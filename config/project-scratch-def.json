@@ -1,0 +1,128 @@
+{
+  "orgName": "SAS",
+  "edition": "Enterprise",
+  "language" : "en_US",
+  "features": [
+    "ContactsToMultipleAccounts",
+    "DigitalEngagement",
+    "Entitlements",
+    "Knowledge",
+    "LightningServiceConsole",
+    "LiveAgent",
+    "LiveMessage",
+    "Macros",
+    "PersonAccounts",
+    "ServiceCloud",
+    "ServiceUser",
+    "SurveyCreatorUser"
+  ],
+  "settings": {
+    "accountSettings":{
+      "enableRelateContactToMultipleAccounts":true
+    },
+    "caseSettings": {
+      "emailToCase":{
+        "enableEmailToCase": true,
+        "enableOnDemandEmailToCase": true,
+        "enableThreadIDInBody": true,
+        "enableThreadIDInSubject": true
+      },
+      "enableCaseFeed": true,
+      "enableCollapseEmailThread": true
+    },
+    "chatterSettings": {
+      "enableChatter": true
+    },
+    "emailAdministrationSettings":{
+      "enableEnhancedEmailEnabled": true
+    },
+    "emailTemplateSettings":{
+      "enableTemplateEnhancedFolderPref": true
+    },
+    "enhancedNotesSettings":{
+      "enableEnhancedNotes": true,
+      "enableTasksOnEnhancedNotes": true
+    },
+    "entitlementSettings":{
+      "enableEntitlements": true,
+      "enableEntitlementVersioning": true,
+      "enableMilestoneFeedItem": true,
+      "enableMilestoneStoppedTime": true,
+      "entitlementLookupLimitedToActiveStatus": true,
+      "entitlementLookupLimitedToSameAccount": true,
+      "entitlementLookupLimitedToSameAsset": false,
+      "entitlementLookupLimitedToSameContact": false,
+      "ignoreMilestoneBusinessHours": true
+    },
+    "knowledgeSettings":{
+      "cases":{
+        "enableArticleCreation":false,
+        "enableArticlePublicSharingSites":false,
+        "enableCaseDataCategoryMapping":true,
+        "useProfileForPDFCreation":false
+      },
+      "defaultLanguage": "en_US",
+      "enableExternalMediaContent": true,
+      "enableKnowledge": true,
+      "enableKnowledgeArticleTextHighlights": true,
+      "enableKnowledgeKeywordAutoComplete": true,
+      "enableKnowledgeTitleAutoComplete": true,
+      "enableLightningKbAutoLoadRichTextField": true,
+      "enableLightningKnowledge": true,
+      "languages": {
+        "language":[
+          {
+            "active": true,
+            "name": "da"
+          },
+          {
+            "active": true,
+            "name": "en_US"
+          },
+          {
+            "active": true,
+            "name": "fi"
+          },
+          {
+            "active": true,
+            "name": "no"
+          },
+          {
+            "active": true,
+            "name": "sv"
+          }
+        ]
+      },
+      "showArticleSummariesCustomerPortal": true,
+      "showArticleSummariesInternalApp": true,
+      "showArticleSummariesPartnerPortal": true,
+      "showValidationStatusField": true
+    },
+    "languageSettings": {
+      "enableTranslationWorkbench": true
+    },
+    "liveAgentSettings": {
+      "enableLiveAgent": true,
+      "enableQuickTextEnabled": true
+    },
+    "macroSettings": {
+      "enableAdvancedSearch":true,
+      "macrosInFolders":true
+    },
+    "nameSettings": {
+      "enableMiddleName": true,
+      "enableNameSuffix": true
+    },
+    "omniChannelSettings": {
+      "enableOmniChannel": true
+    },
+    "pathAssistantSettings":{
+      "pathAssistantEnabled": true
+    },
+    "userManagementSettings":{
+      "enableEnhancedPermsetMgmt":true,
+      "enableEnhancedProfileMgmt":true,
+      "enableNewProfileUI":true
+    }
+  }
+}
