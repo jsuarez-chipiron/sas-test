@@ -69,6 +69,10 @@ steps:
       echo "Error when creating package"
       exit 101
     fi
+    if [ "$packageVersionId" == "null" ]; then
+      echo "Error when creating package"
+      exit 101
+    fi
     echo "$packageVersionId" > $(Build.ArtifactStagingDirectory)/package-version.txt
     echo "$(INSTALLATION_KEY)" > $(Build.ArtifactStagingDirectory)/package-key.txt
   displayName: 'Create Package Version'
