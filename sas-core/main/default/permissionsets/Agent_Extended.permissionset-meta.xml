@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Additional permissions for some Agents</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Agent Extended</label>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EditPublicReports</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EditReports</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ExportReport</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ManageAnalyticSnapshots</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>RunReports</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ViewRoles</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ViewSetup</name>
+    </userPermissions>
+</PermissionSet>
