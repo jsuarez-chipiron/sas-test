@@ -10,3 +10,7 @@ package.xml
 
 # LWC Jest
 **/__tests__/**
+
+# Non used automatic entries
+**/AppSwitcher.appMenu-meta.xml
+**/Trial Customer Portal User.profile-meta.xml
