@@ -57,6 +57,25 @@ steps:
     sfdx force:org:delete --targetusername ciorg --noprompt
   displayName: 'Delete Org'
 
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'inline'
+    script: |
+      import os
+      from xml.etree.ElementTree import ElementTree
+      import re
+      
+      reTest = re.compile("test-.*-junit\\.xml")
+      
+      for file in os.listdir("/$(Common.TestResultsDirectory)"):
+        if reTest.match(file)!=None:
+          print(file)
+          tree = ElementTree()
+          tree.parse("/$(Common.TestResultsDirectory)/"+file)
+          for elem in tree.findall("./testsuite/testcase"):
+            elem.set('name',elem.get("classname")+"/"+elem.get("name"))
+          tree.write("/$(Common.TestResultsDirectory)/"+file)
+
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
