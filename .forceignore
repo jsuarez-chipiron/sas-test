@@ -14,3 +14,12 @@ package.xml
 # Non used automatic entries
 **/AppSwitcher.appMenu-meta.xml
 **/Trial Customer Portal User.profile-meta.xml
+
+**EmbeddedServiceConfig
+
+#CustomApplications
+sas-core\main\default\applications\standard__Sales.app-meta.xml
+sas-core\main\default\applications\standard__Chatter.app-meta.xml
+sas-core\main\default\applications\standard__Service.app-meta.xml
+sas-core\main\default\applications\standard__Marketing.app-meta.xml
+sas-core\main\default\applications\standard__Insights.app-meta.xml
