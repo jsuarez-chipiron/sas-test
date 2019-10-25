@@ -14,6 +14,9 @@
     <optionsIsInviteAutoRemove>false</optionsIsInviteAutoRemove>
     <perAgentQueueLength>10</perAgentQueueLength>
     <routingType xsi:nil="true"/>
+    <skills>
+        <skill>DirectSalesSkill</skill>
+    </skills>
     <type>Standard</type>
     <windowLanguage>no</windowLanguage>
 </LiveChatButton>
