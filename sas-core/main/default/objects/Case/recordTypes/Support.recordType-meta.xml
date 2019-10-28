@@ -5,6 +5,157 @@
     <businessProcess>Default</businessProcess>
     <label>Support</label>
     <picklistValues>
+        <picklist>CaseSubReason__c</picklist>
+        <values>
+            <fullName>AMEX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bike</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking confirmation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Car rental</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Card replacement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Change profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Damaged baggage status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delay certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delayed baggage status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delete profiles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error on app</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error on web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight disruption</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Give away membership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Make cancellation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mastercard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Merge profiles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name change on Eurobonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Air partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On corporate account</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Report of damaged baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Report of delayed baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reset of password</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reset of pin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retroregistration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ski %2F Snowboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax invoice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel agent booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unaccompanied minor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User guidance - App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User guidance - web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wheelchair</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Origin</picklist>
         <values>
             <fullName>Chatter Answers</fullName>
@@ -41,34 +192,78 @@
     <picklistValues>
         <picklist>Reason</picklist>
         <values>
-            <fullName>Complex functionality</fullName>
+            <fullName>Cancellation%2Frefund of ticket</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Existing problem</fullName>
+            <fullName>Credit card</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Instructions not clear</fullName>
+            <fullName>Delayed%2Fdamaged luggage</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>New problem</fullName>
+            <fullName>Digital support</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>User didn%27t attend training</fullName>
+            <fullName>EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rebooking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rebooking of groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Requesting documentation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retroregistration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special service requests</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel pass</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Sample Cases</fullName>
+            <fullName>Error</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Trial</fullName>
+            <fullName>Extraordinary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Support</fullName>
             <default>false</default>
         </values>
     </picklistValues>
