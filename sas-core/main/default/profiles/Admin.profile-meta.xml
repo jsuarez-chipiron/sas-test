@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
-	<applicationVisibilities>
+    <applicationVisibilities>
         <application>SAS_Service</application>
         <default>false</default>
         <visible>true</visible>
@@ -27,6 +27,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>C_Util_Test</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SamlJitHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SamlJitHandler_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>
@@ -80,6 +88,23 @@
         <field>Log__c.StackTrace__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.Vendor__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <layoutAssignments>
+        <layout>AdRoleLink__mdt-AD Role Link Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdRolePermission__mdt-AD Role Permission Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdRoleUserDetail__mdt-AD Role User Detail Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdRole__mdt-AD Role Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Log__c-Log Layout</layout>
     </layoutAssignments>

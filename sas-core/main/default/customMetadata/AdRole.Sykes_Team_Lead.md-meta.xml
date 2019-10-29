@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Sykes Team Lead</label>
+    <protected>false</protected>
+    <values>
+        <field>GroupId__c</field>
+        <value xsi:type="xsd:string">764cdb4a-bb21-47e7-8b2e-8085331fe0ae</value>
+    </values>
+    <values>
+        <field>Priority__c</field>
+        <value xsi:type="xsd:double">60.0</value>
+    </values>
+</CustomMetadata>
