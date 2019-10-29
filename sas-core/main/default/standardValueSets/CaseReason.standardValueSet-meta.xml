@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Airport Services</fullName>
+        <default>false</default>
+        <label>Airport Services</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Ancillary</fullName>
+        <default>false</default>
+        <label>Ancillary</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Baggage</fullName>
+        <default>false</default>
+        <label>Baggage</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Cancellation/refund of ticket</fullName>
+        <default>false</default>
+        <label>Cancellation/refund of ticket</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Changes</fullName>
+        <default>false</default>
+        <label>Changes</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Corp Account managers (SAS for business)</fullName>
+        <default>false</default>
+        <label>Corp Account managers (SAS for business)</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Credit card</fullName>
+        <default>false</default>
+        <label>Credit card</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Delayed/damaged luggage</fullName>
+        <default>false</default>
+        <label>Delayed/damaged luggage</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Digital support</fullName>
+        <default>false</default>
+        <label>Digital support</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>EuroBonus</fullName>
+        <default>false</default>
+        <label>EuroBonus</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Flight info</fullName>
+        <default>false</default>
+        <label>Flight info</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Group booking - direct groups</fullName>
+        <default>false</default>
+        <label>Group booking - direct groups</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Inflight / Onboard</fullName>
+        <default>false</default>
+        <label>Inflight / Onboard</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Name change</fullName>
+        <default>false</default>
+        <label>Name change</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Non-SAS produkter</fullName>
+        <default>false</default>
+        <label>Non-SAS produkter</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Rebooking</fullName>
+        <default>false</default>
+        <label>Rebooking</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Rebooking of groups</fullName>
+        <default>false</default>
+        <label>Rebooking of groups</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Refund</fullName>
+        <default>false</default>
+        <label>Refund</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Requesting documentation</fullName>
+        <default>false</default>
+        <label>Requesting documentation</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Retroregistration</fullName>
+        <default>false</default>
+        <label>Retroregistration</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Rule &amp; Information</fullName>
+        <default>false</default>
+        <label>Rule &amp; Information</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Rules &amp; Informaton</fullName>
+        <default>false</default>
+        <label>Rules &amp; Informaton</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>SAS Medical</fullName>
+        <default>false</default>
+        <label>SAS Medical</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Schedule changes</fullName>
+        <default>false</default>
+        <label>Schedule changes</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Special service requests</fullName>
+        <default>false</default>
+        <label>Special service requests</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Travel pass</fullName>
+        <default>false</default>
+        <label>Travel pass</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+</StandardValueSet>

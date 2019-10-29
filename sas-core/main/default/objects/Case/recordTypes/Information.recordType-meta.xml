@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Information</fullName>
+    <active>true</active>
+    <businessProcess>Default</businessProcess>
+    <label>Information</label>
+    <picklistValues>
+        <picklist>CaseSubReason__c</picklist>
+        <values>
+            <fullName>Add EB in booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add infant in booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allowance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arrival information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage delivery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bike</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancellation%2Frefund of ticket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Charter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Check-in</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Co2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Connection time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Connections</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Content and Dangerous goods</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Departure information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Document control %28ESTA %2F VISA %2F DOCS %2F PASSPORT%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EB shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extra seat for comfort</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fast Track</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General service questions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Golfbag</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hotel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Life time gold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lost %26 found</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lounge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lounges</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Group booking - agent groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Group booking - bulk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Opening hours</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Overbooked flights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oxygen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Points status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre seating</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Program info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rebooking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rebooking of groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retroregistration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rules %26 information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Aircraft</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seating</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Security</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service kiosk %2F baggage drop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ski %2F Snowboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special assistance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special baggage incl%2E pets</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Staff %26 Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket office airport</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer %26 Gate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer %2F Arrival services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unaccompanied minor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Upgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wheelchair</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Origin</picklist>
+        <values>
+            <fullName>Chatter Answers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>Critical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Urgent</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason</picklist>
+        <values>
+            <fullName>Airport Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ancillary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancellation%2Frefund of ticket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corp Account managers %28SAS for business%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group booking - direct groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inflight %2F Onboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-SAS produkter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rule %26 Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rules %26 Informaton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Medical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special service requests</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel pass</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extraordinary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Support</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

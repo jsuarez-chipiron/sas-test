@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_User_equal_with_Owner</fullName>
+    <active>true</active>
+    <description>Limits editing of Internal Comments to the Case Owner</description>
+    <errorConditionFormula>$User.Id  &lt;&gt;  OwnerId</errorConditionFormula>
+    <errorDisplayField>Internal_Notes__c</errorDisplayField>
+    <errorMessage>Only the Case Owner can edit this field.</errorMessage>
+</ValidationRule>

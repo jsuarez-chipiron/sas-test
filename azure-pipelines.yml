@@ -57,6 +57,26 @@ steps:
     sfdx force:org:delete --targetusername ciorg --noprompt
   displayName: 'Delete Org'
 
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'inline'
+    script: |
+      import os
+      from xml.etree.ElementTree import ElementTree
+      import re
+      
+      reTest = re.compile("test-.*-junit\\.xml")
+      
+      for file in os.listdir("/$(Common.TestResultsDirectory)"):
+        if reTest.match(file)!=None:
+          print(file)
+          tree = ElementTree()
+          tree.parse("/$(Common.TestResultsDirectory)/"+file)
+          for elem in tree.findall("./testsuite/testcase"):
+            elem.set('name',elem.get("classname")+"/"+elem.get("name"))
+          tree.write("/$(Common.TestResultsDirectory)/"+file)
+  displayName: 'Adjust Test Format'
+
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
@@ -76,6 +96,19 @@ steps:
     echo "$packageVersionId" > $(Build.ArtifactStagingDirectory)/package-version.txt
     echo "$(INSTALLATION_KEY)" > $(Build.ArtifactStagingDirectory)/package-key.txt
   displayName: 'Create Package Version'
+
+- script: |
+    sfdx force:source:convert --rootdir ./sas-core --outputdir ./package-md
+  displayName: 'Convert to metadata package'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: './package-md'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/package-md.zip'
+    replaceExistingArchive: true
+  displayName: 'Create metadata package artifcat'
 
 - task: PublishBuildArtifacts@1
   inputs:
