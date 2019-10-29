@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <name>SoMe</name>
+    <name>Direct Sales EN</name>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
     <queueSobject>
-        <sobjectType>SocialPost</sobjectType>
+        <sobjectType>LiveAgentSession</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>LiveChatTranscript</sobjectType>
     </queueSobject>
 </Queue>
