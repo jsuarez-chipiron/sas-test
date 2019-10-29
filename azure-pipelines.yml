@@ -96,6 +96,18 @@ steps:
     echo "$(INSTALLATION_KEY)" > $(Build.ArtifactStagingDirectory)/package-key.txt
   displayName: 'Create Package Version'
 
+- script: |
+    sfdx force:source:convert --rootdir ./sas-core --outputdir ./package-md
+  displayName: 'Convert to metadata package'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: './package-md'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/package-md.zip'
+    replaceExistingArchive: true
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
