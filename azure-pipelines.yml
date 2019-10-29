@@ -75,6 +75,7 @@ steps:
           for elem in tree.findall("./testsuite/testcase"):
             elem.set('name',elem.get("classname")+"/"+elem.get("name"))
           tree.write("/$(Common.TestResultsDirectory)/"+file)
+  displayName: 'Adjust Test Format'
 
 - task: PublishTestResults@2
   inputs:
@@ -107,6 +108,7 @@ steps:
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/package-md.zip'
     replaceExistingArchive: true
+  displayName: 'Create metadata package artifcat'
 
 - task: PublishBuildArtifacts@1
   inputs:
