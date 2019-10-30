@@ -379,7 +379,7 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
         //Check if scratch org
         if(UserInfo.getLastName()=='User' && UserInfo.getFirstName()=='User')return '.'+C_Util.getUUID().substring(0,6);
         String uname = UserInfo.getUserName();
-        return uname.substring(uname.lastIndexOf('.')+1);
+        return '.'+uname.substring(uname.lastIndexOf('.')+1);
     }
 
     /**
