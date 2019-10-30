@@ -82,7 +82,7 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
         u.IsActive = true;
         u.LastName = attributes.get('http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname');
         u.ProfileId = profileId;
-        u.Username = u.Email + getEnvironmentSuffix();
+        u.Username = email + getEnvironmentSuffix();
         u.UserRoleId = roleId;
         u.Alias = createAlias(u);
         
