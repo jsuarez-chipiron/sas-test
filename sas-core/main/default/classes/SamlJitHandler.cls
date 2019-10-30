@@ -60,7 +60,7 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
         Id roleId = ai.loadRoleId();
         
 
-        User u = userId!=null ? new User(Id=userId) : new User();
+        User u = userId!=null ? [SELECT Id,Email,Alias FROM User WHERE Id=:userId] : new User();
         if(userId==null){
             u.DigestFrequency = 'N';
             u.DefaultGroupNotificationFrequency = 'N';
@@ -104,9 +104,8 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
         String alias = u.FirstName.substring(0,1)+u.LastName.substring(0,5);
         Boolean checkAliasConflicts = true;
         if(u.Id!=null){
-            String currentAlias = [SELECT Alias FROM User WHERE Id=:u.Id].Alias;
-            if(currentAlias.startsWith(alias)){
-                alias = currentAlias;
+            if(u.Alias.startsWith(alias)){
+                alias = u.Alias;
                 checkAliasConflicts = false;
             }
         }
