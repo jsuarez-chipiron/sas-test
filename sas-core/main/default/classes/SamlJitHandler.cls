@@ -72,7 +72,9 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
             u.UserPreferencesHideSfxWelcomeMat = true;
             u.UserPreferencesLightningExperiencePreferred = true;
         }
-        u.Email = attributes.get('http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress');
+        String email = attributes.get('http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'); 
+        //Ensure email is not reset from sandbox invalid emails
+        if(userId==null || u.Email!=email+'.invalid')u.Email = email;
         u.EmailEncodingKey = 'UTF-8';
         u.EmailPreferencesAutoBcc = false;
         u.FederationIdentifier = federationId;
