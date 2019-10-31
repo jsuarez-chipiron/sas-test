@@ -38,10 +38,26 @@
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>
+    <customMetadataTypeAccesses>
+        <enabled>false</enabled>
+        <name>AdRoleLink__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>false</enabled>
+        <name>AdRolePermission__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>false</enabled>
+        <name>AdRoleUserDetail__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>false</enabled>
+        <name>AdRole__mdt</name>
+    </customMetadataTypeAccesses>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.AccountId</field>
-        <readable>true</readable>
+        <editable>false</editable>
+        <field>AdRoleUserDetail__mdt.Value__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -50,7 +66,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Internal_Notes__c</field>
+        <field>Case.ContactId</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -131,15 +147,22 @@
         <layout>AdRole__mdt-AD Role Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Information Layout</layout>
+        <layout>Case-SAS Information Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-SAS Information Layout</layout>
         <recordType>Case.Information</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Support Layout</layout>
+        <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Support</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Log__c-Log Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PersonAccount-Person Account Layout</layout>
+        <recordType>PersonAccount.PersonAccount</recordType>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -415,6 +438,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>EnableCommunityAppLauncher</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>EnableNotifications</name>
     </userPermissions>
     <userPermissions>
@@ -525,7 +552,10 @@
         <enabled>true</enabled>
         <name>ManageEmailClientConfig</name>
     </userPermissions>
-    
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ManageEntitlements</name>
+    </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>ManageExchangeConfig</name>
@@ -849,5 +879,9 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ViewSetup</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ViewUserPII</name>
     </userPermissions>
 </Profile>
