@@ -84,7 +84,7 @@ steps:
     failTaskOnFailedTests: true
 
 #- script: |
-#    packageVersionId="`sfdx force:package:version:create --package "SAS Core" --installationkey "$(INSTALLATION_KEY)" --definitionfile config/project-scratch-def.json --wait 10 --json | jq '.result.SubscriberPackageVersionId' | tr -cd '[a-zA-Z0-9]'`"
+#    packageVersionId="`sfdx force:package:version:create --package "$(PACKAGE_NAME)" --installationkey "$(INSTALLATION_KEY)" --definitionfile config/project-scratch-def.json --wait 10 --json | jq '.result.SubscriberPackageVersionId' | tr -cd '[a-zA-Z0-9]'`"
 #    if [ -z "$packageVersionId" ]; then
 #      echo "Error when creating package"
 #      exit 101
@@ -98,7 +98,13 @@ steps:
 #  displayName: 'Create Package Version'
 
 - script: |
-    sfdx force:source:convert --rootdir ./sas-core --outputdir ./package-md
+    sfdx force:source:convert --rootdir ./$(PACKAGE_FOLDER) --outputdir ./package-md
+    if [ -e ./$(PACKAGE_FOLDER)/destructiveChangesPre.xml ]; then
+      cp ./$(PACKAGE_FOLDER)/destructiveChangesPre.xml ./package-md/destructiveChangesPre.xml
+    fi
+    if [ -e ./$(PACKAGE_FOLDER)/destructiveChangesPost.xml ]; then
+      cp ./$(PACKAGE_FOLDER)/destructiveChangesPost.xml ./package-md/destructiveChangesPost.xml
+    fi
   displayName: 'Convert to metadata package'
 
 - task: ArchiveFiles@2
