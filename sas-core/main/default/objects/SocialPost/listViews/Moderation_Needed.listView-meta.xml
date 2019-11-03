@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Moderation_Needed</fullName>
+    <columns>Name</columns>
+    <columns>ReplyTo</columns>
+    <columns>Parent</columns>
+    <columns>Persona</columns>
+    <columns>Content</columns>
+    <columns>Posted</columns>
+    <columns>ReviewedStatus</columns>
+    <columns>Notes</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Parent</field>
+        <operation>equals</operation>
+    </filters>
+    <filters>
+        <field>ReviewedStatus</field>
+        <operation>equals</operation>
+        <value>Needed</value>
+    </filters>
+    <label>Moderation Needed</label>
+</ListView>
