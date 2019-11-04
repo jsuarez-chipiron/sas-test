@@ -44,7 +44,7 @@
     <relatedLists>
         <fields>Name</fields>
         <fields>Content</fields>
-        <fields>Persona</fields>
+        <fields>PersonaId</fields>
         <fields>Posted</fields>
         <fields>Parent</fields>
         <fields>PostUrl</fields>
