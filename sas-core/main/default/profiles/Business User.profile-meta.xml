@@ -29,11 +29,35 @@
         <apexClass>C_Util_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>SamlJitHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SamlJitHandler_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
     <custom>true</custom>
+    <customMetadataTypeAccesses>
+        <enabled>false</enabled>
+        <name>AdRoleLink__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>false</enabled>
+        <name>AdRolePermission__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>false</enabled>
+        <name>AdRoleUserDetail__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>false</enabled>
+        <name>AdRole__mdt</name>
+    </customMetadataTypeAccesses>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.AccountId</field>
-        <readable>true</readable>
+        <editable>false</editable>
+        <field>AdRoleUserDetail__mdt.Value__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -42,7 +66,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Internal_Notes__c</field>
+        <field>Case.ContactId</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -123,19 +147,25 @@
         <layout>AdRole__mdt-AD Role Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Information Layout</layout>
+        <layout>Case-SAS Information Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-SAS Information Layout</layout>
         <recordType>Case.Information</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Support Layout</layout>
+        <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Support</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Log__c-Log Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>PersonAccount-Person Account Layout</layout>
+        <recordType>PersonAccount.PersonAccount</recordType>
+    </layoutAssignments>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Case.Information</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -144,6 +174,10 @@
         <recordType>Case.Support</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabVisibilities>
+        <tab>Log__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
     <userLicense>Salesforce</userLicense>
     <userPermissions>
         <enabled>true</enabled>
@@ -190,12 +224,16 @@
         <name>ChatterInviteExternalUsers</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ChatterOwnGroups</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>ContentWorkspaces</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ConvertLeads</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -256,6 +294,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ExportReport</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ImportPersonal</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

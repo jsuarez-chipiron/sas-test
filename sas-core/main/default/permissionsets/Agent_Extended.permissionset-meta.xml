@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Additional permissions for some Agents</description>
+    <description>Additional reporting permissions for Agents with this Permission Set. An Agent Extended can create and customize reports and create folders.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Agent Extended</label>
     <userPermissions>
@@ -9,7 +9,15 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>CreateReportFolders</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>CreateReportInLightning</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EditMyReports</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
