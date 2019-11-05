@@ -101,7 +101,7 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
         @return The alias
     */
     private static String createAlias(User u){
-        String alias = u.FirstName.substring(0,1)+u.LastName.substring(0,5);
+        String alias = u.FirstName.substring(0,1)+(u.LastName.length()>=5 ? u.LastName.substring(0,5) : u.LastName);
         Boolean checkAliasConflicts = true;
         if(u.Id!=null){
             if(u.Alias.startsWith(alias)){
