@@ -36,6 +36,11 @@
                 <default>false</default>
                 <label>User Permission</label>
             </value>
+            <value>
+                <fullName>Call Center</fullName>
+                <default>false</default>
+                <label>Call Center</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

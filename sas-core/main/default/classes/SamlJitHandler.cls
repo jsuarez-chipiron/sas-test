@@ -29,6 +29,10 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
     */
     private static final String PERMISSION_TYPE_GROUP = 'Group';
     /**
+        Permission type API name for type call center
+    */
+    private static final String PERMISSION_TYPE_CALL_CENTER = 'Call Center';
+    /**
         AD role name associated with resets of permissions
     */
     private static final String AD_ROLE_RESET = 'RESET';
@@ -60,7 +64,7 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
         Id roleId = ai.loadRoleId();
         
 
-        User u = userId!=null ? [SELECT Id,Email,Alias FROM User WHERE Id=:userId] : new User();
+        User u = userId!=null ? [SELECT Id,Email,Alias,CallCenterId FROM User WHERE Id=:userId] : new User();
         if(userId==null){
             u.DigestFrequency = 'N';
             u.DefaultGroupNotificationFrequency = 'N';
@@ -85,6 +89,7 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
         u.Username = email + getEnvironmentSuffix();
         u.UserRoleId = roleId;
         u.Alias = createAlias(u);
+        u.CallCenterId = ai.loadCallCenterId(u.CallCenterId);
         
         ai.setUserDetails(u);
 
@@ -168,6 +173,10 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
         */
         String roleDevName;
         /**
+            The name of the call center which to assign to the user
+        */
+        String callCenterName;
+        /**
             The permission sets in which to incldue the user
         */
         Set<String> inclPS;
@@ -183,6 +192,10 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
             The groups from which to exclude the user
         */
         Set<String> exclGroups;
+        /**
+            THe call centers which should automatically be removed from the user
+        */
+        Set<String> exclCallCenters;
         /**
             User permissions set for the user
         */
@@ -226,6 +239,7 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
             inclGroups = new Set<String>();
             exclPS = new Set<String>();
             exclGroups = new Set<String>();
+            exclCallCenters = new Set<String>();
             userPermissions = new Map<String,Boolean>();
             userDetails = new Map<String,Object>();
             
@@ -248,6 +262,9 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
                     else if(adp.PermissionType__c==PERMISSION_TYPE_GROUP){
                         inclGroups.add(adp.MasterLabel);
                     }
+                    else if(adp.PermissionType__c==PERMISSION_TYPE_CALL_CENTER){
+                        if(callCenterName==null)callCenterName=adp.MasterLabel;
+                    }
                 }
             }
 
@@ -262,6 +279,9 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
                 }
                 else if(adp.PermissionType__c==PERMISSION_TYPE_GROUP){
                     if(!inclGroups.contains(adp.MasterLabel))exclGroups.add(adp.MasterLabel);
+                }
+                else if(adp.PermissionType__c==PERMISSION_TYPE_CALL_CENTER){
+                    if(adp.MasterLabel!=callCenterName)exclCallCenters.add(adp.MasterLabel);
                 }
             }
 
@@ -293,6 +313,23 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
             UserRole[] roleRec = [SELECT Id FROM UserRole WHERE DeveloperName=:roleDevName];
             if(roleRec.size()==0)throw new JitException('Cannot find a role with developer name: '+roleDevName);
             return roleRec[0].Id;
+        }
+
+        /**
+            Loads the call center id which to assign to the user
+            @param currentCallCenterId The id of the user's current call center
+            @return The updated call center id of the user
+        */
+        private Id loadCallCenterId(Id currentCallCenterId){
+            Set<String> allCallCenters = new Set<String>(exclCallCenters);
+            if(callCenterName!=null)allCallCenters.add(callCenterName);
+            CallCenter[] ccList = [SELECT Id,InternalName FROM CallCenter WHERE InternalName IN : allCallCenters];
+            Id ccId = currentCallCenterId;
+            for(CallCenter cc : ccList){
+                if(cc.InternalName==callCenterName)ccId = cc.Id;
+                else if(ccId==cc.Id)ccId=null;
+            }
+            return ccId;
         }
 
         /**
