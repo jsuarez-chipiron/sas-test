@@ -79,7 +79,6 @@
         <field>Case.ContactId</field>
         <readable>true</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.EBNumber__c</field>
