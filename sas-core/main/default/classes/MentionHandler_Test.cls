@@ -75,8 +75,8 @@ private class MentionHandler_Test {
             Test.startTest();
             //Post the FeedItem
             ConnectApi.FeedElement feedElement = ConnectApi.ChatterFeeds.postFeedElement(null, feedItemInput);
-            System.assertEquals(1, [SELECT id FROM FeedItem].size());
-            System.debug([SELECT id FROM FeedItem]);
+            System.debug('FeedItems' + [SELECT id, body FROM FeedItem WHERE id =: feedElement.id]);
+            System.assertEquals(1, [SELECT id FROM FeedItem WHERE id =: feedElement.id].size());
             Test.stopTest();
         }
     }
@@ -124,8 +124,19 @@ private class MentionHandler_Test {
         feedItemInputEdit.body = messageBodyInputEdit;
         
         Test.startTest();
-        //Update the FeedItem
-        ConnectApi.FeedElement editedFeedElement = ConnectApi.ChatterFeeds.updateFeedElement(null, feedElement.id, feedItemInputEdit);
+        Boolean expectedError = false;
+        try{
+            //Update the FeedItem
+            ConnectApi.FeedElement editedFeedElement = ConnectApi.ChatterFeeds.updateFeedElement(null, feedElement.id, feedItemInputEdit);
+        }
+        //Catch the expected error
+        catch (Exception e) {
+            expectedError = true;
+            Boolean expectedErrorMessage = (e.getMessage().contains('You don\'t have the permission to mention ')) ? true : false;
+            System.assertEquals(true, expectedErrorMessage, e.getMessage());
+        }
+
+        System.assertEquals(true, expectedError, 'No error');
         Test.stopTest();
     }    
 
@@ -219,8 +230,19 @@ private class MentionHandler_Test {
         commentInputEdit.body = messageBodyInputEdit;
 
         Test.startTest();
-        //Update the FeedComment
-        ConnectApi.Comment editedComment = ConnectApi.ChatterFeeds.updateComment(null, commentRep.id, commentInputEdit);
+        Boolean expectedError = false;
+        try{
+            //Update the FeedComment
+            ConnectApi.Comment editedComment = ConnectApi.ChatterFeeds.updateComment(null, commentRep.id, commentInputEdit);
+        }
+        //Catch the expected error
+        catch (Exception e) {
+            expectedError = true;
+            Boolean expectedErrorMessage = (e.getMessage().contains('You don\'t have the permission to mention ')) ? true : false;
+            System.assertEquals(true, expectedErrorMessage, e.getMessage());
+        }
+
+        System.assertEquals(true, expectedError, 'No error');
         Test.stopTest();
     }
 }
