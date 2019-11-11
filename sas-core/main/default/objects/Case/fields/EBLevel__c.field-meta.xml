@@ -13,24 +13,29 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>B</fullName>
+                <fullName>Base</fullName>
                 <default>false</default>
-                <label>B</label>
+                <label>Base</label>
             </value>
             <value>
-                <fullName>S</fullName>
+                <fullName>Silver</fullName>
                 <default>false</default>
-                <label>S</label>
+                <label>Silver</label>
             </value>
             <value>
-                <fullName>G</fullName>
+                <fullName>Gold</fullName>
                 <default>false</default>
-                <label>G</label>
+                <label>Gold</label>
+            </value>
+			<value>
+                <fullName>Diamond</fullName>
+                <default>false</default>
+                <label>Diamond</label>
             </value>
             <value>
-                <fullName>P</fullName>
+                <fullName>Pandion</fullName>
                 <default>false</default>
-                <label>P</label>
+                <label>Pandion</label>
             </value>
         </valueSetDefinition>
     </valueSet>
