@@ -15,17 +15,17 @@
             <value>
                 <fullName>B,</fullName>
                 <default>false</default>
-                <label>B,</label>
+                <label>B</label>
             </value>
             <value>
-                <fullName>S,</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
-                <label>S,</label>
+                <label>S</label>
             </value>
             <value>
-                <fullName>G,</fullName>
+                <fullName>G</fullName>
                 <default>false</default>
-                <label>G,</label>
+                <label>G</label>
             </value>
             <value>
                 <fullName>P</fullName>
