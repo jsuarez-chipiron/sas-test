@@ -192,12 +192,7 @@
         <object>Case</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <recordTypeVisibilities>
-        <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
-        <recordType>Account.Business</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
+    
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>Case.Information</recordType>
