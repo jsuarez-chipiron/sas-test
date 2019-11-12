@@ -78,6 +78,10 @@
         <enabled>false</enabled>
         <name>AdRole__mdt</name>
     </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>false</enabled>
+        <name>Feature_Switch__mdt</name>
+    </customMetadataTypeAccesses>
     <externalDataSourceAccesses>
         <enabled>false</enabled>
         <externalDataSource>SAS_External_Systems</externalDataSource>
@@ -151,6 +155,11 @@
         <editable>false</editable>
         <field>Case.TPAccountNumber__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Feature_Switch__mdt.Active__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -367,6 +376,9 @@
     <layoutAssignments>
         <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Support</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Feature_Switch__mdt-Feature Switch Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>FrequentFlyer__x-Frequent Flyer Layout</layout>
