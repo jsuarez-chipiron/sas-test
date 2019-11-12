@@ -52,7 +52,7 @@ public class MentionHandler extends C_TriggerHandler {
 
                 //Get the Comment based on the ID.
                 if(!Test.isRunningTest()) {
-                    ConnectApi.FeedElement feed = ConnectApi.ChatterFeeds.getFeedElement(communityId, feedId);
+                    ConnectApi.Comment feed = ConnectApi.ChatterFeeds.getComment(communityId, feedId);
                     List<ConnectApi.MessageSegment> messageSegments = feed.body.messageSegments;
                     String errorMessage = checkMessageSegments(messageSegments, insertedById);
 
