@@ -158,23 +158,23 @@
     <picklistValues>
         <picklist>EBLevel__c</picklist>
         <values>
-            <fullName>Base</fullName>
+            <fullName>B</fullName>
             <default>false</default>
         </values>
 		<values>
-            <fullName>Silver</fullName>
+            <fullName>S</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Gold</fullName>
+            <fullName>G</fullName>
             <default>false</default>
         </values>
 		<values>
-            <fullName>Diamond</fullName>
+            <fullName>D</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Pandion</fullName>
+            <fullName>P</fullName>
             <default>false</default>
         </values>
     </picklistValues>
