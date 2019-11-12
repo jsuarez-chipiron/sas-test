@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ConcentTelemarketing__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates that customer has given concent to Telemarketing</description>
+    <externalDeveloperName>concentTelemarketing</externalDeveloperName>
+    <externalId>false</externalId>
+    <inlineHelpText>Indicates that customer has given concent to Telemarketing</inlineHelpText>
+    <isFilteringDisabled>true</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>true</isSortingDisabled>
+    <label>Concent Telemarketing</label>
+    <type>Checkbox</type>
+</CustomField>
