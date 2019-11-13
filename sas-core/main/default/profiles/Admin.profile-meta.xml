@@ -243,6 +243,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>FrequentFlyer__x.Gender__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>FrequentFlyer__x.LastName__c</field>
         <readable>true</readable>
     </fieldPermissions>
