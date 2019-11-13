@@ -109,7 +109,7 @@ export default class App extends LightningElement {
         getCaseData({ caseId: this.recordId })
             .then(result => {
                 this.error = undefined;
-                this.evaluateCaseOnOpen({caseRecord: result});
+                this.evaluateCaseOnOpen(result);
             })
             .catch(error => {
                 this.displayError({ error: error });
@@ -123,7 +123,7 @@ export default class App extends LightningElement {
      */
     evaluateCaseOnOpen(caseRecord){
         //If case already has an account connected, only update account if it was not updated within an hour
-        if (caseRecord.Account) {
+        if (caseRecord.AccountId) {
             this.customerIdentified = true;
             if (Date.now() - Date.parse(caseRecord.Account.LastRetrievedFromSource__c) > 3600000) {
                 this.searchOption = 'ExternalId';
@@ -132,7 +132,7 @@ export default class App extends LightningElement {
             }
         }
         //If no account is connected and case has EB number, search for customer based on EB number
-        else if (caseRecord.EBNumber__c) {
+        else if (caseRecord.EBNumber__c) {        
             this.searchOption = 'EBNumber__c';
             this.searchValue = caseRecord.EBNumber__c;
             this.searchForCustomer();
