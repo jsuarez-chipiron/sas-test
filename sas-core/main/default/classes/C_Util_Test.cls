@@ -26,5 +26,10 @@ private class C_Util_Test {
         System.assertEquals(true, p.matcher(t1).matches());
         System.assertEquals(true, p.matcher(t2).matches());
         System.assertEquals(t1, t2);
+        C_Util.setUUID(s1);
+        String t3 = C_Util.getUUID();
+        System.assertEquals(s1,t3);
+        System.assertNotEquals(t1,t3);
+        System.assertNotEquals(t2,t3);
     }
 }
