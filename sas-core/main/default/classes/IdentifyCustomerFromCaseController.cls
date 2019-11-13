@@ -11,8 +11,8 @@ public with sharing class IdentifyCustomerFromCaseController {
             Account acc = new Account();
             acc.FirstName = data.FirstName__c;
             acc.LastName = data.LastName__c;
-            acc.EBNumber__c = '700001043';
-            acc.TPAccountNumber__c = '700001042';
+            acc.EBNumber__c = data.EBNumber__c;
+            acc.TPAccountNumber__c = data.TPAccountNumber__c;
             acc.FrequentFlyer__c = data.ExternalId;
             acc.CustomerIdentifier__c = data.ExternalId;
             acc.LastRetrievedFromSource__c = Datetime.now();
