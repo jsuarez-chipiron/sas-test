@@ -14,6 +14,7 @@ public with sharing class CSharkCustomer {
         public String gender {get; set;}
         public String salutation {get; set;}
         public String identifier {get; set;}
+        public String euroBonusNumber {get; set;}
         public List<Engagement> EngagementList {get; set;}
     }
 
