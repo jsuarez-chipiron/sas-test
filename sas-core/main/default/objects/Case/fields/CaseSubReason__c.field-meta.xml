@@ -39,6 +39,11 @@
                 <label>Arrival information</label>
             </value>
             <value>
+                <fullName>Availability</fullName>
+                <default>false</default>
+                <label>Availability</label>
+            </value>
+            <value>
                 <fullName>Baggage</fullName>
                 <default>false</default>
                 <label>Baggage</label>
@@ -62,6 +67,11 @@
                 <fullName>Booking confirmation</fullName>
                 <default>false</default>
                 <label>Booking confirmation</label>
+            </value>
+            <value>
+                <fullName>Campaign booking</fullName>
+                <default>false</default>
+                <label>Campaign booking</label>
             </value>
             <value>
                 <fullName>Cancellation/refund of ticket</fullName>
@@ -114,6 +124,11 @@
                 <label>Content and Dangerous goods</label>
             </value>
             <value>
+                <fullName>Create case</fullName>
+                <default>false</default>
+                <label>Create case</label>
+            </value>
+            <value>
                 <fullName>Damaged baggage status</fullName>
                 <default>false</default>
                 <label>Damaged baggage status</label>
@@ -134,6 +149,11 @@
                 <label>Delete profiles</label>
             </value>
             <value>
+                <fullName>Denied boarding</fullName>
+                <default>false</default>
+                <label>Denied boarding</label>
+            </value>
+            <value>
                 <fullName>Departure information</fullName>
                 <default>false</default>
                 <label>Departure information</label>
@@ -142,6 +162,11 @@
                 <fullName>Document control (ESTA / VISA / DOCS / PASSPORT)</fullName>
                 <default>false</default>
                 <label>Document control (ESTA / VISA / DOCS / PASSPORT)</label>
+            </value>
+            <value>
+                <fullName>Downgrading</fullName>
+                <default>false</default>
+                <label>Downgrading</label>
             </value>
             <value>
                 <fullName>EB shop</fullName>
@@ -169,9 +194,24 @@
                 <label>Fast Track</label>
             </value>
             <value>
+                <fullName>Flight cancellations</fullName>
+                <default>false</default>
+                <label>Flight cancellations</label>
+            </value>
+            <value>
+                <fullName>Flight delays</fullName>
+                <default>false</default>
+                <label>Flight delays</label>
+            </value>
+            <value>
                 <fullName>Flight disruption</fullName>
                 <default>false</default>
                 <label>Flight disruption</label>
+            </value>
+            <value>
+                <fullName>General service</fullName>
+                <default>false</default>
+                <label>General service</label>
             </value>
             <value>
                 <fullName>General service questions</fullName>
@@ -232,6 +272,11 @@
                 <fullName>Merge profiles</fullName>
                 <default>false</default>
                 <label>Merge profiles</label>
+            </value>
+            <value>
+                <fullName>Missed connecting flight</fullName>
+                <default>false</default>
+                <label>Missed connecting flight</label>
             </value>
             <value>
                 <fullName>Name change</fullName>
@@ -304,6 +349,11 @@
                 <label>Pre seating</label>
             </value>
             <value>
+                <fullName>Price inquiry</fullName>
+                <default>false</default>
+                <label>Price inquiry</label>
+            </value>
+            <value>
                 <fullName>Program info</fullName>
                 <default>false</default>
                 <label>Program info</label>
@@ -354,6 +404,11 @@
                 <label>Retroregistration</label>
             </value>
             <value>
+                <fullName>Route inquiry</fullName>
+                <default>false</default>
+                <label>Route inquiry</label>
+            </value>
+            <value>
                 <fullName>Rules &amp; information</fullName>
                 <default>false</default>
                 <label>Rules &amp; information</label>
@@ -402,6 +457,11 @@
                 <fullName>Staff &amp; Service</fullName>
                 <default>false</default>
                 <label>Staff &amp; Service</label>
+            </value>
+            <value>
+                <fullName>Strike</fullName>
+                <default>false</default>
+                <label>Strike</label>
             </value>
             <value>
                 <fullName>Tax invoice</fullName>
@@ -470,76 +530,6 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>Changes</controllingFieldValue>
-            <valueName>Add EB in booking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Changes</controllingFieldValue>
-            <valueName>Add infant in booking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Changes</controllingFieldValue>
-            <controllingFieldValue>Name change</controllingFieldValue>
-            <valueName>Name change</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Changes</controllingFieldValue>
-            <controllingFieldValue>Name change</controllingFieldValue>
-            <valueName>Name correction</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Changes</controllingFieldValue>
-            <controllingFieldValue>Corp Account managers (SAS for business)</controllingFieldValue>
-            <controllingFieldValue>Group booking - direct groups</controllingFieldValue>
-            <controllingFieldValue>Schedule changes</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>Travel pass</controllingFieldValue>
-            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
-            <valueName>Rules &amp; information</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight info</controllingFieldValue>
-            <valueName>Arrival information</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight info</controllingFieldValue>
-            <valueName>Connections</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight info</controllingFieldValue>
-            <valueName>Connection time</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight info</controllingFieldValue>
-            <valueName>Departure information</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight info</controllingFieldValue>
-            <valueName>SAS Aircraft</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight info</controllingFieldValue>
-            <valueName>SMS</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight info</controllingFieldValue>
-            <valueName>Transfer / Arrival services</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group booking - direct groups</controllingFieldValue>
-            <controllingFieldValue>Ancillary</controllingFieldValue>
-            <valueName>Upgrade</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Inflight / Onboard</controllingFieldValue>
-            <valueName>General service questions</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Inflight / Onboard</controllingFieldValue>
-            <controllingFieldValue>Ancillary</controllingFieldValue>
-            <valueName>Seating</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Non-SAS produkter</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Car rental</valueName>
@@ -559,8 +549,38 @@
             <valueName>Travel Insurance</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Rebooking</controllingFieldValue>
+            <valueName>Travel agent booking</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>
             <valueName>Refund status</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Requesting documentation</controllingFieldValue>
+            <valueName>Booking confirmation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Requesting documentation</controllingFieldValue>
+            <valueName>Delay certificate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Requesting documentation</controllingFieldValue>
+            <valueName>Receipt</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Requesting documentation</controllingFieldValue>
+            <valueName>Tax invoice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retroregistration</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Retroregistration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rule &amp; Information</controllingFieldValue>
+            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
+            <valueName>Rebooking of groups</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
@@ -594,6 +614,155 @@
             <controllingFieldValue>SAS Medical</controllingFieldValue>
             <controllingFieldValue>Special service requests</controllingFieldValue>
             <valueName>Wheelchair</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Schedule changes</controllingFieldValue>
+            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
+            <controllingFieldValue>Travel pass</controllingFieldValue>
+            <controllingFieldValue>Changes</controllingFieldValue>
+            <controllingFieldValue>Corp Account managers (SAS for business)</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Group booking - direct groups</controllingFieldValue>
+            <valueName>Rules &amp; information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Baggage</controllingFieldValue>
+            <valueName>Allowance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Baggage</controllingFieldValue>
+            <valueName>Content and Dangerous goods</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special service requests</controllingFieldValue>
+            <valueName>Bike</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special service requests</controllingFieldValue>
+            <valueName>Golfbag</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special service requests</controllingFieldValue>
+            <valueName>Pet</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special service requests</controllingFieldValue>
+            <valueName>Ski / Snowboard</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special service requests</controllingFieldValue>
+            <valueName>Unaccompanied minor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special service requests</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
+            <valueName>Make cancellation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel pass</controllingFieldValue>
+            <valueName>Flight disruption</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Changes</controllingFieldValue>
+            <valueName>Add EB in booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Changes</controllingFieldValue>
+            <valueName>Add infant in booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Changes</controllingFieldValue>
+            <controllingFieldValue>Name change</controllingFieldValue>
+            <valueName>Name change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Changes</controllingFieldValue>
+            <controllingFieldValue>Name change</controllingFieldValue>
+            <valueName>Name correction</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Claims</controllingFieldValue>
+            <valueName>Create case</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Denied boarding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Downgrading</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Flight cancellations</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Flight delays</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Missed connecting flight</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Strike</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Availability</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Campaign booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Price inquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Route inquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
+            <valueName>Damaged baggage status</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
+            <valueName>Delayed baggage status</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
+            <valueName>Report of damaged baggage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
+            <valueName>Report of delayed baggage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital support</controllingFieldValue>
+            <controllingFieldValue>Airport Services</controllingFieldValue>
+            <valueName>Check-in</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital support</controllingFieldValue>
+            <valueName>Error on app</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital support</controllingFieldValue>
+            <valueName>Error on web</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital support</controllingFieldValue>
+            <valueName>User guidance - App</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital support</controllingFieldValue>
+            <valueName>User guidance - web</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
@@ -661,65 +830,37 @@
             <valueName>Reset of pin</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>Retroregistration</controllingFieldValue>
-            <valueName>Retroregistration</valueName>
+            <controllingFieldValue>Flight info</controllingFieldValue>
+            <valueName>Arrival information</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Rule &amp; Information</controllingFieldValue>
-            <valueName>Rebooking of groups</valueName>
+            <controllingFieldValue>Flight info</controllingFieldValue>
+            <valueName>Connections</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Name change</controllingFieldValue>
-            <valueName>On corporate account</valueName>
+            <controllingFieldValue>Flight info</controllingFieldValue>
+            <valueName>Connection time</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Rebooking</controllingFieldValue>
-            <valueName>Travel agent booking</valueName>
+            <controllingFieldValue>Flight info</controllingFieldValue>
+            <valueName>Departure information</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Requesting documentation</controllingFieldValue>
-            <valueName>Booking confirmation</valueName>
+            <controllingFieldValue>Flight info</controllingFieldValue>
+            <valueName>SAS Aircraft</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Requesting documentation</controllingFieldValue>
-            <valueName>Delay certificate</valueName>
+            <controllingFieldValue>Flight info</controllingFieldValue>
+            <valueName>SMS</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Requesting documentation</controllingFieldValue>
-            <valueName>Receipt</valueName>
+            <controllingFieldValue>Flight info</controllingFieldValue>
+            <valueName>Transfer / Arrival services</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Requesting documentation</controllingFieldValue>
-            <valueName>Tax invoice</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special service requests</controllingFieldValue>
-            <valueName>Bike</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special service requests</controllingFieldValue>
-            <valueName>Golfbag</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special service requests</controllingFieldValue>
-            <valueName>Pet</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special service requests</controllingFieldValue>
-            <valueName>Ski / Snowboard</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special service requests</controllingFieldValue>
-            <valueName>Unaccompanied minor</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special service requests</controllingFieldValue>
-            <valueName>Other</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel pass</controllingFieldValue>
-            <valueName>Flight disruption</valueName>
+            <controllingFieldValue>Group booking - direct groups</controllingFieldValue>
+            <controllingFieldValue>Ancillary</controllingFieldValue>
+            <valueName>Upgrade</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Airport Services</controllingFieldValue>
@@ -727,15 +868,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Airport Services</controllingFieldValue>
-            <controllingFieldValue>Digital support</controllingFieldValue>
-            <valueName>Check-in</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Airport Services</controllingFieldValue>
             <valueName>Document control (ESTA / VISA / DOCS / PASSPORT)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Airport Services</controllingFieldValue>
+            <controllingFieldValue>Ancillary</controllingFieldValue>
             <valueName>Fast Track</valueName>
         </valueSettings>
         <valueSettings>
@@ -783,42 +920,6 @@
             <valueName>Waiting time</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
-            <valueName>Make cancellation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
-            <valueName>Damaged baggage status</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
-            <valueName>Delayed baggage status</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
-            <valueName>Report of damaged baggage</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
-            <valueName>Report of delayed baggage</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Digital support</controllingFieldValue>
-            <valueName>Error on app</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Digital support</controllingFieldValue>
-            <valueName>Error on web</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Digital support</controllingFieldValue>
-            <valueName>User guidance - App</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Digital support</controllingFieldValue>
-            <valueName>User guidance - web</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Ancillary</controllingFieldValue>
             <valueName>Baggage</valueName>
         </valueSettings>
@@ -843,12 +944,17 @@
             <valueName>Pre seating</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Baggage</controllingFieldValue>
-            <valueName>Allowance</valueName>
+            <controllingFieldValue>Ancillary</controllingFieldValue>
+            <controllingFieldValue>Inflight / Onboard</controllingFieldValue>
+            <valueName>Seating</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Baggage</controllingFieldValue>
-            <valueName>Content and Dangerous goods</valueName>
+            <controllingFieldValue>Inflight / Onboard</controllingFieldValue>
+            <valueName>General service questions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Name change</controllingFieldValue>
+            <valueName>On corporate account</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
