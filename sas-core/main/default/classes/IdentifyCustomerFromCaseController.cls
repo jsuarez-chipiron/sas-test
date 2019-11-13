@@ -3,7 +3,7 @@ public with sharing class IdentifyCustomerFromCaseController {
 
     @AuraEnabled
     public static Account findCustomer(String searchField, String searchValue){
-        String query = 'SELECT ExternalId, EBNumber__c, FirstName__c, LastName__c FROM FrequentFlyer__x WHERE ' + searchField + ' = \'' + searchValue + '\'';
+        String query = 'SELECT ExternalId, EBNumber__c, FirstName__c, LastName__c, TPAccountNumber__c FROM FrequentFlyer__x WHERE ' + searchField + ' = \'' + searchValue + '\'';
         System.debug('Query: ' + query);
         List<FrequentFlyer__x> externalData = Database.query(query);
         if(!externalData.isEmpty()){
