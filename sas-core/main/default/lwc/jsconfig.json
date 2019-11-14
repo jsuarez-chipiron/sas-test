@@ -2,7 +2,23 @@
     "compilerOptions": {
         "experimentalDecorators": true,
         "baseUrl": ".",
-        "paths": {}
+        "paths": {
+            "c/errorPanel": [
+                "errorPanel/errorPanel.js"
+            ],
+            "c/identifyCustomerFromCase": [
+                "identifyCustomerFromCase/identifyCustomerFromCase.js"
+            ],
+            "c/ldsUtils": [
+                "ldsUtils/ldsUtils.js"
+            ],
+            "c/recordEditFormStaticContact": [
+                "recordEditFormStaticContact/recordEditFormStaticContact.js"
+            ],
+            "c/wireGetRecordStaticContact": [
+                "wireGetRecordStaticContact/wireGetRecordStaticContact.js"
+            ]
+        }
     },
     "include": [
         "**/*",

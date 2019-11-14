@@ -37,6 +37,7 @@ public with sharing class C_Log {
         if(http!=null)http.setRecord(l);
         l.Timestamp__c = tsNow;
         if(TS!=null)l.Duration__c = tsNow-TS;
+        l.Transaction__c = C_Util.getUUID();
         insert l;
     }
     /**

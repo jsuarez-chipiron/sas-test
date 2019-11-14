@@ -32,6 +32,12 @@
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
+        <fullName>Claims</fullName>
+        <default>false</default>
+        <label>Claims</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
         <fullName>Corp Account managers (SAS for business)</fullName>
         <default>false</default>
         <label>Corp Account managers (SAS for business)</label>
@@ -62,6 +68,12 @@
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
+        <fullName>Flight disruptions</fullName>
+        <default>false</default>
+        <label>Flight disruptions</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
         <fullName>Flight info</fullName>
         <default>false</default>
         <label>Flight info</label>
@@ -86,9 +98,21 @@
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
+        <fullName>New booking</fullName>
+        <default>false</default>
+        <label>New booking</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
         <fullName>Non-SAS produkter</fullName>
         <default>false</default>
         <label>Non-SAS produkter</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Overbooked flights</fullName>
+        <default>false</default>
+        <label>Overbooked flights</label>
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>

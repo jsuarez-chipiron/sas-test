@@ -88,7 +88,7 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
         u.ProfileId = profileId;
         u.Username = email + getEnvironmentSuffix();
         u.UserRoleId = roleId;
-        u.Alias = createAlias(u);
+        u.Alias = u.FirstName.substring(0,1)+(u.LastName.length()>=7 ? u.LastName.substring(0,7) : u.LastName);
         u.CallCenterId = ai.loadCallCenterId(u.CallCenterId);
         
         ai.setUserDetails(u);
@@ -99,41 +99,6 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
 
         return u;
     }
-
-    /**
-        Creates an alias for the provided user
-        @param u The user for which to create the alias
-        @return The alias
-    */
-    private static String createAlias(User u){
-        String alias = u.FirstName.substring(0,1)+(u.LastName.length()>=5 ? u.LastName.substring(0,5) : u.LastName);
-        Boolean checkAliasConflicts = true;
-        if(u.Id!=null){
-            if(u.Alias.startsWith(alias)){
-                alias = u.Alias;
-                checkAliasConflicts = false;
-            }
-        }
-        if(checkAliasConflicts){
-            String aliasTest = alias+'%';
-            User[] uList = [SELECT Id,Alias FROM User WHERE Alias LIKE :aliasTest];
-            Integer maxNum = -1;
-            for(User u2 : uList){
-                String uAlias = u2.Alias;
-                if(uAlias==alias && maxNum==-1)maxNum=0;
-                else if(uAlias.length()>alias.length()){
-                    String numStr = uAlias.substring(alias.length());
-                    if(numStr.isNumeric()){
-                        Integer num = Integer.valueOf(numStr);
-                        if(num>maxNum)maxNum=num;
-                    }
-                }
-            }
-            alias += (maxNum==-1 ? '' : (maxNum+1)+'');
-        }
-        return alias;
-    }
-
 
     /**
         Extracts the roles provided by the AD assertion as an AD info object

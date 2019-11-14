@@ -54,10 +54,13 @@ public with sharing class C_RestUtil {
         Initalizes the REST utils by doing the following
         Sets the timestamp in the logging framework
         Sets the savespoint
+        Sets the transaction UUID if mapped in the X-Transaction header
     */
     public static void init(){
         C_Log.init();
         setSavepoint();
+        String t = RestContext.request.headers.get('X-Transaction');
+        if(!String.isBlank(t))C_Util.setUUID(t);
     }
 
     /**

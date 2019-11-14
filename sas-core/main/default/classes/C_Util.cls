@@ -27,13 +27,23 @@ public with sharing class C_Util {
     }
 
     /**
-        Retireves the UUID generated for this transaction
+        Retrieves the UUID generated for this transaction
         THh UUID is generated upon the first call of the method in the transaction
         @see generateUUID for details on the UUID
         @return The transaction UUID
     */
     public static String getUUID(){
         return uuid!=null ? uuid : (uuid = generateUUID());
+    }
+
+    /**
+        Sets the UUID for the transaction
+        The ability to set the UUID should be used in cases where the UUID
+        is provided by the calling party.
+        @param uuid The UUID to use for the transacton
+    */
+    public static void setUUID(String uuid){
+        C_Util.uuid = uuid;
     }
     
     /**
@@ -56,6 +66,7 @@ public with sharing class C_Util {
                 chars[sh+offset]=45;
                 offset++;
             }
+            //15 = 0xf
             Integer s1 = (i1 >> sh) & 15;
             Integer s2 = (i2 >> sh) & 15;
             Integer s3 = (i3 >> sh) & 15;
@@ -65,6 +76,7 @@ public with sharing class C_Util {
             //Setting variant
             if(i==4)s1 = 8 | (s1 & 3);
             Integer idx = sh+offset;
+            //Unicode char 0=48, a=97
             chars[idx] = s1 + (s1 < 10 ? 48 : 87);
             chars[idx+1] = s2 + (s2 < 10 ? 48 : 87);
             chars[idx+2] = s3 + (s3 < 10 ? 48 : 87);
