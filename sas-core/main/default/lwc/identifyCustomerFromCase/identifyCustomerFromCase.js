@@ -43,7 +43,7 @@ export default class App extends LightningElement {
         return this.wiredCase.data.fields.EBNumber__c.value;
     }*/
 
-    //List of options available to search for. Value should correspons to field on Frequent_Flyer__x. 
+    //List of options available to search for. Value should corresponds to field on Frequent_Flyer__x.
     get searchOptions() {
         return [
             { label: "EuroBonus", value: "EBNumber__c" },
@@ -51,6 +51,20 @@ export default class App extends LightningElement {
             { label: "Customer Id", value: "ExternalId" },
             { label: "Travel Pass", value: "TPAccountNumber__c" }
         ];
+    }
+
+    /**
+     * Event handler for when a user presses the enter key in the search field
+     * @param {*} event 
+     */
+    handlePressEnterKey(event){
+        let enterKeyCode = 13;
+        if(event.keyCode === enterKeyCode){
+            if (!this.validateSearchInput()) {
+                this.noSearchResult = false;
+                this.searchForCustomer();
+            }
+        }
     }
 
     /**
