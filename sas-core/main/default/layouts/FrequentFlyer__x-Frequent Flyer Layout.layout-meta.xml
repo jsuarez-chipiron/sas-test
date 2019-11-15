@@ -52,19 +52,19 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ConcentSMS__c</field>
+                <field>ConsentSMS__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ConcentEmail__c</field>
+                <field>ConsentEmail__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ConcentTelemarketing__c</field>
+                <field>ConsentTelemarketing__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ConcentEB__c</field>
+                <field>ConsentEB__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

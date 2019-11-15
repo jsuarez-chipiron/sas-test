@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ConcentEmail__c</fullName>
+    <fullName>ConsentEmail__c</fullName>
     <defaultValue>false</defaultValue>
-    <description>Indicates that customer has given concent to receive Email</description>
-    <externalDeveloperName>concentEmail</externalDeveloperName>
+    <description>Indicates that customer has given consent to receive Email</description>
+    <externalDeveloperName>consentEmail</externalDeveloperName>
     <externalId>false</externalId>
-    <inlineHelpText>Indicates that customer has given concent to receive Email</inlineHelpText>
+    <inlineHelpText>Indicates that customer has given consent to receive Email</inlineHelpText>
     <isFilteringDisabled>true</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>true</isSortingDisabled>
-    <label>Concent Email</label>
+    <label>Consent Email</label>
     <type>Checkbox</type>
 </CustomField>

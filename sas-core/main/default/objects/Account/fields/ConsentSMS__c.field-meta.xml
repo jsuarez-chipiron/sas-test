@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ConcentEuroBonus__c</fullName>
+    <fullName>ConsentSMS__c</fullName>
     <defaultValue>false</defaultValue>
-    <description>Indicates that customer has given concent to EuroBonus</description>
+    <description>Indicates that customer has given consent to receive SMS</description>
     <externalId>false</externalId>
-    <label>Concent EuroBonus</label>
+    <label>Consent SMS</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>
