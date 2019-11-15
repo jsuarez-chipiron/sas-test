@@ -126,22 +126,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.ConcentEmail__c</field>
+        <field>Account.ConsentEmail__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.ConcentEuroBonus__c</field>
+        <field>Account.ConsentEuroBonus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.ConcentSMS__c</field>
+        <field>Account.ConsentSMS__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.ConcentTelemarketing__c</field>
+        <field>Account.ConsentTelemarketing__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -192,7 +192,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.EBLevel__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -246,22 +246,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>FrequentFlyer__x.ConcentEB__c</field>
+        <field>FrequentFlyer__x.ConsentEB__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>FrequentFlyer__x.ConcentEmail__c</field>
+        <field>FrequentFlyer__x.ConsentEmail__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>FrequentFlyer__x.ConcentSMS__c</field>
+        <field>FrequentFlyer__x.ConsentSMS__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>FrequentFlyer__x.ConcentTelemarketing__c</field>
+        <field>FrequentFlyer__x.ConsentTelemarketing__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
