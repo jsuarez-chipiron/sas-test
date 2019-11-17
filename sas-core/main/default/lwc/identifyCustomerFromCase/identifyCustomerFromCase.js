@@ -59,11 +59,9 @@ export default class App extends LightningElement {
      */
     handlePressEnterKey(event){
         let enterKeyCode = 13;
-        if(event.keyCode === enterKeyCode){
-            if (!this.validateSearchInput()) {
-                this.noSearchResult = false;
-                this.searchForCustomer();
-            }
+        if(event.keyCode === enterKeyCode && !this.validateSearchInput()){
+            this.noSearchResult = false;
+            this.searchForCustomer();
         }
     }
 
@@ -188,7 +186,9 @@ export default class App extends LightningElement {
     searchForCustomer() {
         console.log("Triggered search for customer");
         this.showSpinner = true;
+        this.findCustomerAsync();
 
+        /*
         findCustomer({
             searchField: this.searchOption,
             searchValue: this.searchValue
@@ -200,13 +200,12 @@ export default class App extends LightningElement {
                     this.showSpinner = false;
                     this.noSearchResult = true;
                 } else {
-                    let account = result;
                     const recordInput = {
                         fields: {
                             Id: this.recordId,
-                            AccountId: account.Id,
-                            EBNumber__c: account.EBNumber__c,
-                            TPAccountNumber__c: account.TPAccountNumber__c
+                            AccountId: result.Id,
+                            EBNumber__c: result.EBNumber__c,
+                            TPAccountNumber__c: result.TPAccountNumber__c
                         }
                     };
 
@@ -222,12 +221,43 @@ export default class App extends LightningElement {
             })
             .catch(error => {
                 this.displayError({ error: error });
-            });
+            });  */          
     }
 
     displayError(error) {
         console.log("An error occured: " + JSON.stringify(error));
         this.showSpinner = false;
         this.error = error;
+    }
+
+    
+    async findCustomerAsync(){
+        try{
+            let account = await findCustomer({
+                searchField: this.searchOption,
+                searchValue: this.searchValue
+            });
+            if(account){
+                const recordInput = {
+                    fields: {
+                        Id: this.recordId,
+                        AccountId: account.Id,
+                        EBNumber__c: account.EBNumber__c,
+                        TPAccountNumber__c: account.TPAccountNumber__c
+                    }
+                };
+
+                let result = await updateRecord(recordInput);
+                this.error = undefined;
+                this.customerIdentified = true;
+                this.showSpinner = false;
+            } else{
+                this.showSpinner = false;
+                this.noSearchResult = true;
+            }
+
+        } catch(e){
+            this.displayError({ error: e });
+        }
     }
 }
