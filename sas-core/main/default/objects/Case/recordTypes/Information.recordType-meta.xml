@@ -47,6 +47,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Chat lost</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Check-in</fullName>
             <default>false</default>
         </values>
@@ -64,6 +68,10 @@
         </values>
         <values>
             <fullName>Content and Dangerous goods</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer hangs up</fullName>
             <default>false</default>
         </values>
         <values>
@@ -96,6 +104,10 @@
         </values>
         <values>
             <fullName>Hotel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive customer</fullName>
             <default>false</default>
         </values>
         <values>
@@ -258,6 +270,10 @@
             <fullName>Wheelchair</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Wrong department</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>EBLevel__c</picklist>
@@ -265,20 +281,20 @@
             <fullName>B</fullName>
             <default>false</default>
         </values>
-		<values>
-            <fullName>S</fullName>
+        <values>
+            <fullName>D</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>G</fullName>
             <default>false</default>
         </values>
-		<values>
-            <fullName>D</fullName>
+        <values>
+            <fullName>P</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>P</fullName>
+            <fullName>S</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -344,6 +360,10 @@
         </values>
         <values>
             <fullName>Corp Account managers %28SAS for business%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error</fullName>
             <default>false</default>
         </values>
         <values>

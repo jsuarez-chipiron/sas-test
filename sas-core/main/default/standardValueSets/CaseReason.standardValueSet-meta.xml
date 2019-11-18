@@ -62,6 +62,12 @@
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
+        <fullName>Error</fullName>
+        <default>false</default>
+        <label>Error</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
         <fullName>EuroBonus</fullName>
         <default>false</default>
         <label>EuroBonus</label>

@@ -75,6 +75,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Chat lost</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Check-in</fullName>
             <default>false</default>
         </values>
@@ -96,6 +100,10 @@
         </values>
         <values>
             <fullName>Create case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer hangs up</fullName>
             <default>false</default>
         </values>
         <values>
@@ -156,6 +164,10 @@
         </values>
         <values>
             <fullName>Hotel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive customer</fullName>
             <default>false</default>
         </values>
         <values>
@@ -370,6 +382,10 @@
             <fullName>Wheelchair</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Wrong department</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>EBLevel__c</picklist>
@@ -464,6 +480,10 @@
         </values>
         <values>
             <fullName>Delayed%2Fdamaged luggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error</fullName>
             <default>false</default>
         </values>
         <values>

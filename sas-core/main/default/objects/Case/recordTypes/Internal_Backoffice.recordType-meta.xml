@@ -7,7 +7,23 @@
     <picklistValues>
         <picklist>CaseSubReason__c</picklist>
         <values>
+            <fullName>Chat lost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer hangs up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong department</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -74,6 +90,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Reason</picklist>
+        <values>
+            <fullName>Error</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Other</fullName>
             <default>false</default>
