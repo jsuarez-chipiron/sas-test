@@ -361,6 +361,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Knowledge__kav.Body__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Knowledge__kav.SubType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Knowledge__kav.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Log__c.Duration__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -458,6 +473,13 @@
         <layout>FrequentFlyer__x-Frequent Flyer Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-SAS SSI Layout</layout>
+        <recordType>Knowledge__kav.SSI</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Log__c-Log Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -516,6 +538,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Support</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Knowledge__kav.SSI</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
