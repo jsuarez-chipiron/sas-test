@@ -89,6 +89,10 @@
                 <behavior>Edit</behavior>
                 <field>EBLevel__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Asked_For_Help__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
