@@ -85,10 +85,6 @@
                 <behavior>Edit</behavior>
                 <field>EBLevel__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Asked_For_Help__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -141,6 +137,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CaseSubReason__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Asked_For_Help__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

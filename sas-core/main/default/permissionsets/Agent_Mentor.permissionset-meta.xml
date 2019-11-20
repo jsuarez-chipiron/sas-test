@@ -7,5 +7,5 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Agent_Mentor</label>
+    <label>Agent Mentor</label>
 </PermissionSet>
