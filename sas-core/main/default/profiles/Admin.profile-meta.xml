@@ -181,7 +181,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Asked_For_Help__c</field>
+        <field>Case.AskedForHelp__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -3,7 +3,7 @@
     <description>Permission set grants users possibility of editing &quot;Asked For Help&quot; field in Case.</description>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Asked_For_Help__c</field>
+        <field>Case.AskedForHelp__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
