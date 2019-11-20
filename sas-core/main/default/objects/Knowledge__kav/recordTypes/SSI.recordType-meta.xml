@@ -4,4 +4,18 @@
     <active>true</active>
     <description>Knowledge article for SSI</description>
     <label>SSI</label>
+    <picklistValues>
+        <picklist>SubType__c</picklist>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>
