@@ -458,9 +458,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-SAS Information Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-SAS Information Layout</layout>
         <recordType>Case.Information</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -531,12 +528,12 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <recordType>Case.Information</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Case.Internal_Backoffice</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
