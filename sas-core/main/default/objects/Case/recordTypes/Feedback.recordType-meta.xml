@@ -413,6 +413,10 @@
     <picklistValues>
         <picklist>Origin</picklist>
         <values>
+            <fullName>Chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email</fullName>
             <default>false</default>
         </values>

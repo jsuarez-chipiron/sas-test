@@ -9,9 +9,9 @@
     <columns>CORE.USERS.ALIAS</columns>
     <filterScope>Mine</filterScope>
     <filters>
-        <field>CASES.STATUS</field>
+        <field>CASES.CLOSED</field>
         <operation>equals</operation>
-        <value>Closed</value>
+        <value>1</value>
     </filters>
     <label>My Closed Cases</label>
 </ListView>
