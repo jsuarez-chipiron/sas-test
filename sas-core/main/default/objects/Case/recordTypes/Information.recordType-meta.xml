@@ -422,24 +422,8 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Error</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Extraordinary</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Information</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sales</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Support</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
 </RecordType>

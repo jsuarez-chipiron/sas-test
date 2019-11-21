@@ -102,23 +102,19 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Error</fullName>
+            <fullName>SASSI Internal</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Extraordinary</fullName>
+            <fullName>SalesInformation</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Information</fullName>
+            <fullName>System</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Sales</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Support</fullName>
+            <fullName>Tariff</fullName>
             <default>false</default>
         </values>
     </picklistValues>
