@@ -41,6 +41,11 @@
                 <default>false</default>
                 <label>Call Center</label>
             </value>
+            <value>
+                <fullName>Permission License</fullName>
+                <default>false</default>
+                <label>Permission License</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

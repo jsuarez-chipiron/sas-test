@@ -21,6 +21,10 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
     */
     private static final String PERMISSION_TYPE_PERMISSION_SET = 'Permission Set';
     /**
+        Permission type API name for type permission license
+    */
+    private static final String PERMISSION_TYPE_PERMISSION_LICENSE = 'Permission License';
+    /**
         Permission type API name for type role
     */
     private static final String PERMISSION_TYPE_ROLE = 'Role';
@@ -142,17 +146,25 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
         */
         String callCenterName;
         /**
-            The permission sets in which to incldue the user
+            The permission sets which to assign to the user
         */
         Set<String> inclPS;
+        /**
+            The permission licenses which to assign to the user
+        */
+        Set<String> inclPL;
         /** 
             The groups in which to include the user
         */
         Set<String> inclGroups;
         /**
-            The permission sets from which to exclude the user
+            The permission sets from which to remove from the user
         */
         Set<String> exclPS;
+        /**
+            The permission licenses from which to remove from the user
+        */
+        Set<String> exclPL;
         /**
             The groups from which to exclude the user
         */
@@ -201,8 +213,10 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
         */
         private void loadUserConfig(){
             inclPS = new Set<String>();
+            inclPL = new Set<String>();
             inclGroups = new Set<String>();
             exclPS = new Set<String>();
+            exclPL = new Set<String>();
             exclGroups = new Set<String>();
             exclCallCenters = new Set<String>();
             userPermissions = new Map<String,Boolean>();
@@ -224,6 +238,9 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
                     else if(adp.PermissionType__c==PERMISSION_TYPE_PERMISSION_SET){
                         inclPS.add(adp.MasterLabel);
                     }
+                    else if(adp.PermissionType__c==PERMISSION_TYPE_PERMISSION_LICENSE){
+                        inclPL.add(adp.MasterLabel);
+                    }
                     else if(adp.PermissionType__c==PERMISSION_TYPE_GROUP){
                         inclGroups.add(adp.MasterLabel);
                     }
@@ -241,6 +258,9 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
                 }
                 else if(adp.PermissionType__c==PERMISSION_TYPE_PERMISSION_SET){
                     if(!inclPS.contains(adp.MasterLabel))exclPS.add(adp.MasterLabel);
+                }
+                else if(adp.PermissionType__c==PERMISSION_TYPE_PERMISSION_LICENSE){
+                    if(!inclPL.contains(adp.MasterLabel))exclPL.add(adp.MasterLabel);
                 }
                 else if(adp.PermissionType__c==PERMISSION_TYPE_GROUP){
                     if(!inclGroups.contains(adp.MasterLabel))exclGroups.add(adp.MasterLabel);
@@ -319,11 +339,16 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
             Set<String> allPS = new Set<String>();
             allPS.addAll(inclPS);
             allPS.addAll(exclPS);
+            Set<String> allPL = new Set<String>();
+            allPL.addAll(inclPL);
+            allPL.addAll(exclPL);
             Set<String> allGroups = new Set<String>();
             allGroups.addAll(inclGroups);
             allGroups.addAll(exclGroups);
             List<PermissionSetAssignment> psaAddList = new List<PermissionSetAssignment>();
             List<PermissionSetAssignment> psaDelList = new List<PermissionSetAssignment>();
+            List<PermissionSetLicenseAssign> plaAddList = new List<PermissionSetLicenseAssign>();
+            List<PermissionSetLicenseAssign> plaDelList = new List<PermissionSetLicenseAssign>();
             List<GroupMember> gmAddList = new List<GroupMember>();
             List<GroupMember> gmDelList = new List<GroupMember>();
 
@@ -342,6 +367,24 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
                 }
                 else if(exclPS.contains(ps.Name)){
                     if(psa!=null)psaDelList.add(psa);
+                }
+            }
+
+            //Get current permission set license assignments
+            PermissionSetLicenseAssign[] plaList = [SELECT Id,AssigneeId,PermissionSetLicenseId FROM PermissionSetLicenseAssign WHERE AssigneeId=:userId];
+            Map<Id,PermissionSetLicenseAssign> plaMap = new Map<Id,PermissionSetLicenseAssign>();
+            for(PermissionSetLicenseAssign pla : plaList){
+                plaMap.put(pla.PermissionSetLicenseId,pla);
+            }
+            //Get all referenced permission sets
+            PermissionSetLicense[] plList = [SELECT Id,DeveloperName FROM PermissionSetLicense WHERE DeveloperName IN :allPL];
+            for(PermissionSetLicense pl : plList){
+                PermissionSetLicenseAssign pla = plaMap.get(pl.Id);
+                if(inclPS.contains(pl.DeveloperName)){
+                    if(pla==null)plaAddList.add(new PermissionSetLicenseAssign(AssigneeId=userId,PermissionSetLicenseId=pl.Id));
+                }
+                else if(exclPS.contains(pl.DeveloperName)){
+                    if(pla!=null)plaDelList.add(pla);
                 }
             }
 
@@ -364,10 +407,12 @@ global class SamlJitHandler implements Auth.SamlJitHandler {
                 }
             }
 
+            insert plaAddList;
             insert psaAddList;
             insert gmAddList;
             delete gmDelList;
             delete psaDelList;
+            delete plaDelList;
         }
     }
 
