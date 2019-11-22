@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ConcentEB__c</fullName>
+    <fullName>ConsentEB__c</fullName>
     <defaultValue>false</defaultValue>
-    <description>Indicates that customer has given concent to EuroBonus</description>
-    <externalDeveloperName>concentEB</externalDeveloperName>
+    <description>Indicates that customer has given consent to EuroBonus</description>
+    <externalDeveloperName>consentEB</externalDeveloperName>
     <externalId>false</externalId>
-    <inlineHelpText>Indicates that customer has given concent to EuroBonus</inlineHelpText>
+    <inlineHelpText>Indicates that customer has given consent to EuroBonus</inlineHelpText>
     <isFilteringDisabled>true</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>true</isSortingDisabled>
-    <label>Concent EuroBonus</label>
+    <label>Consent EuroBonus</label>
     <type>Checkbox</type>
 </CustomField>

@@ -8,7 +8,7 @@
                     required type="button" if:true={showSearchOptions}></lightning-radio-group>
                 <!--Search field of component-->
                 <lightning-input type="text" label="Enter customer's EuroBonus number" value={searchValue}
-                    onchange={handleSearchValueChange} class="search-field">
+                    onchange={handleSearchValueChange} onkeydown={handlePressEnterKey} class="search-field">
                 </lightning-input>
             </div>
             <!--Button to trigger search based on input-->
@@ -39,7 +39,7 @@
     <lightning-card title="Customer Identified" icon-name="action:approval" if:true={customerIdentified}>
         <div slot="actions">
             <lightning-button-icon icon-name="utility:cancel_transfer" title="Change customer connected to case"
-                onclick={handleChangeCustomer}></lightning-button-icon>
+                onclick={handleChangeCustomer} alternative-text="Change customer"></lightning-button-icon>
         </div>
         <div if:true={showSpinner}>
             <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>

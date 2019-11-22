@@ -75,6 +75,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Chat lost</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Check-in</fullName>
             <default>false</default>
         </values>
@@ -96,6 +100,10 @@
         </values>
         <values>
             <fullName>Create case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer hangs up</fullName>
             <default>false</default>
         </values>
         <values>
@@ -156,6 +164,10 @@
         </values>
         <values>
             <fullName>Hotel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive customer</fullName>
             <default>false</default>
         </values>
         <values>
@@ -370,6 +382,10 @@
             <fullName>Wheelchair</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Wrong department</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>EBLevel__c</picklist>
@@ -396,6 +412,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Origin</picklist>
+        <values>
+            <fullName>Chat</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Email</fullName>
             <default>false</default>
@@ -464,6 +484,10 @@
         </values>
         <values>
             <fullName>Delayed%2Fdamaged luggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error</fullName>
             <default>false</default>
         </values>
         <values>
@@ -538,24 +562,8 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Error</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Extraordinary</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Information</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sales</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Support</fullName>
-            <default>false</default>
+            <fullName>Feedback</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
 </RecordType>

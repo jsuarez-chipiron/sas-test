@@ -138,6 +138,10 @@
                 <behavior>Edit</behavior>
                 <field>CaseSubReason__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AskedForHelp__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
