@@ -5,17 +5,73 @@
     <businessProcess>Default</businessProcess>
     <label>Internal/Backoffice</label>
     <picklistValues>
-        <picklist>CaseSubReason__c</picklist>
+        <picklist>CaseReason__c</picklist>
         <values>
-            <fullName>Chat lost</fullName>
+            <fullName>ADM</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Customer hangs up</fullName>
+            <fullName>ARI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Inactive customer</fullName>
+            <fullName>ATC%2FATC Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ancillary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Animals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Availability %2F MCT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Code Share</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eurobonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare Quote</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare Rules</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fares</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Irregularity %2F Schedule change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Minor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OAL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -23,7 +79,94 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Wrong department</fullName>
+            <fullName>Policy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund %2F SRS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reservation issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SSR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Safety report</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax%2FYQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketing</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CaseSubReason__c</picklist>
+        <values>
+            <fullName>AVIH%2FPETC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BULK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bike</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CBBG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ESAN%2FSVAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SPEQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seating</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Upgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wheelchair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XBAG</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -94,10 +237,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>Reason</picklist>
-        <values>
-            <fullName>Error</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Other</fullName>
             <default>false</default>
