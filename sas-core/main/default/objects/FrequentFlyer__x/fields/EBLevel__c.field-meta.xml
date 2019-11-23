@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>EBLevel__c</fullName>
     <description>Current EuruBonus Level of customer</description>
-    <externalDeveloperName>euroBonusLevel</externalDeveloperName>
+    <externalDeveloperName>IncentiveLevel</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>true</isFilteringDisabled>
     <isNameField>false</isNameField>

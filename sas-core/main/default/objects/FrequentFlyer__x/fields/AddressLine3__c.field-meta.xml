@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>AddressLine3__c</fullName>
     <description>Third line of a customers physical address</description>
-    <externalDeveloperName>addressLine3</externalDeveloperName>
+    <externalDeveloperName>AddressLine3</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>true</isFilteringDisabled>
     <isNameField>false</isNameField>
