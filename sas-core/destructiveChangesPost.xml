@@ -24,5 +24,12 @@
         <members>FrequentFlyer__x.ConcentEB__c</members>
         <name>CustomField</name>
     </types>
-	
+
+    <!--2019-11-25 - Anton Norell - Removed classed when refactoring C-Shark integration-->
+    <types>
+        <members>BatchUpdateAccessTokens{</members>
+        <members>APIMGetCustomerRequest</members>
+        <members>CSharkCustomer</members>
+        <name>ApexClass</name>
+    </types>
 </Package>
