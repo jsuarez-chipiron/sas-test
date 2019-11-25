@@ -6,15 +6,35 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
-        <apexClass>APIMGetCustomerRequest</apexClass>
+        <apexClass>APIM_AuthConnector</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>BatchUpdateAccessTokens</apexClass>
+        <apexClass>CSharkIntegrationService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CSharkCustomer</apexClass>
+        <apexClass>CSharkIntegrationService_Test</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CSharkResponseParser</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>C_LocalAuthConnector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>C_LocalAuthController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>C_LocalAuthInterface</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>C_LocalAuthProvider</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -109,6 +129,10 @@
     <customMetadataTypeAccesses>
         <enabled>false</enabled>
         <name>Feature_Switch__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>false</enabled>
+        <name>LocalAuthProvider__mdt</name>
     </customMetadataTypeAccesses>
     <externalDataSourceAccesses>
         <enabled>false</enabled>
@@ -540,6 +564,10 @@
         <object>Log__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <pageAccesses>
+        <apexPage>C_LocalAuth</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Feedback</recordType>

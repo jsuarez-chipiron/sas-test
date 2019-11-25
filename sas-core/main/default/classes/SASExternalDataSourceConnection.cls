@@ -28,6 +28,7 @@ global with sharing class SASExternalDataSourceConnection extends DataSource.Con
         System.debug('Filter: ' + c.tableSelection.filter);
         System.debug('Order: ' + c.tableSelection.order);
 
+
         Boolean mockData = false;
 
         DataSource.TableResult returnTable;
@@ -43,14 +44,15 @@ global with sharing class SASExternalDataSourceConnection extends DataSource.Con
             //Get filters for query
             DataSource.Filter filter = c.tableSelection.filter;
             //Throw exception if filter is missing (must supply filter fot API)
-            if(c.tableSelection.filter == null){
-                throw new APIMGetCustomerRequest.APIMException('The query must be filtered by one of the following values: EBNumber__c, ExternalId');
+            if(c.tableSelection.filter == null && !mockData){
+                throw new CSharkIntegrationService.CSharkIntegrationException('The query must be filtered by one of the following values: EBNumber__c, ExternalId');
             }
             else{
                 //Check that only one parameter is included in filter
                 if(filter.columnName != null){
                     //Throw exception if filter contains unsupporter operators
-                    if(filter.type != DataSource.FilterType.EQUALS) throw new APIMGetCustomerRequest.APIMException('Only filter of typ EQUALS (=) is supported for this object');
+                    if(filter.type != DataSource.FilterType.EQUALS)
+                        throw new CSharkIntegrationService.CSharkIntegrationException('Only filter of typ EQUALS (=) is supported for this object');
 
                     //Translate fields in filter to fields used as keys in API
                     String searchEngagementType;
@@ -67,25 +69,11 @@ global with sharing class SASExternalDataSourceConnection extends DataSource.Con
                     }
                     System.debug('Mock data? ' + mockData);
                     if(!mockData){
-                        CSharkCustomer customer = APIMGetCustomerRequest.getCustomer(searchEngagementType, (String) filter.columnValue);
-                        List<Map<String,Object>> rows = new List<Map<String,Object>>();
-                        //Check is request returned a customer. If not, an empty table is returned. 
-                        if(customer != null){
-                            CSharkCustomer.CustomerGetResult customerData = customer.customerGetResponse.customerGetResult;
-                            Map<String,Object> row = new Map<String,Object>();
-                            row.put('ExternalId', customerData.identifier);
-                            row.put('DisplayUrl', 'url123');
-                            row.put('firstName', customerData.firstName);
-                            row.put('lastName', customerData.lastName);
-                            row.put('fullName', customerData.firstName + customerData.lastName);
-                            //row.put('email', customer.getEngagement('DefaultProfileEngagement').profile.VirtualAddresses[0].virtualAddressLine);
-                            row.put('birthDate', customerData.birthDate);
-                            row.put('euroBonusNumber', customerData.euroBonusNumber);
-                            row.put('mobile', '+46700802145');
-                            row.put('phone', '');
-                            rows.add(row);
-                            returnTable = Datasource.TableResult.get(c.tableSelection, rows);
-                        }
+                        List<Map<String,Object>> rows = CSharkIntegrationService.getCustomer(
+                                CSharkIntegrationService.SearchType.EuroBonus,
+                                (String) filter.columnValue).dataRows;
+                        System.debug('Returntable = ' + rows);
+                        returnTable = Datasource.TableResult.get(c.tableSelection, rows);
                     } 
                     else{
                         System.debug('Else for returning mock');
@@ -95,12 +83,98 @@ global with sharing class SASExternalDataSourceConnection extends DataSource.Con
 
                 }
                 else{
-                    throw new APIMGetCustomerRequest.APIMException('Please provide only one value to filter by. Filter: ' + filter);
+                    throw new CSharkIntegrationService.CSharkIntegrationException('Please provide only one value to filter by. Filter: ' + filter);
                 }
             }
+        } else if(c.tableSelection.tableSelected == 'PrivacySettings'){
+            returnTable = Datasource.TableResult.get(c.tableSelection, getMockPrivacySettings());
+
         }
             System.debug('Return table: ' + returnTable);
             return returnTable;
+    }
+
+    private static String evaluateFilter(){
+        return '';
+    }
+
+    private List<Map<String, Object>> getMockPrivacySettings(){
+         List<Map<String,Object>> rows = new List<Map<String,Object>>();
+          
+            Map<String,Object> row1 = new Map<String,Object>();
+            row1.put('ExternalId', '10787700_0');
+            row1.put('DisplayUrl', '123');
+            row1.put('Account', '10787700');
+            row1.put('ActivationDate', Datetime.now().addYears(-1));
+            row1.put('Active', false);
+            row1.put('FrequentFlyer', '10787700');
+            row1.put('PrivacyArea', 'Profiling');
+            row1.put('Type', null);
+            row1.put('Version', null);
+            rows.add(row1);
+
+            Map<String,Object> row2 = new Map<String,Object>();
+            row2.put('ExternalId', '10787700_1');
+            row2.put('DisplayUrl', '123');
+            row2.put('Account', '10787700');
+            row2.put('ActivationDate', null);
+            row2.put('Active', true);
+            row2.put('FrequentFlyer', '10787700');
+            row2.put('PrivacyArea', 'DirectMarketing');
+            row2.put('Type', 'EMail');
+            row2.put('Version', null);
+            rows.add(row2);
+
+            Map<String,Object> row3 = new Map<String,Object>();
+            row3.put('ExternalId', '10787700_2');
+            row3.put('DisplayUrl', '123');
+            row3.put('Account', '10787700');
+            row3.put('ActivationDate', Datetime.now().addMonths(-8));
+            row3.put('Active', true);
+            row3.put('FrequentFlyer', '10787700');
+            row3.put('PrivacyArea', 'DirectMarketing');
+            row3.put('Type', 'SMS');
+            row3.put('Version', 15);
+            rows.add(row3);
+
+            Map<String,Object> row4 = new Map<String,Object>();
+            row4.put('ExternalId', '10787700_3');
+            row4.put('DisplayUrl', '123');
+            row4.put('Account', '10787700');
+            row4.put('ActivationDate', Datetime.now());
+            row4.put('Active', true);
+            row4.put('FrequentFlyer', '10787700');
+            row4.put('PrivacyArea', 'DirectMarketing');
+            row4.put('Type', 'Telemarketing');
+            row4.put('Version', null);
+            rows.add(row4);
+
+            Map<String,Object> row5 = new Map<String,Object>();
+            row5.put('ExternalId', '10787700_4');
+            row5.put('DisplayUrl', '123');
+            row5.put('Account', '10787700');
+            row5.put('ActivationDate', Datetime.now());
+            row5.put('Active', true);
+            row5.put('FrequentFlyer', '10787700');
+            row5.put('PrivacyArea', 'TOC');
+            row5.put('Type', 'EB0');
+            row5.put('Version', 2);
+            rows.add(row5);
+
+            Map<String,Object> row6 = new Map<String,Object>();
+            row6.put('ExternalId', '10787700_5');
+            row6.put('DisplayUrl', '123');
+            row6.put('Account', '10787700');
+            row6.put('ActivationDate', Datetime.now());
+            row6.put('Active', true);
+            row6.put('FrequentFlyer', '10787700');
+            row6.put('PrivacyArea', 'TOC');
+            row6.put('Type', 'EB');
+            row6.put('Version', 15);
+            rows.add(row6);
+
+        System.debug('Returning rows: ' + rows);
+        return rows;
     }
     
 
@@ -128,10 +202,10 @@ global with sharing class SASExternalDataSourceConnection extends DataSource.Con
             row.put('countryCode', '');
             row.put('countyState', '');
             row.put('zipCode', '');
-            row.put('concentEB', 'true');
-            row.put('concentEmail', 'false');
-            row.put('concentSMS', 'false');
-            row.put('concentTelemarketing', 'false');
+            row.put('consentEB', 'true');
+            row.put('consentEmail', 'false');
+            row.put('consentSMS', 'false');
+            row.put('consentTelemarketing', 'false');
             row.put('mbrshipLvlStatusEndPeriod', '');
             row.put('mbrshipLvlStatusStartPeriod', '');
             row.put('basicPointsRequiredForHigerLevel', '');
