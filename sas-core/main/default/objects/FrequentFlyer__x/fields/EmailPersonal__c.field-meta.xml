@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>EmailPersonal__c</fullName>
     <description>Personal email to customer</description>
-    <externalDeveloperName>VirtualAddressLineEmail</externalDeveloperName>
+    <externalDeveloperName>HomeE-mail</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>

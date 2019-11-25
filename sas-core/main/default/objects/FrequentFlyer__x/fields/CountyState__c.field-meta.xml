@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CountyState__c</fullName>
     <description>County or state that customer lives in</description>
-    <externalDeveloperName>CountyState</externalDeveloperName>
+    <externalDeveloperName>HomeCountyState</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>true</isFilteringDisabled>
     <isNameField>false</isNameField>
