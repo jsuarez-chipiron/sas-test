@@ -32,4 +32,12 @@
         <members>CSharkCustomer</members>
         <name>ApexClass</name>
     </types>
+    <types>
+        <members>AccessToken__c{</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>AccessToken__c-Access Token Layout{</members>
+        <name>Layout</name>
+    </types>
 </Package>
