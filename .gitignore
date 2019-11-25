@@ -29,3 +29,7 @@ Thumbs.db
 ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
+
+#IntelliJ fileds
+.idea/
+SAS.iml
