@@ -47,12 +47,4 @@
         <members>noMentionsFeedComment</members>
         <name>ApexTrigger</name>
     </types>
-    <types>
-        <members>Owner in All Internal Users</members>
-        <name>SharingCriteriaRule</name>
-    </types>
-    <types>
-        <members>All Internal Users</members>
-        <name>SharingOwnerRule</name>
-    </types>
 </Package>
