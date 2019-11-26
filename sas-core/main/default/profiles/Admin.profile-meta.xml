@@ -516,6 +516,9 @@
         <layout>LiveChatTranscript-Chat Transcript Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>LocalAuthProvider__mdt-Local Auth Provider Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Log__c-Log Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
