@@ -25,19 +25,26 @@
         <name>CustomField</name>
     </types>
 
-    <!--2019-11-25 - Anton Norell - Removed classed when refactoring C-Shark integration-->
+    <!--2019-11-25 - Anton Norell - Removed classes when refactoring C-Shark integration-->
     <types>
-        <members>BatchUpdateAccessTokens{</members>
+        <members>BatchUpdateAccessTokens</members>
         <members>APIMGetCustomerRequest</members>
         <members>CSharkCustomer</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>AccessToken__c{</members>
+        <members>AccessToken__c</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>AccessToken__c-Access Token Layout{</members>
+        <members>AccessToken__c-Access Token Layout</members>
         <name>Layout</name>
+    </types>
+
+    <!--2019-11-26 - Philip Ossler - Removed old triggers after renaming-->
+    <types>
+        <members>FeedItemTrigger</members>
+        <members>FeedCommentTrigger</members>
+        <name>ApexTrigger</name>
     </types>
 </Package>
