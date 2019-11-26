@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>STOPQ_Cases</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>STOPQ Cases</label>
+        <sharedTo>
+            <group>SASSTOPQEscalations</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>SASSTOPQEscalations</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Sutherland_Cases</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Sutherland Cases</label>
+        <sharedTo>
+            <group>Sutherland</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Sutherland</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Sykes_Cases</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Sykes Cases</label>
+        <sharedTo>
+            <group>Sykes</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Sykes</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>
