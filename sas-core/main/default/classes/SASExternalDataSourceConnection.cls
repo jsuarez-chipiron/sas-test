@@ -86,9 +86,6 @@ global with sharing class SASExternalDataSourceConnection extends DataSource.Con
                     throw new CSharkIntegrationService.CSharkIntegrationException('Please provide only one value to filter by. Filter: ' + filter);
                 }
             }
-        } else if(c.tableSelection.tableSelected == 'PrivacySettings'){
-            returnTable = Datasource.TableResult.get(c.tableSelection, getMockPrivacySettings());
-
         }
             System.debug('Return table: ' + returnTable);
             return returnTable;
@@ -98,124 +95,19 @@ global with sharing class SASExternalDataSourceConnection extends DataSource.Con
         return '';
     }
 
-    private List<Map<String, Object>> getMockPrivacySettings(){
-         List<Map<String,Object>> rows = new List<Map<String,Object>>();
-          
-            Map<String,Object> row1 = new Map<String,Object>();
-            row1.put('ExternalId', '10787700_0');
-            row1.put('DisplayUrl', '123');
-            row1.put('Account', '10787700');
-            row1.put('ActivationDate', Datetime.now().addYears(-1));
-            row1.put('Active', false);
-            row1.put('FrequentFlyer', '10787700');
-            row1.put('PrivacyArea', 'Profiling');
-            row1.put('Type', null);
-            row1.put('Version', null);
-            rows.add(row1);
-
-            Map<String,Object> row2 = new Map<String,Object>();
-            row2.put('ExternalId', '10787700_1');
-            row2.put('DisplayUrl', '123');
-            row2.put('Account', '10787700');
-            row2.put('ActivationDate', null);
-            row2.put('Active', true);
-            row2.put('FrequentFlyer', '10787700');
-            row2.put('PrivacyArea', 'DirectMarketing');
-            row2.put('Type', 'EMail');
-            row2.put('Version', null);
-            rows.add(row2);
-
-            Map<String,Object> row3 = new Map<String,Object>();
-            row3.put('ExternalId', '10787700_2');
-            row3.put('DisplayUrl', '123');
-            row3.put('Account', '10787700');
-            row3.put('ActivationDate', Datetime.now().addMonths(-8));
-            row3.put('Active', true);
-            row3.put('FrequentFlyer', '10787700');
-            row3.put('PrivacyArea', 'DirectMarketing');
-            row3.put('Type', 'SMS');
-            row3.put('Version', 15);
-            rows.add(row3);
-
-            Map<String,Object> row4 = new Map<String,Object>();
-            row4.put('ExternalId', '10787700_3');
-            row4.put('DisplayUrl', '123');
-            row4.put('Account', '10787700');
-            row4.put('ActivationDate', Datetime.now());
-            row4.put('Active', true);
-            row4.put('FrequentFlyer', '10787700');
-            row4.put('PrivacyArea', 'DirectMarketing');
-            row4.put('Type', 'Telemarketing');
-            row4.put('Version', null);
-            rows.add(row4);
-
-            Map<String,Object> row5 = new Map<String,Object>();
-            row5.put('ExternalId', '10787700_4');
-            row5.put('DisplayUrl', '123');
-            row5.put('Account', '10787700');
-            row5.put('ActivationDate', Datetime.now());
-            row5.put('Active', true);
-            row5.put('FrequentFlyer', '10787700');
-            row5.put('PrivacyArea', 'TOC');
-            row5.put('Type', 'EB0');
-            row5.put('Version', 2);
-            rows.add(row5);
-
-            Map<String,Object> row6 = new Map<String,Object>();
-            row6.put('ExternalId', '10787700_5');
-            row6.put('DisplayUrl', '123');
-            row6.put('Account', '10787700');
-            row6.put('ActivationDate', Datetime.now());
-            row6.put('Active', true);
-            row6.put('FrequentFlyer', '10787700');
-            row6.put('PrivacyArea', 'TOC');
-            row6.put('Type', 'EB');
-            row6.put('Version', 15);
-            rows.add(row6);
-
-        System.debug('Returning rows: ' + rows);
-        return rows;
-    }
-    
-
-    // Helper method to get record values from the external system for the Sample table.
+    /**
+     * Helper method used to generate mock data based on a preconfigured response with a certain search criteria
+     * @param searchValue EuroBonus number to search for. Only one value will return a result.
+     * @return If searchValue matches, a customer data row is returned. If not, the return is empty.
+     */
     private List<Map<String, Object>> getMockRows (String searchValue) {
-        List<Map<String,Object>> rows = new List<Map<String,Object>>();
-        
-        if(searchValue == '544108996'){    
-            Map<String,Object> row = new Map<String,Object>();
-            row.put('ExternalId', '10787700');
-            row.put('DisplayUrl', '10787700');
-            row.put('firstName', 'December');
-            row.put('lastName', 'Lady');
-            row.put('fullName', 'December Lady');
-            row.put('emailPersonal', 'cvvdfffree@der.dd');
-            row.put('birthDate', '1988-12-12T00:00:00');
-            row.put('euroBonusNumber', '544108996');
-            row.put('euroBonusLevel', 'G');
-            row.put('mobile', '+4676565432');
-            row.put('phone', '');
-            row.put('addressLine1', '');
-            row.put('addressLine2', '');
-            row.put('addressLine3', '');
-            row.put('city', '');
-            row.put('countryCode', '');
-            row.put('countyState', '');
-            row.put('zipCode', '');
-            row.put('consentEB', 'true');
-            row.put('consentEmail', 'false');
-            row.put('consentSMS', 'false');
-            row.put('consentTelemarketing', 'false');
-            row.put('mbrshipLvlStatusEndPeriod', '');
-            row.put('mbrshipLvlStatusStartPeriod', '');
-            row.put('basicPointsRequiredForHigerLevel', '');
-            row.put('travelPassAccountNumber', '');
-            row.put('subscriptionID', '544108996');
-            row.put('gender', 'F');
-            rows.add(row);
+        List<Map<String, Object>> dataRows = new List<Map<String, Object>>();
+        if(searchValue == '544108996'){
+            StaticResource mockResponse = [SELECT Id, Body FROM StaticResource WHERE Name = 'FrequentFlyerMock_544108996'];
+            CSharkResponseParser parser = new CSharkResponseParser(mockResponse.Body.toString());
+            parser.parseCustomerGetResponse();
+            dataRows = parser.dataRows;
         }
-
-        System.debug('Returning rows: ' + rows);
-        return rows;
+        return dataRows;
     }
 }

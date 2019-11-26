@@ -1,6 +1,4 @@
 public with sharing class IdentifyCustomerFromCaseController {
-
-
     @AuraEnabled
     public static Account findCustomer(String searchField, String searchValue){
         String query = 'SELECT ExternalId, EBNumber__c, FirstName__c, LastName__c, TPAccountNumber__c FROM FrequentFlyer__x WHERE ' + searchField + ' = \'' + searchValue + '\'';
@@ -23,7 +21,7 @@ public with sharing class IdentifyCustomerFromCaseController {
         return null;
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled(Cacheable=true)
     public static Case getCaseData(String caseId){
         return [SELECT Id, AccountId, EBNumber__c, TPAccountNumber__c, Account.FrequentFlyer__c, Account.LastRetrievedFromSource__c FROM Case WHERE Id = :caseId];
     }

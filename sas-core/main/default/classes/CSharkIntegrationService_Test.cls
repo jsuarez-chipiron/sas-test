@@ -6,7 +6,6 @@
  */
 @IsTest
 public with sharing class CSharkIntegrationService_Test {
-
     @IsTest
     static void shouldReturnEuroBonusCustomer(){
         StaticResourceCalloutMock mock = new StaticResourceCalloutMock();
