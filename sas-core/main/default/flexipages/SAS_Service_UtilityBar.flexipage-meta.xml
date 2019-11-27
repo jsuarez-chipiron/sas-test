@@ -8,6 +8,9 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <componentInstances>
+            <componentName>Chat_ConsoleAutomation</componentName>
+        </componentInstances>
         <name>backgroundComponents</name>
         <type>Background</type>
     </flexiPageRegions>
