@@ -107,18 +107,27 @@ public with sharing class CSharkResponseParser {
      * @return Customer row with values from engagements added
      */
     private Map<String, Object> parseEngagementList(Dom.XmlNode engagements, Map<String, Object> customerRow) {
+
         for (Dom.XmlNode engagement : engagements.getChildElements()) {
             String engagementType = engagement.getAttributeValue('type', XMLNS_I);
 
             if (engagementType == 'EuroBonusEngagement') {
-                for (Dom.XmlNode ebNode : engagement.getChildElements()) {
-                    customerRow.put(ebNode.getName(), ebNode.getText());
+                for (Dom.XmlNode ebElement : engagement.getChildElements()) {
+                    customerRow.put(ebElement.getName(), ebElement.getText());
+                }
+            } else if(engagementType == 'TravelPassEngagement'){
+                for (Dom.XmlNode travelPassElement : engagement.getChildElements()) {
+                    customerRow.put(travelPassElement.getName(), travelPassElement.getText());
                 }
             } else if (engagementType == 'PrivacySettings') {
                 //Get and iterate over list of privacy settings.
                 for (Dom.XmlNode setting : engagement.getChildElement('Settings', XMLNS_A).getChildElements()) {
                     String settingType = setting.getChildElement('Type', XMLNS_A).getText();
                     customerRow.put('Consent' + settingType, setting.getChildElement('Active', XMLNS_A).getText());
+                }
+            } else if(engagementType == 'CorporateMemberEngagement'){
+                for (Dom.XmlNode corporateMembershipElement : engagement.getChildElements()) {
+                    customerRow.put(corporateMembershipElement.getName(), corporateMembershipElement.getText());
                 }
             } else if (engagementType == 'DefaultProfileEngagement') {
                 Dom.XmlNode profile = engagement.getChildElement('Profile', XMLNS_A);

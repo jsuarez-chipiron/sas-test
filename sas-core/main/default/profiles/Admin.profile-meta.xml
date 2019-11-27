@@ -274,6 +274,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>FrequentFlyer__x.ConsentEB0__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>FrequentFlyer__x.ConsentEB__c</field>
         <readable>true</readable>

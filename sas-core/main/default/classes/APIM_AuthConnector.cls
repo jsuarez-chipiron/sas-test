@@ -14,8 +14,8 @@ global with sharing class APIM_AuthConnector extends C_LocalAuthConnector{
      * Authenticates against the service
      * @param username The username to use when authenticating
      * @param password he password used when authenticating
-     * @param param1 Resource for call
-     * @param param2 Subscription key
+     * @param param1 Subscription key
+     * @param param2 Resource for call
      * @return The oauth access token
      */
     global override String authenticate(String username, String password, String param1, String param2){

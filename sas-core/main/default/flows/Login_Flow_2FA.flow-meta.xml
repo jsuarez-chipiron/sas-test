@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Retrieves whether time based one time password is available for the user to authenticate.</description>
+        <name>Get_TOTP_Availability</name>
+        <label>Get TOTP Availability</label>
+        <locationX>473</locationX>
+        <locationY>58</locationY>
+        <actionName>LoginFlowTOTPAvailability</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>TOTP_Availability</targetReference>
+        </connector>
+        <inputParameters>
+            <name>userIds</name>
+            <value>
+                <elementReference>LoginFlow_UserId</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>TOTP_Available</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
+        <description>Verifies the provided TOTP token.</description>
+        <name>Verify_TOTP</name>
+        <label>Verify TOTP</label>
+        <locationX>1095</locationX>
+        <locationY>58</locationY>
+        <actionName>LoginFlowTOTPVerify</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>TOTP_Verification_Status</targetReference>
+        </connector>
+        <inputParameters>
+            <name>totpCodeList</name>
+            <value>
+                <elementReference>Time_based_token</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>TOTPVerifyStatus</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <assignments>
+        <description>Ensures that the user is logged out of the system instead of allowed access.</description>
+        <name>Force_Logout</name>
+        <label>Force Logout</label>
+        <locationX>714</locationX>
+        <locationY>408</locationY>
+        <assignmentItems>
+            <assignToReference>LoginFlow_ForceLogout</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Determines the execution path by login type, allowing SSO logins without further authentication.</description>
+        <name>Login_Type</name>
+        <label>Login Type</label>
+        <locationX>230</locationX>
+        <locationY>60</locationY>
+        <defaultConnector>
+            <targetReference>Get_TOTP_Availability</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non SSO</defaultConnectorLabel>
+        <rules>
+            <name>SSO</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>LoginFlow_LoginType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SAML Idp Initiated SSO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LoginFlow_LoginType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SAML Sfdc Initiated SSO</stringValue>
+                </rightValue>
+            </conditions>
+            <label>SSO</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Splits the execution logic depending on whether TOTP is available for the user.</description>
+        <name>TOTP_Availability</name>
+        <label>TOTP Availability</label>
+        <locationX>705</locationX>
+        <locationY>60</locationY>
+        <defaultConnector>
+            <targetReference>TOTP_Unavailable</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TOTP_Available</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Enter_TOTP_Code</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Split execution path depending on the TOTP verification status.</description>
+        <name>TOTP_Verification_Status</name>
+        <label>TOTP Verification Status</label>
+        <locationX>1087</locationX>
+        <locationY>238</locationY>
+        <defaultConnector>
+            <targetReference>Enter_TOTP_Code</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Verification Failed</defaultConnectorLabel>
+        <rules>
+            <name>Verification_OK</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TOTPVerifyStatus</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Verification OK</label>
+        </rules>
+    </decisions>
+    <description>Login flow used to require second factor authentication when not logging in using SSO.</description>
+    <interviewLabel>Login Flow 2FA {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Login Flow 2FA</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <screens>
+        <description>Dialog to allow entering the time based code.</description>
+        <name>Enter_TOTP_Code</name>
+        <label>Enter TOTP Code</label>
+        <locationX>914</locationX>
+        <locationY>58</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Verify_TOTP</targetReference>
+        </connector>
+        <fields>
+            <name>Invalid_TOTP_Token</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0);&quot;&gt;Invalid TOTP Token&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>TOTPVerifyStatus</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Time_based_token_description</name>
+            <fieldText>&lt;p&gt;Enter your time based token for this environment. If you have lost access to your time based token, please login using the standard SAS AD method and update your TOTP settings within Salesforce.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Time_based_token</name>
+            <dataType>String</dataType>
+            <fieldText>Time based token</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Dialog shown when TOTP secret has not been created for the user.</description>
+        <name>TOTP_Unavailable</name>
+        <label>TOTP Unavailable</label>
+        <locationX>714</locationX>
+        <locationY>241</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Force_Logout</targetReference>
+        </connector>
+        <fields>
+            <name>TOTP_Unavailable_Desc</name>
+            <fieldText>&lt;p&gt;A TOTP token has not been setup for your user. In order to allow for non SSO login, please first login using SSO and register your TOTP token.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>37</locationX>
+        <locationY>58</locationY>
+        <connector>
+            <targetReference>Login_Type</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Whether the user should be logged out as a result of the login flow.</description>
+        <name>LoginFlow_ForceLogout</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>The type of method used to login for the user</description>
+        <name>LoginFlow_LoginType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>The user id of the user attempting to login.</description>
+        <name>LoginFlow_UserId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Whether TOTP is available for the user.</description>
+        <name>TOTP_Available</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Whether the TOTP token entered was correct.</description>
+        <name>TOTPVerifyStatus</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </variables>
+</Flow>

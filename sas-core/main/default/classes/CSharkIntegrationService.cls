@@ -79,8 +79,11 @@ public with sharing class CSharkIntegrationService {
         request.setMethod('POST');
         request.setHeader('Content-Type', 'text/xml');
         request.setHeader('SOAPAction',
-                        '"http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1/ICSharkCustomerManagementTicketless/' + String.valueOf(operationName) + '"');
+                        '"http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1/ICSharkCustomerManagementTicketless/' +
+                                String.valueOf(operationName) + '"');
         request.setHeader('Ocp-Apim-Subscription-Key', '09f8570b366b4c1392c170ff77356140');
+        request.setHeader('sas-system-name', 'Salesforce');
+        request.setHeader('sas-tracking-id', C_Util.getUUID());
         return request;
     }
 

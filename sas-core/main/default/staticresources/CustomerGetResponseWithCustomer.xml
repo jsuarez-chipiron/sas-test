@@ -36,6 +36,23 @@
                         <a:PurchaseNeedPassword>false</a:PurchaseNeedPassword>
                         <a:UserName>clmtest6</a:UserName>
                     </a:Engagement>
+                    <a:Engagement i:type="a:TravelPassEngagement">
+                        <a:Profile i:nil="true"/>
+                        <a:Account i:nil="true"/>
+                        <a:CID>020802</a:CID>
+                        <a:CMP>NOSECUR</a:CMP>
+                        <a:Closed>false</a:Closed>
+                        <a:CommunicationLanguage>sv</a:CommunicationLanguage>
+                        <a:CreatedInSourceSystem i:nil="true"/>
+                        <a:EmployeeNumber i:nil="true"/>
+                        <a:GroupAdministrator>true</a:GroupAdministrator>
+                        <a:LastModified>2017-03-30T05:20:24.5206937</a:LastModified>
+                        <a:NameOnCard i:nil="true"/>
+                        <a:ParentIdentifier>10326999</a:ParentIdentifier>
+                        <a:PassengerType>A</a:PassengerType>
+                        <a:Status>Active</a:Status>
+                        <a:TravelPassAccountNumber>928004605</a:TravelPassAccountNumber>
+                    </a:Engagement>
                     <a:Engagement i:type="a:SubscriptionEngagement">
                         <a:Profile i:nil="true"/>
                         <a:LastModified>2018-04-23T14:19:23.3753901</a:LastModified>
@@ -129,6 +146,20 @@
                                 <a:Version>14</a:Version>
                             </a:PrivacyItem>
                         </a:Settings>
+                    </a:Engagement>
+                    <a:Engagement i:type="a:CorporateMemberEngagement">
+                        <a:Profile i:nil="true"/>
+                        <a:AuthoritytoAccess>Approved</a:AuthoritytoAccess>
+                        <a:CMPCode>RFISHSE</a:CMPCode>
+                        <a:CNFCID>000000</a:CNFCID>
+                        <a:Closed>false</a:Closed>
+                        <a:CompanyContactEmail i:nil="true"/>
+                        <a:CompanyIdentifier>11866721</a:CompanyIdentifier>
+                        <a:CompanyName>RockFish</a:CompanyName>
+                        <a:CorporateMemberId>12002219</a:CorporateMemberId>
+                        <a:LastModified>2019-09-25T07:02:55.4244822</a:LastModified>
+                        <a:ParentIdentifier>11866633</a:ParentIdentifier>
+                        <a:SCPAgreementStatus>Active</a:SCPAgreementStatus>
                     </a:Engagement>
                     <a:Engagement i:type="a:DefaultProfileEngagement">
                         <a:Profile>

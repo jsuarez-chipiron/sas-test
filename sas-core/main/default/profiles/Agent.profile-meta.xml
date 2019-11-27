@@ -6,6 +6,38 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>APIM_AuthConnector</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CSharkIntegrationService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CSharkIntegrationService_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CSharkResponseParser</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>C_LocalAuthConnector</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>C_LocalAuthController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>C_LocalAuthInterface</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>C_LocalAuthProvider</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>C_Log</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -97,6 +129,10 @@
     <customMetadataTypeAccesses>
         <enabled>false</enabled>
         <name>Feature_Switch__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>false</enabled>
+        <name>LocalAuthProvider__mdt</name>
     </customMetadataTypeAccesses>
     <externalDataSourceAccesses>
         <enabled>false</enabled>
@@ -236,6 +272,11 @@
         <editable>false</editable>
         <field>FrequentFlyer__x.City__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FrequentFlyer__x.ConsentEB0__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -480,6 +521,9 @@
         <layout>LiveChatTranscript-Chat Transcript Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>LocalAuthProvider__mdt-Local Auth Provider Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Log__c-Log Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -493,6 +537,10 @@
     <layoutAssignments>
         <layout>SocialPost-Social Post Layout</layout>
     </layoutAssignments>
+    <pageAccesses>
+        <apexPage>C_LocalAuth</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Feedback</recordType>
@@ -531,16 +579,12 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
-        <tab>Log__c</tab>
+        <tab>FrequentFlyer__x</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>standard-Account</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>standard-Case</tab>
-        <visibility>DefaultOn</visibility>
+        <tab>Log__c</tab>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <userLicense>Salesforce</userLicense>
     <userPermissions>
