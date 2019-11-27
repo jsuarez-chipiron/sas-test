@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Sutherland_Cases</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Sutherland can see Sykes cases but not PQs.</description>
+        <label>Sutherland Cases</label>
+        <sharedTo>
+            <group>Sutherland</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Information,Support,Feedback</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Sykes_Cases</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Sykes can see Sutherlands cases put not PQs.</description>
+        <label>Sykes Cases</label>
+        <sharedTo>
+            <group>Sykes</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Information,Support,Feedback</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>STOPQ_Cases</fullName>
         <accessLevel>Edit</accessLevel>
@@ -8,29 +36,7 @@
             <group>SASSTOPQEscalations</group>
         </sharedTo>
         <sharedFrom>
-            <group>SASSTOPQEscalations</group>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>Sutherland_Cases</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Sutherland Cases</label>
-        <sharedTo>
-            <group>Sutherland</group>
-        </sharedTo>
-        <sharedFrom>
-            <group>Sutherland</group>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>Sykes_Cases</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Sykes Cases</label>
-        <sharedTo>
-            <group>Sykes</group>
-        </sharedTo>
-        <sharedFrom>
-            <group>Sykes</group>
+            <allInternalUsers/>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>

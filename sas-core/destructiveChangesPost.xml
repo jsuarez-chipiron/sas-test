@@ -41,7 +41,7 @@
         <name>Layout</name>
     </types>
 
-    <!--2019-11-26 - Philip Ossler - Removed old triggers after renaming & old Sharing Rule-->
+    <!--2019-11-26 - Philip Ossler - Removed old triggers after renaming-->
     <types>
         <members>noMentionsFeedItem</members>
         <members>noMentionsFeedComment</members>
