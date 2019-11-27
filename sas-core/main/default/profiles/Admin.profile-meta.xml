@@ -82,10 +82,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>Chat_ConsoleAutomation</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>Chat_ConsoleAutomationController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
