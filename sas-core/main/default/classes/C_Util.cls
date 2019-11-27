@@ -58,30 +58,29 @@ public with sharing class C_Util {
         Integer i2 = Crypto.getRandomInteger();
         Integer i3 = Crypto.getRandomInteger();
         Integer i4 = Crypto.getRandomInteger();
-        Integer[] chars = new Integer[36];
-        Integer offset = 0;
-        for(Integer i=0;i<8;i++){
-            Integer sh = i*4;
-            if(i>=2 && i<=5){
-                chars[sh+offset]=45;
-                offset++;
-            }
-            //15 = 0xf
-            Integer s1 = (i1 >> sh) & 15;
-            Integer s2 = (i2 >> sh) & 15;
-            Integer s3 = (i3 >> sh) & 15;
-            Integer s4 = (i4 >> sh) & 15;
-            //Set version number 4
-            if(i==3)s1 = 4;
-            //Setting variant
-            if(i==4)s1 = 8 | (s1 & 3);
-            Integer idx = sh+offset;
-            //Unicode char 0=48, a=97
-            chars[idx] = s1 + (s1 < 10 ? 48 : 87);
-            chars[idx+1] = s2 + (s2 < 10 ? 48 : 87);
-            chars[idx+2] = s3 + (s3 < 10 ? 48 : 87);
-            chars[idx+3] = s4 + (s4 < 10 ? 48 : 87);
-        }
-        return String.fromCharArray(chars);
+
+        //Setting version number 4 (5th nibble set to 4)
+        i2 = (4<<12) | (i2 & ((-1)^(15<<12)));
+        //Setting variant (high two bits of 1st nibble set to 0x8)
+        i3 = (8<<28) | (i3 & ((-1)^(12<<28)));
+
+        C_HexBuffer hb = new C_HexBuffer(C_HexBuffer.Mode.CHARS);
+        Integer[] ch = new Integer[36];
+        hb.set(i1);
+        hb.copy(ch,0);
+        ch[8]=45;
+        hb.set(i2);
+        hb.copyHighShort(ch, 9);
+        ch[13]=45;
+        hb.copyLowShort(ch, 14);
+        ch[18]=45;
+        hb.set(i3);
+        hb.copyHighShort(ch, 19);
+        ch[23]=45;
+        hb.copyLowShort(ch, 24);
+        hb.set(i4);
+        hb.copy(ch, 28);
+
+        return String.fromCharArray(ch);
     }
 }
