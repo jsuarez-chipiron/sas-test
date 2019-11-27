@@ -48,6 +48,10 @@ public with sharing class CSharkIntegrationService_Test {
         System.assertEquals('+46725465098', dataRow.get('HomeMobile'));
         System.assertEquals('testskapp@gmail.com', dataRow.get('AltE-mail'));
         System.assertEquals('B', dataRow.get('IncentiveLevel'));
+        System.assertEquals('11866721', dataRow.get('CompanyIdentifier'));
+        System.assertEquals('RockFish', dataRow.get('CompanyName'));
+        System.assertEquals('11866633', dataRow.get('ParentIdentifier'));
+        System.assertEquals('928004605', dataRow.get('TravelPassAccountNumber'));
     }
 
     @IsTest
