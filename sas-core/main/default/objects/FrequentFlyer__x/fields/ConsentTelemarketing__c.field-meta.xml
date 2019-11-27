@@ -3,7 +3,7 @@
     <fullName>ConsentTelemarketing__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates that customer has given consent to Telemarketing</description>
-    <externalDeveloperName>consentTelemarketing</externalDeveloperName>
+    <externalDeveloperName>ConsentTelemarketing</externalDeveloperName>
     <externalId>false</externalId>
     <inlineHelpText>Indicates that customer has given consent to Telemarketing</inlineHelpText>
     <isFilteringDisabled>true</isFilteringDisabled>

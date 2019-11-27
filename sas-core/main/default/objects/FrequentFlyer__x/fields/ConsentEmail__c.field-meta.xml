@@ -3,7 +3,7 @@
     <fullName>ConsentEmail__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates that customer has given consent to receive Email</description>
-    <externalDeveloperName>consentEmail</externalDeveloperName>
+    <externalDeveloperName>ConsentEMail</externalDeveloperName>
     <externalId>false</externalId>
     <inlineHelpText>Indicates that customer has given consent to receive Email</inlineHelpText>
     <isFilteringDisabled>true</isFilteringDisabled>

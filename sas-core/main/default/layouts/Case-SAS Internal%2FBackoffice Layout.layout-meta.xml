@@ -127,12 +127,12 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Type</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Reason</field>
+                <field>CaseReason__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

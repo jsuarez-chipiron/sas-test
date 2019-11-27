@@ -28,6 +28,7 @@ global with sharing class SASExternalDataSourceConnection extends DataSource.Con
         System.debug('Filter: ' + c.tableSelection.filter);
         System.debug('Order: ' + c.tableSelection.order);
 
+
         Boolean mockData = false;
 
         DataSource.TableResult returnTable;
@@ -43,14 +44,15 @@ global with sharing class SASExternalDataSourceConnection extends DataSource.Con
             //Get filters for query
             DataSource.Filter filter = c.tableSelection.filter;
             //Throw exception if filter is missing (must supply filter fot API)
-            if(c.tableSelection.filter == null){
-                throw new APIMGetCustomerRequest.APIMException('The query must be filtered by one of the following values: EBNumber__c, ExternalId');
+            if(c.tableSelection.filter == null && !mockData){
+                throw new CSharkIntegrationService.CSharkIntegrationException('The query must be filtered by one of the following values: EBNumber__c, ExternalId');
             }
             else{
                 //Check that only one parameter is included in filter
                 if(filter.columnName != null){
                     //Throw exception if filter contains unsupporter operators
-                    if(filter.type != DataSource.FilterType.EQUALS) throw new APIMGetCustomerRequest.APIMException('Only filter of typ EQUALS (=) is supported for this object');
+                    if(filter.type != DataSource.FilterType.EQUALS)
+                        throw new CSharkIntegrationService.CSharkIntegrationException('Only filter of typ EQUALS (=) is supported for this object');
 
                     //Translate fields in filter to fields used as keys in API
                     String searchEngagementType;
@@ -67,25 +69,11 @@ global with sharing class SASExternalDataSourceConnection extends DataSource.Con
                     }
                     System.debug('Mock data? ' + mockData);
                     if(!mockData){
-                        CSharkCustomer customer = APIMGetCustomerRequest.getCustomer(searchEngagementType, (String) filter.columnValue);
-                        List<Map<String,Object>> rows = new List<Map<String,Object>>();
-                        //Check is request returned a customer. If not, an empty table is returned. 
-                        if(customer != null){
-                            CSharkCustomer.CustomerGetResult customerData = customer.customerGetResponse.customerGetResult;
-                            Map<String,Object> row = new Map<String,Object>();
-                            row.put('ExternalId', customerData.identifier);
-                            row.put('DisplayUrl', 'url123');
-                            row.put('firstName', customerData.firstName);
-                            row.put('lastName', customerData.lastName);
-                            row.put('fullName', customerData.firstName + customerData.lastName);
-                            //row.put('email', customer.getEngagement('DefaultProfileEngagement').profile.VirtualAddresses[0].virtualAddressLine);
-                            row.put('birthDate', customerData.birthDate);
-                            row.put('euroBonusNumber', customerData.euroBonusNumber);
-                            row.put('mobile', '+46700802145');
-                            row.put('phone', '');
-                            rows.add(row);
-                            returnTable = Datasource.TableResult.get(c.tableSelection, rows);
-                        }
+                        List<Map<String,Object>> rows = CSharkIntegrationService.getCustomer(
+                                CSharkIntegrationService.SearchType.EuroBonus,
+                                (String) filter.columnValue).dataRows;
+                        System.debug('Returntable = ' + rows);
+                        returnTable = Datasource.TableResult.get(c.tableSelection, rows);
                     } 
                     else{
                         System.debug('Else for returning mock');
@@ -95,53 +83,31 @@ global with sharing class SASExternalDataSourceConnection extends DataSource.Con
 
                 }
                 else{
-                    throw new APIMGetCustomerRequest.APIMException('Please provide only one value to filter by. Filter: ' + filter);
+                    throw new CSharkIntegrationService.CSharkIntegrationException('Please provide only one value to filter by. Filter: ' + filter);
                 }
             }
         }
             System.debug('Return table: ' + returnTable);
             return returnTable;
     }
-    
 
-    // Helper method to get record values from the external system for the Sample table.
+    private static String evaluateFilter(){
+        return '';
+    }
+
+    /**
+     * Helper method used to generate mock data based on a preconfigured response with a certain search criteria
+     * @param searchValue EuroBonus number to search for. Only one value will return a result.
+     * @return If searchValue matches, a customer data row is returned. If not, the return is empty.
+     */
     private List<Map<String, Object>> getMockRows (String searchValue) {
-        List<Map<String,Object>> rows = new List<Map<String,Object>>();
-        
-        if(searchValue == '544108996'){    
-            Map<String,Object> row = new Map<String,Object>();
-            row.put('ExternalId', '10787700');
-            row.put('DisplayUrl', '10787700');
-            row.put('firstName', 'December');
-            row.put('lastName', 'Lady');
-            row.put('fullName', 'December Lady');
-            row.put('emailPersonal', 'cvvdfffree@der.dd');
-            row.put('birthDate', '1988-12-12T00:00:00');
-            row.put('euroBonusNumber', '544108996');
-            row.put('euroBonusLevel', 'G');
-            row.put('mobile', '+4676565432');
-            row.put('phone', '');
-            row.put('addressLine1', '');
-            row.put('addressLine2', '');
-            row.put('addressLine3', '');
-            row.put('city', '');
-            row.put('countryCode', '');
-            row.put('countyState', '');
-            row.put('zipCode', '');
-            row.put('concentEB', 'true');
-            row.put('concentEmail', 'false');
-            row.put('concentSMS', 'false');
-            row.put('concentTelemarketing', 'false');
-            row.put('mbrshipLvlStatusEndPeriod', '');
-            row.put('mbrshipLvlStatusStartPeriod', '');
-            row.put('basicPointsRequiredForHigerLevel', '');
-            row.put('travelPassAccountNumber', '');
-            row.put('subscriptionID', '544108996');
-            row.put('gender', 'F');
-            rows.add(row);
+        List<Map<String, Object>> dataRows = new List<Map<String, Object>>();
+        if(searchValue == '544108996'){
+            StaticResource mockResponse = [SELECT Id, Body FROM StaticResource WHERE Name = 'FrequentFlyerMock_544108996'];
+            CSharkResponseParser parser = new CSharkResponseParser(mockResponse.Body.toString());
+            parser.parseCustomerGetResponse();
+            dataRows = parser.dataRows;
         }
-
-        System.debug('Returning rows: ' + rows);
-        return rows;
+        return dataRows;
     }
 }

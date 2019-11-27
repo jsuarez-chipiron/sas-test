@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FirstName__c</fullName>
     <description>First Name of customer</description>
-    <externalDeveloperName>firstName</externalDeveloperName>
+    <externalDeveloperName>FirstName</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>true</isFilteringDisabled>
     <isNameField>false</isNameField>
