@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingCriteriaRules>
+        <fullName>STOPQ_Cases</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>PQ can see all Cases</description>
+        <label>STOPQ Cases</label>
+        <sharedTo>
+            <group>SASSTOPQEscalations</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Information,Support,Feedback,Internal/Backoffice</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Sutherland_Cases</fullName>
         <accessLevel>Edit</accessLevel>
         <description>Sutherland can see Sykes cases but not PQs.</description>
@@ -28,15 +42,4 @@
             <value>Information,Support,Feedback</value>
         </criteriaItems>
     </sharingCriteriaRules>
-    <sharingOwnerRules>
-        <fullName>STOPQ_Cases</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>STOPQ Cases</label>
-        <sharedTo>
-            <group>SASSTOPQEscalations</group>
-        </sharedTo>
-        <sharedFrom>
-            <allInternalUsers/>
-        </sharedFrom>
-    </sharingOwnerRules>
 </SharingRules>
