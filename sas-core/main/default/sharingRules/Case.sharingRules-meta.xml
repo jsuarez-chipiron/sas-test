@@ -9,9 +9,9 @@
             <group>SASSTOPQEscalations</group>
         </sharedTo>
         <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Information,Support,Feedback,Internal/Backoffice</value>
+            <field>OwnerId</field>
+            <operation>notEqual</operation>
+            <value>.</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
