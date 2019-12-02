@@ -42,7 +42,7 @@ public class CaseHandler extends C_TriggerHandler {
    Used to call the trigger in the after insert context
    */
     public override void afterInsert() {
-        ManageCaseTagRecords(newCaseMap, oldCaseMap);
+        ManageCaseTagRecords(newCaseMap, null, newCaseList, null);
 
     }
 
@@ -51,7 +51,7 @@ public class CaseHandler extends C_TriggerHandler {
     Used to call the trigger in the after update context
     */
     public override void afterUpdate() {
-        ManageCaseTagRecords(newCaseMap, oldCaseMap);
+        ManageCaseTagRecords(newCaseMap, oldCaseMap, newCaseList, oldCaseList);
 
     }
 
@@ -62,25 +62,22 @@ public class CaseHandler extends C_TriggerHandler {
     private static void AssignOwnerFromSoMe(List<Case> newCaseList) {
         for (Case c : newCaseList) {
             //Route cases created from Social Posts to GlobalSupportSoMe-queue
-            if ((c.Origin == 'Facebook' || c.Origin == 'Twitter') && (c.SourceId != null && String.valueOf(c.SourceId).startsWith('0ST'))) {
-                try {
-                    List<Group> SoMeQueue = [SELECT Id,DeveloperName FROM Group WHERE Type = 'Queue' AND DeveloperName LIKE 'GlobalSupportSoMe'];
-                    c.OwnerId = SoMeQueue[0].Id;
-                } catch (Exception e) {
-                    System.debug('An exception occurred: ' + e.getMessage());
-                    C_log.logexception(e, null, null);
-
+            if ((c.Origin == 'Facebook' || c.Origin == 'Twitter') && (c.SourceId != null && c.SourceId.getSOBjectType()==SocialPost.SObjectType)) {
+                    List<Group> soMeQueue = [SELECT Id,DeveloperName FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe'];
+                    if(soMeQueue.size() != 0) c.OwnerId = soMeQueue[0].Id;
+                    else C_log.log(C_Log.Severity.Warning, 'GlobalSupportSoMe queue not found', null, null, null );
                 }
             }
         }
-    }
+
+
 
     /**
      * Creates/updates/delete case tag records when tags (Case Reason, Case SubReason or Case Tag) is updated on case
      * @param newCaseMap The map between the id and the new version of the case i.e. the Trigger.newMap variable
      * @param oldCaseMap The map between the id and the old version of the case i.e. the Trigger.oldMap variable
      */
-    private static void ManageCaseTagRecords(Map<Id, Case> newCaseMap, Map<Id, Case> oldCaseMap) {
+    private static void ManageCaseTagRecords(Map<Id, Case> newCaseMap, Map<Id, Case> oldCaseMap, List<Case> newCaseList, List<Case> oldCaseList) {
         try {
 
             // Map with existing case tag records and CaseId+Tag+Type as key
@@ -98,12 +95,12 @@ public class CaseHandler extends C_TriggerHandler {
             // Loop over new/updated tags on case and compare with tags in case tag records
             for (String keyId : newTagByKeyId.keySet()) {
                 if (oldTagByKeyId.containsKey(keyId)) oldTagByKeyId.remove(keyId);
-                if (!oldTagByKeyId.containsKey(keyId)) createCaseTags.add(newTagByKeyId.get(keyId));
+                else if (!oldTagByKeyId.containsKey(keyId)) createCaseTags.add(newTagByKeyId.get(keyId));
             }
 
-            //Delete old tags not included in newTagByKeyId map
-            deleteCaseTags = oldTagByKeyId.values();
+            //Delete old tags not included in newTagByKeyId Map
 
+            deleteCaseTags = oldTagByKeyId.values();
             if (createCaseTags != null) upsert createCaseTags;
             if (deleteCaseTags != null) delete deleteCaseTags;
         }
@@ -126,7 +123,7 @@ public static Map<String, CaseTag__c> createCaseTagMap(Map<Id, Case> newCaseMap)
 
    if (!caseTagRecords.isEmpty()) {
        for (CaseTag__c ct : caseTagRecords) {
-           if (!caseTagsByKeyId.containsKey(ct.CaseId__c + ct.CaseTag__c + ct.Type__c)) caseTagsByKeyId.put(ct.CaseId__c + ct.CaseTag__c, ct);
+           if (!caseTagsByKeyId.containsKey(ct.CaseId__c + ct.CaseTag__c + ct.Type__c)) caseTagsByKeyId.put(ct.CaseId__c + ct.CaseTag__c+ct.Type__c, ct);
        }
    }
    return caseTagsByKeyId;

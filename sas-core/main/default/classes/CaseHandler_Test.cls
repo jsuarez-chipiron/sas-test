@@ -41,6 +41,8 @@ private class CaseHandler_Test {
         update newCases;
         System.AssertEquals('UpdatedTestReason 1', [SELECT Id, CaseTag__c From CaseTag__c Where CaseId__c =: c.Id AND Type__c=:MAIN_TAG Limit 1][0].CaseTag__c);
         System.AssertEquals('TestSubReason 1', [SELECT Id, CaseTag__c From CaseTag__c Where CaseId__c =: c.Id AND Type__c=:SUB_MAIN_TAG Limit 1][0].CaseTag__c);
+        System.AssertEquals(1, [SELECT Id From CaseTag__c Where CaseId__c =: c.Id AND Type__c=:MAIN_TAG].Size());
+        System.AssertEquals(1, [SELECT Id From CaseTag__c Where CaseId__c =: c.Id AND Type__c=:SUB_MAIN_TAG].Size());
         System.AssertEquals(1, [SELECT Id From CaseTag__c Where CaseId__c =: c.Id AND Type__c=:ADDITIONAL_TAG].Size());
         System.AssertEquals(3, [SELECT Id From CaseTag__c WHERE CaseId__c =: c.Id].size());
         System.AssertEquals(0, [SELECT Id From CaseTag__c WHERE CaseId__c !=: c.Id].size());
@@ -62,8 +64,8 @@ private class CaseHandler_Test {
         SoMeCases.add(c1);
         SoMeCases.add(c2);
         insert SoMeCases;
-        System.assertEquals('00G', String.valueOf([SELECT OwnerId FROM Case WHERE Id = :c1.Id].OwnerId).Substring(0,3));
-        System.assertEquals('00G', String.valueOf([SELECT OwnerId FROM Case WHERE Id = :c2.Id].OwnerId).Substring(0,3));
+        System.assertEquals([SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe'].Id, [SELECT OwnerId FROM Case WHERE Id = :c1.Id].OwnerId);
+        System.assertEquals([SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe'].Id, [SELECT OwnerId FROM Case WHERE Id = :c2.Id].OwnerId);
 
     }
 
