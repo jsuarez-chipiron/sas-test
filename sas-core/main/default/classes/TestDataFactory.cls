@@ -31,4 +31,13 @@ public class TestDataFactory {
         }
         return newCases;
     }
+
+    public static List<SocialPost> createSocialPosts(Integer numSocialPosts) {
+        List<SocialPost> newSocialPosts = new List<SocialPost>();
+        for (Integer i = 0, sz = numSocialPosts; i < sz; i++) {
+            SocialPost sp = new SocialPost (Name='Test'+i, Headline='TestHeadLine'+i, Posted=system.now());
+            newSocialPosts.add(sp);
+        }
+        return newSocialPosts;
+    }
 }

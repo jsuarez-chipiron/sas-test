@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CaseTag__c</fullName>
+    <description>The tag for why the customer was contacting customer support</description>
+    <externalId>false</externalId>
+    <label>Case Tag</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ADM</fullName>
+                <default>false</default>
+                <label>ADM</label>
+            </value>
+            <value>
+                <fullName>Airport Services</fullName>
+                <default>false</default>
+                <label>Airport Services</label>
+            </value>
+            <value>
+                <fullName>Ancillary</fullName>
+                <default>false</default>
+                <label>Ancillary</label>
+            </value>
+            <value>
+                <fullName>Animals</fullName>
+                <default>false</default>
+                <label>Animals</label>
+            </value>
+            <value>
+                <fullName>ARI</fullName>
+                <default>false</default>
+                <label>ARI</label>
+            </value>
+            <value>
+                <fullName>ATC/ATC Refund</fullName>
+                <default>false</default>
+                <label>ATC/ATC Refund</label>
+            </value>
+            <value>
+                <fullName>Availability / MCT</fullName>
+                <default>false</default>
+                <label>Availability / MCT</label>
+            </value>
+            <value>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+                <label>Baggage</label>
+            </value>
+            <value>
+                <fullName>Cancellation/refund of ticket</fullName>
+                <default>false</default>
+                <label>Cancellation/refund of ticket</label>
+            </value>
+            <value>
+                <fullName>Changes</fullName>
+                <default>false</default>
+                <label>Changes</label>
+            </value>
+            <value>
+                <fullName>Claims</fullName>
+                <default>false</default>
+                <label>Claims</label>
+            </value>
+            <value>
+                <fullName>Code Share</fullName>
+                <default>false</default>
+                <label>Code Share</label>
+            </value>
+            <value>
+                <fullName>Corp Account managers (SAS for busiess)</fullName>
+                <default>false</default>
+                <label>Corp Account managers (SAS for busiess)</label>
+            </value>
+            <value>
+                <fullName>Credit card</fullName>
+                <default>false</default>
+                <label>Credit card</label>
+            </value>
+            <value>
+                <fullName>Delayed/damaged luggage</fullName>
+                <default>false</default>
+                <label>Delayed/damaged luggage</label>
+            </value>
+            <value>
+                <fullName>Digital</fullName>
+                <default>false</default>
+                <label>Digital</label>
+            </value>
+            <value>
+                <fullName>Digital support</fullName>
+                <default>false</default>
+                <label>Digital support</label>
+            </value>
+            <value>
+                <fullName>Error</fullName>
+                <default>false</default>
+                <label>Error</label>
+            </value>
+            <value>
+                <fullName>Eurobonus</fullName>
+                <default>false</default>
+                <label>Eurobonus</label>
+            </value>
+            <value>
+                <fullName>Fare Quote</fullName>
+                <default>false</default>
+                <label>Fare Quote</label>
+            </value>
+            <value>
+                <fullName>Fare Rules</fullName>
+                <default>false</default>
+                <label>Fare Rules</label>
+            </value>
+            <value>
+                <fullName>Fares</fullName>
+                <default>false</default>
+                <label>Fares</label>
+            </value>
+            <value>
+                <fullName>Flight disruptions</fullName>
+                <default>false</default>
+                <label>Flight disruptions</label>
+            </value>
+            <value>
+                <fullName>Flight info</fullName>
+                <default>false</default>
+                <label>Flight info</label>
+            </value>
+            <value>
+                <fullName>Group booking - direct groups</fullName>
+                <default>false</default>
+                <label>Group booking - direct groups</label>
+            </value>
+            <value>
+                <fullName>Inflight / Onboard</fullName>
+                <default>false</default>
+                <label>Inflight / Onboard</label>
+            </value>
+            <value>
+                <fullName>Irregularity / Schedule change</fullName>
+                <default>false</default>
+                <label>Irregularity / Schedule change</label>
+            </value>
+            <value>
+                <fullName>Minor</fullName>
+                <default>false</default>
+                <label>Minor</label>
+            </value>
+            <value>
+                <fullName>Name change</fullName>
+                <default>false</default>
+                <label>Name change</label>
+            </value>
+            <value>
+                <fullName>New booking</fullName>
+                <default>false</default>
+                <label>New booking</label>
+            </value>
+            <value>
+                <fullName>Non-SAS produkter</fullName>
+                <default>false</default>
+                <label>Non-SAS produkter</label>
+            </value>
+            <value>
+                <fullName>OAL</fullName>
+                <default>false</default>
+                <label>OAL</label>
+            </value>
+            <value>
+                <fullName>Overbooked flights</fullName>
+                <default>false</default>
+                <label>Overbooked flights</label>
+            </value>
+            <value>
+                <fullName>Policy</fullName>
+                <default>false</default>
+                <label>Policy</label>
+            </value>
+            <value>
+                <fullName>Project</fullName>
+                <default>false</default>
+                <label>Project</label>
+            </value>
+            <value>
+                <fullName>Rebooking</fullName>
+                <default>false</default>
+                <label>Rebooking</label>
+            </value>
+            <value>
+                <fullName>Rebooking of groups</fullName>
+                <default>false</default>
+                <label>Rebooking of groups</label>
+            </value>
+            <value>
+                <fullName>Refund</fullName>
+                <default>false</default>
+                <label>Refund</label>
+            </value>
+            <value>
+                <fullName>Refund / SRS</fullName>
+                <default>false</default>
+                <label>Refund / SRS</label>
+            </value>
+            <value>
+                <fullName>Requesting documentation</fullName>
+                <default>false</default>
+                <label>Requesting documentation</label>
+            </value>
+            <value>
+                <fullName>Reservation issues</fullName>
+                <default>false</default>
+                <label>Reservation issues</label>
+            </value>
+            <value>
+                <fullName>Retroregistration</fullName>
+                <default>false</default>
+                <label>Retroregistration</label>
+            </value>
+            <value>
+                <fullName>Rules &amp; Informaton</fullName>
+                <default>false</default>
+                <label>Rules &amp; Informaton</label>
+            </value>
+            <value>
+                <fullName>Safety report</fullName>
+                <default>false</default>
+                <label>Safety report</label>
+            </value>
+            <value>
+                <fullName>SAS Medical</fullName>
+                <default>false</default>
+                <label>SAS Medical</label>
+            </value>
+            <value>
+                <fullName>Schedule changes</fullName>
+                <default>false</default>
+                <label>Schedule changes</label>
+            </value>
+            <value>
+                <fullName>Special service requests</fullName>
+                <default>false</default>
+                <label>Special service requests</label>
+            </value>
+            <value>
+                <fullName>SSR</fullName>
+                <default>false</default>
+                <label>SSR</label>
+            </value>
+            <value>
+                <fullName>Tax/YQ</fullName>
+                <default>false</default>
+                <label>Tax/YQ</label>
+            </value>
+            <value>
+                <fullName>Ticketing</fullName>
+                <default>false</default>
+                <label>Ticketing</label>
+            </value>
+            <value>
+                <fullName>Travel pass</fullName>
+                <default>false</default>
+                <label>Travel pass</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

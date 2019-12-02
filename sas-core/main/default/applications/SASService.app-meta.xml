@@ -40,9 +40,13 @@
     <tabs>standard-report</tabs>
     <tabs>Knowledge__kav</tabs>
     <tabs>standard-SocialPost</tabs>
+    <tabs>CaseTag__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SAS_Service_UtilityBar</utilityBar>
     <workspaceConfig>
+        <mappings>
+            <tab>CaseTag__c</tab>
+        </mappings>
         <mappings>
             <tab>Knowledge__kav</tab>
         </mappings>
