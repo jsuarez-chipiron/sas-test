@@ -32,6 +32,12 @@ public class TestDataFactory {
         return newCases;
     }
 
+
+    /**
+ * Creates social post with minimal info
+ * @param numSocialPosts Number of social posts to be created
+ * @return list of social posts
+ */
     public static List<SocialPost> createSocialPosts(Integer numSocialPosts) {
         List<SocialPost> newSocialPosts = new List<SocialPost>();
         for (Integer i = 0, sz = numSocialPosts; i < sz; i++) {
