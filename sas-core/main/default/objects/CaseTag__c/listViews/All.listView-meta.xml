@@ -4,7 +4,8 @@
     <columns>NAME</columns>
     <columns>CaseId__c</columns>
     <columns>CaseTag__c</columns>
-    <columns>MainTag__c</columns>
+    <columns>Type__c</columns>
+    <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

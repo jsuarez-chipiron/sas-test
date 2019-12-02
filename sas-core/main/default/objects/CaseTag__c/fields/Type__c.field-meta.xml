@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Type__c</fullName>
-    <description>The type of the case generating the case type record</description>
+    <description>Defines the weather the tag is Main, Sub or Additional</description>
     <externalId>false</externalId>
     <label>Type</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Information</fullName>
+                <fullName>Main</fullName>
                 <default>false</default>
-                <label>Information</label>
+                <label>Main</label>
+            </value>
+            <value>
+                <fullName>Sub</fullName>
+                <default>false</default>
+                <label>Sub</label>
+            </value>
+            <value>
+                <fullName>Additional</fullName>
+                <default>false</default>
+                <label>Additional</label>
             </value>
         </valueSetDefinition>
     </valueSet>

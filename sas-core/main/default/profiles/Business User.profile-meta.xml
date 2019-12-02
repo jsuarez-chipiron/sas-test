@@ -22,6 +22,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>C_HexBuffer</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>C_HexBuffer_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>C_LocalAuthConnector</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -90,11 +98,27 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LoginFlowTOTPAvailability</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LoginFlowTOTPVerify</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LoginFlowTOTP_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MentionHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>MentionHandler_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RecordTypeHelper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -250,11 +274,6 @@
         <editable>true</editable>
         <field>CaseTag__c.CaseTag__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>CaseTag__c.MainTag__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -605,12 +624,6 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
-
-        <tab>FrequentFlyer__x</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-
         <tab>CaseTag__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -619,7 +632,6 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
->>>>>>> Stashed changes
         <tab>Log__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
