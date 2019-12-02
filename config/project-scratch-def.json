@@ -3,6 +3,7 @@
   "edition": "Developer",
   "language" : "en_US",
   "features": [
+    "Communities",
     "ContactsToMultipleAccounts",
     "Entitlements",
     "Knowledge",
@@ -32,6 +33,9 @@
     },
     "chatterSettings": {
       "enableChatter": true
+    },
+    "communitiesSettings": {
+      "enableNetworksEnabled": true
     },
     "emailAdministrationSettings":{
       "enableEnhancedEmailEnabled": true
