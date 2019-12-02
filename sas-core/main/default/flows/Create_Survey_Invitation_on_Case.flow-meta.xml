@@ -180,7 +180,7 @@
     </start>
     <status>Active</status>
     <variables>
-        <description>Varieble for storing the CaseId</description>
+        <description>Variable for storing the CaseId</description>
         <name>caseId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>

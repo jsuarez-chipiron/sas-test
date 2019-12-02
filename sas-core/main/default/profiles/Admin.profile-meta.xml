@@ -258,6 +258,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.LatestSurveyInvitation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.PIR__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -300,6 +305,11 @@
         <editable>false</editable>
         <field>FrequentFlyer__x.ConsentEB0__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.SurveyInvitationLink__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -514,6 +524,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Log__c.StackTrace__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SurveyInvitation.RelatedCase__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
