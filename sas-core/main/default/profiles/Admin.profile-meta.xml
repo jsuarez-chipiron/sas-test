@@ -78,10 +78,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CaseAssignOwnerOnCreation_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CaseHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
