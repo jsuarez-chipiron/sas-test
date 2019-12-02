@@ -4,5 +4,15 @@
     <entityName>Case</entityName>
     <fieldName>Status</fieldName>
     <masterLabel>Support</masterLabel>
+    <pathAssistantSteps>
+        <fieldNames>Type</fieldNames>
+        <fieldNames>CaseReason__c</fieldNames>
+        <fieldNames>CaseSubReason__c</fieldNames>
+        <fieldNames>CaseTags__c</fieldNames>
+        <picklistValueName>Closed</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <picklistValueName>Escalated</picklistValueName>
+    </pathAssistantSteps>
     <recordTypeName>Support</recordTypeName>
 </PathAssistant>
