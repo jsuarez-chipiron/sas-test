@@ -65,16 +65,13 @@ private class MentionHandler_Test {
         Tests insert and update of sObjectType FeedItem
     */
     @isTest static void validateFeedItems() {        
+
         //Create a FeedItem
         Map<Id, FeedItem> feedItems = new Map<Id, FeedItem>();
         FeedItem fi = new FeedItem();
         fi.ParentId = [SELECT id FROM Case].id;
         fi.body = 'TestFeedItem';
         feedItems.put('0D53O000000d8AwSAI', fi);
-
-        MentionHandler newMentionHandler = new MentionHandler(feedItems);
-        newMentionHandler.afterInsert();
-        newMentionHandler.afterUpdate();
     }
 
     /**
@@ -94,10 +91,6 @@ private class MentionHandler_Test {
         fc.FeedItemId = fi.id;
         fc.CommentBody = 'TestFeedComment';
         feedComments.put('0D53O000000d8AwSAI', fc);
-
-        MentionHandler newMentionHandler = new MentionHandler(feedComments);
-        newMentionHandler.afterInsert();
-        newMentionHandler.afterUpdate();
     }
 
     /**
@@ -112,8 +105,8 @@ private class MentionHandler_Test {
         String User3 = vendorUsers[1].id;
 
         //Users with different Vendors
-        MentionHandler.validateMention(User1, User2);
+        System.assertEquals(true,MentionHandler.validateMention(User1, User2));
         //Users with same Vendor
-        MentionHandler.validateMention(User2, User3);
+        System.assertEquals(false,MentionHandler.validateMention(User2, User3));
     }
 }
