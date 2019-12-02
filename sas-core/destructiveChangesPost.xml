@@ -30,6 +30,8 @@
         <members>BatchUpdateAccessTokens</members>
         <members>APIMGetCustomerRequest</members>
         <members>CSharkCustomer</members>
+		<members>CaseAssignOwnerOnCreation_Test</members>
+		<members>CaseTriggerHandler</members>
         <name>ApexClass</name>
     </types>
     <types>
