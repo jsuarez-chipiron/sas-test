@@ -85,6 +85,10 @@
                 <behavior>Edit</behavior>
                 <field>EBLevel__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SurveyInvitationLink__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
