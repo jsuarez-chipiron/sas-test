@@ -4,6 +4,7 @@
  * @description Handler class for operations performed on case object.
  */
 
+
 public class CaseHandler extends C_TriggerHandler {
 
     private static final String MAIN_TAG = 'Main';
