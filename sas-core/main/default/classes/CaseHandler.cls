@@ -62,7 +62,6 @@ public class CaseHandler extends C_TriggerHandler {
     private static void AssignOwnerFromSoMe(List<Case> newCaseList) {
         for (Case c : newCaseList) {
             //Route cases created from Social Posts to GlobalSupportSoMe-queue
-            system.debug(c.SourceId);
             if ((c.Origin == 'Facebook' || c.Origin == 'Twitter') && (c.SourceId != null && String.valueOf(c.SourceId).startsWith('0ST'))) {
                 try {
                     List<Group> SoMeQueue = [SELECT Id,DeveloperName FROM Group WHERE Type = 'Queue' AND DeveloperName LIKE 'GlobalSupportSoMe'];
@@ -145,7 +144,7 @@ public static Map<String, CaseTag__c> createCaseTagMap(Map<Id, Case> newCaseMap)
        for (Integer i = 0; i < cSize; i++) {
            Case newC = newCaseMap == null ? null : newCaseMap.values()[i];
            List<String> caseTagString = newC.CaseTags__c != null ? newC.CaseTags__c.split(';') : null;
-           newTagsByKeyId.put(newC.Id+newC.CaseReason__c+MAIN_TAG, new CaseTag__c(CaseId__c=newC.Id, CaseTag__c=newC.CaseReason__c, Type__c=MAIN_TAG));
+           if(newC.CaseReason__c!=null) newTagsByKeyId.put(newC.Id+newC.CaseReason__c+MAIN_TAG, new CaseTag__c(CaseId__c=newC.Id, CaseTag__c=newC.CaseReason__c, Type__c=MAIN_TAG));
            if(newC.CaseSubReason__c!=null) newTagsByKeyId.put(newC.Id+newC.CaseSubReason__c+SUB_MAIN_TAG,  new CaseTag__c(CaseId__c=newC.Id, CaseTag__c=newC.CaseSubReason__c, Type__c=SUB_MAIN_TAG));
            if (caseTagString != null) {
                for (String s : CaseTagString) {
