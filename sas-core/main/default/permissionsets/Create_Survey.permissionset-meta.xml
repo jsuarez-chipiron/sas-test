@@ -13,7 +13,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SurveyInvitation.Related_Case__c</field>
+        <field>SurveyInvitation.RelatedCase__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>

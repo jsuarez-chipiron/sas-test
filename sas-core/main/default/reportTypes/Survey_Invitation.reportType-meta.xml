@@ -56,7 +56,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Related_Case__c</field>
+            <field>RelatedCase__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
@@ -81,12 +81,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Related_Case__c.Origin</field>
+            <field>RelatedCase__c.Origin</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Related_Case__c.Reason</field>
+            <field>RelatedCase__c.Reason</field>
             <table>SurveyInvitation</table>
         </columns>
         <masterLabel>Survey Invitations</masterLabel>
