@@ -104,6 +104,10 @@
       "enableSocialPostHistoryTracking":true,
       "enableSocialReceiveParentPost":true
     },
+    "surveySettings":{
+      "enableSurvey":true,
+      "enableSurveyOwnerCanManageResponse":false
+    },
     "userManagementSettings":{
       "enableEnhancedPermsetMgmt":true,
       "enableEnhancedProfileMgmt":true,
