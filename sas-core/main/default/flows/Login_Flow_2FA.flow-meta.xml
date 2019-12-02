@@ -4,12 +4,12 @@
         <description>Retrieves whether time based one time password is available for the user to authenticate.</description>
         <name>Get_TOTP_Availability</name>
         <label>Get TOTP Availability</label>
-        <locationX>473</locationX>
+        <locationX>322</locationX>
         <locationY>58</locationY>
         <actionName>LoginFlowTOTPAvailability</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>TOTP_Availability</targetReference>
+            <targetReference>Login_Type</targetReference>
         </connector>
         <inputParameters>
             <name>userIds</name>
@@ -19,6 +19,25 @@
         </inputParameters>
         <outputParameters>
             <assignToReference>TOTP_Available</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
+        <description>Retrieves a verification URL to prompt the user to add an authenticator</description>
+        <name>Get_Verification_Url</name>
+        <label>Get Verification Url</label>
+        <locationX>524</locationX>
+        <locationY>431</locationY>
+        <actionName>LoginFlowTOTPUrl</actionName>
+        <actionType>apex</actionType>
+        <inputParameters>
+            <name>retUrls</name>
+            <value>
+                <stringValue>/lightning/page/home</stringValue>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>LoginFlow_FinishLocation</assignToReference>
             <name>output</name>
         </outputParameters>
     </actionCalls>
@@ -48,8 +67,8 @@
         <description>Ensures that the user is logged out of the system instead of allowed access.</description>
         <name>Force_Logout</name>
         <label>Force Logout</label>
-        <locationX>714</locationX>
-        <locationY>408</locationY>
+        <locationX>712</locationX>
+        <locationY>438</locationY>
         <assignmentItems>
             <assignToReference>LoginFlow_ForceLogout</assignToReference>
             <operator>Assign</operator>
@@ -62,10 +81,10 @@
         <description>Determines the execution path by login type, allowing SSO logins without further authentication.</description>
         <name>Login_Type</name>
         <label>Login Type</label>
-        <locationX>230</locationX>
+        <locationX>515</locationX>
         <locationY>60</locationY>
         <defaultConnector>
-            <targetReference>Get_TOTP_Availability</targetReference>
+            <targetReference>TOTP_Availability</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non SSO</defaultConnectorLabel>
         <rules>
@@ -85,6 +104,9 @@
                     <stringValue>SAML Sfdc Initiated SSO</stringValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>TOTP_Registration_Status</targetReference>
+            </connector>
             <label>SSO</label>
         </rules>
     </decisions>
@@ -112,6 +134,29 @@
                 <targetReference>Enter_TOTP_Code</targetReference>
             </connector>
             <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks whether TOTP is available to determine whether the user should be prompted to register the authenticator.</description>
+        <name>TOTP_Registration_Status</name>
+        <label>TOTP Registration Status</label>
+        <locationX>515</locationX>
+        <locationY>224</locationY>
+        <defaultConnector>
+            <targetReference>Get_Verification_Url</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No TOTP</defaultConnectorLabel>
+        <rules>
+            <name>Has_TOTP</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TOTP_Available</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Has TOTP</label>
         </rules>
     </decisions>
     <decisions>
@@ -199,8 +244,8 @@
         <description>Dialog shown when TOTP secret has not been created for the user.</description>
         <name>TOTP_Unavailable</name>
         <label>TOTP Unavailable</label>
-        <locationX>714</locationX>
-        <locationY>241</locationY>
+        <locationX>715</locationX>
+        <locationY>224</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -219,10 +264,18 @@
         <locationX>37</locationX>
         <locationY>58</locationY>
         <connector>
-            <targetReference>Login_Type</targetReference>
+            <targetReference>Get_TOTP_Availability</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <description>The location to which the user is redirected after the login flow.</description>
+        <name>LoginFlow_FinishLocation</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <description>Whether the user should be logged out as a result of the login flow.</description>
         <name>LoginFlow_ForceLogout</name>

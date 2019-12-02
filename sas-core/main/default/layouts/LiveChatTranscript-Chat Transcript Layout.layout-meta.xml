@@ -38,6 +38,10 @@
                 <behavior>Edit</behavior>
                 <field>CODSId__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CaseRecordTypeName__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

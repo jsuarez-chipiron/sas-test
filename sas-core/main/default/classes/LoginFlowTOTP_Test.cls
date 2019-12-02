@@ -80,6 +80,19 @@ private class LoginFlowTOTP_Test {
         }
     }
 
+    /** 
+        Tests that generating verification urls works
+    */
+    @isTest static void checkGenerateVerificationUrl(){
+        User u = [SELECT Id FROM User WHERE FederationIdentifier=:USER_EMAIL];
+        System.runAs(u){
+            String[] urls = LoginFlowTOTPUrl.getVerificationUrls(new String[]{'/TESTRETURN'});
+            System.assertEquals(1,urls.size());
+            System.assert(!String.isBlank(urls[0]));
+            System.assert(urls[0].contains('TESTRETURN'));
+        }
+    }
+
 
     /**
         Computes the TOTP token for the current time
