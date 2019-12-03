@@ -49,4 +49,10 @@
         <members>noMentionsFeedComment</members>
         <name>ApexTrigger</name>
     </types>
+
+    <!--2019-12-03 - Anton Norell - Removed classes when refactoring C-Shark integration-->
+    <types>
+        <members>C_LocalAuthInterface</members>
+        <name>ApexClass</name>
+    </types>
 </Package>
