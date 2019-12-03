@@ -62,6 +62,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>C_TestUtil</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>C_TestUtil_Test</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>C_TriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -90,11 +98,43 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>Chat_ConsoleAutomationController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ExternalObjectQueryHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ExternalObjectQueryHandler_Test</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FrequentFlyerService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FrequentFlyerService_Test</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IdentifyCustomerFromCaseController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LiveChatTranscriptTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LiveChatTranscriptTriggerHandler_Test</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>LoginFlowTOTPAvailability</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LoginFlowTOTPUrl</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -122,7 +162,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>SASExternalDataSourceConnection_Test</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SASExternalDataSourceProvider</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SASExternalDataSourceProvider_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
