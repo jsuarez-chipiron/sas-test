@@ -10,50 +10,61 @@ public with sharing class CSharkIntegrationService {
      */
     public enum OperationName {CustomerGet, CustomersGet}
 
+    //TODO Use Frequent Flyer database field names as enums instead and use method to translate to operation parameters
     /**
-     * Supported parameters to base search for customer on
+     * Supported parameters to base search for customer on. The format of these search types
+     * correspond with valid search terms in the C-Shark service.
      */
     public enum SearchType {EuroBonus, Identifier, UserName, TPAccount, Email, PhoneNumber, LastName}
 
-    //TODO Extend class with method for C-Shark service CustomersGet. Wrap CustomerGet and CustomersGet in method
-    // and determine which method to call based on provided SearchType
+    /**
+     * Contains the valid fields to search for in the C-Shark API. The values correspond with the field
+     * named returned in the service and are used as database named on external objects using the service,
+     * e.g. Frequent Flyer. The values are used when translating a query to valid Search Terms for the API.
+     */
+    public static Set<String> validApiSearchFieldNames = new Set<String>{
+            'EuroBonusNumber',
+            'TravelPassAccountNumber',
+            'ExternalId',
+            'HomeEMail'
+    };
 
     /**
-     * Entry point to use CustomerGet operation in C-Shark. Customer data is returned based on the search parameters.
+     * Used to retrieve a list of customers from C-Shark. Customer data is returned based on the search parameters.
+     * Depending on what is search fore, this method might call different underlying method to retrieve data from
+     * the C-Shark service.
      * @param searchEngagementType Type of identifier for customer. Selected from enums in class
      * @param engagementSearchKey Value to search for, based on search type, e.g. a EuroBonus number
      * @return Custom class containing an error message or the customer data result
      */
-    public static CSharkResponse getCustomer(SearchType searchEngagementType, String engagementSearchKey){
-        C_Log.HttpData httpDataLog = new C_Log.HttpData();
-        CSharkResponse cSharkResponse = new CSharkResponse();
-        try{
-            Http http = new Http();
-            HttpRequest request = createAPIMRequest(OperationName.CustomerGet);
-            request.setBody(generateCustomerGetBody(searchEngagementType, engagementSearchKey));
+    public static List<Map<String, Object>> getCustomer(SearchType searchEngagementType, Object engagementSearchKey){
+        //TODO Extend class with method for C-Shark service CustomersGet. Wrap CustomerGet and CustomersGet in method
+        // and determine which method to call based on provided SearchType
 
-            httpDataLog = createHttpDataLog(request);
+        List<Map<String, Object>> customerRows = new List<Map<String, Object>>();
 
-            HttpResponse response = http.send(request);
+        Http http = new Http();
+        HttpRequest request = createAPIMRequest(OperationName.CustomerGet);
+        request.setBody(generateCustomerGetBody(searchEngagementType, engagementSearchKey));
 
-            if(response.getStatusCode() == 200){
-                CSharkResponseParser parser = new CSharkResponseParser(response.getBody());
-                parser.parseCustomerGetResponse();
-                if(parser.errorMessage == null){
-                    cSharkResponse.dataRows = parser.dataRows;
-                } else{
-                    cSharkResponse.errorMessage = parser.errorMessage;
-                    C_Log.log(C_Log.Severity.Error, cSharkResponse.errorMessage, null, 'APIM', httpDataLog);
-                }
-            } else {
-                cSharkResponse.errorMessage = 'An error occurred during callout: ' + response.getStatusCode() + ', ' + response.getStatus();
-                C_Log.log(C_Log.Severity.Error, cSharkResponse.errorMessage, null, 'APIM', httpDataLog);
-            }
-        } catch(Exception e){
-            C_Log.logException(e, 'APIM', httpDataLog);
-            cSharkResponse.errorMessage = 'An exception occurred. See log for details. ' + e.getMessage();
+        HttpResponse response = http.send(request);
+
+        if(response.getStatusCode() == 200){
+            customerRows = CSharkResponseParser.parseCustomerGetResponse(response.getBody());
+        } else {
+            C_Log.HttpData httpDataLog = createHttpDataLog(request);
+            C_Log.log(
+                    C_Log.Severity.Error,
+                    response.getStatusCode() + response.getStatus() + response.getBody(),
+                    null,
+                    'APIM',
+                    httpDataLog
+            );
+            throw new CSharkIntegrationException(
+                    'C-Shark service responded with an error ' + response.getStatusCode() +'. See log for details.'
+            );
         }
-        return cSharkResponse;
+        return customerRows;
     }
 
     /**
@@ -66,8 +77,8 @@ public with sharing class CSharkIntegrationService {
         httpDataLog.resource = request.getEndpoint();
         httpDataLog.remoteAddress = request.getEndpoint();
         httpDataLog.headers = request.getHeader('Content-Type') +
-                                                ', ' +
-                                                request.getHeader('Ocp-Apim-Subscription-Key');
+                ', ' +
+                request.getHeader('Ocp-Apim-Subscription-Key');
         httpDataLog.method = request.getMethod();
         httpDataLog.body = request.getBody();
         return httpDataLog;
@@ -79,30 +90,41 @@ public with sharing class CSharkIntegrationService {
         request.setMethod('POST');
         request.setHeader('Content-Type', 'text/xml');
         request.setHeader('SOAPAction',
-                        '"http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1/ICSharkCustomerManagementTicketless/' +
-                                String.valueOf(operationName) + '"');
+                '"http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1/ICSharkCustomerManagementTicketless/' +
+                        String.valueOf(operationName) + '"');
         request.setHeader('Ocp-Apim-Subscription-Key', '09f8570b366b4c1392c170ff77356140');
         request.setHeader('sas-system-name', 'Salesforce');
         request.setHeader('sas-tracking-id', C_Util.getUUID());
         return request;
     }
 
-/*
-    private static String generateCustomersGetBody(SearchType searchEngagementType, String engagementSearchKey){
+    /**
+     * Generates a request body for operation CustomersGet in C-Shark.
+     * @param searchType The type of values to search for, e.g. EuroBonus
+     * @param SearchKey The value to search for, e.g. '554422441'
+     * @return Request body string in XML-format.
+     */
+    private static String generateCustomersGetBody(SearchType searchType, Object SearchKey){
         String requestBody = '<?xml version="1.0" encoding="utf-8"?>' +
                 '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' +
                 '<Body>' +
                 '<CustomerGet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1">' +
-                '<SearchType>' + searchEngagementType +'</SearchType>' +
-                '<SearchKey>' + engagementSearchKey +'</SearchKey>' +
+                '<SearchType>' + searchType +'</SearchType>' +
+                '<SearchKey>' + SearchKey +'</SearchKey>' +
                 '<FirstName>' + '' +'</FirstName>' +
                 '</CustomerGet>' +
                 '</Body>' +
                 '</Envelope>';
         return requestBody;
     }
-*/
-    private static String generateCustomerGetBody(SearchType searchEngagementType, String engagementSearchKey){
+
+    /**
+     * Generates a request body for operation CustomerGet in C-Shark.
+     * @param searchEngagementType The type of values to search for, e.g. EuroBonus
+     * @param engagementSearchKey The value to search for, e.g. '554422441'
+     * @return Request body string in XML-format.
+     */
+    private static String generateCustomerGetBody(SearchType searchEngagementType, Object engagementSearchKey){
         String requestBody = '<?xml version="1.0" encoding="utf-8"?>' +
                 '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' +
                 '<Body>' +
@@ -116,21 +138,46 @@ public with sharing class CSharkIntegrationService {
     }
 
     /**
-     * Class used by this service to transmit a result from C-Shark together with a potential error message.
-     * If operation is successful, this object is returns with data. If not, it returns with an error message and
-     * an empty result.
+     * Customer exception class for C-Shark integration
      */
-    public class CSharkResponse{
-        public List<Map<String,Object>> dataRows;
-        public String errorMessage;
+    public class CSharkIntegrationException extends Exception{}
 
-        public CSharkResponse(){
-            dataRows = new List<Map<String, Object>>();
+    /**
+     * Helper method used to generate mock data based on a preconfigured response with a certain search criteria
+     * @param providedSearchValue EuroBonus number to search for. Only one value will return a result.
+     * @return If searchValue matches, a customer data row is returned. If not, the return is empty.
+     */
+    public static List<Map<String, Object>> getMockRows(SearchType providedSearchType, Object providedSearchValue) {
+        List<Map<String, Object>> dataRows = new List<Map<String, Object>>();
+        if (providedSearchType == SearchType.EuroBonus && providedSearchValue == '544108996') {
+            StaticResource mockResponse = [SELECT Id, Body FROM StaticResource WHERE Name = 'FrequentFlyerMock_544108996'];
+            dataRows = CSharkResponseParser.parseCustomerGetResponse(mockResponse.Body.toString());
         }
+        return dataRows;
     }
 
     /**
-     * Customer exception class for C-Shark integration
+     * Helper method used to get a valid search type from this service
+     * based on a provided string, e.g. a field name from a table
+     * @param searchField String value to match search type by
+     * @return If search type is found, it is returned. Otherwise the return value is null.
      */
-    public with sharing class CSharkIntegrationException extends Exception{}
+    public static SearchType getSearchTypeByFieldName(String searchField){
+        SearchType matchedSearchType;
+        switch on searchField{
+            when 'EuroBonusNumber'{
+                matchedSearchType = SearchType.EuroBonus;
+            }
+            when 'TravelPassAccountNumber'{
+                matchedSearchType = SearchType.TPAccount;
+            }
+            when 'ExternalId'{
+                matchedSearchType = SearchType.Identifier;
+            }
+            when 'HomeEMail'{
+                matchedSearchType = SearchType.Email;
+            }
+        }
+        return matchedSearchType;
+    }
 }

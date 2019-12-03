@@ -6,6 +6,10 @@
  */
 @IsTest
 public with sharing class CSharkIntegrationService_Test {
+    /**
+     * Asserts that a search for a certain EuroBonus customer returns the correct information for that customer.
+     * All expected fields should be validated against the content of the mock file in static resources.
+     */
     @IsTest
     static void shouldReturnEuroBonusCustomer(){
         StaticResourceCalloutMock mock = new StaticResourceCalloutMock();
@@ -16,16 +20,13 @@ public with sharing class CSharkIntegrationService_Test {
         Test.setMock(HttpCalloutMock.class, mock);
 
         Test.startTest();
-        CSharkIntegrationService.CSharkResponse response = CSharkIntegrationService.getCustomer(
+        List<Map<String, Object>> response = CSharkIntegrationService.getCustomer(
                 CSharkIntegrationService.SearchType.EuroBonus,
                 '700001423');
         Test.stopTest();
-        System.assertEquals(null, response.errorMessage, 'Operation returned an error message - should be null');
 
-        System.assertEquals(1, response.dataRows.size(), 'Operation did not return the expected number of rows');
-
-        //Test mapping to table
-        Map<String,Object> dataRow = response.dataRows[0];
+        System.assertEquals(1, response.size(), 'Operation did not return the expected number of rows');
+        Map<String,Object> dataRow = response[0];
         System.assertEquals('1988-10-13T00:00:00', dataRow.get('BirthDate'));
         System.assertEquals('Marcus', dataRow.get('FirstName'));
         System.assertEquals('M', dataRow.get('Gender'));
@@ -54,25 +55,42 @@ public with sharing class CSharkIntegrationService_Test {
         System.assertEquals('928004605', dataRow.get('TravelPassAccountNumber'));
     }
 
+    /**
+     * Asserts that a negative response from the C-Shark service is handled correctly.
+     */
     @IsTest
-    static void shouldReturn401Error(){
+    static void shouldReturn500Error(){
         StaticResourceCalloutMock mock = new StaticResourceCalloutMock();
         mock.setStaticResource('CustomerGetResponseWithCustomer');
-        mock.setStatusCode(400);
+        mock.setStatusCode(500);
         mock.setHeader('Content-Type', 'text/xml');
-
         Test.setMock(HttpCalloutMock.class, mock);
 
+        Exception returnedException;
         Test.startTest();
-        CSharkIntegrationService.CSharkResponse response = CSharkIntegrationService.getCustomer(
-                CSharkIntegrationService.SearchType.EuroBonus,
-                '700001423');
+        try{
+            List<Map<String, Object>> response = CSharkIntegrationService.getCustomer(
+                    CSharkIntegrationService.SearchType.EuroBonus,
+                    '700001423');
+        } catch (CSharkIntegrationService.CSharkIntegrationException e){
+            returnedException = e;
+        }
         Test.stopTest();
 
-        System.assertNotEquals(null, response.errorMessage);
-        System.assertEquals(0, response.dataRows.size());
+        System.assertNotEquals(
+                null,
+                returnedException,
+                'The integration service should have thrown an exception due to a 500 error, but that did not happen.'
+        );
+        System.assertEquals('C-Shark service responded with an error 500. See log for details.',
+                returnedException.getMessage(),
+                'The message in the exception did not match the expected message. Check if message has been changed.'
+        );
     }
 
+    /**
+     * Asserts that when the parser for the C-Shark response fails, an exception is thrown.
+     */
     @IsTest
     static void shouldReturnParseError(){
         StaticResourceCalloutMock mock = new StaticResourceCalloutMock();
@@ -82,13 +100,38 @@ public with sharing class CSharkIntegrationService_Test {
 
         Test.setMock(HttpCalloutMock.class, mock);
 
+        Exception returnedException;
         Test.startTest();
-        CSharkIntegrationService.CSharkResponse response = CSharkIntegrationService.getCustomer(
-                CSharkIntegrationService.SearchType.EuroBonus,
-                '700001423');
+        try{
+            List<Map<String, Object>> response = CSharkIntegrationService.getCustomer(
+                    CSharkIntegrationService.SearchType.EuroBonus,
+                    '700001423');
+        } catch (Exception e){
+            returnedException = e;
+        }
         Test.stopTest();
 
-        System.assertNotEquals(null, response.errorMessage);
-        System.assertEquals('An error occurred during parsing of C-Shark response. See log for more details.', response.errorMessage);
+        System.assertNotEquals(null, returnedException);
+    }
+
+    @IsTest
+    static void shouldReturnMockDataWhenCallingMethodDirectly(){
+        CSharkIntegrationService.SearchType searchType = CSharkIntegrationService.SearchType.EuroBonus;
+        String searchValue = '544108996';
+
+        List<Map<String, Object>> customerRows = CSharkIntegrationService.getMockRows(searchType, searchValue);
+
+        System.assertNotEquals(0, customerRows.size(), 'Service for mock data returned no rows.');
+        System.assertEquals(1, customerRows.size(), 'Service for mock data returned too many customer rows.');
+    }
+
+    @IsTest
+    static void shouldNotReturnMockDataWhenCallingMethodDirectly(){
+        CSharkIntegrationService.SearchType searchType = CSharkIntegrationService.SearchType.EuroBonus;
+        String searchValue = 'Invalid Search Value';
+
+        List<Map<String, Object>> customerRows = CSharkIntegrationService.getMockRows(searchType, searchValue);
+
+        System.assertEquals(0, customerRows.size(), 'Service for mock data returned customer data even though search value was invalid.');
     }
 }
