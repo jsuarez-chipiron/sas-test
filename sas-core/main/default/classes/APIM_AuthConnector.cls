@@ -5,12 +5,6 @@
  */
 global with sharing class APIM_AuthConnector extends C_LocalAuthConnector{
     /**
-        Authenticates against the service
-        @param username The username to use when authenticating
-        @param password The password used when authenticating
-        @return The oauth access token
-    */
-    /**
      * Authenticates against the service
      * @param username The username to use when authenticating
      * @param password he password used when authenticating

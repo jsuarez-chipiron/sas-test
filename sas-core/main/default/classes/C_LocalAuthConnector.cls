@@ -7,7 +7,9 @@ global abstract class C_LocalAuthConnector {
      * Authenticates against the service
      * @param username The username to use when authenticating
      * @param password The password used when authenticating
-     * @return The oauth access token
+     * @param param1 First additional, optional parameter
+     * @param param2 Second additional, optional parameter
+     * @return
      */
     global abstract String authenticate(String username,String password, String param1, String param2);
 }
