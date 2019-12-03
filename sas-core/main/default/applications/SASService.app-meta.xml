@@ -68,7 +68,6 @@
             <tab>standard-LiveAgentSession</tab>
         </mappings>
         <mappings>
-            <fieldName>CaseId</fieldName>
             <tab>standard-LiveChatTranscript</tab>
         </mappings>
         <mappings>
