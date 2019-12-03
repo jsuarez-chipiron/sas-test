@@ -38,10 +38,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>C_LocalAuthInterface</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>C_LocalAuthProvider</apexClass>
         <enabled>false</enabled>
     </classAccesses>
