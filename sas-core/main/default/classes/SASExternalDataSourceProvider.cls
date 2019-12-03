@@ -1,18 +1,27 @@
 /**
- * Class used to act as a Data Source provider for SAS External Systmes using Salesforce Connect
- * Capabilities such as Authentication methods and operations support are set in this class
+ * @author Anton Norell
+ * @date 2019-10-15
+ * @description  The class informs Salesforce of the functional and authentication capabilities
+ *               that are supported by or required to connect to the external system.
  */
 global class SASExternalDataSourceProvider extends DataSource.Provider{
-
+    /**
+     * Returns the types of authentication that can be used to access the external system.
+     * Only Anonymous auth is supported for data source, as authentication is handled ba classes making callouts.
+     * @return List of capabilities for authentication.
+     */
     override global List<DataSource.AuthenticationCapability> getAuthenticationCapabilities() {
         List<DataSource.AuthenticationCapability> capabilities = new List<DataSource.AuthenticationCapability>();
-        
-        //Data Source should not have authentication built in, that is handled by class making a callout
         capabilities.add(DataSource.AuthenticationCapability.ANONYMOUS);
         return capabilities;
     }
 
-    //Currently, the Data Source only supports read operations
+    /**
+     * Returns the functional operations that the external system supports and the
+     * required endpoint settings for the external data source definition in Salesforce.
+     * Currently the SAS data source only supports read operations.
+     * @return List of CRUD capabilities for data source
+     */
     override global List<DataSource.Capability> getCapabilities(){
         List<DataSource.Capability> capabilities = new List<DataSource.Capability>();
         capabilities.add(DataSource.Capability.ROW_QUERY);
@@ -23,6 +32,11 @@ global class SASExternalDataSourceProvider extends DataSource.Provider{
         return capabilities;
     }
 
+    /**
+     * Implementation of required method to return a custom connection
+     * @param connectionParams Credentials for authenticating to the external system.
+     * @return Returns a connection that points to an instance of the external data source.
+     */
     override global DataSource.Connection getConnection(DataSource.ConnectionParams connectionParams) {
         return new SASExternalDataSourceConnection(connectionParams);
     }
