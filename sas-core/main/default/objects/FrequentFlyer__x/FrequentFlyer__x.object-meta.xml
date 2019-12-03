@@ -118,7 +118,7 @@
     <enableFeeds>false</enableFeeds>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>true</enableSearch>
+    <enableSearch>false</enableSearch>
     <externalDataSource>SAS_External_Systems</externalDataSource>
     <externalName>FrequentFlyers</externalName>
     <label>Frequent Flyer</label>
@@ -127,5 +127,8 @@
         <customTabListAdditionalFields>Name__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>EBNumber__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>EmailPersonal__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Name__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Name__c</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Name__c</searchResultsAdditionalFields>
     </searchLayouts>
 </CustomObject>

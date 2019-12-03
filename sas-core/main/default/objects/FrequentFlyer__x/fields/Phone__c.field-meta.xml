@@ -4,7 +4,7 @@
     <description>Phone number of customer, not mobile number</description>
     <externalDeveloperName>HomePhone</externalDeveloperName>
     <externalId>false</externalId>
-    <isFilteringDisabled>true</isFilteringDisabled>
+    <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>Phone</label>
