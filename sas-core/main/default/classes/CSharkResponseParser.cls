@@ -2,25 +2,12 @@
  * @author Anton Norell
  * @date 2019-11-23
  * @description Class used to parse a response in XML from external system C-Shark.
-  *             Valid scope of response is for service CSharkCustomerManagementTicketless.
- *              Currently supports CustomerGet operation. The parser can be extended to support more
- *              operations by adding public parsing methods for those operations. Output from parser is
- *              a format that can be translated by a Salesforce Connect Custom Adapter to a SQL/SOQL response.
+ * Valid scope of response is for service CSharkCustomerManagementTicketless.
+ * Currently supports CustomerGet operation. The parser can be extended to support more
+ * operations by adding public parsing methods for those operations. Output from parser is
+ * a format that can be translated by a Salesforce Connect Custom Adapter to a SQL/SOQL response.
  */
 public with sharing class CSharkResponseParser {
-    /**
-     * The body of the response to parse. Is supplied through constructor.
-     */
-    private String responseBody;
-    /**
-     * Potential error message for an error that has occurred during parsing.
-     */
-    public String errorMessage {get; private set;}
-    /**
-     * The result of the parsing operation.
-     */
-    public List<Map<String,Object>> dataRows {get; private set;}
-
     /**
      * Namespaces for the C-Shark XML. Prefix is specified by _<prefix>.
      */
@@ -30,34 +17,20 @@ public with sharing class CSharkResponseParser {
     private static final String XMLNS_A = 'http://www.flysas.com/wcf/CSharkCustomerManagement/v1';
 
     /**
-     * Constructor for class.
-     * @param responseBody The body of a C-Shark response. Calling class is responsible for extracting body.
-     */
-    public CSharkResponseParser(String responseBody){
-        this.responseBody = responseBody;
-        this.dataRows = new List<Map<String, Object>>();
-    }
-
-    /**
-     * Entry point for parsing a response for operation CustomerGet. The method used the response body
-     * provided in class constructor.
+     * Used to parse a response for operation CustomerGet.
      * @return List of customer rows that can be translated by Apex Customer Adapter for a SQL/SOQL result.
      */
-    public void parseCustomerGetResponse(){
-        try{
-            Dom.XmlNode customerGetResponse = getDocumentBody().getChildElement('CustomerGetResponse', XMLNS);
-            List<Dom.XmlNode> customerGetResults = customerGetResponse.getChildElements();
-            for(Dom.XmlNode customerGetResult:customerGetResults){
-                if(customerGetResult.getAttributeValue('nil', XMLNS_I) == null){
-                    Map<String,Object> customerRow = parseCustomerGetResult(customerGetResult);
-                    dataRows.add(customerRow);
-                }
+    public static List<Map<String, Object>> parseCustomerGetResponse(String responseBody){
+        List<Map<String, Object>> dataRows = new List<Map<String, Object>>();
+        Dom.XmlNode customerGetResponse = getDocumentBody(responseBody).getChildElement('CustomerGetResponse', XMLNS);
+        List<Dom.XmlNode> customerGetResults = customerGetResponse.getChildElements();
+        for(Dom.XmlNode customerGetResult:customerGetResults){
+            if(customerGetResult.getAttributeValue('nil', XMLNS_I) == null){
+                Map<String,Object> customerRow = parseCustomerGetResult(customerGetResult);
+                dataRows.add(customerRow);
             }
-        } catch (Exception e){
-            errorMessage = 'An error occurred during parsing of C-Shark response. See log for more details.';
-            C_Log.logException(e, null, null);
         }
-
+        return dataRows;
     }
 
     /**
@@ -65,7 +38,7 @@ public with sharing class CSharkResponseParser {
      * be used to get the body for any C-Shark operation
      * @return XML node Body from document
      */
-    private Dom.XmlNode getDocumentBody(){
+    private static Dom.XmlNode getDocumentBody(String responseBody){
         Dom.Document document = new Dom.Document();
         document.load(responseBody);
         Dom.XmlNode rootNode = document.getRootElement();
@@ -79,7 +52,7 @@ public with sharing class CSharkResponseParser {
      * @param customerGetResult XML node of type CustomerGetResult to parse
      * @return A new customer row based on the content of the CustomerGetResult
      */
-    private Map<String,Object> parseCustomerGetResult(Dom.XmlNode customerGetResult){
+    private static Map<String,Object> parseCustomerGetResult(Dom.XmlNode customerGetResult){
         List<Dom.XmlNode> elements = customerGetResult.getChildElements();
 
         Map<String,Object> customerRow = new Map<String, Object>();
@@ -106,8 +79,7 @@ public with sharing class CSharkResponseParser {
      * @param customerRow Customer row to add values parser in list of engagements
      * @return Customer row with values from engagements added
      */
-    private Map<String, Object> parseEngagementList(Dom.XmlNode engagements, Map<String, Object> customerRow) {
-
+    private static Map<String, Object> parseEngagementList(Dom.XmlNode engagements, Map<String, Object> customerRow) {
         for (Dom.XmlNode engagement : engagements.getChildElements()) {
             String engagementType = engagement.getAttributeValue('type', XMLNS_I);
 
@@ -120,7 +92,6 @@ public with sharing class CSharkResponseParser {
                     customerRow.put(travelPassElement.getName(), travelPassElement.getText());
                 }
             } else if (engagementType == 'PrivacySettings') {
-                //Get and iterate over list of privacy settings.
                 for (Dom.XmlNode setting : engagement.getChildElement('Settings', XMLNS_A).getChildElements()) {
                     String settingType = setting.getChildElement('Type', XMLNS_A).getText();
                     customerRow.put('Consent' + settingType, setting.getChildElement('Active', XMLNS_A).getText());
@@ -131,7 +102,6 @@ public with sharing class CSharkResponseParser {
                 }
             } else if (engagementType == 'DefaultProfileEngagement') {
                 Dom.XmlNode profile = engagement.getChildElement('Profile', XMLNS_A);
-                //Get and iterate over list of physical addresses. Address function is determined by the first entity in list of functions.
                 for (Dom.XmlNode physicalAddress : profile.getChildElement('PhysicalAddresses', XMLNS_A).getChildElements()) {
                     List<Dom.XmlNode> addressFunctions = physicalAddress.getChildElement('Functions', XMLNS_A).getChildElements();
                     String addressFunction = addressFunctions[0].getChildElement('FunctionName', XMLNS_A).getText();
@@ -139,8 +109,6 @@ public with sharing class CSharkResponseParser {
                         customerRow.put(addressFunction + addressNode.getName(), addressNode.getText());
                     }
                 }
-                //Get and iterate over list of virtual addresses (Email, phone etc.). Address function is determined
-                // by the first entity in list of functions.
                 for (Dom.XmlNode virtualAddress : profile.getChildElement('VirtualAddresses', XMLNS_A).getChildElements()) {
                     List<Dom.XmlNode> addressFunctions = virtualAddress.getChildElement('Functions', XMLNS_A).getChildElements();
                     String addressFunction = addressFunctions[0].getChildElement('FunctionName', XMLNS_A).getText();
