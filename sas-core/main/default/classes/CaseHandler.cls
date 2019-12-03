@@ -55,7 +55,6 @@ public class CaseHandler extends C_TriggerHandler {
   Used to call the trigger in the before update context
   */
     public override void beforeUpdate() {
-        AssignOwnerFromSoMe(newCaseList);
         ValidateCaseTags(newCaseList);
 
     }
