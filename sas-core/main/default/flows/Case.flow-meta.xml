@@ -184,14 +184,14 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>AND(ISNEW(), ISPICKVAL([Case].Origin, &quot;Web&quot;))</stringValue>
+                <stringValue>AND(ISNEW(), ISPICKVAL([Case].Origin, &quot;Chat&quot;))</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_1</name>
         <dataType>Boolean</dataType>
-        <expression>AND(ISNEW(), ISPICKVAL({!myVariable_current.Origin}, &quot;Web&quot;))</expression>
+        <expression>AND(ISNEW(), ISPICKVAL({!myVariable_current.Origin}, &quot;Chat&quot;))</expression>
     </formulas>
-    <interviewLabel>Case-1_InterviewLabel</interviewLabel>
+    <interviewLabel>Case-3_InterviewLabel</interviewLabel>
     <label>Case</label>
     <processMetadataValues>
         <name>ObjectType</name>

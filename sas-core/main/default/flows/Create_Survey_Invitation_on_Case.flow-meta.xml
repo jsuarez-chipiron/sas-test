@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <decisions>
+        <description>Determines the execution path by survey name</description>
+        <name>Survey_Name</name>
+        <label>Survey Name</label>
+        <locationX>778</locationX>
+        <locationY>52</locationY>
+        <defaultConnectorLabel>No Customer Feedback</defaultConnectorLabel>
+        <rules>
+            <name>Customer_Feedback</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>lookupSurvey</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>createSurveyInvitation</targetReference>
+            </connector>
+            <label>Customer Feedback</label>
+        </rules>
+    </decisions>
     <description>Flow for creating a Survey Invitation and relating it to the Parent Case</description>
     <interviewLabel>Create Survey Invitation on Case {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Create Survey Invitation on Case</label>
@@ -19,8 +42,8 @@
     <recordCreates>
         <name>createSurveyInvitation</name>
         <label>createSurveyInvitation</label>
-        <locationX>574</locationX>
-        <locationY>202</locationY>
+        <locationX>787</locationX>
+        <locationY>250</locationY>
         <assignRecordIdToReference>surveyInvitationId</assignRecordIdToReference>
         <connector>
             <targetReference>lookupSurveyInvitation</targetReference>
@@ -108,13 +131,13 @@
         <locationY>50</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>createSurveyInvitation</targetReference>
+            <targetReference>Survey_Name</targetReference>
         </connector>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Feedback</stringValue>
+                <stringValue>Customer Feedback</stringValue>
             </value>
         </filters>
         <object>Survey</object>
@@ -126,8 +149,8 @@
     <recordLookups>
         <name>lookupSurveyInvitation</name>
         <label>lookupSurveyInvitation</label>
-        <locationX>788</locationX>
-        <locationY>200</locationY>
+        <locationX>787</locationX>
+        <locationY>433</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>updateCase</targetReference>
@@ -148,8 +171,8 @@
     <recordUpdates>
         <name>updateCase</name>
         <label>updateCase</label>
-        <locationX>788</locationX>
-        <locationY>363</locationY>
+        <locationX>787</locationX>
+        <locationY>623</locationY>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
