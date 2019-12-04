@@ -1,6 +1,6 @@
 /**
     Test method for the process Case Set priority Urgent that sets the priority 
-    to urgent based on input from customer in Subject field. 
+    to urgent based on input from customer in Subject field or if Email is Flagged as important. 
     @author Josephine Ding - Deloitte
 */
 @isTest 
@@ -30,6 +30,53 @@ private class CaseSetPriorityUrgent_Test {
         System.assertEquals('Urgent', [SELECT Priority FROM Case WHERE Id = :c1.Id].Priority);  
     }
 
-    
+    /**
+        Tests the Process on Email Message where a Case created from an Email with High Importance should have the Priority Urgent
+        @author Philip Ossler - Deloitte
+    */
+    @isTest
+    static void sendEmailWithImportanceFlag(){
+        List<Case> cases = TestDataFactory.createCases(1, null, null, RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
+        cases[0].Priority = 'Medium';
+        cases[0].Origin = 'Email';
+        insert(cases[0]);
+
+        EmailMessage email = new EmailMessage();
+        email.FromAddress = 'test@abc.se';
+        email.Incoming = True;
+        email.ToAddress= 'test@def.se';
+        email.Subject = 'Test Subject';
+        email.HtmlBody = 'Test Body';
+        email.Headers = 'Importance: High';
+        email.ParentId = cases[0].Id; 
+        insert email;
+
+        List<Case> updatedCase = [SELECT Priority FROM Case WHERE id =: cases[0].Id];
+        System.assertEquals('Urgent', updatedCase[0].Priority);
+    }
+
+    /**
+        Tests the Process on Email Message where a Case created from an Email without any specific importance shouldn't change Priority
+        @author Philip Ossler - Deloitte
+    */
+    @isTest
+    static void sendEmailWithoutImportanceFlag(){
+        List<Case> cases = TestDataFactory.createCases(1, null, null, RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
+        cases[0].Priority = 'Medium';
+        cases[0].Origin = 'Email';
+        insert(cases[0]);
+
+        EmailMessage email = new EmailMessage();
+        email.FromAddress = 'test@abc.se';
+        email.Incoming = True;
+        email.ToAddress= 'test@def.se';
+        email.Subject = 'Test Subject';
+        email.HtmlBody = 'Test Body';
+        email.ParentId = cases[0].Id; 
+        insert email;
+
+        List<Case> updatedCase = [SELECT Priority FROM Case WHERE id =: cases[0].Id];
+        System.assertNotEquals('Urgent', updatedCase[0].Priority);
+    }
  }
 
