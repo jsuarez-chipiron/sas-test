@@ -55,4 +55,10 @@
         <members>C_LocalAuthInterface</members>
         <name>ApexClass</name>
     </types>
+
+    <!--2019-12-04 - Philip Ossler - Removed Permission Set for Survey creation because of duplicate-->
+    <types>
+        <members>Create_Survey</members>
+        <name>PermissionSet</name>
+    </types>
 </Package>
