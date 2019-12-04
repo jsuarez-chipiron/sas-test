@@ -487,6 +487,117 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CaseTags__c</picklist>
+        <values>
+            <fullName>Airport Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ancillary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancellation%2Frefund of ticket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Claims</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delayed%2Fdamaged luggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eurobonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight disruptions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inflight %2F Onboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-SAS produkter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Overbooked flights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rebooking of groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Requesting documentation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retroregistration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rules %26 Informaton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Medical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special service requests</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel pass</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>EBLevel__c</picklist>
         <values>
             <fullName>B</fullName>

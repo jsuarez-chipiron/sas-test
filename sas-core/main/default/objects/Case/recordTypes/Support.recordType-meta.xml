@@ -239,6 +239,65 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CaseTags__c</picklist>
+        <values>
+            <fullName>Cancellation%2Frefund of ticket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delayed%2Fdamaged luggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eurobonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rebooking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rebooking of groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Requesting documentation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retroregistration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special service requests</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel pass</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>EBLevel__c</picklist>
         <values>
             <fullName>B</fullName>
