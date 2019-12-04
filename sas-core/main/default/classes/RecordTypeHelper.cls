@@ -18,7 +18,7 @@ public with sharing class RecordTypeHelper {
     public static final Id CASE_INTERNAL_BACKOFFICE;
 
     static {
-        RecordType[] rtList = [SELECT Id,SobjectType,DeveloperName FROM RecordType];
+        RecordType[] rtList = [SELECT Id,SobjectType,DeveloperName FROM RecordType WHERE SobjectType ='Case' ];
         for (Integer i = 0, sz = rtList.size(); i < sz; i++) {
             RecordType rt = rtList[i];
             if (rt.SobjectType == 'Case') {
@@ -29,6 +29,4 @@ public with sharing class RecordTypeHelper {
             }
         }
     }
-
-
 }
