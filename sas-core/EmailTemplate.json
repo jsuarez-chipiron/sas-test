@@ -1,0 +1,51 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "EmailTemplate",
+                "referenceId": "EmailTemplateRef1"
+            },
+            "Body": "\n            Hello {!Receiving_User.FirstName},\n\n            We received your request to reset your {!Community_Name} password. We can't reset your password right now. Your account is locked after too many login attempts.\n\n            {!CASE(1,\n            IF(VALUE(PASSWORD_LOCK_TIME) > 0, 1, 0), \"Try again in \" + PASSWORD_LOCK_TIME + \" minutes.\",\n            IF(VALUE(PASSWORD_LOCK_TIME) < 0, 1, 0), \"Contact your \" + Community_Name + \" administrator to unlock your account.\",\n            \"\")}\n\n            If you didn't request a password reset or haven't tried to log in to your account recently, contact your {!Community_Name} administrator or reply to this email.\n\n            Thank you,\n            {!Community_Name}\n        ",
+            "Subject": "You've been locked out of {!Community_Name}"
+        },
+        {
+            "attributes": {
+                "type": "EmailTemplate",
+                "referenceId": "EmailTemplateRef2"
+            },
+            "Body": "You recently attempted an action in {!Community_Name}.\nAction: {!Action}\n\nBrowser: {!Browser}\nOperating System: {!Operating_System}\nUsername: {!Receiving_User.Username}\n\nTo ensure your account's security, we must verify your identity. Enter the following code where prompted by {!Community_Name}.\n\nVerification Code: {!Verification_Code}\n\nIf you didn't attempt this action in {!Community_Name}, or you don't recognize this browser or operating system, contact your {!Community_Name} administrator.\n        ",
+            "Subject": "Verify your identity in {!Community_Name}"
+        },
+        {
+            "attributes": {
+                "type": "EmailTemplate",
+                "referenceId": "EmailTemplateRef3"
+            },
+            "Body": "\n            Hi {!Receiving_User.FirstName},\n\n            Welcome to {!Community_Name}! To get started, go to {!Community_Url}\n\n            Username: {!Receiving_User.Username}\n\n            Thanks,\n            {!Organization.Name}\n        ",
+            "Subject": "Welcome to {!Community_Name}"
+        },
+        {
+            "attributes": {
+                "type": "EmailTemplate",
+                "referenceId": "EmailTemplateRef4"
+            },
+            "Body": "\n            Hi {!Receiving_User.FirstName},\n\n            Your password has been reset for {!Community_Name}. Go to:\n\n            {!Community_Url}\n\n            Thanks,\n            {!Organization.Name}\n        ",
+            "Subject": "Your new {!Community_Name} password"
+        },
+        {
+            "attributes": {
+                "type": "EmailTemplate",
+                "referenceId": "EmailTemplateRef5"
+            },
+            "Body": "\n            Hi {!Receiving_User.FirstName},\n\n            Your password has been reset for {!Community_Name}. Go to:\n\n            {!Community_Url}\n\n            Thanks,\n            {!Organization.Name}\n        ",
+            "Subject": "Your new {!Community_Name} password"
+        },
+        {
+            "attributes": {
+                "type": "EmailTemplate",
+                "referenceId": "EmailTemplateRef6"
+            },
+            "Subject": "<<Replace here with email subject>>"
+        }
+    ]
+}
