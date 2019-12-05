@@ -25,7 +25,6 @@
         <name>CustomField</name>
     </types>
 
-    <!--2019-11-25 - Anton Norell - Removed classes when refactoring C-Shark integration-->
 	<!--2019-12-05 - Ludvig Wälimaa - Removed Chat_Console-classess when refactoring after making utility component more generic component -->
     <types>
         <members>BatchUpdateAccessTokens</members>
@@ -43,8 +42,8 @@
         <members>Chat_ConsoleAutomation</members>
         <name>AuraDefinitionBundle</name>
     </types>
-	
-	
+
+    <!--2019-11-25 - Anton Norell - Removed classes when refactoring C-Shark integration-->
     <types>
         <members>AccessToken__c</members>
         <name>CustomObject</name>
@@ -81,5 +80,15 @@
     <types>
         <members>STOPQEscalations</members>
         <name>Queue</name>
+    </types>
+
+    <!--2019-12-05 - Anton Norell - Removed classes when refactoring C-Shark integration, Removed field-->
+    <types>
+        <members>IdentifyCustomerFromCaseController</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Account.BirthDate__c</members>
+        <name>CustomField</name>
     </types>
 </Package>

@@ -11,12 +11,6 @@
             ],
             "c/ldsUtils": [
                 "ldsUtils/ldsUtils.js"
-            ],
-            "c/recordEditFormStaticContact": [
-                "recordEditFormStaticContact/recordEditFormStaticContact.js"
-            ],
-            "c/wireGetRecordStaticContact": [
-                "wireGetRecordStaticContact/wireGetRecordStaticContact.js"
             ]
         }
     },
