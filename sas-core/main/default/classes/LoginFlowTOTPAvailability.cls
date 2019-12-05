@@ -16,6 +16,10 @@ global with sharing class LoginFlowTOTPAvailability {
         for(TwoFactorInfo tfi : tfiList){
             hasTotpSet.add(tfi.UserId);
         }
+        TwoFactorMethodsInfo[] tfmiList = [SELECT Id,HasSalesforceAuthenticator,UserId FROM TwoFactorMethodsInfo WHERE UserId IN :userIds];
+        for(TwoFactorMethodsInfo tfmi : tfmiList){
+            if(tfmi.HasSalesforceAuthenticator)hasTotpSet.add(tfmi.UserId);
+        }
         TwoFactorTempCode[] tcList = [SELECT Id,UserId FROM TwoFactorTempCode WHERE UserId IN :userIds AND Expiration>:DateTime.now()];
         for(TwoFactorTempCode tc : tcList){
             hasTotpSet.add(tc.UserId);
