@@ -6,7 +6,7 @@
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>true</isNameField>
-    <isSortingDisabled>false</isSortingDisabled>
+    <isSortingDisabled>true</isSortingDisabled>
     <label>Name</label>
     <length>255</length>
     <required>false</required>

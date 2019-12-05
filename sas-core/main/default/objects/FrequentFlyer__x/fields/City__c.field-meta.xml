@@ -4,9 +4,9 @@
     <description>City of customer</description>
     <externalDeveloperName>HomeCityName</externalDeveloperName>
     <externalId>false</externalId>
-    <isFilteringDisabled>true</isFilteringDisabled>
+    <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
-    <isSortingDisabled>false</isSortingDisabled>
+    <isSortingDisabled>true</isSortingDisabled>
     <label>City</label>
     <length>255</length>
     <required>false</required>

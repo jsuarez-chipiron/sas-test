@@ -4,9 +4,9 @@
     <description>Current EuruBonus Level of customer</description>
     <externalDeveloperName>IncentiveLevel</externalDeveloperName>
     <externalId>false</externalId>
-    <isFilteringDisabled>true</isFilteringDisabled>
+    <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
-    <isSortingDisabled>false</isSortingDisabled>
+    <isSortingDisabled>true</isSortingDisabled>
     <label>EuroBonus Level</label>
     <length>255</length>
     <required>false</required>

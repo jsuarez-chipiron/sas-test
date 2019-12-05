@@ -182,37 +182,18 @@
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>
-    <customMetadataTypeAccesses>
-        <enabled>false</enabled>
-        <name>AdRoleLink__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>false</enabled>
-        <name>AdRolePermission__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>false</enabled>
-        <name>AdRoleUserDetail__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>false</enabled>
-        <name>AdRole__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>false</enabled>
-        <name>Feature_Switch__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>false</enabled>
-        <name>LocalAuthProvider__mdt</name>
-    </customMetadataTypeAccesses>
     <externalDataSourceAccesses>
         <enabled>false</enabled>
         <externalDataSource>SAS_External_Systems</externalDataSource>
     </externalDataSourceAccesses>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.BirthDate__c</field>
+        <field>Account.CODSId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.CompanyName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -242,12 +223,37 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.CustomerIdentifier__c</field>
+        <field>Account.EBBalance__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.EBLevel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.EBMemberSinceDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.EBNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.EBQualifyingPeriodEndDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.EBQualifyingPeriodStartDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.EBReachesNextLevelPoints__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -257,7 +263,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.Gender__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.LastRetrievedFromSource__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.SubscriptionId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -268,16 +284,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AdRoleUserDetail__mdt.Value__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.AccountId</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.AskedForHelp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.CODSId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -293,21 +309,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.CaseTags__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>Case.Priority</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>Case.Subject</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>Case.Origin</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -337,6 +338,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.SurveyInvitationLink__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.TPAccountNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -356,23 +362,8 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.ConsentEB0__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>FrequentFlyer__x.AddressLine1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.ConsentEB0__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.SurveyInvitationLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -393,6 +384,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>FrequentFlyer__x.City__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FrequentFlyer__x.CompanyName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -536,6 +532,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>LiveChatTranscript.CaseRecordTypeName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>LiveChatTranscript.EBNumber__c</field>
         <readable>true</readable>
@@ -666,6 +667,10 @@
     <layoutAssignments>
         <layout>PersonAccount-B2C - EB Customer</layout>
         <recordType>PersonAccount.EBCustomer</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PersonAccount-Person Account Layout</layout>
+        <recordType>PersonAccount.PersonAccount</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>SocialPost-Social Post Layout</layout>

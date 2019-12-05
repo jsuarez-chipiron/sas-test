@@ -6,9 +6,9 @@
     <externalDeveloperName>ConsentSMS</externalDeveloperName>
     <externalId>false</externalId>
     <inlineHelpText>Indicates that customer has given consent to receive SMS</inlineHelpText>
-    <isFilteringDisabled>true</isFilteringDisabled>
+    <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
-    <isSortingDisabled>false</isSortingDisabled>
+    <isSortingDisabled>true</isSortingDisabled>
     <label>Consent SMS</label>
     <type>Checkbox</type>
 </CustomField>

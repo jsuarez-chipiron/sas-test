@@ -6,7 +6,7 @@
     <externalDeveloperName>ConsentEB</externalDeveloperName>
     <externalId>false</externalId>
     <inlineHelpText>Indicates that customer has given consent to EuroBonus</inlineHelpText>
-    <isFilteringDisabled>true</isFilteringDisabled>
+    <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>true</isSortingDisabled>
     <label>Consent EuroBonus</label>

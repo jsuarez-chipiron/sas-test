@@ -2,9 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ZipCode__c</fullName>
     <description>Zip Code of customer</description>
-    <externalDeveloperName>ZipCode</externalDeveloperName>
+    <externalDeveloperName>HomeZipCode</externalDeveloperName>
     <externalId>false</externalId>
-    <isFilteringDisabled>true</isFilteringDisabled>
+    <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>true</isSortingDisabled>
     <label>Zip Code</label>

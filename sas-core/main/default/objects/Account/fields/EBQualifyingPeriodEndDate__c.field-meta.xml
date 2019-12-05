@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EBQualifyingPeriodEndDate__c</fullName>
+    <description>End date for the customer&#39;s current qualifying period for EuroBonus</description>
+    <externalId>false</externalId>
+    <label>Qualifying Period End</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Date</type>
+</CustomField>

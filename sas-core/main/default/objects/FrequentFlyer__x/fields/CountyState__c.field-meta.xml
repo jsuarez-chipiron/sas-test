@@ -4,7 +4,7 @@
     <description>County or state that customer lives in</description>
     <externalDeveloperName>HomeCountyState</externalDeveloperName>
     <externalId>false</externalId>
-    <isFilteringDisabled>true</isFilteringDisabled>
+    <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>true</isSortingDisabled>
     <label>County/State</label>

@@ -4,7 +4,7 @@
     <description>Country of customer</description>
     <externalDeveloperName>HomeCountryCode</externalDeveloperName>
     <externalId>false</externalId>
-    <isFilteringDisabled>true</isFilteringDisabled>
+    <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>true</isSortingDisabled>
     <label>Country Code</label>

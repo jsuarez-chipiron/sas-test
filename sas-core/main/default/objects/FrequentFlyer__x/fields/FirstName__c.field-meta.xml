@@ -4,9 +4,9 @@
     <description>First Name of customer</description>
     <externalDeveloperName>FirstName</externalDeveloperName>
     <externalId>false</externalId>
-    <isFilteringDisabled>true</isFilteringDisabled>
+    <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
-    <isSortingDisabled>false</isSortingDisabled>
+    <isSortingDisabled>true</isSortingDisabled>
     <label>First Name</label>
     <length>255</length>
     <required>false</required>

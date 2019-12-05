@@ -4,12 +4,10 @@
     <description>Date when customer first became a EuroBonus member</description>
     <externalDeveloperName>EnrollmentDate</externalDeveloperName>
     <externalId>false</externalId>
-    <isFilteringDisabled>true</isFilteringDisabled>
+    <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>true</isSortingDisabled>
     <label>Member Since</label>
-    <length>255</length>
     <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Date</type>
 </CustomField>

@@ -6,7 +6,7 @@
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
-    <isSortingDisabled>false</isSortingDisabled>
+    <isSortingDisabled>true</isSortingDisabled>
     <label>Travel Pass Account Number</label>
     <length>255</length>
     <required>false</required>

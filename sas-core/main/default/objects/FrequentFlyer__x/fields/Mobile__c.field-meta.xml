@@ -6,10 +6,8 @@
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
-    <isSortingDisabled>false</isSortingDisabled>
+    <isSortingDisabled>true</isSortingDisabled>
     <label>Mobile</label>
-    <length>255</length>
     <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Phone</type>
 </CustomField>

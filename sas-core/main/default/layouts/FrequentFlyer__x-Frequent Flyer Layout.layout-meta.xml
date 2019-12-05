@@ -74,6 +74,10 @@
                 <behavior>Edit</behavior>
                 <field>ConsentEB0__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CompanyName__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
