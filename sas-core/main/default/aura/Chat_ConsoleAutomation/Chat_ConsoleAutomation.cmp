@@ -1,7 +1,0 @@
-<aura:component implements="lightning:backgroundUtilityItem" controller="Chat_ConsoleAutomationController">
-    <aura:attribute name="transcriptWaitingForTab" type="List" access="private" default="[]" description="Transcripts which have been accepted but not yet received a case subtab"/>
-    <lightning:omniToolkitAPI aura:id="omniToolkit" />
-    <lightning:workspaceAPI aura:id="workspace" />
-    <aura:handler event="lightning:omniChannelWorkAccepted" action="{! c.onWorkAccepted }"/>
-    <aura:handler event="lightning:tabCreated" action="{!c.onTabCreated}"/>  
-</aura:component>

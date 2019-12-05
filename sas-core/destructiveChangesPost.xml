@@ -26,14 +26,25 @@
     </types>
 
     <!--2019-11-25 - Anton Norell - Removed classes when refactoring C-Shark integration-->
+	<!--2019-12-05 - Ludvig Wälimaa - Removed Chat_Console-classess when refactoring after making utility component more generic component -->
     <types>
         <members>BatchUpdateAccessTokens</members>
         <members>APIMGetCustomerRequest</members>
         <members>CSharkCustomer</members>
 		<members>CaseAssignOwnerOnCreation_Test</members>
 		<members>CaseTriggerHandler</members>
+		<members>Chat_ConsoleAutomationController</members>
+		<members>Chat_ConsoleAutomationController_Test</members>
         <name>ApexClass</name>
     </types>
+	
+	<!--2019-12-05 - Ludvig Wälimaa - Removed component when refactoring after making utility component more generic component -->
+	<types>
+        <members>Chat_ConsoleAutomation</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+	
+	
     <types>
         <members>AccessToken__c</members>
         <name>CustomObject</name>
