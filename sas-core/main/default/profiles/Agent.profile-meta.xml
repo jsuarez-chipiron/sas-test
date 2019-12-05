@@ -82,7 +82,7 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CaseSetPriorityUrgent_Test</apexClass>
+        <apexClass>EmailToCase_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
