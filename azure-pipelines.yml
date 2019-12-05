@@ -39,6 +39,13 @@ steps:
   displayName: 'Setup Org'
 
 - script: |
+    if [ -e ./$(PACKAGE_FOLDER)/EmailTemplate.json ]; then
+      sfdx force:data:tree:import -f ./$(PACKAGE_FOLDER)/EmailTemplate.json
+      mv ./$(PACKAGE_FOLDER)/EmailTemplate.json ./$(PACKAGE_FOLDER)/EmailTemplate.xml
+    fi
+  displayName: 'Import email templates'
+
+- script: |
     sfdx force:source:push --targetusername ciorg --forceoverwrite
   displayName: 'Push Source'
 
