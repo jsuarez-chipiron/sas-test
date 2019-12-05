@@ -15,3 +15,6 @@ package.xml
 # Non used automatic entries
 **/AppSwitcher.appMenu-meta.xml
 **/Trial Customer Portal User.profile-meta.xml
+
+#Data Files
+**/EmailTemplate.json
