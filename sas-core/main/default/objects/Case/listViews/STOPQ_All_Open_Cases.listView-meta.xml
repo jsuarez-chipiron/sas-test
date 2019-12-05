@@ -9,9 +9,9 @@
     <columns>CORE.USERS.ALIAS</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>CASES.TYPE</field>
+        <field>CASES.RECORDTYPE</field>
         <operation>equals</operation>
-        <value>SalesInformation,SASSI Internal,System,Tariff</value>
+        <value>Case.Internal_Backoffice</value>
     </filters>
     <filters>
         <field>CASES.STATUS</field>

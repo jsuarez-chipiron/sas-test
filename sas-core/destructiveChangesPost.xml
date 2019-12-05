@@ -72,4 +72,14 @@
         <members>Create_Survey</members>
         <name>PermissionSet</name>
     </types>
+
+    <!--2019-12-04 - Philip Ossler - Changed name of Test Class after adding more tests-->
+    <types>
+        <members>CaseSetPriorityUrgent_Test</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>STOPQEscalations</members>
+        <name>Queue</name>
+    </types>
 </Package>

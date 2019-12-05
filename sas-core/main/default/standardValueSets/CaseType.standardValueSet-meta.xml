@@ -12,9 +12,9 @@
         <label>Information</label>
     </standardValue>
     <standardValue>
-        <fullName>SalesInformation</fullName>
+        <fullName>Sales Information</fullName>
         <default>false</default>
-        <label>SalesInformation</label>
+        <label>Sales Information</label>
     </standardValue>
     <standardValue>
         <fullName>SASSI Internal</fullName>
