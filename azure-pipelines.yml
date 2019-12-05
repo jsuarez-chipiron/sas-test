@@ -41,7 +41,6 @@ steps:
 - script: |
     if [ -e ./$(PACKAGE_FOLDER)/EmailTemplate.json ]; then
       sfdx force:data:tree:import -f ./$(PACKAGE_FOLDER)/EmailTemplate.json
-      mv ./$(PACKAGE_FOLDER)/EmailTemplate.json ./$(PACKAGE_FOLDER)/EmailTemplate.xml
     fi
   displayName: 'Import email templates'
 
@@ -111,6 +110,9 @@ steps:
     fi
     if [ -e ./$(PACKAGE_FOLDER)/destructiveChangesPost.xml ]; then
       cp ./$(PACKAGE_FOLDER)/destructiveChangesPost.xml ./package-md/destructiveChangesPost.xml
+    fi
+    if [ -e ./$(PACKAGE_FOLDER)/EmailTemplate.json ]; then
+      mv ./$(PACKAGE_FOLDER)/EmailTemplate.json $(Build.ArtifactStagingDirectory)/EmailTemplate.json
     fi
   displayName: 'Convert to metadata package'
 
