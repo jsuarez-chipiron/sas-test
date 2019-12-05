@@ -94,10 +94,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>Chat_ConsoleAutomationController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>ExternalObjectQueryHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
