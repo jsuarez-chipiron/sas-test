@@ -47,7 +47,7 @@ public with sharing class CSharkResponseParser {
     }
 
     /**
-     * Private method used to parse a single CustomerGetResult from C-Shark and create a new customer row.
+     * Used to parse a single CustomerGetResult from C-Shark and create a new customer row.
      * The method is responsible for calling other methods used to parse content of the result.
      * @param customerGetResult XML node of type CustomerGetResult to parse
      * @return A new customer row based on the content of the CustomerGetResult
@@ -60,20 +60,18 @@ public with sharing class CSharkResponseParser {
             String elementName = element.getName();
             String elementText = element.getText();
             if(elementName == 'Identifier'){
-                //Customer identifier in response is set as External Id for customer row
                 customerRow.put('ExternalId', elementText);
             } else if(elementName == 'EngagementList') {
                 customerRow = parseEngagementList(element, customerRow);
             } else {
-                //All elements on top level in CustomerGetResult, e.g. Name, email etc. are added to the customer row.
-                customerRow.put(elementName, elementText);
+                customerRow.putAll(getNameValuePair(elementName, elementText));
             }
         }
         return customerRow;
     }
 
     /**
-     * Method used to iterate over engagements and parse each engagement according to rules specific for that engagement.
+     * Used to iterate over engagements and parse each engagement according to rules specific for that engagement.
      * Only relevant engagements are parsed and their values added to the customer row with the field database name as key.
      * @param engagements List of engagements broken out from a CustomerGetResponse
      * @param customerRow Customer row to add values parser in list of engagements
@@ -85,20 +83,20 @@ public with sharing class CSharkResponseParser {
 
             if (engagementType == 'EuroBonusEngagement') {
                 for (Dom.XmlNode ebElement : engagement.getChildElements()) {
-                    customerRow.put(ebElement.getName(), ebElement.getText());
+                    customerRow.putAll(getNameValuePair(ebElement.getName(), ebElement.getText()));
                 }
             } else if(engagementType == 'TravelPassEngagement'){
                 for (Dom.XmlNode travelPassElement : engagement.getChildElements()) {
-                    customerRow.put(travelPassElement.getName(), travelPassElement.getText());
+                    customerRow.putAll(getNameValuePair(travelPassElement.getName(), travelPassElement.getText()));
                 }
             } else if (engagementType == 'PrivacySettings') {
                 for (Dom.XmlNode setting : engagement.getChildElement('Settings', XMLNS_A).getChildElements()) {
                     String settingType = setting.getChildElement('Type', XMLNS_A).getText();
-                    customerRow.put('Consent' + settingType, setting.getChildElement('Active', XMLNS_A).getText());
+                    customerRow.putAll(getNameValuePair('Consent' + settingType, setting.getChildElement('Active', XMLNS_A).getText()));
                 }
             } else if(engagementType == 'CorporateMemberEngagement'){
                 for (Dom.XmlNode corporateMembershipElement : engagement.getChildElements()) {
-                    customerRow.put(corporateMembershipElement.getName(), corporateMembershipElement.getText());
+                    customerRow.putAll(getNameValuePair(corporateMembershipElement.getName(), corporateMembershipElement.getText()));
                 }
             } else if (engagementType == 'DefaultProfileEngagement') {
                 Dom.XmlNode profile = engagement.getChildElement('Profile', XMLNS_A);
@@ -106,16 +104,26 @@ public with sharing class CSharkResponseParser {
                     List<Dom.XmlNode> addressFunctions = physicalAddress.getChildElement('Functions', XMLNS_A).getChildElements();
                     String addressFunction = addressFunctions[0].getChildElement('FunctionName', XMLNS_A).getText();
                     for (Dom.XmlNode addressNode : physicalAddress.getChildElements()) {
-                        customerRow.put(addressFunction + addressNode.getName(), addressNode.getText());
+                        customerRow.putAll(getNameValuePair(addressFunction + addressNode.getName(), addressNode.getText()));
                     }
                 }
                 for (Dom.XmlNode virtualAddress : profile.getChildElement('VirtualAddresses', XMLNS_A).getChildElements()) {
                     List<Dom.XmlNode> addressFunctions = virtualAddress.getChildElement('Functions', XMLNS_A).getChildElements();
                     String addressFunction = addressFunctions[0].getChildElement('FunctionName', XMLNS_A).getText();
                     String addressLine = virtualAddress.getChildElement('VirtualAddressLine', XMLNS_A).getText();
-                    customerRow.put(addressFunction, addressLine);
+                    customerRow.putAll(getNameValuePair(addressFunction, addressLine));
                 }
             }
+        }
+        return customerRow;
+    }
+
+    private static Map<String, Object> getNameValuePair(String elementName, Object elementText){
+        Map<String, Object> customerRow = new Map<String, Object>();
+        if(elementName.endsWith('Date') && elementText != null) {
+            customerRow.put(elementName, Date.valueOf(String.valueOf(elementText)));
+        } else{
+            customerRow.put(elementName, elementText);
         }
         return customerRow;
     }

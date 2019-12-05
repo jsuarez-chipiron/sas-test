@@ -1,7 +1,7 @@
 import { LightningElement, track, api, wire } from "lwc";
 import { getRecord, updateRecord } from "lightning/uiRecordApi";
-import findCustomer from "@salesforce/apex/IdentifyCustomerFromCaseController.findCustomer";
-import getCaseData from "@salesforce/apex/IdentifyCustomerFromCaseController.getCaseData";
+import findCustomer from "@salesforce/apex/IdentifyCustomerComponentController.findCustomer";
+import getCaseData from "@salesforce/apex/IdentifyCustomerComponentController.getCaseData";
 
 export default class App extends LightningElement {
     @api recordId = null; //Record Id for case the component is places
@@ -16,7 +16,7 @@ export default class App extends LightningElement {
     searchValue; //Search value from search text field, set by action handler
 
     @track
-    showSpinner = false; //When true, spinner graphic is displayed over compoent
+    showSpinner = false; //When true, spinner graphic is displayed over component
 
     @track
     customerIdentified = false; //When true, the component declares the customer as identified on the case
@@ -159,7 +159,7 @@ export default class App extends LightningElement {
 
     /**
      * Validates the value in the search field on component
-     * Currently only checks if field is empty but should preferably be extended with futher validations
+     * Currently only checks if field is empty but should preferably be extended with further validations
      */
     validateSearchInput() {
         console.log("Triggered validate input");
@@ -187,41 +187,6 @@ export default class App extends LightningElement {
         console.log("Triggered search for customer");
         this.showSpinner = true;
         this.findCustomerAsync();
-
-        /*
-        findCustomer({
-            searchField: this.searchOption,
-            searchValue: this.searchValue
-        })
-            .then(result => {
-                this.error = undefined;
-
-                if (!result) {
-                    this.showSpinner = false;
-                    this.noSearchResult = true;
-                } else {
-                    const recordInput = {
-                        fields: {
-                            Id: this.recordId,
-                            AccountId: result.Id,
-                            EBNumber__c: result.EBNumber__c,
-                            TPAccountNumber__c: result.TPAccountNumber__c
-                        }
-                    };
-
-                    updateRecord(recordInput).then(result => {
-                        this.error = undefined;
-                        this.customerIdentified = true;
-                        this.showSpinner = false;
-                    })
-                        .catch(error => {
-                            this.displayError({ error: error });
-                        });
-                }
-            })
-            .catch(error => {
-                this.displayError({ error: error });
-            });  */          
     }
 
     displayError(error) {
@@ -230,7 +195,6 @@ export default class App extends LightningElement {
         this.error = error;
     }
 
-    
     async findCustomerAsync(){
         try{
             let account = await findCustomer({

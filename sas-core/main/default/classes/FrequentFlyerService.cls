@@ -27,17 +27,6 @@ public with sharing class FrequentFlyerService {
     }
 
     /**
-     * Used to create an account based on a Frequent Flyer record.
-     * @param frequentFlyers List of Frequent Flyer record to generate accounts for
-     * @return List of account generated
-     */
-    public static List<Account> syncFrequentFlyersToAccounts(List<FrequentFlyer__x> frequentFlyers){
-        List<Account> accounts = new List<Account>();
-        //TODO Implement creation of Account record based on table result
-        return accounts;
-    }
-
-    /**
      * Used to retrieve customer rows based on supplied search variables. Checks if mock
      * data should be returned or if callout to external system should be performed.
      * @param selectedSearchType The selected type of search

@@ -21,13 +21,13 @@ public with sharing class CSharkIntegrationService_Test {
 
         Test.startTest();
         List<Map<String, Object>> response = CSharkIntegrationService.getCustomer(
-                CSharkIntegrationService.SearchType.EuroBonus,
+                CSharkIntegrationService.SearchType.EB_NUMBER,
                 '700001423');
         Test.stopTest();
 
         System.assertEquals(1, response.size(), 'Operation did not return the expected number of rows');
         Map<String,Object> dataRow = response[0];
-        System.assertEquals('1988-10-13T00:00:00', dataRow.get('BirthDate'));
+        System.assertEquals(Date.valueOf('1988-10-13T00:00:00'), dataRow.get('BirthDate'));
         System.assertEquals('Marcus', dataRow.get('FirstName'));
         System.assertEquals('M', dataRow.get('Gender'));
         System.assertEquals('10401209', dataRow.get('ExternalId'));
@@ -53,6 +53,7 @@ public with sharing class CSharkIntegrationService_Test {
         System.assertEquals('RockFish', dataRow.get('CompanyName'));
         System.assertEquals('11866633', dataRow.get('ParentIdentifier'));
         System.assertEquals('928004605', dataRow.get('TravelPassAccountNumber'));
+        System.assertEquals(Date.valueOf('2016-09-28T00:00:00'), dataRow.get('EnrollmentDate'));
     }
 
     /**
@@ -70,7 +71,7 @@ public with sharing class CSharkIntegrationService_Test {
         Test.startTest();
         try{
             List<Map<String, Object>> response = CSharkIntegrationService.getCustomer(
-                    CSharkIntegrationService.SearchType.EuroBonus,
+                    CSharkIntegrationService.SearchType.EB_NUMBER,
                     '700001423');
         } catch (CSharkIntegrationService.CSharkIntegrationException e){
             returnedException = e;
@@ -104,7 +105,7 @@ public with sharing class CSharkIntegrationService_Test {
         Test.startTest();
         try{
             List<Map<String, Object>> response = CSharkIntegrationService.getCustomer(
-                    CSharkIntegrationService.SearchType.EuroBonus,
+                    CSharkIntegrationService.SearchType.EB_NUMBER,
                     '700001423');
         } catch (Exception e){
             returnedException = e;
@@ -116,7 +117,7 @@ public with sharing class CSharkIntegrationService_Test {
 
     @IsTest
     static void shouldReturnMockDataWhenCallingMethodDirectly(){
-        CSharkIntegrationService.SearchType searchType = CSharkIntegrationService.SearchType.EuroBonus;
+        CSharkIntegrationService.SearchType searchType = CSharkIntegrationService.SearchType.EB_NUMBER;
         String searchValue = '544108996';
 
         List<Map<String, Object>> customerRows = CSharkIntegrationService.getMockRows(searchType, searchValue);
@@ -127,7 +128,7 @@ public with sharing class CSharkIntegrationService_Test {
 
     @IsTest
     static void shouldNotReturnMockDataWhenCallingMethodDirectly(){
-        CSharkIntegrationService.SearchType searchType = CSharkIntegrationService.SearchType.EuroBonus;
+        CSharkIntegrationService.SearchType searchType = CSharkIntegrationService.SearchType.EB_NUMBER;
         String searchValue = 'Invalid Search Value';
 
         List<Map<String, Object>> customerRows = CSharkIntegrationService.getMockRows(searchType, searchValue);

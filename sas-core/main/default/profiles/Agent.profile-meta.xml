@@ -58,6 +58,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>C_TestUtil</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>C_TestUtil_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>C_TriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -86,11 +94,47 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>IdentifyCustomerFromCaseController</apexClass>
+        <apexClass>Chat_ConsoleAutomationController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>ExternalObjectQueryHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ExternalObjectQueryHandler_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FrequentFlyerService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FrequentFlyerService_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IdentifyCustomerComponentController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IdentifyCustomerComponentController_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LiveChatTranscriptTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LiveChatTranscriptTriggerHandler_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>LoginFlowTOTPAvailability</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LoginFlowTOTPUrl</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -118,7 +162,15 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>SASExternalDataSourceConnection_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SASExternalDataSourceProvider</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SASExternalDataSourceProvider_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

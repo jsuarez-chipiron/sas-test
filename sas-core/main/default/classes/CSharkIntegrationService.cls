@@ -10,12 +10,12 @@ public with sharing class CSharkIntegrationService {
      */
     public enum OperationName {CustomerGet, CustomersGet}
 
-    //TODO Use Frequent Flyer database field names as enums instead and use method to translate to operation parameters
     /**
      * Supported parameters to base search for customer on. The format of these search types
      * correspond with valid search terms in the C-Shark service.
      */
-    public enum SearchType {EuroBonus, Identifier, UserName, TPAccount, Email, PhoneNumber, LastName}
+    public enum SearchType {
+        EB_NUMBER, CODS_ID, TP_ACCOUNT, EMAIL, SITE_MEMBER, SUBSCRIPTION_ID}
 
     /**
      * Contains the valid fields to search for in the C-Shark API. The values correspond with the field
@@ -60,6 +60,7 @@ public with sharing class CSharkIntegrationService {
                     'APIM',
                     httpDataLog
             );
+            Savepoint sp = Database.setSavepoint();
             throw new CSharkIntegrationException(
                     'C-Shark service responded with an error ' + response.getStatusCode() +'. See log for details.'
             );
@@ -105,6 +106,7 @@ public with sharing class CSharkIntegrationService {
      * @return Request body string in XML-format.
      */
     private static String generateCustomersGetBody(SearchType searchType, Object SearchKey){
+        //TODO Create switch statement like in CustomerGet request with valid search terms for this operation
         String requestBody = '<?xml version="1.0" encoding="utf-8"?>' +
                 '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' +
                 '<Body>' +
@@ -119,17 +121,41 @@ public with sharing class CSharkIntegrationService {
     }
 
     /**
-     * Generates a request body for operation CustomerGet in C-Shark.
+     * Generates a request body for operation CustomerGet in C-Shark. The search type is translated
+     * to the matching search term for this request.
      * @param searchEngagementType The type of values to search for, e.g. EuroBonus
      * @param engagementSearchKey The value to search for, e.g. '554422441'
      * @return Request body string in XML-format.
      */
     private static String generateCustomerGetBody(SearchType searchEngagementType, Object engagementSearchKey){
-        String requestBody = '<?xml version="1.0" encoding="utf-8"?>' +
+        String searchTerm;
+        switch on searchEngagementType{
+            when EB_NUMBER {
+                searchTerm = 'EuroBonus';
+            }
+            when TP_ACCOUNT {
+                searchTerm = 'TP';
+            }
+            when CODS_ID {
+                searchTerm = 'Default';
+            }
+            when EMAIL {
+                searchTerm = 'Email';
+            }
+            when SUBSCRIPTION_ID {
+                searchTerm = 'Subscription';
+            }
+            when SITE_MEMBER {
+                searchTerm = 'SiteMember';
+            }
+        }
+
+        String requestBody =
+                '<?xml version="1.0" encoding="utf-8"?>' +
                 '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' +
                 '<Body>' +
                 '<CustomerGet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1">' +
-                '<searchEngagementType>' + searchEngagementType +'</searchEngagementType>' +
+                '<searchEngagementType>' + searchTerm +'</searchEngagementType>' +
                 '<engagementSearchKey>' + engagementSearchKey +'</engagementSearchKey>' +
                 '</CustomerGet>' +
                 '</Body>' +
@@ -149,7 +175,8 @@ public with sharing class CSharkIntegrationService {
      */
     public static List<Map<String, Object>> getMockRows(SearchType providedSearchType, Object providedSearchValue) {
         List<Map<String, Object>> dataRows = new List<Map<String, Object>>();
-        if (providedSearchType == SearchType.EuroBonus && providedSearchValue == '544108996') {
+        if ((providedSearchType == SearchType.EB_NUMBER && providedSearchValue == '544108996') ||
+                providedSearchType == SearchType.CODS_ID && providedSearchValue == '10787700') {
             StaticResource mockResponse = [SELECT Id, Body FROM StaticResource WHERE Name = 'FrequentFlyerMock_544108996'];
             dataRows = CSharkResponseParser.parseCustomerGetResponse(mockResponse.Body.toString());
         }
@@ -166,16 +193,22 @@ public with sharing class CSharkIntegrationService {
         SearchType matchedSearchType;
         switch on searchField{
             when 'EuroBonusNumber'{
-                matchedSearchType = SearchType.EuroBonus;
+                matchedSearchType = SearchType.EB_NUMBER;
             }
             when 'TravelPassAccountNumber'{
-                matchedSearchType = SearchType.TPAccount;
+                matchedSearchType = SearchType.TP_ACCOUNT;
             }
             when 'ExternalId'{
-                matchedSearchType = SearchType.Identifier;
+                matchedSearchType = SearchType.CODS_ID;
             }
             when 'HomeEMail'{
-                matchedSearchType = SearchType.Email;
+                matchedSearchType = SearchType.EMAIL;
+            }
+            when 'SubscriptionID'{
+                matchedSearchType = SearchType.SUBSCRIPTION_ID;
+            }
+            when 'UserName'{
+                matchedSearchType = SearchType.SITE_MEMBER;
             }
         }
         return matchedSearchType;

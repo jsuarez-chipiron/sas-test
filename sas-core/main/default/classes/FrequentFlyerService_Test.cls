@@ -96,7 +96,7 @@ private class FrequentFlyerService_Test {
      * with customer rows is returned.
      */
     @IsTest
-    static void shouldReturnTableOfCustomerRows(){
+    static void shouldReturnTableOfCustomerRowsBasedOnEBNumber(){
         StaticResourceCalloutMock mock = new StaticResourceCalloutMock();
         mock.setStaticResource('CustomerGetResponseWithCustomer');
         mock.setStatusCode(200);
@@ -109,6 +109,33 @@ private class FrequentFlyerService_Test {
                 DataSource.FilterType.EQUALS,
                 'EuroBonusNumber',
                 '700001423'
+        );
+
+        Test.startTest();
+        DataSource.TableResult tableResult = FrequentFlyerService.handleQuery(queryContext);
+        Test.stopTest();
+
+        System.assertEquals(1, tableResult.rows.size(), 'An unexpected number of customer rows was returned.');
+    }
+
+    /**
+ * Asserts that a query is handled correctly through all underlying services and that a table
+ * with customer rows is returned.
+ */
+    @IsTest
+    static void shouldReturnTableOfCustomerRowsBasedOnExternalId(){
+        StaticResourceCalloutMock mock = new StaticResourceCalloutMock();
+        mock.setStaticResource('CustomerGetResponseWithCustomer');
+        mock.setStatusCode(200);
+        mock.setHeader('Content-Type', 'text/xml');
+        Test.setMock(HttpCalloutMock.class, mock);
+
+        DataSource.QueryContext queryContext = new DataSource.QueryContext();
+        queryContext.tableSelection = new DataSource.TableSelection();
+        queryContext.tableSelection.filter = C_TestUtil.generateFilter(
+                DataSource.FilterType.EQUALS,
+                'ExternalId',
+                '10401209'
         );
 
         Test.startTest();
