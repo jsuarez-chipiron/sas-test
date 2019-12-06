@@ -510,6 +510,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>FrequentFlyer__x.MiddleName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>FrequentFlyer__x.Mobile__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -525,12 +530,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>FrequentFlyer__x.Salutation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>FrequentFlyer__x.SubscriptionId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>FrequentFlyer__x.TPAccountNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>FrequentFlyer__x.Title__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
