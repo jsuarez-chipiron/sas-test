@@ -64,7 +64,10 @@ private class IdentifyCustomerComponentController_Test {
                 EBReachesNextLevelPoints__c = null,
                 SubscriptionId__c = null,
                 TPAccountNumber__c = '678',
-                CompanyName__c = 'Company Name'
+                CompanyName__c = 'Company Name',
+                MiddleName__c = 'Middle',
+                Salutation__c = 'Salutation',
+                Title__c = 'Title'
         );
 
         List<Account> accounts = IdentifyCustomerComponentController.createAccountRecordsBasedOnFrequentFlyers(
@@ -101,6 +104,9 @@ private class IdentifyCustomerComponentController_Test {
         System.assertEquals(ff.SubscriptionId__c, acc.SubscriptionId__c);
         System.assertEquals(ff.TPAccountNumber__c, acc.TPAccountNumber__c);
         System.assertEquals(ff.CompanyName__c, acc.CompanyName__c);
+        System.assertEquals(ff.Title__c, acc.PersonTitle);
+        System.assertEquals(ff.Salutation__c, acc.Salutation);
+        System.assertEquals(ff.MiddleName__c, acc.MiddleName);
         System.assert(acc.LastRetrievedFromSource__c > DateTime.now().addMinutes(-5)
                 && acc.LastRetrievedFromSource__c < DateTime.now().addMinutes(5));
     }

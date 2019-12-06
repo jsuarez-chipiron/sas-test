@@ -32,7 +32,9 @@ public with sharing class CSharkIntegrationService_Test {
         System.assertEquals('M', dataRow.get('Gender'));
         System.assertEquals('10401209', dataRow.get('ExternalId'));
         System.assertEquals('CLMTestSix', dataRow.get('LastName'));
-        System.assertEquals('Mr', dataRow.get('Title'));
+        System.assertEquals('Senior Title', dataRow.get('Title'));
+        System.assertEquals('Middle', dataRow.get('MiddleName'));
+        System.assertEquals('Mr', dataRow.get('Salutation'));
         System.assertEquals('Teststreet 11', dataRow.get('HomeAddressLine1'));
         System.assertEquals('', dataRow.get('HomeAddressLine2'));
         System.assertEquals('', dataRow.get('HomeAddressLine2'));

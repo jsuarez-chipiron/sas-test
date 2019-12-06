@@ -20,7 +20,7 @@ public with sharing class IdentifyCustomerComponentController {
                         'CountryCode__c, CountyState__c, EmailPersonal__c, EBBalance__c, EBLevel__c, EBNumber__c, ' +
                         'FirstName__c, LastName__c, Gender__c, EBMemberSinceDate__c, Mobile__c, Name__c, Phone__c, ' +
                         'EBQualifyingPeriodStartDate__c, EBQualifyingPeriodEndDate__c, EBReachesNextLevelPoints__c, ' +
-                        'SubscriptionId__c, TPAccountNumber__c, ZipCode__c, CompanyName__c ' +
+                        'SubscriptionId__c, TPAccountNumber__c, ZipCode__c, CompanyName__c, Title__c, MiddleName__c, Salutation__c ' +
                         'FROM FrequentFlyer__x ' +
                         'WHERE ' + searchField + ' = \'' + searchValue + '\'';
         List<FrequentFlyer__x> externalData = Database.query(query);
@@ -73,6 +73,9 @@ public with sharing class IdentifyCustomerComponentController {
                     SubscriptionId__c = ff.SubscriptionId__c,
                     TPAccountNumber__c = ff.TPAccountNumber__c,
                     CompanyName__c = ff.CompanyName__c,
+                    PersonTitle = ff.Title__c,
+                    Salutation = ff.Salutation__c,
+                    MiddleName = ff.MiddleName__c,
                     LastRetrievedFromSource__c = Datetime.now()
             );
             accounts.add(newAccount);
