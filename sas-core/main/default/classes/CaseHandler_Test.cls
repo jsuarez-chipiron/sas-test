@@ -28,17 +28,33 @@ private class CaseHandler_Test {
 
     @isTest
     static void insertCaseTagRecords() {
-        List<Case> newCase  = TestDataFactory.createCases(1, null, null, null, null);
+        List<Case> newCase = TestDataFactory.createCases(1, null, null, null, null);
         newCase[0].CaseReason__c = 'TestReason 1';
         newCase[0].CaseSubReason__c = 'TestSubReason 1';
         newCase[0].CaseTags__c = 'TestTag1;TestTag2';
         newCase[0].Subject = 'TestCase';
         insert newCase;
         Case c = [SELECT Id FROM CASE WHERE Subject = 'TestCase'];
-        System.AssertEquals('TestReason 1', [SELECT Id, CaseTag__c From CaseTag__c Where CaseId__c = :c.Id AND Type__c = :CaseHandler.MAIN_TAG Limit 1][0].CaseTag__c);
-        System.AssertEquals('TestSubReason 1', [SELECT Id, CaseTag__c From CaseTag__c Where CaseId__c = :c.Id AND Type__c = :CaseHandler.SUB_MAIN_TAG Limit 1][0].CaseTag__c);
-        System.AssertEquals(2, [SELECT Id From CaseTag__c Where CaseId__c = :c.Id AND Type__c = :CaseHandler.ADDITIONAL_TAG].Size());
-        System.AssertEquals(4, [SELECT Id From CaseTag__c WHERE CaseId__c = :c.Id].size());
+
+        List<CaseTag__c> ctList = [SELECT Id, CaseTag__c, Type__c FROM CaseTag__c WHERE CaseId__c = :c.Id];
+        Map<String, List<CaseTag__c>> typeToTags = new Map<String, List<CaseTag__c>>();
+        for (CaseTag__c ct :ctList) {
+            if(typeToTags.containsKey(ct.Type__c)){
+                typeToTags.get(ct.Type__c).add(ct);
+            }
+            else {
+                List<CaseTag__C> ctsTags = new List<CaseTag__c>();
+                ctsTags.add(ct);
+                typeToTags.put(ct.Type__c, ctsTags);
+            }
+            system.debug(typeToTags);
+
+        }
+        System.AssertEquals('TestReason 1', typeToTags.get(CaseHandler.MAIN_TAG)[0].CaseTag__c);
+        System.AssertEquals('TestSubReason 1', typeToTags.get(CaseHandler.SUB_MAIN_TAG)[0].CaseTag__c);
+        System.AssertEquals(2, typeToTags.get(CaseHandler.ADDITIONAL_TAG).size());
+        System.AssertEquals(4, ctList.size());
+
     }
 
     //Test if case tag records is updated when a case is updated
@@ -48,14 +64,29 @@ private class CaseHandler_Test {
         c2.CaseReason__c = 'UpdatedTestReason 1';
         c2.CaseTags__c = 'TestTag2';
         update c2;
-        System.AssertEquals('UpdatedTestReason 1', [SELECT Id, CaseTag__c From CaseTag__c Where CaseId__c = :c2.Id AND Type__c = :CaseHandler.MAIN_TAG Limit 1][0].CaseTag__c);
-        System.AssertEquals('TestSubReason 1', [SELECT Id, CaseTag__c From CaseTag__c Where CaseId__c = :c2.Id AND Type__c = :CaseHandler.SUB_MAIN_TAG Limit 1][0].CaseTag__c);
-        System.AssertEquals(1, [SELECT Id From CaseTag__c Where CaseId__c = :c2.Id AND Type__c = :CaseHandler.MAIN_TAG].Size());
-        System.AssertEquals(1, [SELECT Id From CaseTag__c Where CaseId__c = :c2.Id AND Type__c = :CaseHandler.SUB_MAIN_TAG].Size());
-        System.AssertEquals(1, [SELECT Id From CaseTag__c Where CaseId__c = :c2.Id AND Type__c = :CaseHandler.ADDITIONAL_TAG].Size());
-        System.AssertEquals(3, [SELECT Id From CaseTag__c WHERE CaseId__c = :c2.Id].size());
-        System.AssertEquals(0, [SELECT Id From CaseTag__c WHERE CaseId__c != :c2.Id].size());
+        List<CaseTag__c> ctList = [SELECT Id, CaseTag__c, Type__c FROM CaseTag__c WHERE CaseId__c = :c2.Id];
+        system.debug(ctList);
+        Map<String, List<CaseTag__c>> typeToTags = new Map<String, List<CaseTag__c>>();
+        for (CaseTag__c ct :ctList) {
+            if (typeToTags.containsKey(ct.Type__c)) {
+                typeToTags.get(ct.Type__c).add(ct);
+            } else {
+                List<CaseTag__C> ctsTags = new List<CaseTag__c>();
+                ctsTags.add(ct);
+                typeToTags.put(ct.Type__c, ctsTags);
+            }
+        }
+
+        System.AssertEquals('UpdatedTestReason 1', typeToTags.get(CaseHandler.MAIN_TAG)[0].CaseTag__c);
+        System.AssertEquals('TestSubReason 1', typeToTags.get(CaseHandler.SUB_MAIN_TAG)[0].CaseTag__c);
+        System.AssertEquals(1, typeToTags.get(CaseHandler.MAIN_TAG).Size());
+        System.AssertEquals(1, typeToTags.get(CaseHandler.SUB_MAIN_TAG).Size());
+        System.AssertEquals(1, typeToTags.get(CaseHandler.ADDITIONAL_TAG).Size());
+        System.AssertEquals(1, typeToTags.get(CaseHandler.MAIN_TAG).Size());
+        System.AssertEquals(1, typeToTags.get(CaseHandler.MAIN_TAG).Size());
+        System.AssertEquals(3, ctList.Size());
     }
+
 
     //Test if case tag records is deleted if case is deleted
     @isTest
@@ -68,17 +99,21 @@ private class CaseHandler_Test {
     /**
         Test methods for AssignOwnerFromSoMe-Post
     */
-    @isTest
-    static void newSocialMediaCases(){
+    @isTest static void newSocialMediaCases(){
         List<SocialPost> socialPosts = [Select Id FROM SocialPost LIMIT 2];
         Case c1 = new Case (Status='New', Origin='Facebook', SourceId=socialPosts[0].Id);
         Case c2 = new Case (Status='New', Origin='Twitter', SourceId=socialPosts[1].Id);
-        List<Case> SoMeCases = new List<Case>();
-        SoMeCases.add(c1);
-        SoMeCases.add(c2);
-        insert SoMeCases;
-        System.assertEquals([SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe'].Id, [SELECT OwnerId FROM Case WHERE Id = :c1.Id].OwnerId);
-        System.assertEquals([SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe'].Id, [SELECT OwnerId FROM Case WHERE Id = :c2.Id].OwnerId);
+        List<Case> soMeCases = new List<Case>();
+        soMeCases.add(c1);
+        soMeCases.add(c2);
+        insert soMeCases;
+        Set<Id>caseIds = new Set<Id>();
+        caseIds.add(c1.Id);
+        caseIds.add(c2.Id);
+        List<Group> groupList = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe'];
+        List<Case> caseList = [SELECT OwnerId FROM Case Where Id =:caseIds];
+        System.assertEquals(groupList[0].Id, caseList[0].OwnerId);
+        System.assertEquals(groupList[0].Id, caseList[1].OwnerId);
 
     }
 
@@ -86,9 +121,8 @@ private class CaseHandler_Test {
        Test method for ValidateCaseTags - method check that you can not add a case tag with the same value as the case reason
        Test not to be able to create case with case reason and case tag with same value
     */
-    @isTest
-    static void testValidateCaseTagsOnInsert() {
-       // Test not to be able to create case with case reason and case tag with same value
+    @isTest static void testValidateCaseTagsOnInsert() {
+        // Test not to be able to create case with case reason and case tag with same value
         List<Case> newCases = TestDataFactory.createCases(1, null, null, null, null);
         newCases[0].CaseReason__c = 'TestReason 1';
         newCases[0].CaseSubReason__c = 'TestSubReason 1';
