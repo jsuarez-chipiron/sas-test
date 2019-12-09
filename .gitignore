@@ -34,3 +34,8 @@ $RECYCLE.BIN/
 .idea/
 SAS.iml
 IlluminatedCloud/
+
+#SF components excluded from respository
+sas-core/main/default/namedCredentials
+sas-core/main/default/authproviders
+
