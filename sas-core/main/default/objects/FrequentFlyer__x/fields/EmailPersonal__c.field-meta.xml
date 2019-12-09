@@ -6,9 +6,10 @@
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
-    <isSortingDisabled>true</isSortingDisabled>
+    <isSortingDisabled>false</isSortingDisabled>
     <label>Email - Personal</label>
+    <length>80</length>
     <required>false</required>
-    <type>Email</type>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>

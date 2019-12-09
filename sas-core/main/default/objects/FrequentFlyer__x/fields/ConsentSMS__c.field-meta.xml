@@ -8,7 +8,7 @@
     <inlineHelpText>Indicates that customer has given consent to receive SMS</inlineHelpText>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
-    <isSortingDisabled>true</isSortingDisabled>
+    <isSortingDisabled>false</isSortingDisabled>
     <label>Consent SMS</label>
     <type>Checkbox</type>
 </CustomField>
