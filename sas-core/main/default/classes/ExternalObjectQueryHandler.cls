@@ -133,7 +133,6 @@ public with sharing class ExternalObjectQueryHandler {
          */
         @TestVisible
         private Boolean filterRow(DataSource.Filter filter) {
-            Boolean rowValid = false;
             Integer filtersTrue = 0;
             Integer numberOfSubFilters = filter.subfilters != null ? filter.subfilters.size() : 0;
             if (filter.subfilters != null) {
@@ -145,12 +144,12 @@ public with sharing class ExternalObjectQueryHandler {
             }
             if (filter.type == DataSource.FilterType.AND_) {
                 if (filtersTrue == numberOfSubFilters) {
-                    rowValid = true;
+                    return true;
                 }
             } else if (filtersTrue >= 1) {
-                rowValid = true;
+                return true;
             }
-            return rowValid;
+            return false;
         }
 
         /**
@@ -160,26 +159,73 @@ public with sharing class ExternalObjectQueryHandler {
          * @return
          */
         private Boolean evaluateFilter(DataSource.Filter filter) {
-            Boolean filterResult = false;
             Object filterValue = filter.columnValue;
             Object actualValue = row.get(filter.columnName);
 
             if (filter.type == DataSource.FilterType.EQUALS) {
-                if (filterValue == actualValue) filterResult = true;
+                if (filterValue == actualValue) return true;
             } else if (filter.type == DataSource.FilterType.NOT_EQUALS) {
-                if (filterValue != actualValue) filterResult = true;
+                if (filterValue != actualValue) return true;
             } else if (filter.type == DataSource.FilterType.LIKE_) {
                 throw new CSharkIntegrationService.CSharkIntegrationException('LIKE is not a valid expression for this object');
             } else if (filter.type == DataSource.FilterType.GREATER_THAN) {
-                if (Integer.valueOf(filterValue) < Integer.valueOf(actualValue)) filterResult = true;
+                if(filterValue instanceof Integer) {
+                    if (Integer.valueOf(filterValue) < Integer.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof String){
+                    if (String.valueOf(filterValue) < String.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof Boolean){
+                    if (Boolean.valueOf(filterValue) == false && Boolean.valueOf(actualValue) == true) return true;
+                } else if(filterValue instanceof Date){
+                    if (Date.valueOf(filterValue) < Date.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof Datetime){
+                    if (Datetime.valueOf(filterValue) < Datetime.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof Decimal){
+                    if (Double.valueOf(filterValue) < Double.valueOf(actualValue)) return true;
+                }
             } else if (filter.type == DataSource.FilterType.GREATER_THAN_OR_EQUAL_TO) {
-                if (Integer.valueOf(filterValue) <= Integer.valueOf(actualValue)) filterResult = true;
+                if(filterValue instanceof Integer) {
+                    if (Integer.valueOf(filterValue) <= Integer.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof String){
+                    if (String.valueOf(filterValue) <= String.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof Boolean){
+                    return true;
+                } else if(filterValue instanceof Date){
+                    if (Date.valueOf(filterValue) <= Date.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof Datetime){
+                    if (Datetime.valueOf(filterValue) <= Datetime.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof Decimal){
+                    if (Double.valueOf(filterValue) <= Double.valueOf(actualValue)) return true;
+                }
             } else if (filter.type == DataSource.FilterType.LESS_THAN) {
-                if (Integer.valueOf(filterValue) > Integer.valueOf(actualValue)) filterResult = true;
+                if(filterValue instanceof Integer) {
+                    if (Integer.valueOf(filterValue) > Integer.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof String){
+                    if (String.valueOf(filterValue) > String.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof Boolean){
+                    if (Boolean.valueOf(filterValue) == true && Boolean.valueOf(actualValue) == false) return true;
+                } else if(filterValue instanceof Date){
+                    if (Date.valueOf(filterValue) > Date.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof Datetime){
+                    if (Datetime.valueOf(filterValue) > Datetime.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof Decimal){
+                    if (Double.valueOf(filterValue) > Double.valueOf(actualValue)) return true;
+                }
             } else if (filter.type == DataSource.FilterType.LESS_THAN_OR_EQUAL_TO) {
-                if (Integer.valueOf(filterValue) >= Integer.valueOf(actualValue)) filterResult = true;
+                if(filterValue instanceof Integer) {
+                    if (Integer.valueOf(filterValue) >= Integer.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof String){
+                    if (String.valueOf(filterValue) >= String.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof Boolean){
+                    return true;
+                } else if(filterValue instanceof Date){
+                    if (Date.valueOf(filterValue) >= Date.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof Datetime){
+                    if (Datetime.valueOf(filterValue) >= Datetime.valueOf(actualValue)) return true;
+                } else if(filterValue instanceof Decimal){
+                    if (Double.valueOf(filterValue) >= Double.valueOf(actualValue)) return true;
+                }
             }
-            return filterResult;
+            return false;
         }
     }
 

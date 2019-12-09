@@ -339,7 +339,7 @@ public with sharing class ExternalObjectQueryHandler_Test {
 
     /**
      * Asserts that the QueryHandler Order function can order a list of data rows with a simple order
-     * clause of String type, containing only one sort field
+     * statement of String type, containing only one sort field
      */
     @IsTest
     static void shouldReturnOrderedRowsBasedOnSimpleStringOrder(){
@@ -366,7 +366,7 @@ public with sharing class ExternalObjectQueryHandler_Test {
 
     /**
      * Asserts that the QueryHandler Order function can order a list of data rows with a simple order
-     * clause of Date type, containing only one sort field
+     * statement of Date type, containing only one sort field
      */
     @IsTest
     static void shouldReturnOrderedRowsBasedOnSimpleDateOrder(){
@@ -393,7 +393,7 @@ public with sharing class ExternalObjectQueryHandler_Test {
 
     /**
      * Asserts that the QueryHandler Order function can order a list of data rows with a simple order
-     * clause of Datetime type, containing only one sort field
+     * statement of Datetime type, containing only one sort field
      */
     @IsTest
     static void shouldReturnOrderedRowsBasedOnSimpleDatetimeOrder(){
@@ -420,7 +420,7 @@ public with sharing class ExternalObjectQueryHandler_Test {
 
     /**
      * Asserts that the QueryHandler Order function can order a list of data rows with a simple order
-     * clause of Integer type, containing only one sort field
+     * statement of Integer type, containing only one sort field
      */
     @IsTest
     static void shouldReturnOrderedRowsBasedOnSimpleIntegerOrder(){
@@ -448,7 +448,7 @@ public with sharing class ExternalObjectQueryHandler_Test {
 
     /**
      * Asserts that the QueryHandler Order function can order a list of data rows with a simple order
-     * clause of Decimal type, containing only one sort field
+     * statement of Decimal type, containing only one sort field
      */
     @IsTest
     static void shouldReturnOrderedRowsBasedOnSimpleDecimalOrder(){
@@ -476,7 +476,7 @@ public with sharing class ExternalObjectQueryHandler_Test {
 
     /**
      * Asserts that the QueryHandler Order function can order a list of data rows with a simple order
-     * clause of Boolean type, containing only one sort field
+     * statement of Boolean type, containing only one sort field
      */
     @IsTest
     static void shouldReturnOrderedRowsBasedOnSimpleBooleanOrder(){
@@ -504,7 +504,7 @@ public with sharing class ExternalObjectQueryHandler_Test {
     
     /**
      * Asserts that the QueryHandler Order function can order a list of data rows with a complex order
-     * clause, containing multiple sort fields
+     * statement, containing multiple sort fields
      */
     @IsTest
     static void shouldReturnOrderRowsBasedOnComplexOrder(){
@@ -542,5 +542,28 @@ public with sharing class ExternalObjectQueryHandler_Test {
         System.assertEquals(rows[3], orderedRows[5]);
         System.assertEquals(rows[4], orderedRows[3]);
         System.assertEquals(rows[5], orderedRows[1]);
+    }
+
+    /**
+     * Asserts that when rows are processed without an order statement, the order of the rows remain intact
+     */
+    @IsTest
+    static void shouldReturnSameOrderOfRowsWhenMissingOrderStatement(){
+        DataSource.QueryContext queryContext= new DataSource.QueryContext();
+        queryContext.tableSelection = new DataSource.TableSelection();
+
+        List<Map<String, Object>> rows = new List<Map<String, Object>>{
+                new Map<String, Object>{'ColumnName1' => 'Value3', 'ColumnName2' => 'Value32', 'ColumnName3' => 1},
+                new Map<String, Object>{'ColumnName1' => 'Value2', 'ColumnName2' => 'Value22', 'ColumnName3' => 2},
+                new Map<String, Object>{'ColumnName1' => 'Value1', 'ColumnName2' => 'Value11', 'ColumnName3' => 3},
+                new Map<String, Object>{'ColumnName1' => 'Value3', 'ColumnName2' => 'Value31', 'ColumnName3' => 4},
+                new Map<String, Object>{'ColumnName1' => 'Value2', 'ColumnName2' => 'Value21', 'ColumnName3' => 5},
+                new Map<String, Object>{'ColumnName1' => 'Value1', 'ColumnName2' => 'Value11', 'ColumnName3' => 6}
+        };
+
+        ExternalObjectQueryHandler handler = new ExternalObjectQueryHandler(queryContext);
+        List<Map<String, Object>> orderedRows = handler.orderRows(rows);
+
+        System.assertEquals(rows, orderedRows, 'The order was different the original order, should not change if order statement is missing');
     }
 }
