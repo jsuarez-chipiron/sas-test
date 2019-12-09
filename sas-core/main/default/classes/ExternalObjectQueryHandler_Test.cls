@@ -1,8 +1,8 @@
 /**
  * @author Anton Norell
  * @date 2019-12-01
- * @description Test class for ExternalObjectQueryHandler. Functionality in class is tested separately
- * from any service using the handler.
+ * @description Test class for ExternalObjectQueryHandler.
+ * Functionality in class is tested separately from any service using the handler.
  */
 @IsTest
 public with sharing class ExternalObjectQueryHandler_Test {
@@ -337,8 +337,210 @@ public with sharing class ExternalObjectQueryHandler_Test {
         System.assertEquals(rowMatchingFilter, validRows[0], 'The returned row was not the correct one.');
     }
 
+    /**
+     * Asserts that the QueryHandler Order function can order a list of data rows with a simple order
+     * clause of String type, containing only one sort field
+     */
     @IsTest
-    static void shouldReturnOrderRowsBasedOnQuery(){
-        //TODO Implement test method
+    static void shouldReturnOrderedRowsBasedOnSimpleStringOrder(){
+        DataSource.QueryContext queryContext= new DataSource.QueryContext();
+        queryContext.tableSelection = new DataSource.TableSelection();
+        queryContext.tableSelection.order =  new List<DataSource.Order>();
+        DataSource.Order order = new DataSource.Order();
+        order.columnName = 'ColumnName';
+        order.direction = DataSource.OrderDirection.ASCENDING;
+        queryContext.tableSelection.order.add(order);
+        List<Map<String, Object>> originalRows = new List<Map<String, Object>>{
+                new Map<String, Object>{'ColumnName' => 'Last3'},
+                new Map<String, Object>{'ColumnName' => 'Last1'},
+                new Map<String, Object>{'ColumnName' => 'Last2'}
+        };
+
+        ExternalObjectQueryHandler handler = new ExternalObjectQueryHandler(queryContext);
+        List<Map<String, Object>> orderedRows = handler.orderRows(originalRows);
+
+        System.assertEquals(originalRows[0], orderedRows[2]);
+        System.assertEquals(originalRows[1], orderedRows[0]);
+        System.assertEquals(originalRows[2], orderedRows[1]);
+    }
+
+    /**
+     * Asserts that the QueryHandler Order function can order a list of data rows with a simple order
+     * clause of Date type, containing only one sort field
+     */
+    @IsTest
+    static void shouldReturnOrderedRowsBasedOnSimpleDateOrder(){
+        DataSource.QueryContext queryContext= new DataSource.QueryContext();
+        queryContext.tableSelection = new DataSource.TableSelection();
+        queryContext.tableSelection.order =  new List<DataSource.Order>();
+        DataSource.Order order = new DataSource.Order();
+        order.columnName = 'ColumnName';
+        order.direction = DataSource.OrderDirection.DESCENDING;
+        queryContext.tableSelection.order.add(order);
+        List<Map<String, Object>> originalRows = new List<Map<String, Object>>{
+                new Map<String, Object>{'ColumnName' => Date.today().addYears(-2)},
+                new Map<String, Object>{'ColumnName' => Date.today()},
+                new Map<String, Object>{'ColumnName' => Date.today().addYears(-1)}
+        };
+
+        ExternalObjectQueryHandler handler = new ExternalObjectQueryHandler(queryContext);
+        List<Map<String, Object>> orderedRows = handler.orderRows(originalRows);
+
+        System.assertEquals(originalRows[0], orderedRows[2]);
+        System.assertEquals(originalRows[1], orderedRows[0]);
+        System.assertEquals(originalRows[2], orderedRows[1]);
+    }
+
+    /**
+     * Asserts that the QueryHandler Order function can order a list of data rows with a simple order
+     * clause of Datetime type, containing only one sort field
+     */
+    @IsTest
+    static void shouldReturnOrderedRowsBasedOnSimpleDatetimeOrder(){
+        DataSource.QueryContext queryContext= new DataSource.QueryContext();
+        queryContext.tableSelection = new DataSource.TableSelection();
+        queryContext.tableSelection.order =  new List<DataSource.Order>();
+        DataSource.Order order = new DataSource.Order();
+        order.columnName = 'ColumnName';
+        order.direction = DataSource.OrderDirection.DESCENDING;
+        queryContext.tableSelection.order.add(order);
+        List<Map<String, Object>> originalRows = new List<Map<String, Object>>{
+                new Map<String, Object>{'ColumnName' => Datetime.now().addYears(-2)},
+                new Map<String, Object>{'ColumnName' => Datetime.now()},
+                new Map<String, Object>{'ColumnName' => Datetime.now().addYears(-1)}
+        };
+
+        ExternalObjectQueryHandler handler = new ExternalObjectQueryHandler(queryContext);
+        List<Map<String, Object>> orderedRows = handler.orderRows(originalRows);
+
+        System.assertEquals(originalRows[0], orderedRows[2]);
+        System.assertEquals(originalRows[1], orderedRows[0]);
+        System.assertEquals(originalRows[2], orderedRows[1]);
+    }
+
+    /**
+     * Asserts that the QueryHandler Order function can order a list of data rows with a simple order
+     * clause of Integer type, containing only one sort field
+     */
+    @IsTest
+    static void shouldReturnOrderedRowsBasedOnSimpleIntegerOrder(){
+        DataSource.QueryContext queryContext= new DataSource.QueryContext();
+        queryContext.tableSelection = new DataSource.TableSelection();
+        queryContext.tableSelection.order =  new List<DataSource.Order>();
+        DataSource.Order order = new DataSource.Order();
+        order.columnName = 'ColumnName';
+        order.direction = DataSource.OrderDirection.ASCENDING;
+        queryContext.tableSelection.order.add(order);
+
+        List<Map<String, Object>> originalRows = new List<Map<String, Object>>{
+                new Map<String, Object>{'ColumnName' => 3},
+                new Map<String, Object>{'ColumnName' => 1},
+                new Map<String, Object>{'ColumnName' => 2}
+        };
+
+        ExternalObjectQueryHandler handler = new ExternalObjectQueryHandler(queryContext);
+        List<Map<String, Object>> orderedRows = handler.orderRows(originalRows);
+
+        System.assertEquals(originalRows[0], orderedRows[2]);
+        System.assertEquals(originalRows[1], orderedRows[0]);
+        System.assertEquals(originalRows[2], orderedRows[1]);
+    }
+
+    /**
+     * Asserts that the QueryHandler Order function can order a list of data rows with a simple order
+     * clause of Decimal type, containing only one sort field
+     */
+    @IsTest
+    static void shouldReturnOrderedRowsBasedOnSimpleDecimalOrder(){
+        DataSource.QueryContext queryContext= new DataSource.QueryContext();
+        queryContext.tableSelection = new DataSource.TableSelection();
+        queryContext.tableSelection.order =  new List<DataSource.Order>();
+        DataSource.Order order = new DataSource.Order();
+        order.columnName = 'ColumnName';
+        order.direction = DataSource.OrderDirection.ASCENDING;
+        queryContext.tableSelection.order.add(order);
+
+        List<Map<String, Object>> originalRows = new List<Map<String, Object>>{
+                new Map<String, Object>{'ColumnName' => 1.3},
+                new Map<String, Object>{'ColumnName' => 0.2},
+                new Map<String, Object>{'ColumnName' => 1.2}
+        };
+
+        ExternalObjectQueryHandler handler = new ExternalObjectQueryHandler(queryContext);
+        List<Map<String, Object>> orderedRows = handler.orderRows(originalRows);
+
+        System.assertEquals(originalRows[0], orderedRows[2]);
+        System.assertEquals(originalRows[1], orderedRows[0]);
+        System.assertEquals(originalRows[2], orderedRows[1]);
+    }
+
+    /**
+     * Asserts that the QueryHandler Order function can order a list of data rows with a simple order
+     * clause of Boolean type, containing only one sort field
+     */
+    @IsTest
+    static void shouldReturnOrderedRowsBasedOnSimpleBooleanOrder(){
+        DataSource.QueryContext queryContext= new DataSource.QueryContext();
+        queryContext.tableSelection = new DataSource.TableSelection();
+        queryContext.tableSelection.order =  new List<DataSource.Order>();
+        DataSource.Order order = new DataSource.Order();
+        order.columnName = 'ColumnName';
+        order.direction = DataSource.OrderDirection.ASCENDING;
+        queryContext.tableSelection.order.add(order);
+
+        List<Map<String, Object>> originalRows = new List<Map<String, Object>>{
+                new Map<String, Object>{'ColumnName' => true},
+                new Map<String, Object>{'ColumnName' => true},
+                new Map<String, Object>{'ColumnName' => false}
+        };
+
+        ExternalObjectQueryHandler handler = new ExternalObjectQueryHandler(queryContext);
+        List<Map<String, Object>> orderedRows = handler.orderRows(originalRows);
+
+        System.assertEquals(originalRows[0], orderedRows[1]);
+        System.assertEquals(originalRows[1], orderedRows[2]);
+        System.assertEquals(originalRows[2], orderedRows[0]);
+    }
+    
+    /**
+     * Asserts that the QueryHandler Order function can order a list of data rows with a complex order
+     * clause, containing multiple sort fields
+     */
+    @IsTest
+    static void shouldReturnOrderRowsBasedOnComplexOrder(){
+        DataSource.QueryContext queryContext= new DataSource.QueryContext();
+        queryContext.tableSelection = new DataSource.TableSelection();
+        queryContext.tableSelection.order =  new List<DataSource.Order>();
+        DataSource.Order order1 = new DataSource.Order();
+        order1.columnName = 'ColumnName1';
+        order1.direction = DataSource.OrderDirection.ASCENDING;
+        queryContext.tableSelection.order.add(order1);
+        DataSource.Order order2 = new DataSource.Order();
+        order2.columnName = 'ColumnName2';
+        order2.direction = DataSource.OrderDirection.DESCENDING;
+        queryContext.tableSelection.order.add(order2);
+        DataSource.Order order3 = new DataSource.Order();
+        order3.columnName = 'ColumnName3';
+        order3.direction = DataSource.OrderDirection.ASCENDING;
+        queryContext.tableSelection.order.add(order3);
+
+        List<Map<String, Object>> rows = new List<Map<String, Object>>{
+                new Map<String, Object>{'ColumnName1' => 'Value3', 'ColumnName2' => 'Value32', 'ColumnName3' => 1},
+                new Map<String, Object>{'ColumnName1' => 'Value2', 'ColumnName2' => 'Value22', 'ColumnName3' => 2},
+                new Map<String, Object>{'ColumnName1' => 'Value1', 'ColumnName2' => 'Value11', 'ColumnName3' => 3},
+                new Map<String, Object>{'ColumnName1' => 'Value3', 'ColumnName2' => 'Value31', 'ColumnName3' => 4},
+                new Map<String, Object>{'ColumnName1' => 'Value2', 'ColumnName2' => 'Value21', 'ColumnName3' => 5},
+                new Map<String, Object>{'ColumnName1' => 'Value1', 'ColumnName2' => 'Value11', 'ColumnName3' => 6}
+        };
+
+        ExternalObjectQueryHandler handler = new ExternalObjectQueryHandler(queryContext);
+        List<Map<String, Object>> orderedRows = handler.orderRows(rows);
+
+        System.assertEquals(rows[0], orderedRows[4]);
+        System.assertEquals(rows[1], orderedRows[2]);
+        System.assertEquals(rows[2], orderedRows[0]);
+        System.assertEquals(rows[3], orderedRows[5]);
+        System.assertEquals(rows[4], orderedRows[3]);
+        System.assertEquals(rows[5], orderedRows[1]);
     }
 }

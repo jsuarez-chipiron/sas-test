@@ -205,9 +205,4 @@ private class FrequentFlyerService_Test {
 
         System.assertEquals(0, tableResult.rows.size(), 'An unexpected number of customer rows was returned.');
     }
-
-    @IsTest
-    static void shouldReturnAccountBasedOnFrequentFlyers(){
-        //TODO Implement test method when functionality exists
-    }
 }

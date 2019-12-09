@@ -70,44 +70,129 @@ private class IdentifyCustomerComponentController_Test {
                 Title__c = 'Title'
         );
 
-        List<Account> accounts = IdentifyCustomerComponentController.createAccountRecordsBasedOnFrequentFlyers(
+        Account account = IdentifyCustomerComponentController.createAccountRecordBasedOnFrequentFlyers(
                 new List<FrequentFlyer__x>{ff}
         );
-        insert accounts;
 
-        System.assertEquals(1, accounts.size(), 'Method returned wrong number of accounts - should contain one account');
-        Account acc = accounts[0];
-        System.assertEquals(RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER, acc.RecordTypeId);
-        System.assertEquals(ff.ExternalId, acc.FrequentFlyer__c);
-        System.assertEquals(ff.AddressLine1__c, acc.PersonMailingStreet);
-        System.assertEquals(ff.City__c, acc.PersonMailingCity);
-        System.assertEquals(ff.ZipCode__c, acc.PersonMailingPostalCode);
-        System.assertEquals(ff.CountryCode__c, acc.PersonMailingCountry);
-        System.assertEquals(ff.CountyState__c, acc.PersonMailingState);
-        System.assertEquals(ff.BirthDate__c, acc.PersonBirthdate);
-        System.assertEquals(ff.ConsentEmail__c, acc.ConsentEmail__c);
-        System.assertEquals(ff.ConsentEB__c, acc.ConsentEuroBonus__c);
-        System.assertEquals(ff.ConsentEB0__c, acc.ConsentSiteProfile__c);
-        System.assertEquals(ff.ConsentSMS__c, acc.ConsentSMS__c);
-        System.assertEquals(ff.ConsentTelemarketing__c, acc.ConsentTelemarketing__c);
-        System.assertEquals(ff.EmailPersonal__c, acc.PersonEmail);
-        System.assertEquals(ff.EBBalance__c, acc.EBBalance__c);
-        System.assertEquals(ff.EBLevel__c, acc.EBLevel__c);
-        System.assertEquals(ff.EBNumber__c, acc.EBNumber__c);
-        System.assertEquals(ff.FirstName__c, acc.FirstName);
-        System.assertEquals(ff.Gender__c, acc.Gender__c);
-        System.assertEquals(ff.LastName__c, acc.LastName);
-        System.assertEquals(ff.EBMemberSinceDate__c, acc.EBMemberSinceDate__c);
-        System.assertEquals(ff.EBQualifyingPeriodEndDate__c, acc.EBQualifyingPeriodEndDate__c);
-        System.assertEquals(ff.EBQualifyingPeriodStartDate__c, acc.EBQualifyingPeriodStartDate__c);
-        System.assertEquals(ff.EBReachesNextLevelPoints__c, acc.EBReachesNextLevelPoints__c);
-        System.assertEquals(ff.SubscriptionId__c, acc.SubscriptionId__c);
-        System.assertEquals(ff.TPAccountNumber__c, acc.TPAccountNumber__c);
-        System.assertEquals(ff.CompanyName__c, acc.CompanyName__c);
-        System.assertEquals(ff.Title__c, acc.PersonTitle);
-        System.assertEquals(ff.Salutation__c, acc.Salutation);
-        System.assertEquals(ff.MiddleName__c, acc.MiddleName);
-        System.assert(acc.LastRetrievedFromSource__c > DateTime.now().addMinutes(-5)
-                && acc.LastRetrievedFromSource__c < DateTime.now().addMinutes(5));
+        System.assertNotEquals(null, account, 'Method did not return expected account');
+        System.assertEquals(RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER, account.RecordTypeId);
+        System.assertEquals(ff.ExternalId, account.FrequentFlyer__c);
+        System.assertEquals(ff.AddressLine1__c, account.PersonMailingStreet);
+        System.assertEquals(ff.City__c, account.PersonMailingCity);
+        System.assertEquals(ff.ZipCode__c, account.PersonMailingPostalCode);
+        System.assertEquals(ff.CountryCode__c, account.PersonMailingCountry);
+        System.assertEquals(ff.CountyState__c, account.PersonMailingState);
+        System.assertEquals(ff.BirthDate__c, account.PersonBirthdate);
+        System.assertEquals(ff.ConsentEmail__c, account.ConsentEmail__c);
+        System.assertEquals(ff.ConsentEB__c, account.ConsentEuroBonus__c);
+        System.assertEquals(ff.ConsentEB0__c, account.ConsentSiteProfile__c);
+        System.assertEquals(ff.ConsentSMS__c, account.ConsentSMS__c);
+        System.assertEquals(ff.ConsentTelemarketing__c, account.ConsentTelemarketing__c);
+        System.assertEquals(ff.EmailPersonal__c, account.PersonEmail);
+        System.assertEquals(ff.EBBalance__c, account.EBBalance__c);
+        System.assertEquals(ff.EBLevel__c, account.EBLevel__c);
+        System.assertEquals(ff.EBNumber__c, account.EBNumber__c);
+        System.assertEquals(ff.FirstName__c, account.FirstName);
+        System.assertEquals(ff.Gender__c, account.Gender__c);
+        System.assertEquals(ff.LastName__c, account.LastName);
+        System.assertEquals(ff.EBMemberSinceDate__c, account.EBMemberSinceDate__c);
+        System.assertEquals(ff.EBQualifyingPeriodEndDate__c, account.EBQualifyingPeriodEndDate__c);
+        System.assertEquals(ff.EBQualifyingPeriodStartDate__c, account.EBQualifyingPeriodStartDate__c);
+        System.assertEquals(ff.EBReachesNextLevelPoints__c, account.EBReachesNextLevelPoints__c);
+        System.assertEquals(ff.SubscriptionId__c, account.SubscriptionId__c);
+        System.assertEquals(ff.TPAccountNumber__c, account.TPAccountNumber__c);
+        System.assertEquals(ff.CompanyName__c, account.CompanyName__c);
+        System.assertEquals(ff.Title__c, account.PersonTitle);
+        System.assertEquals(ff.Salutation__c, account.Salutation);
+        System.assertEquals(ff.MiddleName__c, account.MiddleName);
+        System.assert(account.LastRetrievedFromSource__c > DateTime.now().addMinutes(-5)
+                && account.LastRetrievedFromSource__c < DateTime.now().addMinutes(5));
     }
+
+    /**
+     * Asserts that an account record is inserted based on a provided Frequent Flyer record provided to controller
+     */
+    @IsTest
+    static void shouldInsertBasedOnFrequentFlyer(){
+        FrequentFlyer__x ff = new FrequentFlyer__x(
+                ExternalId = '123',
+                AddressLine1__c = 'AddressLine1',
+                City__c = 'City',
+                ZipCode__c = 'ZipCode',
+                CountryCode__c = 'Country',
+                CountyState__c = 'State',
+                BirthDate__c = Date.today().addYears(-2),
+                ConsentEmail__c = true,
+                ConsentEB__c = false,
+                ConsentSMS__c = true,
+                ConsentEB0__c = false,
+                ConsentTelemarketing__c = true,
+                EmailPersonal__c = 'email@email.com',
+                EBBalance__c = 1000,
+                EBLevel__c = null,
+                EBNumber__c = '321',
+                FirstName__c = 'First Name',
+                Gender__c = 'F',
+                LastName__c = 'Last Name',
+                EBMemberSinceDate__c = null,
+                Mobile__c = '0701234567',
+                Phone__c = null,
+                EBQualifyingPeriodEndDate__c = Date.today().addYears(1),
+                EBQualifyingPeriodStartDate__c = Date.today(),
+                EBReachesNextLevelPoints__c = null,
+                SubscriptionId__c = null,
+                TPAccountNumber__c = '678',
+                CompanyName__c = 'Company Name',
+                MiddleName__c = 'Middle',
+                Salutation__c = 'Salutation',
+                Title__c = 'Title'
+        );
+
+        IdentifyCustomerComponentController.createAccountRecordBasedOnFrequentFlyers(new List<FrequentFlyer__x>{ff});
+
+        System.assertEquals(1, [SELECT Id FROM Account].size(), 'Expected 1 account to be inserted based on Frequent Flyer');
+    }
+
+    /**
+     * Asserts that the controller can handle an empty return when querying for Frequent Flyer
+     */
+    @IsTest
+    static void shouldReturnNullIfFrequentFlyerListIfEmpty(){
+        Account account = IdentifyCustomerComponentController.createAccountRecordBasedOnFrequentFlyers(
+                new List<FrequentFlyer__x>()
+        );
+
+        System.assertEquals(null, account);
+    }
+
+    /**
+     * Asserts that the query for the external object Frequent Flyer can run correctly. As external object queries
+     * are not supported in test context, the test should return a null result.
+     */
+    @IsTest
+    static void shouldReturnNullResultDueToNoSupportForQuery(){
+        Account account = IdentifyCustomerComponentController.findCustomer('EBNumber__c', '700001423');
+
+        System.assertEquals(null, account);
+    }
+
+    /**
+     * Asserts that the query for the external object Frequent Flyer can run correctly. As external object queries
+     * are not supported in test context, the test catches the expected exception and verifies the message.
+     *//*
+    @IsTest
+    static void shouldThrowExceptionDueToUnsupportedExternalObjectQuery(){
+        Exception returnedException;
+        try{
+            Account account = IdentifyCustomerComponentController.findCustomer('EBNumber__c', '700001423');
+
+        } catch (QueryException e){
+            returnedException = e;
+        }
+        System.assertNotEquals(null, returnedException, 'Expected a QueryException to be thrown');
+        System.assertEquals('entity type FrequentFlyer__x does not support query',
+                returnedException.getMessage(),
+                'Expected the exception to contain another message. Check that used query is not malformed. '
+        );
+    }*/
 }

@@ -24,12 +24,7 @@ public with sharing class IdentifyCustomerComponentController {
                         'FROM FrequentFlyer__x ' +
                         'WHERE ' + searchField + ' = \'' + searchValue + '\'';
         List<FrequentFlyer__x> externalData = Database.query(query);
-        List<Account> syncedAccounts = createAccountRecordsBasedOnFrequentFlyers(externalData);
-        if(!syncedAccounts.isEmpty()){
-            upsert syncedAccounts[0] CODSId__c;
-            return syncedAccounts[0];
-        }
-        return null;
+        return createAccountRecordBasedOnFrequentFlyers(externalData);
     }
 
     /**
@@ -39,7 +34,7 @@ public with sharing class IdentifyCustomerComponentController {
      * @return List of account generated
      */
     @TestVisible
-    private static List<Account> createAccountRecordsBasedOnFrequentFlyers(List<FrequentFlyer__x> frequentFlyers){
+    private static Account createAccountRecordBasedOnFrequentFlyers(List<FrequentFlyer__x> frequentFlyers){
         List<Account> accounts = new List<Account>();
         for(FrequentFlyer__x ff:frequentFlyers){
             Account newAccount = new Account(
@@ -80,7 +75,11 @@ public with sharing class IdentifyCustomerComponentController {
             );
             accounts.add(newAccount);
         }
-        return accounts;
+        if(!accounts.isEmpty()){
+            upsert accounts[0] CODSId__c;
+            return accounts[0];
+        }
+        return null;
     }
 
     /**

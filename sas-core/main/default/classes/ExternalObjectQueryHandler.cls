@@ -19,6 +19,11 @@ public with sharing class ExternalObjectQueryHandler {
     private Map<String, Set<Object>> validApiSearchTermsAndValues;
 
     /**
+     * Variable used to store the list of order clauses for a query when the ordering function is called.
+     */
+    private static List<DataSource.Order> orderList;
+
+    /**
      * Constructor for class. Extracts values from the QueryContext needed by methods in the class to class variables.
      * @param queryContext QueryContext object for the query for an external object.
      */
@@ -44,10 +49,22 @@ public with sharing class ExternalObjectQueryHandler {
     /**
      * Used to order supplied rows based on the query supplied for class instance.
      * @param rows List of rows to be ordered.
-     * @return Ordered list with rows.
+     * @return Ordered list with rows. If no order clause exists, the original list is returned.
      */
     public List<Map<String, Object>> orderRows(List<Map<String, Object>> rows){
-        //TODO Implement order functionality for rows
+        if(tableSelection.order != null && tableSelection.order.size() != 0){
+            orderList = tableSelection.order;
+            List<DataRowSortWrapper> wrappers = new List<DataRowSortWrapper>();
+            for(Map<String, Object> row:rows){
+                wrappers.add(new DataRowSortWrapper(row));
+            }
+            wrappers.sort();
+            List<Map<String, Object>> orderedRows = new List<Map<String, Object>>();
+            for(DataRowSortWrapper wrapper:wrappers){
+                orderedRows.add(wrapper.dataRow);
+            }
+            return orderedRows;
+        }
         return rows;
     }
 
@@ -163,6 +180,90 @@ public with sharing class ExternalObjectQueryHandler {
                 if (Integer.valueOf(filterValue) >= Integer.valueOf(actualValue)) filterResult = true;
             }
             return filterResult;
+        }
+    }
+
+    /**
+     * @author Anton Norell
+     * @date 2019-12-06
+     * @description Wrapper class to enable ordering of a list of data rows. Each data row is wrapped and the comparable
+     * interface is implemented for the wrapper to support sorting of the wrapper records.
+     */
+    private class DataRowSortWrapper implements Comparable{
+        /**
+         * Holds the wrapped row which values should be used to sort a list
+         */
+        private Map<String, Object> dataRow;
+
+        /**
+         * Constructor for class that wraps the provided data row
+         * @param row
+         */
+        public DataRowSortWrapper(Map<String, Object> dataRow){
+            this.dataRow = dataRow;
+        }
+
+        /**
+         * Implementation of comparable interface, allowing standard sorting of a customer object. Iterates
+         * over a map with values to order rows by
+         * @param compareToObject Object to compare the contextual object to
+         * @return Returns an integer representing the objects relative position in the list
+         */
+        public Integer compareTo(Object compareToObject) {
+            DataRowSortWrapper compareToWrapper = (DataRowSortWrapper) compareToObject;
+            for(DataSource.Order order : orderList){
+                Integer res = 0;
+                res = compareField(this.dataRow.get(order.columnName), compareToWrapper.dataRow.get(order.columnName), order.direction);
+                if(res != 0) return res;
+            }
+            return 0;
+        }
+
+        /**
+         * Helper method used to handle the fact that the values of rows for External Objects are always
+         * returned as objects. This method casts the object to its intended data type, allowing a comparison to be made.
+         * @param o1 The first object to compare
+         * @param o2 The second object to compare
+         * @param orderAscending If the order should be in ascending direction
+         * @return Returns object o1s relative position to object o2
+         */
+        private Integer compareField(Object o1, Object o2, DataSource.OrderDirection orderDirection){
+            Integer res = 0;
+            if(o1 instanceof Integer) {
+                Integer value1 = (Integer)o1;
+                Integer value2 = (Integer)o2;
+                if(value1 < value2) res = 1;
+                else if(value1 > value2) res = -1;
+            } else if(o1 instanceof String){
+                String value1 = (String)o1;
+                String value2 = (String)o2;
+                if(value1 < value2) res = 1;
+                else if(value1 > value2) res = -1;
+            } else if(o1 instanceof Boolean){
+                Boolean value1 = (Boolean)o1;
+                Boolean value2 = (Boolean)o2;
+                if(value1 == false && value2 == true) res = 1;
+                else if(value1 == true && value2 == false) res = -1;
+            } else if(o1 instanceof Date){
+                Date value1 = (Date)o1;
+                Date value2 = (Date)o2;
+                if(value1 < value2) res = 1;
+                else if(value1 > value2) res = -1;
+            } else if(o1 instanceof Datetime){
+                Datetime value1 = (Datetime)o1;
+                Datetime value2 = (Datetime)o2;
+                if(value1 < value2) res = 1;
+                else if(value1 > value2) res = -1;
+            } else if(o1 instanceof Decimal){
+                Decimal value1 = (Decimal)o1;
+                Decimal value2 = (Decimal)o2;
+                if(value1 < value2) res = 1;
+                else if(value1 > value2) res = -1;
+            }
+            if(res != 0 && orderDirection == DataSource.OrderDirection.ASCENDING){
+                res = res * -1;
+            }
+            return res;
         }
     }
 }
