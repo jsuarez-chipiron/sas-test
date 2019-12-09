@@ -9,16 +9,16 @@ public with sharing class RecordTypeHelper {
     /**
     Static variables to store id of record types on case object
     */
-    public static final Id CASE_INFORMATION;
-    public static final Id CASE_FEEDBACK;
-    public static final Id CASE_SUPPORT;
-    public static final Id CASE_INTERNAL_BACKOFFICE;
+    @TestVisible public static final Id CASE_INFORMATION;
+    @TestVisible public static final Id CASE_FEEDBACK;
+    @TestVisible public static final Id CASE_SUPPORT;
+    @TestVisible public static final Id CASE_INTERNAL_BACKOFFICE;
 
     /**
     Static variables to store id of record types on account object
     */
-    public static final Id ACCOUNT_PERSON_EBCUSTOMER;
-    public static final Id ACCOUNT_PERSON_ANONYMOUS;
+    @TestVisible public static final Id ACCOUNT_PERSON_EBCUSTOMER;
+    @TestVisible public static final Id ACCOUNT_PERSON_ANONYMOUS;
 
     static {
         RecordType[] rtList = [SELECT Id,SobjectType,DeveloperName FROM RecordType WHERE SobjectType IN ('Case', 'Account') ];
