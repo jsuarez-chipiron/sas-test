@@ -169,17 +169,18 @@ private class IdentifyCustomerComponentController_Test {
      * Asserts that the query for the external object Frequent Flyer can run correctly. As external object queries
      * are not supported in test context, the test should return a null result.
      */
+    /*
     @IsTest
     static void shouldReturnNullResultDueToNoSupportForQuery(){
         Account account = IdentifyCustomerComponentController.findCustomer('EBNumber__c', '700001423');
 
         System.assertEquals(null, account);
     }
-
+    */
     /**
      * Asserts that the query for the external object Frequent Flyer can run correctly. As external object queries
      * are not supported in test context, the test catches the expected exception and verifies the message.
-     *//*
+     */
     @IsTest
     static void shouldThrowExceptionDueToUnsupportedExternalObjectQuery(){
         Exception returnedException;
@@ -194,5 +195,5 @@ private class IdentifyCustomerComponentController_Test {
                 returnedException.getMessage(),
                 'Expected the exception to contain another message. Check that used query is not malformed. '
         );
-    }*/
+    }
 }
