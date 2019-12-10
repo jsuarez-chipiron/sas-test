@@ -137,4 +137,48 @@ public with sharing class CSharkIntegrationService_Test {
 
         System.assertEquals(0, customerRows.size(), 'Service for mock data returned customer data even though search value was invalid.');
     }
+
+    @IsTest
+    static void shouldReturnCorrectSearchTypeBasedOnString(){
+        List<String> searchStrings = new List<String>{
+                'EuroBonusNumber',
+                'TravelPassAccountNumber',
+                'ExternalId',
+                'HomeEMail',
+                'SubscriptionID',
+                'UserName'
+        };
+
+        List<CSharkIntegrationService.SearchType> searchTypes = new List<CSharkIntegrationService.SearchType>();
+        for(String searchString : searchStrings){
+            searchTypes.add(CSharkIntegrationService.getSearchTypeByFieldName(searchString));
+        }
+
+        System.assertEquals(CSharkIntegrationService.SearchType.EB_NUMBER, searchTypes[0]);
+        System.assertEquals(CSharkIntegrationService.SearchType.TP_ACCOUNT, searchTypes[1]);
+        System.assertEquals(CSharkIntegrationService.SearchType.CODS_ID, searchTypes[2]);
+        System.assertEquals(CSharkIntegrationService.SearchType.EMAIL, searchTypes[3]);
+        System.assertEquals(CSharkIntegrationService.SearchType.SUBSCRIPTION_ID, searchTypes[4]);
+        System.assertEquals(CSharkIntegrationService.SearchType.SITE_MEMBER, searchTypes[5]);
+    }
+
+    /**
+     * Asserts that the the CustomerGet body generation method uses the correct search engagement type value
+     * bases on tha classes' search type enum list. If this method fails, check the order of the enums
+     * for SearchType in CSharkIntegrationService.
+     */
+    @IsTest
+    static void shouldGenerateCustomerGetBodyBasedInSearchType(){
+        List<String> bodyList = new List<String>();
+        for(CSharkIntegrationService.SearchType searchType:CSharkIntegrationService.SearchType.values()){
+            bodyList.add(CSharkIntegrationService.generateCustomerGetBody(searchType, ''));
+        }
+        System.debug(bodyList);
+        System.assert(bodyList[0].contains('<searchEngagementType>EuroBonus</searchEngagementType>'));
+        System.assert(bodyList[1].contains('<searchEngagementType>Default</searchEngagementType>'));
+        System.assert(bodyList[2].contains('<searchEngagementType>TP</searchEngagementType>'));
+        System.assert(bodyList[3].contains('<searchEngagementType>Email</searchEngagementType>'));
+        System.assert(bodyList[4].contains('<searchEngagementType>SiteMember</searchEngagementType>'));
+        System.assert(bodyList[5].contains('<searchEngagementType>Subscription</searchEngagementType>'));
+    }
 }

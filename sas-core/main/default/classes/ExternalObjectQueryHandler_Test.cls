@@ -143,18 +143,18 @@ public with sharing class ExternalObjectQueryHandler_Test {
     static void shouldFilterSimpleQueryLessThanOrEqualsConditionCorrectly(){
         DataSource.Filter filter = C_TestUtil.generateFilter(DataSource.FilterType.AND_, null, null);
         filter.subfilters = new List<DataSource.Filter>{
-                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column1', 100),
-                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column2', '100'),
-                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column3', Date.today()),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column1', 200),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column2', '200'),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column3', Date.today().addYears(1)),
                 C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column4', Datetime.now()),
-                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column5', 99.5),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column5', 100.5),
                 C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column6', true)
         };
 
         Map<String, Object> dataRow = new Map<String, Object>{
-                'Column1' => 90,
-                'Column2' => '100',
-                'Column3' => Date.today().addYears(-1),
+                'Column1' => 100,
+                'Column2' => '200',
+                'Column3' => Date.today(),
                 'Column4' => Datetime.now(),
                 'Column5' => 99.5,
                 'Column6' => false

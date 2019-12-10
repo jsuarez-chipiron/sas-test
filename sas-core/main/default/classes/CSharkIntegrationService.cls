@@ -11,6 +11,11 @@ public with sharing class CSharkIntegrationService {
     public enum OperationName {CustomerGet, CustomersGet}
 
     /**
+     * Sets the name of the system that it saved in logs in APIM and CShark for callouts from this service
+     */
+    private static final String API_SYSTEM_NAME = 'Salesforce';
+
+    /**
      * Supported parameters to base search for customer on. The format of these search types
      * correspond with valid search terms in the C-Shark service.
      */
@@ -94,17 +99,18 @@ public with sharing class CSharkIntegrationService {
                 '"http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1/ICSharkCustomerManagementTicketless/' +
                         String.valueOf(operationName) + '"');
         request.setHeader('Ocp-Apim-Subscription-Key', '09f8570b366b4c1392c170ff77356140');
-        request.setHeader('sas-system-name', 'Salesforce');
+        request.setHeader('sas-system-name', API_SYSTEM_NAME);
         request.setHeader('sas-tracking-id', C_Util.getUUID());
         return request;
     }
+
 
     /**
      * Generates a request body for operation CustomersGet in C-Shark.
      * @param searchType The type of values to search for, e.g. EuroBonus
      * @param SearchKey The value to search for, e.g. '554422441'
      * @return Request body string in XML-format.
-     */
+     *//*
     private static String generateCustomersGetBody(SearchType searchType, Object SearchKey){
         //TODO Create switch statement like in CustomerGet request with valid search terms for this operation
         String requestBody = '<?xml version="1.0" encoding="utf-8"?>' +
@@ -119,7 +125,7 @@ public with sharing class CSharkIntegrationService {
                 '</Envelope>';
         return requestBody;
     }
-
+*/
     /**
      * Generates a request body for operation CustomerGet in C-Shark. The search type is translated
      * to the matching search term for this request.
@@ -127,6 +133,7 @@ public with sharing class CSharkIntegrationService {
      * @param engagementSearchKey The value to search for, e.g. '554422441'
      * @return Request body string in XML-format.
      */
+    @TestVisible
     private static String generateCustomerGetBody(SearchType searchEngagementType, Object engagementSearchKey){
         String searchTerm;
         switch on searchEngagementType{
