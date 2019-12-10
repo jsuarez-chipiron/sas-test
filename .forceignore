@@ -18,3 +18,7 @@ package.xml
 
 #Data Files
 **/EmailTemplate.json
+
+#Authentication entities (use manual deployments)
+**/authproviders/**
+**/namedCredentials/**
