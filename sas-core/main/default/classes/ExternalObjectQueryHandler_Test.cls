@@ -37,7 +37,7 @@ public with sharing class ExternalObjectQueryHandler_Test {
         ExternalObjectQueryHandler.QueryRowHandler queryIterator = new ExternalObjectQueryHandler.QueryRowHandler(dataRow);
         Boolean iterationResult = queryIterator.filterRow(filter);
 
-        System.assertEquals(true, iterationResult, 'The query filter did not handle NOT_EQUALS condition correctly');
+        System.assertEquals(true, iterationResult, 'The query filter did not handle NOT_EQUALS condition as expected.');
     }
 
     /**
@@ -45,16 +45,31 @@ public with sharing class ExternalObjectQueryHandler_Test {
      */
     @IsTest
     static void shouldFilterSimpleQueryGreaterThanConditionCorrectly(){
-        DataSource.Filter filter = new DataSource.Filter();
-        filter.columnName = 'Column1';
-        filter.columnValue = 100;
-        filter.type = DataSource.FilterType.GREATER_THAN;
-        Map<String, Object> dataRow = new Map<String, Object>{'Column1' => 200};
+        DataSource.Filter filter = C_TestUtil.generateFilter(DataSource.FilterType.AND_, null, null);
+        filter.subfilters = new List<DataSource.Filter>{
+                C_TestUtil.generateFilter(DataSource.FilterType.GREATER_THAN, 'Column1', 100),
+                C_TestUtil.generateFilter(DataSource.FilterType.GREATER_THAN, 'Column2', '100'),
+                C_TestUtil.generateFilter(DataSource.FilterType.GREATER_THAN, 'Column3', Date.today()),
+                C_TestUtil.generateFilter(DataSource.FilterType.GREATER_THAN, 'Column4', Datetime.now()),
+                C_TestUtil.generateFilter(DataSource.FilterType.GREATER_THAN, 'Column5', 99.5),
+                C_TestUtil.generateFilter(DataSource.FilterType.GREATER_THAN, 'Column6', false)
+        };
 
-        ExternalObjectQueryHandler.QueryRowHandler queryIterator = new ExternalObjectQueryHandler.QueryRowHandler(dataRow);
-        Boolean iterationResult = queryIterator.filterRow(filter);
+        Map<String, Object> dataRow = new Map<String, Object>{
+                'Column1' => 200,
+                'Column2' => '200',
+                'Column3' => Date.today().addYears(1),
+                'Column4' => Datetime.now().addYears(1),
+                'Column5' => 100.5,
+                'Column6' => true
+        };
 
-        System.assertEquals(true, iterationResult, 'The query filter did not handle GREATER_THAN condition correctly');
+        ExternalObjectQueryHandler.QueryRowHandler queryRowHandler = new ExternalObjectQueryHandler.QueryRowHandler(dataRow);
+        Boolean queryResult = queryRowHandler.filterRow(filter);
+
+        System.assertEquals(true, queryResult, 'The query filter did not handle GREATER_THAN condition correctly. ' +
+                'Check that all data types for condition are evaluated correctly'
+        );
     }
 
     /**
@@ -62,15 +77,31 @@ public with sharing class ExternalObjectQueryHandler_Test {
      */
     @IsTest
     static void shouldFilterSimpleQueryGreaterThanOrEqualsConditionCorrectly(){
-        DataSource.Filter filter = new DataSource.Filter();
-        filter.columnName = 'Column1';
-        filter.columnValue = 100;
-        filter.type = DataSource.FilterType.GREATER_THAN_OR_EQUAL_TO;
-        Map<String, Object> dataRow = new Map<String, Object>{'Column1' => 100};
+        DataSource.Filter filter = C_TestUtil.generateFilter(DataSource.FilterType.AND_, null, null);
+        filter.subfilters = new List<DataSource.Filter>{
+                C_TestUtil.generateFilter(DataSource.FilterType.GREATER_THAN_OR_EQUAL_TO, 'Column1', 100),
+                C_TestUtil.generateFilter(DataSource.FilterType.GREATER_THAN_OR_EQUAL_TO, 'Column2', '100'),
+                C_TestUtil.generateFilter(DataSource.FilterType.GREATER_THAN_OR_EQUAL_TO, 'Column3', Date.today()),
+                C_TestUtil.generateFilter(DataSource.FilterType.GREATER_THAN_OR_EQUAL_TO, 'Column4', Datetime.now()),
+                C_TestUtil.generateFilter(DataSource.FilterType.GREATER_THAN_OR_EQUAL_TO, 'Column5', 99.5),
+                C_TestUtil.generateFilter(DataSource.FilterType.GREATER_THAN_OR_EQUAL_TO, 'Column6', false)
+        };
 
-        ExternalObjectQueryHandler.QueryRowHandler queryIterator = new ExternalObjectQueryHandler.QueryRowHandler(dataRow);
-        Boolean iterationResult = queryIterator.filterRow(filter);
-        System.assertEquals(true, iterationResult, 'The query filter did not handle GREATER_THAN_OR_EQUAL_TO condition correctly');
+        Map<String, Object> dataRow = new Map<String, Object>{
+                'Column1' => 100,
+                'Column2' => '200',
+                'Column3' => Date.today(),
+                'Column4' => Datetime.now().addYears(1),
+                'Column5' => 100.5,
+                'Column6' => false
+        };
+
+        ExternalObjectQueryHandler.QueryRowHandler queryRowHandler = new ExternalObjectQueryHandler.QueryRowHandler(dataRow);
+        Boolean queryResult = queryRowHandler.filterRow(filter);
+
+        System.assertEquals(true, queryResult, 'The query filter did not handle GREATER_THAN_OR_EQUAL_TO' +
+                ' condition correctly. Check that all data types for condition are evaluated correctly'
+        );
     }
 
     /**
@@ -78,16 +109,31 @@ public with sharing class ExternalObjectQueryHandler_Test {
      */
     @IsTest
     static void shouldFilterSimpleQueryLessThanConditionCorrectly(){
-        DataSource.Filter filter = new DataSource.Filter();
-        filter.columnName = 'Column1';
-        filter.columnValue = 100;
-        filter.type = DataSource.FilterType.LESS_THAN;
-        Map<String, Object> dataRow = new Map<String, Object>{'Column1' => 50};
+        DataSource.Filter filter = C_TestUtil.generateFilter(DataSource.FilterType.AND_, null, null);
+        filter.subfilters = new List<DataSource.Filter>{
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN, 'Column1', 200),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN, 'Column2', '200'),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN, 'Column3', Date.today().addYears(1)),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN, 'Column4', Datetime.now().addYears(1)),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN, 'Column5', 100.5),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN, 'Column6', true)
+        };
 
-        ExternalObjectQueryHandler.QueryRowHandler queryIterator = new ExternalObjectQueryHandler.QueryRowHandler(dataRow);
-        Boolean iterationResult = queryIterator.filterRow(filter);
+        Map<String, Object> dataRow = new Map<String, Object>{
+                'Column1' => 100,
+                'Column2' => '100',
+                'Column3' => Date.today(),
+                'Column4' => Datetime.now(),
+                'Column5' => 99.5,
+                'Column6' => false
+        };
 
-        System.assertEquals(true, iterationResult, 'The query filter did not handle LESS_THAN condition correctly');
+        ExternalObjectQueryHandler.QueryRowHandler queryRowHandler = new ExternalObjectQueryHandler.QueryRowHandler(dataRow);
+        Boolean queryResult = queryRowHandler.filterRow(filter);
+
+        System.assertEquals(true, queryResult, 'The query filter did not handle LESS_THAN condition correctly. ' +
+                'Check that all data types for condition are evaluated correctly'
+        );
     }
 
     /**
@@ -95,16 +141,31 @@ public with sharing class ExternalObjectQueryHandler_Test {
      */
     @IsTest
     static void shouldFilterSimpleQueryLessThanOrEqualsConditionCorrectly(){
-        DataSource.Filter filter = new DataSource.Filter();
-        filter.columnName = 'Column1';
-        filter.columnValue = 100;
-        filter.type = DataSource.FilterType.LESS_THAN_OR_EQUAL_TO;
-        Map<String, Object> dataRow = new Map<String, Object>{'Column1' => 50};
+        DataSource.Filter filter = C_TestUtil.generateFilter(DataSource.FilterType.AND_, null, null);
+        filter.subfilters = new List<DataSource.Filter>{
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column1', 100),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column2', '100'),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column3', Date.today()),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column4', Datetime.now()),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column5', 99.5),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column6', true)
+        };
 
-        ExternalObjectQueryHandler.QueryRowHandler queryIterator = new ExternalObjectQueryHandler.QueryRowHandler(dataRow);
-        Boolean iterationResult = queryIterator.filterRow(filter);
+        Map<String, Object> dataRow = new Map<String, Object>{
+                'Column1' => 90,
+                'Column2' => '100',
+                'Column3' => Date.today().addYears(-1),
+                'Column4' => Datetime.now(),
+                'Column5' => 99.5,
+                'Column6' => false
+        };
 
-        System.assertEquals(true, iterationResult, 'The query filter did not handle LESS_THAN_OR_EQUAL_TO condition correctly');
+        ExternalObjectQueryHandler.QueryRowHandler queryRowHandler = new ExternalObjectQueryHandler.QueryRowHandler(dataRow);
+        Boolean queryResult = queryRowHandler.filterRow(filter);
+
+        System.assertEquals(true, queryResult, 'The query filter did not handle LESS_THAN_OR_EQUAL_TO ' +
+                'condition correctly. Check that all data types for condition are evaluated correctly'
+        );
     }
 
     /**
