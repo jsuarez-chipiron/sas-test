@@ -6,8 +6,10 @@
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
-    <isSortingDisabled>true</isSortingDisabled>
+    <isSortingDisabled>false</isSortingDisabled>
     <label>Member Since</label>
+    <length>255</length>
     <required>false</required>
-    <type>Date</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

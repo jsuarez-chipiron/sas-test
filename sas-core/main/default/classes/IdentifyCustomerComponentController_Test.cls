@@ -43,7 +43,7 @@ private class IdentifyCustomerComponentController_Test {
                 ZipCode__c = 'ZipCode',
                 CountryCode__c = 'Country',
                 CountyState__c = 'State',
-                BirthDate__c = Date.today().addYears(-2),
+                BirthDate__c = String.valueOf(Date.today().addYears(-2)),
                 ConsentEmail__c = true,
                 ConsentEB__c = false,
                 ConsentSMS__c = true,
@@ -59,8 +59,8 @@ private class IdentifyCustomerComponentController_Test {
                 EBMemberSinceDate__c = null,
                 Mobile__c = '0701234567',
                 Phone__c = null,
-                EBQualifyingPeriodEndDate__c = Date.today().addYears(1),
-                EBQualifyingPeriodStartDate__c = Date.today(),
+                EBQualifyingPeriodEndDate__c = String.valueOf(Date.today().addYears(1)),
+                EBQualifyingPeriodStartDate__c = String.valueOf(Date.today()),
                 EBReachesNextLevelPoints__c = null,
                 SubscriptionId__c = null,
                 TPAccountNumber__c = '678',
@@ -82,7 +82,7 @@ private class IdentifyCustomerComponentController_Test {
         System.assertEquals(ff.ZipCode__c, account.PersonMailingPostalCode);
         System.assertEquals(ff.CountryCode__c, account.PersonMailingCountry);
         System.assertEquals(ff.CountyState__c, account.PersonMailingState);
-        System.assertEquals(ff.BirthDate__c, account.PersonBirthdate);
+        System.assertEquals(Date.valueOf(ff.BirthDate__c), account.PersonBirthdate);
         System.assertEquals(ff.ConsentEmail__c, account.ConsentEmail__c);
         System.assertEquals(ff.ConsentEB__c, account.ConsentEuroBonus__c);
         System.assertEquals(ff.ConsentEB0__c, account.ConsentSiteProfile__c);
@@ -95,9 +95,9 @@ private class IdentifyCustomerComponentController_Test {
         System.assertEquals(ff.FirstName__c, account.FirstName);
         System.assertEquals(ff.Gender__c, account.Gender__c);
         System.assertEquals(ff.LastName__c, account.LastName);
-        System.assertEquals(ff.EBMemberSinceDate__c, account.EBMemberSinceDate__c);
-        System.assertEquals(ff.EBQualifyingPeriodEndDate__c, account.EBQualifyingPeriodEndDate__c);
-        System.assertEquals(ff.EBQualifyingPeriodStartDate__c, account.EBQualifyingPeriodStartDate__c);
+        System.assertEquals(null, account.EBMemberSinceDate__c);
+        System.assertEquals(Date.valueOf(ff.EBQualifyingPeriodEndDate__c), account.EBQualifyingPeriodEndDate__c);
+        System.assertEquals(Date.valueOf(ff.EBQualifyingPeriodStartDate__c), account.EBQualifyingPeriodStartDate__c);
         System.assertEquals(ff.EBReachesNextLevelPoints__c, account.EBReachesNextLevelPoints__c);
         System.assertEquals(ff.SubscriptionId__c, account.SubscriptionId__c);
         System.assertEquals(ff.TPAccountNumber__c, account.TPAccountNumber__c);
@@ -121,7 +121,7 @@ private class IdentifyCustomerComponentController_Test {
                 ZipCode__c = 'ZipCode',
                 CountryCode__c = 'Country',
                 CountyState__c = 'State',
-                BirthDate__c = Date.today().addYears(-2),
+                BirthDate__c = String.valueOf(Date.today().addYears(-2)),
                 ConsentEmail__c = true,
                 ConsentEB__c = false,
                 ConsentSMS__c = true,
@@ -137,8 +137,8 @@ private class IdentifyCustomerComponentController_Test {
                 EBMemberSinceDate__c = null,
                 Mobile__c = '0701234567',
                 Phone__c = null,
-                EBQualifyingPeriodEndDate__c = Date.today().addYears(1),
-                EBQualifyingPeriodStartDate__c = Date.today(),
+                EBQualifyingPeriodEndDate__c = String.valueOf(Date.today().addYears(1)),
+                EBQualifyingPeriodStartDate__c = String.valueOf(Date.today()),
                 EBReachesNextLevelPoints__c = null,
                 SubscriptionId__c = null,
                 TPAccountNumber__c = '678',
@@ -169,18 +169,18 @@ private class IdentifyCustomerComponentController_Test {
      * Asserts that the query for the external object Frequent Flyer can run correctly. As external object queries
      * are not supported in test context, the test should return a null result.
      */
-    /*
+
     @IsTest
     static void shouldReturnNullResultDueToNoSupportForQuery(){
         Account account = IdentifyCustomerComponentController.findCustomer('EBNumber__c', '700001423');
 
         System.assertEquals(null, account);
     }
-    */
+
     /**
      * Asserts that the query for the external object Frequent Flyer can run correctly. As external object queries
      * are not supported in test context, the test catches the expected exception and verifies the message.
-     */
+     *//*
     @IsTest
     static void shouldThrowExceptionDueToUnsupportedExternalObjectQuery(){
         Exception returnedException;
@@ -195,5 +195,5 @@ private class IdentifyCustomerComponentController_Test {
                 returnedException.getMessage(),
                 'Expected the exception to contain another message. Check that used query is not malformed. '
         );
-    }
+    }*/
 }

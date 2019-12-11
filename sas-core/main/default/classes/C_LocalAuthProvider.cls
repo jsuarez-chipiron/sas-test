@@ -98,9 +98,7 @@ global class C_LocalAuthProvider extends Auth.AuthProviderPluginClass{
         return new Auth.OAuthRefreshResult(accessToken,refreshToken,errMsg);
     }
 
-
     private class RefreshTokenAuthInfo{
-
         public String userName {get; private set;}
         public String password {get; private set;}
         public String param1 {get; private set;}
