@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PostSubReason__c</fullName>
+    <externalId>false</externalId>
+    <label>Post Sub Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>PostReason__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Test 1</fullName>
+                <default>false</default>
+                <label>Test 1</label>
+            </value>
+            <value>
+                <fullName>Test 2</fullName>
+                <default>false</default>
+                <label>Test 2</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Baggage</controllingFieldValue>
+            <controllingFieldValue>Ticket</controllingFieldValue>
+            <valueName>Test 1</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Baggage</controllingFieldValue>
+            <controllingFieldValue>Ticket</controllingFieldValue>
+            <valueName>Test 2</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>
