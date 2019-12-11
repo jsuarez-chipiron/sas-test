@@ -146,7 +146,7 @@ public with sharing class ExternalObjectQueryHandler_Test {
                 C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column1', 200),
                 C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column2', '200'),
                 C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column3', Date.today().addYears(1)),
-                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column4', Datetime.now()),
+                C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column4', Datetime.now().addYears(1)),
                 C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column5', 100.5),
                 C_TestUtil.generateFilter(DataSource.FilterType.LESS_THAN_OR_EQUAL_TO, 'Column6', true)
         };
