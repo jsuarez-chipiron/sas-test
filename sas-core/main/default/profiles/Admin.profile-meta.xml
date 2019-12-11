@@ -614,6 +614,7 @@
         <field>Log__c.StackTrace__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.ParentMessage__c</field>
         <readable>true</readable>
@@ -637,7 +638,6 @@
         <editable>false</editable>
         <field>SocialPost.SASPost__c</field>
         <readable>true</readable>
-    </fieldPermissions>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
