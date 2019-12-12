@@ -58,8 +58,7 @@ export default class App extends LightningElement {
      * @param {*} event 
      */
     handlePressEnterKey(event){
-        let enterKeyCode = 13;
-        if(event.keyCode === enterKeyCode && !this.validateSearchInput()){
+        if(event.key === 'Enter' && !this.validateSearchInput()){
             this.noSearchResult = false;
             this.searchForCustomer();
         }
