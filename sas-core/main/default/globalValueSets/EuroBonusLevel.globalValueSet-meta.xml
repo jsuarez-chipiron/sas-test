@@ -3,7 +3,7 @@
     <customValue>
         <fullName>B</fullName>
         <default>false</default>
-        <label>Base</label>
+        <label>Basic</label>
     </customValue>
     <customValue>
         <fullName>S</fullName>
