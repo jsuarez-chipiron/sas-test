@@ -48,7 +48,7 @@ export default class App extends LightningElement {
         return [
             { label: "EuroBonus", value: "EBNumber__c" },
             { label: "Email", value: "Email__c" },
-            { label: "Customer Id", value: "ExternalId" },
+            { label: "CODS Id", value: "ExternalId" },
             { label: "Travel Pass", value: "TPAccountNumber__c" }
         ];
     }
@@ -155,6 +155,7 @@ export default class App extends LightningElement {
             this.searchValue = caseRecord.TPAccountNumber__c;
             this.searchForCustomer();
         }
+        this.searchOption = 'EBNumber__c';
     }
 
     /**
