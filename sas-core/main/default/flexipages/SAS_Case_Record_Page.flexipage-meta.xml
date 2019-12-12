@@ -168,6 +168,9 @@
             </componentInstanceProperties>
             <componentName>console:relatedRecord</componentName>
         </componentInstances>
+        <componentInstances>
+            <componentName>forceKnowledge:articleSearchDesktop</componentName>
+        </componentInstances>
         <mode>Replace</mode>
         <name>sidebar</name>
         <type>Region</type>
