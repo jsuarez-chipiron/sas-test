@@ -7,6 +7,12 @@
         <label>Fields</label>
         <layoutColumns>
             <layoutItems>
+                <field>Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>SubType__c</field>
+            </layoutItems>
+            <layoutItems>
                 <field>Title</field>
             </layoutItems>
         </layoutColumns>
@@ -19,12 +25,6 @@
         <editHeading>true</editHeading>
         <label>Article Details</label>
         <layoutColumns>
-            <layoutItems>
-                <field>Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <field>SubType__c</field>
-            </layoutItems>
             <layoutItems>
                 <field>Body__c</field>
             </layoutItems>
@@ -73,6 +73,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>FeedItem.TextPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>EditDraftKnowledgeArticleVersion</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>0</sortOrder>
@@ -106,11 +111,6 @@
             <actionName>RestoreKnowledgeArticleVersion</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
         </platformActionListItems>
     </platformActionList>
 </Layout>
