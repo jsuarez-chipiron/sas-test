@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>EBQualifyingPeriodStartDate__c</fullName>
-    <description>Start of qualifying period for customer EuroBonus engagement</description>
+    <fullName>EBMbrshipLvlStatusStartDate__c</fullName>
+    <description>Start of membership level for customer EuroBonus engagement</description>
     <externalDeveloperName>MbrshipLvlStatusStartPeriod</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Qualifying Period Start</label>
+    <label>EB Level Start Date</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

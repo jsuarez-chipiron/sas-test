@@ -91,4 +91,13 @@
         <members>Account.BirthDate__c</members>
         <name>CustomField</name>
     </types>
+
+    <!--2019-12-05 - Anton Norell - Renemed fields on Frequent Flyer and Account-->
+    <types>
+        <members>Account.EBQualifyingPeriodEndDate__c</members>
+        <members>Account.EBQualifyingPeriodStartDate__c</members>
+        <members>Frequent_Flyer__x.EBQualifyingPeriodEndDate__c</members>
+        <members>Frequent_Flyer__x.EBQualifyingPeriodStartDate__c</members>
+        <name>CustomField</name>
+    </types>
 </Package>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>EBQualifyingPeriodEndDate__c</fullName>
-    <description>End of qualifying period for customer EuroBonus engagement</description>
+    <fullName>EBMbrshipLvlStatusEndDate__c</fullName>
+    <description>End of current status level for customer&#39;s EuroBonus engagement</description>
     <externalDeveloperName>MbrshipLvlStatusEndPeriod</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Qualifying Period End</label>
+    <label>EB Level End Date</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

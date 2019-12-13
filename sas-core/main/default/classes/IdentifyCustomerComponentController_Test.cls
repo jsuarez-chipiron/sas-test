@@ -59,8 +59,8 @@ private class IdentifyCustomerComponentController_Test {
                 EBMemberSinceDate__c = null,
                 Mobile__c = '0701234567',
                 Phone__c = null,
-                EBQualifyingPeriodEndDate__c = String.valueOf(Date.today().addYears(1)),
-                EBQualifyingPeriodStartDate__c = String.valueOf(Date.today()),
+                EBMbrshipLvlStatusEndDate__c = String.valueOf(Date.today().addYears(1)),
+                EBMbrshipLvlStatusStartDate__c = String.valueOf(Date.today()),
                 EBReachesNextLevelPoints__c = null,
                 SubscriptionId__c = null,
                 TPAccountNumber__c = '678',
@@ -96,8 +96,8 @@ private class IdentifyCustomerComponentController_Test {
         System.assertEquals(ff.Gender__c, account.Gender__c);
         System.assertEquals(ff.LastName__c, account.LastName);
         System.assertEquals(null, account.EBMemberSinceDate__c);
-        System.assertEquals(Date.valueOf(ff.EBQualifyingPeriodEndDate__c), account.EBQualifyingPeriodEndDate__c);
-        System.assertEquals(Date.valueOf(ff.EBQualifyingPeriodStartDate__c), account.EBQualifyingPeriodStartDate__c);
+        System.assertEquals(Date.valueOf(ff.EBMbrshipLvlStatusEndDate__c), account.EBMbrshipLvlStatusEndDate__c);
+        System.assertEquals(Date.valueOf(ff.EBMbrshipLvlStatusStartDate__c), account.EBMbrshipLvlStatusStartDate__c);
         System.assertEquals(ff.EBReachesNextLevelPoints__c, account.EBReachesNextLevelPoints__c);
         System.assertEquals(ff.SubscriptionId__c, account.SubscriptionId__c);
         System.assertEquals(ff.TPAccountNumber__c, account.TPAccountNumber__c);
@@ -137,8 +137,8 @@ private class IdentifyCustomerComponentController_Test {
                 EBMemberSinceDate__c = null,
                 Mobile__c = '0701234567',
                 Phone__c = null,
-                EBQualifyingPeriodEndDate__c = String.valueOf(Date.today().addYears(1)),
-                EBQualifyingPeriodStartDate__c = String.valueOf(Date.today()),
+                EBMbrshipLvlStatusEndDate__c = String.valueOf(Date.today().addYears(1)),
+                EBMbrshipLvlStatusStartDate__c = String.valueOf(Date.today()),
                 EBReachesNextLevelPoints__c = null,
                 SubscriptionId__c = null,
                 TPAccountNumber__c = '678',

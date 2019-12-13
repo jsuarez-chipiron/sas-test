@@ -19,7 +19,7 @@ public with sharing class IdentifyCustomerComponentController {
                         'City__c, ConsentTelemarketing__c, ConsentEB0__c, ConsentSMS__c, ConsentEB__c, ConsentEmail__c, ' +
                         'CountryCode__c, CountyState__c, EmailPersonal__c, EBBalance__c, EBLevel__c, EBNumber__c, ' +
                         'FirstName__c, LastName__c, Gender__c, EBMemberSinceDate__c, Mobile__c, Name__c, Phone__c, ' +
-                        'EBQualifyingPeriodStartDate__c, EBQualifyingPeriodEndDate__c, EBReachesNextLevelPoints__c, ' +
+                        'EBMbrshipLvlStatusStartDate__c, EBMbrshipLvlStatusEndDate__c, EBReachesNextLevelPoints__c, ' +
                         'SubscriptionId__c, TPAccountNumber__c, ZipCode__c, CompanyName__c, Title__c, MiddleName__c, Salutation__c ' +
                         'FROM FrequentFlyer__x ' +
                         'WHERE ' + searchField + ' = \'' + searchValue + '\'';
@@ -62,8 +62,8 @@ public with sharing class IdentifyCustomerComponentController {
                     EBMemberSinceDate__c = ff.EBMemberSinceDate__c != null ? Date.valueOf(ff.EBMemberSinceDate__c) : null,
                     PersonMobilePhone = ff.Mobile__c,
                     PersonHomePhone = ff.Phone__c,
-                    EBQualifyingPeriodEndDate__c = ff.EBQualifyingPeriodEndDate__c != null ? Date.valueOf(ff.EBQualifyingPeriodEndDate__c) : null,
-                    EBQualifyingPeriodStartDate__c = ff.EBQualifyingPeriodStartDate__c != null ? Date.valueOf(ff.EBQualifyingPeriodStartDate__c) : null,
+                    EBMbrshipLvlStatusEndDate__c = ff.EBMbrshipLvlStatusEndDate__c != null ? Date.valueOf(ff.EBMbrshipLvlStatusEndDate__c) : null,
+                    EBMbrshipLvlStatusStartDate__c = ff.EBMbrshipLvlStatusStartDate__c != null ? Date.valueOf(ff.EBMbrshipLvlStatusStartDate__c) : null,
                     EBReachesNextLevelPoints__c = ff.EBReachesNextLevelPoints__c,
                     SubscriptionId__c = ff.SubscriptionId__c,
                     TPAccountNumber__c = ff.TPAccountNumber__c,
