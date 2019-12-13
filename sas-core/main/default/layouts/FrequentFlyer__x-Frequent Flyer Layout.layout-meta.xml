@@ -156,11 +156,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EBQualifyingPeriodStartDate__c</field>
+                <field>EBMbrshipLvlStatusStartDate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EBQualifyingPeriodEndDate__c</field>
+                <field>EBMbrshipLvlStatusEndDate__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -196,7 +196,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3E000000kUTM</masterLabel>
+        <masterLabel>00h1X000000jofh</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
