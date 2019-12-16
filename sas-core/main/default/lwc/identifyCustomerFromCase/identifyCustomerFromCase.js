@@ -27,22 +27,6 @@ export default class App extends LightningElement {
     @track
     noSearchResult = false; //When true, a warning is displayed to the user about not finding a search result
 
-    //Used to wire to case records. Might be used in the future. 
-    /* 
-    @wire(getRecord, {
-        recordId: "$recordId",
-        fields: ["Case.AccountId", "Case.EBNumber__c"]
-    })
-    wiredCase;
-
-    get accountId() {
-        return this.wiredCase.data.fields.AccountId.value;
-    }
-
-    get ebNumber() {
-        return this.wiredCase.data.fields.EBNumber__c.value;
-    }*/
-
     //List of options available to search for. Value should corresponds to field on Frequent_Flyer__x.
     get searchOptions() {
         return [
@@ -108,7 +92,7 @@ export default class App extends LightningElement {
                 this.showSpinner = false;
             })
             .catch(error => {
-                this.displayError({ error: error });
+                this.displayError(error);
             })
     }
 
@@ -123,7 +107,7 @@ export default class App extends LightningElement {
                 this.evaluateCaseOnOpen(result);
             })
             .catch(error => {
-                this.displayError({ error: error });
+                this.displayError(error);
             })
     }
 
@@ -220,8 +204,8 @@ export default class App extends LightningElement {
                 this.noSearchResult = true;
             }
 
-        } catch(e){
-            this.displayError({ error: e });
+        } catch(error){
+            this.displayError(error);
         }
     }
 }
