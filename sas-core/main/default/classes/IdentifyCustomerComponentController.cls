@@ -148,7 +148,7 @@ public with sharing class IdentifyCustomerComponentController {
             accountId = transcript.AccountId;
             personContactId = transcript.Account.PersonContactId;
             euroBonusNumber = transcript.EBNumber__c;
-            codsId = transcript.Account.FrequentFlyer__c;
+            codsId = transcript.CODSId__c;
             caseId = transcript.CaseId;
             lastRetrievedFromSource = transcript.Account.LastRetrievedFromSource__c;
             supportsUIApi = false;
