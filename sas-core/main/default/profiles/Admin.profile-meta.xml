@@ -306,7 +306,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.VirtualOrganizaation__c</field>
+        <field>Case.VirtualOrganization__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -675,7 +675,22 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
+        <field>User.VirtualOrganization__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.Site__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.Team__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>User.Vendor__c</field>
         <readable>true</readable>
     </fieldPermissions>

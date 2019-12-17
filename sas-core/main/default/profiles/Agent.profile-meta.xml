@@ -326,7 +326,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.VirtualOrganizaation__c</field>
+        <field>Case.VirtualOrganization__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -706,7 +706,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>User.VirtualOrganizaation__c</field>
+        <field>User.VirtualOrganization__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
