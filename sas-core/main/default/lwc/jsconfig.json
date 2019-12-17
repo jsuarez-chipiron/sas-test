@@ -6,14 +6,14 @@
             "c/errorPanel": [
                 "errorPanel/errorPanel.js"
             ],
-            "c/identifyCustomerFromCase": [
-                "identifyCustomerFromCase/identifyCustomerFromCase.js"
-            ],
             "c/ldsUtils": [
                 "ldsUtils/ldsUtils.js"
             ],
             "c/pubsub": [
                 "pubsub/pubsub.js"
+            ],
+            "c/identifyCustomer": [
+                "identifyCustomer/identifyCustomer.js"
             ]
         }
     },

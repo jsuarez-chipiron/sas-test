@@ -147,11 +147,7 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
-            <componentInstanceProperties>
-                <name>showSearchOptions</name>
-                <value>false</value>
-            </componentInstanceProperties>
-            <componentName>identifyCustomerFromCase</componentName>
+            <componentName>identifyCustomerContainer</componentName>
         </componentInstances>
         <componentInstances>
             <componentInstanceProperties>

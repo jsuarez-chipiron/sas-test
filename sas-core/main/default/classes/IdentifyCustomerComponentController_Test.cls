@@ -22,12 +22,12 @@ private class IdentifyCustomerComponentController_Test {
         );
         insert originalCase;
 
-        Case retrievedCase = IdentifyCustomerComponentController.getCaseData(originalCase.Id);
+        IdentifyCustomerComponentController.ComponentRecordData retrievedData = IdentifyCustomerComponentController.getRecordData(originalCase.Id);
 
-        System.assertNotEquals(null, retrievedCase);
-        System.assertEquals(originalCase.EBNumber__c, retrievedCase.EBNumber__c);
-        System.assertEquals(acc.Id, retrievedCase.AccountId);
-        System.assertEquals(null, retrievedCase.Account.LastRetrievedFromSource__c);
+        System.assertNotEquals(null, retrievedData);
+        System.assertEquals(originalCase.EBNumber__c, retrievedData.euroBonusNumber);
+        System.assertEquals(acc.Id, retrievedData.accountId);
+        System.assertEquals(null, retrievedData.lastRetrievedFromSource);
     }
 
     /**

@@ -39,7 +39,7 @@
     <lightning-card title="Customer Identified" icon-name="action:approval" if:true={customerIdentified}>
         <div slot="actions">
             <lightning-button-icon icon-name="utility:cancel_transfer" title="Change customer connected to case"
-                onclick={handleChangeCustomer} alternative-text="Change customer"></lightning-button-icon>
+                onclick={handleChangeCustomerButtonClick} alternative-text="Change customer"></lightning-button-icon>
         </div>
         <div if:true={showSpinner}>
             <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>

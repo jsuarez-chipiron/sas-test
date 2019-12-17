@@ -83,12 +83,111 @@ public with sharing class IdentifyCustomerComponentController {
     }
 
     /**
-     * Used to retrieve case data for the case record that the controller is called from.
-     * @param caseId Id for case to retrieve data
-     * @return Case record corresponding to the supplied Id
+     * Used to retrieve data for the record that the controller is called from.
+     * @param recordId Record id for the record where the component is called from.
+     * @return Abstract interpretation of object in context, containing record data.
      */
-    @AuraEnabled(Cacheable=true)
-    public static Case getCaseData(Id caseId){
-        return [SELECT Id, AccountId, EBNumber__c, TPAccountNumber__c, Account.FrequentFlyer__c, Account.LastRetrievedFromSource__c FROM Case WHERE Id = :caseId];
+    @AuraEnabled(Cacheable = true)
+    public static ComponentRecordData getRecordData(Id recordId){
+        SObjectType sObjectType = recordId.getSobjectType();
+        if(sObjectType == Case.getSObjectType()){
+            return new ComponentRecordData(
+                    [SELECT Id, EBNumber__c, TPAccountNumber__c, AccountId,
+                    Account.FrequentFlyer__c, Account.LastRetrievedFromSource__c
+                    FROM Case
+                    WHERE Id = :recordId]
+            );
+        } else if (sObjectType == LiveChatTranscript.getSObjectType()){
+            return new ComponentRecordData(
+                    [SELECT Id, EBNumber__c, CODSId__c, Account.PersonContactId, Account.FrequentFlyer__c, CaseId, Account.LastRetrievedFromSource__c
+                    FROM LiveChatTranscript
+                    WHERE Id = :recordId]
+            );
+        }
+        return null;
+    }
+
+    /**
+     * Class used as an abstract interpretation of multiple SObject types. The class is used to communicate data
+     * between the controlled and the Lightning Web Component. To support new SObject types, add a new constructor
+     * and a corresponding block in the update method.
+     */
+    public class ComponentRecordData{
+        @AuraEnabled public Id recordId {get; private set;}
+        @AuraEnabled public Id accountId {get; private set;}
+        @AuraEnabled public Id personContactId {get; private set;}
+        @AuraEnabled public Id caseId {get; private set;}
+        @AuraEnabled public String euroBonusNumber {get; private set;}
+        @AuraEnabled public String tpAccountNumber {get; private set;}
+        @AuraEnabled public String codsId {get; private set;}
+        @AuraEnabled public Datetime lastRetrievedFromSource {get; private set;}
+        @AuraEnabled public Boolean supportsUIApi {get; private set;}
+
+        @AuraEnabled public Map<String, String> fieldNameMapping {get; private set;}
+
+        /**
+         * Constructor for class
+         * @param cse Case record used to populate class params
+         */
+        public ComponentRecordData(Case cse) {
+            recordId = cse.Id;
+            accountId = cse.AccountId;
+            euroBonusNumber = cse.EBNumber__c;
+            tpAccountNumber = cse.TPAccountNumber__c;
+            codsId = cse.Account.FrequentFlyer__c;
+            lastRetrievedFromSource = cse.Account.LastRetrievedFromSource__c;
+            supportsUIApi = true;
+        }
+
+        /**
+         * Constructor for class
+         * @param transcript LiveChatTranscript record used to populate class params
+         */
+        public ComponentRecordData(LiveChatTranscript transcript){
+            recordId = transcript.Id;
+            accountId = transcript.AccountId;
+            personContactId = transcript.Account.PersonContactId;
+            euroBonusNumber = transcript.EBNumber__c;
+            codsId = transcript.Account.FrequentFlyer__c;
+            caseId = transcript.CaseId;
+            lastRetrievedFromSource = transcript.Account.LastRetrievedFromSource__c;
+            supportsUIApi = false;
+        }
+
+        /**
+         * Used to perform an update with dynamic selection of SObject type based on type derived from record id.
+         */
+        public void updateUnderlyingRecord(){
+            SObject recordToUpdate;
+            SObjectType sObjectType = recordId.getSobjectType();
+            if(sObjectType == LiveChatTranscript.getSObjectType()){
+                recordToUpdate = new LiveChatTranscript(
+                        Id = recordId,
+                        AccountId = accountId,
+                        EBNumber__c = euroBonusNumber,
+                        CODSId__c = codsId,
+                        ContactId = personContactId
+                );
+            } else if (sObjectType == Case.getSObjectType()){
+                recordToUpdate = new Case(
+                        Id = recordId,
+                        AccountId = accountId,
+                        TPAccountNumber__c = tpAccountNumber,
+                        CODSId__c = codsId,
+                        EBNumber__c = euroBonusNumber
+                );
+            }
+            update recordToUpdate;
+        }
+    }
+
+    /**
+     * Used to perform an update from a Lightning Web Component with apex, when UI API is not supported.
+     * @param jsonData JSON structure corresponding to the ComponentRecordData class.
+     */
+    @AuraEnabled
+    public static void updateRecordDataWithApex(String jsonData){
+        ComponentRecordData recordData = (ComponentRecordData)JSON.deserialize(jsonData, ComponentRecordData.class);
+        recordData.updateUnderlyingRecord();
     }
 }
