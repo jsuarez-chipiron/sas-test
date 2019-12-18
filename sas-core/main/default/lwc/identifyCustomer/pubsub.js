@@ -14,6 +14,7 @@ const registerListener = (eventName, callback, thisArg) => {
         events[eventName] = [];
     }
     const duplicate = events[eventName].find(listener => {
+        console.log('Subscribed to event: ' + eventName);
         return listener.callback === callback && listener.thisArg === thisArg;
     });
     if (!duplicate) {
@@ -59,6 +60,7 @@ const fireEvent = (eventName, payload) => {
         listeners.forEach(listener => {
             try {
                 listener.callback.call(listener.thisArg, payload);
+                console.log('Fired event: ' + eventName);
             } catch (error) {
                 // fail silently
             }

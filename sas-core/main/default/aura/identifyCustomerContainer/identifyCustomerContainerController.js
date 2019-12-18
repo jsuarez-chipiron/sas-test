@@ -9,6 +9,7 @@
    */
   refreshView: function(component, event) {
     $A.get('e.force:refreshView').fire();
+    console.log('Fired event refreshView from Aura');
   },
 
   /**
@@ -18,9 +19,10 @@
     const workspaceAPI = component.find("workspace");
     workspaceAPI.getEnclosingTabId().then(function(tabId) {
       component.set("v.tabId", tabId);
+      console.log('Enclosing tab id in Aura: ' + tabId);
     })
       .catch(function(error) {
-        console.log('Error: ' + error);
+        console.log('Error when getting enclosed tab id: ' + error);
       });
   }
 });

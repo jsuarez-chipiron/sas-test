@@ -118,6 +118,7 @@ export default class App extends LightningElement {
 
     handleChangeCustomerButtonClick(event){
         fireEvent(this.tabIdentifier + '_customerChanged', event );
+        console.log('Fired event: ' + this.tabIdentifier + '_customerChanged');
     }
 
     /**
@@ -126,7 +127,7 @@ export default class App extends LightningElement {
      * @param {*} event
      */
     async handleChangeCustomer(event) {
-        console.log("Triggered change customer");
+        console.log("Received event for change customer");
         try{
             this.showSpinner = true;
             if(this.currentRecordData.supportsUIApi) {
@@ -166,6 +167,7 @@ export default class App extends LightningElement {
     async connectedCallback() {
         try{
             await this.setTabIdentifier();
+            console.log('Tab identifier: ' + this.tabIdentifier);
             this.showSpinner = true;
             await registerListener(this.tabIdentifier + '_customerIdentified', this.handleCustomerIdentified, this);
             await registerListener(this.tabIdentifier + '_customerChanged', this.handleChangeCustomer, this);
@@ -200,6 +202,7 @@ export default class App extends LightningElement {
      */
     async handleCustomerIdentified(account){
         try {
+            console.log('Received event for identified customer');
             if(this.currentRecordData.supportsUIApi) {
                 const recordInput = {
                     fields: {
@@ -309,6 +312,7 @@ export default class App extends LightningElement {
             });
             if(account){
                 await fireEvent(this.tabIdentifier + '_customerIdentified', account);
+                console.log('Fired event: ' + this.tabIdentifier + '_customerIdentified');
             } else{
                 this.showSpinner = false;
                 this.noSearchResult = true;
