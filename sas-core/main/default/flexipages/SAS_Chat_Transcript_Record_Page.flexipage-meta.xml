@@ -98,21 +98,23 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
+            <componentName>identifyCustomerContainer</componentName>
+        </componentInstances>
+        <componentInstances>
             <componentInstanceProperties>
                 <name>createQuickActionName</name>
-                <value>NewContact</value>
+                <value>NewAccount</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>lookupFieldName</name>
-                <value>ContactId</value>
+                <value>AccountId</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>titleFieldName</name>
-                <value>Contact Details</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>updateQuickActionName</name>
-                <value>Contact._LightningRelatedContact</value>
+                <value>Account.Update_Person_Account</value>
             </componentInstanceProperties>
             <componentName>console:relatedRecord</componentName>
         </componentInstances>

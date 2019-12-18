@@ -6,10 +6,10 @@
 @IsTest
 private class IdentifyCustomerComponentController_Test {
     /**
-     * Asserts that the correct case and fields are retrieved from method in controller
+     * Asserts that the correct case and fields are retrieved from method in controller.
      */
     @IsTest
-    static void shouldReturnCaseBasedOnCaseId(){
+    static void shouldReturnRecordDataBasedOnCaseId(){
         Account acc = new Account(
                 RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
                 LastName = 'Last Name'
@@ -22,12 +22,88 @@ private class IdentifyCustomerComponentController_Test {
         );
         insert originalCase;
 
-        Case retrievedCase = IdentifyCustomerComponentController.getCaseData(originalCase.Id);
+        IdentifyCustomerComponentController.ComponentRecordData retrievedData = IdentifyCustomerComponentController.getRecordData(originalCase.Id);
 
-        System.assertNotEquals(null, retrievedCase);
-        System.assertEquals(originalCase.EBNumber__c, retrievedCase.EBNumber__c);
-        System.assertEquals(acc.Id, retrievedCase.AccountId);
-        System.assertEquals(null, retrievedCase.Account.LastRetrievedFromSource__c);
+        System.assertNotEquals(null, retrievedData);
+        System.assertEquals(originalCase.EBNumber__c, retrievedData.euroBonusNumber);
+        System.assertEquals(acc.Id, retrievedData.accountId);
+        System.assertEquals(null, retrievedData.lastRetrievedFromSource);
+    }
+
+    /**
+     * Asserts that the correct LiveChatTranscript and fields are retrieved from method in controller
+     */
+    @IsTest
+    static void shouldReturnRecordDataBasedOnLiveChatTranscriptId(){
+        Account acc = new Account(
+                RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
+                LastName = 'Last Name'
+        );
+        insert acc;
+        acc = [SELECT Id, PersonContactId FROM Account WHERE Id = :acc.Id];
+        Case originalCase = new Case(
+                AccountId = acc.Id,
+                EBNumber__c = '123',
+                TPAccountNumber__c = '321'
+        );
+        insert originalCase;
+        LiveChatVisitor visitor = new LiveChatVisitor();
+        insert visitor;
+        LiveChatTranscript transcript = new LiveChatTranscript(
+                LiveChatVisitorId = visitor.Id,
+                CaseId = originalCase.Id,
+                AccountId = acc.Id,
+                ContactId = acc.PersonContactId,
+                EBNumber__c = '123',
+                CODSId__c = '321'
+        );
+        insert transcript;
+
+        IdentifyCustomerComponentController.ComponentRecordData retrievedData = IdentifyCustomerComponentController.getRecordData(transcript.Id);
+
+        System.assertNotEquals(null, retrievedData);
+        System.assertEquals(transcript.EBNumber__c, retrievedData.euroBonusNumber);
+        System.assertEquals(acc.Id, retrievedData.accountId);
+        System.assertEquals(transcript.CODSId__c, retrievedData.codsId);
+        System.assertEquals(acc.PersonContactId, retrievedData.personContactId);
+        System.assertEquals(null, retrievedData.lastRetrievedFromSource);
+    }
+
+    /**
+     * Asserts that the controller can update a chat transcript record based on a supplied JSON string with record id and data
+     */
+    @IsTest
+    static void shouldUpdateLiveChatTranscriptBasedOnSuppliedJSONData(){
+        LiveChatVisitor visitor = new LiveChatVisitor();
+        insert visitor;
+        LiveChatTranscript transcript = new LiveChatTranscript(LiveChatVisitorId = visitor.Id);
+        insert transcript;
+
+        String jsonData = '{"recordId": "' + transcript.Id + '", "euroBonusNumber": "123"}';
+        IdentifyCustomerComponentController.updateRecordDataWithApex(jsonData);
+
+        System.assertEquals(
+                '123',
+                [SELECT Id, EBNumber__c FROM LiveChatTranscript WHERE Id = :transcript.Id].EBNumber__c,
+                'The method did not update the underlying transcript correctly. Expected EBNumber__ to be updated.'
+        );
+    }
+    /**
+     * Asserts that the controller can update a case record based on a supplied JSON string with record id and data
+     */
+    @IsTest
+    static void shouldUpdateCaseBasedOnSuppliedJSONData(){
+        Case originalCase = new Case();
+        insert originalCase;
+
+        String jsonData = '{"recordId": "' + originalCase.Id + '", "euroBonusNumber": "123"}';
+        IdentifyCustomerComponentController.updateRecordDataWithApex(jsonData);
+
+        System.assertEquals(
+                '123',
+                [SELECT Id, EBNumber__c FROM Case WHERE Id = :originalCase.Id].EBNumber__c,
+                'The method did not update the underlying case correctly. Expected EBNumber__ to be updated.'
+        );
     }
 
     /**

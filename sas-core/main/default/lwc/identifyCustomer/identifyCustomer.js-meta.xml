@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="identifyCustomerFromCase">
+    <apiVersion>47.0</apiVersion>
+    <isExposed>false</isExposed>
+    <description>
+        Component used to identify a customer based on a supplied search value, and connect the customer records.
+        To use the component, the corresponding Aura container component should be placed on a record page.
+    </description>
+</LightningComponentBundle>

@@ -1,0 +1,6 @@
+<aura:component implements="flexipage:availableForAllPageTypes, force:hasRecordId" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.getEnclosingTabId}"/>
+    <aura:attribute name="tabId" type="Id"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+    <c:identifyCustomer recordId="{!v.recordId}" enclosingTabId="{!v.tabId}" onconnectedCustomerChange="{!c.refreshView}"/>
+</aura:component>
