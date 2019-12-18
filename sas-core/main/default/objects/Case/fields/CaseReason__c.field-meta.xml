@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CaseReason__c</fullName>
+    <complianceGroup>PIIExtract</complianceGroup>
     <externalId>false</externalId>
     <label>Case Reason</label>
     <required>false</required>
@@ -10,7 +11,6 @@
     <type>Picklist</type>
     <valueSet>
         <controllingField>Type</controllingField>
-        <restricted>false</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -295,9 +295,9 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Tariff</controllingFieldValue>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
             <valueName>Baggage</valueName>
         </valueSettings>
         <valueSettings>
@@ -311,8 +311,8 @@
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Eurobonus</valueName>
         </valueSettings>
         <valueSettings>
@@ -359,11 +359,41 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
             <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <valueName>ATC/ATC Refund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <valueName>Fare Quote</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <valueName>Fare Rules</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <valueName>Fares</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <valueName>Policy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Refund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <valueName>Tax/YQ</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -372,8 +402,8 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Cancellation/refund of ticket</valueName>
         </valueSettings>
         <valueSettings>
@@ -387,8 +417,8 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Credit card</valueName>
         </valueSettings>
         <valueSettings>
@@ -398,8 +428,8 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Error</valueName>
         </valueSettings>
         <valueSettings>
@@ -436,12 +466,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Refund</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Requesting documentation</valueName>
         </valueSettings>
@@ -467,23 +491,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Special service requests</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Travel pass</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Digital support</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Rebooking</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Information</controllingFieldValue>
@@ -494,28 +510,12 @@
             <valueName>Group booking - direct groups</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>ATC/ATC Refund</valueName>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Digital support</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Fare Quote</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Fare Rules</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Fares</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Policy</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Tax/YQ</valueName>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Rebooking</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

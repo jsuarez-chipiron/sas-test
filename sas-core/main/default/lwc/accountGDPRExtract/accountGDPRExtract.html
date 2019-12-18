@@ -1,0 +1,18 @@
+<template>
+    <lightning-card title="GDPR Extract" icon-name="action:download">
+        <div class="slds-p-horizontal_small">
+            <p>Download an extract of Personal Identifiable Information (PII) by clicking the button below.</p>
+        </div>
+        <div class="slds-p-left_small slds-p-top_small">
+            <lightning-button variant="brand" label="Download extract" title="Download button" onclick={downloadExtract}> </lightning-button>
+        </div>
+        <!--Spinner graphics dynamically rendered, controlled by JS-->
+        <div if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+        </div>
+        <!--Custom child component to render errors in search-->
+        <template if:true={error}>
+            <c-error-panel errors={error}></c-error-panel>
+        </template>
+    </lightning-card>
+</template>

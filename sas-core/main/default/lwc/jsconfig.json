@@ -3,17 +3,17 @@
         "experimentalDecorators": true,
         "baseUrl": ".",
         "paths": {
+            "c/accountGDPRExtract": [
+                "accountGDPRExtract/accountGDPRExtract.js"
+            ],
             "c/errorPanel": [
                 "errorPanel/errorPanel.js"
             ],
-            "c/ldsUtils": [
-                "ldsUtils/ldsUtils.js"
-            ],
-            "c/pubsub": [
-                "pubsub/pubsub.js"
-            ],
             "c/identifyCustomer": [
                 "identifyCustomer/identifyCustomer.js"
+            ],
+            "c/ldsUtils": [
+                "ldsUtils/ldsUtils.js"
             ]
         }
     },
