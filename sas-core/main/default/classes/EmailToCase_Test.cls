@@ -14,7 +14,12 @@ private class EmailToCase_Test {
         Group g1 = new Group(Name='STOPQ Escalations', type='Queue');
         insert g1;
         QueueSObject q1 = new QueueSObject(QueueID = g1.id, SobjectType = 'Case');
-        insert q1;     
+        insert q1; 
+
+        Group testGroup = new Group(Name='test group', Type='Queue');
+        insert testGroup;
+        QueueSObject testQueue = new QueueSObject(QueueID = testGroup.id, SobjectType = 'Case');
+        insert testQueue;    
     }
 
     /**
@@ -153,11 +158,71 @@ private class EmailToCase_Test {
         email.ToAddress= 'pq_commercial_procedures_and_tariff_support@sas.se';
         email.Subject = 'Test Subject';
         email.HtmlBody = 'Test Body';
+
         email.ParentId = cases[0].Id; 
         insert email;
 
         List<Case> updatedCase = [SELECT Type FROM Case WHERE id =: cases[0].Id];
         System.assertEquals(null, updatedCase[0].Type);
     }
- }
 
+
+
+ /**
+        Test creating a Case when userId of Case Owner starts with 005
+        @author Josephine Ding - Deloitte
+    */
+    @isTest 
+    static void setCaseOwnerUserTest(){ 
+
+        //Create the user
+        User theUser = new User ();
+        theUser.team__c = 'Team 1';
+        theUser.site__c = 'Test Site';
+        theUser.vendor__c = 'Test Vendor';
+        theUser.virtualOrganization__c = 'Test VirtualOrganization';
+        
+        //insert user
+        insert theUser;
+        //Set the owner of the case to be the User you created 
+        Case testCase = new Case(OwnerId = theUser.Id);
+                
+        Test.startTest();
+        //insert testCase; 
+        insert testCase;
+        //Do asserts and check if the fields in User are the same as updated case value
+         //add fields you want to assert
+        Test.stopTest();
+        Case updatedCase = [SELECT Id,team__c,site__c,vendor__c,virtualOrganization__c FROM CASE WHERE id=:testCase.id]; 
+
+        System.assertEquals(theUser.team__c, updatedCase.team__c); 
+        System.assertEquals(theUser.site__c, updatedCase.site__c); 
+        System.assertEquals(theUser.Vendor__c , updatedCase.Vendor__c); 
+        System.assertEquals(theUser.virtualOrganization__c, updatedCase.virtualOrganization__c); 
+          
+    }
+
+    @isTest
+        //Create a Queue setCaseOwnerQueueTest
+    static void setCaseOwnerQueueTest () {
+       
+        Group g  =[SELECT Id FROM Group WHERE Name = 'test group' LIMIT 1];
+   
+        //Set the owner of the case to be the Queue you created 
+        Case testCase = new Case(OwnerId = g.Id);
+                
+        Test.startTest();
+        //insert testCase; 
+        insert testCase;
+        //Do asserts and check if the fields in User are the same as updated case value
+         //add fields you want to assert
+        Test.stopTest();
+        Case updatedCase = [SELECT Id,team__c,site__c,vendor__c,virtualOrganization__c FROM CASE WHERE id=:testCase.id]; 
+
+        System.assertEquals(null, updatedCase.team__c); 
+        System.assertEquals(null, updatedCase.site__c); 
+        System.assertEquals(null , updatedCase.Vendor__c); 
+        System.assertEquals(null, updatedCase.virtualOrganization__c); 
+        
+    }
+ }
