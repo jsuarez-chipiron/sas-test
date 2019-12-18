@@ -192,7 +192,7 @@
             <componentName>accountGDPRExtract</componentName>
             <visibilityRule>
                 <criteria>
-                    <leftValue>{!$Permission.CustomPermission.Download_GDPR_Extract}</leftValue>
+                    <leftValue>{!$Permission.CustomPermission.Generate_GDPR_Extract}</leftValue>
                     <operator>EQUAL</operator>
                     <rightValue>true</rightValue>
                 </criteria>
