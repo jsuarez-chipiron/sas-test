@@ -172,7 +172,7 @@ private class EmailToCase_Test {
     */
     @isTest 
     static void setCaseOwnerUserTest(){ 
-
+         Profile pf = [Select Id from Profile where name = 'System Administrator' LIMIT 1];
         //Create the user
         User theUser = new User ();
         theUser.team__c = 'Team 1';
@@ -180,6 +180,26 @@ private class EmailToCase_Test {
         theUser.vendor__c = 'Test Vendor';
         theUser.virtualOrganization__c = 'Test VirtualOrganization';
         
+        theUser.FirstName = 'Test';
+        theUser.LastName = 'Name';
+        theUser.CompanyName = 'IT Test Company';
+        theUser.MobilePhone = '123-456-7890';
+        
+        theUser.Username = 'testUser-' + '@test.com';
+        theUser.Email = 'testUser-' + '@test.com';
+        theUser.Alias = 'test';
+        theUser.CommunityNickname = 'test1';
+        theUser.TimeZoneSidKey = 'America/New_York';
+        theUser.LocaleSidKey = 'en_US';
+        theUser.EmailEncodingKey = 'UTF-8';
+        theUser.ProfileId = pf.Id;
+        theUser.LanguageLocaleKey = 'en_US';
+        
+        theUser.Street = '123 Test St';
+        theUser.City = 'Testcity';
+        theUser.State = 'va';
+        theUser.PostalCode = '23223';
+        theUser.Country = 'USA';
         //insert user
         insert theUser;
         //Set the owner of the case to be the User you created 
