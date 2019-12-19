@@ -6,7 +6,7 @@
 public with sharing class AccountGDPRExtractController {
     @AuraEnabled
     public static ContentVersion generateExtractFile(Id accountId){
-        String jsonExtract = DataExtractService.extractPIIData(accountId);
+        String jsonExtract = DataExtractService.extractAccountPersonalData(accountId, null);
 
         ContentVersion extractFile = new ContentVersion();
         extractFile.Description = 'Extract of Personal Identifiable Information.';
@@ -16,7 +16,7 @@ public with sharing class AccountGDPRExtractController {
         extractFile.VersionData = Blob.valueOf(jsonExtract);
         insert extractFile;
 
-        return [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id = :extractFile.Id];
+        return [SELECT Id, ContentDocumentId, Title FROM ContentVersion WHERE Id = :extractFile.Id];
     }
 
 }
