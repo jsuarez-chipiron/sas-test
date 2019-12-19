@@ -71,7 +71,6 @@ public with sharing class DataExtractService {
         queries.add('SELECT ' + fieldSelections.get(CASE_OBJECT) + emailSubQuery + ' FROM ' + CASE_OBJECT + ' WHERE AccountId = \'' + accountId + '\'');
         queries.add('SELECT ' + fieldSelections.get(CHAT_TRANSCRIPT_OBJECT) + ' FROM ' + CHAT_TRANSCRIPT_OBJECT + ' WHERE AccountId = \'' + accountId + '\'');
 
-        System.debug(queries);
         return queries;
     }
 }
