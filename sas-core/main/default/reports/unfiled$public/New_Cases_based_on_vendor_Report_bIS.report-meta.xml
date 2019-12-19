@@ -7,9 +7,6 @@
         <field>Case$Subject</field>
     </columns>
     <columns>
-        <field>Case$Type</field>
-    </columns>
-    <columns>
         <field>Case$Status</field>
     </columns>
     <columns>
