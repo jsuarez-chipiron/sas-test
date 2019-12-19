@@ -165,6 +165,22 @@
             <componentName>console:relatedRecord</componentName>
         </componentInstances>
         <componentInstances>
+            <componentName>runtime_service_scs:conversations</componentName>
+            <visibilityRule>
+                <booleanFilter>1 OR 2</booleanFilter>
+                <criteria>
+                    <leftValue>{!Record.Origin}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Facebook</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.Origin}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Twitter</rightValue>
+                </criteria>
+            </visibilityRule>
+        </componentInstances>
+        <componentInstances>
             <componentName>forceKnowledge:articleSearchDesktop</componentName>
         </componentInstances>
         <mode>Replace</mode>

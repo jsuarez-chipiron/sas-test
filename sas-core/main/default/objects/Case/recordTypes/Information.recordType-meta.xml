@@ -467,7 +467,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Facebook</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Twitter</fullName>
             <default>false</default>
         </values>
         <values>

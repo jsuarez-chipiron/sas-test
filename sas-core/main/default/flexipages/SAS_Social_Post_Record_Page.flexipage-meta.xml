@@ -22,6 +22,13 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
+            <componentName>forceChatter:recordFeedContainer</componentName>
+        </componentInstances>
+        <name>Facet-131071a3-02ba-49d2-894c-cc8d7b6f59a7</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <componentInstances>
             <componentName>runtime_service_scs:socialPostMessage</componentName>
         </componentInstances>
         <mode>Replace</mode>
@@ -37,6 +44,17 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>body</name>
+                <value>Facet-131071a3-02ba-49d2-894c-cc8d7b6f59a7</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>title</name>
+                <value>Standard.Tab.feed</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:tab</componentName>
+        </componentInstances>
         <componentInstances>
             <componentInstanceProperties>
                 <name>body</name>
@@ -118,10 +136,50 @@
     <flexiPageRegions>
         <componentInstances>
             <componentInstanceProperties>
-                <name>tabs</name>
-                <value>sidebartabs</value>
+                <name>lookupFieldName</name>
+                <value>Id</value>
             </componentInstanceProperties>
-            <componentName>flexipage:tabset</componentName>
+            <componentInstanceProperties>
+                <name>titleFieldName</name>
+                <value>Parent Post</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>updateQuickActionName</name>
+                <value>SocialPost.ParentPost</value>
+            </componentInstanceProperties>
+            <componentName>console:relatedRecord</componentName>
+            <visibilityRule>
+                <criteria>
+                    <leftValue>{!Record.MessageType}</leftValue>
+                    <operator>NE</operator>
+                    <rightValue>Post</rightValue>
+                </criteria>
+            </visibilityRule>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>lookupFieldName</name>
+                <value>Id</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>titleFieldName</name>
+                <value>Parent Comment</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>updateQuickActionName</name>
+                <value>SocialPost.ParentComment</value>
+            </componentInstanceProperties>
+            <componentName>console:relatedRecord</componentName>
+            <visibilityRule>
+                <criteria>
+                    <leftValue>{!Record.MessageType}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Reply</rightValue>
+                </criteria>
+            </visibilityRule>
+        </componentInstances>
+        <componentInstances>
+            <componentName>runtime_service_scs:socialPostMessage</componentName>
         </componentInstances>
         <componentInstances>
             <componentInstanceProperties>
@@ -137,6 +195,16 @@
                 <value>SocialPost.This_Social_Post</value>
             </componentInstanceProperties>
             <componentName>console:relatedRecord</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentName>forceKnowledge:articleSearchDesktop</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>tabs</name>
+                <value>sidebartabs</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:tabset</componentName>
         </componentInstances>
         <mode>Replace</mode>
         <name>sidebar</name>
