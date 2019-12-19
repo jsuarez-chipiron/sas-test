@@ -7,6 +7,9 @@
         <field>Case$Subject</field>
     </columns>
     <columns>
+        <field>Case$Type</field>
+    </columns>
+    <columns>
         <field>Case$Status</field>
     </columns>
     <columns>
@@ -35,17 +38,18 @@
             <operator>equals</operator>
             <value>Sykes</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>Case$Status</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>,New,In Progress,On Hold,Awaiting Customer Response,Escalated,Closed</value>
+        </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
         <field>Case$Priority</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsDown>
-    <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>Case$Type</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>My Cases_Sykes</name>
