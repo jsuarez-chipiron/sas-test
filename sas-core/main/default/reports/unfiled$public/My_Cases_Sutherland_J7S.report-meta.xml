@@ -7,6 +7,9 @@
         <field>Case$Subject</field>
     </columns>
     <columns>
+        <field>Case$Type</field>
+    </columns>
+    <columns>
         <field>Case$Status</field>
     </columns>
     <columns>
@@ -47,16 +50,6 @@
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
         <field>Case$Priority</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsDown>
-    <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>Case$Type</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsDown>
-    <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>Case$Type</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>My Cases_Sutherland</name>
