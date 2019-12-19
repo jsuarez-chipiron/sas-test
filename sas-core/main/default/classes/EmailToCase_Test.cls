@@ -166,8 +166,6 @@ private class EmailToCase_Test {
         System.assertEquals(null, updatedCase[0].Type);
     }
 
-
-
  /**
         Test creating a Case when userId of Case Owner starts with 005
         @author Josephine Ding - Deloitte
