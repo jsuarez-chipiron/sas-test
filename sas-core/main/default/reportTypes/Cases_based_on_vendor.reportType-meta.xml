@@ -3,7 +3,7 @@
     <baseObject>Case</baseObject>
     <category>cases</category>
     <deployed>true</deployed>
-    <description>Cases can be divided into Sykes and Sutherland.</description>
+    <description>Cases divide to Sutherland and Sykes.</description>
     <label>Cases based on vendor</label>
     <sections>
         <columns>
@@ -64,6 +64,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>RecordType</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CaseReopenedCount__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -183,6 +188,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Site__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Status</field>
             <table>Case</table>
         </columns>
@@ -204,6 +214,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>SurveyInvitationLink__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Team__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -238,17 +253,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Account.Name</field>
+            <field>Vendor__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Account.TextName</field>
+            <field>VirtualOrganization__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact.Account</field>
+            <field>Account.FirstName</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.LastName</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -258,12 +278,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact.MobilePhone</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact.FirstName</field>
+            <field>Contact.Account</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -273,7 +288,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact.LastName</field>
+            <field>Contact.MobilePhone</field>
             <table>Case</table>
         </columns>
         <masterLabel>Cases</masterLabel>
