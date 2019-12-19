@@ -709,11 +709,10 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Log__c.StackTrace__c</field>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.ParentCommentMessage__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -10,7 +10,6 @@
     <columns>Posted</columns>
     <columns>Persona</columns>
     <columns>Parent</columns>
-    <columns>PostStatus__c</columns>
     <filterScope>Mine</filterScope>
     <filters>
         <field>ReviewedStatus</field>
