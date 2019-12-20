@@ -6,5 +6,6 @@
     <fields>Posted</fields>
     <fields>Provider</fields>
     <fields>ReplyToId</fields>
+    <fields>ParentId</fields>
     <label>SAS Compact Layout</label>
 </CompactLayout>
