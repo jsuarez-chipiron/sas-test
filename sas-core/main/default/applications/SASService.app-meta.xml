@@ -12,20 +12,38 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>SAS_Chat_Transcript_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>LiveChatTranscript</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>SAS_Person_Account_Record_Page</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
         <pageOrSobjectType>Account</pageOrSobjectType>
     </actionOverrides>
-	<actionOverrides>
+    <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>SAS_Chat_Transcript_Record_Page</content>
+        <content>SAS_Social_Persona_Record_Page</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
-        <pageOrSobjectType>LiveChatTranscript</pageOrSobjectType>
+        <pageOrSobjectType>SocialPersona</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>SAS_Social_Post_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>SocialPost</pageOrSobjectType>
     </actionOverrides>
     <brand>
         <headerColor>#000099</headerColor>
