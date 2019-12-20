@@ -24,6 +24,11 @@ public class CaseHandler extends C_TriggerHandler {
     @TestVisible private static final String ADDITIONAL_TAG = 'Additional';
 
     /**
+Static variable for the Social Post review status "Reviewed"
+*/
+    @TestVisible private static final String STATUS_REVIEWED= 'Reviewed';
+
+    /**
     Trigger variables
     */
     private Map<Id, Case> newCaseMap;
@@ -64,6 +69,7 @@ public class CaseHandler extends C_TriggerHandler {
    */
     public override void afterInsert() {
         ManageCaseTagRecords(newCaseList, newCaseMap);
+        UpdateSocialPost(newCaseList);
 
     }
 
@@ -90,6 +96,35 @@ public class CaseHandler extends C_TriggerHandler {
             }
         }
     }
+
+    /**
+    Method to set owner (Global Support SoMe) on case created from SoMe-posts
+    @param newCaseList The list of new version of the case i.e. the Trigger.new variable
+    */
+    private static void UpdateSocialPost(List<Case> newCaseList) {
+       Map<Id,Case>caseBySoMeIds = new Map<Id,Case>();
+        for(Case c : newCaseList){
+            if(c.SourceId!=null && c.SourceId.getSobjectType()==SocialPost.SObjectType) {
+                caseBySoMeIds.put(c.SourceId, c);
+            }
+        }
+        if(!caseBySoMeIds.isEmpty()) {
+            List<SocialPost> sps = [SELECT Id FROM SocialPost WHERE Id =:caseBySoMeIds.keySet() AND ParentId=null];
+            List<SocialPost> spToUpdate = new List<SocialPost> ();
+        for (SocialPost sp : sps) {
+            sp.ParentId=caseBySoMeIds.get(sp.Id).Id;
+            sp.CaseCreated__c = true;
+            sp.Done__c=true;
+            sp.ReviewedStatus=STATUS_REVIEWED;
+            spToUpdate.add(sp);
+
+            }
+
+        update spToUpdate;
+    }
+    }
+
+
 
     /**
     Method to make sure Case Reason and Case Tags is not the same value
