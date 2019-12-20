@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Checked if the post has a case created from it</description>
     <externalId>false</externalId>
-    <label>CaseCreated</label>
+    <label>Case Created</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Checkbox</type>
