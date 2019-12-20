@@ -14,5 +14,10 @@
         <operation>notEqual</operation>
         <value>Needed</value>
     </filters>
+    <filters>
+        <field>SASPost__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
     <label>Handled Posts</label>
 </ListView>
