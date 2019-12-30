@@ -10,9 +10,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Other</fullName>
+                <fullName>Reservations</fullName>
                 <default>false</default>
-                <label>Other</label>
+                <label>Reservations</label>
             </value>
         </valueSetDefinition>
     </valueSet>
