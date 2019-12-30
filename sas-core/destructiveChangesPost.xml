@@ -106,4 +106,14 @@
         <members>Case.CaseReopenedCount__c</members>
         <name>CustomField</name>
     </types>
+
+    <!--2019-12-30 - Philip Ossler - Remove Trigger for other solution in Process Builder-->
+    <types>
+        <members>SurveyResponseHandler</members>
+        <name>ApexClass</name>
+    </types>    
+    <types>
+        <members>SurveyResponseTrigger</members>
+        <name>ApexTrigger</name>
+    </types>       
 </Package>
