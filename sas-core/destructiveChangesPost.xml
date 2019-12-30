@@ -100,4 +100,10 @@
         <members>Frequent_Flyer__x.EBQualifyingPeriodStartDate__c</members>
         <name>CustomField</name>
     </types>
+
+    <!--2019-12-05 - Philip Ossler - Renamed field-->
+    <types>
+        <members>Case.CaseReopenedCount__c</members>
+        <name>CustomField</name>
+    </types>
 </Package>
