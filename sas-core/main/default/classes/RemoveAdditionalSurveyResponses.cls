@@ -1,3 +1,8 @@
+/**
+    Class invoked by a process to remove additional survey responses. Deletes all completed responses but the first.
+    @author Philip Ossler
+    @param invitationId The Id of related survey invitation
+*/
 public without sharing class RemoveAdditionalSurveyResponses {
     @InvocableMethod(label='Remove Additional SurveyResponses' description='Only the first SurveyResponse per Case will be saved')
     public static void updateSurveyResponses(List<SurveyInvitation> invitationId) {
