@@ -170,6 +170,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>RemoveAdditionalSurveyResponses</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SASExternalDataSourceConnection</apexClass>
         <enabled>true</enabled>
     </classAccesses>
