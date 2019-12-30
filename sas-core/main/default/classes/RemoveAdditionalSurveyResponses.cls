@@ -10,7 +10,7 @@ public without sharing class RemoveAdditionalSurveyResponses {
             SELECT InvitationId 
             FROM SurveyResponse
             WHERE InvitationId IN: new Map<Id, SurveyInvitation>(invitationId).keySet()
-            ORDER BY CreatedDate ASC
+            ORDER BY Status DESC, CreatedDate ASC
         ];
         if(surveyResponses.size() > 1) {
             List<SurveyResponse> recordsToRemove = new List<SurveyResponse>();
