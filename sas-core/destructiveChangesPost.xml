@@ -115,5 +115,9 @@
     <types>
         <members>SurveyResponseTrigger</members>
         <name>ApexTrigger</name>
-    </types>       
+    </types>
+    <types>
+        <members>SAS Profile</members>
+        <name>Profile</name>
+    </types>    
 </Package>
