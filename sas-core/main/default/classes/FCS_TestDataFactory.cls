@@ -8,10 +8,6 @@
 @isTest
 public class FCS_TestDataFactory {
     /**
-        Type of accounts which can be created within the data factory
-    */
-    public enum AccountType{FREQUENT_FLYER}
-    /**
         Sequence number used to seed unique fields to ensure no collisions occur
     */
     public static Integer SEQ_NUM = 0;
@@ -56,32 +52,29 @@ public class FCS_TestDataFactory {
     }
 
     /**
-        Creates accounts which can be used in test methods
+        Creates frequent flyers which cna be used in the test methods
         @param numAccounts The number of accounts to create
-        @param type The type of the accounts which should be created
         @return The list of accounts (Not Saved)
     */
-    public static Account[] createAccounts(Integer numAccounts,AccountType type){
+    public static Account[] createFrequentFlyers(Integer numAccounts){
         Account[] accs = new Account[numAccounts];
         for(Integer i=0;i<numAccounts;i++){
             Account acc = new Account();
-            if(type == AccountType.FREQUENT_FLYER){
-                acc.RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER;
-                acc.FirstName = 'TestFirstName';
-                acc.LastName = 'TestLastName';
-                acc.CODSId__c = 'TEST'+SEQ_NUM;
-                acc.PersonEmail = 'test@test.com';
-                acc.PersonMobilePhone = '+46701234567';
-                acc.PersonHomePhone = '+4681234567';
-                acc.Gender__c = (SEQ_NUM & 1) > 0 ? 'F' : 'M';
-                acc.FrequentFlyer__c = acc.CODSId__c;
-                acc.PersonBirthDate = Date.newInstance(1990 - Math.mod(SEQ_NUM,50),Math.mod(SEQ_NUM,12)+1,Math.mod(SEQ_NUM,29)+1);
-                acc.EBNumber__c = 'EBTEST'+SEQ_NUM;
-                acc.EBLevel__c = (SEQ_NUM & 3) < 2 ? 'B' : (SEQ_NUM & 3) < 3 ? 'S' : 'G';
-                acc.EBMbrshipLvlStatusStartDate__c = Date.today().toStartOfMonth();
-                acc.EBMbrshipLvlStatusEndDate__c = acc.EBMbrshipLvlStatusStartDate__c.addYears(1);
-                SEQ_NUM++;
-            }
+            acc.RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER;
+            acc.FirstName = 'TestFirstName';
+            acc.LastName = 'TestLastName';
+            acc.CODSId__c = 'TEST'+SEQ_NUM;
+            acc.PersonEmail = 'test@test.com';
+            acc.PersonMobilePhone = '+46701234567';
+            acc.PersonHomePhone = '+4681234567';
+            acc.Gender__c = (SEQ_NUM & 1) > 0 ? 'F' : 'M';
+            acc.FrequentFlyer__c = acc.CODSId__c;
+            acc.PersonBirthDate = Date.newInstance(1990 - Math.mod(SEQ_NUM,50),Math.mod(SEQ_NUM,12)+1,Math.mod(SEQ_NUM,29)+1);
+            acc.EBNumber__c = 'EBTEST'+SEQ_NUM;
+            acc.EBLevel__c = (SEQ_NUM & 3) < 2 ? 'B' : (SEQ_NUM & 3) < 3 ? 'S' : 'G';
+            acc.EBMbrshipLvlStatusStartDate__c = Date.today().toStartOfMonth();
+            acc.EBMbrshipLvlStatusEndDate__c = acc.EBMbrshipLvlStatusStartDate__c.addYears(1);
+            SEQ_NUM++;
             accs[i] = acc;
         }
         return accs;

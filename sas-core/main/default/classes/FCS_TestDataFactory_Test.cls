@@ -15,7 +15,7 @@ private class FCS_TestDataFactory_Test {
 		Tests creating and inserting account records
 	*/
 	@isTest static void insertAccountRecords(){
-		insert FCS_TestDataFactory.createAccounts(200, FCS_TestDataFactory.AccountType.FREQUENT_FLYER);
+		insert FCS_TestDataFactory.createFrequentFlyers(200);
 	}
 
 	/** 
