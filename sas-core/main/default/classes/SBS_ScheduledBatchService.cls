@@ -166,7 +166,7 @@ global with sharing class SBS_ScheduledBatchService {
 				be.success = be.customError!=true && success;
 				if(be.scheduledBatchRunComponentId!=null){
 					//Retrieve stored errors to ensure that they are fetched as well.
-					Integer storedErrors = Database.countQuery('SELECT COUNT() FROM SBS_ScheduledBatchRunTxnError__c WHERE SBS_ScheduledBatchRunComponent__c=\''+be.scheduledBatchRunComponentId+'\'');
+					Integer storedErrors = Database.countQuery('SELECT COUNT() FROM SBS_ScheduledBatchRunTxnError__c WHERE ScheduledBatchRunComponent__c=\''+be.scheduledBatchRunComponentId+'\'');
 					if(storedErrors>0)be.success=false;
 					SBS_ScheduledBatchRunComponent__c sbrc = [SELECT Id,ApexJobId__c FROM SBS_ScheduledBatchRunComponent__c WHERE Id=:be.scheduledBatchRunComponentId];
 					sbrc.TotalBatches__c = aaj.TotalJobItems;
