@@ -347,7 +347,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.CaseReopenedCount__c</field>
+        <field>Case.ReopenedCount__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
