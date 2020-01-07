@@ -83,4 +83,17 @@ public with sharing class C_Util {
 
         return String.fromCharArray(ch);
     }
+
+    /**
+        Generates a set of ids from the list of sobjects
+        @param soList The list of SObjects
+        @return The set of ids of the sobjects in the list
+    */
+    public static Set<Id> getIdSet(SObject[] soList){
+        Set<Id> s = new Set<Id>();
+        for(Integer i=0,sz=soList.size();i<sz;i++){
+            s.add(soList[i].Id);
+        }
+        return s;
+    }
 }

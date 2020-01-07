@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FCS_Wiped__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Set when the customer data has been wiped from the account</description>
+    <externalId>false</externalId>
+    <label>Wiped</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>
