@@ -228,6 +228,11 @@
     </externalDataSourceAccesses>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.CMP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.CODSId__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -449,6 +454,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>FrequentFlyer__x.BirthDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>FrequentFlyer__x.CMP__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
