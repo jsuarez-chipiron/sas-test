@@ -11,9 +11,9 @@ private class CaseHandler_Test {
    Test method for generation of test data used in more than one method
   */
     @TestSetup static void createTestData(){
-        List<SocialPost> socialPosts = TestDataFactory.createSocialPosts(2);
+        List<SocialPost> socialPosts = FCS_TestDataFactory.createSocialPosts(2);
         insert socialPosts;
-        List<Case> newCases  = TestDataFactory.createCases(1, null, null, null, null);
+        List<Case> newCases  = FCS_TestDataFactory.createCases(1, null, null, null, null);
         newCases[0].CaseReason__c = 'TestReason 1';
         newCases[0].Subject = 'TestCase 2';
         newCases[0].CaseSubReason__c = 'TestSubReason 1';
@@ -28,7 +28,7 @@ private class CaseHandler_Test {
 
     @isTest
     static void insertCaseTagRecords() {
-        List<Case> newCase = TestDataFactory.createCases(1, null, null, null, null);
+        List<Case> newCase = FCS_TestDataFactory.createCases(1, null, null, null, null);
         newCase[0].CaseReason__c = 'TestReason 1';
         newCase[0].CaseSubReason__c = 'TestSubReason 1';
         newCase[0].CaseTags__c = 'TestTag1;TestTag2';
@@ -123,7 +123,7 @@ private class CaseHandler_Test {
     */
     @isTest static void testValidateCaseTagsOnInsert() {
         // Test not to be able to create case with case reason and case tag with same value
-        List<Case> newCases = TestDataFactory.createCases(1, null, null, null, null);
+        List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null, null);
         newCases[0].CaseReason__c = 'TestReason 1';
         newCases[0].CaseSubReason__c = 'TestSubReason 1';
         newCases[0].CaseTags__c = 'TestTag1;TestTag2;TestReason 1';

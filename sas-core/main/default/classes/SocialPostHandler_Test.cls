@@ -14,7 +14,7 @@ Test method for generation of test data used in more than one method
 */
     @TestSetup static void createTestData() {
 
-        List<Case> newCases = TestDataFactory.createCases(1, null, null, null, null);
+        List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null, null);
         newCases[0].CaseReason__c = 'TestReason 1';
         newCases[0].Subject = 'TestCase 2';
         newCases[0].CaseSubReason__c = 'TestSubReason 1';
@@ -28,7 +28,7 @@ Test method for generation of test data used in more than one method
     @isTest
     static void insertSASPost() {
         List<ManagedSocialAccounts__mdt> socialAccs = [SELECT Id, DeveloperName, Name__c, Provider__c From ManagedSocialAccounts__mdt];
-        List<SocialPost> socialPosts = TestDataFactory.createSocialPosts(1);
+        List<SocialPost> socialPosts = FCS_TestDataFactory.createSocialPosts(1);
         socialPosts[0].MessageType = 'Post';
         socialPosts[0].Provider = socialAccs[0].Provider__c;
         socialPosts[0].Handle = socialAccs[0].Name__c;

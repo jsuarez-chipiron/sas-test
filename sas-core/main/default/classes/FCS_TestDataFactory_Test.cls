@@ -1,0 +1,29 @@
+/**
+	Unit tests which ensures that the records created by the test data factory can 
+	be inserted in the database.
+	@author Peter Södergren
+*/
+@isTest
+private class FCS_TestDataFactory_Test {
+	/**
+		Tests creating and inserting case records
+	*/
+	@isTest	static void insertCaseRecords () {
+       insert FCS_TestDataFactory.createCases(200, null, null, RecordTypeHelper.CASE_SUPPORT, 'Baggage');
+	}
+	/** 
+		Tests creating and inserting account records
+	*/
+	@isTest static void insertAccountRecords(){
+		insert FCS_TestDataFactory.createAccounts(200, FCS_TestDataFactory.AccountType.FREQUENT_FLYER);
+	}
+
+	/** 
+		Tests creating and inserting social post records
+	*/
+	@isTest static void insertSocialRecords(){
+		insert FCS_TestDataFactory.createSocialPosts(200);
+	}
+	
+}
+	
