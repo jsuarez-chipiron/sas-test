@@ -25,14 +25,15 @@ export default class AccountGdprExtract extends LightningElement {
   @track showSpinner;
 
   /**
-   * Used to call controller to generate an extract for the customer in context. Opens a link to download the generated file.
+   * Used to call controller to generate an extract for the customer in context. Opens a link to download the generated
+   * file, and then deletes the file from Salesforce.
    * @returns {Promise<void>}
    */
   async downloadExtract(){
     try{
       this.showSpinner = true;
       let contentVersion = await generateExtractFile({ accountId : this.recordId });
-      window.open('/sfc/servlet.shepherd/version/download/' + contentVersion.Id);
+      await window.open('/sfc/servlet.shepherd/version/download/' + contentVersion.Id);
       await deleteRecord(contentVersion.ContentDocumentId);
       this.showSpinner = false;
 
@@ -40,8 +41,8 @@ export default class AccountGdprExtract extends LightningElement {
       this.dispatchEvent(event);
     } catch (error) {
       this.error = error;
-      this.showSpinner = false,
-      console.log('An error occured: ' + error);
+      this.showSpinner = false;
+      console.log('An error occurred: ' + error);
     }
   }
 }
