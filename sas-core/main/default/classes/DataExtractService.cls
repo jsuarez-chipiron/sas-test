@@ -4,10 +4,26 @@
  * @description Class used to hold operations related to extracting personal data
  */
 public with sharing class DataExtractService {
+    /**
+     * Determines the name of the ComplianceGroup field value on FieldDefinition that determines if field
+     * should be included in GDPR Extract.
+     */
     private static final String PII_TAG = 'PIIExtract';
+    /**
+     * Object name for Case object
+     */
     private static final String CASE_OBJECT = Case.SObjectType.getDescribe().name;
+    /**
+     * Object name for Account object
+     */
     private static final String ACCOUNT_OBJECT = Account.SObjectType.getDescribe().name;
+    /**
+     * Object name for Chat Transcript object
+     */
     private static final String CHAT_TRANSCRIPT_OBJECT = LiveChatTranscript.SObjectType.getDescribe().name;
+    /**
+     * Object name for Email object
+     */
     private static final String EMAIL_OBJECT = EmailMessage.SObjectType.getDescribe().name;
 
     /**
