@@ -76,14 +76,4 @@ global with sharing class GDPR_WipeAccountService {
     global static void wipeAccounts(Id[] accIds){
         wipeAccounts(accIds,getAcccountFieldsToClear(false),getWipedAccountName(),true,true);
     }
-    /**
-        Aura Enabled method used to privde the abiltiy to wipe a single account 
-        from a lightning component.
-        @param accId The account id which to wipe
-    */
-    @AuraEnabled
-    global static void wipeAccount(Id accId){
-        if(!FeatureManagement.checkPermission('Manual_GDPR_Delete'))throw new NoAccessException();
-        wipeAccounts(new Id[]{accId});
-    }
 }

@@ -71,7 +71,7 @@ private class GDPR_Delete_Test {
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
         sg.set('AccountDataWipePeriod','1');
         sg.set('AccountDataWipeName','TestDelete');
-        GDPR_WipeAccountService.wipeAccount(acc.Id);
+        GDPR_DeleteComponentController.deleteRecordData(acc.Id);
         Test.stopTest();
 
         acc = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,EBLevel__c FROM Account WHERE Id=:acc.Id];
@@ -201,7 +201,7 @@ private class GDPR_Delete_Test {
     @isTest static void wipeCaseManual(){
         Test.startTest();
         MessagingSession ms = [SELECT Id,CaseId FROM MessagingSession];
-        GDPR_WipeCaseService.wipeCases(new Id[]{ms.CaseId});
+        GDPR_DeleteComponentController.deleteRecordData(ms.CaseId);
         Test.stopTest();
 
         Case[] cOpen = [SELECT Id FROM Case WHERE IsClosed=false];
