@@ -13,8 +13,6 @@
         <apexClass>GDPR_AccountGDPRExtractController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-        <enabled>true</enabled>
-    </classAccesses>
     <classAccesses>
         <apexClass>CSharkIntegrationService</apexClass>
         <enabled>true</enabled>
