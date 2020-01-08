@@ -733,18 +733,8 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>SocialPost.PostReason__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.PostReplied__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SocialPost.PostSubReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
