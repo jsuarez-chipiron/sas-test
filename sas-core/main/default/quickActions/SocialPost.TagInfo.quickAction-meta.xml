@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Quick Action to create a feedback case</description>
+    <description>Action used to create background case to add tagging to social posts</description>
     <fieldOverrides>
         <field>Origin</field>
         <formula>TEXT(SocialPost.Provider)</formula>
@@ -9,38 +9,41 @@
         <field>SourceId</field>
         <formula>SocialPost.Id</formula>
     </fieldOverrides>
-    <label>Feedback Case</label>
+    <fieldOverrides>
+        <field>Status</field>
+        <literalValue>Closed</literalValue>
+    </fieldOverrides>
+    <label>Tag Info</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>
         <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>
         <quickActionLayoutColumns>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>OwnerId</field>
+                <field>Type</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Subject</field>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Description</field>
+                <field>CaseReason__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
         <quickActionLayoutColumns>
             <quickActionLayoutItems>
+                <emptySpace>true</emptySpace>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Status</field>
-                <uiBehavior>Required</uiBehavior>
+                <field>CaseSubReason__c</field>
+                <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
     </quickActionLayout>
-    <successMessage>Feedback Case Created</successMessage>
+    <successMessage>Tag added successfully</successMessage>
     <targetObject>Case</targetObject>
     <targetParentField>Source</targetParentField>
-    <targetRecordType>Case.Feedback</targetRecordType>
+    <targetRecordType>Case.Information</targetRecordType>
     <type>Create</type>
 </QuickAction>
