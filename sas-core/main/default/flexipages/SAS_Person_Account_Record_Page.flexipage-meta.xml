@@ -173,7 +173,7 @@
             <componentName>flexipage:tabset</componentName>
         </componentInstances>
         <componentInstances>
-            <componentName>accountGDPRExtract</componentName>
+            <componentName>gdpr_AccountGDPRExtract</componentName>
             <visibilityRule>
                 <criteria>
                     <leftValue>{!$Permission.CustomPermission.Generate_GDPR_Extract}</leftValue>
@@ -183,7 +183,7 @@
             </visibilityRule>
         </componentInstances>
         <componentInstances>
-            <componentName>fcs_AccountGDPRDelete</componentName>
+            <componentName>gdpr_AccountGDPRDelete</componentName>
             <visibilityRule>
                 <criteria>
                     <leftValue>{!$Permission.CustomPermission.Manual_GDPR_Delete}</leftValue>

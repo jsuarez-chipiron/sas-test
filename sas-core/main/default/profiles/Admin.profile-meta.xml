@@ -10,7 +10,9 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AccountGDPRExtractController</apexClass>
+        <apexClass>GDPR_AccountGDPRExtractController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -357,6 +359,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.EBNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.FirstClosingDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

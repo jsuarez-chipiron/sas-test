@@ -4,7 +4,7 @@
  * @description JS controller for component used to delete data for customer
  */
 import { LightningElement, track, api } from "lwc";
-//Add method for GDPR delete batch
+import wipeAccount from "@salesforce/apex/GDPR_WipeAccountService.wipeAccount";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class AccountGdprExtract extends LightningElement {
@@ -37,8 +37,8 @@ export default class AccountGdprExtract extends LightningElement {
     try{
       this.showSpinner = true;
       if(!this.validateInput()){
-        //TODO Method for deletion with await
-        const event = new ShowToastEvent({title: 'GDPR Delete', message: 'Successfully started deletion of data', variant: 'success'});
+        await wipeAccount({accId : this.recordId});
+        const event = new ShowToastEvent({title: 'GDPR Delete', message: 'Successfully deleted data', variant: 'success'});
         this.dispatchEvent(event);
         this.deleteDisabled = true;
       }
