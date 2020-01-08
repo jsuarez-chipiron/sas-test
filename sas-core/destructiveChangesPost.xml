@@ -125,6 +125,8 @@
     </types>
 	<types>
 		<members>SocialPost.This_Social_Post</members>
+		<members>SocialPost.CreateInformationCase</members>
+		<members>SocialPost.CreateFeedbackCase</members>	
 		<name>QuickAction</name>
 	</types>
 

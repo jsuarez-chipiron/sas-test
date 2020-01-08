@@ -3,6 +3,22 @@
 */
 @isTest
 private class C_RestUtil_Test {
+    
+    /**
+        Tests setting OK and Status code 200 on success. 
+    */
+    @isTest static void restUtilsetOKTest(){
+        setupRestContext(
+            '/TEST', 
+            'GET', 
+            null, 
+            new Map<String,String>{'p1'=>'TEST','p2'=>'','p3'=>'5','p4'=>'5.4'}, 
+            null
+        );
+        C_RestUtil.init();
+        C_RestUtil.setOK('OK');
+    }
+    
     /**
         Tests retrival of query parameters
     */
