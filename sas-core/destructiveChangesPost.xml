@@ -115,5 +115,16 @@
     <types>
         <members>SurveyResponseTrigger</members>
         <name>ApexTrigger</name>
-    </types>       
+    </types>   
+
+<!--2010-01-08 - Sanna Sörberg - Remove fields on Social Post--> 
+	<types>
+        <members>SocialPost.PostReason__c</members>
+        <members>SocialPost.PostSubReason__c</members>
+        <name>CustomField</name>
+    </types>
+	<types>
+		<members>SocialPost.This_Social_Post</members>
+		<name>QuickAction</name>
+	</types>
 </Package>
