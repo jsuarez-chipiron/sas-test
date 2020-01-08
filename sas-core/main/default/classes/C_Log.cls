@@ -29,7 +29,7 @@ public with sharing class C_Log {
     */
     public static void log(Severity severity,String msg,String stackTrace,String logGroup,HttpData http){
         Long tsNow = System.currentTimeMillis();
-        Log__c l = new Log__c();
+        C_Log__c l = new C_Log__c();
         l.Severity__c = severity.name();
         if(msg!=null)l.Message__c = msg.abbreviate(10000);
         if(stackTrace!=null)l.StackTrace__c = stackTrace.abbreviate(10000);
@@ -82,7 +82,7 @@ public with sharing class C_Log {
             Sets the HTTP information on the supplied log record
             @param l The log record
         */
-        private void setRecord(Log__c l){
+        private void setRecord(C_Log__c l){
             if(resource!=null)l.HttpResource__c = resource.abbreviate(255);
             if(method!=null)l.HttpMethod__c = method.abbreviate(10);
             if(remoteAddress!=null)l.HttpRemoteAddress__c = remoteAddress.abbreviate(60);

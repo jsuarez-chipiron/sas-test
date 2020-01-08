@@ -155,5 +155,11 @@
         <members>FCS_GDPRWipeCase_Batch</members>
         <members>TestDataFactory</members>
         <members>TestDataFactory_Test</members>
+        <name>ApexClass</name>
+    </types>
+    <!--2020-01-08 - Peter Södergren - Remove object after namespace change-->
+    <types>
+        <members>Log__c</members>
+        <name>CustomObject</name>
     </types>
 </Package>

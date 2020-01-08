@@ -182,7 +182,7 @@ private class C_RestUtil_Test {
             C_RestUtil.handleException(e);
         }
         System.assertEquals(0,Database.countQuery('SELECT COUNT() FROM FeedItem'));
-        Log__c l = [SELECT Id,HttpResource__c,HttpMethod__c,HttpHeaders__c,HttpQueryParameters__c,HttpBody__c,HttpRemoteAddress__c FROM Log__c];
+        C_Log__c l = [SELECT Id,HttpResource__c,HttpMethod__c,HttpHeaders__c,HttpQueryParameters__c,HttpBody__c,HttpRemoteAddress__c FROM C_Log__c];
         System.assertEquals('/TEST',l.HttpResource__c);
         System.assertEquals('POST',l.HttpMethod__c);
         System.assert(l.HttpHeaders__c.contains('h1'));
@@ -217,7 +217,7 @@ private class C_RestUtil_Test {
             C_RestUtil.handleException(e);
         }
         System.assertEquals(0,Database.countQuery('SELECT COUNT() FROM FeedItem'));
-        Log__c l = [SELECT Id,HttpResource__c,HttpMethod__c,HttpHeaders__c,HttpQueryParameters__c,HttpBody__c,HttpRemoteAddress__c FROM Log__c];
+        C_Log__c l = [SELECT Id,HttpResource__c,HttpMethod__c,HttpHeaders__c,HttpQueryParameters__c,HttpBody__c,HttpRemoteAddress__c FROM C_Log__c];
         System.assertEquals('/TEST',l.HttpResource__c);
         System.assertEquals('POST',l.HttpMethod__c);
         System.assert(l.HttpHeaders__c.contains('h1'));
@@ -252,7 +252,7 @@ private class C_RestUtil_Test {
             C_RestUtil.handleException(e);
         }
         System.assertEquals(0,Database.countQuery('SELECT COUNT() FROM FeedItem'));
-        Log__c l = [SELECT Id,HttpResource__c,HttpMethod__c,HttpHeaders__c,HttpQueryParameters__c,HttpBody__c,HttpRemoteAddress__c FROM Log__c];
+        C_Log__c l = [SELECT Id,HttpResource__c,HttpMethod__c,HttpHeaders__c,HttpQueryParameters__c,HttpBody__c,HttpRemoteAddress__c FROM C_Log__c];
         System.assertEquals('/TEST',l.HttpResource__c);
         System.assertEquals('POST',l.HttpMethod__c);
         System.assert(l.HttpHeaders__c.contains('h1'));

@@ -14,7 +14,7 @@ private class C_Log_Test {
     @isTest static void logStandard(){
         C_Log.init();
         C_Log.log(C_Log.Severity.Info, 'TEST MESSAGE', null, 'TEST GROUP', null);
-        Log__c l = [SELECT Id,Severity__c,Message__c,StackTrace__c,LogGroup__c,Timestamp__c,Duration__c FROM Log__c ORDER BY CreatedDate DESC LIMIT 1];
+        C_Log__c l = [SELECT Id,Severity__c,Message__c,StackTrace__c,LogGroup__c,Timestamp__c,Duration__c FROM C_Log__c ORDER BY CreatedDate DESC LIMIT 1];
         System.assertEquals(C_Log.Severity.Info.name(),l.Severity__c);
         System.assertEquals('TEST MESSAGE',l.Message__c);
         System.assertEquals(null,l.StackTrace__c);
@@ -29,7 +29,7 @@ private class C_Log_Test {
     */
     @isTest static void logNoInit(){
         C_Log.log(C_Log.Severity.Warning, 'TEST MESSAGE', null, 'TEST GROUP', null);
-        Log__c l = [SELECT Id,Severity__c,Message__c,StackTrace__c,LogGroup__c,Timestamp__c,Duration__c FROM Log__c ORDER BY CreatedDate DESC LIMIT 1];
+        C_Log__c l = [SELECT Id,Severity__c,Message__c,StackTrace__c,LogGroup__c,Timestamp__c,Duration__c FROM C_Log__c ORDER BY CreatedDate DESC LIMIT 1];
         System.assertEquals(C_Log.Severity.Warning.name(),l.Severity__c);
         System.assertEquals('TEST MESSAGE',l.Message__c);
         System.assertEquals(null,l.StackTrace__c);
@@ -50,7 +50,7 @@ private class C_Log_Test {
             C_Log.logException(e, null, null);
         }
 
-        Log__c l = [SELECT Id,Severity__c,Message__c,StackTrace__c,LogGroup__c,Timestamp__c,Duration__c FROM Log__c ORDER BY CreatedDate DESC LIMIT 1];
+        C_Log__c l = [SELECT Id,Severity__c,Message__c,StackTrace__c,LogGroup__c,Timestamp__c,Duration__c FROM C_Log__c ORDER BY CreatedDate DESC LIMIT 1];
         System.assertEquals(C_Log.Severity.Error.name(),l.Severity__c);
         System.assertEquals('TEST ERROR MESSAGE',l.Message__c);
         System.assertNotEquals(null,l.StackTrace__c);
@@ -87,7 +87,7 @@ private class C_Log_Test {
         http.body = 'TEST BODY';
         C_Log.init();
         C_Log.log(C_Log.Severity.Info, 'TEST MESSAGE', null, 'TEST GROUP', http);
-        Log__c l = [SELECT Id,Severity__c,Message__c,StackTrace__c,LogGroup__c,Timestamp__c,Duration__c,HttpResource__c,HttpMethod__c,HttpHeaders__c,HttpQueryParameters__c,HttpRemoteAddress__c,HttpBody__c FROM Log__c ORDER BY CreatedDate DESC LIMIT 1];
+        C_Log__c l = [SELECT Id,Severity__c,Message__c,StackTrace__c,LogGroup__c,Timestamp__c,Duration__c,HttpResource__c,HttpMethod__c,HttpHeaders__c,HttpQueryParameters__c,HttpRemoteAddress__c,HttpBody__c FROM C_Log__c ORDER BY CreatedDate DESC LIMIT 1];
         System.assertEquals(C_Log.Severity.Info.name(),l.Severity__c);
         System.assertEquals('TEST MESSAGE',l.Message__c);
         System.assertEquals(null,l.StackTrace__c);
@@ -101,6 +101,36 @@ private class C_Log_Test {
         System.assertEquals(http.queryParams,l.HttpQueryParameters__c);
         System.assertEquals(http.remoteAddress,l.HttpRemoteAddress__c);
         System.assertEquals(http.body,l.HttpBody__c);
+    }
+
+    /**
+        Tests deletion of log records using the batch to ensure that the log records are deleted.
+    */
+    @isTest static void deleteBatch(){
+        C_Log.init();
+        C_Log.log(C_Log.Severity.Info, 'TEST MESSAGE', null, 'TEST GROUP', null);
+        System.assertEquals(1,Database.countQuery('SELECT COUNT() FROM C_Log__c'));
+        Test.startTest();
+        C_Settings.SettingsGroup sg = C_Settings.getSettings('Log');
+        sg.set('LogRetentionPeriod','-1');
+        Database.executeBatch(new C_LogDelete_Batch());
+        Test.stopTest();
+        System.assertEquals(0,Database.countQuery('SELECT COUNT() FROM C_Log__c'));
+    }
+
+    /**
+        Tests deletion of log records using the batch and ensrues that logs within the retention period are kept
+    */
+    @isTest static void deleteBatchRetain(){
+        C_Log.init();
+        C_Log.log(C_Log.Severity.Info, 'TEST MESSAGE', null, 'TEST GROUP', null);
+        System.assertEquals(1,Database.countQuery('SELECT COUNT() FROM C_Log__c'));
+        Test.startTest();
+        C_Settings.SettingsGroup sg = C_Settings.getSettings('Log');
+        sg.set('LogRetentionPeriod','1');
+        Database.executeBatch(new C_LogDelete_Batch());
+        Test.stopTest();
+        System.assertEquals(1,Database.countQuery('SELECT COUNT() FROM C_Log__c'));
     }
 
 }
