@@ -142,4 +142,18 @@
         <members>recordEditFormStaticContact</members>
         <name>LightningComponentBundle</name>
     </types>
+
+    <!--2020-01-08 - Peter Södergren - Remove obsolete classes-->
+    <types>
+        <members>FCS_GDPRDeleteAccountData_Batch</members>
+        <members>FCS_GDPRDeleteCase_Batch</members>
+        <members>FCS_GDPRDeleteChat_Batch</members>
+        <members>FCS_GDPRDeleteInteraction_Batch</members>
+        <members>FCS_GDPRDeleteMessaging_Batch</members>
+        <members>FCS_GDPRDeleteSocialPost_Batch</members>
+        <members>FCS_GDPRDelete_Test</members>
+        <members>FCS_GDPRWipeCase_Batch</members>
+        <members>TestDataFactory</members>
+        <members>TestDataFactory_Test</members>
+    </types>
 </Package>
