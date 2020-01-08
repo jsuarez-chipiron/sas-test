@@ -83,6 +83,7 @@ global with sharing class GDPR_WipeAccountService {
     */
     @AuraEnabled
     global static void wipeAccount(Id accId){
+        if(!FeatureManagement.checkPermission('Manual_GDPR_Delete'))throw new NoAccessException();
         wipeAccounts(new Id[]{accId});
     }
 }
