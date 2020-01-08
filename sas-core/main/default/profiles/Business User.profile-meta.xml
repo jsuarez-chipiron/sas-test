@@ -11,10 +11,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_AccountGDPRExtractController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AccountGDPRExtractController_Test</apexClass>
+        <apexClass>GDPR_AccountGDPRExtractController_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
