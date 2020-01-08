@@ -183,7 +183,7 @@
             </visibilityRule>
         </componentInstances>
         <componentInstances>
-            <componentName>gdpr_AccountGDPRDelete</componentName>
+            <componentName>gdpr_GDPRDelete</componentName>
             <visibilityRule>
                 <criteria>
                     <leftValue>{!$Permission.CustomPermission.Manual_GDPR_Delete}</leftValue>

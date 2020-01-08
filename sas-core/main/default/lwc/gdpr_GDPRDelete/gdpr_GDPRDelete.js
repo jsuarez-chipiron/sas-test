@@ -4,7 +4,7 @@
  * @description JS controller for component used to delete data for customer
  */
 import { LightningElement, track, api } from "lwc";
-import wipeAccount from "@salesforce/apex/GDPR_WipeAccountService.wipeAccount";
+import wipeRecord from "@salesforce/apex/GDPR_DeleteComponentController.deleteRecordData";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class AccountGdprExtract extends LightningElement {
@@ -33,11 +33,11 @@ export default class AccountGdprExtract extends LightningElement {
    * file, and then deletes the file from Salesforce.
    * @returns {Promise<void>}
    */
-  async deleteAccount(){
+  async deleteRecordData(){
     try{
       this.showSpinner = true;
       if(!this.validateInput()){
-        await wipeAccount({accId : this.recordId});
+        await wipeRecord({recordId : this.recordId});
         const event = new ShowToastEvent({title: 'GDPR Delete', message: 'Successfully deleted data', variant: 'success'});
         this.dispatchEvent(event);
         this.deleteDisabled = true;

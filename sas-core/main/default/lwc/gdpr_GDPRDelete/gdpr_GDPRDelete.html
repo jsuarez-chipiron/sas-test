@@ -1,7 +1,7 @@
 <template>
     <lightning-card title="GDPR Delete" icon-name="action:delete">
         <span class="slds-m-horizontal_medium">
-            Delete sensitive data related to this account.
+            Delete sensitive data related to this record.
         </span>
         <div class="slds-grid slds-gutters_direct-medium slds-align_absolute-center slds-m-top_x-small">
             <div class="slds-col slds-align-bottom">
@@ -16,7 +16,7 @@
             </div>
             <div class="slds-col slds-align-bottom">
                 <div class="slds-float_right">
-                    <lightning-button variant="destructive" label="Delete" title="Delete button" onclick={deleteAccount} disabled={deleteDisabled}> </lightning-button>
+                    <lightning-button variant="destructive" label="Delete" title="Delete button" onclick={deleteRecordData} disabled={deleteDisabled}> </lightning-button>
                 </div>
             </div>
         </div>
