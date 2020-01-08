@@ -206,6 +206,10 @@
         <enabled>true</enabled>
         <name>Generate_GDPR_Extract</name>
     </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Manual_GDPR_Delete</name>
+    </customPermissions>
     <externalDataSourceAccesses>
         <enabled>false</enabled>
         <externalDataSource>SAS_External_Systems</externalDataSource>

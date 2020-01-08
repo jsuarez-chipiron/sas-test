@@ -18,5 +18,4 @@ public with sharing class AccountGDPRExtractController {
 
         return [SELECT Id, ContentDocumentId, Title FROM ContentVersion WHERE Id = :extractFile.Id];
     }
-
 }

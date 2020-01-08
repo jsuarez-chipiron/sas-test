@@ -1,14 +1,12 @@
 <template>
     <lightning-card title="GDPR Extract" icon-name="action:download">
-        <div class="slds-grid slds-gutters slds-align_absolute-center">
-            <div class="slds-col slds-shrink-none slds-grow-none">
-                <div class="slds-p-horizontal_small">
-                    <p>Download an extract of <br> this account's Personal Data.</p>
-                </div>
+        <div class="slds-grid slds-gutters_medium slds-align_absolute-center">
+            <div class="slds-col">
+                    <p>Download an extract of this account's Personal Data.</p>
             </div>
-            <div class="slds-col slds-shrink-none">
-                <div class="slds-p-horizontal_small">
-                    <lightning-button variant="brand" label="Download extract" title="Download button" onclick={downloadExtract}> </lightning-button>
+            <div class="slds-col">
+                <div class="slds-float_right">
+                    <lightning-button variant="brand" label="Download" title="Download button" onclick={downloadExtract}> </lightning-button>
                 </div>
             </div>
         </div>

@@ -24,6 +24,11 @@ export default class AccountGdprExtract extends LightningElement {
   @track showSpinner;
 
   /**
+   * If true, the delete button and input field on the component is disabled.
+   */
+  @track buttonDisabled;
+
+  /**
    * Used to call controller to generate an extract for the customer in context. Opens a link to download the generated
    * file, and then deletes the file from Salesforce.
    * @returns {Promise<void>}
@@ -31,15 +36,39 @@ export default class AccountGdprExtract extends LightningElement {
   async deleteAccount(){
     try{
       this.showSpinner = true;
-      //Method for deletion with await
+      if(!this.validateInput()){
+        //TODO Method for deletion with await
+        const event = new ShowToastEvent({title: 'GDPR Delete', message: 'Successfully started deletion of data', variant: 'success'});
+        this.dispatchEvent(event);
+        this.deleteDisabled = true;
+      }
       this.showSpinner = false;
-
-      const event = new ShowToastEvent({title: 'GDPR Delete', message: 'Successfully deleted data', variant: 'success'});
-      this.dispatchEvent(event);
     } catch (error) {
       this.error = error;
       this.showSpinner = false;
       console.log('An error occurred: ' + error);
     }
+  }
+
+  /**
+   * Validates the value in the search field on component
+   * Currently only checks if field is empty but should preferably be extended with further validations
+   */
+  validateInput() {
+    let fieldError = true;
+    let inputCmp = this.template.querySelector(".input-field");
+    let value = inputCmp.value;
+    if (value === "") {
+      inputCmp.setCustomValidity("Please insert the record Id");
+      fieldError = true;
+    } else if (value === this.recordId){
+      inputCmp.setCustomValidity("");
+      fieldError = false;
+    } else {
+      inputCmp.setCustomValidity("Incorrect record Id");
+      fieldError = true;
+    }
+    inputCmp.reportValidity();
+    return fieldError;
   }
 }

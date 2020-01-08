@@ -7,16 +7,16 @@
             <div class="slds-col slds-align-bottom">
                 <div class="slds-grid">
                     <div class="slds-col">
-                        <lightning-input type="text" label="Verify deletion by entering this record's Id"></lightning-input>
+                        <lightning-input class="input-field" type="text" label="Verify deletion by entering this record's Id" disabled={deleteDisabled}></lightning-input>
                     </div>
                     <div class="slds-col">
-                        <lightning-helptext content="The record Id can be found in the URL field of this page, e.g. https://flysas.lightning.force.com/lightning/r/Account/0011x00000wtUPzAAM/view, where 0011x00000wtUPzAAM is the Record Id"></lightning-helptext>
+                        <lightning-helptext content="The record Id can be found in the URL field of this page, e.g. https://flysas.lightning.force.com/lightning/r/Account/0011x00000wtUPzAAM/view, where 0011x00000wtUPzAAM is the record Id"></lightning-helptext>
                     </div>
                 </div>
             </div>
-            <div class="slds-col slds-align-bottom slds-shrink-none">
+            <div class="slds-col slds-align-bottom">
                 <div class="slds-float_right">
-                    <lightning-button variant="destructive" label="Delete account" title="Delete button" onclick={deleteAccount}> </lightning-button>
+                    <lightning-button variant="destructive" label="Delete" title="Delete button" onclick={deleteAccount} disabled={deleteDisabled}> </lightning-button>
                 </div>
             </div>
         </div>
