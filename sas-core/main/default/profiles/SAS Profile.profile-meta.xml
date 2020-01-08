@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Profile xmlns="http://soap.sforce.com/2006/04/metadata">
+
+	<classAccesses>
+        <apexClass>RetrieveSurveyLink</apexClass>
+        <enabled>True</enabled>
+    </classAccesses>
+    <custom>true</custom>
+
+    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.CODSId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LiveChatTranscript.CODSId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LiveChatTranscript.CaseRecordTypeName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LiveChatTranscript.EBNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <layoutAssignments>
+        <layout>Account-Account Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdRoleLink__mdt-AD Role Link Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdRolePermission__mdt-AD Role Permission Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdRoleUserDetail__mdt-AD Role User Detail Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdRole__mdt-AD Role Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.Feedback</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.Information</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.Internal_Backoffice</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.Support</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Close Case Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseTag__c-Case Reason Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Feature_Switch__mdt-Feature Switch Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>FrequentFlyer__x-Frequent Flyer Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LiveChatTranscript-Chat Transcript Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LocalAuthProvider__mdt-Local Auth Provider Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Log__c-Log Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SocialPost-Social Post Layout</layout>
+    </layoutAssignments>
+    
+    <pageAccesses>
+        <apexPage>CommunitiesLanding</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>CommunitiesLogin</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>CommunitiesSelfReg</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>CommunitiesSelfRegConfirm</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>CommunitiesTemplate</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>Exception</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>FileNotFound</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>ForgotPassword</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>ForgotPasswordConfirm</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>IdeasHome</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>InMaintenance</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>MyProfilePage</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>SiteLogin</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>SiteRegister</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>SiteRegisterConfirm</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>SiteTemplate</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>StdExceptionTemplate</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>Unauthorized</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>UnderConstruction</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <userLicense>Guest</userLicense>
+</Profile>
