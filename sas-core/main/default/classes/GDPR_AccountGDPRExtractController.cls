@@ -1,9 +1,9 @@
 /**
  * @author Anton Norell
  * @date 2019-12-18
- * @description Controller for LWC accountGDPRExtract component.
+ * @description Controller for LWC gdpr_AccountGDPRExtract component.
  */
-public with sharing class AccountGDPRExtractController {
+public with sharing class GDPR_AccountGDPRExtractController {
     @AuraEnabled
     public static ContentVersion generateExtractFile(Id accountId){
         String jsonExtract = DataExtractService.extractAccountPersonalData(accountId, null);

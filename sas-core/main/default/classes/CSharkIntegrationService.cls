@@ -4,7 +4,7 @@
  * @description Service class for integrations calling external system C-Shark. Exposes available operations through
  *              public methods corresponding to the operation name.
  */
-public with sharing class CSharkIntegrationService {
+public with sharing class   CSharkIntegrationService {
     /**
      * Supported operation names for C-Shark services
      */

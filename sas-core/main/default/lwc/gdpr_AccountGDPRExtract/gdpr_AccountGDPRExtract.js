@@ -4,11 +4,11 @@
  * @description JS constoller for component used to generate GDPR extract for a customer.
  */
 import { LightningElement, track, api } from "lwc";
-import generateExtractFile from "@salesforce/apex/AccountGDPRExtractController.generateExtractFile";
+import generateExtractFile from "@salesforce/apex/GDPR_AccountGDPRExtractController.generateExtractFile";
 import { deleteRecord } from "lightning/uiRecordApi";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-export default class AccountGdprExtract extends LightningElement {
+export default class Gdpr_AccountGDPRExtract extends LightningElement {
   /**
    * Id for Account record in context
    */
@@ -34,9 +34,10 @@ export default class AccountGdprExtract extends LightningElement {
       this.showSpinner = true;
       let contentVersion = await generateExtractFile({ accountId : this.recordId });
       await window.open('/sfc/servlet.shepherd/version/download/' + contentVersion.Id);
-      await deleteRecord(contentVersion.ContentDocumentId);
-      this.showSpinner = false;
+      //await deleteRecord(this.contentDocumentId);
+      await setTimeout(function(){ deleteRecord(this.contentDocumentId); }, 1500);
 
+      this.showSpinner = false;
       const event = new ShowToastEvent({title: 'GDPR Extract', message: 'Extract generated successfully', variant: 'success'});
       this.dispatchEvent(event);
     } catch (error) {

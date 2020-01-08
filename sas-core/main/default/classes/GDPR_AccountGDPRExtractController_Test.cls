@@ -4,7 +4,7 @@
  * @description Test class for AccountGDPRExtractController
  */
 @IsTest
-private class AccountGDPRExtractController_Test {
+private class GDPR_AccountGDPRExtractController_Test {
     /**
      * Asserts that a file is generated for the customer when using the DataExtractService. Scope for test is limited
      * to ContentVersion creation, not the file content.
@@ -17,7 +17,7 @@ private class AccountGDPRExtractController_Test {
         );
         insert acc;
 
-        ContentVersion contentVersion = AccountGDPRExtractController.generateExtractFile(acc.Id);
+        ContentVersion contentVersion = GDPR_AccountGDPRExtractController.generateExtractFile(acc.Id);
 
         System.assertNotEquals(null, contentVersion, 'No ContentVersion record was returned');
         System.assertEquals('GDPR extract ' + Date.today().format() + '.json', contentVersion.Title);
