@@ -182,6 +182,16 @@
                 </criteria>
             </visibilityRule>
         </componentInstances>
+        <componentInstances>
+            <componentName>fcs_AccountGDPRDelete</componentName>
+            <visibilityRule>
+                <criteria>
+                    <leftValue>{!$Permission.CustomPermission.Manual_GDPR_Delete}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>true</rightValue>
+                </criteria>
+            </visibilityRule>
+        </componentInstances>
         <mode>Replace</mode>
         <name>sidebar</name>
         <type>Region</type>

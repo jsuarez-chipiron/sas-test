@@ -10,7 +10,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class AccountGdprExtract extends LightningElement {
   /**
-   * Id for Account record in contect
+   * Id for Account record in context
    */
   @api recordId;
 

@@ -182,21 +182,6 @@
             <componentName>runtime_service_scs:socialPostMessage</componentName>
         </componentInstances>
         <componentInstances>
-            <componentInstanceProperties>
-                <name>lookupFieldName</name>
-                <value>Id</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>titleFieldName</name>
-                <value>Post tags</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>updateQuickActionName</name>
-                <value>SocialPost.This_Social_Post</value>
-            </componentInstanceProperties>
-            <componentName>console:relatedRecord</componentName>
-        </componentInstances>
-        <componentInstances>
             <componentName>forceKnowledge:articleSearchDesktop</componentName>
         </componentInstances>
         <componentInstances>
