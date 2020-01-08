@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportFolder xmlns="http://soap.sforce.com/2006/04/metadata">
+    <folderShares>
+        <accessLevel>Manage</accessLevel>
+        <sharedTo>test-ilf6iqperetb@example.com</sharedTo>
+        <sharedToType>User</sharedToType>
+    </folderShares>
+    <folderShares>
+        <accessLevel>View</accessLevel>
+        <sharedTo>SASSTOPQEscalations</sharedTo>
+        <sharedToType>Group</sharedToType>
+    </folderShares>
+    <name>SAS - STOPQ</name>
+</ReportFolder>
