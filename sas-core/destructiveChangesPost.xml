@@ -127,4 +127,10 @@
 		<members>SocialPost.This_Social_Post</members>
 		<name>QuickAction</name>
 	</types>
+
+    <!--2020-01-08 - Anton Norell - Removed obsolete class-->
+    <types>
+        <members>AccountGDPRDeleteController</members>
+        <name>ApexClass</name>
+    </types>
 </Package>
