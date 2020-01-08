@@ -41,7 +41,7 @@ global with sharing class GDPR_WipeCase_Batch extends SBS_ScheduledBatch{
 		@param sObjScope The cases to delete
 	*/
 	global override void executeScope(Database.BatchableContext bc, SObject[] sObjScope){
-        GDPR_WipeCaseService.wipeCase((Case[])sObjScope, fieldsToClear);
+        GDPR_WipeCaseService.wipeCases((Case[])sObjScope, fieldsToClear);
     }
 
     

@@ -28,13 +28,25 @@ global with sharing class GDPR_WipeCaseService {
         }
         return fieldsToClear;
     }
+    /**
+        Wipes the cases with the supplied case ids and deletes any connected interactions
+        @param caseIds THe ids of the cases to wipe
+    */
+    global static void wipeCases(Id[] caseIds){
+        Integer sz = caseIds.size();
+        Case[] caseList = new Case[sz];
+        for(Integer i=0;i<sz;i++){
+            caseList[i] = new Case(Id=caseIds[i]);
+        }
+        wipeCases(caseList);
+    }
 
     /**
         Wipes the provided cases and deletes any connected interactions
         @param caseList The list of cases to wipe
     */
-    global static void wipeCase(Case[] caseList){
-        wipeCase(caseList,getCaseFieldsToClear());
+    global static void wipeCases(Case[] caseList){
+        wipeCases(caseList,getCaseFieldsToClear());
     }
 
     /**
@@ -43,7 +55,7 @@ global with sharing class GDPR_WipeCaseService {
         @param caseList The list of cases to wipe
         @param fieldsToClear The fields to clear on the case record
     */
-    global static void wipeCase(Case[] caseList,String[] fieldsToClear){
+    global static void wipeCases(Case[] caseList,String[] fieldsToClear){
         Integer sz = caseList.size();
         Integer fSz = fieldsToClear.size();
         Set<Id> caseIds = new Set<Id>();

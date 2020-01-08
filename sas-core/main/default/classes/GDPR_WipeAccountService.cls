@@ -64,7 +64,7 @@ global with sharing class GDPR_WipeAccountService {
         update accList;
         if(wipeRelated){
             Case[] cList = [SELECT Id FROM Case WHERE AccountId IN :accIds];
-            if(!cList.isEmpty())GDPR_WipeCaseService.wipeCase(cList);
+            if(!cList.isEmpty())GDPR_WipeCaseService.wipeCases(cList);
         }
     }
 

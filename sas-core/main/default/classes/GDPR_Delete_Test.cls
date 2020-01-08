@@ -196,6 +196,26 @@ private class GDPR_Delete_Test {
     }
 
     /**
+        Tests case wipe using the case id as input to wipe specific case ids
+    */
+    @isTest static void wipeCaseManual(){
+        Test.startTest();
+        MessagingSession ms = [SELECT Id,CaseId FROM MessagingSession];
+        GDPR_WipeCaseService.wipeCases(new Id[]{ms.CaseId});
+        Test.stopTest();
+
+        Case[] cOpen = [SELECT Id FROM Case WHERE IsClosed=false];
+        System.assertEquals(1,cOpen.size());
+
+        Case[] cClosed = [SELECT Id FROM Case WHERE IsClosed=true];
+        System.assertEquals(5,cClosed.size());
+        System.assertEquals(1,[SELECT Id FROM EmailMessage].size());
+        System.assertEquals(1,[SELECT Id FROM LiveChatTranscript].size());
+        System.assertEquals(0,[SELECT Id FROM MessagingSession].size());
+        System.assertEquals(1,[SELECT Id FROM SocialPost].size());
+    }
+
+    /**
         Tests that case wipe retains cases within the retention period
     */
     @isTest static void wipeCaseRetain(){
