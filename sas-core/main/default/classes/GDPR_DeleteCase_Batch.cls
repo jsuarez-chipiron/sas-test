@@ -3,7 +3,7 @@
     X number of days after case closed.
     @author Peter Södergren
 */
-global with sharing class FCS_GDPRDeleteCase_Batch extends SBS_ScheduledBatch{
+global with sharing class GDPR_DeleteCase_Batch extends SBS_ScheduledBatch{
     /**
         The date at which cases will be removed
     */
@@ -11,7 +11,7 @@ global with sharing class FCS_GDPRDeleteCase_Batch extends SBS_ScheduledBatch{
     /**
         Initiates the batch class and extracts the date used to filter out cases for removal
     */
-    global FCS_GDPRDeleteCase_Batch(){
+    global GDPR_DeleteCase_Batch(){
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
         lastRetentionDate = DateTime.newInstance(Date.today().addDays(-sg.getInt('MaxRetentionPeriod')),Time.newInstance(0,0,0,0));
     }
@@ -36,18 +36,11 @@ global with sharing class FCS_GDPRDeleteCase_Batch extends SBS_ScheduledBatch{
 	*/
 	global override void executeScope(Database.BatchableContext bc, SObject[] sObjScope){
         Integer sz = sObjScope.size();
-        Id[] caseIds = new Id[sz];
+        Set<Id> caseIds = new Set<Id>();
         for(Integer i=0;i<sz;i++){
-            caseIds[i]=sObjScope[i].Id;
+            caseIds.add(sObjScope[i].Id);
         }
-        LiveChatTranscript lctList = [SELECT Id FROM LiveChatTranscript WHERE CaseId IN :caseIds];
-        EmailMessage emList = [SELECT Id FROM EmailMessage WHERE ParentId IN :caseIds];
-        MessagingSession msList = [SELECT Id FROM MessagingSession WHERE CaseId IN :caseIds];
-        SocialPost spList = [SELECT Id FROM SocialPost WHERE ParentId IN :caseIds];
-        delete lctList;
-        delete emList;
-        delete msList;
-        delete spList;
+        GDPR_WipeCaseService.deleteRelatedEntities(caseIds);
         delete sObjScope;
     }
 

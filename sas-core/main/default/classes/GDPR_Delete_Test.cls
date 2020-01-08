@@ -3,12 +3,13 @@
     @author Peter Södergren
 */
 @isTest 
-private class FCS_GDPRDelete_Test {
+private class GDPR_Delete_Test {
     /**
         Creates the records used to tests data deletion
     */
     @testSetup static void setup(){
         Account[] accs = FCS_TestDataFactory.createFrequentFlyers(2);
+        accs[0].LastName = 'TESTACC1';
         insert accs;
         Case[] cList = FCS_TestDataFactory.createCases(5, accs[0].Id, accs[0].PersonContactId, RecordTypeHelper.CASE_SUPPORT, 'Baggage');
         cList.addAll(FCS_TestDataFactory.createCases(1, accs[1].Id, accs[1].PersonContactId, RecordTypeHelper.CASE_SUPPORT, 'Baggage'));
@@ -43,21 +44,68 @@ private class FCS_GDPRDelete_Test {
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
         sg.set('AccountDataWipePeriod','-1');
         sg.set('AccountDataWipeName','TestDelete');
-        Database.executeBatch(new FCS_GDPRDeleteAccountData_Batch());
+        Database.executeBatch(new GDPR_DeleteAccountData_Batch());
         Test.stopTest();
 
-        Account[] accsWiped = [SELECT Id,Name,FCS_Wiped__c,EBLevel__c FROM Account WHERE FCS_Wiped__c=true];
+        Account[] accsWiped = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,EBLevel__c FROM Account WHERE GDPR_WipedSoft__c=true];
         System.assertEquals(1,accsWiped.size());
         System.assertEquals('TestDelete',accsWiped[0].Name);
-        System.assertEquals(true,accsWiped[0].FCS_Wiped__c);
+        System.assertEquals(true,accsWiped[0].GDPR_WipedSoft__c);
+        System.assertEquals(false,accsWiped[0].GDPR_Wiped__c);
         System.assertEquals(null,accsWiped[0].EBLevel__c);
 
-        Account[] accsNotWiped = [SELECT Id,Name,FCS_Wiped__c,EBLevel__c FROM Account WHERE FCS_Wiped__c=false];
+        Account[] accsNotWiped = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,EBLevel__c FROM Account WHERE GDPR_WipedSoft__c=false];
         System.assertEquals(1,accsNotWiped.size());
         System.assertNotEquals('TestDelete',accsNotWiped[0].Name);
-        System.assertNotEquals(true,accsNotWiped[0].FCS_Wiped__c);
+        System.assertEquals(false,accsNotWiped[0].GDPR_WipedSoft__c);
+        System.assertEquals(false,accsWiped[0].GDPR_Wiped__c);
         System.assertNotEquals(null,accsNotWiped[0].EBLevel__c);
     }
+
+    /**
+        Tests that accounts can be wiped completely from the system
+    */
+    @isTest static void wipeAccount(){
+        Account acc = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,EBLevel__c FROM Account WHERE LastName='TESTACC1'];
+        Test.startTest();
+        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
+        sg.set('AccountDataWipePeriod','1');
+        sg.set('AccountDataWipeName','TestDelete');
+        GDPR_WipeAccountService.wipeAccount(acc.Id);
+        Test.stopTest();
+
+        acc = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,EBLevel__c FROM Account WHERE Id=:acc.Id];
+        System.assertEquals('TestDelete',acc.Name);
+        System.assertEquals(true,acc.GDPR_Wiped__c);
+        System.assertEquals(true,acc.GDPR_WipedSoft__c);
+        System.assertEquals(null,acc.EBLevel__c);
+
+        Account[] accsNotWiped = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,EBLevel__c FROM Account WHERE GDPR_Wiped__c=false];
+        System.assertEquals(1,accsNotWiped.size());
+        System.assertNotEquals('TestDelete',accsNotWiped[0].Name);
+        System.assertNotEquals(true,accsNotWiped[0].GDPR_Wiped__c);
+        System.assertNotEquals(true,accsNotWiped[0].GDPR_WipedSoft__c);
+        System.assertNotEquals(null,accsNotWiped[0].EBLevel__c);
+
+        Case[] cClosed = [SELECT Id,GDPR_Wiped__c FROM Case WHERE IsClosed=true];
+        System.assertEquals(5,cClosed.size());
+        System.assertEquals(true,cClosed[0].GDPR_Wiped__c);
+        System.assertEquals(true,cClosed[1].GDPR_Wiped__c);
+        System.assertEquals(true,cClosed[2].GDPR_Wiped__c);
+        System.assertEquals(true,cClosed[3].GDPR_Wiped__c);
+        System.assertEquals(true,cClosed[4].GDPR_Wiped__c);
+
+        System.assertEquals(0,[SELECT Id FROM EmailMessage].size());
+        System.assertEquals(0,[SELECT Id FROM LiveChatTranscript].size());
+        System.assertEquals(0,[SELECT Id FROM LiveChatVisitor].size());
+        System.assertEquals(0,[SELECT Id FROM MessagingSession].size());
+        System.assertEquals(0,[SELECT Id FROM MessagingEndUser].size());
+        System.assertEquals(0,[SELECT Id FROM SocialPost].size());
+
+
+    }
+
+
     /**
         Tests that account data is not wiped if cases are open or within the close period
     */
@@ -66,18 +114,20 @@ private class FCS_GDPRDelete_Test {
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
         sg.set('AccountDataWipePeriod','1');
         sg.set('AccountDataWipeName','TestDelete');
-        Database.executeBatch(new FCS_GDPRDeleteAccountData_Batch());
+        Database.executeBatch(new GDPR_DeleteAccountData_Batch());
         Test.stopTest();
 
-        Account[] accsWiped = [SELECT Id,Name,FCS_Wiped__c,EBLevel__c FROM Account WHERE FCS_Wiped__c=true];
+        Account[] accsWiped = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,EBLevel__c FROM Account WHERE GDPR_WipedSoft__c=true];
         System.assertEquals(0,accsWiped.size());
 
-        Account[] accsNotWiped = [SELECT Id,Name,FCS_Wiped__c,EBLevel__c FROM Account WHERE FCS_Wiped__c=false];
+        Account[] accsNotWiped = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,EBLevel__c FROM Account WHERE GDPR_WipedSoft__c=false];
         System.assertEquals(2,accsNotWiped.size());
         System.assertNotEquals('TestDelete',accsNotWiped[0].Name);
         System.assertNotEquals('TestDelete',accsNotWiped[1].Name);
-        System.assertNotEquals(true,accsNotWiped[0].FCS_Wiped__c);
-        System.assertNotEquals(true,accsNotWiped[1].FCS_Wiped__c);
+        System.assertNotEquals(true,accsNotWiped[0].GDPR_Wiped__c);
+        System.assertNotEquals(true,accsNotWiped[1].GDPR_Wiped__c);
+        System.assertNotEquals(true,accsNotWiped[0].GDPR_WipedSoft__c);
+        System.assertNotEquals(true,accsNotWiped[1].GDPR_WipedSoft__c);
         System.assertNotEquals(null,accsNotWiped[0].EBLevel__c);
         System.assertNotEquals(null,accsNotWiped[1].EBLevel__c);
     }
@@ -89,7 +139,7 @@ private class FCS_GDPRDelete_Test {
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
         sg.set('MaxRetentionPeriod','-1');
-        Database.executeBatch(new FCS_GDPRDeleteCase_Batch());
+        Database.executeBatch(new GDPR_DeleteCase_Batch());
         Test.stopTest();
 
         Case[] cOpen = [SELECT Id FROM Case WHERE IsClosed=false];
@@ -110,7 +160,7 @@ private class FCS_GDPRDelete_Test {
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
         sg.set('MaxRetentionPeriod','1');
-        Database.executeBatch(new FCS_GDPRDeleteCase_Batch());
+        Database.executeBatch(new GDPR_DeleteCase_Batch());
         Test.stopTest();
 
         Case[] cOpen = [SELECT Id FROM Case WHERE IsClosed=false];
@@ -131,7 +181,7 @@ private class FCS_GDPRDelete_Test {
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
         sg.set('NoConsentRetentionPeriod','-1');
-        Database.executeBatch(new FCS_GDPRWipeCase_Batch());
+        Database.executeBatch(new GDPR_WipeCase_Batch());
         Test.stopTest();
 
         Case[] cOpen = [SELECT Id FROM Case WHERE IsClosed=false];
@@ -152,7 +202,7 @@ private class FCS_GDPRDelete_Test {
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
         sg.set('NoConsentRetentionPeriod','1');
-        Database.executeBatch(new FCS_GDPRWipeCase_Batch());
+        Database.executeBatch(new GDPR_WipeCase_Batch());
         Test.stopTest();
 
         Case[] cOpen = [SELECT Id FROM Case WHERE IsClosed=false];
@@ -182,9 +232,9 @@ private class FCS_GDPRDelete_Test {
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
         sg.set('MaxRetentionPeriod','-1');
         sg.set('NoConsentRetentionPeriod','-1');
-        Database.executeBatch(new FCS_GDPRDeleteChat_Batch());
-        Database.executeBatch(new FCS_GDPRDeleteMessaging_Batch());
-        Database.executeBatch(new FCS_GDPRDeleteSocialPost_Batch());
+        Database.executeBatch(new GDPR_DeleteChat_Batch());
+        Database.executeBatch(new GDPR_DeleteMessaging_Batch());
+        Database.executeBatch(new GDPR_DeleteSocialPost_Batch());
         Test.stopTest();
 
         System.assertEquals(0,[SELECT Id FROM EmailMessage].size());
@@ -212,9 +262,9 @@ private class FCS_GDPRDelete_Test {
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
         sg.set('MaxRetentionPeriod','1');
         sg.set('NoConsentRetentionPeriod','1');
-        Database.executeBatch(new FCS_GDPRDeleteChat_Batch());
-        Database.executeBatch(new FCS_GDPRDeleteMessaging_Batch());
-        Database.executeBatch(new FCS_GDPRDeleteSocialPost_Batch());
+        Database.executeBatch(new GDPR_DeleteChat_Batch());
+        Database.executeBatch(new GDPR_DeleteMessaging_Batch());
+        Database.executeBatch(new GDPR_DeleteSocialPost_Batch());
         Test.stopTest();
 
         System.assertEquals(0,[SELECT Id FROM EmailMessage].size());
@@ -227,3 +277,4 @@ private class FCS_GDPRDelete_Test {
 
 
 }
+

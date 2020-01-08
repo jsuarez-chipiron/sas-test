@@ -4,7 +4,7 @@
     and ensures that they are not saved for longer than thier retention period
     @author Peter Södergren
 */
-global abstract class FCS_GDPRDeleteInteraction_Batch extends SBS_ScheduledBatch{
+global abstract class GDPR_DeleteInteraction_Batch extends SBS_ScheduledBatch{
     /**
         The sobject name of the interaction sobject
     */
@@ -42,7 +42,7 @@ global abstract class FCS_GDPRDeleteInteraction_Batch extends SBS_ScheduledBatch
         @param relSObjField The Sobject field which links primary deleted object to the parent record
         @param assumeConsent Whether to assume consent for the interactions (true= assume all interactions have consent, false=assume no interactions have consent, null=check each interaction for consent)
     */
-    global FCS_GDPRDeleteInteraction_Batch(Schema.SObjectType sot,Schema.SObjectField caseField,Schema.SobjectType relSot,Schema.SObjectField relSObjField,Boolean assumeConsent){
+    global GDPR_DeleteInteraction_Batch(Schema.SObjectType sot,Schema.SObjectField caseField,Schema.SobjectType relSot,Schema.SObjectField relSObjField,Boolean assumeConsent){
         this.sObjName = sot+'';
         this.caseField = caseField!=null ? caseField+'' : null;
         this.relSObjName = relSot!=null && relSObjField!=null ? relSot+'' : null;
@@ -59,7 +59,7 @@ global abstract class FCS_GDPRDeleteInteraction_Batch extends SBS_ScheduledBatch
     */
     global Database.QueryLocator start(Database.BatchableContext bc){
         String q = 'SELECT Id, CreatedDate';
-        if(assumeConsent==null)q+=', FCS_Consent__c';
+        if(assumeConsent==null)q+=', GDPR_Consent__c';
         if(relSObjField!=null)q+=', '+relSObjField;
         q+=' FROM '+sObjName;
         if(caseField!=null)q+=' WHERE '+caseField+'=null';
@@ -76,7 +76,7 @@ global abstract class FCS_GDPRDeleteInteraction_Batch extends SBS_ScheduledBatch
         Set<Id> relIds = new Set<Id>();
         for(Integer i=0,sz=sObjScope.size();i<sz;i++){
             SObject so = sObjScope[i];
-            Boolean consent = assumeConsent!=null ? assumeConsent : (Boolean)so.get('FCS_Consent__c');
+            Boolean consent = assumeConsent!=null ? assumeConsent : (Boolean)so.get('GDPR_Consent__c');
             DateTime createdDate = (DateTime)so.get('CreatedDate');
             Boolean del = consent ? createdDate<maxRetentionDate : createdDate<noConsentRetentionDate;
             if(del){
