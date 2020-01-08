@@ -134,4 +134,12 @@
         <members>AccountGDPRExtractController</members>
         <name>ApexClass</name>
     </types>
+    <types>
+        <members>accountGDPRExtract</members>
+        <members>fcs_AccountGDPRDelete</members>
+        <members>identifyCustomerFromCase</members>
+        <members>pubsub</members>
+        <members>recordEditFormStaticContact</members>
+        <name>LightningComponentBundle</name>
+    </types>
 </Package>
