@@ -93,15 +93,6 @@ public with sharing class C_RestUtil {
         }
         C_Log.logException(e, null, getLogHttpData());
     }
-    
-	/**
-	 	Sets the response to input msg and returns a 200 status code.
-	 	@param msg The message given after the successful call. 	 
-	 */    
-    public static void setOK(String msg){
-        RestContext.response.responseBody = Blob.valueOf(msg);
-        RestContext.response.statusCode = 200;
-    }
 
     /**
         Retireves log http data to enable inclusion of the data
