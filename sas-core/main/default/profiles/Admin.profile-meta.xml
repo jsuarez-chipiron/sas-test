@@ -681,52 +681,52 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Log__c.Duration__c</field>
+        <field>C_Log__c.Duration__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Log__c.HttpBody__c</field>
+        <field>C_Log__c.HttpBody__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Log__c.HttpHeaders__c</field>
+        <field>C_Log__c.HttpHeaders__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Log__c.HttpMethod__c</field>
+        <field>C_Log__c.HttpMethod__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Log__c.HttpQueryParameters__c</field>
+        <field>C_Log__c.HttpQueryParameters__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Log__c.HttpRemoteAddress__c</field>
+        <field>C_Log__c.HttpRemoteAddress__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Log__c.HttpResource__c</field>
+        <field>C_Log__c.HttpResource__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Log__c.LogGroup__c</field>
+        <field>C_Log__c.LogGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Log__c.Message__c</field>
+        <field>C_Log__c.Message__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Log__c.StackTrace__c</field>
+        <field>C_Log__c.StackTrace__c</field>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -850,7 +850,7 @@
         <layout>LocalAuthProvider__mdt-Local Auth Provider Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Log__c-Log Layout</layout>
+        <layout>C_Log__c-Log Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ManagedSocialAccounts__mdt-Managed Social Account Layout</layout>
@@ -893,7 +893,7 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
-        <object>Log__c</object>
+        <object>C_Log__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <pageAccesses>
@@ -945,7 +945,7 @@
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Log__c</tab>
+        <tab>C_Log__c</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <userLicense>Salesforce</userLicense>
