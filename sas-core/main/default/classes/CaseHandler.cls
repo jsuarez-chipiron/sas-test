@@ -24,6 +24,7 @@ public class CaseHandler extends C_TriggerHandler {
    Static variable for the Case status "Closed"
    */
     @TestVisible private static final String CASE_STATUS_CLOSED= 'Closed';
+
     /**
     Trigger variables
     */
@@ -44,41 +45,35 @@ public class CaseHandler extends C_TriggerHandler {
    Used to call the trigger in the before insert context
    */
     public override void beforeInsert() {
-        AssignOwnerFromSoMe(newCaseList, oldCaseList);
-        ValidateCaseTags(newCaseList);
+        assignOwnerFromSoMe(newCaseList);
+        validateCaseTags(newCaseList);
     }
     /**
   Used to call the trigger in the before update context
   */
     public override void beforeUpdate() {
-        ValidateCaseTags(newCaseList);
+        validateCaseTags(newCaseList);
     }
     /**
    Used to call the trigger in the after insert context
    */
     public override void afterInsert() {
-        ManageCaseTagRecords(newCaseList, newCaseMap);
-        UpdateSocialPost(newCaseList);
+        manageCaseTagRecords(newCaseList, newCaseMap);
+        updateSocialPost(newCaseList);
     }
 
     /**
     Used to call the trigger in the after update context
     */
     public override void afterUpdate() {
-        ManageCaseTagRecords(newCaseList, newCaseMap);
+        manageCaseTagRecords(newCaseList, newCaseMap);
     }
 
     /**
-    Method to set owner on case created from SoMe-posts
-    infoTag
-    supportTag
-    feedbackTag
-    Else throw an error
-    Made for reproting purposes
+    Method to set owner on case created from SoMe-post quick actions
     @param newCaseList The list of new version of the case i.e. the Trigger.new variable
-     @param oldCaseList The list of new version of the case i.e. the Trigger.old variable  ---> Do we really need this. Check this.
     */
-    private static void AssignOwnerFromSoMe(List<Case> newCaseList, List<Case> oldCaseList) {
+    private static void assignOwnerFromSoMe(List<Case> newCaseList) {
         Set<Id> socialPostIds = new Set<Id>();
         List<Case> caseInScope = new List<Case>();
         for (Case c : newCaseList) {
@@ -104,13 +99,13 @@ public class CaseHandler extends C_TriggerHandler {
     }
 
     /**
-    Method to set owner (Global Support SoMe) on case created from SoMe-posts
+    Method to update parent social post with status fields when case is created
     @param newCaseList The list of new version of the case i.e. the Trigger.new variable
     */
-    private static void UpdateSocialPost(List<Case> newCaseList) {
+    private static void updateSocialPost(List<Case> newCaseList) {
         Map<Id,Case>caseBySoMeIds = new Map<Id,Case>();
         for(Case c : newCaseList){
-            if(c.SourceId!=null && c.SourceId.getSobjectType()==SocialPost.SObjectType) {
+            if(c.SourceId!=null && c.SourceId.getSobjectType()==SocialPost.SObjectType && c.Status!=CASE_STATUS_CLOSED) {
                 caseBySoMeIds.put(c.SourceId, c);
             }
         }
@@ -132,7 +127,7 @@ public class CaseHandler extends C_TriggerHandler {
     Method to make sure Case Reason and Case Tags is not the same value
     @param newCaseList The list of new version of the case i.e. the Trigger.new variable
     */
-    private static void ValidateCaseTags(List<Case> newCaseList) {
+    private static void validateCaseTags(List<Case> newCaseList) {
         Integer cSize = newCaseList.size();
         for (Integer i = 0; i < cSize; i++) {
             Case newC = newCaseList[i];
@@ -152,7 +147,7 @@ public class CaseHandler extends C_TriggerHandler {
      * Creates/updates/delete case tag records when tags (Case Reason, Case SubReason or Case Tag) is updated on case
      * @param newCaseMap The map between the id and the new version of the case i.e. the Trigger.newMap variable
      */
-    private static void ManageCaseTagRecords(List <Case> newCaseList, Map<Id, Case> newCaseMap) {
+    private static void manageCaseTagRecords(List <Case> newCaseList, Map<Id, Case> newCaseMap) {
         try {
             Map<String, CaseTag__c> newTagByKeyId = createToBeCaseTagMap(newCaseList);
             Map<String, CaseTag__c> oldTagByKeyId = createCurrentCaseTagMap(newCaseMap);

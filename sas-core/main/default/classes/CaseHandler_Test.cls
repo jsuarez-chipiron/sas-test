@@ -6,6 +6,8 @@
 
 @isTest
 private class CaseHandler_Test {
+
+    private static final String CASE_STATUS_NEW= 'New';
     /**
    Test method for generation of test data used in more than one method
   */
@@ -94,8 +96,8 @@ private class CaseHandler_Test {
     }
 
     /**
-        Test methods for AssignOwnerFromSoMe-Post
-    */
+		Tests that cases (used to save tagging of cases where case is created with status closed) created from social posts is assigned to the owner of the source post if owner is a user
+	*/
     @isTest static void addSocialMediaTag(){
         List<SocialPost> socialPosts = [SELECT Id FROM SocialPost];
         List<User> users = [SELECT Id From User];
@@ -121,6 +123,9 @@ private class CaseHandler_Test {
         System.assertEquals(socialPosts[2].OwnerId, caseList[2].OwnerId);
     }
 
+    /**
+      Tests that it is not possible to create a case (as tag eg. in status closed) assigned to the owner of the source post if owner is a user
+  */
     @isTest static void errorAddSocialMediaTag(){
         List<SocialPost> socialPosts = [SELECT Id FROM SocialPost LIMIT 1];
         List<User> users = [SELECT Id FROM User LIMIT 1];
@@ -129,7 +134,7 @@ private class CaseHandler_Test {
             socialPosts[i].OwnerId=groupList[i].Id;
         }
         update socialPosts;
-        Case infoTag = new Case (Status='Closed', Origin='Facebook', SourceId=socialPosts[0].Id, RecordTypeId=RecordTypeHelper.CASE_INFORMATION);
+        Case infoTag = new Case (Status=CaseHandler.CASE_STATUS_CLOSED, Origin='Facebook', SourceId=socialPosts[0].Id, RecordTypeId=RecordTypeHelper.CASE_INFORMATION);
         List<Case> soMeCases = new List<Case>();
         soMeCases.add(infoTag);
         Database.SaveResult result = Database.insert(soMeCases[0], false);
@@ -172,5 +177,26 @@ private class CaseHandler_Test {
         System.assert(result3.getErrors().size() == 1);
         System.AssertEquals(0, [SELECT Id FROM CASE WHERE CaseTags__c INCLUDES ('TestReason1')].size());
         System.AssertEquals(1, [SELECT Id FROM CASE WHERE CaseTags__c INCLUDES ('CommonTestTag2')].size());
+    }
+
+    /**
+    Test Method to see if social posts are updated correctly if new case is created from there (not closed).
+ */
+    @isTest
+    static void testUpdateSocialPosts() {
+        List<SocialPost> socialPosts = [SELECT Id FROM SocialPost];
+        List<User> users = [SELECT Id FROM User];
+        for (Integer i = 0, sz = socialPosts.size(); i < sz; i++) {
+            socialPosts[i].OwnerId=users[i].Id;
+        }
+        List<Case> newCase = FCS_TestDataFactory.createCases(1, null, null, null, null);
+        newCase[0].CaseReason__c = 'TestReason 12';
+        newCase[0].CaseSubReason__c = 'TestSubReason 12';
+        newCase[0].CaseTags__c = 'TestTag12;TestTag22';
+        newCase[0].Subject = 'TestCase12';
+        newCase[0].Status = CASE_STATUS_NEW;
+        newCase[0].SourceId = socialPosts[0].Id;
+        insert newCase;
+        System.AssertEquals(true, [SELECT Id, CaseCreated__c FROM SocialPost WHERE Id =:newCase[0].SourceId][0].CaseCreated__c);
     }
 }
