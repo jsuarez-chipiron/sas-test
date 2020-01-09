@@ -1,10 +1,10 @@
 /**
  * @author Anton Norell
  * @date 2019-12-19
- * @description Test class for DataExtractService
+ * @description Test class for GDPR_DataExtractService
  */
 @IsTest
-private class DataExtractService_Test {
+private class GDPR_DataExtractService_Test {
     /**
      * Asserts that the queries in the service are generated correctly based on provided FieldDefinition list. The
      * field definitions are retrieved from static resources.
@@ -19,21 +19,22 @@ private class DataExtractService_Test {
         StaticResource fieldDefinition = [SELECT Id, Body FROM StaticResource WHERE Name = 'FieldDefinitionsJSON'];
         List<FieldDefinition> fieldDefinitions = (List<FieldDefinition>)JSON.deserialize(fieldDefinition.Body.toString(), List<FieldDefinition>.class);
 
-        List<String> queries = DataExtractService.getQueries(fieldDefinitions, acc.Id);
+        List<String> queries = GDPR_DataExtractService.getQueries(fieldDefinitions, new Id[]{acc.Id});
+
         System.assertEquals(
-                            'SELECT null FROM Account WHERE Id = \'' + acc.Id + '\'', queries[0],
+                            'SELECT null FROM Account WHERE Id IN (\'' + acc.Id + '\')', queries[0],
                             'Generated incorrect Account query based on provided field definition'
         );
         System.assertEquals(
-                        'SELECT Status, Description, CaseReason__c, (SELECT MessageDate, FromName, ToAddress, ' +
+                        'SELECT Status, AccountId, Description, CaseReason__c, (SELECT MessageDate, FromName, ToAddress, ' +
                         'HtmlBody, TextBody, Subject, FromAddress FROM EmailMessages) FROM Case ' +
-                        'WHERE AccountId = \'' + acc.Id + '\'',
+                        'WHERE AccountId IN (\'' + acc.Id + '\')',
                         queries[1], 'Generated incorrect Case query based on provided field definition'
         );
 
         System.assertEquals(
                         'SELECT EndTime, VisitorMessageCount, ChatDuration, EndedBy, StartTime, ' +
-                        'IpAddress, Body, Status, Location FROM LiveChatTranscript WHERE AccountId = \'' + acc.Id + '\'',
+                        'IpAddress, Body, Status, AccountId, Location FROM LiveChatTranscript WHERE AccountId IN (\'' + acc.Id + '\')',
                         queries[2], 'Generated incorrect LiveChatTranscript query based on provided field definition'
         );
     }
@@ -65,8 +66,8 @@ private class DataExtractService_Test {
         StaticResource fieldDefinition = [SELECT Id, Body FROM StaticResource WHERE Name = 'FieldDefinitionsJSON'];
         List<FieldDefinition> fieldDefinitions = (List<FieldDefinition>)JSON.deserialize(fieldDefinition.Body.toString(), List<FieldDefinition>.class);
 
-        String jsonData = DataExtractService.extractAccountPersonalData(acc.Id, fieldDefinitions);
-        List<SObject> extractObjects = (List<SObject>)JSON.deserialize(jsonData, List<SObject>.class);
+        String[] jsonData = GDPR_DataExtractService.extractAccountPersonalData(new Id[]{acc.Id}, fieldDefinitions);
+        List<SObject> extractObjects = (List<SObject>)JSON.deserialize(jsonData[0], List<SObject>.class);
 
         System.assertEquals(3, extractObjects.size(), 'Incorrect number of records in extract');
         System.assertEquals(acc.Id, extractObjects[0].Id);
@@ -87,8 +88,8 @@ private class DataExtractService_Test {
         );
         insert acc;
 
-        String jsonData = DataExtractService.extractAccountPersonalData(acc.Id, null);
-        List<SObject> extractObjects = (List<SObject>)JSON.deserialize(jsonData, List<SObject>.class);
+        String[] jsonData = GDPR_DataExtractService.extractAccountPersonalData(new Id[]{acc.Id}, null);
+        List<SObject> extractObjects = (List<SObject>)JSON.deserialize(jsonData[0], List<SObject>.class);
 
         System.assertNotEquals(null, jsonData);
         System.assertEquals(acc.Id, extractObjects[0].Id);

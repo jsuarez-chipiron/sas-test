@@ -3,7 +3,7 @@
  * @date 2019-12-18
  * @description Class used to hold operations related to extracting personal data
  */
-public with sharing class DataExtractService {
+public with sharing class GDPR_DataExtractService {
     /**
      * Determines the name of the ComplianceGroup field value on FieldDefinition that determines if field
      * should be included in GDPR Extract.
@@ -30,11 +30,12 @@ public with sharing class DataExtractService {
      * Generates a JSON extract of a customer's Personal Identifiable Information based on the supplied account id.
      * Fields included per object are defined on field level with metadata "ComplianceGroup. If new objects should be
      * included in extract, the objects should be added to query for field definitions and to lost of queries in the method.
-     * @param accountId Account to generate extract for
-     * @param fieldDefinitions Externally provided FieldDefinition. Available to set primarily for test purposes.
-     * @return JSON structure with the customer's data
+     * @param accountIds Account to generate extract for
+     * @param fieldDefinitions Externally provided FieldDefinition. Available to set primarily for test purposes, but
+     * should be null for most uses.
+     * @return List of JSON structures with the customer's data, one instance for each account
      */
-    public static String extractAccountPersonalData(Id accountId, List<FieldDefinition> fieldDefinitions){
+    public static String[] extractAccountPersonalData(Id[] accountIds, List<FieldDefinition> fieldDefinitions){
         if(fieldDefinitions == null){
             //ComplianceGroup filter set to != null due to inability to filter on list for field
             fieldDefinitions =
@@ -44,16 +45,30 @@ public with sharing class DataExtractService {
                     IN (:CASE_OBJECT, :ACCOUNT_OBJECT, :CHAT_TRANSCRIPT_OBJECT, :EMAIL_OBJECT)
                     AND ComplianceGroup != NULL];
         }
-        String JsonString = JSON.serializePretty(fieldDefinitions);
 
-        List<FieldDefinition> defs = (List<FieldDefinition>)JSON.deserialize(String.valueOf(JsonString), List<FieldDefinition>.class);
-
-        List<SObject> extract = new List<SObject>();
-        for(String query : getQueries(fieldDefinitions, accountId)){
+        Map<Id, SObject[]> extractByAccountId = new Map<Id, SObject[]>();
+        for(String query : getQueries(fieldDefinitions, accountIds)){
+            System.debug('QUery:' + query);
             //In cases where no fields for object are tagged as PII, only Id is retrieved
-            extract.addAll(Database.query(query.replace('null', 'Id')));
+            SObject[] records = Database.query(query.replace('null', 'Id'));
+
+            String accountIdentifierField = getSObjectTypeAccountIdentifier(records.getSObjectType());
+
+            for(SObject record:records){
+                Id recordAccountId = (Id)record.get(accountIdentifierField);
+                if(extractByAccountId.get(recordAccountId) == null){
+                    extractByAccountId.put(recordAccountId, new SObject[]{record});
+                } else {
+                    extractByAccountId.get(recordAccountId).add(record);
+                }
+            }
         }
-        return JSON.serializePretty(extract);
+
+        String[] jsonExtracts = new String[]{};
+        for(SObject[] records:extractByAccountId.values()){
+            jsonExtracts.add(JSON.serializePretty(records));
+        }
+        return jsonExtracts;
     }
 
     /**
@@ -64,7 +79,7 @@ public with sharing class DataExtractService {
      * @return List of queries that can be used to retrieve personal data
      */
     @TestVisible
-    private static List<String> getQueries(List<FieldDefinition> fieldDefinitions, Id accountId) {
+    private static List<String> getQueries(List<FieldDefinition> fieldDefinitions, Id[] accountIds) {
         Map<String, String> fieldSelections = new Map<String, String>();
         for (FieldDefinition def : fieldDefinitions) {
             if (def.ComplianceGroup.contains(PII_TAG)) {
@@ -81,12 +96,29 @@ public with sharing class DataExtractService {
             fieldSelections.put(fieldSelectionKey, fieldSelections.get(fieldSelectionKey).removeEnd(', '));
         }
 
+        String[] accountIdsAsStrings = new String[]{};
+        for(Id accId : accountIds){
+            accountIdsAsStrings.add('\'' + accId + '\'');
+        }
+
         List<String> queries = new List<String>();
-        queries.add('SELECT ' + fieldSelections.get(ACCOUNT_OBJECT) + ' FROM ' + ACCOUNT_OBJECT + ' WHERE Id = \'' + accountId + '\'');
+        queries.add('SELECT ' + fieldSelections.get(ACCOUNT_OBJECT) + ' FROM ' + ACCOUNT_OBJECT + ' WHERE Id IN ' + accountIdsAsStrings);
         String emailSubQuery = ', (SELECT ' + fieldSelections.get(EMAIL_OBJECT) + ' FROM ' + EMAIL_OBJECT + 's)';
-        queries.add('SELECT ' + fieldSelections.get(CASE_OBJECT) + emailSubQuery + ' FROM ' + CASE_OBJECT + ' WHERE AccountId = \'' + accountId + '\'');
-        queries.add('SELECT ' + fieldSelections.get(CHAT_TRANSCRIPT_OBJECT) + ' FROM ' + CHAT_TRANSCRIPT_OBJECT + ' WHERE AccountId = \'' + accountId + '\'');
+        queries.add('SELECT ' + fieldSelections.get(CASE_OBJECT) + emailSubQuery + ' FROM ' + CASE_OBJECT + ' WHERE AccountId IN ' + accountIdsAsStrings);
+        queries.add('SELECT ' + fieldSelections.get(CHAT_TRANSCRIPT_OBJECT) + ' FROM ' + CHAT_TRANSCRIPT_OBJECT + ' WHERE AccountId IN ' + accountIdsAsStrings);
 
         return queries;
+    }
+
+    private static String getSObjectTypeAccountIdentifier(SObjectType sObjectType){
+        String identifier;
+        if (sObjectType == Account.SObjectType){
+            identifier = 'Id';
+        } else if (sObjectType == Case.SObjectType){
+         identifier = 'AccountId';
+        } else if (sObjectType == LiveChatTranscript.SObjectType){
+            identifier = 'AccountId';
+        }
+        return identifier;
     }
 }
