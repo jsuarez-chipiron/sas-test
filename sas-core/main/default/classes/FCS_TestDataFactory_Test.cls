@@ -24,6 +24,13 @@ private class FCS_TestDataFactory_Test {
 	@isTest static void insertSocialRecords(){
 		insert FCS_TestDataFactory.createSocialPosts(200);
 	}
+
+	/**
+		Tests creating and inserting user records
+	*/
+	@isTest static void insertUserRecords(){
+		insert FCS_TestDataFactory.createUsers(200);
+	}
 	
 }
 	
