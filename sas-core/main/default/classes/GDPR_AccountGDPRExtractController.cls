@@ -12,7 +12,7 @@ public with sharing class GDPR_AccountGDPRExtractController {
      */
     @AuraEnabled
     public static ContentVersion generateExtractFile(Id accountId){
-        String[] jsonExtract = GDPR_DataExtractService.extractAccountPersonalData(new Id[]{accountId}, null);
+        String[] jsonExtract = GDPR_DataExtractService.extractAccountPersonalData(new Id[]{accountId}, null, null);
 
         ContentVersion extractFile = new ContentVersion();
         extractFile.Description = 'Extract of Personal Identifiable Information.';
