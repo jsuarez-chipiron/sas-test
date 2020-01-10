@@ -25,12 +25,6 @@
         <field>AGE</field>
     </columns>
     <columns>
-        <field>OPEN</field>
-    </columns>
-    <columns>
-        <field>CLOSED</field>
-    </columns>
-    <columns>
         <field>CASE_NUMBER</field>
     </columns>
     <filter>

@@ -86,7 +86,57 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.Reason</field>
+            <field>RelatedCase__c.Vendor__c</field>
+            <table>SurveyInvitation</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RelatedCase__c.CaseNumber</field>
+            <table>SurveyInvitation</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RelatedCase__c.Owner</field>
+            <table>SurveyInvitation</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RelatedCase__c.CaseReason__c</field>
+            <table>SurveyInvitation</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RelatedCase__c.CaseSubReason__c</field>
+            <table>SurveyInvitation</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RelatedCase__c.CaseTags__c</field>
+            <table>SurveyInvitation</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RelatedCase__c.FirstClosingDate__c</field>
+            <table>SurveyInvitation</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RelatedCase__c.Priority</field>
+            <table>SurveyInvitation</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RelatedCase__c.IsReopened__c</field>
+            <table>SurveyInvitation</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RelatedCase__c.Status</field>
+            <table>SurveyInvitation</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RelatedCase__c.Type</field>
             <table>SurveyInvitation</table>
         </columns>
         <masterLabel>Survey Invitations</masterLabel>

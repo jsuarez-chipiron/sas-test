@@ -66,10 +66,6 @@
     </columns>
     <columns>
         <aggregateTypes>Sum</aggregateTypes>
-        <field>Case.IsReopened__c</field>
-    </columns>
-    <columns>
-        <aggregateTypes>Sum</aggregateTypes>
         <field>Case.ReopenedCount__c</field>
     </columns>
     <columns>
@@ -91,7 +87,7 @@ Detailing AHT, amount of opened, closed and reopened Cases.</description>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
         <field>OWNER</field>
-        <sortOrder>Desc</sortOrder>
+        <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>SAS - STOPQ follow-up</name>
     <params>
@@ -108,7 +104,7 @@ Detailing AHT, amount of opened, closed and reopened Cases.</description>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <sortColumn>CASE_NUMBER</sortColumn>
-    <sortOrder>Desc</sortOrder>
+    <sortOrder>Asc</sortOrder>
     <timeFrameFilter>
         <dateColumn>HLAST_UPDATE</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

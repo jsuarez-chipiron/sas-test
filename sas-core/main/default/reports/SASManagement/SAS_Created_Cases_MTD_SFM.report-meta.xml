@@ -16,7 +16,13 @@
         <field>CREATED_DATE</field>
     </columns>
     <columns>
+        <field>CLOSED_DATE</field>
+    </columns>
+    <columns>
         <field>AGE</field>
+    </columns>
+    <columns>
+        <field>Case.FirstClosingDate__c</field>
     </columns>
     <columns>
         <field>OPEN</field>
