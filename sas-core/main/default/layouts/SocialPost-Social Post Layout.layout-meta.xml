@@ -152,7 +152,7 @@
             <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>SocialPost.FollowUpCase</actionName>
+            <actionName>SocialPost.EscalateCase</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
         </platformActionListItems>
