@@ -29,7 +29,7 @@ private class FCS_TestDataFactory_Test {
 		Tests creating and inserting user records
 	*/
 	@isTest static void insertUserRecords(){
-		insert FCS_TestDataFactory.createUsers(200);
+		insert FCS_TestDataFactory.createUsers(1);
 	}
 	
 }
