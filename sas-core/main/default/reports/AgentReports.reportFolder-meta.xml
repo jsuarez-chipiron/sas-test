@@ -5,5 +5,5 @@
         <sharedTo>AllInternalUsers</sharedTo>
         <sharedToType>Organization</sharedToType>
     </folderShares>
-    <name>Agent Report</name>
+    <name>Agent Reports</name>
 </ReportFolder>
