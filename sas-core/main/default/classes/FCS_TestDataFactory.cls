@@ -2,7 +2,7 @@
  /**
  * @author Sanna Sörberg
  * @date 2019-11-27
- * @description Factory class used to generate commonly used test data
+ * @description Factory class used to generate commonly used test metadata
  */
 
 @isTest
@@ -22,7 +22,7 @@ public class FCS_TestDataFactory {
     *
     * @return list of new cases
     */
-    public static List<Case> createCases(Integer numCases, Id accId, Id conId, Id rtId, String reason) {
+    public static Case[] createCases(Integer numCases, Id accId, Id conId, Id rtId, String reason) {
         List<Case> newCases = new List<Case>();
         for (Integer i = 0, sz = numCases; i < sz; i++) {
             Case c = new Case();
@@ -36,16 +36,15 @@ public class FCS_TestDataFactory {
         return newCases;
     }
 
-
     /**
     * Creates social post with minimal info
     * @param numSocialPosts Number of social posts to be created
     * @return list of social posts
     */
-    public static List<SocialPost> createSocialPosts(Integer numSocialPosts) {
+    public static SocialPost[] createSocialPosts(Integer numSocialPosts) {
         List<SocialPost> newSocialPosts = new List<SocialPost>();
         for (Integer i = 0, sz = numSocialPosts; i < sz; i++) {
-            SocialPost sp = new SocialPost (Name='Test'+i, Headline='TestHeadLine'+i, Posted=system.now());
+            SocialPost sp = new SocialPost (Name = 'Test' + i, Headline = 'TestHeadLine' + i, Posted = system.now());
             newSocialPosts.add(sp);
         }
         return newSocialPosts;
@@ -56,21 +55,21 @@ public class FCS_TestDataFactory {
         @param numAccounts The number of accounts to create
         @return The list of accounts (Not Saved)
     */
-    public static Account[] createFrequentFlyers(Integer numAccounts){
+    public static Account[] createFrequentFlyers(Integer numAccounts) {
         Account[] accs = new Account[numAccounts];
-        for(Integer i=0;i<numAccounts;i++){
+        for (Integer i = 0; i < numAccounts; i++) {
             Account acc = new Account();
             acc.RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER;
             acc.FirstName = 'TestFirstName';
             acc.LastName = 'TestLastName';
-            acc.CODSId__c = 'TEST'+SEQ_NUM;
+            acc.CODSId__c = 'TEST' + SEQ_NUM;
             acc.PersonEmail = 'test@test.com';
             acc.PersonMobilePhone = '+46701234567';
             acc.PersonHomePhone = '+4681234567';
             acc.Gender__c = (SEQ_NUM & 1) > 0 ? 'F' : 'M';
             acc.FrequentFlyer__c = acc.CODSId__c;
-            acc.PersonBirthDate = Date.newInstance(1990 - Math.mod(SEQ_NUM,50),Math.mod(SEQ_NUM,12)+1,Math.mod(SEQ_NUM,29)+1);
-            acc.EBNumber__c = 'EBTEST'+SEQ_NUM;
+            acc.PersonBirthDate = Date.newInstance(1990 - Math.mod(SEQ_NUM, 50), Math.mod(SEQ_NUM, 12) + 1, Math.mod(SEQ_NUM, 29) + 1);
+            acc.EBNumber__c = 'EBTEST' + SEQ_NUM;
             acc.EBLevel__c = (SEQ_NUM & 3) < 2 ? 'B' : (SEQ_NUM & 3) < 3 ? 'S' : 'G';
             acc.EBMbrshipLvlStatusStartDate__c = Date.today().toStartOfMonth();
             acc.EBMbrshipLvlStatusEndDate__c = acc.EBMbrshipLvlStatusStartDate__c.addYears(1);
@@ -78,5 +77,25 @@ public class FCS_TestDataFactory {
             accs[i] = acc;
         }
         return accs;
+    }
+
+    public static User[] createUsers(Integer numUsers) {
+        Profile p = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        List<User> users = new List<User>();
+        for (Integer i = 0, sz = numUsers; i < sz; i++) {
+            User u = new User(
+                    Alias = 'user' + i,
+                    Email = 'testUser' + i + '@test.com',
+                    EmailEncodingKey = 'UTF-8',
+                    LastName = 'user' + i,
+                    LanguageLocaleKey = 'en_US',
+                    LocaleSidKey = 'sv_SE',
+                    ProfileId = p.Id,
+                    TimeZoneSidKey = 'Europe/Paris',
+                    UserName = 'testUser' + i + '@test.com.flysas',
+                    Vendor__c = 'SAS');
+            users.add(u);
+        }
+        return users;
     }
 }

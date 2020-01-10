@@ -6,8 +6,8 @@
 @IsTest
 private class GDPR_AccountGDPRExtractController_Test {
     /**
-     * Asserts that a file is generated for the customer when using the DataExtractService. Scope for test is limited
-     * to ContentVersion creation, not the file content.
+     * Asserts that a file is generated for the customer when using the GDPR_DataExtractService. Scope for test is limited
+     * to ContentVersion creation, not the file content, which is tested in the service generating the file.
      */
     @IsTest
     static void shouldGenerateContentVersion() {

@@ -98,7 +98,7 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DataExtractService</apexClass>
+        <apexClass>GDPR_DataExtractService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

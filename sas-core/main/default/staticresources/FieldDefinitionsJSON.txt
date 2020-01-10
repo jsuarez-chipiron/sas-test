@@ -120,6 +120,17 @@
     "Id":"000000000000000AAA",
     "DurableId":"Case.Status"
   },
+    {
+      "attributes":{
+        "type":"FieldDefinition",
+        "url":"/services/data/v47.0/sobjects/FieldDefinition/Case.AccountId"
+      },
+      "QualifiedApiName":"AccountId",
+      "ComplianceGroup":"PIIExtract",
+      "EntityDefinitionId":"Case",
+      "Id":"000000000000000AAA",
+      "DurableId":"Case.AccountId"
+    },
   {
     "attributes":{
       "type":"FieldDefinition",
@@ -187,6 +198,17 @@
     "Id":"000000000000000AAA",
     "DurableId":"LiveChatTranscript.Status"
   },
+    {
+      "attributes":{
+        "type":"FieldDefinition",
+        "url":"/services/data/v47.0/sobjects/FieldDefinition/LiveChatTranscript.AccountId"
+      },
+      "QualifiedApiName":"AccountId",
+      "ComplianceGroup":"PIIExtract",
+      "EntityDefinitionId":"LiveChatTranscript",
+      "Id":"000000000000000AAA",
+      "DurableId":"LiveChatTranscript.AccountId"
+    },
   {
     "attributes":{
       "type":"FieldDefinition",

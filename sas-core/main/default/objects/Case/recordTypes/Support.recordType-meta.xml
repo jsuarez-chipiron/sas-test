@@ -23,6 +23,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Eurobonus</fullName>
             <default>false</default>
         </values>

@@ -10,10 +10,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>GDPR_AccountGDPRExtractController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CSharkIntegrationService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -99,10 +95,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ConsoleAutomationController_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DataExtractService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -214,6 +206,11 @@
         <enabled>false</enabled>
         <externalDataSource>SAS_External_Systems</externalDataSource>
     </externalDataSourceAccesses>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.CMP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.CODSId__c</field>
@@ -417,6 +414,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>CaseTag__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ContentVersion.IsGDPRExtract__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
