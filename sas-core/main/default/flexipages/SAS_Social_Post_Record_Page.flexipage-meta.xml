@@ -171,10 +171,16 @@
             </componentInstanceProperties>
             <componentName>console:relatedRecord</componentName>
             <visibilityRule>
+                <booleanFilter>(1 AND 2)</booleanFilter>
                 <criteria>
                     <leftValue>{!Record.MessageType}</leftValue>
                     <operator>EQUAL</operator>
                     <rightValue>Reply</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.Provider}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Facebook</rightValue>
                 </criteria>
             </visibilityRule>
         </componentInstances>
