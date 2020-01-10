@@ -5,5 +5,10 @@
         <sharedTo>SykesManagement</sharedTo>
         <sharedToType>Group</sharedToType>
     </folderShares>
-    <name>Sykes - Management</name>
+    <folderShares>
+        <accessLevel>View</accessLevel>
+        <sharedTo>SykesTeamlead</sharedTo>
+        <sharedToType>Group</sharedToType>
+    </folderShares>
+    <name>Sykes - Management/Team Lead</name>
 </ReportFolder>
