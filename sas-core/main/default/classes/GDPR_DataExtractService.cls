@@ -5,54 +5,54 @@
  */
 public with sharing class GDPR_DataExtractService {
     /**
+     * Holds settings for extraction of objects. Should be accessed only through internal getter
+     * method to guarantee that the variable is populated.
+     */
+    private static GDPRExtractObjectSetting__mdt[] objectSettings;
+
+    /**
      * Determines the name of the ComplianceGroup field value on FieldDefinition that determines if field
      * should be included in GDPR Extract.
      */
     private static final String PII_TAG = 'PIIExtract';
-    /**
-     * Object name for Case object
-     */
-    private static final String CASE_OBJECT = Case.SObjectType.getDescribe().name;
-    /**
-     * Object name for Account object
-     */
-    private static final String ACCOUNT_OBJECT = Account.SObjectType.getDescribe().name;
-    /**
-     * Object name for Chat Transcript object
-     */
-    private static final String CHAT_TRANSCRIPT_OBJECT = LiveChatTranscript.SObjectType.getDescribe().name;
-    /**
-     * Object name for Email object
-     */
-    private static final String EMAIL_OBJECT = EmailMessage.SObjectType.getDescribe().name;
 
     /**
      * Generates a JSON extract of a customer's Personal Identifiable Information based on the supplied account id.
      * Fields included per object are defined on field level with metadata "ComplianceGroup. If new objects should be
      * included in extract, the objects should be added to query for field definitions and to lost of queries in the method.
-     * @param accountIds Account to generate extract for
+     * @param accountIds Accounts to generate extract for
      * @param fieldDefinitions Externally provided FieldDefinition. Available to set primarily for test purposes, but
-     * should be null for most uses.
+     * should be null for most use cases.
+     * @param extractObjectSettings Externally provided settings for extracting objects. Available to set primarily
+     * for test purposes, but should be null for most use cases.
      * @return List of JSON structures with the customer's data, one instance for each account
      */
-    public static String[] extractAccountPersonalData(Id[] accountIds, List<FieldDefinition> fieldDefinitions){
+    public static String[] extractAccountPersonalData(Id[] accountIds, List<FieldDefinition> fieldDefinitions, List<GDPRExtractObjectSetting__mdt> extractObjectSettings){
+        if(extractObjectSettings != null){
+            objectSettings = extractObjectSettings;
+        }
+
         if(fieldDefinitions == null){
             //ComplianceGroup filter set to != null due to inability to filter on list for field
             fieldDefinitions =
                     [SELECT QualifiedApiName, ComplianceGroup, SecurityClassification, EntityDefinitionId
                     FROM FieldDefinition
                     WHERE EntityDefinitionId
-                    IN (:CASE_OBJECT, :ACCOUNT_OBJECT, :CHAT_TRANSCRIPT_OBJECT, :EMAIL_OBJECT)
+                    IN :getListOfIncludedObjectNames()
                     AND ComplianceGroup != NULL];
         }
 
         Map<Id, SObject[]> extractByAccountId = new Map<Id, SObject[]>();
         for(String query : getQueries(fieldDefinitions, accountIds)){
-            System.debug('QUery:' + query);
             //In cases where no fields for object are tagged as PII, only Id is retrieved
             SObject[] records = Database.query(query.replace('null', 'Id'));
 
-            String accountIdentifierField = getSObjectTypeAccountIdentifier(records.getSObjectType());
+            String accountIdentifierField;
+            for(GDPRExtractObjectSetting__mdt setting:getObjectSettings()){
+                if(setting.ObjectName__c == String.valueOf(records.getSObjectType())){
+                    accountIdentifierField = setting.AccountIdFieldName__c;
+                }
+            }
 
             for(SObject record:records){
                 Id recordAccountId = (Id)record.get(accountIdentifierField);
@@ -80,45 +80,131 @@ public with sharing class GDPR_DataExtractService {
      */
     @TestVisible
     private static List<String> getQueries(List<FieldDefinition> fieldDefinitions, Id[] accountIds) {
-        Map<String, String> fieldSelections = new Map<String, String>();
-        for (FieldDefinition def : fieldDefinitions) {
-            if (def.ComplianceGroup.contains(PII_TAG)) {
-                String currentFieldSelection = fieldSelections.get(def.EntityDefinitionId);
-                if (currentFieldSelection == null) {
-                    fieldSelections.put(def.EntityDefinitionId, def.QualifiedApiName + ', ');
-                } else {
-                    fieldSelections.put(def.EntityDefinitionId, currentFieldSelection += def.QualifiedApiName + ', ');
-                }
-            }
-        }
-
-        for (String fieldSelectionKey : fieldSelections.keySet()) {
-            fieldSelections.put(fieldSelectionKey, fieldSelections.get(fieldSelectionKey).removeEnd(', '));
-        }
-
         String[] accountIdsAsStrings = new String[]{};
         for(Id accId : accountIds){
             accountIdsAsStrings.add('\'' + accId + '\'');
         }
 
         List<String> queries = new List<String>();
-        queries.add('SELECT ' + fieldSelections.get(ACCOUNT_OBJECT) + ' FROM ' + ACCOUNT_OBJECT + ' WHERE Id IN ' + accountIdsAsStrings);
-        String emailSubQuery = ', (SELECT ' + fieldSelections.get(EMAIL_OBJECT) + ' FROM ' + EMAIL_OBJECT + 's)';
-        queries.add('SELECT ' + fieldSelections.get(CASE_OBJECT) + emailSubQuery + ' FROM ' + CASE_OBJECT + ' WHERE AccountId IN ' + accountIdsAsStrings);
-        queries.add('SELECT ' + fieldSelections.get(CHAT_TRANSCRIPT_OBJECT) + ' FROM ' + CHAT_TRANSCRIPT_OBJECT + ' WHERE AccountId IN ' + accountIdsAsStrings);
-
+        Map<String, ExtractObject> extractObjectsByObjectName = new Map<String, ExtractObject>();
+        for(GDPRExtractObjectSetting__mdt setting:getObjectSettings()){
+                extractObjectsByObjectName.put(setting.ObjectName__c, new ExtractObject(setting));
+        }
+        for(GDPRExtractObjectSetting__mdt setting:getObjectSettings()){
+            if(setting.ParentObjectName__c != null){
+                if(extractObjectsByObjectName.get(setting.ParentObjectName__c) == null){
+                    throw new DataExtractException('Object ' + setting.ParentObjectName__c + ' must be included ' +
+                            'in extract configuration as it is set as parent for object ' + setting.ObjectName__c);
+                } else {
+                    extractObjectsByObjectName.get(setting.ParentObjectName__c).childObjects.add(new ExtractObject(setting));
+                }
+            }
+        }
+        for(ExtractObject extractObject : extractObjectsByObjectName.values()){
+            if(extractObject.parentObjectName == null){
+                queries.add(extractObject.getObjectQuery(getFieldSelectionsByObjectName(fieldDefinitions), accountIdsAsStrings));
+            }
+        }
         return queries;
     }
 
-    private static String getSObjectTypeAccountIdentifier(SObjectType sObjectType){
-        String identifier;
-        if (sObjectType == Account.SObjectType){
-            identifier = 'Id';
-        } else if (sObjectType == Case.SObjectType){
-         identifier = 'AccountId';
-        } else if (sObjectType == LiveChatTranscript.SObjectType){
-            identifier = 'AccountId';
+    /**
+     * Generates a map of field selections for each object that should be included in extract.
+     * @param fieldDefinitions Field definitions for object.
+     * @return Map of field selections in string format, with object name as key.
+     */
+    private static Map<String, String> getFieldSelectionsByObjectName(List<FieldDefinition> fieldDefinitions) {
+        Map<String, String> fieldSelectionsByObjectName = new Map<String, String>();
+        for (FieldDefinition def : fieldDefinitions) {
+            if (def.ComplianceGroup.contains(PII_TAG)) {
+                String currentFieldSelection = fieldSelectionsByObjectName.get(def.EntityDefinitionId);
+                if (currentFieldSelection == null) {
+                    fieldSelectionsByObjectName.put(def.EntityDefinitionId, def.QualifiedApiName + ', ');
+                } else {
+                    fieldSelectionsByObjectName.put(def.EntityDefinitionId, currentFieldSelection += def.QualifiedApiName + ', ');
+                }
+            }
         }
-        return identifier;
+
+        for (String fieldSelectionKey : fieldSelectionsByObjectName.keySet()) {
+            fieldSelectionsByObjectName.put(fieldSelectionKey, fieldSelectionsByObjectName.get(fieldSelectionKey).removeEnd(', '));
+        }
+        return fieldSelectionsByObjectName;
     }
+
+    /**
+     * Used to retrieve setting for extracting objects. In no settings are already retrieved for session, the settings are queried.
+     * @return List or settings for extracting objects
+     */
+    private static GDPRExtractObjectSetting__mdt[] getObjectSettings(){
+        if(objectSettings == null){
+            objectSettings = [  SELECT Id, AccountIdFieldName__c, ObjectName__c, ParentObjectName__c, RelationshipName__c
+                                FROM GDPRExtractObjectSetting__mdt
+                                ORDER BY ObjectName__c ASC
+                            ];
+        }
+        if(objectSettings.isEmpty()){
+            throw new DataExtractException('No configuration for Data Extract exists. Add at least on object to perform operation.');
+        }
+        return objectSettings;
+    }
+
+    /**
+     * Used to generate a list of the object names that should be included in extract, retrieved from extract settings.
+     * @return List of object names
+     */
+    private static String[] getListOfIncludedObjectNames(){
+        String[] includedObjects = new String[]{};
+        for(GDPRExtractObjectSetting__mdt setting:getObjectSettings()){
+            includedObjects.add(setting.ObjectName__c);
+        }
+        return includedObjects;
+    }
+
+    /**
+     * @author Anton Norell
+     * @date 2020-01-10
+     * @description Used to hold information about an object to extract, as well as some logic related to an individual extract object.
+     */
+    public class ExtractObject {
+        public String objectName {get; private set;}
+        public String accountIdentifier {get; private set;}
+        public String parentObjectName {get; private set;}
+        public String relationshipName {get; private set;}
+        public ExtractObject[] childObjects;
+
+        public ExtractObject(GDPRExtractObjectSetting__mdt setting){
+            objectName = setting.ObjectName__c;
+            accountIdentifier = setting.AccountIdFieldName__c;
+            parentObjectName = setting.ParentObjectName__c;
+            relationshipName = setting.RelationshipName__c;
+            childObjects = new ExtractObject[]{};
+        }
+
+        /**
+         * Used to generate a query for the instantiated extract object. If the object contains child objects, those
+         * are included as sub queries.
+         * @param fieldSelectionsByObjectName Map of field selections for each object, used to select fields for query.
+         * @param accountIdsAsStrings Selection of which accounts to include in query filter.
+         * @return A single query for the extract object.
+         */
+        public String getObjectQuery(Map<String, String> fieldSelectionsByObjectName, String[] accountIdsAsStrings){
+            String subQueries = '';
+            for(ExtractObject childObject:childObjects){
+                subQueries += ', (SELECT ' + fieldSelectionsByObjectName.get(childObject.objectName) +
+                                ' FROM ' + childObject.relationshipName + ')';
+            }
+            String query = 'SELECT ' + fieldSelectionsByObjectName.get(objectName) + subQueries + ' FROM ' + objectName +
+                            ' WHERE ' + accountIdentifier + ' IN ' + accountIdsAsStrings;
+            return query;
+        }
+    }
+
+    /**
+     * @author Anton Norell
+     * @date 2020-01-10
+     * @description  Internal exception for errors related to extraction logic
+     */
+    @TestVisible
+    private class DataExtractException extends Exception{}
 }
