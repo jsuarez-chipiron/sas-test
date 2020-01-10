@@ -173,4 +173,10 @@
         <members>DataExtractService_Test</members>
         <name>ApexClass</name>
     </types>
+	
+	<!--2020-01-08 - Sanna Sörberg - Delete quick action-->
+	<types>
+		<members>SocialPost.FollowUpCase</members>	
+		<name>QuickAction</name>
+	</types>
 </Package>

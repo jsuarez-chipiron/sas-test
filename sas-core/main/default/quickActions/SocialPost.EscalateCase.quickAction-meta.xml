@@ -9,7 +9,7 @@
         <field>SourceId</field>
         <formula>SocialPost.Id</formula>
     </fieldOverrides>
-    <label>Follow up Case</label>
+    <label>Escalate Case</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>
         <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>
@@ -57,7 +57,7 @@
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
     </quickActionLayout>
-    <successMessage>Follow up  case created</successMessage>
+    <successMessage>Case created</successMessage>
     <targetObject>Case</targetObject>
     <targetParentField>Source</targetParentField>
     <targetRecordType>Case.Information</targetRecordType>
