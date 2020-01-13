@@ -149,10 +149,26 @@
             </componentInstanceProperties>
             <componentName>console:relatedRecord</componentName>
             <visibilityRule>
+                <booleanFilter>(1 AND 2) OR (3 AND 4)</booleanFilter>
                 <criteria>
                     <leftValue>{!Record.MessageType}</leftValue>
                     <operator>NE</operator>
                     <rightValue>Post</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.Provider}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Facebook</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.MessageType}</leftValue>
+                    <operator>NE</operator>
+                    <rightValue>Tweet</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.Provider}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Twitter</rightValue>
                 </criteria>
             </visibilityRule>
         </componentInstances>
