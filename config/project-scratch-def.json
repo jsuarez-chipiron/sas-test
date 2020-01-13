@@ -101,7 +101,7 @@
     },
     "socialCustomerServiceSettings":{
       "caseSubjectOption":"SocialPostContent",
-      "enableSocialApprovals":true,
+      "enableSocialApprovals":false,
       "enableSocialCaseAssignmentRules":true,
       "enableSocialCustomerService":true,
       "enableSocialPersonaHistoryTracking":true,
