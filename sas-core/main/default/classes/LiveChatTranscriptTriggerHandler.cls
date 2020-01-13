@@ -14,7 +14,9 @@ public class LiveChatTranscriptTriggerHandler extends C_TriggerHandler {
             //Creating cases for LiveChatTranscripts
             for(Integer i=0;i<sz;i++) {
                 LiveChatTranscript lct = lctList[i];
-                lct.Language__c = lct.LiveChatButton.windowLanguage.toUpperCase();
+                if(lct.LiveChatButton.windowLanguage != null){
+                    lct.Language__c = lct.LiveChatButton.windowLanguage.toUpperCase();
+                } 
                 if(lct.CaseId == null){
                     Case c = new Case();
                     c.EBNumber__c = lct.EBNumber__c;
