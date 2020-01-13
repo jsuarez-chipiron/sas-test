@@ -10,9 +10,6 @@
         <field>SUBJECT</field>
     </columns>
     <columns>
-        <field>TYPE</field>
-    </columns>
-    <columns>
         <field>CREATED_DATE</field>
     </columns>
     <columns>
@@ -33,7 +30,12 @@
     <columns>
         <field>CASE_NUMBER</field>
     </columns>
-    <format>Tabular</format>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>TYPE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
     <name>SAS - Created Cases MTD</name>
     <params>
         <name>units</name>

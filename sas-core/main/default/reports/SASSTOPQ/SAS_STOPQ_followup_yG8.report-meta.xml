@@ -92,7 +92,7 @@ Detailing AHT, amount of opened, closed and reopened Cases.</description>
     <name>SAS - STOPQ follow-up</name>
     <params>
         <name>units</name>
-        <value>m</value>
+        <value>h</value>
     </params>
     <params>
         <name>co</name>
