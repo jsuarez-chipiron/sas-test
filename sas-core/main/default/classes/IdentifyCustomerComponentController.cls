@@ -17,7 +17,7 @@ public with sharing class IdentifyCustomerComponentController {
     public static Account findCustomer(String searchField, String searchValue){
         String query = 'SELECT Id, ExternalId, AddressLine1__c, AddressLine2__c, AddressLine3__c, BirthDate__c, ' +
                         'City__c, ConsentTelemarketing__c, ConsentEB0__c, ConsentSMS__c, ConsentEB__c, ConsentEmail__c, ' +
-                        'CountryCode__c, CountyState__c, EmailPersonal__c, EBBalance__c, EBLevel__c, EBNumber__c, ' +
+                        'CountryCode__c, CountyState__c, EmailPersonal__c, EBBalance__c, EBLevel__c, EBNumber__c, CMP__c, ' +
                         'FirstName__c, LastName__c, Gender__c, EBMemberSinceDate__c, Mobile__c, Name__c, Phone__c, ' +
                         'EBMbrshipLvlStatusStartDate__c, EBMbrshipLvlStatusEndDate__c, EBReachesNextLevelPoints__c, ' +
                         'SubscriptionId__c, TPAccountNumber__c, ZipCode__c, CompanyName__c, Title__c, MiddleName__c, Salutation__c ' +
@@ -68,6 +68,7 @@ public with sharing class IdentifyCustomerComponentController {
                     SubscriptionId__c = ff.SubscriptionId__c,
                     TPAccountNumber__c = ff.TPAccountNumber__c,
                     CompanyName__c = ff.CompanyName__c,
+                    CMP__c = ff.CMP__c,
                     PersonTitle = ff.Title__c,
                     Salutation = ff.Salutation__c,
                     MiddleName = ff.MiddleName__c,

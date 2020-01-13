@@ -56,6 +56,7 @@ public with sharing class CSharkIntegrationService_Test {
         System.assertEquals('11866633', dataRow.get('ParentIdentifier'));
         System.assertEquals('928004605', dataRow.get('TravelPassAccountNumber'));
         System.assertEquals(Date.valueOf('2016-09-28T00:00:00'), dataRow.get('EnrollmentDate'));
+        System.assertEquals('RFISHSE', dataRow.get('CMPCode'));
     }
 
     /**

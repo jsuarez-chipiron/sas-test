@@ -141,6 +141,7 @@ private class IdentifyCustomerComponentController_Test {
                 SubscriptionId__c = null,
                 TPAccountNumber__c = '678',
                 CompanyName__c = 'Company Name',
+                CMP__c = '123',
                 MiddleName__c = 'Middle',
                 Salutation__c = 'Salutation',
                 Title__c = 'Title'
@@ -178,6 +179,7 @@ private class IdentifyCustomerComponentController_Test {
         System.assertEquals(ff.SubscriptionId__c, account.SubscriptionId__c);
         System.assertEquals(ff.TPAccountNumber__c, account.TPAccountNumber__c);
         System.assertEquals(ff.CompanyName__c, account.CompanyName__c);
+        System.assertEquals(ff.CMP__c, account.CMP__c);
         System.assertEquals(ff.Title__c, account.PersonTitle);
         System.assertEquals(ff.Salutation__c, account.Salutation);
         System.assertEquals(ff.MiddleName__c, account.MiddleName);
@@ -219,6 +221,7 @@ private class IdentifyCustomerComponentController_Test {
                 SubscriptionId__c = null,
                 TPAccountNumber__c = '678',
                 CompanyName__c = 'Company Name',
+                CMP__c = '123',
                 MiddleName__c = 'Middle',
                 Salutation__c = 'Salutation',
                 Title__c = 'Title'
