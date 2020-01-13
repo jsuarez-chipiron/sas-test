@@ -388,7 +388,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Langauge__c</field>
+        <field>Case.Language__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
