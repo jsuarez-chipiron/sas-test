@@ -6,9 +6,9 @@
         <label>EN</label>
     </customValue>
     <customValue>
-        <fullName>SE</fullName>
+        <fullName>SV</fullName>
         <default>false</default>
-        <label>SE</label>
+        <label>SV</label>
     </customValue>
     <customValue>
         <fullName>NO</fullName>
