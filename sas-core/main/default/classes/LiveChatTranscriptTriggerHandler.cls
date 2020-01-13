@@ -10,13 +10,24 @@ public class LiveChatTranscriptTriggerHandler extends C_TriggerHandler {
             Integer sz = lctList.size();
             Case[] cFullList = new Case[sz];
             List<Case> cInsList = new List<Case>();
-           
+           	
+            C_GeneralSetting__mdt [] generalSettings = [SELECT MasterLabel, DeveloperName, Value__c FROM C_GeneralSetting__mdt WHERE Group__C = 'CHAT LANGUAGE'];
+			Map<String, String> languageIso = new Map<String, String>();
+            for(C_GeneralSetting__mdt gs : generalSettings){
+                String devName = gs.DeveloperName;
+                languageIso.put(devName.removeStart('LANGUAGE_'), gs.Value__c);
+            }
+            
+            List<Id> chatButtonIds = new List<Id>();
+            for(LiveChatTranscript lct : lctList) chatButtonIds.add(lct.LiveChatButtonId);
+            Map<Id, LiveChatButton> lcbMap = new Map<Id, LiveChatButton>([SELECT Id, toLabel(windowLanguage) FROM LiveChatButton WHERE Id IN :chatButtonIds]);
+            
             //Creating cases for LiveChatTranscripts
             for(Integer i=0;i<sz;i++) {
                 LiveChatTranscript lct = lctList[i];
-                if(lct.LiveChatButton.windowLanguage != null){
-                    lct.Language__c = lct.LiveChatButton.windowLanguage.toUpperCase();
-                } 
+                if(lct.LiveChatButtonId != null){
+                  lct.Language__c = languageIso.get(lcbMap.get(lct.LiveChatButtonId).windowLanguage);   
+                }
                 if(lct.CaseId == null){
                     Case c = new Case();
                     c.EBNumber__c = lct.EBNumber__c;
