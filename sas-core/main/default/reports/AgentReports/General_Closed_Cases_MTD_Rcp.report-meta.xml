@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>OWNER</field>
-    </columns>
-    <columns>
-        <field>ACCOUNT.NAME</field>
+        <field>CASE_NUMBER</field>
     </columns>
     <columns>
         <field>SUBJECT</field>
     </columns>
     <columns>
-        <field>CREATED_DATE</field>
+        <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
-        <field>AGE</field>
+        <field>STATUS</field>
     </columns>
     <columns>
-        <field>OPEN</field>
+        <field>TYPE</field>
     </columns>
     <columns>
-        <field>CLOSED</field>
+        <field>PRIORITY</field>
     </columns>
     <filter>
         <criteriaItems>
@@ -30,11 +27,16 @@
         </criteriaItems>
         <language>en_US</language>
     </filter>
-    <format>Tabular</format>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>OWNER</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
     <name>General - Closed Cases MTD</name>
     <params>
         <name>units</name>
-        <value>h</value>
+        <value>m</value>
     </params>
     <params>
         <name>co</name>
