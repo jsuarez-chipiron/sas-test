@@ -45,9 +45,6 @@
         <field>STATUS</field>
     </columns>
     <columns>
-        <field>TYPE</field>
-    </columns>
-    <columns>
         <aggregateTypes>Sum</aggregateTypes>
         <field>OPEN</field>
     </columns>
@@ -72,6 +69,9 @@
         <aggregateTypes>Average</aggregateTypes>
         <field>AGE</field>
     </columns>
+    <columns>
+        <field>OWNER</field>
+    </columns>
     <description>Report for statistics on STOPQ Cases. 
 Detailing AHT, amount of opened, closed and reopened Cases.</description>
     <filter>
@@ -86,7 +86,7 @@ Detailing AHT, amount of opened, closed and reopened Cases.</description>
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>OWNER</field>
+        <field>TYPE</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>SAS - STOPQ follow-up</name>
