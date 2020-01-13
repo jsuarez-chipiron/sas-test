@@ -3,6 +3,7 @@
     <compactLayoutAssignment>SAS_Compact_Layout</compactLayoutAssignment>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <searchLayouts>
         <customTabListAdditionalFields>Content</customTabListAdditionalFields>
         <customTabListAdditionalFields>Posted</customTabListAdditionalFields>
@@ -14,17 +15,17 @@
         <excludedStandardButtons>New</excludedStandardButtons>
         <excludedStandardButtons>OpenListInQuip</excludedStandardButtons>
         <excludedStandardButtons>MassCreateCase</excludedStandardButtons>
-        <excludedStandardButtons>MassApprovePosts</excludedStandardButtons>
         <excludedStandardButtons>SfxMassRejectPosts</excludedStandardButtons>
-        <excludedStandardButtons>SfxMassIgnore</excludedStandardButtons>
+        <excludedStandardButtons>MassRejectPosts</excludedStandardButtons>
         <excludedStandardButtons>SfxMassCreateCase</excludedStandardButtons>
         <excludedStandardButtons>SfxMassApprovePosts</excludedStandardButtons>
-        <excludedStandardButtons>MassRejectPosts</excludedStandardButtons>
+        <excludedStandardButtons>MassApprovePosts</excludedStandardButtons>
         <searchResultsAdditionalFields>Content</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Posted</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Provider</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Persona</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Parent</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>MessageType</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ReviewedStatus</searchResultsAdditionalFields>
     </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
 </CustomObject>
