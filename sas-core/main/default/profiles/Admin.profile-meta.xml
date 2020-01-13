@@ -388,6 +388,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Langauge__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.TPAccountNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -659,6 +664,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SocialPost.Done__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LiveChatTranscript.Language__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
