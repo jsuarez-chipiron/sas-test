@@ -88,13 +88,47 @@ private class IdentifyCustomerComponentController_Test {
                 'The method did not update the underlying transcript correctly. Expected EBNumber__ to be updated.'
         );
     }
+
+
+    /**
+     * Asserts that the controller can update a chat transcript record based on a supplied JSON string with,
+     * record id and data as well as updating a related case record
+     */
+    @IsTest
+    static void shouldUpdateLiveChatTranscriptAndRelatedRecordsBasedOnSuppliedJSONData(){
+        Case originalCase = new Case();
+        insert originalCase;
+        LiveChatVisitor visitor = new LiveChatVisitor();
+        insert visitor;
+        LiveChatTranscript transcript = new LiveChatTranscript(LiveChatVisitorId = visitor.Id, CaseId = originalCase.Id);
+        insert transcript;
+
+        String jsonData = '{"recordId": "' + transcript.Id + '", "euroBonusNumber": "123", "caseId": "' + originalCase.Id + '"}';
+        IdentifyCustomerComponentController.updateRecordDataWithApex(jsonData);
+
+        System.assertEquals(
+                '123',
+                [SELECT Id, EBNumber__c FROM LiveChatTranscript WHERE Id = :transcript.Id].EBNumber__c,
+                'The method did not update the underlying transcript correctly. Expected EBNumber__ to be updated.'
+        );
+        System.assertEquals(
+                '123',
+                [SELECT Id, EBNumber__c FROM Case WHERE Id = :originalCase.Id].EBNumber__c,
+                'The method did not update the related case correctly. Expected EBNumber__ to be updated.'
+        );
+    }
+
     /**
      * Asserts that the controller can update a case record based on a supplied JSON string with record id and data
      */
     @IsTest
-    static void shouldUpdateCaseBasedOnSuppliedJSONData(){
+    static void shouldUpdateCaseAndRelatedRecordsBasedOnSuppliedJSONData(){
         Case originalCase = new Case();
         insert originalCase;
+        LiveChatVisitor visitor = new LiveChatVisitor();
+        insert visitor;
+        LiveChatTranscript transcript = new LiveChatTranscript(LiveChatVisitorId = visitor.Id, CaseId = originalCase.Id);
+        insert transcript;
 
         String jsonData = '{"recordId": "' + originalCase.Id + '", "euroBonusNumber": "123"}';
         IdentifyCustomerComponentController.updateRecordDataWithApex(jsonData);
@@ -103,6 +137,11 @@ private class IdentifyCustomerComponentController_Test {
                 '123',
                 [SELECT Id, EBNumber__c FROM Case WHERE Id = :originalCase.Id].EBNumber__c,
                 'The method did not update the underlying case correctly. Expected EBNumber__ to be updated.'
+        );
+        System.assertEquals(
+                '123',
+                [SELECT Id, EBNumber__c FROM LiveChatTranscript WHERE Id = :transcript.Id].EBNumber__c,
+                'The method did not update the related chat transcript correctly. Expected EBNumber__ to be updated.'
         );
     }
 

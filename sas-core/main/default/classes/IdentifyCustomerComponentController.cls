@@ -89,7 +89,7 @@ public with sharing class IdentifyCustomerComponentController {
      * @return Abstract interpretation of object in context, containing record data.
      */
     @AuraEnabled(Cacheable = true)
-    public static ComponentRecordData getRecordData(Id recordId){
+        public static ComponentRecordData getRecordData(Id recordId){
         SObjectType sObjectType = recordId.getSobjectType();
         if(sObjectType == Case.getSObjectType()){
             return new ComponentRecordData(
@@ -110,8 +110,8 @@ public with sharing class IdentifyCustomerComponentController {
 
     /**
      * Class used as an abstract interpretation of multiple SObject types. The class is used to communicate data
-     * between the controlled and the Lightning Web Component. To support new SObject types, add a new constructor
-     * and a corresponding block in the update method.
+     * between the controlled and the Lightning Web Component, as well as performing actions on records encapsuled
+     * by this wrapper. To support new SObject types, add a new constructor and a corresponding block in the update method.
      */
     public class ComponentRecordData{
         @AuraEnabled public Id recordId {get; private set;}
@@ -122,9 +122,11 @@ public with sharing class IdentifyCustomerComponentController {
         @AuraEnabled public String tpAccountNumber {get; private set;}
         @AuraEnabled public String codsId {get; private set;}
         @AuraEnabled public Datetime lastRetrievedFromSource {get; private set;}
+        /**
+         * Indicates that this SObjectType supports UI API. This enables transactions in JavaScript without
+         * utilizing APEX to perform DML.
+         */
         @AuraEnabled public Boolean supportsUIApi {get; private set;}
-
-        @AuraEnabled public Map<String, String> fieldNameMapping {get; private set;}
 
         /**
          * Constructor for class
@@ -159,26 +161,46 @@ public with sharing class IdentifyCustomerComponentController {
          * Used to perform an update with dynamic selection of SObject type based on type derived from record id.
          */
         public void updateUnderlyingRecord(){
-            SObject recordToUpdate;
-            SObjectType sObjectType = recordId.getSobjectType();
-            if(sObjectType == LiveChatTranscript.getSObjectType()){
-                recordToUpdate = new LiveChatTranscript(
-                        Id = recordId,
-                        AccountId = accountId,
-                        EBNumber__c = euroBonusNumber,
-                        CODSId__c = codsId,
-                        ContactId = personContactId
-                );
-            } else if (sObjectType == Case.getSObjectType()){
-                recordToUpdate = new Case(
+            SObject[] recordsToUpdate = new SObject[]{};
+            if(recordId.getSobjectType() == LiveChatTranscript.getSObjectType()){
+                recordsToUpdate.add(generateRecord(recordId));
+                if(caseId != null){
+                    recordsToUpdate.add(generateRecord(caseId));
+                }
+            } else if (recordId.getSobjectType() == Case.getSObjectType()){
+                recordsToUpdate.add(generateRecord(recordId));
+                    for(LiveChatTranscript transcript:[SELECT Id FROM LiveChatTranscript WHERE CaseId = :recordId]){
+                        recordsToUpdate.add(generateRecord(transcript.Id));
+                    }
+            }
+            update recordsToUpdate;
+        }
+
+        /**
+         * Used to populate a new SObject record based on values in ComponentRecordData.
+         * @param recordId Id of record to create. Possible to set to enable creation of records based on related Ids.
+         * @return A new SObject record.
+         */
+        private SObject generateRecord(Id recordId){
+            SObject returnRecord;
+            if(recordId.getSobjectType() == Case.SObjectType){
+                returnRecord = new Case(
                         Id = recordId,
                         AccountId = accountId,
                         TPAccountNumber__c = tpAccountNumber,
                         CODSId__c = codsId,
                         EBNumber__c = euroBonusNumber
                 );
+            } else if (recordId.getSobjectType() == LiveChatTranscript.SObjectType){
+                returnRecord = new LiveChatTranscript(
+                        Id = recordId,
+                        AccountId = accountId,
+                        EBNumber__c = euroBonusNumber,
+                        CODSId__c = codsId,
+                        ContactId = personContactId
+                );
             }
-            update recordToUpdate;
+            return returnRecord;
         }
     }
 

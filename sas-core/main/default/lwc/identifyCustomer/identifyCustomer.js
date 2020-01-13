@@ -116,48 +116,35 @@ export default class App extends LightningElement {
         }
     }
 
-    handleChangeCustomerButtonClick(event){
+    async handleChangeCustomerButtonClick(event){
+        const recordInput = {
+            recordId: this.recordId,
+            accountId: null,
+            euroBonusNumber: null,
+            tpAccountNumber: null,
+            codsId: null,
+            caseId: this.currentRecordData.caseId ? this.currentRecordData.caseId : null
+        };
+        await updateRecordDataWithApex({ jsonData: JSON.stringify(recordInput) });
         fireEvent(this.tabIdentifier + '_customerChanged', event );
         console.log('Fired event: ' + this.tabIdentifier + '_customerChanged');
     }
 
     /**
      * Event handler for when a used clicks button to change customer related to record
-     * Removed valued related to previously connected customer from record record
+     * Removed valued related to previously connected customer from record
      * @param {*} event
      */
     async handleChangeCustomer(event) {
         console.log("Received event for change customer");
         try{
-            this.showSpinner = true;
-            if(this.currentRecordData.supportsUIApi) {
-                const recordInput = {
-                    fields: {
-                        Id: this.recordId,
-                        AccountId: null,
-                        EBNumber__c: null,
-                        TPAccountNumber__c: null
-                    }
-                };
-                await updateRecord(recordInput);
-            }  else {
-                const recordInput = {
-                    recordId: this.recordId,
-                    accountId: null,
-                    euroBonusNumber: null,
-                    tpAccountNumber: null,
-                    codsId: null
-                };
-
-                await updateRecordDataWithApex({ jsonData: JSON.stringify(recordInput) });
-                this.dispatchEvent(new CustomEvent('connectedCustomerChange'));
-            }
+            this.dispatchEvent(new CustomEvent('connectedCustomerChange'));
             this.error = undefined;
             this.customerIdentified = false;
             this.showSpinner = false;
         } catch (error){
                 this.displayError(error);
-            }
+        }
     }
 
     /**
@@ -201,31 +188,9 @@ export default class App extends LightningElement {
      * @returns {Promise<void>}
      */
     async handleCustomerIdentified(account){
+        console.log('Received event for identified customer');
         try {
-            console.log('Received event for identified customer');
-            if(this.currentRecordData.supportsUIApi) {
-                const recordInput = {
-                    fields: {
-                        Id: this.currentRecordData.recordId,
-                        AccountId: account.Id,
-                        EBNumber__c: account.EBNumber__c,
-                        TPAccountNumber__c: account.TPAccountNumber__c,
-                        CODSId__c: account.FrequentFlyer__c
-                    }
-                };
-                await updateRecord(recordInput);
-            } else{
-                const recordInput = {
-                    recordId: this.recordId,
-                    accountId: account.Id,
-                    euroBonusNumber: account.EBNumber__c,
-                    tpAccountNumber: account.TPAccountNumber__c,
-                    codsId: account.FrequentFlyer__c,
-                    personContactId: account.PersonContactId
-                };
-                await updateRecordDataWithApex({ jsonData: JSON.stringify(recordInput) });
-                this.dispatchEvent(new CustomEvent('connectedCustomerChange'));
-            }
+            this.dispatchEvent(new CustomEvent('connectedCustomerChange'));
             this.error = undefined;
             this.customerIdentified = true;
             this.showSpinner = false;
@@ -293,7 +258,7 @@ export default class App extends LightningElement {
      * @param error
      */
     displayError(error) {
-        console.log("An error occured: " + JSON.stringify(error));
+        console.log("An error occurred: " + JSON.stringify(error));
         this.showSpinner = false;
         this.error = error;
     }
@@ -311,6 +276,16 @@ export default class App extends LightningElement {
                 searchValue: this.searchValue
             });
             if(account){
+                const recordInput = {
+                    recordId: this.recordId,
+                    accountId: account.Id,
+                    euroBonusNumber: account.EBNumber__c,
+                    tpAccountNumber: account.TPAccountNumber__c,
+                    codsId: account.FrequentFlyer__c,
+                    personContactId: account.PersonContactId,
+                    caseId: this.currentRecordData.caseId ? this.currentRecordData.caseId : null
+                };
+                await updateRecordDataWithApex({ jsonData: JSON.stringify(recordInput) });
                 await fireEvent(this.tabIdentifier + '_customerIdentified', account);
                 console.log('Fired event: ' + this.tabIdentifier + '_customerIdentified');
             } else{
