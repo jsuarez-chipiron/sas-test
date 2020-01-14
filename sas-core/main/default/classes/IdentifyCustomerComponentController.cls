@@ -104,8 +104,9 @@ public with sharing class IdentifyCustomerComponentController {
                     FROM LiveChatTranscript
                     WHERE Id = :recordId]
             );
+        } else {
+            throw new IdentifyCustomerComponentException('This object is not supported. Modify component controller to support object');
         }
-        return null;
     }
 
     /**
@@ -214,4 +215,11 @@ public with sharing class IdentifyCustomerComponentController {
         ComponentRecordData recordData = (ComponentRecordData)JSON.deserialize(jsonData, ComponentRecordData.class);
         recordData.updateUnderlyingRecord();
     }
+
+    /**
+     * @author Anton Norell
+     * @date 2020-01-14
+     * @description Custom exception class used to throw exception for cases not covered by standard exceptions.
+     */
+    private class IdentifyCustomerComponentException extends Exception{}
 }
