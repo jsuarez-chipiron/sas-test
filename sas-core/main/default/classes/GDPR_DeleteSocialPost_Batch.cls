@@ -4,9 +4,9 @@
 */
 global class GDPR_DeleteSocialPost_Batch extends GDPR_DeleteInteraction_Batch{
     /**
-        Deletes social post interactions (No social posts are assumed to have consent)
+        Deletes social post interactions (Social Posts retain consent through their parent case)
     */
     global GDPR_DeleteSocialPost_Batch() {
-        super(SocialPost.SObjectType,SocialPost.ParentId,null,null,false);
+        super(SocialPost.SObjectType,'DeletePeriodSocialPost','DeletePeriodSocialPostConsent',SocialPost.ParentId,null,null);
     }
 }

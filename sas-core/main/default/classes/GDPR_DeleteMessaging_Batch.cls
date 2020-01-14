@@ -7,6 +7,6 @@ global class GDPR_DeleteMessaging_Batch extends GDPR_DeleteInteraction_Batch{
         Deletes messaging interactions
     */
     global GDPR_DeleteMessaging_Batch() {
-        super(MessagingSession.SObjectType,MessagingSession.CaseId,MessagingEndUser.SObjectType,MessagingSession.MessagingEndUserId,null);
+        super(MessagingSession.SObjectType,'DeletePeriodMessaging','DeletePeriodMessagingConsent',null,MessagingEndUser.SObjectType,MessagingSession.MessagingEndUserId);
     }
 }

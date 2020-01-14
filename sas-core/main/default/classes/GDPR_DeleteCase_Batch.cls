@@ -12,8 +12,7 @@ global with sharing class GDPR_DeleteCase_Batch extends SBS_ScheduledBatch{
         Initiates the batch class and extracts the date used to filter out cases for removal
     */
     global GDPR_DeleteCase_Batch(){
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        lastRetentionDate = DateTime.newInstance(Date.today().addDays(-sg.getInt('MaxRetentionPeriod')),Time.newInstance(0,0,0,0));
+        lastRetentionDate = DateTime.newInstance(Date.today().addDays(-C_Settings.getSettings('GDPR').getInt('DeletePeriodCase')),Time.newInstance(0,0,0,0));
     }
 
     /**

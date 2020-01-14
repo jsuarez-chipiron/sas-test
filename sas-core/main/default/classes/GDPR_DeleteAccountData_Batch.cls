@@ -23,8 +23,7 @@ global with sharing class GDPR_DeleteAccountData_Batch extends SBS_ScheduledBatc
     */
     global GDPR_DeleteAccountData_Batch(){
         fieldsToClear = GDPR_WipeAccountService.getAcccountFieldsToClear(true);
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        lastRetentionDate = DateTime.newInstance(Date.today().addDays(-sg.getInt('AccountDataWipePeriod')),Time.newInstance(0,0,0,0));
+        lastRetentionDate = DateTime.newInstance(Date.today().addDays(-C_Settings.getSettings('GDPR').getInt('WipePeriodAccount')),Time.newInstance(0,0,0,0));
         wipedAccountName = GDPR_WipeAccountService.getWipedAccountName();
     }
 

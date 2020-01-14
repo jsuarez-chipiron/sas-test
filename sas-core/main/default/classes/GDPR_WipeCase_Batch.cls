@@ -17,8 +17,7 @@ global with sharing class GDPR_WipeCase_Batch extends SBS_ScheduledBatch{
         Initiates the batch class and extracts the date used to filter out cases for removal
     */
     global GDPR_WipeCase_Batch(){
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        lastRetentionDate = DateTime.newInstance(Date.today().addDays(-sg.getInt('NoConsentRetentionPeriod')),Time.newInstance(0,0,0,0));
+        lastRetentionDate = DateTime.newInstance(Date.today().addDays(-C_Settings.getSettings('GDPR').getInt('WipePeriodCase')),Time.newInstance(0,0,0,0));
         fieldsToClear = GDPR_WipeCaseService.getCaseFieldsToClear();
     }
 

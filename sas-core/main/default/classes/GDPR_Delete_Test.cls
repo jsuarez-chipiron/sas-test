@@ -42,7 +42,7 @@ private class GDPR_Delete_Test {
     @isTest static void deleteAccountData(){
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('AccountDataWipePeriod','-1');
+        sg.set('WipePeriodAccount','-1');
         sg.set('AccountDataWipeName','TestDelete');
         Database.executeBatch(new GDPR_DeleteAccountData_Batch());
         Test.stopTest();
@@ -69,7 +69,7 @@ private class GDPR_Delete_Test {
         Account acc = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,EBLevel__c FROM Account WHERE LastName='TESTACC1'];
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('AccountDataWipePeriod','1');
+        sg.set('WipePeriodAccount','1');
         sg.set('AccountDataWipeName','TestDelete');
         GDPR_DeleteComponentController.deleteRecordData(acc.Id);
         Test.stopTest();
@@ -112,7 +112,7 @@ private class GDPR_Delete_Test {
     @isTest static void retainAccountData(){
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('AccountDataWipePeriod','1');
+        sg.set('WipePeriodAccount','1');
         sg.set('AccountDataWipeName','TestDelete');
         Database.executeBatch(new GDPR_DeleteAccountData_Batch());
         Test.stopTest();
@@ -133,12 +133,25 @@ private class GDPR_Delete_Test {
     }
 
     /**
+        Tests deletion of accounts (Should only occur when the account has no cases)
+    */
+    @isTest static void deleteAccount(){
+        delete [SELECT Id FROM Case WHERE Status='Closed'];
+        Test.startTest();
+        Database.executeBatch(new GDPR_DeleteAccount_Batch());
+        Test.stopTest();
+        Account[] accList = [SELECT Id,LastName FROM Account];
+        System.assertEquals(1, accList.size());
+        System.assertNotEquals('TESTACC1', accList[0].LastName);
+    }
+
+    /**
         Tests case deletion
     */
     @isTest static void deleteCase(){
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('MaxRetentionPeriod','-1');
+        sg.set('DeletePeriodCase','-1');
         Database.executeBatch(new GDPR_DeleteCase_Batch());
         Test.stopTest();
 
@@ -159,7 +172,7 @@ private class GDPR_Delete_Test {
     @isTest static void retainCase(){
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('MaxRetentionPeriod','1');
+        sg.set('DeletePeriodCase','1');
         Database.executeBatch(new GDPR_DeleteCase_Batch());
         Test.stopTest();
 
@@ -180,7 +193,7 @@ private class GDPR_Delete_Test {
     @isTest static void wipeCase(){
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('NoConsentRetentionPeriod','-1');
+        sg.set('WipePeriodCase','-1');
         Database.executeBatch(new GDPR_WipeCase_Batch());
         Test.stopTest();
 
@@ -221,7 +234,7 @@ private class GDPR_Delete_Test {
     @isTest static void wipeCaseRetain(){
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('NoConsentRetentionPeriod','1');
+        sg.set('WipePeriodCase','1');
         Database.executeBatch(new GDPR_WipeCase_Batch());
         Test.stopTest();
 
@@ -237,21 +250,20 @@ private class GDPR_Delete_Test {
     }
 
     /**
-        Tests that batches which deletes interactions deletes the interactions when not connected to a case
+        Tests that batches which deletes interactions deletes the interactions when outside the retention period
     */
     @isTest static void deleteInteraction(){
-        delete [SELECT Id FROM Case];
-        System.assertEquals(0,[SELECT Id FROM EmailMessage].size());
-        System.assertEquals(1,[SELECT Id FROM LiveChatTranscript].size());
-        System.assertEquals(1,[SELECT Id FROM LiveChatVisitor].size());
-        System.assertEquals(1,[SELECT Id FROM MessagingSession].size());
-        System.assertEquals(1,[SELECT Id FROM MessagingEndUser].size());
-        System.assertEquals(1,[SELECT Id FROM SocialPost].size());
-
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('MaxRetentionPeriod','-1');
-        sg.set('NoConsentRetentionPeriod','-1');
+        sg.set('DeletePeriodEmail','-2');
+        sg.set('DeletePeriodChat','-2');
+        sg.set('DeletePeriodMessaging','-2');
+        sg.set('DeletePeriodSocialPost','-2');
+        sg.set('DeletePeriodEmailConsent','-1');
+        sg.set('DeletePeriodChatConsent','-1');
+        sg.set('DeletePeriodMessagingConsent','-1');
+        sg.set('DeletePeriodSocialPostConsent','-1');
+        Database.executeBatch(new GDPR_DeleteEmail_Batch());
         Database.executeBatch(new GDPR_DeleteChat_Batch());
         Database.executeBatch(new GDPR_DeleteMessaging_Batch());
         Database.executeBatch(new GDPR_DeleteSocialPost_Batch());
@@ -266,28 +278,27 @@ private class GDPR_Delete_Test {
     }
 
     /**
-        Tests that deletion of interactions does not run for interactions connected to cases
+        Tests that deletion of interactions does not run for interactions within the retention period
     */
-    @isTest static void retainInteractionWithCase(){
-
-        delete [SELECT Id FROM Case];
-        System.assertEquals(0,[SELECT Id FROM EmailMessage].size());
-        System.assertEquals(1,[SELECT Id FROM LiveChatTranscript].size());
-        System.assertEquals(1,[SELECT Id FROM LiveChatVisitor].size());
-        System.assertEquals(1,[SELECT Id FROM MessagingSession].size());
-        System.assertEquals(1,[SELECT Id FROM MessagingEndUser].size());
-        System.assertEquals(1,[SELECT Id FROM SocialPost].size());
+    @isTest static void retainInteraction(){
 
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('MaxRetentionPeriod','1');
-        sg.set('NoConsentRetentionPeriod','1');
+        sg.set('DeletePeriodEmail','1');
+        sg.set('DeletePeriodChat','1');
+        sg.set('DeletePeriodMessaging','1');
+        sg.set('DeletePeriodSocialPost','1');
+        sg.set('DeletePeriodEmailConsent','1');
+        sg.set('DeletePeriodChatConsent','1');
+        sg.set('DeletePeriodMessagingConsent','1');
+        sg.set('DeletePeriodSocialPostConsent','1');
+        Database.executeBatch(new GDPR_DeleteEmail_Batch());
         Database.executeBatch(new GDPR_DeleteChat_Batch());
         Database.executeBatch(new GDPR_DeleteMessaging_Batch());
         Database.executeBatch(new GDPR_DeleteSocialPost_Batch());
         Test.stopTest();
 
-        System.assertEquals(0,[SELECT Id FROM EmailMessage].size());
+        System.assertEquals(1,[SELECT Id FROM EmailMessage].size());
         System.assertEquals(1,[SELECT Id FROM LiveChatTranscript].size());
         System.assertEquals(1,[SELECT Id FROM LiveChatVisitor].size());
         System.assertEquals(1,[SELECT Id FROM MessagingSession].size());
