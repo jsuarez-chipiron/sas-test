@@ -88,7 +88,7 @@ public with sharing class IdentifyCustomerComponentController {
      * @param recordId Record id for the record where the component is called from.
      * @return Abstract interpretation of object in context, containing record data.
      */
-    @AuraEnabled(Cacheable = true)
+    @AuraEnabled
         public static ComponentRecordData getRecordData(Id recordId){
         SObjectType sObjectType = recordId.getSobjectType();
         if(sObjectType == Case.getSObjectType()){
@@ -138,6 +138,7 @@ public with sharing class IdentifyCustomerComponentController {
             euroBonusNumber = cse.EBNumber__c;
             tpAccountNumber = cse.TPAccountNumber__c;
             codsId = cse.Account.FrequentFlyer__c;
+            caseId = cse.Id;
             lastRetrievedFromSource = cse.Account.LastRetrievedFromSource__c;
             supportsUIApi = true;
         }
@@ -163,14 +164,14 @@ public with sharing class IdentifyCustomerComponentController {
         public void updateUnderlyingRecord(){
             SObject[] recordsToUpdate = new SObject[]{};
             if(recordId.getSobjectType() == LiveChatTranscript.getSObjectType()){
-                recordsToUpdate.add(generateRecord(recordId));
+                recordsToUpdate.add(generateSObjectRecord(recordId));
                 if(caseId != null){
-                    recordsToUpdate.add(generateRecord(caseId));
+                    recordsToUpdate.add(generateSObjectRecord(caseId));
                 }
             } else if (recordId.getSobjectType() == Case.getSObjectType()){
-                recordsToUpdate.add(generateRecord(recordId));
+                recordsToUpdate.add(generateSObjectRecord(recordId));
                     for(LiveChatTranscript transcript:[SELECT Id FROM LiveChatTranscript WHERE CaseId = :recordId]){
-                        recordsToUpdate.add(generateRecord(transcript.Id));
+                        recordsToUpdate.add(generateSObjectRecord(transcript.Id));
                     }
             }
             update recordsToUpdate;
@@ -181,7 +182,7 @@ public with sharing class IdentifyCustomerComponentController {
          * @param recordId Id of record to create. Possible to set to enable creation of records based on related Ids.
          * @return A new SObject record.
          */
-        private SObject generateRecord(Id recordId){
+        private SObject generateSObjectRecord(Id recordId){
             SObject returnRecord;
             if(recordId.getSobjectType() == Case.SObjectType){
                 returnRecord = new Case(

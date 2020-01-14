@@ -103,7 +103,7 @@ private class IdentifyCustomerComponentController_Test {
         LiveChatTranscript transcript = new LiveChatTranscript(LiveChatVisitorId = visitor.Id, CaseId = originalCase.Id);
         insert transcript;
 
-        String jsonData = '{"recordId": "' + transcript.Id + '", "euroBonusNumber": "123", "caseId": "' + originalCase.Id + '"}';
+        String jsonData = '{"recordId": "' + transcript.Id + '", "euroBonusNumber": "123", "caseId": "' + originalCase.Id + '"  }';
         IdentifyCustomerComponentController.updateRecordDataWithApex(jsonData);
 
         System.assertEquals(
