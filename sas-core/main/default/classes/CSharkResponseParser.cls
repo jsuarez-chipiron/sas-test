@@ -52,6 +52,7 @@ public with sharing class CSharkResponseParser {
      * @param customerGetResult XML node of type CustomerGetResult to parse
      * @return A new customer row based on the content of the CustomerGetResult
      */
+    @TestVisible
     private static Map<String,Object> parseCustomerGetResult(Dom.XmlNode customerGetResult){
         List<Dom.XmlNode> elements = customerGetResult.getChildElements();
 
@@ -96,7 +97,12 @@ public with sharing class CSharkResponseParser {
                 }
             } else if(engagementType == 'CorporateMemberEngagement'){
                 for (Dom.XmlNode corporateMembershipElement : engagement.getChildElements()) {
-                    customerRow.putAll(getNameValuePair(corporateMembershipElement.getName(), corporateMembershipElement.getText()));
+                    System.debug(corporateMembershipElement);
+                    if(corporateMembershipElement.getName() == 'CMPCode' && (customerRow.get('CMP') == '' || customerRow.get('CMP') == null)){
+                        customerRow.putAll(getNameValuePair('CMP', corporateMembershipElement.getText()));
+                    } else {
+                        customerRow.putAll(getNameValuePair(corporateMembershipElement.getName(), corporateMembershipElement.getText()));
+                    }
                 }
             } else if (engagementType == 'DefaultProfileEngagement') {
                 Dom.XmlNode profile = engagement.getChildElement('Profile', XMLNS_A);
@@ -118,6 +124,13 @@ public with sharing class CSharkResponseParser {
         return customerRow;
     }
 
+    /**
+     * Used to generate a map from an XML element and its value. The method applies logic conversion logic to certain
+     * value types, such as dates.
+     * @param elementName Name of XML element
+     * @param elementText Value of XML element
+     * @return Map with element name as key and the value as value
+     */
     private static Map<String, Object> getNameValuePair(String elementName, Object elementText){
         Map<String, Object> customerRow = new Map<String, Object>();
         if(elementName.endsWith('Date') && elementText != null) {

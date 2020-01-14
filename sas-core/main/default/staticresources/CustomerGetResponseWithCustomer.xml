@@ -150,7 +150,7 @@
                     <a:Engagement i:type="a:CorporateMemberEngagement">
                         <a:Profile i:nil="true"/>
                         <a:AuthoritytoAccess>Approved</a:AuthoritytoAccess>
-                        <a:CMPCode>RFISHSE</a:CMPCode>
+                        <a:CMPCode i:nil="true">RFISHSE</a:CMPCode>
                         <a:CNFCID>000000</a:CNFCID>
                         <a:Closed>false</a:Closed>
                         <a:CompanyContactEmail i:nil="true"/>

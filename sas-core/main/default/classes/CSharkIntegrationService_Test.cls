@@ -56,7 +56,58 @@ public with sharing class CSharkIntegrationService_Test {
         System.assertEquals('11866633', dataRow.get('ParentIdentifier'));
         System.assertEquals('928004605', dataRow.get('TravelPassAccountNumber'));
         System.assertEquals(Date.valueOf('2016-09-28T00:00:00'), dataRow.get('EnrollmentDate'));
-        System.assertEquals('RFISHSE', dataRow.get('CMPCode'));
+        System.assertEquals('NOSECUR', dataRow.get('CMP'));
+    }
+
+    /**
+     * Asserts that the parser can select and prioritize CMP value from different engagements.
+     */
+    @IsTest
+    static void shouldSelectCorrectCMPCodeFromEngagements(){
+        String responseWithTravelpass =
+                '<?xml version="1.0"?>' +
+                        '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
+                        '<s:Body>' +
+                        '<CustomerGetResponse xmlns="http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1">' +
+                        '<CustomerGetResult xmlns:a="http://www.flysas.com/wcf/CSharkCustomerManagement/v1" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">' +
+                        '<a:EngagementList>' +
+                        '<a:Engagement i:type="a:TravelPassEngagement">' +
+                        '<a:CMP>NOSECUR</a:CMP>' +
+                        '</a:Engagement>' +
+                        '<a:Engagement i:type="a:CorporateMemberEngagement">' +
+                        '<a:CMPCode i:nil="true">RFISHSE</a:CMPCode>' +
+                        '</a:Engagement>' +
+                        '</a:EngagementList>' +
+                        '</CustomerGetResult>' +
+                        '</CustomerGetResponse>' +
+                        '</s:Body>' +
+                        '</s:Envelope>';
+        String responseWithoutTravelpass =
+                '<?xml version="1.0"?>' +
+                        '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
+                        '<s:Body>' +
+                        '<CustomerGetResponse xmlns="http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1">' +
+                        '<CustomerGetResult xmlns:a="http://www.flysas.com/wcf/CSharkCustomerManagement/v1" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">' +
+                        '<a:EngagementList>' +
+                        '<a:Engagement i:type="a:CorporateMemberEngagement">' +
+                        '<a:CMPCode i:nil="true">RFISHSE</a:CMPCode>' +
+                        '</a:Engagement>' +
+                        '</a:EngagementList>' +
+                        '</CustomerGetResult>' +
+                        '</CustomerGetResponse>' +
+                        '</s:Body>' +
+                        '</s:Envelope>';
+
+        System.assertEquals(
+                'NOSECUR',
+                CSharkResponseParser.parseCustomerGetResponse(responseWithTravelpass)[0].get('CMP'),
+                'Selected incorrect CMP value, should have selected value for Travel Pass as it exists.'
+        );
+        System.assertEquals(
+                'RFISHSE',
+                CSharkResponseParser.parseCustomerGetResponse(responseWithoutTravelpass)[0].get('CMP'),
+                'Selected incorrect CMP value, should have selected value for Corporate Membership as Travel Pass is missing.'
+        );
     }
 
     /**
