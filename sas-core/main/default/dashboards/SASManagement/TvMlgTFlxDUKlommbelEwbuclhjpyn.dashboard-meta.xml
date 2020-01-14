@@ -454,7 +454,6 @@
     </dashboardGridLayout>
     <dashboardType>LoggedInUser</dashboardType>
     <isGridLayout>true</isGridLayout>
-    <runningUser>test-yeschks7iy9o@example.com</runningUser>
     <textColor>#000000</textColor>
     <title>SAS - Management</title>
     <titleColor>#000000</titleColor>
