@@ -12,12 +12,6 @@
     <columns>
         <field>STATUS</field>
     </columns>
-    <columns>
-        <field>TYPE</field>
-    </columns>
-    <columns>
-        <field>PRIORITY</field>
-    </columns>
     <filter>
         <criteriaItems>
             <column>STATUS</column>
@@ -29,8 +23,7 @@
     </filter>
     <format>Summary</format>
     <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>OWNER</field>
+        <field>CLOSED_DATE</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>General - Closed Cases MTD</name>
