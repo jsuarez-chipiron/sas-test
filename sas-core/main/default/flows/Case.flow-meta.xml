@@ -515,7 +515,7 @@
                 <stringValue>[Case].ReopenedCount__c + 1</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_12_myRule_9_A1_6613653923</name>
+        <name>formula_12_myRule_9_A1_3449271940</name>
         <dataType>Number</dataType>
         <expression>{!myVariable_current.ReopenedCount__c} + 1</expression>
         <scale>18</scale>
@@ -531,7 +531,7 @@
         <dataType>Boolean</dataType>
         <expression>AND(ISNEW(), ISPICKVAL({!myVariable_current.Origin}, &quot;Chat&quot;))</expression>
     </formulas>
-    <interviewLabel>Case-4_InterviewLabel</interviewLabel>
+    <interviewLabel>Case-2_InterviewLabel</interviewLabel>
     <label>Case</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -720,6 +720,42 @@
             <field>Site__c</field>
             <value>
                 <elementReference>myVariable_current.Owner:User.Site__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Sub Team</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>SubTeam__c</field>
+            <value>
+                <elementReference>myVariable_current.Owner:User.SubTeam__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1039,13 +1075,13 @@
             </processMetadataValues>
             <field>ReopenedCount__c</field>
             <value>
-                <elementReference>formula_12_myRule_9_A1_6613653923</elementReference>
+                <elementReference>formula_12_myRule_9_A1_3449271940</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <startElementReference>isChangedDecision10_myRule_9_Status</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>
