@@ -70,6 +70,43 @@
             <rowSpan>8</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
+            <colSpan>3</colSpan>
+            <columnIndex>5</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
+                <chartSummary>
+                    <axisBinding>y</axisBinding>
+                    <column>RowCount</column>
+                </chartSummary>
+                <componentType>Donut</componentType>
+                <decimalPrecision>-1</decimalPrecision>
+                <displayUnits>Auto</displayUnits>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingColumn>Case.Language__c</groupingColumn>
+                <groupingSortProperties>
+                    <groupingSorts>
+                        <groupingLevel>g1</groupingLevel>
+                        <sortOrder>a</sortOrder>
+                    </groupingSorts>
+                </groupingSortProperties>
+                <header># Cases by Language</header>
+                <legendPosition>Right</legendPosition>
+                <maxValuesDisplayed>6</maxValuesDisplayed>
+                <report>SASManagement/SAS_Cases_by_Language_3EC</report>
+                <showPercentage>false</showPercentage>
+                <showTotal>false</showTotal>
+                <showValues>true</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <useReportChart>false</useReportChart>
+            </dashboardComponent>
+            <rowIndex>0</rowIndex>
+            <rowSpan>8</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
             <colSpan>4</colSpan>
             <columnIndex>8</columnIndex>
             <dashboardComponent>
@@ -454,7 +491,7 @@
     </dashboardGridLayout>
     <dashboardType>LoggedInUser</dashboardType>
     <isGridLayout>true</isGridLayout>
-    <runningUser>test-yeschks7iy9o@example.com</runningUser>
+    <runningUser>test-zpypbayptmay@example.com</runningUser>
     <textColor>#000000</textColor>
     <title>SAS - Management</title>
     <titleColor>#000000</titleColor>

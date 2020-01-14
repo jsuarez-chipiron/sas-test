@@ -30,6 +30,10 @@
                 <behavior>Readonly</behavior>
                 <field>ChatDuration</field>
             </layoutItems>
+			<layoutItems>
+                <behavior>Edit</behavior>
+                <field>Language__c</field>
+            </layoutItems>
 			 <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EBNumber__c</field>
