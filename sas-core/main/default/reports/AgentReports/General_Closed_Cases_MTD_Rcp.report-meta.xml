@@ -26,7 +26,7 @@
         <field>CLOSED_DATE</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>General - Closed Cases MTD</name>
+    <name>General - My Closed Cases MTD</name>
     <params>
         <name>units</name>
         <value>m</value>
