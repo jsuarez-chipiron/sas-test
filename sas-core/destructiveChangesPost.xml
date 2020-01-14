@@ -179,4 +179,11 @@
 		<members>SocialPost.FollowUpCase</members>	
 		<name>QuickAction</name>
 	</types>
+	
+	<!--2020-01-14 - Peter Södergren - Delete Case Field Retention for GDPR-->
+	<types>
+		<members>C_GeneralSetting.CWRF_AccountId</members>
+		<members>C_GeneralSetting.CWRF_ContactId</members>
+		<name>CustomMetadata</name>
+	</types>
 </Package>
