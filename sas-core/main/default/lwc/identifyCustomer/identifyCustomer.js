@@ -1,5 +1,4 @@
 import { LightningElement, track, api, wire } from "lwc";
-import { updateRecord } from "lightning/uiRecordApi";
 import findCustomer from "@salesforce/apex/IdentifyCustomerComponentController.findCustomer";
 import getRecordData from "@salesforce/apex/IdentifyCustomerComponentController.getRecordData";
 import updateRecordDataWithApex from "@salesforce/apex/IdentifyCustomerComponentController.updateRecordDataWithApex";
@@ -61,19 +60,6 @@ export default class App extends LightningElement {
     currentRecordData = undefined;
 
     /**
-     * Parameter set from Aura component container, containing the id of the enclosing tab for the current record.
-     * This value is used to calculate the Tab Identifier.
-     */
-    @api enclosingTabId;
-
-    /**
-     * Identifier to the group of tabs the record on which the component is shown belongs to.
-     * The Tab Identifier is used to contains events to the groups of records under this id.
-     * @type {string}
-     */
-    tabIdentifier;
-
-    /**
      * List of options available to search for. Value should corresponds to field on Frequent_Flyer__x.
      * @returns {({label: string, value: string}|{label: string, value: string}|{label: string, value: string}|{label: string, value: string})[]}
      */
@@ -117,17 +103,20 @@ export default class App extends LightningElement {
     }
 
     async handleChangeCustomerButtonClick(event){
-        const recordInput = {
-            recordId: this.recordId,
-            accountId: null,
-            euroBonusNumber: null,
-            tpAccountNumber: null,
-            codsId: null,
-            caseId: this.currentRecordData.caseId ? this.currentRecordData.caseId : null
-        };
-        await updateRecordDataWithApex({ jsonData: JSON.stringify(recordInput) });
-        fireEvent(this.tabIdentifier + '_customerChanged', event );
-        console.log('Fired event: ' + this.tabIdentifier + '_customerChanged');
+        try{
+            const recordInput = {
+                recordId: this.recordId,
+                accountId: null,
+                euroBonusNumber: null,
+                tpAccountNumber: null,
+                codsId: null,
+                caseId: this.currentRecordData.caseId
+            };
+            await updateRecordDataWithApex({ jsonData: JSON.stringify(recordInput) });
+            await fireEvent(this.currentRecordData.caseId + '_customerChanged', event );
+        } catch (error) {
+            this.displayError(error);
+        }
     }
 
     /**
@@ -136,14 +125,13 @@ export default class App extends LightningElement {
      * @param {*} event
      */
     async handleChangeCustomer(event) {
-        console.log("Received event for change customer");
         try{
-            this.dispatchEvent(new CustomEvent('connectedCustomerChange'));
+            await this.dispatchEvent(new CustomEvent('refreshView'));
             this.error = undefined;
             this.customerIdentified = false;
             this.showSpinner = false;
         } catch (error){
-                this.displayError(error);
+            this.displayError(error);
         }
     }
 
@@ -153,32 +141,14 @@ export default class App extends LightningElement {
      */
     async connectedCallback() {
         try{
-            await this.setTabIdentifier();
-            console.log('Tab identifier: ' + this.tabIdentifier);
             this.showSpinner = true;
-            await registerListener(this.tabIdentifier + '_customerIdentified', this.handleCustomerIdentified, this);
-            await registerListener(this.tabIdentifier + '_customerChanged', this.handleChangeCustomer, this);
             this.currentRecordData = await getRecordData({ recordId: this.recordId });
+            await registerListener(this.currentRecordData.caseId + '_customerIdentified', this.handleCustomerIdentified, this);
+            await registerListener(this.currentRecordData.caseId + '_customerChanged', this.handleChangeCustomer, this);
             await this.evaluateRecordOnOpen();
             this.showSpinner = false;
         } catch (error) {
                 this.displayError(error);
-        }
-    }
-
-    /**
-     * Used to set identifier to tab group the record showing the component belongs to.
-     */
-    setTabIdentifier(){
-        if(this.enclosingTabId){
-            let subTabSeparatorIndex = this.enclosingTabId.search('_');
-            if(subTabSeparatorIndex > -1){
-                this.tabIdentifier = this.enclosingTabId.slice(0, subTabSeparatorIndex);
-            } else{
-                this.tabIdentifier = this.enclosingTabId;
-            }
-        } else {
-            this.tabIdentifier = this.recordId;
         }
     }
 
@@ -188,9 +158,8 @@ export default class App extends LightningElement {
      * @returns {Promise<void>}
      */
     async handleCustomerIdentified(account){
-        console.log('Received event for identified customer');
         try {
-            this.dispatchEvent(new CustomEvent('connectedCustomerChange'));
+            await this.dispatchEvent(new CustomEvent('refreshView'));
             this.error = undefined;
             this.customerIdentified = true;
             this.showSpinner = false;
@@ -200,7 +169,7 @@ export default class App extends LightningElement {
     }
 
     /**
-     * This lifecycle hook fires when a component is removed from the DOM.
+     * This lifecycle hook fires when a component is removed from the DOM. Unregisters listeners for component.
      */
     disconnectedCallback() {
         unregisterAllListeners(this);
@@ -212,6 +181,7 @@ export default class App extends LightningElement {
      * @returns {Promise<void>}
      */
     async evaluateRecordOnOpen(){
+        console.log('Evaluating on open: ' + JSON.stringify(this.currentRecordData));
         if (this.currentRecordData.accountId) {
             this.customerIdentified = true;
             if (Date.now() - Date.parse(this.currentRecordData.lastRetrievedFromSource) > 3600000) {
@@ -246,10 +216,10 @@ export default class App extends LightningElement {
             inputCmp.setCustomValidity("Please provide a valid EuroBonus number");
             fieldError = true;
         } else {
-            inputCmp.setCustomValidity(""); // If there was a custom error before, reset it
+            inputCmp.setCustomValidity("");
             fieldError = false;
         }
-        inputCmp.reportValidity(); // Tells lightning-input to show the error right away without needing interaction
+        inputCmp.reportValidity();
         return fieldError;
     }
 
@@ -283,11 +253,10 @@ export default class App extends LightningElement {
                     tpAccountNumber: account.TPAccountNumber__c,
                     codsId: account.FrequentFlyer__c,
                     personContactId: account.PersonContactId,
-                    caseId: this.currentRecordData.caseId ? this.currentRecordData.caseId : null
+                    caseId: this.currentRecordData.caseId
                 };
                 await updateRecordDataWithApex({ jsonData: JSON.stringify(recordInput) });
-                await fireEvent(this.tabIdentifier + '_customerIdentified', account);
-                console.log('Fired event: ' + this.tabIdentifier + '_customerIdentified');
+                await fireEvent(this.currentRecordData.caseId + '_customerIdentified', account);
             } else{
                 this.showSpinner = false;
                 this.noSearchResult = true;
