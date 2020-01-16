@@ -615,56 +615,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>C_Log__c.Duration__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>C_Log__c.HttpBody__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>C_Log__c.HttpHeaders__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>C_Log__c.HttpMethod__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>C_Log__c.HttpQueryParameters__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>C_Log__c.HttpRemoteAddress__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>C_Log__c.HttpResource__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>C_Log__c.LogGroup__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>C_Log__c.Message__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>C_Log__c.StackTrace__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>ManagedSocialAccounts__mdt.Name__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -798,9 +748,6 @@
         <layout>LocalAuthProvider__mdt-Local Auth Provider Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>C_Log__c-Log Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>ManagedSocialAccounts__mdt-Managed Social Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -926,10 +873,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>FrequentFlyer__x</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>C_Log__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <userLicense>Salesforce</userLicense>
