@@ -11,11 +11,11 @@ global with sharing class GDPR_WipeAccountService {
         @param keepReference Whether to keep a reference to account to be able to refetch data at a later point
         @return The list fo fields which should be wiped from the case
     */
-    global static String[] getAcccountFieldsToClear(Boolean keepReference){
+    global static String[] getAccountFieldsToClear(Boolean keepReference){
         Set<String> retainedFields = new Set<String>();
-        C_Settings.SettingsGroup sgf = C_Settings.getSettings('AWRF');
-        for(String k : sgf.keySet()){
-            retainedFields.add(sgf.get(k));
+        GDPR_WipeRetentionField__mdt[] settings = [SELECT FieldName__c FROM GDPR_WipeRetentionField__mdt WHERE Object__c = :Account.SObjectType.getDescribe().getName()];
+        for(GDPR_WipeRetentionField__mdt setting: settings){
+            retainedFields.add(setting.FieldName__c);
         }
         if(keepReference)retainedFields.add(Account.CodsId__c+'');
 
@@ -74,6 +74,6 @@ global with sharing class GDPR_WipeAccountService {
         @param accIds The account ids to wipe
     */
     global static void wipeAccounts(Id[] accIds){
-        wipeAccounts(accIds,getAcccountFieldsToClear(false),getWipedAccountName(),true,true);
+        wipeAccounts(accIds, getAccountFieldsToClear(false),getWipedAccountName(),true,true);
     }
 }
