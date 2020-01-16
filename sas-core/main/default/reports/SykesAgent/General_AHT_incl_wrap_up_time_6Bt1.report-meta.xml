@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>ACCOUNT.NAME</field>
-    </columns>
-    <columns>
-        <field>SUBJECT</field>
-    </columns>
-    <columns>
-        <field>TYPE</field>
+        <field>OWNER</field>
     </columns>
     <columns>
         <field>STATUS</field>
@@ -16,36 +10,56 @@
         <field>PRIORITY</field>
     </columns>
     <columns>
-        <field>CREATED_DATE</field>
-    </columns>
-    <columns>
-        <field>AGE</field>
-    </columns>
-    <columns>
-        <field>OPEN</field>
-    </columns>
-    <columns>
-        <field>CLOSED</field>
+        <field>TYPE</field>
     </columns>
     <columns>
         <field>CASE_NUMBER</field>
     </columns>
+    <columns>
+        <field>SUBJECT</field>
+    </columns>
+    <columns>
+        <field>CLOSED_DATE</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>CDF1</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>OPEN</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>CLOSED</field>
+    </columns>
+    <customDetailFormulas>
+        <calculatedFormula>(CLOSED_DATE-CREATED_DATE)</calculatedFormula>
+        <dataType>Double</dataType>
+        <developerName>CDF1</developerName>
+        <label>AHT Days</label>
+        <scale>2</scale>
+    </customDetailFormulas>
     <filter>
+        <criteriaItems>
+            <column>STATUS</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Closed</value>
+        </criteriaItems>
         <criteriaItems>
             <column>Case.Vendor__c</column>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>Sutherland</value>
+            <value>Sykes</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>
-    <format>Summary</format>
-    <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>OWNER</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsDown>
-    <name>General - My Cases in Queue</name>
+    <format>Tabular</format>
+    <name>General - My AHT (incl. wrap up time)</name>
     <params>
         <name>units</name>
         <value>m</value>
@@ -55,7 +69,7 @@
         <value>1</value>
     </params>
     <reportType>CaseList</reportType>
-    <scope>queue</scope>
+    <scope>user</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
