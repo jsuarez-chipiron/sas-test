@@ -125,7 +125,8 @@
             <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
                 <chartSummary>
-                    <column>FORMULA2</column>
+                    <aggregate>Average</aggregate>
+                    <column>LiveChatTranscript$Abandoned</column>
                 </chartSummary>
                 <componentType>Metric</componentType>
                 <dashboardFilterColumns>
@@ -224,7 +225,8 @@
             <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
                 <chartSummary>
-                    <column>FORMULA2</column>
+                    <aggregate>Average</aggregate>
+                    <column>LiveChatTranscript$Abandoned</column>
                 </chartSummary>
                 <componentType>Metric</componentType>
                 <dashboardFilterColumns>
