@@ -182,34 +182,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SamlJitHandler</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>SamlJitHandler_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>ConsoleAutomationController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <custom>true</custom>
-    <customMetadataTypeAccesses>
-        <enabled>false</enabled>
-        <name>AdRoleLink__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>false</enabled>
-        <name>AdRolePermission__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>false</enabled>
-        <name>AdRoleUserDetail__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>false</enabled>
-        <name>AdRole__mdt</name>
-    </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>false</enabled>
         <name>Feature_Switch__mdt</name>
@@ -326,11 +302,6 @@
         <editable>false</editable>
         <field>Account.TPAccountNumber__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>AdRoleUserDetail__mdt.Value__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -784,18 +755,6 @@
     </fieldPermissions>
     <layoutAssignments>
         <layout>Account-Account Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>AdRoleLink__mdt-AD Role Link Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>AdRolePermission__mdt-AD Role Permission Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>AdRoleUserDetail__mdt-AD Role User Detail Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>AdRole__mdt-AD Role Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-SAS Feedback Layout</layout>
