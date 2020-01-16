@@ -15,7 +15,7 @@
         <datatype>number</datatype>
         <description>Avg Wait time and Avg Abandoned After</description>
         <developerName>FORMULA2</developerName>
-        <isActive>true</isActive>
+        <isActive>false</isActive>
         <isCrossBlock>false</isCrossBlock>
         <masterLabel>Total Wait Time</masterLabel>
         <scale>0</scale>
