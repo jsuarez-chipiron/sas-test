@@ -126,7 +126,7 @@
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
                 <chartSummary>
                     <aggregate>Average</aggregate>
-                    <column>LiveChatTranscript$Abandoned</column>
+                    <column>LiveChatTranscript$WaitTime</column>
                 </chartSummary>
                 <componentType>Metric</componentType>
                 <dashboardFilterColumns>
@@ -226,7 +226,7 @@
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
                 <chartSummary>
                     <aggregate>Average</aggregate>
-                    <column>LiveChatTranscript$Abandoned</column>
+                    <column>LiveChatTranscript$WaitTime</column>
                 </chartSummary>
                 <componentType>Metric</componentType>
                 <dashboardFilterColumns>
