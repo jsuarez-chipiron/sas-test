@@ -30,7 +30,7 @@
         <field>TYPE</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>General - # My Open Cases by Type</name>
+    <name>General - My Open Cases by Type</name>
     <params>
         <name>units</name>
         <value>m</value>

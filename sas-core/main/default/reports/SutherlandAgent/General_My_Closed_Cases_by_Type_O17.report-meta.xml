@@ -22,6 +22,12 @@
             <operator>equals</operator>
             <value>Closed</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>Case.Vendor__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Sykes</value>
+        </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>
@@ -30,7 +36,7 @@
         <field>TYPE</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>General - My Cases Closed by Type</name>
+    <name>General - My Closed Cases by Type</name>
     <params>
         <name>units</name>
         <value>h</value>
