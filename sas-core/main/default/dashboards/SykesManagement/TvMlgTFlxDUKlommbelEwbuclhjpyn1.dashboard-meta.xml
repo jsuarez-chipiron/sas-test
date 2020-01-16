@@ -348,7 +348,6 @@
     </dashboardGridLayout>
     <dashboardType>LoggedInUser</dashboardType>
     <isGridLayout>true</isGridLayout>
-    <runningUser>test-p2zyu5f7ecur@example.com</runningUser>
     <textColor>#000000</textColor>
     <title>Sykes - Management</title>
     <titleColor>#000000</titleColor>
