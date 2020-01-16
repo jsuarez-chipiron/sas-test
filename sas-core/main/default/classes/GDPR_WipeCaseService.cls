@@ -12,9 +12,9 @@ global with sharing class GDPR_WipeCaseService {
     */
     global static String[] getCaseFieldsToClear(){
         Set<String> retainedFields = new Set<String>();
-        C_Settings.SettingsGroup sgf = C_Settings.getSettings('CWRF');
-        for(String k : sgf.keySet()){
-            retainedFields.add(sgf.get(k));
+        GDPR_WipeRetentionField__mdt[] settings = [SELECT FieldName__c FROM GDPR_WipeRetentionField__mdt WHERE Object__c = :Case.SObjectType.getDescribe().getName()];
+        for(GDPR_WipeRetentionField__mdt setting: settings){
+            retainedFields.add(setting.FieldName__c);
         }
 
         List<String> fieldsToClear = new List<String>();
