@@ -63,4 +63,8 @@
         <object>C_Log__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <tabSettings>
+        <tab>C_Log__c</tab>
+        <visibility>Available</visibility>
+    </tabSettings>
 </PermissionSet>
