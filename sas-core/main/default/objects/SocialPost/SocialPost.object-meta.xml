@@ -3,7 +3,6 @@
     <compactLayoutAssignment>SAS_Compact_Layout</compactLayoutAssignment>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
-    <externalSharingModel>ReadWrite</externalSharingModel>
     <searchLayouts>
         <customTabListAdditionalFields>Content</customTabListAdditionalFields>
         <customTabListAdditionalFields>Posted</customTabListAdditionalFields>

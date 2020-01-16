@@ -186,4 +186,10 @@
 		<members>C_GeneralSetting.CWRF_ContactId</members>
 		<name>CustomMetadata</name>
 	</types>
+
+    <!--2020-01-15 - Philip Ossler - Delete dashboard-->
+    <types>
+        <members>AgentDashboard/TZBJzdabTNsyRlTGBwmFbwAMQUIRqo</members>
+        <name>Dashboard</name>
+    </types>
 </Package>

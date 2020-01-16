@@ -20,7 +20,7 @@
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
-                <header>General - # My Open Cases</header>
+                <header># My Open Cases</header>
                 <indicatorBreakpoint1>20.0</indicatorBreakpoint1>
                 <indicatorBreakpoint2>50.0</indicatorBreakpoint2>
                 <indicatorHighColor>#00716B</indicatorHighColor>
@@ -44,7 +44,7 @@
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
-                <header>General - My Cases Closed Today</header>
+                <header>My Closed Cases Today</header>
                 <indicatorBreakpoint1>20.0</indicatorBreakpoint1>
                 <indicatorBreakpoint2>50.0</indicatorBreakpoint2>
                 <indicatorHighColor>#00716B</indicatorHighColor>
@@ -80,7 +80,7 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>General - # My Open Cases by Type</header>
+                <header># My Open Cases by Type</header>
                 <legendPosition>Bottom</legendPosition>
                 <report>AgentReports/General_My_of_open_cases_by_type_Y4a</report>
                 <showPercentage>false</showPercentage>
@@ -116,7 +116,7 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>General - My Cases Closed by Type</header>
+                <header>My Closed Cases by Type</header>
                 <legendPosition>Bottom</legendPosition>
                 <report>AgentReports/General_My_Cases_Closed_by_Type_2Aq</report>
                 <showPercentage>false</showPercentage>
@@ -167,7 +167,7 @@
                     <hideChatterPhotos>true</hideChatterPhotos>
                 </flexComponentProperties>
                 <groupingSortProperties/>
-                <header>General - My AHT (incl. wrap up time)</header>
+                <header>My Average Handle Time (AHT)</header>
                 <report>AgentReports/General_AHT_incl_wrap_up_time_6Bt</report>
             </dashboardComponent>
             <rowIndex>13</rowIndex>
@@ -197,7 +197,7 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>General - My Cases in Queue</header>
+                <header>My Cases by Queue</header>
                 <legendPosition>Right</legendPosition>
                 <maxValuesDisplayed>6</maxValuesDisplayed>
                 <report>AgentReports/General_My_Cases_in_Queue_HFA</report>
