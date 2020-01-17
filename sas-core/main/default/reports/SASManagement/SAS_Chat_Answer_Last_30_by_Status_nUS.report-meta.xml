@@ -4,7 +4,7 @@
         <calculatedFormula>RowCount / PARENTGROUPVAL(RowCount, GRAND_SUMMARY)</calculatedFormula>
         <datatype>percent</datatype>
         <developerName>FORMULA1</developerName>
-        <downGroupingContext>LiveChatTranscript$CreatedDate</downGroupingContext>
+        <downGroupingContext>LiveChatTranscript$Status</downGroupingContext>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
         <masterLabel>Answer Rate</masterLabel>
@@ -45,15 +45,15 @@
     </filter>
     <format>Summary</format>
     <groupingsDown>
-        <field>LiveChatTranscript$CreatedDate</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsDown>
-    <groupingsDown>
         <dateGranularity>Day</dateGranularity>
         <field>LiveChatTranscript$Status</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>SAS - Chat Answer % Last 30</name>
+    <groupingsDown>
+        <field>LiveChatTranscript$CreatedDate</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>SAS - Chat Answer % Last 30 by Status</name>
     <params>
         <name>co</name>
         <value>1</value>
