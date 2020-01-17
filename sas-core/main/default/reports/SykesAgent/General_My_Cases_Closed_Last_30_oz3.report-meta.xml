@@ -33,7 +33,7 @@
         <field>STATUS</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>General - My Cases Closed Today</name>
+    <name>General - My Cases Closed Last 30</name>
     <params>
         <name>units</name>
         <value>m</value>
