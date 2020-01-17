@@ -60,7 +60,7 @@
         <field>STATUS</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>General - My Open Cases Today</name>
+    <name>General - My Open Cases Last 30</name>
     <params>
         <name>units</name>
         <value>m</value>
@@ -78,6 +78,6 @@
     <sortOrder>Desc</sortOrder>
     <timeFrameFilter>
         <dateColumn>CREATED_DATEONLY</dateColumn>
-        <interval>INTERVAL_TODAY</interval>
+        <interval>INTERVAL_LAST30</interval>
     </timeFrameFilter>
 </Report>
