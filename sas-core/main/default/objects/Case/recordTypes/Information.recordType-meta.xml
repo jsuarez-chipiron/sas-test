@@ -43,6 +43,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Extraordinary</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Flight info</fullName>
             <default>false</default>
         </values>
@@ -315,6 +319,10 @@
         </values>
         <values>
             <fullName>Staff %26 Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Threat</fullName>
             <default>false</default>
         </values>
         <values>

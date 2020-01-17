@@ -273,6 +273,11 @@
                 <default>false</default>
                 <label>Other</label>
             </value>
+            <value>
+                <fullName>Extraordinary</fullName>
+                <default>false</default>
+                <label>Extraordinary</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>

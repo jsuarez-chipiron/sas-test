@@ -47,6 +47,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Extraordinary</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Flight disruptions</fullName>
             <default>false</default>
         </values>
@@ -451,6 +455,10 @@
         </values>
         <values>
             <fullName>Tax invoice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Threat</fullName>
             <default>false</default>
         </values>
         <values>
