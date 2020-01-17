@@ -32,23 +32,7 @@
         </dashboardFilterOptions>
         <dashboardFilterOptions>
             <operator>equals</operator>
-            <values>Team 2</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>Team 3</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>Team 4</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>Team 5</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>Team 6</values>
+            <values>Team 1,Team 2</values>
         </dashboardFilterOptions>
         <name>Team</name>
     </dashboardFilters>
@@ -73,7 +57,6 @@
                 <dashboardFilterColumns>
                     <column>LiveChatTranscript$Case.Team__c</column>
                 </dashboardFilterColumns>
-                <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
                 <drillToDetailEnabled>false</drillToDetailEnabled>
@@ -120,7 +103,6 @@
                 <dashboardFilterColumns>
                     <column>LiveChatTranscript$Case.Team__c</column>
                 </dashboardFilterColumns>
-                <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
                 <drillToDetailEnabled>false</drillToDetailEnabled>
@@ -299,7 +281,6 @@
                 <dashboardFilterColumns>
                     <column>Case.Team__c</column>
                 </dashboardFilterColumns>
-                <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
                 <drillToDetailEnabled>false</drillToDetailEnabled>
@@ -343,7 +324,6 @@
                 <dashboardFilterColumns>
                     <column>Case.Team__c</column>
                 </dashboardFilterColumns>
-                <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
                 <drillToDetailEnabled>false</drillToDetailEnabled>

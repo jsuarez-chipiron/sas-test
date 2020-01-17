@@ -515,7 +515,7 @@
                 <stringValue>[Case].ReopenedCount__c + 1</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_12_myRule_9_A1_3449271940</name>
+        <name>formula_12_myRule_9_A1_0705389661</name>
         <dataType>Number</dataType>
         <expression>{!myVariable_current.ReopenedCount__c} + 1</expression>
         <scale>18</scale>
@@ -531,7 +531,7 @@
         <dataType>Boolean</dataType>
         <expression>AND(ISNEW(), ISPICKVAL({!myVariable_current.Origin}, &quot;Chat&quot;))</expression>
     </formulas>
-    <interviewLabel>Case-2_InterviewLabel</interviewLabel>
+    <interviewLabel>Case-3_InterviewLabel</interviewLabel>
     <label>Case</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -726,7 +726,7 @@
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
-                    <stringValue>String</stringValue>
+                    <stringValue>Picklist</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -762,7 +762,7 @@
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
-                    <stringValue>String</stringValue>
+                    <stringValue>Picklist</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -1075,13 +1075,13 @@
             </processMetadataValues>
             <field>ReopenedCount__c</field>
             <value>
-                <elementReference>formula_12_myRule_9_A1_3449271940</elementReference>
+                <elementReference>formula_12_myRule_9_A1_0705389661</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <startElementReference>isChangedDecision10_myRule_9_Status</startElementReference>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>
