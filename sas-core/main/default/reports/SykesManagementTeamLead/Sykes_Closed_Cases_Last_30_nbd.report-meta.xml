@@ -44,8 +44,7 @@
     </filter>
     <format>Summary</format>
     <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>CLOSED</field>
+        <field>CLOSED_DATEONLY</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Sykes - # Closed Cases Last 30</name>

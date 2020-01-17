@@ -34,12 +34,6 @@
             <operator>equals</operator>
             <value>0</value>
         </criteriaItems>
-        <criteriaItems>
-            <column>Case.Vendor__c</column>
-            <isUnlocked>false</isUnlocked>
-            <operator>equals</operator>
-            <value>Sykes</value>
-        </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>
@@ -47,7 +41,7 @@
         <field>CREATED_DATEONLY</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Sykes - # Open Cases Last 30</name>
+    <name>SAS - # Open Cases Last 30</name>
     <params>
         <name>units</name>
         <value>m</value>
