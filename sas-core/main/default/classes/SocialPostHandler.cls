@@ -140,7 +140,11 @@ public class SocialPostHandler extends C_TriggerHandler {
     }
 
     /**
-       Method to set default fields on insert on Social Post
+       Method to set default fields on insert on Social Post.
+       1. If the Post is a SAS-post it is marked as SASPost, Outbound and with no review status
+       2. If the post is a comment on a SAS-post it is marked as Comment on SAS Post
+       3. If the post is a reply on a SAS-post it is marked as a Comment on SAS Post
+       4. For both comment and replies parent posts is added for added context
        @param newSocialPost list of new version of the social post i.e. the Trigger.new variable
        */
     private static void setFieldsOnCreate(List<SocialPost> newSocialPostList) {
@@ -164,23 +168,23 @@ public class SocialPostHandler extends C_TriggerHandler {
             sp.OwnerId=soMeQueue[0].Id;
         }
         List<SocialPost> parentPosts = [SELECT Id, ReplyToId, Content, Provider, Handle FROM SocialPost Where Id=: parentIds];
-        for(SocialPost sp : parentPosts){
-            parentIdsNext.add(sp.ReplyToId);
+        for(SocialPost parentSP : parentPosts){
+            parentIdsNext.add(parentSp.ReplyToId);
         }
         List<SocialPost> parentPostsNext = [SELECT Id, ReplyToId, Content, Provider, Handle FROM SocialPost Where Id=: parentIdsNext];
         for(Integer i=0,sz=parentPosts.size();i<sz;i++){
-            if(parentIds[i]!=null) {
-                if(socialPageByProvider.containsKey(parentPosts[i].Provider) && parentPosts[i].Handle == socialPageByProvider.get(newSocialPostList[i].Provider)){
-                    newSocialPostList[i].SASPostComment__c = true;
-                }
-                newSocialPostList[i].ParentMessage__c =   parentPosts[i].Content;
-            }
             if(parentIdsNext[i] != null){
                 if(socialPageByProvider.containsKey(parentPostsNext[i].Provider) && parentPostsNext[i].Handle == socialPageByProvider.get(newSocialPostList[i].Provider)){
                     newSocialPostList[i].SASPostComment__c = true;
                 }
                 newSocialPostList[i].ParentMessage__c =   parentPostsNext[i].Content;
                 newSocialPostList[i].ParentCommentMessage__c =   parentPosts[i].Content;
+            }
+            else if(parentIds[i]!=null) {
+                if(socialPageByProvider.containsKey(parentPosts[i].Provider) && parentPosts[i].Handle == socialPageByProvider.get(newSocialPostList[i].Provider)){
+                    newSocialPostList[i].SASPostComment__c = true;
+                }
+                newSocialPostList[i].ParentMessage__c =   parentPosts[i].Content;
             }
         }
     }
