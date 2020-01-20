@@ -94,10 +94,17 @@ public class SocialPostHandler extends C_TriggerHandler {
             if(handled!=null && handled){
                 newSp.ReviewedStatus=STATUS_REVIEWED;
                 newSp.Done__c= true;
+                if(!oldSp.Done__c){
+                    newSp.ClosedDate__c = System.Now();
+                }
             }
             if(handled!= null && !handled){
                 newSp.ReviewedStatus=STATUS_NEEDED;
                 newSp.Done__c= false;
+                if(oldSp.Done__c){
+                    newSp.ClosedDate__c = null;
+                    newSp.Reopened__c = true;
+                }
             }
         }
     }
@@ -125,6 +132,7 @@ public class SocialPostHandler extends C_TriggerHandler {
                     sp.PostReplied__c = true;
                     sp.ReviewedStatus = STATUS_REVIEWED;
                     sp.Done__c = true;
+                    sp.ClosedDate__c = System.now();
                     updatedSocialPosts.add(sp);
                 }
                 if (newSocialPostList == null) {
