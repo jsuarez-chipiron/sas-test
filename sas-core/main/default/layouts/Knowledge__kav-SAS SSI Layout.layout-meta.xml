@@ -4,7 +4,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Fields</label>
+        <label>Category</label>
         <layoutColumns>
             <layoutItems>
                 <field>Type__c</field>
@@ -38,6 +38,20 @@
         <label>Properties</label>
         <layoutColumns>
             <layoutItems>
+                <field>LastModifiedDate</field>
+            </layoutItems>
+            <layoutItems>
+                <field>LastModifiedById</field>
+            </layoutItems>
+            <layoutItems>
+                <field>LastPublishedDate</field>
+            </layoutItems>
+            <layoutItems>
+                <field>InformationOwner__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
                 <field>ArticleCreatedDate</field>
             </layoutItems>
             <layoutItems>
@@ -46,16 +60,8 @@
             <layoutItems>
                 <field>UrlName</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
-                <field>LastModifiedDate</field>
-            </layoutItems>
-            <layoutItems>
-                <field>LastModifiedById</field>
-            </layoutItems>
-            <layoutItems>
-                <field>LastPublishedDate</field>
+                <field>ArticleTotalViewCount</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -73,11 +79,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>EditDraftKnowledgeArticleVersion</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>0</sortOrder>
@@ -93,24 +94,42 @@
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>ChangeKnowledgeArticleVersionRecordType</actionName>
+            <actionName>CreateDraftFromOnlineKnowledgeArticleVersion</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>CreateDraftFromOnlineKnowledgeArticleVersion</actionName>
+            <actionName>ArchiveKnowledgeArticleVersion</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>ArchiveKnowledgeArticleVersion</actionName>
+            <actionName>RestoreKnowledgeArticleVersion</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>RestoreKnowledgeArticleVersion</actionName>
-            <actionType>StandardButton</actionType>
+            <actionName>FeedItem.TextPost</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>NewCase</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
     </platformActionList>
+    <relatedLists>
+        <fields>Query</fields>
+        <relatedList>KavSearchPromotionRuleRelatedList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>KnowledgeArticleVersionFilesRelatedList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CASES.SUBJECT</fields>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.CREATED_DATE</fields>
+        <relatedList>KnowledgeArticleCaseRelatedList</relatedList>
+    </relatedLists>
 </Layout>
