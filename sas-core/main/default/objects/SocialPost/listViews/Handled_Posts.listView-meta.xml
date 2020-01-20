@@ -19,5 +19,10 @@
         <operation>equals</operation>
         <value>0</value>
     </filters>
+    <filters>
+        <field>IsOutbound</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
     <label>Handled Posts</label>
 </ListView>

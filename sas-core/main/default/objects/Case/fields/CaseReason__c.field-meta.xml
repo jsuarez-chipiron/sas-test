@@ -278,6 +278,21 @@
                 <default>false</default>
                 <label>Extraordinary</label>
             </value>
+            <value>
+                <fullName>Food</fullName>
+                <default>false</default>
+                <label>Food</label>
+            </value>
+            <value>
+                <fullName>WiFi</fullName>
+                <default>false</default>
+                <label>WiFi</label>
+            </value>
+            <value>
+                <fullName>Environment</fullName>
+                <default>false</default>
+                <label>Environment</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
@@ -418,6 +433,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
             <valueName>Claims</valueName>
         </valueSettings>
         <valueSettings>
@@ -453,6 +469,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
             <valueName>New booking</valueName>
         </valueSettings>
         <valueSettings>
@@ -505,6 +522,18 @@
             <controllingFieldValue>Information</controllingFieldValue>
             <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Travel pass</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Extraordinary</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Food</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>WiFi</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Information</controllingFieldValue>
