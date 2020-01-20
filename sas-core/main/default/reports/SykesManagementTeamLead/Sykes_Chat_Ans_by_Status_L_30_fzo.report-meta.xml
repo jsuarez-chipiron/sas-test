@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <calculatedFormula>RowCount / PARENTGROUPVAL(RowCount, GRAND_SUMMARY)</calculatedFormula>
+        <datatype>percent</datatype>
+        <developerName>FORMULA1</developerName>
+        <downGroupingContext>LiveChatTranscript$Status</downGroupingContext>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Answer Rate</masterLabel>
+        <scale>2</scale>
+    </aggregates>
     <columns>
         <field>LiveChatTranscript$Name</field>
     </columns>
@@ -24,12 +34,19 @@
         <aggregateTypes>Minimum</aggregateTypes>
         <field>LiveChatTranscript$WaitTime</field>
     </columns>
+    <description>Chat Answer % by Status Last 30</description>
     <filter>
         <criteriaItems>
             <column>LiveChatTranscript$Status</column>
             <isUnlocked>true</isUnlocked>
             <operator>notEqual</operator>
-            <value/>
+            <value>,5</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>LiveChatTranscript$Case.Vendor__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Sykes</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>
@@ -39,7 +56,11 @@
         <field>LiveChatTranscript$Status</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Sykes - # Offered Chats Last 30</name>
+    <groupingsDown>
+        <field>LiveChatTranscript$CreatedDate</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Sykes - Chat Ans. % by Status L 30</name>
     <params>
         <name>co</name>
         <value>1</value>

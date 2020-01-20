@@ -10,11 +10,11 @@
     <dashboardFilters>
         <dashboardFilterOptions>
             <operator>equals</operator>
-            <values>Sykes - Odense</values>
+            <values>ODE</values>
         </dashboardFilterOptions>
         <dashboardFilterOptions>
             <operator>equals</operator>
-            <values>Sykes - Sveg</values>
+            <values>EVG</values>
         </dashboardFilterOptions>
         <name>Site</name>
     </dashboardFilters>
@@ -32,7 +32,23 @@
         </dashboardFilterOptions>
         <dashboardFilterOptions>
             <operator>equals</operator>
-            <values>Team 1,Team 2</values>
+            <values>Team 2</values>
+        </dashboardFilterOptions>
+        <dashboardFilterOptions>
+            <operator>equals</operator>
+            <values>Team 3</values>
+        </dashboardFilterOptions>
+        <dashboardFilterOptions>
+            <operator>equals</operator>
+            <values>Team 4</values>
+        </dashboardFilterOptions>
+        <dashboardFilterOptions>
+            <operator>equals</operator>
+            <values>Team 5</values>
+        </dashboardFilterOptions>
+        <dashboardFilterOptions>
+            <operator>equals</operator>
+            <values>Team 6</values>
         </dashboardFilterOptions>
         <name>Team</name>
     </dashboardFilters>
