@@ -90,36 +90,40 @@
                 <flexComponentProperties>
                     <decimalPrecision>-1</decimalPrecision>
                     <flexTableColumn>
-                        <reportColumn>OWNER</reportColumn>
+                        <reportColumn>ORIGIN</reportColumn>
                         <showSubTotal>false</showSubTotal>
                         <showTotal>true</showTotal>
-                        <type>detail</type>
+                        <type>grouping</type>
                     </flexTableColumn>
                     <flexTableColumn>
-                        <reportColumn>STATUS</reportColumn>
+                        <reportColumn>RowCount</reportColumn>
                         <showSubTotal>false</showSubTotal>
                         <showTotal>true</showTotal>
-                        <type>detail</type>
+                        <type>aggregate</type>
                     </flexTableColumn>
                     <flexTableColumn>
-                        <reportColumn>TYPE</reportColumn>
+                        <reportColumn>s!AGE</reportColumn>
                         <showSubTotal>false</showSubTotal>
                         <showTotal>true</showTotal>
-                        <type>detail</type>
+                        <type>aggregate</type>
                     </flexTableColumn>
                     <flexTableColumn>
-                        <reportColumn>CASE_NUMBER</reportColumn>
+                        <reportColumn>a!AGE</reportColumn>
                         <showSubTotal>false</showSubTotal>
                         <showTotal>true</showTotal>
-                        <type>detail</type>
+                        <type>aggregate</type>
                     </flexTableColumn>
                     <flexTableSortInfo>
-                        <sortColumn>STATUS</sortColumn>
                         <sortOrder>1</sortOrder>
                     </flexTableSortInfo>
                     <hideChatterPhotos>true</hideChatterPhotos>
                 </flexComponentProperties>
-                <groupingSortProperties/>
+                <groupingSortProperties>
+                    <groupingSorts>
+                        <groupingLevel>g1</groupingLevel>
+                        <sortOrder>a</sortOrder>
+                    </groupingSorts>
+                </groupingSortProperties>
                 <header>General - My AHT (incl. wrap up time)</header>
                 <report>SykesAgent/General_AHT_incl_wrap_up_time_6Bt1</report>
             </dashboardComponent>
@@ -445,7 +449,7 @@
     </dashboardGridLayout>
     <dashboardType>LoggedInUser</dashboardType>
     <isGridLayout>true</isGridLayout>
- 
+    <runningUser>test-z6oagrljbwtk@example.com</runningUser>
     <textColor>#000000</textColor>
     <title>Sykes Agent</title>
     <titleColor>#000000</titleColor>
