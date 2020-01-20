@@ -39,7 +39,7 @@
         </criteriaItems>
         <criteriaItems>
             <column>STATUS</column>
-            <isUnlocked>false</isUnlocked>
+            <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
             <value>,New,In Progress,On Hold,Awaiting Customer Response,Escalated,Closed</value>
         </criteriaItems>

@@ -51,7 +51,7 @@
         <field>LiveChatTranscript$Status</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>General - My Chat Answer Rate % Today</name>
+    <name>General - My Chat Anwser Rate % Last 30</name>
     <params>
         <name>co</name>
         <value>1</value>
@@ -63,6 +63,6 @@
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>LiveChatTranscript$CreatedDate</dateColumn>
-        <interval>INTERVAL_TODAY</interval>
+        <interval>INTERVAL_LAST30</interval>
     </timeFrameFilter>
 </Report>

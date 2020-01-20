@@ -26,7 +26,7 @@
             <column>Case.Vendor__c</column>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>Sykes</value>
+            <value>Sutherland</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>
@@ -39,7 +39,7 @@
     <name>General - My Closed Cases by Type</name>
     <params>
         <name>units</name>
-        <value>h</value>
+        <value>m</value>
     </params>
     <params>
         <name>co</name>

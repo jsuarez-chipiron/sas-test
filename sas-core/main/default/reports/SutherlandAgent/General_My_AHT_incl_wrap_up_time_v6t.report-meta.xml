@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
+        <field>ORIGIN</field>
+    </columns>
+    <columns>
         <field>OWNER</field>
     </columns>
     <columns>
@@ -36,6 +39,10 @@
         <aggregateTypes>Sum</aggregateTypes>
         <field>CLOSED</field>
     </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>AGE</field>
+    </columns>
     <customDetailFormulas>
         <calculatedFormula>(CLOSED_DATE-CREATED_DATE)</calculatedFormula>
         <dataType>Double</dataType>
@@ -49,6 +56,12 @@
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
             <value>Closed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case.Vendor__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Sutherland</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>

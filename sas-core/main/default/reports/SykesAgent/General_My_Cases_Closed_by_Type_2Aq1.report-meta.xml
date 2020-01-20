@@ -39,7 +39,7 @@
     <name>General - My Closed Cases by Type</name>
     <params>
         <name>units</name>
-        <value>h</value>
+        <value>m</value>
     </params>
     <params>
         <name>co</name>
