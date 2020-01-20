@@ -9,128 +9,6 @@
     <dashboardColorPalette>water</dashboardColorPalette>
     <dashboardGridLayout>
         <dashboardGridComponents>
-            <colSpan>2</colSpan>
-            <columnIndex>0</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <chartSummary>
-                    <column>RowCount</column>
-                </chartSummary>
-                <componentType>Metric</componentType>
-                <decimalPrecision>-1</decimalPrecision>
-                <displayUnits>Auto</displayUnits>
-                <groupingSortProperties/>
-                <header>My Open Cases Today</header>
-                <indicatorBreakpoint1>33.0</indicatorBreakpoint1>
-                <indicatorBreakpoint2>67.0</indicatorBreakpoint2>
-                <indicatorHighColor>#00716B</indicatorHighColor>
-                <indicatorLowColor>#C23934</indicatorLowColor>
-                <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
-                <report>SykesAgent/General_My_Open_Cases_I3U1</report>
-                <showRange>false</showRange>
-            </dashboardComponent>
-            <rowIndex>0</rowIndex>
-            <rowSpan>6</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>2</colSpan>
-            <columnIndex>2</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <chartSummary>
-                    <column>RowCount</column>
-                </chartSummary>
-                <componentType>Metric</componentType>
-                <decimalPrecision>-1</decimalPrecision>
-                <displayUnits>Auto</displayUnits>
-                <groupingSortProperties/>
-                <header>My Open Cases Last 30</header>
-                <indicatorBreakpoint1>33.0</indicatorBreakpoint1>
-                <indicatorBreakpoint2>67.0</indicatorBreakpoint2>
-                <indicatorHighColor>#00716B</indicatorHighColor>
-                <indicatorLowColor>#C23934</indicatorLowColor>
-                <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
-                <report>SykesAgent/General_My_Open_Cases_Last_30_EKi30</report>
-                <showRange>false</showRange>
-            </dashboardComponent>
-            <rowIndex>0</rowIndex>
-            <rowSpan>6</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>4</colSpan>
-            <columnIndex>4</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <chartSummary>
-                    <aggregate>Sum</aggregate>
-                    <column>LiveChatTranscript$Abandoned</column>
-                </chartSummary>
-                <componentType>Metric</componentType>
-                <decimalPrecision>-1</decimalPrecision>
-                <displayUnits>Auto</displayUnits>
-                <groupingSortProperties/>
-                <header>My Offered Cases Today</header>
-                <indicatorBreakpoint1>50.0</indicatorBreakpoint1>
-                <indicatorBreakpoint2>70.0</indicatorBreakpoint2>
-                <indicatorHighColor>#00716B</indicatorHighColor>
-                <indicatorLowColor>#FF8000</indicatorLowColor>
-                <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
-                <report>SykesAgent/My_Chat_Anwser_Rate_Today_MCy</report>
-                <showRange>false</showRange>
-            </dashboardComponent>
-            <rowIndex>0</rowIndex>
-            <rowSpan>6</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>4</colSpan>
-            <columnIndex>8</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <componentType>FlexTable</componentType>
-                <flexComponentProperties>
-                    <decimalPrecision>-1</decimalPrecision>
-                    <flexTableColumn>
-                        <reportColumn>ORIGIN</reportColumn>
-                        <showSubTotal>false</showSubTotal>
-                        <showTotal>true</showTotal>
-                        <type>grouping</type>
-                    </flexTableColumn>
-                    <flexTableColumn>
-                        <reportColumn>RowCount</reportColumn>
-                        <showSubTotal>false</showSubTotal>
-                        <showTotal>true</showTotal>
-                        <type>aggregate</type>
-                    </flexTableColumn>
-                    <flexTableColumn>
-                        <reportColumn>s!AGE</reportColumn>
-                        <showSubTotal>false</showSubTotal>
-                        <showTotal>true</showTotal>
-                        <type>aggregate</type>
-                    </flexTableColumn>
-                    <flexTableColumn>
-                        <reportColumn>a!AGE</reportColumn>
-                        <showSubTotal>false</showSubTotal>
-                        <showTotal>true</showTotal>
-                        <type>aggregate</type>
-                    </flexTableColumn>
-                    <flexTableSortInfo>
-                        <sortOrder>1</sortOrder>
-                    </flexTableSortInfo>
-                    <hideChatterPhotos>true</hideChatterPhotos>
-                </flexComponentProperties>
-                <groupingSortProperties>
-                    <groupingSorts>
-                        <groupingLevel>g1</groupingLevel>
-                        <sortOrder>a</sortOrder>
-                    </groupingSorts>
-                </groupingSortProperties>
-                <header>General - My AHT (incl. wrap up time)</header>
-                <report>SykesAgent/General_AHT_incl_wrap_up_time_6Bt1</report>
-            </dashboardComponent>
-            <rowIndex>0</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
             <colSpan>4</colSpan>
             <columnIndex>0</columnIndex>
             <dashboardComponent>
@@ -140,30 +18,29 @@
                     <axisBinding>y</axisBinding>
                     <column>RowCount</column>
                 </chartSummary>
-                <componentType>Bar</componentType>
+                <componentType>Line</componentType>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>TYPE</groupingColumn>
+                <groupingColumn>STATUS</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>My Open Cases by Type</header>
+                <header>My Open Cases - Last 30</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SykesAgent/General_My_Open_Cases_by_Type_m9o</report>
+                <report>SykesAgent/General_My_Open_Cases_Last_30_EKi30</report>
                 <showPercentage>false</showPercentage>
-                <showPicturesOnCharts>false</showPicturesOnCharts>
-                <showValues>true</showValues>
+                <showValues>false</showValues>
                 <sortBy>RowLabelAscending</sortBy>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
-            <rowIndex>6</rowIndex>
+            <rowIndex>0</rowIndex>
             <rowSpan>7</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
@@ -176,7 +53,7 @@
                     <axisBinding>y</axisBinding>
                     <column>FORMULA1</column>
                 </chartSummary>
-                <componentType>Donut</componentType>
+                <componentType>Line</componentType>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
@@ -190,17 +67,64 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>My Offered Case Last 30</header>
-                <legendPosition>Right</legendPosition>
+                <header>My Chat Offered &amp; Anwser % - Last 30</header>
+                <legendPosition>Bottom</legendPosition>
                 <report>SykesAgent/My_Chat_Anwser_Rate_Last_30_N7b</report>
                 <showPercentage>false</showPercentage>
-                <showTotal>true</showTotal>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
-            <rowIndex>6</rowIndex>
+            <rowIndex>0</rowIndex>
             <rowSpan>7</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>2</colSpan>
+            <columnIndex>8</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+                <chartSummary>
+                    <column>RowCount</column>
+                </chartSummary>
+                <componentType>Metric</componentType>
+                <decimalPrecision>-1</decimalPrecision>
+                <displayUnits>Auto</displayUnits>
+                <groupingSortProperties/>
+                <header>My Open Cases - Today</header>
+                <indicatorBreakpoint1>20.0</indicatorBreakpoint1>
+                <indicatorBreakpoint2>40.0</indicatorBreakpoint2>
+                <indicatorHighColor>#00716B</indicatorHighColor>
+                <indicatorLowColor>#008000</indicatorLowColor>
+                <indicatorMiddleColor>#FF0000</indicatorMiddleColor>
+                <report>SykesAgent/General_My_Open_Cases_I3U1</report>
+                <showRange>false</showRange>
+            </dashboardComponent>
+            <rowIndex>0</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>2</colSpan>
+            <columnIndex>10</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+                <chartSummary>
+                    <column>RowCount</column>
+                </chartSummary>
+                <componentType>Metric</componentType>
+                <decimalPrecision>-1</decimalPrecision>
+                <displayUnits>Auto</displayUnits>
+                <groupingSortProperties/>
+                <header>My Cases Closed - Today</header>
+                <indicatorBreakpoint1>0.0</indicatorBreakpoint1>
+                <indicatorBreakpoint2>10.0</indicatorBreakpoint2>
+                <indicatorHighColor>#00716B</indicatorHighColor>
+                <indicatorLowColor>#C23934</indicatorLowColor>
+                <indicatorMiddleColor>#008000</indicatorMiddleColor>
+                <report>SykesAgent/General_My_Cases_Closed_Today_NFZ1</report>
+                <showRange>false</showRange>
+            </dashboardComponent>
+            <rowIndex>0</rowIndex>
+            <rowSpan>4</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
             <colSpan>2</colSpan>
@@ -215,17 +139,17 @@
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
-                <header>My Chat Queue Time Last 30</header>
-                <indicatorBreakpoint1>20.0</indicatorBreakpoint1>
+                <header>My Avg Chat Queue Time - Today</header>
+                <indicatorBreakpoint1>10.0</indicatorBreakpoint1>
                 <indicatorBreakpoint2>35.0</indicatorBreakpoint2>
                 <indicatorHighColor>#FF0000</indicatorHighColor>
                 <indicatorLowColor>#008000</indicatorLowColor>
                 <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
-                <report>SykesAgent/My_Chat_Queue_Time_Last_30_qwl</report>
+                <report>SykesAgent/General_My_Chat_Queue_Time_Today_SPUi</report>
                 <showRange>false</showRange>
             </dashboardComponent>
-            <rowIndex>8</rowIndex>
-            <rowSpan>5</rowSpan>
+            <rowIndex>4</rowIndex>
+            <rowSpan>4</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
             <colSpan>2</colSpan>
@@ -240,17 +164,17 @@
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
-                <header>My Chat Queue Time Today</header>
-                <indicatorBreakpoint1>10.0</indicatorBreakpoint1>
-                <indicatorBreakpoint2>35.0</indicatorBreakpoint2>
-                <indicatorHighColor>#FF0000</indicatorHighColor>
+                <header>My Chat Offered &amp; Anwser % - Today</header>
+                <indicatorBreakpoint1>20.0</indicatorBreakpoint1>
+                <indicatorBreakpoint2>50.0</indicatorBreakpoint2>
+                <indicatorHighColor>#00716B</indicatorHighColor>
                 <indicatorLowColor>#008000</indicatorLowColor>
-                <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
-                <report>SykesAgent/General_My_Chat_Queue_Time_Today_SPUi</report>
+                <indicatorMiddleColor>#FF0000</indicatorMiddleColor>
+                <report>SykesAgent/My_Chat_Anwser_Rate_Today_MCy</report>
                 <showRange>false</showRange>
             </dashboardComponent>
-            <rowIndex>8</rowIndex>
-            <rowSpan>5</rowSpan>
+            <rowIndex>4</rowIndex>
+            <rowSpan>4</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
             <colSpan>4</colSpan>
@@ -259,85 +183,72 @@
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
                 <chartAxisRange>Auto</chartAxisRange>
                 <chartSummary>
+                    <aggregate>Sum</aggregate>
                     <axisBinding>y</axisBinding>
-                    <column>RowCount</column>
+                    <column>LiveChatTranscript$Abandoned</column>
                 </chartSummary>
-                <componentType>Bar</componentType>
+                <componentType>Line</componentType>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>TYPE</groupingColumn>
+                <groupingColumn>LiveChatTranscript$Status</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>My Closed Cases by Type</header>
+                <header>My Avg Chat Queue Time - Last 30</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SykesAgent/General_My_Cases_Closed_by_Type_2Aq1</report>
+                <report>SykesAgent/My_Chat_Queue_Time_Last_30_qwl</report>
                 <showPercentage>false</showPercentage>
-                <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
-            <rowIndex>13</rowIndex>
+            <rowIndex>7</rowIndex>
             <rowSpan>8</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
-            <colSpan>2</colSpan>
+            <colSpan>4</colSpan>
             <columnIndex>4</columnIndex>
             <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
                 <chartSummary>
+                    <axisBinding>y</axisBinding>
                     <column>RowCount</column>
                 </chartSummary>
-                <componentType>Metric</componentType>
+                <componentType>Line</componentType>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
-                <groupingSortProperties/>
-                <header>My Cases Closed Today</header>
-                <indicatorBreakpoint1>0.0</indicatorBreakpoint1>
-                <indicatorBreakpoint2>10.0</indicatorBreakpoint2>
-                <indicatorHighColor>#00716B</indicatorHighColor>
-                <indicatorLowColor>#C23934</indicatorLowColor>
-                <indicatorMiddleColor>#C43934</indicatorMiddleColor>
-                <report>SykesAgent/General_My_Cases_Closed_Today_NFZ1</report>
-                <showRange>false</showRange>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingColumn>STATUS</groupingColumn>
+                <groupingSortProperties>
+                    <groupingSorts>
+                        <groupingLevel>g1</groupingLevel>
+                        <sortOrder>a</sortOrder>
+                    </groupingSorts>
+                </groupingSortProperties>
+                <header>My Cases Closed - Last 30</header>
+                <legendPosition>Bottom</legendPosition>
+                <report>SykesAgent/General_My_Cases_Closed_Last_30_oz3</report>
+                <showPercentage>false</showPercentage>
+                <showValues>false</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <useReportChart>false</useReportChart>
             </dashboardComponent>
-            <rowIndex>13</rowIndex>
-            <rowSpan>5</rowSpan>
+            <rowIndex>7</rowIndex>
+            <rowSpan>7</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
             <colSpan>2</colSpan>
-            <columnIndex>6</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <chartSummary>
-                    <column>RowCount</column>
-                </chartSummary>
-                <componentType>Metric</componentType>
-                <decimalPrecision>-1</decimalPrecision>
-                <displayUnits>Auto</displayUnits>
-                <groupingSortProperties/>
-                <header>My Cases Closed Last 30</header>
-                <indicatorBreakpoint1>33.0</indicatorBreakpoint1>
-                <indicatorBreakpoint2>67.0</indicatorBreakpoint2>
-                <indicatorHighColor>#00716B</indicatorHighColor>
-                <indicatorLowColor>#C23934</indicatorLowColor>
-                <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
-                <report>SykesAgent/General_My_Cases_Closed_Last_30_oz3</report>
-                <showRange>false</showRange>
-            </dashboardComponent>
-            <rowIndex>13</rowIndex>
-            <rowSpan>5</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>4</colSpan>
             <columnIndex>8</columnIndex>
             <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
@@ -353,25 +264,60 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>OWNER</groupingColumn>
+                <groupingColumn>TYPE</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>My Cases in Queue</header>
+                <header>My Open Cases by Type</header>
                 <legendPosition>Right</legendPosition>
-                <maxValuesDisplayed>6</maxValuesDisplayed>
-                <report>SykesAgent/General_My_Cases_in_Queue_bqD1</report>
-                <showPercentage>true</showPercentage>
+                <report>SykesAgent/General_My_Open_Cases_by_Type_m9o</report>
+                <showPercentage>false</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
-            <rowIndex>13</rowIndex>
-            <rowSpan>8</rowSpan>
+            <rowIndex>8</rowIndex>
+            <rowSpan>7</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>2</colSpan>
+            <columnIndex>10</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
+                <chartSummary>
+                    <axisBinding>y</axisBinding>
+                    <column>RowCount</column>
+                </chartSummary>
+                <componentType>Donut</componentType>
+                <decimalPrecision>-1</decimalPrecision>
+                <displayUnits>Auto</displayUnits>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingColumn>TYPE</groupingColumn>
+                <groupingSortProperties>
+                    <groupingSorts>
+                        <groupingLevel>g1</groupingLevel>
+                        <sortOrder>a</sortOrder>
+                    </groupingSorts>
+                </groupingSortProperties>
+                <header>My Closed Cases by Type</header>
+                <legendPosition>Right</legendPosition>
+                <report>SykesAgent/General_My_Cases_Closed_by_Type_2Aq1</report>
+                <showPercentage>false</showPercentage>
+                <showTotal>true</showTotal>
+                <showValues>true</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <useReportChart>false</useReportChart>
+            </dashboardComponent>
+            <rowIndex>8</rowIndex>
+            <rowSpan>7</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
             <colSpan>4</colSpan>
@@ -405,12 +351,12 @@
                 <sortBy>RowLabelAscending</sortBy>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
-            <rowIndex>18</rowIndex>
+            <rowIndex>14</rowIndex>
             <rowSpan>8</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
             <colSpan>4</colSpan>
-            <columnIndex>8</columnIndex>
+            <columnIndex>0</columnIndex>
             <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
                 <chartAxisRange>Auto</chartAxisRange>
@@ -434,14 +380,69 @@
                 </groupingSortProperties>
                 <header>My Cases by Priority</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SykesAgent/My_Cases_by_Priority_Sykes_hWQ1</report>
+                <report>SykesAgent/My_Cases_by_Priority_Sykes_hWQ</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
-            <rowIndex>21</rowIndex>
+            <rowIndex>15</rowIndex>
+            <rowSpan>8</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>8</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+                <componentType>FlexTable</componentType>
+                <flexComponentProperties>
+                    <decimalPrecision>-1</decimalPrecision>
+                    <flexTableColumn>
+                        <reportColumn>ORIGIN</reportColumn>
+                        <showSubTotal>false</showSubTotal>
+                        <showTotal>true</showTotal>
+                        <type>grouping</type>
+                    </flexTableColumn>
+                    <flexTableColumn>
+                        <breakPoint1>10.0</breakPoint1>
+                        <breakPoint2>30.0</breakPoint2>
+                        <breakPointOrder>0</breakPointOrder>
+                        <highRangeColor>29035</highRangeColor>
+                        <lowRangeColor>32768</lowRangeColor>
+                        <midRangeColor>16711680</midRangeColor>
+                        <reportColumn>RowCount</reportColumn>
+                        <showSubTotal>false</showSubTotal>
+                        <showTotal>true</showTotal>
+                        <type>aggregate</type>
+                    </flexTableColumn>
+                    <flexTableColumn>
+                        <reportColumn>s!AGE</reportColumn>
+                        <showSubTotal>false</showSubTotal>
+                        <showTotal>true</showTotal>
+                        <type>aggregate</type>
+                    </flexTableColumn>
+                    <flexTableColumn>
+                        <reportColumn>a!AGE</reportColumn>
+                        <showSubTotal>false</showSubTotal>
+                        <showTotal>true</showTotal>
+                        <type>aggregate</type>
+                    </flexTableColumn>
+                    <flexTableSortInfo>
+                        <sortOrder>1</sortOrder>
+                    </flexTableSortInfo>
+                    <hideChatterPhotos>true</hideChatterPhotos>
+                </flexComponentProperties>
+                <groupingSortProperties>
+                    <groupingSorts>
+                        <groupingLevel>g1</groupingLevel>
+                        <sortOrder>a</sortOrder>
+                    </groupingSorts>
+                </groupingSortProperties>
+                <header>My AHT (incl. wrap up time)</header>
+                <report>SykesAgent/General_AHT_incl_wrap_up_time_6Bt1</report>
+            </dashboardComponent>
+            <rowIndex>15</rowIndex>
             <rowSpan>8</rowSpan>
         </dashboardGridComponents>
         <numberOfColumns>12</numberOfColumns>
@@ -449,7 +450,7 @@
     </dashboardGridLayout>
     <dashboardType>LoggedInUser</dashboardType>
     <isGridLayout>true</isGridLayout>
-
+    <runningUser>test-aqefnjetz71n@example.com</runningUser>
     <textColor>#000000</textColor>
     <title>Sykes Agent</title>
     <titleColor>#000000</titleColor>
