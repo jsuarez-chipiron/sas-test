@@ -192,4 +192,14 @@
         <members>AgentDashboard/TZBJzdabTNsyRlTGBwmFbwAMQUIRqo</members>
         <name>Dashboard</name>
     </types>
+	
+	<!--2020-01-15 - Philip Ossler - Delete dashboard-->
+    <types>
+        <members>SykesManagementTeamLead\Sykes_Abandoned_Cases_MB2</members>
+		<members>SykesManagementTeamLead\Sykes_Case_Resolution_Time_by_Type_MTD_8l7</members>
+		<members>SykesManagementTeamLead\Sykes_Cases_by_Queue_HXr</members>
+		<members>SykesManagementTeamLead\Sykes_Offered_Chats_Last_30_ioK</members>
+		<members>SykesManagementTeamLead\Sykes_Offered_Chats_Today_Hiv</members>
+        <name>Report</name>
+    </types>
 </Package>
