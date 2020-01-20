@@ -103,6 +103,7 @@
     </classAccesses>
 	<classAccesses>
         <apexClass>ConsoleAutomationController</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ExternalObjectQueryHandler_Test</apexClass>
