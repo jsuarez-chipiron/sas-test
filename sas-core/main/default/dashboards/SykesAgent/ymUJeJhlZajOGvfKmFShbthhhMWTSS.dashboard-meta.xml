@@ -245,7 +245,7 @@
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>7</rowIndex>
-            <rowSpan>7</rowSpan>
+            <rowSpan>8</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
             <colSpan>2</colSpan>
@@ -321,41 +321,6 @@
         </dashboardGridComponents>
         <dashboardGridComponents>
             <colSpan>4</colSpan>
-            <columnIndex>4</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
-                <chartSummary>
-                    <axisBinding>y</axisBinding>
-                    <column>RowCount</column>
-                </chartSummary>
-                <componentType>Line</componentType>
-                <decimalPrecision>-1</decimalPrecision>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
-                <groupingColumn>CLOSED_DATE</groupingColumn>
-                <groupingSortProperties>
-                    <groupingSorts>
-                        <groupingLevel>g1</groupingLevel>
-                        <sortOrder>a</sortOrder>
-                    </groupingSorts>
-                </groupingSortProperties>
-                <header>My Closed Cases MTD</header>
-                <legendPosition>Bottom</legendPosition>
-                <report>SykesAgent/General_Closed_Cases_MTD_Rcp1</report>
-                <showPercentage>false</showPercentage>
-                <showValues>true</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <useReportChart>false</useReportChart>
-            </dashboardComponent>
-            <rowIndex>14</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>4</colSpan>
             <columnIndex>0</columnIndex>
             <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
@@ -383,6 +348,41 @@
                 <report>SykesAgent/My_Cases_by_Priority_Sykes_hWQ</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
+                <showValues>true</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <useReportChart>false</useReportChart>
+            </dashboardComponent>
+            <rowIndex>15</rowIndex>
+            <rowSpan>8</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>4</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
+                <chartSummary>
+                    <axisBinding>y</axisBinding>
+                    <column>RowCount</column>
+                </chartSummary>
+                <componentType>Line</componentType>
+                <decimalPrecision>-1</decimalPrecision>
+                <displayUnits>Auto</displayUnits>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingColumn>CLOSED_DATE</groupingColumn>
+                <groupingSortProperties>
+                    <groupingSorts>
+                        <groupingLevel>g1</groupingLevel>
+                        <sortOrder>a</sortOrder>
+                    </groupingSorts>
+                </groupingSortProperties>
+                <header>My Closed Cases MTD</header>
+                <legendPosition>Bottom</legendPosition>
+                <report>SykesAgent/General_Closed_Cases_MTD_Rcp1</report>
+                <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
                 <useReportChart>false</useReportChart>
