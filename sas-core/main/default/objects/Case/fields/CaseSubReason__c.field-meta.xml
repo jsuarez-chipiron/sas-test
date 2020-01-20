@@ -11,7 +11,7 @@
     <valueSet>
         <controllingField>CaseReason__c</controllingField>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>Add EB in booking</fullName>
                 <default>false</default>
@@ -141,6 +141,11 @@
                 <fullName>Content and Dangerous goods</fullName>
                 <default>false</default>
                 <label>Content and Dangerous goods</label>
+            </value>
+            <value>
+                <fullName>Control status</fullName>
+                <default>false</default>
+                <label>Control status</label>
             </value>
             <value>
                 <fullName>Create case</fullName>
@@ -348,6 +353,11 @@
                 <label>Non Air partners</label>
             </value>
             <value>
+                <fullName>No sale</fullName>
+                <default>false</default>
+                <label>No sale</label>
+            </value>
+            <value>
                 <fullName>On corporate account</fullName>
                 <default>false</default>
                 <label>On corporate account</label>
@@ -356,6 +366,11 @@
                 <fullName>Opening hours</fullName>
                 <default>false</default>
                 <label>Opening hours</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
             </value>
             <value>
                 <fullName>Overbooked flights</fullName>
@@ -478,6 +493,11 @@
                 <label>SMS</label>
             </value>
             <value>
+                <fullName>Sold</fullName>
+                <default>false</default>
+                <label>Sold</label>
+            </value>
+            <value>
                 <fullName>Special assistance</fullName>
                 <default>false</default>
                 <label>Special assistance</label>
@@ -503,9 +523,19 @@
                 <label>Strike</label>
             </value>
             <value>
+                <fullName>Submit more information</fullName>
+                <default>false</default>
+                <label>Submit more information</label>
+            </value>
+            <value>
                 <fullName>Tax invoice</fullName>
                 <default>false</default>
                 <label>Tax invoice</label>
+            </value>
+            <value>
+                <fullName>Threat</fullName>
+                <default>false</default>
+                <label>Threat</label>
             </value>
             <value>
                 <fullName>Ticket office airport</fullName>
@@ -578,14 +608,9 @@
                 <label>XBAG</label>
             </value>
             <value>
-                <fullName>Other</fullName>
+                <fullName>Youth</fullName>
                 <default>false</default>
-                <label>Other</label>
-            </value>
-            <value>
-                <fullName>Threat</fullName>
-                <default>false</default>
-                <label>Threat</label>
+                <label>Youth</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -677,7 +702,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Claims</controllingFieldValue>
+            <valueName>Control status</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Claims</controllingFieldValue>
             <valueName>Create case</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Claims</controllingFieldValue>
+            <valueName>Submit more information</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
@@ -1011,11 +1044,23 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>No sale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Price inquiry</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Route inquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Sold</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Youth</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Non-SAS produkter</controllingFieldValue>
