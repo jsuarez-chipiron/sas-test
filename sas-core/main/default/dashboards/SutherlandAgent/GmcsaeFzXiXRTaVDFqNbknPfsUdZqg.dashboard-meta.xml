@@ -517,9 +517,8 @@
         <numberOfColumns>12</numberOfColumns>
         <rowHeight>36</rowHeight>
     </dashboardGridLayout>
-    <dashboardType>SpecifiedUser</dashboardType>
+    <dashboardType>LoggedInUser</dashboardType>
     <isGridLayout>true</isGridLayout>
-    <runningUser>test-aqefnjetz71n@example.com</runningUser>
     <textColor>#000000</textColor>
     <title>Sutherland Agent</title>
     <titleColor>#000000</titleColor>
