@@ -41,7 +41,7 @@
             <column>LiveChatTranscript$Case.Vendor__c</column>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>Sykes</value>
+            <value>Sutherland</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>

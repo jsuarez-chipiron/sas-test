@@ -35,7 +35,7 @@
             <column>Case.Vendor__c</column>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>Sutherland</value>
+            <value>Sykes</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>
