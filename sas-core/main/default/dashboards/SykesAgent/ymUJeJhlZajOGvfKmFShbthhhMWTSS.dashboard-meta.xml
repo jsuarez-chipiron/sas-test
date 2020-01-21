@@ -32,12 +32,13 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>My Open Cases - Last 30</header>
+                <header>My Open Cases</header>
                 <legendPosition>Bottom</legendPosition>
                 <report>SykesAgent/General_My_Open_Cases_Last_30_EKi30</report>
                 <showPercentage>false</showPercentage>
-                <showValues>false</showValues>
+                <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
+                <title>Last 30 Days</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>0</rowIndex>
@@ -50,16 +51,17 @@
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
                 <chartAxisRange>Auto</chartAxisRange>
                 <chartSummary>
+                    <aggregate>Average</aggregate>
                     <axisBinding>y</axisBinding>
-                    <column>FORMULA1</column>
+                    <column>LiveChatTranscript$Abandoned</column>
                 </chartSummary>
-                <componentType>Line</componentType>
+                <componentType>Donut</componentType>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
+                <expandOthers>true</expandOthers>
                 <groupingColumn>LiveChatTranscript$Status</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
@@ -67,12 +69,14 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>My Chat Offered &amp; Anwser % - Last 30</header>
-                <legendPosition>Bottom</legendPosition>
+                <header>My Chat Answer %</header>
+                <legendPosition>Right</legendPosition>
                 <report>SykesAgent/My_Chat_Anwser_Rate_Last_30_N7b</report>
-                <showPercentage>false</showPercentage>
+                <showPercentage>true</showPercentage>
+                <showTotal>true</showTotal>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
+                <title>Last 30 Days</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>0</rowIndex>
@@ -90,12 +94,13 @@
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
-                <header>My Open Cases - Today</header>
-                <indicatorBreakpoint1>20.0</indicatorBreakpoint1>
-                <indicatorBreakpoint2>40.0</indicatorBreakpoint2>
-                <indicatorHighColor>#00716B</indicatorHighColor>
-                <indicatorLowColor>#008000</indicatorLowColor>
-                <indicatorMiddleColor>#FF0000</indicatorMiddleColor>
+                <header>My Open Cases</header>
+                <indicatorBreakpoint1>33.0</indicatorBreakpoint1>
+                <indicatorBreakpoint2>67.0</indicatorBreakpoint2>
+                <indicatorHighColor>#FF0000</indicatorHighColor>
+                <indicatorLowColor>#408080</indicatorLowColor>
+                <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
+                <metricLabel>Today</metricLabel>
                 <report>SykesAgent/General_My_Open_Cases_I3U1</report>
                 <showRange>false</showRange>
             </dashboardComponent>
@@ -114,12 +119,13 @@
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
-                <header>My Cases Closed - Today</header>
-                <indicatorBreakpoint1>0.0</indicatorBreakpoint1>
-                <indicatorBreakpoint2>10.0</indicatorBreakpoint2>
-                <indicatorHighColor>#00716B</indicatorHighColor>
-                <indicatorLowColor>#C23934</indicatorLowColor>
-                <indicatorMiddleColor>#008000</indicatorMiddleColor>
+                <header>My Closed Cases</header>
+                <indicatorBreakpoint1>10.0</indicatorBreakpoint1>
+                <indicatorBreakpoint2>30.0</indicatorBreakpoint2>
+                <indicatorHighColor>#408080</indicatorHighColor>
+                <indicatorLowColor>#FF0000</indicatorLowColor>
+                <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
+                <metricLabel>Today</metricLabel>
                 <report>SykesAgent/General_My_Cases_Closed_Today_NFZ1</report>
                 <showRange>false</showRange>
             </dashboardComponent>
@@ -132,19 +138,20 @@
             <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
                 <chartSummary>
-                    <aggregate>Sum</aggregate>
-                    <column>LiveChatTranscript$Abandoned</column>
+                    <aggregate>Average</aggregate>
+                    <column>LiveChatTranscript$WaitTime</column>
                 </chartSummary>
                 <componentType>Metric</componentType>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
-                <header>My Avg Chat Queue Time - Today</header>
-                <indicatorBreakpoint1>10.0</indicatorBreakpoint1>
-                <indicatorBreakpoint2>35.0</indicatorBreakpoint2>
+                <header>My Avg Queue Time</header>
+                <indicatorBreakpoint1>33.0</indicatorBreakpoint1>
+                <indicatorBreakpoint2>67.0</indicatorBreakpoint2>
                 <indicatorHighColor>#FF0000</indicatorHighColor>
-                <indicatorLowColor>#008000</indicatorLowColor>
+                <indicatorLowColor>#408080</indicatorLowColor>
                 <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
+                <metricLabel>Today</metricLabel>
                 <report>SykesAgent/General_My_Chat_Queue_Time_Today_SPUi</report>
                 <showRange>false</showRange>
             </dashboardComponent>
@@ -157,20 +164,20 @@
             <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
                 <chartSummary>
-                    <aggregate>Sum</aggregate>
-                    <column>LiveChatTranscript$Abandoned</column>
+                    <column>RowCount</column>
                 </chartSummary>
                 <componentType>Metric</componentType>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
-                <header>My Chat Offered &amp; Anwser % - Today</header>
-                <indicatorBreakpoint1>20.0</indicatorBreakpoint1>
-                <indicatorBreakpoint2>50.0</indicatorBreakpoint2>
-                <indicatorHighColor>#00716B</indicatorHighColor>
-                <indicatorLowColor>#008000</indicatorLowColor>
-                <indicatorMiddleColor>#FF0000</indicatorMiddleColor>
-                <report>SykesAgent/My_Chat_Anwser_Rate_Today_MCy</report>
+                <header>My Open Cases</header>
+                <indicatorBreakpoint1>10.0</indicatorBreakpoint1>
+                <indicatorBreakpoint2>30.0</indicatorBreakpoint2>
+                <indicatorHighColor>#FF0000</indicatorHighColor>
+                <indicatorLowColor>#408080</indicatorLowColor>
+                <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
+                <metricLabel>Today</metricLabel>
+                <report>SykesAgent/General_My_Open_Cases_I3U1</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>4</rowIndex>
@@ -183,9 +190,9 @@
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
                 <chartAxisRange>Auto</chartAxisRange>
                 <chartSummary>
-                    <aggregate>Sum</aggregate>
+                    <aggregate>Average</aggregate>
                     <axisBinding>y</axisBinding>
-                    <column>LiveChatTranscript$Abandoned</column>
+                    <column>LiveChatTranscript$WaitTime</column>
                 </chartSummary>
                 <componentType>Line</componentType>
                 <decimalPrecision>-1</decimalPrecision>
@@ -201,12 +208,13 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>My Avg Chat Queue Time - Last 30</header>
+                <header>My Chat Answer %</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SykesAgent/My_Chat_Queue_Time_Last_30_qwl</report>
+                <report>SykesAgent/My_Chat_Anwser_Rate_Last_30_N7b</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
+                <title>Last 30 Days</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>7</rowIndex>
@@ -229,19 +237,20 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>STATUS</groupingColumn>
+                <groupingColumn>CLOSED_DATEONLY</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>My Cases Closed - Last 30</header>
+                <header>My Closed Cases</header>
                 <legendPosition>Bottom</legendPosition>
                 <report>SykesAgent/General_My_Cases_Closed_Last_30_oz3</report>
                 <showPercentage>false</showPercentage>
-                <showValues>false</showValues>
+                <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
+                <title>Last 30 Days</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>7</rowIndex>
@@ -263,7 +272,7 @@
                 <drillEnabled>false</drillEnabled>
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
+                <expandOthers>true</expandOthers>
                 <groupingColumn>TYPE</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
@@ -274,7 +283,7 @@
                 <header>My Open Cases by Type</header>
                 <legendPosition>Right</legendPosition>
                 <report>SykesAgent/General_My_Open_Cases_by_Type_m9o</report>
-                <showPercentage>false</showPercentage>
+                <showPercentage>true</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -299,7 +308,7 @@
                 <drillEnabled>false</drillEnabled>
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
+                <expandOthers>true</expandOthers>
                 <groupingColumn>TYPE</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
@@ -310,7 +319,7 @@
                 <header>My Closed Cases by Type</header>
                 <legendPosition>Right</legendPosition>
                 <report>SykesAgent/General_My_Cases_Closed_by_Type_2Aq1</report>
-                <showPercentage>false</showPercentage>
+                <showPercentage>true</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -401,34 +410,35 @@
                     <flexTableColumn>
                         <reportColumn>ORIGIN</reportColumn>
                         <showSubTotal>false</showSubTotal>
-                        <showTotal>true</showTotal>
-                        <type>grouping</type>
+                        <showTotal>false</showTotal>
+                        <type>detail</type>
                     </flexTableColumn>
                     <flexTableColumn>
-                        <breakPoint1>10.0</breakPoint1>
-                        <breakPoint2>30.0</breakPoint2>
-                        <breakPointOrder>0</breakPointOrder>
-                        <highRangeColor>29035</highRangeColor>
-                        <lowRangeColor>32768</lowRangeColor>
-                        <midRangeColor>16711680</midRangeColor>
-                        <reportColumn>RowCount</reportColumn>
+                        <reportColumn>OWNER</reportColumn>
                         <showSubTotal>false</showSubTotal>
-                        <showTotal>true</showTotal>
-                        <type>aggregate</type>
+                        <showTotal>false</showTotal>
+                        <type>detail</type>
                     </flexTableColumn>
                     <flexTableColumn>
-                        <reportColumn>s!AGE</reportColumn>
+                        <reportColumn>STATUS</reportColumn>
                         <showSubTotal>false</showSubTotal>
-                        <showTotal>true</showTotal>
-                        <type>aggregate</type>
+                        <showTotal>false</showTotal>
+                        <type>detail</type>
                     </flexTableColumn>
                     <flexTableColumn>
-                        <reportColumn>a!AGE</reportColumn>
+                        <reportColumn>PRIORITY</reportColumn>
                         <showSubTotal>false</showSubTotal>
-                        <showTotal>true</showTotal>
-                        <type>aggregate</type>
+                        <showTotal>false</showTotal>
+                        <type>detail</type>
+                    </flexTableColumn>
+                    <flexTableColumn>
+                        <reportColumn>TYPE</reportColumn>
+                        <showSubTotal>false</showSubTotal>
+                        <showTotal>false</showTotal>
+                        <type>detail</type>
                     </flexTableColumn>
                     <flexTableSortInfo>
+                        <sortColumn>ORIGIN</sortColumn>
                         <sortOrder>1</sortOrder>
                     </flexTableSortInfo>
                     <hideChatterPhotos>true</hideChatterPhotos>
@@ -439,8 +449,9 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>My AHT (incl. wrap up time)</header>
+                <header>My Average Handle Time</header>
                 <report>SykesAgent/General_AHT_incl_wrap_up_time_6Bt1</report>
+                <title>incl. wrap up time</title>
             </dashboardComponent>
             <rowIndex>15</rowIndex>
             <rowSpan>8</rowSpan>
