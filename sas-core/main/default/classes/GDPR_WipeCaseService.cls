@@ -6,16 +6,22 @@
 */
 global with sharing class GDPR_WipeCaseService {
     /**
+        Additional retained fields used by test due to a Salesforce bug with testing and field definitions
+    */
+    @TestVisible static Set<String> RETAIN_ADD;
+    /**
         Retrieves the case fields to clear based where the fields 
         stored in the general setting group CWRF are removed
         @return The list fo fields which should be wiped from the case
     */
     global static String[] getCaseFieldsToClear(){
-        Set<String> retainedFields = new Set<String>();
-        GDPR_WipeRetentionField__mdt[] settings = [SELECT FieldName__c FROM GDPR_WipeRetentionField__mdt WHERE Object__c = :Case.SObjectType.getDescribe().getName()];
-        for(GDPR_WipeRetentionField__mdt setting: settings){
-            retainedFields.add(setting.FieldName__c);
+        Set<String> retainedFields = RETAIN_ADD!=null ? RETAIN_ADD : new Set<String>();
+        FieldDefinition[] fdList = [SELECT QualifiedAPIName,ComplianceGroup FROM FieldDefinition WHERE EntityDefinition.QualifiedAPIName='Case' AND ComplianceGroup!=null];
+        for(FieldDefinition fd : fdList){
+            if(fd.ComplianceGroup.split(';').contains('WipeRetain'))retainedFields.add(fd.QualifiedAPIName);
         }
+        //Add fields for which compliance cannot be set
+        retainedFields.add('RecordTypeId');
 
         List<String> fieldsToClear = new List<String>();
         Map<String,Schema.SObjectField> fMap = Case.getSObjectType().getDescribe().fields.getMap();

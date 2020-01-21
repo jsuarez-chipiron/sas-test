@@ -13,10 +13,15 @@ global with sharing class GDPR_WipeAccountService {
     */
     global static String[] getAccountFieldsToClear(Boolean keepReference){
         Set<String> retainedFields = new Set<String>();
-        GDPR_WipeRetentionField__mdt[] settings = [SELECT FieldName__c FROM GDPR_WipeRetentionField__mdt WHERE Object__c = :Account.SObjectType.getDescribe().getName()];
-        for(GDPR_WipeRetentionField__mdt setting: settings){
-            retainedFields.add(setting.FieldName__c);
+        FieldDefinition[] fdList = [SELECT QualifiedAPIName,ComplianceGroup FROM FieldDefinition WHERE EntityDefinition.QualifiedAPIName='Account' AND ComplianceGroup!=null];
+        for(FieldDefinition fd : fdList){
+            if(fd.ComplianceGroup.split(';').contains('WipeRetain'))retainedFields.add(fd.QualifiedAPIName);
         }
+        //Add fields for which compliance cannot be set
+        retainedFields.add('MasterRecordId');
+        retainedFields.add('RecordTypeId');
+        //Name is not removed since it cannot be edited for person accounts
+        retainedFields.add('Name');
         if(keepReference)retainedFields.add(Account.CodsId__c+'');
 
         List<String> fieldsToClear = new List<String>();

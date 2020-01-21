@@ -36,4 +36,9 @@
         <default>false</default>
         <label>CCPA</label>
     </standardValue>
+    <standardValue>
+        <fullName>WipeRetain</fullName>
+        <default>false</default>
+        <label>WipeRetain</label>
+    </standardValue>
 </StandardValueSet>
