@@ -4,7 +4,7 @@
         <calculatedFormula>RowCount / PARENTGROUPVAL(RowCount, GRAND_SUMMARY)</calculatedFormula>
         <datatype>percent</datatype>
         <developerName>FORMULA1</developerName>
-        <downGroupingContext>LiveChatTranscript$Status</downGroupingContext>
+        <downGroupingContext>LiveChatTranscript$CreatedDate</downGroupingContext>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
         <masterLabel>Answer Rate</masterLabel>
@@ -34,7 +34,6 @@
         <aggregateTypes>Minimum</aggregateTypes>
         <field>LiveChatTranscript$WaitTime</field>
     </columns>
-    <description>Chat Answer % by Status Last 30</description>
     <filter>
         <criteriaItems>
             <column>LiveChatTranscript$Status</column>
@@ -46,21 +45,21 @@
             <column>LiveChatTranscript$Case.Vendor__c</column>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>Sykes</value>
+            <value>Sutherland</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>
     <groupingsDown>
+        <field>LiveChatTranscript$CreatedDate</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
         <dateGranularity>Day</dateGranularity>
         <field>LiveChatTranscript$Status</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <groupingsDown>
-        <field>LiveChatTranscript$CreatedDate</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsDown>
-    <name>Sutherland - Chat Ans. % by Status L 30</name>
+    <name>Sutherland - Chat Answer % Last 30</name>
     <params>
         <name>co</name>
         <value>1</value>

@@ -34,7 +34,6 @@
         <aggregateTypes>Minimum</aggregateTypes>
         <field>LiveChatTranscript$WaitTime</field>
     </columns>
-    <description>Chat Answer % by Status Last 30</description>
     <filter>
         <criteriaItems>
             <column>LiveChatTranscript$Status</column>
@@ -60,7 +59,7 @@
         <field>LiveChatTranscript$CreatedDate</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Sykes - Chat Ans. % by Status L 30</name>
+    <name>Sykes - Chat Answer % Last 30 by Status</name>
     <params>
         <name>co</name>
         <value>1</value>

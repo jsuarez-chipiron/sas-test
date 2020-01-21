@@ -4,7 +4,7 @@
         <calculatedFormula>RowCount / PARENTGROUPVAL(RowCount, GRAND_SUMMARY)</calculatedFormula>
         <datatype>percent</datatype>
         <developerName>FORMULA1</developerName>
-        <downGroupingContext>LiveChatTranscript$Status</downGroupingContext>
+        <downGroupingContext>LiveChatTranscript$CreatedDate</downGroupingContext>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
         <masterLabel>Answer Rate</masterLabel>
@@ -41,15 +41,25 @@
             <operator>notEqual</operator>
             <value>,5</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>LiveChatTranscript$Case.Vendor__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Sykes</value>
+        </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>
+    <groupingsDown>
+        <field>LiveChatTranscript$CreatedDate</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
         <field>LiveChatTranscript$Status</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Sykes - Chat Answer Rate % Today</name>
+    <name>Sykes - Chat Answer % Last 30</name>
     <params>
         <name>co</name>
         <value>1</value>
@@ -61,6 +71,6 @@
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>LiveChatTranscript$CreatedDate</dateColumn>
-        <interval>INTERVAL_TODAY</interval>
+        <interval>INTERVAL_LAST30</interval>
     </timeFrameFilter>
 </Report>

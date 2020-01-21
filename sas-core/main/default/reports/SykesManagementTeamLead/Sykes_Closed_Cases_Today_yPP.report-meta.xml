@@ -13,6 +13,12 @@
         <field>TYPE</field>
     </columns>
     <columns>
+        <field>STATUS</field>
+    </columns>
+    <columns>
+        <field>PRIORITY</field>
+    </columns>
+    <columns>
         <field>CREATED_DATE</field>
     </columns>
     <columns>
@@ -45,7 +51,7 @@
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>CLOSED</field>
+        <field>ORIGIN</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Sykes - # Closed Cases Today</name>

@@ -41,6 +41,12 @@
             <operator>notEqual</operator>
             <value>,5</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>LiveChatTranscript$Case.Vendor__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Sutherland</value>
+        </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>
@@ -53,7 +59,7 @@
         <field>LiveChatTranscript$CreatedDate</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Sykes - Chat Answer % by Status Last 30</name>
+    <name>Sutherland - Chat Answer % L30 by Status</name>
     <params>
         <name>co</name>
         <value>1</value>

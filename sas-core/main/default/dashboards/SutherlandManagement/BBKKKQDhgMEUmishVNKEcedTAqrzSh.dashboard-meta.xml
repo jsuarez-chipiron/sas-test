@@ -7,47 +7,6 @@
     <colorPalette>water</colorPalette>
     <dashboardChartTheme>dark</dashboardChartTheme>
     <dashboardColorPalette>water</dashboardColorPalette>
-    <dashboardFilters>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values/>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>Sykes</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>Sutherland</values>
-        </dashboardFilterOptions>
-        <name>Vendor</name>
-    </dashboardFilters>
-    <dashboardFilters>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>ODE</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>EVG</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>OER</values>
-        </dashboardFilterOptions>
-        <name>Site</name>
-    </dashboardFilters>
-    <dashboardFilters>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>Direct Sales</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>Global Support</values>
-        </dashboardFilterOptions>
-        <name>Virtual Organization</name>
-    </dashboardFilters>
     <dashboardGridLayout>
         <dashboardGridComponents>
             <colSpan>4</colSpan>
@@ -60,15 +19,6 @@
                     <column>RowCount</column>
                 </chartSummary>
                 <componentType>Line</componentType>
-                <dashboardFilterColumns>
-                    <column>Case.Vendor__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
@@ -84,7 +34,7 @@
                 </groupingSortProperties>
                 <header>Open Cases</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SASManagement/SAS_Open_Cases_Last_30_xFS</report>
+                <report>SutherlandManagementTeamLead/Sutherland_Open_Cases_Last_30_WbQ</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -105,15 +55,6 @@
                     <column>RowCount</column>
                 </chartSummary>
                 <componentType>Donut</componentType>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Vendor__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
@@ -130,7 +71,7 @@
                 <header>Chat - Offered &amp; Answer %</header>
                 <legendPosition>Right</legendPosition>
                 <maxValuesDisplayed>6</maxValuesDisplayed>
-                <report>SASManagement/SAS_Chat_Answer_Today_1pm</report>
+                <report>SutherlandManagementTeamLead/Sutherland_Chat_Answer_Today_WGT</report>
                 <showPercentage>true</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
@@ -151,15 +92,6 @@
                     <column>LiveChatTranscript$WaitTime</column>
                 </chartSummary>
                 <componentType>Metric</componentType>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Vendor__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
@@ -170,7 +102,7 @@
                 <indicatorLowColor>#00716B</indicatorLowColor>
                 <indicatorMiddleColor>#C23934</indicatorMiddleColor>
                 <metricLabel>Today</metricLabel>
-                <report>SASManagement/SAS_Chat_Queue_Time_Today_pDI</report>
+                <report>SutherlandManagementTeamLead/Sutherland_Chat_Queue_Time_Today_pP3</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>0</rowIndex>
@@ -185,15 +117,6 @@
                     <column>RowCount</column>
                 </chartSummary>
                 <componentType>Metric</componentType>
-                <dashboardFilterColumns>
-                    <column>Case.Vendor__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
@@ -204,7 +127,7 @@
                 <indicatorLowColor>#C23934</indicatorLowColor>
                 <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
                 <metricLabel>Today</metricLabel>
-                <report>SASManagement/SAS_Open_Cases_Today_sol</report>
+                <report>SutherlandManagementTeamLead/Sutherland_Open_Cases_Today_NPv</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>0</rowIndex>
@@ -220,15 +143,6 @@
                     <column>LiveChatTranscript$WaitTime</column>
                 </chartSummary>
                 <componentType>Metric</componentType>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Vendor__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
@@ -239,7 +153,7 @@
                 <indicatorLowColor>#00716B</indicatorLowColor>
                 <indicatorMiddleColor>#C23934</indicatorMiddleColor>
                 <metricLabel>Last 30 Days</metricLabel>
-                <report>SASManagement/SAS_Chat_Queue_Time_Last_30_U6j</report>
+                <report>SutherlandManagementTeamLead/Sutherland_Chat_Queue_Time_Last_30_2ca</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>4</rowIndex>
@@ -254,15 +168,6 @@
                     <column>RowCount</column>
                 </chartSummary>
                 <componentType>Metric</componentType>
-                <dashboardFilterColumns>
-                    <column>Case.Vendor__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
@@ -273,7 +178,7 @@
                 <indicatorLowColor>#00716B</indicatorLowColor>
                 <indicatorMiddleColor>#00716B</indicatorMiddleColor>
                 <metricLabel>Today</metricLabel>
-                <report>SASManagement/SAS_Closed_Cases_Today_c0w</report>
+                <report>SutherlandManagementTeamLead/Sutherland_Closed_Cases_Today_Evr</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>4</rowIndex>
@@ -288,15 +193,6 @@
                     <column>RowCount</column>
                 </chartSummary>
                 <componentType>Metric</componentType>
-                <dashboardFilterColumns>
-                    <column>Case.Vendor__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
@@ -307,7 +203,7 @@
                 <indicatorLowColor>#C23934</indicatorLowColor>
                 <indicatorMiddleColor>#C23934</indicatorMiddleColor>
                 <metricLabel>Backlog</metricLabel>
-                <report>SASManagement/SAS_Open_Cases_BV7</report>
+                <report>SutherlandManagementTeamLead/Sutherland_Open_Cases_wHY</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>8</rowIndex>
@@ -324,15 +220,6 @@
                     <column>RowCount</column>
                 </chartSummary>
                 <componentType>Donut</componentType>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Vendor__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
@@ -349,7 +236,7 @@
                 <header>Chat - Offered &amp; Answer %</header>
                 <legendPosition>Right</legendPosition>
                 <maxValuesDisplayed>6</maxValuesDisplayed>
-                <report>SASManagement/SAS_Chat_Answer_Last_30_by_Status_nUS</report>
+                <report>SutherlandManagementTeamLead/Sutherland_Chat_Answer_L30_by_Status_mM4</report>
                 <showPercentage>true</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
@@ -370,15 +257,6 @@
                     <column>AGE</column>
                 </chartSummary>
                 <componentType>Metric</componentType>
-                <dashboardFilterColumns>
-                    <column>Case.Vendor__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
@@ -389,7 +267,7 @@
                 <indicatorLowColor>#C23934</indicatorLowColor>
                 <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
                 <metricLabel>Today</metricLabel>
-                <report>SASManagement/SAS_Average_Handle_Time_Today_Oz6</report>
+                <report>SutherlandManagementTeamLead/Sutherland_Average_Handle_Time_Today_pCk</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>8</rowIndex>
@@ -405,15 +283,6 @@
                     <column>AGE</column>
                 </chartSummary>
                 <componentType>Metric</componentType>
-                <dashboardFilterColumns>
-                    <column>Case.Vendor__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
@@ -424,7 +293,7 @@
                 <indicatorLowColor>#C23934</indicatorLowColor>
                 <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
                 <metricLabel>Last 30 Days</metricLabel>
-                <report>SASManagement/SAS_Average_Handle_Time_Last_30_IF2</report>
+                <report>SutherlandManagementTeamLead/Sutherland_Average_Handle_Time_Last_30_8Ur</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>12</rowIndex>
@@ -441,15 +310,6 @@
                     <column>FORMULA1</column>
                 </chartSummary>
                 <componentType>Line</componentType>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Vendor__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
@@ -465,7 +325,7 @@
                 </groupingSortProperties>
                 <header>Chat - Answer %</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SASManagement/SAS_Chat_Answer_Last_30_D0S</report>
+                <report>SutherlandManagementTeamLead/Sutherland_Chat_Answer_Last_30_hoR</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -487,15 +347,6 @@
                     <column>LiveChatTranscript$WaitTime</column>
                 </chartSummary>
                 <componentType>Line</componentType>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Vendor__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
@@ -511,7 +362,7 @@
                 </groupingSortProperties>
                 <header>Chat - Queue Time (Seconds)</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SASManagement/SAS_Chat_Queue_Time_Last_30_U6j</report>
+                <report>SutherlandManagementTeamLead/Sutherland_Chat_Queue_Time_Last_30_2ca</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -532,15 +383,6 @@
                     <column>RowCount</column>
                 </chartSummary>
                 <componentType>Line</componentType>
-                <dashboardFilterColumns>
-                    <column>Case.Vendor__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
@@ -556,7 +398,7 @@
                 </groupingSortProperties>
                 <header>Closed Cases</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SASManagement/SAS_Closed_Cases_Last_30_TSG</report>
+                <report>SutherlandManagementTeamLead/Sutherland_Closed_Cases_Last_30_eJF</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -578,15 +420,6 @@
                     <column>AGE</column>
                 </chartSummary>
                 <componentType>Line</componentType>
-                <dashboardFilterColumns>
-                    <column>Case.Vendor__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
@@ -602,7 +435,7 @@
                 </groupingSortProperties>
                 <header>Chat - AHT (Minutes)</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SASManagement/SAS_Average_Handle_Time_Last_30_IF2</report>
+                <report>SutherlandManagementTeamLead/Sutherland_Average_Handle_Time_Last_30_8Ur</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -618,7 +451,7 @@
     <dashboardType>SpecifiedUser</dashboardType>
     <isGridLayout>true</isGridLayout>
     <textColor>#000000</textColor>
-    <title>SAS - Management</title>
+    <title>Sutherland - Management</title>
     <titleColor>#000000</titleColor>
     <titleSize>12</titleSize>
 </Dashboard>

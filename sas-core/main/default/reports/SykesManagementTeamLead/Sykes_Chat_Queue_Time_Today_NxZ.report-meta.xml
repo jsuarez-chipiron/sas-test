@@ -53,7 +53,7 @@
             <column>LiveChatTranscript$Status</column>
             <isUnlocked>true</isUnlocked>
             <operator>notEqual</operator>
-            <value>,0,5</value>
+            <value/>
         </criteriaItems>
         <criteriaItems>
             <column>LiveChatTranscript$Case.Origin</column>

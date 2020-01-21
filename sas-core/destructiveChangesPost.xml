@@ -220,6 +220,20 @@
         <members>SASManagement\SAS_Open_Cases_by_Priority_g72</members>
         <members>SASManagement\SAS_Open_Cases_by_Status_fl7</members>
         <members>SASManagement\SAS_Open_Cases_by_Type_SZW</members>
+        <members>SutherlandManagementTeamLead\Sutherland_Abandoned_Cases_bwH</members>
+        <members>SutherlandManagementTeamLead\Sutherland_Case_Res_Time_by_Type_MTD_L2z</members>
+        <members>SutherlandManagementTeamLead\Sutherland_Cases_by_Queue_3gx</members>
+        <members>SutherlandManagementTeamLead\Sutherland_Chat_Ans_by_Status_L_30_d6k</members>
+        <members>SutherlandManagementTeamLead\Sutherland_Chat_Answer_Rate_Last_30_ds7</members>
+        <members>SutherlandManagementTeamLead\Sutherland_Chat_Answer_Rate_Today_mEZ</members>
+        <members>SutherlandManagementTeamLead\Sutherland_Closed_Cases_MTD_Btv</members>
+        <members>SutherlandManagementTeamLead\Sutherland_Created_Cases_MTD_kWI</members>
+        <members>SykesManagementTeamLead\Sykes_Chat_Ans_by_Status_L_30_fzo</members>
+        <members>SykesManagementTeamLead\Sykes_Chat_Answer_by_Status_Last_30_VgC</members>
+        <members>SykesManagementTeamLead\Sykes_Chat_Answer_Rate_Last_30_PHA</members>
+        <members>SykesManagementTeamLead\Sykes_Chat_Answer_Rate_Today_v1g</members>
+        <members>SykesManagementTeamLead\Sykes_Closed_Cases_MTD_gDD</members>
+        <members>SykesManagementTeamLead\Sykes_Created_Cases_MTD_QIn</members>
         <name>Report</name>
     </types>
 </Package>

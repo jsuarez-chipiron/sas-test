@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <chart>
+        <backgroundColor1>#FFFFFF</backgroundColor1>
+        <backgroundColor2>#FFFFFF</backgroundColor2>
+        <backgroundFadeDir>Diagonal</backgroundFadeDir>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>HorizontalBar</chartType>
+        <enableHoverLabels>false</enableHoverLabels>
+        <expandOthers>true</expandOthers>
+        <groupingColumn>CASE_NUMBER</groupingColumn>
+        <location>CHART_BOTTOM</location>
+        <showAxisLabels>false</showAxisLabels>
+        <showPercentage>false</showPercentage>
+        <showTotal>false</showTotal>
+        <showValues>false</showValues>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <textColor>#000000</textColor>
+        <textSize>12</textSize>
+        <titleColor>#000000</titleColor>
+        <titleSize>18</titleSize>
+    </chart>
+    <columns>
+        <field>OWNER</field>
+    </columns>
     <columns>
         <field>ACCOUNT.NAME</field>
     </columns>
@@ -21,31 +48,28 @@
     <columns>
         <field>AGE</field>
     </columns>
-    <columns>
-        <field>OPEN</field>
-    </columns>
-    <columns>
-        <field>CLOSED</field>
-    </columns>
-    <columns>
-        <field>CASE_NUMBER</field>
-    </columns>
     <filter>
+        <criteriaItems>
+            <column>CLOSED</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>0</value>
+        </criteriaItems>
         <criteriaItems>
             <column>Case.Vendor__c</column>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>Sutherland</value>
+            <value>Sykes</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>OWNER</field>
+        <field>CASE_NUMBER</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Sutherland - # Cases by Queue</name>
+    <name>Sykes - # Open Cases</name>
     <params>
         <name>units</name>
         <value>m</value>
@@ -55,7 +79,7 @@
         <value>1</value>
     </params>
     <reportType>CaseList</reportType>
-    <scope>queue</scope>
+    <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>

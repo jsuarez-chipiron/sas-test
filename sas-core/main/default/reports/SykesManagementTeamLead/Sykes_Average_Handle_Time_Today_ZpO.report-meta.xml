@@ -13,26 +13,30 @@
         <field>TYPE</field>
     </columns>
     <columns>
+        <field>STATUS</field>
+    </columns>
+    <columns>
+        <field>PRIORITY</field>
+    </columns>
+    <columns>
         <field>CREATED_DATE</field>
     </columns>
     <columns>
-        <field>CLOSED_DATE</field>
-    </columns>
-    <columns>
+        <aggregateTypes>Average</aggregateTypes>
         <field>AGE</field>
     </columns>
     <columns>
-        <field>Case.FirstClosingDate__c</field>
+        <field>OPEN</field>
     </columns>
     <columns>
-        <field>CASE_NUMBER</field>
+        <field>CLOSED</field>
     </columns>
     <filter>
         <criteriaItems>
-            <column>CLOSED</column>
-            <isUnlocked>false</isUnlocked>
+            <column>ORIGIN</column>
+            <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value>1</value>
+            <value>Chat</value>
         </criteriaItems>
         <criteriaItems>
             <column>Case.Vendor__c</column>
@@ -42,8 +46,13 @@
         </criteriaItems>
         <language>en_US</language>
     </filter>
-    <format>Tabular</format>
-    <name>Sykes - Closed Cases MTD</name>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>CASE_NUMBER</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Sykes - Average Handle Time Today</name>
     <params>
         <name>units</name>
         <value>m</value>
@@ -59,6 +68,6 @@
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>CREATED_DATEONLY</dateColumn>
-        <interval>INTERVAL_THISMONTH</interval>
+        <interval>INTERVAL_TODAY</interval>
     </timeFrameFilter>
 </Report>

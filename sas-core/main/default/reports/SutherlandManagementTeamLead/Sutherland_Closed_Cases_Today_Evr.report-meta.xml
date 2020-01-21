@@ -13,6 +13,12 @@
         <field>TYPE</field>
     </columns>
     <columns>
+        <field>STATUS</field>
+    </columns>
+    <columns>
+        <field>PRIORITY</field>
+    </columns>
+    <columns>
         <field>CREATED_DATE</field>
     </columns>
     <columns>
@@ -44,7 +50,8 @@
     </filter>
     <format>Summary</format>
     <groupingsDown>
-        <field>CLOSED_DATEONLY</field>
+        <dateGranularity>Day</dateGranularity>
+        <field>ORIGIN</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Sutherland - # Closed Cases Today</name>

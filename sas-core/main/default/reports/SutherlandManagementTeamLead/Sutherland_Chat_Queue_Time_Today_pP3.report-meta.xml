@@ -15,7 +15,7 @@
         <datatype>number</datatype>
         <description>Avg Wait time and Avg Abandoned After</description>
         <developerName>FORMULA2</developerName>
-        <isActive>false</isActive>
+        <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
         <masterLabel>Total Wait Time</masterLabel>
         <scale>0</scale>
@@ -53,7 +53,7 @@
             <column>LiveChatTranscript$Status</column>
             <isUnlocked>true</isUnlocked>
             <operator>notEqual</operator>
-            <value>,0,5</value>
+            <value/>
         </criteriaItems>
         <criteriaItems>
             <column>LiveChatTranscript$Case.Origin</column>

@@ -4,6 +4,9 @@
         <field>OWNER</field>
     </columns>
     <columns>
+        <field>ORIGIN</field>
+    </columns>
+    <columns>
         <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
@@ -13,16 +16,17 @@
         <field>TYPE</field>
     </columns>
     <columns>
+        <field>STATUS</field>
+    </columns>
+    <columns>
+        <field>PRIORITY</field>
+    </columns>
+    <columns>
         <field>CREATED_DATE</field>
     </columns>
     <columns>
-        <field>CLOSED_DATE</field>
-    </columns>
-    <columns>
+        <aggregateTypes>Average</aggregateTypes>
         <field>AGE</field>
-    </columns>
-    <columns>
-        <field>Case.FirstClosingDate__c</field>
     </columns>
     <columns>
         <field>OPEN</field>
@@ -35,15 +39,25 @@
     </columns>
     <filter>
         <criteriaItems>
+            <column>ORIGIN</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Chat</value>
+        </criteriaItems>
+        <criteriaItems>
             <column>Case.Vendor__c</column>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>Sutherland</value>
+            <value>Sykes</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>
-    <format>Tabular</format>
-    <name>Sutherland - Created Cases MTD</name>
+    <format>Summary</format>
+    <groupingsDown>
+        <field>CLOSED_DATEONLY</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Sykes - Average Handle Time Last 30</name>
     <params>
         <name>units</name>
         <value>m</value>
@@ -58,7 +72,7 @@
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
-        <dateColumn>CREATED_DATEONLY</dateColumn>
-        <interval>INTERVAL_THISMONTH</interval>
+        <dateColumn>CLOSED_DATEONLY</dateColumn>
+        <interval>INTERVAL_LAST30</interval>
     </timeFrameFilter>
 </Report>

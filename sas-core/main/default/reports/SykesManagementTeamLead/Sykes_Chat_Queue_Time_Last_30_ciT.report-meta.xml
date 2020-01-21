@@ -71,6 +71,10 @@
     </filter>
     <format>Summary</format>
     <groupingsDown>
+        <field>LiveChatTranscript$CreatedDate</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
         <dateGranularity>Day</dateGranularity>
         <field>LiveChatTranscript$Status</field>
         <sortOrder>Desc</sortOrder>

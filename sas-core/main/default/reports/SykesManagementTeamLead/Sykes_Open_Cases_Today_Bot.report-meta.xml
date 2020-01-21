@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>STATUS</field>
-    </columns>
-    <columns>
         <field>OWNER</field>
     </columns>
     <columns>
@@ -16,6 +13,9 @@
         <field>TYPE</field>
     </columns>
     <columns>
+        <field>STATUS</field>
+    </columns>
+    <columns>
         <field>PRIORITY</field>
     </columns>
     <columns>
@@ -23,6 +23,9 @@
     </columns>
     <columns>
         <field>AGE</field>
+    </columns>
+    <columns>
+        <field>CASE_NUMBER</field>
     </columns>
     <filter>
         <criteriaItems>
@@ -42,7 +45,7 @@
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>CLOSED</field>
+        <field>ORIGIN</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Sykes - # Open Cases Today</name>
