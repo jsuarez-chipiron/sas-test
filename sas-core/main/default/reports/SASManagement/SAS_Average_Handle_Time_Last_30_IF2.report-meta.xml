@@ -4,6 +4,9 @@
         <field>OWNER</field>
     </columns>
     <columns>
+        <field>ORIGIN</field>
+    </columns>
+    <columns>
         <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
@@ -36,8 +39,7 @@
     </columns>
     <format>Summary</format>
     <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>ORIGIN</field>
+        <field>CLOSED_DATEONLY</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>SAS - Average Handle Time Last 30</name>
@@ -55,7 +57,7 @@
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
-        <dateColumn>CREATED_DATEONLY</dateColumn>
+        <dateColumn>CLOSED_DATEONLY</dateColumn>
         <interval>INTERVAL_LAST30</interval>
     </timeFrameFilter>
 </Report>
