@@ -11,7 +11,38 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
-        <valueSetName>Team</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Team 1</fullName>
+                <default>false</default>
+                <label>Team 1</label>
+            </value>
+            <value>
+                <fullName>Team 2</fullName>
+                <default>false</default>
+                <label>Team 2</label>
+            </value>
+            <value>
+                <fullName>Team 3</fullName>
+                <default>false</default>
+                <label>Team 3</label>
+            </value>
+            <value>
+                <fullName>Team 4</fullName>
+                <default>false</default>
+                <label>Team 4</label>
+            </value>
+            <value>
+                <fullName>Team 5</fullName>
+                <default>false</default>
+                <label>Team 5</label>
+            </value>
+            <value>
+                <fullName>Team 6</fullName>
+                <default>false</default>
+                <label>Team 6</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>
