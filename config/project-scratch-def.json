@@ -96,6 +96,9 @@
     "omniChannelSettings": {
       "enableOmniChannel": true
     },
+    "liveMessageSettings": {
+      "enableLiveMessage": true
+    },
     "pathAssistantSettings":{
       "pathAssistantEnabled": true
     },
