@@ -37,6 +37,12 @@ private class GDPR_Delete_Test {
         insert spList;
     }
     /**
+        Sets up mock retention fields for tests due to a Salesforce bug which occurs when running all tests and fetching field definitions
+    */
+    static void setupMockRetentionFields(){
+        GDPR_WipeCaseService.RETAIN_ADD = new Set<String>{'Type','Origin','Status','ClosedDate'};
+    }
+    /**
         Tests that account data is wiped after the retention period but left for account with open cases
     */
     @isTest static void deleteAccountData(){
@@ -66,6 +72,7 @@ private class GDPR_Delete_Test {
         Tests that accounts can be wiped completely from the system
     */
     @isTest static void wipeAccount(){
+        setupMockRetentionFields();
         Account acc = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,EBLevel__c FROM Account WHERE LastName='TESTACC1'];
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
@@ -170,6 +177,7 @@ private class GDPR_Delete_Test {
         Tests that cases within the retention period are kept
     */
     @isTest static void retainCase(){
+        setupMockRetentionFields();
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
         sg.set('DeletePeriodCase','1');
@@ -191,6 +199,7 @@ private class GDPR_Delete_Test {
         Tests case wipe
     */
     @isTest static void wipeCase(){
+        setupMockRetentionFields();
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
         sg.set('WipePeriodCase','-1');
@@ -212,6 +221,7 @@ private class GDPR_Delete_Test {
         Tests case wipe using the case id as input to wipe specific case ids
     */
     @isTest static void wipeCaseManual(){
+        setupMockRetentionFields();
         Test.startTest();
         MessagingSession ms = [SELECT Id,CaseId FROM MessagingSession];
         GDPR_DeleteComponentController.deleteRecordData(ms.CaseId);
