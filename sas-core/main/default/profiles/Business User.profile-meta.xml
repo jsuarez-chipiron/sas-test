@@ -190,6 +190,17 @@
         <enabled>false</enabled>
         <externalDataSource>SAS_External_Systems</externalDataSource>
     </externalDataSourceAccesses>
+
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SocialPost.FCS_SubTeam__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SocialPost.FCS_Team__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.CODSId__c</field>
