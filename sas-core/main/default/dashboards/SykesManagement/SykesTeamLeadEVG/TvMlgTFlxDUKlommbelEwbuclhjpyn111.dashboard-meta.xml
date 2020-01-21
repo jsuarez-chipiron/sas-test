@@ -10,14 +10,18 @@
     <dashboardFilters>
         <dashboardFilterOptions>
             <operator>equals</operator>
-            <values>OER</values>
+            <values>ODE</values>
+        </dashboardFilterOptions>
+        <dashboardFilterOptions>
+            <operator>equals</operator>
+            <values>EVG</values>
         </dashboardFilterOptions>
         <name>Site</name>
     </dashboardFilters>
     <dashboardFilters>
         <dashboardFilterOptions>
             <operator>equals</operator>
-            <values>Global Support</values>
+            <values>Direct Sales</values>
         </dashboardFilterOptions>
         <name>Virtual Organization</name>
     </dashboardFilters>
@@ -84,7 +88,7 @@
                 </groupingSortProperties>
                 <header>Open Cases</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SutherlandManagementTeamLead/Sutherland_Open_Cases_Last_30_WbQ</report>
+                <report>SykesManagementTeamLead/Sykes_Open_Cases_Last_30_geV</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -130,7 +134,7 @@
                 <header>Chat - Offered &amp; Answer %</header>
                 <legendPosition>Right</legendPosition>
                 <maxValuesDisplayed>6</maxValuesDisplayed>
-                <report>SutherlandManagementTeamLead/Sutherland_Chat_Answer_Today_WGT</report>
+                <report>SykesManagementTeamLead/Sykes_Chat_Answer_Today_gSU</report>
                 <showPercentage>true</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
@@ -170,7 +174,7 @@
                 <indicatorLowColor>#00716B</indicatorLowColor>
                 <indicatorMiddleColor>#C23934</indicatorMiddleColor>
                 <metricLabel>Today</metricLabel>
-                <report>SutherlandManagementTeamLead/Sutherland_Chat_Queue_Time_Today_pP3</report>
+                <report>SykesManagementTeamLead/Sykes_Chat_Queue_Time_Today_NxZ</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>0</rowIndex>
@@ -204,7 +208,7 @@
                 <indicatorLowColor>#C23934</indicatorLowColor>
                 <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
                 <metricLabel>Today</metricLabel>
-                <report>SutherlandManagementTeamLead/Sutherland_Open_Cases_Today_NPv</report>
+                <report>SykesManagementTeamLead/Sykes_Open_Cases_Today_Bot</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>0</rowIndex>
@@ -239,7 +243,7 @@
                 <indicatorLowColor>#00716B</indicatorLowColor>
                 <indicatorMiddleColor>#C23934</indicatorMiddleColor>
                 <metricLabel>Last 30 Days</metricLabel>
-                <report>SutherlandManagementTeamLead/Sutherland_Chat_Queue_Time_Last_30_2ca</report>
+                <report>SykesManagementTeamLead/Sykes_Chat_Queue_Time_Last_30_ciT</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>4</rowIndex>
@@ -273,7 +277,7 @@
                 <indicatorLowColor>#00716B</indicatorLowColor>
                 <indicatorMiddleColor>#00716B</indicatorMiddleColor>
                 <metricLabel>Today</metricLabel>
-                <report>SutherlandManagementTeamLead/Sutherland_Closed_Cases_Today_Evr</report>
+                <report>SykesManagementTeamLead/Sykes_Closed_Cases_Today_yPP</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>4</rowIndex>
@@ -303,11 +307,11 @@
                 <header># Open Cases</header>
                 <indicatorBreakpoint1>33.0</indicatorBreakpoint1>
                 <indicatorBreakpoint2>67.0</indicatorBreakpoint2>
-                <indicatorHighColor>#C23934</indicatorHighColor>
+                <indicatorHighColor>#00716B</indicatorHighColor>
                 <indicatorLowColor>#C23934</indicatorLowColor>
-                <indicatorMiddleColor>#C23934</indicatorMiddleColor>
+                <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
                 <metricLabel>Backlog</metricLabel>
-                <report>SutherlandManagementTeamLead/Sutherland_Open_Cases_wHY</report>
+                <report>SykesManagementTeamLead/Sykes_Open_Cases_ciy</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>8</rowIndex>
@@ -339,6 +343,7 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>true</expandOthers>
+                <footer>Last 30 Days</footer>
                 <groupingColumn>LiveChatTranscript$Status</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
@@ -349,12 +354,11 @@
                 <header>Chat - Offered &amp; Answer %</header>
                 <legendPosition>Right</legendPosition>
                 <maxValuesDisplayed>6</maxValuesDisplayed>
-                <report>SutherlandManagementTeamLead/Sutherland_Chat_Answer_L30_by_Status_mM4</report>
+                <report>SykesManagementTeamLead/Sykes_Chat_Answer_Last_30_by_Status_hfe</report>
                 <showPercentage>true</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
-                <title>Last 30 Days</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>8</rowIndex>
@@ -389,7 +393,7 @@
                 <indicatorLowColor>#C23934</indicatorLowColor>
                 <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
                 <metricLabel>Today</metricLabel>
-                <report>SutherlandManagementTeamLead/Sutherland_Average_Handle_Time_Today_pCk</report>
+                <report>SykesManagementTeamLead/Sykes_Average_Handle_Time_Today_ZpO</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>8</rowIndex>
@@ -424,7 +428,7 @@
                 <indicatorLowColor>#C23934</indicatorLowColor>
                 <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
                 <metricLabel>Last 30 Days</metricLabel>
-                <report>SutherlandManagementTeamLead/Sutherland_Average_Handle_Time_Last_30_8Ur</report>
+                <report>SykesManagementTeamLead/Sykes_Average_Handle_Time_Last_30_Rvg</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>12</rowIndex>
@@ -465,7 +469,7 @@
                 </groupingSortProperties>
                 <header>Chat - Answer %</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SutherlandManagementTeamLead/Sutherland_Chat_Answer_Last_30_hoR</report>
+                <report>SykesManagementTeamLead/Sykes_Chat_Answer_Last_30_9nR</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -511,7 +515,7 @@
                 </groupingSortProperties>
                 <header>Chat - Queue Time (Seconds)</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SutherlandManagementTeamLead/Sutherland_Chat_Queue_Time_Last_30_2ca</report>
+                <report>SykesManagementTeamLead/Sykes_Chat_Queue_Time_Last_30_ciT</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -556,7 +560,7 @@
                 </groupingSortProperties>
                 <header>Closed Cases</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SutherlandManagementTeamLead/Sutherland_Closed_Cases_Last_30_eJF</report>
+                <report>SykesManagementTeamLead/Sykes_Closed_Cases_Last_30_nbd</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -602,7 +606,7 @@
                 </groupingSortProperties>
                 <header>Chat - AHT (Minutes)</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SutherlandManagementTeamLead/Sutherland_Average_Handle_Time_Last_30_8Ur</report>
+                <report>SykesManagementTeamLead/Sykes_Average_Handle_Time_Last_30_Rvg</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -617,8 +621,9 @@
     </dashboardGridLayout>
     <dashboardType>SpecifiedUser</dashboardType>
     <isGridLayout>true</isGridLayout>
+    <runningUser>test-fj5nztv1tjby@example.com</runningUser>
     <textColor>#000000</textColor>
-    <title>Sutherland - Management</title>
+    <title>Sykes - Team Lead EVG</title>
     <titleColor>#000000</titleColor>
     <titleSize>12</titleSize>
 </Dashboard>
