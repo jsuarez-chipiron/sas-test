@@ -236,4 +236,11 @@
         <members>SykesManagementTeamLead\Sykes_Created_Cases_MTD_QIn</members>
         <name>Report</name>
     </types>
+
+    <!--2020-01-21 - Sanna Sörberg - Delete fields-->
+    <types>
+        <members>SocialPost.SubTeam__c</members>
+        <members>SocialPost.Team__c</members>
+        <name>CustomField</name>
+    </types>
 </Package>
