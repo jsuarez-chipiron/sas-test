@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Access to Omni statuses Break, Lunch and Busy</description>
+    <description>Access to Omni statuses Break, Lunch, In a meeting and Busy</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Service Presences - Breaks</label>
     <license>Salesforce</license>
