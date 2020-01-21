@@ -35,7 +35,7 @@ Test method for generation of test data used in more than one method
         system.assertEquals(false, hiddenSp.PostReplied__c);
         system.assertEquals(false, hiddenSp.PostIgnored__c);
         system.assertEquals(false, hiddenSp.PostLiked__c);
-        system.assertEquals(system.now(), hiddenSp.ClosedDate__c);
+        system.assertEquals(true, hiddenSp.ClosedDate__c < system.now().addSeconds(10) && hiddenSp.ClosedDate__c > system.now().addSeconds(-10));
         system.assertEquals(false, hiddenSp.Reopened__c);
         hiddenSp.Status=null;
         update hiddenSp;
@@ -64,7 +64,7 @@ Test method for generation of test data used in more than one method
         system.assertEquals(false, ignoredSp.PostReplied__c);
         system.assertEquals(true, ignoredSp.PostIgnored__c);
         system.assertEquals(false, ignoredSp.PostLiked__c);
-        system.assertEquals(system.now(), ignoredSp.ClosedDate__c);
+        system.assertEquals(true, ignoredSp.ClosedDate__c < system.now().addSeconds(10) && ignoredSp.ClosedDate__c > system.now().addSeconds(-10));
         system.assertEquals(false, ignoredSp.Reopened__c);
     }
 
@@ -85,7 +85,7 @@ Test method for generation of test data used in more than one method
         system.assertEquals(false, likedSp.PostReplied__c);
         system.assertEquals(false, likedSp.PostIgnored__c);
         system.assertEquals(true, likedSp.PostLiked__c);
-        system.assertEquals(system.now(), likedSp.ClosedDate__c);
+        system.assertEquals(true, likedSp.ClosedDate__c < system.now().addSeconds(10) && likedSp.ClosedDate__c > system.now().addSeconds(-10));
         system.assertEquals(false, likedSp.Reopened__c);
     }
 
@@ -105,7 +105,7 @@ Test method for generation of test data used in more than one method
         system.assertEquals(true, repliedSp.PostReplied__c);
         system.assertEquals(false, repliedSp.PostIgnored__c);
         system.assertEquals(false, repliedSp.PostLiked__c);
-        system.assertEquals(system.now(), repliedSp.ClosedDate__c);
+        system.assertEquals(true, repliedSp.ClosedDate__c < system.now().addSeconds(10) && repliedSp.ClosedDate__c > system.now().addSeconds(-10));
     }
 
     /**
