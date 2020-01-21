@@ -629,7 +629,6 @@
     </dashboardGridLayout>
     <dashboardType>LoggedInUser</dashboardType>
     <isGridLayout>true</isGridLayout>
-    <runningUser>test-0eikr8hfgwba@example.com</runningUser>
     <textColor>#000000</textColor>
     <title>SAS - Management</title>
     <titleColor>#000000</titleColor>
