@@ -751,8 +751,38 @@
         <field>User.VirtualOrganization__c</field>
         <readable>true</readable>
     </fieldPermissions>
+
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SocialPost.Vendor__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SocialPost.VirtualOrganization__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <layoutAssignments>
+        <layout>AD_RoleLink__mdt-AD Role Link Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AD_RolePermission__mdt-AD Role Permission Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AD_RoleUserDetail__mdt-AD Role User Detail Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AD_Role__mdt-AD Role Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Account-Account Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>C_GeneralSetting__mdt-General Setting Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>C_Log__c-Log Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-SAS Feedback Layout</layout>
