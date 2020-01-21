@@ -193,13 +193,33 @@
         <name>Dashboard</name>
     </types>
 	
-	<!--2020-01-15 - Philip Ossler - Delete dashboard-->
+	<!--2020-01-20 - Ludvig Wälimaaaaaa - Delete reports-->
     <types>
         <members>SykesManagementTeamLead\Sykes_Abandoned_Cases_MB2</members>
 		<members>SykesManagementTeamLead\Sykes_Case_Resolution_Time_by_Type_MTD_8l7</members>
 		<members>SykesManagementTeamLead\Sykes_Cases_by_Queue_HXr</members>
 		<members>SykesManagementTeamLead\Sykes_Offered_Chats_Last_30_ioK</members>
 		<members>SykesManagementTeamLead\Sykes_Offered_Chats_Today_Hiv</members>
+        <name>Report</name>
+    </types>
+
+    <!--2020-01-21 - Philip Ossler - Delete reports-->
+    <types>
+        <members>SASManagement\Case_Resolution_Time_by_Type_MTD_WZG</members>
+		<members>SASManagement\SAS_Abandoned_Cases_J0n</members>
+		<members>SASManagement\SAS_Average_Age_of_Open_Cases_Vk5</members>
+		<members>SASManagement\SAS_Average_Handle_Time_AHT_YXc</members>
+		<members>SASManagement\SAS_Cases_by_Language_3EC</members>
+        <members>SASManagement\SAS_Cases_by_Queue_uyU</members>
+        <members>SASManagement\SAS_Chat_Answer_Rate_MTD_846</members>
+        <members>SASManagement\SAS_Closed_Cases_by_Case_Owner_WVc</members>
+        <members>SASManagement\SAS_Closed_Cases_by_Type_Llc</members>
+        <members>SASManagement\SAS_Closed_Cases_MTD_aqS</members>
+        <members>SASManagement\SAS_Created_Cases_MTD_SFM</members>
+        <members>SASManagement\SAS_Offered_Chats_MTD_AHJ</members>
+        <members>SASManagement\SAS_Open_Cases_by_Priority_g72</members>
+        <members>SASManagement\SAS_Open_Cases_by_Status_fl7</members>
+        <members>SASManagement\SAS_Open_Cases_by_Type_SZW</members>
         <name>Report</name>
     </types>
 </Package>
