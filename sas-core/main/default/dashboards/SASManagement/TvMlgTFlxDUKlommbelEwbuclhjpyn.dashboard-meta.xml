@@ -127,7 +127,7 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>Chat Offered &amp; Answer %</header>
+                <header>Chat - Offered &amp; Answer %</header>
                 <legendPosition>Right</legendPosition>
                 <maxValuesDisplayed>6</maxValuesDisplayed>
                 <report>SASManagement/SAS_Chat_Answer_Today_1pm</report>
@@ -163,7 +163,7 @@
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
-                <header>Avg Chat Queue Time</header>
+                <header>Chat - Avg Queue Time</header>
                 <indicatorBreakpoint1>40.0</indicatorBreakpoint1>
                 <indicatorBreakpoint2>67.0</indicatorBreakpoint2>
                 <indicatorHighColor>#C23934</indicatorHighColor>
@@ -232,7 +232,7 @@
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
-                <header>Avg Chat Queue Time</header>
+                <header>Chat - Avg Queue Time</header>
                 <indicatorBreakpoint1>40.0</indicatorBreakpoint1>
                 <indicatorBreakpoint2>67.0</indicatorBreakpoint2>
                 <indicatorHighColor>#C23934</indicatorHighColor>
@@ -380,7 +380,7 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>Chat Offered &amp; Answer %</header>
+                <header>Chat - Offered &amp; Answer %</header>
                 <legendPosition>Right</legendPosition>
                 <maxValuesDisplayed>6</maxValuesDisplayed>
                 <report>SASManagement/SAS_Chat_Answer_Last_30_by_Status_nUS</report>
@@ -416,7 +416,7 @@
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
-                <header>Average Handle Time (Minutes)</header>
+                <header>Chat - AHT (Minutes)</header>
                 <indicatorBreakpoint1>33.0</indicatorBreakpoint1>
                 <indicatorBreakpoint2>67.0</indicatorBreakpoint2>
                 <indicatorHighColor>#00716B</indicatorHighColor>
@@ -451,7 +451,7 @@
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
-                <header>Average Handle Time</header>
+                <header>Chat - AHT (Minutes)</header>
                 <indicatorBreakpoint1>33.0</indicatorBreakpoint1>
                 <indicatorBreakpoint2>67.0</indicatorBreakpoint2>
                 <indicatorHighColor>#00716B</indicatorHighColor>
@@ -497,7 +497,7 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>Chat Answer %</header>
+                <header>Chat - Answer %</header>
                 <legendPosition>Bottom</legendPosition>
                 <report>SASManagement/SAS_Chat_Answer_Last_30_D0S</report>
                 <showPercentage>false</showPercentage>
@@ -543,7 +543,7 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>Chat Queue Time</header>
+                <header>Chat - Queue Time (Seconds)</header>
                 <legendPosition>Bottom</legendPosition>
                 <report>SASManagement/SAS_Chat_Queue_Time_Last_30_U6j</report>
                 <showPercentage>false</showPercentage>
@@ -634,7 +634,7 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>Average Handle Time (Minutes)</header>
+                <header>Chat - AHT (Minutes)</header>
                 <legendPosition>Bottom</legendPosition>
                 <report>SASManagement/SAS_Average_Handle_Time_Last_30_IF2</report>
                 <showPercentage>false</showPercentage>

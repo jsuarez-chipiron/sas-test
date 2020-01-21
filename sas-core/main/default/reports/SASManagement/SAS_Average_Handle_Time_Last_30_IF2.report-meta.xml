@@ -37,6 +37,15 @@
     <columns>
         <field>CASE_NUMBER</field>
     </columns>
+    <filter>
+        <criteriaItems>
+            <column>ORIGIN</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Chat</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
     <format>Summary</format>
     <groupingsDown>
         <field>CLOSED_DATEONLY</field>
