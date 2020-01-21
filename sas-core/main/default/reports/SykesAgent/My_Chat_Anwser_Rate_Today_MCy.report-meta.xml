@@ -14,7 +14,9 @@
         <field>LiveChatTranscript$Name</field>
     </columns>
     <columns>
-        <aggregateTypes>Sum</aggregateTypes>
+        <aggregateTypes>Average</aggregateTypes>
+        <aggregateTypes>Maximum</aggregateTypes>
+        <aggregateTypes>Minimum</aggregateTypes>
         <field>LiveChatTranscript$Abandoned</field>
     </columns>
     <columns>
@@ -27,7 +29,9 @@
         <field>LiveChatTranscript$EndTime</field>
     </columns>
     <columns>
-        <aggregateTypes>Sum</aggregateTypes>
+        <aggregateTypes>Average</aggregateTypes>
+        <aggregateTypes>Maximum</aggregateTypes>
+        <aggregateTypes>Minimum</aggregateTypes>
         <field>LiveChatTranscript$WaitTime</field>
     </columns>
     <filter>
