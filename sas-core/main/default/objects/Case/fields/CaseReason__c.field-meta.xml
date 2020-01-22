@@ -12,7 +12,7 @@
     <valueSet>
         <controllingField>Type</controllingField>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>ADM</fullName>
                 <default>false</default>
@@ -99,6 +99,11 @@
                 <label>Digital support</label>
             </value>
             <value>
+                <fullName>Environment</fullName>
+                <default>false</default>
+                <label>Environment</label>
+            </value>
+            <value>
                 <fullName>Error</fullName>
                 <default>false</default>
                 <label>Error</label>
@@ -107,6 +112,11 @@
                 <fullName>Eurobonus</fullName>
                 <default>false</default>
                 <label>Eurobonus</label>
+            </value>
+            <value>
+                <fullName>Extraordinary</fullName>
+                <default>false</default>
+                <label>Extraordinary</label>
             </value>
             <value>
                 <fullName>Fare Quote</fullName>
@@ -132,6 +142,11 @@
                 <fullName>Flight info</fullName>
                 <default>false</default>
                 <label>Flight info</label>
+            </value>
+            <value>
+                <fullName>Food</fullName>
+                <default>false</default>
+                <label>Food</label>
             </value>
             <value>
                 <fullName>Group booking - direct groups</fullName>
@@ -172,6 +187,11 @@
                 <fullName>OAL</fullName>
                 <default>false</default>
                 <label>OAL</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
             </value>
             <value>
                 <fullName>Overbooked flights</fullName>
@@ -269,29 +289,9 @@
                 <label>Travel pass</label>
             </value>
             <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
-            </value>
-            <value>
-                <fullName>Extraordinary</fullName>
-                <default>false</default>
-                <label>Extraordinary</label>
-            </value>
-            <value>
-                <fullName>Food</fullName>
-                <default>false</default>
-                <label>Food</label>
-            </value>
-            <value>
                 <fullName>WiFi</fullName>
                 <default>false</default>
                 <label>WiFi</label>
-            </value>
-            <value>
-                <fullName>Environment</fullName>
-                <default>false</default>
-                <label>Environment</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -355,6 +355,14 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
             <valueName>Project</valueName>
         </valueSettings>
         <valueSettings>
@@ -376,14 +384,6 @@
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
             <valueName>Ticketing</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Tariff</controllingFieldValue>
@@ -449,9 +449,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Environment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Extraordinary</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -461,6 +471,10 @@
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <valueName>Flight info</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Food</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -522,14 +536,6 @@
             <controllingFieldValue>Information</controllingFieldValue>
             <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Travel pass</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Extraordinary</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Food</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>

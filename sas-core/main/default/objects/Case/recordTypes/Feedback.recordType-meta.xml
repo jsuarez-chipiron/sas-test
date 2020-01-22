@@ -39,6 +39,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Environment</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Error</fullName>
             <default>false</default>
         </values>
@@ -56,6 +60,10 @@
         </values>
         <values>
             <fullName>Flight info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Food</fullName>
             <default>false</default>
         </values>
         <values>
@@ -116,6 +124,10 @@
         </values>
         <values>
             <fullName>Travel pass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WiFi</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -705,6 +717,108 @@
         <picklist>Reason</picklist>
         <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SubTeam__c</picklist>
+        <values>
+            <fullName>Team 1%2E1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 1%2E2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 1%2E3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 2%2E1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 2%2E2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 2%2E3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 3%2E1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 3%2E2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 3%2E3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 4%2E1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 4%2E2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 4%2E3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 5%2E1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 5%2E2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 5%2E3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 6%2E1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 6%2E2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 6%2E3</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Team__c</picklist>
+        <values>
+            <fullName>Team 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 6</fullName>
             <default>false</default>
         </values>
     </picklistValues>
