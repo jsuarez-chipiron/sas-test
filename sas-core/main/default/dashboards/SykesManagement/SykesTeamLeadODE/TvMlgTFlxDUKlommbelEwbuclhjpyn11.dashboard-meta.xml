@@ -150,13 +150,12 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>Open Cases</header>
+                <header># Open Cases Last 30</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SykesManagementTeamLead/Sykes_Open_Cases_Last_30_geV</report>
+                <report>SykesTeamLeadODE/Sykes_ODE_Open_Cases_Last_30_tpO</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
-                <title>Last 30 Days</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>0</rowIndex>
@@ -374,8 +373,7 @@
                 <indicatorHighColor>#00716B</indicatorHighColor>
                 <indicatorLowColor>#C23934</indicatorLowColor>
                 <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
-                <metricLabel>Backlog</metricLabel>
-                <report>SykesManagementTeamLead/Sykes_Open_Cases_ciy</report>
+                <report>SykesTeamLeadODE/Sykes_ODE_Open_Cases_yQ1</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>8</rowIndex>
