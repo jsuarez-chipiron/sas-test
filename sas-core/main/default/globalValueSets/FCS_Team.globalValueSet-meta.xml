@@ -30,6 +30,6 @@
         <default>false</default>
         <label>Team 6</label>
     </customValue>
-    <masterLabel>FCS_Team</masterLabel>
+    <masterLabel>FCS Team</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

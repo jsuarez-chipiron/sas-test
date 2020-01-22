@@ -112,7 +112,7 @@
             <name>referenceTargetField</name>
         </processMetadataValues>
         <name>myRule_1_A1</name>
-        <label>Update social post with user fields</label>
+        <label>Update fields based on owner</label>
         <locationX>100</locationX>
         <locationY>200</locationY>
         <filters>
@@ -128,6 +128,42 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Site</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>FCS_Site__c</field>
+            <value>
+                <elementReference>myVariable_current.Owner:User.FCS_Site__c</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <processMetadataValues>
                 <name>dataType</name>
@@ -161,7 +197,7 @@
             </processMetadataValues>
             <field>FCS_SubTeam__c</field>
             <value>
-                <elementReference>myVariable_current.Owner:User.SubTeam__c</elementReference>
+                <elementReference>myVariable_current.Owner:User.FCS_SubTeam__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -197,50 +233,14 @@
             </processMetadataValues>
             <field>FCS_Team__c</field>
             <value>
-                <elementReference>myVariable_current.Owner:User.Team__c</elementReference>
+                <elementReference>myVariable_current.Owner:User.FCS_Team__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Site</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Reference</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>Site__c</field>
-            <value>
-                <elementReference>myVariable_current.Owner:User.Site__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
+                    <stringValue>Picklist</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -267,16 +267,16 @@
                     <stringValue>Reference</stringValue>
                 </value>
             </processMetadataValues>
-            <field>Vendor__c</field>
+            <field>FCS_Vendor__c</field>
             <value>
-                <elementReference>myVariable_current.Owner:User.Vendor__c</elementReference>
+                <elementReference>myVariable_current.Owner:User.FCS_Vendor__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
-                    <stringValue>String</stringValue>
+                    <stringValue>Picklist</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -303,9 +303,9 @@
                     <stringValue>Reference</stringValue>
                 </value>
             </processMetadataValues>
-            <field>VirtualOrganization__c</field>
+            <field>FCS_VirtualOrganization__c</field>
             <value>
-                <elementReference>myVariable_current.VirtualOrganization__c</elementReference>
+                <elementReference>myVariable_current.Owner:User.FCS_VirtualOrganization__c</elementReference>
             </value>
         </inputAssignments>
         <object>SocialPost</object>

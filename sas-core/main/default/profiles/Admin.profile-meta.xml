@@ -190,6 +190,48 @@
         <enabled>false</enabled>
         <externalDataSource>SAS_External_Systems</externalDataSource>
     </externalDataSourceAccesses>
+
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>User.FCS_Site__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>User.FCS_SubTeam__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>User.FCS_Team__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>User.FCS_Vendor__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>User.FCS_VirtualOrganization__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>SocialPost.FCS_Site__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>SocialPost.FCS_Vendor__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>SocialPost.FCS_VirtualOrganization__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
+
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.CMP__c</field>
@@ -203,12 +245,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.CompanyName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SocialPost.Site__c</field>
         <readable>true</readable>
     </fieldPermissions>
 
@@ -749,16 +785,6 @@
         <readable>true</readable>
     </fieldPermissions>
 
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SocialPost.Vendor__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SocialPost.VirtualOrganization__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     
     <layoutAssignments>
         <layout>AD_RoleLink__mdt-AD Role Link Layout</layout>

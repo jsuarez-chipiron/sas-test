@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Direct Sales</fullName>
+        <default>false</default>
+        <label>Direct Sales</label>
+    </customValue>
+    <customValue>
+        <fullName>Global Support</fullName>
+        <default>false</default>
+        <label>Global Support</label>
+    </customValue>
+    <description>The virtual organization of the user or record owner</description>
+    <masterLabel>FCS Virtual Organization</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>
