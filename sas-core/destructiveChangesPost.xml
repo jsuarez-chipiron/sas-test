@@ -65,4 +65,17 @@
         <name>CustomField</name>
     </types>
     
+        <!--2020-01-22 - Philip Ossler - Delete reports-->
+    <types>
+        <members>SASManagement\SAS_Chat_Answer_Last_30_by_Status_nUS</members>
+		<members>SASManagement\SAS_Chat_Answer_Last_30_D0S</members>
+		<members>SASManagement\SAS_Chat_Answer_Today_1pm</members>
+        <members>SutherlandManagementTeamLead\Sutherland_Chat_Answer_L30_by_Status_mM4</members>
+        <members>SutherlandManagementTeamLead\Sutherland_Chat_Answer_Last_30_hoR</members>
+        <members>SutherlandManagementTeamLead\Sutherland_Chat_Answer_Today_WGT</members>
+        <members>SykesManagementTeamLead\Sykes_Chat_Answer_Last_30_9nR</members>
+        <members>SykesManagementTeamLead\Sykes_Chat_Answer_Last_30_by_Status_hfe</members>
+        <members>SykesManagementTeamLead\Sykes_Chat_Queue_Time_Today_NxZ</members>
+        <name>Report</name>
+    </types>
 </Package>
