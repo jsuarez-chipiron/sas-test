@@ -79,6 +79,7 @@
         <name>Report</name>
     </types>
 
+    <!--2020-01-22 - Sanna Sörberg - Delete fields-->
     <types>
         <members>SocialPost.Site__c</members>
         <members>SocialPost.Vendor__c</members>
