@@ -108,38 +108,36 @@
                     <axisBinding>y</axisBinding>
                     <column>RowCount</column>
                 </chartSummary>
-                <componentType>Donut</componentType>
+                <componentType>Line</componentType>
                 <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Site__c</column>
+                    <column>Case.Site__c</column>
                 </dashboardFilterColumns>
                 <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.VirtualOrganization__c</column>
+                    <column>Case.VirtualOrganization__c</column>
                 </dashboardFilterColumns>
                 <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Team__c</column>
+                    <column>Case.Team__c</column>
                 </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
-                <expandOthers>true</expandOthers>
-                <groupingColumn>LiveChatTranscript$Status</groupingColumn>
+                <expandOthers>false</expandOthers>
+                <groupingColumn>CLOSED_DATEONLY</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>Chat - Offered &amp; Answer %</header>
-                <legendPosition>Right</legendPosition>
-                <maxValuesDisplayed>6</maxValuesDisplayed>
-                <report>SykesManagementTeamLead/Sykes_Chat_Answer_Today_gSU</report>
-                <showPercentage>true</showPercentage>
-                <showTotal>true</showTotal>
+                <header>Closed Cases</header>
+                <legendPosition>Bottom</legendPosition>
+                <report>SykesManagementTeamLead/Sykes_Closed_Cases_Last_30_nbd</report>
+                <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
-                <title>Today</title>
+                <title>Last 30 Days</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>0</rowIndex>
@@ -318,53 +316,6 @@
             <rowSpan>4</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
-            <colSpan>4</colSpan>
-            <columnIndex>4</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
-                <chartSummary>
-                    <axisBinding>y</axisBinding>
-                    <column>RowCount</column>
-                </chartSummary>
-                <componentType>Donut</componentType>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Team__c</column>
-                </dashboardFilterColumns>
-                <decimalPrecision>-1</decimalPrecision>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>true</expandOthers>
-                <footer>Last 30 Days</footer>
-                <groupingColumn>LiveChatTranscript$Status</groupingColumn>
-                <groupingSortProperties>
-                    <groupingSorts>
-                        <groupingLevel>g1</groupingLevel>
-                        <sortOrder>a</sortOrder>
-                    </groupingSorts>
-                </groupingSortProperties>
-                <header>Chat - Offered &amp; Answer %</header>
-                <legendPosition>Right</legendPosition>
-                <maxValuesDisplayed>6</maxValuesDisplayed>
-                <report>SykesManagementTeamLead/Sykes_Chat_Answer_Last_30_by_Status_hfe</report>
-                <showPercentage>true</showPercentage>
-                <showTotal>true</showTotal>
-                <showValues>true</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <useReportChart>false</useReportChart>
-            </dashboardComponent>
-            <rowIndex>8</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
             <colSpan>2</colSpan>
             <columnIndex>10</columnIndex>
             <dashboardComponent>
@@ -436,51 +387,6 @@
         </dashboardGridComponents>
         <dashboardGridComponents>
             <colSpan>4</colSpan>
-            <columnIndex>4</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
-                <chartSummary>
-                    <axisBinding>y</axisBinding>
-                    <column>FORMULA1</column>
-                </chartSummary>
-                <componentType>Line</componentType>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>LiveChatTranscript$Case.Team__c</column>
-                </dashboardFilterColumns>
-                <decimalPrecision>-1</decimalPrecision>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
-                <groupingColumn>LiveChatTranscript$CreatedDate</groupingColumn>
-                <groupingSortProperties>
-                    <groupingSorts>
-                        <groupingLevel>g1</groupingLevel>
-                        <sortOrder>a</sortOrder>
-                    </groupingSorts>
-                </groupingSortProperties>
-                <header>Chat - Answer %</header>
-                <legendPosition>Bottom</legendPosition>
-                <report>SykesManagementTeamLead/Sykes_Chat_Answer_Last_30_9nR</report>
-                <showPercentage>false</showPercentage>
-                <showValues>true</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <title>Last 30 Days</title>
-                <useReportChart>false</useReportChart>
-            </dashboardComponent>
-            <rowIndex>16</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>4</colSpan>
             <columnIndex>8</columnIndex>
             <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
@@ -523,51 +429,6 @@
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>16</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>4</colSpan>
-            <columnIndex>4</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
-                <chartSummary>
-                    <axisBinding>y</axisBinding>
-                    <column>RowCount</column>
-                </chartSummary>
-                <componentType>Line</componentType>
-                <dashboardFilterColumns>
-                    <column>Case.Site__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.VirtualOrganization__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Team__c</column>
-                </dashboardFilterColumns>
-                <decimalPrecision>-1</decimalPrecision>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
-                <groupingColumn>CLOSED_DATEONLY</groupingColumn>
-                <groupingSortProperties>
-                    <groupingSorts>
-                        <groupingLevel>g1</groupingLevel>
-                        <sortOrder>a</sortOrder>
-                    </groupingSorts>
-                </groupingSortProperties>
-                <header>Closed Cases</header>
-                <legendPosition>Bottom</legendPosition>
-                <report>SykesManagementTeamLead/Sykes_Closed_Cases_Last_30_nbd</report>
-                <showPercentage>false</showPercentage>
-                <showValues>true</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <title>Last 30 Days</title>
-                <useReportChart>false</useReportChart>
-            </dashboardComponent>
-            <rowIndex>24</rowIndex>
             <rowSpan>8</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
