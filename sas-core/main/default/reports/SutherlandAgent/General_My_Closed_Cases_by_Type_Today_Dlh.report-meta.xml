@@ -7,48 +7,36 @@
         <field>OWNER</field>
     </columns>
     <columns>
-        <field>ACCOUNT.NAME</field>
-    </columns>
-    <columns>
         <field>SUBJECT</field>
     </columns>
     <columns>
-        <field>TYPE</field>
+        <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
         <field>STATUS</field>
     </columns>
-    <columns>
-        <field>PRIORITY</field>
-    </columns>
-    <columns>
-        <field>CREATED_DATE</field>
-    </columns>
-    <columns>
-        <aggregateTypes>Sum</aggregateTypes>
-        <field>AGE</field>
-    </columns>
     <filter>
+        <criteriaItems>
+            <column>STATUS</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Closed</value>
+        </criteriaItems>
         <criteriaItems>
             <column>Case.Vendor__c</column>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Sutherland</value>
         </criteriaItems>
-        <criteriaItems>
-            <column>CLOSED</column>
-            <isUnlocked>false</isUnlocked>
-            <operator>equals</operator>
-            <value>0</value>
-        </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>
     <groupingsDown>
-        <field>CREATED_DATEONLY</field>
+        <dateGranularity>Day</dateGranularity>
+        <field>TYPE</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>General - My Open Cases Last 30</name>
+    <name>General - My Closed Cases by Type Today</name>
     <params>
         <name>units</name>
         <value>m</value>
@@ -62,10 +50,8 @@
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
-    <sortColumn>CREATED_DATE</sortColumn>
-    <sortOrder>Desc</sortOrder>
     <timeFrameFilter>
-        <dateColumn>CREATED_DATEONLY</dateColumn>
-        <interval>INTERVAL_LAST30</interval>
+        <dateColumn>CLOSED_DATE</dateColumn>
+        <interval>INTERVAL_TODAY</interval>
     </timeFrameFilter>
 </Report>

@@ -34,11 +34,12 @@
                 </groupingSortProperties>
                 <header>My Cases by Priority</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SutherlandAgent/My_Cases_by_Priority_0wK</report>
+                <report>SutherlandAgent/General_My_Cases_by_Priority_Today_cV7</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
+                <title>Today</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>0</rowIndex>
@@ -200,11 +201,10 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>STATUS</groupingColumn>
+                <groupingColumn>CREATED_DATEONLY</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
-                        <sortColumn>RowCount</sortColumn>
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
@@ -296,6 +296,43 @@
         </dashboardGridComponents>
         <dashboardGridComponents>
             <colSpan>4</colSpan>
+            <columnIndex>0</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
+                <chartSummary>
+                    <axisBinding>y</axisBinding>
+                    <column>RowCount</column>
+                </chartSummary>
+                <componentType>Bar</componentType>
+                <decimalPrecision>-1</decimalPrecision>
+                <displayUnits>Auto</displayUnits>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingColumn>PRIORITY</groupingColumn>
+                <groupingSortProperties>
+                    <groupingSorts>
+                        <groupingLevel>g1</groupingLevel>
+                        <sortOrder>a</sortOrder>
+                    </groupingSorts>
+                </groupingSortProperties>
+                <header>My Cases by Priority</header>
+                <legendPosition>Bottom</legendPosition>
+                <report>SutherlandAgent/General_My_Cases_by_Priority_Last_30_Nxy</report>
+                <showPercentage>false</showPercentage>
+                <showPicturesOnCharts>false</showPicturesOnCharts>
+                <showValues>true</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <title>Last 30 Days</title>
+                <useReportChart>false</useReportChart>
+            </dashboardComponent>
+            <rowIndex>16</rowIndex>
+            <rowSpan>8</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
             <columnIndex>4</columnIndex>
             <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
@@ -380,6 +417,42 @@
             <rowSpan>8</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>0</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
+                <chartSummary>
+                    <axisBinding>y</axisBinding>
+                    <column>RowCount</column>
+                </chartSummary>
+                <componentType>Line</componentType>
+                <decimalPrecision>-1</decimalPrecision>
+                <displayUnits>Auto</displayUnits>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingColumn>TYPE</groupingColumn>
+                <groupingSortProperties>
+                    <groupingSorts>
+                        <groupingLevel>g1</groupingLevel>
+                        <sortOrder>a</sortOrder>
+                    </groupingSorts>
+                </groupingSortProperties>
+                <header>My Open Cases by Type</header>
+                <legendPosition>Bottom</legendPosition>
+                <report>SutherlandAgent/General_My_Open_Cases_by_Type_Last_30_vK3</report>
+                <showPercentage>false</showPercentage>
+                <showValues>true</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <title>Last 30</title>
+                <useReportChart>false</useReportChart>
+            </dashboardComponent>
+            <rowIndex>24</rowIndex>
+            <rowSpan>8</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
             <colSpan>2</colSpan>
             <columnIndex>4</columnIndex>
             <dashboardComponent>
@@ -403,13 +476,14 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>General - My Open Cases by Type</header>
+                <header>My Open Cases by Type</header>
                 <legendPosition>Right</legendPosition>
-                <report>SutherlandAgent/General_My_Open_Cases_by_Type_YBZ</report>
+                <report>SutherlandAgent/My_Open_Cases_by_Type_Today_RtM</report>
                 <showPercentage>true</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
+                <title>Today</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>24</rowIndex>
@@ -441,11 +515,12 @@
                 </groupingSortProperties>
                 <header>My Closed Cases by Type</header>
                 <legendPosition>Right</legendPosition>
-                <report>SutherlandAgent/General_My_Closed_Cases_by_Type_O17</report>
+                <report>SutherlandAgent/General_My_Closed_Cases_by_Type_Today_Dlh</report>
                 <showPercentage>true</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
+                <title>Today</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>24</rowIndex>
@@ -491,7 +566,7 @@
     </dashboardGridLayout>
     <dashboardType>LoggedInUser</dashboardType>
     <isGridLayout>true</isGridLayout>
-
+    <runningUser>test-cncagolm0rae@example.com</runningUser>
     <textColor>#000000</textColor>
     <title>Sutherland Agent</title>
     <titleColor>#000000</titleColor>

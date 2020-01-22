@@ -11,7 +11,7 @@
         <chartType>HorizontalBar</chartType>
         <enableHoverLabels>false</enableHoverLabels>
         <expandOthers>true</expandOthers>
-        <groupingColumn>STATUS</groupingColumn>
+        <groupingColumn>CREATED_DATEONLY</groupingColumn>
         <location>CHART_BOTTOM</location>
         <showAxisLabels>false</showAxisLabels>
         <showPercentage>false</showPercentage>
@@ -25,19 +25,32 @@
         <titleSize>18</titleSize>
     </chart>
     <columns>
-        <field>OWNER</field>
+        <field>CASE_NUMBER</field>
     </columns>
     <columns>
-        <field>SUBJECT</field>
+        <field>OWNER</field>
     </columns>
     <columns>
         <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
+        <field>SUBJECT</field>
+    </columns>
+    <columns>
+        <field>TYPE</field>
+    </columns>
+    <columns>
+        <field>STATUS</field>
+    </columns>
+    <columns>
+        <field>PRIORITY</field>
+    </columns>
+    <columns>
         <field>CREATED_DATE</field>
     </columns>
     <columns>
-        <field>CREATED_DATEONLY</field>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>AGE</field>
     </columns>
     <filter>
         <criteriaItems>
@@ -56,8 +69,7 @@
     </filter>
     <format>Summary</format>
     <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>STATUS</field>
+        <field>CREATED_DATEONLY</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>General - My Open Cases Last 30</name>
