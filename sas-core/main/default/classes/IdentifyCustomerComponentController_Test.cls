@@ -165,7 +165,6 @@ private class IdentifyCustomerComponentController_Test {
                 ConsentEB0__c = false,
                 ConsentTelemarketing__c = true,
                 EmailPersonal__c = 'email@email.com',
-                EBBalance__c = 1000,
                 EBLevel__c = null,
                 EBNumber__c = '321',
                 FirstName__c = 'First Name',
@@ -174,9 +173,6 @@ private class IdentifyCustomerComponentController_Test {
                 EBMemberSinceDate__c = null,
                 Mobile__c = '0701234567',
                 Phone__c = null,
-                EBMbrshipLvlStatusEndDate__c = String.valueOf(Date.today().addYears(1)),
-                EBMbrshipLvlStatusStartDate__c = String.valueOf(Date.today()),
-                EBReachesNextLevelPoints__c = null,
                 SubscriptionId__c = null,
                 TPAccountNumber__c = '678',
                 CompanyName__c = 'Company Name',
@@ -205,16 +201,12 @@ private class IdentifyCustomerComponentController_Test {
         System.assertEquals(ff.ConsentSMS__c, account.ConsentSMS__c);
         System.assertEquals(ff.ConsentTelemarketing__c, account.ConsentTelemarketing__c);
         System.assertEquals(ff.EmailPersonal__c, account.PersonEmail);
-        System.assertEquals(ff.EBBalance__c, account.EBBalance__c);
         System.assertEquals(ff.EBLevel__c, account.EBLevel__c);
         System.assertEquals(ff.EBNumber__c, account.EBNumber__c);
         System.assertEquals(ff.FirstName__c, account.FirstName);
         System.assertEquals(ff.Gender__c, account.Gender__c);
         System.assertEquals(ff.LastName__c, account.LastName);
         System.assertEquals(null, account.EBMemberSinceDate__c);
-        System.assertEquals(Date.valueOf(ff.EBMbrshipLvlStatusEndDate__c), account.EBMbrshipLvlStatusEndDate__c);
-        System.assertEquals(Date.valueOf(ff.EBMbrshipLvlStatusStartDate__c), account.EBMbrshipLvlStatusStartDate__c);
-        System.assertEquals(ff.EBReachesNextLevelPoints__c, account.EBReachesNextLevelPoints__c);
         System.assertEquals(ff.SubscriptionId__c, account.SubscriptionId__c);
         System.assertEquals(ff.TPAccountNumber__c, account.TPAccountNumber__c);
         System.assertEquals(ff.CompanyName__c, account.CompanyName__c);
@@ -245,7 +237,6 @@ private class IdentifyCustomerComponentController_Test {
                 ConsentEB0__c = false,
                 ConsentTelemarketing__c = true,
                 EmailPersonal__c = 'email@email.com',
-                EBBalance__c = 1000,
                 EBLevel__c = null,
                 EBNumber__c = '321',
                 FirstName__c = 'First Name',
@@ -254,9 +245,6 @@ private class IdentifyCustomerComponentController_Test {
                 EBMemberSinceDate__c = null,
                 Mobile__c = '0701234567',
                 Phone__c = null,
-                EBMbrshipLvlStatusEndDate__c = String.valueOf(Date.today().addYears(1)),
-                EBMbrshipLvlStatusStartDate__c = String.valueOf(Date.today()),
-                EBReachesNextLevelPoints__c = null,
                 SubscriptionId__c = null,
                 TPAccountNumber__c = '678',
                 CompanyName__c = 'Company Name',

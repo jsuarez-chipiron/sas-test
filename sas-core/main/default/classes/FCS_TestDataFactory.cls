@@ -71,8 +71,6 @@ public class FCS_TestDataFactory {
             acc.PersonBirthDate = Date.newInstance(1990 - Math.mod(SEQ_NUM, 50), Math.mod(SEQ_NUM, 12) + 1, Math.mod(SEQ_NUM, 29) + 1);
             acc.EBNumber__c = 'EBTEST' + SEQ_NUM;
             acc.EBLevel__c = (SEQ_NUM & 3) < 2 ? 'B' : (SEQ_NUM & 3) < 3 ? 'S' : 'G';
-            acc.EBMbrshipLvlStatusStartDate__c = Date.today().toStartOfMonth();
-            acc.EBMbrshipLvlStatusEndDate__c = acc.EBMbrshipLvlStatusStartDate__c.addYears(1);
             SEQ_NUM++;
             accs[i] = acc;
         }
