@@ -78,4 +78,11 @@
         <members>SykesManagementTeamLead\Sykes_Chat_Queue_Time_Today_NxZ</members>
         <name>Report</name>
     </types>
+
+    <types>
+        <members>SocialPost.Site__c</members>
+        <members>SocialPost.Vendor__c</members>
+        <members>SocialPost.VirtualOrganization__c</members>
+        <name>CustomField</name>
+    </types>
 </Package>
