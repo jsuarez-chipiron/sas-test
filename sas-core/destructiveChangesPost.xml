@@ -11,188 +11,6 @@
     When it is confirmed that an included change has been deployed to relevant environments,
     the block can be removed from this document.
 -->
-
-<!--2019-11-15 - Anton Norell - Renamed fields on customer and frequent flyer due to misspelling-->
-    <types>
-        <members>Account.ConcentSMS__c</members>
-        <members>Account.ConcentEmail__c</members>
-        <members>Account.ConcentTelemarketing__c</members>
-        <members>Account.ConcentEB__c</members>
-        <members>FrequentFlyer__x.ConcentSMS__c</members>
-        <members>FrequentFlyer__x.ConcentEmail__c</members>
-        <members>FrequentFlyer__x.ConcentTelemarketing__c</members>
-        <members>FrequentFlyer__x.ConcentEB__c</members>
-        <name>CustomField</name>
-    </types>
-
-	<!--2019-12-05 - Ludvig Wälimaa - Removed Chat_Console-classess when refactoring after making utility component more generic component -->
-    <types>
-        <members>BatchUpdateAccessTokens</members>
-        <members>APIMGetCustomerRequest</members>
-        <members>CSharkCustomer</members>
-		<members>CaseAssignOwnerOnCreation_Test</members>
-		<members>CaseTriggerHandler</members>
-		<members>Chat_ConsoleAutomationController</members>
-		<members>Chat_ConsoleAutomationController_Test</members>
-        <name>ApexClass</name>
-    </types>
-	
-	<!--2019-12-05 - Ludvig Wälimaa - Removed component when refactoring after making utility component more generic component -->
-	<types>
-        <members>Chat_ConsoleAutomation</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-
-    <!--2019-11-25 - Anton Norell - Removed classes when refactoring C-Shark integration-->
-    <types>
-        <members>AccessToken__c</members>
-        <name>CustomObject</name>
-    </types>
-    <types>
-        <members>AccessToken__c-Access Token Layout</members>
-        <name>Layout</name>
-    </types>
-
-    <!--2019-11-26 - Philip Ossler - Removed old triggers after renaming-->
-    <types>
-        <members>noMentionsFeedItem</members>
-        <members>noMentionsFeedComment</members>
-        <name>ApexTrigger</name>
-    </types>
-
-    <!--2019-12-03 - Anton Norell - Removed classes when refactoring C-Shark integration-->
-    <types>
-        <members>C_LocalAuthInterface</members>
-        <name>ApexClass</name>
-    </types>
-
-    <!--2019-12-04 - Philip Ossler - Removed Permission Set for Survey creation because of duplicate-->
-    <types>
-        <members>Create_Survey</members>
-        <name>PermissionSet</name>
-    </types>
-
-    <!--2019-12-04 - Philip Ossler - Changed name of Test Class after adding more tests-->
-    <types>
-        <members>CaseSetPriorityUrgent_Test</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>STOPQEscalations</members>
-        <name>Queue</name>
-    </types>
-
-    <!--2019-12-05 - Anton Norell - Removed classes when refactoring C-Shark integration, Removed field-->
-    <types>
-        <members>IdentifyCustomerFromCaseController</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>Account.BirthDate__c</members>
-        <name>CustomField</name>
-    </types>
-
-    <!--2019-12-05 - Anton Norell - Renemed fields on Frequent Flyer and Account-->
-    <types>
-        <members>Account.EBQualifyingPeriodEndDate__c</members>
-        <members>Account.EBQualifyingPeriodStartDate__c</members>
-        <members>Frequent_Flyer__x.EBQualifyingPeriodEndDate__c</members>
-        <members>Frequent_Flyer__x.EBQualifyingPeriodStartDate__c</members>
-        <name>CustomField</name>
-    </types>
-
-    <!--2019-12-05 - Philip Ossler - Renamed field-->
-    <types>
-        <members>Case.CaseReopenedCount__c</members>
-        <name>CustomField</name>
-    </types>
-
-    <!--2019-12-30 - Philip Ossler - Remove Trigger for other solution in Process Builder-->
-    <types>
-        <members>SurveyResponseHandler</members>
-        <name>ApexClass</name>
-    </types>    
-    <types>
-        <members>SurveyResponseTrigger</members>
-        <name>ApexTrigger</name>
-    </types>   
-
-<!--2010-01-08 - Sanna Sörberg - Remove fields on Social Post--> 
-	<types>
-        <members>SocialPost.PostReason__c</members>
-        <members>SocialPost.PostSubReason__c</members>
-        <name>CustomField</name>
-    </types>
-	<types>
-		<members>SocialPost.This_Social_Post</members>
-		<members>SocialPost.CreateInformationCase</members>
-		<members>SocialPost.CreateFeedbackCase</members>	
-		<name>QuickAction</name>
-	</types>
-
-    <!--2020-01-08 - Anton Norell - Removed obsolete class-->
-    <types>
-        <members>AccountGDPRDeleteController</members>
-        <members>AccountGDPRExtractController</members>
-        <name>ApexClass</name>
-    </types>
-
-    <!--2020-01-08 - Anton Norell - Removed retired lightning components-->
-    <types>
-        <members>accountGDPRExtract</members>
-        <members>fcs_AccountGDPRDelete</members>
-        <members>identifyCustomerFromCase</members>
-        <members>pubsub</members>
-        <members>recordEditFormStaticContact</members>
-        <name>LightningComponentBundle</name>
-    </types>
-
-    <!--2020-01-08 - Peter Södergren - Remove obsolete classes-->
-    <types>
-        <members>FCS_GDPRDeleteAccountData_Batch</members>
-        <members>FCS_GDPRDeleteCase_Batch</members>
-        <members>FCS_GDPRDeleteChat_Batch</members>
-        <members>FCS_GDPRDeleteInteraction_Batch</members>
-        <members>FCS_GDPRDeleteMessaging_Batch</members>
-        <members>FCS_GDPRDeleteSocialPost_Batch</members>
-        <members>FCS_GDPRDelete_Test</members>
-        <members>FCS_GDPRWipeCase_Batch</members>
-        <members>TestDataFactory</members>
-        <members>TestDataFactory_Test</members>
-        <name>ApexClass</name>
-    </types>
-    <!--2020-01-08 - Peter Södergren - Remove object after namespace change-->
-    <types>
-        <members>Log__c</members>
-        <name>CustomObject</name>
-    </types>
-
-    <!--2020-01-08 - Anton Norell - Removed renamed class-->
-    <types>
-        <members>DataExtractService</members>
-        <members>DataExtractService_Test</members>
-        <name>ApexClass</name>
-    </types>
-	
-	<!--2020-01-08 - Sanna Sörberg - Delete quick action-->
-	<types>
-		<members>SocialPost.FollowUpCase</members>	
-		<name>QuickAction</name>
-	</types>
-	
-	<!--2020-01-14 - Peter Södergren - Delete Case Field Retention for GDPR-->
-	<types>
-		<members>C_GeneralSetting.CWRF_AccountId</members>
-		<members>C_GeneralSetting.CWRF_ContactId</members>
-		<name>CustomMetadata</name>
-	</types>
-
-    <!--2020-01-15 - Philip Ossler - Delete dashboard-->
-    <types>
-        <members>AgentDashboard/TZBJzdabTNsyRlTGBwmFbwAMQUIRqo</members>
-        <name>Dashboard</name>
-    </types>
-	
 	<!--2020-01-20 - Ludvig Wälimaaaaaa - Delete reports-->
     <types>
         <members>SykesManagementTeamLead\Sykes_Abandoned_Cases_MB2</members>
@@ -235,6 +53,16 @@
         <members>SykesManagementTeamLead\Sykes_Closed_Cases_MTD_gDD</members>
         <members>SykesManagementTeamLead\Sykes_Created_Cases_MTD_QIn</members>
         <name>Report</name>
+    </types>
+
+
+    <!--2020-01-22 - Anton Norell - removed obsolete fields-->
+    <types>
+        <members>Account.EBMbrshipLvlStatusStartDate__c</members>
+        <members>Account.EBMbrshipLvlStatusEndDate__c</members>
+        <members>Account.EBReachesNextLevelPoints__c</members>
+        <members>Account.EBBalance__c</members>
+        <name>CustomField</name>
     </types>
     
 </Package>
