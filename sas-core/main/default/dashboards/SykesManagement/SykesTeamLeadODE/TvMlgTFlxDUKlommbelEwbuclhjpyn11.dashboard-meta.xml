@@ -196,8 +196,7 @@
                 </groupingSortProperties>
                 <header>Chat - Offered &amp; Answer %</header>
                 <legendPosition>Right</legendPosition>
-                <maxValuesDisplayed>6</maxValuesDisplayed>
-                <report>SykesManagementTeamLead/Sykes_Chat_Answer_Today_gSU</report>
+                <report>SykesTeamLeadODE/Sykes_ODE_Chat_Answer_Today_Qwq</report>
                 <showPercentage>true</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
@@ -231,13 +230,13 @@
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
                 <header>Chat - Avg Queue Time</header>
-                <indicatorBreakpoint1>40.0</indicatorBreakpoint1>
+                <indicatorBreakpoint1>33.0</indicatorBreakpoint1>
                 <indicatorBreakpoint2>67.0</indicatorBreakpoint2>
-                <indicatorHighColor>#C23934</indicatorHighColor>
-                <indicatorLowColor>#00716B</indicatorLowColor>
-                <indicatorMiddleColor>#C23934</indicatorMiddleColor>
+                <indicatorHighColor>#00716B</indicatorHighColor>
+                <indicatorLowColor>#C23934</indicatorLowColor>
+                <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
                 <metricLabel>Today</metricLabel>
-                <report>SykesManagementTeamLead/Sykes_Chat_Queue_Time_Today_NxZ</report>
+                <report>SykesTeamLeadODE/Sykes_ODE_Chat_Queue_Time_Today_ula</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>0</rowIndex>
@@ -271,7 +270,7 @@
                 <indicatorLowColor>#C23934</indicatorLowColor>
                 <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
                 <metricLabel>Today</metricLabel>
-                <report>SykesManagementTeamLead/Sykes_Open_Cases_Today_Bot</report>
+                <report>SykesTeamLeadODE/Sykes_ODE_Open_Cases_Today_lWN</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>0</rowIndex>
@@ -300,13 +299,13 @@
                 <displayUnits>Auto</displayUnits>
                 <groupingSortProperties/>
                 <header>Chat - Avg Queue Time</header>
-                <indicatorBreakpoint1>40.0</indicatorBreakpoint1>
+                <indicatorBreakpoint1>33.0</indicatorBreakpoint1>
                 <indicatorBreakpoint2>67.0</indicatorBreakpoint2>
-                <indicatorHighColor>#C23934</indicatorHighColor>
-                <indicatorLowColor>#00716B</indicatorLowColor>
-                <indicatorMiddleColor>#C23934</indicatorMiddleColor>
-                <metricLabel>Last 30 Days</metricLabel>
-                <report>SykesManagementTeamLead/Sykes_Chat_Queue_Time_Last_30_ciT</report>
+                <indicatorHighColor>#00716B</indicatorHighColor>
+                <indicatorLowColor>#C23934</indicatorLowColor>
+                <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
+                <metricLabel>Last 30</metricLabel>
+                <report>SykesTeamLeadODE/Sykes_ODE_Chat_Queue_Time_Last_30_Mwy</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>4</rowIndex>
@@ -337,10 +336,10 @@
                 <indicatorBreakpoint1>33.0</indicatorBreakpoint1>
                 <indicatorBreakpoint2>67.0</indicatorBreakpoint2>
                 <indicatorHighColor>#00716B</indicatorHighColor>
-                <indicatorLowColor>#00716B</indicatorLowColor>
-                <indicatorMiddleColor>#00716B</indicatorMiddleColor>
+                <indicatorLowColor>#C23934</indicatorLowColor>
+                <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
                 <metricLabel>Today</metricLabel>
-                <report>SykesManagementTeamLead/Sykes_Closed_Cases_Today_yPP</report>
+                <report>SykesTeamLeadODE/Sykes_ODE_Closed_Cases_Today_CLD</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>4</rowIndex>
@@ -405,7 +404,6 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>true</expandOthers>
-                <footer>Last 30 Days</footer>
                 <groupingColumn>LiveChatTranscript$Status</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
@@ -415,12 +413,12 @@
                 </groupingSortProperties>
                 <header>Chat - Offered &amp; Answer %</header>
                 <legendPosition>Right</legendPosition>
-                <maxValuesDisplayed>6</maxValuesDisplayed>
-                <report>SykesManagementTeamLead/Sykes_Chat_Answer_Last_30_by_Status_hfe</report>
+                <report>SykesTeamLeadODE/Sykes_ODE_Chat_Answer_L_30_by_Status_L8w</report>
                 <showPercentage>true</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
+                <title>Last 30 Days</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>8</rowIndex>
@@ -455,7 +453,7 @@
                 <indicatorLowColor>#C23934</indicatorLowColor>
                 <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
                 <metricLabel>Today</metricLabel>
-                <report>SykesManagementTeamLead/Sykes_Average_Handle_Time_Today_ZpO</report>
+                <report>SykesTeamLeadODE/Sykes_ODE_Average_Handle_Time_Today_1rp</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>8</rowIndex>
@@ -490,7 +488,7 @@
                 <indicatorLowColor>#C23934</indicatorLowColor>
                 <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
                 <metricLabel>Last 30 Days</metricLabel>
-                <report>SykesManagementTeamLead/Sykes_Average_Handle_Time_Last_30_Rvg</report>
+                <report>SykesTeamLeadODE/Sykes_ODE_Average_Handle_Time_Last_30_6pK</report>
                 <showRange>false</showRange>
             </dashboardComponent>
             <rowIndex>12</rowIndex>
@@ -529,13 +527,13 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>Chat - Answer %</header>
+                <header>Chat Answer %</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SykesManagementTeamLead/Sykes_Chat_Answer_Last_30_9nR</report>
+                <report>SykesTeamLeadODE/Sykes_ODE_Chat_Answer_Last_30_tUC</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
-                <title>Last 30 Days</title>
+                <title>Last 30</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>16</rowIndex>
@@ -577,7 +575,7 @@
                 </groupingSortProperties>
                 <header>Chat - Queue Time (Seconds)</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SykesManagementTeamLead/Sykes_Chat_Queue_Time_Last_30_ciT</report>
+                <report>SykesTeamLeadODE/Sykes_ODE_Chat_Queue_Time_Last_30_Mwy</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -620,13 +618,13 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>Closed Cases</header>
+                <header># Closed Cases</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SykesManagementTeamLead/Sykes_Closed_Cases_Last_30_nbd</report>
+                <report>SykesTeamLeadODE/Sykes_ODE_Closed_Cases_Last_30_s3p</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
-                <title>Last 30 Days</title>
+                <title>Last 30</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>24</rowIndex>
@@ -668,7 +666,7 @@
                 </groupingSortProperties>
                 <header>Chat - AHT (Minutes)</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SykesManagementTeamLead/Sykes_Average_Handle_Time_Last_30_Rvg</report>
+                <report>SykesTeamLeadODE/Sykes_ODE_Average_Handle_Time_Last_30_6pK</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
