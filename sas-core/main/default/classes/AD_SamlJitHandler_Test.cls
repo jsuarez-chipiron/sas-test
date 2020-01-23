@@ -128,7 +128,7 @@ private class AD_SamlJitHandler_Test {
         u = [SELECT Id,FCS_Vendor__c,ProfileId,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
         Profile p = [SELECT Id,Name FROM Profile WHERE Id=:u.ProfileId];
         System.assertEquals('Agent',p.Name);
-        System.assertEquals('SYKES',u.FCS_Vendor__c);
+        System.assertEquals('Sykes',u.FCS_Vendor__c);
     }
 
     /**
