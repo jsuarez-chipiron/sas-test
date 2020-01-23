@@ -191,7 +191,11 @@
         <externalDataSource>SAS_External_Systems</externalDataSource>
     </externalDataSourceAccesses>
 
-
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SocialPost.AnswerTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
         <fieldPermissions>
             <editable>false</editable>
             <field>User.FCS_Site__c</field>
