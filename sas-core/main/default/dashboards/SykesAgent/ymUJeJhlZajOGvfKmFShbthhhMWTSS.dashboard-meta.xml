@@ -200,7 +200,7 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>CREATED_DATEONLY</groupingColumn>
+                <groupingColumn>STATUS</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
@@ -213,7 +213,7 @@
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
-                <title>Last 30 Days</title>
+                <title>Last 30</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>8</rowIndex>
@@ -502,7 +502,7 @@
     </dashboardGridLayout>
     <dashboardType>LoggedInUser</dashboardType>
     <isGridLayout>true</isGridLayout>
-    <runningUser>test-cncagolm0rae@example.com</runningUser>
+
     <textColor>#000000</textColor>
     <title>Sykes Agent</title>
     <titleColor>#000000</titleColor>
