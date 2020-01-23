@@ -54,7 +54,7 @@ private class AD_SamlJitHandler_Test {
         AD_SamlJitHandler sjh = new AD_SamlJitHandler();
         User u = sjh.createUser(null,null,null,email,sa.attributes,sa.assertion);
         System.assertNotEquals(null,u.Id);
-        u = [SELECT Id,ProfileId,Vendor__c,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
+        u = [SELECT Id,ProfileId,FCS_Vendor__c,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
         Profile p = [SELECT Id,Name FROM Profile WHERE Id=:u.ProfileId];
         System.assertEquals('System Administrator',p.Name);
         System.assertEquals('TFIRST',u.FirstName);
@@ -67,7 +67,7 @@ private class AD_SamlJitHandler_Test {
         System.assertEquals(email,u.FederationIdentifier);
         System.assertEquals(true,u.UserPermissionsSupportUser);
         System.assert(u.Alias.startsWith('TTLAST'));
-        System.assertEquals(null,u.Vendor__c);
+        System.assertEquals(null,u.FCS_Vendor__c);
     }
 
     /**
@@ -80,7 +80,7 @@ private class AD_SamlJitHandler_Test {
         User u = [SELECT Id FROM User WHERE FederationIdentifier=:USER_EMAIL];
         sjh.updateUser(u.Id,null,null,null,email,sa.attributes,sa.assertion);
         System.assertNotEquals(null,u.Id);
-        u = [SELECT Id,ProfileId,Vendor__c,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
+        u = [SELECT Id,ProfileId,FCS_Vendor__c,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
         Profile p = [SELECT Id,Name FROM Profile WHERE Id=:u.ProfileId];
         System.assertEquals('Business User',p.Name);
         System.assertEquals('TFIRST',u.FirstName);
@@ -93,7 +93,7 @@ private class AD_SamlJitHandler_Test {
         System.assertEquals(email,u.FederationIdentifier);
         System.assertEquals(true,u.UserPermissionsSupportUser);
         System.assert(u.Alias.startsWith('TTLAST'));
-        System.assertEquals(null,u.Vendor__c);
+        System.assertEquals(null,u.FCS_Vendor__c);
     }
     
     /** 
@@ -125,10 +125,10 @@ private class AD_SamlJitHandler_Test {
         AD_SamlJitHandler sjh = new AD_SamlJitHandler();
         User u = sjh.createUser(null,null,null,email,sa.attributes,sa.assertion);
         System.assertNotEquals(null,u.Id);
-        u = [SELECT Id,Vendor__c,ProfileId,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
+        u = [SELECT Id,FCS_Vendor__c,ProfileId,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
         Profile p = [SELECT Id,Name FROM Profile WHERE Id=:u.ProfileId];
         System.assertEquals('Agent',p.Name);
-        System.assertEquals('SYKES',u.Vendor__c);
+        System.assertEquals('SYKES',u.FCS_Vendor__c);
     }
 
     /**
@@ -140,7 +140,7 @@ private class AD_SamlJitHandler_Test {
         AD_SamlJitHandler sjh = new AD_SamlJitHandler();
         User u = sjh.createUser(null,null,null,email,sa.attributes,sa.assertion);
         System.assertNotEquals(null,u.Id);
-        u = [SELECT Id,ProfileId,Vendor__c,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
+        u = [SELECT Id,ProfileId,FCS_Vendor__c,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
         System.assert(u.Alias.startsWith('TTLAST'));
 
         email = USER_EMAIL+'.com.se';
@@ -148,7 +148,7 @@ private class AD_SamlJitHandler_Test {
         sjh = new AD_SamlJitHandler();
         u = sjh.createUser(null,null,null,email,sa.attributes,sa.assertion);
         System.assertNotEquals(null,u.Id);
-        u = [SELECT Id,ProfileId,Vendor__c,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
+        u = [SELECT Id,ProfileId,FCS_Vendor__c,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
         System.assert(u.Alias.startsWith('TTLAST'));
 
         email = USER_EMAIL+'.com.no';
@@ -156,7 +156,7 @@ private class AD_SamlJitHandler_Test {
         sjh = new AD_SamlJitHandler();
         u = sjh.createUser(null,null,null,email,sa.attributes,sa.assertion);
         System.assertNotEquals(null,u.Id);
-        u = [SELECT Id,ProfileId,Vendor__c,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
+        u = [SELECT Id,ProfileId,FCS_Vendor__c,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
         System.assert(u.Alias.startsWith('TTLAST'));
 
         email = USER_EMAIL+'.com.dk';
@@ -164,7 +164,7 @@ private class AD_SamlJitHandler_Test {
         sjh = new AD_SamlJitHandler();
         u = sjh.createUser(null,null,null,email,sa.attributes,sa.assertion);
         System.assertNotEquals(null,u.Id);
-        u = [SELECT Id,ProfileId,Vendor__c,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
+        u = [SELECT Id,ProfileId,FCS_Vendor__c,FirstName,LastName,Username,EmailEncodingKey,Alias,TimeZoneSidKey,LocaleSidKey,LanguageLocaleKey,Email,FederationIdentifier,UserPermissionsSupportUser FROM User WHERE Id=:u.Id];
         System.assert(u.Alias.startsWith('TTLAST'));
     }
 

@@ -215,7 +215,7 @@ private class EmailToCase_Test {
 
         System.assertEquals(theUser.team__c, updatedCase.team__c); 
         System.assertEquals(theUser.site__c, updatedCase.site__c); 
-        System.assertEquals(theUser.Vendor__c , updatedCase.Vendor__c); 
+        System.assertEquals(theUser.FCS_Vendor__c , updatedCase.FCS_Vendor__c); 
         System.assertEquals(theUser.virtualOrganization__c, updatedCase.virtualOrganization__c); 
           
     }
@@ -239,7 +239,7 @@ private class EmailToCase_Test {
 
         System.assertEquals(null, updatedCase.team__c); 
         System.assertEquals(null, updatedCase.site__c); 
-        System.assertEquals(null , updatedCase.Vendor__c); 
+        System.assertEquals(null , updatedCase.FCS_Vendor__c); 
         System.assertEquals(null, updatedCase.virtualOrganization__c); 
         
     }
