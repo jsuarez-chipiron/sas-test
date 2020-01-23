@@ -34,15 +34,12 @@
                 </groupingSortProperties>
                 <header>My Cases by Priority</header>
                 <legendPosition>Bottom</legendPosition>
-<<<<<<< HEAD
                 <report>SutherlandAgent/General_My_Cases_by_Priority_Today_ZJG</report>
-=======
-                <report>SutherlandAgent/My_Cases_by_Priority_0wK</report>
->>>>>>> parent of 8c7a877... Sutherland Reports and Dashboard
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
+                <title>Today</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>0</rowIndex>
@@ -204,11 +201,10 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>STATUS</groupingColumn>
+                <groupingColumn>CREATED_DATEONLY</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
-                        <sortColumn>RowCount</sortColumn>
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
@@ -301,7 +297,6 @@
         </dashboardGridComponents>
         <dashboardGridComponents>
             <colSpan>4</colSpan>
-<<<<<<< HEAD
             <columnIndex>0</columnIndex>
             <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
@@ -338,8 +333,6 @@
         </dashboardGridComponents>
         <dashboardGridComponents>
             <colSpan>4</colSpan>
-=======
->>>>>>> parent of 8c7a877... Sutherland Reports and Dashboard
             <columnIndex>4</columnIndex>
             <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
@@ -412,7 +405,6 @@
             <rowSpan>8</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
-<<<<<<< HEAD
             <colSpan>4</colSpan>
             <columnIndex>0</columnIndex>
             <dashboardComponent>
@@ -449,8 +441,6 @@
             <rowSpan>8</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
-=======
->>>>>>> parent of 8c7a877... Sutherland Reports and Dashboard
             <colSpan>2</colSpan>
             <columnIndex>4</columnIndex>
             <dashboardComponent>
@@ -474,13 +464,14 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>General - My Open Cases by Type</header>
+                <header>My Open Cases by Type</header>
                 <legendPosition>Right</legendPosition>
-                <report>SutherlandAgent/General_My_Open_Cases_by_Type_YBZ</report>
+                <report>SutherlandAgent/My_Open_Cases_by_Type_Today_RtM</report>
                 <showPercentage>true</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
+                <title>Today</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>24</rowIndex>
@@ -512,11 +503,12 @@
                 </groupingSortProperties>
                 <header>My Closed Cases by Type</header>
                 <legendPosition>Right</legendPosition>
-                <report>SutherlandAgent/General_My_Closed_Cases_by_Type_O17</report>
+                <report>SutherlandAgent/General_My_Closed_Cases_by_Type_Today_Dlh</report>
                 <showPercentage>true</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
+                <title>Today</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>24</rowIndex>
@@ -599,7 +591,7 @@
     </dashboardGridLayout>
     <dashboardType>LoggedInUser</dashboardType>
     <isGridLayout>true</isGridLayout>
-
+    <runningUser>test-cncagolm0rae@example.com</runningUser>
     <textColor>#000000</textColor>
     <title>Sutherland Agent</title>
     <titleColor>#000000</titleColor>
