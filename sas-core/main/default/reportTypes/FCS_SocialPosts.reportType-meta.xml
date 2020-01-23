@@ -8,7 +8,7 @@
         <outerJoin>false</outerJoin>
         <relationship>Personas</relationship>
     </join>
-    <label>Social Posts</label>
+    <label>Social Post</label>
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
