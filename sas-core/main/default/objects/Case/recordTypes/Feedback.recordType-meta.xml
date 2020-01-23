@@ -721,7 +721,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>SubTeam__c</picklist>
+        <picklist>FCS_SubTeam__c</picklist>
         <values>
             <fullName>Team 1%2E1</fullName>
             <default>false</default>
@@ -796,7 +796,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Team__c</picklist>
+        <picklist>FCS_Team__c</picklist>
         <values>
             <fullName>Team 1</fullName>
             <default>false</default>

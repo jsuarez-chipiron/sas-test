@@ -262,12 +262,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Site__c</field>
+            <field>FCS_Site__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>SubTeam__c</field>
+            <field>FCS_SubTeam__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -282,7 +282,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Team__c</field>
+            <field>FCS_Team__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -292,7 +292,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>VirtualOrganization__c</field>
+            <field>FCS_VirtualOrganization__c</field>
             <table>Case</table>
         </columns>
         <masterLabel>Cases</masterLabel>

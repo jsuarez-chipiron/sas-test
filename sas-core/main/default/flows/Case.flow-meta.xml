@@ -717,9 +717,9 @@
                     <stringValue>Reference</stringValue>
                 </value>
             </processMetadataValues>
-            <field>Site__c</field>
+            <field>FCS_Site__c</field>
             <value>
-                <elementReference>myVariable_current.Owner:User.Site__c</elementReference>
+                <elementReference>myVariable_current.Owner:User.FCS_Site__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -753,9 +753,9 @@
                     <stringValue>Reference</stringValue>
                 </value>
             </processMetadataValues>
-            <field>SubTeam__c</field>
+            <field>FCS_SubTeam__c</field>
             <value>
-                <elementReference>myVariable_current.Owner:User.SubTeam__c</elementReference>
+                <elementReference>myVariable_current.Owner:User.FCS_SubTeam__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -789,9 +789,9 @@
                     <stringValue>Reference</stringValue>
                 </value>
             </processMetadataValues>
-            <field>Team__c</field>
+            <field>FCS_Team__c</field>
             <value>
-                <elementReference>myVariable_current.Owner:User.Team__c</elementReference>
+                <elementReference>myVariable_current.Owner:User.FCS_Team__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -861,9 +861,9 @@
                     <stringValue>Reference</stringValue>
                 </value>
             </processMetadataValues>
-            <field>VirtualOrganization__c</field>
+            <field>FCS_VirtualOrganization__c</field>
             <value>
-                <elementReference>myVariable_current.Owner:User.VirtualOrganization__c</elementReference>
+                <elementReference>myVariable_current.Owner:User.FCS_VirtualOrganization__c</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>

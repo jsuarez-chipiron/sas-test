@@ -271,7 +271,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Case.SubTeam__c</field>
+            <field>Case.FCS_SubTeam__c</field>
             <table>LiveChatTranscript</table>
         </columns>
         <columns>
@@ -291,7 +291,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Case.Site__c</field>
+            <field>Case.FCS_Site__c</field>
             <table>LiveChatTranscript</table>
         </columns>
         <columns>
@@ -316,7 +316,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Case.VirtualOrganization__c</field>
+            <field>Case.FCS_VirtualOrganization__c</field>
             <table>LiveChatTranscript</table>
         </columns>
         <columns>
@@ -331,7 +331,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Case.Team__c</field>
+            <field>Case.FCS_Team__c</field>
             <table>LiveChatTranscript</table>
         </columns>
         <masterLabel>Case</masterLabel>

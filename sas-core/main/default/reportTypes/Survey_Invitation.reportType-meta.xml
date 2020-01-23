@@ -350,12 +350,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.VirtualOrganization__c</field>
+            <field>RelatedCase__c.FCS_VirtualOrganization__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.Team__c</field>
+            <field>RelatedCase__c.FCS_Team__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
@@ -380,12 +380,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.Site__c</field>
+            <field>RelatedCase__c.FCS_Site__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.SubTeam__c</field>
+            <field>RelatedCase__c.FCS_SubTeam__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <masterLabel>Case</masterLabel>

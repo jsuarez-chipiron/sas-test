@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SubTeam__c</fullName>
+    <fullName>FCS_SubTeam__c</fullName>
     <description>The sub team of the record owner</description>
     <externalId>false</externalId>
     <inlineHelpText>The sub team of the record owner</inlineHelpText>
@@ -11,7 +11,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <controllingField>Team__c</controllingField>
+        <controllingField>FCS_Team__c</controllingField>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
