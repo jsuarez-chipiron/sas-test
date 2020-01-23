@@ -286,7 +286,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Case.Vendor__c</field>
+            <field>Case.FCS_Vendor__c</field>
             <table>LiveChatTranscript</table>
         </columns>
         <columns>

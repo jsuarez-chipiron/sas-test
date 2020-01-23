@@ -825,9 +825,9 @@
                     <stringValue>Reference</stringValue>
                 </value>
             </processMetadataValues>
-            <field>Vendor__c</field>
+            <field>FCS_Vendor__c</field>
             <value>
-                <elementReference>myVariable_current.Owner:User.Vendor__c</elementReference>
+                <elementReference>myVariable_current.Owner:User.FCS_Vendor__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

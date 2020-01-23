@@ -420,11 +420,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Vendor__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.VirtualOrganization__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -772,11 +767,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>User.Team__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>User.Vendor__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

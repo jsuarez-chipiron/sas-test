@@ -86,7 +86,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.Vendor__c</field>
+            <field>RelatedCase__c.FCS_Vendor__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>

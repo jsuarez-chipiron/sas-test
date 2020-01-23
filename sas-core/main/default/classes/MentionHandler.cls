@@ -79,11 +79,11 @@ public class MentionHandler extends C_TriggerHandler {
         //Only apply logic for mentioning users
         if(mentionedUserId.getSobjectType()!=User.SObjectType)return false;
         //Which Vendor does postUser belong to?
-        User postUser = [SELECT Vendor__c FROM User WHERE id =: insertedById];
+        User postUser = [SELECT FCS_Vendor__c FROM User WHERE id =: insertedById];
         
         //Which Vendor does mentionedUser belong to?
-        User mentionedUser = [SELECT Vendor__c FROM User WHERE id =: mentionedUserId];
+        User mentionedUser = [SELECT FCS_Vendor__c FROM User WHERE id =: mentionedUserId];
 
-        return postUser.Vendor__c != mentionedUser.Vendor__c;
+        return postUser.FCS_Vendor__c != mentionedUser.FCS_Vendor__c;
     }
 }
