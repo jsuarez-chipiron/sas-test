@@ -34,7 +34,7 @@
                 </groupingSortProperties>
                 <header>My Cases by Priority</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SutherlandAgent/General_My_Cases_by_Priority_Today_ZJG</report>
+                <report>SutherlandAgent/General_My_Cases_by_Priority_Today_cV7</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>true</showValues>
@@ -194,25 +194,24 @@
                     <axisBinding>y</axisBinding>
                     <column>RowCount</column>
                 </chartSummary>
-                <componentType>Bar</componentType>
+                <componentType>Line</componentType>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>PRIORITY</groupingColumn>
+                <groupingColumn>CREATED_DATEONLY</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>My Cases by Priority</header>
+                <header>My Open Cases</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SutherlandAgent/General_My_Cases_by_Priority_Last_30_Nxy</report>
+                <report>SutherlandAgent/General_My_Open_Cases_Last_30_MJ9</report>
                 <showPercentage>false</showPercentage>
-                <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
                 <title>Last 30 Days</title>
@@ -306,24 +305,25 @@
                     <axisBinding>y</axisBinding>
                     <column>RowCount</column>
                 </chartSummary>
-                <componentType>Line</componentType>
+                <componentType>Bar</componentType>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>CREATED_DATEONLY</groupingColumn>
+                <groupingColumn>PRIORITY</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>My Open Cases</header>
+                <header>My Cases by Priority</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SutherlandAgent/General_My_Open_Cases_Last_30_MJ9</report>
+                <report>SutherlandAgent/General_My_Cases_by_Priority_Last_30_Nxy</report>
                 <showPercentage>false</showPercentage>
+                <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
                 <title>Last 30 Days</title>
@@ -377,7 +377,7 @@
                 <chartSummary>
                     <aggregate>Average</aggregate>
                     <axisBinding>y</axisBinding>
-                    <column>AGE</column>
+                    <column>LiveChatTranscript$WaitTime</column>
                 </chartSummary>
                 <componentType>Line</componentType>
                 <decimalPrecision>-1</decimalPrecision>
@@ -386,20 +386,20 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>CLOSED_DATEONLY</groupingColumn>
+                <groupingColumn>LiveChatTranscript$CreatedDate</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>My Average Handle Time</header>
+                <header>My Chat Queue Time</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SutherlandAgent/General_My_Average_Handle_Time_Last_30_p6g</report>
+                <report>SutherlandAgent/General_My_Chat_Queue_Time_Last_30_BxN</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
-                <title>Last 30</title>
+                <title>Last 30 Days</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>16</rowIndex>
@@ -524,7 +524,7 @@
                 <chartSummary>
                     <aggregate>Average</aggregate>
                     <axisBinding>y</axisBinding>
-                    <column>LiveChatTranscript$WaitTime</column>
+                    <column>AGE</column>
                 </chartSummary>
                 <componentType>Line</componentType>
                 <decimalPrecision>-1</decimalPrecision>
@@ -533,20 +533,20 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>LiveChatTranscript$CreatedDate</groupingColumn>
+                <groupingColumn>CLOSED_DATEONLY</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>My Chat Queue Time</header>
+                <header>My Average Handle Time</header>
                 <legendPosition>Bottom</legendPosition>
-                <report>SutherlandAgent/General_My_Chat_Queue_Time_Last_30_BxN</report>
+                <report>SutherlandAgent/General_My_Average_Handle_Time_Last_30_p6g</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
-                <title>Last 30 Days</title>
+                <title>Last 30</title>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>24</rowIndex>
