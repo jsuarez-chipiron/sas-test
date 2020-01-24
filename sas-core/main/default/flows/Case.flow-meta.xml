@@ -515,7 +515,7 @@
                 <stringValue>[Case].ReopenedCount__c + 1</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_12_myRule_9_A1_8068924621</name>
+        <name>formula_12_myRule_9_A1_8396308517</name>
         <dataType>Number</dataType>
         <expression>{!myVariable_current.ReopenedCount__c} + 1</expression>
         <scale>18</scale>
@@ -531,7 +531,7 @@
         <dataType>Boolean</dataType>
         <expression>AND(ISNEW(), ISPICKVAL({!myVariable_current.Origin}, &quot;Chat&quot;))</expression>
     </formulas>
-    <interviewLabel>Case-5_InterviewLabel</interviewLabel>
+    <interviewLabel>Case-6_InterviewLabel</interviewLabel>
     <label>Case</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -720,6 +720,78 @@
             <field>FCS_Site__c</field>
             <value>
                 <elementReference>myVariable_current.Owner:User.FCS_Site__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Sub Team</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>FCS_SubTeam__c</field>
+            <value>
+                <elementReference>myVariable_current.Owner:User.FCS_SubTeam__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Team</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>FCS_Team__c</field>
+            <value>
+                <elementReference>myVariable_current.Owner:User.FCS_Team__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1003,7 +1075,7 @@
             </processMetadataValues>
             <field>ReopenedCount__c</field>
             <value>
-                <elementReference>formula_12_myRule_9_A1_8068924621</elementReference>
+                <elementReference>formula_12_myRule_9_A1_8396308517</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>

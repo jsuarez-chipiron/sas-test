@@ -211,9 +211,8 @@ private class EmailToCase_Test {
         //Do asserts and check if the fields in User are the same as updated case value
          //add fields you want to assert
         Test.stopTest();
-        Case updatedCase = [SELECT Id,FCS_Site__c,FCS_Vendor__c,FCS_VirtualOrganization__c FROM CASE WHERE id=:testCase.id]; 
-		//FCS_Team__c,
-        //System.assertEquals(theUser.FCS_Team__c, updatedCase.FCS_Team__c); 
+        Case updatedCase = [SELECT Id,FCS_Team__c,FCS_Site__c,FCS_Vendor__c,FCS_VirtualOrganization__c FROM CASE WHERE id=:testCase.id]; 
+        System.assertEquals(theUser.FCS_Team__c, updatedCase.FCS_Team__c); 
         System.assertEquals(theUser.FCS_Site__c, updatedCase.FCS_Site__c); 
         System.assertEquals(theUser.FCS_Vendor__c , updatedCase.FCS_Vendor__c); 
         System.assertEquals(theUser.FCS_VirtualOrganization__c, updatedCase.FCS_VirtualOrganization__c); 
@@ -235,9 +234,8 @@ private class EmailToCase_Test {
         //Do asserts and check if the fields in User are the same as updated case value
          //add fields you want to assert
         Test.stopTest();
-        Case updatedCase = [SELECT Id,FCS_Site__c,FCS_Vendor__c,FCS_VirtualOrganization__c FROM CASE WHERE id=:testCase.id]; 
-		//FCS_Team__c,
-        //System.assertEquals(null, updatedCase.FCS_Team__c); 
+        Case updatedCase = [SELECT Id,FCS_Team__c,FCS_Site__c,FCS_Vendor__c,FCS_VirtualOrganization__c FROM CASE WHERE id=:testCase.id]; 
+        System.assertEquals(null, updatedCase.FCS_Team__c); 
         System.assertEquals(null, updatedCase.FCS_Site__c); 
         System.assertEquals(null , updatedCase.FCS_Vendor__c); 
         System.assertEquals(null, updatedCase.FCS_VirtualOrganization__c); 
