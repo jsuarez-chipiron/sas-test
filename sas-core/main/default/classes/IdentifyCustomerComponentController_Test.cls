@@ -70,6 +70,49 @@ private class IdentifyCustomerComponentController_Test {
     }
 
     /**
+     * Asserts that the correct MessagingSession and fields are retrieved from method in controller
+     */
+    @IsTest
+    static void shouldReturnRecordDataBasedOnMessagingSession(){
+        Account acc = new Account(
+                RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
+                LastName = 'Last Name'
+        );
+        insert acc;
+        acc = [SELECT Id, PersonContactId FROM Account WHERE Id = :acc.Id];
+        Case originalCase = new Case(
+                AccountId = acc.Id,
+                EBNumber__c = '123',
+                TPAccountNumber__c = '321'
+        );
+        insert originalCase;
+        MessagingEndUser messagingEndUser1 = new MessagingEndUser(
+                MessagingChannelId = '0Mj1X0000004CLJSA2',
+                Name = 'User1',
+                MessageType = 'Facebook',
+                MessagingPlatformKey = '123',
+                AccountId = acc.Id,
+                ContactId = acc.PersonContactId
+        );
+        insert messagingEndUser1;
+        MessagingSession session = new MessagingSession(
+                Origin = 'InboundInitiated',
+                MessagingEndUserId = messagingEndUser1.Id,
+                Status = 'New',
+                MessagingChannelId = '0Mj1X0000004CLJSA2',
+                CaseId = originalCase.Id
+        );
+        insert session;
+
+        IdentifyCustomerComponentController.ComponentRecordData retrievedData = IdentifyCustomerComponentController.getRecordData(session.Id);
+
+        System.assertNotEquals(null, retrievedData);
+        System.assertEquals(acc.Id, retrievedData.accountId);
+        System.assertEquals(acc.PersonContactId, retrievedData.personContactId);
+        System.assertEquals(null, retrievedData.lastRetrievedFromSource);
+    }
+
+    /**
      * Asserts that the controller can update a chat transcript record based on a supplied JSON string with record id and data
      */
     @IsTest
@@ -142,6 +185,47 @@ private class IdentifyCustomerComponentController_Test {
                 '123',
                 [SELECT Id, EBNumber__c FROM LiveChatTranscript WHERE Id = :transcript.Id].EBNumber__c,
                 'The method did not update the related chat transcript correctly. Expected EBNumber__ to be updated.'
+        );
+    }
+
+    /**
+     * Asserts that the controller can update a MassagingSession record based on a supplied JSON string with record id and data
+     */
+    @IsTest
+    static void shouldUpdateMessagingSessionAndRelatedRecordsBasedOnSuppliedJSONData(){
+        Case originalCase = new Case();
+        insert originalCase;
+        MessagingEndUser messagingEndUser1 = new MessagingEndUser(
+                MessagingChannelId = '0Mj1X0000004CLJSA2',
+                Name = 'User1',
+                MessageType = 'Facebook',
+                MessagingPlatformKey = '123'
+        );
+        insert messagingEndUser1;
+        MessagingSession session = new MessagingSession(
+                Origin = 'InboundInitiated',
+                MessagingEndUserId = messagingEndUser1.Id,
+                Status = 'New',
+                MessagingChannelId = '0Mj1X0000004CLJSA2',
+                CaseId = originalCase.Id
+        );
+        insert session;
+
+        Account account = new Account(RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER, LastName = 'Name');
+        insert account;
+
+        String jsonData = '{"recordId": "' + session.Id + '", "euroBonusNumber": "123", "caseId": "' + originalCase.Id + '", "accountId": "' + account.Id + '"}';
+        IdentifyCustomerComponentController.updateRecordDataWithApex(jsonData);
+
+        System.assertEquals(
+                '123',
+                [SELECT Id, AccountId, EBNumber__c FROM Case WHERE Id = :originalCase.Id].EBNumber__c,
+                'The method did not update the related case correctly. Expected EBNumber__ to be updated.'
+        );
+        System.assertEquals(
+                account.Id,
+                [SELECT Id, EndUserAccountId, MessagingEndUser.AccountId FROM MessagingSession WHERE Id = :session.Id].MessagingEndUser.AccountId,
+                'The method did not update the related End User Account correctly. Expected AccountId to be updated.'
         );
     }
 
@@ -269,6 +353,24 @@ private class IdentifyCustomerComponentController_Test {
         );
 
         System.assertEquals(null, account);
+    }
+
+   /**
+    * Asserts that en exception is thrown if component is placed on an unsupported object
+    */
+    @IsTest
+    static void shouldThrowExceptionIfNotSupportedObject(){
+        Opportunity opp = new Opportunity(Name = 'Name', StageName = 'New', CloseDate = Date.today());
+        insert opp;
+
+        IdentifyCustomerComponentController.IdentifyCustomerComponentException catchedException;
+        try{
+            IdentifyCustomerComponentController.getRecordData(opp.Id);
+        } catch (IdentifyCustomerComponentController.IdentifyCustomerComponentException e){
+            catchedException = e;
+        }
+
+        System.assertNotEquals(null, catchedException, 'Expected exception for unsupported object. Check that object is still unsupported.');
     }
 
     /**

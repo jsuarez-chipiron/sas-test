@@ -100,6 +100,12 @@ public with sharing class IdentifyCustomerComponentController {
                     FROM LiveChatTranscript
                     WHERE Id = :recordId]
             );
+        } else if (sObjectType == MessagingSession.getSObjectType()){
+            return new ComponentRecordData(
+            [SELECT Id, EndUserAccountId, EndUserContactId, EndUserAccount.LastRetrievedFromSource__c, CaseId
+            FROM MessagingSession
+            WHERE Id = :recordId]
+            );
         } else {
             throw new IdentifyCustomerComponentException('This object is not supported. Modify component controller to support object');
         }
@@ -156,6 +162,19 @@ public with sharing class IdentifyCustomerComponentController {
         }
 
         /**
+         * Constructor for class
+         * @param transcript LiveChatTranscript record used to populate class params
+         */
+        public ComponentRecordData(MessagingSession session){
+            recordId = session.Id;
+            accountId = session.EndUserAccountId;
+            personContactId = session.EndUserContactId;
+            caseId = session.CaseId;
+            lastRetrievedFromSource = session.EndUserAccount.LastRetrievedFromSource__c;
+            supportsUIApi = false;
+        }
+
+        /**
          * Used to perform an update with dynamic selection of SObject type based on type derived from record id.
          */
         public void updateUnderlyingRecord(){
@@ -170,7 +189,14 @@ public with sharing class IdentifyCustomerComponentController {
                     for(LiveChatTranscript transcript:[SELECT Id FROM LiveChatTranscript WHERE CaseId = :recordId]){
                         recordsToUpdate.add(generateSObjectRecord(transcript.Id));
                     }
+            } else if (recordId.getSobjectType() == MessagingSession.getSObjectType()){
+                MessagingSession session = [SELECT Id, MessagingEndUserId FROM MessagingSession WHERE Id = :recordId];
+                recordsToUpdate.add(generateSObjectRecord(session.MessagingEndUserId));
+                if(caseId != null){
+                    recordsToUpdate.add(generateSObjectRecord(caseId));
+                }
             }
+            System.debug('Updating records: ' + JSON.serializePretty(recordsToUpdate));
             update recordsToUpdate;
         }
 
@@ -197,6 +223,12 @@ public with sharing class IdentifyCustomerComponentController {
                         CODSId__c = codsId,
                         ContactId = personContactId
                 );
+            } else if (recordId.getSobjectType() == MessagingEndUser.SObjectType){
+                returnRecord = new MessagingEndUser(
+                        Id = recordId,
+                        AccountId = accountId,
+                        ContactId = personContactId
+                );
             }
             return returnRecord;
         }
@@ -217,5 +249,6 @@ public with sharing class IdentifyCustomerComponentController {
      * @date 2020-01-14
      * @description Custom exception class used to throw exception for cases not covered by standard exceptions.
      */
+    @TestVisible
     private class IdentifyCustomerComponentException extends Exception{}
 }

@@ -13,22 +13,11 @@ public class ConsoleAutomationController {
     @AuraEnabled
     public static List<String> retrievePrefixes(){
         List<String> prefixList = new List<String>();
-        prefixList.add(getObjectPrefix('LiveChatTranscript'));
+        prefixList.add(LiveChatTranscript.SObjectType.getDescribe().getKeyPrefix());
+        prefixList.add(MessagingSession.SObjectType.getDescribe().getKeyPrefix());
         return prefixList;
     }
 
-    /**
-     * Returns and Objects prefix (first three characters).
-     * 
-     * @param objName 	The API name of the Object
-     * @return 			The prefix string of the Object
-    */
-    private static String getObjectPrefix(String objName){
-        Schema.sObjectType sObjType = Schema.getGlobalDescribe().get(objName);
-        return sObjType.getDescribe().getKeyPrefix();
-    }
-
-    
     /**
      * Returns a list of Object id's to open subtabs for in the Service Cloud console.
      * 
@@ -38,13 +27,21 @@ public class ConsoleAutomationController {
     @AuraEnabled
     public static List<Id> retrieveRelated(Id objId){
         List<Id> returnObjIds = new List<Id>();
-        String objType = objId.getSObjectType().getDescribe().getName();
+        SObjectType objType = objId.getSobjectType();
 
-        if(objType == 'LiveChatTranscript'){
+        if(objType == LiveChatTranscript.SObjectType){
             LiveChatTranscript lct = [SELECT Status, CaseId, OwnerId FROM LiveChatTranscript WHERE Id = :objId];
             if(lct.Status == 'InProgress'){
-                Case c = new Case(id = lct.CaseId);
+                Case c = new Case(Id = lct.CaseId);
                 c.OwnerId = lct.OwnerId;
+                update c;
+                returnObjIds.add(c.Id);
+            }
+        } else if (objType == MessagingSession.SObjectType){
+            MessagingSession ms = [SELECT Id, Status, CaseId, OwnerId FROM MessagingSession WHERE Id = :objId];
+            if(ms.Status == 'InProgress'){
+                Case c = new Case(Id = ms.CaseId);
+                c.OwnerId = ms.OwnerId;
                 update c;
                 returnObjIds.add(c.Id);
             }
