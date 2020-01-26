@@ -39,7 +39,7 @@ public class ConsoleAutomationController {
             }
         } else if (objType == MessagingSession.SObjectType){
             MessagingSession ms = [SELECT Id, Status, CaseId, OwnerId FROM MessagingSession WHERE Id = :objId];
-            if(ms.Status == 'InProgress'){
+            if(ms.Status == 'Active'){
                 Case c = new Case(Id = ms.CaseId);
                 c.OwnerId = ms.OwnerId;
                 update c;
