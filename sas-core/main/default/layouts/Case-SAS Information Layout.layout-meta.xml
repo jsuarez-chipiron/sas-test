@@ -301,31 +301,6 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
-        <fields>Name</fields>
-        <fields>Owner</fields>
-        <fields>StartTime</fields>
-        <fields>EndTime</fields>
-        <fields>Status</fields>
-        <relatedList>RelatedLiveChatTranscriptList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Name</fields>
-        <fields>MessagingEndUser</fields>
-        <fields>Owner</fields>
-        <fields>StartTime</fields>
-        <fields>Status</fields>
-        <fields>EndTime</fields>
-        <fields>MessagingChannel</fields>
-        <relatedList>MessagingSession</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Name</fields>
-        <fields>Persona</fields>
-        <fields>Headline</fields>
-        <fields>Who</fields>
-        <relatedList>SocialPosts</relatedList>
-    </relatedLists>
-    <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -346,7 +321,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3E0000018gv9</masterLabel>
+        <masterLabel>00h1j000000vxbp</masterLabel>
         <sizeX>3</sizeX>
         <sizeY>4</sizeY>
         <summaryLayoutItems>
