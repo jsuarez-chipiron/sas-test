@@ -91,7 +91,7 @@ public class FCS_TestDataFactory {
                     ProfileId = p.Id,
                     TimeZoneSidKey = 'Europe/Paris',
                     UserName = 'testUser' + i + '@test.com.flysas',
-                    FCS_Vendor__c = 'SAS');
+                    FCS_Vendor__c = 'Sykes');
             users.add(u);
         }
         return users;

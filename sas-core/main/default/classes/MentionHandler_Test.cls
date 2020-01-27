@@ -21,7 +21,7 @@ private class MentionHandler_Test {
             ProfileId = p.Id,
             TimeZoneSidKey = 'Europe/Paris',
             UserName = 'testUser1@test.com.flysas',
-            FCS_Vendor__c = 'SAS'
+            FCS_Vendor__c = 'Sutherland'
         );
         users.add(u1);
         
@@ -35,7 +35,7 @@ private class MentionHandler_Test {
             ProfileId = p.Id,
             TimeZoneSidKey = 'Europe/Paris',
             UserName = 'testUser2@test.com.flysas',
-            FCS_Vendor__c = 'Vendor'
+            FCS_Vendor__c = 'Sykes'
         );
         users.add(u2);
 
@@ -49,7 +49,7 @@ private class MentionHandler_Test {
             ProfileId = p.Id,
             TimeZoneSidKey = 'Europe/Paris',
             UserName = 'testUser3@test.com.flysas',
-            FCS_Vendor__c = 'Vendor'
+            FCS_Vendor__c = 'Sykes'
         );
         users.add(u3);
         insert(users);
@@ -98,8 +98,8 @@ private class MentionHandler_Test {
     */
     @isTest static void validateUsers() {
         //Retrieval of Users
-        List<User> sasUsers = [SELECT id FROM User WHERE FCS_Vendor__c = 'SAS'];
-        List<User> vendorUsers = [SELECT id FROM User WHERE FCS_Vendor__c = 'Vendor'];
+        List<User> sasUsers = [SELECT id FROM User WHERE FCS_Vendor__c = 'Sutherland'];
+        List<User> vendorUsers = [SELECT id FROM User WHERE FCS_Vendor__c = 'Sykes'];
         String User1 = sasUsers[0].id;
         String User2 = vendorUsers[0].id;
         String User3 = vendorUsers[1].id;
