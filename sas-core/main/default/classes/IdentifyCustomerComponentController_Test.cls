@@ -6,6 +6,19 @@
 @IsTest
 private class IdentifyCustomerComponentController_Test {
     /**
+     * Setting up setup objects in setup method
+     */
+    @TestSetup
+    static void createTestData(){
+        insert new MessagingChannel(
+                DeveloperName = 'FacebookChannel4',
+                MasterLabel = 'Facebook4',
+                MessagingPlatformKey = '456',
+                MessageType = 'Facebook'
+        );
+    }
+
+    /**
      * Asserts that the correct case and fields are retrieved from method in controller.
      */
     @IsTest
@@ -86,8 +99,9 @@ private class IdentifyCustomerComponentController_Test {
                 TPAccountNumber__c = '321'
         );
         insert originalCase;
+        MessagingChannel messagingChannel = [SELECT Id FROM MessagingChannel LIMIT 1];
         MessagingEndUser messagingEndUser1 = new MessagingEndUser(
-                MessagingChannelId = '0Mj1X0000004CLJSA2',
+                MessagingChannelId = messagingChannel.Id,
                 Name = 'User1',
                 MessageType = 'Facebook',
                 MessagingPlatformKey = '123',
@@ -99,7 +113,7 @@ private class IdentifyCustomerComponentController_Test {
                 Origin = 'InboundInitiated',
                 MessagingEndUserId = messagingEndUser1.Id,
                 Status = 'New',
-                MessagingChannelId = '0Mj1X0000004CLJSA2',
+                MessagingChannelId = messagingChannel.Id,
                 CaseId = originalCase.Id
         );
         insert session;
@@ -195,8 +209,9 @@ private class IdentifyCustomerComponentController_Test {
     static void shouldUpdateMessagingSessionAndRelatedRecordsBasedOnSuppliedJSONData(){
         Case originalCase = new Case();
         insert originalCase;
+        MessagingChannel messagingChannel = [SELECT Id FROM MessagingChannel LIMIT 1];
         MessagingEndUser messagingEndUser1 = new MessagingEndUser(
-                MessagingChannelId = '0Mj1X0000004CLJSA2',
+                MessagingChannelId = messagingChannel.Id,
                 Name = 'User1',
                 MessageType = 'Facebook',
                 MessagingPlatformKey = '123'
@@ -206,7 +221,7 @@ private class IdentifyCustomerComponentController_Test {
                 Origin = 'InboundInitiated',
                 MessagingEndUserId = messagingEndUser1.Id,
                 Status = 'New',
-                MessagingChannelId = '0Mj1X0000004CLJSA2',
+                MessagingChannelId = messagingChannel.Id,
                 CaseId = originalCase.Id
         );
         insert session;

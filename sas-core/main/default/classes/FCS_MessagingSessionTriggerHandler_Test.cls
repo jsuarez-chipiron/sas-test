@@ -5,6 +5,26 @@
  */
 @IsTest
 private class FCS_MessagingSessionTriggerHandler_Test {
+
+    /**
+     * Setting up setup objects in setup method
+     */
+    @TestSetup
+    static void createTestData(){
+        insert new MessagingChannel(
+                DeveloperName = 'FacebookChannel1',
+                MasterLabel = 'Facebook1',
+                MessagingPlatformKey = '321',
+                MessageType = 'Facebook'
+        );
+        insert new MessagingChannel(
+                DeveloperName = 'FacebookChannel2',
+                MasterLabel = 'Facebook2',
+                MessagingPlatformKey = '123',
+                MessageType = 'Facebook'
+        );
+    }
+
     /**
      * Asserts that new, inbound MessageSessions created cases with the correct values
      */
@@ -12,14 +32,14 @@ private class FCS_MessagingSessionTriggerHandler_Test {
     static void shouldCreateNewCasesBasesOnNewMessagingSessions() {
         MessagingChannel[] messagingChannel = [SELECT Id FROM MessagingChannel];
         MessagingEndUser messagingEndUser1 = new MessagingEndUser(
-                MessagingChannelId = '0Mj1X0000004CLJSA2',
+                MessagingChannelId = messagingChannel[0].Id,
                 Name = 'User1',
                 MessageType = 'Facebook',
                 MessagingPlatformKey = '123'
         );
         insert messagingEndUser1;
         MessagingEndUser messagingEndUser2 = new MessagingEndUser(
-                MessagingChannelId = '0Mj1X0000004CN0SAM',
+                MessagingChannelId = messagingChannel[1].Id,
                 Name = 'User2',
                 MessageType = 'Facebook',
                 MessagingPlatformKey = '123'
@@ -31,13 +51,13 @@ private class FCS_MessagingSessionTriggerHandler_Test {
                 Origin = 'InboundInitiated',
                 MessagingEndUserId = messagingEndUser1.Id,
                 Status = 'New',
-                MessagingChannelId = '0Mj1X0000004CLJSA2'
+                MessagingChannelId = messagingChannel[0].Id
         ));
         sessions.add(new MessagingSession(
                 Origin = 'InboundInitiated',
                 MessagingEndUserId = messagingEndUser2.Id,
                 Status = 'New',
-                MessagingChannelId = '0Mj1X0000004CN0SAM'
+                MessagingChannelId = messagingChannel[1].Id
         ));
         insert sessions;
 

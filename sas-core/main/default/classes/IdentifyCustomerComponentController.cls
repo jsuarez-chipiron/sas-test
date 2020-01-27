@@ -196,7 +196,6 @@ public with sharing class IdentifyCustomerComponentController {
                     recordsToUpdate.add(generateSObjectRecord(caseId));
                 }
             }
-            System.debug('Updating records: ' + JSON.serializePretty(recordsToUpdate));
             update recordsToUpdate;
         }
 
