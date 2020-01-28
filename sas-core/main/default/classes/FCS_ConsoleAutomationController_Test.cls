@@ -5,7 +5,8 @@
  */
 
 @IsTest
-public class ConsoleAutomationController_Test {
+public class FCS_ConsoleAutomationController_Test {
+    
     
     /**
 	 * Testing getRelated method that will find and return 
@@ -21,7 +22,7 @@ public class ConsoleAutomationController_Test {
         lct.Status = 'InProgress';
         insert lct; 
         
-        List<Id> caseIds = ConsoleAutomationController.retrieveRelated(lct.Id);
+        List<Id> caseIds = FCS_ConsoleAutomationController.retrieveRelated(lct.Id);
         Id expCaseId = [SELECT CaseId FROM LiveChatTranscript WHERE Id = :lct.Id].CaseId;
         System.assertEquals(expCaseId, caseIds[0]);
     }
@@ -36,7 +37,7 @@ public class ConsoleAutomationController_Test {
     @IsTest
     static void testRetrievePrefixes(){
         Test.startTest();
-        List<String> prefixList = ConsoleAutomationController.retrievePrefixes();
+        List<String> prefixList = FCS_ConsoleAutomationController.retrievePrefixes();
         Test.stopTest();
         System.assertNotEquals(null, prefixList);
     }

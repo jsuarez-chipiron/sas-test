@@ -1,4 +1,4 @@
-<aura:component implements="lightning:backgroundUtilityItem" controller="ConsoleAutomationController">
+<aura:component implements="lightning:backgroundUtilityItem" controller="FCS_ConsoleAutomationController">
     <aura:attribute name="prefixList" type="List" access="private" default="[]" description="List of object prefixes where a subtab should be automatically opened for."/>
     <aura:attribute name="transcriptWaitingForTab" type="List" access="private" default="[]" description="Transcripts which have been accepted but not yet received a case subtab"/>
     <lightning:omniToolkitAPI aura:id="omniToolkit" />
