@@ -30,15 +30,15 @@ private class IdentifyCustomerComponentController_Test {
         insert acc;
         Case originalCase = new Case(
                 AccountId = acc.Id,
-                EBNumber__c = '123',
-                TPAccountNumber__c = '321'
+                FCS_EBNumber__c = '123',
+                FCS_TPAccountNumber__c = '321'
         );
         insert originalCase;
 
         IdentifyCustomerComponentController.ComponentRecordData retrievedData = IdentifyCustomerComponentController.getRecordData(originalCase.Id);
 
         System.assertNotEquals(null, retrievedData);
-        System.assertEquals(originalCase.EBNumber__c, retrievedData.euroBonusNumber);
+        System.assertEquals(originalCase.FCS_EBNumber__c, retrievedData.euroBonusNumber);
         System.assertEquals(acc.Id, retrievedData.accountId);
         System.assertEquals(null, retrievedData.lastRetrievedFromSource);
     }
@@ -56,8 +56,8 @@ private class IdentifyCustomerComponentController_Test {
         acc = [SELECT Id, PersonContactId FROM Account WHERE Id = :acc.Id];
         Case originalCase = new Case(
                 AccountId = acc.Id,
-                EBNumber__c = '123',
-                TPAccountNumber__c = '321'
+                FCS_EBNumber__c = '123',
+                FCS_TPAccountNumber__c = '321'
         );
         insert originalCase;
         LiveChatVisitor visitor = new LiveChatVisitor();
@@ -67,17 +67,17 @@ private class IdentifyCustomerComponentController_Test {
                 CaseId = originalCase.Id,
                 AccountId = acc.Id,
                 ContactId = acc.PersonContactId,
-                EBNumber__c = '123',
-                CODSId__c = '321'
+                FCS_EBNumber__c = '123',
+                FCS_CODSId__c = '321'
         );
         insert transcript;
 
         IdentifyCustomerComponentController.ComponentRecordData retrievedData = IdentifyCustomerComponentController.getRecordData(transcript.Id);
 
         System.assertNotEquals(null, retrievedData);
-        System.assertEquals(transcript.EBNumber__c, retrievedData.euroBonusNumber);
+        System.assertEquals(transcript.FCS_EBNumber__c, retrievedData.euroBonusNumber);
         System.assertEquals(acc.Id, retrievedData.accountId);
-        System.assertEquals(transcript.CODSId__c, retrievedData.codsId);
+        System.assertEquals(transcript.FCS_CODSId__c, retrievedData.codsId);
         System.assertEquals(acc.PersonContactId, retrievedData.personContactId);
         System.assertEquals(null, retrievedData.lastRetrievedFromSource);
     }
@@ -95,8 +95,8 @@ private class IdentifyCustomerComponentController_Test {
         acc = [SELECT Id, PersonContactId FROM Account WHERE Id = :acc.Id];
         Case originalCase = new Case(
                 AccountId = acc.Id,
-                EBNumber__c = '123',
-                TPAccountNumber__c = '321'
+                FCS_EBNumber__c = '123',
+                FCS_TPAccountNumber__c = '321'
         );
         insert originalCase;
         MessagingChannel messagingChannel = [SELECT Id FROM MessagingChannel LIMIT 1];
@@ -141,8 +141,8 @@ private class IdentifyCustomerComponentController_Test {
 
         System.assertEquals(
                 '123',
-                [SELECT Id, EBNumber__c FROM LiveChatTranscript WHERE Id = :transcript.Id].EBNumber__c,
-                'The method did not update the underlying transcript correctly. Expected EBNumber__ to be updated.'
+                [SELECT Id, FCS_EBNumber__c FROM LiveChatTranscript WHERE Id = :transcript.Id].FCS_EBNumber__c,
+                'The method did not update the underlying transcript correctly. Expected FCS_EBNumber__ to be updated.'
         );
     }
 
@@ -165,13 +165,13 @@ private class IdentifyCustomerComponentController_Test {
 
         System.assertEquals(
                 '123',
-                [SELECT Id, EBNumber__c FROM LiveChatTranscript WHERE Id = :transcript.Id].EBNumber__c,
-                'The method did not update the underlying transcript correctly. Expected EBNumber__ to be updated.'
+                [SELECT Id, FCS_EBNumber__c FROM LiveChatTranscript WHERE Id = :transcript.Id].FCS_EBNumber__c,
+                'The method did not update the underlying transcript correctly. Expected FCS_EBNumber__ to be updated.'
         );
         System.assertEquals(
                 '123',
-                [SELECT Id, EBNumber__c FROM Case WHERE Id = :originalCase.Id].EBNumber__c,
-                'The method did not update the related case correctly. Expected EBNumber__ to be updated.'
+                [SELECT Id, FCS_EBNumber__c FROM Case WHERE Id = :originalCase.Id].FCS_EBNumber__c,
+                'The method did not update the related case correctly. Expected FCS_EBNumber__ to be updated.'
         );
     }
 
@@ -192,13 +192,13 @@ private class IdentifyCustomerComponentController_Test {
 
         System.assertEquals(
                 '123',
-                [SELECT Id, EBNumber__c FROM Case WHERE Id = :originalCase.Id].EBNumber__c,
-                'The method did not update the underlying case correctly. Expected EBNumber__ to be updated.'
+                [SELECT Id, FCS_EBNumber__c FROM Case WHERE Id = :originalCase.Id].FCS_EBNumber__c,
+                'The method did not update the underlying case correctly. Expected FCS_EBNumber__ to be updated.'
         );
         System.assertEquals(
                 '123',
-                [SELECT Id, EBNumber__c FROM LiveChatTranscript WHERE Id = :transcript.Id].EBNumber__c,
-                'The method did not update the related chat transcript correctly. Expected EBNumber__ to be updated.'
+                [SELECT Id, FCS_EBNumber__c FROM LiveChatTranscript WHERE Id = :transcript.Id].FCS_EBNumber__c,
+                'The method did not update the related chat transcript correctly. Expected FCS_EBNumber__ to be updated.'
         );
     }
 
@@ -234,7 +234,7 @@ private class IdentifyCustomerComponentController_Test {
 
         System.assertEquals(
                 '123',
-                [SELECT Id, AccountId, EBNumber__c FROM Case WHERE Id = :originalCase.Id].EBNumber__c,
+                [SELECT Id, AccountId, FCS_EBNumber__c FROM Case WHERE Id = :originalCase.Id].FCS_EBNumber__c,
                 'The method did not update the related case correctly. Expected EBNumber__ to be updated.'
         );
         System.assertEquals(

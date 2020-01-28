@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>TPAccountNumber__c</fullName>
-    <description>Unique identifier for customer&#39;s Travel Pass account</description>
+    <fullName>FCS_EBLevel__c</fullName>
     <externalId>false</externalId>
-    <label>Travel Pass Account Number</label>
-    <length>255</length>
+    <label>EuroBonus Level</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>EuroBonusLevel</valueSetName>
+    </valueSet>
 </CustomField>

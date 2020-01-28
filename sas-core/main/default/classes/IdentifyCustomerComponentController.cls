@@ -9,7 +9,7 @@ public with sharing class IdentifyCustomerComponentController {
      * Used to handle request to fins a customer from the component. A list of frequent flyer record is fetched by
      * a query, and then the first record in the list is synced to a corresponding account record in Salesforce.
      * If the account already exists it is updated, otherwise created.
-     * @param searchField Field on Frequent Flyer object to use as filter to retrieve customer, e.g. EBNumber__c
+     * @param searchField Field on Frequent Flyer object to use as filter to retrieve customer, e.g. FCS_EBNumber__c
      * @param searchValue Value for the search field, e.g. a EuroBonus number
      * @return If an account is found it is returned, otherwise null,
      */
@@ -89,14 +89,14 @@ public with sharing class IdentifyCustomerComponentController {
         SObjectType sObjectType = recordId.getSobjectType();
         if(sObjectType == Case.getSObjectType()){
             return new ComponentRecordData(
-                    [SELECT Id, EBNumber__c, TPAccountNumber__c, AccountId,
+                    [SELECT Id, FCS_EBNumber__c, FCS_TPAccountNumber__c, AccountId,
                     Account.FrequentFlyer__c, Account.LastRetrievedFromSource__c
                     FROM Case
                     WHERE Id = :recordId]
             );
         } else if (sObjectType == LiveChatTranscript.getSObjectType()){
             return new ComponentRecordData(
-                    [SELECT Id, EBNumber__c, CODSId__c, Account.PersonContactId, Account.FrequentFlyer__c, CaseId, Account.LastRetrievedFromSource__c
+                    [SELECT Id, FCS_EBNumber__c, FCS_CODSId__c, Account.PersonContactId, Account.FrequentFlyer__c, CaseId, Account.LastRetrievedFromSource__c
                     FROM LiveChatTranscript
                     WHERE Id = :recordId]
             );
@@ -138,8 +138,8 @@ public with sharing class IdentifyCustomerComponentController {
         public ComponentRecordData(Case cse) {
             recordId = cse.Id;
             accountId = cse.AccountId;
-            euroBonusNumber = cse.EBNumber__c;
-            tpAccountNumber = cse.TPAccountNumber__c;
+            euroBonusNumber = cse.FCS_EBNumber__c;
+            tpAccountNumber = cse.FCS_TPAccountNumber__c;
             codsId = cse.Account.FrequentFlyer__c;
             caseId = cse.Id;
             lastRetrievedFromSource = cse.Account.LastRetrievedFromSource__c;
@@ -154,8 +154,8 @@ public with sharing class IdentifyCustomerComponentController {
             recordId = transcript.Id;
             accountId = transcript.AccountId;
             personContactId = transcript.Account.PersonContactId;
-            euroBonusNumber = transcript.EBNumber__c;
-            codsId = transcript.CODSId__c;
+            euroBonusNumber = transcript.FCS_EBNumber__c;
+            codsId = transcript.FCS_CODSId__c;
             caseId = transcript.CaseId;
             lastRetrievedFromSource = transcript.Account.LastRetrievedFromSource__c;
             supportsUIApi = false;
@@ -210,16 +210,16 @@ public with sharing class IdentifyCustomerComponentController {
                 returnRecord = new Case(
                         Id = recordId,
                         AccountId = accountId,
-                        TPAccountNumber__c = tpAccountNumber,
-                        CODSId__c = codsId,
-                        EBNumber__c = euroBonusNumber
+                        FCS_TPAccountNumber__c = tpAccountNumber,
+                        FCS_CODSId__c = codsId,
+                        FCS_EBNumber__c = euroBonusNumber
                 );
             } else if (recordId.getSobjectType() == LiveChatTranscript.SObjectType){
                 returnRecord = new LiveChatTranscript(
                         Id = recordId,
                         AccountId = accountId,
-                        EBNumber__c = euroBonusNumber,
-                        CODSId__c = codsId,
+                        FCS_EBNumber__c = euroBonusNumber,
+                        FCS_CODSId__c = codsId,
                         ContactId = personContactId
                 );
             } else if (recordId.getSobjectType() == MessagingEndUser.SObjectType){

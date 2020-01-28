@@ -73,6 +73,10 @@
                 <behavior>Edit</behavior>
                 <field>SuppliedEmail</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FCS_EBLevel__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
@@ -89,7 +93,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PNR__c</field>
+                <field>FCS_PNR__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
