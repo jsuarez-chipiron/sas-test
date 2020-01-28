@@ -5,192 +5,7 @@
         <default>true</default>
         <visible>true</visible>
     </applicationVisibilities>
-    <classAccesses>
-        <apexClass>APIM_AuthConnector</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>GDPR_AccountGDPRExtractController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>GDPR_AccountGDPRExtractController_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CSharkIntegrationService</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CSharkIntegrationService_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CSharkResponseParser</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>C_HexBuffer</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>C_HexBuffer_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>C_LocalAuthConnector</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>C_LocalAuthController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>C_LocalAuthProvider</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>C_RestUtil</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>C_RestUtil_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>C_TestUtil</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>C_TestUtil_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>C_TriggerHandler</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>C_TriggerHandler_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>C_Util</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>C_Util_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CaseHandler</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CaseHandler_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>GDPR_DataExtractService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EmailToCase_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ExternalObjectQueryHandler</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-	<classAccesses>
-        <apexClass>ConsoleAutomationController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ExternalObjectQueryHandler_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>FrequentFlyerService</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>FrequentFlyerService_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>IdentifyCustomerComponentController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>IdentifyCustomerComponentController_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LiveChatTranscriptTriggerHandler</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LiveChatTranscriptTriggerHandler_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LoginFlowTOTPAvailability</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LoginFlowTOTPUrl</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LoginFlowTOTPVerify</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LoginFlowTOTP_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>MentionHandler</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>MentionHandler_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>RecordTypeHelper</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>SASExternalDataSourceConnection</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>SASExternalDataSourceConnection_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>SASExternalDataSourceProvider</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>SASExternalDataSourceProvider_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
     <custom>true</custom>
-    <customMetadataTypeAccesses>
-        <enabled>false</enabled>
-        <name>Feature_Switch__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>false</enabled>
-        <name>LocalAuthProvider__mdt</name>
-    </customMetadataTypeAccesses>
-    <externalDataSourceAccesses>
-        <enabled>false</enabled>
-        <externalDataSource>SAS_External_Systems</externalDataSource>
-    </externalDataSourceAccesses>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.AnswerTime__c</field>
@@ -236,7 +51,6 @@
             <field>SocialPost.FCS_VirtualOrganization__c</field>
             <readable>true</readable>
         </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.FCS_SubTeam__c</field>
@@ -267,9 +81,6 @@
         <field>Account.ConsentEuroBonus__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
-
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.ConsentSMS__c</field>
@@ -441,176 +252,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Feature_Switch__mdt.Active__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.AddressLine1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.AddressLine2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.AddressLine3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.BirthDate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.City__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.CompanyName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>FrequentFlyer__x.ConsentEB0__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>FrequentFlyer__x.ConsentEB__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>FrequentFlyer__x.ConsentEmail__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>FrequentFlyer__x.ConsentSMS__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>FrequentFlyer__x.ConsentTelemarketing__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.CountryCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.CountyState__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.EBBalance__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.EBLevel__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.EBMbrshipLvlStatusEndDate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.EBMbrshipLvlStatusStartDate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.EBMemberSinceDate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.EBNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.EBReachesNextLevelPoints__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.EmailPersonal__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.FirstName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>FrequentFlyer__x.Gender__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.LastName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.MiddleName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.Mobile__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.Phone__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.Salutation__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.SubscriptionId__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.TPAccountNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.Title__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FrequentFlyer__x.ZipCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Knowledge__kav.Body__c</field>
         <readable>true</readable>
@@ -639,16 +280,6 @@
         <editable>true</editable>
         <field>LiveChatTranscript.EBNumber__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>ManagedSocialAccounts__mdt.Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>ManagedSocialAccounts__mdt.Provider__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -690,7 +321,6 @@
         <field>SocialPost.PostReplied__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.Reopened__c</field>
@@ -701,7 +331,6 @@
         <field>SocialPost.ClosedDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.SASPostComment__c</field>
@@ -717,21 +346,6 @@
         <field>SurveyInvitation.RelatedCase__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
-   
-
-    <layoutAssignments>
-        <layout>AD_RoleLink__mdt-AD Role Link Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>AD_RolePermission__mdt-AD Role Permission Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>AD_RoleUserDetail__mdt-AD Role User Detail Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>AD_Role__mdt-AD Role Layout</layout>
-    </layoutAssignments>
     <layoutAssignments>
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
@@ -764,12 +378,6 @@
         <layout>CaseTag__c-Case Reason Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Feature_Switch__mdt-Feature Switch Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>FrequentFlyer__x-Frequent Flyer Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Knowledge__kav-SAS SSI Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -780,12 +388,6 @@
         <layout>LiveChatTranscript-Chat Transcript Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>LocalAuthProvider__mdt-Local Auth Provider Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ManagedSocialAccounts__mdt-Managed Social Account Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>PersonAccount-B2C - Anonymous Customer</layout>
         <recordType>PersonAccount.AnonymousCustomer</recordType>
     </layoutAssignments>
@@ -793,21 +395,6 @@
         <layout>PersonAccount-B2C - EB Customer</layout>
         <recordType>PersonAccount.EBCustomer</recordType>
     </layoutAssignments>
-    <layoutAssignments>
-        <layout>SocialPersona-Social Persona Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>SocialPost-Social Post Layout</layout>
-    </layoutAssignments>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>FrequentFlyer__x</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -861,11 +448,7 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>SurveySubject</object>
         <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>    
-    <pageAccesses>
-        <apexPage>C_LocalAuth</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
+    </objectPermissions>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Feedback</recordType>
@@ -904,10 +487,6 @@
     </recordTypeVisibilities>
     <tabVisibilities>
         <tab>CaseTag__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>FrequentFlyer__x</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <userLicense>Salesforce</userLicense>
