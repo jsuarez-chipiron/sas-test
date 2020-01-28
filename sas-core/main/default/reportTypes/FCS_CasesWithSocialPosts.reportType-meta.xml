@@ -207,12 +207,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>EBLevel__c</field>
+            <field>FCS_EBLevel__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>EBNumber__c</field>
+            <field>FCS_EBNumber__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -237,7 +237,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Language__c</field>
+            <field>FCS_Language__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -247,12 +247,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>PIR__c</field>
+            <field>FCS_PIR__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>PNR__c</field>
+            <field>FCS_PNR__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -277,7 +277,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>TPAccountNumber__c</field>
+            <field>FCS_TPAccountNumber__c</field>
             <table>Case</table>
         </columns>
         <columns>

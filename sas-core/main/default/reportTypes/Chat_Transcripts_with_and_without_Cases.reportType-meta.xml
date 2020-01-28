@@ -88,7 +88,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CODSId__c</field>
+            <field>FCS_CODSId__c</field>
             <table>LiveChatTranscript</table>
         </columns>
         <columns>
@@ -128,7 +128,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>EBNumber__c</field>
+            <field>FCS_EBNumber__c</field>
             <table>LiveChatTranscript</table>
         </columns>
         <columns>
@@ -138,7 +138,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Language__c</field>
+            <field>FCS_Language__c</field>
             <table>LiveChatTranscript</table>
         </columns>
         <columns>
@@ -296,7 +296,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Case.Language__c</field>
+            <field>Case.FCS_Language__c</field>
             <table>LiveChatTranscript</table>
         </columns>
         <columns>
