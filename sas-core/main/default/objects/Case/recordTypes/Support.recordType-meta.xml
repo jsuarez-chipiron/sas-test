@@ -333,6 +333,149 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>FCS_Site__c</picklist>
+        <values>
+            <fullName>EVG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ODE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OER</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FCS_SubTeam__c</picklist>
+        <values>
+            <fullName>Team 1%2E1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 1%2E2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 1%2E3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 2%2E1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 2%2E2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 2%2E3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 3%2E1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 3%2E2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 3%2E3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 4%2E1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 4%2E2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 4%2E3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 5%2E1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 5%2E2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 5%2E3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 6%2E1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 6%2E2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 6%2E3</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FCS_Team__c</picklist>
+        <values>
+            <fullName>Team 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 6</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FCS_Vendor__c</picklist>
+        <values>
+            <fullName>SAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sutherland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sykes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FCS_VirtualOrganization__c</picklist>
+        <values>
+            <fullName>Direct Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Global Support</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Language__c</picklist>
         <values>
             <fullName>DK</fullName>

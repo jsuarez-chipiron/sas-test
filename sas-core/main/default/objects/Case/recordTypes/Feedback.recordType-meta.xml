@@ -645,78 +645,17 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Language__c</picklist>
+        <picklist>FCS_Site__c</picklist>
         <values>
-            <fullName>DK</fullName>
+            <fullName>EVG</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>EN</fullName>
+            <fullName>ODE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SV</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Origin</picklist>
-        <values>
-            <fullName>Chat</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Facebook</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Phone</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Twitter</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Web</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Priority</picklist>
-        <values>
-            <fullName>Critical</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>High</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Low</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Medium</fullName>
-            <default>true</default>
-        </values>
-        <values>
-            <fullName>Urgent</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Reason</picklist>
-        <values>
-            <fullName>Other</fullName>
+            <fullName>OER</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -819,6 +758,108 @@
         </values>
         <values>
             <fullName>Team 6</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FCS_Vendor__c</picklist>
+        <values>
+            <fullName>SAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sutherland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sykes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FCS_VirtualOrganization__c</picklist>
+        <values>
+            <fullName>Direct Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Global Support</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Language__c</picklist>
+        <values>
+            <fullName>DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SV</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Origin</picklist>
+        <values>
+            <fullName>Chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Facebook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Twitter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>Critical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Urgent</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason</picklist>
+        <values>
+            <fullName>Other</fullName>
             <default>false</default>
         </values>
     </picklistValues>
