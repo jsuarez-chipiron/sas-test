@@ -10,6 +10,11 @@
         <default>false</default>
         <label>Sykes</label>
     </customValue>
+    <customValue>
+        <fullName>SAS</fullName>
+        <default>false</default>
+        <label>SAS</label>
+    </customValue>
     <description>The vendor of the user or record owner (that is a user)</description>
     <masterLabel>FCS Vendor</masterLabel>
     <sorted>true</sorted>
