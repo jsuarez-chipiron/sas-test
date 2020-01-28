@@ -3,7 +3,7 @@
  * @date 2019-11-27
  * Controller class for the hidden utility to open a case subtab under a chat transcript tab in the SAS Service-console.  
  */
-public class ConsoleAutomationController {
+public class FCS_ConsoleAutomationController {
 
     /**
      * Returns a list of object prefixes that are subject to automatically open a tab with a related object. 

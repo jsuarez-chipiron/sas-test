@@ -15,7 +15,7 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
-            <componentName>ConsoleAutomation</componentName>
+            <componentName>FCS_ConsoleAutomation</componentName>
         </componentInstances>
         <name>backgroundComponents</name>
         <type>Background</type>
