@@ -537,10 +537,7 @@
         <enabled>false</enabled>
         <name>EditTopics</name>
     </userPermissions>
-    <userPermissions>
-        <enabled>false</enabled>
-        <name>EnableCommunityAppLauncher</name>
-    </userPermissions>
+    
     <userPermissions>
         <enabled>false</enabled>
         <name>EnableNotifications</name>
