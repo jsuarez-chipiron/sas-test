@@ -108,7 +108,7 @@
         </outputAssignments>
         <outputAssignments>
             <assignToReference>guestUserLang</assignToReference>
-            <field>Language__c</field>
+            <field>FCS_SurveyLanguage__c</field>
         </outputAssignments>
     </recordLookups>
     <recordLookups>
