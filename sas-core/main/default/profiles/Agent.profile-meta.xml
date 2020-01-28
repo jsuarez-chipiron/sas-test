@@ -542,10 +542,7 @@
         <enabled>false</enabled>
         <name>EnableNotifications</name>
     </userPermissions>
-    <userPermissions>
-        <enabled>false</enabled>
-        <name>FieldServiceAccess</name>
-    </userPermissions>
+    
     <userPermissions>
         <enabled>true</enabled>
         <name>LightningConsoleAllowedForUser</name>
