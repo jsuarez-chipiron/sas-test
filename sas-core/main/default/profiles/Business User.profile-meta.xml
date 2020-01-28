@@ -148,7 +148,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.CODSId__c</field>
+        <field>Case.FCS_CODSId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -173,12 +173,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.EBLevel__c</field>
+        <field>Case.FCS_EBLevel__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.EBNumber__c</field>
+        <field>Case.FCS_EBNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -198,12 +198,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.PIR__c</field>
+        <field>Case.FCS_PIR__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.PNR__c</field>
+        <field>Case.FCS_PNR__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -218,7 +218,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.TPAccountNumber__c</field>
+        <field>Case.FCS_TPAccountNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -273,17 +273,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>LiveChatTranscript.CODSId__c</field>
+        <field>LiveChatTranscript.FCS_CODSId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>LiveChatTranscript.CaseRecordTypeName__c</field>
+        <field>LiveChatTranscript.FCS_CaseRecordTypeName__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>LiveChatTranscript.EBNumber__c</field>
+        <field>LiveChatTranscript.FCS_EBNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
