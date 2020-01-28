@@ -340,12 +340,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.EBLevel__c</field>
+            <field>RelatedCase__c.FCS_EBLevel__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.PNR__c</field>
+            <field>RelatedCase__c.FCS_PNR__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
@@ -360,17 +360,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.PIR__c</field>
+            <field>RelatedCase__c.FCS_PIR__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.Language__c</field>
+            <field>RelatedCase__c.FCS_Language__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.EBNumber__c</field>
+            <field>RelatedCase__c.FCS_EBNumber__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>

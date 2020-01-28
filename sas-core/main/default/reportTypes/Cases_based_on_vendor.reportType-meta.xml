@@ -83,7 +83,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CODSId__c</field>
+            <field>FCS_CODSId__c</field>
             <table>Case</table>
         </columns>
         <columns>

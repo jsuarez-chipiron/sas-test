@@ -53,7 +53,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CaseRecordTypeName__c</field>
+            <field>FCS_CaseRecordTypeName__c</field>
             <table>LiveChatTranscript</table>
         </columns>
         <columns>

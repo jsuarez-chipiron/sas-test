@@ -32,19 +32,19 @@
             </layoutItems>
 			<layoutItems>
                 <behavior>Edit</behavior>
-                <field>Language__c</field>
+                <field>FCS_Language__c</field>
             </layoutItems>
 			 <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EBNumber__c</field>
+                <field>FCS_EBNumber__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>CODSId__c</field>
+                <field>FCS_CODSId__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>CaseRecordTypeName__c</field>
+                <field>FCS_CaseRecordTypeName__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
