@@ -3,7 +3,7 @@
     to urgent based on input from customer in Subject field or if Email is Flagged as important. 
 */
 @isTest 
-private class EmailToCase_Test { 
+private class FCS_EmailToCase_Test { 
 
     /**
         Set up the STOPQ-Escalation Queue

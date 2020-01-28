@@ -5,7 +5,7 @@
  * tested through this class.
  */
 @IsTest
-public with sharing class LiveChatTranscriptTriggerHandler_Test {
+public with sharing class FCS_LiveChatTranscriptTrigger_Test {
     
     
     /**

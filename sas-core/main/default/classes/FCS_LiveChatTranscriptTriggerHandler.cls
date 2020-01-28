@@ -3,7 +3,7 @@
  * @date 2019-11-27
  * Handler class for LivechatTranscriptTrigger. Holds automation related to creating a case for every new LiveChatTranscript for example. 
  */
-public class LiveChatTranscriptTriggerHandler extends C_TriggerHandler {
+public class FCS_LiveChatTranscriptTriggerHandler extends C_TriggerHandler {
     public override void beforeInsert(){ 
 		try{
             LiveChatTranscript[] lctList = (List<LiveChatTranscript>) Trigger.new;
