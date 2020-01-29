@@ -24,7 +24,16 @@ public with sharing class IdentifyCustomerComponentController {
                         'FROM FrequentFlyer__x ' +
                         'WHERE ' + searchField + ' = \'' + searchValue + '\'';
         List<FrequentFlyer__x> externalData = Database.query(query);
-        return createAccountRecordBasedOnFrequentFlyers(externalData);
+        Account createdAccount = createAccountRecordBasedOnFrequentFlyers(externalData);
+
+        //Necessary to do a query for the account after upsert to retrieve the PersonContactId
+        if(createdAccount != null){
+            return [SELECT Id, PersonContactId, EBNumber__c, TPAccountNumber__c, CODSId__c, LastRetrievedFromSource__c
+            FROM Account
+            WHERE Id = :createdAccount.Id];
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -90,7 +99,7 @@ public with sharing class IdentifyCustomerComponentController {
         if(sObjectType == Case.getSObjectType()){
             return new ComponentRecordData(
                     [SELECT Id, FCS_EBNumber__c, FCS_TPAccountNumber__c, AccountId,
-                    Account.FrequentFlyer__c, Account.LastRetrievedFromSource__c
+                    Account.FrequentFlyer__c, Account.LastRetrievedFromSource__c, Account.PersonContactId
                     FROM Case
                     WHERE Id = :recordId]
             );
@@ -138,6 +147,7 @@ public with sharing class IdentifyCustomerComponentController {
         public ComponentRecordData(Case cse) {
             recordId = cse.Id;
             accountId = cse.AccountId;
+            personContactId = cse.Account.PersonContactId;
             euroBonusNumber = cse.FCS_EBNumber__c;
             tpAccountNumber = cse.FCS_TPAccountNumber__c;
             codsId = cse.Account.FrequentFlyer__c;

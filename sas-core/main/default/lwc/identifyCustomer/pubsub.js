@@ -59,8 +59,8 @@ const fireEvent = (eventName, payload) => {
         const listeners = events[eventName];
         listeners.forEach(listener => {
             try {
-                listener.callback.call(listener.thisArg, payload);
                 console.log('Fired event: ' + eventName);
+                listener.callback.call(listener.thisArg, payload);
             } catch (error) {
                 // fail silently
             }

@@ -107,6 +107,7 @@ export default class App extends LightningElement {
             const recordInput = {
                 recordId: this.recordId,
                 accountId: null,
+                personContactId: null,
                 euroBonusNumber: null,
                 tpAccountNumber: null,
                 codsId: null,
