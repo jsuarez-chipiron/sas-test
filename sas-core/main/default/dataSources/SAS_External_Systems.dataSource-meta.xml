@@ -5,5 +5,5 @@
     <label>SAS External Systems</label>
     <principalType>Anonymous</principalType>
     <protocol>NoAuthentication</protocol>
-    <type>SASExternalDataSourceProvider</type>
+    <type>C_SASExternalDataSourceProvider</type>
 </ExternalDataSource>

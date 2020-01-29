@@ -9,7 +9,7 @@ private class FCS_TestDataFactory_Test {
 		Tests creating and inserting case records
 	*/
 	@isTest	static void insertCaseRecords () {
-       insert FCS_TestDataFactory.createCases(200, null, null, RecordTypeHelper.CASE_SUPPORT, 'Baggage');
+       insert FCS_TestDataFactory.createCases(200, null, null, C_RecordTypeHelper.CASE_SUPPORT, 'Baggage');
 	}
 	/** 
 		Tests creating and inserting account records

@@ -163,7 +163,7 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
-            <componentName>identifyCustomerContainer</componentName>
+            <componentName>FCS_IdentifyCustomerContainer</componentName>
             <visibilityRule>
                 <criteria>
                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>

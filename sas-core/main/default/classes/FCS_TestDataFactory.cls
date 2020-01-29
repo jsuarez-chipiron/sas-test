@@ -59,18 +59,18 @@ public class FCS_TestDataFactory {
         Account[] accs = new Account[numAccounts];
         for (Integer i = 0; i < numAccounts; i++) {
             Account acc = new Account();
-            acc.RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER;
+            acc.RecordTypeId = C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER;
             acc.FirstName = 'TestFirstName';
             acc.LastName = 'TestLastName';
-            acc.CODSId__c = 'TEST' + SEQ_NUM;
+            acc.FCS_CODSId__c = 'TEST' + SEQ_NUM;
             acc.PersonEmail = 'test@test.com';
             acc.PersonMobilePhone = '+46701234567';
             acc.PersonHomePhone = '+4681234567';
-            acc.Gender__c = (SEQ_NUM & 1) > 0 ? 'F' : 'M';
-            acc.FrequentFlyer__c = acc.CODSId__c;
+            acc.FCS_Gender__c = (SEQ_NUM & 1) > 0 ? 'F' : 'M';
+            acc.FCS_FrequentFlyer__c = acc.FCS_CODSId__c;
             acc.PersonBirthDate = Date.newInstance(1990 - Math.mod(SEQ_NUM, 50), Math.mod(SEQ_NUM, 12) + 1, Math.mod(SEQ_NUM, 29) + 1);
-            acc.EBNumber__c = 'EBTEST' + SEQ_NUM;
-            acc.EBLevel__c = (SEQ_NUM & 3) < 2 ? 'B' : (SEQ_NUM & 3) < 3 ? 'S' : 'G';
+            acc.FCS_EBNumber__c = 'EBTEST' + SEQ_NUM;
+            acc.FCS_EBLevel__c = (SEQ_NUM & 3) < 2 ? 'B' : (SEQ_NUM & 3) < 3 ? 'S' : 'G';
             SEQ_NUM++;
             accs[i] = acc;
         }

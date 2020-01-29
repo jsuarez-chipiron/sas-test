@@ -3,8 +3,8 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <searchLayouts>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>EBLevel__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>EBNumber__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>TPAccountNumber__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FCS_EBLevel__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FCS_EBNumber__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FCS_TPAccountNumber__c</searchResultsAdditionalFields>
     </searchLayouts>
 </CustomObject>

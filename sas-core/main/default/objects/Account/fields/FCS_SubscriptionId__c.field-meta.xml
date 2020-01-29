@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FCS_SubscriptionId__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>Unique identifier for customer&#39;s subscription engagement</description>
+    <externalId>true</externalId>
+    <label>Subscription Id</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

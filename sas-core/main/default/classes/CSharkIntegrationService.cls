@@ -42,6 +42,7 @@ public with sharing class   CSharkIntegrationService {
      * @param engagementSearchKey Value to search for, based on search type, e.g. a EuroBonus number
      * @return Custom class containing an error message or the customer data result
      */
+    //TODO Gör om argument från object till string
     public static List<Map<String, Object>> getCustomer(SearchType searchEngagementType, Object engagementSearchKey){
         //TODO Extend class with method for C-Shark service CustomersGet. Wrap CustomerGet and CustomersGet in method
         // and determine which method to call based on provided SearchType
@@ -65,7 +66,6 @@ public with sharing class   CSharkIntegrationService {
                     'APIM',
                     httpDataLog
             );
-            Savepoint sp = Database.setSavepoint();
             throw new CSharkIntegrationException(
                     'C-Shark service responded with an error ' + response.getStatusCode() +'. See log for details.'
             );
@@ -82,14 +82,13 @@ public with sharing class   CSharkIntegrationService {
         C_Log.HttpData httpDataLog = new C_Log.HttpData();
         httpDataLog.resource = request.getEndpoint();
         httpDataLog.remoteAddress = request.getEndpoint();
-        httpDataLog.headers = request.getHeader('Content-Type') +
-                ', ' +
-                request.getHeader('Ocp-Apim-Subscription-Key');
+        httpDataLog.headers = request.getHeader('Content-Type');
         httpDataLog.method = request.getMethod();
         httpDataLog.body = request.getBody();
         return httpDataLog;
     }
 
+    //TODO Kommentera metod. Ta bort hårdkodad sub key.
     private static HttpRequest createAPIMRequest(OperationName operationName){
         HttpRequest request = new HttpRequest();
         request.setEndpoint('callout:SAS_APIM/csharkcustmgmtticketless');
@@ -104,7 +103,7 @@ public with sharing class   CSharkIntegrationService {
         return request;
     }
 
-
+    //TODO aktivera metod
     /**
      * Generates a request body for operation CustomersGet in C-Shark.
      * @param searchType The type of values to search for, e.g. EuroBonus
@@ -170,6 +169,7 @@ public with sharing class   CSharkIntegrationService {
         return requestBody;
     }
 
+    //TODO Remove mock functionality
     /**
      * Customer exception class for C-Shark integration
      */
@@ -190,6 +190,7 @@ public with sharing class   CSharkIntegrationService {
         return dataRows;
     }
 
+    //TODO FLytta till rätt klass där den kan vara private
     /**
      * Helper method used to get a valid search type from this service
      * based on a provided string, e.g. a field name from a table

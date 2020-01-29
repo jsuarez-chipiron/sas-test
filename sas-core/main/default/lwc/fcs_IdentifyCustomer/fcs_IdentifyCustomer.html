@@ -1,0 +1,52 @@
+<template>
+    <lightning-card title="Retrieve Customer" icon-name="action:join_group" if:false={customerIdentified}>
+        <div class="slds-grid slds-gutters slds-grid_vertical-align-end slds-p-left_small">
+            <!--Component that displays buttons where the user can choose a value to search for, e.g. EuroBonus. 
+                Dynimically rendered based on property.-->
+            <div class="slds-col">
+                <lightning-radio-group name="searchOptions" label="Search by" options={options} value={searchOption}
+                    required type="button" if:true={showSearchOptions}></lightning-radio-group>
+                <!--Search field of component-->
+                <lightning-input type="text" label="Enter customer's EuroBonus number" value={searchValue}
+                    onchange={handleSearchValueChange} onkeydown={handlePressEnterKey} class="search-field">
+                </lightning-input>
+            </div>
+            <!--Button to trigger search based on input-->
+            <div class="slds-col">
+                <lightning-button variant="brand" label="Search" title="Search button"
+                    onclick={handleSearchButtonClick}>
+                </lightning-button>
+            </div>
+        </div>
+
+        <!--Spinner graphics dynamically rendered, controlled by JS-->
+        <div if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+        </div>
+        <!--Custom child component to render errors in search-->
+        <template if:true={error}>
+            <c-c_-error-panel errors={error}></c-c_-error-panel>
+        </template>
+        <!--Displays a warning is no result was found in search-->
+        <div class="slds-p-around_medium searchError" if:true={noSearchResult}>
+            <lightning-icon icon-name="utility:warning" variant="warning"></lightning-icon>
+            <div class="slds-p-around_small">
+                <p>Could not find a matching customer</p>
+            </div>
+        </div>
+    </lightning-card>
+    <!--Lightning card that displays when a customer has been identified. Icon and title different from search card.-->
+    <lightning-card title="Customer Identified" icon-name="action:approval" if:true={customerIdentified}>
+        <div slot="actions">
+            <lightning-button-icon icon-name="utility:cancel_transfer" title="Change customer connected to case"
+                onclick={handleChangeCustomerButtonClick} alternative-text="Change customer"></lightning-button-icon>
+        </div>
+        <div if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+        </div>
+        <!--Custom child component to render errors in search-->
+        <template if:true={error}>
+            <c-c_-error-panel errors={error}></c-c_-error-panel>
+        </template>
+    </lightning-card>
+</template>

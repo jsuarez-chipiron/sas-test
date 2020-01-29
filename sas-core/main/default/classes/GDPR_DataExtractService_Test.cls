@@ -12,7 +12,7 @@ private class GDPR_DataExtractService_Test {
     @IsTest
     static void shouldReturnQueriesBasedOnFieldDefinitions() {
         Account acc = new Account(
-                RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
+                RecordTypeId = C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
                 LastName = 'LastName'
         );
         insert acc;
@@ -47,13 +47,13 @@ private class GDPR_DataExtractService_Test {
     @IsTest
     static void shouldReturnMultipleExtractsForMultipleAccounts(){
         Account acc1 = new Account(
-                RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
+                RecordTypeId = C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
                 LastName = 'LastName'
         );
         insert acc1;
 
         Account acc2 = new Account(
-                RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
+                RecordTypeId = C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
                 LastName = 'LastName'
         );
         insert acc2;
@@ -77,7 +77,7 @@ private class GDPR_DataExtractService_Test {
     @IsTest
     static void shouldReturnCorrectPersonalDataExtractBasedOnProvidedFieldDefinition(){
         Account acc = new Account(
-                RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
+                RecordTypeId = C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
                 LastName = 'LastName'
         );
         insert acc;
@@ -113,7 +113,7 @@ private class GDPR_DataExtractService_Test {
     @IsTest
     static void shouldReturnPersonalDataExtractBasedOnQueriedFieldDefinition(){
         Account acc = new Account(
-                RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
+                RecordTypeId = C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
                 LastName = 'LastName'
         );
         insert acc;
@@ -132,7 +132,7 @@ private class GDPR_DataExtractService_Test {
     @IsTest
     static void shouldThrowExceptionWhenNoSettingsExist(){
         Account acc = new Account(
-                RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
+                RecordTypeId = C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
                 LastName = 'LastName'
         );
         insert acc;
@@ -157,7 +157,7 @@ private class GDPR_DataExtractService_Test {
     @IsTest
     static void shouldThrowExceptionIfParentObjectIsMissingFromChildObjectConfiguration(){
         Account acc = new Account(
-                RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
+                RecordTypeId = C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
                 LastName = 'LastName'
         );
         insert acc;

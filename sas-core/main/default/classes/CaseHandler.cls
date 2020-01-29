@@ -77,9 +77,9 @@ public class CaseHandler extends C_TriggerHandler {
         Set<Id> socialPostIds = new Set<Id>();
         List<Case> caseInScope = new List<Case>();
         for (Case c : newCaseList) {
-            Boolean infoTag = (c.Origin == 'Facebook' || c.Origin == 'Twitter') && (c.SourceId != null && c.SourceId.getSOBjectType() == SocialPost.SObjectType && c.Status == CASE_STATUS_CLOSED && c.RecordTypeId == RecordTypeHelper.CASE_INFORMATION);
-            Boolean supportTag = (c.Origin == 'Facebook' || c.Origin == 'Twitter') && (c.SourceId != null && c.SourceId.getSOBjectType() == SocialPost.SObjectType && c.Status == CASE_STATUS_CLOSED && c.RecordTypeId == RecordTypeHelper.CASE_SUPPORT);
-            Boolean feedbackTag = (c.Origin == 'Facebook' || c.Origin == 'Twitter') && (c.SourceId != null && c.SourceId.getSOBjectType() == SocialPost.SObjectType && c.Status == CASE_STATUS_CLOSED && c.RecordTypeId == RecordTypeHelper.CASE_FEEDBACK);
+            Boolean infoTag = (c.Origin == 'Facebook' || c.Origin == 'Twitter') && (c.SourceId != null && c.SourceId.getSOBjectType() == SocialPost.SObjectType && c.Status == CASE_STATUS_CLOSED && c.RecordTypeId == C_RecordTypeHelper.CASE_INFORMATION);
+            Boolean supportTag = (c.Origin == 'Facebook' || c.Origin == 'Twitter') && (c.SourceId != null && c.SourceId.getSOBjectType() == SocialPost.SObjectType && c.Status == CASE_STATUS_CLOSED && c.RecordTypeId == C_RecordTypeHelper.CASE_SUPPORT);
+            Boolean feedbackTag = (c.Origin == 'Facebook' || c.Origin == 'Twitter') && (c.SourceId != null && c.SourceId.getSOBjectType() == SocialPost.SObjectType && c.Status == CASE_STATUS_CLOSED && c.RecordTypeId == C_RecordTypeHelper.CASE_FEEDBACK);
             if ((infoTag || supportTag || feedbackTag)) {
                 socialPostIds.add(c.SourceId);
                 caseInScope.add(c);

@@ -1,0 +1,3 @@
+<aura:component implements="flexipage:availableForAllPageTypes, force:hasRecordId" access="global" description="Container for Identify Customer LWC to be able to use Aura events" >
+    <c:fcs_IdentifyCustomer recordId="{!v.recordId}" onrefreshView="{!c.refreshView}"/>
+</aura:component>

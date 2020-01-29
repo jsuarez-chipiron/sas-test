@@ -22,7 +22,7 @@ global with sharing class GDPR_WipeAccountService {
         retainedFields.add('RecordTypeId');
         //Name is not removed since it cannot be edited for person accounts
         retainedFields.add('Name');
-        if(keepReference)retainedFields.add(Account.CodsId__c+'');
+        if(keepReference)retainedFields.add(Account.FCS_CodsId__c+'');
 
         List<String> fieldsToClear = new List<String>();
         Map<String,Schema.SObjectField> fMap = Account.getSObjectType().getDescribe().fields.getMap();

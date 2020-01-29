@@ -33,72 +33,72 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.CMP__c</field>
+        <field>Account.FCS_CMP__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.CODSId__c</field>
+        <field>Account.FCS_CODSId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.CompanyName__c</field>
+        <field>Account.FCS_CompanyName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.ConsentEmail__c</field>
+        <field>Account.FCS_ConsentEmail__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.ConsentEuroBonus__c</field>
+        <field>Account.FCS_ConsentEuroBonus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.ConsentSMS__c</field>
+        <field>Account.FCS_ConsentSMS__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.ConsentSiteProfile__c</field>
+        <field>Account.FCS_ConsentSiteProfile__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.ConsentTelemarketing__c</field>
+        <field>Account.FCS_ConsentTelemarketing__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.EBLevel__c</field>
+        <field>Account.FCS_EBLevel__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.EBMemberSinceDate__c</field>
+        <field>Account.FCS_EBMemberSinceDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.EBNumber__c</field>
+        <field>Account.FCS_EBNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.FrequentFlyer__c</field>
+        <field>Account.FCS_FrequentFlyer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.Gender__c</field>
+        <field>Account.FCS_Gender__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.LastRetrievedFromSource__c</field>
+        <field>Account.FCS_LastRetrievedFromSource__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -108,12 +108,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.SubscriptionId__c</field>
+        <field>Account.FCS_SubscriptionId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.TPAccountNumber__c</field>
+        <field>Account.FCS_TPAccountNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -327,7 +327,7 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>FrequentFlyer__x</object>
+        <object>FCS_FrequentFlyer__x</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

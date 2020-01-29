@@ -88,7 +88,7 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
-            <componentName>identifyCustomerContainer</componentName>
+            <componentName>FCS_IdentifyCustomerContainer</componentName>
         </componentInstances>
         <componentInstances>
             <componentInstanceProperties>

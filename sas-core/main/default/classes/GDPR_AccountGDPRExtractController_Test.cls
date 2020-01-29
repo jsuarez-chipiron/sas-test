@@ -12,7 +12,7 @@ private class GDPR_AccountGDPRExtractController_Test {
     @IsTest
     static void shouldGenerateContentVersion() {
         Account acc = new Account(
-                RecordTypeId = RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
+                RecordTypeId = C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
                 LastName = 'LastName'
         );
         insert acc;

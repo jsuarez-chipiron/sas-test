@@ -41,15 +41,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>FrequentFlyer__c</field>
+                <field>FCS_FrequentFlyer__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>LastRetrievedFromSource__c</field>
+                <field>FCS_LastRetrievedFromSource__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>TPAccountNumber__c</field>
+                <field>FCS_TPAccountNumber__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

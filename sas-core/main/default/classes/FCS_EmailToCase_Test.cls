@@ -56,7 +56,7 @@ private class FCS_EmailToCase_Test {
     */
     @isTest
     static void sendEmailWithImportanceFlag(){
-        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
+        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
         cases[0].Priority = 'Medium';
         cases[0].Origin = 'Email';
         insert(cases[0]);
@@ -81,7 +81,7 @@ private class FCS_EmailToCase_Test {
     */
     @isTest
     static void sendEmailWithoutImportanceFlag(){
-        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
+        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
         cases[0].Priority = 'Medium';
         cases[0].Origin = 'Email';
         insert(cases[0]);
@@ -105,7 +105,7 @@ private class FCS_EmailToCase_Test {
     */
     @isTest
     static void sendEmailToSalesInformation(){
-        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
+        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
         insert cases;
 
         EmailMessage email = new EmailMessage();
@@ -127,7 +127,7 @@ private class FCS_EmailToCase_Test {
     */
     @isTest
     static void sendEmailToSASSIInternal(){
-        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
+        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
         insert cases;
 
         EmailMessage email = new EmailMessage();
@@ -149,7 +149,7 @@ private class FCS_EmailToCase_Test {
     */
     @isTest
     static void sendEmailToSystemTariff(){
-        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
+        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
         insert cases;
 
         EmailMessage email = new EmailMessage();
