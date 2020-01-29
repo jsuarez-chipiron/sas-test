@@ -286,7 +286,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>RemoveAdditionalSurveyResponses</apexClass>
+        <apexClass>FCS_RemoveAdditionalSurveyResponses</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -520,17 +520,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.AskedForHelp__c</field>
+        <field>Case.FCS_AskedForHelp__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.CaseReason__c</field>
+        <field>Case.FCS_CaseReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.CaseSubReason__c</field>
+        <field>Case.FCS_CaseSubReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -610,7 +610,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.FirstClosingDate__c</field>
+        <field>Case.FCS_FirstClosingDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -625,22 +625,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.IsReopened__c</field>
+        <field>Case.FCS_IsReopened__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.LatestSurveyInvitation__c</field>
+        <field>Case.FCS_LatestSurveyInvitation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.ReopenedCount__c</field>
+        <field>Case.FCS_ReopenedCount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.SurveyInvitationLink__c</field>
+        <field>Case.FCS_SurveyInvitationLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -650,7 +650,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>CaseTag__c.Type__c</field>
+        <field>CaseTag__c.FCS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -854,7 +854,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Knowledge__kav.Body__c</field>
+        <field>Knowledge__kav.FCS_Body__c</field>
     </fieldPermissions>
     <fieldPermissions>
         <field>Case.FCS_CaseReason__c</field>
@@ -862,7 +862,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Knowledge__kav.InformationOwner__c</field>
+        <field>Knowledge__kav.FCS_InformationOwner__c</field>
     </fieldPermissions>
     <fieldPermissions>
         <field>Case.FCS_ReopenedCount__c</field>
@@ -870,7 +870,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Knowledge__kav.SubType__c</field>
+        <field>Knowledge__kav.FCS_SubType__c</field>
     </fieldPermissions>
     <fieldPermissions>
         <field>Case.FCS_CaseSubReason__c</field>
@@ -878,7 +878,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Knowledge__kav.Type__c</field>
+        <field>Knowledge__kav.FCS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1044,17 +1044,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.AnswerTime__c</field>
+        <field>SocialPost.FCS_AnswerTime__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.CaseCreated__c</field>
+        <field>SocialPost.FCS_CaseCreated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.ClosedDate__c</field>
+        <field>SocialPost.FCS_ClosedDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1124,7 +1124,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.SASPostComment__c</field>
+        <field>SocialPost.FCS_SASPostComment__c</field>
     </fieldPermissions>
     <fieldPermissions>
         <field>SocialPost.FCS_ClosedDate__c</field>
@@ -1132,7 +1132,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.SASPost__c</field>
+        <field>SocialPost.FCS_SASPost__c</field>
     </fieldPermissions>
     <fieldPermissions>
         <field>SocialPost.FCS_SASPostComment__c</field>
@@ -1140,7 +1140,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SurveyInvitation.NumberOfResponses__c</field>
+        <field>SurveyInvitation.FCS_NumberOfResponses__c</field>
     </fieldPermissions>
     <fieldPermissions>
         <field>SocialPost.FCS_SASPost__c</field>
