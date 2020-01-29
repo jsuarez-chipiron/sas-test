@@ -72,4 +72,14 @@
         <members>SocialPost.VirtualOrganization__c</members>
         <name>CustomField</name>
     </types>
+
+    <!--2020-01-22 - Anton Norell - Renamed permissions for Messaging-->
+    <types>
+        <members>AD_RolePermission.SASEmergency_Facebook_Messenger_User</members>
+        <name>CustomMetadata</name>
+    </types>
+    <types>
+        <members>Facebook_Messenger_User</members>
+        <name>PermissionSet</name>
+    </types>
 </Package>
