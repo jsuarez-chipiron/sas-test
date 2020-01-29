@@ -25,47 +25,47 @@ Test method for generation of test data used in more than one method
     Test method to test to that status fields and checkboxes are updated when hiding/unhiding an post
      */
     @isTest static void testHideAndUnhidePost() {
-        SocialPost sp = [SELECT Id, PostHidden__c FROM SocialPost LIMIT 1];
+        SocialPost sp = [SELECT Id, FCS_PostHidden__c FROM SocialPost LIMIT 1];
         sp.Status=SocialPostHandler.STATUS_HIDDEN;
         update sp;
-        SocialPost hiddenSp = [SELECT Id, PostHidden__c , ReviewedStatus, Done__c, PostReplied__c, PostIgnored__c, PostLiked__c, ClosedDate__c, Reopened__c FROM SocialPost LIMIT 1];
-        system.assertEquals(true, hiddenSp.PostHidden__c);
+        SocialPost hiddenSp = [SELECT Id, FCS_PostHidden__c , ReviewedStatus, FCS_Done__c, FCS_PostReplied__c, FCS_PostIgnored__c, FCS_PostLiked__c, FCS_ClosedDate__c, FCS_Reopened__c FROM SocialPost LIMIT 1];
+        system.assertEquals(true, hiddenSp.FCS_PostHidden__c);
         system.assertEquals(SocialPostHandler.STATUS_REVIEWED, hiddenSp.ReviewedStatus);
-        system.assertEquals(true, hiddenSp.Done__c);
-        system.assertEquals(false, hiddenSp.PostReplied__c);
-        system.assertEquals(false, hiddenSp.PostIgnored__c);
-        system.assertEquals(false, hiddenSp.PostLiked__c);
-        system.assertEquals(true, hiddenSp.ClosedDate__c < system.now().addSeconds(10) && hiddenSp.ClosedDate__c > system.now().addSeconds(-10));
-        system.assertEquals(false, hiddenSp.Reopened__c);
+        system.assertEquals(true, hiddenSp.FCS_Done__c);
+        system.assertEquals(false, hiddenSp.FCS_PostReplied__c);
+        system.assertEquals(false, hiddenSp.FCS_PostIgnored__c);
+        system.assertEquals(false, hiddenSp.FCS_PostLiked__c);
+        system.assertEquals(true, hiddenSp.FCS_ClosedDate__c < system.now().addSeconds(10) && hiddenSp.FCS_ClosedDate__c > system.now().addSeconds(-10));
+        system.assertEquals(false, hiddenSp.FCS_Reopened__c);
         hiddenSp.Status=null;
         update hiddenSp;
-        SocialPost unhiddenSp = [SELECT Id, PostHidden__c , ReviewedStatus, Done__c, PostReplied__c, PostIgnored__c, PostLiked__c, ClosedDate__c, Reopened__c FROM SocialPost LIMIT 1];
-        system.assertEquals(false, unhiddenSp.PostHidden__c);
+        SocialPost unhiddenSp = [SELECT Id, FCS_PostHidden__c , ReviewedStatus, FCS_Done__c, FCS_PostReplied__c, FCS_PostIgnored__c, FCS_PostLiked__c, FCS_ClosedDate__c, FCS_Reopened__c FROM SocialPost LIMIT 1];
+        system.assertEquals(false, unhiddenSp.FCS_PostHidden__c);
         system.assertEquals(SocialPostHandler.STATUS_NEEDED, unhiddenSp.ReviewedStatus);
-        system.assertEquals(false, unhiddenSp.Done__c);
-        system.assertEquals(false, unhiddenSp.PostReplied__c);
-        system.assertEquals(false, unhiddenSp.PostIgnored__c);
-        system.assertEquals(false, unhiddenSp.PostLiked__c);
-        system.assertEquals(null, unhiddenSp.ClosedDate__c);
-        system.assertEquals(true, unhiddenSp.Reopened__c);
+        system.assertEquals(false, unhiddenSp.FCS_Done__c);
+        system.assertEquals(false, unhiddenSp.FCS_PostReplied__c);
+        system.assertEquals(false, unhiddenSp.FCS_PostIgnored__c);
+        system.assertEquals(false, unhiddenSp.FCS_PostLiked__c);
+        system.assertEquals(null, unhiddenSp.FCS_ClosedDate__c);
+        system.assertEquals(true, unhiddenSp.FCS_Reopened__c);
     }
 
     /**
    Test method to test to that status fields and checkboxes are updated when ignoring a post
     */
     @isTest static void testIgnorePost() {
-        SocialPost sp = [SELECT Id, PostIgnored__c FROM SocialPost LIMIT 1];
+        SocialPost sp = [SELECT Id, FCS_PostIgnored__c FROM SocialPost LIMIT 1];
         sp.ReviewedStatus=SocialPostHandler.STATUS_IGNORE;
         update sp;
-        SocialPost ignoredSp = [SELECT Id, PostHidden__c , ReviewedStatus, Done__c, PostReplied__c, PostIgnored__c, PostLiked__c, ClosedDate__c, Reopened__c FROM SocialPost LIMIT 1];
-        system.assertEquals(false, ignoredSp.PostHidden__c);
+        SocialPost ignoredSp = [SELECT Id, FCS_PostHidden__c , ReviewedStatus, FCS_Done__c, FCS_PostReplied__c, FCS_PostIgnored__c, FCS_PostLiked__c, FCS_ClosedDate__c, FCS_Reopened__c FROM SocialPost LIMIT 1];
+        system.assertEquals(false, ignoredSp.FCS_PostHidden__c);
         system.assertEquals(SocialPostHandler.STATUS_REVIEWED, ignoredSp.ReviewedStatus);
-        system.assertEquals(true, ignoredSp.Done__c);
-        system.assertEquals(false, ignoredSp.PostReplied__c);
-        system.assertEquals(true, ignoredSp.PostIgnored__c);
-        system.assertEquals(false, ignoredSp.PostLiked__c);
-        system.assertEquals(true, ignoredSp.ClosedDate__c < system.now().addSeconds(10) && ignoredSp.ClosedDate__c > system.now().addSeconds(-10));
-        system.assertEquals(false, ignoredSp.Reopened__c);
+        system.assertEquals(true, ignoredSp.FCS_Done__c);
+        system.assertEquals(false, ignoredSp.FCS_PostReplied__c);
+        system.assertEquals(true, ignoredSp.FCS_PostIgnored__c);
+        system.assertEquals(false, ignoredSp.FCS_PostLiked__c);
+        system.assertEquals(true, ignoredSp.FCS_ClosedDate__c < system.now().addSeconds(10) && ignoredSp.FCS_ClosedDate__c > system.now().addSeconds(-10));
+        system.assertEquals(false, ignoredSp.FCS_Reopened__c);
     }
 
 
@@ -78,15 +78,15 @@ Test method for generation of test data used in more than one method
         sp.Recipient='Test1';
         sp.LikedBy='Test1';
         update sp;
-        SocialPost likedSp = [SELECT Id, PostHidden__c , ReviewedStatus, Done__c, PostReplied__c, PostIgnored__c, PostLiked__c, ClosedDate__c, Reopened__c FROM SocialPost LIMIT 1];
-        system.assertEquals(false, likedSp.PostHidden__c);
+        SocialPost likedSp = [SELECT Id, FCS_PostHidden__c , ReviewedStatus, FCS_Done__c, FCS_PostReplied__c, FCS_PostIgnored__c, FCS_PostLiked__c, FCS_ClosedDate__c, FCS_Reopened__c FROM SocialPost LIMIT 1];
+        system.assertEquals(false, likedSp.FCS_PostHidden__c);
         system.assertEquals(SocialPostHandler.STATUS_REVIEWED, likedSp.ReviewedStatus);
-        system.assertEquals(true, likedSp.Done__c);
-        system.assertEquals(false, likedSp.PostReplied__c);
-        system.assertEquals(false, likedSp.PostIgnored__c);
-        system.assertEquals(true, likedSp.PostLiked__c);
-        system.assertEquals(true, likedSp.ClosedDate__c < system.now().addSeconds(10) && likedSp.ClosedDate__c > system.now().addSeconds(-10));
-        system.assertEquals(false, likedSp.Reopened__c);
+        system.assertEquals(true, likedSp.FCS_Done__c);
+        system.assertEquals(false, likedSp.FCS_PostReplied__c);
+        system.assertEquals(false, likedSp.FCS_PostIgnored__c);
+        system.assertEquals(true, likedSp.FCS_PostLiked__c);
+        system.assertEquals(true, likedSp.FCS_ClosedDate__c < system.now().addSeconds(10) && likedSp.FCS_ClosedDate__c > system.now().addSeconds(-10));
+        system.assertEquals(false, likedSp.FCS_Reopened__c);
     }
 
     /**
@@ -98,14 +98,14 @@ Test method for generation of test data used in more than one method
         spList[0].ReplyToId=replyToSp.Id;
         spList[0].IsOutbound=true;
         insert spList;
-        SocialPost repliedSp = [SELECT Id, PostHidden__c , ReviewedStatus, Done__c, PostReplied__c, PostIgnored__c, PostLiked__c, ClosedDate__c FROM SocialPost WHERE Id=:replyToSp.Id LIMIT 1];
-        system.assertEquals(false, repliedSp.PostHidden__c);
+        SocialPost repliedSp = [SELECT Id, FCS_PostHidden__c , ReviewedStatus, FCS_Done__c, FCS_PostReplied__c, FCS_PostIgnored__c, FCS_PostLiked__c, FCS_ClosedDate__c FROM SocialPost WHERE Id=:replyToSp.Id LIMIT 1];
+        system.assertEquals(false, repliedSp.FCS_PostHidden__c);
         system.assertEquals(SocialPostHandler.STATUS_REVIEWED, repliedSp.ReviewedStatus);
-        system.assertEquals(true, repliedSp.Done__c);
-        system.assertEquals(true, repliedSp.PostReplied__c);
-        system.assertEquals(false, repliedSp.PostIgnored__c);
-        system.assertEquals(false, repliedSp.PostLiked__c);
-        system.assertEquals(true, repliedSp.ClosedDate__c < system.now().addSeconds(10) && repliedSp.ClosedDate__c > system.now().addSeconds(-10));
+        system.assertEquals(true, repliedSp.FCS_Done__c);
+        system.assertEquals(true, repliedSp.FCS_PostReplied__c);
+        system.assertEquals(false, repliedSp.FCS_PostIgnored__c);
+        system.assertEquals(false, repliedSp.FCS_PostLiked__c);
+        system.assertEquals(true, repliedSp.FCS_ClosedDate__c < system.now().addSeconds(10) && repliedSp.FCS_ClosedDate__c > system.now().addSeconds(-10));
     }
 
     /**
@@ -125,20 +125,20 @@ Test method for generation of test data used in more than one method
         newCase[0].Status = 'New';
         newCase[0].SourceId = socialPosts[0].Id;
         insert newCase;
-        System.AssertEquals(true, [SELECT Id, CaseCreated__c FROM SocialPost WHERE Id =:newCase[0].SourceId][0].CaseCreated__c);
-        SocialPost sp = [SELECT Id, CaseCreated__c, ParentId FROM SocialPost LIMIT 1];
+        System.AssertEquals(true, [SELECT Id, FCS_CaseCreated__c FROM SocialPost WHERE Id =:newCase[0].SourceId][0].FCS_CaseCreated__c);
+        SocialPost sp = [SELECT Id, FCS_CaseCreated__c, ParentId FROM SocialPost LIMIT 1];
         sp.ParentId=null;
         update sp;
-        SocialPost parentDeletedSp = [SELECT Id, PostHidden__c , ReviewedStatus, Done__c, PostReplied__c, PostIgnored__c, PostLiked__c, CaseCreated__c, ClosedDate__c, Reopened__c FROM SocialPost LIMIT 1];
-        system.assertEquals(false, parentDeletedSp.PostHidden__c);
-        system.assertEquals(false, parentDeletedSp.CaseCreated__c);
+        SocialPost parentDeletedSp = [SELECT Id, FCS_PostHidden__c , ReviewedStatus, FCS_Done__c, FCS_PostReplied__c, FCS_PostIgnored__c, FCS_PostLiked__c, FCS_CaseCreated__c, FCS_ClosedDate__c, FCS_Reopened__c FROM SocialPost LIMIT 1];
+        system.assertEquals(false, parentDeletedSp.FCS_PostHidden__c);
+        system.assertEquals(false, parentDeletedSp.FCS_CaseCreated__c);
         system.assertEquals(SocialPostHandler.STATUS_NEEDED, parentDeletedSp.ReviewedStatus);
-        system.assertEquals(false, parentDeletedSp.Done__c);
-        system.assertEquals(false, parentDeletedSp.PostReplied__c);
-        system.assertEquals(false, parentDeletedSp.PostIgnored__c);
-        system.assertEquals(false, parentDeletedSp.PostLiked__c);
-        system.assertEquals(null, parentDeletedSp.ClosedDate__c);
-        system.assertEquals(true, parentDeletedSp.Reopened__c);
+        system.assertEquals(false, parentDeletedSp.FCS_Done__c);
+        system.assertEquals(false, parentDeletedSp.FCS_PostReplied__c);
+        system.assertEquals(false, parentDeletedSp.FCS_PostIgnored__c);
+        system.assertEquals(false, parentDeletedSp.FCS_PostLiked__c);
+        system.assertEquals(null, parentDeletedSp.FCS_ClosedDate__c);
+        system.assertEquals(true, parentDeletedSp.FCS_Reopened__c);
     }
 
 
@@ -152,9 +152,9 @@ Test method for generation of test data used in more than one method
         socialPosts[0].Provider = socialAccs[0].Provider__c;
         socialPosts[0].Handle = socialAccs[0].Name__c;
         insert socialPosts;
-        List<SocialPost> updatedSocialPosts = [SELECT Id, IsOutbound, SASPost__c, ReviewedStatus FROM SocialPost WHERE Provider=:socialAccs[0].Provider__c AND Handle=: socialPosts[0].Handle];
+        List<SocialPost> updatedSocialPosts = [SELECT Id, IsOutbound, FCS_SASPost__c, ReviewedStatus FROM SocialPost WHERE Provider=:socialAccs[0].Provider__c AND Handle=: socialPosts[0].Handle];
         system.assertEquals(true, updatedSocialPosts[0].IsOutbound);
-        system.assertEquals(true,  updatedSocialPosts[0].SASPost__c);
+        system.assertEquals(true,  updatedSocialPosts[0].FCS_SASPost__c);
         system.assertEquals(null, updatedSocialPosts[0].ReviewedStatus);
     }
 }

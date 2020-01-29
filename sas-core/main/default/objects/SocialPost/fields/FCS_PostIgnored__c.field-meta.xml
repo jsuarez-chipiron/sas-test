@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Reopened__c</fullName>
+    <fullName>FCS_PostIgnored__c</fullName>
     <defaultValue>false</defaultValue>
-    <description>Marked true if the social post is reopened</description>
+    <description>Checked if the action taken on the post is ignore</description>
     <externalId>false</externalId>
-    <inlineHelpText>Marked true if the social post is reopened</inlineHelpText>
-    <label>Reopened</label>
+    <label>Ignored</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Checkbox</type>

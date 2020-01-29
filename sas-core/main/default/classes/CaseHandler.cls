@@ -114,8 +114,8 @@ public class CaseHandler extends C_TriggerHandler {
             List<SocialPost> spToUpdate = new List<SocialPost> ();
             for (SocialPost sp : sps) {
                 sp.ParentId=caseBySoMeIds.get(sp.Id).Id;
-                sp.CaseCreated__c = true;
-                sp.Done__c=true;
+                sp.FCS_CaseCreated__c = true;
+                sp.FCS_Done__c=true;
                 sp.ReviewedStatus=SP_STATUS_REVIEWED;
                 spToUpdate.add(sp);
             }

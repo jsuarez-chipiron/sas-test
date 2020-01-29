@@ -57,7 +57,7 @@
 
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.AnswerTime__c</field>
+        <field>SocialPost.FCS_AnswerTime__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -318,7 +318,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.CaseCreated__c</field>
+        <field>SocialPost.FCS_CaseCreated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -343,7 +343,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SocialPost.Done__c</field>
+        <field>SocialPost.FCS_Done__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -373,53 +373,53 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.ParentCommentMessage__c</field>
+        <field>SocialPost.FCS_ParentCommentMessage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.ParentMessage__c</field>
+        <field>SocialPost.FCS_ParentMessage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.PostHidden__c</field>
+        <field>SocialPost.FCS_PostHidden__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.PostIgnored__c</field>
+        <field>SocialPost.FCS_PostIgnored__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.PostLiked__c</field>
+        <field>SocialPost.FCS_PostLiked__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.PostReplied__c</field>
+        <field>SocialPost.FCS_PostReplied__c</field>
         <readable>true</readable>
     </fieldPermissions>
 
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.Reopened__c</field>
+        <field>SocialPost.FCS_Reopened__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.ClosedDate__c</field>
+        <field>SocialPost.FCS_ClosedDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.SASPostComment__c</field>
+        <field>SocialPost.FCS_SASPostComment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SocialPost.SASPost__c</field>
+        <field>SocialPost.FCS_SASPost__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

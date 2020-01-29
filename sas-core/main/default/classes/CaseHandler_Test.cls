@@ -197,6 +197,6 @@ private class CaseHandler_Test {
         newCase[0].Status = CASE_STATUS_NEW;
         newCase[0].SourceId = socialPosts[0].Id;
         insert newCase;
-        System.AssertEquals(true, [SELECT Id, CaseCreated__c FROM SocialPost WHERE Id =:newCase[0].SourceId][0].CaseCreated__c);
+        System.AssertEquals(true, [SELECT Id, FCS_CaseCreated__c FROM SocialPost WHERE Id =:newCase[0].SourceId][0].FCS_CaseCreated__c);
     }
 }

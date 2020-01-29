@@ -570,62 +570,62 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CaseCreated__c</field>
+            <field>FCS_CaseCreated__c</field>
             <table>Case.Posts</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ClosedDate__c</field>
+            <field>FCS_ClosedDate__c</field>
             <table>Case.Posts</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Done__c</field>
+            <field>FCS_Done__c</field>
             <table>Case.Posts</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ParentCommentMessage__c</field>
+            <field>FCS_ParentCommentMessage__c</field>
             <table>Case.Posts</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ParentMessage__c</field>
+            <field>FCS_ParentMessage__c</field>
             <table>Case.Posts</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>PostHidden__c</field>
+            <field>FCS_PostHidden__c</field>
             <table>Case.Posts</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>PostIgnored__c</field>
+            <field>FCS_PostIgnored__c</field>
             <table>Case.Posts</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>PostLiked__c</field>
+            <field>FCS_PostLiked__c</field>
             <table>Case.Posts</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>PostReplied__c</field>
+            <field>FCS_PostReplied__c</field>
             <table>Case.Posts</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Reopened__c</field>
+            <field>FCS_Reopened__c</field>
             <table>Case.Posts</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>SASPostComment__c</field>
+            <field>FCS_SASPostComment__c</field>
             <table>Case.Posts</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>SASPost__c</field>
+            <field>FCS_SASPost__c</field>
             <table>Case.Posts</table>
         </columns>
         <columns>
