@@ -64,46 +64,46 @@ public class SocialPostHandler extends C_TriggerHandler {
             SocialPost oldSp = oldSocialPostList[i];
             //If post is updated to hidden - the status is updated to hidden and marked as reviewed
             if(newSp.Status!=oldSp.Status && newSp.Status==STATUS_HIDDEN){
-                newSp.PostHidden__c= true;
+                newSp.FCS_PostHidden__c= true;
                 handled= true;
             }
             //If post is updated to unhidden, the post is unmarked done if not other action is taken
             if(newSp.Status!=oldSp.Status && oldSp.Status==STATUS_HIDDEN) {
-                newSp.PostHidden__c = false;
-                if (!newSp.PostIgnored__c && !newSp.CaseCreated__c && !newSp.PostReplied__c && !newSp.PostLiked__c) {
+                newSp.FCS_PostHidden__c = false;
+                if (!newSp.FCS_PostIgnored__c && !newSp.FCS_CaseCreated__c && !newSp.FCS_PostReplied__c && !newSp.FCS_PostLiked__c) {
                     handled = false;
                 }
             }
             //If post is updated to ignore - the status is ignored and marked as reviewed
             if(newSp.ReviewedStatus!= oldSp.ReviewedStatus && newSp.ReviewedStatus== STATUS_IGNORE){
-                newSp.PostIgnored__c= true;
+                newSp.FCS_PostIgnored__c= true;
                 handled=true;
             }
             //If parent case is deleted - updated checkbox case created and unmark Done if no other action is taken
             if(newSp.ParentId!=oldSp.ParentId && newSp.ParentId==null) {
-                newSp.CaseCreated__c = false;
-                if (!newSp.PostIgnored__c && !newSp.PostHidden__c && !newSp.PostReplied__c && !newSp.PostLiked__c) {
+                newSp.FCS_CaseCreated__c = false;
+                if (!newSp.FCS_PostIgnored__c && !newSp.FCS_PostHidden__c && !newSp.FCS_PostReplied__c && !newSp.FCS_PostLiked__c) {
                     handled = false;
                 }
             }
             //If post is updated to liked - The status is updated to liked and marked as reviewed
             if(newSp.Recipient == newSp.LikedBy && newSp.LikedBy!=oldSp.LikedBy){
-                newSp.PostLiked__c=true;
+                newSp.FCS_PostLiked__c=true;
                 handled=true;
             }
             if(handled!=null && handled){
                 newSp.ReviewedStatus=STATUS_REVIEWED;
-                newSp.Done__c= true;
-                if(!oldSp.Done__c){
-                    newSp.ClosedDate__c = System.Now();
+                newSp.FCS_Done__c= true;
+                if(!oldSp.FCS_Done__c){
+                    newSp.FCS_ClosedDate__c = System.Now();
                 }
             }
             if(handled!= null && !handled){
                 newSp.ReviewedStatus=STATUS_NEEDED;
-                newSp.Done__c= false;
-                if(oldSp.Done__c){
-                    newSp.ClosedDate__c = null;
-                    newSp.Reopened__c = true;
+                newSp.FCS_Done__c= false;
+                if(oldSp.FCS_Done__c){
+                    newSp.FCS_ClosedDate__c = null;
+                    newSp.FCS_Reopened__c = true;
                 }
             }
         }
@@ -129,15 +129,15 @@ public class SocialPostHandler extends C_TriggerHandler {
             List<SocialPost> updatedSocialPosts = new List<SocialPost> ();
             for (SocialPost sp : parentPosts) {
                 if (oldSocialPostList == null) {
-                    sp.PostReplied__c = true;
+                    sp.FCS_PostReplied__c = true;
                     sp.ReviewedStatus = STATUS_REVIEWED;
-                    sp.Done__c = true;
-                    sp.ClosedDate__c = System.now();
+                    sp.FCS_Done__c = true;
+                    sp.FCS_ClosedDate__c = System.now();
                     updatedSocialPosts.add(sp);
                 }
                 if (newSocialPostList == null) {
-                    sp.PostReplied__c = false;
-                    if (!sp.PostIgnored__c && !sp.PostHidden__c && !sp.PostLiked__c && !sp.PostReplied__c) {
+                    sp.FCS_PostReplied__c = false;
+                    if (!sp.FCS_PostIgnored__c && !sp.FCS_PostHidden__c && !sp.FCS_PostLiked__c && !sp.FCS_PostReplied__c) {
                         sp.ReviewedStatus = STATUS_NEEDED;
                         updatedSocialPosts.add(sp);
                     }
@@ -170,7 +170,7 @@ public class SocialPostHandler extends C_TriggerHandler {
             parentIds.add(sp.ReplyToId);
             if(socialPageByProvider.containsKey(sp.Provider) &&  sp.Handle == socialPageByProvider.get(sp.Provider)){
                 sp.IsOutbound = true;
-                sp.SASPost__c = true;
+                sp.FCS_SASPost__c = true;
                 sp.ReviewedStatus = null;
             }
             sp.OwnerId=soMeQueue[0].Id;
@@ -183,16 +183,16 @@ public class SocialPostHandler extends C_TriggerHandler {
         for(Integer i=0,sz=parentPosts.size();i<sz;i++){
             if(parentIdsNext[i] != null){
                 if(socialPageByProvider.containsKey(parentPostsNext[i].Provider) && parentPostsNext[i].Handle == socialPageByProvider.get(newSocialPostList[i].Provider)){
-                    newSocialPostList[i].SASPostComment__c = true;
+                    newSocialPostList[i].FCS_SASPostComment__c = true;
                 }
-                newSocialPostList[i].ParentMessage__c =   parentPostsNext[i].Content;
-                newSocialPostList[i].ParentCommentMessage__c =   parentPosts[i].Content;
+                newSocialPostList[i].FCS_ParentMessage__c =   parentPostsNext[i].Content;
+                newSocialPostList[i].FCS_ParentCommentMessage__c =   parentPosts[i].Content;
             }
             else if(parentIds[i]!=null) {
                 if(socialPageByProvider.containsKey(parentPosts[i].Provider) && parentPosts[i].Handle == socialPageByProvider.get(newSocialPostList[i].Provider)){
-                    newSocialPostList[i].SASPostComment__c = true;
+                    newSocialPostList[i].FCS_SASPostComment__c = true;
                 }
-                newSocialPostList[i].ParentMessage__c =   parentPosts[i].Content;
+                newSocialPostList[i].FCS_ParentMessage__c =   parentPosts[i].Content;
             }
         }
     }

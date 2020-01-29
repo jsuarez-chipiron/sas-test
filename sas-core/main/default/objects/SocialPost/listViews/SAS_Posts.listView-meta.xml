@@ -5,7 +5,7 @@
     <columns>Name</columns>
     <columns>Content</columns>
     <columns>ReplyTo</columns>
-    <columns>ParentMessage__c</columns>
+    <columns>FCS_ParentMessage__c</columns>
     <columns>Provider</columns>
     <columns>Posted</columns>
     <columns>Persona</columns>
@@ -17,7 +17,7 @@
         <value>Needed</value>
     </filters>
     <filters>
-        <field>SASPostComment__c</field>
+        <field>FCS_SASPostComment__c</field>
         <operation>equals</operation>
         <value>1</value>
     </filters>

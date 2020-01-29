@@ -7,10 +7,10 @@
         <label>Category</label>
         <layoutColumns>
             <layoutItems>
-                <field>Type__c</field>
+                <field>FCS_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <field>SubType__c</field>
+                <field>FCS_SubType__c</field>
             </layoutItems>
             <layoutItems>
                 <field>Title</field>
@@ -26,7 +26,7 @@
         <label>Article Details</label>
         <layoutColumns>
             <layoutItems>
-                <field>Body__c</field>
+                <field>FCS_Body__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -47,7 +47,7 @@
                 <field>LastPublishedDate</field>
             </layoutItems>
             <layoutItems>
-                <field>InformationOwner__c</field>
+                <field>FCS_InformationOwner__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

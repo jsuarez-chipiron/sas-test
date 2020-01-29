@@ -56,7 +56,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c</field>
+            <field>FCS_RelatedCase__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
@@ -81,62 +81,62 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.Origin</field>
+            <field>FCS_RelatedCase__c.Origin</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.FCS_Vendor__c</field>
+            <field>FCS_RelatedCase__c.FCS_Vendor__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.CaseNumber</field>
+            <field>FCS_RelatedCase__c.CaseNumber</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.Owner</field>
+            <field>FCS_RelatedCase__c.Owner</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.CaseReason__c</field>
+            <field>FCS_RelatedCase__c.FCS_CaseReason__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.CaseSubReason__c</field>
+            <field>FCS_RelatedCase__c.FCS_CaseSubReason__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.CaseTags__c</field>
+            <field>FCS_RelatedCase__c.CaseTags__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.FirstClosingDate__c</field>
+            <field>FCS_RelatedCase__c.FCS_FirstClosingDate__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.Priority</field>
+            <field>FCS_RelatedCase__c.Priority</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.IsReopened__c</field>
+            <field>FCS_RelatedCase__c.FCS_IsReopened__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.Status</field>
+            <field>FCS_RelatedCase__c.Status</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.Type</field>
+            <field>FCS_RelatedCase__c.Type</field>
             <table>SurveyInvitation</table>
         </columns>
         <masterLabel>Survey Invitations</masterLabel>
@@ -315,77 +315,77 @@
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.Id</field>
+            <field>FCS_RelatedCase__c.Id</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.CreatedDate</field>
+            <field>FCS_RelatedCase__c.CreatedDate</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.GDPR_Consent__c</field>
+            <field>FCS_RelatedCase__c.GDPR_Consent__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.IsEscalated</field>
+            <field>FCS_RelatedCase__c.IsEscalated</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.IsClosed</field>
+            <field>FCS_RelatedCase__c.IsClosed</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.FCS_EBLevel__c</field>
+            <field>FCS_RelatedCase__c.FCS_EBLevel__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.FCS_PNR__c</field>
+            <field>FCS_RelatedCase__c.FCS_PNR__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.FCS_VirtualOrganization__c</field>
+            <field>FCS_RelatedCase__c.FCS_VirtualOrganization__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.FCS_Team__c</field>
+            <field>FCS_RelatedCase__c.FCS_Team__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.FCS_PIR__c</field>
+            <field>FCS_RelatedCase__c.FCS_PIR__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.FCS_Language__c</field>
+            <field>FCS_RelatedCase__c.FCS_Language__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.FCS_EBNumber__c</field>
+            <field>FCS_RelatedCase__c.FCS_EBNumber__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.ClosedDate</field>
+            <field>FCS_RelatedCase__c.ClosedDate</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.FCS_Site__c</field>
+            <field>FCS_RelatedCase__c.FCS_Site__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RelatedCase__c.FCS_SubTeam__c</field>
+            <field>FCS_RelatedCase__c.FCS_SubTeam__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <masterLabel>Case</masterLabel>

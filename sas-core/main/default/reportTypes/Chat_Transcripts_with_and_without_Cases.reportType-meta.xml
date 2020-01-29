@@ -261,12 +261,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Case.CaseSubReason__c</field>
+            <field>Case.FCS_CaseSubReason__c</field>
             <table>LiveChatTranscript</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Case.FirstClosingDate__c</field>
+            <field>Case.FCS_FirstClosingDate__c</field>
             <table>LiveChatTranscript</table>
         </columns>
         <columns>
@@ -306,7 +306,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Case.CaseReason__c</field>
+            <field>Case.FCS_CaseReason__c</field>
             <table>LiveChatTranscript</table>
         </columns>
         <columns>

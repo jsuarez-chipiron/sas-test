@@ -114,8 +114,8 @@ public class CaseHandler extends C_TriggerHandler {
             List<SocialPost> spToUpdate = new List<SocialPost> ();
             for (SocialPost sp : sps) {
                 sp.ParentId=caseBySoMeIds.get(sp.Id).Id;
-                sp.CaseCreated__c = true;
-                sp.Done__c=true;
+                sp.FCS_CaseCreated__c = true;
+                sp.FCS_Done__c=true;
                 sp.ReviewedStatus=SP_STATUS_REVIEWED;
                 spToUpdate.add(sp);
             }
@@ -134,7 +134,7 @@ public class CaseHandler extends C_TriggerHandler {
             List<String> caseTagString = newC.CaseTags__c != null ? newC.CaseTags__c.split(';') : null;
             if (caseTagString != null) {
                 for (String s : CaseTagString) {
-                    if (s == newC.CaseReason__c) {
+                    if (s == newC.FCS_CaseReason__c) {
                         newC.addError('You can not provide the same additional reason (case tag) as the Case Reason');
 
                     }
@@ -174,11 +174,11 @@ public class CaseHandler extends C_TriggerHandler {
     * @return caseTagsByKeyId Map with existing case tag records (CaseTag__c) with CaseId+Tag+Type as key
     */
     public static Map<String, CaseTag__c> createCurrentCaseTagMap(Map<Id, Case> newCaseMap){
-        List<CaseTag__c> caseTagRecords = [SELECT Id, CaseTag__c, Type__c, CaseId__c FROM CaseTag__c WHERE CaseId__c = :newCaseMap.keySet()];
+        List<CaseTag__c> caseTagRecords = [SELECT Id, CaseTag__c, FCS_Type__c, CaseId__c FROM CaseTag__c WHERE CaseId__c = :newCaseMap.keySet()];
         Map<String, CaseTag__c> caseTagsByKeyId = new Map<String, CaseTag__c> ();
         if (!caseTagRecords.isEmpty()) {
             for (CaseTag__c ct : caseTagRecords) {
-                if (!caseTagsByKeyId.containsKey(ct.CaseId__c + ct.CaseTag__c + ct.Type__c)) caseTagsByKeyId.put(ct.CaseId__c + ct.CaseTag__c+ct.Type__c, ct);
+                if (!caseTagsByKeyId.containsKey(ct.CaseId__c + ct.CaseTag__c + ct.FCS_Type__c)) caseTagsByKeyId.put(ct.CaseId__c + ct.CaseTag__c+ct.FCS_Type__c, ct);
             }
         }
         return caseTagsByKeyId;
@@ -195,11 +195,11 @@ public class CaseHandler extends C_TriggerHandler {
         for (Integer i = 0; i < cSize; i++) {
             Case newC = newCaseList == null ? null : newCaseList[i];
             List<String> caseTagString = newC.CaseTags__c != null ? newC.CaseTags__c.split(';') : null;
-            if (newC.CaseReason__c != null) newTagsByKeyId.put(newC.Id + newC.CaseReason__c + MAIN_TAG, new CaseTag__c(CaseId__c = newC.Id, CaseTag__c = newC.CaseReason__c, Type__c = MAIN_TAG));
-            if (newC.CaseSubReason__c != null) newTagsByKeyId.put(newC.Id + newC.CaseSubReason__c + SUB_MAIN_TAG, new CaseTag__c(CaseId__c = newC.Id, CaseTag__c = newC.CaseSubReason__c, Type__c = SUB_MAIN_TAG));
+            if (newC.FCS_CaseReason__c != null) newTagsByKeyId.put(newC.Id + newC.FCS_CaseReason__c + MAIN_TAG, new CaseTag__c(CaseId__c = newC.Id, CaseTag__c = newC.FCS_CaseReason__c, FCS_Type__c = MAIN_TAG));
+            if (newC.FCS_CaseSubReason__c != null) newTagsByKeyId.put(newC.Id + newC.FCS_CaseSubReason__c + SUB_MAIN_TAG, new CaseTag__c(CaseId__c = newC.Id, CaseTag__c = newC.FCS_CaseSubReason__c, FCS_Type__c = SUB_MAIN_TAG));
             if (caseTagString != null) {
                 for (String s : CaseTagString) {
-                    newTagsByKeyId.put(newC.Id + s + ADDITIONAL_TAG, new CaseTag__c(CaseId__c = newC.Id, CaseTag__c = s, Type__c = ADDITIONAL_TAG));
+                    newTagsByKeyId.put(newC.Id + s + ADDITIONAL_TAG, new CaseTag__c(CaseId__c = newC.Id, CaseTag__c = s, FCS_Type__c = ADDITIONAL_TAG));
                 }
             }
         }

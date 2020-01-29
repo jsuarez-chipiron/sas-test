@@ -350,7 +350,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>myVariable_current.FirstClosingDate__c</leftValueReference>
+                <leftValueReference>myVariable_current.FCS_FirstClosingDate__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -412,7 +412,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>myVariable_current.IsReopened__c</leftValueReference>
+                <leftValueReference>myVariable_current.FCS_IsReopened__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -512,12 +512,12 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>[Case].ReopenedCount__c + 1</stringValue>
+                <stringValue>[Case].FCS_ReopenedCount__c + 1</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_12_myRule_9_A1_8396308517</name>
         <dataType>Number</dataType>
-        <expression>{!myVariable_current.ReopenedCount__c} + 1</expression>
+        <expression>{!myVariable_current.FCS_ReopenedCount__c} + 1</expression>
         <scale>18</scale>
     </formulas>
     <formulas>
@@ -944,7 +944,7 @@
                     <stringValue>Reference</stringValue>
                 </value>
             </processMetadataValues>
-            <field>FirstClosingDate__c</field>
+            <field>FCS_FirstClosingDate__c</field>
             <value>
                 <elementReference>myVariable_current.ClosedDate</elementReference>
             </value>
@@ -1073,7 +1073,7 @@
                     <stringValue>Formula</stringValue>
                 </value>
             </processMetadataValues>
-            <field>ReopenedCount__c</field>
+            <field>FCS_ReopenedCount__c</field>
             <value>
                 <elementReference>formula_12_myRule_9_A1_8396308517</elementReference>
             </value>

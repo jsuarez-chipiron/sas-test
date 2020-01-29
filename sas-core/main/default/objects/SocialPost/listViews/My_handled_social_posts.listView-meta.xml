@@ -5,7 +5,7 @@
     <columns>Name</columns>
     <columns>Content</columns>
     <columns>ReplyTo</columns>
-    <columns>ParentMessage__c</columns>
+    <columns>FCS_ParentMessage__c</columns>
     <columns>Provider</columns>
     <columns>Posted</columns>
     <columns>Persona</columns>

@@ -125,7 +125,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>AskedForHelp__c</field>
+                <field>FCS_AskedForHelp__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

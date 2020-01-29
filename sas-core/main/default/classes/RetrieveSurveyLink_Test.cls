@@ -15,7 +15,7 @@ public class RetrieveSurveyLink_Test {
         lct.LiveChatVisitorId = lcv.Id;
         insert lct; 
         Case c = new Case();
-        c.SurveyInvitationLink__c = 'test';
+        c.FCS_SurveyInvitationLink__c = 'test';
         insert c;
         lct.CaseId = c.Id;
         update lct;

@@ -15,7 +15,7 @@
         <value>Needed</value>
     </filters>
     <filters>
-        <field>SASPost__c</field>
+        <field>FCS_SASPost__c</field>
         <operation>equals</operation>
         <value>0</value>
     </filters>

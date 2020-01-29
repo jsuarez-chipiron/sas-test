@@ -53,43 +53,43 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ParentMessage__c</field>
+                <field>FCS_ParentMessage__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ParentCommentMessage__c</field>
+                <field>FCS_ParentCommentMessage__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PostHidden__c</field>
+                <field>FCS_PostHidden__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PostLiked__c</field>
+                <field>FCS_PostLiked__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PostReplied__c</field>
+                <field>FCS_PostReplied__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PostIgnored__c</field>
+                <field>FCS_PostIgnored__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Done__c</field>
+                <field>FCS_Done__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>CaseCreated__c</field>
+                <field>FCS_CaseCreated__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ClosedDate__c</field>
+                <field>FCS_ClosedDate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Reopened__c</field>
+                <field>FCS_Reopened__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Reopened__c</fullName>
+    <fullName>FCS_Done__c</fullName>
     <defaultValue>false</defaultValue>
-    <description>Marked true if the social post is reopened</description>
+    <description>Checked if the post fulfills the criteria of being handled</description>
     <externalId>false</externalId>
-    <inlineHelpText>Marked true if the social post is reopened</inlineHelpText>
-    <label>Reopened</label>
+    <label>Done</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Checkbox</type>

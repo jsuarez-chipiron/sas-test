@@ -1,24 +1,29 @@
 /**
     Class invoked by a process to remove additional survey responses. Deletes all completed responses but the first.
     @author Philip Ossler
-    @param invitationId The Id of related survey invitation
 */
-public without sharing class RemoveAdditionalSurveyResponses {
+public without sharing class FCS_RemoveAdditionalSurveyResponses {
     @InvocableMethod(label='Remove Additional SurveyResponses' description='Only the first SurveyResponse per Case will be saved')
+    /**
+        @param invitationId The Id of related Survey Invitation
+    */
     public static void updateSurveyResponses(List<SurveyInvitation> invitationId) {
         List<SurveyResponse> surveyResponses = [
-            SELECT InvitationId 
+            SELECT Id, InvitationId, Status
             FROM SurveyResponse
             WHERE InvitationId IN: new Map<Id, SurveyInvitation>(invitationId).keySet()
             ORDER BY Status DESC, CreatedDate ASC
         ];
-        if(surveyResponses.size() > 1) {
-            List<SurveyResponse> recordsToRemove = new List<SurveyResponse>();
-            for(SurveyResponse sr : surveyResponses) {
+        Set<Id> recordsBySurveyInvitation = new Set<Id>();
+        List<SurveyResponse> recordsToRemove = new List<SurveyResponse>();
+        for(SurveyResponse sr : surveyResponses) {
+            if(!recordsBySurveyInvitation.contains(sr.InvitationId) && sr.Status == 'Completed') {
+                recordsBySurveyInvitation.add(sr.InvitationId);
+            }
+            else {
                 recordsToRemove.add(sr);
-            } 
-            recordsToRemove.remove(0);
-            delete recordsToRemove;
+            }
         }
+        delete recordsToRemove;
     }
 }
