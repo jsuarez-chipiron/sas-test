@@ -223,7 +223,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.SurveyInvitationLink__c</field>
+        <field>Case.FCS_SurveyInvitationLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
