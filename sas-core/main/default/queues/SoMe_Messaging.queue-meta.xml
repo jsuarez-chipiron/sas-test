@@ -4,9 +4,10 @@
     <name>SoMe Messaging</name>
     <queueMembers>
         <publicGroups>
-            <publicGroup>Messaging_SoMe</publicGroup>
+            <publicGroup>SASEmergency</publicGroup>
         </publicGroups>
     </queueMembers>
+    <queueRoutingConfig>DirectSales</queueRoutingConfig>
     <queueSobject>
         <sobjectType>MessagingSession</sobjectType>
     </queueSobject>
