@@ -6,7 +6,7 @@
     <businessProcess>Default</businessProcess>
     <label>Support</label>
     <picklistValues>
-        <picklist>CaseReason__c</picklist>
+        <picklist>FCS_CaseReason__c</picklist>
         <values>
             <fullName>Cancellation%2Frefund of ticket</fullName>
             <default>false</default>
@@ -69,7 +69,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>CaseSubReason__c</picklist>
+        <picklist>FCS_CaseSubReason__c</picklist>
         <values>
             <fullName>AMEX</fullName>
             <default>false</default>

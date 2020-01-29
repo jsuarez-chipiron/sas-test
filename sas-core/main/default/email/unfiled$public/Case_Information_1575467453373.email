@@ -6,7 +6,7 @@ Case number:{{{Case.CaseNumber}}}<br />
 Priority:{{{Case.Priority}}}<br />
 Case Origin:&nbsp;{{{Case.Priority}}}<br />
 Type:&nbsp;{{{Case.Type}}}<br />
-Reason:&nbsp;{{{Case.CaseReason__c}}}<br />
+Reason:&nbsp;{{{Case.FCS_CaseReason__c}}}<br />
 Subject:&nbsp;{{{Case.Subject}}}<br />
 <br />
 <br />

@@ -40,7 +40,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NumberOfResponses__c</field>
+                <field>FCS_NumberOfResponses__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>

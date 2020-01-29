@@ -18,7 +18,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>AskedForHelp__c</field>
+            <field>FCS_AskedForHelp__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -58,7 +58,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CaseReason__c</field>
+            <field>FCS_CaseReason__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -68,7 +68,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CaseSubReason__c</field>
+            <field>FCS_CaseSubReason__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -153,7 +153,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>LatestSurveyInvitation__c</field>
+            <field>FCS_LatestSurveyInvitation__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -203,7 +203,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>SurveyInvitationLink__c</field>
+            <field>FCS_SurveyInvitationLink__c</field>
             <table>Case</table>
         </columns>
         <columns>

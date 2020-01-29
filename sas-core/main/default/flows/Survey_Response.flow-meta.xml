@@ -8,10 +8,10 @@
             </value>
         </processMetadataValues>
         <name>myRule_1_A2</name>
-        <label>RemoveAdditionalSurveyResponses</label>
+        <label>FCS_RemoveAdditionalSurveyResponses</label>
         <locationX>100</locationX>
         <locationY>300</locationY>
-        <actionName>RemoveAdditionalSurveyResponses</actionName>
+        <actionName>FCS_RemoveAdditionalSurveyResponses</actionName>
         <actionType>apex</actionType>
         <inputParameters>
             <processMetadataValues>
@@ -113,12 +113,12 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>[SurveyResponse].Invitation.NumberOfResponses__c + 1</stringValue>
+                <stringValue>[SurveyResponse].Invitation.FCS_NumberOfResponses__c + 1</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_2_myRule_1_A1_0520194672</name>
         <dataType>Number</dataType>
-        <expression>{!myVariable_current.Invitation.NumberOfResponses__c} + 1</expression>
+        <expression>{!myVariable_current.Invitation.FCS_NumberOfResponses__c} + 1</expression>
         <scale>18</scale>
     </formulas>
     <interviewLabel>Survey_Response-4_InterviewLabel</interviewLabel>
@@ -224,7 +224,7 @@
                     <stringValue>Formula</stringValue>
                 </value>
             </processMetadataValues>
-            <field>NumberOfResponses__c</field>
+            <field>FCS_NumberOfResponses__c</field>
             <value>
                 <elementReference>formula_2_myRule_1_A1_0520194672</elementReference>
             </value>

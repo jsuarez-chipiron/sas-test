@@ -14,9 +14,9 @@ Test method for generation of test data used in more than one method
         List<SocialPost> socialPosts = FCS_TestDataFactory.createSocialPosts(4);
         insert socialPosts;
         List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null, null);
-        newCases[0].CaseReason__c = 'TestReason 1';
+        newCases[0].FCS_CaseReason__c = 'TestReason 1';
         newCases[0].Subject = 'TestCase 2';
-        newCases[0].CaseSubReason__c = 'TestSubReason 1';
+        newCases[0].FCS_CaseSubReason__c = 'TestSubReason 1';
         newCases[0].CaseTags__c = 'CommonTestTag1;CommonTestTag2';
         insert newCases;
     }
@@ -118,8 +118,8 @@ Test method for generation of test data used in more than one method
             socialPosts[i].OwnerId=users[i].Id;
         }
         List<Case> newCase = FCS_TestDataFactory.createCases(1, null, null, null, null);
-        newCase[0].CaseReason__c = 'TestReason 12';
-        newCase[0].CaseSubReason__c = 'TestSubReason 12';
+        newCase[0].FCS_CaseReason__c = 'TestReason 12';
+        newCase[0].FCS_CaseSubReason__c = 'TestSubReason 12';
         newCase[0].CaseTags__c = 'TestTag12;TestTag22';
         newCase[0].Subject = 'TestCase12';
         newCase[0].Status = 'New';

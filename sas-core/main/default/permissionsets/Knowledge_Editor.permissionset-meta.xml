@@ -3,22 +3,22 @@
     <description>Grants the user the possibility to create, edit and delete Knowledge Articles</description>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Knowledge__kav.Body__c</field>
+        <field>Knowledge__kav.FCS_Body__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Knowledge__kav.InformationOwner__c</field>
+        <field>Knowledge__kav.FCS_InformationOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Knowledge__kav.SubType__c</field>
+        <field>Knowledge__kav.FCS_SubType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Knowledge__kav.Type__c</field>
+        <field>Knowledge__kav.FCS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>

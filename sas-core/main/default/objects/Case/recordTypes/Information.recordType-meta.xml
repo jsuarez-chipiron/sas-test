@@ -5,7 +5,7 @@
     <businessProcess>Default</businessProcess>
     <label>Information</label>
     <picklistValues>
-        <picklist>CaseReason__c</picklist>
+        <picklist>FCS_CaseReason__c</picklist>
         <values>
             <fullName>Airport Services</fullName>
             <default>false</default>
@@ -100,7 +100,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>CaseSubReason__c</picklist>
+        <picklist>FCS_CaseSubReason__c</picklist>
         <values>
             <fullName>Add EB in booking</fullName>
             <default>false</default>

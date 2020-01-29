@@ -72,7 +72,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>RelatedCase__c</field>
+            <field>FCS_RelatedCase__c</field>
             <value>
                 <elementReference>caseId</elementReference>
             </value>
@@ -190,13 +190,13 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>LatestSurveyInvitation__c</field>
+            <field>FCS_LatestSurveyInvitation__c</field>
             <value>
                 <elementReference>lookupSurveyInvitation.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>SurveyInvitationLink__c</field>
+            <field>FCS_SurveyInvitationLink__c</field>
             <value>
                 <elementReference>surveyInvitationLink</elementReference>
             </value>

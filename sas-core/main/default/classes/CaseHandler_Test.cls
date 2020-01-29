@@ -17,9 +17,9 @@ private class CaseHandler_Test {
         List<SocialPost> socialPosts = FCS_TestDataFactory.createSocialPosts(4);
         insert socialPosts;
         List<Case> newCases  = FCS_TestDataFactory.createCases(1, null, null, null, null);
-        newCases[0].CaseReason__c = 'TestReason 1';
+        newCases[0].FCS_CaseReason__c = 'TestReason 1';
         newCases[0].Subject = 'TestCase 2';
-        newCases[0].CaseSubReason__c = 'TestSubReason 1';
+        newCases[0].FCS_CaseSubReason__c = 'TestSubReason 1';
         newCases[0].CaseTags__c = 'CommonTestTag1;CommonTestTag2';
         insert newCases;
     }
@@ -31,22 +31,22 @@ private class CaseHandler_Test {
     @isTest
     static void insertCaseTagRecords() {
         List<Case> newCase = FCS_TestDataFactory.createCases(1, null, null, null, null);
-        newCase[0].CaseReason__c = 'TestReason 1';
-        newCase[0].CaseSubReason__c = 'TestSubReason 1';
+        newCase[0].FCS_CaseReason__c = 'TestReason 1';
+        newCase[0].FCS_CaseSubReason__c = 'TestSubReason 1';
         newCase[0].CaseTags__c = 'TestTag1;TestTag2';
         newCase[0].Subject = 'TestCase';
         insert newCase;
         Case c = [SELECT Id FROM CASE WHERE Subject = 'TestCase'];
-        List<CaseTag__c> ctList = [SELECT Id, CaseTag__c, Type__c FROM CaseTag__c WHERE CaseId__c = :c.Id];
+        List<CaseTag__c> ctList = [SELECT Id, CaseTag__c, FCS_Type__c FROM CaseTag__c WHERE CaseId__c = :c.Id];
         Map<String, List<CaseTag__c>> typeToTags = new Map<String, List<CaseTag__c>>();
         for (CaseTag__c ct :ctList) {
-            if(typeToTags.containsKey(ct.Type__c)){
-                typeToTags.get(ct.Type__c).add(ct);
+            if(typeToTags.containsKey(ct.FCS_Type__c)){
+                typeToTags.get(ct.FCS_Type__c).add(ct);
             }
             else {
                 List<CaseTag__C> ctsTags = new List<CaseTag__c>();
                 ctsTags.add(ct);
-                typeToTags.put(ct.Type__c, ctsTags);
+                typeToTags.put(ct.FCS_Type__c, ctsTags);
             }
             system.debug(typeToTags);
         }
@@ -60,20 +60,20 @@ private class CaseHandler_Test {
     @isTest
     static void updateCaseTagRecords() {
         Case c2 = [SELECT Id FROm CASE WHERE Subject = 'TestCase 2'];
-        c2.CaseReason__c = 'UpdatedTestReason 1';
+        c2.FCS_CaseReason__c = 'UpdatedTestReason 1';
         c2.CaseTags__c = 'TestTag2';
         update c2;
-        List<CaseTag__c> ctList = [SELECT Id, CaseTag__c, Type__c FROM CaseTag__c WHERE CaseId__c = :c2.Id];
+        List<CaseTag__c> ctList = [SELECT Id, CaseTag__c, FCS_Type__c FROM CaseTag__c WHERE CaseId__c = :c2.Id];
         system.debug(ctList);
         Map<String, List<CaseTag__c>> typeToTags = new Map<String, List<CaseTag__c>>();
         for (CaseTag__c ct :ctList) {
-            if (typeToTags.containsKey(ct.Type__c)) {
-                typeToTags.get(ct.Type__c).add(ct);
+            if (typeToTags.containsKey(ct.FCS_Type__c)) {
+                typeToTags.get(ct.FCS_Type__c).add(ct);
             }
             else {
                 List<CaseTag__C> ctsTags = new List<CaseTag__c>();
                 ctsTags.add(ct);
-                typeToTags.put(ct.Type__c, ctsTags);
+                typeToTags.put(ct.FCS_Type__c, ctsTags);
             }
         }
         System.AssertEquals('UpdatedTestReason 1', typeToTags.get(CaseHandler.MAIN_TAG)[0].CaseTag__c);
@@ -149,15 +149,15 @@ private class CaseHandler_Test {
     @isTest static void testValidateCaseTagsOnInsert() {
         // Test not to be able to create case with case reason and case tag with same value
         List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null, null);
-        newCases[0].CaseReason__c = 'TestReason 1';
-        newCases[0].CaseSubReason__c = 'TestSubReason 1';
+        newCases[0].FCS_CaseReason__c = 'TestReason 1';
+        newCases[0].FCS_CaseSubReason__c = 'TestSubReason 1';
         newCases[0].CaseTags__c = 'TestTag1;TestTag2;TestReason 1';
         newCases[0].Subject = 'ValidateCaseTags';
         Database.SaveResult result = Database.insert(newCases[0], false);
         System.assert(result.isSuccess() == false);
         System.assert(result.getErrors().size() == 1);
         //Test that it is possible to insert with not the same case reason and case tag
-        newCases[0].CaseReason__c ='TestReason 1';
+        newCases[0].FCS_CaseReason__c ='TestReason 1';
         newCases[0].CaseTags__c ='TestTag2';
         Database.SaveResult result2 = Database.insert(newCases[0], false);
         System.assert(result2.isSuccess() == true);
@@ -170,7 +170,7 @@ private class CaseHandler_Test {
     @isTest
     static void testValidateCaseTagsOnUpdate() {
         Case c3 = [SELECT Id FROm CASE WHERE Subject = 'TestCase 2'];
-        c3.CaseReason__c = 'TestReason 1';
+        c3.FCS_CaseReason__c = 'TestReason 1';
         c3.CaseTags__c ='CommonTestTag2;TestReason 1';
         Database.SaveResult result3 = Database.update(c3, false);
         System.assert(result3.isSuccess() == false);
@@ -190,8 +190,8 @@ private class CaseHandler_Test {
             socialPosts[i].OwnerId=users[i].Id;
         }
         List<Case> newCase = FCS_TestDataFactory.createCases(1, null, null, null, null);
-        newCase[0].CaseReason__c = 'TestReason 12';
-        newCase[0].CaseSubReason__c = 'TestSubReason 12';
+        newCase[0].FCS_CaseReason__c = 'TestReason 12';
+        newCase[0].FCS_CaseSubReason__c = 'TestSubReason 12';
         newCase[0].CaseTags__c = 'TestTag12;TestTag22';
         newCase[0].Subject = 'TestCase12';
         newCase[0].Status = CASE_STATUS_NEW;

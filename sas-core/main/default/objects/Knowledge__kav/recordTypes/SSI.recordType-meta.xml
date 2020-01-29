@@ -5,7 +5,7 @@
     <description>Knowledge article for SSI</description>
     <label>SSI</label>
     <picklistValues>
-        <picklist>SubType__c</picklist>
+        <picklist>FCS_SubType__c</picklist>
         <values>
             <fullName>Allowances</fullName>
             <default>false</default>
@@ -120,7 +120,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Type__c</picklist>
+        <picklist>FCS_Type__c</picklist>
         <values>
             <fullName>Reservations</fullName>
             <default>false</default>

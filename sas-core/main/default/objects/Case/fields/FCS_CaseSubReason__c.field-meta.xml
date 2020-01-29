@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CaseSubReason__c</fullName>
+    <fullName>FCS_CaseSubReason__c</fullName>
     <complianceGroup>WipeRetain</complianceGroup>
     <externalId>false</externalId>
     <label>Case Sub-reason</label>
@@ -10,7 +10,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <controllingField>CaseReason__c</controllingField>
+        <controllingField>FCS_CaseReason__c</controllingField>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>

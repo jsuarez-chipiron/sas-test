@@ -6,8 +6,8 @@
     <masterLabel>Internal/Backoffice</masterLabel>
     <pathAssistantSteps>
         <fieldNames>Type</fieldNames>
-        <fieldNames>CaseReason__c</fieldNames>
-        <fieldNames>CaseSubReason__c</fieldNames>
+        <fieldNames>FCS_CaseReason__c</fieldNames>
+        <fieldNames>FCS_CaseSubReason__c</fieldNames>
         <fieldNames>CaseTags__c</fieldNames>
         <picklistValueName>Closed</picklistValueName>
     </pathAssistantSteps>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NumberOfResponses__c</fullName>
+    <fullName>FCS_NumberOfResponses__c</fullName>
     <defaultValue>0</defaultValue>
     <description>Counts the amount of responses made for each link. Used in process and trigger to restrict responses to one but still store history.</description>
     <externalId>false</externalId>
