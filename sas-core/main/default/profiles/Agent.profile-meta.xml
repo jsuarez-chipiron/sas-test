@@ -224,7 +224,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.ContactId</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
