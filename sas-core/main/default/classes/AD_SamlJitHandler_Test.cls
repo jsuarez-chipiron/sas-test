@@ -93,7 +93,7 @@ private class AD_SamlJitHandler_Test {
         System.assertEquals(email,u.FederationIdentifier);
         System.assertEquals(true,u.UserPermissionsSupportUser);
         System.assert(u.Alias.startsWith('TTLAST'));
-        System.assertEquals(null,u.FCS_Vendor__c);
+        System.assertEquals('SAS',u.FCS_Vendor__c);
     }
     
     /** 
