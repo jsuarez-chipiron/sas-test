@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FCS_CaseReason__c</fullName>
     <complianceGroup>PIIExtract;WipeRetain</complianceGroup>
+    <description>Second level categorization for cases.</description>
     <externalId>false</externalId>
     <label>Case Reason</label>
     <required>false</required>
