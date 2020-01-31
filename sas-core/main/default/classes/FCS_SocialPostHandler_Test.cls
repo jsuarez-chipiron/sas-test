@@ -5,7 +5,7 @@
 */
 
 @isTest
-private class SocialPostHandler_Test {
+private class FCS_SocialPostHandler_Test {
 
 /**
 Test method for generation of test data used in more than one method
@@ -26,11 +26,11 @@ Test method for generation of test data used in more than one method
      */
     @isTest static void testHideAndUnhidePost() {
         SocialPost sp = [SELECT Id, FCS_PostHidden__c FROM SocialPost LIMIT 1];
-        sp.Status=SocialPostHandler.STATUS_HIDDEN;
+        sp.Status= FCS_SocialPostHandler.STATUS_HIDDEN;
         update sp;
         SocialPost hiddenSp = [SELECT Id, FCS_PostHidden__c , ReviewedStatus, FCS_Done__c, FCS_PostReplied__c, FCS_PostIgnored__c, FCS_PostLiked__c, FCS_ClosedDate__c, FCS_Reopened__c FROM SocialPost LIMIT 1];
         system.assertEquals(true, hiddenSp.FCS_PostHidden__c);
-        system.assertEquals(SocialPostHandler.STATUS_REVIEWED, hiddenSp.ReviewedStatus);
+        system.assertEquals(FCS_SocialPostHandler.STATUS_REVIEWED, hiddenSp.ReviewedStatus);
         system.assertEquals(true, hiddenSp.FCS_Done__c);
         system.assertEquals(false, hiddenSp.FCS_PostReplied__c);
         system.assertEquals(false, hiddenSp.FCS_PostIgnored__c);
@@ -41,7 +41,7 @@ Test method for generation of test data used in more than one method
         update hiddenSp;
         SocialPost unhiddenSp = [SELECT Id, FCS_PostHidden__c , ReviewedStatus, FCS_Done__c, FCS_PostReplied__c, FCS_PostIgnored__c, FCS_PostLiked__c, FCS_ClosedDate__c, FCS_Reopened__c FROM SocialPost LIMIT 1];
         system.assertEquals(false, unhiddenSp.FCS_PostHidden__c);
-        system.assertEquals(SocialPostHandler.STATUS_NEEDED, unhiddenSp.ReviewedStatus);
+        system.assertEquals(FCS_SocialPostHandler.STATUS_NEEDED, unhiddenSp.ReviewedStatus);
         system.assertEquals(false, unhiddenSp.FCS_Done__c);
         system.assertEquals(false, unhiddenSp.FCS_PostReplied__c);
         system.assertEquals(false, unhiddenSp.FCS_PostIgnored__c);
@@ -55,11 +55,11 @@ Test method for generation of test data used in more than one method
     */
     @isTest static void testIgnorePost() {
         SocialPost sp = [SELECT Id, FCS_PostIgnored__c FROM SocialPost LIMIT 1];
-        sp.ReviewedStatus=SocialPostHandler.STATUS_IGNORE;
+        sp.ReviewedStatus= FCS_SocialPostHandler.STATUS_IGNORE;
         update sp;
         SocialPost ignoredSp = [SELECT Id, FCS_PostHidden__c , ReviewedStatus, FCS_Done__c, FCS_PostReplied__c, FCS_PostIgnored__c, FCS_PostLiked__c, FCS_ClosedDate__c, FCS_Reopened__c FROM SocialPost LIMIT 1];
         system.assertEquals(false, ignoredSp.FCS_PostHidden__c);
-        system.assertEquals(SocialPostHandler.STATUS_REVIEWED, ignoredSp.ReviewedStatus);
+        system.assertEquals(FCS_SocialPostHandler.STATUS_REVIEWED, ignoredSp.ReviewedStatus);
         system.assertEquals(true, ignoredSp.FCS_Done__c);
         system.assertEquals(false, ignoredSp.FCS_PostReplied__c);
         system.assertEquals(true, ignoredSp.FCS_PostIgnored__c);
@@ -80,7 +80,7 @@ Test method for generation of test data used in more than one method
         update sp;
         SocialPost likedSp = [SELECT Id, FCS_PostHidden__c , ReviewedStatus, FCS_Done__c, FCS_PostReplied__c, FCS_PostIgnored__c, FCS_PostLiked__c, FCS_ClosedDate__c, FCS_Reopened__c FROM SocialPost LIMIT 1];
         system.assertEquals(false, likedSp.FCS_PostHidden__c);
-        system.assertEquals(SocialPostHandler.STATUS_REVIEWED, likedSp.ReviewedStatus);
+        system.assertEquals(FCS_SocialPostHandler.STATUS_REVIEWED, likedSp.ReviewedStatus);
         system.assertEquals(true, likedSp.FCS_Done__c);
         system.assertEquals(false, likedSp.FCS_PostReplied__c);
         system.assertEquals(false, likedSp.FCS_PostIgnored__c);
@@ -100,7 +100,7 @@ Test method for generation of test data used in more than one method
         insert spList;
         SocialPost repliedSp = [SELECT Id, FCS_PostHidden__c , ReviewedStatus, FCS_Done__c, FCS_PostReplied__c, FCS_PostIgnored__c, FCS_PostLiked__c, FCS_ClosedDate__c FROM SocialPost WHERE Id=:replyToSp.Id LIMIT 1];
         system.assertEquals(false, repliedSp.FCS_PostHidden__c);
-        system.assertEquals(SocialPostHandler.STATUS_REVIEWED, repliedSp.ReviewedStatus);
+        system.assertEquals(FCS_SocialPostHandler.STATUS_REVIEWED, repliedSp.ReviewedStatus);
         system.assertEquals(true, repliedSp.FCS_Done__c);
         system.assertEquals(true, repliedSp.FCS_PostReplied__c);
         system.assertEquals(false, repliedSp.FCS_PostIgnored__c);
@@ -132,7 +132,7 @@ Test method for generation of test data used in more than one method
         SocialPost parentDeletedSp = [SELECT Id, FCS_PostHidden__c , ReviewedStatus, FCS_Done__c, FCS_PostReplied__c, FCS_PostIgnored__c, FCS_PostLiked__c, FCS_CaseCreated__c, FCS_ClosedDate__c, FCS_Reopened__c FROM SocialPost LIMIT 1];
         system.assertEquals(false, parentDeletedSp.FCS_PostHidden__c);
         system.assertEquals(false, parentDeletedSp.FCS_CaseCreated__c);
-        system.assertEquals(SocialPostHandler.STATUS_NEEDED, parentDeletedSp.ReviewedStatus);
+        system.assertEquals(FCS_SocialPostHandler.STATUS_NEEDED, parentDeletedSp.ReviewedStatus);
         system.assertEquals(false, parentDeletedSp.FCS_Done__c);
         system.assertEquals(false, parentDeletedSp.FCS_PostReplied__c);
         system.assertEquals(false, parentDeletedSp.FCS_PostIgnored__c);

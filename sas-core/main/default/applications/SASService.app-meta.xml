@@ -76,12 +76,12 @@
     <tabs>standard-Dashboard</tabs>
     <tabs>standard-report</tabs>
     <tabs>Knowledge__kav</tabs>
-    <tabs>CaseTag__c</tabs>
+    <tabs>FCS_CaseTag__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SAS_Service_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
-            <tab>CaseTag__c</tab>
+            <tab>FCS_CaseTag__c</tab>
         </mappings>
         <mappings>
             <tab>Knowledge__kav</tab>

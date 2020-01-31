@@ -247,13 +247,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>CaseTag__c.CaseTag__c</field>
+        <editable>false</editable>
+        <field>FCS_CaseTag__c.FCS_CaseTag__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>CaseTag__c.FCS_Type__c</field>
+        <editable>false</editable>
+        <field>FCS_CaseTag__c.FCS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -380,7 +380,7 @@
         <layout>CaseClose-Close Case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>CaseTag__c-Case Reason Layout</layout>
+        <layout>FCS_CaseTag__c-Case Reason Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Knowledge__kav-SAS SSI Layout</layout>
@@ -491,7 +491,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
-        <tab>CaseTag__c</tab>
+        <tab>FCS_CaseTag__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <userLicense>Salesforce</userLicense>

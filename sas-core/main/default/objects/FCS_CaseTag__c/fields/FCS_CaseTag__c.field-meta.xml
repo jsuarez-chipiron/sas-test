@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CaseTag__c</fullName>
+    <fullName>FCS_CaseTag__c</fullName>
     <description>The tag for why the customer was contacting customer support</description>
     <externalId>false</externalId>
     <label>Case Tag</label>
