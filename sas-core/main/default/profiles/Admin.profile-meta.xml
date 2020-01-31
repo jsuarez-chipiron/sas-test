@@ -301,12 +301,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>CaseTag__c.CaseTag__c</field>
+        <field>FCS_CaseTag__c.FCS_CaseTag__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>CaseTag__c.FCS_Type__c</field>
+        <field>FCS_CaseTag__c.FCS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -624,7 +624,7 @@
     </fieldPermissions>
     <fieldPermissions>        
         <editable>true</editable>
-        <field>CaseTag__c.FCS_Type__c</field>
+        <field>FCS_CaseTag__c.FCS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -870,7 +870,7 @@
         <recordType>Case.Support</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>CaseTag__c-Case Reason Layout</layout>
+        <layout>FCS_CaseTag__c-Case Reason Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Feature_Switch__mdt-Feature Switch Layout</layout>
@@ -944,7 +944,7 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
-        <object>CaseTag__c</object>
+        <object>FCS_CaseTag__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -1028,7 +1028,7 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>CaseTag__c</tab>
+        <tab>FCS_CaseTag__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>

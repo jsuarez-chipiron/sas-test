@@ -4,7 +4,7 @@
  * @description Handler class for operations performed on social post object.
  */
 
-public class SocialPostHandler extends C_TriggerHandler {
+public class FCS_SocialPostHandler extends C_TriggerHandler {
     /**
     Static variable for the review status "Reviewed"
     */
@@ -29,7 +29,7 @@ public class SocialPostHandler extends C_TriggerHandler {
     /**
    Set variables
    */
-    public SocialPostHandler() {
+    public FCS_SocialPostHandler() {
         this.newSocialPostList = (List <SocialPost>) Trigger.new;
         this.oldSocialPostList = (List <SocialPost>) Trigger.old;
     }

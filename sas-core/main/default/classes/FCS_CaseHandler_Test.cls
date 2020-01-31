@@ -5,7 +5,7 @@
 */
 
 @isTest
-private class CaseHandler_Test {
+private class FCS_CaseHandler_Test {
 
     private static final String CASE_STATUS_NEW= 'New';
     /**
@@ -37,22 +37,22 @@ private class CaseHandler_Test {
         newCase[0].Subject = 'TestCase';
         insert newCase;
         Case c = [SELECT Id FROM CASE WHERE Subject = 'TestCase'];
-        List<CaseTag__c> ctList = [SELECT Id, CaseTag__c, FCS_Type__c FROM CaseTag__c WHERE CaseId__c = :c.Id];
-        Map<String, List<CaseTag__c>> typeToTags = new Map<String, List<CaseTag__c>>();
-        for (CaseTag__c ct :ctList) {
+        List<FCS_CaseTag__c> ctList = [SELECT Id, FCS_CaseTag__c, FCS_Type__c FROM FCS_CaseTag__c WHERE FCS_CaseId__c = :c.Id];
+        Map<String, List<FCS_CaseTag__c>> typeToTags = new Map<String, List<FCS_CaseTag__c>>();
+        for (FCS_CaseTag__c ct :ctList) {
             if(typeToTags.containsKey(ct.FCS_Type__c)){
                 typeToTags.get(ct.FCS_Type__c).add(ct);
             }
             else {
-                List<CaseTag__C> ctsTags = new List<CaseTag__c>();
+                List<FCS_CaseTag__c> ctsTags = new List<FCS_CaseTag__c>();
                 ctsTags.add(ct);
                 typeToTags.put(ct.FCS_Type__c, ctsTags);
             }
             system.debug(typeToTags);
         }
-        System.AssertEquals('TestReason 1', typeToTags.get(CaseHandler.MAIN_TAG)[0].CaseTag__c);
-        System.AssertEquals('TestSubReason 1', typeToTags.get(CaseHandler.SUB_MAIN_TAG)[0].CaseTag__c);
-        System.AssertEquals(2, typeToTags.get(CaseHandler.ADDITIONAL_TAG).size());
+        System.AssertEquals('TestReason 1', typeToTags.get(FCS_CaseHandler.MAIN_TAG)[0].FCS_CaseTag__c);
+        System.AssertEquals('TestSubReason 1', typeToTags.get(FCS_CaseHandler.SUB_MAIN_TAG)[0].FCS_CaseTag__c);
+        System.AssertEquals(2, typeToTags.get(FCS_CaseHandler.ADDITIONAL_TAG).size());
         System.AssertEquals(4, ctList.size());
     }
 
@@ -63,26 +63,26 @@ private class CaseHandler_Test {
         c2.FCS_CaseReason__c = 'UpdatedTestReason 1';
         c2.CaseTags__c = 'TestTag2';
         update c2;
-        List<CaseTag__c> ctList = [SELECT Id, CaseTag__c, FCS_Type__c FROM CaseTag__c WHERE CaseId__c = :c2.Id];
+        List<FCS_CaseTag__c> ctList = [SELECT Id, FCS_CaseTag__c, FCS_Type__c FROM FCS_CaseTag__c WHERE FCS_CaseId__c = :c2.Id];
         system.debug(ctList);
-        Map<String, List<CaseTag__c>> typeToTags = new Map<String, List<CaseTag__c>>();
-        for (CaseTag__c ct :ctList) {
+        Map<String, List<FCS_CaseTag__c>> typeToTags = new Map<String, List<FCS_CaseTag__c>>();
+        for (FCS_CaseTag__c ct :ctList) {
             if (typeToTags.containsKey(ct.FCS_Type__c)) {
                 typeToTags.get(ct.FCS_Type__c).add(ct);
             }
             else {
-                List<CaseTag__C> ctsTags = new List<CaseTag__c>();
+                List<FCS_CaseTag__c> ctsTags = new List<FCS_CaseTag__c>();
                 ctsTags.add(ct);
                 typeToTags.put(ct.FCS_Type__c, ctsTags);
             }
         }
-        System.AssertEquals('UpdatedTestReason 1', typeToTags.get(CaseHandler.MAIN_TAG)[0].CaseTag__c);
-        System.AssertEquals('TestSubReason 1', typeToTags.get(CaseHandler.SUB_MAIN_TAG)[0].CaseTag__c);
-        System.AssertEquals(1, typeToTags.get(CaseHandler.MAIN_TAG).Size());
-        System.AssertEquals(1, typeToTags.get(CaseHandler.SUB_MAIN_TAG).Size());
-        System.AssertEquals(1, typeToTags.get(CaseHandler.ADDITIONAL_TAG).Size());
-        System.AssertEquals(1, typeToTags.get(CaseHandler.MAIN_TAG).Size());
-        System.AssertEquals(1, typeToTags.get(CaseHandler.MAIN_TAG).Size());
+        System.AssertEquals('UpdatedTestReason 1', typeToTags.get(FCS_CaseHandler.MAIN_TAG)[0].FCS_CaseTag__c);
+        System.AssertEquals('TestSubReason 1', typeToTags.get(FCS_CaseHandler.SUB_MAIN_TAG)[0].FCS_CaseTag__c);
+        System.AssertEquals(1, typeToTags.get(FCS_CaseHandler.MAIN_TAG).Size());
+        System.AssertEquals(1, typeToTags.get(FCS_CaseHandler.SUB_MAIN_TAG).Size());
+        System.AssertEquals(1, typeToTags.get(FCS_CaseHandler.ADDITIONAL_TAG).Size());
+        System.AssertEquals(1, typeToTags.get(FCS_CaseHandler.MAIN_TAG).Size());
+        System.AssertEquals(1, typeToTags.get(FCS_CaseHandler.MAIN_TAG).Size());
         System.AssertEquals(3, ctList.Size());
     }
 
@@ -92,7 +92,7 @@ private class CaseHandler_Test {
     static void deleteCaseTagRecords() {
         Case c2 = [SELECT Id FROm CASE WHERE Subject = 'TestCase 2'];
         delete c2;
-        System.AssertEquals(0, [SELECT Id From CaseTag__c WHERE CaseId__c =: c2.Id].size());
+        System.AssertEquals(0, [SELECT Id From FCS_CaseTag__c WHERE FCS_CaseId__c =: c2.Id].size());
     }
 
     /**
@@ -134,7 +134,7 @@ private class CaseHandler_Test {
             socialPosts[i].OwnerId=groupList[i].Id;
         }
         update socialPosts;
-        Case infoTag = new Case (Status=CaseHandler.CASE_STATUS_CLOSED, Origin='Facebook', SourceId=socialPosts[0].Id, RecordTypeId= C_RecordTypeHelper.CASE_INFORMATION);
+        Case infoTag = new Case (Status= FCS_CaseHandler.CASE_STATUS_CLOSED, Origin='Facebook', SourceId=socialPosts[0].Id, RecordTypeId= C_RecordTypeHelper.CASE_INFORMATION);
         List<Case> soMeCases = new List<Case>();
         soMeCases.add(infoTag);
         Database.SaveResult result = Database.insert(soMeCases[0], false);

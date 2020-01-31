@@ -12,11 +12,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>CaseId__c</field>
+                <field>FCS_CaseId__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>CaseTag__c</field>
+                <field>FCS_CaseTag__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

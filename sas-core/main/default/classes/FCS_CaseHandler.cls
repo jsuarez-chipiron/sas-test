@@ -3,7 +3,7 @@
  * @date 2019-11-27
  * @description Handler class for operations performed on case object.
  */
-public class CaseHandler extends C_TriggerHandler {
+public class FCS_CaseHandler extends C_TriggerHandler {
     /**
     Static variable for the Case Tag type Main
     */
@@ -19,11 +19,11 @@ public class CaseHandler extends C_TriggerHandler {
     /**
     Static variable for the Social Post review status "Reviewed"
     */
-    @TestVisible private static final String SP_STATUS_REVIEWED= 'Reviewed';
+    @TestVisible private static final String SP_STATUS_REVIEWED = 'Reviewed';
     /**
    Static variable for the Case status "Closed"
    */
-    @TestVisible private static final String CASE_STATUS_CLOSED= 'Closed';
+    @TestVisible private static final String CASE_STATUS_CLOSED = 'Closed';
 
     /**
     Trigger variables
@@ -35,7 +35,7 @@ public class CaseHandler extends C_TriggerHandler {
     /**
    Set variables
    */
-    public CaseHandler() {
+    public FCS_CaseHandler() {
         this.newCaseMap = (Map<Id, Case>) Trigger.newMap;
         this.newCaseList = (List <Case>) Trigger.new;
         this.oldCaseMap = (Map<Id, Case>) Trigger.oldMap;
@@ -85,13 +85,12 @@ public class CaseHandler extends C_TriggerHandler {
                 caseInScope.add(c);
             }
         }
-        Map<Id,SocialPost> socialPostsByIds = new Map<Id, SocialPost>([SELECT Id, OwnerId FROM SocialPost WHERE Id =:socialPostIds]);
-        for (Case c : caseInScope){
-            if(socialPostsByIds.containsKey(c.SourceId)){
-                if(socialPostsByIds.get(c.SourceId).OwnerId.getSObjectType()==User.SObjectType){
-                    c.OwnerId=socialPostsByIds.get(c.SourceId).OwnerId;
-                }
-                else {
+        Map<Id, SocialPost> socialPostsByIds = new Map<Id, SocialPost>([SELECT Id, OwnerId FROM SocialPost WHERE Id = :socialPostIds]);
+        for (Case c : caseInScope) {
+            if (socialPostsByIds.containsKey(c.SourceId)) {
+                if (socialPostsByIds.get(c.SourceId).OwnerId.getSObjectType() == User.SObjectType) {
+                    c.OwnerId = socialPostsByIds.get(c.SourceId).OwnerId;
+                } else {
                     c.addError('The Social Post needs to be assign to a user before tagging the post');
                 }
             }
@@ -103,20 +102,20 @@ public class CaseHandler extends C_TriggerHandler {
     @param newCaseList The list of new version of the case i.e. the Trigger.new variable
     */
     private static void updateSocialPost(List<Case> newCaseList) {
-        Map<Id,Case>caseBySoMeIds = new Map<Id,Case>();
-        for(Case c : newCaseList){
-            if(c.SourceId!=null && c.SourceId.getSobjectType()==SocialPost.SObjectType && c.Status!=CASE_STATUS_CLOSED) {
+        Map<Id, Case>caseBySoMeIds = new Map<Id, Case>();
+        for (Case c : newCaseList) {
+            if (c.SourceId != null && c.SourceId.getSobjectType() == SocialPost.SObjectType && c.Status != CASE_STATUS_CLOSED) {
                 caseBySoMeIds.put(c.SourceId, c);
             }
         }
-        if(!caseBySoMeIds.isEmpty()) {
-            List<SocialPost> sps = [SELECT Id FROM SocialPost WHERE Id =:caseBySoMeIds.keySet() AND ParentId=null];
+        if (!caseBySoMeIds.isEmpty()) {
+            List<SocialPost> sps = [SELECT Id FROM SocialPost WHERE Id = :caseBySoMeIds.keySet() AND ParentId = null];
             List<SocialPost> spToUpdate = new List<SocialPost> ();
             for (SocialPost sp : sps) {
-                sp.ParentId=caseBySoMeIds.get(sp.Id).Id;
+                sp.ParentId = caseBySoMeIds.get(sp.Id).Id;
                 sp.FCS_CaseCreated__c = true;
-                sp.FCS_Done__c=true;
-                sp.ReviewedStatus=SP_STATUS_REVIEWED;
+                sp.FCS_Done__c = true;
+                sp.ReviewedStatus = SP_STATUS_REVIEWED;
                 spToUpdate.add(sp);
             }
             update spToUpdate;
@@ -149,57 +148,55 @@ public class CaseHandler extends C_TriggerHandler {
      */
     private static void manageCaseTagRecords(List <Case> newCaseList, Map<Id, Case> newCaseMap) {
         try {
-            Map<String, CaseTag__c> newTagByKeyId = createToBeCaseTagMap(newCaseList);
-            Map<String, CaseTag__c> oldTagByKeyId = createCurrentCaseTagMap(newCaseMap);
-            List<CaseTag__c> deleteCaseTags = new List<CaseTag__c>();
-            List<CaseTag__c> createCaseTags = new List<CaseTag__c>();
+            Map<String, FCS_CaseTag__c> newTagByKeyId = createToBeCaseTagMap(newCaseList);
+            Map<String, FCS_CaseTag__c> oldTagByKeyId = createCurrentCaseTagMap(newCaseMap);
+            List<FCS_CaseTag__c> deleteCaseTags = new List<FCS_CaseTag__c>();
+            List<FCS_CaseTag__c> createCaseTags = new List<FCS_CaseTag__c>();
 
             for (String keyId : newTagByKeyId.keySet()) {
-                if (oldTagByKeyId.containsKey(keyId)) oldTagByKeyId.remove(keyId);
-                else if (!oldTagByKeyId.containsKey(keyId)) createCaseTags.add(newTagByKeyId.get(keyId));
+                if (oldTagByKeyId.containsKey(keyId)) oldTagByKeyId.remove(keyId); else if (!oldTagByKeyId.containsKey(keyId)) createCaseTags.add(newTagByKeyId.get(keyId));
             }
             deleteCaseTags = oldTagByKeyId.values();
             if (createCaseTags != null) upsert createCaseTags;
             if (deleteCaseTags != null) delete deleteCaseTags;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.debug('An exception occurred: ' + e.getMessage());
             C_log.logexception(e, null, null);
         }
     }
 
     /**
-    * Returns a map containing the current (old) case tags records that needs to be evaluate agianst the new version of the case, CaseId+CaseTag+Type as key
+    * Returns a map containing the current (old) case tags records that needs to be evaluate agianst the new version of the case, FCS_CaseId__c+CaseTag+Type as key
     * @param newCaseMap The map between the id and the new version of the case i.e. the Trigger.newMap variable
-    * @return caseTagsByKeyId Map with existing case tag records (CaseTag__c) with CaseId+Tag+Type as key
+    * @return caseTagsByKeyId Map with existing case tag records (FCS_CaseTag__c) with FCS_CaseId__c+Tag+Type as key
     */
-    public static Map<String, CaseTag__c> createCurrentCaseTagMap(Map<Id, Case> newCaseMap){
-        List<CaseTag__c> caseTagRecords = [SELECT Id, CaseTag__c, FCS_Type__c, CaseId__c FROM CaseTag__c WHERE CaseId__c = :newCaseMap.keySet()];
-        Map<String, CaseTag__c> caseTagsByKeyId = new Map<String, CaseTag__c> ();
+    public static Map<String, FCS_CaseTag__c> createCurrentCaseTagMap(Map<Id, Case> newCaseMap) {
+        List<FCS_CaseTag__c> caseTagRecords = [SELECT Id, FCS_CaseTag__c, FCS_Type__c, FCS_CaseId__c FROM FCS_CaseTag__c WHERE FCS_CaseId__c = :newCaseMap.keySet()];
+        Map<String, FCS_CaseTag__c> caseTagsByKeyId = new Map<String, FCS_CaseTag__c> ();
         if (!caseTagRecords.isEmpty()) {
-            for (CaseTag__c ct : caseTagRecords) {
-                if (!caseTagsByKeyId.containsKey(ct.CaseId__c + ct.CaseTag__c + ct.FCS_Type__c)) caseTagsByKeyId.put(ct.CaseId__c + ct.CaseTag__c+ct.FCS_Type__c, ct);
+            for (FCS_CaseTag__c ct : caseTagRecords) {
+                if (!caseTagsByKeyId.containsKey(ct.FCS_CaseId__c + ct.FCS_CaseTag__c + ct.FCS_Type__c)) caseTagsByKeyId.put(ct.FCS_CaseId__c + ct.FCS_CaseTag__c + ct.FCS_Type__c, ct);
             }
         }
         return caseTagsByKeyId;
     }
 
     /**
-    * Returns a map containg the updated version (new) of the case tags records with CaseId+CaseTag+Type as key
+    * Returns a map containg the updated version (new) of the case tags records with FCS_CaseId__c+CaseTag+Type as key
     * @param newCaseList The list of the new version of the case i.e. the Trigger.new variable
-    * @return newTagsByKeyId Map with new case tags on Case with CaseId+Tag+Type as key
+    * @return newTagsByKeyId Map with new case tags on Case with FCS_CaseId__c+Tag+Type as key
     */
-    public static Map<String, CaseTag__c> createToBeCaseTagMap(List<Case> newCaseList) {
+    public static Map<String, FCS_CaseTag__c> createToBeCaseTagMap(List<Case> newCaseList) {
         Integer cSize = newCaseList.size();
-        Map<String, CaseTag__c> newTagsByKeyId = new Map<String, CaseTag__c>();
+        Map<String, FCS_CaseTag__c> newTagsByKeyId = new Map<String, FCS_CaseTag__c>();
         for (Integer i = 0; i < cSize; i++) {
             Case newC = newCaseList == null ? null : newCaseList[i];
             List<String> caseTagString = newC.CaseTags__c != null ? newC.CaseTags__c.split(';') : null;
-            if (newC.FCS_CaseReason__c != null) newTagsByKeyId.put(newC.Id + newC.FCS_CaseReason__c + MAIN_TAG, new CaseTag__c(CaseId__c = newC.Id, CaseTag__c = newC.FCS_CaseReason__c, FCS_Type__c = MAIN_TAG));
-            if (newC.FCS_CaseSubReason__c != null) newTagsByKeyId.put(newC.Id + newC.FCS_CaseSubReason__c + SUB_MAIN_TAG, new CaseTag__c(CaseId__c = newC.Id, CaseTag__c = newC.FCS_CaseSubReason__c, FCS_Type__c = SUB_MAIN_TAG));
+            if (newC.FCS_CaseReason__c != null) newTagsByKeyId.put(newC.Id + newC.FCS_CaseReason__c + MAIN_TAG, new FCS_CaseTag__c(FCS_CaseId__c = newC.Id, FCS_CaseTag__c = newC.FCS_CaseReason__c, FCS_Type__c = MAIN_TAG));
+            if (newC.FCS_CaseSubReason__c != null) newTagsByKeyId.put(newC.Id + newC.FCS_CaseSubReason__c + SUB_MAIN_TAG, new FCS_CaseTag__c(FCS_CaseId__c = newC.Id, FCS_CaseTag__c = newC.FCS_CaseSubReason__c, FCS_Type__c = SUB_MAIN_TAG));
             if (caseTagString != null) {
                 for (String s : CaseTagString) {
-                    newTagsByKeyId.put(newC.Id + s + ADDITIONAL_TAG, new CaseTag__c(CaseId__c = newC.Id, CaseTag__c = s, FCS_Type__c = ADDITIONAL_TAG));
+                    newTagsByKeyId.put(newC.Id + s + ADDITIONAL_TAG, new FCS_CaseTag__c(FCS_CaseId__c = newC.Id, FCS_CaseTag__c = s, FCS_Type__c = ADDITIONAL_TAG));
                 }
             }
         }
