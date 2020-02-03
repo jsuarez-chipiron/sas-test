@@ -93,7 +93,7 @@ private class AD_SamlJitHandler_Test {
         System.assertEquals(email,u.FederationIdentifier);
         System.assertEquals(true,u.UserPermissionsSupportUser);
         System.assert(u.Alias.startsWith('TTLAST'));
-        System.assertEquals(null,u.FCS_Vendor__c);
+        System.assertEquals('SAS',u.FCS_Vendor__c);
     }
     
     /** 
@@ -118,7 +118,7 @@ private class AD_SamlJitHandler_Test {
     /**
         Tests assigning the user the Sykes team lead role which links to the Sykes role
         thus giving the user the Sykes Vendor property and agent profile
-    */
+    *//*
     @isTest static void testParentRole(){
         String email = USER_EMAIL+'.com';
         SamlAssertion sa = generateAssertion('TFIRST', 'TLAST', email, new String[]{SYKES_TEAM_LEAD_ROLE});
@@ -129,7 +129,7 @@ private class AD_SamlJitHandler_Test {
         Profile p = [SELECT Id,Name FROM Profile WHERE Id=:u.ProfileId];
         System.assertEquals('Agent',p.Name);
         System.assertEquals('Sykes',u.FCS_Vendor__c);
-    }
+    }*/
 
     /**
         Tests that customers with duplicated aliases are managed correctly
