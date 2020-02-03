@@ -9,6 +9,10 @@
         <apexClass>FCS_RemoveAdditionalSurveyResponses</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>FCS_ConsoleAutomationController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <custom>false</custom>
     <customPermissions>
         <enabled>true</enabled>
