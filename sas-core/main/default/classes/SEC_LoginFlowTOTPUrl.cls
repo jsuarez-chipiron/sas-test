@@ -2,7 +2,7 @@
     Invocable action to render a link for the current user to
     raise the session and thus enabling TOTP registration
 */
-global with sharing class LoginFlowTOTPUrl {
+global with sharing class SEC_LoginFlowTOTPUrl {
     /**
         Generates verification urls with the provided return urls
         @param retUrls The return urls for the verification urls

@@ -6,7 +6,7 @@
         <label>Get TOTP Availability</label>
         <locationX>370</locationX>
         <locationY>58</locationY>
-        <actionName>LoginFlowTOTPAvailability</actionName>
+        <actionName>SEC_LoginFlowTOTPAvailability</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>TOTP_Registration_Status</targetReference>
@@ -28,7 +28,7 @@
         <label>Get Verification Url</label>
         <locationX>523</locationX>
         <locationY>293</locationY>
-        <actionName>LoginFlowTOTPUrl</actionName>
+        <actionName>SEC_LoginFlowTOTPUrl</actionName>
         <actionType>apex</actionType>
         <inputParameters>
             <name>retUrls</name>

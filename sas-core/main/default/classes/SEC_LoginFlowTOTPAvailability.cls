@@ -2,7 +2,7 @@
     Invocable action to check whether TOTP is available for the currently runnign user
     Used for login flows
 */
-global with sharing class LoginFlowTOTPAvailability {
+global with sharing class SEC_LoginFlowTOTPAvailability {
     /**
         Checks whether a TOTP secret is registered for each of the provided user ids
         Also returns true when the suer has an associated temp code

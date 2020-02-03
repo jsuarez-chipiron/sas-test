@@ -2,7 +2,7 @@
     Invocable action to verify TOTP for the current running user
     Used for login flows
 */
-global with sharing class LoginFlowTOTPVerify {
+global with sharing class SEC_LoginFlowTOTPVerify {
     /**
         Invocable actions to verify totp tokens for the current running users
         @param totpCodeList The list of totp codes to check

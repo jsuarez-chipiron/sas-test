@@ -2,7 +2,7 @@
     Tests methods for TOTP Login Flow invocable actions
 */
 @isTest 
-private class LoginFlowTOTP_Test {
+private class SEC_LoginFlowTOTP_Test {
     /**
         The user email and federation Id used for the test user 
     */
@@ -40,29 +40,29 @@ private class LoginFlowTOTP_Test {
             TwoFactorInfo tfi = new TwoFactorInfo(SharedKey='MFQWCYLBMFQWCYLBMFQWCYLBMFQWCYLB',Type='TOTP',UserId=u.Id);
             insert tfi;
 
-            Boolean[] isAvailableList = LoginFlowTOTPAvailability.isAvailable(new Id[]{u.Id});
+            Boolean[] isAvailableList = SEC_LoginFlowTOTPAvailability.isAvailable(new Id[]{u.Id});
             System.assertEquals(1,isAvailableList.size());
             System.assertEquals(true,isAvailableList[0]);
             //Tests correct token
             String token = computeTOTPAuthToken('aaaaaaaaaaaaaaaaaaaa');
             System.assertEquals(true,Auth.SessionManagement.validateTotpTokenForUser(token),'Token not accepted: '+token);
-            Boolean[] verifyList = LoginFlowTOTPVerify.verifyTotp(new String[]{token});
+            Boolean[] verifyList = SEC_LoginFlowTOTPVerify.verifyTotp(new String[]{token});
             System.assertEquals(1,verifyList.size());
             System.assertEquals(true,verifyList[0],'Token not accepted: '+token);
             //Tests incorrect token
-            verifyList = LoginFlowTOTPVerify.verifyTotp(new String[]{'000000'});
+            verifyList = SEC_LoginFlowTOTPVerify.verifyTotp(new String[]{'000000'});
             System.assertEquals(1,verifyList.size());
             System.assertEquals(false,verifyList[0]);
             //Tests token with incorrect format
-            verifyList = LoginFlowTOTPVerify.verifyTotp(new String[]{'asq1n2ecwq'});
+            verifyList = SEC_LoginFlowTOTPVerify.verifyTotp(new String[]{'asq1n2ecwq'});
             System.assertEquals(1,verifyList.size());
             System.assertEquals(false,verifyList[0]);
             //Tests empty token
-            verifyList = LoginFlowTOTPVerify.verifyTotp(new String[]{''});
+            verifyList = SEC_LoginFlowTOTPVerify.verifyTotp(new String[]{''});
             System.assertEquals(1,verifyList.size());
             System.assertEquals(false,verifyList[0]);
             //Tests null token
-            verifyList = LoginFlowTOTPVerify.verifyTotp(new String[]{null});
+            verifyList = SEC_LoginFlowTOTPVerify.verifyTotp(new String[]{null});
             System.assertEquals(1,verifyList.size());
             System.assertEquals(false,verifyList[0]);
         }
@@ -74,7 +74,7 @@ private class LoginFlowTOTP_Test {
     @isTest static void checkTempCode(){
         User u = [SELECT Id FROM User WHERE FederationIdentifier=:USER_EMAIL];
         System.runAs(u){
-            Boolean[] isAvailableList = LoginFlowTOTPAvailability.isAvailable(new Id[]{u.Id});
+            Boolean[] isAvailableList = SEC_LoginFlowTOTPAvailability.isAvailable(new Id[]{u.Id});
             System.assertEquals(1,isAvailableList.size());
             System.assertEquals(false,isAvailableList[0]);
         }
@@ -86,7 +86,7 @@ private class LoginFlowTOTP_Test {
     @isTest static void checkGenerateVerificationUrl(){
         User u = [SELECT Id FROM User WHERE FederationIdentifier=:USER_EMAIL];
         System.runAs(u){
-            String[] urls = LoginFlowTOTPUrl.getVerificationUrls(new String[]{'/TESTRETURN'});
+            String[] urls = SEC_LoginFlowTOTPUrl.getVerificationUrls(new String[]{'/TESTRETURN'});
             System.assertEquals(1,urls.size());
             System.assert(!String.isBlank(urls[0]));
             System.assert(urls[0].contains('TESTRETURN'));
