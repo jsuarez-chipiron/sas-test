@@ -212,6 +212,7 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
             Loads the user configuration for the ad roles
         */
         private void loadUserConfig(){
+            Boolean isTest = C_Util.isSandbox();
             inclPS = new Set<String>();
             inclPL = new Set<String>();
             inclGroups = new Set<String>();
@@ -223,29 +224,31 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
             userDetails = new Map<String,Object>();
             
             //Loading permissions included under the users current AD role
-            AD_Role__mdt[] arList = [SELECT Id,Priority__c,GroupId__c,(SELECT Id,MasterLabel,PermissionType__c FROM RolePermissions__r),(SELECT Id,MasterLabel,Value__c FROM RoleUserDetails__r) FROM AD_Role__mdt WHERE GroupId__c IN :adRoles ORDER BY Priority__c DESC];
+            AD_Role__mdt[] arList = [SELECT Id,Priority__c,GroupId__c,TestOnly__c,(SELECT Id,MasterLabel,PermissionType__c FROM RolePermissions__r),(SELECT Id,MasterLabel,Value__c FROM RoleUserDetails__r) FROM AD_Role__mdt WHERE GroupId__c IN :adRoles ORDER BY Priority__c DESC];
             for(AD_Role__mdt ar : arList){
-                for(AD_RolePermission__mdt adp : ar.RolePermissions__r){
-                    if(adp.PermissionType__c==PERMISSION_TYPE_PROFILE){
-                        if(profileName==null)profileName = adp.MasterLabel;
-                    }
-                    else if(adp.PermissionType__c==PERMISSION_TYPE_ROLE){
-                        if(roleDevName==null)roleDevName = adp.MasterLabel;
-                    }
-                    else if(adp.PermissionType__c==PERMISSION_TYPE_USER_PERMISSION){
-                        if(!userPermissions.containsKey(adp.MasterLabel))userPermissions.put(adp.MasterLabel,true);
-                    }
-                    else if(adp.PermissionType__c==PERMISSION_TYPE_PERMISSION_SET){
-                        inclPS.add(adp.MasterLabel);
-                    }
-                    else if(adp.PermissionType__c==PERMISSION_TYPE_PERMISSION_LICENSE){
-                        inclPL.add(adp.MasterLabel);
-                    }
-                    else if(adp.PermissionType__c==PERMISSION_TYPE_GROUP){
-                        inclGroups.add(adp.MasterLabel);
-                    }
-                    else if(adp.PermissionType__c==PERMISSION_TYPE_CALL_CENTER){
-                        if(callCenterName==null)callCenterName=adp.MasterLabel;
+                if(isTest || !ar.TestOnly__c){
+                    for(AD_RolePermission__mdt adp : ar.RolePermissions__r){
+                        if(adp.PermissionType__c==PERMISSION_TYPE_PROFILE){
+                            if(profileName==null)profileName = adp.MasterLabel;
+                        }
+                        else if(adp.PermissionType__c==PERMISSION_TYPE_ROLE){
+                            if(roleDevName==null)roleDevName = adp.MasterLabel;
+                        }
+                        else if(adp.PermissionType__c==PERMISSION_TYPE_USER_PERMISSION){
+                            if(!userPermissions.containsKey(adp.MasterLabel))userPermissions.put(adp.MasterLabel,true);
+                        }
+                        else if(adp.PermissionType__c==PERMISSION_TYPE_PERMISSION_SET){
+                            inclPS.add(adp.MasterLabel);
+                        }
+                        else if(adp.PermissionType__c==PERMISSION_TYPE_PERMISSION_LICENSE){
+                            inclPL.add(adp.MasterLabel);
+                        }
+                        else if(adp.PermissionType__c==PERMISSION_TYPE_GROUP){
+                            inclGroups.add(adp.MasterLabel);
+                        }
+                        else if(adp.PermissionType__c==PERMISSION_TYPE_CALL_CENTER){
+                            if(callCenterName==null)callCenterName=adp.MasterLabel;
+                        }
                     }
                 }
             }
@@ -273,9 +276,11 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
             //Retireving general user details to set for the user
             for(Integer i=arList.size()-1;i>=0;i--){
                 AD_Role__mdt ar = arList[i];
-                for(AD_RoleUserDetail__mdt ud : ar.RoleUserDetails__r){
-                    if(ud.Value__c=='false' || ud.Value__c=='true')userDetails.put(ud.MasterLabel,ud.Value__c=='true');
-                    else userDetails.put(ud.MasterLabel,ud.Value__c);
+                if(isTest || !ar.TestOnly__c){
+                    for(AD_RoleUserDetail__mdt ud : ar.RoleUserDetails__r){
+                        if(ud.Value__c=='false' || ud.Value__c=='true')userDetails.put(ud.MasterLabel,ud.Value__c=='true');
+                        else userDetails.put(ud.MasterLabel,ud.Value__c);
+                    }
                 }
             }
         }
