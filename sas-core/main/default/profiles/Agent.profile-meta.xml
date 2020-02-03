@@ -594,11 +594,15 @@
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>SendSingleEmail</name>
+        <name>ListEmailSend</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>SendMassEmail</name>
+        <name>EmailMass</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>EmailSingle</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
