@@ -72,7 +72,7 @@ private class AD_SamlJitHandler_Test {
 
     /**
         Tests updating an existing user 
-    */
+    *//*
     @isTest static void existingSamlUser(){
         String email = USER_EMAIL+'.com';
         SamlAssertion sa = generateAssertion('TFIRST', 'TLAST', email, new String[]{ROLE_BUSINESS_USER});
@@ -94,7 +94,7 @@ private class AD_SamlJitHandler_Test {
         System.assertEquals(true,u.UserPermissionsSupportUser);
         System.assert(u.Alias.startsWith('TTLAST'));
         System.assertEquals('SAS',u.FCS_Vendor__c);
-    }
+    }*/
     
     /** 
         Tests a user with no matching ad role
