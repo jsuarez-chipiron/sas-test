@@ -5,10 +5,6 @@
     <fieldName>Status</fieldName>
     <masterLabel>Information</masterLabel>
     <pathAssistantSteps>
-        <fieldNames>Type</fieldNames>
-        <fieldNames>FCS_CaseReason__c</fieldNames>
-        <fieldNames>FCS_CaseSubReason__c</fieldNames>
-        <fieldNames>CaseTags__c</fieldNames>
         <picklistValueName>Closed</picklistValueName>
     </pathAssistantSteps>
     <recordTypeName>Information</recordTypeName>

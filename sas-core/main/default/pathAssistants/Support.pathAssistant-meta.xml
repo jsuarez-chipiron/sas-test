@@ -5,14 +5,7 @@
     <fieldName>Status</fieldName>
     <masterLabel>Support</masterLabel>
     <pathAssistantSteps>
-        <fieldNames>Type</fieldNames>
-        <fieldNames>FCS_CaseReason__c</fieldNames>
-        <fieldNames>FCS_CaseSubReason__c</fieldNames>
-        <fieldNames>CaseTags__c</fieldNames>
         <picklistValueName>Closed</picklistValueName>
-    </pathAssistantSteps>
-    <pathAssistantSteps>
-        <picklistValueName>Escalated</picklistValueName>
     </pathAssistantSteps>
     <recordTypeName>Support</recordTypeName>
 </PathAssistant>
