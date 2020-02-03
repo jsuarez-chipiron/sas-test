@@ -352,23 +352,6 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
             List<GroupMember> gmAddList = new List<GroupMember>();
             List<GroupMember> gmDelList = new List<GroupMember>();
 
-            //Get current permission set and permission set group assignments
-            PermissionSetAssignment[] psaList = [SELECT Id,AssigneeId,PermissionSetGroupId,PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId=:userId];
-            Map<Id,PermissionSetAssignment> psaMap = new Map<Id,PermissionSetAssignment>();
-            for(PermissionSetAssignment psa : psaList){
-                psaMap.put(psa.PermissionSetId,psa);
-            }
-            //Get all referenced permission sets
-            PermissionSet[] psList = [SELECT Id,Name,PermissionSetGroupId FROM PermissionSet WHERE Name IN :allPS];
-            for(PermissionSet ps : psList){
-                PermissionSetAssignment psa = psaMap.get(ps.Id);
-                if(inclPS.contains(ps.Name)){
-                    if(psa==null)psaAddList.add(new PermissionSetAssignment(AssigneeId=userId,PermissionSetId=ps.Id,PermissionSetGroupId=ps.PermissionSetGroupId));
-                }
-                else if(exclPS.contains(ps.Name)){
-                    if(psa!=null)psaDelList.add(psa);
-                }
-            }
 
             //Get current permission set license assignments
             PermissionSetLicenseAssign[] plaList = [SELECT Id,AssigneeId,PermissionSetLicenseId FROM PermissionSetLicenseAssign WHERE AssigneeId=:userId];
@@ -385,6 +368,24 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
                 }
                 else if(exclPS.contains(pl.DeveloperName)){
                     if(pla!=null)plaDelList.add(pla);
+                }
+            }
+
+            //Get current permission set and permission set group assignments
+            PermissionSetAssignment[] psaList = [SELECT Id,AssigneeId,PermissionSetGroupId,PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId=:userId];
+            Map<Id,PermissionSetAssignment> psaMap = new Map<Id,PermissionSetAssignment>();
+            for(PermissionSetAssignment psa : psaList){
+                psaMap.put(psa.PermissionSetId,psa);
+            }
+            //Get all referenced permission sets
+            PermissionSet[] psList = [SELECT Id,Name,PermissionSetGroupId FROM PermissionSet WHERE Name IN :allPS];
+            for(PermissionSet ps : psList){
+                PermissionSetAssignment psa = psaMap.get(ps.Id);
+                if(inclPS.contains(ps.Name)){
+                    if(psa==null)psaAddList.add(new PermissionSetAssignment(AssigneeId=userId,PermissionSetId=ps.Id,PermissionSetGroupId=ps.PermissionSetGroupId));
+                }
+                else if(exclPS.contains(ps.Name)){
+                    if(psa!=null)psaDelList.add(psa);
                 }
             }
 
