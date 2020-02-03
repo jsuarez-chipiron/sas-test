@@ -45,6 +45,12 @@ steps:
   displayName: 'Import email templates'
 
 - script: |
+    if [ -d ./$(PACKAGE_FOLDER)/main/default/sharingRules ]; then
+      mv ./$(PACKAGE_FOLDER)/main/default/sharingRules ./$(PACKAGE_FOLDER)/sharingRules
+    fi
+  displayName: 'Remove sharing rules'
+
+- script: |
     sfdx force:source:push --targetusername ciorg --forceoverwrite
   displayName: 'Push Source'
 
@@ -90,19 +96,11 @@ steps:
     testResultsFiles: '$(Common.TestResultsDirectory)/test-*-junit.xml'
     failTaskOnFailedTests: true
 
-#- script: |
-#    packageVersionId="`sfdx force:package:version:create --package "$(PACKAGE_NAME)" --installationkey "$(INSTALLATION_KEY)" --definitionfile config/project-scratch-def.json --wait 10 --json | jq '.result.SubscriberPackageVersionId' | tr -cd '[a-zA-Z0-9]'`"
-#    if [ -z "$packageVersionId" ]; then
-#      echo "Error when creating package"
-#      exit 101
-#    fi
-#    if [ "$packageVersionId" == "null" ]; then
-#      echo "Error when creating package"
-#      exit 101
-#    fi
-#    echo "$packageVersionId" > $(Build.ArtifactStagingDirectory)/package-version.txt
-#    echo "$(INSTALLATION_KEY)" > $(Build.ArtifactStagingDirectory)/package-key.txt
-#  displayName: 'Create Package Version'
+- script: |
+    if [ -d ./$(PACKAGE_FOLDER)/sharingRules ]; then
+      mv ./$(PACKAGE_FOLDER)/sharingRules ./$(PACKAGE_FOLDER)/main/default/sharingRules
+    fi
+  displayName: 'Return sharing rules'
 
 - script: |
     sfdx force:source:convert --rootdir ./$(PACKAGE_FOLDER) --outputdir ./package-md
