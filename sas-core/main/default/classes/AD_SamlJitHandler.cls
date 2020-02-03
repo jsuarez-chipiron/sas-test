@@ -202,9 +202,12 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
             Loads all linked roles related to the currently added roles
         */
         private void loadLinkedRoles(){
-            AD_RoleLink__mdt[] arlList = [SELECT Id,RoleLinked__r.GroupId__c FROM AD_RoleLink__mdt WHERE Role__r.GroupId__c IN :adRoles];
+            Boolean isTest = C_Util.isSandbox();
+            AD_RoleLink__mdt[] arlList = [SELECT Id,RoleLinked__r.GroupId__c,Role__r.TestOnly__c FROM AD_RoleLink__mdt WHERE Role__r.GroupId__c IN :adRoles];
             for(AD_RoleLink__mdt arl :arlList){
-                if(arl.RoleLinked__r.GroupId__c!=null)adRoles.add(arl.RoleLinked__r.GroupId__c);
+                if(isTest || !arl.Role__r.TestOnly__c){
+                    if(arl.RoleLinked__r.GroupId__c!=null)adRoles.add(arl.RoleLinked__r.GroupId__c);
+                }
             }
         }
 
