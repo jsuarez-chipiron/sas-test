@@ -371,10 +371,10 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
             PermissionSetLicense[] plList = [SELECT Id,DeveloperName FROM PermissionSetLicense WHERE DeveloperName IN :allPL];
             for(PermissionSetLicense pl : plList){
                 PermissionSetLicenseAssign pla = plaMap.get(pl.Id);
-                if(inclPS.contains(pl.DeveloperName)){
+                if(inclPL.contains(pl.DeveloperName)){
                     if(pla==null)plaAddList.add(new PermissionSetLicenseAssign(AssigneeId=userId,PermissionSetLicenseId=pl.Id));
                 }
-                else if(exclPS.contains(pl.DeveloperName)){
+                else if(exclPL.contains(pl.DeveloperName)){
                     if(pla!=null)plaDelList.add(pla);
                 }
             }
