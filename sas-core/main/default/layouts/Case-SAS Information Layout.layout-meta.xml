@@ -10,10 +10,6 @@
         </feedFilters>
         <feedFilters>
             <feedFilterType>FeedItemType</feedFilterType>
-            <feedItemType>EmailMessageEvent</feedItemType>
-        </feedFilters>
-        <feedFilters>
-            <feedFilterType>FeedItemType</feedFilterType>
             <feedItemType>TextPost</feedItemType>
         </feedFilters>
         <feedFilters>
@@ -339,7 +335,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000000nDJt</masterLabel>
+        <masterLabel>00h1j000000qzkI</masterLabel>
         <sizeX>3</sizeX>
         <sizeY>4</sizeY>
         <summaryLayoutItems>
