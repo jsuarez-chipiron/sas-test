@@ -1,3 +1,3 @@
 trigger FeedItemTrigger on FeedItem (after insert, after update) {
-    new MentionHandler().run();
+    new FCS_MentionHandler().run();
 }

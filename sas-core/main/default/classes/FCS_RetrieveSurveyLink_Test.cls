@@ -2,7 +2,7 @@
 	Test class for RetrieveSurveyKLink Apex Rest class.
 */
 @isTest
-public class RetrieveSurveyLink_Test {
+public class FCS_RetrieveSurveyLink_Test {
     
 	/**
 		Test setup
@@ -38,7 +38,7 @@ public class RetrieveSurveyLink_Test {
             RestContext.request = req;
             RestContext.response = res;
         	C_RestUtil.init();
-            RetrieveSurveyLink.doGet();
+            FCS_RetrieveSurveyLink.doGet();
        Test.stopTest();     
     }
 

@@ -3,7 +3,7 @@
 	@author Ludvig Walimaa - Deloitte
 */
 @RestResource(urlMapping='/SurveyLink/*')
-global without sharing class RetrieveSurveyLink {
+global without sharing class FCS_RetrieveSurveyLink {
 
 	@HttpGet
     global static void doGet() {

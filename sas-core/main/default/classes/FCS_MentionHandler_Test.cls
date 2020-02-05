@@ -1,8 +1,8 @@
 /**
-    Test class for MentionHandler class
+    Test class for FCS_MentionHandler class
 */
 @isTest
-private class MentionHandler_Test {
+private class FCS_MentionHandler_Test {
     /**
         Initial setup of users and case
     */
@@ -105,8 +105,8 @@ private class MentionHandler_Test {
         String User3 = vendorUsers[1].id;
 
         //Users with different Vendors
-        System.assertEquals(true,MentionHandler.validateMention(User1, User2));
+        System.assertEquals(true,FCS_MentionHandler.validateMention(User1, User2));
         //Users with same Vendor
-        System.assertEquals(false,MentionHandler.validateMention(User2, User3));
+        System.assertEquals(false,FCS_MentionHandler.validateMention(User2, User3));
     }
 }

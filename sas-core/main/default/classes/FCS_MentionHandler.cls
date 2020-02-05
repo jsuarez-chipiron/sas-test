@@ -1,4 +1,4 @@
-public class MentionHandler extends C_TriggerHandler {
+public class FCS_MentionHandler extends C_TriggerHandler {
     /**
         Set by tests to ensure that the logic in this handler runs during tests
         (ConnectApi failes when not using SeeAllData=true)
