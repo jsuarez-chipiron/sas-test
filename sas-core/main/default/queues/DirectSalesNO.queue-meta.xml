@@ -7,6 +7,7 @@
             <publicGroup>SykesDirectSalesChatSENO</publicGroup>
         </publicGroups>
     </queueMembers>
+    <queueRoutingConfig>DirectSales</queueRoutingConfig>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
