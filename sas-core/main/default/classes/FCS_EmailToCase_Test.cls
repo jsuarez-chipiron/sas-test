@@ -215,8 +215,7 @@ private class FCS_EmailToCase_Test {
         System.assertEquals(theUser.FCS_Team__c, updatedCase.FCS_Team__c); 
         System.assertEquals(theUser.FCS_Site__c, updatedCase.FCS_Site__c); 
         System.assertEquals(theUser.FCS_Vendor__c , updatedCase.FCS_Vendor__c); 
-        System.assertEquals(theUser.FCS_VirtualOrganization__c, updatedCase.FCS_VirtualOrganization__c); 
-          
+        System.assertEquals(theUser.FCS_VirtualOrganization__c, updatedCase.FCS_VirtualOrganization__c);  
     }
 
     @isTest
