@@ -14,11 +14,10 @@
 
 <!-- Delete ListViews automatically created on SocialPost when enabling SocialCustomerService. Should be kept until first release to prod 200325 -->
 	<types>
+		<members>SocialPost.AllSocialPosts</member>
+		<members>SocialPost.GlobalSupportSoMe_SocialPost</member>
+		<members>SocialPost.Social_post_pending_approval_filter</member>
+		<members>SocialPost.Social_posts_without_case</member>
 		<name>ListView</name>
-		<member>SocialPost.AllSocialPosts</member>
-		<member>SocialPost.GlobalSupportSoMe_SocialPost</member>
-		<member>SocialPost.Social_post_pending_approval_filter</member>
-		<member>SocialPost.Social_posts_without_case</member>
 	</types>
-	
 </Package>
