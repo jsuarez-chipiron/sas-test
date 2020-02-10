@@ -24,10 +24,11 @@ steps:
     secureFile: 'ci_cert.key'
 
 - script: |
-    mkdir $(Agent.BuildDirectory)/sfdx
-    wget -qO- $CLIURL | tar xJ -C $(Agent.BuildDirectory)/sfdx --strip-components 1
-    sudo $(Agent.BuildDirectory)/sfdx/install
-    export PATH=$(Agent.BuildDirectory)/sfdx/:$PATH
+    #mkdir $(Agent.BuildDirectory)/sfdx
+    #wget -qO- $CLIURL | tar xJ -C $(Agent.BuildDirectory)/sfdx --strip-components 1
+    #sudo $(Agent.BuildDirectory)/sfdx/install
+    #export PATH=$(Agent.BuildDirectory)/sfdx/:$PATH
+    sudo npm install --global sfdx-cli
     sfdx --version
     sfdx plugins --core
   displayName: 'Install SFDX'
