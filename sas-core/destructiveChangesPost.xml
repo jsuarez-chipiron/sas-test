@@ -11,5 +11,14 @@
     When it is confirmed that an included change has been deployed to relevant environments,
     the block can be removed from this document.
 -->
+
+<!-- Delete ListViews automatically created on SocialPost when enabling SocialCustomerService. Should be kept until first release to prod 200325 -->
+	<types>
+		<name>ListView</name>
+		<member>SocialPost.AllSocialPosts</member>
+		<member>SocialPost.GlobalSupportSoMe_SocialPost</member>
+		<member>SocialPost.Social_post_pending_approval_filter</member>
+		<member>SocialPost.Social_posts_without_case</member>
+	</types>
 	
 </Package>
