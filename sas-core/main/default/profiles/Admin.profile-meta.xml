@@ -500,6 +500,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>GDPRExtractObjectSetting__mdt.ParentObjectName__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -514,25 +515,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Knowledge__kav.FCS_Body__c</field>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>Case.FCS_CaseReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Knowledge__kav.FCS_InformationOwner__c</field>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>Case.FCS_ReopenedCount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Knowledge__kav.FCS_SubType__c</field>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>Case.FCS_CaseSubReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -548,17 +540,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LiveChatTranscript.FCS_CaseRecordTypeName__c</field>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>Case.FCS_FirstClosingDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>LiveChatTranscript.FCS_EBNumber__c</field>
-    </fieldPermissions>
-    <fieldPermissions>        
-        <field>Case.FCS_LatestSurveyInvitation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -624,8 +610,9 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBS_ScheduledBatchRunComponent__c.ErrorMessage__c</field>
+        <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>        
+    <fieldPermissions>
         <editable>true</editable>
         <field>FCS_CaseTag__c.FCS_Type__c</field>
         <readable>true</readable>
@@ -653,19 +640,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBS_ScheduledBatchRunComponent__c.TotalErrors__c</field>
-    </fieldPermissions>
-    <fieldPermissions>        <editable>true</editable>
-        <field>Knowledge__kav.FCS_Body__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Knowledge__kav.FCS_SubType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Knowledge__kav.FCS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -691,9 +665,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBS_ScheduledBatchRun__c.StartTime__c</field>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>SocialPost.FCS_CaseCreated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -784,25 +755,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.FCS_SASPostComment__c</field>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>SocialPost.FCS_ClosedDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.FCS_SASPost__c</field>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>SocialPost.FCS_SASPostComment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SurveyInvitation.FCS_NumberOfResponses__c</field>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>SocialPost.FCS_SASPost__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
