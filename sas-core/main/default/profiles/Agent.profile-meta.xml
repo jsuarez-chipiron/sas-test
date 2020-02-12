@@ -637,4 +637,8 @@
         <enabled>false</enabled>
         <name>ViewSetup</name>
     </userPermissions>
+    <tabVisibilities>
+        <tab>standard-Survey</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
 </Profile>
