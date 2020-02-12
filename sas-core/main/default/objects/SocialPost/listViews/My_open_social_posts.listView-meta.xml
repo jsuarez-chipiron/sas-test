@@ -10,6 +10,7 @@
     <columns>Posted</columns>
     <columns>Persona</columns>
     <columns>Parent</columns>
+    <columns>Owner</columns>
     <filterScope>Mine</filterScope>
     <filters>
         <field>ReviewedStatus</field>

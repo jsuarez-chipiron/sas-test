@@ -11,6 +11,7 @@
     <columns>Posted</columns>
     <columns>Persona</columns>
     <columns>Parent</columns>
+    <columns>Owner</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>FCS_SASPost__c</field>

@@ -4,6 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Checked if the action taken on the post is ignore</description>
     <externalId>false</externalId>
+    <inlineHelpText>Checked if the post is ignored from its source e.g Facebook or Twitter</inlineHelpText>
     <label>Ignored</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

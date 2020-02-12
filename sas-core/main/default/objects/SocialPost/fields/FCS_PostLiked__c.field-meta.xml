@@ -4,6 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Checked if the post is liked from SF e.g Facebook or Twitter</description>
     <externalId>false</externalId>
+    <inlineHelpText>Checked if the post is liked from its source e.g Facebook or Twitter</inlineHelpText>
     <label>Liked</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

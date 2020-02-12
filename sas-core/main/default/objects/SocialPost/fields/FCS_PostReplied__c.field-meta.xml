@@ -4,6 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Checked if the post is replied to from SF to  e.g Facebook or Twitter</description>
     <externalId>false</externalId>
+    <inlineHelpText>Checked if the post is replied to from SF to e.g Facebook or Twitter</inlineHelpText>
     <label>Replied</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

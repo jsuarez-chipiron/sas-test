@@ -4,6 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Checked if the post has a case created from it</description>
     <externalId>false</externalId>
+    <inlineHelpText>Checked if the post has a case created from it</inlineHelpText>
     <label>Case Created</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

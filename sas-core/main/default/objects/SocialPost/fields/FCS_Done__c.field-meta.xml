@@ -4,6 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Checked if the post fulfills the criteria of being handled</description>
     <externalId>false</externalId>
+    <inlineHelpText>Checked if the post fulfills the criteria of being handled</inlineHelpText>
     <label>Done</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
