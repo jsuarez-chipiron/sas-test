@@ -13,6 +13,6 @@
     <label>STOPQ SASSI Internal</label>
     <queue>STOPQSASSIInternal</queue>
     <sharedTo>
-        <allInternalUsers/>
+        <group>SASSTOPQEscalations</group>
     </sharedTo>
 </ListView>

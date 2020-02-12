@@ -13,6 +13,6 @@
     <label>STOPQ Sales Information</label>
     <queue>STOPQSalesInformation</queue>
     <sharedTo>
-        <allInternalUsers/>
+        <group>SASSTOPQEscalations</group>
     </sharedTo>
 </ListView>

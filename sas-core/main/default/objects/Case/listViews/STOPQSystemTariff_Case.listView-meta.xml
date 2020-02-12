@@ -13,6 +13,6 @@
     <label>STOPQ System &amp; Tariff</label>
     <queue>STOPQSystemTariff</queue>
     <sharedTo>
-        <allInternalUsers/>
+        <group>SASSTOPQEscalations</group>
     </sharedTo>
 </ListView>
