@@ -405,7 +405,7 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
             }
 
             //Get all referenced groups 
-            Group[] groupList = [SELECT Id,DeveloperName FROM Group WHERE DeveloperName IN :allGroups];
+            Group[] groupList = [SELECT Id,DeveloperName, Type FROM Group WHERE DeveloperName IN :allGroups AND Type = 'Regular'];
             for(Group g : groupList){
                 GroupMember gm = gmMap.get(g.Id);
                 if(inclGroups.contains(g.DeveloperName)){
