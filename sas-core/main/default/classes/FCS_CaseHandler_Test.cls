@@ -11,25 +11,40 @@ private class FCS_CaseHandler_Test {
     /**
    Test method for generation of test data used in more than one method
   */
-    @TestSetup static void createTestData(){
+    @TestSetup static void createTestUserSetup(){
+        PermissionSet socialMediaPermission = [SELECT Id FROM PermissionSet WHERE Name = 'Social_Media_User'];
+        Profile agentProfile = [SELECT Id FROM Profile WHERE Name = 'Agent'];
         List<User> users = FCS_TestDataFactory.createUsers(2);
         insert users;
+        PermissionSetAssignment[] assignments = new PermissionSetAssignment[]{};
+        for(User u:users){
+            u.ProfileId = agentProfile.Id;
+            assignments.add(new PermissionSetAssignment(
+                    AssigneeId = u.Id,
+                    PermissionSetId = socialMediaPermission.Id
+            ));
+        }
+        insert assignments;
+        update users;
+    }
+
+    static void createTestData() {
         List<SocialPost> socialPosts = FCS_TestDataFactory.createSocialPosts(4);
         insert socialPosts;
-        List<Case> newCases  = FCS_TestDataFactory.createCases(1, null, null, null, null);
+        List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null, null);
         newCases[0].FCS_CaseReason__c = 'TestReason 1';
         newCases[0].Subject = 'TestCase 2';
         newCases[0].FCS_CaseSubReason__c = 'TestSubReason 1';
         newCases[0].CaseTags__c = 'CommonTestTag1;CommonTestTag2';
         insert newCases;
     }
-
     /**
     Test method for generation of case tag records from case
     Test if case tag records is created on insert of new Case
    */
     @isTest
     static void insertCaseTagRecords() {
+        createTestData();
         List<Case> newCase = FCS_TestDataFactory.createCases(1, null, null, null, null);
         newCase[0].FCS_CaseReason__c = 'TestReason 1';
         newCase[0].FCS_CaseSubReason__c = 'TestSubReason 1';
@@ -59,6 +74,7 @@ private class FCS_CaseHandler_Test {
     //Test if case tag records is updated when a case is updated
     @isTest
     static void updateCaseTagRecords() {
+        createTestData();
         Case c2 = [SELECT Id FROm CASE WHERE Subject = 'TestCase 2'];
         c2.FCS_CaseReason__c = 'UpdatedTestReason 1';
         c2.CaseTags__c = 'TestTag2';
@@ -90,6 +106,7 @@ private class FCS_CaseHandler_Test {
     //Test if case tag records is deleted if case is deleted
     @isTest
     static void deleteCaseTagRecords() {
+        createTestData();
         Case c2 = [SELECT Id FROm CASE WHERE Subject = 'TestCase 2'];
         delete c2;
         System.AssertEquals(0, [SELECT Id From FCS_CaseTag__c WHERE FCS_CaseId__c =: c2.Id].size());
@@ -99,6 +116,7 @@ private class FCS_CaseHandler_Test {
 		Tests that cases (used to save tagging of cases where case is created with status closed) created from social posts is assigned to the owner of the source post if owner is a user
 	*/
     @isTest static void addSocialMediaTag(){
+        createTestData();
         List<SocialPost> socialPosts = [SELECT Id FROM SocialPost];
         List<User> users = [SELECT Id From User];
         for (Integer i = 0, sz = socialPosts.size(); i < sz; i++) {
@@ -127,6 +145,7 @@ private class FCS_CaseHandler_Test {
       Tests that it is not possible to create a case (as tag eg. in status closed) assigned to the owner of the source post if owner is a user
   */
     @isTest static void errorAddSocialMediaTag(){
+        createTestData();
         List<SocialPost> socialPosts = [SELECT Id FROM SocialPost LIMIT 1];
         List<User> users = [SELECT Id FROM User LIMIT 1];
         List<Group>groupList=[SELECT Id FROM Group WHERE Type='Queue'AND DeveloperName='GlobalSupportSoMe'];
@@ -147,6 +166,7 @@ private class FCS_CaseHandler_Test {
        Test not to be able to create case with case reason and case tag with same value
     */
     @isTest static void testValidateCaseTagsOnInsert() {
+        createTestData();
         // Test not to be able to create case with case reason and case tag with same value
         List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null, null);
         newCases[0].FCS_CaseReason__c = 'TestReason 1';
@@ -169,7 +189,8 @@ private class FCS_CaseHandler_Test {
   */
     @isTest
     static void testValidateCaseTagsOnUpdate() {
-        Case c3 = [SELECT Id FROm CASE WHERE Subject = 'TestCase 2'];
+        createTestData();
+        Case c3 = [SELECT Id FROM CASE WHERE Subject = 'TestCase 2'];
         c3.FCS_CaseReason__c = 'TestReason 1';
         c3.CaseTags__c ='CommonTestTag2;TestReason 1';
         Database.SaveResult result3 = Database.update(c3, false);
@@ -184,6 +205,7 @@ private class FCS_CaseHandler_Test {
  */
     @isTest
     static void testUpdateSocialPosts() {
+        createTestData();
         List<SocialPost> socialPosts = [SELECT Id FROM SocialPost];
         List<User> users = [SELECT Id FROM User];
         for (Integer i = 0, sz = socialPosts.size(); i < sz; i++) {
