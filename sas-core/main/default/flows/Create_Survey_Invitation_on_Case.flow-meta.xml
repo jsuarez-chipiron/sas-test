@@ -60,6 +60,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>FCS_RelatedCase__c</field>
+            <value>
+                <elementReference>caseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Name</field>
             <value>
                 <elementReference>caseNumber</elementReference>
@@ -72,9 +78,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>FCS_RelatedCase__c</field>
+            <field>OptionsCollectAnonymousResponse</field>
             <value>
-                <elementReference>caseId</elementReference>
+                <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
         <inputAssignments>
