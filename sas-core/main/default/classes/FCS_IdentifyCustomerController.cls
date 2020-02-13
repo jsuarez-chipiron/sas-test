@@ -4,7 +4,7 @@
  * @description Controller for component used to identify a customer from a Salesforce record. Includes methods
  * to retrieve data and create data.
  */
-public with sharing class FCS_IdentifyCustomerController {
+public without sharing class FCS_IdentifyCustomerController {
     /**
      * Used to handle request to fins a customer from the component. A list of frequent flyer record is fetched by
      * a query, and then the first record in the list is synced to a corresponding account record in Salesforce.
