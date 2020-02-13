@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Close_Case_Validation</fullName>
+    <active>true</active>
+    <description>Makes sure that the user changes Tags the Case before Closing</description>
+    <errorConditionFormula>AND(
+    OR(
+        ISCHANGED(IsClosed),
+        ISPICKVAL(Status, &quot;Closed&quot;)
+    ),        
+    OR(
+        ISPICKVAL(FCS_CaseReason__c, &quot;&quot;),
+        ISPICKVAL(Type, &quot;&quot;))
+)</errorConditionFormula>
+    <errorMessage>Tag Case before Closing</errorMessage>
+</ValidationRule>
