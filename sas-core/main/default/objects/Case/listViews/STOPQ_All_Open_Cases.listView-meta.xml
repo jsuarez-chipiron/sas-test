@@ -16,9 +16,9 @@
         <value>Case.Internal_Backoffice</value>
     </filters>
     <filters>
-        <field>CASES.STATUS</field>
-        <operation>notEqual</operation>
-        <value>Closed</value>
+        <field>CASES.CLOSED</field>
+        <operation>equals</operation>
+        <value>0</value>
     </filters>
     <label>STOPQ All Open Cases</label>
     <sharedTo>

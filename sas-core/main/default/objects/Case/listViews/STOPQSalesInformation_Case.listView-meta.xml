@@ -10,6 +10,11 @@
     <columns>CASES.NAME</columns>
     <columns>CASES.EMAIL</columns>
     <filterScope>Queue</filterScope>
+    <filters>
+        <field>CASES.CLOSED</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
     <label>STOPQ Sales Information</label>
     <queue>STOPQSalesInformation</queue>
     <sharedTo>
