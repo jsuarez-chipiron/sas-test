@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Role__c</field>
-        <value xsi:type="xsd:string">Sykes_EVG_Team_Lead</value>
+        <value xsi:type="xsd:string">Sykes_EVG_Direct_Sales</value>
     </values>
     <values>
         <field>Value__c</field>
