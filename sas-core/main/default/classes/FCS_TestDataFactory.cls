@@ -31,6 +31,7 @@ public class FCS_TestDataFactory {
             c.ContactId = conId;
             if (rtId != null)c.RecordTypeId = rtId;
             c.Reason = reason == null ? 'Baggage' : reason;
+            c.FCS_CaseReason__c = reason == null ? 'Baggage' : reason;
             newCases.add(c);
         }
         return newCases;

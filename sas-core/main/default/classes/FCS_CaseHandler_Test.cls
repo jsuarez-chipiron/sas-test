@@ -123,9 +123,9 @@ private class FCS_CaseHandler_Test {
             socialPosts[i].OwnerId=users[i].Id;
         }
         update socialPosts;
-        Case infoTag = new Case (Status='Closed', Origin='Facebook', SourceId=socialPosts[0].Id, RecordTypeId= C_RecordTypeHelper.CASE_INFORMATION);
-        Case supportTag = new Case (Status='Closed', Origin='Twitter', SourceId=socialPosts[1].Id, RecordTypeId= C_RecordTypeHelper.CASE_FEEDBACK);
-        Case feedbackTag = new Case (Status='Closed', Origin='Twitter', SourceId=socialPosts[2].Id, RecordTypeId= C_RecordTypeHelper.CASE_SUPPORT);
+        Case infoTag = new Case (Status='Closed', Origin='Facebook', SourceId=socialPosts[0].Id, RecordTypeId= C_RecordTypeHelper.CASE_INFORMATION, FCS_CaseReason__c = 'Information');
+        Case supportTag = new Case (Status='Closed', Origin='Twitter', SourceId=socialPosts[1].Id, RecordTypeId= C_RecordTypeHelper.CASE_FEEDBACK, FCS_CaseReason__c = 'Feedback');
+        Case feedbackTag = new Case (Status='Closed', Origin='Twitter', SourceId=socialPosts[2].Id, RecordTypeId= C_RecordTypeHelper.CASE_SUPPORT, FCS_CaseReason__c = 'Support');
         List<Case> soMeCases = new List<Case>();
         soMeCases.add(infoTag);
         soMeCases.add(supportTag);
