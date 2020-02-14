@@ -17,6 +17,7 @@
     <label>Global Support SoMe : Open</label>
     <queue>GlobalSupportSoMe</queue>
     <sharedTo>
-        <group>SutherlandGlobalSupportSoMe</group>
+        <group>SAS</group>
+        <group>Sutherland</group>
     </sharedTo>
 </ListView>

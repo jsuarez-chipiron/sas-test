@@ -16,6 +16,7 @@
     </filters>
     <label>Global Support SoMe : Actioned</label>
     <sharedTo>
-        <group>SutherlandGlobalSupportSoMe</group>
+        <group>SAS</group>
+        <group>Sutherland</group>
     </sharedTo>
 </ListView>
