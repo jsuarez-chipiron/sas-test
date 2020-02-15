@@ -14,8 +14,8 @@
     "PersonAccounts",
     "ServiceCloud",
     "ServiceUser",
-    "SocialCustomerService",
-    "SurveyCreatorUser"
+    "SocialCustomerService"
+    //"SurveyCreatorUser" - Removed due to error creating scratch. Ludvig W
   ],
   "settings": {
     "accountSettings":{
