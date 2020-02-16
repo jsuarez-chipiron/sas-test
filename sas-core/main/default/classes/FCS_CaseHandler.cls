@@ -104,7 +104,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     private static void updateSocialPost(List<Case> newCaseList) {
         Map<Id, Case>caseBySoMeIds = new Map<Id, Case>();
         for (Case c : newCaseList) {
-            if (c.SourceId != null && c.SourceId.getSobjectType() == SocialPost.SObjectType && c.Status != CASE_STATUS_CLOSED) {
+            if (c.SourceId != null && c.SourceId.getSobjectType() == SocialPost.SObjectType) {
                 caseBySoMeIds.put(c.SourceId, c);
             }
         }
@@ -113,10 +113,12 @@ public class FCS_CaseHandler extends C_TriggerHandler {
             List<SocialPost> spToUpdate = new List<SocialPost> ();
             for (SocialPost sp : sps) {
                 sp.ParentId = caseBySoMeIds.get(sp.Id).Id;
-                sp.FCS_CaseCreated__c = true;
-                sp.FCS_Done__c = true;
-                sp.FCS_ClosedDate__c= system.now();
-                sp.ReviewedStatus = SP_STATUS_REVIEWED;
+                if(caseBySoMeIds.get(sp.Id).Status != CASE_STATUS_CLOSED) {
+                    sp.FCS_CaseCreated__c = true;
+                    sp.FCS_Done__c = true;
+                    sp.FCS_ClosedDate__c = system.now();
+                    sp.ReviewedStatus = SP_STATUS_REVIEWED;
+                }
                 spToUpdate.add(sp);
             }
             update spToUpdate;
