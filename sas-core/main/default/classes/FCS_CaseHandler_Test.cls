@@ -12,7 +12,7 @@ private class FCS_CaseHandler_Test {
    Test method for generation of test data used in more than one method
   */
     @TestSetup static void createTestUserSetup(){
-        PermissionSet socialMediaPermission = [SELECT Id FROM PermissionSet WHERE Name = 'Social_Media_User'];
+        PermissionSet socialMediaPermission = [SELECT Id FROM PermissionSet WHERE Name = 'SocialMediaUser'];
         Profile agentProfile = [SELECT Id FROM Profile WHERE Name = 'Agent'];
         List<User> users = FCS_TestDataFactory.createUsers(2);
         insert users;

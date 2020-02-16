@@ -63,12 +63,12 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
             SocialPost newSp = newSocialPostList[i];
             SocialPost oldSp = oldSocialPostList[i];
             //If post is updated to hidden - the status is updated to hidden and marked as reviewed
-            if(newSp.Status!=oldSp.Status && newSp.Status==STATUS_HIDDEN){
+            if((newSp.Status!=oldSp.Status && newSp.Status==STATUS_HIDDEN) || (newSp.FCS_PostHidden__c != oldSp.FCS_PostHidden__c && newSp.FCS_PostHidden__c)){
                 newSp.FCS_PostHidden__c= true;
                 handled= true;
             }
             //If post is updated to unhidden, the post is unmarked done if not other action is taken
-            if(newSp.Status!=oldSp.Status && oldSp.Status==STATUS_HIDDEN) {
+            if(newSp.Status!=oldSp.Status && oldSp.Status==STATUS_HIDDEN || (newSp.FCS_PostHidden__c != oldSp.FCS_PostHidden__c && !newSp.FCS_PostHidden__c)) {
                 newSp.FCS_PostHidden__c = false;
                 if (!newSp.FCS_PostIgnored__c && !newSp.FCS_CaseCreated__c && !newSp.FCS_PostReplied__c && !newSp.FCS_PostLiked__c) {
                     handled = false;
@@ -95,7 +95,7 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
                 newSp.ReviewedStatus=STATUS_REVIEWED;
                 newSp.FCS_Done__c= true;
                 if(!oldSp.FCS_Done__c){
-                    newSp.FCS_ClosedDate__c = System.Now();
+                    newSp.FCS_ClosedDate__c = System.now();
                 }
             }
             if(handled!= null && !handled){
@@ -153,6 +153,7 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
        2. If the post is a comment on a SAS-post it is marked as Comment on SAS Post
        3. If the post is a reply on a SAS-post it is marked as a Comment on SAS Post
        4. For both comment and replies parent posts is added for added context
+       5. If default Social Social Inbound Social Post Handler has set ParentId it is updated to null and Review Status updated to Needed
        @param newSocialPost list of new version of the social post i.e. the Trigger.new variable
        */
     private static void setFieldsOnCreate(List<SocialPost> newSocialPostList) {
@@ -174,6 +175,10 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
                 sp.ReviewedStatus = null;
             }
             sp.OwnerId=soMeQueue[0].Id;
+            if(sp.ParentId != null && sp.IsOutbound == false){
+                sp.ParentId = null;
+                sp.ReviewedStatus = STATUS_NEEDED;
+            }
         }
         List<SocialPost> parentPosts = [SELECT Id, ReplyToId, Content, Provider, Handle FROM SocialPost Where Id=: parentIds];
         for(SocialPost parentSP : parentPosts){

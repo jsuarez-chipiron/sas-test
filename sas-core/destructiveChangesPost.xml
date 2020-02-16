@@ -12,12 +12,15 @@
     the block can be removed from this document.
 -->
 
-<!-- Delete ListViews automatically created on SocialPost when enabling SocialCustomerService. Should be kept until first release to prod 200325 -->
+<!-- 2020-02-16 Delete permission set and replace with new one using SF-licence to be able to set tab visibilities -->
 	<types>
-		<members>SocialPost.AllSocialPosts</members>
-		<members>SocialPost.GlobalSupportSoMe_SocialPost</members>
-		<members>SocialPost.Social_post_pending_approval_filter</members>
-		<members>SocialPost.Social_posts_without_case</members>
-		<name>ListView</name>
+		<members>Social_Media_User</members>
+		<name>PermissionSet</name>
+	</types>
+<!-- 2020-02-16 Delete apex class that is obsolete -->
+	<types>
+		<members>FCS_InboundSocialPostHandlerImpl</members>
+		<members>FCS_InboundSocialPostHandlerImpl_Test</members>
+		<name>ApexClass</name>
 	</types>
 </Package>

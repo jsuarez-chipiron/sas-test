@@ -115,6 +115,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
                 sp.ParentId = caseBySoMeIds.get(sp.Id).Id;
                 sp.FCS_CaseCreated__c = true;
                 sp.FCS_Done__c = true;
+                sp.FCS_ClosedDate__c= system.now();
                 sp.ReviewedStatus = SP_STATUS_REVIEWED;
                 spToUpdate.add(sp);
             }
