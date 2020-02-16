@@ -10,9 +10,9 @@
     <columns>OWNER_NAME</columns>
     <filterScope>Queue</filterScope>
     <filters>
-        <field>CASES.STATUS</field>
-        <operation>notEqual</operation>
-        <value>Closed</value>
+        <field>CASES.CLOSED</field>
+        <operation>equals</operation>
+        <value>0</value>
     </filters>
     <label>Global Support SoMe : Open</label>
     <queue>GlobalSupportSoMe</queue>

@@ -9,6 +9,11 @@
     <columns>CASES.PRIORITY</columns>
     <columns>OWNER_NAME</columns>
     <filterScope>Queue</filterScope>
+    <filters>
+        <field>CASES.CLOSED</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
     <label>Direct Sales NO</label>
     <queue>DirectSalesNO</queue>
     <sharedTo>
