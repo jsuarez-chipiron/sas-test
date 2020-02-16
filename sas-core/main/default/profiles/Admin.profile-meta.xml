@@ -998,7 +998,7 @@
     </recordTypeVisibilities>
     <tabVisibilities>
         <tab>C_Log__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>FCS_CaseTag__c</tab>
