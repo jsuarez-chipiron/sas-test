@@ -37,4 +37,10 @@
         <label>Closed</label>
         <closed>true</closed>
     </standardValue>
+    <standardValue>
+        <fullName>New Response</fullName>
+        <default>false</default>
+        <label>New Response</label>
+        <closed>false</closed>
+    </standardValue>
 </StandardValueSet>
