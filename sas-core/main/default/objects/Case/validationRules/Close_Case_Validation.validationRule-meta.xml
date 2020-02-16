@@ -4,6 +4,7 @@
     <active>true</active>
     <description>Makes sure that the user changes Tags the Case before Closing</description>
     <errorConditionFormula>AND(
+    GDPR_Wiped__c = false,
     OR(
         ISCHANGED(IsClosed),
         ISPICKVAL(Status, &quot;Closed&quot;)

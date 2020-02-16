@@ -5,7 +5,6 @@
  * @description Factory class used to generate commonly used test metadata
  */
 
-@isTest
 public class FCS_TestDataFactory {
     /**
         Sequence number used to seed unique fields to ensure no collisions occur
