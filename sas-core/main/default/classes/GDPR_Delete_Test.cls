@@ -13,14 +13,16 @@ private class GDPR_Delete_Test {
         insert accs;
         Case[] cList = FCS_TestDataFactory.createCases(5, accs[0].Id, accs[0].PersonContactId, C_RecordTypeHelper.CASE_SUPPORT, 'Baggage');
         cList.addAll(FCS_TestDataFactory.createCases(1, accs[1].Id, accs[1].PersonContactId, C_RecordTypeHelper.CASE_SUPPORT, 'Baggage'));
-        insert new EmailMessage(FromAddress='test@example.com.invalid',FromName='Test',Incoming=true,Subject='TestSubject',TextBody='TestBody',ToAddress='test@sas.se',ParentId=cList[0].Id);
-		cList[0].Status = 'Closed';
+        cList[0].Status = 'Closed';
         cList[1].Status = 'Closed';
         cList[2].Status = 'Closed';
         cList[3].Status = 'Closed';
         cList[4].Status = 'Closed';
         cList[5].Status = 'Open';
         insert cList;
+		insert new EmailMessage(FromAddress='test@example.com.invalid',FromName='Test',Incoming=true,Subject='TestSubject',TextBody='TestBody',ToAddress='test@sas.se',ParentId=cList[0].Id);
+		cList[0].Status = 'Closed';
+		update cList;
         LiveChatVisitor lcv = new LiveChatVisitor();
         insert lcv;
         insert new LiveChatTranscript(AccountId=accs[0].Id,Body='Test',CaseId=cList[1].Id,Status='Completed',LiveChatVisitorId=lcv.Id);
