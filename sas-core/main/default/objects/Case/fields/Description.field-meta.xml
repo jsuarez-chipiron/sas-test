@@ -3,7 +3,7 @@
     <fullName>Description</fullName>
     <complianceGroup>PIIExtract</complianceGroup>
     <securityClassification>Confidential</securityClassification>
-    <trackFeedHistory>false</trackFeedHistory>
+    <trackFeedHistory>true</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
 </CustomField>
