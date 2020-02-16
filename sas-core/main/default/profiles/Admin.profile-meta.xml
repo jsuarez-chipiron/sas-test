@@ -827,9 +827,6 @@
         <layout>GDPRExtractObjectSetting__mdt-GDPR Extract Object Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>GDPR_WipeRetentionField__mdt-GDPR Wipe Retention Field Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Knowledge__kav-SAS SSI Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
