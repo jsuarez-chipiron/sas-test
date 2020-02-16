@@ -14,11 +14,6 @@
         <operation>equals</operation>
         <value>Facebook,Twitter</value>
     </filters>
-    <filters>
-        <field>CASES.CLOSED</field>
-        <operation>equals</operation>
-        <value>0</value>
-    </filters>
     <label>Global Support SoMe : Actioned</label>
     <sharedTo>
         <group>SAS</group>
