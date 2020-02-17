@@ -445,7 +445,7 @@
     <label>Social Media Users</label>
     <license>Salesforce</license>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
