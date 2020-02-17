@@ -14,17 +14,20 @@
         <excludedStandardButtons>New</excludedStandardButtons>
         <excludedStandardButtons>OpenListInQuip</excludedStandardButtons>
         <excludedStandardButtons>MassCreateCase</excludedStandardButtons>
-        <excludedStandardButtons>SfxMassRejectPosts</excludedStandardButtons>
+        <excludedStandardButtons>MassApprovePosts</excludedStandardButtons>
         <excludedStandardButtons>MassRejectPosts</excludedStandardButtons>
         <excludedStandardButtons>SfxMassCreateCase</excludedStandardButtons>
         <excludedStandardButtons>SfxMassApprovePosts</excludedStandardButtons>
-        <excludedStandardButtons>MassApprovePosts</excludedStandardButtons>
-        <searchResultsAdditionalFields>Content</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Posted</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Provider</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Parent</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>MessageType</searchResultsAdditionalFields>
+        <excludedStandardButtons>SfxMassRejectPosts</excludedStandardButtons>
         <searchResultsAdditionalFields>ReviewedStatus</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Content</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ReplyTo</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FCS_ParentMessage__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Provider</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Posted</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Persona</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Parent</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Owner</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
 </CustomObject>
