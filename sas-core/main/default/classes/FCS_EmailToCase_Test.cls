@@ -240,4 +240,44 @@ private class FCS_EmailToCase_Test {
         System.assertEquals(null, updatedCase.FCS_VirtualOrganization__c); 
         
     }
+    
+     /**
+        Tests the Process on Email Message where sending a new Email to a Closed Case will re-open the Case and set in a new status.
+        @author Ludvig Wälimaa - Deloitte
+    */
+    @isTest
+    static void setNewResponseStatusOnCase(){
+        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
+        insert cases;
+		
+        EmailMessage email = new EmailMessage();
+        email.FromAddress = 'test@abc.se';
+        email.Incoming = True;
+        email.ToAddress= 'salesinformation@sas.se';
+        email.Subject = 'Test Subject';
+        email.HtmlBody = 'Test Body';
+        email.ParentId = cases[0].Id; 
+        insert email;
+		
+        cases[0].FCS_CaseReason__c = 'Ancillary';
+        cases[0].FCS_CaseSubReason__c = 'Meals'; 
+        cases[0].Status = 'Closed';
+        
+        update cases[0];
+        
+        //SKicka till email 
+        EmailMessage email2 = new EmailMessage();
+        email2.FromAddress = 'test@abc.se';
+        email2.Incoming = True;
+        email2.ToAddress= 'salesinformation@sas.se';
+        email2.Subject = 'Test Subject';
+        email2.HtmlBody = 'Test Body';
+        email2.ParentId = cases[0].Id; 
+        insert email2;
+        
+        Case c = [SELECT Status from Case where Id = :cases[0].Id];
+        
+        System.assertEquals('New Response', c.Status);
+    }
+
  }
