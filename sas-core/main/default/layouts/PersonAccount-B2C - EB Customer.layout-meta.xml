@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>CreateSurveyInvitation</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <feedLayout>
         <autocollapsePublisher>true</autocollapsePublisher>
@@ -244,6 +245,11 @@
             <sortOrder>13</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>PartnerScorecard</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>14</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>PrintableView</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>15</sortOrder>
@@ -257,11 +263,6 @@
             <actionName>Share</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>17</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>PartnerScorecard</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>14</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Submit</actionName>
@@ -367,7 +368,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000000reV4</masterLabel>
+        <masterLabel>00h1X0000011vSq</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
