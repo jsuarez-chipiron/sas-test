@@ -35,9 +35,18 @@ public class FCS_LiveChatTranscriptTriggerHandler extends C_TriggerHandler {
                     c.Origin = 'Chat';
                     c.FCS_Language__c = lct.FCS_Language__c;
                     c.FCS_SurveyLanguage__c = sgSurvey.get(lct.FCS_Language__c);
-                    if(lct.FCS_CaseRecordTypeName__c == 'Information') c.RecordTypeId = C_RecordTypeHelper.CASE_INFORMATION;
-                    if(lct.FCS_CaseRecordTypeName__c == 'Support') c.RecordTypeId = C_RecordTypeHelper.CASE_SUPPORT;
-                    if(lct.FCS_CaseRecordTypeName__c == 'Feedback') c.RecordTypeId = C_RecordTypeHelper.CASE_FEEDBACK;
+                    if(lct.FCS_CaseRecordTypeName__c == 'Information'){
+						c.RecordTypeId = C_RecordTypeHelper.CASE_INFORMATION;
+						c.Type = 'Information';
+					}
+                    if(lct.FCS_CaseRecordTypeName__c == 'Support'){
+						c.RecordTypeId = C_RecordTypeHelper.CASE_SUPPORT;
+						c.Type = 'Support';
+					}
+                    if(lct.FCS_CaseRecordTypeName__c == 'Feedback'){
+						c.RecordTypeId = C_RecordTypeHelper.CASE_FEEDBACK;
+						c.Type = 'Feedback';
+					}
                     cFullList[i] = c;
                     cInsList.add(c);
                 }
