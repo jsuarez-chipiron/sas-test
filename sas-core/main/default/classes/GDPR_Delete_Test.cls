@@ -35,8 +35,9 @@ private class GDPR_Delete_Test {
         insert meu;
         insert new MessagingSession(CaseId=cList[2].Id,MessagingEndUserId=meu.Id,Status='Ended',MessagingChannelId=mc.Id);
         SocialPost[] spList = FCS_TestDataFactory.createSocialPosts(1);
-        spList[0].ParentId = cList[3].Id;
         insert spList;
+        spList[0].ParentId = cList[3].Id;
+        update spList;
     }
     /**
         Sets up mock retention fields for tests due to a Salesforce bug which occurs when running all tests and fetching field definitions

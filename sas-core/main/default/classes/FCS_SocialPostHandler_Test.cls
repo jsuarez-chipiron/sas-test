@@ -166,7 +166,6 @@ Test method for generation of test data used in more than one method
         socialPosts[0].MessageType = 'Post';
         socialPosts[0].Headline = 'TestPost1';
         socialPosts[0].ParentId = [SELECT Id From Case Limit 1].Id;
-		socialPosts[0].IsOutbound = false;
         insert socialPosts;
         List<SocialPost> updatedSocialPosts = [SELECT Id, ParentId, ReviewedStatus FROM SocialPost WHERE Headline = 'TestPost1'];
         system.assertEquals(null, updatedSocialPosts[0].ParentId);
