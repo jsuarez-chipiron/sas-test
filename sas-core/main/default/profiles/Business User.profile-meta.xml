@@ -106,6 +106,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.FCS_CMP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.FCS_EBLevel__c</field>
         <readable>true</readable>
     </fieldPermissions>
