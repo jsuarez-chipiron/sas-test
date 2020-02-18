@@ -220,7 +220,7 @@ export default class App extends LightningElement {
         console.log("Triggered validate input");
         let fieldError = false;
         let inputCmp = this.template.querySelector(".search-field");
-        let value = inputCmp.value;
+        let value = inputCmp.value.trim();
         if (value === "") {
             inputCmp.setCustomValidity("Please provide a valid EuroBonus number");
             fieldError = true;
@@ -250,10 +250,9 @@ export default class App extends LightningElement {
         console.log("Triggered search for customer");
         this.showSpinner = true;
         try{
-            //let trimmedSearchValue = this.searchValue.trim();
             let account = await findCustomer({
                 searchField: this.searchOption,
-                searchValue: this.searchValue.trim()
+                searchValue: this.searchValue ? this.searchValue.trim() : this.searchValue
             });
             if(account){
                 this.accountId = account.Id;
