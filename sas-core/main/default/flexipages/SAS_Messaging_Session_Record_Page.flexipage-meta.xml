@@ -93,21 +93,6 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>createQuickActionName</name>
-                <value>NewAccount</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>lookupFieldName</name>
-                <value>EndUserAccountId</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>updateQuickActionName</name>
-                <value>Account.Update_Person_Account</value>
-            </componentInstanceProperties>
-            <componentName>console:relatedRecord</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>createQuickActionName</name>
                 <value>NewCase</value>
             </componentInstanceProperties>
             <componentInstanceProperties>

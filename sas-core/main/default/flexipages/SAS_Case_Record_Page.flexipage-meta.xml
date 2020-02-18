@@ -175,28 +175,6 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>createQuickActionName</name>
-                <value>NewAccount</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>lookupFieldName</name>
-                <value>AccountId</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>updateQuickActionName</name>
-                <value>Account.Update_Person_Account</value>
-            </componentInstanceProperties>
-            <componentName>console:relatedRecord</componentName>
-            <visibilityRule>
-                <criteria>
-                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                    <operator>NE</operator>
-                    <rightValue>Internal_Backoffice</rightValue>
-                </criteria>
-            </visibilityRule>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>createQuickActionName</name>
                 <value>NewCase</value>
             </componentInstanceProperties>
             <componentInstanceProperties>

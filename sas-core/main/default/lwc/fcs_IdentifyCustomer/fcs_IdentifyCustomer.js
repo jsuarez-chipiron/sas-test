@@ -60,6 +60,11 @@ export default class App extends LightningElement {
     currentRecordData = undefined;
 
     /**
+     * Holds account Id for identified account. Used to render account info component.
+     */
+    @track accountId;
+
+    /**
      * List of options available to search for. Value should corresponds to field on Frequent_Flyer__x.
      * @returns {({label: string, value: string}|{label: string, value: string}|{label: string, value: string}|{label: string, value: string})[]}
      */
@@ -130,6 +135,7 @@ export default class App extends LightningElement {
             await this.dispatchEvent(new CustomEvent('refreshView'));
             this.error = undefined;
             this.customerIdentified = false;
+            this.accountId = undefined;
             this.showSpinner = false;
         } catch (error){
             this.displayError(error);
@@ -163,6 +169,7 @@ export default class App extends LightningElement {
             await this.dispatchEvent(new CustomEvent('refreshView'));
             this.error = undefined;
             this.customerIdentified = true;
+            this.accountId = account.Id;
             this.showSpinner = false;
         } catch (error) {
             this.displayError(error);
@@ -185,6 +192,7 @@ export default class App extends LightningElement {
         console.log('Evaluating on open: ' + JSON.stringify(this.currentRecordData));
         if (this.currentRecordData.accountId) {
             this.customerIdentified = true;
+            this.accountId = this.currentRecordData.accountId;
             if (Date.now() - Date.parse(this.currentRecordData.lastRetrievedFromSource) > 3600000) {
                 this.searchOption = 'ExternalId';
                 this.searchValue = this.currentRecordData.codsId;
@@ -242,11 +250,14 @@ export default class App extends LightningElement {
         console.log("Triggered search for customer");
         this.showSpinner = true;
         try{
+            //let trimmedSearchValue = this.searchValue.trim();
             let account = await findCustomer({
                 searchField: this.searchOption,
-                searchValue: this.searchValue
+                searchValue: this.searchValue.trim()
             });
             if(account){
+                this.accountId = account.Id;
+                this.searchValue = account.FCS_EBNumber__c;
                 const recordInput = {
                     recordId: this.recordId,
                     accountId: account.Id,

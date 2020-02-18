@@ -49,4 +49,10 @@
             <c-c_-error-panel errors={error}></c-c_-error-panel>
         </template>
     </lightning-card>
+    <!--Custom child component to display information from connected account-->
+    <template if:true={accountId}>
+        <div class="slds-p-top--small">
+            <c-fcs_-display-account-data accountid={accountId}></c-fcs_-display-account-data>
+        </div>
+    </template>
 </template>
