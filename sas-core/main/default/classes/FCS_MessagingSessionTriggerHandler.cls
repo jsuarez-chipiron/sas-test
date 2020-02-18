@@ -17,14 +17,17 @@ public with sharing class FCS_MessagingSessionTriggerHandler extends C_TriggerHa
         Integer sessionCount = Trigger.new.size();
         MessagingSession[] sessions = (MessagingSession[])Trigger.new;
         Case[] newCases = new Case[]{};
+        Set<Id> messagingEndUserIds = new Set<Id>();
+        for(MessagingSession s : sessions){messagingEndUserIds.add(s.MessagingEndUserId);}
+        Map<Id, MessagingEndUser> meuMap = new Map<Id, MessagingEndUser>([SELECT Id, AccountId, ContactId FROM MessagingEndUser WHERE Id IN :messagingEndUserIds]);
         for (Integer i = 0; i < Trigger.new.size(); i++) {
             if (sessions[i].CaseId == null && sessions[i].Origin == 'InboundInitiated') {
                 newCases.add(new Case(
                         Status = 'In Progress',
                         Origin = 'Facebook Messenger',
                         RecordTypeId = C_RecordTypeHelper.CASE_INFORMATION,
-                        AccountId = sessions[i].EndUserAccountId,
-                        ContactId = sessions[i].EndUserContactId
+                    	AccountId = meuMap.get(sessions[i].MessagingEndUserId).AccountId,
+                    	ContactId = meuMap.get(sessions[i].MessagingEndUserId).ContactId 	
                 ));
             }
         }
