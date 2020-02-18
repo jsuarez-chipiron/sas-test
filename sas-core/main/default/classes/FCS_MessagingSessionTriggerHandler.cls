@@ -22,7 +22,9 @@ public with sharing class FCS_MessagingSessionTriggerHandler extends C_TriggerHa
                 newCases.add(new Case(
                         Status = 'In Progress',
                         Origin = 'Facebook Messenger',
-                        RecordTypeId = C_RecordTypeHelper.CASE_INFORMATION
+                        RecordTypeId = C_RecordTypeHelper.CASE_INFORMATION,
+                        AccountId = sessions[i].EndUserAccountId,
+                        ContactId = sessions[i].EndUserContactId
                 ));
             }
         }
