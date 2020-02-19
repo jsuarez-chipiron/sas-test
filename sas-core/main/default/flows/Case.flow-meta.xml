@@ -13,14 +13,14 @@
                 <stringValue>Create Survey Invitation on Case</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_1_A1</name>
+        <name>myRule_3_A2</name>
         <label>Create Survey Invitation on Case</label>
-        <locationX>100</locationX>
-        <locationY>200</locationY>
+        <locationX>300</locationX>
+        <locationY>300</locationY>
         <actionName>Create_Survey_Invitation_on_Case</actionName>
         <actionType>flow</actionType>
         <connector>
-            <targetReference>myDecision2</targetReference>
+            <targetReference>myDecision4</targetReference>
         </connector>
         <inputParameters>
             <processMetadataValues>
@@ -66,16 +66,16 @@
         </inputParameters>
     </actionCalls>
     <decisions>
-        <name>isChangedDecision10_myRule_9_Status</name>
-        <label>isChangedDecision10_myRule_9_Status</label>
+        <name>isChangedDecision8_myRule_7_Status</name>
+        <label>isChangedDecision8_myRule_7_Status</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision11_myRule_9_IsClosed</targetReference>
+            <targetReference>isChangedDecision9_myRule_7_IsClosed</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_10_myRule_9_Status</name>
+            <name>isChangedRule_8_myRule_7_Status</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -92,14 +92,14 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision11_myRule_9_IsClosed</targetReference>
+                <targetReference>isChangedDecision9_myRule_7_IsClosed</targetReference>
             </connector>
-            <label>isChangedRule_10_myRule_9_Status</label>
+            <label>isChangedRule_8_myRule_7_Status</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isChangedDecision11_myRule_9_IsClosed</name>
-        <label>isChangedDecision11_myRule_9_IsClosed</label>
+        <name>isChangedDecision9_myRule_7_IsClosed</name>
+        <label>isChangedDecision9_myRule_7_IsClosed</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -107,7 +107,7 @@
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>isChangedRule_11_myRule_9_IsClosed</name>
+            <name>isChangedRule_9_myRule_7_IsClosed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -126,7 +126,7 @@
             <connector>
                 <targetReference>myDecision</targetReference>
             </connector>
-            <label>isChangedRule_11_myRule_9_IsClosed</label>
+            <label>isChangedRule_9_myRule_7_IsClosed</label>
         </rules>
     </decisions>
     <decisions>
@@ -146,37 +146,6 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_1</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>formula_myRule_1</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myRule_1_A1</targetReference>
-            </connector>
-            <label>Is Created</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <processMetadataValues>
-            <name>index</name>
-            <value>
-                <numberValue>1.0</numberValue>
-            </value>
-        </processMetadataValues>
-        <name>myDecision2</name>
-        <label>myDecision2</label>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision4</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myRule_3</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -241,7 +210,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_3_A1</targetReference>
+                <targetReference>myRule_1_A1</targetReference>
             </connector>
             <label>Is Urgent</label>
         </rules>
@@ -250,19 +219,19 @@
         <processMetadataValues>
             <name>index</name>
             <value>
-                <numberValue>2.0</numberValue>
+                <numberValue>1.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision4</name>
-        <label>myDecision4</label>
+        <name>myDecision2</name>
+        <label>myDecision2</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision6</targetReference>
+            <targetReference>myDecision4</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_5</name>
+            <name>myRule_3</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -302,7 +271,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_5_A1</targetReference>
+                <targetReference>myRule_3_A1</targetReference>
             </connector>
             <label>User Is Owner</label>
         </rules>
@@ -311,19 +280,19 @@
         <processMetadataValues>
             <name>index</name>
             <value>
-                <numberValue>3.0</numberValue>
+                <numberValue>2.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision6</name>
-        <label>myDecision6</label>
+        <name>myDecision4</name>
+        <label>myDecision4</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision8</targetReference>
+            <targetReference>myDecision6</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_7</name>
+            <name>myRule_5</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -419,7 +388,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_7_A1</targetReference>
+                <targetReference>myRule_5_A1</targetReference>
             </connector>
             <label>Is Closed</label>
         </rules>
@@ -428,16 +397,16 @@
         <processMetadataValues>
             <name>index</name>
             <value>
-                <numberValue>4.0</numberValue>
+                <numberValue>3.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision8</name>
-        <label>myDecision8</label>
+        <name>myDecision6</name>
+        <label>myDecision6</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_9</name>
+            <name>myRule_7</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -464,7 +433,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_10_myRule_9_Status</leftValueReference>
+                <leftValueReference>isChangedRule_8_myRule_7_Status</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -495,14 +464,14 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_11_myRule_9_IsClosed</leftValueReference>
+                <leftValueReference>isChangedRule_9_myRule_7_IsClosed</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_9_A1</targetReference>
+                <targetReference>myRule_7_A1</targetReference>
             </connector>
             <label>Is Reopened</label>
         </rules>
@@ -515,23 +484,12 @@
                 <stringValue>[Case].FCS_ReopenedCount__c + 1</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_12_myRule_9_A1_8396308517</name>
+        <name>formula_10_myRule_7_A1_8533469210</name>
         <dataType>Number</dataType>
         <expression>{!myVariable_current.FCS_ReopenedCount__c} + 1</expression>
         <scale>18</scale>
     </formulas>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue>AND(ISNEW(), ISPICKVAL([Case].Origin, &quot;Chat&quot;))</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_myRule_1</name>
-        <dataType>Boolean</dataType>
-        <expression>AND(ISNEW(), ISPICKVAL({!myVariable_current.Origin}, &quot;Chat&quot;))</expression>
-    </formulas>
-    <interviewLabel>Case-6_InterviewLabel</interviewLabel>
+    <interviewLabel>Case-2_InterviewLabel</interviewLabel>
     <label>Case</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -583,12 +541,12 @@
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_3_A1</name>
+        <name>myRule_1_A1</name>
         <label>Set Priority Urgent</label>
-        <locationX>300</locationX>
+        <locationX>100</locationX>
         <locationY>200</locationY>
         <connector>
-            <targetReference>myDecision4</targetReference>
+            <targetReference>myDecision2</targetReference>
         </connector>
         <filters>
             <processMetadataValues>
@@ -666,12 +624,12 @@
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_5_A1</name>
+        <name>myRule_3_A1</name>
         <label>Update case with user fields</label>
-        <locationX>500</locationX>
+        <locationX>300</locationX>
         <locationY>200</locationY>
         <connector>
-            <targetReference>myDecision6</targetReference>
+            <targetReference>myRule_3_A2</targetReference>
         </connector>
         <filters>
             <processMetadataValues>
@@ -893,12 +851,12 @@
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_7_A1</name>
+        <name>myRule_5_A1</name>
         <label>Set Closing Date</label>
-        <locationX>700</locationX>
+        <locationX>500</locationX>
         <locationY>200</locationY>
         <connector>
-            <targetReference>myDecision8</targetReference>
+            <targetReference>myDecision6</targetReference>
         </connector>
         <filters>
             <processMetadataValues>
@@ -976,9 +934,9 @@
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_9_A1</name>
+        <name>myRule_7_A1</name>
         <label>Update Reopened Count</label>
-        <locationX>900</locationX>
+        <locationX>700</locationX>
         <locationY>200</locationY>
         <filters>
             <processMetadataValues>
@@ -1075,12 +1033,12 @@
             </processMetadataValues>
             <field>FCS_ReopenedCount__c</field>
             <value>
-                <elementReference>formula_12_myRule_9_A1_8396308517</elementReference>
+                <elementReference>formula_10_myRule_7_A1_8533469210</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
-    <startElementReference>isChangedDecision10_myRule_9_Status</startElementReference>
+    <startElementReference>isChangedDecision8_myRule_7_Status</startElementReference>
     <status>Active</status>
     <variables>
         <name>myVariable_current</name>

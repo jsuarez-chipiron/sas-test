@@ -78,6 +78,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>OptionsCollectAnonymousResponse</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>SurveyId</field>
             <value>
                 <elementReference>surveyId</elementReference>
