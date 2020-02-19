@@ -1,31 +1,30 @@
-<html style="overflow-y: hidden;">
-<head>
-	<title></title>
-</head>
-<body style="height: auto; min-height: auto;">
-<h1 style="background-color:#0000ad;">&nbsp;</h1>
-Dear partner,<br />
-<br />
-Case number:{{{Case.CaseNumber}}}<br />
-Priority:{{{Case.Priority}}}<br />
-Case Origin:&nbsp;{{{Case.Origin}}}<br />
-Type:&nbsp;{{{Case.Type}}}<br />
-Reason:&nbsp;{{{Case.FCS_CaseReason__c}}}<br />
-Subject:&nbsp;{{{Case.Subject}}}<br />
-<br />
-<br />
-Best regards,<br />
-<br />
-Scandinavian Airlines.<br />
-<img alt="SAS-Logo_B3_RGB" class="" src="" style="max-width: 650.75px" title="SAS-Logo_B3_RGB" />
-<h2 style="background-color:#0000ad;">&nbsp;</h2>
-
-<p>Copyright &copy; 2020 Scandinavia Airlines</p>
-
-
-
-<div id="" style="left: 8px; top: 313.875px;">&nbsp;</div>
-
-<div id="" style="left: 8px; top: 313.875px;">&nbsp;</div>
-</body>
+<html>
+ <head> 
+  <title></title> 
+ </head> 
+ <body style="height: auto; min-height: auto;">
+  <h1 style="background-color:#0000ad;">&nbsp;</h1> Dear partner, 
+  <br /> 
+  <br /> Case number: {{{Case.CaseNumber}}} 
+  <br /> Priority: {{{Case.Priority}}} 
+  <br /> Case Origin:&nbsp;{{{Case.Origin}}} 
+  <br /> Type:&nbsp;{{{Case.Type}}} 
+  <br /> Reason:&nbsp;{{{Case.FCS_CaseReason__c}}} 
+  <br /> Subject:&nbsp;{{{Case.Subject}}} 
+  <br /> 
+  <br /> 
+  <br /> Best regards, 
+  <br /> 
+  <br /> Scandinavian Airlines. 
+  <br /> 
+  <img alt="SAS-Logo_B3_RGB" src="" style="max-width: 650.75px" title="SAS-Logo_B3_RGB" /> 
+  <h2 style="background-color:#0000ad;">&nbsp;</h2> 
+  <p>Copyright &copy; 2020 Scandinavia Airlines</p> 
+  <div id="" style="left: 8px; top: 313.875px;">
+    &nbsp; 
+  </div> 
+  <div id="" style="left: 8px; top: 313.875px;">
+    &nbsp; 
+  </div>
+ </body>
 </html>
