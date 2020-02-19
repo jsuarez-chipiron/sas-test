@@ -23,4 +23,11 @@
 		<members>FCS_InboundSocialPostHandlerImpl_Test</members>
 		<name>ApexClass</name>
 	</types>
+	
+	<!-- 2020-02-19 Delete CustomMetadata -->
+	<types>
+		<members>AD_RolePermission.SAS_ManageQuickText</members>
+		<members>AD_RolePermission.SAS_Social_Media_User</members>
+		<name>CustomMetadata</name>
+	</types>
 </Package>
