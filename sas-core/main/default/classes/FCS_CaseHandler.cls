@@ -133,7 +133,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
         Integer cSize = newCaseList.size();
         for (Integer i = 0; i < cSize; i++) {
             Case newC = newCaseList[i];
-            List<String> caseTagString = newC.CaseTags__c != null ? newC.CaseTags__c.split(';') : null;
+            List<String> caseTagString = newC.FCS_CaseTags__c != null ? newC.FCS_CaseTags__c.split(';') : null;
             if (caseTagString != null) {
                 for (String s : CaseTagString) {
                     if (s == newC.FCS_CaseReason__c) {
@@ -150,7 +150,6 @@ public class FCS_CaseHandler extends C_TriggerHandler {
      * @param newCaseMap The map between the id and the new version of the case i.e. the Trigger.newMap variable
      */
     private static void manageCaseTagRecords(List <Case> newCaseList, Map<Id, Case> newCaseMap) {
-        try {
             Map<String, FCS_CaseTag__c> newTagByKeyId = createToBeCaseTagMap(newCaseList);
             Map<String, FCS_CaseTag__c> oldTagByKeyId = createCurrentCaseTagMap(newCaseMap);
             List<FCS_CaseTag__c> deleteCaseTags = new List<FCS_CaseTag__c>();
@@ -162,12 +161,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
             deleteCaseTags = oldTagByKeyId.values();
             if (createCaseTags != null) upsert createCaseTags;
             if (deleteCaseTags != null) delete deleteCaseTags;
-        } catch (Exception e) {
-            System.debug('An exception occurred: ' + e.getMessage());
-            C_log.logexception(e, null, null);
         }
-    }
-
     /**
     * Returns a map containing the current (old) case tags records that needs to be evaluate agianst the new version of the case, FCS_CaseId__c+CaseTag+Type as key
     * @param newCaseMap The map between the id and the new version of the case i.e. the Trigger.newMap variable
@@ -194,7 +188,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
         Map<String, FCS_CaseTag__c> newTagsByKeyId = new Map<String, FCS_CaseTag__c>();
         for (Integer i = 0; i < cSize; i++) {
             Case newC = newCaseList == null ? null : newCaseList[i];
-            List<String> caseTagString = newC.CaseTags__c != null ? newC.CaseTags__c.split(';') : null;
+            List<String> caseTagString = newC.FCS_CaseTags__c != null ? newC.FCS_CaseTags__c.split(';') : null;
             if (newC.FCS_CaseReason__c != null) newTagsByKeyId.put(newC.Id + newC.FCS_CaseReason__c + MAIN_TAG, new FCS_CaseTag__c(FCS_CaseId__c = newC.Id, FCS_CaseTag__c = newC.FCS_CaseReason__c, FCS_Type__c = MAIN_TAG));
             if (newC.FCS_CaseSubReason__c != null) newTagsByKeyId.put(newC.Id + newC.FCS_CaseSubReason__c + SUB_MAIN_TAG, new FCS_CaseTag__c(FCS_CaseId__c = newC.Id, FCS_CaseTag__c = newC.FCS_CaseSubReason__c, FCS_Type__c = SUB_MAIN_TAG));
             if (caseTagString != null) {

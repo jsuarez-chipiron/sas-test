@@ -35,7 +35,7 @@ private class FCS_CaseHandler_Test {
         newCases[0].FCS_CaseReason__c = 'TestReason 1';
         newCases[0].Subject = 'TestCase 2';
         newCases[0].FCS_CaseSubReason__c = 'TestSubReason 1';
-        newCases[0].CaseTags__c = 'CommonTestTag1;CommonTestTag2';
+        newCases[0].FCS_CaseTags__c = 'CommonTestTag1;CommonTestTag2';
         insert newCases;
     }
     /**
@@ -48,7 +48,7 @@ private class FCS_CaseHandler_Test {
         List<Case> newCase = FCS_TestDataFactory.createCases(1, null, null, null, null);
         newCase[0].FCS_CaseReason__c = 'TestReason 1';
         newCase[0].FCS_CaseSubReason__c = 'TestSubReason 1';
-        newCase[0].CaseTags__c = 'TestTag1;TestTag2';
+        newCase[0].FCS_CaseTags__c = 'TestTag1;TestTag2';
         newCase[0].Subject = 'TestCase';
         insert newCase;
         Case c = [SELECT Id FROM CASE WHERE Subject = 'TestCase'];
@@ -77,7 +77,7 @@ private class FCS_CaseHandler_Test {
         createTestData();
         Case c2 = [SELECT Id FROm CASE WHERE Subject = 'TestCase 2'];
         c2.FCS_CaseReason__c = 'UpdatedTestReason 1';
-        c2.CaseTags__c = 'TestTag2';
+        c2.FCS_CaseTags__c = 'TestTag2';
         update c2;
         List<FCS_CaseTag__c> ctList = [SELECT Id, FCS_CaseTag__c, FCS_Type__c FROM FCS_CaseTag__c WHERE FCS_CaseId__c = :c2.Id];
         system.debug(ctList);
@@ -171,14 +171,14 @@ private class FCS_CaseHandler_Test {
         List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null, null);
         newCases[0].FCS_CaseReason__c = 'TestReason 1';
         newCases[0].FCS_CaseSubReason__c = 'TestSubReason 1';
-        newCases[0].CaseTags__c = 'TestTag1;TestTag2;TestReason 1';
+        newCases[0].FCS_CaseTags__c = 'TestTag1;TestTag2;TestReason 1';
         newCases[0].Subject = 'ValidateCaseTags';
         Database.SaveResult result = Database.insert(newCases[0], false);
         System.assert(result.isSuccess() == false);
         System.assert(result.getErrors().size() == 1);
         //Test that it is possible to insert with not the same case reason and case tag
         newCases[0].FCS_CaseReason__c ='TestReason 1';
-        newCases[0].CaseTags__c ='TestTag2';
+        newCases[0].FCS_CaseTags__c ='TestTag2';
         Database.SaveResult result2 = Database.insert(newCases[0], false);
         System.assert(result2.isSuccess() == true);
         System.assert(result2.getErrors().size() == 0);
@@ -192,12 +192,12 @@ private class FCS_CaseHandler_Test {
         createTestData();
         Case c3 = [SELECT Id FROM CASE WHERE Subject = 'TestCase 2'];
         c3.FCS_CaseReason__c = 'TestReason 1';
-        c3.CaseTags__c ='CommonTestTag2;TestReason 1';
+        c3.FCS_CaseTags__c ='CommonTestTag2;TestReason 1';
         Database.SaveResult result3 = Database.update(c3, false);
         System.assert(result3.isSuccess() == false);
         System.assert(result3.getErrors().size() == 1);
-        System.AssertEquals(0, [SELECT Id FROM CASE WHERE CaseTags__c INCLUDES ('TestReason1')].size());
-        System.AssertEquals(1, [SELECT Id FROM CASE WHERE CaseTags__c INCLUDES ('CommonTestTag2')].size());
+        System.AssertEquals(0, [SELECT Id FROM CASE WHERE FCS_CaseTags__c INCLUDES ('TestReason1')].size());
+        System.AssertEquals(1, [SELECT Id FROM CASE WHERE FCS_CaseTags__c INCLUDES ('CommonTestTag2')].size());
     }
 
     /**
@@ -214,7 +214,7 @@ private class FCS_CaseHandler_Test {
         List<Case> newCase = FCS_TestDataFactory.createCases(1, null, null, null, null);
         newCase[0].FCS_CaseReason__c = 'TestReason 12';
         newCase[0].FCS_CaseSubReason__c = 'TestSubReason 12';
-        newCase[0].CaseTags__c = 'TestTag12;TestTag22';
+        newCase[0].FCS_CaseTags__c = 'TestTag12;TestTag22';
         newCase[0].Subject = 'TestCase12';
         newCase[0].Status = CASE_STATUS_NEW;
         newCase[0].SourceId = socialPosts[0].Id;
