@@ -13,7 +13,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CaseTags__c</field>
+            <field>FCS_CaseTags__c</field>
             <table>Case</table>
         </columns>
         <columns>

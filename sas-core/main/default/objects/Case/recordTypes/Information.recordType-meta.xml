@@ -411,7 +411,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>CaseTags__c</picklist>
+        <picklist>FCS_CaseTags__c</picklist>
         <values>
             <fullName>Airport Services</fullName>
             <default>false</default>

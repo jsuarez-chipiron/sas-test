@@ -252,7 +252,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>CaseTags__c</picklist>
+        <picklist>FCS_CaseTags__c</picklist>
         <values>
             <fullName>Cancellation%2Frefund of ticket</fullName>
             <default>false</default>

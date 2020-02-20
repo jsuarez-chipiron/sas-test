@@ -24,10 +24,16 @@
 		<name>ApexClass</name>
 	</types>
 	
-	<!-- 2020-02-19 Delete CustomMetadata -->
+	<!-- 2020-02-19 Delete CustomMetadata Sanna Sörberg -->
 	<types>
 		<members>AD_RolePermission.SAS_ManageQuickText</members>
 		<members>AD_RolePermission.SAS_Social_Media_User</members>
 		<name>CustomMetadata</name>
+	</types>
+	
+	<!-- 2020-02-20 Delete field when adding namespace Sanna Sörberg -->
+	<types>
+		<members>Case.CaseTags__c</members>
+		<name>CustomField</name>
 	</types>
 </Package>

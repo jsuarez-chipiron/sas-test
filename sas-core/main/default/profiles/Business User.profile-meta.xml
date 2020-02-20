@@ -201,7 +201,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.CaseTags__c</field>
+        <field>Case.FCS_CaseTags__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

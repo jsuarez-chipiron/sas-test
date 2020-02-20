@@ -111,7 +111,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>FCS_RelatedCase__c.CaseTags__c</field>
+            <field>FCS_RelatedCase__c.FCS_CaseTags__c</field>
             <table>SurveyInvitation</table>
         </columns>
         <columns>

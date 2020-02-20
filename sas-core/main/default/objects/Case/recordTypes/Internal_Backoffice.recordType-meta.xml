@@ -5,7 +5,7 @@
     <businessProcess>Default</businessProcess>
     <label>Internal/Backoffice</label>
     <picklistValues>
-        <picklist>CaseTags__c</picklist>
+        <picklist>FCS_CaseTags__c</picklist>
         <values>
             <fullName>ADM</fullName>
             <default>false</default>

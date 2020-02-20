@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CaseTags__c</fullName>
+    <fullName>FCS_CaseTags__c</fullName>
     <externalId>false</externalId>
     <label>Additional Case Reasons</label>
     <required>false</required>
