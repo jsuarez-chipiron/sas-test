@@ -16,5 +16,10 @@
         <field>Parent</field>
         <operation>notEqual</operation>
     </filters>
+    <filters>
+        <field>IsOutbound</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
     <label>Social Posts with cases</label>
 </ListView>
