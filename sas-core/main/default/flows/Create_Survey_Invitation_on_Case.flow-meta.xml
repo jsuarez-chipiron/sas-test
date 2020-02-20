@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <decisions>
+        <description>Decides what do to based on the origin of the case</description>
+        <name>Origin</name>
+        <label>Origin</label>
+        <locationX>287</locationX>
+        <locationY>208</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>IsChat</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>caseOrigin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Chat</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>lookupCommunity</targetReference>
+            </connector>
+            <label>IsChat</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Determines the execution path by survey name</description>
         <name>Survey_Name</name>
         <label>Survey Name</label>
@@ -95,10 +118,10 @@
         <name>lookupCase</name>
         <label>lookupCase</label>
         <locationX>220</locationX>
-        <locationY>50</locationY>
+        <locationY>49</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>lookupCommunity</targetReference>
+            <targetReference>Origin</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -115,6 +138,10 @@
         <outputAssignments>
             <assignToReference>guestUserLang</assignToReference>
             <field>FCS_SurveyLanguage__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>caseOrigin</assignToReference>
+            <field>Origin</field>
         </outputAssignments>
     </recordLookups>
     <recordLookups>
@@ -232,6 +259,14 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>The origin of the case</description>
+        <name>caseOrigin</name>
+        <dataType>Picklist</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <description>Variable for storing the CommunityId</description>
