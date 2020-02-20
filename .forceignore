@@ -23,6 +23,3 @@ package.xml
 #Authentication entities (use manual deployments)
 **/authproviders/**
 **/namedCredentials/**
-
-#Ignore Knowledge since original exists in PROD
-**/objects/Knowledge__kav
