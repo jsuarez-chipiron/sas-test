@@ -10,6 +10,7 @@ private class GDPR_Delete_Test {
     @testSetup static void setup(){
         Account[] accs = FCS_TestDataFactory.createFrequentFlyers(2);
         accs[0].LastName = 'TESTACC1';
+        accs[1].LastName = 'TESTACC2';
         insert accs;
         Case[] cList = FCS_TestDataFactory.createCases(5, accs[0].Id, accs[0].PersonContactId, C_RecordTypeHelper.CASE_SUPPORT, 'Baggage');
         cList.addAll(FCS_TestDataFactory.createCases(1, accs[1].Id, accs[1].PersonContactId, C_RecordTypeHelper.CASE_SUPPORT, 'Baggage'));
@@ -143,16 +144,16 @@ private class GDPR_Delete_Test {
     }
 
     /**
-        Tests deletion of accounts (Should only occur when the account has no cases)
+        Tests deletion of accounts (Should only occur when the account has no cases or interactions)
     */
     @isTest static void deleteAccount(){
-        delete [SELECT Id FROM Case WHERE Status='Closed'];
+        delete [SELECT Id FROM Case];
         Test.startTest();
         Database.executeBatch(new GDPR_DeleteAccount_Batch());
         Test.stopTest();
         Account[] accList = [SELECT Id,LastName FROM Account];
         System.assertEquals(1, accList.size());
-        System.assertNotEquals('TESTACC1', accList[0].LastName);
+        System.assertNotEquals('TESTACC2', accList[0].LastName);
     }
 
     /**
