@@ -1,45 +1,46 @@
 /**
-    Class with utility methods for rest services
-*/
+ * Class with utility methods for rest services
+ * @author Peter Södergren
+ */
 public with sharing class C_RestUtil {
     /**
-        The current savepoint of the REST transaction
-    */
+     * The current savepoint of the REST transaction
+     */
     private static Savepoint sp;
     /**
-        HTTP data used for logging
-    */
+     * Cached version of HTTP data used for logging
+     */
     private static C_Log.HttpData http;
     /**
-        Exception for errors in REST services
-    */
+     * Exception for errors in REST services
+     */
     public virtual class RestException extends Exception{
         /**
-            The HTTP status code of the excpetion
-        */
+         * The HTTP status code of the excpetion
+         */
         public Integer statusCode;
         /**
-            Creates a REST Exception
-            @param statusCode The http status code
-        */
+         * Creates a REST Exception
+         * @param statusCode The http status code
+         */
         public RestException(Integer statusCode,String message){
             this(message);
             this.statusCode = statusCode;
         }
     }
     /**
-        Throws a bad request excpetion
-        @param msg The message communicated for the bad request
-    */
+     * Throws a bad request excpetion
+     * @param msg The message communicated for the bad request
+     */
     public static void badRequest(String msg){
         throw new RestException(400,msg);
     }
     /**
-        Parses the JSON body into the supplied type
-        Note: The caller needs to cast returned object into the correct type
-        @param t The type to which to convert the JSON body
-        @return The result as an object
-    */
+     * Parses the JSON body into the supplied type
+     * Note: The caller needs to cast returned object into the correct type
+     * @param t The type to which to convert the JSON body
+     * @return The result as an object
+     */
     public static Object getJSONBody(Type t){
         Object o = null;
         try{
@@ -51,11 +52,11 @@ public with sharing class C_RestUtil {
         return o;
     }
     /**
-        Initalizes the REST utils by doing the following
-        Sets the timestamp in the logging framework
-        Sets the savespoint
-        Sets the transaction UUID if mapped in the X-Transaction header
-    */
+     * Initalizes the REST utils by doing the following
+     * Sets the timestamp in the logging framework
+     * Sets the savespoint
+     * Sets the transaction UUID if mapped in the X-Transaction header
+     */
     public static void init(){
         C_Log.init();
         setSavepoint();
@@ -64,20 +65,20 @@ public with sharing class C_RestUtil {
     }
 
     /**
-        Sets a savepoint to roll back to in case of an error
-        Note: only sets a avepoint if an existing savepoint is not set
-    */
+     * Sets a savepoint to roll back to in case of an error
+     * Note: only sets a avepoint if an existing savepoint is not set
+     */
     public static void setSavepoint(){
         if(sp==null)sp = Database.setSavepoint();
     }
 
     /**
-        Handles exceptions by rolling back to the last savepoint
-        Ensures the error is logged in the logging framework
-        If the exception is rest exception the status code and message is used, 
-        otherwise an internal server error is set as the rest response
-        @param e The exception
-    */
+     * Handles exceptions by rolling back to the last savepoint
+     * Ensures the error is logged in the logging framework
+     * If the exception is rest exception the status code and message is used, 
+     * otherwise an internal server error is set as the rest response
+     * @param e The exception
+     */
     public static void handleException(Exception e){
         if(sp!=null){
             Database.rollback(sp);
@@ -95,8 +96,8 @@ public with sharing class C_RestUtil {
     }
     
 	/**
-	 	Sets the response to input msg and returns a 200 status code.
-	 	@param msg The message given after the successful call. 	 
+     * Sets the response to input msg and returns a 200 status code.
+     * @param msg The message given after the successful call. 	 
 	 */    
     public static void setOK(String msg){
         RestContext.response.responseBody = Blob.valueOf(msg);
@@ -104,67 +105,48 @@ public with sharing class C_RestUtil {
     }
 
     /**
-        Retireves log http data to enable inclusion of the data
-        in log records.
-        @return The log HTTP data
-    */
+     * Retireves log http data to enable inclusion of the data
+     * in log records.
+     * @return The log HTTP data
+     */
     public static C_Log.HttpData getLogHttpData(){
         if(http!=null)return http;
-        RestRequest req = RestContext.request;
-        if(req==null)return null;
-        http = new C_Log.HttpData();
-        http.resource = req.resourcePath;
-        http.method = req.httpMethod;
-        http.remoteAddress = req.remoteAddress;
-        http.headers = '';
-        for(String k : req.headers.keySet()){
-            http.headers+=k+': '+req.headers.get(k)+'\n';
-        }
-        http.queryParams = '';
-        for(String k : req.params.keySet()){
-            http.queryParams+=k+': '+req.params.get(k)+'\n';
-        }
-        try {
-            http.body = req.requestBody.toString();
-        }
-        catch(Exception e){
-            http.body = 'Blob Data ('+req.requestBody.size()+')';
-        }
+        http = C_Log.generateLogHttpData(RestContext.request);
         return http;
     }
 
     /**
-        Retirevs query parameters as a parameter collection object
-        @return The query params as a parameter collection
-    */
+     * Retirevs query parameters as a parameter collection object
+     * @return The query params as a parameter collection
+     */
     public static ParamCollection getQueryParams(){
         return new ParamCollection(RestContext.request.params);
     }
 
     /**
-        Paramaeter collection object to provide methods for interacting with the parameters
-    */
+     * Paramaeter collection object to provide methods for interacting with the parameters
+     */
     public class ParamCollection{
         /**
-            The map of parameters for the collection
-        */
+         * The map of parameters for the collection
+         */
         Map<String,String> params;
         /**
-            Creates the parameter collection using a string key value map 
-            as the source
-            @params The parameters of the collection
-        */
+         * Creates the parameter collection using a string key value map 
+         * as the source
+         * @params The parameters of the collection
+         */
         private ParamCollection(Map<String,String> params){
             this.params = params;
         }
 
         /**
-            Retrieves the parameter value for the provided key
-            If set as required the method will throw a bad request exception if the value is null or blank
-            @param k The key for which to fetch the value
-            @param req Whether the parameter is required
-            @return The parameter value
-        */
+         * Retrieves the parameter value for the provided key
+         * If set as required the method will throw a bad request exception if the value is null or blank
+         * @param k The key for which to fetch the value
+         * @param req Whether the parameter is required
+         * @return The parameter value
+         */
         public String get(String k,Boolean req){
             String v = params.get(k);
             if(String.isBlank(v))v=null;
@@ -173,13 +155,13 @@ public with sharing class C_RestUtil {
         }
 
         /**
-            Retrieves the parameter value for the provided key as an integer
-            The method will throw a bad request exception if the parameter is not an integer
-            If set as required the method will throw a bad request exception if the value is null or blank
-            @param k The key for which to fetch the value
-            @param req Whether the parameter is required
-            @return The integer value of the parameter
-        */
+         * Retrieves the parameter value for the provided key as an integer
+         * The method will throw a bad request exception if the parameter is not an integer
+         * If set as required the method will throw a bad request exception if the value is null or blank
+         * @param k The key for which to fetch the value
+         * @param req Whether the parameter is required
+         * @return The integer value of the parameter
+         */
         public Integer getInt(String k,Boolean req){
             String v = get(k,req);
             Integer i;

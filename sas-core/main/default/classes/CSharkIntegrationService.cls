@@ -58,7 +58,8 @@ public with sharing class   CSharkIntegrationService {
         if(response.getStatusCode() == 200){
             customerRows = CSharkResponseParser.parseCustomerGetResponse(response.getBody());
         } else {
-            C_Log.HttpData httpDataLog = createHttpDataLog(request);
+            C_Log.HttpData httpDataLog = C_Log.generateLogHttpData(request);
+            httpDataLog.headers = request.getHeader('Content-Type');
             C_Log.log(
                     C_Log.Severity.Error,
                     response.getStatusCode() + response.getStatus() + response.getBody(),
@@ -71,21 +72,6 @@ public with sharing class   CSharkIntegrationService {
             );
         }
         return customerRows;
-    }
-
-    /**
-     * Used to create a HttpData object to attach to C_Log class. The parameters are specific to the APIM/CShark service.
-     * @param request Http request to base log data on
-     * @return HttpData record that can be attached to C_Log class
-     */
-    private static C_Log.HttpData createHttpDataLog(HttpRequest request){
-        C_Log.HttpData httpDataLog = new C_Log.HttpData();
-        httpDataLog.resource = request.getEndpoint();
-        httpDataLog.remoteAddress = request.getEndpoint();
-        httpDataLog.headers = request.getHeader('Content-Type');
-        httpDataLog.method = request.getMethod();
-        httpDataLog.body = request.getBody();
-        return httpDataLog;
     }
 
     //TODO Kommentera metod. Ta bort hårdkodad sub key.
