@@ -23,3 +23,6 @@ package.xml
 #Authentication entities (use manual deployments)
 **/authproviders/**
 **/namedCredentials/**
+
+#Ignore Sharing Rules because of deployment error
+**/sharingRules/Case.sharingRules-meta.xml
