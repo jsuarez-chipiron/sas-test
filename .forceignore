@@ -24,6 +24,5 @@ package.xml
 **/authproviders/**
 **/namedCredentials/**
 
-#Ignored report due to error in v.47, fixed in v.48: https://success.salesforce.com/issues_view?id=a1p3A000001YnUoQAK.
-#Row should be removed when v.48 is live.
-**/reports/SASManagement/SAS_CSI_Score_WdT.report
+#Ignore Sharing Rules because of deployment error
+**/sharingRules/Case.sharingRules-meta.xml
