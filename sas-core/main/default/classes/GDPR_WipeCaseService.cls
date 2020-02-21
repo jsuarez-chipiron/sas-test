@@ -16,9 +16,10 @@ global with sharing class GDPR_WipeCaseService {
     */
     global static String[] getCaseFieldsToClear(){
         Set<String> retainedFields = RETAIN_ADD!=null ? RETAIN_ADD : new Set<String>();
-        FieldDefinition[] fdList = [SELECT QualifiedAPIName,ComplianceGroup FROM FieldDefinition WHERE EntityDefinition.QualifiedAPIName='Case' AND ComplianceGroup!=null];
+        //TODO When issue related to retrieving multiple field definitions in on transaction os solved, remove Account filter from this query and filter in loop below
+        FieldDefinition[] fdList = [SELECT QualifiedAPIName,ComplianceGroup, EntityDefinitionId FROM FieldDefinition WHERE (EntityDefinitionId ='Account' OR EntityDefinitionId ='Case') AND ComplianceGroup!=null];
         for(FieldDefinition fd : fdList){
-            if(fd.ComplianceGroup.split(';').contains('WipeRetain'))retainedFields.add(fd.QualifiedAPIName);
+            if(fd.EntityDefinitionId == 'Case' && fd.ComplianceGroup.split(';').contains('WipeRetain'))retainedFields.add(fd.QualifiedAPIName);
         }
         //Add fields for which compliance cannot be set
         retainedFields.add('RecordTypeId');

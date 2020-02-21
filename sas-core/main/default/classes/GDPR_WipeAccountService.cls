@@ -13,9 +13,10 @@ global with sharing class GDPR_WipeAccountService {
     */
     global static String[] getAccountFieldsToClear(Boolean keepReference){
         Set<String> retainedFields = new Set<String>();
-        FieldDefinition[] fdList = [SELECT QualifiedAPIName,ComplianceGroup FROM FieldDefinition WHERE EntityDefinition.QualifiedAPIName='Account' AND ComplianceGroup!=null];
+        //TODO When issue related to retrieving multiple field definitions in on transaction os solved, remove Case filted from this query
+        FieldDefinition[] fdList = [SELECT QualifiedAPIName,ComplianceGroup, EntityDefinitionId FROM FieldDefinition WHERE (EntityDefinitionId ='Account' OR EntityDefinitionId ='Case') AND ComplianceGroup!=null];
         for(FieldDefinition fd : fdList){
-            if(fd.ComplianceGroup.split(';').contains('WipeRetain'))retainedFields.add(fd.QualifiedAPIName);
+            if(fd.EntityDefinitionId == 'Account' && fd.ComplianceGroup.split(';').contains('WipeRetain'))retainedFields.add(fd.QualifiedAPIName);
         }
         //Add fields for which compliance cannot be set
         retainedFields.add('MasterRecordId');
@@ -79,6 +80,6 @@ global with sharing class GDPR_WipeAccountService {
         @param accIds The account ids to wipe
     */
     global static void wipeAccounts(Id[] accIds){
-        wipeAccounts(accIds, getAccountFieldsToClear(false),getWipedAccountName(),true,true);
+        wipeAccounts(accIds, getAccountFieldsToClear(false),getWipedAccountName(),true, true);
     }
 }

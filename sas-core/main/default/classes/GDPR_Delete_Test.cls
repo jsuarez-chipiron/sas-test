@@ -319,7 +319,5 @@ private class GDPR_Delete_Test {
         System.assertEquals(1,[SELECT Id FROM MessagingEndUser].size());
         System.assertEquals(1,[SELECT Id FROM SocialPost].size());
     }
-
-
 }
 
