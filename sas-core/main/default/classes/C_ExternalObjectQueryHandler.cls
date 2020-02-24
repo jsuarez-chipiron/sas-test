@@ -1,4 +1,3 @@
-//TODO Namespace på klass
 /**
  * @author Anton Norell
  * @date 2019-11-30

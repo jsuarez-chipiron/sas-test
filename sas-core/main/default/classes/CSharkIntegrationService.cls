@@ -75,9 +75,9 @@ public with sharing class   CSharkIntegrationService {
     }
 
     /**
-     * Creates and returns a Http request with correct values for APIM and CShark
-     * @param operationName
-     * @return
+     * Creates and returns a Http request with correct values for APIM and C-Shark
+     * @param operationName Operation to perform in C-Shark
+     * @return Ready http request for APIM/C-Shark
      */
     private static HttpRequest createAPIMRequest(OperationName operationName){
         HttpRequest request = new HttpRequest();
@@ -88,7 +88,9 @@ public with sharing class   CSharkIntegrationService {
                 '"' + 'http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1/ICSharkCustomerManagementTicketless/' +
                         String.valueOf(operationName) + '"');
         C_GeneralSetting__mdt[] subscriptionKey = [SELECT Id, Value__c FROM C_GeneralSetting__mdt WHERE DeveloperName = 'APIM_Subscription_Key'];
-        if(subscriptionKey == null) throw new CSharkIntegrationException('General setting for APIM subscription key missing');
+        //Generate metatata record for test as it is not stored in repo
+        if(Test.isRunningTest()) subscriptionKey = new C_GeneralSetting__mdt[]{new C_GeneralSetting__mdt(Label = '123', DeveloperName = 'APIM_Subscription_Key', Value__c = '123')};
+        if(subscriptionKey.isEmpty()) throw new CSharkIntegrationException('General setting for APIM subscription key missing');
         request.setHeader('Ocp-Apim-Subscription-Key', subscriptionKey[0].Value__c);
         request.setHeader('sas-system-name', API_SYSTEM_NAME);
         request.setHeader('sas-tracking-id', C_Util.getUUID());
@@ -160,9 +162,8 @@ public with sharing class   CSharkIntegrationService {
         return requestBody;
     }
 
-    //TODO Remove mock functionality
     /**
-     * Customer exception class for C-Shark integration
+     * Custom exception class for C-Shark integration
      */
     public class CSharkIntegrationException extends Exception{}
 
