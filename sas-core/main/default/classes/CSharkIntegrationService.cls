@@ -74,28 +74,33 @@ public with sharing class   CSharkIntegrationService {
         return customerRows;
     }
 
-    //TODO Kommentera metod. Ta bort hårdkodad sub key.
+    /**
+     * Creates and returns a Http request with correct values for APIM and CShark
+     * @param operationName
+     * @return
+     */
     private static HttpRequest createAPIMRequest(OperationName operationName){
         HttpRequest request = new HttpRequest();
         request.setEndpoint('callout:SAS_APIM/csharkcustmgmtticketless');
         request.setMethod('POST');
         request.setHeader('Content-Type', 'text/xml');
         request.setHeader('SOAPAction',
-                '"http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1/ICSharkCustomerManagementTicketless/' +
+                '"' + 'http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1/ICSharkCustomerManagementTicketless/' +
                         String.valueOf(operationName) + '"');
-        request.setHeader('Ocp-Apim-Subscription-Key', '09f8570b366b4c1392c170ff77356140');
+        C_GeneralSetting__mdt[] subscriptionKey = [SELECT Id, Value__c FROM C_GeneralSetting__mdt WHERE DeveloperName = 'APIM_Subscription_Key'];
+        if(subscriptionKey == null) throw new CSharkIntegrationException('General setting for APIM subscription key missing');
+        request.setHeader('Ocp-Apim-Subscription-Key', subscriptionKey[0].Value__c);
         request.setHeader('sas-system-name', API_SYSTEM_NAME);
         request.setHeader('sas-tracking-id', C_Util.getUUID());
         return request;
     }
 
-    //TODO aktivera metod
     /**
      * Generates a request body for operation CustomersGet in C-Shark.
      * @param searchType The type of values to search for, e.g. EuroBonus
      * @param SearchKey The value to search for, e.g. '554422441'
      * @return Request body string in XML-format.
-     *//*
+     */
     private static String generateCustomersGetBody(SearchType searchType, Object SearchKey){
         //TODO Create switch statement like in CustomerGet request with valid search terms for this operation
         String requestBody = '<?xml version="1.0" encoding="utf-8"?>' +
@@ -110,7 +115,7 @@ public with sharing class   CSharkIntegrationService {
                 '</Envelope>';
         return requestBody;
     }
-*/
+
     /**
      * Generates a request body for operation CustomerGet in C-Shark. The search type is translated
      * to the matching search term for this request.
