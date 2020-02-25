@@ -8,4 +8,8 @@
         <tab>standard-OmniSupervisor</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <tabSettings>
+        <tab>standard-OmniSupervisorLightning</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>
