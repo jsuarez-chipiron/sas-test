@@ -577,6 +577,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>    
     <tabVisibilities>
+        <tab>standard-OmniSupervisorLightning</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>   
+    <tabVisibilities>
         <tab>standard-Survey</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>

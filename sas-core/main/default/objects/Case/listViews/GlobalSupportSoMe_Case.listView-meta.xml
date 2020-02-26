@@ -12,7 +12,7 @@
     <label>Global Support SoMe</label>
     <queue>GlobalSupportSoMe</queue>
     <sharedTo>
-        <group>SAS</group>
+        <group>SASEmergency</group>
         <group>Sutherland</group>
     </sharedTo>
 </ListView>
