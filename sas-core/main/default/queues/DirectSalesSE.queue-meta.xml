@@ -4,7 +4,7 @@
     <name>Direct Sales SE</name>
     <queueMembers>
         <publicGroups>
-            <publicGroup>SykesDirectSalesChatSENO</publicGroup>
+            <publicGroup>SykesDirectSalesChatSE</publicGroup>
         </publicGroups>
     </queueMembers>
     <queueSobject>
