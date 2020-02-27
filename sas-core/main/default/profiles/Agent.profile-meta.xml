@@ -679,7 +679,19 @@
     <userPermissions>
         <enabled>false</enabled>
         <name>ViewSetup</name>
-    </userPermissions>
+    </userPermissions>  
+    <tabVisibilities>
+        <tab>standard-CollaborationGroup</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>standard-EmailTemplate</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>standard-EnhancedLetterhead</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>    
     <tabVisibilities>
         <tab>standard-OmniSupervisor</tab>
         <visibility>Hidden</visibility>
@@ -687,10 +699,10 @@
     <tabVisibilities>
         <tab>standard-OmniSupervisorLightning</tab>
         <visibility>Hidden</visibility>
-    </tabVisibilities> 
+    </tabVisibilities>
     <tabVisibilities>
-        <tab>standard-Survey</tab>
-        <visibility>DefaultOff</visibility>
+        <tab>standard-ProcessInstanceWorkitem</tab>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-SocialPost</tab>
@@ -698,6 +710,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-SocialPersona</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>standard-Survey</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
 </Profile>
