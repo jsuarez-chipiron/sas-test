@@ -461,6 +461,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>New booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Non-SAS produkter</fullName>
             <default>false</default>
         </values>
@@ -513,6 +517,25 @@
         </values>
         <values>
             <fullName>S</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FCS_Language__c</picklist>
+        <values>
+            <fullName>DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SV</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -656,25 +679,6 @@
         </values>
         <values>
             <fullName>Global Support</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>FCS_Language__c</picklist>
-        <values>
-            <fullName>DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EN</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SV</fullName>
             <default>false</default>
         </values>
     </picklistValues>

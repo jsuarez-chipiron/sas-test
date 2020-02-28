@@ -5,121 +5,6 @@
     <businessProcess>Default</businessProcess>
     <label>Internal/Backoffice</label>
     <picklistValues>
-        <picklist>FCS_CaseTags__c</picklist>
-        <values>
-            <fullName>ADM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ARI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ATC%2FATC Refund</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ancillary</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Animals</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Availability %2F MCT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Baggage</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Code Share</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Digital</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Error</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Eurobonus</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fare Quote</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fare Rules</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fares</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Irregularity %2F Schedule change</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Minor</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Name change</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OAL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Policy</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Project</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Refund</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Refund %2F SRS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reservation issues</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SSR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Safety report</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Tax%2FYQ</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ticketing</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
         <values>
             <fullName>ADM</fullName>
@@ -690,6 +575,253 @@
         </values>
         <values>
             <fullName>XBAG</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FCS_CaseTags__c</picklist>
+        <values>
+            <fullName>ADM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEM issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ARI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ATC%2FATC Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent Helpdesk R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Airport</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ancillary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Animals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Availability %2F MCT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back-office R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage service R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CR requests</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Campaigns</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Code Share</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conditions of carriage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contacts R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contacts-Country</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contacts-partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Care R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Depa%2FDepu</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deployment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital channels R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Sales R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documents%2FVoucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus procedures R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eurobonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare Quote</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare Rules</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fares</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group sales R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Irregularity %2F Schedule change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Irregularity%C2%A0</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Login issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Look here before you ask R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Minor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>News</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OAL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Policies and agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Policy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Products</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund %2F SRS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reservation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reservation issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SSR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Safety report</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax%2FYQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketing</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -545,6 +545,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Environment</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Error</fullName>
             <default>false</default>
         </values>
@@ -558,6 +562,10 @@
         </values>
         <values>
             <fullName>Flight info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Food</fullName>
             <default>false</default>
         </values>
         <values>
@@ -620,6 +628,10 @@
             <fullName>Travel pass</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>WiFi</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>FCS_EBLevel__c</picklist>
@@ -641,6 +653,25 @@
         </values>
         <values>
             <fullName>S</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FCS_Language__c</picklist>
+        <values>
+            <fullName>DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SV</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -784,25 +815,6 @@
         </values>
         <values>
             <fullName>Global Support</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>FCS_Language__c</picklist>
-        <values>
-            <fullName>DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EN</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SV</fullName>
             <default>false</default>
         </values>
     </picklistValues>
