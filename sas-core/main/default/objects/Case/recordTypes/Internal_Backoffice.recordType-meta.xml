@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Internal_Backoffice</fullName>
     <active>true</active>
-    <businessProcess>Default</businessProcess>
+    <businessProcess>Internal%2FBackoffice</businessProcess>
     <label>Internal/Backoffice</label>
     <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>

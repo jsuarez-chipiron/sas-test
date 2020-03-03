@@ -26,6 +26,12 @@
         <closed>false</closed>
     </standardValue>
     <standardValue>
+        <fullName>New Response</fullName>
+        <default>false</default>
+        <label>New Response</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
         <fullName>Escalated</fullName>
         <default>false</default>
         <label>Escalated</label>
@@ -36,11 +42,5 @@
         <default>false</default>
         <label>Closed</label>
         <closed>true</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>New Response</fullName>
-        <default>false</default>
-        <label>New Response</label>
-        <closed>false</closed>
     </standardValue>
 </StandardValueSet>
