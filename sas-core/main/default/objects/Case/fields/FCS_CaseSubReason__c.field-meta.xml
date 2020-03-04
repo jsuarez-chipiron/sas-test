@@ -65,11 +65,6 @@
                 <label>AVIH/PETC</label>
             </value>
             <value>
-                <fullName>Bag</fullName>
-                <default>false</default>
-                <label>Bag</label>
-            </value>
-            <value>
                 <fullName>Baggage</fullName>
                 <default>false</default>
                 <label>Baggage</label>
@@ -415,11 +410,6 @@
                 <label>Inactive customer</label>
             </value>
             <value>
-                <fullName>INF</fullName>
-                <default>false</default>
-                <label>INF</label>
-            </value>
-            <value>
                 <fullName>Infant</fullName>
                 <default>false</default>
                 <label>Infant</label>
@@ -478,11 +468,6 @@
                 <fullName>Mastercard</fullName>
                 <default>false</default>
                 <label>Mastercard</label>
-            </value>
-            <value>
-                <fullName>Meal</fullName>
-                <default>false</default>
-                <label>Meal</label>
             </value>
             <value>
                 <fullName>Meals</fullName>
@@ -735,11 +720,6 @@
                 <label>Scandinavian agents</label>
             </value>
             <value>
-                <fullName>Seat</fullName>
-                <default>false</default>
-                <label>Seat</label>
-            </value>
-            <value>
                 <fullName>Seating</fullName>
                 <default>false</default>
                 <label>Seating</label>
@@ -900,11 +880,6 @@
                 <label>Travelpass</label>
             </value>
             <value>
-                <fullName>UM</fullName>
-                <default>false</default>
-                <label>UM</label>
-            </value>
-            <value>
                 <fullName>UMNR</fullName>
                 <default>false</default>
                 <label>UMNR</label>
@@ -1004,10 +979,6 @@
         <valueSettings>
             <controllingFieldValue>Animals</controllingFieldValue>
             <valueName>AVIH/PETC</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Ancillary</controllingFieldValue>
-            <valueName>Bag</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Ancillary</controllingFieldValue>
@@ -1297,10 +1268,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Minor</controllingFieldValue>
-            <valueName>INF</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Minor</controllingFieldValue>
             <valueName>Infant</valueName>
         </valueSettings>
         <valueSettings>
@@ -1348,10 +1315,6 @@
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
             <valueName>Mastercard</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Ancillary</controllingFieldValue>
-            <valueName>Meal</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Ancillary</controllingFieldValue>
@@ -1565,10 +1528,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Ancillary</controllingFieldValue>
-            <valueName>Seat</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Ancillary</controllingFieldValue>
             <controllingFieldValue>Inflight / Onboard</controllingFieldValue>
             <valueName>Seating</valueName>
         </valueSettings>
@@ -1699,10 +1658,6 @@
             <controllingFieldValue>Products</controllingFieldValue>
             <controllingFieldValue>Fares</controllingFieldValue>
             <valueName>Travelpass</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Minor</controllingFieldValue>
-            <valueName>UM</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Minor</controllingFieldValue>
