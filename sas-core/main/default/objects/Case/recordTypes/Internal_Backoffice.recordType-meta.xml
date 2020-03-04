@@ -266,10 +266,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Bag</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Big%2FSupersale</fullName>
             <default>false</default>
         </values>
@@ -378,10 +374,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>INF</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Infant</fullName>
             <default>false</default>
         </values>
@@ -407,10 +399,6 @@
         </values>
         <values>
             <fullName>Lounge</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Meal</fullName>
             <default>false</default>
         </values>
         <values>
@@ -498,10 +486,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Seat</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Seating</fullName>
             <default>false</default>
         </values>
@@ -551,10 +535,6 @@
         </values>
         <values>
             <fullName>Travelpass</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>UM</fullName>
             <default>false</default>
         </values>
         <values>
