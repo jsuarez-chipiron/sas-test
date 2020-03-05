@@ -7,6 +7,6 @@
         <searchResultsAdditionalFields>FCS_EBNumber__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>FCS_TPAccountNumber__c</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>Read</sharingModel>
-    <externalSharingModel>Read</externalSharingModel>
+    <sharingModel>Private</sharingModel>
+    <externalSharingModel>Private</externalSharingModel>
 </CustomObject>
