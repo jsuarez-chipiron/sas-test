@@ -21,26 +21,6 @@
         <field>Contact.Phone</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>MCENS_Callback__c.BatchSize__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>MCENS_Callback__c.CallbackUrl__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>MCENS_Callback__c.SignatureKey__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>MCENS_Callback__c.UUID__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Email Contact Manager</label>
     <license>Salesforce</license>
