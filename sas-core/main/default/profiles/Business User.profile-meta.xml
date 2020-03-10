@@ -413,6 +413,10 @@
         <layout>CaseClose-Close Case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Contact-Email Contact Layout</layout>
+        <recordType>Contact.EmailContact</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>FCS_CaseTag__c-Case Reason Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
