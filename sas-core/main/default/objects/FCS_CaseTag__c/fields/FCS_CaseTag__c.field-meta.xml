@@ -103,7 +103,7 @@
             <value>
                 <fullName>Eurobonus</fullName>
                 <default>false</default>
-                <label>Eurobonus</label>
+                <label>EuroBonus</label>
             </value>
             <value>
                 <fullName>Fare Quote</fullName>
