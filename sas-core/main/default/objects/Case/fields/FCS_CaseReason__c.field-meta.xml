@@ -207,12 +207,12 @@
             <value>
                 <fullName>Eurobonus</fullName>
                 <default>false</default>
-                <label>Eurobonus</label>
+                <label>EuroBonus</label>
             </value>
             <value>
                 <fullName>Eurobonus procedures R</fullName>
                 <default>false</default>
-                <label>Eurobonus procedures R</label>
+                <label>EuroBonus procedures R</label>
             </value>
             <value>
                 <fullName>Extraordinary</fullName>
