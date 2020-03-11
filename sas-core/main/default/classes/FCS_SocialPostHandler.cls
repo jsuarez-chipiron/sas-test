@@ -157,8 +157,7 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
        @param newSocialPost list of new version of the social post i.e. the Trigger.new variable
        */
     private static void setFieldsOnCreate(List<SocialPost> newSocialPostList) {
-        List<C_GeneralSetting__mdt>
-        //List<ManagedSocialAccounts__mdt> socialAccs = [SELECT Id, DeveloperName, Name__c, Provider__c From ManagedSocialAccounts__mdt];
+        List<ManagedSocialAccounts__mdt> socialAccs = [SELECT Id, DeveloperName, Name__c, Provider__c From ManagedSocialAccounts__mdt];
         List<Group> soMeQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe'];
         Map<String, String> socialPageByProvider = new Map<String, String> ();
         if(socialAccs.size() > 0) {
