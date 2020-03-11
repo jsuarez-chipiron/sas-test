@@ -157,7 +157,8 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
        @param newSocialPost list of new version of the social post i.e. the Trigger.new variable
        */
     private static void setFieldsOnCreate(List<SocialPost> newSocialPostList) {
-        List<ManagedSocialAccounts__mdt> socialAccs = [SELECT Id, DeveloperName, Name__c, Provider__c From ManagedSocialAccounts__mdt];
+        List<C_GeneralSetting__mdt>
+        //List<ManagedSocialAccounts__mdt> socialAccs = [SELECT Id, DeveloperName, Name__c, Provider__c From ManagedSocialAccounts__mdt];
         List<Group> soMeQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe'];
         Map<String, String> socialPageByProvider = new Map<String, String> ();
         if(socialAccs.size() > 0) {
@@ -192,6 +193,9 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
                 }
                 newSocialPostList[i].FCS_ParentMessage__c =   parentPostsNext[i].Content;
                 newSocialPostList[i].FCS_ParentCommentMessage__c =   parentPosts[i].Content;
+                if(newSocialPostList[i].FCS_ParentCommentMessage__c != null && newSocialPostList[i].FCS_ParentCommentMessage__c !='') {
+                    newSocialPostList[i].FCS_IsReply__c = true;
+                }
             }
             else if(parentIds[i]!=null) {
                 if(socialPageByProvider.containsKey(parentPosts[i].Provider) && parentPosts[i].Handle == socialPageByProvider.get(newSocialPostList[i].Provider)){

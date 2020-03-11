@@ -187,7 +187,7 @@
             </componentInstanceProperties>
             <componentName>console:relatedRecord</componentName>
             <visibilityRule>
-                <booleanFilter>(1 AND 2)</booleanFilter>
+                <booleanFilter>(1 AND 2 ) OR (3 AND 4)</booleanFilter>
                 <criteria>
                     <leftValue>{!Record.MessageType}</leftValue>
                     <operator>EQUAL</operator>
@@ -197,6 +197,16 @@
                     <leftValue>{!Record.Provider}</leftValue>
                     <operator>EQUAL</operator>
                     <rightValue>Facebook</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.Provider}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Twitter</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.FCS_IsReply__c}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>true</rightValue>
                 </criteria>
             </visibilityRule>
         </componentInstances>
