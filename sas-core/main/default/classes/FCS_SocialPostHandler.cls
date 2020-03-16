@@ -109,11 +109,11 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
         }
     }
 
-        /**
-       Method to set fields on the post when replying to a post (creating a reply record)
-       @param newSocialPost list of new version of the social post i.e. the Trigger.new variable
-       @param oldSocialPost list of old version of the social post i.e. the Trigger.old variable
-       */
+    /**
+   Method to set fields on the post when replying to a post (creating a reply record)
+   @param newSocialPost list of new version of the social post i.e. the Trigger.new variable
+   @param oldSocialPost list of old version of the social post i.e. the Trigger.old variable
+   */
     private static void updatePostStatusOnParent(List<SocialPost> newSocialPostList, List<SocialPost> oldSocialPostList) {
         Set<Id> parentIds = new Set<Id>();
         List<SocialPost> spRecords = newSocialPostList != null ? newSocialPostList : oldSocialPostList;
@@ -147,6 +147,7 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
         }
     }
 
+
     /**
        Method to set default fields on insert on Social Post.
        1. If the Post is a SAS-post it is marked as SASPost, Outbound and with no review status
@@ -157,22 +158,19 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
        @param newSocialPost list of new version of the social post i.e. the Trigger.new variable
        */
     private static void setFieldsOnCreate(List<SocialPost> newSocialPostList) {
-        List<ManagedSocialAccounts__mdt> socialAccs = [SELECT Id, DeveloperName, Name__c, Provider__c From ManagedSocialAccounts__mdt];
+        List<C_GeneralSetting__mdt> socialPages = [SELECT Value__c FROM C_GeneralSetting__mdt WHERE Group__c ='Social Accounts'];
         List<Group> soMeQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe'];
-        Map<String, String> socialPageByProvider = new Map<String, String> ();
-        if(socialAccs.size() > 0) {
-            for (ManagedSocialAccounts__mdt msa : socialAccs) {
-                socialPageByProvider.put(msa.Provider__c, msa.Name__c);
-            }
-        }
         List<Id> parentIds = new List<Id> ();
         List<Id> parentIdsNext = new List<Id> ();
         for(SocialPost sp : newSocialPostList){
             parentIds.add(sp.ReplyToId);
-            if(socialPageByProvider.containsKey(sp.Provider) &&  sp.Handle == socialPageByProvider.get(sp.Provider)){
-                sp.IsOutbound = true;
-                sp.FCS_SASPost__c = true;
-                sp.ReviewedStatus = null;
+            for(C_GeneralSetting__mdt socialPage :socialPages) {
+                if (socialPage.Value__c==sp.Handle && !sp.IsOutbound==true){
+                    sp.IsOutbound = true;
+                    sp.FCS_SASPost__c = true;
+                    sp.ReviewedStatus = null;
+
+                }
             }
             sp.OwnerId=soMeQueue[0].Id;
             if(sp.ParentId != null && sp.IsOutbound == false){
@@ -187,8 +185,10 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
         List<SocialPost> parentPostsNext = [SELECT Id, ReplyToId, Content, Provider, Handle FROM SocialPost Where Id=: parentIdsNext];
         for(Integer i=0,sz=parentPosts.size();i<sz;i++){
             if(parentIdsNext[i] != null){
-                if(socialPageByProvider.containsKey(parentPostsNext[i].Provider) && parentPostsNext[i].Handle == socialPageByProvider.get(newSocialPostList[i].Provider)){
-                    newSocialPostList[i].FCS_SASPostComment__c = true;
+                for(C_GeneralSetting__mdt socialPage :socialPages) {
+                    if (socialPage.Value__c == parentPostsNext[i].Handle && newSocialPostList[i].FCS_SASPostComment__c == true) {
+                        newSocialPostList[i].FCS_SASPostComment__c = true;
+                    }
                 }
                 newSocialPostList[i].FCS_ParentMessage__c =   parentPostsNext[i].Content;
                 newSocialPostList[i].FCS_ParentCommentMessage__c =   parentPosts[i].Content;
@@ -197,8 +197,10 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
                 }
             }
             else if(parentIds[i]!=null) {
-                if(socialPageByProvider.containsKey(parentPosts[i].Provider) && parentPosts[i].Handle == socialPageByProvider.get(newSocialPostList[i].Provider)){
-                    newSocialPostList[i].FCS_SASPostComment__c = true;
+                for(C_GeneralSetting__mdt socialPage :socialPages) {
+                    if (socialPage.Value__c == parentPosts[i].Handle && !newSocialPostList[i].FCS_SASPostComment__c == true){
+                        newSocialPostList[i].FCS_SASPostComment__c = true;
+                    }
                 }
                 newSocialPostList[i].FCS_ParentMessage__c =   parentPosts[i].Content;
             }
