@@ -839,9 +839,6 @@
         <layout>LocalAuthProvider__mdt-Local Auth Provider Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ManagedSocialAccounts__mdt-Managed Social Account Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>PersonAccount-B2C - Anonymous Customer</layout>
         <recordType>PersonAccount.AnonymousCustomer</recordType>
     </layoutAssignments>
