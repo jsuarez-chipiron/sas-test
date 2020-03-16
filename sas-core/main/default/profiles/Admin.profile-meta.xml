@@ -549,16 +549,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ManagedSocialAccounts__mdt.Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>ManagedSocialAccounts__mdt.Provider__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>MessagingSession.GDPR_Consent__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -847,9 +837,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>LocalAuthProvider__mdt-Local Auth Provider Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ManagedSocialAccounts__mdt-Managed Social Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>PersonAccount-B2C - Anonymous Customer</layout>
