@@ -23,7 +23,7 @@ private class FCS_DisplayAccountDataController_Test {
      */
     @IsTest
     static void shouldReturnAccountIdForCase() {
-        Account account = new Account(Name = 'Name');
+        Account account = new Account(LastName = 'Name', RecordTypeId = C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER);
         insert account;
         Case c = new Case(AccountId = account.Id);
         insert c;
@@ -38,7 +38,7 @@ private class FCS_DisplayAccountDataController_Test {
      */
     @IsTest
     static void shouldReturnAccountIdForChatTranscript() {
-        Account account = new Account(Name = 'Name');
+        Account account = new Account(LastName = 'Name', RecordTypeId = C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER);
         insert account;
         LiveChatVisitor visitor = new LiveChatVisitor();
         insert visitor;
@@ -55,7 +55,7 @@ private class FCS_DisplayAccountDataController_Test {
  */
     @IsTest
     static void shouldReturnAccountIdForMessagingSession() {
-        Account account = new Account(Name = 'Name');
+        Account account = new Account(LastName = 'Name', RecordTypeId = C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER);
         insert account;
         MessagingChannel messagingChannel = [SELECT Id FROM MessagingChannel LIMIT 1];
         MessagingEndUser messagingEndUser1 = new MessagingEndUser(
