@@ -20,8 +20,13 @@ public with sharing class C_RecordTypeHelper {
     @TestVisible public static final Id ACCOUNT_PERSON_EBCUSTOMER;
     @TestVisible public static final Id ACCOUNT_PERSON_ANONYMOUS;
 
+    /**
+     * Static variables to store id of record types on contact object
+     */
+    @TestVisible public static final Id CONTACT_EMAILCONTACT;
+
     static {
-        RecordType[] rtList = [SELECT Id,SobjectType,DeveloperName FROM RecordType WHERE SobjectType IN ('Case', 'Account') ];
+        RecordType[] rtList = [SELECT Id,SobjectType,DeveloperName FROM RecordType WHERE SobjectType IN ('Case', 'Account', 'Contact') ];
         for (Integer i = 0, sz = rtList.size(); i < sz; i++) {
             RecordType rt = rtList[i];
             if (rt.SobjectType == 'Case') {
@@ -32,6 +37,8 @@ public with sharing class C_RecordTypeHelper {
             } else if(rt.SobjectType == 'Account'){
                 if (rt.DeveloperName == 'EBCustomer') ACCOUNT_PERSON_EBCUSTOMER = rt.Id;
                 if (rt.DeveloperName == 'AnonymousCustomer') ACCOUNT_PERSON_ANONYMOUS = rt.Id;
+            }  else if(rt.SobjectType == 'Contact'){
+                if (rt.DeveloperName == 'EmailContact') CONTACT_EMAILCONTACT = rt.Id;
             }
         }
     }
