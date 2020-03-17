@@ -480,7 +480,7 @@
         </rules>
     </decisions>
     <description>Processes for the Email Message object</description>
-    <interviewLabel>Email_Message-7_InterviewLabel</interviewLabel>
+    <interviewLabel>Email_Message-2_InterviewLabel</interviewLabel>
     <label>Email Message</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -920,6 +920,9 @@
         <label>SetCaseUrgent</label>
         <locationX>700</locationX>
         <locationY>200</locationY>
+        <connector>
+            <targetReference>myDecision8</targetReference>
+        </connector>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
