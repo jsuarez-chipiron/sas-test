@@ -38,13 +38,13 @@ global abstract class GDPR_DeleteInteraction_Batch extends SBS_ScheduledBatch{
     /**
         Creates a batch instance to delete all the interactions with the supplied logic
         @param sot The SObject type of the interaction object to delete
-        @param maxDaysConsentName The name of the general GDPR setting which defines the maximum number of days for which an interaction may be stored with consent
         @param maxDaysNoConsentName The name of the general GDPR setting which defines the maximum number of days for which and interaction may be stored without consent (null=use consent setting)
+        @param maxDaysConsentName The name of the general GDPR setting which defines the maximum number of days for which an interaction may be stored with consent
         @param caseField The relationship field to a case (If present it assumed that the case holds the consent for the conversation)
         @param relSot The related SObject Type in case that a related SObject should be removed
         @param relSObjField The Sobject field which links primary deleted object to the parent record
     */
-    global GDPR_DeleteInteraction_Batch(Schema.SObjectType sot,String maxDaysConsentName,String maxDaysNoConsentName,Schema.SObjectField caseField,Schema.SobjectType relSot,Schema.SObjectField relSObjField){
+    global GDPR_DeleteInteraction_Batch(Schema.SObjectType sot,String maxDaysNoConsentName,String maxDaysConsentName,Schema.SObjectField caseField,Schema.SobjectType relSot,Schema.SObjectField relSObjField){
         this.sObjName = sot+'';
         this.caseField = caseField!=null ? caseField+'' : null;
         this.relSObjName = relSot!=null && relSObjField!=null ? relSot+'' : null;
