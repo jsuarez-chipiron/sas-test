@@ -31,11 +31,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Corporate product</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Credit card</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Delayed%2Fdamaged baggage</fullName>
+            <fullName>Delayed/damaged baggage</fullName>
             <default>false</default>
         </values>
         <values>
@@ -120,10 +124,6 @@
         </values>
         <values>
             <fullName>Special service requests</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Travel pass</fullName>
             <default>false</default>
         </values>
         <values>
@@ -537,11 +537,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Corporate product</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Credit card</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Delayed%2Fdamaged baggage</fullName>
+            <fullName>Delayed/damaged baggage</fullName>
             <default>false</default>
         </values>
         <values>
@@ -626,10 +630,6 @@
         </values>
         <values>
             <fullName>Special service requests</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Travel pass</fullName>
             <default>false</default>
         </values>
         <values>
