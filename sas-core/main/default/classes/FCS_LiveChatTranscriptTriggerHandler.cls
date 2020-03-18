@@ -4,7 +4,8 @@
  * Handler class for LivechatTranscriptTrigger. Holds automation related to creating a case for every new LiveChatTranscript for example. 
  */
 public class FCS_LiveChatTranscriptTriggerHandler extends C_TriggerHandler {
-    public override void beforeInsert(){ 
+    public override void beforeInsert(){
+        checkIpWhitelist((List<LiveChatTranscript>) Trigger.new);
 		try{
             LiveChatTranscript[] lctList = (List<LiveChatTranscript>) Trigger.new;
             Integer sz = lctList.size();
@@ -64,5 +65,19 @@ public class FCS_LiveChatTranscriptTriggerHandler extends C_TriggerHandler {
         } catch(Exception e) {
             C_Log.logException(e, null, null);    
         }     
-  	}
+      }
+    /**
+     * Checks the Ip whitelisting of the chats
+     * @param lctList The chat transcript to check for whitelisting
+     */
+      static void checkIpWhitelist(List<LiveChatTranscript> lctList){
+        C_Settings.SettingsGroup sgIpRestriction = C_Settings.getSettings('ChatIpWhitelist');
+        Set<String> ipWhiteList = new Set<String>();
+        for(String k : sgIpRestriction.keySet()){
+            ipWhiteList.add(sgIpRestriction.get(k));
+        }
+        for(LiveChatTranscript lct : lctList){
+            if(ipWhiteList.size()>0 && !ipWhiteList.contains(lct.IpAddress))lct.addError('Ip Address Not Allowed: '+lct.IpAddress);
+        }
+      }
 }
