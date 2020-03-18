@@ -23,7 +23,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Delayed/damaged baggage</fullName>
+            <fullName>Delayed%2Fdamaged baggage</fullName>
             <default>false</default>
         </values>
         <values>
@@ -325,7 +325,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Delayed/damaged baggage</fullName>
+            <fullName>Delayed%2Fdamaged baggage</fullName>
             <default>false</default>
         </values>
         <values>
