@@ -35,10 +35,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Corporate product</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Credit card</fullName>
             <default>false</default>
         </values>
@@ -47,7 +43,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>EuroBonus</fullName>
+            <fullName>Eurobonus</fullName>
             <default>false</default>
         </values>
         <values>
@@ -56,10 +52,6 @@
         </values>
         <values>
             <fullName>Flight info</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group booking</fullName>
             <default>false</default>
         </values>
         <values>
@@ -75,7 +67,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Non-SAS products</fullName>
+            <fullName>Non-SAS produkter</fullName>
             <default>false</default>
         </values>
         <values>
@@ -103,7 +95,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Ticket Status</fullName>
+            <fullName>Travel pass</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -115,14 +107,6 @@
         </values>
         <values>
             <fullName>Add infant in booking</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Airport service locations</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Allergies</fullName>
             <default>false</default>
         </values>
         <values>
@@ -194,23 +178,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Corona virus</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Create case</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Customer hangs up</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Damaged baggage status</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Delayed baggage status</fullName>
             <default>false</default>
         </values>
         <values>
@@ -310,15 +282,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Point related questions</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Points status</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Pre seating</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Price inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Program info</fullName>
             <default>false</default>
         </values>
         <values>
@@ -327,14 +303,6 @@
         </values>
         <values>
             <fullName>Rebooking of groups</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Referred to SAS Medical</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Referred to group form</fullName>
             <default>false</default>
         </values>
         <values>
@@ -347,6 +315,10 @@
         </values>
         <values>
             <fullName>Route inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rules %26 information</fullName>
             <default>false</default>
         </values>
         <values>
@@ -386,7 +358,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Strike related information</fullName>
+            <fullName>Staff %26 Service</fullName>
             <default>false</default>
         </values>
         <values>
@@ -395,6 +367,10 @@
         </values>
         <values>
             <fullName>Threat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket office airport</fullName>
             <default>false</default>
         </values>
         <values>
@@ -415,6 +391,14 @@
         </values>
         <values>
             <fullName>Upgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wheelchair</fullName>
             <default>false</default>
         </values>
         <values>
@@ -449,15 +433,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Claims</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Corp Account managers %28SAS for busiess%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Corporate product</fullName>
             <default>false</default>
         </values>
         <values>
@@ -469,19 +445,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>EuroBonus</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Extraordinary</fullName>
+            <fullName>Eurobonus</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Flight info</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group booking</fullName>
             <default>false</default>
         </values>
         <values>
@@ -497,7 +465,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Non-SAS products</fullName>
+            <fullName>Non-SAS produkter</fullName>
             <default>false</default>
         </values>
         <values>
@@ -525,7 +493,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Ticket Status</fullName>
+            <fullName>Travel pass</fullName>
             <default>false</default>
         </values>
     </picklistValues>

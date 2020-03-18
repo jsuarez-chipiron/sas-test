@@ -16,21 +16,6 @@
                 <label>ADM</label>
             </value>
             <value>
-                <fullName>AEM issues</fullName>
-                <default>false</default>
-                <label>AEM issues</label>
-            </value>
-            <value>
-                <fullName>Agent Helpdesk R</fullName>
-                <default>false</default>
-                <label>Agent Helpdesk R</label>
-            </value>
-            <value>
-                <fullName>Airport</fullName>
-                <default>false</default>
-                <label>Airport</label>
-            </value>
-            <value>
                 <fullName>Airport Services</fullName>
                 <default>false</default>
                 <label>Airport Services</label>
@@ -51,11 +36,6 @@
                 <label>ARI</label>
             </value>
             <value>
-                <fullName>Assistance</fullName>
-                <default>false</default>
-                <label>Assistance</label>
-            </value>
-            <value>
                 <fullName>ATC/ATC Refund</fullName>
                 <default>false</default>
                 <label>ATC/ATC Refund</label>
@@ -66,24 +46,9 @@
                 <label>Availability / MCT</label>
             </value>
             <value>
-                <fullName>Back-office R</fullName>
-                <default>false</default>
-                <label>Back-office R</label>
-            </value>
-            <value>
                 <fullName>Baggage</fullName>
                 <default>false</default>
                 <label>Baggage</label>
-            </value>
-            <value>
-                <fullName>Baggage service R</fullName>
-                <default>false</default>
-                <label>Baggage service R</label>
-            </value>
-            <value>
-                <fullName>Campaigns</fullName>
-                <default>false</default>
-                <label>Campaigns</label>
             </value>
             <value>
                 <fullName>Cancellation/refund of ticket</fullName>
@@ -106,39 +71,9 @@
                 <label>Code Share</label>
             </value>
             <value>
-                <fullName>Conditions of carriage</fullName>
-                <default>false</default>
-                <label>Conditions of carriage</label>
-            </value>
-            <value>
-                <fullName>Contacts-Country</fullName>
-                <default>false</default>
-                <label>Contacts-Country</label>
-            </value>
-            <value>
-                <fullName>Contacts-partners</fullName>
-                <default>false</default>
-                <label>Contacts-partners</label>
-            </value>
-            <value>
-                <fullName>Contacts R</fullName>
-                <default>false</default>
-                <label>Contacts R</label>
-            </value>
-            <value>
                 <fullName>Corp Account managers (SAS for busiess)</fullName>
                 <default>false</default>
                 <label>Corp Account managers (SAS for busiess)</label>
-            </value>
-            <value>
-                <fullName>Corporate product</fullName>
-                <default>false</default>
-                <label>Corporate product</label>
-            </value>
-            <value>
-                <fullName>Corporate R</fullName>
-                <default>false</default>
-                <label>Corporate R</label>
             </value>
             <value>
                 <fullName>Credit card</fullName>
@@ -146,29 +81,9 @@
                 <label>Credit card</label>
             </value>
             <value>
-                <fullName>CR requests</fullName>
+                <fullName>Delayed/damaged luggage</fullName>
                 <default>false</default>
-                <label>CR requests</label>
-            </value>
-            <value>
-                <fullName>Customer Care R</fullName>
-                <default>false</default>
-                <label>Customer Care R</label>
-            </value>
-            <value>
-                <fullName>Delayed/damaged baggage</fullName>
-                <default>false</default>
-                <label>Delayed/damaged baggage</label>
-            </value>
-            <value>
-                <fullName>Depa/Depu</fullName>
-                <default>false</default>
-                <label>Depa/Depu</label>
-            </value>
-            <value>
-                <fullName>Deployment</fullName>
-                <default>false</default>
-                <label>Deployment</label>
+                <label>Delayed/damaged luggage</label>
             </value>
             <value>
                 <fullName>Digital</fullName>
@@ -176,29 +91,9 @@
                 <label>Digital</label>
             </value>
             <value>
-                <fullName>Digital channels R</fullName>
-                <default>false</default>
-                <label>Digital channels R</label>
-            </value>
-            <value>
                 <fullName>Digital support</fullName>
                 <default>false</default>
                 <label>Digital support</label>
-            </value>
-            <value>
-                <fullName>Direct Sales R</fullName>
-                <default>false</default>
-                <label>Direct Sales R</label>
-            </value>
-            <value>
-                <fullName>Documents/Voucher</fullName>
-                <default>false</default>
-                <label>Documents/Voucher</label>
-            </value>
-            <value>
-                <fullName>Environment</fullName>
-                <default>false</default>
-                <label>Environment</label>
             </value>
             <value>
                 <fullName>Error</fullName>
@@ -206,19 +101,9 @@
                 <label>Error</label>
             </value>
             <value>
-                <fullName>EuroBonus</fullName>
+                <fullName>Eurobonus</fullName>
                 <default>false</default>
                 <label>EuroBonus</label>
-            </value>
-            <value>
-                <fullName>EuroBonus procedures R</fullName>
-                <default>false</default>
-                <label>EuroBonus procedures R</label>
-            </value>
-            <value>
-                <fullName>Extraordinary</fullName>
-                <default>false</default>
-                <label>Extraordinary</label>
             </value>
             <value>
                 <fullName>Fare Quote</fullName>
@@ -246,29 +131,9 @@
                 <label>Flight info</label>
             </value>
             <value>
-                <fullName>Food</fullName>
-                <default>false</default>
-                <label>Food</label>
-            </value>
-            <value>
-                <fullName>Group booking</fullName>
-                <default>false</default>
-                <label>Group booking</label>
-            </value>
-            <value>
                 <fullName>Group booking - direct groups</fullName>
                 <default>false</default>
                 <label>Group booking - direct groups</label>
-            </value>
-            <value>
-                <fullName>Groups</fullName>
-                <default>false</default>
-                <label>Groups</label>
-            </value>
-            <value>
-                <fullName>Group sales R</fullName>
-                <default>false</default>
-                <label>Group sales R</label>
             </value>
             <value>
                 <fullName>Inflight / Onboard</fullName>
@@ -276,39 +141,14 @@
                 <label>Inflight / Onboard</label>
             </value>
             <value>
-                <fullName>Irregularity</fullName>
-                <default>false</default>
-                <label>Irregularity</label>
-            </value>
-            <value>
                 <fullName>Irregularity / Schedule change</fullName>
                 <default>false</default>
                 <label>Irregularity / Schedule change</label>
             </value>
             <value>
-                <fullName>Login issues</fullName>
-                <default>false</default>
-                <label>Login issues</label>
-            </value>
-            <value>
-                <fullName>Look here before you ask R</fullName>
-                <default>false</default>
-                <label>Look here before you ask R</label>
-            </value>
-            <value>
-                <fullName>Medical</fullName>
-                <default>false</default>
-                <label>Medical</label>
-            </value>
-            <value>
                 <fullName>Minor</fullName>
                 <default>false</default>
                 <label>Minor</label>
-            </value>
-            <value>
-                <fullName>Missing offer</fullName>
-                <default>false</default>
-                <label>Missing offer</label>
             </value>
             <value>
                 <fullName>Name change</fullName>
@@ -321,14 +161,9 @@
                 <label>New booking</label>
             </value>
             <value>
-                <fullName>News</fullName>
+                <fullName>Non-SAS produkter</fullName>
                 <default>false</default>
-                <label>News</label>
-            </value>
-            <value>
-                <fullName>Non-SAS products</fullName>
-                <default>false</default>
-                <label>Non-SAS products</label>
+                <label>Non-SAS produkter</label>
             </value>
             <value>
                 <fullName>OAL</fullName>
@@ -341,19 +176,9 @@
                 <label>Overbooked flights</label>
             </value>
             <value>
-                <fullName>Policies and agreements</fullName>
-                <default>false</default>
-                <label>Policies and agreements</label>
-            </value>
-            <value>
                 <fullName>Policy</fullName>
                 <default>false</default>
                 <label>Policy</label>
-            </value>
-            <value>
-                <fullName>Products</fullName>
-                <default>false</default>
-                <label>Products</label>
             </value>
             <value>
                 <fullName>Project</fullName>
@@ -381,19 +206,9 @@
                 <label>Refund / SRS</label>
             </value>
             <value>
-                <fullName>Refund R</fullName>
-                <default>false</default>
-                <label>Refund R</label>
-            </value>
-            <value>
                 <fullName>Requesting documentation</fullName>
                 <default>false</default>
                 <label>Requesting documentation</label>
-            </value>
-            <value>
-                <fullName>Reservation</fullName>
-                <default>false</default>
-                <label>Reservation</label>
             </value>
             <value>
                 <fullName>Reservation issues</fullName>
@@ -436,16 +251,6 @@
                 <label>SSR</label>
             </value>
             <value>
-                <fullName>Star Award Online</fullName>
-                <default>false</default>
-                <label>Star Award Online</label>
-            </value>
-            <value>
-                <fullName>System</fullName>
-                <default>false</default>
-                <label>System</label>
-            </value>
-            <value>
                 <fullName>Tax/YQ</fullName>
                 <default>false</default>
                 <label>Tax/YQ</label>
@@ -456,24 +261,9 @@
                 <label>Ticketing</label>
             </value>
             <value>
-                <fullName>Ticket Status</fullName>
-                <default>false</default>
-                <label>Ticket Status</label>
-            </value>
-            <value>
                 <fullName>Travel pass</fullName>
                 <default>false</default>
                 <label>Travel pass</label>
-            </value>   
-            <value>
-                <fullName>WiFi</fullName>
-                <default>false</default>
-                <label>WiFi</label>
-            </value>
-            <value>
-                <fullName>Wrong department chosen</fullName>
-                <default>false</default>
-                <label>Wrong department chosen</label>
             </value>
             <value>
                 <fullName>Other</fullName>

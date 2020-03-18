@@ -35,7 +35,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Delayed%2Fdamaged baggage</fullName>
+            <fullName>Delayed%2Fdamaged luggage</fullName>
             <default>false</default>
         </values>
         <values>
@@ -47,7 +47,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>EuroBonus</fullName>
+            <fullName>Eurobonus</fullName>
             <default>false</default>
         </values>
         <values>
@@ -79,7 +79,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Non-SAS products</fullName>
+            <fullName>Non-SAS produkter</fullName>
             <default>false</default>
         </values>
         <values>
@@ -326,7 +326,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Name change on EuroBonus profile</fullName>
+            <fullName>Name change on Eurobonus</fullName>
             <default>false</default>
         </values>
         <values>
@@ -382,7 +382,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Point related questions</fullName>
+            <fullName>Program info</fullName>
             <default>false</default>
         </values>
         <values>
@@ -462,7 +462,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Strike related</fullName>
+            <fullName>Strike</fullName>
             <default>false</default>
         </values>
         <values>
@@ -474,7 +474,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Airport service locations</fullName>
+            <fullName>Ticket office airport</fullName>
             <default>false</default>
         </values>
         <values>
@@ -541,7 +541,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Delayed%2Fdamaged baggage</fullName>
+            <fullName>Delayed%2Fdamaged luggage</fullName>
             <default>false</default>
         </values>
         <values>
@@ -553,11 +553,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>EuroBonus</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Extraordinary</fullName>
+            <fullName>Eurobonus</fullName>
             <default>false</default>
         </values>
         <values>
@@ -585,7 +581,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Non-SAS products</fullName>
+            <fullName>Non-SAS produkter</fullName>
             <default>false</default>
         </values>
         <values>
