@@ -14,11 +14,14 @@ private class FCS_CaseHandler_Test {
     @TestSetup static void createTestUserSetup(){
         PermissionSet socialMediaPermission = [SELECT Id FROM PermissionSet WHERE Name = 'SocialMediaUser'];
         Profile agentProfile = [SELECT Id FROM Profile WHERE Name = 'Agent'];
-        List<User> users = FCS_TestDataFactory.createUsers(2);
+        List<User> users = FCS_TestDataFactory.createUsers(4);
         insert users;
         PermissionSetAssignment[] assignments = new PermissionSetAssignment[]{};
+        Integer i = 0;
         for(User u:users){
             u.ProfileId = agentProfile.Id;
+            u.FederationIdentifier = 'SoMe' + i;
+            i++;
             assignments.add(new PermissionSetAssignment(
                     AssigneeId = u.Id,
                     PermissionSetId = socialMediaPermission.Id
@@ -118,7 +121,7 @@ private class FCS_CaseHandler_Test {
     @isTest static void addSocialMediaTag(){
         createTestData();
         List<SocialPost> socialPosts = [SELECT Id FROM SocialPost];
-        List<User> users = [SELECT Id From User];
+        List<User> users = [SELECT Id From User WHERE FederationIdentifier LIKE 'SoMe%'];
         for (Integer i = 0, sz = socialPosts.size(); i < sz; i++) {
             socialPosts[i].OwnerId=users[i].Id;
         }
