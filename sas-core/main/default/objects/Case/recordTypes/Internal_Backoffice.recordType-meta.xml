@@ -119,11 +119,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Eurobonus</fullName>
+            <fullName>EuroBonus</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Eurobonus procedures R</fullName>
+            <fullName>EuroBonus procedures R</fullName>
             <default>false</default>
         </values>
         <values>
@@ -534,7 +534,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Travelpass</fullName>
+            <fullName>Travel pass</fullName>
             <default>false</default>
         </values>
         <values>
@@ -673,15 +673,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Error</fullName>
+            <fullName>EuroBonus</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>EuroBonus procedures R</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Eurobonus</fullName>
             <default>false</default>
         </values>
         <values>
@@ -705,11 +701,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Irregularity %2F Schedule change</fullName>
+            <fullName>Irregularity</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Irregularity%C2%A0</fullName>
+            <fullName>Irregularity %2F Schedule change</fullName>
             <default>false</default>
         </values>
         <values>
@@ -745,7 +741,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Policies and agreement</fullName>
+            <fullName>Policies and agreements</fullName>
             <default>false</default>
         </values>
         <values>
@@ -786,10 +782,6 @@
         </values>
         <values>
             <fullName>Safety report</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Schedule changes</fullName>
             <default>false</default>
         </values>
         <values>

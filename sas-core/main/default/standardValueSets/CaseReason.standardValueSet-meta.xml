@@ -50,9 +50,9 @@
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
-        <fullName>Delayed/damaged luggage</fullName>
+        <fullName>Delayed/damaged baggage</fullName>
         <default>false</default>
-        <label>Delayed/damaged luggage</label>
+        <label>Delayed/damaged baggage</label>
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
@@ -110,9 +110,9 @@
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
-        <fullName>Non-SAS produkter</fullName>
+        <fullName>Non-SAS products</fullName>
         <default>false</default>
-        <label>Non-SAS produkter</label>
+        <label>Non-SAS products</label>
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>

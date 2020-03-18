@@ -135,6 +135,11 @@
                 <label>Corp Account managers (SAS for busiess)</label>
             </value>
             <value>
+                <fullName>Corporate product</fullName>
+                <default>false</default>
+                <label>Corporate product</label>
+            </value>
+            <value>
                 <fullName>Corporate R</fullName>
                 <default>false</default>
                 <label>Corporate R</label>
@@ -155,9 +160,9 @@
                 <label>Customer Care R</label>
             </value>
             <value>
-                <fullName>Delayed/damaged luggage</fullName>
+                <fullName>Delayed/damaged baggage</fullName>
                 <default>false</default>
-                <label>Delayed/damaged luggage</label>
+                <label>Delayed/damaged baggage</label>
             </value>
             <value>
                 <fullName>Depa/Depu</fullName>
@@ -205,12 +210,12 @@
                 <label>Error</label>
             </value>
             <value>
-                <fullName>Eurobonus</fullName>
+                <fullName>EuroBonus</fullName>
                 <default>false</default>
                 <label>EuroBonus</label>
             </value>
             <value>
-                <fullName>Eurobonus procedures R</fullName>
+                <fullName>EuroBonus procedures R</fullName>
                 <default>false</default>
                 <label>EuroBonus procedures R</label>
             </value>
@@ -248,6 +253,11 @@
                 <fullName>Food</fullName>
                 <default>false</default>
                 <label>Food</label>
+            </value>
+            <value>
+                <fullName>Group booking</fullName>
+                <default>false</default>
+                <label>Group booking</label>
             </value>
             <value>
                 <fullName>Group booking - direct groups</fullName>
@@ -300,6 +310,11 @@
                 <label>Minor</label>
             </value>
             <value>
+                <fullName>Missing offer</fullName>
+                <default>false</default>
+                <label>Missing offer</label>
+            </value>
+            <value>
                 <fullName>Name change</fullName>
                 <default>false</default>
                 <label>Name change</label>
@@ -315,9 +330,9 @@
                 <label>News</label>
             </value>
             <value>
-                <fullName>Non-SAS produkter</fullName>
+                <fullName>Non-SAS products</fullName>
                 <default>false</default>
-                <label>Non-SAS produkter</label>
+                <label>Non-SAS products</label>
             </value>
             <value>
                 <fullName>OAL</fullName>
@@ -425,6 +440,11 @@
                 <label>SSR</label>
             </value>
             <value>
+                <fullName>Star Award Online</fullName>
+                <default>false</default>
+                <label>Star Award Online</label>
+            </value>
+            <value>
                 <fullName>System</fullName>
                 <default>false</default>
                 <label>System</label>
@@ -440,14 +460,24 @@
                 <label>Ticketing</label>
             </value>
             <value>
+                <fullName>Ticket Status</fullName>
+                <default>false</default>
+                <label>Ticket Status</label>
+            </value>
+            <value>
                 <fullName>Travel pass</fullName>
                 <default>false</default>
                 <label>Travel pass</label>
-            </value>
+            </value>    
             <value>
                 <fullName>WiFi</fullName>
                 <default>false</default>
                 <label>WiFi</label>
+            </value>
+            <value>
+                <fullName>Wrong department chosen</fullName>
+                <default>false</default>
+                <label>Wrong department chosen</label>
             </value>
             <value>
                 <fullName>Other</fullName>
@@ -460,32 +490,15 @@
             <valueName>ADM</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <valueName>AEM issues</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Agent Helpdesk R</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Airport</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <valueName>Airport Services</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
             <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
             <valueName>Ancillary</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
             <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
             <valueName>Animals</valueName>
         </valueSettings>
         <valueSettings>
@@ -494,36 +507,120 @@
             <valueName>ARI</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>Availability / MCT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
             <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Assistance</valueName>
+            <valueName>Baggage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>Code Share</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>Digital</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>EuroBonus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>Irregularity / Schedule change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Minor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Name change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>OAL</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>Project</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>Refund / SRS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>Reservation issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>Safety report</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>SSR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>Ticketing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Tariff</controllingFieldValue>
             <valueName>ATC/ATC Refund</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <valueName>Availability / MCT</valueName>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <valueName>Fare Quote</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <valueName>Fare Rules</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
             <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Back-office R</valueName>
+            <valueName>Fares</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <valueName>Policy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Refund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <valueName>Tax/YQ</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <controllingFieldValue>System</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Baggage</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Baggage service R</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Campaigns</valueName>
+            <valueName>Airport Services</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -534,6 +631,7 @@
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Changes</valueName>
         </valueSettings>
         <valueSettings>
@@ -542,32 +640,10 @@
             <valueName>Claims</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <valueName>Code Share</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Conditions of carriage</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Contacts R</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Contacts-Country</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Contacts-partners</valueName>
-        </valueSettings>
-        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
-            <valueName>Corp Account managers (SAS for busiess)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Corporate R</valueName>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Corporate product</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -576,45 +652,9 @@
             <valueName>Credit card</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <valueName>CR requests</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Customer Care R</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Delayed/damaged luggage</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Depa/Depu</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <valueName>Deployment</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <valueName>Digital</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Digital channels R</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Digital support</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Direct Sales R</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Documents/Voucher</valueName>
+            <valueName>Delayed/damaged baggage</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -629,33 +669,8 @@
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <controllingFieldValue>System</controllingFieldValue>
-            <valueName>Eurobonus</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Eurobonus procedures R</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
             <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Extraordinary</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Fare Quote</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Fare Rules</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Fares</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -671,56 +686,9 @@
             <valueName>Food</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <valueName>Group booking - direct groups</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Group sales R</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Groups</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <valueName>Inflight / Onboard</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Irregularity</valueName>
-        </valueSettings>   
-        <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <valueName>Irregularity / Schedule change</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <valueName>Login issues</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Look here before you ask R</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Medical</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <controllingFieldValue>System</controllingFieldValue>
-            <valueName>Minor</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <controllingFieldValue>System</controllingFieldValue>
-            <valueName>Name change</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>News</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -730,35 +698,11 @@
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
-            <valueName>Non-SAS produkter</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <valueName>OAL</valueName>
+            <valueName>Non-SAS products</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>Overbooked flights</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Policies and agreements</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Policy</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Products</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <valueName>Project</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Rebooking</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -767,31 +711,8 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Refund</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <valueName>Refund / SRS</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Refund R</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Requesting documentation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <valueName>Reservation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <valueName>Reservation issues</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -802,10 +723,6 @@
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <valueName>Rules &amp; Informaton</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <valueName>Safety report</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -825,38 +742,172 @@
             <valueName>Special service requests</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <valueName>SSR</valueName>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>WiFi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Corp Account managers (SAS for busiess)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Group booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Group booking - direct groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Ticket Status</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Agent Helpdesk R</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Airport</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Assistance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Back-office R</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Baggage service R</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Campaigns</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Conditions of carriage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Contacts-Country</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Contacts-partners</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Contacts R</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Corporate R</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Customer Care R</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Depa/Depu</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Digital channels R</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Direct Sales R</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Documents/Voucher</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>EuroBonus procedures R</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Group sales R</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Irregularity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Look here before you ask R</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Medical</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>News</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Policies and agreements</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Products</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Refund R</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>Reservation</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sales Information</controllingFieldValue>
             <valueName>System</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Tax/YQ</valueName>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <valueName>AEM issues</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <valueName>Ticketing</valueName>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <valueName>CR requests</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <valueName>Deployment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <valueName>Login issues</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Travel pass</valueName>
+            <valueName>Digital support</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>WiFi</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
             <controllingFieldValue>Support</controllingFieldValue>
-            <controllingFieldValue>System</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Other</valueName>
+            <valueName>Missing offer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Rebooking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Star Award Online</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Wrong department chosen</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

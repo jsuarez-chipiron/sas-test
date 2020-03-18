@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Support</fullName>
@@ -12,11 +11,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate product</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Credit card</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Delayed%2Fdamaged luggage</fullName>
+            <fullName>Delayed%2Fdamaged baggage</fullName>
             <default>false</default>
         </values>
         <values>
@@ -28,11 +35,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Eurobonus</fullName>
+            <fullName>EuroBonus</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Extraordinary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing offer</fullName>
             <default>false</default>
         </values>
         <values>
@@ -64,7 +75,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Travel pass</fullName>
+            <fullName>Star Award Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong department chosen</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -72,6 +87,10 @@
         <picklist>FCS_CaseSubReason__c</picklist>
         <values>
             <fullName>AMEX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AMEX 2 for 1</fullName>
             <default>false</default>
         </values>
         <values>
@@ -103,6 +122,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Commercial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corona virus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corona virus asian customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Customer hangs up</fullName>
             <default>false</default>
         </values>
@@ -131,6 +162,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EuroBonus ticket</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Flight disruption</fullName>
             <default>false</default>
         </values>
@@ -143,11 +178,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Hotel</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Inactive customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Irregularity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Login%2FPassword issues</fullName>
             <default>false</default>
         </values>
         <values>
@@ -167,7 +214,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Name change on Eurobonus</fullName>
+            <fullName>Name change on EuroBonus profile</fullName>
             <default>false</default>
         </values>
         <values>
@@ -215,6 +262,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Revenue ticket</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ski %2F Snowboard</fullName>
             <default>false</default>
         </values>
@@ -224,6 +275,10 @@
         </values>
         <values>
             <fullName>Threat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket status</fullName>
             <default>false</default>
         </values>
         <values>
@@ -258,11 +313,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate product</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Credit card</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Delayed%2Fdamaged luggage</fullName>
+            <fullName>Delayed%2Fdamaged baggage</fullName>
             <default>false</default>
         </values>
         <values>
@@ -274,7 +337,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Eurobonus</fullName>
+            <fullName>EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extraordinary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing offer</fullName>
             <default>false</default>
         </values>
         <values>
@@ -306,7 +377,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Travel pass</fullName>
+            <fullName>Star Award Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong department chosen</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -330,6 +405,25 @@
         </values>
         <values>
             <fullName>S</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FCS_Language__c</picklist>
+        <values>
+            <fullName>DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SV</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -473,25 +567,6 @@
         </values>
         <values>
             <fullName>Global Support</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>FCS_Language__c</picklist>
-        <values>
-            <fullName>DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EN</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SV</fullName>
             <default>false</default>
         </values>
     </picklistValues>
