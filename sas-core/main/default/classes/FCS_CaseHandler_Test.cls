@@ -150,7 +150,7 @@ private class FCS_CaseHandler_Test {
     @isTest static void errorAddSocialMediaTag(){
         createTestData();
         List<SocialPost> socialPosts = [SELECT Id FROM SocialPost LIMIT 1];
-        List<User> users = [SELECT Id FROM User LIMIT 1];
+        List<User> users = [SELECT Id From User WHERE FederationIdentifier = 'SoMe0'];
         List<Group>groupList=[SELECT Id FROM Group WHERE Type='Queue'AND DeveloperName='GlobalSupportSoMe'];
         for (Integer i = 0, sz = socialPosts.size(); i < sz; i++) {
             socialPosts[i].OwnerId=groupList[i].Id;
@@ -210,7 +210,7 @@ private class FCS_CaseHandler_Test {
     static void testUpdateSocialPosts() {
         createTestData();
         List<SocialPost> socialPosts = [SELECT Id FROM SocialPost];
-        List<User> users = [SELECT Id FROM User];
+        List<User> users = [SELECT Id From User WHERE FederationIdentifier LIKE 'SoMe%'];
         for (Integer i = 0, sz = socialPosts.size(); i < sz; i++) {
             socialPosts[i].OwnerId=users[i].Id;
         }
