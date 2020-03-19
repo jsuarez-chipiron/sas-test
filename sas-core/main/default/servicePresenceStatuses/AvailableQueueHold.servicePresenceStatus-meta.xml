@@ -4,5 +4,5 @@
         <channel>sfdc_liveagent</channel>
         <channel>sfdc_livemessage</channel>
     </channels>
-    <label>Available - Queue Hold</label>
+    <label>Queue Hold</label>
 </ServicePresenceStatus>
