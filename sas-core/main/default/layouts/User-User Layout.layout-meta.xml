@@ -26,6 +26,8 @@
                 <behavior>Edit</behavior>
                 <field>FCS_SubTeam__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>FCS_CustomChatName__c</field>
@@ -35,7 +37,6 @@
                 <field>ChatName__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <summaryLayout>
