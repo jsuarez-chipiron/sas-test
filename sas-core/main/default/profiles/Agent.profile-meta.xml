@@ -303,7 +303,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>User.ChatName__c</field>
+        <field>User.FCS_ChatName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
