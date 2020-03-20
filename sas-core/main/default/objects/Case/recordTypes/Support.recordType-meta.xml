@@ -513,6 +513,10 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>Facebook Messenger</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Priority</picklist>
