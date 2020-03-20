@@ -31,4 +31,9 @@
         <default>false</default>
         <label>Chat</label>
     </standardValue>
+    <standardValue>
+        <fullName>Facebook Messenger</fullName>
+        <default>false</default>
+        <label>Facebook Messenger</label>
+    </standardValue>
 </StandardValueSet>
