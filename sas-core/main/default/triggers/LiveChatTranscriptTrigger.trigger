@@ -1,3 +1,3 @@
-trigger LiveChatTranscriptTrigger on LiveChatTranscript (before insert) {
+trigger LiveChatTranscriptTrigger on LiveChatTranscript (before update) {
 	new FCS_LiveChatTranscriptTriggerHandler().run();
 }
