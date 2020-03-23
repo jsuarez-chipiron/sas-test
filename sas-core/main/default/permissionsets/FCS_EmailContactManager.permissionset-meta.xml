@@ -3,6 +3,11 @@
     <description>Grants the ability to create and edit email contacts.</description>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contact.Description</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contact.Department</field>
         <readable>true</readable>
     </fieldPermissions>
