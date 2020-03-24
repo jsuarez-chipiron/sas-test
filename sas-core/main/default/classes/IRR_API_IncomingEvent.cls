@@ -1,0 +1,26 @@
+/**
+* @author Niklas Lundkvist, Deloitte
+* @date 2020
+*
+* @description Event API endpoint class for incoming events.
+*/
+
+@RestResource(UrlMapping='/EventAPI/*')
+global class IRR_API_IncomingEvent {
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Handle incoming Event POST and call EventService to process event.
+     *      - Event type is parsed from the request URI
+     *      - Request body is used as event payload
+     */
+    @HttpPost
+    global static void handleIncomingEvent() {
+        RestRequest req = RestContext.request;
+        String eventType = req.requestURI.substringAfterLast('/');
+        String eventPayload = req.requestBody.toString();
+        IRR_SVC_EventService.processEvent(eventType, eventPayload);
+    }
+}

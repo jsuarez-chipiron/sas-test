@@ -1,0 +1,118 @@
+/**
+* @author Niklas Lundkvist, Deloitte
+* @date 2020
+*
+* @description Event Processor for the Delay event. Inherits and uses functionality from EventProcessor abstract class.
+*/
+
+public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
+
+    private static final String ERROR_FLIGHT_ID = 'Flight Id is missing from event info: {0}';
+    private static final String ERROR_DELAY_MINUTES = 'Delay Minutes is missing from event info: {0}';
+    private static final String ERROR_DEPT_TIME = 'Delayed time is missing from event info: {0}';
+    private static final String ERROR_SCHD_TIME = 'Scheduled time is missing from event info: {0}';
+
+    private static final String EVENT_FLOW_NAME = 'IRR_EVT_DelayFlow';
+
+    private IRR_MOD_DelayInfo delayInfo;
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Validates event before processing. Throws on error.
+     */
+    public void validateEvent() {
+        if (String.isBlank(delayInfo.flightId)) {
+            throwEventException(ERROR_FLIGHT_ID, delayInfo);
+        }
+        if (delayInfo.delayMinutes == null) {
+            throwEventException(ERROR_DELAY_MINUTES, delayInfo);
+        }
+        if (String.isBlank(delayInfo.delayedTime)) {
+            throwEventException(ERROR_DEPT_TIME, delayInfo);
+        }
+        if (String.isBlank(delayInfo.scheduledTime)) {
+            throwEventException(ERROR_SCHD_TIME, delayInfo);
+        }
+    }
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Populates event object with additional information and initiates passengerInfo list.
+     */
+    public void initiateEvent() {
+        Map<String, Integer> delayMinutesByFlightIds = IRR_SEL_DelayLogsSelector.newInstance()
+                .getLatestDelayByFlightIds(new Set<String>{delayInfo.flightId});
+        delayInfo.previousDelayMinutes = delayMinutesByFlightIds.containsKey(delayInfo.flightId) ?
+                delayMinutesByFlightIds.get(delayInfo.flightId) : 0;
+        delayInfo.firstDelay = delayInfo.previousDelayMinutes == 0;
+        delayInfo.delayDifference = Math.abs(delayInfo.delayMinutes - delayInfo.previousDelayMinutes);
+
+        delayInfo.flightRef = delayInfo.flightId.split('-')[0];
+
+        Datetime scheduledTime = Datetime.valueOfGmt(delayInfo.scheduledTime.replace('T', ' '));
+        Long millisecondsToScheduledTime = scheduledTime.getTime() - Datetime.now().getTime();
+        delayInfo.minutesToScheduledTime = (Integer) millisecondsToScheduledTime / 60000;
+
+        this.passengerInfos = IRR_SVC_TedsService.getPassengerInfosForFlight(delayInfo.flightId);
+    }
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Executes flow with for each passenger with event specific information.
+     */
+    public void processEvent() {
+        IRR_MOD_FlowVariables flowVariables = new IRR_MOD_FlowVariables();
+        flowVariables.delayInfo = delayInfo;
+        for (IRR_MOD_PassengerInfo passengerInfo : passengerInfos) {
+            flowVariables.passengerInfo = passengerInfo;
+            executeFlow(EVENT_FLOW_NAME, flowVariables);
+        }
+    }
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Finalizes the event by inserting logs if messages have been created.
+     *
+     * @param uow Unit of Work
+     */
+    public void finalizeEvent(fflib_ISObjectUnitOfWork uow) {
+        if (messages != null && !messages.isEmpty()) {
+            insertDelayLog(uow);
+            insertCommunicationLogs(uow);
+        }
+    }
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Creates a Delay Log based on event object information and registers it in the Unit of Work.
+     *
+     * @param uow Unit of Work
+     */
+    private void insertDelayLog(fflib_ISObjectUnitOfWork uow) {
+        IRR_DelayLog__c delayLog = new IRR_DelayLog__c();
+        delayLog.IRR_FlightId__c = delayInfo.flightId;
+        delayLog.IRR_DelayMinutes__c = delayInfo.delayMinutes;
+        uow.registerNew(delayLog);
+    }
+
+
+    public IRR_EVT_DelayProcessor(IRR_MOD_DelayInfo delayInfo) {
+        this.delayInfo = delayInfo;
+    }
+
+    public class Constructor implements IRR_EVT_EventProcessor.IConstructable {
+        public IRR_EVT_IEventProcessor newInstance(Object payload) {
+            return (IRR_EVT_IEventProcessor) new IRR_EVT_DelayProcessor((IRR_MOD_DelayInfo) payload);
+        }
+    }
+}

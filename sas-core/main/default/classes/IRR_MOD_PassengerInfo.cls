@@ -8,6 +8,12 @@
 public class IRR_MOD_PassengerInfo {
 
     @AuraEnabled
+    public String bookingReference;
+
+    @AuraEnabled
+    public String codsId;
+
+    @AuraEnabled
     public Boolean hasPhoneNumber;
     @AuraEnabled
     public Boolean hasEmailAddress;

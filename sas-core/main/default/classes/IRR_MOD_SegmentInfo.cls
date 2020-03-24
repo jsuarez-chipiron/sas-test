@@ -25,4 +25,6 @@ public class IRR_MOD_SegmentInfo {
     @AuraEnabled
     public String status;
 
+    @AuraEnabled
+    public String flightId;
 }

@@ -11,6 +11,9 @@ public class IRR_MOD_DelayInfo {
     public String flightId;
 
     @AuraEnabled
+    public String flightRef;
+
+    @AuraEnabled
     public Integer delayMinutes;
 
     @AuraEnabled
@@ -27,4 +30,10 @@ public class IRR_MOD_DelayInfo {
 
     @AuraEnabled
     public Integer minutesToScheduledTime;
+
+    @AuraEnabled
+    public Boolean firstDelay;
+
+    @AuraEnabled
+    public Integer delayDifference;
 }
