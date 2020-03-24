@@ -158,7 +158,7 @@
                     </value>
                 </processMetadataValues>
                 <leftValueReference>myVariable_current.ToAddress</leftValueReference>
-                <operator>Contains</operator>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>salesinformation@sas.se</stringValue>
                 </rightValue>
@@ -213,7 +213,7 @@
                     </value>
                 </processMetadataValues>
                 <leftValueReference>myVariable_current.ToAddress</leftValueReference>
-                <operator>Contains</operator>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>sassi.internal@sas.dk</stringValue>
                 </rightValue>
@@ -268,7 +268,7 @@
                     </value>
                 </processMetadataValues>
                 <leftValueReference>myVariable_current.ToAddress</leftValueReference>
-                <operator>Contains</operator>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>pq_commercial_procedures_and_tariff_support@sas.se</stringValue>
                 </rightValue>
