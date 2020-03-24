@@ -179,6 +179,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>No action taken</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>OAL</fullName>
             <default>false</default>
         </values>
@@ -223,11 +227,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SAS%2EXX</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SSR</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Safety report</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule changes</fullName>
             <default>false</default>
         </values>
         <values>
@@ -374,6 +386,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>INF</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Infant</fullName>
             <default>false</default>
         </values>
@@ -395,10 +411,6 @@
         </values>
         <values>
             <fullName>Kids</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Lounge</fullName>
             <default>false</default>
         </values>
         <values>
@@ -673,15 +685,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Error</fullName>
+            <fullName>Eurobonus</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>EuroBonus procedures R</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Eurobonus</fullName>
             <default>false</default>
         </values>
         <values>
@@ -705,11 +713,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Irregularity %2F Schedule change</fullName>
+            <fullName>Irregularity</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Irregularity%C2%A0</fullName>
+            <fullName>Irregularity %2F Schedule change</fullName>
             <default>false</default>
         </values>
         <values>
@@ -737,6 +745,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>No action taken</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>OAL</fullName>
             <default>false</default>
         </values>
@@ -745,7 +757,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Policies and agreement</fullName>
+            <fullName>Policies and agreements</fullName>
             <default>false</default>
         </values>
         <values>
@@ -778,6 +790,10 @@
         </values>
         <values>
             <fullName>Reservation issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS%2EXX</fullName>
             <default>false</default>
         </values>
         <values>

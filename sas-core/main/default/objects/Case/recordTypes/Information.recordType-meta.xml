@@ -27,15 +27,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Claims</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Corp Account managers %28SAS for busiess%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Credit card</fullName>
+            <fullName>Corporate product</fullName>
             <default>false</default>
         </values>
         <values>
@@ -55,7 +47,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Group booking - direct groups</fullName>
+            <fullName>Group booking</fullName>
             <default>false</default>
         </values>
         <values>
@@ -87,15 +79,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Schedule changes</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Special service requests</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Travel pass</fullName>
+            <fullName>Ticket Status</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -110,15 +98,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Airport service locations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allergies</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Allowance</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Arrival information</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Availability</fullName>
             <default>false</default>
         </values>
         <values>
@@ -138,14 +130,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Campaign booking</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cancellation%2Frefund of ticket</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Charter</fullName>
             <default>false</default>
         </values>
@@ -162,10 +146,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Connection time</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Connections</fullName>
             <default>false</default>
         </values>
@@ -174,15 +154,23 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Control status</fullName>
+            <fullName>Corona virus</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Create case</fullName>
+            <fullName>Corona virus asian customer</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Customer hangs up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Damaged baggage status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delayed baggage status</fullName>
             <default>false</default>
         </values>
         <values>
@@ -246,18 +234,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>New Group booking - agent groups</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>New Group booking - bulk</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>New booking</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>No sale</fullName>
             <default>false</default>
         </values>
@@ -270,10 +246,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Overbooked flights</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Oxygen</fullName>
             <default>false</default>
         </values>
@@ -282,11 +254,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Points status</fullName>
+            <fullName>Point related questions</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Pre seating</fullName>
+            <fullName>Points status</fullName>
             <default>false</default>
         </values>
         <values>
@@ -294,15 +266,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Program info</fullName>
+            <fullName>Referred to SAS Medical</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Rebooking</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rebooking of groups</fullName>
+            <fullName>Referred to group form</fullName>
             <default>false</default>
         </values>
         <values>
@@ -314,10 +282,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Route inquiry</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Rules %26 information</fullName>
             <default>false</default>
         </values>
@@ -326,7 +290,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SMS</fullName>
+            <fullName>SAS for business</fullName>
             <default>false</default>
         </values>
         <values>
@@ -346,10 +310,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Sold</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Special assistance</fullName>
             <default>false</default>
         </values>
@@ -358,19 +318,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Staff %26 Service</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Submit more information</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Threat</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ticket office airport</fullName>
+            <fullName>Strike related information</fullName>
             <default>false</default>
         </values>
         <values>
@@ -378,11 +326,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Transfer %2F Arrival services</fullName>
+            <fullName>Travel Insurance</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Travel Insurance</fullName>
+            <fullName>Travelpass</fullName>
             <default>false</default>
         </values>
         <values>
@@ -394,19 +342,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Waiting time</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Wheelchair</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Wrong department</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Youth</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -433,11 +373,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Corp Account managers %28SAS for busiess%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Credit card</fullName>
+            <fullName>Corporate product</fullName>
             <default>false</default>
         </values>
         <values>
@@ -449,11 +385,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Extraordinary</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Flight info</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Group booking - direct groups</fullName>
+            <fullName>Group booking</fullName>
             <default>false</default>
         </values>
         <values>
@@ -485,15 +425,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Schedule changes</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Special service requests</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Travel pass</fullName>
+            <fullName>Ticket Status</fullName>
             <default>false</default>
         </values>
     </picklistValues>

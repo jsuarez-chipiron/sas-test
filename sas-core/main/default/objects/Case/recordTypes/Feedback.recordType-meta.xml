@@ -31,15 +31,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Credit card</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Delayed%2Fdamaged luggage</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Environment</fullName>
             <default>false</default>
         </values>
         <values>
@@ -51,19 +43,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Extraordinary</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Flight disruptions</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Flight info</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Food</fullName>
             <default>false</default>
         </values>
         <values>
@@ -91,19 +75,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Rebooking of groups</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Refund</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Requesting documentation</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Retroregistration</fullName>
             <default>false</default>
         </values>
         <values>
@@ -126,10 +102,6 @@
             <fullName>Travel pass</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>WiFi</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>FCS_CaseSubReason__c</picklist>
@@ -143,6 +115,10 @@
         </values>
         <values>
             <fullName>Add infant in booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Airport service locations</fullName>
             <default>false</default>
         </values>
         <values>
@@ -223,6 +199,14 @@
         </values>
         <values>
             <fullName>Content and Dangerous goods</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corona virus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corona virus asian customer</fullName>
             <default>false</default>
         </values>
         <values>
@@ -311,6 +295,10 @@
         </values>
         <values>
             <fullName>Mastercard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meals</fullName>
             <default>false</default>
         </values>
         <values>
@@ -470,14 +458,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Threat</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ticket office airport</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Transfer %26 Gate</fullName>
             <default>false</default>
         </values>
@@ -537,15 +517,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Credit card</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Delayed%2Fdamaged luggage</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Environment</fullName>
             <default>false</default>
         </values>
         <values>
@@ -562,10 +534,6 @@
         </values>
         <values>
             <fullName>Flight info</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Food</fullName>
             <default>false</default>
         </values>
         <values>
@@ -593,19 +561,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Rebooking of groups</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Refund</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Requesting documentation</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Retroregistration</fullName>
             <default>false</default>
         </values>
         <values>
@@ -626,10 +586,6 @@
         </values>
         <values>
             <fullName>Travel pass</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WiFi</fullName>
             <default>false</default>
         </values>
     </picklistValues>
