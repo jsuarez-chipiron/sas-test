@@ -3,7 +3,7 @@
     <fullName>FCS_CODSId__c</fullName>
     <externalId>false</externalId>
     <label>CODS Id</label>
-    <length>255</length>
+    <length>254</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

@@ -146,13 +146,13 @@ Test method for generation of test data used in more than one method
     Test method to test to that posts posted from SAS-own site is set with the correct statuses
     */
     @isTest static void insertSASPost() {
-        List<ManagedSocialAccounts__mdt> socialAccs = [SELECT Id, DeveloperName, Name__c, Provider__c From ManagedSocialAccounts__mdt];
+        List<C_GeneralSetting__mdt> socialPages = [SELECT Value__c FROM C_GeneralSetting__mdt WHERE Group__c ='Social Accounts'];
         List<SocialPost> socialPosts = FCS_TestDataFactory.createSocialPosts(1);
         socialPosts[0].MessageType = 'Post';
-        socialPosts[0].Provider = socialAccs[0].Provider__c;
-        socialPosts[0].Handle = socialAccs[0].Name__c;
+     //   socialPosts[0].Provider = socialAccs[0].Provider__c;
+        socialPosts[0].Handle = socialPages[0].Value__c;
         insert socialPosts;
-        List<SocialPost> updatedSocialPosts = [SELECT Id, IsOutbound, FCS_SASPost__c, ReviewedStatus FROM SocialPost WHERE Provider=:socialAccs[0].Provider__c AND Handle=: socialPosts[0].Handle];
+        List<SocialPost> updatedSocialPosts = [SELECT Id, IsOutbound, FCS_SASPost__c, ReviewedStatus FROM SocialPost WHERE  Handle=: socialPosts[0].Handle];
         system.assertEquals(true, updatedSocialPosts[0].IsOutbound);
         system.assertEquals(true,  updatedSocialPosts[0].FCS_SASPost__c);
         system.assertEquals(null, updatedSocialPosts[0].ReviewedStatus);

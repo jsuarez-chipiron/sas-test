@@ -19,8 +19,9 @@ public class FCS_ConsoleAutomationController_Test {
         insert lcv; 
         LiveChatTranscript lct = new LiveChatTranscript();
         lct.LiveChatVisitorId = lcv.Id;
-        lct.Status = 'InProgress';
         insert lct; 
+        lct.Status = 'InProgress';
+        update lct;
         
         List<Id> caseIds = FCS_ConsoleAutomationController.retrieveRelated(lct.Id);
         Id expCaseId = [SELECT CaseId FROM LiveChatTranscript WHERE Id = :lct.Id].CaseId;

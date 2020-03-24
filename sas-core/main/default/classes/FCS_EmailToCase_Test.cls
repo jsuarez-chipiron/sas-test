@@ -185,8 +185,8 @@ private class FCS_EmailToCase_Test {
         theUser.CompanyName = 'IT Test Company';
         theUser.MobilePhone = '123-456-7890';
         
-        theUser.Username = 'testUser-' + '@test.com';
-        theUser.Email = 'testUser-' + '@test.com';
+        theUser.Username = 'testUser-' + '@sas.com';
+        theUser.Email = 'testUser-' + '@sas.com';
         theUser.Alias = 'test';
         theUser.CommunityNickname = 'test1';
         theUser.TimeZoneSidKey = 'America/New_York';

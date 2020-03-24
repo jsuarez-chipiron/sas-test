@@ -176,6 +176,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.FCS_IsReopened__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.FCS_Language__c</field>
         <readable>true</readable>
@@ -285,9 +290,25 @@
         <field>Knowledge__kav.FCS_SubType__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>MessagingEndUser.IsOptedOut</field>
+        <readable>false</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>SurveyInvitation.FCS_RelatedCase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.FCS_ChatName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.FCS_CustomChatName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <layoutAssignments>
@@ -311,6 +332,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-Close Case Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-Email Contact Layout</layout>
+        <recordType>Contact.EmailContact</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>FCS_CaseTag__c-Case Reason Layout</layout>
@@ -679,7 +704,19 @@
     <userPermissions>
         <enabled>false</enabled>
         <name>ViewSetup</name>
-    </userPermissions>
+    </userPermissions>  
+    <tabVisibilities>
+        <tab>standard-CollaborationGroup</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>standard-EmailTemplate</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>standard-EnhancedLetterhead</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>    
     <tabVisibilities>
         <tab>standard-OmniSupervisor</tab>
         <visibility>Hidden</visibility>
@@ -687,10 +724,10 @@
     <tabVisibilities>
         <tab>standard-OmniSupervisorLightning</tab>
         <visibility>Hidden</visibility>
-    </tabVisibilities> 
+    </tabVisibilities>
     <tabVisibilities>
-        <tab>standard-Survey</tab>
-        <visibility>DefaultOff</visibility>
+        <tab>standard-ProcessInstanceWorkitem</tab>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-SocialPost</tab>
@@ -698,6 +735,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-SocialPersona</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>standard-Survey</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
 </Profile>

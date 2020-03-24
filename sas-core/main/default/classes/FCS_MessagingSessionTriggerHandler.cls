@@ -6,7 +6,7 @@ public with sharing class FCS_MessagingSessionTriggerHandler extends C_TriggerHa
     /**
      * Method running before insert for object
      */
-    public override void beforeInsert(){
+    public override void beforeUpdate(){
         createCasesForMessagingSessions();
     }
 
@@ -21,7 +21,7 @@ public with sharing class FCS_MessagingSessionTriggerHandler extends C_TriggerHa
         for(MessagingSession s : sessions){messagingEndUserIds.add(s.MessagingEndUserId);}
         Map<Id, MessagingEndUser> meuMap = new Map<Id, MessagingEndUser>([SELECT Id, AccountId, ContactId FROM MessagingEndUser WHERE Id IN :messagingEndUserIds]);
         for (Integer i = 0; i < Trigger.new.size(); i++) {
-            if (sessions[i].CaseId == null && sessions[i].Origin == 'InboundInitiated') {
+            if (sessions[i].CaseId == null && sessions[i].Status == 'Active' && sessions[i].Origin == 'InboundInitiated') {
                 newCases.add(new Case(
                         Status = 'In Progress',
                         Origin = 'Facebook Messenger',
@@ -34,7 +34,7 @@ public with sharing class FCS_MessagingSessionTriggerHandler extends C_TriggerHa
         insert newCases;
 
         for (Integer i = 0; i < sessionCount; i++) {
-            if(sessions[i].CaseId == null && sessions[i].Origin == 'InboundInitiated'){
+            if(sessions[i].CaseId == null && sessions[i].Status == 'Active' && sessions[i].Origin == 'InboundInitiated'){
                 sessions[i].CaseId = newCases[i].Id;
             }
         }

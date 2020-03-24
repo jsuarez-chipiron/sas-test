@@ -145,65 +145,10 @@
             <name>myRule_1</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.Subject</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>urgent</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.Origin</leftValueReference>
+                <leftValueReference>formula_myRule_1</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Email</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -807,12 +752,31 @@
                 <stringValue>[Case].FCS_ReopenedCount__c + 1</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_10_myRule_7_A1_8590978915</name>
+        <name>formula_10_myRule_7_A1_0580502464</name>
         <dataType>Number</dataType>
         <expression>{!myVariable_current.FCS_ReopenedCount__c} + 1</expression>
         <scale>18</scale>
     </formulas>
-    <interviewLabel>Case-3_InterviewLabel</interviewLabel>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+    ISNEW(),
+    ISPICKVAL([Case].Origin, &#39;Email&#39;),
+    CONTAINS(LOWER([Case].Subject), &#39;urgent&#39;) 
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+    ISNEW(),
+    ISPICKVAL({!myVariable_current.Origin}, &#39;Email&#39;),
+    CONTAINS(LOWER({!myVariable_current.Subject}), &#39;urgent&#39;) 
+)</expression>
+    </formulas>
+    <interviewLabel>Case-4_InterviewLabel</interviewLabel>
     <label>Case</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -1356,7 +1320,7 @@
             </processMetadataValues>
             <field>FCS_ReopenedCount__c</field>
             <value>
-                <elementReference>formula_10_myRule_7_A1_8590978915</elementReference>
+                <elementReference>formula_10_myRule_7_A1_0580502464</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>

@@ -79,10 +79,6 @@
                 <behavior>Edit</behavior>
                 <field>FCS_Language__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ParentId</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -134,7 +130,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Case tags</label>
+        <label>Case Tags</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -148,14 +144,12 @@
                 <behavior>Edit</behavior>
                 <field>FCS_CaseSubReason__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>FCS_CaseTags__c</field>
             </layoutItems>
         </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
+        <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>

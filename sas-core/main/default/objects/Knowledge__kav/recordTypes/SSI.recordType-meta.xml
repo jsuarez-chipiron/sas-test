@@ -27,11 +27,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cobranded with EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Dangerous Goods%2FWeapons</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Death of passenger or the passenger%27s immediate family - SAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EB Highlights%2FError reports</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Earning points</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus Program</fullName>
             <default>false</default>
         </values>
         <values>
@@ -59,11 +75,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Former Partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Fragile and special value items</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Give Away Membership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hotel Partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>IATA baggage resolution 302</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Life Time Gold</fullName>
             <default>false</default>
         </values>
         <values>
@@ -76,6 +108,10 @@
         </values>
         <values>
             <fullName>Medical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Membership levels</fullName>
             <default>false</default>
         </values>
         <values>
@@ -95,7 +131,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Non cobranded cards</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prepaid card</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Refund in case of death</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Pandion</fullName>
             <default>false</default>
         </values>
         <values>
@@ -111,7 +163,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Service Benefits for Diamond Members</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Benefits for Gold Members</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Benefits for Silver Members</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Special baggage and Sporting Equipment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Specific Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spending points</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Upgrade for points</fullName>
             <default>false</default>
         </values>
         <values>
@@ -120,7 +196,11 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FCS_Type__c</picklist>
+        <picklist>FCS_Type__c</picklist>¨
+        <values>
+            <fullName>EuroBonus</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Reservations</fullName>
             <default>false</default>

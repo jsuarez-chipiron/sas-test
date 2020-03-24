@@ -7,8 +7,10 @@
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
     <columns>OWNER_NAME</columns>
-    <columns>CASES.NAME</columns>
     <columns>CASES.EMAIL</columns>
+    <columns>CASES.TYPE</columns>
+    <columns>FCS_CaseReason__c</columns>
+    <columns>CASES.ORIGIN</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>CASES.RECORDTYPE</field>

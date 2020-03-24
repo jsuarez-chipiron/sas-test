@@ -109,4 +109,20 @@ private class FCS_MentionHandler_Test {
         //Users with same Vendor
         System.assertEquals(false,FCS_MentionHandler.validateMention(User2, User3));
     }
+
+    /**
+     * Asserts that triggers can run correctly for objects related to mentions. Logic is tested in other test methods.
+     */
+    @IsTest static void runTriggers(){
+        Case c = new Case();
+        insert c;
+        FeedItem feedItem = new FeedItem();
+        feedItem.ParentId = c.Id;
+        feedItem.Body = 'test';
+        insert feedItem;
+        FeedComment feedComment = new FeedComment();
+        feedComment.CommentBody = 'Test';
+        feedComment.FeedItemId = feedItem.Id;
+        insert feedComment;
+    }
 }

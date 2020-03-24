@@ -26,10 +26,10 @@ private class FCS_MessagingSessionTriggerHandler_Test {
     }
 
     /**
-     * Asserts that new, inbound MessageSessions created cases with the correct values
+     * Asserts that an updated, inbound MessageSessions created cases with the correct values
      */
     @IsTest
-    static void shouldCreateNewCasesBasesOnNewMessagingSessions() {
+    static void shouldCreateNewCasesBasesOnUpdatedMessagingSessions() {
         MessagingChannel[] messagingChannel = [SELECT Id FROM MessagingChannel];
         MessagingEndUser messagingEndUser1 = new MessagingEndUser(
                 MessagingChannelId = messagingChannel[0].Id,
@@ -50,16 +50,19 @@ private class FCS_MessagingSessionTriggerHandler_Test {
         sessions.add(new MessagingSession(
                 Origin = 'InboundInitiated',
                 MessagingEndUserId = messagingEndUser1.Id,
-                Status = 'New',
+                Status = 'Active',
                 MessagingChannelId = messagingChannel[0].Id
         ));
         sessions.add(new MessagingSession(
                 Origin = 'InboundInitiated',
                 MessagingEndUserId = messagingEndUser2.Id,
-                Status = 'New',
+                Status = 'Active',
                 MessagingChannelId = messagingChannel[1].Id
         ));
         insert sessions;
+
+        //Perform update to trigger creation of case. This is done as the status field on MassagingSession cannot be updated.
+        update sessions;
 
         Case[] cases = [SELECT Id FROM Case];
         sessions = [SELECT Id, CaseId, Case.Origin, Case.RecordType.DeveloperName FROM MessagingSession];
@@ -92,5 +95,46 @@ private class FCS_MessagingSessionTriggerHandler_Test {
 
         Case[] cases = [SELECT Id FROM Case];
         System.assertEquals(0, cases.size());
+    }
+
+    /**
+     * Asserts that cases are not created for MessageSessions that are not active
+     */
+    @IsTest
+    static void shouldCreateNewCasesBasesOnNewMessagingSessions() {
+        MessagingChannel[] messagingChannel = [SELECT Id FROM MessagingChannel];
+        MessagingEndUser messagingEndUser1 = new MessagingEndUser(
+                MessagingChannelId = messagingChannel[0].Id,
+                Name = 'User1',
+                MessageType = 'Facebook',
+                MessagingPlatformKey = '123'
+        );
+        insert messagingEndUser1;
+        MessagingEndUser messagingEndUser2 = new MessagingEndUser(
+                MessagingChannelId = messagingChannel[1].Id,
+                Name = 'User2',
+                MessageType = 'Facebook',
+                MessagingPlatformKey = '123'
+        );
+        insert messagingEndUser2;
+
+        MessagingSession[] sessions = new MessagingSession[]{};
+        sessions.add(new MessagingSession(
+                Origin = 'InboundInitiated',
+                MessagingEndUserId = messagingEndUser1.Id,
+                Status = 'Waiting',
+                MessagingChannelId = messagingChannel[0].Id
+        ));
+        sessions.add(new MessagingSession(
+                Origin = 'InboundInitiated',
+                MessagingEndUserId = messagingEndUser2.Id,
+                Status = 'New',
+                MessagingChannelId = messagingChannel[1].Id
+        ));
+        insert sessions;
+        //Perform update to trigger creation of case. This is done as the status field on MassagingSession cannot be updated.
+        update sessions;
+
+        System.assertEquals(0, [SELECT Id FROM Case].size());
     }
 }

@@ -543,19 +543,19 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>LiveChatTranscript.FCS_LoggedIn__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>LiveChatTranscript.GDPR_Consent__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ManagedSocialAccounts__mdt.Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>ManagedSocialAccounts__mdt.Provider__c</field>
-        <readable>true</readable>
+        <field>MessagingEndUser.IsOptedOut</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -758,6 +758,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>User.FCS_ChatName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.FCS_CustomChatName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>User.FCS_Site__c</field>
         <readable>true</readable>
@@ -820,6 +830,10 @@
         <recordType>Case.Support</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Contact-Email Contact Layout</layout>
+        <recordType>Contact.EmailContact</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>FCS_CaseTag__c-Case Reason Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -843,9 +857,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>LocalAuthProvider__mdt-Local Auth Provider Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ManagedSocialAccounts__mdt-Managed Social Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>PersonAccount-B2C - Anonymous Customer</layout>

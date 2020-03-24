@@ -17,6 +17,6 @@
     <label>Direct Sales SE</label>
     <queue>DirectSalesSE</queue>
     <sharedTo>
-        <group>SykesDirectSalesChatSENO</group>
+        <group>SykesDirectSalesChatSE</group>
     </sharedTo>
 </ListView>

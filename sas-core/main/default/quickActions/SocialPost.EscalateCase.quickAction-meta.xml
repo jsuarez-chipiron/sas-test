@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Quick Action to create an escalate case.</description>
+    <description>Quick Action to create  case of the social post</description>
     <fieldOverrides>
         <field>Origin</field>
         <formula>TEXT(SocialPost.Provider)</formula>
@@ -9,7 +9,7 @@
         <field>SourceId</field>
         <formula>SocialPost.Id</formula>
     </fieldOverrides>
-    <label>Escalate Case</label>
+    <label>Create Case</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>
         <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>
