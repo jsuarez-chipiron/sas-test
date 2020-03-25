@@ -27,6 +27,9 @@ steps:
     sudo npm install sfdx-cli --global
     sfdx --version
     sfdx plugins --core
+    git clone https://github.com/psodergren/sfdx-lexemail $(Agent.HomeDirectory)/sfdx-lexemail
+    sfdx plugins:link $(Agent.HomeDirectory)/sfdx-lexemail
+    sfdx plugins
   displayName: 'Install SFDX'
 
 - script: |
