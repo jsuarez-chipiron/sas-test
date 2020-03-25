@@ -5,6 +5,7 @@
 package.xml
 **/destructiveChangesPost.xml
 **/destructiveChangesPre.xml
+**/emails/**
 
 # LWC configuration files
 **/jsconfig.json
