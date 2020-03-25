@@ -39,9 +39,7 @@ steps:
   displayName: 'Setup Org'
 
 - script: |
-    if [ -e ./$(PACKAGE_FOLDER)/EmailTemplate.json ]; then
-      sfdx force:data:tree:import -f ./$(PACKAGE_FOLDER)/EmailTemplate.json
-    fi
+    sfdx email:push
   displayName: 'Import email templates'
 
 - script: |
