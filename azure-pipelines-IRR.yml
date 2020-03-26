@@ -55,7 +55,7 @@ steps:
 - script: |
     numCls="`find ./ -name '*.cls' -not -path './sfdx/*' | wc -l`"
     if [ $numCls -gt 0 ]; then 
-      sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat junit --outputdir $(Common.TestResultsDirectory) --codecoverage --testlevel RunLocalTests
+      sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat junit --outputdir $(Common.TestResultsDirectory) --codecoverage --testlevel RunLocalTests --synchronous
     else 
       echo "Test skipped due to no classes"
     fi
