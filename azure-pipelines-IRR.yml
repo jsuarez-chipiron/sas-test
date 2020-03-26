@@ -24,7 +24,7 @@ steps:
     secureFile: 'ci_cert.key'
 
 - script: |
-    sudo npm install sfdx-cli --global
+    sudo npm install sfdx-cli@7.50.0 --global
     sfdx --version
     sfdx plugins --core
     git clone https://github.com/psodergren/sfdx-lexemail $(Agent.HomeDirectory)/sfdx-lexemail
@@ -55,7 +55,7 @@ steps:
 - script: |
     numCls="`find ./ -name '*.cls' -not -path './sfdx/*' | wc -l`"
     if [ $numCls -gt 0 ]; then 
-      sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat junit --outputdir $(Common.TestResultsDirectory) --codecoverage --testlevel RunLocalTests --synchronous
+      sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat junit --outputdir $(Common.TestResultsDirectory) --codecoverage --testlevel RunLocalTests
     else 
       echo "Test skipped due to no classes"
     fi
