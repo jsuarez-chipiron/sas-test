@@ -108,9 +108,10 @@ steps:
     if [ -e ./$(PACKAGE_FOLDER)/destructiveChangesPost.xml ]; then
       cp ./$(PACKAGE_FOLDER)/destructiveChangesPost.xml ./package-md/destructiveChangesPost.xml
     fi
-    if [ -e ./$(PACKAGE_FOLDER)/EmailTemplate.json ]; then
-      mv ./$(PACKAGE_FOLDER)/EmailTemplate.json $(Build.ArtifactStagingDirectory)/EmailTemplate.json
+    if [ ! -d ./$(PACKAGE_FOLDER)/emails ]; then
+      mkdir ./$(PACKAGE_FOLDER)/emails
     fi
+    cp ./$(PACKAGE_FOLDER)/emails $(Build.ArtifactStagingDirectory)/emails
   displayName: 'Convert to metadata package'
 
 - task: ArchiveFiles@2
