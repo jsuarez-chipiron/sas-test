@@ -12,9 +12,13 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
     private static final String MESSAGE_STATUS_PAUSED = 'Paused';
     private static final String MESSAGE_STATUS_FILTERED = 'Filtered';
 
+    @TestVisible
     protected List<IRR_MOD_Message> messages = new List<IRR_MOD_Message>();
 
+    @TestVisible
     protected List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
+
+    abstract String getEventName();
 
     /**
      * @author Niklas Lundkvist, Deloitte
@@ -65,10 +69,10 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
         List<IRR_SVC_SFMCService.SMSMessage> SFMCSMSMessages = new List<IRR_SVC_SFMCService.SMSMessage>();
         for (IRR_MOD_Message message : messages) {
             if (message.status != MESSAGE_STATUS_DEFAULT) continue;
-            if (message.type == IRR_MOD_Message.MessageType.SMS && message.passengerInfo.hasPhoneNumber) {
+            if (message.channel == IRR_MOD_Message.MessageChannel.SMS) {
                 SFMCSMSMessages.add(new IRR_SVC_SFMCService.SMSMessage(message));
             }
-            else if (message.type == IRR_MOD_Message.MessageType.Email && message.passengerInfo.hasEmailAddress) {
+            else if (message.channel == IRR_MOD_Message.MessageChannel.Email) {
                 //TODO WIP
             }
         }
@@ -145,13 +149,13 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
         Map<String, Object> templateParams = (Map<String,Object>) JSON.deserializeUntyped(serializedVariables);
 
         if (sendSMSMessage) {
-            IRR_MOD_Message smsMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageType.SMS,
-                    templateParams, smsTemplateName, flowVariables.passengerInfo);
+            IRR_MOD_Message smsMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.SMS,
+                    templateParams, smsTemplateName, flowVariables.passengerInfo, getEventName());
             messages.add(smsMessage);
         }
         if (sendEmailMessage) {
-            IRR_MOD_Message emailMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageType.Email,
-                    templateParams,smsTemplateName, flowVariables.passengerInfo);
+            IRR_MOD_Message emailMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.Email,
+                    templateParams,smsTemplateName, flowVariables.passengerInfo, getEventName());
             messages.add(emailMessage);
         }
     }
@@ -173,6 +177,4 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
     public interface IConstructable {
         IRR_EVT_IEventProcessor newInstance(Object eventInfo);
     }
-
-    public class EventProcessingException extends Exception { }
 }

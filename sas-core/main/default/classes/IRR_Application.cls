@@ -36,7 +36,7 @@ public class IRR_Application {
     public static final fflib_Application.SelectorFactory Selector =
             new fflib_Application.SelectorFactory(
                     new Map<SObjectType, Type> {
-                            SFMC_SMSDefinition__mdt.SObjectType => IRR_SEL_SMSMessageDefinitionsSelector.class,
+                            SFMC_SMSDefinition__mdt.SObjectType => IRR_SEL_SMSDefinitionsSelector.class,
                             IRR_DelayLog__c.SObjectType => IRR_SEL_DelayLogsSelector.class
                     }
             );

@@ -12,25 +12,17 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
 
     private static final String NAMED_CREDENTIAL = 'callout:SAS_MC_API';
 
-    private final C_IIntegrationExecutor integrationExecutor =
-            IRR_Application.IntegrationExecutorBuilder.newInstance(IRR_Application.IntegrationType.REST)
-                    .setBaseURL(NAMED_CREDENTIAL)
-                    .build();
-
-    /**
-     * @author Niklas Lundkvist, Deloitte
-     * @date 2020
-     *
-     * @description Creates a SMS Message instance using provided parameters and calls the bulkified implementation.
-     *
-     * @param recipient Phone Number of recipient
-     * @param contactKey Contact key to relate the message to in SFMC
-     * @param content Message content
-     */
-    public void sendSMSMessage(String recipient, String contactKey, String content) {
-        IRR_SVC_SFMCService.SMSMessage message =
-                new IRR_SVC_SFMCService.SMSMessage(content, recipient, contactKey);
-        IRR_SVC_SFMCService.sendSMSMessages(new List<IRR_SVC_SFMCService.SMSMessage>{message});
+    private static C_IIntegrationExecutor integrationExecutor {
+        get {
+            if (integrationExecutor == null) {
+                integrationExecutor =
+                        IRR_Application.IntegrationExecutorBuilder.newInstance(IRR_Application.IntegrationType.REST)
+                                .setBaseURL(NAMED_CREDENTIAL)
+                                .build();
+            }
+            return integrationExecutor;
+        }
+        private set;
     }
 
     /**
@@ -50,7 +42,7 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
             Map<String, Object> requestBody = createSMSRequestBody(definition, scopedMessages);
 
             String responseString = integrationExecutor.executeRequest(
-                    SMS_ENDPOINT, C_IntegrationExecutor.Method.GET, requestBody, null);
+                    SMS_ENDPOINT, C_IntegrationExecutor.Method.POST, requestBody, null);
 
             IRR_SVC_SFMCService.SFMCResponse response = (IRR_SVC_SFMCService.SFMCResponse)
                     JSON.deserialize(responseString, IRR_SVC_SFMCService.SFMCResponse.class);
@@ -81,7 +73,7 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
                 new Map<String, List<IRR_SVC_SFMCService.SMSMessage>>();
         for (IRR_SVC_SFMCService.SMSMessage message : messages) {
             for (String code : smsDefinitionsCache.keySet()) {
-                if (!message.recipient.startsWith(code)) continue;
+                if (code != null && !message.recipient.startsWith(code)) continue;
                 String definition = smsDefinitionsCache.get(code);
                 if (!smsMessagesBySendDefinitions.containsKey(definition)) {
                     smsMessagesBySendDefinitions.put(definition, new List<IRR_SVC_SFMCService.SMSMessage>());
@@ -101,7 +93,7 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
      */
     private void retrieveSMSDefinitions() {
         smsDefinitionsCache = new Map<String, String>();
-        List<SFMC_SMSDefinition__mdt> smsDefinitions = IRR_SEL_SMSMessageDefinitionsSelector.newInstance()
+        List<SFMC_SMSDefinition__mdt> smsDefinitions = IRR_SEL_SMSDefinitionsSelector.newInstance()
                 .getAllSMSDefinitions();
         for (SFMC_SMSDefinition__mdt definition : smsDefinitions) {
             smsDefinitionsCache.put(definition.SFMC_CountryPrefix__c, definition.SFMC_DefinitionKey__c);

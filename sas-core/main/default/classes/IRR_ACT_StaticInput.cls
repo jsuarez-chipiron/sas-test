@@ -2,7 +2,7 @@
 * @author Niklas Lundkvist, Deloitte
 * @date 2020
 *
-* @description TODO
+* @description Container class for Static Input Apex Action.
 */
 
 public class IRR_ACT_StaticInput {
@@ -13,7 +13,7 @@ public class IRR_ACT_StaticInput {
      * @author Niklas Lundkvist, Deloitte
      * @date 2020
      *
-     * @description Returns the static action output variable. This variable is required to be set.
+     * @description Workaround to provide Apex Defined object inputs for a Flow.
      *          *Warning* This action requires Apex setup and is not bulkified.
      *
      * @return Action Output variable
@@ -22,16 +22,4 @@ public class IRR_ACT_StaticInput {
     public static List<IRR_MOD_FlowVariables> getActionOutput() {
         return new List<IRR_MOD_FlowVariables>{actionOutput};
     }
-    /*@InvocableMethod
-    public static List<StaticOutput> deserializeObject() {
-        StaticOutput output = new StaticOutput();
-        output.flowVariables = actionOutput;
-        return new List<StaticOutput>{output};
-    }
-
-    public class StaticOutput {
-        @InvocableVariable
-        public List<IRR_MOD_FlowVariables> flowVariables;
-    }*/
-
 }

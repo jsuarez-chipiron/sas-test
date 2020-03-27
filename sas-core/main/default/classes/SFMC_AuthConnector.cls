@@ -25,10 +25,10 @@ global class SFMC_AuthConnector extends C_LocalAuthConnector {
                 'client_secret' => password
         };
         if (String.isNotBlank(param1)) {
-            bodyParams.put('scope', param1);
+            bodyParams.put('account_id', param2);
         }
         if (String.isNotBlank(param2)) {
-            bodyParams.put('account_id', param2);
+            bodyParams.put('scope', param1);
         }
         request.setHeader('Content-Type', 'application/json');
         request.setBody(JSON.serialize(bodyParams));

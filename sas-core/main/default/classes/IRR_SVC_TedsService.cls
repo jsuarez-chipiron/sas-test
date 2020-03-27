@@ -12,12 +12,8 @@ public class IRR_SVC_TedsService {
 
     public static final String BOOKING_STATUS_CONFIRMED = 'Confirmed';
 
-    public static IRR_MOD_TedsBooking getBookingDetails(String bookingId) {
-        return service().getBookingDetails(bookingId);
-    }
-
-    public static List<IRR_MOD_TedsBooking> getBookingDetailsForFlight(String flightId) {
-        return service().getBookingDetailsForFlight(flightId);
+    public static List<IRR_MOD_PassengerInfo> getPassengerInfosForBooking(String bookingId) {
+        return service().getPassengerInfosForBooking(bookingId);
     }
 
     public static List<IRR_MOD_PassengerInfo> getPassengerInfosForFlight(String flightId) {

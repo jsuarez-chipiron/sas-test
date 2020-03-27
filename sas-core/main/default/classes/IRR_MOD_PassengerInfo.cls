@@ -24,6 +24,8 @@ public class IRR_MOD_PassengerInfo {
     public String emailAddress;
 
     @AuraEnabled
+    public Boolean hasThisSegment;
+    @AuraEnabled
     public IRR_MOD_SegmentInfo thisSegment;
 
     @AuraEnabled

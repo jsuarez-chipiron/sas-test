@@ -7,10 +7,6 @@
 
 public class IRR_SVC_SFMCService {
 
-    public static void sendSMSMessage(String recipient, String contactKey, String content) {
-        service().sendSMSMessage(recipient, contactKey, content);
-    }
-
     public static void sendSMSMessages(List<IRR_SVC_SFMCService.SMSMessage> messages) {
         service().sendSMSMessages(messages);
     }

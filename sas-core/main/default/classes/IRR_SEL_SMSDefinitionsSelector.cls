@@ -5,11 +5,11 @@
 * @description Selector class for the SMS Definition custom metadata object.
 */
 
-public class IRR_SEL_SMSMessageDefinitionsSelector extends fflib_SObjectSelector
-        implements IRR_SEL_ISMSMessageDefinitionsSelector {
+public class IRR_SEL_SMSDefinitionsSelector extends fflib_SObjectSelector
+        implements IRR_SEL_ISMSDefinitionsSelector {
 
-    public static IRR_SEL_ISMSMessageDefinitionsSelector newInstance() {
-        return (IRR_SEL_ISMSMessageDefinitionsSelector)
+    public static IRR_SEL_ISMSDefinitionsSelector newInstance() {
+        return (IRR_SEL_ISMSDefinitionsSelector)
                 IRR_Application.Selector.newInstance(SFMC_SMSDefinition__mdt.SObjectType);
     }
 

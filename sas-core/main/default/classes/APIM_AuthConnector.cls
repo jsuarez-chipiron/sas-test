@@ -3,7 +3,7 @@
  * @date 2019-11-25
  * @description Implementation of C:LocalAuthConnector used to authenticate to APIM with OAuth2.0
  */
-global with sharing class APIM_AuthConnector extends C_LocalAuthConnector{
+global with sharing class APIM_AuthConnector extends C_LocalAuthConnector {
     /**
      * Authenticates against the service
      * @param username The username to use when authenticating
