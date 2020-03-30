@@ -36,15 +36,18 @@ public class IRR_SVC_EventService {
 
         public void add(IRR_MOD_Message message) {
             IRR_CommunicationLog__c log = new IRR_CommunicationLog__c();
-            log.IRR_FlightId__c = message.passengerInfo.thisSegment.flightId;
+            if (message.passengerInfo.thisSegment != null) {
+                log.IRR_FlightId__c = message.passengerInfo.thisSegment.flightId;
+            }
             log.IRR_BookingReference__c = message.passengerInfo.bookingReference;
             log.IRR_CodsId__c = message.passengerInfo.codsId;
-            log.IRR_Channel__c = String.valueOf(message.type);
+            log.IRR_Channel__c = String.valueOf(message.channel);
             log.IRR_ContactKey__c = message.contactKey;
             log.IRR_MessageKey__c = message.messageKey;
             log.IRR_Recipient__c = message.recipient;
             log.IRR_Status__c = message.status;
             //TODO CONTENT?
+            System.debug(log);
             unitOfWork.registerNew(log);
         }
     }

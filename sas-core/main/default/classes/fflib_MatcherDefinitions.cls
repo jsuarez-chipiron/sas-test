@@ -1094,9 +1094,57 @@ public with sharing class fflib_MatcherDefinitions
 		}
 	}
 
+	public class MapWithPath implements fflib_IMatcher {
+		private Map<String, Object> objectByPaths;
+
+		public MapWithPath(Map<String, Object> objectByPaths) {
+			this.objectByPaths = validate(objectByPaths);
+		}
+
+		public Boolean matches(Object arg) {
+			for (String path : objectByPaths.keySet()) {
+				Object toMatch = objectByPaths.get(path);
+				Object result = parseMapPath(path, arg);
+				if (result == null || result != toMatch) return false;
+			}
+			return true;
+		}
+
+		private Map<String, Object> validate(Map<String, Object> arg) {
+			if (arg == null || arg.isEmpty())
+			{
+				throw new fflib_ApexMocks.ApexMocksException('Arg cannot be null/empty: ' + arg);
+			}
+
+			return arg;
+		}
+	}
+
 	/*
 	 * Helpers
 	 */
+
+	private static Object parseMapPath(String path, Object argMap) {
+		List<String> pathComponents = path.split('\\.');
+		Object result = argMap;
+		for (String component : pathComponents) {
+			String componentBeforeIndex = component.substringBeforeLast('[');
+			if (result != null && result instanceof Map<String, Object>) {
+				Map<String, Object> obj = (Map<String, Object>) result;
+				result = obj.get(componentBeforeIndex);
+				if (result instanceof List<Object> && component.contains('[') && component.contains(']')) {
+					List<Object> listObjects = (List<Object>) result;
+					Integer index = Integer.valueOf(component.substringBetween('[',']'));
+					if (listObjects.size() > index) result = listObjects[index];
+				}
+			}
+			else {
+				return null;
+			}
+
+		}
+		return result;
+	}
 
 	private static Object validateNotNull(Object arg)
 	{

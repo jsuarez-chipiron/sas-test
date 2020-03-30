@@ -7,14 +7,19 @@
 
 public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
 
-    private static final String ERROR_FLIGHT_ID = 'Flight Id is missing from event info: {0}';
-    private static final String ERROR_DELAY_MINUTES = 'Delay Minutes is missing from event info: {0}';
-    private static final String ERROR_DEPT_TIME = 'Delayed time is missing from event info: {0}';
-    private static final String ERROR_SCHD_TIME = 'Scheduled time is missing from event info: {0}';
+    private static final String ERROR_FLIGHT_ID = 'Flight Id is missing from event: {0}';
+    private static final String ERROR_DELAY_MINUTES = 'Delay minutes is missing from event: {0}';
+    private static final String ERROR_DEPT_TIME = 'Delayed time is missing from event: {0}';
+    private static final String ERROR_SCHD_TIME = 'Scheduled time is missing from event: {0}';
 
     private static final String EVENT_FLOW_NAME = 'IRR_EVT_DelayFlow';
 
+    @TestVisible
     private IRR_MOD_DelayInfo delayInfo;
+
+    public String getEventName(){
+        return 'Delay';
+    }
 
     /**
      * @author Niklas Lundkvist, Deloitte

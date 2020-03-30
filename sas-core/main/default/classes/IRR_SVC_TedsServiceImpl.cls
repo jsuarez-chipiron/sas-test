@@ -14,12 +14,20 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
     private static final String BOOKING_ENDPOINT_TEMPLATE = '/teds-booking/bookings/{0}';
     private static final String BOOKINGS_FILTER_ENDPOINT = '/teds-booking/bookings';
 
-    private final C_IIntegrationExecutor integrationExecutor =
-            IRR_Application.IntegrationExecutorBuilder.newInstance(IRR_Application.IntegrationType.REST)
-                    .setBaseURL(NAMED_CREDENTIAL)
-                    .setAPIVersion(API_VERSION)
-                    .setAPIMSubscriptionKey(APIM_SUBSCRIPTION_KEY)
-                    .build();
+    private static C_IIntegrationExecutor integrationExecutor {
+        get {
+            if (integrationExecutor == null) {
+                integrationExecutor =
+                        IRR_Application.IntegrationExecutorBuilder.newInstance(IRR_Application.IntegrationType.REST)
+                                .setBaseURL(NAMED_CREDENTIAL)
+                                .setAPIVersion(API_VERSION)
+                                .setAPIMSubscriptionKey(APIM_SUBSCRIPTION_KEY)
+                                .build();
+            }
+            return integrationExecutor;
+        }
+        private set;
+    }
 
     /**
      * @author Niklas Lundkvist, Deloitte
@@ -31,12 +39,28 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      *
      * @return Retrieved Booking Details
      */
-    public IRR_MOD_TedsBooking getBookingDetails(String bookingId) {
+    private IRR_MOD_TedsBooking getBookingDetails(String bookingId) {
         String endpointURL = String.format(BOOKING_ENDPOINT_TEMPLATE, new List<String>{bookingId});
         String response = integrationExecutor
                 .executeRequest(endpointURL, C_IntegrationExecutor.Method.GET, null, null);
         IRR_MOD_TedsBooking parsedResponse = IRR_MOD_TedsBooking.parse(response);
         return parsedResponse;
+    }
+
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Retrieves booking details and creates Passenger Infos for all passengers in a booking.
+     *
+     * @param bookingId Flight Id to retrieve bookings for
+     *
+     * @return List of Retrieved Booking Details
+     */
+    public List<IRR_MOD_PassengerInfo> getPassengerInfosForBooking(String bookingId) {
+        IRR_MOD_TedsBooking bookings = getBookingDetails(bookingId);
+        return initiatePassengerInfos(new List<IRR_MOD_TedsBooking>{bookings}, null);
     }
 
     /**
@@ -49,7 +73,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      *
      * @return List of retrieved Booking Details
      */
-    public List<IRR_MOD_TedsBooking> getBookingDetailsForFlight(String flightId) {
+    private List<IRR_MOD_TedsBooking> getBookingDetailsForFlight(String flightId) {
         Map<String, String> queryParams = new Map<String, String>{
                 'flightId' => flightId
         };
@@ -63,7 +87,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      * @author Niklas Lundkvist, Deloitte
      * @date 2020
      *
-     * @description Retrieves booking details and creates Passenger Infos for a flight id.
+     * @description Retrieves booking details and creates Passenger Infos for all passengers of a flight.
      *
      * @param flightId Flight Id to retrieve bookings for
      *
@@ -73,7 +97,6 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         List<IRR_MOD_TedsBooking> tedsBookings = getBookingDetailsForFlight(flightId);
         return initiatePassengerInfos(tedsBookings, flightId);
     }
-
 
 
     /**
@@ -178,20 +201,23 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         passengerInfo.bookingReference = booking.reference;
         passengerInfo.codsId = booking.codsId;
 
-        IRR_MOD_TedsBooking.Segments passengerThisSegment;
-        IRR_MOD_TedsBooking.Segments passengerNextSegment;
+        if (tripThisSegment != null) {
+            IRR_MOD_TedsBooking.Segments passengerThisSegment;
+            IRR_MOD_TedsBooking.Segments passengerNextSegment;
 
-        for (IRR_MOD_TedsBooking.Segments segment : passenger.segments) {
-            if (segment.segmentId == tripThisSegment.id) passengerThisSegment = segment;
-            if (tripNextSegment != null && segment.segmentId == tripNextSegment.id) passengerNextSegment = segment;
+            for (IRR_MOD_TedsBooking.Segments segment : passenger.segments) {
+                if (segment.segmentId == tripThisSegment.id) passengerThisSegment = segment;
+                if (tripNextSegment != null && segment.segmentId == tripNextSegment.id) passengerNextSegment = segment;
+            }
+
+            passengerInfo.thisSegment = createSegmentInfo(tripThisSegment, passengerThisSegment);
+
+            if (tripNextSegment!=null && passengerNextSegment!=null) {
+                passengerInfo.nextSegment = createSegmentInfo(tripNextSegment, passengerNextSegment);
+            }
         }
 
-        passengerInfo.thisSegment = createSegmentInfo(tripThisSegment, passengerThisSegment);
-
-        if (tripNextSegment!=null && passengerNextSegment!=null) {
-            passengerInfo.nextSegment = createSegmentInfo(tripNextSegment, passengerNextSegment);
-        }
-
+        passengerInfo.hasThisSegment = passengerInfo.thisSegment != null;
         passengerInfo.hasPhoneNumber = String.isNotBlank(passengerInfo.phoneNumber);
         passengerInfo.hasEmailAddress = String.isNotBlank(passengerInfo.emailAddress);
         passengerInfo.hasNextSegment = passengerInfo.nextSegment != null;

@@ -3,16 +3,13 @@
   <title></title> 
  </head> 
  <body style="height: auto; min-height: auto;">
-  Important information about your SAS booking ABC123
-  <br/>
-  <br/>Hi!
-  <br/>
-  <br/>Your Flight SK2315 CPH - OSL 13 Sep, with departure time 06.00 is delayed to: 06:10 (arrival time 07.10)
-  <br/>
-  <br/>We apologize for this change. Please check in according to original departure time.
-  <br/>
-  <br/>Read more about your rights here https://www.flysas.com/en/legal-info/eu-passenger-rights/
-  <br/>
-  <br/>Regards, SAS
+  Important information about your SAS booking ABC123 
+  <br /> Hi! 
+  <br /> Your Flight SK2315 CPH - OSL 13 Sep, with departure time 06.00 is delayed to: 06:10 ( arrival time 07.10) 
+  <br /> We apologize for this change. 
+  <br /> Please check in according to original departure time. 
+  <br /> Read more about your rights here 
+  <a href="https://www.flysas.com/en/legal-info/eu-passenger-rights/">https://www.flysas.com/en/legal-info/eu-passenger-rights/</a> 
+  <br /> Regards, SAS
  </body>
 </html>

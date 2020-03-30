@@ -43,26 +43,16 @@ public class fflib_MatcherDefinitionsTest
 	
 	static
 	{
-		Map<String, Schema.SObjectType> globalDescribe = Schema.getGlobalDescribe();
+		ACCOUNT_OBJECT_TYPE = Account.SObjectType;
+		OPPORTUNITY_OBJECT_TYPE = Opportunity.SObjectType;
+		GROUP_OBJECT_TYPE = Group.SObjectType;
 
-		ACCOUNT_OBJECT_TYPE = globalDescribe.get('Account');
-		OPPORTUNITY_OBJECT_TYPE = globalDescribe.get('Opportunity');
-		GROUP_OBJECT_TYPE = globalDescribe.get('Group');
-		
-		SObject accountRecord = ACCOUNT_OBJECT_TYPE.newSObject();
-		accountRecord.put('Name', 'MatcherDefinitionTestAccount' + System.now());
+		ACCOUNT_RECORD = new Account(Name = 'MatcherDefinitionTestAccount' + System.now(), Id = fflib_IDGenerator.generate(ACCOUNT_OBJECT_TYPE));
 
-		insert accountRecord;
-		Id accountId = accountRecord.Id;
-
-		ACCOUNT_RECORD = Database.query('SELECT Id, Name FROM Account WHERE Id = :accountId LIMIT 1');
-        
 		GROUP_RECORDS = new list<Group> {
-			new Group(Name = 'MatcherDefnTestGroup0'+System.now(), DeveloperName='MatcherDefnTestGroup0'+System.now().getTime(),Type='Queue'),
-			new Group(Name = 'MatcherDefnTestGroup1'+System.now(), DeveloperName='MatcherDefnTestGroup1'+System.now().getTime(),Type='Queue')
+			new Group(Id = fflib_IDGenerator.generate(GROUP_OBJECT_TYPE), Name = 'MatcherDefnTestGroup0'+System.now(), DeveloperName='MatcherDefnTestGroup0'+System.now().getTime(),Type='Queue'),
+			new Group(Id = fflib_IDGenerator.generate(GROUP_OBJECT_TYPE), Name = 'MatcherDefnTestGroup1'+System.now(), DeveloperName='MatcherDefnTestGroup1'+System.now().getTime(),Type='Queue')
 		};
-		insert GROUP_RECORDS;    
-        
 	}
 
 	@isTest
@@ -1198,5 +1188,75 @@ public class fflib_MatcherDefinitionsTest
 		{
 			System.assertEquals('Arg cannot be null: null', e.getMessage());
 		}
+	}
+
+	@isTest
+	private static void constructMapWithPath_WithNullArg_ThrowsException()
+	{
+		try
+		{
+			new fflib_MatcherDefinitions.MapWithPath(null);
+			System.assert(false, 'Expected exception');
+		}
+		catch (fflib_ApexMocks.ApexMocksException e)
+		{
+			System.assertEquals('Arg cannot be null/empty: null', e.getMessage());
+		}
+	}
+
+	@isTest
+	private static void constructMapWithPath_WithEmptyArg_ThrowsException()
+	{
+		try
+		{
+			new fflib_MatcherDefinitions.MapWithPath(new Map<String, Object>());
+			System.assert(false, 'Expected exception');
+		}
+		catch (fflib_ApexMocks.ApexMocksException e)
+		{
+			System.assertEquals('Arg cannot be null/empty: {}', e.getMessage());
+		}
+	}
+
+	@isTest
+	private static void whenMapWithPathsShouldReturnCorrectResults()
+	{
+		String matchingString = 'TEST_STRING';
+		Date matchingDate = Date.today();
+		Map<String, Object> successFieldMap = new Map<String, Object> {
+				'test' => new Map<String, Object>{
+						'objects' => new List<Object> {
+								new Map<String, Object> {
+										'path' => matchingString,
+										'anotherField' => 'anotherValue'
+								}
+						},
+						'dateTest' => matchingDate,
+						'otherField' => 'otherValue'
+				}
+		};
+		Map<String, Object> failureFieldMap = new Map<String, Object> {
+				'otherField' => 'otherValue'
+		};
+
+		Map<String, Object> toMatch = new Map<String, Object> {
+				'test.objects[0].path' => matchingString,
+				'test.dateTest' => matchingDate
+		};
+
+		Map<String, Object> failToMatch = new Map<String, Object> {
+				'completelyDifferent' => 'someValue'
+		};
+
+		fflib_IMatcher matcher = new fflib_MatcherDefinitions.MapWithPath(toMatch);
+
+		System.assert(!matcher.matches(null));
+		System.assert(!matcher.matches(new Map<String, Object>()));
+		System.assert(!matcher.matches(failureFieldMap));
+		System.assert(!matcher.matches('NotAMap'));
+
+		System.assert(matcher.matches(successFieldMap));
+
+		System.assert(!new fflib_MatcherDefinitions.MapWithPath(failToMatch).matches(successFieldMap));
 	}
 }
