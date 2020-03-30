@@ -27,6 +27,8 @@ public class IRR_SVC_SFMCService {
 
     public class MessageResponse {
         public String messageKey;
+        public Integer errorcode; //The error code in case of an error
+        public String message; //The error message in case of an error
     }
 
     public class SMSMessage {
@@ -34,6 +36,8 @@ public class IRR_SVC_SFMCService {
         public String recipient;
         public String contactKey;
         public String messageKey;
+        public Integer errorCode; //The error code returned by marketing cloud in case of an error
+        public String errorMessage; //The error message returned by marketing cloud in case of an error
 
         public SMSMessage(String content, String recipient, String contactKey) {
             this.content = content;

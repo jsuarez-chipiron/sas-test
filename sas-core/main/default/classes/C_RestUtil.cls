@@ -58,8 +58,19 @@ public with sharing class C_RestUtil {
      * Sets the transaction UUID if mapped in the X-Transaction header
      */
     public static void init(){
+        init(true);
+    }
+
+    /**
+     * Initalizes the REST utils by doing the following
+     * Sets the timestamp in the logging framework
+     * Sets the savespoint, if specified
+     * Sets the transaction UUID if mapped in the X-Transaction header
+     * @param setSavepoint Whether to set a savepoint as part of the init. (Consumes DML call so transactions with following callouts should avoid setting a savepoint)
+     */
+    public static void init(Boolean setSavepoint){
         C_Log.init();
-        setSavepoint();
+        if(setSavepoint)setSavepoint();
         String t = RestContext.request.headers.get('X-Transaction');
         if(!String.isBlank(t))C_Util.setUUID(t);
     }
@@ -85,12 +96,11 @@ public with sharing class C_RestUtil {
             sp = null;
         }
         if(e instanceof RestException){
-            RestContext.response.responseBody = Blob.valueOf(((RestException)e).getMessage());
-            RestContext.response.statusCode = ((RestException)e).statusCode;
+            RestException re = (RestException)e;
+            set(re.statusCode,re.getMessage());
         }
         else {
-            RestContext.response.responseBody = Blob.valueOf('Internal Server Error');
-            RestContext.response.statusCode = 500;
+            set(500,'Internal Server Error');
         }
         C_Log.logException(e, null, getLogHttpData());
     }
@@ -100,8 +110,17 @@ public with sharing class C_RestUtil {
      * @param msg The message given after the successful call. 	 
 	 */    
     public static void setOK(String msg){
+        set(200,msg);
+    }
+
+    /**
+     * Sets the response to the status code and the provided message
+     * @param statusCode The status code to set for the response
+     * @param msg The message to set for the response
+     */
+    public static void set(Integer statusCode,String msg){
         RestContext.response.responseBody = Blob.valueOf(msg);
-        RestContext.response.statusCode = 200;
+        RestContext.response.statusCode = statusCode;
     }
 
     /**

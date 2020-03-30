@@ -1,0 +1,149 @@
+/**
+ * SMS Gateway implementation for MID
+ * Allows the sending of SMS messages routed via Marketing Cloud
+ * @author Peter Södergren
+ */
+@RestResource(urlMapping='/mid/sendsms')
+global without sharing class MID_SendSMS {
+    /**
+     * POST
+     * Allows the caller to send an SMS to multiple recipients routed via marketing cloud
+     */
+    @HttpPost
+    global static void doPost(){
+        if(System.getApplicationReadWriteMode()==System.ApplicationReadWriteMode.READ_ONLY)C_RestUtil.set(503,'Service Unavailable');
+        else {
+            try{
+                C_RestUtil.init(false);
+                SendSMSRequest req = (SendSMSRequest)C_RestUtil.getJSONBody(SendSMSRequest.class);
+                if(String.isBlank(req.message))C_RestUtil.badRequest('Must specify a message');
+                if(String.isBlank(req.type))req.type='MID';
+                if(req.recipients==null || req.recipients.size()==0)C_RestUtil.badRequest('Must specify a recipients');
+
+                Integer recSz = req.recipients.size();
+                SMSResultWrapper[] resultWrapperList = new SMSResultWrapper[recSz];
+                List<IRR_SVC_SFMCService.SMSMessage> messages = new List<IRR_SVC_SFMCService.SMSMessage>();
+                for(Integer i=0;i<recSz;i++){
+                    SendSMSRecipient rec = req.recipients[i];
+                    SMSResultWrapper smsw = new SMSResultWrapper();
+                    resultWrapperList[i] = smsw;
+                    if(String.isBlank(rec.phoneNumber)){
+                        smsw.errorCode = 40001;
+                        smsw.errorMessage = 'No phone number specified';
+                        //TODO maybe add additional validations
+                    }
+                    else {
+                        IRR_SVC_SFMCService.SMSMessage sms = new IRR_SVC_SFMCService.SMSMessage(req.message,rec.phoneNumber,rec.phoneNumber);
+                        messages.add(sms);
+                        smsw.smsIdx = messages.size()-1;
+                    }
+                }
+                if(!messages.isEmpty())IRR_SVC_SFMCService.sendSMSMessages(messages);
+
+                SendSMSResponse resp = new SendSMSResponse();
+                resp.result = new SendSMSResult[recSz];
+                for(Integer i=0;i<recSz;i++){
+                    SMSResultWrapper smsw = resultWrapperList[i];
+                    SendSMSResult res = new SendSMSResult();
+                    if(smsw.smsIdx!=null){
+                        IRR_SVC_SFMCService.SMSMessage sms = messages[smsw.smsIdx];
+                        res.success = sms.errorCode==null || sms.errorCode==0;
+                        res.messageKey = sms.messageKey;
+                        res.errorCode = sms.errorCode;
+                        res.errorMessage = sms.errorMessage;
+                    }
+                    else {
+                        res.success = false;
+                        res.errorCode = smsw.errorCode;
+                        res.errorMessage = smsw.errorMessage;
+                    }
+                    resp.result[i] = res;
+                }
+                //TODO add to communications log
+                C_RestUtil.set(200, JSON.serialize(resp));
+
+            }
+            catch(Exception e){
+                C_RestUtil.handleException(e);
+            }
+        }
+    }
+    /**
+     * Utility class to help collect the response for sms sends
+     */
+    class SMSResultWrapper{
+        /**
+         * Custom error code set before sending the sms to marketing cloud
+         */
+        Integer errorCode;
+        /**
+         * Custom error message set before sending the sms to marketing cloud
+         */
+        String errorMessage;
+        /**
+         * THe index of the SMS object in the messages list
+         */
+        Integer smsIdx;
+    }
+
+    /**
+     * Representation of the JSON Request data for sending SMS
+     */
+    class SendSMSRequest{
+        /**
+         * The message to send
+         */
+        String message;
+        /**
+         * A custom id to set for all messages in the request (optional)
+         */
+        String messageGroupId;
+        /**
+         * The type of message being sent (optional)
+         */
+        String type;
+        /**
+         * The list of recipients of the message
+         */
+        SendSMSRecipient[] recipients;
+    }
+    /**
+     * Representation of the JSON request data for each recipient of an sms message
+     */
+    class SendSMSRecipient{
+        /**
+         * The phone number to which to send the sms message
+         */
+        String phoneNumber;
+    }
+    /**
+     * Representation of the JSON response data for sending SMS
+     */
+    class SendSMSResponse{
+        /**
+         * The result for forwarding each message for each recipient in the request (in the same order as in the request)
+         */
+        SendSMSResult[] result;
+    }
+    /**
+     * Representation of the JSON response data contain the result of a single recipient
+     */
+    class SendSMSResult{
+        /**
+         * Whether the message was forawrded to Marketing Cloud successfully
+         */
+        Boolean success;
+        /**
+         * The id of the message sent (only set if successful)
+         */
+        String messageKey;
+        /**
+         * The error code (only set if not successful)
+         */
+        Integer errorCode;
+        /**
+         * The error message (only set if not successful)
+         */
+        String errorMessage;
+    }
+}

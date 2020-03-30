@@ -27,10 +27,11 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
      * @param contactKey Contact key to relate the message to in SFMC
      * @param content Message content
      */
-    public void sendSMSMessage(String recipient, String contactKey, String content) {
+    public IRR_SVC_SFMCService.SMSMessage sendSMSMessage(String recipient, String contactKey, String content) {
         IRR_SVC_SFMCService.SMSMessage message =
                 new IRR_SVC_SFMCService.SMSMessage(content, recipient, contactKey);
         IRR_SVC_SFMCService.sendSMSMessages(new List<IRR_SVC_SFMCService.SMSMessage>{message});
+        return message;
     }
 
     /**
@@ -42,7 +43,7 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
      *
      * @param messages SMS Message list to send
      */
-    public void sendSMSMessages(List<IRR_SVC_SFMCService.SMSMessage> messages) {
+    public List<IRR_SVC_SFMCService.SMSMessage> sendSMSMessages(List<IRR_SVC_SFMCService.SMSMessage> messages) {
         Map<String, List<IRR_SVC_SFMCService.SMSMessage>> smsMessagesBySendDefinitions =
                 sortMessagesBySendDefinitions(messages);
         for (String definition : smsMessagesBySendDefinitions.keySet()) {
@@ -60,8 +61,11 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
             for (Integer i = 0; i < responsesSize; i++) {
                 IRR_SVC_SFMCService.MessageResponse messageResponse = response.responses[i];
                 scopedMessages[i].messageKey = messageResponse.messageKey;
+                scopedMessages[i].errorCode = messageResponse.errorcode;
+                if(messageResponse.errorcode!=null && messageResponse.errorcode!=0)scopedMessages[i].errorMessage = messageResponse.message;
             }
         }
+        return messages;
     }
 
     /**
