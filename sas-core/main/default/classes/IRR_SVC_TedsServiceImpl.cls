@@ -2,7 +2,7 @@
 * @author Niklas Lundkvist, Deloitte
 * @date 2020
 *
-* @description TODO
+* @description Concrete implementation of Teds Service functionality.
 */
 
 public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {

@@ -2,7 +2,7 @@
 * @author Niklas Lundkvist, Deloitte
 * @date 2020
 *
-* @description TODO
+* @description Concrete implementation of Event functionality.
 */
 
 public class IRR_SVC_EventServiceImpl implements IRR_SVC_IEventService {

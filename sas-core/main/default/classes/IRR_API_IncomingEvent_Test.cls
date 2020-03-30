@@ -2,7 +2,7 @@
 * @author Niklas Lundkvist, Deloitte
 * @date 2020
 *
-* @description TODO
+* @description Test class for the Incoming Event REST API.
 */
 
 @IsTest

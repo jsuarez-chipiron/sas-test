@@ -2,7 +2,7 @@
 * @author Niklas Lundkvist, Deloitte
 * @date 2020
 *
-* @description TODO
+* @description Test class for the DelayProcessor class, also covers parts of EventProcessor abstract class.
 */
 
 @IsTest
