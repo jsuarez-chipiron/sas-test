@@ -32,6 +32,8 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
      *      send definition.
      *
      * @param messages SMS Message list to send
+     *
+     * @return Input Messages list
      */
     public List<IRR_SVC_SFMCService.SMSMessage> sendSMSMessages(List<IRR_SVC_SFMCService.SMSMessage> messages) {
         Map<String, List<IRR_SVC_SFMCService.SMSMessage>> smsMessagesBySendDefinitions =
