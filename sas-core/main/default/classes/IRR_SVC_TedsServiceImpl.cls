@@ -41,9 +41,9 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      */
     private IRR_MOD_TedsBooking getBookingDetails(String bookingId) {
         String endpointURL = String.format(BOOKING_ENDPOINT_TEMPLATE, new List<String>{bookingId});
-        String response = integrationExecutor
+        C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
                 .executeRequest(endpointURL, C_IntegrationExecutor.Method.GET, null, null);
-        IRR_MOD_TedsBooking parsedResponse = IRR_MOD_TedsBooking.parse(response);
+        IRR_MOD_TedsBooking parsedResponse = IRR_MOD_TedsBooking.parse(responseObject.responseBody);
         return parsedResponse;
     }
 
@@ -77,9 +77,9 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         Map<String, String> queryParams = new Map<String, String>{
                 'flightId' => flightId
         };
-        String response = integrationExecutor
+        C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
                 .executeRequest(BOOKINGS_FILTER_ENDPOINT, C_IntegrationExecutor.Method.GET, null, queryParams);
-        List<IRR_MOD_TedsBooking> tedsBookings = IRR_MOD_TedsBooking.parseArray(response);
+        List<IRR_MOD_TedsBooking> tedsBookings = IRR_MOD_TedsBooking.parseArray(responseObject.responseBody);
         return tedsBookings;
     }
 

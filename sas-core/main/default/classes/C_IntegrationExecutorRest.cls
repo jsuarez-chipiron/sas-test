@@ -33,7 +33,7 @@ public class C_IntegrationExecutorRest implements C_IIntegrationExecutor {
      *
      * @return Map structure, empty Map if nothing was returned from the callout
      */
-    public String executeRequest(String path, C_IntegrationExecutor.Method method,
+    public C_IntegrationExecutor.IntegrationResponse executeRequest(String path, C_IntegrationExecutor.Method method,
             Map<String, Object> body, Map<String, Object> queryParams) {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
@@ -51,7 +51,7 @@ public class C_IntegrationExecutorRest implements C_IIntegrationExecutor {
         HttpResponse res = http.send(request);
         String response = String.isNotBlank(res.getBody()) ? res.getBody() : '';
         System.debug(response);
-        return response;
+        return new C_IntegrationExecutor.IntegrationResponse(res.getStatusCode(),response);
     }
 
     public void setRequestHeaders(HttpRequest request, Map<String, String> requestHeaders) {

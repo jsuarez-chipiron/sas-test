@@ -40,11 +40,11 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
             List<IRR_SVC_SFMCService.SMSMessage> scopedMessages = smsMessagesBySendDefinitions.get(definition);
             Map<String, Object> requestBody = createSMSRequestBody(definition, scopedMessages);
 
-            String responseString = integrationExecutor.executeRequest(
+            C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor.executeRequest(
                     SMS_ENDPOINT, C_IntegrationExecutor.Method.POST, requestBody, null);
 
             IRR_SVC_SFMCService.SFMCResponse response = (IRR_SVC_SFMCService.SFMCResponse)
-                    JSON.deserialize(responseString, IRR_SVC_SFMCService.SFMCResponse.class);
+                    JSON.deserialize(responseObject.responseBody, IRR_SVC_SFMCService.SFMCResponse.class);
             Integer responsesSize = response.responses != null && !response.responses.isEmpty() ?
                     response.responses.size() : 0;
 

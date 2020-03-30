@@ -50,7 +50,7 @@ private class MID_SendSMS_Test {
      * Tests sending an SMS with no message
      */
     @isTest private static void sendSMSNoMessage(){
-        setupRequest('{"messageGroupId":"TEST1234567","type":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
+        setupRequest('{"messageGroupId":"TEST1234567","channel":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTNoMessage1'},
             new Integer[]{null},
@@ -67,7 +67,7 @@ private class MID_SendSMS_Test {
      * Tests sending an SMS with no recipients
      */
     @isTest private static void sendSMSNoRecipients(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","type":"MID","recipients":[]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTNoRecipients1'},
             new Integer[]{null},
@@ -85,7 +85,7 @@ private class MID_SendSMS_Test {
      * Tests sending an SMS where the recipient has no phone number
      */
     @isTest private static void sendSMSNoPhoneNumber(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","type":"MID","recipients":[{}]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[{}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTNoPhoneNumber1'},
             new Integer[]{null},
@@ -109,7 +109,7 @@ private class MID_SendSMS_Test {
      * Tests sending an SMS during system maintainence
      */
     @isTest private static void sendSMSSystemMaintainence(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","type":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSystemMaintainence1'},
             new Integer[]{null},
@@ -128,7 +128,7 @@ private class MID_SendSMS_Test {
      * Tests sending a successful SMS to a single recipient
      */
     @isTest private static void sendSuccessfulSMSToSingleRecipient(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","type":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSend1'},
             new Integer[]{null},
@@ -152,7 +152,7 @@ private class MID_SendSMS_Test {
      * Tests sending a failed SMS to a single recipient
      */
     @isTest private static void sendFailedSMSToSingleRecipient(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","type":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSendFail1'},
             new Integer[]{1001},
@@ -176,7 +176,7 @@ private class MID_SendSMS_Test {
      * Tests sending a successful SMS to a single recipient
      */
     @isTest private static void sendSuccessfulSMSToMultipleRecipient(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","type":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSendMulti1','TESTSendMulti2','TESTSendMulti3'},
             new Integer[]{null,null,null},
@@ -208,7 +208,7 @@ private class MID_SendSMS_Test {
      * Tests sending a mixed result SMS to a single recipient
      */
     @isTest private static void sendMixedSMSToMultipleRecipient(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","type":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSendMultiMixed1','TESTSendMultiMixed2','TESTSendMultiMixed3'},
             new Integer[]{null,1001,null},
@@ -240,7 +240,7 @@ private class MID_SendSMS_Test {
      * Tests sending a failed SMS to a multiple recipient
      */
     @isTest private static void sendFailedSMSToMutipleRecipient(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","type":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSendMultiFail1','TESTSendMultiFail2','TESTSendMultiFail3'},
             new Integer[]{1001,1002,1003},

@@ -17,7 +17,7 @@ global without sharing class MID_SendSMS {
                 C_RestUtil.init(false);
                 SendSMSRequest req = (SendSMSRequest)C_RestUtil.getJSONBody(SendSMSRequest.class);
                 if(String.isBlank(req.message))C_RestUtil.badRequest('Must specify a message');
-                if(String.isBlank(req.type))req.type='MID';
+                if(String.isBlank(req.channel))req.channel='MID';
                 if(req.recipients==null || req.recipients.size()==0)C_RestUtil.badRequest('Must specify a recipients');
 
                 Integer recSz = req.recipients.size();
@@ -101,7 +101,7 @@ global without sharing class MID_SendSMS {
         /**
          * The type of message being sent (optional)
          */
-        String type;
+        String channel;
         /**
          * The list of recipients of the message
          */
