@@ -12,9 +12,6 @@ private class IRR_SVC_SFMCService_Test {
     static void testSendSMSMessage() {
         //Set up mocks
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IRR_SVC_ISFMCService serviceMock = (IRR_SVC_ISFMCService) mocks.mock(IRR_SVC_SFMCServiceImpl.class);
-        IRR_Application.Service.setMock(IRR_SVC_ISFMCService.class, serviceMock);
-
         C_IIntegrationExecutorBuilder builderMock = (C_IIntegrationExecutorBuilder) mocks.mock(
                 C_IntegrationExecutorBuilder.class);
         C_IIntegrationExecutor executorMock = (C_IIntegrationExecutor) mocks.mock(C_IntegrationExecutorRest.class);
