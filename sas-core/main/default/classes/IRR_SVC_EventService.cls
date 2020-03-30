@@ -6,6 +6,18 @@
 */
 
 public class IRR_SVC_EventService {
+    /**
+     * The status set for created communication log records without errors
+     */
+    static final String COM_LOG_STATUS_CREATED = 'Created';
+    /**
+     * The status set for created communication log records with errors
+     */
+    static final String COM_LOG_STATUS_ERROR = 'Error';
+    /**
+     * The channel set fior created sms communication log records
+     */
+    static final String COM_LOG_CHANNEL_SMS = 'SMS';
 
     public static void processEvent(String eventType, String payload) {
         service().processEvent(eventType, payload);
@@ -48,6 +60,32 @@ public class IRR_SVC_EventService {
             log.IRR_Status__c = message.status;
             //TODO CONTENT?
             System.debug(log);
+            unitOfWork.registerNew(log);
+        }
+
+        /**
+         * Adds a communication log record for the provided sms message
+         * @param sms The sms message for which to add a communication log record
+         * @param messageType The type of message sent
+         * @param groupExtId The external id of the group of the message sent
+         */
+        public void add(IRR_SVC_SFMCService.SMSMessage sms, String messageType, String groupExtId) {
+            IRR_CommunicationLog__c log = new IRR_CommunicationLog__c();
+            log.IRR_Channel__c = COM_LOG_CHANNEL_SMS;
+            log.IRR_ContactKey__c = sms.contactKey;
+            log.IRR_MessageKey__c = sms.messageKey;
+            log.IRR_Recipient__c = sms.recipient;
+            log.IRR_ExternalId__c = sms.externalId;
+            log.IRR_ExternalGroupId__c = groupExtId;
+            log.IRR_MessageType__c = messageType;
+            if(sms.errorCode==null || sms.errorCode==0){
+                log.IRR_Status__c = COM_LOG_STATUS_CREATED;
+            }
+            else {
+                log.IRR_Status__c = COM_LOG_STATUS_ERROR;
+                log.IRR_StatusCode__c = sms.errorCode;
+                log.IRR_ErrorMessage__c = sms.errorMessage;
+            }
             unitOfWork.registerNew(log);
         }
     }

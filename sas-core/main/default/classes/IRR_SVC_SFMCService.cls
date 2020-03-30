@@ -32,6 +32,7 @@ public class IRR_SVC_SFMCService {
         public String recipient;
         public String contactKey;
         public String messageKey;
+        public String externalId;
         public Integer errorCode; //The error code returned by marketing cloud in case of an error
         public String errorMessage; //The error message returned by marketing cloud in case of an error
 

@@ -22,6 +22,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_ErrorMessage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_ErrorReason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_ExternalGroupId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_ExternalId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>IRR_CommunicationLog__c.IRR_FlightId__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32,7 +52,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_MessageType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>IRR_CommunicationLog__c.IRR_Recipient__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_StatusCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

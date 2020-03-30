@@ -17,7 +17,7 @@ global without sharing class MID_SendSMS {
                 C_RestUtil.init(false);
                 SendSMSRequest req = (SendSMSRequest)C_RestUtil.getJSONBody(SendSMSRequest.class);
                 if(String.isBlank(req.message))C_RestUtil.badRequest('Must specify a message');
-                if(String.isBlank(req.channel))req.channel='MID';
+                if(String.isBlank(req.messageType))req.messageType='MID';
                 if(req.recipients==null || req.recipients.size()==0)C_RestUtil.badRequest('Must specify a recipients');
 
                 Integer recSz = req.recipients.size();
@@ -34,11 +34,15 @@ global without sharing class MID_SendSMS {
                     }
                     else {
                         IRR_SVC_SFMCService.SMSMessage sms = new IRR_SVC_SFMCService.SMSMessage(req.message,rec.phoneNumber,rec.phoneNumber);
+                        sms.externalId = rec.externalId;
                         messages.add(sms);
                         smsw.smsIdx = messages.size()-1;
                     }
                 }
                 if(!messages.isEmpty())IRR_SVC_SFMCService.sendSMSMessages(messages);
+
+                fflib_ISObjectUnitOfWork uow = IRR_Application.UnitOfWork.newInstance();
+                IRR_SVC_EventService.CommunicationLogFactory logFactory = new IRR_SVC_EventService.CommunicationLogFactory(uow);
 
                 SendSMSResponse resp = new SendSMSResponse();
                 resp.result = new SendSMSResult[recSz];
@@ -51,6 +55,7 @@ global without sharing class MID_SendSMS {
                         res.messageKey = sms.messageKey;
                         res.errorCode = sms.errorCode;
                         res.errorMessage = sms.errorMessage;
+                        logFactory.add(sms, req.messageType, req.messageGroupId);
                     }
                     else {
                         res.success = false;
@@ -59,7 +64,8 @@ global without sharing class MID_SendSMS {
                     }
                     resp.result[i] = res;
                 }
-                //TODO add to communications log
+                uow.commitWork();
+
                 C_RestUtil.set(200, JSON.serialize(resp));
 
             }
@@ -101,7 +107,7 @@ global without sharing class MID_SendSMS {
         /**
          * The type of message being sent (optional)
          */
-        String channel;
+        String messageType;
         /**
          * The list of recipients of the message
          */
@@ -115,6 +121,10 @@ global without sharing class MID_SendSMS {
          * The phone number to which to send the sms message
          */
         String phoneNumber;
+        /**
+         * The external id to set for the message sent to the recipient
+         */
+        String externalId;
     }
     /**
      * Representation of the JSON response data for sending SMS

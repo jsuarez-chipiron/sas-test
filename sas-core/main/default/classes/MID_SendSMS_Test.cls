@@ -35,6 +35,15 @@ private class MID_SendSMS_Test {
         return (SendSMSResponse)JSON.deserialize(RestContext.response.responseBody.toString(), SendSMSResponse.class);
     }
     /**
+     * Verifies the communication log data
+     * @param numCreated The number of communication log entries with the status created
+     * @param numError The number of communication log entries with the status error
+     */
+    static void verifyCommunicationLog(Integer numCreated, Integer numError){
+        System.assertEquals(numCreated, [SELECT Id FROM IRR_CommunicationLog__c WHERE IRR_Status__c='Created'].size());
+        System.assertEquals(numError, [SELECT Id FROM IRR_CommunicationLog__c WHERE IRR_Status__c='Error'].size());
+    }
+    /**
      * Checks the error logs in the test
      * @param shouldHaveErrors Whether the logs should have error log records
      */
@@ -50,7 +59,7 @@ private class MID_SendSMS_Test {
      * Tests sending an SMS with no message
      */
     @isTest private static void sendSMSNoMessage(){
-        setupRequest('{"messageGroupId":"TEST1234567","channel":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
+        setupRequest('{"messageGroupId":"TEST1234567","messageType":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTNoMessage1'},
             new Integer[]{null},
@@ -62,12 +71,13 @@ private class MID_SendSMS_Test {
         System.assertEquals(400, RestContext.response.statusCode);
         System.assertEquals(0, smsMock.numCalls);
         System.assertEquals(0, smsMock.numSMS);
+        verifyCommunicationLog(0,0);
     }
     /**
      * Tests sending an SMS with no recipients
      */
     @isTest private static void sendSMSNoRecipients(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTNoRecipients1'},
             new Integer[]{null},
@@ -79,13 +89,14 @@ private class MID_SendSMS_Test {
         System.assertEquals(400, RestContext.response.statusCode);
         System.assertEquals(0, smsMock.numCalls);
         System.assertEquals(0, smsMock.numSMS);
+        verifyCommunicationLog(0,0);
     }
 
     /**
      * Tests sending an SMS where the recipient has no phone number
      */
     @isTest private static void sendSMSNoPhoneNumber(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[{}]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[{}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTNoPhoneNumber1'},
             new Integer[]{null},
@@ -103,13 +114,14 @@ private class MID_SendSMS_Test {
         System.assertEquals(false,resp.result[0].success);
         System.assertEquals(40001,resp.result[0].errorCode);
         System.assertNotEquals(null,resp.result[0].errorMessage);
+        verifyCommunicationLog(0,0);
     }
 
     /**
      * Tests sending an SMS during system maintainence
      */
     @isTest private static void sendSMSSystemMaintainence(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSystemMaintainence1'},
             new Integer[]{null},
@@ -122,13 +134,14 @@ private class MID_SendSMS_Test {
         System.assertEquals(503, RestContext.response.statusCode);
         System.assertEquals(0, smsMock.numCalls);
         System.assertEquals(0, smsMock.numSMS);
+        verifyCommunicationLog(0,0);
     }
 
     /**
      * Tests sending a successful SMS to a single recipient
      */
     @isTest private static void sendSuccessfulSMSToSingleRecipient(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSend1'},
             new Integer[]{null},
@@ -146,13 +159,14 @@ private class MID_SendSMS_Test {
         System.assertEquals(true,resp.result[0].success);
         System.assertEquals(null,resp.result[0].errorCode);
         System.assertEquals(null,resp.result[0].errorMessage);
+        verifyCommunicationLog(1,0);
     }
 
     /**
      * Tests sending a failed SMS to a single recipient
      */
     @isTest private static void sendFailedSMSToSingleRecipient(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSendFail1'},
             new Integer[]{1001},
@@ -170,13 +184,14 @@ private class MID_SendSMS_Test {
         System.assertEquals(false,resp.result[0].success);
         System.assertEquals(1001,resp.result[0].errorCode);
         System.assertEquals('TESTERROR',resp.result[0].errorMessage);
+        verifyCommunicationLog(0,1);
     }
 
     /**
      * Tests sending a successful SMS to a single recipient
      */
     @isTest private static void sendSuccessfulSMSToMultipleRecipient(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSendMulti1','TESTSendMulti2','TESTSendMulti3'},
             new Integer[]{null,null,null},
@@ -202,13 +217,14 @@ private class MID_SendSMS_Test {
         System.assertEquals(true,resp.result[2].success);
         System.assertEquals(null,resp.result[2].errorCode);
         System.assertEquals(null,resp.result[2].errorMessage);
+        verifyCommunicationLog(3,0);
     }
 
     /**
      * Tests sending a mixed result SMS to a single recipient
      */
     @isTest private static void sendMixedSMSToMultipleRecipient(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSendMultiMixed1','TESTSendMultiMixed2','TESTSendMultiMixed3'},
             new Integer[]{null,1001,null},
@@ -234,13 +250,14 @@ private class MID_SendSMS_Test {
         System.assertEquals(true,resp.result[2].success);
         System.assertEquals(null,resp.result[2].errorCode);
         System.assertEquals(null,resp.result[2].errorMessage);
+        verifyCommunicationLog(2,1);
     }
 
     /**
      * Tests sending a failed SMS to a multiple recipient
      */
     @isTest private static void sendFailedSMSToMutipleRecipient(){
-        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","channel":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
+        setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSendMultiFail1','TESTSendMultiFail2','TESTSendMultiFail3'},
             new Integer[]{1001,1002,1003},
@@ -266,6 +283,7 @@ private class MID_SendSMS_Test {
         System.assertEquals(false,resp.result[2].success);
         System.assertEquals(1003,resp.result[2].errorCode);
         System.assertEquals('TESTERROR3',resp.result[2].errorMessage);
+        verifyCommunicationLog(0,3);
     }
 
     /**
