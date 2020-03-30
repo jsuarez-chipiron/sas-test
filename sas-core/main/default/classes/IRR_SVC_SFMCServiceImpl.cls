@@ -44,17 +44,24 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
 
             C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor.executeRequest(
                     SMS_ENDPOINT, C_IntegrationExecutor.Method.POST, requestBody, null);
-
             IRR_SVC_SFMCService.SFMCResponse response = (IRR_SVC_SFMCService.SFMCResponse)
                     JSON.deserialize(responseObject.responseBody, IRR_SVC_SFMCService.SFMCResponse.class);
-            Integer responsesSize = response.responses != null && !response.responses.isEmpty() ?
-                    response.responses.size() : 0;
+            if(responseObject.statusCode>=200 && responseObject.statusCode<300){
+                Integer responsesSize = response.responses != null && !response.responses.isEmpty() ?
+                        response.responses.size() : 0;
 
-            for (Integer i = 0; i < responsesSize; i++) {
-                IRR_SVC_SFMCService.MessageResponse messageResponse = response.responses[i];
-                scopedMessages[i].messageKey = messageResponse.messageKey;
-                scopedMessages[i].errorCode = messageResponse.errorcode;
-                if(messageResponse.errorcode!=null && messageResponse.errorcode!=0)scopedMessages[i].errorMessage = messageResponse.message;
+                for (Integer i = 0; i < responsesSize; i++) {
+                    IRR_SVC_SFMCService.MessageResponse messageResponse = response.responses[i];
+                    scopedMessages[i].messageKey = messageResponse.messageKey;
+                    scopedMessages[i].errorCode = messageResponse.errorcode;
+                    if(messageResponse.errorcode!=null && messageResponse.errorcode!=0)scopedMessages[i].errorMessage = messageResponse.message;
+                }
+            }
+            else {
+                for(IRR_SVC_SFMCService.SMSMessage msg : scopedMessages){
+                    msg.errorCode = response.errorcode;
+                    msg.errorMessage = response.message;
+                }
             }
         }
         return messages;

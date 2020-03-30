@@ -18,6 +18,7 @@ public class IRR_SVC_SFMCService {
     public class SFMCResponse {
         public List<MessageResponse> responses;
         public Integer errorcode;
+        public String message;
         public String requestId;
     }
 

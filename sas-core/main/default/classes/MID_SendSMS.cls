@@ -33,6 +33,7 @@ global without sharing class MID_SendSMS {
                         //TODO maybe add additional validations
                     }
                     else {
+                        if(rec.phoneNumber.startsWith('+'))rec.phoneNumber=rec.phoneNumber.substring(1);
                         IRR_SVC_SFMCService.SMSMessage sms = new IRR_SVC_SFMCService.SMSMessage(req.message,rec.phoneNumber,rec.phoneNumber);
                         sms.externalId = rec.externalId;
                         messages.add(sms);
