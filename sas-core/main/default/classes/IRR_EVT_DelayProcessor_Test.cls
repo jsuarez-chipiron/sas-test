@@ -281,7 +281,7 @@ private class IRR_EVT_DelayProcessor_Test {
                 .newInstance(delayInfo);
         IRR_MOD_Message message = new IRR_MOD_Message('TEST_STATUS', IRR_MOD_Message.MessageChannel.SMS, null, null,
                 passengerInfo, 'TEST_TYPE');
-        message.smsMessage = smsMessage;
+        message.SFMCMessage = smsMessage;
         eventProcessor.messages.add(message);
 
         //When
