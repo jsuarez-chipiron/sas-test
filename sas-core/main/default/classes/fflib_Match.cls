@@ -1157,10 +1157,28 @@ public class fflib_Match
 	}
 	/**
 	 * Registers a matcher which will check if the method is called with an arg that matches mapWithPath
-	 * @param toMatch Map containing mappings from field to object
+	 * @param toMatch Map containing mappings from field path to object
 	 * @return A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
 	public static Map<String, Object> mapWithPath(Map<String, Object> toMatch) {
 		return (Map<String, Object>) matches(new fflib_MatcherDefinitions.MapWithPath(toMatch));
+	}
+
+	/**
+	 * Registers a matcher which will check if the method is called with an arg that matches objectWithPath
+	 * @param toMatch Map containing mappings from field path to object
+	 * @return A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
+	 */
+	public static Object objectWithPath(Map<String, Object> toMatch) {
+		return (Map<String, Object>) matches(new fflib_MatcherDefinitions.ObjectWithPath(toMatch));
+	}
+
+	/**
+	 * Registers a matcher which will check if the method is called with an arg that matches objectWithPath
+	 * @param toMatch Map containing mappings from field path to object
+	 * @return A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
+	 */
+	public static List<Object> objectsWithPath(List<Map<String, Object>> toMatch) {
+		return (List<Object>) matches(new fflib_MatcherDefinitions.ObjectsWithPath(toMatch));
 	}
 }

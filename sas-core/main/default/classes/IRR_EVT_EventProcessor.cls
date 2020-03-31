@@ -67,19 +67,22 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
 
     private void sendMessages() {
         List<IRR_SVC_SFMCService.SMSMessage> SFMCSMSMessages = new List<IRR_SVC_SFMCService.SMSMessage>();
+        List<IRR_SVC_SFMCService.EmailMessage> SFMCEmailMessages = new List<IRR_SVC_SFMCService.EmailMessage>();
         for (IRR_MOD_Message message : messages) {
             if (message.status != MESSAGE_STATUS_DEFAULT) continue;
             if (message.channel == IRR_MOD_Message.MessageChannel.SMS) {
                 SFMCSMSMessages.add(new IRR_SVC_SFMCService.SMSMessage(message));
             }
             else if (message.channel == IRR_MOD_Message.MessageChannel.Email) {
-                //TODO WIP
+                SFMCEmailMessages.add(new IRR_SVC_SFMCService.EmailMessage(message));
             }
         }
-        System.debug('SEND MESSAGES');
+        System.debug('SEND SMS');
         System.debug(SFMCSMSMessages);
         IRR_SVC_SFMCService.sendSMSMessages(SFMCSMSMessages);
-        //IRR_SVC_SFMCService.sendEmailMessages(SFMCEmailMessages);
+        System.debug('SEND EMAIL');
+        System.debug(SFMCEmailMessages);
+        IRR_SVC_SFMCService.sendEmailMessages(SFMCEmailMessages);
     }
 
     /**

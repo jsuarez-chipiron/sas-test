@@ -8,9 +8,12 @@
 public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
 
     private static final String SMS_ENDPOINT = '/messaging/v1/sms/messages/';
-    private static final String EMAIL_ENDPOINT; //TODO WIP
+    private static final String EMAIL_ENDPOINT = '/messaging/v1/email/messages/';
+
+    private static final String EMAIL_SEND_DEFINITION = 'generic_transactional_email';
 
     private static final String NAMED_CREDENTIAL = 'callout:SAS_MC_API';
+
     private static C_IIntegrationExecutor integrationExecutor {
         get {
             if (integrationExecutor == null) {
@@ -24,6 +27,11 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
         private set;
     }
 
+    public List<IRR_SVC_SFMCService.EmailMessage> sendEmailMessages(List<IRR_SVC_SFMCService.EmailMessage> messages) {
+        sendSFMCMessages(EMAIL_SEND_DEFINITION, EMAIL_ENDPOINT, messages);
+        return messages;
+    }
+
     /**
      * @author Niklas Lundkvist, Deloitte
      * @date 2020
@@ -33,38 +41,46 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
      *
      * @param messages SMS Message list to send
      *
-     * @return Input Messages list
+     * @return Input Message List
      */
     public List<IRR_SVC_SFMCService.SMSMessage> sendSMSMessages(List<IRR_SVC_SFMCService.SMSMessage> messages) {
-        Map<String, List<IRR_SVC_SFMCService.SMSMessage>> smsMessagesBySendDefinitions =
+        Map<String, List<IRR_SVC_SFMCService.SFMCMessage>> smsMessagesBySendDefinitions =
                 sortMessagesBySendDefinitions(messages);
         for (String definition : smsMessagesBySendDefinitions.keySet()) {
-            List<IRR_SVC_SFMCService.SMSMessage> scopedMessages = smsMessagesBySendDefinitions.get(definition);
-            Map<String, Object> requestBody = createSMSRequestBody(definition, scopedMessages);
+            List<IRR_SVC_SFMCService.SFMCMessage> scopedMessages = smsMessagesBySendDefinitions.get(definition);
+            sendSFMCMessages(definition, SMS_ENDPOINT, scopedMessages);
+        }
+        return messages;
+    }
 
-            C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor.executeRequest(
-                    SMS_ENDPOINT, C_IntegrationExecutor.Method.POST, requestBody, null);
-            IRR_SVC_SFMCService.SFMCResponse response = (IRR_SVC_SFMCService.SFMCResponse)
-                    JSON.deserialize(responseObject.responseBody, IRR_SVC_SFMCService.SFMCResponse.class);
-            if(responseObject.statusCode>=200 && responseObject.statusCode<300){
-                Integer responsesSize = response.responses != null && !response.responses.isEmpty() ?
-                        response.responses.size() : 0;
+    private void sendSFMCMessages(String sendDefinition, String endPoint,
+            List<IRR_SVC_SFMCService.SFMCMessage> messages) {
+        Map<String, Object> requestBody = createMessageRequestBody(sendDefinition, messages);
 
-                for (Integer i = 0; i < responsesSize; i++) {
-                    IRR_SVC_SFMCService.MessageResponse messageResponse = response.responses[i];
-                    scopedMessages[i].messageKey = messageResponse.messageKey;
-                    scopedMessages[i].errorCode = messageResponse.errorcode;
-                    if(messageResponse.errorcode!=null && messageResponse.errorcode!=0)scopedMessages[i].errorMessage = messageResponse.message;
-                }
-            }
-            else {
-                for(IRR_SVC_SFMCService.SMSMessage msg : scopedMessages){
-                    msg.errorCode = response.errorcode;
-                    msg.errorMessage = response.message;
+        C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor.executeRequest(
+                endPoint, C_IntegrationExecutor.Method.POST, requestBody, null);
+        IRR_SVC_SFMCService.SFMCResponse response = (IRR_SVC_SFMCService.SFMCResponse)
+                JSON.deserialize(responseObject.responseBody, IRR_SVC_SFMCService.SFMCResponse.class);
+
+        if(responseObject.statusCode>=200 && responseObject.statusCode<300){
+            Integer responsesSize = response.responses != null && !response.responses.isEmpty() ?
+                    response.responses.size() : 0;
+
+            for (Integer i = 0; i < responsesSize; i++) {
+                IRR_SVC_SFMCService.MessageResponse messageResponse = response.responses[i];
+                messages[i].messageKey = messageResponse.messageKey;
+                messages[i].errorCode = messageResponse.errorcode;
+                if(messageResponse.errorcode!=null && messageResponse.errorcode!=0) {
+                    messages[i].errorMessage = messageResponse.message;
                 }
             }
         }
-        return messages;
+        else {
+            for(IRR_SVC_SFMCService.SFMCMessage msg : messages){
+                msg.errorCode = response.errorcode;
+                msg.errorMessage = response.message;
+            }
+        }
     }
 
     /**
@@ -77,17 +93,17 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
      *
      * @return Map of SMS Messages by send definition key
      */
-    private Map<String, List<IRR_SVC_SFMCService.SMSMessage>> sortMessagesBySendDefinitions(
-            List<IRR_SVC_SFMCService.SMSMessage> messages) {
+    private Map<String, List<IRR_SVC_SFMCService.SFMCMessage>> sortMessagesBySendDefinitions(
+            List<IRR_SVC_SFMCService.SFMCMessage> messages) {
         if (smsDefinitionsCache == null) retrieveSMSDefinitions();
-        Map<String, List<IRR_SVC_SFMCService.SMSMessage>> smsMessagesBySendDefinitions =
-                new Map<String, List<IRR_SVC_SFMCService.SMSMessage>>();
-        for (IRR_SVC_SFMCService.SMSMessage message : messages) {
+        Map<String, List<IRR_SVC_SFMCService.SFMCMessage>> smsMessagesBySendDefinitions =
+                new Map<String, List<IRR_SVC_SFMCService.SFMCMessage>>();
+        for (IRR_SVC_SFMCService.SFMCMessage message : messages) {
             for (String code : smsDefinitionsCache.keySet()) {
                 if (code != null && !message.recipient.startsWith(code)) continue;
                 String definition = smsDefinitionsCache.get(code);
                 if (!smsMessagesBySendDefinitions.containsKey(definition)) {
-                    smsMessagesBySendDefinitions.put(definition, new List<IRR_SVC_SFMCService.SMSMessage>());
+                    smsMessagesBySendDefinitions.put(definition, new List<IRR_SVC_SFMCService.SFMCMessage>());
                 }
                 smsMessagesBySendDefinitions.get(definition).add(message);
                 break;
@@ -127,15 +143,15 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
      *
      * @return SFMC Request body structure
      */
-    private Map<String, Object> createSMSRequestBody(String sendDefinition,
-            List<IRR_SVC_SFMCService.SMSMessage> messages) {
+    private Map<String, Object> createMessageRequestBody(String sendDefinition,
+            List<IRR_SVC_SFMCService.SFMCMessage> messages) {
         List<Map<String, Object>> recipients = new List<Map<String, Object>>();
-        for (IRR_SVC_SFMCService.SMSMessage smsMessage : messages) {
+        for (IRR_SVC_SFMCService.SFMCMessage smsMessage : messages) {
             Map<String, Object> recipient = new Map<String, Object> {
                     'to' => smsMessage.recipient,
                     'contactKey' => smsMessage.contactKey,
                     'attributes' => new Map<String, Object> {
-                            'message' => smsMessage.content
+                            'content' => smsMessage.content
                     }
             };
             recipients.add(recipient);
@@ -143,7 +159,7 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
         Map<String, Object> requestBody = new Map<String, Object>{
                 'definitionKey' => sendDefinition,
                 'recipients' => recipients,
-                'content' => new Map<String, Object> { 'message' => '%%message%%' },
+                'content' => new Map<String, Object> { 'message' => '%%content%%' },
                 'subscriptions' => new Map<String, Object> { 'resubscribe' => true }
         };
         return requestBody;

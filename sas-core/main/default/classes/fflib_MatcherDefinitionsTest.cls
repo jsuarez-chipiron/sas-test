@@ -1190,6 +1190,157 @@ public class fflib_MatcherDefinitionsTest
 		}
 	}
 
+	@IsTest
+	static void whenObjectsWithPathShouldReturnCorrectResults() {
+		String matchingString = 'TEST_STRING';
+		Integer matchingNumber = 15;
+		Date matchingDate = Date.today();
+		Datetime matchingDatetime = Datetime.now();
+
+		ObjectWithPathTest successObject = new ObjectWithPathTest();
+		successObject.testString = matchingString;
+		successObject.anotherField = 'TEST_ANOTHER';
+
+		successObject.subField = new ObjectWithPathTestSub();
+		successObject.subField.testDate = matchingDate;
+
+		ObjectWithPathTest successObject2 = new ObjectWithPathTest();
+		successObject2.testDatetime = matchingDatetime;
+		successObject2.anotherField = 'OTHER_TEST';
+
+		successObject2.subField = new ObjectWithPathTestSub();
+		successObject2.subField.testNumber = matchingNumber;
+
+		ObjectWithPathTest failureObject = new ObjectWithPathTest();
+		failureObject.anotherField = 'FAIL_TEST';
+
+		List<ObjectWithPathTest> successList = new List<ObjectWithPathTest>{successObject, successObject2};
+
+		List<Map<String, Object>> toMatch = new List<Map<String, Object>>{
+				new Map<String, Object> {
+						'testString' => matchingString,
+						'subField.testDate' => matchingDate
+				},
+				new Map<String, Object> {
+						'testDatetime' => matchingDatetime,
+						'subField.testNumber' => matchingNumber
+				}
+		};
+
+		List<Map<String, Object>> failToMatch = new List<Map<String, Object>> {
+				new Map<String, Object> {
+						'something' => 'completelyDifferent'
+				},
+				new Map<String, Object> {
+						'notFound' => 'inObject'
+				}
+		};
+
+		fflib_IMatcher matcher = new fflib_MatcherDefinitions.ObjectsWithPath(toMatch);
+		System.assert(!matcher.matches(null));
+		System.assert(!matcher.matches(new List<ObjectWithPathTest>{
+				new ObjectWithPathTest(), new ObjectWithPathTest()}));
+		System.assert(!matcher.matches(new List<ObjectWithPathTestSub>{
+				new ObjectWithPathTestSub(), new ObjectWithPathTestSub()}));
+		System.assert(!matcher.matches(new List<ObjectWithPathTest>{successObject}));
+		System.assert(!matcher.matches(new List<ObjectWithPathTest>{successObject2, successObject}));
+		System.assert(matcher.matches(successList));
+
+		System.assert(!new fflib_MatcherDefinitions.ObjectsWithPath(failToMatch).matches(successList));
+	}
+
+	@IsTest
+	static void constructObjectsWithPath_WithNullArg_ThrowsException() {
+		try
+		{
+			new fflib_MatcherDefinitions.ObjectsWithPath(null);
+			System.assert(false, 'Expected exception');
+		}
+		catch (fflib_ApexMocks.ApexMocksException e)
+		{
+			System.assertEquals('Arg cannot be null/empty: null', e.getMessage());
+		}
+	}
+
+	@IsTest
+	static void constructObjectsWithPath_WithEmptyArg_ThrowsException() {
+		try
+		{
+			new fflib_MatcherDefinitions.ObjectsWithPath(new List<Map<String, Object>>());
+			System.assert(false, 'Expected exception');
+		}
+		catch (fflib_ApexMocks.ApexMocksException e)
+		{
+			System.assertEquals('Arg cannot be null/empty: ()', e.getMessage());
+		}
+	}
+
+	@IsTest
+	static void whenObjectWithPathShouldReturnCorrectResults() {
+		String matchingString = 'TEST_STRING';
+		Integer matchingNumber = 15;
+		Date matchingDate = Date.today();
+		Datetime matchingDatetime = Datetime.now();
+
+		ObjectWithPathTest successObject = new ObjectWithPathTest();
+		successObject.testString = matchingString;
+		successObject.testDatetime = matchingDatetime;
+		successObject.anotherField = 'TEST_ANOTHER';
+
+		successObject.subField = new ObjectWithPathTestSub();
+		successObject.subField.testNumber = matchingNumber;
+		successObject.subField.testDate = matchingDate;
+
+		ObjectWithPathTest failureObject = new ObjectWithPathTest();
+		failureObject.anotherField = 'TEST_ANOTHER';
+
+		Map<String, Object> toMatch = new Map<String, Object> {
+				'testString' => matchingString,
+				'testDatetime' => matchingDatetime,
+				'subField.testNumber' => matchingNumber,
+				'subField.testDate' => matchingDate
+		};
+
+		Map<String, Object> failToMatch = new Map<String, Object> {
+				'somethingCompletely' => 'different'
+		};
+
+		fflib_IMatcher matcher = new fflib_MatcherDefinitions.ObjectWithPath(toMatch);
+
+		System.assert(!matcher.matches(null));
+		System.assert(!matcher.matches(new Map<String, Object>()));
+		System.assert(!matcher.matches(failureObject));
+		System.assert(matcher.matches(successObject));
+
+		System.assert(!new fflib_MatcherDefinitions.ObjectWithPath(failToMatch).matches(successObject));
+	}
+
+	@IsTest
+	static void constructObjectWithPath_WithNullArg_ThrowsException() {
+		try
+		{
+			new fflib_MatcherDefinitions.ObjectWithPath(null);
+			System.assert(false, 'Expected exception');
+		}
+		catch (fflib_ApexMocks.ApexMocksException e)
+		{
+			System.assertEquals('Arg cannot be null/empty: null', e.getMessage());
+		}
+	}
+
+	@IsTest
+	static void constructObjectWithPath_WithEmptyArg_ThrowsException() {
+		try
+		{
+			new fflib_MatcherDefinitions.ObjectWithPath(new Map<String, Object>());
+			System.assert(false, 'Expected exception');
+		}
+		catch (fflib_ApexMocks.ApexMocksException e)
+		{
+			System.assertEquals('Arg cannot be null/empty: {}', e.getMessage());
+		}
+	}
+
 	@isTest
 	private static void constructMapWithPath_WithNullArg_ThrowsException()
 	{
@@ -1258,5 +1409,17 @@ public class fflib_MatcherDefinitionsTest
 		System.assert(matcher.matches(successFieldMap));
 
 		System.assert(!new fflib_MatcherDefinitions.MapWithPath(failToMatch).matches(successFieldMap));
+	}
+
+	public class ObjectWithPathTest {
+		public String testString;
+		public String anotherField;
+		public Datetime testDatetime;
+		public ObjectWithPathTestSub subField;
+	}
+
+	public class ObjectWithPathTestSub {
+		public Date testDate;
+		public Integer testNumber;
 	}
 }

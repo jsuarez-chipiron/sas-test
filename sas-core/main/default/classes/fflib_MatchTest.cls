@@ -1381,6 +1381,32 @@ public with sharing class fflib_MatchTest
 		System.assert(registeredMatchers[0] instanceof fflib_MatcherDefinitions.MapWithPath);
 	}
 
+	@IsTest
+	static void objectWithPathRegistersCorrectMatcherType() {
+		//Given/When
+		Object x = fflib_Match.objectWithPath(new Map<String, Object>{'test.object.path' => 'something'});
+
+		//Then
+		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
+		System.assertNotEquals(null, registeredMatchers);
+		System.assertEquals(1, registeredMatchers.size());
+		System.assert(registeredMatchers[0] instanceof fflib_MatcherDefinitions.ObjectWithPath);
+	}
+
+	@IsTest
+	static void objectsWithPathRegistersCorrectMatcherType() {
+		//Given/When
+		List<Object> x = fflib_Match.objectsWithPath(new List<Map<String, Object>>{
+				new Map<String, Object>{
+					'test.object.path' => 'something'}});
+
+		//Then
+		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
+		System.assertNotEquals(null, registeredMatchers);
+		System.assertEquals(1, registeredMatchers.size());
+		System.assert(registeredMatchers[0] instanceof fflib_MatcherDefinitions.ObjectsWithPath);
+	}
+
 	private class AlwaysMatch implements fflib_IMatcher
 	{
 		public Boolean matches(Object arg)

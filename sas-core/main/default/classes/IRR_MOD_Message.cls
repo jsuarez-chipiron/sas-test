@@ -17,15 +17,13 @@ public class IRR_MOD_Message {
     public String content;
     public IRR_MOD_PassengerInfo passengerInfo;
     public String contactKey;
-    public IRR_SVC_SFMCService.SMSMessage smsMessage;
-    public Object emailMessage;
+    public IRR_SVC_SFMCService.SFMCMessage SFMCMessage;
     public String subject;
     public String type;
 
     public String messageKey {
         get {
-            return channel == MessageChannel.SMS && smsMessage != null ? smsMessage.messageKey :
-                    emailMessage != null ? 'emailKey' : '';
+            return SFMCMessage != null ? SFMCMessage.messageKey : '';
         }
     }
 
