@@ -30,7 +30,7 @@ private class IRR_SVC_TedsService_Test {
                     (C_IntegrationExecutor.Method) fflib_Match.eq(C_IntegrationExecutor.Method.GET),
                     (Map<String, Object>) fflib_Match.isNull(),
                     (Map<String, Object>) fflib_Match.anyObject()))
-                .thenReturn(jsonResponse);
+                .thenReturn(new C_IntegrationExecutor.IntegrationResponse(200, jsonResponse));
         mocks.stopStubbing();
         IRR_Application.IntegrationExecutorBuilder.setMock(IRR_Application.IntegrationType.REST, builderMock);
         String flightId = 'SK0946-20200211-ORD-ARN';
@@ -108,7 +108,7 @@ private class IRR_SVC_TedsService_Test {
                     (C_IntegrationExecutor.Method) fflib_Match.eq(C_IntegrationExecutor.Method.GET),
                     (Map<String, Object>) fflib_Match.isNull(),
                     (Map<String, Object>) fflib_Match.isNull()))
-                .thenReturn(jsonResponse);
+                .thenReturn(new C_IntegrationExecutor.IntegrationResponse(200, jsonResponse));
         mocks.stopStubbing();
         IRR_Application.IntegrationExecutorBuilder.setMock(IRR_Application.IntegrationType.REST, builderMock);
         String bookingRef = 'P2WNNO-20200205';
