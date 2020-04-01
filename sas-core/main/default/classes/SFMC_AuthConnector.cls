@@ -10,8 +10,8 @@ global class SFMC_AuthConnector extends C_LocalAuthConnector {
      * Authenticates against the service
      * @param username The client_id to use when authenticating
      * @param password The client_secret used when authenticating
-     * @param param1 Account Id, corresponds to BU in SFMC (optional)
-     * @param param2 Authentication scope, uses default package scope if not set (optional)
+     * @param param1 Authentication scope, uses default package scope if not set (optional)
+     * @param param2 Account Id, corresponds to BU in SFMC (optional)
      * @return The oauth access token
      */
     global override String authenticate(String username, String password, String param1, String param2){
@@ -25,10 +25,10 @@ global class SFMC_AuthConnector extends C_LocalAuthConnector {
                 'client_secret' => password
         };
         if (String.isNotBlank(param1)) {
-            bodyParams.put('account_id', param2);
+            bodyParams.put('scope', param1);
         }
         if (String.isNotBlank(param2)) {
-            bodyParams.put('scope', param1);
+            bodyParams.put('account_id', param2);
         }
         request.setHeader('Content-Type', 'application/json');
         request.setBody(JSON.serialize(bodyParams));
