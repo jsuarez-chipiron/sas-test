@@ -28,8 +28,6 @@ public with sharing class C_RestUtil {
             this.statusCode = statusCode;
         }
     }
-
-    //:)
     /**
      * Throws a bad request excpetion
      * @param msg The message communicated for the bad request
