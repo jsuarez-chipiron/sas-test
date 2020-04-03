@@ -29,7 +29,7 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
 
     public List<IRR_SVC_SFMCService.EmailMessage> sendEmailMessages(List<IRR_SVC_SFMCService.EmailMessage> messages) {
         //TODO CREATE REAL EMAIL REQUEST BODY
-        Map<String, Object> requestBody = createSMSRequestBody(EMAIL_SEND_DEFINITION, messages);
+        Map<String, Object> requestBody = createEmailRequestBody(EMAIL_SEND_DEFINITION, messages);
         sendSFMCMessages(requestBody, EMAIL_ENDPOINT, messages);
         return messages;
     }
@@ -162,6 +162,38 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
                 'recipients' => recipients,
                 'content' => new Map<String, Object> { 'message' => '%%content%%' },
                 'subscriptions' => new Map<String, Object> { 'resubscribe' => true }
+        };
+        return requestBody;
+    }
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Creates SFMC request body structure for a send definition and a list of SMS Messages.
+     *
+     * @param sendDefinition SFMC Send Definition key
+     * @param messages List of SMS Messages
+     *
+     * @return SFMC Request body structure
+     */
+    private Map<String, Object> createEmailRequestBody(String sendDefinition,
+            List<IRR_SVC_SFMCService.EmailMessage> messages) {
+        List<Map<String, Object>> recipients = new List<Map<String, Object>>();
+        for (IRR_SVC_SFMCService.EmailMessage emailMessage : messages) {
+            Map<String, Object> recipient = new Map<String, Object> {
+                    'to' => emailMessage.recipient,
+                    'contactKey' => emailMessage.contactKey,
+                    'attributes' => new Map<String, Object> {
+                            'HTMLContent' => emailMessage.content,
+                            'Subject' => emailMessage.subject
+                    }
+            };
+            recipients.add(recipient);
+        }
+        Map<String, Object> requestBody = new Map<String, Object>{
+                'definitionKey' => sendDefinition,
+                'recipients' => recipients
         };
         return requestBody;
     }

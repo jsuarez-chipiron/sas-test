@@ -7,8 +7,10 @@
 
 public class IRR_SVC_SFMCService {
 
-    public static IRR_SVC_SFMCService.EmailMessage sendEmailMessage(String content, String recipient, String contactKey) {
-        IRR_SVC_SFMCService.EmailMessage message = new IRR_SVC_SFMCService.EmailMessage(content,recipient,contactKey);
+    public static IRR_SVC_SFMCService.EmailMessage sendEmailMessage(String content, String subject, String recipient,
+            String contactKey) {
+        IRR_SVC_SFMCService.EmailMessage message = new IRR_SVC_SFMCService.EmailMessage(
+                content, subject, recipient, contactKey);
         return sendEmailMessages(new List<IRR_SVC_SFMCService.EmailMessage>{message})[0];
     }
 
@@ -77,13 +79,16 @@ public class IRR_SVC_SFMCService {
     }
 
     public class EmailMessage extends SFMCMessage {
+        public String subject;
 
-        public EmailMessage(String content, String recipient, String contactKey) {
+        public EmailMessage(String content, String subject, String recipient, String contactKey) {
             super(content, recipient, contactKey);
+            this.subject = subject;
         }
 
         public EmailMessage(IRR_MOD_Message message) {
             super(message);
+            this.subject = message.subject;
         }
     }
 

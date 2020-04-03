@@ -123,8 +123,8 @@ private class IRR_SVC_SFMCService_Test {
         IRR_SVC_ISFMCService serviceMock = (IRR_SVC_ISFMCService) mocks.mock(IRR_SVC_SFMCServiceImpl.class);
 
         //Given
-        IRR_SVC_SFMCService.EmailMessage message = new IRR_SVC_SFMCService.EmailMessage('TEST_CONTENT', 'TEST_RECIPIENT',
-                'TEST_CONTACT_KEY');
+        IRR_SVC_SFMCService.EmailMessage message = new IRR_SVC_SFMCService.EmailMessage('TEST_CONTENT', 'TEST_SUBJECT',
+                'TEST_RECIPIENT', 'TEST_CONTACT_KEY');
         mocks.startStubbing();
         mocks.when(serviceMock.sendEmailMessages((List<IRR_SVC_SFMCService.EmailMessage>) fflib_Match.anyList()))
                 .thenReturn(new List<IRR_SVC_SFMCService.EmailMessage>{message});
@@ -132,8 +132,8 @@ private class IRR_SVC_SFMCService_Test {
         IRR_Application.Service.setMock(IRR_SVC_ISFMCService.class, serviceMock);
 
         //When
-        IRR_SVC_SFMCService.EmailMessage result = IRR_SVC_SFMCService.sendEmailMessage('TEST_CONTENT', 'TEST_RECIPIENT',
-                'TEST_CONTACT_KEY');
+        IRR_SVC_SFMCService.EmailMessage result = IRR_SVC_SFMCService.sendEmailMessage('TEST_CONTENT', 'TEST_SUBJECT',
+                'TEST_RECIPIENT', 'TEST_CONTACT_KEY');
 
         //Then
         ((IRR_SVC_ISFMCService) mocks.verify(serviceMock))
@@ -173,9 +173,9 @@ private class IRR_SVC_SFMCService_Test {
         mocks.stopStubbing();
         IRR_Application.IntegrationExecutorBuilder.setMock(IRR_Application.IntegrationType.REST, builderMock);
         IRR_SVC_SFMCService.EmailMessage emailMessage = new IRR_SVC_SFMCService.EmailMessage(
-                'TEST_CONTENT', 'TEST_RECIPIENT', 'TEST_CONTACT_KEY');
+                'TEST_CONTENT', 'TEST_SUBJECT', 'TEST_RECIPIENT', 'TEST_CONTACT_KEY');
         IRR_SVC_SFMCService.EmailMessage emailMessageOther = new IRR_SVC_SFMCService.EmailMessage(
-                'OTHER_CONTENT', 'OTHER_RECIPIENT', 'OTHER_CONTACT_KEY');
+                'OTHER_CONTENT', 'OTHER_SUBJECT','OTHER_RECIPIENT', 'OTHER_CONTACT_KEY');
 
         //When
         IRR_SVC_SFMCService.sendEmailMessages(new List<IRR_SVC_SFMCService.EmailMessage>{emailMessage, emailMessageOther});
@@ -192,10 +192,12 @@ private class IRR_SVC_SFMCService_Test {
         Map<String, Object> recipientMatch = new Map<String, Object>{
                 'recipients[0].to' => 'TEST_RECIPIENT',
                 'recipients[0].contactKey' => 'TEST_CONTACT_KEY',
-                'recipients[0].attributes.content' => 'TEST_CONTENT',
+                'recipients[0].attributes.HTMLContent' => 'TEST_CONTENT',
+                'recipients[0].attributes.Subject' => 'TEST_SUBJECT',
                 'recipients[1].to' => 'OTHER_RECIPIENT',
                 'recipients[1].contactKey' => 'OTHER_CONTACT_KEY',
-                'recipients[1].attributes.content' => 'OTHER_CONTENT',
+                'recipients[1].attributes.HTMLContent' => 'OTHER_CONTENT',
+                'recipients[1].attributes.Subject' => 'OTHER_SUBJECT',
                 'definitionKey' => 'generic_transactional_email'
         };
         ((C_IIntegrationExecutor) mocks.verify(executorMock)).executeRequest(
@@ -230,9 +232,9 @@ private class IRR_SVC_SFMCService_Test {
         mocks.stopStubbing();
         IRR_Application.IntegrationExecutorBuilder.setMock(IRR_Application.IntegrationType.REST, builderMock);
         IRR_SVC_SFMCService.EmailMessage emailMessage = new IRR_SVC_SFMCService.EmailMessage(
-                'TEST_CONTENT', 'TEST_RECIPIENT', 'TEST_CONTACT_KEY');
+                'TEST_CONTENT', 'TEST_SUBJECT', 'TEST_RECIPIENT', 'TEST_CONTACT_KEY');
         IRR_SVC_SFMCService.EmailMessage emailMessageOther = new IRR_SVC_SFMCService.EmailMessage(
-                'OTHER_CONTENT', 'OTHER_RECIPIENT', 'OTHER_CONTACT_KEY');
+                'OTHER_CONTENT', 'OTHER_SUBJECT', 'OTHER_RECIPIENT', 'OTHER_CONTACT_KEY');
 
         //When
         IRR_SVC_SFMCService.sendEmailMessages(new List<IRR_SVC_SFMCService.EmailMessage>{emailMessage, emailMessageOther});
@@ -269,9 +271,9 @@ private class IRR_SVC_SFMCService_Test {
         mocks.stopStubbing();
         IRR_Application.IntegrationExecutorBuilder.setMock(IRR_Application.IntegrationType.REST, builderMock);
         IRR_SVC_SFMCService.EmailMessage emailMessage = new IRR_SVC_SFMCService.EmailMessage(
-                'TEST_CONTENT', 'TEST_RECIPIENT', 'TEST_CONTACT_KEY');
+                'TEST_CONTENT', 'TEST_SUBJECT', 'TEST_RECIPIENT', 'TEST_CONTACT_KEY');
         IRR_SVC_SFMCService.EmailMessage emailMessageOther = new IRR_SVC_SFMCService.EmailMessage(
-                'OTHER_CONTENT', 'OTHER_RECIPIENT', 'OTHER_CONTACT_KEY');
+                'OTHER_CONTENT', 'OTHER_SUBJECT', 'OTHER_RECIPIENT', 'OTHER_CONTACT_KEY');
 
         //When
         IRR_SVC_SFMCService.sendEmailMessages(new List<IRR_SVC_SFMCService.EmailMessage>{emailMessage, emailMessageOther});
