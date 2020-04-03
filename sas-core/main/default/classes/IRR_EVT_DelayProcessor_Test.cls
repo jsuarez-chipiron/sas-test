@@ -207,6 +207,8 @@ private class IRR_EVT_DelayProcessor_Test {
         delayInfo.flightId = 'TEST_FLIGHT_ID';
         delayInfo.delayedMinutes = 10;
         delayInfo.scheduledTimeOfDepartureUTC = Datetime.now().addHours(3);
+        delayInfo.scheduledTimeOfDepartureLocal = Datetime.now().addHours(4);
+        delayInfo.estimatedTimeOfDepartureLocal = Datetime.now().addHours(5);
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_DelayProcessor.Constructor().newInstance(delayInfo);
         IRR_Application.Selector.setMock(selectorMock);
         IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
