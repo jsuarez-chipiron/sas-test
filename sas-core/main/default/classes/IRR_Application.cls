@@ -61,8 +61,8 @@ public class IRR_Application {
                     new Map<String, C_Application.EventDefinition> {
                             'flightDepartureDelay' => new C_Application.EventDefinition(
                                     IRR_MOD_DelayInfo.class, IRR_EVT_DelayProcessor.Constructor.class),
-                            'manualMessage' => new C_Application.EventDefinition(
-                                    null, null)
+                            'manualCommunication' => new C_Application.EventDefinition(
+                                    IRR_MOD_ManualInfo.class, null)
                     }
             );
 
