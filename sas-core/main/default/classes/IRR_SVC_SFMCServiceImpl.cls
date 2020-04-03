@@ -28,7 +28,9 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
     }
 
     public List<IRR_SVC_SFMCService.EmailMessage> sendEmailMessages(List<IRR_SVC_SFMCService.EmailMessage> messages) {
-        sendSFMCMessages(EMAIL_SEND_DEFINITION, EMAIL_ENDPOINT, messages);
+        //TODO CREATE REAL EMAIL REQUEST BODY
+        Map<String, Object> requestBody = createSMSRequestBody(EMAIL_SEND_DEFINITION, messages);
+        sendSFMCMessages(requestBody, EMAIL_ENDPOINT, messages);
         return messages;
     }
 
@@ -48,15 +50,14 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
                 sortMessagesBySendDefinitions(messages);
         for (String definition : smsMessagesBySendDefinitions.keySet()) {
             List<IRR_SVC_SFMCService.SFMCMessage> scopedMessages = smsMessagesBySendDefinitions.get(definition);
-            sendSFMCMessages(definition, SMS_ENDPOINT, scopedMessages);
+            Map<String, Object> requestBody = createSMSRequestBody(definition, scopedMessages);
+            sendSFMCMessages(requestBody, SMS_ENDPOINT, scopedMessages);
         }
         return messages;
     }
 
-    private void sendSFMCMessages(String sendDefinition, String endPoint,
+    private void sendSFMCMessages(Map<String, Object> requestBody, String endPoint,
             List<IRR_SVC_SFMCService.SFMCMessage> messages) {
-        Map<String, Object> requestBody = createMessageRequestBody(sendDefinition, messages);
-
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor.executeRequest(
                 endPoint, C_IntegrationExecutor.Method.POST, requestBody, null);
         IRR_SVC_SFMCService.SFMCResponse response = (IRR_SVC_SFMCService.SFMCResponse)
@@ -143,7 +144,7 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
      *
      * @return SFMC Request body structure
      */
-    private Map<String, Object> createMessageRequestBody(String sendDefinition,
+    private Map<String, Object> createSMSRequestBody(String sendDefinition,
             List<IRR_SVC_SFMCService.SFMCMessage> messages) {
         List<Map<String, Object>> recipients = new List<Map<String, Object>>();
         for (IRR_SVC_SFMCService.SFMCMessage smsMessage : messages) {

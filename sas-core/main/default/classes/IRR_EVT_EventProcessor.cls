@@ -79,10 +79,10 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
         }
         System.debug('SEND SMS');
         System.debug(SFMCSMSMessages);
-        IRR_SVC_SFMCService.sendSMSMessages(SFMCSMSMessages);
+        if (!SFMCSMSMessages.isEmpty()) IRR_SVC_SFMCService.sendSMSMessages(SFMCSMSMessages);
         System.debug('SEND EMAIL');
         System.debug(SFMCEmailMessages);
-        IRR_SVC_SFMCService.sendEmailMessages(SFMCEmailMessages);
+        if (!SFMCEmailMessages.isEmpty()) IRR_SVC_SFMCService.sendEmailMessages(SFMCEmailMessages);
     }
 
     /**
@@ -146,19 +146,24 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
         sendSMSMessage = sendSMSMessage == null || String.isBlank(smsTemplateName) ||
                 !flowVariables.passengerInfo.hasPhoneNumber ? false : sendSMSMessage;
 
-        if (!sendSMSMessage && !sendEmailMessage) return;
+        if (sendSMSMessage || sendEmailMessage){
+            createMessages(sendSMSMessage, smsTemplateName, sendEmailMessage, emailTemplateName, flowVariables);
+        }
+    }
 
+    protected void createMessages(Boolean sendSMS, String SMSTemplate, Boolean sendEmail, String emailTemplate,
+            IRR_MOD_FlowVariables flowVariables) {
         String serializedVariables = JSON.serialize(flowVariables);
         Map<String, Object> templateParams = (Map<String,Object>) JSON.deserializeUntyped(serializedVariables);
 
-        if (sendSMSMessage) {
+        if (sendSMS) {
             IRR_MOD_Message smsMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.SMS,
-                    templateParams, smsTemplateName, flowVariables.passengerInfo, getEventName());
+                    templateParams, SMSTemplate, flowVariables.passengerInfo, getEventName());
             messages.add(smsMessage);
         }
-        if (sendEmailMessage) {
+        if (sendEmail) {
             IRR_MOD_Message emailMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.Email,
-                    templateParams,smsTemplateName, flowVariables.passengerInfo, getEventName());
+                    templateParams,emailTemplate, flowVariables.passengerInfo, getEventName());
             messages.add(emailMessage);
         }
     }

@@ -28,9 +28,10 @@ private class IRR_EVT_DelayProcessor_Test {
         //Given
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.flightId = 'TEST_FLIGHT_ID';
-        delayInfo.scheduledTime = 'TEST_SCHEDULED_TIME';
-        delayInfo.delayMinutes = 10;
-        delayInfo.delayedTime = 'TEST_DELAYED_TIME';
+        delayInfo.scheduledTimeOfDepartureUTC = Datetime.now();
+        delayInfo.scheduledTimeOfDepartureLocal = Datetime.now();
+        delayInfo.delayedMinutes = 10;
+        delayInfo.estimatedTimeOfDepartureLocal = Datetime.now();
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_DelayProcessor.Constructor().newInstance(delayInfo);
 
         //When
@@ -41,9 +42,10 @@ private class IRR_EVT_DelayProcessor_Test {
     static void testValidateEvent_ThrowsNoFlightId() {
         //Given
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
-        delayInfo.scheduledTime = 'TEST_SCHEDULED_TIME';
-        delayInfo.delayMinutes = 10;
-        delayInfo.delayedTime = 'TEST_DELAYED_TIME';
+        delayInfo.scheduledTimeOfDepartureUTC = Datetime.now();
+        delayInfo.scheduledTimeOfDepartureLocal = Datetime.now();
+        delayInfo.delayedMinutes = 10;
+        delayInfo.estimatedTimeOfDepartureLocal = Datetime.now();
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_DelayProcessor.Constructor().newInstance(delayInfo);
 
         //When
@@ -64,8 +66,9 @@ private class IRR_EVT_DelayProcessor_Test {
         //Given
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.flightId = 'TEST_FLIGHT_ID';
-        delayInfo.scheduledTime = 'TEST_SCHEDULED_TIME';
-        delayInfo.delayedTime = 'TEST_DELAYED_TIME';
+        delayInfo.scheduledTimeOfDepartureUTC = Datetime.now();
+        delayInfo.scheduledTimeOfDepartureLocal = Datetime.now();
+        delayInfo.estimatedTimeOfDepartureLocal = Datetime.now();
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_DelayProcessor.Constructor().newInstance(delayInfo);
 
         //When
@@ -86,8 +89,9 @@ private class IRR_EVT_DelayProcessor_Test {
         //Given
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.flightId = 'TEST_FLIGHT_ID';
-        delayInfo.scheduledTime = 'TEST_SCHEDULED_TIME';
-        delayInfo.delayMinutes = 10;
+        delayInfo.scheduledTimeOfDepartureUTC = Datetime.now();
+        delayInfo.scheduledTimeOfDepartureLocal = Datetime.now();
+        delayInfo.delayedMinutes = 10;
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_DelayProcessor.Constructor().newInstance(delayInfo);
 
         //When
@@ -96,7 +100,9 @@ private class IRR_EVT_DelayProcessor_Test {
             eventProcessor.validateEvent();
         }
         catch (IRR_SVC_EventService.EventException eventException) {
-            if (eventException.getMessage().contains('Delayed time is missing from event')) caughtException = true;
+            if (eventException.getMessage().contains('Estimated time of departure is missing from event')){
+                caughtException = true;
+            }
         }
 
         //Then
@@ -108,8 +114,8 @@ private class IRR_EVT_DelayProcessor_Test {
         //Given
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.flightId = 'TEST_FLIGHT_ID';
-        delayInfo.delayMinutes = 10;
-        delayInfo.delayedTime = 'TEST_DELAYED_TIME';
+        delayInfo.delayedMinutes = 10;
+        delayInfo.estimatedTimeOfDepartureLocal = Datetime.now();
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_DelayProcessor.Constructor().newInstance(delayInfo);
 
         //When
@@ -118,7 +124,9 @@ private class IRR_EVT_DelayProcessor_Test {
             eventProcessor.validateEvent();
         }
         catch (IRR_SVC_EventService.EventException eventException) {
-            if (eventException.getMessage().contains('Scheduled time is missing from event')) caughtException = true;
+            if (eventException.getMessage().contains('Scheduled time of departure is missing from event')){
+                caughtException = true;
+            }
         }
 
         //Then
@@ -138,15 +146,17 @@ private class IRR_EVT_DelayProcessor_Test {
         Map<String, Integer> delayMinutesByFlightIds = new Map<String, Integer>();
         mocks.startStubbing();
         mocks.when(selectorMock.sObjectType()).thenReturn(IRR_DelayLog__c.SObjectType);
-        mocks.when(selectorMock.getLatestDelayByFlightIds(new Set<String>{'TEST_FLIGHT_ID'}))
+        mocks.when(selectorMock.getLatestDelayByFlightIds(new Set<String>{'SK1429-20191104-ARN-CPH'}))
                 .thenReturn(delayMinutesByFlightIds);
-        mocks.when(serviceMock.getPassengerInfosForFlight('TEST_FLIGHT_ID'))
+        mocks.when(serviceMock.getPassengerInfosForFlight('SK1429-20191104-ARN-CPH'))
                 .thenReturn(passengerInfos);
         mocks.stopStubbing();
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
-        delayInfo.flightId = 'TEST_FLIGHT_ID';
-        delayInfo.delayMinutes = 10;
-        delayInfo.scheduledTime = Datetime.now().addHours(3).formatGmt('yyyy-MM-dd\'T\'HH:mm:ss\'+00:00\'');
+        delayInfo.flightId = 'SK1429-20191104-ARN-CPH';
+        delayInfo.delayedMinutes = 10;
+        delayInfo.scheduledTimeOfDepartureUTC = Datetime.now().addHours(3);
+        delayInfo.scheduledTimeOfDepartureLocal = Datetime.now().addHours(4);
+        delayInfo.estimatedTimeOfDepartureLocal = Datetime.now().addHours(5);
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_DelayProcessor.Constructor().newInstance(delayInfo);
         IRR_Application.Selector.setMock(selectorMock);
         IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
@@ -156,11 +166,21 @@ private class IRR_EVT_DelayProcessor_Test {
 
         //Then
         ((IRR_SEL_IDelayLogsSelector) mocks.verify(selectorMock))
-                .getLatestDelayByFlightIds(new Set<String>{'TEST_FLIGHT_ID'});
-        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getPassengerInfosForFlight('TEST_FLIGHT_ID');
-        System.assertEquals(0, delayInfo.previousDelayMinutes);
+                .getLatestDelayByFlightIds(new Set<String>{'SK1429-20191104-ARN-CPH'});
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getPassengerInfosForFlight('SK1429-20191104-ARN-CPH');
+        System.assertEquals(0, delayInfo.previousDelayedMinutes);
         System.assertEquals(10, delayInfo.delayDifference);
-        System.assertEquals(10, delayInfo.delayMinutes);
+        System.assertEquals(10, delayInfo.delayedMinutes);
+        System.assertEquals(delayInfo.scheduledTimeOfDepartureLocal.formatGmt('dd'),
+                delayInfo.scheduledFormattedLocalDate);
+        System.assertEquals(delayInfo.scheduledTimeOfDepartureLocal.formatGmt('MMM'),
+                delayInfo.scheduledFormattedLocalMonth);
+        System.assertEquals(delayInfo.scheduledTimeOfDepartureLocal.formatGmt('HH:mm'),
+                delayInfo.scheduledFormattedLocalTime);
+        System.assertEquals(delayInfo.estimatedTimeOfDepartureLocal.formatGmt('HH:mm'),
+                delayInfo.estimatedFormattedLocalTime);
+        System.assertEquals('ARN', delayInfo.stationDeparture);
+        System.assertEquals('CPH', delayInfo.stationArrival);
         System.assert(delayInfo.firstDelay);
         System.assert(delayInfo.minutesToScheduledTime >= 179 && delayInfo.minutesToScheduledTime < 181);
     }
@@ -185,8 +205,8 @@ private class IRR_EVT_DelayProcessor_Test {
         mocks.stopStubbing();
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.flightId = 'TEST_FLIGHT_ID';
-        delayInfo.delayMinutes = 10;
-        delayInfo.scheduledTime = Datetime.now().addHours(3).formatGmt('yyyy-MM-dd\'T\'HH:mm:ss\'+00:00\'');
+        delayInfo.delayedMinutes = 10;
+        delayInfo.scheduledTimeOfDepartureUTC = Datetime.now().addHours(3);
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_DelayProcessor.Constructor().newInstance(delayInfo);
         IRR_Application.Selector.setMock(selectorMock);
         IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
@@ -198,9 +218,9 @@ private class IRR_EVT_DelayProcessor_Test {
         ((IRR_SEL_IDelayLogsSelector) mocks.verify(selectorMock))
                 .getLatestDelayByFlightIds(new Set<String>{'TEST_FLIGHT_ID'});
         ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getPassengerInfosForFlight('TEST_FLIGHT_ID');
-        System.assertEquals(10, delayInfo.previousDelayMinutes);
+        System.assertEquals(10, delayInfo.previousDelayedMinutes);
         System.assertEquals(0, delayInfo.delayDifference);
-        System.assertEquals(10, delayInfo.delayMinutes);
+        System.assertEquals(10, delayInfo.delayedMinutes);
         System.assert(!delayInfo.firstDelay);
         System.assert(delayInfo.minutesToScheduledTime >= 179 && delayInfo.minutesToScheduledTime < 181);
     }
@@ -269,7 +289,7 @@ private class IRR_EVT_DelayProcessor_Test {
         smsMessage.messageKey = 'TEST_MESSAGE_KEY';
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.flightId = 'TEST_FLIGHT_ID';
-        delayInfo.delayMinutes = 10;
+        delayInfo.delayedMinutes = 10;
         IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
         passengerInfo.phoneNumber = 'TEST_PHONE';
         passengerInfo.emailAddress = 'TEST_EMAIL';
