@@ -100,6 +100,7 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
         Map<String, List<IRR_SVC_SFMCService.SFMCMessage>> smsMessagesBySendDefinitions =
                 new Map<String, List<IRR_SVC_SFMCService.SFMCMessage>>();
         for (IRR_SVC_SFMCService.SFMCMessage message : messages) {
+            Boolean found = false;
             for (String code : smsDefinitionsCache.keySet()) {
                 if (code != null && !message.recipient.startsWith(code)) continue;
                 String definition = smsDefinitionsCache.get(code);
@@ -107,7 +108,12 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
                     smsMessagesBySendDefinitions.put(definition, new List<IRR_SVC_SFMCService.SFMCMessage>());
                 }
                 smsMessagesBySendDefinitions.get(definition).add(message);
+                found = true;
                 break;
+            }
+            if(!found){
+                message.errorCode = 12001;
+                message.errorMessage = 'Unsupported country prefix for phone number';
             }
         }
         return smsMessagesBySendDefinitions;
