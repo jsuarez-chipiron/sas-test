@@ -58,8 +58,13 @@ public class IRR_SVC_EventService {
             log.IRR_MessageKey__c = message.messageKey;
             log.IRR_Recipient__c = message.recipient;
             log.IRR_Status__c = message.status;
+            if (message.SFMCMessage != null && message.SFMCMessage.errorCode != null &&
+                    message.SFMCMessage.errorCode != 0) {
+                log.IRR_Status__c = COM_LOG_STATUS_ERROR;
+                log.IRR_StatusCode__c = message.SFMCMessage.errorCode;
+                log.IRR_ErrorMessage__c = message.SFMCMessage.errorMessage;
+            }
             //TODO CONTENT?
-            System.debug(log);
             unitOfWork.registerNew(log);
         }
 

@@ -333,6 +333,63 @@ private class IRR_EVT_DelayProcessor_Test {
     }
 
     @IsTest
+    static void testFinalizeEvent_Error() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        fflib_ISObjectUnitOfWork uowMock = (fflib_ISObjectUnitOfWork) mocks.mock(fflib_SObjectUnitOfWork.class);
+
+        //Given
+        IRR_SVC_SFMCService.SMSMessage smsMessage = new IRR_SVC_SFMCService.SMSMessage(null, null, null);
+        smsMessage.messageKey = 'TEST_MESSAGE_KEY';
+        smsMessage.errorMessage = 'TEST_ERROR';
+        smsMessage.errorCode = 9000;
+        IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
+        delayInfo.flightId = 'TEST_FLIGHT_ID';
+        delayInfo.delayedMinutes = 10;
+        IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
+        passengerInfo.phoneNumber = 'TEST_PHONE';
+        passengerInfo.emailAddress = 'TEST_EMAIL';
+        passengerInfo.codsId = 'TEST_CODS_ID';
+        passengerInfo.thisSegment = new IRR_MOD_SegmentInfo();
+        passengerInfo.thisSegment.flightId = 'TEST_FLIGHT_ID';
+        passengerInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
+        IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
+                .newInstance(delayInfo);
+        IRR_MOD_Message message = new IRR_MOD_Message('TEST_STATUS', IRR_MOD_Message.MessageChannel.SMS, null, null,
+                passengerInfo, 'TEST_TYPE');
+        message.SFMCMessage = smsMessage;
+        eventProcessor.messages.add(message);
+
+        //When
+        eventProcessor.finalizeEvent(uowMock);
+
+        //Then
+        Map<SObjectField, Object> cLogMatcher = new Map<SObjectField, Object>{
+                IRR_CommunicationLog__c.IRR_FlightId__c => 'TEST_FLIGHT_ID',
+                IRR_CommunicationLog__c.IRR_BookingReference__c => 'TEST_BOOKING_REFERENCE',
+                IRR_CommunicationLog__c.IRR_CodsId__c => 'TEST_CODS_ID',
+                IRR_CommunicationLog__c.IRR_Channel__c => 'SMS',
+                IRR_CommunicationLog__c.IRR_ContactKey__c => 'TEST_EMAIL',
+                IRR_CommunicationLog__c.IRR_MessageKey__c => 'TEST_MESSAGE_KEY',
+                IRR_CommunicationLog__c.IRR_Recipient__c => 'TEST_PHONE',
+                IRR_CommunicationLog__c.IRR_Status__c => 'Error',
+                IRR_CommunicationLog__c.IRR_StatusCode__c => 9000,
+                IRR_CommunicationLog__c.IRR_ErrorMessage__c => 'TEST_ERROR'
+
+        };
+        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock))
+                .registerNew(fflib_Match.sObjectOfType(IRR_CommunicationLog__c.SObjectType));
+        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock)).registerNew(fflib_Match.sObjectWith(cLogMatcher));
+        Map<SObjectField, Object> dLogMatcher = new Map<SObjectField, Object>{
+                IRR_DelayLog__c.IRR_DelayMinutes__c => 10,
+                IRR_DelayLog__c.IRR_FlightId__c => 'TEST_FLIGHT_ID'
+        };
+        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock))
+                .registerNew(fflib_Match.sObjectOfType(IRR_DelayLog__c.SObjectType));
+        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock)).registerNew(fflib_Match.sObjectWith(dLogMatcher));
+    }
+
+    @IsTest
     static void testProcessMessages_NotIsSandbox() {
         //Set up mocks
         fflib_ApexMocks mocks = new fflib_ApexMocks();
