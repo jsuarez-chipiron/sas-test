@@ -36,8 +36,10 @@ public class IRR_Application {
     public static final fflib_Application.SelectorFactory Selector =
             new fflib_Application.SelectorFactory(
                     new Map<SObjectType, Type> {
-                            SFMC_SMSDefinition__mdt.SObjectType => IRR_SEL_SMSMessageDefinitionsSelector.class,
-                            IRR_DelayLog__c.SObjectType => IRR_SEL_DelayLogsSelector.class
+                            IRR_DelayLog__c.SObjectType => IRR_SEL_DelayLogsSelector.class,
+                            IRR_RecipientWhitelist__mdt.SObjectType => IRR_SEL_RecipientWhitelistSelector.class,
+                            Organization.SObjectType => IRR_SEL_OrganizationSelector.class,
+                            SFMC_SMSDefinition__mdt.SObjectType => IRR_SEL_SMSDefinitionsSelector.class
                     }
             );
 
@@ -61,8 +63,8 @@ public class IRR_Application {
                     new Map<String, C_Application.EventDefinition> {
                             'flightDepartureDelay' => new C_Application.EventDefinition(
                                     IRR_MOD_DelayInfo.class, IRR_EVT_DelayProcessor.Constructor.class),
-                            'manualMessage' => new C_Application.EventDefinition(
-                                    null, null)
+                            'manualCommunication' => new C_Application.EventDefinition(
+                                    IRR_MOD_ManualInfo.class, IRR_EVT_ManualProcessor.Constructor.class)
                     }
             );
 

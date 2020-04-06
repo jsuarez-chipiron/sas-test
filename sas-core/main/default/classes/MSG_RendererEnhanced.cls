@@ -64,7 +64,7 @@ global class MSG_RendererEnhanced implements MSG_IRenderer{
      */
     public void renderMessage(IRR_MOD_Message message) {
         MSG_TemplateCache.TemplateContent tc = templateCache.getTemplateByName(message.template);
-        Boolean isHtml = tc.isHtml() && message.type != IRR_MOD_Message.MessageType.SMS;
+        Boolean isHtml = tc.isHtml() && message.channel != IRR_MOD_Message.MessageChannel.SMS;
         TemplateModel tm = templateModelsByTemplateNameHTML.get(message.template + isHtml);
         if (tm == null) {
             TemplateLetterheadModel tlm = tc.letterhead != null ? new TemplateLetterheadModel(tc.letterhead) : null;

@@ -57,7 +57,7 @@ public abstract with sharing class fflib_SObjectSelector
     /**
      * Enforce CRUD Security
      **/
-    private Boolean m_enforceCRUD = true;
+    private Boolean m_enforceCRUD = false;
    	
     /**
      * Order by field

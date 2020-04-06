@@ -252,7 +252,7 @@ private with sharing class fflib_SObjectSelectorTest
 	{
 		public Testfflib_SObjectSelector()
 		{
-			super();
+			super(false, true, false);
 		}
 
 		public Testfflib_SObjectSelector(Boolean includeFieldSetFields, Boolean enforceCRUD, Boolean enforceFLS, Boolean sortSelectFields)

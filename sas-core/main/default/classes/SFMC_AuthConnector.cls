@@ -10,8 +10,8 @@ global class SFMC_AuthConnector extends C_LocalAuthConnector {
      * Authenticates against the service
      * @param username The client_id to use when authenticating
      * @param password The client_secret used when authenticating
-     * @param param1 Account Id, corresponds to BU in SFMC (optional)
-     * @param param2 Authentication scope, uses default package scope if not set (optional)
+     * @param param1 Authentication scope, uses default package scope if not set (optional)
+     * @param param2 Account Id, corresponds to BU in SFMC (optional)
      * @return The oauth access token
      */
     global override String authenticate(String username, String password, String param1, String param2){

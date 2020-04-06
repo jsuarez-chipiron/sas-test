@@ -4,6 +4,6 @@
 */
 
 public interface IRR_SVC_ISFMCService {
-    void sendSMSMessage(String recipient, String contactKey, String content);
-    void sendSMSMessages(List<IRR_SVC_SFMCService.SMSMessage> messages);
+    List<IRR_SVC_SFMCService.EmailMessage> sendEmailMessages(List<IRR_SVC_SFMCService.EmailMessage> messages);
+    List<IRR_SVC_SFMCService.SMSMessage> sendSMSMessages(List<IRR_SVC_SFMCService.SMSMessage> messages);
 }

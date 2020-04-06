@@ -14,19 +14,43 @@ public class IRR_MOD_DelayInfo {
     public String flightRef;
 
     @AuraEnabled
-    public Integer delayMinutes;
+    public String stationDeparture;
 
     @AuraEnabled
-    public String delayedTime;
+    public String stationArrival;
 
     @AuraEnabled
-    public String delayCode;
+    public Integer delayedMinutes;
 
     @AuraEnabled
-    public String scheduledTime;
+    public Datetime estimatedTimeOfDepartureLocal;
 
     @AuraEnabled
-    public Integer previousDelayMinutes;
+    public String estimatedFormattedLocalTime;
+
+    @AuraEnabled
+    public Datetime estimatedTimeOfDepartureUTC;
+
+    @AuraEnabled
+    public String delayReasonCode;
+
+    @AuraEnabled
+    public Datetime scheduledTimeOfDepartureLocal;
+
+    @AuraEnabled
+    public String scheduledFormattedLocalMonth;
+
+    @AuraEnabled
+    public String scheduledFormattedLocalDate;
+
+    @AuraEnabled
+    public String scheduledFormattedLocalTime;
+
+    @AuraEnabled
+    public Datetime scheduledTimeOfDepartureUTC;
+
+    @AuraEnabled
+    public Integer previousDelayedMinutes;
 
     @AuraEnabled
     public Integer minutesToScheduledTime;

@@ -10,11 +10,15 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
 
     private static final String MESSAGE_STATUS_DEFAULT = 'Created';
     private static final String MESSAGE_STATUS_PAUSED = 'Paused';
-    private static final String MESSAGE_STATUS_FILTERED = 'Filtered';
+    private static final String MESSAGE_STATUS_NOT_WHITELISTED = 'Not Whitelisted';
 
+    @TestVisible
     protected List<IRR_MOD_Message> messages = new List<IRR_MOD_Message>();
 
+    @TestVisible
     protected List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
+
+    abstract String getEventName();
 
     /**
      * @author Niklas Lundkvist, Deloitte
@@ -39,15 +43,29 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
         //TODO WIP
     }
 
-    private void filterMessages() {
-        //TODO WIP
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Filters messages by changing its status if running in a sandbox and recipient is not on whitelist.
+     */
+    private void whitelistFilterMessages() {
+        Organization org = IRR_SEL_OrganizationSelector.newInstance().selectOrganization();
+        if (!org.IsSandbox) return;
+        Set<String> whitelistedRecipients = IRR_SEL_RecipientWhitelistSelector.newInstance()
+                .getAllWhitelistedRecipients();
+        for (IRR_MOD_Message message : messages) {
+            if (!whitelistedRecipients.contains(message.recipient)) {
+                message.status = MESSAGE_STATUS_NOT_WHITELISTED;
+            }
+        }
     }
 
     /**
      * @author Niklas Lundkvist, Deloitte
      * @date 2020
      *
-     * @description Renders content for messages in scope using a Renderer initialized with applicable templates.
+     * @description De-duplicates messages in scope.
      */
     private void deduplicateMessages() {
         List<IRR_MOD_Message> deduplicatedMessages = new List<IRR_MOD_Message>();
@@ -63,19 +81,22 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
 
     private void sendMessages() {
         List<IRR_SVC_SFMCService.SMSMessage> SFMCSMSMessages = new List<IRR_SVC_SFMCService.SMSMessage>();
+        List<IRR_SVC_SFMCService.EmailMessage> SFMCEmailMessages = new List<IRR_SVC_SFMCService.EmailMessage>();
         for (IRR_MOD_Message message : messages) {
             if (message.status != MESSAGE_STATUS_DEFAULT) continue;
-            if (message.type == IRR_MOD_Message.MessageType.SMS && message.passengerInfo.hasPhoneNumber) {
+            if (message.channel == IRR_MOD_Message.MessageChannel.SMS) {
                 SFMCSMSMessages.add(new IRR_SVC_SFMCService.SMSMessage(message));
             }
-            else if (message.type == IRR_MOD_Message.MessageType.Email && message.passengerInfo.hasEmailAddress) {
-                //TODO WIP
+            else if (message.channel == IRR_MOD_Message.MessageChannel.Email) {
+                SFMCEmailMessages.add(new IRR_SVC_SFMCService.EmailMessage(message));
             }
         }
-        System.debug('SEND MESSAGES');
+        System.debug('SEND SMS');
         System.debug(SFMCSMSMessages);
-        IRR_SVC_SFMCService.sendSMSMessages(SFMCSMSMessages);
-        //IRR_SVC_SFMCService.sendEmailMessages(SFMCEmailMessages);
+        if (!SFMCSMSMessages.isEmpty()) IRR_SVC_SFMCService.sendSMSMessages(SFMCSMSMessages);
+        System.debug('SEND EMAIL');
+        System.debug(SFMCEmailMessages);
+        if (!SFMCEmailMessages.isEmpty()) IRR_SVC_SFMCService.sendEmailMessages(SFMCEmailMessages);
     }
 
     /**
@@ -86,9 +107,11 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
      *      - De-duplicates, renders, pauses and sends SMS and Email messages.
      */
     public void processMessages() {
+        if (messages == null || messages.isEmpty()) return;
         deduplicateMessages();
         renderMessages();
         pauseMessages();
+        whitelistFilterMessages();
         sendMessages();
     }
 
@@ -139,19 +162,24 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
         sendSMSMessage = sendSMSMessage == null || String.isBlank(smsTemplateName) ||
                 !flowVariables.passengerInfo.hasPhoneNumber ? false : sendSMSMessage;
 
-        if (!sendSMSMessage && !sendEmailMessage) return;
+        if (sendSMSMessage || sendEmailMessage){
+            createMessages(sendSMSMessage, smsTemplateName, sendEmailMessage, emailTemplateName, flowVariables);
+        }
+    }
 
+    protected void createMessages(Boolean sendSMS, String SMSTemplate, Boolean sendEmail, String emailTemplate,
+            IRR_MOD_FlowVariables flowVariables) {
         String serializedVariables = JSON.serialize(flowVariables);
         Map<String, Object> templateParams = (Map<String,Object>) JSON.deserializeUntyped(serializedVariables);
 
-        if (sendSMSMessage) {
-            IRR_MOD_Message smsMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageType.SMS,
-                    templateParams, smsTemplateName, flowVariables.passengerInfo);
+        if (sendSMS) {
+            IRR_MOD_Message smsMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.SMS,
+                    templateParams, SMSTemplate, flowVariables.passengerInfo, getEventName());
             messages.add(smsMessage);
         }
-        if (sendEmailMessage) {
-            IRR_MOD_Message emailMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageType.Email,
-                    templateParams,smsTemplateName, flowVariables.passengerInfo);
+        if (sendEmail) {
+            IRR_MOD_Message emailMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.Email,
+                    templateParams,emailTemplate, flowVariables.passengerInfo, getEventName());
             messages.add(emailMessage);
         }
     }
@@ -173,6 +201,4 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
     public interface IConstructable {
         IRR_EVT_IEventProcessor newInstance(Object eventInfo);
     }
-
-    public class EventProcessingException extends Exception { }
 }

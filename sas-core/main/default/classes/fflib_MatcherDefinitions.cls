@@ -1094,9 +1094,167 @@ public with sharing class fflib_MatcherDefinitions
 		}
 	}
 
+	/**
+	 * ObjectsWithPath matcher: checks if the supplied argument objects match the field path value list of maps
+	 */
+	public class ObjectsWithPath implements fflib_IMatcher {
+		private List<Map<String, Object>> objectByPathsList;
+
+		/**
+		 * ObjectsWithPath constructor
+		 * @param objectByPathsList List of map of field path value mappings to match
+		 */
+		public ObjectsWithPath(List<Map<String, Object>> objectByPathsList) {
+			this.objectByPathsList = validate(objectByPathsList);
+		}
+		
+		public Boolean matches(Object arg) {
+			if (arg == null) return false;
+
+			String serializedObjects = JSON.serialize(arg);
+
+			List<Object> untypedObjectList = (List<Object>) JSON.deserializeUntyped(serializedObjects);
+			if (objectByPathsList.size() != untypedObjectList.size()) return false;
+
+			Integer listSize = untypedObjectList.size();
+			for (Integer i = 0; i < listSize; i++) {
+				Object obj = untypedObjectList[i];
+				Map<String, Object> objectByPaths = objectByPathsList[i];
+
+				if (obj instanceof Map<String, Object>) {
+					Map<String, Object> untypedObjectMap = (Map<String, Object>) obj;
+					for (String path : objectByPaths.keySet()) {
+						Object toMatch = objectByPaths.get(path);
+						Object result = parseMapPath(path, untypedObjectMap);
+
+						//Handle dates
+						if (toMatch instanceof Date || toMatch instanceof Datetime) {
+							toMatch = JSON.serialize(toMatch).replace('"', '');
+						}
+
+						System.debug(path + ' ' + toMatch + ' ' + result);
+
+						if (result == null || result != toMatch) return false;
+					}
+				}
+				else {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		private List<Map<String, Object>> validate(List<Map<String, Object>> arg) {
+			if (arg == null || arg.isEmpty()) {
+				throw new fflib_ApexMocks.ApexMocksException('Arg cannot be null/empty: ' + arg);
+			}
+
+			return arg;
+		}
+	}
+
+	/**
+	 * ObjectWithPath matcher: checks if the supplied argument object match the field path value map
+	 */
+	public class ObjectWithPath implements fflib_IMatcher {
+		private Map<String, Object> objectByPaths;
+
+		/**
+		 * ObjectWithPath constructor
+		 * @param objectByPaths Map of field path value mappings to match
+		 */
+		public ObjectWithPath(Map<String, Object> objectByPaths) {
+			this.objectByPaths = validate(objectByPaths);
+		}
+
+		public Boolean matches(Object arg) {
+			if (arg == null) return false;
+
+			String serializedObject = JSON.serialize(arg);
+			Map<String, Object> untypedObjectMap = (Map<String, Object>) JSON.deserializeUntyped(serializedObject);
+
+			for (String path : objectByPaths.keySet()) {
+				Object toMatch = objectByPaths.get(path);
+				Object result = parseMapPath(path, untypedObjectMap);
+
+				//Handle dates
+				if (toMatch instanceof Date || toMatch instanceof Datetime) {
+					toMatch = JSON.serialize(toMatch).replace('"', '');
+				}
+
+				if (result == null || result != toMatch) return false;
+			}
+			return true;
+		}
+
+		private Map<String, Object> validate(Map<String, Object> arg) {
+			if (arg == null || arg.isEmpty())
+			{
+				throw new fflib_ApexMocks.ApexMocksException('Arg cannot be null/empty: ' + arg);
+			}
+
+			return arg;
+		}
+	}
+
+	/**
+	 * MapWithPath matcher: checks if the supplied argument map match the field path value maps
+	 */
+	public class MapWithPath implements fflib_IMatcher {
+		private Map<String, Object> objectByPaths;
+
+		/**
+		 * MapWithPath constructor
+		 * @param objectByPaths Map of field path value mappings to match
+		 */
+		public MapWithPath(Map<String, Object> objectByPaths) {
+			this.objectByPaths = validate(objectByPaths);
+		}
+
+		public Boolean matches(Object arg) {
+			for (String path : objectByPaths.keySet()) {
+				Object toMatch = objectByPaths.get(path);
+				Object result = parseMapPath(path, arg);
+				if (result == null || result != toMatch) return false;
+			}
+			return true;
+		}
+
+		private Map<String, Object> validate(Map<String, Object> arg) {
+			if (arg == null || arg.isEmpty())
+			{
+				throw new fflib_ApexMocks.ApexMocksException('Arg cannot be null/empty: ' + arg);
+			}
+
+			return arg;
+		}
+	}
+
 	/*
 	 * Helpers
 	 */
+
+	private static Object parseMapPath(String path, Object argMap) {
+		List<String> pathComponents = path.split('\\.');
+		Object result = argMap;
+		for (String component : pathComponents) {
+			String componentBeforeIndex = component.substringBeforeLast('[');
+			if (result != null && result instanceof Map<String, Object>) {
+				Map<String, Object> obj = (Map<String, Object>) result;
+				result = obj.get(componentBeforeIndex);
+				if (result instanceof List<Object> && component.contains('[') && component.contains(']')) {
+					List<Object> listObjects = (List<Object>) result;
+					Integer index = Integer.valueOf(component.substringBetween('[',']'));
+					if (listObjects.size() > index) result = listObjects[index];
+				}
+			}
+			else {
+				return null;
+			}
+
+		}
+		return result;
+	}
 
 	private static Object validateNotNull(Object arg)
 	{
