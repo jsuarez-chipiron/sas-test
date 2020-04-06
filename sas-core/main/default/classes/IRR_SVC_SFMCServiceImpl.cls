@@ -71,7 +71,7 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
                 IRR_SVC_SFMCService.MessageResponse messageResponse = response.responses[i];
                 messages[i].messageKey = messageResponse.messageKey;
                 messages[i].errorCode = messageResponse.errorcode;
-                if(messageResponse.errorcode!=null && messageResponse.errorcode!=0) {
+                if(messageResponse.errorcode!=null) {
                     messages[i].errorMessage = messageResponse.message;
                 }
             }

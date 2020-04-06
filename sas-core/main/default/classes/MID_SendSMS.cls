@@ -52,7 +52,7 @@ global without sharing class MID_SendSMS {
                     SendSMSResult res = new SendSMSResult();
                     if(smsw.smsIdx!=null){
                         IRR_SVC_SFMCService.SMSMessage sms = messages[smsw.smsIdx];
-                        res.success = sms.errorCode==null || sms.errorCode==0;
+                        res.success = sms.errorCode==null;
                         res.messageKey = sms.messageKey;
                         res.errorCode = sms.errorCode;
                         res.errorMessage = sms.errorMessage;
