@@ -10,7 +10,7 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
 
     private static final String MESSAGE_STATUS_DEFAULT = 'Created';
     private static final String MESSAGE_STATUS_PAUSED = 'Paused';
-    private static final String MESSAGE_STATUS_FILTERED = 'Filtered';
+    private static final String MESSAGE_STATUS_NOT_WHITELISTED = 'Not Whitelisted';
 
     @TestVisible
     protected List<IRR_MOD_Message> messages = new List<IRR_MOD_Message>();
@@ -43,15 +43,29 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
         //TODO WIP
     }
 
-    private void filterMessages() {
-        //TODO WIP
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Filters messages by changing its status if running in a sandbox and recipient is not on whitelist.
+     */
+    private void whitelistFilterMessages() {
+        Organization org = IRR_SEL_OrganizationSelector.newInstance().selectOrganization();
+        if (!org.IsSandbox) return;
+        Set<String> whitelistedRecipients = IRR_SEL_RecipientWhitelistSelector.newInstance()
+                .getAllWhitelistedRecipients();
+        for (IRR_MOD_Message message : messages) {
+            if (!whitelistedRecipients.contains(message.recipient)) {
+                message.status = MESSAGE_STATUS_NOT_WHITELISTED;
+            }
+        }
     }
 
     /**
      * @author Niklas Lundkvist, Deloitte
      * @date 2020
      *
-     * @description Renders content for messages in scope using a Renderer initialized with applicable templates.
+     * @description De-duplicates messages in scope.
      */
     private void deduplicateMessages() {
         List<IRR_MOD_Message> deduplicatedMessages = new List<IRR_MOD_Message>();
@@ -93,9 +107,11 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
      *      - De-duplicates, renders, pauses and sends SMS and Email messages.
      */
     public void processMessages() {
+        if (messages == null || messages.isEmpty()) return;
         deduplicateMessages();
         renderMessages();
         pauseMessages();
+        whitelistFilterMessages();
         sendMessages();
     }
 

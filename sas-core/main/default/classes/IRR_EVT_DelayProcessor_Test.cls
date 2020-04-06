@@ -333,14 +333,23 @@ private class IRR_EVT_DelayProcessor_Test {
     }
 
     @IsTest
-    static void testProcessMessages() {
+    static void testProcessMessages_NotIsSandbox() {
         //Set up mocks
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         MSG_IRenderer rendererMock = (MSG_IRenderer) mocks.mock(MSG_RendererEnhanced.class);
         MSG_ITemplateCache cacheMock = (MSG_ITemplateCache) mocks.mock(MSG_TemplateCache.class);
         IRR_SVC_ISFMCService serviceMock = (IRR_SVC_ISFMCService) mocks.mock(IRR_SVC_SFMCServiceImpl.class);
+        IRR_SEL_IOrganizationSelector selectorMock = (IRR_SEL_IOrganizationSelector)
+                mocks.mock(IRR_SEL_OrganizationSelector.class);
+
 
         //Given
+        Organization org = (Organization) C_TestDataFactory.createSObject(Organization.SObjectType,
+                new Map<SObjectField, Object> { Organization.IsSandbox => false });
+        mocks.startStubbing();
+        mocks.when(selectorMock.sObjectType()).thenReturn(Organization.SObjectType);
+        mocks.when(selectorMock.selectOrganization()).thenReturn(org);
+        mocks.stopStubbing();
         IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
         passengerInfo.phoneNumber = 'TEST_PHONE';
         passengerInfo.emailAddress = 'TEST_EMAIL';
@@ -353,6 +362,7 @@ private class IRR_EVT_DelayProcessor_Test {
                 .newInstance(null);
         eventProcessor.messages.add(message);
         eventProcessor.messages.add(messageDuplicate);
+        IRR_Application.Selector.setMock(selectorMock);
         IRR_Application.Service.setMock(IRR_SVC_ISFMCService.class, serviceMock);
         IRR_Application.MessageRenderer.setMock(rendererMock);
         IRR_Application.MessageRenderer.setMock(cacheMock);
@@ -365,6 +375,104 @@ private class IRR_EVT_DelayProcessor_Test {
         ((MSG_ITemplateCache) mocks.verify(cacheMock)).loadTemplates(new Set<String>{'TEST_TEMPLATE'});
         ((MSG_IRenderer) mocks.verify(rendererMock)).renderMessage(message);
         ((IRR_SVC_ISFMCService) mocks.verify(serviceMock))
+                .sendSMSMessages((List<IRR_SVC_SFMCService.SMSMessage>) fflib_Match.anyList());
+    }
+
+    @IsTest
+    static void testProcessMessages_Whitelisted() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        MSG_IRenderer rendererMock = (MSG_IRenderer) mocks.mock(MSG_RendererEnhanced.class);
+        MSG_ITemplateCache cacheMock = (MSG_ITemplateCache) mocks.mock(MSG_TemplateCache.class);
+        IRR_SVC_ISFMCService serviceMock = (IRR_SVC_ISFMCService) mocks.mock(IRR_SVC_SFMCServiceImpl.class);
+        IRR_SEL_IOrganizationSelector selectorMock = (IRR_SEL_IOrganizationSelector)
+                mocks.mock(IRR_SEL_OrganizationSelector.class);
+        IRR_SEL_IRecipientWhitelistSelector whitelistMock = (IRR_SEL_IRecipientWhitelistSelector)
+                mocks.mock(IRR_SEL_RecipientWhitelistSelector.class);
+
+
+        //Given
+        Organization org = (Organization) C_TestDataFactory.createSObject(Organization.SObjectType,
+                new Map<SObjectField, Object> { Organization.IsSandbox => true });
+        Set<String> recipientWhitelist = new Set<String>{'TEST_PHONE'};
+        mocks.startStubbing();
+        mocks.when(whitelistMock.sObjectType()).thenReturn(IRR_RecipientWhitelist__mdt.SObjectType);
+        mocks.when(whitelistMock.getAllWhitelistedRecipients()).thenReturn(recipientWhitelist);
+        mocks.when(selectorMock.sObjectType()).thenReturn(Organization.SObjectType);
+        mocks.when(selectorMock.selectOrganization()).thenReturn(org);
+        mocks.stopStubbing();
+        IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
+        passengerInfo.phoneNumber = 'TEST_PHONE';
+        passengerInfo.emailAddress = 'TEST_EMAIL';
+        passengerInfo.codsId = 'TEST_CODS_ID';
+        passengerInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
+        IRR_MOD_Message message = new IRR_MOD_Message('Created', IRR_MOD_Message.MessageChannel.SMS, null,
+                'TEST_TEMPLATE', passengerInfo, 'Delay');
+        IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
+                .newInstance(null);
+        eventProcessor.messages.add(message);
+        IRR_Application.Selector.setMock(selectorMock);
+        IRR_Application.Selector.setMock(whitelistMock);
+        IRR_Application.Service.setMock(IRR_SVC_ISFMCService.class, serviceMock);
+        IRR_Application.MessageRenderer.setMock(rendererMock);
+        IRR_Application.MessageRenderer.setMock(cacheMock);
+
+        //When
+        eventProcessor.processMessages();
+
+        //Then
+        System.assertEquals('Created', message.status);
+        ((IRR_SVC_ISFMCService) mocks.verify(serviceMock))
+                .sendSMSMessages((List<IRR_SVC_SFMCService.SMSMessage>) fflib_Match.anyList());
+    }
+
+    @IsTest
+    static void testProcessMessages_NotWhitelisted() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        MSG_IRenderer rendererMock = (MSG_IRenderer) mocks.mock(MSG_RendererEnhanced.class);
+        MSG_ITemplateCache cacheMock = (MSG_ITemplateCache) mocks.mock(MSG_TemplateCache.class);
+        IRR_SVC_ISFMCService serviceMock = (IRR_SVC_ISFMCService) mocks.mock(IRR_SVC_SFMCServiceImpl.class);
+        IRR_SEL_IOrganizationSelector selectorMock = (IRR_SEL_IOrganizationSelector)
+                mocks.mock(IRR_SEL_OrganizationSelector.class);
+        IRR_SEL_IRecipientWhitelistSelector whitelistMock = (IRR_SEL_IRecipientWhitelistSelector)
+                mocks.mock(IRR_SEL_RecipientWhitelistSelector.class);
+
+
+        //Given
+        Organization org = (Organization) C_TestDataFactory.createSObject(Organization.SObjectType,
+                new Map<SObjectField, Object> { Organization.IsSandbox => true });
+        Set<String> recipientWhitelist = new Set<String>();
+        mocks.startStubbing();
+        mocks.when(whitelistMock.sObjectType()).thenReturn(IRR_RecipientWhitelist__mdt.SObjectType);
+        mocks.when(whitelistMock.getAllWhitelistedRecipients()).thenReturn(recipientWhitelist);
+        mocks.when(selectorMock.sObjectType()).thenReturn(Organization.SObjectType);
+        mocks.when(selectorMock.selectOrganization()).thenReturn(org);
+        mocks.stopStubbing();
+        IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
+        passengerInfo.phoneNumber = 'TEST_PHONE';
+        passengerInfo.emailAddress = 'TEST_EMAIL';
+        passengerInfo.codsId = 'TEST_CODS_ID';
+        passengerInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
+        IRR_MOD_Message message = new IRR_MOD_Message('Created', IRR_MOD_Message.MessageChannel.SMS, null,
+                'TEST_TEMPLATE', passengerInfo, 'Delay');
+        IRR_MOD_Message messageDuplicate = message.clone();
+        IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
+                .newInstance(null);
+        eventProcessor.messages.add(message);
+        eventProcessor.messages.add(messageDuplicate);
+        IRR_Application.Selector.setMock(selectorMock);
+        IRR_Application.Selector.setMock(whitelistMock);
+        IRR_Application.Service.setMock(IRR_SVC_ISFMCService.class, serviceMock);
+        IRR_Application.MessageRenderer.setMock(rendererMock);
+        IRR_Application.MessageRenderer.setMock(cacheMock);
+
+        //When
+        eventProcessor.processMessages();
+
+        //Then
+        System.assertEquals('Not Whitelisted', message.status);
+        ((IRR_SVC_ISFMCService) mocks.verify(serviceMock, 0))
                 .sendSMSMessages((List<IRR_SVC_SFMCService.SMSMessage>) fflib_Match.anyList());
     }
 }
