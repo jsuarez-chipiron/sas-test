@@ -281,7 +281,7 @@ private class IRR_EVT_DelayProcessor_Test {
     }
 
     @IsTest
-    static void testFinalizeEvent() {
+    static void testFinalizeEvent_Message() {
         //Set up mocks
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         fflib_ISObjectUnitOfWork uowMock = (fflib_ISObjectUnitOfWork) mocks.mock(fflib_SObjectUnitOfWork.class);
@@ -330,6 +330,24 @@ private class IRR_EVT_DelayProcessor_Test {
         ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock))
                 .registerNew(fflib_Match.sObjectOfType(IRR_DelayLog__c.SObjectType));
         ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock)).registerNew(fflib_Match.sObjectWith(dLogMatcher));
+    }
+
+    @IsTest
+    static void testFinalizeEvent_NoMessage() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        fflib_ISObjectUnitOfWork uowMock = (fflib_ISObjectUnitOfWork) mocks.mock(fflib_SObjectUnitOfWork.class);
+
+        //Given
+        IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
+                .newInstance(null);
+
+        //When
+        eventProcessor.finalizeEvent(uowMock);
+
+        //Then
+        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock, 0))
+                .registerNew(fflib_Match.anySObject());
     }
 
     @IsTest
