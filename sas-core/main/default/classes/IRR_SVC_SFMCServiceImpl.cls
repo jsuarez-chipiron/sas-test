@@ -78,7 +78,7 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
         }
         else {
             for(IRR_SVC_SFMCService.SFMCMessage msg : messages){
-                msg.errorCode = response.errorcode;
+                msg.errorCode = response.errorcode != 0 ? response.errorcode : responseObject.statusCode ;
                 msg.errorMessage = response.message;
             }
         }

@@ -249,6 +249,43 @@ private class IRR_SVC_SFMCService_Test {
     }
 
     @IsTest
+    static void testSendEmailMessagesRequestHttpError() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        C_IIntegrationExecutorBuilder builderMock = (C_IIntegrationExecutorBuilder) mocks.mock(
+                C_IntegrationExecutorBuilder.class);
+        C_IIntegrationExecutor executorMock = (C_IIntegrationExecutor) mocks.mock(C_IntegrationExecutorRest.class);
+
+        //Given
+        C_IntegrationExecutor.IntegrationResponse response = new C_IntegrationExecutor.IntegrationResponse(
+                401, '{"documentation":"https://developer.salesforce.com/docs/atlas.en-us.mc-apis.meta/mc-apis/error-handling.htm","errorcode":0,"message":"Not Authorized"}');
+        mocks.startStubbing();
+        mocks.when(builderMock.setBaseURL(fflib_Match.anyString())).thenReturn(builderMock);
+        mocks.when(builderMock.build()).thenReturn(executorMock);
+        mocks.when(executorMock.executeRequest(
+                    fflib_Match.anyString(),
+                    (C_IntegrationExecutor.Method) fflib_Match.eq(C_IntegrationExecutor.Method.POST),
+                    (Map<String, Object>) fflib_Match.anyObject(),
+                    (Map<String, Object>) fflib_Match.isNull()))
+                .thenReturn(response);
+        mocks.stopStubbing();
+        IRR_Application.IntegrationExecutorBuilder.setMock(IRR_Application.IntegrationType.REST, builderMock);
+        IRR_SVC_SFMCService.EmailMessage emailMessage = new IRR_SVC_SFMCService.EmailMessage(
+                'TEST_CONTENT', 'TEST_SUBJECT', 'TEST_RECIPIENT', 'TEST_CONTACT_KEY');
+        IRR_SVC_SFMCService.EmailMessage emailMessageOther = new IRR_SVC_SFMCService.EmailMessage(
+                'OTHER_CONTENT', 'OTHER_SUBJECT', 'OTHER_RECIPIENT', 'OTHER_CONTACT_KEY');
+
+        //When
+        IRR_SVC_SFMCService.sendEmailMessages(new List<IRR_SVC_SFMCService.EmailMessage>{emailMessage, emailMessageOther});
+
+        //Then
+        System.assertEquals(401, emailMessage.errorCode);
+        System.assertEquals('Not Authorized', emailMessage.errorMessage);
+        System.assertEquals(401, emailMessageOther.errorCode);
+        System.assertEquals('Not Authorized', emailMessageOther.errorMessage);
+    }
+
+    @IsTest
     static void testSendEmailMessagesMixedErrorResponse() {
         //Set up mocks
         fflib_ApexMocks mocks = new fflib_ApexMocks();
