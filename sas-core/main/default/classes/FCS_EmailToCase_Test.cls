@@ -106,6 +106,7 @@ private class FCS_EmailToCase_Test {
     @isTest
     static void sendEmailToSalesInformation(){
         List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
+        cases[0].Origin = 'Sales Information';
         insert cases;
 
         EmailMessage email = new EmailMessage();
@@ -117,8 +118,9 @@ private class FCS_EmailToCase_Test {
         email.ParentId = cases[0].Id; 
         insert email;
 
-        List<Case> updatedCase = [SELECT Type FROM Case WHERE id =: cases[0].Id];
+        List<Case> updatedCase = [SELECT Type, Origin FROM Case WHERE id =: cases[0].Id];
         System.assertEquals('Sales Information', updatedCase[0].Type);
+        System.assertEquals('Email', updatedCase[0].Origin);
     }
 
     /**
@@ -128,6 +130,7 @@ private class FCS_EmailToCase_Test {
     @isTest
     static void sendEmailToSASSIInternal(){
         List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
+        cases[0].Origin = 'SASSI Internal';
         insert cases;
 
         EmailMessage email = new EmailMessage();
@@ -139,52 +142,9 @@ private class FCS_EmailToCase_Test {
         email.ParentId = cases[0].Id; 
         insert email;
 
-        List<Case> updatedCase = [SELECT Type FROM Case WHERE id =: cases[0].Id];
+        List<Case> updatedCase = [SELECT Type, Origin FROM Case WHERE id =: cases[0].Id];
         System.assertEquals('SASSI Internal', updatedCase[0].Type);
-    }
-
-    /**
-        Tests the Process on Email Message where an Email is CC:d to SASSI Internal address which should result in the Case having Type SASSI Internal
-        @author Philip Ossler - Deloitte
-    */
-    @isTest
-    static void sendCcEmailToSASSIInternal(){
-        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
-        insert cases;
-
-        EmailMessage email = new EmailMessage();
-        email.FromAddress = 'test@abc.se';
-        email.Incoming = True;
-        email.CcAddress= 'sassi.internal@sas.dk';
-        email.Subject = 'Test Subject';
-        email.HtmlBody = 'Test Body';
-        email.ParentId = cases[0].Id; 
-        insert email;
-
-        List<Case> updatedCase = [SELECT Type FROM Case WHERE id =: cases[0].Id];
-        System.assertEquals('SASSI Internal', updatedCase[0].Type);
-    }
-
-    /**
-        Tests the Process on Email Message where an Email is BCC:d to SASSI Internal address which should result in the Case having Type SASSI Internal
-        @author Philip Ossler - Deloitte
-    */
-    @isTest    
-    static void sendBccEmailToSASSIInternal(){
-        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
-        insert cases;
-
-        EmailMessage email = new EmailMessage();
-        email.FromAddress = 'test@abc.se';
-        email.Incoming = True;
-        email.BccAddress= 'sassi.internal@sas.dk';
-        email.Subject = 'Test Subject';
-        email.HtmlBody = 'Test Body';
-        email.ParentId = cases[0].Id; 
-        insert email;
-
-        List<Case> updatedCase = [SELECT Type FROM Case WHERE id =: cases[0].Id];
-        System.assertEquals('SASSI Internal', updatedCase[0].Type);
+        System.assertEquals('Email', updatedCase[0].Origin);
     }
 
     /**
@@ -194,6 +154,7 @@ private class FCS_EmailToCase_Test {
     @isTest
     static void sendEmailToSystemTariff(){
         List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
+        cases[0].Origin = 'System & Tariff';
         insert cases;
 
         EmailMessage email = new EmailMessage();
@@ -206,8 +167,9 @@ private class FCS_EmailToCase_Test {
         email.ParentId = cases[0].Id; 
         insert email;
 
-        List<Case> updatedCase = [SELECT Type FROM Case WHERE id =: cases[0].Id];
+        List<Case> updatedCase = [SELECT Type, Origin FROM Case WHERE id =: cases[0].Id];
         System.assertEquals(null, updatedCase[0].Type);
+        System.assertEquals('Email', updatedCase[0].Origin);
     }
 
  /**

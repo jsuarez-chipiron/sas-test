@@ -36,4 +36,19 @@
         <default>false</default>
         <label>Facebook Messenger</label>
     </standardValue>
+    <standardValue>
+        <fullName>Sales Information</fullName>
+        <default>false</default>
+        <label>Sales Information</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SASSI Internal</fullName>
+        <default>false</default>
+        <label>SASSI Internal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>System &amp; Tariff</fullName>
+        <default>false</default>
+        <label>System &amp; Tariff</label>
+    </standardValue>
 </StandardValueSet>
