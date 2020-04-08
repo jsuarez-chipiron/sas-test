@@ -89,6 +89,7 @@ global with sharing class GDPR_WipeCaseService {
         SocialPost[] spList = [SELECT Id FROM SocialPost WHERE ParentId IN :caseIds];
         Task[] tList = [SELECT Id FROM Task WHERE WhatId IN :caseIds];
         CaseComment[] ccList = [SELECT Id FROM CaseComment WHERE ParentId IN :caseIds];
+        SurveyInvitation[] siList = [SELECT Id FROM SurveyInvitation WHERE FCS_RelatedCase__c IN :caseIds];
         ContentDocumentLink[] cdlList = [SELECT Id,ContentDocumentId,ContentDocument.LatestPublishedVersion.FirstPublishLocationId FROM ContentDocumentLink WHERE LinkedEntityId IN :caseIds];
         List<ContentDocument> cdDelList = new List<ContentDocument>();
         for(Integer i=0,cdlSz=cdlList.size();i<cdlSz;i++){
@@ -102,6 +103,7 @@ global with sharing class GDPR_WipeCaseService {
         delete spList;
         delete tList;
         delete ccList;
+        delete siList;
         delete cdlList;
         delete cdDelList;
 
