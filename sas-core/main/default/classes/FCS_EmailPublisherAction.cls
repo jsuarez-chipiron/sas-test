@@ -1,6 +1,7 @@
 /**
- * Class for overriding the default QuickAction when writing Emails
  * @author Philip Ossler
+ * @date 2020-04-14
+ * @description Class for overriding the default QuickAction when writing Emails
  */
 global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaultsHandler {
     // Empty constructor
@@ -16,7 +17,7 @@ global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaults
 
         // Assign default FromAddress based on the Case Type
         if (c.Type != null && c.Type.equals('Sales Information')) {
-            emailMessage.FromAddress = String.valueOf(C_Settings.getSettings('EMAIL ADDRESS').get('Sales Information'));
+            emailMessage.FromAddress = C_Settings.getSettings('EMAIL ADDRESS').get('Sales Information');
         }
         else if (c.Type != null && c.Type.equals('SASSI Internal')) {
             emailMessage.FromAddress = C_Settings.getSettings('EMAIL ADDRESS').get('SASSI Internal');
