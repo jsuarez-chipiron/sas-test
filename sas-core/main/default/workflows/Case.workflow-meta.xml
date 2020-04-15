@@ -17,8 +17,7 @@
         </actions>
         <active>true</active>
         <description>Update the Consent field to True , when case is created with Origin as Email , Facebook, Twitter and Facebook Messanger</description>
-        <formula>OR(ISPICKVAL(Origin,&#39;Facebook&#39;),ISPICKVAL(Origin,&#39;Twitter&#39;),ISPICKVAL(Origin,&#39;Facebook Messenger&#39;),
-AND(OR(ISPICKVAL(Origin,&#39;Email&#39;),ISPICKVAL(Origin,&#39;Sales Information&#39;),ISPICKVAL(Origin,&#39;SASSI Internal&#39;),ISPICKVAL(Origin,&#39;System &amp; Tariff&#39;)), CreatedById = $Label.SAS_Automation_Process_User_Id))</formula>
+        <formula>OR(ISPICKVAL(Origin,&#39;Facebook&#39;),ISPICKVAL(Origin,&#39;Twitter&#39;),ISPICKVAL(Origin,&#39;Facebook Messenger&#39;),AND(ISPICKVAL(Origin,&#39;Email&#39;), CreatedById = $Label.SAS_Automation_Process_User_Id))</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
 </Workflow>
