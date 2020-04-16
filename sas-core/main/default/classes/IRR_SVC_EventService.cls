@@ -57,6 +57,7 @@ public class IRR_SVC_EventService {
             log.IRR_ContactKey__c = message.contactKey;
             log.IRR_MessageKey__c = message.messageKey;
             log.IRR_Recipient__c = message.recipient;
+            log.IRR_MessageType__c = message.type;
             log.IRR_Status__c = message.status;
             if (message.SFMCMessage != null && message.SFMCMessage.errorCode != null &&
                     message.SFMCMessage.errorCode != 0) {
