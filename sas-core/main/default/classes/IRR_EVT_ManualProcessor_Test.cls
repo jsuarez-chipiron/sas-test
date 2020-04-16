@@ -150,7 +150,7 @@ private class IRR_EVT_ManualProcessor_Test {
     }
 
     @IsTest
-    static void testInitiateEvent() {
+    static void testInitiateEvent_NoEventInfo() {
         //Given
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
         manualRequest.sendSMSMessages = null;
@@ -163,6 +163,25 @@ private class IRR_EVT_ManualProcessor_Test {
         //Then
         System.assertEquals(false, eventProcessor.manualRequest.sendEmailMessages);
         System.assertEquals(false, eventProcessor.manualRequest.sendSMSMessages);
+    }
+
+    @IsTest
+    static void testInitiateEvent_DelayEvent() {
+        //Given
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.sendSMSMessages = true;
+        manualRequest.sendEmailMessages = false;
+        manualRequest.delayInfo = new IRR_MOD_DelayInfo();
+        manualRequest.delayInfo.flightId = 'SK1429-20191104-ARN-CPH';
+        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+
+        //When
+        eventProcessor.initiateEvent();
+
+        //Then
+        System.assertEquals('SK1429', manualRequest.delayInfo.flightRef);
+        System.assertEquals('ARN', manualRequest.delayInfo.stationDeparture);
+        System.assertEquals('CPH', manualRequest.delayInfo.stationArrival);
     }
 
     @IsTest
