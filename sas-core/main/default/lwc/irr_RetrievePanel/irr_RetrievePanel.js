@@ -11,7 +11,7 @@ export default class irr_RetrievePanel extends LightningElement {
 
     retrievalMode = "FLIGHT_REFERENCE";
 
-    retrieveParameters = {flightId: "SK1234-20200312-ARN-CPH"};
+    retrieveParameters = {};
 
     handleParameterChange(event) {
         this.retrieveParameters[event.target.name] = event.target.value;
