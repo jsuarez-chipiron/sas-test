@@ -46,8 +46,8 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
         if (manualRequest.delayInfo != null && String.isNotBlank(manualRequest.delayInfo.flightId)) {
             List<String> flightIdSplit = manualRequest.delayInfo.flightId.split('-');
             manualRequest.delayInfo.flightRef = flightIdSplit[0];
-            manualRequest.delayInfo.stationArrival = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
-            manualRequest.delayInfo.stationDeparture = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
+            manualRequest.delayInfo.stationDeparture = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
+            manualRequest.delayInfo.stationArrival = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
         }
     }
 

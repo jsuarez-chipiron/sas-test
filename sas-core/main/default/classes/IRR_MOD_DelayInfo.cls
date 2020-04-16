@@ -26,9 +26,6 @@ public class IRR_MOD_DelayInfo {
     public Datetime estimatedTimeOfDepartureLocal { get; set; }
 
     @AuraEnabled
-    public String estimatedFormattedLocalTime { get; set; }
-
-    @AuraEnabled
     public Datetime estimatedTimeOfDepartureUTC { get; set; }
 
     @AuraEnabled
@@ -36,15 +33,6 @@ public class IRR_MOD_DelayInfo {
 
     @AuraEnabled
     public Datetime scheduledTimeOfDepartureLocal { get; set; }
-
-    @AuraEnabled
-    public String scheduledFormattedLocalMonth { get; set; }
-
-    @AuraEnabled
-    public String scheduledFormattedLocalDate { get; set; }
-
-    @AuraEnabled
-    public String scheduledFormattedLocalTime { get; set; }
 
     @AuraEnabled
     public Datetime scheduledTimeOfDepartureUTC { get; set; }

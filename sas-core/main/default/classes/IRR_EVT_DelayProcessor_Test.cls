@@ -171,14 +171,6 @@ private class IRR_EVT_DelayProcessor_Test {
         System.assertEquals(0, delayInfo.previousDelayedMinutes);
         System.assertEquals(10, delayInfo.delayDifference);
         System.assertEquals(10, delayInfo.delayedMinutes);
-        System.assertEquals(delayInfo.scheduledTimeOfDepartureLocal.formatGmt('dd'),
-                delayInfo.scheduledFormattedLocalDate);
-        System.assertEquals(delayInfo.scheduledTimeOfDepartureLocal.formatGmt('MMM'),
-                delayInfo.scheduledFormattedLocalMonth);
-        System.assertEquals(delayInfo.scheduledTimeOfDepartureLocal.formatGmt('HH:mm'),
-                delayInfo.scheduledFormattedLocalTime);
-        System.assertEquals(delayInfo.estimatedTimeOfDepartureLocal.formatGmt('HH:mm'),
-                delayInfo.estimatedFormattedLocalTime);
         System.assertEquals('ARN', delayInfo.stationDeparture);
         System.assertEquals('CPH', delayInfo.stationArrival);
         System.assert(delayInfo.firstDelay);

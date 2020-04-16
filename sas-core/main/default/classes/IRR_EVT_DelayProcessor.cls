@@ -62,8 +62,8 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
 
         List<String> flightIdSplit = delayInfo.flightId.split('-');
         delayInfo.flightRef = flightIdSplit[0];
-        delayInfo.stationArrival = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
-        delayInfo.stationDeparture = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
+        delayInfo.stationDeparture = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
+        delayInfo.stationArrival = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
 
         Long millisecondsToScheduledTime = delayInfo.scheduledTimeOfDepartureUTC.getTime() - Datetime.now().getTime();
         delayInfo.minutesToScheduledTime = (Integer) millisecondsToScheduledTime / 60000;
