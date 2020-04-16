@@ -8,29 +8,44 @@
 public class IRR_MOD_PassengerInfo {
 
     @AuraEnabled
-    public String bookingReference;
+    public String bookingReference { get; set; }
 
     @AuraEnabled
-    public String codsId;
+    public String SSR { get; set; }
 
     @AuraEnabled
-    public Boolean hasPhoneNumber;
-    @AuraEnabled
-    public Boolean hasEmailAddress;
+    public String passengerId { get; set; }
 
     @AuraEnabled
-    public String phoneNumber;
-    @AuraEnabled
-    public String emailAddress;
+    public String lastName { get; set; }
 
     @AuraEnabled
-    public Boolean hasThisSegment;
-    @AuraEnabled
-    public IRR_MOD_SegmentInfo thisSegment;
+    public String firstName { get; set; }
 
     @AuraEnabled
-    public Boolean hasNextSegment;
+    public String ebLevel { get; set; }
+
     @AuraEnabled
-    public IRR_MOD_SegmentInfo nextSegment;
+    public String codsId { get; set; }
+
+    @AuraEnabled
+    public Boolean hasPhoneNumber { get; set; }
+    @AuraEnabled
+    public Boolean hasEmailAddress { get; set; }
+
+    @AuraEnabled
+    public String phoneNumber { get; set; }
+    @AuraEnabled
+    public String emailAddress { get; set; }
+
+    @AuraEnabled
+    public Boolean hasThisSegment { get; set; }
+    @AuraEnabled
+    public IRR_MOD_SegmentInfo thisSegment { get; set; }
+
+    @AuraEnabled
+    public Boolean hasNextSegment { get; set; }
+    @AuraEnabled
+    public IRR_MOD_SegmentInfo nextSegment { get; set; }
 
 }

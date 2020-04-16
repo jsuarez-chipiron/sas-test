@@ -199,23 +199,46 @@ public class IRR_MOD_TedsBooking {
     }
 
     public class FrequentTraveler {
-        public String carrier {get;set;}
-        public String tier {get;set;}
-        public String number_Z {get;set;} // in json: number
+        public List<EuroBonus> euroBonus {get;set;}
+        public List<Other> other {get;set;}
 
         public FrequentTraveler(JSONParser parser) {
             while (parser.nextToken() != System.JSONToken.END_OBJECT) {
                 if (parser.getCurrentToken() == System.JSONToken.FIELD_NAME) {
                     String text = parser.getText();
                     if (parser.nextToken() != System.JSONToken.VALUE_NULL) {
-                        if (text == 'carrier') {
-                            carrier = parser.getText();
-                        } else if (text == 'tier') {
-                            tier = parser.getText();
-                        } else if (text == 'number') {
-                            number_Z = parser.getText();
+                        if (text == 'euroBonus') {
+                            euroBonus = arrayOfEuroBonus(parser);
+                        } else if (text == 'other') {
+                            other = arrayOfOther(parser);
                         } else {
                             System.debug(LoggingLevel.WARN, 'FrequentTraveler consuming unrecognized property: '+text);
+                            consumeObject(parser);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public class EuroBonus {
+        public List<String> segmentIds {get;set;}
+        public String number_Z {get;set;} // in json: number
+        public String tier {get;set;}
+
+        public EuroBonus(JSONParser parser) {
+            while (parser.nextToken() != System.JSONToken.END_OBJECT) {
+                if (parser.getCurrentToken() == System.JSONToken.FIELD_NAME) {
+                    String text = parser.getText();
+                    if (parser.nextToken() != System.JSONToken.VALUE_NULL) {
+                        if (text == 'segmentIds') {
+                            segmentIds = arrayOfString(parser);
+                        } else if (text == 'number') {
+                            number_Z = parser.getText();
+                        } else if (text == 'tier') {
+                            tier = parser.getText();
+                        } else {
+                            System.debug(LoggingLevel.WARN, 'EuroBonus consuming unrecognized property: '+text);
                             consumeObject(parser);
                         }
                     }
@@ -232,6 +255,7 @@ public class IRR_MOD_TedsBooking {
         public String type_Z {get;set;} // in json: type
         public Contact contact {get;set;}
         public FrequentTraveler frequentTraveler {get;set;}
+        public List<SpecialServiceRequests> specialServiceRequests {get;set;}
         public List<Segments> segments {get;set;}
 
         public Passengers(JSONParser parser) {
@@ -253,6 +277,8 @@ public class IRR_MOD_TedsBooking {
                             contact = new Contact(parser);
                         } else if (text == 'frequentTraveler') {
                             frequentTraveler = new FrequentTraveler(parser);
+                        } else if (text == 'specialServiceRequests') {
+                            specialServiceRequests = arrayOfSpecialServiceRequests(parser);
                         } else if (text == 'segments') {
                             segments = arrayOfSegments(parser);
                         } else {
@@ -417,15 +443,70 @@ public class IRR_MOD_TedsBooking {
         }
     }
 
+    public class SpecialServiceRequests {
+        public List<String> segmentIds {get;set;}
+        public String type_Z {get;set;} // in json: type
+        public String code {get;set;}
+        public String text {get;set;}
 
-    public static IRR_MOD_TedsBooking parse(String json) {
-        System.JSONParser parser = System.JSON.createParser(json);
-        return new IRR_MOD_TedsBooking(parser);
+        public SpecialServiceRequests(JSONParser parser) {
+            while (parser.nextToken() != System.JSONToken.END_OBJECT) {
+                if (parser.getCurrentToken() == System.JSONToken.FIELD_NAME) {
+                    String text = parser.getText();
+                    if (parser.nextToken() != System.JSONToken.VALUE_NULL) {
+                        if (text == 'segmentIds') {
+                            segmentIds = arrayOfString(parser);
+                        } else if (text == 'type') {
+                            type_Z = parser.getText();
+                        } else if (text == 'code') {
+                            code = parser.getText();
+                        } else if (text == 'text') {
+                            text = parser.getText();
+                        } else {
+                            System.debug(LoggingLevel.WARN, 'SpecialServiceRequests consuming unrecognized property: '+text);
+                            consumeObject(parser);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public class Other {
+        public List<String> segmentIds {get;set;}
+        public String number_Z {get;set;} // in json: number
+        public String carrier {get;set;}
+
+        public Other(JSONParser parser) {
+            while (parser.nextToken() != System.JSONToken.END_OBJECT) {
+                if (parser.getCurrentToken() == System.JSONToken.FIELD_NAME) {
+                    String text = parser.getText();
+                    if (parser.nextToken() != System.JSONToken.VALUE_NULL) {
+                        if (text == 'segmentIds') {
+                            segmentIds = arrayOfString(parser);
+                        } else if (text == 'number') {
+                            number_Z = parser.getText();
+                        } else if (text == 'carrier') {
+                            carrier = parser.getText();
+                        } else {
+                            System.debug(LoggingLevel.WARN, 'Other consuming unrecognized property: '+text);
+                            consumeObject(parser);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public static List<IRR_MOD_TedsBooking> parseArray(String json) {
         System.JSONParser parser = System.JSON.createParser(json);
         return arrayOfTedsBookings(parser);
+    }
+
+
+    public static IRR_MOD_TedsBooking parse(String json) {
+        System.JSONParser parser = System.JSON.createParser(json);
+        return new IRR_MOD_TedsBooking(parser);
     }
 
     public static void consumeObject(System.JSONParser parser) {
@@ -442,6 +523,15 @@ public class IRR_MOD_TedsBooking {
         } while (depth > 0 && parser.nextToken() != null);
     }
 
+    private static List<IRR_MOD_TedsBooking> arrayOfTedsBookings(System.JSONParser p) {
+        List<IRR_MOD_TedsBooking> res = new List<IRR_MOD_TedsBooking>();
+        if (p.getCurrentToken() == null) p.nextToken();
+        while (p.nextToken() != System.JSONToken.END_ARRAY) {
+            res.add(new IRR_MOD_TedsBooking(p));
+        }
+        return res;
+    }
+
     private static List<Email> arrayOfEmail(System.JSONParser p) {
         List<Email> res = new List<Email>();
         if (p.getCurrentToken() == null) p.nextToken();
@@ -451,41 +541,42 @@ public class IRR_MOD_TedsBooking {
         return res;
     }
 
+
+    private static List<SpecialServiceRequests> arrayOfSpecialServiceRequests(System.JSONParser p) {
+        List<SpecialServiceRequests> res = new List<SpecialServiceRequests>();
+        if (p.getCurrentToken() == null) p.nextToken();
+        while (p.nextToken() != System.JSONToken.END_ARRAY) {
+            res.add(new SpecialServiceRequests(p));
+        }
+        return res;
+    }
+
+
+    private static List<EuroBonus> arrayOfEuroBonus(System.JSONParser p) {
+        List<EuroBonus> res = new List<EuroBonus>();
+        if (p.getCurrentToken() == null) p.nextToken();
+        while (p.nextToken() != System.JSONToken.END_ARRAY) {
+            res.add(new EuroBonus(p));
+        }
+        return res;
+    }
+
+
+    private static List<Other> arrayOfOther(System.JSONParser p) {
+        List<Other> res = new List<Other>();
+        if (p.getCurrentToken() == null) p.nextToken();
+        while (p.nextToken() != System.JSONToken.END_ARRAY) {
+            res.add(new Other(p));
+        }
+        return res;
+    }
+
+
     private static List<Segments_Z> arrayOfSegments_Z(System.JSONParser p) {
         List<Segments_Z> res = new List<Segments_Z>();
         if (p.getCurrentToken() == null) p.nextToken();
         while (p.nextToken() != System.JSONToken.END_ARRAY) {
             res.add(new Segments_Z(p));
-        }
-        return res;
-    }
-
-
-    private static List<Segments> arrayOfSegments(System.JSONParser p) {
-        List<Segments> res = new List<Segments>();
-        if (p.getCurrentToken() == null) p.nextToken();
-        while (p.nextToken() != System.JSONToken.END_ARRAY) {
-            res.add(new Segments(p));
-        }
-        return res;
-    }
-
-
-    private static List<Passengers> arrayOfPassengers(System.JSONParser p) {
-        List<Passengers> res = new List<Passengers>();
-        if (p.getCurrentToken() == null) p.nextToken();
-        while (p.nextToken() != System.JSONToken.END_ARRAY) {
-            res.add(new Passengers(p));
-        }
-        return res;
-    }
-
-
-    private static List<IRR_MOD_TedsBooking> arrayOfTedsBookings(System.JSONParser p) {
-        List<IRR_MOD_TedsBooking> res = new List<IRR_MOD_TedsBooking>();
-        if (p.getCurrentToken() == null) p.nextToken();
-        while (p.nextToken() != System.JSONToken.END_ARRAY) {
-            res.add(new IRR_MOD_TedsBooking(p));
         }
         return res;
     }
@@ -499,11 +590,39 @@ public class IRR_MOD_TedsBooking {
         return res;
     }
 
+    private static List<String> arrayOfString(System.JSONParser p) {
+        List<String> res = new List<String>();
+        if (p.getCurrentToken() == null) p.nextToken();
+        while (p.nextToken() != System.JSONToken.END_ARRAY) {
+            res.add(p.getText());
+        }
+        return res;
+    }
+
+    private static List<Segments> arrayOfSegments(System.JSONParser p) {
+        List<Segments> res = new List<Segments>();
+        if (p.getCurrentToken() == null) p.nextToken();
+        while (p.nextToken() != System.JSONToken.END_ARRAY) {
+            res.add(new Segments(p));
+        }
+        return res;
+    }
+
     private static List<Phone> arrayOfPhone(System.JSONParser p) {
         List<Phone> res = new List<Phone>();
         if (p.getCurrentToken() == null) p.nextToken();
         while (p.nextToken() != System.JSONToken.END_ARRAY) {
             res.add(new Phone(p));
+        }
+        return res;
+    }
+
+
+    private static List<Passengers> arrayOfPassengers(System.JSONParser p) {
+        List<Passengers> res = new List<Passengers>();
+        if (p.getCurrentToken() == null) p.nextToken();
+        while (p.nextToken() != System.JSONToken.END_ARRAY) {
+            res.add(new Passengers(p));
         }
         return res;
     }

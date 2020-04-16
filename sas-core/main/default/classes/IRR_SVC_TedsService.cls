@@ -23,4 +23,6 @@ public class IRR_SVC_TedsService {
     private static IRR_SVC_ITedsService service() {
         return (IRR_SVC_ITedsService) IRR_Application.Service.newInstance(IRR_SVC_ITedsService.class);
     }
+
+    public class TedsException extends Exception { }
 }

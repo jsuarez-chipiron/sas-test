@@ -43,6 +43,9 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         String endpointURL = String.format(BOOKING_ENDPOINT_TEMPLATE, new List<String>{bookingId});
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
                 .executeRequest(endpointURL, C_IntegrationExecutor.Method.GET, null, null);
+        if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
+            throwTedsException(responseObject.responseBody);
+        }
         IRR_MOD_TedsBooking parsedResponse = IRR_MOD_TedsBooking.parse(responseObject.responseBody);
         return parsedResponse;
     }
@@ -79,6 +82,9 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         };
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
                 .executeRequest(BOOKINGS_FILTER_ENDPOINT, C_IntegrationExecutor.Method.GET, null, queryParams);
+        if (responseObject.statusCode >= 300 || responseObject.statusCode < 200) {
+            throwTedsException(responseObject.responseBody);
+        }
         List<IRR_MOD_TedsBooking> tedsBookings = IRR_MOD_TedsBooking.parseArray(responseObject.responseBody);
         return tedsBookings;
     }
@@ -96,6 +102,10 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
     public List<IRR_MOD_PassengerInfo> getPassengerInfosForFlight(String flightId) {
         List<IRR_MOD_TedsBooking> tedsBookings = getBookingDetailsForFlight(flightId);
         return initiatePassengerInfos(tedsBookings, flightId);
+    }
+
+    private void throwTedsException(String message) {
+        throw new IRR_SVC_TedsService.TedsException(message);
     }
 
 
@@ -156,16 +166,25 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
     private IRR_MOD_SegmentInfo createSegmentInfo(IRR_MOD_TedsBooking.Segments_Z tripSegment,
             IRR_MOD_TedsBooking.Segments passengerSegment) {
         IRR_MOD_SegmentInfo segmentInfo = new IRR_MOD_SegmentInfo();
-        segmentInfo.ticketNumber = passengerSegment.ticket.number_Z;
+        if (passengerSegment != null && passengerSegment.ticket != null) {
+            segmentInfo.ticketNumber = passengerSegment.ticket.number_Z;
+        }
         segmentInfo.stationArrival = tripSegment.flight.arrival.station;
         segmentInfo.stationDeparture = tripSegment.flight.departure.station;
         segmentInfo.status = tripSegment.status;
         segmentInfo.flightId = tripSegment.flight.id;
+        segmentInfo.bookingClass = tripSegment.bookingClass;
 
         segmentInfo.isConfirmed = segmentInfo.status == IRR_SVC_TedsService.BOOKING_STATUS_CONFIRMED;
-        segmentInfo.isSASTicket = segmentInfo.ticketNumber.startsWith(IRR_SVC_TedsService.TICKET_IDENTIFIER_SAS);
-        segmentInfo.isWideroeTicket = segmentInfo.ticketNumber.startsWith(
-                IRR_SVC_TedsService.TICKET_IDENTIFIER_WIDEROE);
+        if (String.isNotBlank(segmentInfo.ticketNumber)) {
+            segmentInfo.isSASTicket = segmentInfo.ticketNumber.startsWith(IRR_SVC_TedsService.TICKET_IDENTIFIER_SAS);
+            segmentInfo.isWideroeTicket = segmentInfo.ticketNumber.startsWith(
+                    IRR_SVC_TedsService.TICKET_IDENTIFIER_WIDEROE);
+        }
+        else {
+            segmentInfo.isSASTicket = false;
+            segmentInfo.isWideroeTicket = false;
+        }
         return segmentInfo;
     }
 
@@ -184,6 +203,27 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      */
     private IRR_MOD_PassengerInfo createPassengerInfo(IRR_MOD_TedsBooking booking, IRR_MOD_TedsBooking.Passengers passenger,
             IRR_MOD_TedsBooking.Segments_Z tripThisSegment, IRR_MOD_TedsBooking.Segments_Z tripNextSegment) {
+
+        IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
+        passengerInfo.passengerId = booking.id + passenger.id;
+        passengerInfo.bookingReference = booking.reference;
+        passengerInfo.codsId = booking.codsId;
+        passengerInfo.firstName = passenger.firstName;
+        passengerInfo.lastName  = passenger.lastName;
+
+        if (passenger.frequentTraveler != null && passenger.frequentTraveler.euroBonus != null &&
+                !passenger.frequentTraveler.euroBonus.isEmpty()) {
+            passengerInfo.ebLevel = passenger.frequentTraveler.euroBonus[0].tier;
+        }
+
+        passengerInfo.SSR = '';
+        if (passenger.specialServiceRequests != null) {
+            for (IRR_MOD_TedsBooking.SpecialServiceRequests request : passenger.specialServiceRequests) {
+                if (String.isNotBlank(passengerInfo.SSR)) passengerInfo.SSR += '; ';
+                passengerInfo.SSR += request.code;
+            }
+        }
+
         String phoneAP;
         String phoneCTC;
         for (IRR_MOD_TedsBooking.Phone phone  : passenger.contact.phone) {
@@ -195,11 +235,20 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
                 phoneAP = phone.number_Z;
             }
         }
-
-        IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
         passengerInfo.phoneNumber = String.isNotBlank(phoneCTC) ? phoneCTC : phoneAP;
-        passengerInfo.bookingReference = booking.reference;
-        passengerInfo.codsId = booking.codsId;
+
+        String emailAP;
+        String emailCTC;
+        for (IRR_MOD_TedsBooking.Email email : passenger.contact.email) {
+            if (String.isBlank(email.type_Z)) continue;
+            if (email.type_Z.startsWith('CTC')) {
+                emailCTC = email.address;
+            }
+            else if (email.type_Z.startsWith('AP')) {
+                emailAP = email.address;
+            }
+        }
+        passengerInfo.emailAddress = String.isNotBlank(emailCTC) ? emailCTC : emailAP;
 
         if (tripThisSegment != null) {
             IRR_MOD_TedsBooking.Segments passengerThisSegment;

@@ -8,23 +8,29 @@
 public class IRR_MOD_SegmentInfo {
 
     @AuraEnabled
-    public Boolean isSASTicket;
+    public Boolean isSASTicket { get; set; }
     @AuraEnabled
-    public Boolean isWideroeTicket;
+    public Boolean isWideroeTicket { get; set; }
 
     @AuraEnabled
-    public String ticketNumber;
+    public String ticketNumber { get; set; }
 
     @AuraEnabled
-    public String stationArrival;
+    public String stationArrival { get; set; }
     @AuraEnabled
-    public String stationDeparture;
+    public String stationDeparture { get; set; }
 
     @AuraEnabled
-    public Boolean isConfirmed;
+    public Boolean isConfirmed { get; set; }
     @AuraEnabled
-    public String status;
+    public String status { get; set; }
 
     @AuraEnabled
-    public String flightId;
+    public String bookingClass { get; set; }
+
+    @AuraEnabled
+    public String SSR { get; set; }
+
+    @AuraEnabled
+    public String flightId { get; set; }
 }
