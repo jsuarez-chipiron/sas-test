@@ -32,7 +32,6 @@ public class IRR_CON_ManualCommunication {
     @AuraEnabled
     public static void sendManualCommunication(IRR_MOD_ManualRequest manualRequest) {
         try {
-            System.debug(JSON.serializePretty(manualRequest));
             IRR_SVC_EventService.processEvent(EVENT_TYPE, manualRequest);
         }
         catch (Exception e) {
