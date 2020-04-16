@@ -7,7 +7,7 @@
   <br />
   <br />Hi!
   <br />
-  <br />Your Flight {{{delayInfo.flightRef}}} {{{delayInfo.stationDeparture}}} - {{{delayInfo.stationArrival}}} {{{delayInfo.scheduledFormattedLocalDate}}} {{{delayInfo.scheduledFormattedLocalMonth}}}, with departure time {{{delayInfo.scheduledFormattedLocalTime}}} is delayed to: {{{delayInfo.estimatedFormattedLocalTime}}}
+  <br />Your Flight {{{delayInfo.flightRef}}} {{{delayInfo.stationDeparture}}} - {{{delayInfo.stationArrival}}} [[[formatDatetimeUTC(delayInfo.scheduledTimeOfDepartureLocal, 'dd MMM')]]], with departure time [[[formatDatetimeUTC(delayInfo.scheduledTimeOfDepartureLocal, 'HH:mm')]]] is delayed to: [[[formatDatetimeUTC(delayInfo.estimatedTimeOfDepartureLocal, 'HH:mm')]]]
   <br />
   <br />We apologize for this change.
   <br />

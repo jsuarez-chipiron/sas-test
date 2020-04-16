@@ -8,56 +8,56 @@
 public class IRR_MOD_DelayInfo {
 
     @AuraEnabled
-    public String flightId;
+    public String flightId { get; set; }
 
     @AuraEnabled
-    public String flightRef;
+    public String flightRef { get; set; }
 
     @AuraEnabled
-    public String stationDeparture;
+    public String stationDeparture { get; set; }
 
     @AuraEnabled
-    public String stationArrival;
+    public String stationArrival { get; set; }
 
     @AuraEnabled
-    public Integer delayedMinutes;
+    public Integer delayedMinutes { get; set; }
 
     @AuraEnabled
-    public Datetime estimatedTimeOfDepartureLocal;
+    public Datetime estimatedTimeOfDepartureLocal { get; set; }
 
     @AuraEnabled
-    public String estimatedFormattedLocalTime;
+    public String estimatedFormattedLocalTime { get; set; }
 
     @AuraEnabled
-    public Datetime estimatedTimeOfDepartureUTC;
+    public Datetime estimatedTimeOfDepartureUTC { get; set; }
 
     @AuraEnabled
-    public String delayReasonCode;
+    public String delayReasonCode { get; set; }
 
     @AuraEnabled
-    public Datetime scheduledTimeOfDepartureLocal;
+    public Datetime scheduledTimeOfDepartureLocal { get; set; }
 
     @AuraEnabled
-    public String scheduledFormattedLocalMonth;
+    public String scheduledFormattedLocalMonth { get; set; }
 
     @AuraEnabled
-    public String scheduledFormattedLocalDate;
+    public String scheduledFormattedLocalDate { get; set; }
 
     @AuraEnabled
-    public String scheduledFormattedLocalTime;
+    public String scheduledFormattedLocalTime { get; set; }
 
     @AuraEnabled
-    public Datetime scheduledTimeOfDepartureUTC;
+    public Datetime scheduledTimeOfDepartureUTC { get; set; }
 
     @AuraEnabled
-    public Integer previousDelayedMinutes;
+    public Integer previousDelayedMinutes { get; set; }
 
     @AuraEnabled
-    public Integer minutesToScheduledTime;
+    public Integer minutesToScheduledTime { get; set; }
 
     @AuraEnabled
-    public Boolean firstDelay;
+    public Boolean firstDelay { get; set; }
 
     @AuraEnabled
-    public Integer delayDifference;
+    public Integer delayDifference { get; set; }
 }

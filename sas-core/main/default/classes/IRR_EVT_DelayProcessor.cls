@@ -60,14 +60,10 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
         delayInfo.firstDelay = delayInfo.previousDelayedMinutes == 0;
         delayInfo.delayDifference = Math.abs(delayInfo.delayedMinutes - delayInfo.previousDelayedMinutes);
 
-        delayInfo.flightRef = delayInfo.flightId.split('-')[0];
-        delayInfo.stationArrival = delayInfo.flightId.substringAfterLast('-');
-        delayInfo.stationDeparture = delayInfo.flightId.substringBeforeLast('-').substringAfterLast('-');
-
-        delayInfo.estimatedFormattedLocalTime = delayInfo.estimatedTimeOfDepartureLocal.formatGmt('HH:mm');
-        delayInfo.scheduledFormattedLocalDate = delayInfo.scheduledTimeOfDepartureLocal.formatGmt('dd');
-        delayInfo.scheduledFormattedLocalMonth = delayInfo.scheduledTimeOfDepartureLocal.formatGmt('MMM');
-        delayInfo.scheduledFormattedLocalTime = delayInfo.scheduledTimeOfDepartureLocal.formatGmt('HH:mm');
+        List<String> flightIdSplit = delayInfo.flightId.split('-');
+        delayInfo.flightRef = flightIdSplit[0];
+        delayInfo.stationArrival = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
+        delayInfo.stationDeparture = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
 
         Long millisecondsToScheduledTime = delayInfo.scheduledTimeOfDepartureUTC.getTime() - Datetime.now().getTime();
         delayInfo.minutesToScheduledTime = (Integer) millisecondsToScheduledTime / 60000;

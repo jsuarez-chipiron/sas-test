@@ -25,6 +25,9 @@ global class MSG_RendererEnhanced implements MSG_IRenderer{
         The string used to close an expression in lightning email templates
     */
     private static String LEX_EXPR_CLOSE='}}}';
+
+    private static String LEX_EXPR_ALT_OPEN = '[[[';
+    private static String LEX_EXPR_ALT_CLOSE = ']]]';
     /**
      * Name of function used to start a loop segment
      */
@@ -41,10 +44,6 @@ global class MSG_RendererEnhanced implements MSG_IRenderer{
      * Name of function used to end a conditional display segment
      */
     private static String END_DISPLAY_IF_FN_NAME = 'ENDDISPLAYIF';
-    /**
-        Map used to facilitate testing without committing records using DML
-    */
-    @TestVisible private static Map<SObjectType,SObject[]> DB_QUERY_OVERRIDE;
 
     private MSG_ITemplateCache templateCache;
 
@@ -112,17 +111,17 @@ global class MSG_RendererEnhanced implements MSG_IRenderer{
         */
         TemplateModel(MSG_TemplateCache.TemplateContent tc,TemplateLetterheadModel letterhead,Boolean isHtml){
             if(tc.isUiTypeLEX()){
-                if (String.isNotBlank(tc.subject)) subject = new Template(tc.subject,LEX_EXPR_OPEN,LEX_EXPR_CLOSE);
+                if (String.isNotBlank(tc.subject)) subject = new Template(tc.subject,LEX_EXPR_OPEN,LEX_EXPR_CLOSE, LEX_EXPR_ALT_OPEN, LEX_EXPR_ALT_CLOSE);
                 String bodySrc = tc.getData(isHtml);
                 if(letterhead==null && isHtml)bodySrc = bodySrc.replace('<head>','<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">');
-                body = new Template(bodySrc,LEX_EXPR_OPEN,LEX_EXPR_CLOSE);
+                body = new Template(bodySrc,LEX_EXPR_OPEN,LEX_EXPR_CLOSE, LEX_EXPR_ALT_OPEN, LEX_EXPR_ALT_CLOSE);
             }
             else if(tc.isUiTypeClassic()){
-                if (String.isNotBlank(tc.subject)) subject = new Template(tc.subject,CLASSIC_EXPR_OPEN,CLASSIC_EXPR_CLOSE);
-                body = new Template(tc.getData(isHtml),CLASSIC_EXPR_OPEN,CLASSIC_EXPR_CLOSE);
-                if(letterhead==null && isHtml)letterhead = new TemplateLetterheadModel(new Template('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>',CLASSIC_EXPR_OPEN,CLASSIC_EXPR_CLOSE),new Template('</html>',CLASSIC_EXPR_OPEN,CLASSIC_EXPR_CLOSE));
+                if (String.isNotBlank(tc.subject)) subject = new Template(tc.subject,CLASSIC_EXPR_OPEN,CLASSIC_EXPR_CLOSE, null, null);
+                body = new Template(tc.getData(isHtml),CLASSIC_EXPR_OPEN,CLASSIC_EXPR_CLOSE, null, null);
+                if(letterhead==null && isHtml)letterhead = new TemplateLetterheadModel(new Template('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>',CLASSIC_EXPR_OPEN,CLASSIC_EXPR_CLOSE, null, null),new Template('</html>',CLASSIC_EXPR_OPEN,CLASSIC_EXPR_CLOSE, null, null));
             }
-            else throw new RenderingException('Unknonwn template UI type: '+tc.uiType);
+            else throw new RenderingException('Unknown template UI type: '+tc.uiType);
             this.letterhead = letterhead;
         }
     }
@@ -146,14 +145,14 @@ global class MSG_RendererEnhanced implements MSG_IRenderer{
         */
         TemplateLetterheadModel(MSG_TemplateCache.TemplateLetterhead tl){
             if(tl.isUiTypeLEX()){
-                header = new Template('<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><table border="0" cellpadding="1" width="100%" cellspacing="5" height="100%"><tbody><tr><td>'+(tl.header!=null ? tl.header : '')+'</td></tr><tr><td><div id="htmlValue">',LEX_EXPR_OPEN,LEX_EXPR_CLOSE);
-                footer = new Template('</div></td></tr><tr><td>'+(tl.footer!=null ? tl.footer : '')+'</td></tr></tbody></table>',LEX_EXPR_OPEN,LEX_EXPR_CLOSE);
+                header = new Template('<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><table border="0" cellpadding="1" width="100%" cellspacing="5" height="100%"><tbody><tr><td>'+(tl.header!=null ? tl.header : '')+'</td></tr><tr><td><div id="htmlValue">',LEX_EXPR_OPEN,LEX_EXPR_CLOSE, LEX_EXPR_ALT_OPEN, LEX_EXPR_ALT_CLOSE);
+                footer = new Template('</div></td></tr><tr><td>'+(tl.footer!=null ? tl.footer : '')+'</td></tr></tbody></table>',LEX_EXPR_OPEN,LEX_EXPR_CLOSE, LEX_EXPR_ALT_OPEN, LEX_EXPR_ALT_CLOSE);
             }
             else if(tl.isUiTypeClassic()){
-                if(!String.isBlank(tl.header))header = new Template(tl.header,CLASSIC_EXPR_OPEN,CLASSIC_EXPR_CLOSE);
-                if(!String.isBlank(tl.footer))footer = new Template(tl.footer,CLASSIC_EXPR_OPEN,CLASSIC_EXPR_CLOSE);
+                if(!String.isBlank(tl.header))header = new Template(tl.header,CLASSIC_EXPR_OPEN,CLASSIC_EXPR_CLOSE, null, null);
+                if(!String.isBlank(tl.footer))footer = new Template(tl.footer,CLASSIC_EXPR_OPEN,CLASSIC_EXPR_CLOSE, null, null);
             }
-            else throw new RenderingException('Unknonwn letterhead UI type: '+tl.id);
+            else throw new RenderingException('Unknown letterhead UI type: '+tl.id);
         }
 
         /**
@@ -172,14 +171,6 @@ global class MSG_RendererEnhanced implements MSG_IRenderer{
     */
     class Template{
         /**
-            The character sequence which is used to start an expression in a template
-        */
-        final String EXPR_OPEN;
-        /**
-            The character sequence which is used to stop an expression in a template
-        */
-        final String EXPR_CLOSE;
-        /**
          * The root node to render for the template
          */
         TemplateNodeContainer rootNode;
@@ -188,20 +179,34 @@ global class MSG_RendererEnhanced implements MSG_IRenderer{
             @param src The source template string from which the template is constructed
             @param exprOpen The character sequence which is used to start an expression in a template
             @param exprClose The character sequence which is used to stop an expression in a template
+            @param altOpen Alternative character sequence for starting an expression (optional)
+            @param altClose Alternative character sequence for closing an expression (optional)
         */
-        Template(String src,String exprOpen,String exprClose){
+        Template(String src, String exprOpen, String exprClose, String altOpen, String altClose){
             rootNode = new TemplateNodeContainer();
             List<TemplateNodeContainer> nodeStack = new List<TemplateNodeContainer>();
             TemplateNodeContainer topNode = rootNode;
 
-            EXPR_OPEN = exprOpen;
-            EXPR_CLOSE = exprClose;
+            final String EXPR_OPEN = exprOpen;
+            String EXPR_CLOSE = exprClose;
             Integer openLen = EXPR_OPEN.length();
             Integer closeLen = EXPR_CLOSE.length();
             Integer idx = 0;
             Integer idxNext = 0;
-            while((idxNext=src.indexOf(EXPR_OPEN,idx))!=-1){
+            while(true){
+                idxNext = src.indexOf(EXPR_OPEN,idx);
+                if (EXPR_CLOSE != exprClose) EXPR_CLOSE = exprClose;
+                if (String.isNotBlank(altOpen) && String.isNotBlank(altClose)) {
+                    Integer altNext = src.indexOf(altOpen, idx);
+                    if (altNext != -1 && (idxNext == -1  ||  altNext < idxNext)) {
+                        EXPR_CLOSE = altClose;
+                        idxNext = altNext;
+                    }
+                }
+                if (idxNext == -1) break;
+
                 Integer idxTo = src.indexOf(EXPR_CLOSE,idxNext);
+
                 if(idxTo==-1)throw new RenderingException('Bad template, cannot find closing expression token from index: '+idxNext);
                 topNode.nodeList.add(new TemplateTextNode(src.substring(idx,idxNext)));
                 TemplateExprNode ten = new TemplateExprNode(src.substring(idxNext+openLen,idxTo));
@@ -481,6 +486,15 @@ global class MSG_RendererEnhanced implements MSG_IRenderer{
 		 * @return The data value for the data source and reference path
 		 */
         global override Object getFunctionValue(String sourceRef,Expr_Expr[] exprParamList,Expr_Expr.SymbolSubReference[] path){
+            if (sourceRef=='formatDatetimeUTC') {
+                String stringValue = (String) this.eval(exprParamList[0]);
+                //Parse Datetime ISO String into Datetime using de-serialization, string must be wrapped in quotes
+                Datetime datetimeValue = (Datetime) JSON.deserialize('"' + stringValue + '"', Datetime.class);
+                String format = (String) this.eval(exprParamList[1]);
+                if (datetimeValue != null && String.isNotBlank(format)) {
+                    return datetimeValue.formatGmt(format);
+                }
+            }
             return null;
         }
     }
