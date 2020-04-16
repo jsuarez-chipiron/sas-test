@@ -285,6 +285,7 @@ private class IRR_EVT_DelayProcessor_Test {
         delayInfo.flightId = 'TEST_FLIGHT_ID';
         delayInfo.delayedMinutes = 10;
         IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
+        passengerInfo.lastName = 'TEST_LAST_NAME';
         passengerInfo.phoneNumber = 'TEST_PHONE';
         passengerInfo.emailAddress = 'TEST_EMAIL';
         passengerInfo.codsId = 'TEST_CODS_ID';
@@ -310,7 +311,8 @@ private class IRR_EVT_DelayProcessor_Test {
                 IRR_CommunicationLog__c.IRR_ContactKey__c => 'TEST_EMAIL',
                 IRR_CommunicationLog__c.IRR_MessageKey__c => 'TEST_MESSAGE_KEY',
                 IRR_CommunicationLog__c.IRR_Recipient__c => 'TEST_PHONE',
-                IRR_CommunicationLog__c.IRR_Status__c => 'TEST_STATUS'
+                IRR_CommunicationLog__c.IRR_Status__c => 'TEST_STATUS',
+                IRR_CommunicationLog__c.IRR_LastName__c => 'TEST_LAST_NAME'
         };
         ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock))
                 .registerNew(fflib_Match.sObjectOfType(IRR_CommunicationLog__c.SObjectType));
