@@ -22,7 +22,7 @@ const columns = [
     { label: 'Email Address', fieldName: 'emailAddress', sortable: true },
     { label: 'Status', fieldName: 'thisSegment.status', sortable: true },
     { label: 'Booking Class', fieldName: 'thisSegment.bookingClass', sortable: true },
-    { label: 'SSR', fieldName: 'thisSegment.SSR', sortable: true  },
+    { label: 'SSR', fieldName: 'SSR', sortable: true  },
     { label: 'EB', fieldName: 'ebLevel', sortable: true  },
 ];
 
