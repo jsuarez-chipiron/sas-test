@@ -140,12 +140,9 @@
 																						<tbody>
 																							<tr>
 																								<td class="stylingblock-content-wrapper camarker-inner" style="padding: 0px 50px;">
-																								<div style="text-align: center;"><br />
-																								<br />
-																								&nbsp;</div>
+																								<div style="text-align: center;">&nbsp;</div>
 
-																								<div><span style="font-size:11px;"><span style="font-family:Arial,Helvetica,sans-serif;"><span style="unicode-bidi:embed"><span style="word-break:normal"><span style="color:black">&nbsp;</span></span></span></span></span><span style="color: rgb(0, 0, 0); font-family: arial, helvetica, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">%%HTMLContent%%</span><br />
-																								<br />
+																								<div style="min-height: 400px;"><span style="font-size:11px;"><span style="font-family:Arial,Helvetica,sans-serif;"><span style="unicode-bidi:embed"><span style="word-break:normal"><span style="color:black">&nbsp;</span></span></span></span><span style="unicode-bidi:embed"><span style="word-break:normal"><span style="color:black"><span style="font-family:Verdana,Geneva,sans-serif;">{{{customInfo.content}}}</span></span></span></span></span><br />
 																								<br />
 																								<br />
 																								&nbsp;</div>

@@ -14,47 +14,55 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
     private static final String ERROR_NO_MESSAGE_TO_SEND = 'There is no message to send';
 
     @TestVisible
-    private IRR_MOD_ManualInfo manualInfo;
+    private IRR_MOD_ManualRequest manualRequest;
 
     public String getEventName() {
         return 'Manual';
     }
 
     public void validateEvent() {
-        if (manualInfo == null) {
+        if (manualRequest == null) {
             throw new IRR_SVC_EventService.EventException(ERROR_NO_EVENT);
         }
-        if (manualInfo.passengerInfos == null || manualInfo.passengerInfos.isEmpty()) {
+        if (manualRequest.passengerInfos == null || manualRequest.passengerInfos.isEmpty()) {
             throw new IRR_SVC_EventService.EventException(ERROR_NO_PASSENGERS);
         }
-        if (manualInfo.sendEmailMessages != null && manualInfo.sendEmailMessages &&
-                String.isBlank(manualInfo.emailTemplate)) {
+        if (manualRequest.sendEmailMessages != null && manualRequest.sendEmailMessages &&
+                String.isBlank(manualRequest.emailTemplate)) {
             throw new IRR_SVC_EventService.EventException(ERROR_NO_EMAIL_TEMPLATE);
         }
-        if (manualInfo.sendSMSMessages != null && manualInfo.sendSMSMessages &&
-                String.isBlank(manualInfo.smsTemplate)) {
+        if (manualRequest.sendSMSMessages != null && manualRequest.sendSMSMessages &&
+                String.isBlank(manualRequest.smsTemplate)) {
             throw new IRR_SVC_EventService.EventException(ERROR_NO_SMS_TEMPLATE);
         }
-        if (!manualInfo.sendSMSMessages && !manualInfo.sendEmailMessages) {
+        if (!manualRequest.sendSMSMessages && !manualRequest.sendEmailMessages) {
             throw new IRR_SVC_EventService.EventException(ERROR_NO_MESSAGE_TO_SEND);
         }
     }
 
     public void initiateEvent() {
-        if (manualInfo.sendEmailMessages == null) manualInfo.sendEmailMessages = false;
-        if (manualInfo.sendSMSMessages == null) manualInfo.sendSMSMessages = false;
+        if (manualRequest.sendEmailMessages == null) manualRequest.sendEmailMessages = false;
+        if (manualRequest.sendSMSMessages == null) manualRequest.sendSMSMessages = false;
+        if (manualRequest.delayInfo != null && String.isNotBlank(manualRequest.delayInfo.flightId)) {
+            List<String> flightIdSplit = manualRequest.delayInfo.flightId.split('-');
+            manualRequest.delayInfo.flightRef = flightIdSplit[0];
+            manualRequest.delayInfo.stationArrival = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
+            manualRequest.delayInfo.stationDeparture = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
+        }
     }
 
     public void processEvent() {
-        IRR_MOD_FlowVariables flowVariables = manualInfo.flowVariables;
+        IRR_MOD_FlowVariables flowVariables = new IRR_MOD_FlowVariables();
+        flowVariables.customInfo = manualRequest.customInfo;
+        flowVariables.delayInfo = manualRequest.delayInfo;
 
-        for (IRR_MOD_PassengerInfo passengerInfo : manualInfo.passengerInfos) {
-            Boolean sendEmail = manualInfo.sendEmailMessages && passengerInfo.hasEmailAddress;
-            Boolean sendSMS = manualInfo.sendSMSMessages && passengerInfo.hasPhoneNumber;
+        for (IRR_MOD_PassengerInfo passengerInfo : manualRequest.passengerInfos) {
+            Boolean sendEmail = manualRequest.sendEmailMessages && passengerInfo.hasEmailAddress;
+            Boolean sendSMS = manualRequest.sendSMSMessages && passengerInfo.hasPhoneNumber;
 
             if (sendEmail || sendSMS) {
                 flowVariables.passengerInfo = passengerInfo;
-                createMessages(sendSMS, manualInfo.smsTemplate, sendEmail, manualInfo.emailTemplate, flowVariables);
+                createMessages(sendSMS, manualRequest.smsTemplate, sendEmail, manualRequest.emailTemplate, flowVariables);
             }
         }
     }
@@ -65,13 +73,13 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
         }
     }
 
-    public IRR_EVT_ManualProcessor(IRR_MOD_ManualInfo manualInfo) {
-        this.manualInfo = manualInfo;
+    public IRR_EVT_ManualProcessor(IRR_MOD_ManualRequest manualRequest) {
+        this.manualRequest = manualRequest;
     }
 
     public class Constructor implements IRR_EVT_EventProcessor.IConstructable {
         public IRR_EVT_IEventProcessor newInstance(Object payload) {
-            return (IRR_EVT_IEventProcessor) new IRR_EVT_ManualProcessor((IRR_MOD_ManualInfo) payload);
+            return (IRR_EVT_IEventProcessor) new IRR_EVT_ManualProcessor((IRR_MOD_ManualRequest) payload);
         }
     }
 }

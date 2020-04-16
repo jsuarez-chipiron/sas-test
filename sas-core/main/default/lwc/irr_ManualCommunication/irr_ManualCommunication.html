@@ -1,0 +1,84 @@
+<!--
+ - @author Niklas Lundkvist, Deloitte
+ - @date 2020
+ -->
+
+<!-- IRR Manual Communication -->
+<template>
+    <c-c_-loading-modal load-count={loadCount}></c-c_-loading-modal>
+    <c-c_-error-modal errors={errors} critical={criticalError} onclearerrors={clearErrors}></c-c_-error-modal>
+    <c-irr_-confirmation-modal
+            selected-count={selectedRows.length}
+            show-confirmation={showConfirmation}
+            confirm-detail={confirmDetail}
+            onhideconfirm={handleHideConfirmEvent}
+            onsendconfirm={handleSendConfirmEvent}>
+    </c-irr_-confirmation-modal>
+    <c-irr_-success-modal
+            selected-count={selectedRows.length}
+            show-success={showSuccess}
+            onhidesuccess={handleHideSuccessEvent}
+            onnewsearch={handleResetEvent}>
+    </c-irr_-success-modal>
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item padding="around-small" size="12">
+            <div class="page-section page-header">
+                <c-irr_-retrieve-panel
+                        if:true={showRetrieve}
+                        onretrieve={handleRetrieveEvent}>
+                </c-irr_-retrieve-panel>
+                <c-irr_-send-panel
+                        if:false={showRetrieve}
+                        templates-by-send-mode={templatesBySendMode}
+                        flight-id={flightId}
+                        onsend={handleSendEvent}
+                        oncancel={handleResetEvent}>
+                </c-irr_-send-panel>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" if:false={showRetrieve}>
+            <lightning-layout>
+                <lightning-layout-item padding="around-small" size="3">
+                    <div class="page-section page-right">
+                        <lightning-card title="Filter Passengers" icon-name="standard:calibration">
+                            <div class="slds-p-horizontal_small">
+                                <div class="slds-media">
+                                    <div class="slds-media__body">
+                                        <span>Work in Progress</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-card>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="9">
+                    <div class="page-section page-main">
+                        <lightning-card title="Passenger Table" icon-name="standard:calibration">
+                            <div class="slds-p-horizontal_small">
+                                <div class="slds-media">
+                                    <div class="slds-media__body">
+                                        <lightning-datatable
+                                                if:true={hasResults}
+                                                key-field="passengerId"
+                                                data={processedTable}
+                                                columns={columns}
+                                                sorted-by={sortBy}
+                                                sorted-direction={sortDirection}
+                                                onsort={handleTableSort}
+                                                onrowselection={handleTableSelection}>
+                                        </lightning-datatable>
+                                        <div
+                                                if:false={hasResults}
+                                                class="slds-align_absolute-center slds-m-vertical_small">
+                                            No passengers could be found
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-card>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

@@ -25,13 +25,13 @@ private class IRR_EVT_ManualProcessor_Test {
     @IsTest
     static void testValidateEvent_Success() {
         //Given
-        IRR_MOD_ManualInfo manualInfo = new IRR_MOD_ManualInfo();
-        manualInfo.emailTemplate = 'EMAIL_TEMPLATE';
-        manualInfo.smsTemplate = 'SMS_TEMPLATE';
-        manualInfo.sendSMSMessages = true;
-        manualInfo.sendEmailMessages = true;
-        manualInfo.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
-        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_ManualProcessor.Constructor().newInstance(manualInfo);
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.emailTemplate = 'EMAIL_TEMPLATE';
+        manualRequest.smsTemplate = 'SMS_TEMPLATE';
+        manualRequest.sendSMSMessages = true;
+        manualRequest.sendEmailMessages = true;
+        manualRequest.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
+        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_ManualProcessor.Constructor().newInstance(manualRequest);
 
         //When
         eventProcessor.validateEvent();
@@ -58,13 +58,13 @@ private class IRR_EVT_ManualProcessor_Test {
     @IsTest
     static void testValidateEvent_NoPassengers_Throws() {
         //Given
-        IRR_MOD_ManualInfo manualInfo = new IRR_MOD_ManualInfo();
-        manualInfo.emailTemplate = 'EMAIL_TEMPLATE';
-        manualInfo.smsTemplate = 'SMS_TEMPLATE';
-        manualInfo.sendSMSMessages = true;
-        manualInfo.sendEmailMessages = true;
-        manualInfo.passengerInfos = null;
-        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_ManualProcessor.Constructor().newInstance(manualInfo);
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.emailTemplate = 'EMAIL_TEMPLATE';
+        manualRequest.smsTemplate = 'SMS_TEMPLATE';
+        manualRequest.sendSMSMessages = true;
+        manualRequest.sendEmailMessages = true;
+        manualRequest.passengerInfos = null;
+        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_ManualProcessor.Constructor().newInstance(manualRequest);
 
         //When
         Boolean caughtException = false;
@@ -82,13 +82,13 @@ private class IRR_EVT_ManualProcessor_Test {
     @IsTest
     static void testValidateEvent_NoEmailTemplate_Throws() {
         //Given
-        IRR_MOD_ManualInfo manualInfo = new IRR_MOD_ManualInfo();
-        manualInfo.emailTemplate = null;
-        manualInfo.sendSMSMessages = true;
-        manualInfo.smsTemplate = 'SMS_TEMPLATE';
-        manualInfo.sendEmailMessages = true;
-        manualInfo.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
-        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_ManualProcessor.Constructor().newInstance(manualInfo);
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.emailTemplate = null;
+        manualRequest.sendSMSMessages = true;
+        manualRequest.smsTemplate = 'SMS_TEMPLATE';
+        manualRequest.sendEmailMessages = true;
+        manualRequest.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
+        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_ManualProcessor.Constructor().newInstance(manualRequest);
 
         //When
         Boolean caughtException = false;
@@ -106,13 +106,13 @@ private class IRR_EVT_ManualProcessor_Test {
     @IsTest
     static void testValidateEvent_NoSMSTemplate_Throws() {
         //Given
-        IRR_MOD_ManualInfo manualInfo = new IRR_MOD_ManualInfo();
-        manualInfo.emailTemplate = 'EMAIL_TEMPLATE';
-        manualInfo.sendSMSMessages = true;
-        manualInfo.smsTemplate = null;
-        manualInfo.sendEmailMessages = true;
-        manualInfo.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
-        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_ManualProcessor.Constructor().newInstance(manualInfo);
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.emailTemplate = 'EMAIL_TEMPLATE';
+        manualRequest.sendSMSMessages = true;
+        manualRequest.smsTemplate = null;
+        manualRequest.sendEmailMessages = true;
+        manualRequest.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
+        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_ManualProcessor.Constructor().newInstance(manualRequest);
 
         //When
         Boolean caughtException = false;
@@ -130,11 +130,11 @@ private class IRR_EVT_ManualProcessor_Test {
     @IsTest
     static void testValidateEvent_NoMessageToSend_Throws() {
         //Given
-        IRR_MOD_ManualInfo manualInfo = new IRR_MOD_ManualInfo();
-        manualInfo.sendSMSMessages = false;
-        manualInfo.sendEmailMessages = false;
-        manualInfo.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
-        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_ManualProcessor.Constructor().newInstance(manualInfo);
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.sendSMSMessages = false;
+        manualRequest.sendEmailMessages = false;
+        manualRequest.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
+        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_ManualProcessor.Constructor().newInstance(manualRequest);
 
         //When
         Boolean caughtException = false;
@@ -152,35 +152,35 @@ private class IRR_EVT_ManualProcessor_Test {
     @IsTest
     static void testInitiateEvent() {
         //Given
-        IRR_MOD_ManualInfo manualInfo = new IRR_MOD_ManualInfo();
-        manualInfo.sendSMSMessages = null;
-        manualInfo.sendEmailMessages = null;
-        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualInfo);
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.sendSMSMessages = null;
+        manualRequest.sendEmailMessages = null;
+        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
 
         //When
         eventProcessor.initiateEvent();
 
         //Then
-        System.assertEquals(false, eventProcessor.manualInfo.sendEmailMessages);
-        System.assertEquals(false, eventProcessor.manualInfo.sendSMSMessages);
+        System.assertEquals(false, eventProcessor.manualRequest.sendEmailMessages);
+        System.assertEquals(false, eventProcessor.manualRequest.sendSMSMessages);
     }
 
     @IsTest
     static void testProcessEvent_SendMessages() {
         //Given
-        IRR_MOD_ManualInfo manualInfo = new IRR_MOD_ManualInfo();
-        manualInfo.flowVariables = new IRR_MOD_FlowVariables();
-        manualInfo.flowVariables.delayInfo = new IRR_MOD_DelayInfo();
-        manualInfo.emailTemplate = 'EMAIL_TEMPLATE';
-        manualInfo.smsTemplate = 'SMS_TEMPLATE';
-        manualInfo.sendSMSMessages = true;
-        manualInfo.sendEmailMessages = true;
-        manualInfo.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
-        manualInfo.passengerInfos[0].hasPhoneNumber = true;
-        manualInfo.passengerInfos[0].phoneNumber = 'TEST_PHONE';
-        manualInfo.passengerInfos[0].hasEmailAddress = true;
-        manualInfo.passengerInfos[0].emailAddress = 'TEST_EMAIL';
-        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualInfo);
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.flowVariables = new IRR_MOD_FlowVariables();
+        manualRequest.flowVariables.delayInfo = new IRR_MOD_DelayInfo();
+        manualRequest.emailTemplate = 'EMAIL_TEMPLATE';
+        manualRequest.smsTemplate = 'SMS_TEMPLATE';
+        manualRequest.sendSMSMessages = true;
+        manualRequest.sendEmailMessages = true;
+        manualRequest.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
+        manualRequest.passengerInfos[0].hasPhoneNumber = true;
+        manualRequest.passengerInfos[0].phoneNumber = 'TEST_PHONE';
+        manualRequest.passengerInfos[0].hasEmailAddress = true;
+        manualRequest.passengerInfos[0].emailAddress = 'TEST_EMAIL';
+        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
 
         //When
         eventProcessor.processEvent();
@@ -192,8 +192,8 @@ private class IRR_EVT_ManualProcessor_Test {
         System.assertEquals('EMAIL_TEMPLATE', messages[1].template);
         System.assertEquals('Manual', messages[0].type);
         System.assertEquals('Manual', messages[1].type);
-        System.assertEquals(manualInfo.passengerInfos[0], messages[0].passengerInfo);
-        System.assertEquals(manualInfo.passengerInfos[0], messages[1].passengerInfo);
+        System.assertEquals(manualRequest.passengerInfos[0], messages[0].passengerInfo);
+        System.assertEquals(manualRequest.passengerInfos[0], messages[1].passengerInfo);
         System.assertEquals(messages[0].recipient, 'TEST_PHONE');
         System.assertEquals(messages[1].recipient, 'TEST_EMAIL');
         System.assertEquals(IRR_MOD_Message.MessageChannel.SMS, messages[0].channel);

@@ -1,0 +1,57 @@
+<!--
+ - @author Niklas Lundkvist, Deloitte
+ - @date 2020
+ -->
+
+<!-- IRR Retrieve Panel -->
+<template>
+    <lightning-card title="Retrieve List" icon-name="standard:calibration">
+        <lightning-button
+                slot="actions"
+                variant="brand"
+                label="Retrieve"
+                title="Retrieve List"
+                onclick={handleRetrieve}>
+        </lightning-button>
+        <div class="slds-media">
+            <div class="slds-media__body">
+                <lightning-tabset>
+                    <lightning-tab
+                            class="no-padding"
+                            value="FLIGHT_REFERENCE"
+                            label="Flight Id"
+                            title="Filter passengers by Flight Id"
+                            onactive={handleTabSwitch}>
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small" size="3">
+                                <lightning-input
+                                        type="text"
+                                        name="flightId"
+                                        label="Flight Id"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-tab>
+                    <lightning-tab
+                            class="no-padding"
+                            value="BOOKING_REFERENCE"
+                            label="Booking Reference"
+                            title="Filter passengers by Booking Reference"
+                            onactive={handleTabSwitch}>
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small" size="3">
+                                <lightning-input
+                                        type="text"
+                                        name="bookingId"
+                                        label="Booking Reference"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-tab>
+                </lightning-tabset>
+            </div>
+        </div>
+    </lightning-card>
+</template>

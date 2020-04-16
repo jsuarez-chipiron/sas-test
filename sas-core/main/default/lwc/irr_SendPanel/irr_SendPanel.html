@@ -1,0 +1,101 @@
+<!--
+ - @author Niklas Lundkvist, Deloitte
+ - @date 2020
+ -->
+
+<!-- IRR Send Panel -->
+<template>
+    <lightning-card title="Send Messages" icon-name="standard:calibration">
+        <lightning-button
+                class="slds-p-horizontal_small"
+                slot="actions"
+                variant="destructive"
+                label="Cancel"
+                title="Cancel"
+                onclick={handleCancel}>
+        </lightning-button>
+        <lightning-button
+                slot="actions"
+                variant="brand"
+                label="Send Messages"
+                title="Send Messages"
+                onclick={handleSend}>
+        </lightning-button>
+        <div class="slds-media">
+            <div class="slds-media__body">
+                <lightning-tabset>
+                    <lightning-tab
+                            class="no-padding"
+                            value="CUSTOM"
+                            label="Custom Message"
+                            title="Send a custom message"
+                            onactive={handleTabSwitch}>
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input
+                                        type="text"
+                                        name="subject"
+                                        label="Subject"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <!--<lightning-layout-item padding="around-small">
+                                <lightning-input
+                                        type="text"
+                                        name="header"
+                                        label="Header"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>-->
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input
+                                        type="text"
+                                        name="content"
+                                        label="Content"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-tab>
+                    <lightning-tab
+                            class="no-padding"
+                            value="DELAY"
+                            label="Delay Message"
+                            title="Send delay message"
+                            onactive={handleTabSwitch}>
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small" size="3" class="pull-down">
+                                <lightning-input
+                                        class="slds-p-vertical_xx-small"
+                                        type="text"
+                                        name="flightId"
+                                        label="Flight Id"
+                                        value={flightId}
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input
+                                        type="datetime"
+                                        timezone="GMT"
+                                        name="scheduledTimeOfDepartureLocal"
+                                        label="Scheduled Time of Departure (Local)"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input
+                                        type="datetime"
+                                        timezone="GMT"
+                                        name="estimatedTimeOfDepartureLocal"
+                                        label="Estimated Time of Departure (Local)"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-tab>
+                </lightning-tabset>
+            </div>
+        </div>
+    </lightning-card>
+</template>
