@@ -23,7 +23,7 @@ const columns = [
     { label: 'Status', fieldName: 'thisSegment.status', sortable: true },
     { label: 'Booking Class', fieldName: 'thisSegment.bookingClass', sortable: true },
     { label: 'SSR', fieldName: 'SSR', sortable: true  },
-    { label: 'EB', fieldName: 'ebLevel', sortable: true  },
+    { label: 'EB', fieldName: 'ebLevel', sortable: true, initialWidth: 50  },
 ];
 
 export default class IRR_ManualCommunication extends LightningElement {
