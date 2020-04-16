@@ -142,7 +142,7 @@
 																								<td class="stylingblock-content-wrapper camarker-inner" style="padding: 0px 50px;">
 																								<div style="text-align: center;">&nbsp;</div>
 
-																								<div style="min-height: 400px;"><span style="font-size:11px;"><span style="font-family:Arial,Helvetica,sans-serif;"><span style="unicode-bidi:embed"><span style="word-break:normal"><span style="color:black">&nbsp;</span></span></span></span><span style="unicode-bidi:embed"><span style="word-break:normal"><span style="color:black"><span style="font-family:Verdana,Geneva,sans-serif;">{{{customInfo.content}}}</span></span></span></span></span><br />
+																								<div style="min-height: 400px;"><span style="font-size:11px;"><span style="unicode-bidi:embed"><span style="word-break:normal"><span style="color:black"><span style="font-family:Verdana,Geneva,sans-serif;">{{{customInfo.content}}}</span></span></span></span></span><br />
 																								<br />
 																								<br />
 																								&nbsp;</div>
@@ -150,7 +150,6 @@
 																							</tr>
 																						</tbody>
 																					</table>
-
 																					<table cellpadding="0" cellspacing="0" class="stylingblock-content-wrapper" style="background-color: transparent; min-width: 100%;" width="100%">
 																						<tbody>
 																							<tr>
