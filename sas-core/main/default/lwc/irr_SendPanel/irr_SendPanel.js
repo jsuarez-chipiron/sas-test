@@ -28,7 +28,6 @@ export default class irr_SendPanel extends LightningElement {
 
     handleParameterChange(event) {
         this.sendParameters[event.target.name] = event.target.value;
-        console.log(JSON.stringify(this.sendParameters));
     }
 
     handleTabSwitch(event) {
@@ -44,10 +43,15 @@ export default class irr_SendPanel extends LightningElement {
         else {
             this.showTemplatePicklist = true;
         }
-        console.log(JSON.stringify(this.manualTemplate));
+    }
+
+    validateFields() {
+        return [...this.template.querySelectorAll(`lightning-input[data-tab-group="${this.sendMode}"]`)]
+            .reduce((previousValue, cmp) => cmp.reportValidity() && previousValue, true);
     }
 
     handleSend() {
+        if (!this.validateFields()) return;
         const sendEvent = new CustomEvent('send', {
             detail: { sendMode: this.sendMode, parameters: this.sendParameters, manualTemplate: this.manualTemplate }
         });

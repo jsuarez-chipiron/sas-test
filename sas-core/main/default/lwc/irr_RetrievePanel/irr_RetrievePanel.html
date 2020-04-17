@@ -28,6 +28,11 @@
                                         type="text"
                                         name="flightId"
                                         label="Flight Id"
+                                        data-tab-group="FLIGHT_REFERENCE"
+                                        pattern="([A-Z]{2})([0-9]{4})-([0-9]{8})-([A-Z]{3})-([A-Z]{3})"
+                                        required
+                                        message-when-pattern-mismatch="Input format SK1238-20200213-ARN-CPH"
+                                        field-level-help="Format SK1238-20200213-ARN-CPH"
                                         onchange={handleParameterChange}>
                                 </lightning-input>
                             </lightning-layout-item>
@@ -45,6 +50,8 @@
                                         type="text"
                                         name="bookingId"
                                         label="Booking Reference"
+                                        data-tab-group="BOOKING_REFERENCE"
+                                        required
                                         onchange={handleParameterChange}>
                                 </lightning-input>
                             </lightning-layout-item>

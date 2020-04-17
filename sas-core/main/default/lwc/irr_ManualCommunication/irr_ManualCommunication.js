@@ -7,6 +7,8 @@
 
 import {LightningElement, track} from 'lwc';
 
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
 import getFlightPassengerInfos from '@salesforce/apex/IRR_CON_ManualCommunication.getFlightPassengerInfos';
 import sendManualCommunication from '@salesforce/apex/IRR_CON_ManualCommunication.sendManualCommunication';
 import getManualTemplatesBySendMode from '@salesforce/apex/IRR_CON_ManualCommunication.getManualTemplatesBySendMode';
@@ -80,7 +82,6 @@ export default class IRR_ManualCommunication extends LightningElement {
     }
 
     handleError(error, critical) {
-        console.log(JSON.stringify(error));
         this.loadCount = 0;
         if (critical) this.criticalError = critical;
         this.errors = reduceErrors(error);
@@ -123,6 +124,14 @@ export default class IRR_ManualCommunication extends LightningElement {
     }
 
     handleSendEvent(event) {
+        if (!this.selectedRows || this.selectedRows.length === 0){
+            const toastEvent = new ShowToastEvent({
+                title: 'No Recipients',
+                message: 'Please select at least one recipient in order to continue.',
+            });
+            this.dispatchEvent(toastEvent);
+            return;
+        }
         this.confirmDetail = event.detail;
         this.showConfirmation = true;
     }
@@ -141,7 +150,6 @@ export default class IRR_ManualCommunication extends LightningElement {
                 emailTemplate: manualTemplate.IRR_EmailTemplate__c,
                 smsTemplate: manualTemplate.IRR_SMSTemplate__c
             };
-            console.log(JSON.stringify(manualTemplate));
             switch (sendMode) {
                 case "CUSTOM":
                     payload.customInfo = parameters;

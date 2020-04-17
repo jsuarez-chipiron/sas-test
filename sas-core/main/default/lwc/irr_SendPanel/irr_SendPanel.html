@@ -36,22 +36,18 @@
                                         type="text"
                                         name="subject"
                                         label="Subject"
+                                        required
+                                        data-tab-group="CUSTOM"
                                         onchange={handleParameterChange}>
                                 </lightning-input>
                             </lightning-layout-item>
-                            <!--<lightning-layout-item padding="around-small">
-                                <lightning-input
-                                        type="text"
-                                        name="header"
-                                        label="Header"
-                                        onchange={handleParameterChange}>
-                                </lightning-input>
-                            </lightning-layout-item>-->
                             <lightning-layout-item padding="around-small">
                                 <lightning-input
                                         type="text"
                                         name="content"
                                         label="Content"
+                                        required
+                                        data-tab-group="CUSTOM"
                                         onchange={handleParameterChange}>
                                 </lightning-input>
                             </lightning-layout-item>
@@ -71,6 +67,10 @@
                                         name="flightId"
                                         label="Flight Id"
                                         value={flightId}
+                                        pattern="([A-Z]{2})([0-9]{4})-([0-9]{8})-([A-Z]{3})-([A-Z]{3})"
+                                        required
+                                        message-when-pattern-mismatch="Input format SK1238-20200213-ARN-CPH"
+                                        data-tab-group="DELAY"
                                         onchange={handleParameterChange}>
                                 </lightning-input>
                             </lightning-layout-item>
@@ -80,6 +80,8 @@
                                         timezone="GMT"
                                         name="scheduledTimeOfDepartureLocal"
                                         label="Scheduled Time of Departure (Local)"
+                                        required
+                                        data-tab-group="DELAY"
                                         onchange={handleParameterChange}>
                                 </lightning-input>
                             </lightning-layout-item>
@@ -89,6 +91,8 @@
                                         timezone="GMT"
                                         name="estimatedTimeOfDepartureLocal"
                                         label="Estimated Time of Departure (Local)"
+                                        required
+                                        data-tab-group="DELAY"
                                         onchange={handleParameterChange}>
                                 </lightning-input>
                             </lightning-layout-item>
