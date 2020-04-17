@@ -5,7 +5,7 @@
  * @description TODO
  */
 
-import {LightningElement, track} from 'lwc';
+import {LightningElement} from 'lwc';
 
 export default class irr_RetrievePanel extends LightningElement {
 
@@ -21,7 +21,13 @@ export default class irr_RetrievePanel extends LightningElement {
         this.retrievalMode = event.target.value;
     }
 
+    validateFields() {
+        return [...this.template.querySelectorAll(`lightning-input[data-tab-group="${this.retrievalMode}"]`)]
+            .reduce((previousValue, cmp) => cmp.reportValidity() && previousValue, true);
+    }
+
     handleRetrieve() {
+        if (!this.validateFields()) return;
         const retrievalEvent = new CustomEvent('retrieve' , {
             detail: { parameters: this.retrieveParameters, retrievalMode: this.retrievalMode }
         });
