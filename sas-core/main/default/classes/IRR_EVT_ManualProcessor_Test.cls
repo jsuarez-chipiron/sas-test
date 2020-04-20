@@ -48,7 +48,7 @@ private class IRR_EVT_ManualProcessor_Test {
             eventProcessor.validateEvent();
         }
         catch (IRR_SVC_CommunicationService.EventException eventException) {
-            if (eventException.getMessage().contains('Manual message info is missing')) caughtException = true;
+            if (eventException.getMessage().contains('Manual message request is missing')) caughtException = true;
         }
 
         //Then
@@ -199,6 +199,9 @@ private class IRR_EVT_ManualProcessor_Test {
         manualRequest.passengerInfos[0].phoneNumber = 'TEST_PHONE';
         manualRequest.passengerInfos[0].hasEmailAddress = true;
         manualRequest.passengerInfos[0].emailAddress = 'TEST_EMAIL';
+        manualRequest.customInfo = new IRR_MOD_CustomInfo();
+        manualRequest.customInfo.subject = 'TEST_SUBJECT';
+        manualRequest.customInfo.content = 'TEST_CONTENT';
         IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
 
         //When
@@ -219,7 +222,11 @@ private class IRR_EVT_ManualProcessor_Test {
         System.assertEquals(IRR_MOD_Message.MessageChannel.Email, messages[1].channel);
         System.assert(messages[0].variables.containsKey('passengerInfo') &&
                 messages[0].variables.containsKey('delayInfo')); //TODO ADD OTHER EVENTS
+        System.assert(messages[0].variables.containsKey('passengerInfo') &&
+                messages[0].variables.containsKey('customInfo'));
         System.assert(messages[1].variables.containsKey('passengerInfo') &&
                 messages[1].variables.containsKey('delayInfo')); //TODO ADD OTHER EVENTS
+        System.assert(messages[1].variables.containsKey('passengerInfo') &&
+                messages[1].variables.containsKey('customInfo'));
     }
 }
