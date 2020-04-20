@@ -7,9 +7,9 @@
 
 public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
 
-    private static final String NAMED_CREDENTIAL = 'callout:SAS_APIM';
+    private static final String NAMED_CREDENTIAL = 'callout:SAS_APIM_TEDS';
     private static final String APIM_SUBSCRIPTION_KEY = 'b8568217401c49acb3931605cea78835';
-    private static final String API_VERSION = 'v1';
+    private static final String API_VERSION = 'v2';
 
     private static final String BOOKING_ENDPOINT_TEMPLATE = '/teds-booking/bookings/{0}';
     private static final String BOOKINGS_FILTER_ENDPOINT = '/teds-booking/bookings';

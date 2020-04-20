@@ -5,6 +5,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>APIM_AuthConnector_v2</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>C_Application</apexClass>
         <enabled>true</enabled>
     </classAccesses>
