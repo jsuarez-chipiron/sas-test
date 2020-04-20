@@ -10,13 +10,17 @@ global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaults
 
     // The main interface method
     global void onInitDefaults(QuickAction.QuickActionDefaults[] defaults) {
+        //Set different values to enable Apex tests for when using default email quick action
+        String actionName = Test.isRunningTest() ? 'Case.Email' : 'Case.SendEmail';
+        String actionType = Test.isRunningTest() ? 'Email' : 'SendEmail';
+
         QuickAction.SendEmailQuickActionDefaults sendEmailDefaults = null;
         // Check if the quick action is the standard Case Feed send email action
         for (QuickAction.QuickActionDefaults action : defaults) {
             if (action instanceof QuickAction.SendEmailQuickActionDefaults && 
                 action.getTargetSObject().getSObjectType() == EmailMessage.sObjectType && 
-                action.getActionName().equals('Case.SendEmail') && 
-                action.getActionType().equals('SendEmail')) {
+                action.getActionName().equals(actionName) && 
+                action.getActionType().equals(actionType)) {
                     sendEmailDefaults = (QuickAction.SendEmailQuickActionDefaults) action;
                     break;
             }
