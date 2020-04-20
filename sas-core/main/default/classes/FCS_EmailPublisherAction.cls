@@ -15,8 +15,8 @@ global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaults
         for (QuickAction.QuickActionDefaults action : defaults) {
             if (action instanceof QuickAction.SendEmailQuickActionDefaults && 
                 action.getTargetSObject().getSObjectType() == EmailMessage.sObjectType && 
-                action.getActionName().equals(actionName) && 
-                action.getActionType().equals(actionType)) {
+                action.getActionName().equals('Case.SendEmail') && 
+                action.getActionType().equals('SendEmail')) {
                     sendEmailDefaults = (QuickAction.SendEmailQuickActionDefaults) action;
                     break;
             }
