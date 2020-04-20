@@ -1,0 +1,8 @@
+<apex:page controller="FCS_SocialPostController">
+    <apex:form>
+        <apex:PageBlock>
+            <!--<apex:inputField value="{!sp.OwnerId}"/>-->
+            <apex:commandButton action="{!save}" value="save"/>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
