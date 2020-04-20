@@ -70,4 +70,13 @@ public class IRR_SVC_CommunicationServiceImpl implements IRR_SVC_ICommunicationS
         endTime = Limits.getCpuTime();
         System.debug('\n\nPERF - Committed Work in: ' + (endTime - startTime) + '\n\n');
     }
+
+    public void processGDPRLogs(Set<Id> idSet) {
+        List<IRR_CommunicationLog__c> logs = IRR_SEL_CommunicationLogsSelector.newInstance().selectSObjectsById(idSet);
+        IRR_DOM_ICommunicationLogs domain = IRR_DOM_CommunicationLogs.newInstance(logs);
+        fflib_ISObjectUnitOfWork uow = IRR_Application.UnitOfWork.newInstance();
+        Set<String> contactKeysToDelete = domain.processGDPRLogs(uow);
+
+        uow.commitWork();
+    }
 }

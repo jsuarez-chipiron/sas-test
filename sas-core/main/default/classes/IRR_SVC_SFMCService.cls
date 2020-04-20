@@ -27,6 +27,10 @@ public class IRR_SVC_SFMCService {
         return service().sendSMSMessages(messages);
     }
 
+    public static void deleteContacts(Set<String> contactKeys) {
+        service().deleteContacts(contactKeys);
+    }
+
     private static IRR_SVC_ISFMCService service() {
         return (IRR_SVC_ISFMCService) IRR_Application.Service.newInstance(IRR_SVC_ISFMCService.class);
     }

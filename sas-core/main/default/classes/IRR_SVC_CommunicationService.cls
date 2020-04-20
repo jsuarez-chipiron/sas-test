@@ -27,6 +27,10 @@ public class IRR_SVC_CommunicationService {
         service().processEvent(eventType, payload);
     }
 
+    public static void processGDPRLogs(Set<Id> idSet) {
+        service().processGDPRLogs(idSet);
+    }
+
     private static IRR_SVC_ICommunicationService service() {
         return (IRR_SVC_ICommunicationService) IRR_Application.Service.newInstance(IRR_SVC_ICommunicationService.class);
     }

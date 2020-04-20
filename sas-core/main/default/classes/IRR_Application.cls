@@ -36,6 +36,7 @@ public class IRR_Application {
     public static final fflib_Application.SelectorFactory Selector =
             new fflib_Application.SelectorFactory(
                     new Map<SObjectType, Type> {
+                            IRR_CommunicationLog__c.SObjectType => IRR_SEL_CommunicationLogsSelector.class,
                             IRR_DelayLog__c.SObjectType => IRR_SEL_DelayLogsSelector.class,
                             IRR_ManualCommunicationTemplate__mdt.SObjectType => IRR_SEL_ManualTemplatesSelector.class,
                             IRR_RecipientWhitelist__mdt.SObjectType => IRR_SEL_RecipientWhitelistSelector.class,
@@ -43,6 +44,19 @@ public class IRR_Application {
                             SFMC_SMSDefinition__mdt.SObjectType => IRR_SEL_SMSDefinitionsSelector.class
                     }
             );
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Configure and create the DomainFactory for this Application
+     */
+    public static final fflib_Application.DomainFactory Domain =
+            new fflib_Application.DomainFactory(
+                    IRR_Application.Selector,
+                    new Map<SObjectType, Type> {
+                            IRR_CommunicationLog__c.SObjectType => IRR_DOM_CommunicationLogs.Constructor.class
+                    });
 
     /**
      * @author Niklas Lundkvist, Deloitte
