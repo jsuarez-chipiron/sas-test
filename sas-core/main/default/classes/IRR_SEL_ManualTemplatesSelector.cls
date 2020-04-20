@@ -2,7 +2,7 @@
 * @author Niklas Lundkvist, Deloitte
 * @date 2020
 *
-* @description TODO
+* @description Selector class for the Manual Templates custom metadata object.
 */
 
 public class IRR_SEL_ManualTemplatesSelector extends fflib_SObjectSelector implements IRR_SEL_IManualTemplatesSelector {

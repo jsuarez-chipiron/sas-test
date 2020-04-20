@@ -15,7 +15,9 @@ public class IRR_CON_ManualCommunication {
             return IRR_SVC_TedsService.getPassengerInfosForBooking(bookingId);
         }
         catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            AuraHandledException ahe = new AuraHandledException(e.getMessage());
+            ahe.setMessage(e.getMessage());
+            throw ahe;
         }
     }
 
@@ -25,7 +27,9 @@ public class IRR_CON_ManualCommunication {
             return IRR_SVC_TedsService.getPassengerInfosForFlight(flightId);
         }
         catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            AuraHandledException ahe = new AuraHandledException(e.getMessage());
+            ahe.setMessage(e.getMessage());
+            throw ahe;
         }
     }
 
@@ -35,7 +39,9 @@ public class IRR_CON_ManualCommunication {
             IRR_SVC_CommunicationService.processEvent(EVENT_TYPE, manualRequest);
         }
         catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            AuraHandledException ahe = new AuraHandledException(e.getMessage());
+            ahe.setMessage(e.getMessage());
+            throw ahe;
         }
     }
 
@@ -56,7 +62,9 @@ public class IRR_CON_ManualCommunication {
             return manualTemplatesBySendMode;
         }
         catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            AuraHandledException ahe = new AuraHandledException(e.getMessage());
+            ahe.setMessage(e.getMessage());
+            throw ahe;
         }
     }
 }

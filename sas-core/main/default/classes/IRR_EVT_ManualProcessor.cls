@@ -7,7 +7,7 @@
 
 public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
 
-    private static final String ERROR_NO_EVENT = 'Manual message info is missing';
+    private static final String ERROR_NO_EVENT = 'Manual message request is missing';
     private static final String ERROR_NO_PASSENGERS = 'No passengers to send message to';
     private static final String ERROR_NO_EMAIL_TEMPLATE = 'No Email template selected';
     private static final String ERROR_NO_SMS_TEMPLATE = 'No SMS template selected';
