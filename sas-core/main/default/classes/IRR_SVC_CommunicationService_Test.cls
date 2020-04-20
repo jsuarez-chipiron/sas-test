@@ -6,7 +6,7 @@
 */
 
 @IsTest
-private class IRR_SVC_EventService_Test {
+private class IRR_SVC_CommunicationService_Test {
 
     @IsTest
     static void testProcessEventJSONPayload() {
@@ -20,7 +20,7 @@ private class IRR_SVC_EventService_Test {
         IRR_Application.EventProcessor.setMock('TEST_EVENT', eventMock);
 
         //When
-        IRR_SVC_EventService.processEvent('TEST_EVENT', 'TEST_PAYLOAD');
+        IRR_SVC_CommunicationService.processEvent('TEST_EVENT', 'TEST_PAYLOAD');
 
         //Then
         ((IRR_EVT_IEventProcessor) mocks.verify(eventMock)).validateEvent();
@@ -43,7 +43,7 @@ private class IRR_SVC_EventService_Test {
         IRR_Application.EventProcessor.setMock('TEST_EVENT', eventMock);
 
         //When
-        IRR_SVC_EventService.processEvent('TEST_EVENT', (Object) new Map<String, Object>());
+        IRR_SVC_CommunicationService.processEvent('TEST_EVENT', (Object) new Map<String, Object>());
 
         //Then
         ((IRR_EVT_IEventProcessor) mocks.verify(eventMock)).validateEvent();

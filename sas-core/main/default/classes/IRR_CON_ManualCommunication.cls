@@ -32,7 +32,7 @@ public class IRR_CON_ManualCommunication {
     @AuraEnabled
     public static void sendManualCommunication(IRR_MOD_ManualRequest manualRequest) {
         try {
-            IRR_SVC_EventService.processEvent(EVENT_TYPE, manualRequest);
+            IRR_SVC_CommunicationService.processEvent(EVENT_TYPE, manualRequest);
         }
         catch (Exception e) {
             throw new AuraHandledException(e.getMessage());

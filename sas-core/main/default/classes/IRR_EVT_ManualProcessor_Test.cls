@@ -47,7 +47,7 @@ private class IRR_EVT_ManualProcessor_Test {
         try {
             eventProcessor.validateEvent();
         }
-        catch (IRR_SVC_EventService.EventException eventException) {
+        catch (IRR_SVC_CommunicationService.EventException eventException) {
             if (eventException.getMessage().contains('Manual message info is missing')) caughtException = true;
         }
 
@@ -71,7 +71,7 @@ private class IRR_EVT_ManualProcessor_Test {
         try {
             eventProcessor.validateEvent();
         }
-        catch (IRR_SVC_EventService.EventException eventException) {
+        catch (IRR_SVC_CommunicationService.EventException eventException) {
             if (eventException.getMessage().contains('No passengers to send message to')) caughtException = true;
         }
 
@@ -95,7 +95,7 @@ private class IRR_EVT_ManualProcessor_Test {
         try {
             eventProcessor.validateEvent();
         }
-        catch (IRR_SVC_EventService.EventException eventException) {
+        catch (IRR_SVC_CommunicationService.EventException eventException) {
             if (eventException.getMessage().contains('No Email template selected')) caughtException = true;
         }
 
@@ -119,7 +119,7 @@ private class IRR_EVT_ManualProcessor_Test {
         try {
             eventProcessor.validateEvent();
         }
-        catch (IRR_SVC_EventService.EventException eventException) {
+        catch (IRR_SVC_CommunicationService.EventException eventException) {
             if (eventException.getMessage().contains('No SMS template selected')) caughtException = true;
         }
 
@@ -141,7 +141,7 @@ private class IRR_EVT_ManualProcessor_Test {
         try {
             eventProcessor.validateEvent();
         }
-        catch (IRR_SVC_EventService.EventException eventException) {
+        catch (IRR_SVC_CommunicationService.EventException eventException) {
             if (eventException.getMessage().contains('There is no message to send')) caughtException = true;
         }
 

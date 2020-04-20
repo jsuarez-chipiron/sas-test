@@ -70,7 +70,7 @@ private class IRR_CON_ManualCommunication_Test {
     static void testSendManualCommunication() {
         //Set up mocks
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IRR_SVC_IEventService serviceMock = (IRR_SVC_IEventService) mocks.mock(IRR_SVC_EventServiceImpl.class);
+        IRR_SVC_ICommunicationService serviceMock = (IRR_SVC_ICommunicationService) mocks.mock(IRR_SVC_CommunicationServiceImpl.class);
 
 
         //Given
@@ -81,13 +81,13 @@ private class IRR_CON_ManualCommunication_Test {
         };
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
         manualRequest.passengerInfos = passengerInfos;
-        IRR_Application.Service.setMock(IRR_SVC_IEventService.class, serviceMock);
+        IRR_Application.Service.setMock(IRR_SVC_ICommunicationService.class, serviceMock);
 
         //When
         IRR_CON_ManualCommunication.sendManualCommunication(manualRequest);
 
         //Then
-        ((IRR_SVC_IEventService) mocks.verify(serviceMock)).processEvent('manualCommunication', manualRequest);
+        ((IRR_SVC_ICommunicationService) mocks.verify(serviceMock)).processEvent('manualCommunication', manualRequest);
     }
 
     @IsTest

@@ -149,11 +149,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>IRR_SVC_EventService</apexClass>
+        <apexClass>IRR_SVC_CommunicationService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>IRR_SVC_EventServiceImpl</apexClass>
+        <apexClass>IRR_SVC_CommunicationServiceImpl</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

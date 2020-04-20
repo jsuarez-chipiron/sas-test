@@ -53,7 +53,7 @@ public class IRR_Application {
     public static final fflib_Application.ServiceFactory Service =
             new fflib_Application.ServiceFactory(
                     new Map<Type, Type>{
-                            IRR_SVC_IEventService.class => IRR_SVC_EventServiceImpl.class,
+                            IRR_SVC_ICommunicationService.class => IRR_SVC_CommunicationServiceImpl.class,
                             IRR_SVC_ISFMCService.class => IRR_SVC_SFMCServiceImpl.class,
                             IRR_SVC_ITedsService.class => IRR_SVC_TedsServiceImpl.class
                     }

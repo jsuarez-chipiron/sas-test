@@ -43,7 +43,7 @@ global without sharing class MID_SendSMS {
                 if(!messages.isEmpty())IRR_SVC_SFMCService.sendSMSMessages(messages);
 
                 fflib_ISObjectUnitOfWork uow = IRR_Application.UnitOfWork.newInstance();
-                IRR_SVC_EventService.CommunicationLogFactory logFactory = new IRR_SVC_EventService.CommunicationLogFactory(uow);
+                IRR_SVC_CommunicationService.CommunicationLogFactory logFactory = new IRR_SVC_CommunicationService.CommunicationLogFactory(uow);
 
                 SendSMSResponse resp = new SendSMSResponse();
                 resp.result = new SendSMSResult[recSz];

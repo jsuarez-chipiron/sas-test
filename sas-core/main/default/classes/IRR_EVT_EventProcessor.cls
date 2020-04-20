@@ -124,7 +124,8 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
      * @param uow Unit of Work
      */
     protected void insertCommunicationLogs(fflib_ISObjectUnitOfWork uow) {
-        IRR_SVC_EventService.CommunicationLogFactory logFactory = new IRR_SVC_EventService.CommunicationLogFactory(uow);
+        IRR_SVC_CommunicationService.CommunicationLogFactory logFactory =
+                new IRR_SVC_CommunicationService.CommunicationLogFactory(uow);
         for (IRR_MOD_Message message : messages) {
             logFactory.add(message);
         }
@@ -194,8 +195,10 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
      * @param eventInfo Object to serialize into the message template
      */
     protected void throwEventException(String errorString, Object eventInfo) {
-        throw new IRR_SVC_EventService.EventException(
-                String.format(errorString, new List<String>{eventInfo.toString()}));
+        throw new IRR_SVC_CommunicationService.EventException(
+                String.format(errorString, new List<String>{
+                        eventInfo.toString()
+                }));
     }
 
     public interface IConstructable {

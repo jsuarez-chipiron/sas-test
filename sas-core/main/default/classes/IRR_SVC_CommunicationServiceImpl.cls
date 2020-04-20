@@ -5,7 +5,7 @@
 * @description Concrete implementation of Event functionality.
 */
 
-public class IRR_SVC_EventServiceImpl implements IRR_SVC_IEventService {
+public class IRR_SVC_CommunicationServiceImpl implements IRR_SVC_ICommunicationService {
 
     /**
      * @author Niklas Lundkvist, Deloitte

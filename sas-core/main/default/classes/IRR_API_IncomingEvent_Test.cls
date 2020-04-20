@@ -12,7 +12,7 @@ private class IRR_API_IncomingEvent_Test {
     static void testHandleIncomingEvent() {
         //Set up mocks
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IRR_SVC_IEventService serviceMock = (IRR_SVC_IEventService) mocks.mock(IRR_SVC_EventServiceImpl.class);
+        IRR_SVC_ICommunicationService serviceMock = (IRR_SVC_ICommunicationService) mocks.mock(IRR_SVC_CommunicationServiceImpl.class);
 
         //Given
         RestRequest req = new RestRequest();
@@ -20,12 +20,12 @@ private class IRR_API_IncomingEvent_Test {
         req.httpMethod = 'POST';
         req.requestURI = 'https://instance_name.salesforce.com/services/apexrest/EventAPI/testEventName';
         RestContext.request = req;
-        IRR_Application.Service.setMock(IRR_SVC_IEventService.class, serviceMock);
+        IRR_Application.Service.setMock(IRR_SVC_ICommunicationService.class, serviceMock);
 
         //When
         IRR_API_IncomingEvent.handleIncomingEvent();
 
         //Then
-        ((IRR_SVC_IEventService) mocks.verify(serviceMock)).processEvent('testEventName', 'TEST_EVENT_BODY');
+        ((IRR_SVC_ICommunicationService) mocks.verify(serviceMock)).processEvent('testEventName', 'TEST_EVENT_BODY');
     }
 }

@@ -21,6 +21,6 @@ global class IRR_API_IncomingEvent {
         RestRequest req = RestContext.request;
         String eventType = req.requestURI.substringAfterLast('/');
         String eventPayload = req.requestBody.toString();
-        IRR_SVC_EventService.processEvent(eventType, eventPayload);
+        IRR_SVC_CommunicationService.processEvent(eventType, eventPayload);
     }
 }

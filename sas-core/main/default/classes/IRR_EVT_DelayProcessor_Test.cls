@@ -53,7 +53,7 @@ private class IRR_EVT_DelayProcessor_Test {
         try {
             eventProcessor.validateEvent();
         }
-        catch (IRR_SVC_EventService.EventException eventException) {
+        catch (IRR_SVC_CommunicationService.EventException eventException) {
             if (eventException.getMessage().contains('Flight Id is missing from event')) caughtException = true;
         }
 
@@ -76,7 +76,7 @@ private class IRR_EVT_DelayProcessor_Test {
         try {
             eventProcessor.validateEvent();
         }
-        catch (IRR_SVC_EventService.EventException eventException) {
+        catch (IRR_SVC_CommunicationService.EventException eventException) {
             if (eventException.getMessage().contains('Delay minutes is missing from event')) caughtException = true;
         }
 
@@ -99,7 +99,7 @@ private class IRR_EVT_DelayProcessor_Test {
         try {
             eventProcessor.validateEvent();
         }
-        catch (IRR_SVC_EventService.EventException eventException) {
+        catch (IRR_SVC_CommunicationService.EventException eventException) {
             if (eventException.getMessage().contains('Estimated time of departure is missing from event')){
                 caughtException = true;
             }
@@ -123,7 +123,7 @@ private class IRR_EVT_DelayProcessor_Test {
         try {
             eventProcessor.validateEvent();
         }
-        catch (IRR_SVC_EventService.EventException eventException) {
+        catch (IRR_SVC_CommunicationService.EventException eventException) {
             if (eventException.getMessage().contains('Scheduled time of departure is missing from event')){
                 caughtException = true;
             }

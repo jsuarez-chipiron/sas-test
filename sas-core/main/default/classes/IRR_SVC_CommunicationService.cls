@@ -5,7 +5,7 @@
 * @description Entry point for event related functionality.
 */
 
-public class IRR_SVC_EventService {
+public class IRR_SVC_CommunicationService {
     /**
      * The status set for created communication log records without errors
      */
@@ -27,8 +27,8 @@ public class IRR_SVC_EventService {
         service().processEvent(eventType, payload);
     }
 
-    private static IRR_SVC_IEventService service() {
-        return (IRR_SVC_IEventService) IRR_Application.Service.newInstance(IRR_SVC_IEventService.class);
+    private static IRR_SVC_ICommunicationService service() {
+        return (IRR_SVC_ICommunicationService) IRR_Application.Service.newInstance(IRR_SVC_ICommunicationService.class);
     }
 
     public class CommunicationLogFactory {
