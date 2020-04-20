@@ -10,20 +10,37 @@ global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaults
 
     // The main interface method
     global void onInitDefaults(QuickAction.QuickActionDefaults[] defaults) {
-        QuickAction.SendEmailQuickActionDefaults sendEmailDefaults = (QuickAction.SendEmailQuickActionDefaults)defaults.get(0);
-        EmailMessage emailMessage = (EmailMessage)sendEmailDefaults.getTargetSObject(); 
+        QuickAction.SendEmailQuickActionDefaults sendEmailDefaults = null;
+        // Check if the quick action is the standard Case Feed send email action
+        for (QuickAction.QuickActionDefaults action : defaults) {
+            if (action instanceof QuickAction.SendEmailQuickActionDefaults && 
+                action.getTargetSObject().getSObjectType() == EmailMessage.sObjectType && 
+                action.getActionName().equals(actionName) && 
+                action.getActionType().equals(actionType)) {
+                    sendEmailDefaults = (QuickAction.SendEmailQuickActionDefaults) action;
+                    break;
+            }
+        }
         
-        Case c = [SELECT CaseNumber, Type FROM Case WHERE Id=:sendEmailDefaults.getContextId()];
+        if(sendEmailDefaults != null) {
+            Case c = [SELECT CaseNumber, Type FROM Case WHERE Id=:sendEmailDefaults.getContextId()];
 
-        // Assign default FromAddress based on the Case Type
-        if (c.Type != null && c.Type.equals('Sales Information')) {
-            emailMessage.FromAddress = C_Settings.getSettings('EMAIL ADDRESS').get('Sales Information');
+            EmailMessage emailMessage = (EmailMessage) sendEmailDefaults.getTargetSObject(); 
+
+            // Assign default FromAddress based on the Case Type
+            if (c.Type != null && c.Type.equals('Sales Information')) {
+                emailMessage.FromAddress = C_Settings.getSettings('EMAIL ADDRESS').get('Sales Information');
+                System.debug('From: ' + emailMessage.FromAddress);
+            }
+            else if (c.Type != null && c.Type.equals('SASSI Internal')) {
+                emailMessage.FromAddress = C_Settings.getSettings('EMAIL ADDRESS').get('SASSI Internal');
+                System.debug('From: ' + emailMessage.FromAddress);
+            }    
+            else if (c.Type == null || c.Type.equals('System') || c.Type.equals('Tariff')) {
+                emailMessage.FromAddress = C_Settings.getSettings('EMAIL ADDRESS').get('System & Tariff');
+                System.debug('From: ' + emailMessage.FromAddress);
+            }
+            System.debug('From: ' + emailMessage.FromAddress);
         }
-        else if (c.Type != null && c.Type.equals('SASSI Internal')) {
-            emailMessage.FromAddress = C_Settings.getSettings('EMAIL ADDRESS').get('SASSI Internal');
-        }    
-        else if (c.Type == null || c.Type.equals('System') || c.Type.equals('Tariff')) {
-            emailMessage.FromAddress = C_Settings.getSettings('EMAIL ADDRESS').get('System & Tariff');
-        }
-    } 
+    }
 }
