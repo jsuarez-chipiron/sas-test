@@ -40,10 +40,10 @@ private class IRR_SVC_TedsService_Test {
                 flightId);
 
         //Then
-        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setBaseURL('callout:SAS_APIM');
+        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setBaseURL('callout:SAS_APIM_TEDS');
         ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock))
                 .setAPIMSubscriptionKey('b8568217401c49acb3931605cea78835');
-        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setAPIVersion('v1');
+        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setAPIVersion('v2');
         ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).build();
         ((C_IIntegrationExecutor) mocks.verify(executorMock)).executeRequest(
                 (String) fflib_Match.anyObject(),
@@ -121,10 +121,10 @@ private class IRR_SVC_TedsService_Test {
                 flightId);
 
         //Then
-        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setBaseURL('callout:SAS_APIM');
+        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setBaseURL('callout:SAS_APIM_TEDS');
         ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock))
                 .setAPIMSubscriptionKey('b8568217401c49acb3931605cea78835');
-        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setAPIVersion('v1');
+        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setAPIVersion('v2');
         ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).build();
         ((C_IIntegrationExecutor) mocks.verify(executorMock)).executeRequest(
                 (String) fflib_Match.anyObject(),
@@ -222,10 +222,10 @@ private class IRR_SVC_TedsService_Test {
         List<IRR_MOD_PassengerInfo> passengerInfos = IRR_SVC_TedsService.getPassengerInfosForBooking(bookingRef);
 
         //Then
-        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setBaseURL('callout:SAS_APIM');
+        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setBaseURL('callout:SAS_APIM_TEDS');
         ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock))
                 .setAPIMSubscriptionKey('b8568217401c49acb3931605cea78835');
-        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setAPIVersion('v1');
+        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setAPIVersion('v2');
         ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).build();
         ((C_IIntegrationExecutor) mocks.verify(executorMock)).executeRequest(
                 (String) fflib_Match.anyObject(),
