@@ -157,7 +157,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>IRR_SVC_IEventService</apexClass>
+        <apexClass>IRR_SVC_ICommunicationService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
