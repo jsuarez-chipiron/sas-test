@@ -24,7 +24,7 @@ export default class irr_SendPanel extends LightningElement {
     get customContentLabel() {
         const length = this.sendParameters && this.sendParameters.content ? this.sendParameters.content.length : 0;
         const smsMessages =  Math.ceil(length / 160);
-        return `Content - ${length} characters - ${smsMessages} SMS`;
+        return length === 0 ? 'Content' : `Content - ${length} characters - ${smsMessages} SMS`;
     }
 
     connectedCallback() {
