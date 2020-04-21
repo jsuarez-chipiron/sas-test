@@ -43,7 +43,7 @@ global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaults
                         System.debug('From: ' + emailMessage.FromAddress);
                 } else {
                     //Error goes here
-                    emails.addError('No default Email Address found for Type');
+                    emailMessage.addError('No default Email Address found for Type');
                     System.debug('From: ' + emailMessage.FromAddress);
                 }
             }
