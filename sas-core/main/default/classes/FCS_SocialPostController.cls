@@ -12,6 +12,9 @@ public with sharing class FCS_SocialPostController {
     }
 
     public Pagereference save() {
+        for(SocialPost sp : socialPosts) {
+            sp.OwnerId = UserInfo.getUserId();
+        }
         update socialPosts;
         return null;
     }
