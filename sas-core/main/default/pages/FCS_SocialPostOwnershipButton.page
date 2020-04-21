@@ -1,8 +1,9 @@
-<apex:page controller="FCS_SocialPostController">
+<apex:page standardController="SocialPost" recordSetVar="socialPosts" extensions="FCS_SocialPostController">
     <apex:form>
-        <apex:PageBlock>
-            <!--<apex:inputField value="{!sp.OwnerId}"/>-->
-            <apex:commandButton action="{!save}" value="save"/>
+        <apex:pageBlock>
+            <apex:pageBlockTable value="{!selected}" var="sp">
+                <apex:commandButton action="{!save}" value="quicksave"/>
+            </apex:pageBlockTable>
         </apex:pageBlock>
     </apex:form>
 </apex:page>

@@ -1,20 +1,18 @@
 public with sharing class FCS_SocialPostController {
+    public List<SocialPost> socialPosts {get; private set;}
 
-    private final SocialPost sp;
-    
-    public FCS_SocialPostController() {
-        sp = [SELECT Id, Name, OwnerId FROM SocialPost WHERE Id = :ApexPages.currentPage().getParameters().get('id')];
-    }
-
-    public SocialPost getSocialPost() {
-        return sp;
-    }
-
-    public PageReference save() {
-        if(sp.OwnerId == null) {
-            sp.OwnerId = UserInfo.getUserId();
+    public FCS_SocialPostController(ApexPages.StandardSetController controller) {
+        Id id = (Id) ApexPages.currentPage().getParameters().get('id');
+        if (id != null) {
+            controller.setSelected(
+                [SELECT Id, Name, OwnerId FROM SocialPost WHERE Id = :id]
+            );
         }
-    update sp;
-    return null;
+        this.socialPosts = (List<SocialPost>) controller.getSelected();
+    }
+
+    public Pagereference save() {
+        update socialPosts;
+        return null;
     }
 }

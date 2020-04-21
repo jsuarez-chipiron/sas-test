@@ -28,6 +28,7 @@
         <searchResultsAdditionalFields>Persona</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Parent</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Owner</searchResultsAdditionalFields>
+        <searchResultsCustomButtons>FCS_TakeOwnership</searchResultsCustomButtons>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
 </CustomObject>
