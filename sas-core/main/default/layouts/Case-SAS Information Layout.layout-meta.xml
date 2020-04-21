@@ -123,10 +123,6 @@
                 <behavior>Edit</behavior>
                 <field>Priority</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>GDPR_Consent__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
