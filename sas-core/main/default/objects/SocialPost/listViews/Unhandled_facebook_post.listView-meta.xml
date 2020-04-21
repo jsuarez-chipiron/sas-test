@@ -3,13 +3,14 @@
     <fullName>Unhandled_facebook_post</fullName>
     <booleanFilter>1 AND 2</booleanFilter>
     <columns>Name</columns>
-    <columns>Parent</columns>
-    <columns>Persona</columns>
     <columns>Content</columns>
     <columns>Posted</columns>
+    <columns>Provider</columns>
+    <columns>Persona</columns>
+    <columns>Parent</columns>
+    <columns>MessageType</columns>
     <columns>ReviewedStatus</columns>
-    <columns>Notes</columns>
-    <filterScope>Mine</filterScope>
+    <filterScope>Everything</filterScope>
     <filters>
         <field>Provider</field>
         <operation>equals</operation>
