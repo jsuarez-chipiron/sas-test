@@ -1,0 +1,18 @@
+<!--
+ - Created by anorell on 2020-04-20.
+ -->
+
+<!-- Fcs Omni Channel Queue Backlog -->
+<template>
+    <div>
+        <lightning-datatable
+                key-field="queueId"
+                data={queueStatus}
+                columns={columns}
+                hide-checkbox-column
+                sorted-by="countWaiting"
+                sorted-direction="desc"
+                onheaderaction={handleHeaderAction}>
+        </lightning-datatable>
+    </div>
+</template>
