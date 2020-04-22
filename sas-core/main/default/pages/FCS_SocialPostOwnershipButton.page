@@ -1,3 +1,0 @@
-<apex:page standardController="SocialPost" recordSetVar="socialPosts" extensions="FCS_SocialPostController" action="{!save}">
-
-</apex:page>

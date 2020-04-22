@@ -19,6 +19,8 @@
         <excludedStandardButtons>SfxMassCreateCase</excludedStandardButtons>
         <excludedStandardButtons>SfxMassApprovePosts</excludedStandardButtons>
         <excludedStandardButtons>SfxMassRejectPosts</excludedStandardButtons>
+        <listViewButtons>FCS_TakeOwnership</listViewButtons>
+        <listViewButtons>FCS_RemoveOwnership</listViewButtons>
         <searchResultsAdditionalFields>ReviewedStatus</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Content</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ReplyTo</searchResultsAdditionalFields>
@@ -29,6 +31,7 @@
         <searchResultsAdditionalFields>Parent</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Owner</searchResultsAdditionalFields>
         <searchResultsCustomButtons>FCS_TakeOwnership</searchResultsCustomButtons>
+        <searchResultsCustomButtons>FCS_RemoveOwnership</searchResultsCustomButtons>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
 </CustomObject>

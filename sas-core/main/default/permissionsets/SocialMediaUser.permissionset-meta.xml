@@ -213,6 +213,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SocialPost.FCS_PreviousQueue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SocialPost.FCS_Reopened__c</field>
         <readable>true</readable>
     </fieldPermissions>

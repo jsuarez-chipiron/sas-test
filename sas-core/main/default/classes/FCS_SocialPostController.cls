@@ -1,21 +1,29 @@
 public with sharing class FCS_SocialPostController {
-    public List<SocialPost> socialPosts {get; private set;}
+    ApexPages.StandardSetController setCon;
 
     public FCS_SocialPostController(ApexPages.StandardSetController controller) {
-        Id id = (Id) ApexPages.currentPage().getParameters().get('id');
-        if (id != null) {
-            controller.setSelected(
-                [SELECT Id, Name, OwnerId FROM SocialPost WHERE Id = :id]
-            );
-        }
-        this.socialPosts = (List<SocialPost>) controller.getSelected();
+        setCon = controller;
     }
 
-    public Pagereference save() {
-        for(SocialPost sp : socialPosts) {
+    public PageReference takeOwnership() {
+        List<SocialPost> spIds = (List<SocialPost>) setCon.getSelected();
+        List<SocialPost> spToUpdate = new List<SocialPost>();
+        for(SocialPost sp : [SELECT Id, OwnerId, FCS_PreviousQueue__c FROM SocialPost WHERE Id IN :spIds]) {
             sp.OwnerId = UserInfo.getUserId();
+            spToUpdate.add(sp);
         }
-        update socialPosts;
-        return null;
+        update spToUpdate;
+        return setCon.cancel();
+    }
+
+    public PageReference removeOwnership() {
+        List<SocialPost> spIds = (List<SocialPost>) setCon.getSelected();
+        List<SocialPost> spToUpdate = new List<SocialPost>();
+        for(SocialPost sp : [SELECT Id, OwnerId, FCS_PreviousQueue__c FROM SocialPost WHERE Id IN :spIds]) {
+            sp.OwnerId = sp.FCS_PreviousQueue__c;
+            spToUpdate.add(sp);
+        }
+        update spToUpdate;
+        return setCon.cancel();
     }
 }
