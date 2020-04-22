@@ -220,12 +220,14 @@ private class IRR_EVT_DelayProcessor_Test {
     }
 
     @IsTest
-    static void testProcessEventCloseToDepartureSendSMS() {
+    static void testProcessEventCloseToDeparture_Confirmed_SendSMS() {
         //Given
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.delayDifference = 10;
         delayInfo.minutesToScheduledTime = 100;
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
+        passengerInfos[0].thisSegment = new IRR_MOD_SegmentInfo();
+        passengerInfos[0].thisSegment.isConfirmed = true;
         passengerInfos[0].hasPhoneNumber = true;
         passengerInfos[0].phoneNumber = 'TEST_PHONE';
         passengerInfos[0].hasEmailAddress = true;
@@ -250,12 +252,39 @@ private class IRR_EVT_DelayProcessor_Test {
     }
 
     @IsTest
-    static void testProcessEventCloseToDepartureNoSMS() {
+    static void testProcessEventCloseToDeparture_Confirmed_NoSMS() {
         //Given
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.delayDifference = 5;
         delayInfo.minutesToScheduledTime = 100;
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
+        passengerInfos[0].thisSegment = new IRR_MOD_SegmentInfo();
+        passengerInfos[0].thisSegment.isConfirmed = true;
+        passengerInfos[0].hasPhoneNumber = true;
+        passengerInfos[0].phoneNumber = 'TEST_PHONE';
+        passengerInfos[0].hasEmailAddress = true;
+        passengerInfos[0].emailAddress = 'TEST_EMAIL';
+        IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
+                .newInstance(delayInfo);
+        eventProcessor.passengerInfos = passengerInfos;
+
+        //When
+        eventProcessor.processEvent();
+
+        //Then
+        List<IRR_MOD_Message> messages = eventProcessor.messages;
+        System.assertEquals(0, messages.size());
+    }
+
+    @IsTest
+    static void testProcessEvent_NotConfirmed_NoSMS() {
+        //Given
+        IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
+        delayInfo.delayDifference = 10;
+        delayInfo.minutesToScheduledTime = 100;
+        List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
+        passengerInfos[0].thisSegment = new IRR_MOD_SegmentInfo();
+        passengerInfos[0].thisSegment.isConfirmed = false;
         passengerInfos[0].hasPhoneNumber = true;
         passengerInfos[0].phoneNumber = 'TEST_PHONE';
         passengerInfos[0].hasEmailAddress = true;
