@@ -130,11 +130,12 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
             for (IRR_MOD_TedsBooking.Trips trip : booking.trips) {
                 if (String.isBlank(flightId)) break; //Don't look for segments if there is no current flightId
                 for (IRR_MOD_TedsBooking.Segments_Z segment : trip.segments) {
-                    if (segment.status != IRR_SVC_TedsService.BOOKING_STATUS_CONFIRMED) continue; //Discard unconfirmed
                     if (segment.flight.id == flightId) {
                         thisSegment = segment;
                         continue;
                     }
+                    //Discard unconfirmed segments when looking for next segment
+                    if (segment.status != IRR_SVC_TedsService.BOOKING_STATUS_CONFIRMED) continue;
                     if (thisSegment!=null) {
                         nextSegment = segment;
                         break;
