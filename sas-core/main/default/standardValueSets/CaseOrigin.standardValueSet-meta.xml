@@ -51,4 +51,9 @@
         <default>false</default>
         <label>System &amp; Tariff</label>
     </standardValue>
+    <standardValue>
+        <fullName>Functional Product Support</fullName>
+        <default>false</default>
+        <label>Functional Product Support</label>
+    </standardValue>
 </StandardValueSet>

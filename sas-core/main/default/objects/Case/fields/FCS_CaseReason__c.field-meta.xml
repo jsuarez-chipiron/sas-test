@@ -370,6 +370,11 @@
                 <label>Project</label>
             </value>
             <value>
+                <fullName>Puzzel</fullName>
+                <default>false</default>
+                <label>Puzzel</label>
+            </value>
+            <value>
                 <fullName>Rebooking</fullName>
                 <default>false</default>
                 <label>Rebooking</label>
@@ -423,6 +428,11 @@
                 <fullName>Safety report</fullName>
                 <default>false</default>
                 <label>Safety report</label>
+            </value>
+            <value>
+                <fullName>Salesforce</fullName>
+                <default>false</default>
+                <label>Salesforce</label>
             </value>
             <value>
                 <fullName>SAS.XX</fullName>
@@ -628,6 +638,14 @@
         <valueSettings>
             <controllingFieldValue>Tariff</controllingFieldValue>
             <valueName>Tax/YQ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Functional Product Support</controllingFieldValue>
+            <valueName>Puzzel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Functional Product Support</controllingFieldValue>
+            <valueName>Salesforce</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
