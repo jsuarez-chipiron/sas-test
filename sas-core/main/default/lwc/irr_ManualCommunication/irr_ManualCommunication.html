@@ -20,6 +20,12 @@
             onhidesuccess={handleHideSuccessEvent}
             onnewsearch={handleResetEvent}>
     </c-irr_-success-modal>
+    <c-irr_-recipient-modal
+            onupdaterecipients={handleUpdateAdditionalRecipients}
+            onhiderecipientmodal={handleHideRecipientModal}
+            selected-recipients={additionalRecipients}
+            show-recipient-modal={showRecipientModal}>
+    </c-irr_-recipient-modal>
     <lightning-layout multiple-rows="true">
         <lightning-layout-item padding="around-small" size="12">
             <div class="page-section page-header">
@@ -31,6 +37,7 @@
                         if:false={showRetrieve}
                         templates-by-send-mode={templatesBySendMode}
                         flight-id={flightId}
+                        onshowrecipientmodal={handleShowRecipientModal}
                         onsend={handleSendEvent}
                         oncancel={handleResetEvent}>
                 </c-irr_-send-panel>

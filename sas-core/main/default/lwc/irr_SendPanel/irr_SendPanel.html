@@ -7,12 +7,19 @@
 <template>
     <lightning-card title="Send Messages" icon-name="standard:calibration">
         <lightning-button
-                class="slds-p-horizontal_small"
                 slot="actions"
                 variant="destructive"
                 label="Cancel"
                 title="Cancel"
                 onclick={handleCancel}>
+        </lightning-button>
+        <lightning-button
+                class="slds-p-horizontal_small"
+                slot="actions"
+                variant="neutral"
+                label="Add Recipients"
+                title="Add Additional Recipients"
+                onclick={handleShowRecipientModal}>
         </lightning-button>
         <lightning-button
                 slot="actions"
