@@ -56,6 +56,11 @@ export default class irr_SendPanel extends LightningElement {
             .reduce((previousValue, cmp) => cmp.reportValidity() && previousValue, true);
     }
 
+    handleShowRecipientModal() {
+        const event = new CustomEvent('showrecipientmodal');
+        this.dispatchEvent(event);
+    }
+
     handleSend() {
         if (!this.validateFields()) return;
         const sendEvent = new CustomEvent('send', {

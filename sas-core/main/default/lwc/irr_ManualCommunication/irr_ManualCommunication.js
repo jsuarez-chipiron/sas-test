@@ -54,6 +54,9 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     @track showSuccess = false;
 
+    @track showRecipientModal = false;
+    @track additionalRecipients = [];
+
     flightId = '';
 
     templatesBySendMode = {};
@@ -93,6 +96,19 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     handleTableSelection(event) {
         this.selectedRows = event.detail.selectedRows;
+    }
+
+    handleHideRecipientModal() {
+        this.showRecipientModal = false;
+    }
+
+    handleShowRecipientModal() {
+        this.showRecipientModal = true;
+    }
+
+    handleUpdateAdditionalRecipients(event) {
+        this.additionalRecipients = event.detail;
+        this.showRecipientModal = false;
     }
 
     handleFilterParameterChange(event) {
@@ -142,9 +158,17 @@ export default class IRR_ManualCommunication extends LightningElement {
             this.handleLoad(false);
             const { sendSMS, sendEmail } = event.detail;
             const { parameters, sendMode, manualTemplate } = this.confirmDetail;
-            const unFlattenedPassengers = this.selectedRows.map(row => tableUtil.unFlatten(row));
+            const passengerInfos = this.selectedRows.map(row => tableUtil.unFlatten(row));
+            passengerInfos.push(...this.additionalRecipients.map((rec) => {
+                return {
+                    hasPhoneNumber: !!rec.phoneNumber,
+                    hasEmailAddress: !!rec.emailAddress,
+                    phoneNumber: rec.phoneNumber,
+                    emailAddress: rec.emailAddress
+                };
+            }));
             const payload = {
-                passengerInfos: unFlattenedPassengers,
+                passengerInfos: passengerInfos,
                 sendSMSMessages: sendSMS,
                 sendEmailMessages: sendEmail,
                 emailTemplate: manualTemplate.IRR_EmailTemplate__c,
