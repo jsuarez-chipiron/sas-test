@@ -19,7 +19,7 @@
             <componentInstanceProperties>
                 <name>height</name>
                 <type>decorator</type>
-                <value>480</value>
+                <value>400</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>icon</name>
@@ -29,7 +29,7 @@
             <componentInstanceProperties>
                 <name>label</name>
                 <type>decorator</type>
-                <value>Omni Channel Queue Backlog</value>
+                <value>Queue Status</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>scrollable</name>
@@ -39,7 +39,7 @@
             <componentInstanceProperties>
                 <name>width</name>
                 <type>decorator</type>
-                <value>340</value>
+                <value>440</value>
             </componentInstanceProperties>
             <componentName>fcs_OmniChannelQueueBacklog</componentName>
         </componentInstances>
