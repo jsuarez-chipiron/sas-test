@@ -4,7 +4,6 @@
 	<columns>NAME</columns>
     <columns>IRR_FlightId__c</columns>
     <columns>IRR_DelayMinutes__c</columns>
-    <columns>IRR_Channel__c</columns>
 	<columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
