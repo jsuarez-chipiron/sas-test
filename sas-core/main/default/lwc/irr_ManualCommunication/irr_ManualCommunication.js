@@ -23,7 +23,7 @@ const columns = [
     { label: 'Phone', fieldName: 'phoneNumber', sortable: true },
     { label: 'Email Address', fieldName: 'emailAddress', sortable: true },
     { label: 'Status', fieldName: 'thisSegment.status', sortable: true },
-    { label: 'Booking Class', fieldName: 'thisSegment.bookingClass', sortable: true },
+    { label: 'Booking Class', fieldName: 'thisSegment.bookingClass', sortable: true, initialWidth: 50 },
     { label: 'SSR', fieldName: 'SSR', sortable: true  },
     { label: 'EB', fieldName: 'ebLevel', sortable: true, initialWidth: 50  },
 ];
@@ -57,7 +57,7 @@ export default class IRR_ManualCommunication extends LightningElement {
     @track showRecipientModal = false;
     @track additionalRecipients = [];
 
-    flightId = '';
+    retrieveParameters = {};
 
     templatesBySendMode = {};
 
@@ -77,6 +77,11 @@ export default class IRR_ManualCommunication extends LightningElement {
         catch (e) {
             this.handleError(e, true);
         }
+    }
+
+    get tableHeading() {
+        const params = Object.values(this.retrieveParameters).join(' - ');
+        return `Results for ${params}`;
     }
 
     handleLoad(finished) {
@@ -111,8 +116,8 @@ export default class IRR_ManualCommunication extends LightningElement {
         this.showRecipientModal = false;
     }
 
-    handleFilterParameterChange(event) {
-        this.filterParameters[event.target.name] = event.target.value;
+    handleFilterApplyEvent(event) {
+        this.filterParameters = event.detail;
         this.processTable();
     }
 
@@ -121,9 +126,7 @@ export default class IRR_ManualCommunication extends LightningElement {
     }
 
     processTable() {
-        console.log(JSON.stringify(this.passengerResult));
         let filteredList = tableUtil.filterData(this.passengerResult, this.filterParameters);
-        console.log(JSON.stringify(filteredList));
         tableUtil.sortData(filteredList, this.sortBy, this.sortDirection);
         this.hasResults = filteredList.length > 0;
         this.processedTable = filteredList;
@@ -196,6 +199,7 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     handleResetEvent(_) {
         this.flightId = '';
+        this.filterParameters = {};
         this.processedTable = [];
         this.passengerResult = [];
         this.showRetrieve = true;
@@ -206,10 +210,10 @@ export default class IRR_ManualCommunication extends LightningElement {
         try {
             this.handleLoad(false);
             const { parameters, retrievalMode }  = event.detail;
+            this.retrieveParameters = parameters;
             let result;
             switch (retrievalMode) {
                 case "FLIGHT_REFERENCE":
-                    this.flightId = parameters.flightId;
                     result = await getFlightPassengerInfos({flightId: parameters.flightId});
                     break;
                 case "BOOKING_REFERENCE":
