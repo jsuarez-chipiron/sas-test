@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Manual</fullName>
+    <fullName>New Info</fullName>
 	<columns>NAME</columns>
     <columns>IRR_BookingReference__c</columns>
     <columns>IRR_FlightId__c</columns>
@@ -11,10 +11,5 @@
     <columns>IRR_Status__c</columns>
 	<columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
-	<filters>
-    <field>IRR_MessageType__c</field>
-	<operation>equals</operation>
-	<value>Manual</value>
-	</filters>
-    <label>Manual</label>
+    <label>New Info</label>
 </ListView>

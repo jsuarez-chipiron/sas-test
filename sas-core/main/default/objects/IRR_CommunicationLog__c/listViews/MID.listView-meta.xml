@@ -11,5 +11,10 @@
     <columns>IRR_Status__c</columns>
 	<columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
+		<filters>
+    <field>IRR_MessageType__c</field>
+	<operation>equals</operation>
+	<value>MID</value>
+	</filters>
     <label>MID</label>
 </ListView>
