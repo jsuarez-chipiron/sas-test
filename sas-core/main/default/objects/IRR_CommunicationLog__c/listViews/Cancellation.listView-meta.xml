@@ -11,5 +11,5 @@
     <columns>IRR_Status__c</columns>
 	<columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
-    <label>Cancellations</label>
+    <label>Cancellation</label>
 </ListView>
