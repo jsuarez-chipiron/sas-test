@@ -16,5 +16,5 @@
         <field>Parent</field>
         <operation>notEqual</operation>
     </filters>
-    <label>My Social Posts with cases</label>
+    <label>My Social Posts with Cases</label>
 </ListView>
