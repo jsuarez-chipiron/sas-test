@@ -5,16 +5,23 @@
  * @description TODO
  */
 
-import {LightningElement} from 'lwc';
+import {LightningElement, track} from 'lwc';
 
 export default class irr_RetrievePanel extends LightningElement {
 
     retrievalMode = "FLIGHT_REFERENCE";
 
-    retrieveParameters = {};
+    @track retrieveParameters = {};
+
+    handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            this.handleRetrieve();
+        }
+    }
 
     handleParameterChange(event) {
-        this.retrieveParameters[event.target.name] = event.target.value;
+        this.retrieveParameters[event.target.name] = typeof event.target.value === 'string' ?
+            event.target.value.toUpperCase() : event.target.value;
     }
 
     handleTabSwitch(event) {

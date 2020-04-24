@@ -24,9 +24,14 @@ public class IRR_MOD_SegmentInfo {
     public Boolean isConfirmed { get; set; }
     @AuraEnabled
     public String status { get; set; }
+    @AuraEnabled
+    public String statusCode { get; set; }
 
     @AuraEnabled
     public String bookingClass { get; set; }
+
+    @AuraEnabled
+    public String serviceClass { get; set; }
 
     @AuraEnabled
     public String flightId { get; set; }

@@ -173,8 +173,10 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         segmentInfo.stationArrival = tripSegment.flight.arrival.station;
         segmentInfo.stationDeparture = tripSegment.flight.departure.station;
         segmentInfo.status = tripSegment.status;
+        segmentInfo.statusCode = tripSegment.statusCode;
         segmentInfo.flightId = tripSegment.flight.id;
         segmentInfo.bookingClass = tripSegment.bookingClass;
+        segmentInfo.serviceClass = tripSegment.serviceClass;
 
         segmentInfo.isConfirmed = segmentInfo.status == IRR_SVC_TedsService.BOOKING_STATUS_CONFIRMED;
         if (String.isNotBlank(segmentInfo.ticketNumber)) {
@@ -211,14 +213,24 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         passengerInfo.codsId = booking.codsId;
         passengerInfo.firstName = passenger.firstName;
         passengerInfo.lastName  = passenger.lastName;
+        passengerInfo.lastNameSlashFirstName = (passengerInfo.lastName + '/' + passengerInfo.firstName).toUpperCase();
 
         if (passenger.frequentTraveler != null && passenger.frequentTraveler.euroBonus != null &&
                 !passenger.frequentTraveler.euroBonus.isEmpty()) {
             passengerInfo.ebLevel = passenger.frequentTraveler.euroBonus[0].tier;
         }
 
-        passengerInfo.SSR = '';
+        if (passenger.frequentTraveler != null && passenger.frequentTraveler.other != null) {
+            passengerInfo.otherFQTVCarrier = '';
+            for (IRR_MOD_TedsBooking.Other otherFQTV : passenger.frequentTraveler.other) {
+                if (String.isNotBlank(passengerInfo.otherFQTVCarrier)) passengerInfo.otherFQTVCarrier += '; ';
+                passengerInfo.otherFQTVCarrier += otherFQTV.carrier;
+            }
+        }
+
+
         if (passenger.specialServiceRequests != null) {
+            passengerInfo.SSR = '';
             for (IRR_MOD_TedsBooking.SpecialServiceRequests request : passenger.specialServiceRequests) {
                 if (String.isNotBlank(passengerInfo.SSR)) passengerInfo.SSR += '; ';
                 passengerInfo.SSR += request.code;

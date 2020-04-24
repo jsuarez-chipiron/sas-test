@@ -8,14 +8,14 @@
     <c-c_-loading-modal load-count={loadCount}></c-c_-loading-modal>
     <c-c_-error-modal errors={errors} critical={criticalError} onclearerrors={clearErrors}></c-c_-error-modal>
     <c-irr_-confirmation-modal
-            selected-count={selectedRows.length}
+            selected-count={recipientCount}
             show-confirmation={showConfirmation}
             confirm-detail={confirmDetail}
             onhideconfirm={handleHideConfirmEvent}
             onsendconfirm={handleSendConfirmEvent}>
     </c-irr_-confirmation-modal>
     <c-irr_-success-modal
-            selected-count={selectedRows.length}
+            selected-count={recipientCount}
             show-success={showSuccess}
             onhidesuccess={handleHideSuccessEvent}
             onnewsearch={handleResetEvent}>
@@ -45,14 +45,14 @@
         </lightning-layout-item>
         <lightning-layout-item size="12" if:false={showRetrieve}>
             <lightning-layout>
-                <lightning-layout-item padding="around-small" size="3">
+                <lightning-layout-item padding="around-small" size="2">
                     <div class="page-section page-left">
                         <c-irr_-filter-panel
                             onapplyfilter={handleFilterApplyEvent}>
                         </c-irr_-filter-panel>
                     </div>
                 </lightning-layout-item>
-                <lightning-layout-item padding="around-small" size="9">
+                <lightning-layout-item padding="around-small" size="10">
                     <div class="page-section page-main">
                         <lightning-card title={tableHeading} icon-name="standard:calibration">
                             <div class="slds-p-horizontal_small">

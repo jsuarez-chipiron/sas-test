@@ -52,8 +52,9 @@ export default class irr_SendPanel extends LightningElement {
     }
 
     validateFields() {
-        return [...this.template.querySelectorAll(`lightning-input[data-tab-group="${this.sendMode}"]`)]
-            .reduce((previousValue, cmp) => cmp.reportValidity() && previousValue, true);
+        const inputArray = [...this.template.querySelectorAll(`lightning-input[data-tab-group="${this.sendMode}"]`)];
+        inputArray.push(...this.template.querySelectorAll(`lightning-textarea[data-tab-group="${this.sendMode}"]`));
+        return inputArray.reduce((previousValue, cmp) => cmp.reportValidity() && previousValue, true);
     }
 
     handleShowRecipientModal() {

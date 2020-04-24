@@ -18,14 +18,17 @@ import * as tableUtil from 'c/c_TableUtil';
 import { reduceErrors } from 'c/c_LdsUtils';
 
 const columns = [
-    { label: 'Booking Ref', fieldName: 'bookingReference', sortable: true },
-    { label: 'Name', fieldName: 'lastName', sortable: true },
-    { label: 'Phone', fieldName: 'phoneNumber', sortable: true },
-    { label: 'Email Address', fieldName: 'emailAddress', sortable: true },
+    { label: 'PNR', fieldName: 'bookingReference', sortable: true, initialWidth: 75 },
+    { label: 'Name', fieldName: 'lastNameSlashFirstName', sortable: true },
+    { label: 'Phone', fieldName: 'phoneNumber', sortable: true, initialWidth: 115 },
+    { label: 'Email', fieldName: 'emailAddress', sortable: true },
+    { label: 'Bkg Class', fieldName: 'thisSegment.bookingClass', sortable: true, initialWidth: 60 },
+    { label: 'Serv Class', fieldName: 'thisSegment.serviceClass', sortable: true, initialWidth: 60 },
     { label: 'Status', fieldName: 'thisSegment.status', sortable: true },
-    { label: 'Booking Class', fieldName: 'thisSegment.bookingClass', sortable: true, initialWidth: 50 },
-    { label: 'SSR', fieldName: 'SSR', sortable: true  },
+    { label: 'Code', fieldName: 'thisSegment.statusCode', sortable: true, initialWidth: 70 },
+    { label: 'SSR', fieldName: 'SSR', sortable: true, initialWidth: 70 },
     { label: 'EB', fieldName: 'ebLevel', sortable: true, initialWidth: 50  },
+    { label: 'FQTV', fieldName: 'otherFQTVCarrier', sortable: true, initialWidth: 70 },
 ];
 
 export default class IRR_ManualCommunication extends LightningElement {
@@ -142,8 +145,15 @@ export default class IRR_ManualCommunication extends LightningElement {
         this.showConfirmation = false;
     }
 
+    get recipientCount() {
+        const additionalRecipients = this.additionalRecipients ?
+            this.additionalRecipients.filter(r => r.phoneNumber || r.emailAddress).length : 0;
+        const recipients = this.selectedRows ? this.selectedRows.length : 0;
+        return additionalRecipients + recipients;
+    }
+
     handleSendEvent(event) {
-        if (!this.selectedRows || this.selectedRows.length === 0){
+        if (this.recipientCount === 0){
             const toastEvent = new ShowToastEvent({
                 title: 'No Recipients',
                 message: 'Please select at least one recipient in order to continue.',

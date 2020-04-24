@@ -13,6 +13,10 @@ export default class IRR_SuccessModal extends LightningElement {
 
     @api selectedCount;
 
+    get messageText() {
+        return this.selectedCount > 1 ? 'messages' : 'message';
+    }
+
     get modalClass() {
         return this.showSuccess ? 'slds-modal slds-fade-in-open' : 'slds-modal';
     }

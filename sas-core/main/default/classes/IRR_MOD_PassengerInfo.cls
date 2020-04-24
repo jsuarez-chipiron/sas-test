@@ -20,10 +20,16 @@ public class IRR_MOD_PassengerInfo {
     public String lastName { get; set; }
 
     @AuraEnabled
+    public String lastNameSlashFirstName { get; set; }
+
+    @AuraEnabled
     public String firstName { get; set; }
 
     @AuraEnabled
     public String ebLevel { get; set; }
+
+    @AuraEnabled
+    public String otherFQTVCarrier { get; set; }
 
     @AuraEnabled
     public String codsId { get; set; }
