@@ -10,3 +10,7 @@
 .no-padding {
     padding: 0;
 }
+
+.combobox-actions {
+    display: inherit;
+}

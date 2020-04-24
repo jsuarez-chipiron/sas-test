@@ -7,6 +7,10 @@
 
 import {LightningElement, api, track} from 'lwc';
 
+import { loadStyle } from 'lightning/platformResourceLoader';
+
+import c_ComboBoxInlineGrid from '@salesforce/resourceUrl/c_ComboBoxInlineGrid'
+
 export default class irr_SendPanel extends LightningElement {
 
     @api templatesBySendMode = {};
@@ -27,7 +31,23 @@ export default class irr_SendPanel extends LightningElement {
         return length === 0 ? 'Content' : `Content - ${length} characters - ${smsMessages} SMS`;
     }
 
+    get templatePicklistOptions() {
+        return this.templatesBySendMode[this.sendMode].map((template => {
+            return { label: template.MasterLabel, value: template.DeveloperName };
+        }));
+    }
+
+    handleTemplateChange(event) {
+        this.manualTemplate = this.templatesBySendMode[this.sendMode]
+            .find(template => template.DeveloperName === event.detail.value);
+    }
+
+    get cancelButtonClass() {
+        return this.showTemplatePicklist ? "slds-p-right_small" : "";
+    }
+
     connectedCallback() {
+        loadStyle(this, c_ComboBoxInlineGrid);
         this.setSendMode(this.sendMode);
         if (this.flightId) this.sendParameters.flightId = this.flightId;
     }
@@ -42,13 +62,8 @@ export default class irr_SendPanel extends LightningElement {
 
     setSendMode(sendMode) {
         this.sendMode = sendMode;
-        if (this.templatesBySendMode[this.sendMode] && this.templatesBySendMode[this.sendMode].length === 1) {
-            this.manualTemplate = this.templatesBySendMode[this.sendMode][0];
-            this.showTemplatePicklist = false;
-        }
-        else {
-            this.showTemplatePicklist = true;
-        }
+        this.manualTemplate = this.templatesBySendMode[this.sendMode][0];
+        this.showTemplatePicklist = this.templatesBySendMode[this.sendMode].length !== 1;
     }
 
     validateFields() {

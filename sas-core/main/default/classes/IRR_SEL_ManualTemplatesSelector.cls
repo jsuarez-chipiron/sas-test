@@ -17,6 +17,8 @@ public class IRR_SEL_ManualTemplatesSelector extends fflib_SObjectSelector imple
     {
         return new List<Schema.SObjectField>
         {
+                IRR_ManualCommunicationTemplate__mdt.DeveloperName,
+                IRR_ManualCommunicationTemplate__mdt.MasterLabel,
                 IRR_ManualCommunicationTemplate__mdt.IRR_EmailTemplate__c,
                 IRR_ManualCommunicationTemplate__mdt.IRR_Priority__c,
                 IRR_ManualCommunicationTemplate__mdt.IRR_SendMode__c,

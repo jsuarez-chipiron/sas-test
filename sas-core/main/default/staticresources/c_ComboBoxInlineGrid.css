@@ -1,0 +1,5 @@
+/* c_ComboBoxInlineGrid */
+
+lightning-combobox.combobox-actions[c-irr_SendPanel_irr_SendPanel] > div.slds-form-element__control {
+    display: inline-grid;
+}

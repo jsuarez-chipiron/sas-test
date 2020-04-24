@@ -7,14 +7,25 @@
 <template>
     <lightning-card title="Send Messages" icon-name="standard:calibration">
         <lightning-button
+                class={cancelButtonClass}
                 slot="actions"
                 variant="destructive"
                 label="Cancel"
                 title="Cancel"
                 onclick={handleCancel}>
         </lightning-button>
+        <lightning-combobox
+                if:true={showTemplatePicklist}
+                class="combobox-actions slds-p-left_small"
+                slot="actions"
+                variant="label-hidden"
+                label="Select template"
+                value={manualTemplate.DeveloperName}
+                options={templatePicklistOptions}
+                onchange={handleTemplateChange}>
+        </lightning-combobox>
         <lightning-button
-                class="slds-p-horizontal_small"
+                class="slds-p-left_small"
                 slot="actions"
                 variant="neutral"
                 label="Add Recipients"
@@ -22,6 +33,7 @@
                 onclick={handleShowRecipientModal}>
         </lightning-button>
         <lightning-button
+                class="slds-p-left_small"
                 slot="actions"
                 variant="brand"
                 label="Send Messages"
