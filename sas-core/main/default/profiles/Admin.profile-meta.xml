@@ -2191,6 +2191,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>IRR_SMSResponse__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Manual_Communication</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
