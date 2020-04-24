@@ -9,6 +9,15 @@ public with sharing class C_Log {
      */
     private static Long TS;
     /**
+     * Whether the log class operates in buffered mode
+     */
+    private static Boolean BUFFERED = false;
+    /**
+     * The buffer list of log records to be commited on next flush
+     */
+    private static List<C_Log__c> BUFFER = new List<C_Log__c>();
+
+    /**
      * The severity types logs in created
      */
     public enum Severity {Info, Warning, Error}
@@ -19,6 +28,25 @@ public with sharing class C_Log {
      */
     public static void init(){
         if(TS==null)TS = System.currentTimeMillis();
+    }
+    /**
+     * Sets whether the log class should operate in a buffered mode.
+     * In buffered mode the log class stores incoming logs in a list and only commits them once flush is called.
+     * @param buffered Whether the log class should operate in buffered mode
+     * @return The previous value of whether the log class operates in buffered mode
+     */
+    public static Boolean setBuffered(Boolean buffered){
+        Boolean prevVal = C_Log.BUFFERED;
+        C_Log.BUFFERED = buffered;
+        if(!buffered)flush();
+        return prevVal;
+    }
+    /**
+     * Flushes the buffer and commits the log records
+     */
+    public static void flush(){
+        insert BUFFER;
+        BUFFER.clear();
     }
     /**
      * Creates a log record

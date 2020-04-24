@@ -65,24 +65,22 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
                 endPoint, C_IntegrationExecutor.Method.POST, requestBody, null);
         IRR_SVC_SFMCService.SFMCResponse response = (IRR_SVC_SFMCService.SFMCResponse)
                 JSON.deserialize(responseObject.responseBody, IRR_SVC_SFMCService.SFMCResponse.class);
-
-        if(responseObject.statusCode>=200 && responseObject.statusCode<300){
-            Integer responsesSize = response.responses != null && !response.responses.isEmpty() ?
-                    response.responses.size() : 0;
-
-            for (Integer i = 0; i < responsesSize; i++) {
-                IRR_SVC_SFMCService.MessageResponse messageResponse = response.responses[i];
-                messages[i].messageKey = messageResponse.messageKey;
-                messages[i].errorCode = messageResponse.errorcode;
-                if(messageResponse.errorcode!=null) {
-                    messages[i].errorMessage = messageResponse.message;
-                }
+        //If global error then fill the message result by default with the global error
+        if(responseObject.statusCode>=300){
+            for(IRR_SVC_SFMCService.SFMCMessage msg : messages){
+                msg.errorCode = response.errorcode != 0 ? response.errorcode : responseObject.statusCode;
+                msg.errorMessage = response.message;
             }
         }
-        else {
-            for(IRR_SVC_SFMCService.SFMCMessage msg : messages){
-                msg.errorCode = response.errorcode != 0 ? response.errorcode : responseObject.statusCode ;
-                msg.errorMessage = response.message;
+        Integer responsesSize = response.responses != null && !response.responses.isEmpty() ?
+                response.responses.size() : 0;
+
+        for (Integer i = 0; i < responsesSize; i++) {
+            IRR_SVC_SFMCService.MessageResponse messageResponse = response.responses[i];
+            messages[i].messageKey = messageResponse.messageKey;
+            messages[i].errorCode = messageResponse.errorcode;
+            if(messageResponse.errorcode!=null) {
+                messages[i].errorMessage = messageResponse.message;
             }
         }
     }
