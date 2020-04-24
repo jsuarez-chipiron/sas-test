@@ -14,7 +14,7 @@ export default class IRR_SuccessModal extends LightningElement {
     @api selectedCount;
 
     get messageText() {
-        return this.selectedCount > 1 ? 'messages' : 'message';
+        return this.selectedCount > 1 ? 'messages were' : 'message was';
     }
 
     get modalClass() {
