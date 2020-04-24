@@ -1026,6 +1026,10 @@
         <tab>FCS_FrequentFlyer__x</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
+	  <tabVisibilities>
+        <tab>IRR_SMSResponse__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
     <tabVisibilities>
         <tab>SBS_ScheduledBatchRun__c</tab>
         <visibility>Hidden</visibility>
