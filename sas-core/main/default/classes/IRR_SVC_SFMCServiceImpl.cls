@@ -27,8 +27,11 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
         private set;
     }
 
+    public void deleteContacts(Set<String> contactKeys) {
+        //TODO
+    }
+
     public List<IRR_SVC_SFMCService.EmailMessage> sendEmailMessages(List<IRR_SVC_SFMCService.EmailMessage> messages) {
-        //TODO CREATE REAL EMAIL REQUEST BODY
         Map<String, Object> requestBody = createEmailRequestBody(EMAIL_SEND_DEFINITION, messages);
         sendSFMCMessages(requestBody, EMAIL_ENDPOINT, messages);
         return messages;

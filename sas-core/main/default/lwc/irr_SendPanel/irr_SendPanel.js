@@ -19,7 +19,13 @@ export default class irr_SendPanel extends LightningElement {
 
     sendMode = "CUSTOM";
 
-    sendParameters = {};
+    @track sendParameters = {};
+
+    get customContentLabel() {
+        const length = this.sendParameters && this.sendParameters.content ? this.sendParameters.content.length : 0;
+        const smsMessages =  Math.ceil(length / 160);
+        return length === 0 ? 'Content' : `Content - ${length} characters - ${smsMessages} SMS`;
+    }
 
     connectedCallback() {
         this.setSendMode(this.sendMode);
@@ -48,6 +54,11 @@ export default class irr_SendPanel extends LightningElement {
     validateFields() {
         return [...this.template.querySelectorAll(`lightning-input[data-tab-group="${this.sendMode}"]`)]
             .reduce((previousValue, cmp) => cmp.reportValidity() && previousValue, true);
+    }
+
+    handleShowRecipientModal() {
+        const event = new CustomEvent('showrecipientmodal');
+        this.dispatchEvent(event);
     }
 
     handleSend() {

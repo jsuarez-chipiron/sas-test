@@ -5,6 +5,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>APIM_AuthConnector_v2</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>C_Application</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -149,15 +153,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>IRR_SVC_EventService</apexClass>
+        <apexClass>IRR_SVC_CommunicationService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>IRR_SVC_EventServiceImpl</apexClass>
+        <apexClass>IRR_SVC_CommunicationServiceImpl</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>IRR_SVC_IEventService</apexClass>
+        <apexClass>IRR_SVC_ICommunicationService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

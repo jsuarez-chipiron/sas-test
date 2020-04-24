@@ -36,6 +36,7 @@ public class IRR_Application {
     public static final fflib_Application.SelectorFactory Selector =
             new fflib_Application.SelectorFactory(
                     new Map<SObjectType, Type> {
+                            IRR_CommunicationLog__c.SObjectType => IRR_SEL_CommunicationLogsSelector.class,
                             IRR_DelayLog__c.SObjectType => IRR_SEL_DelayLogsSelector.class,
                             IRR_ManualCommunicationTemplate__mdt.SObjectType => IRR_SEL_ManualTemplatesSelector.class,
                             IRR_RecipientWhitelist__mdt.SObjectType => IRR_SEL_RecipientWhitelistSelector.class,
@@ -48,12 +49,25 @@ public class IRR_Application {
      * @author Niklas Lundkvist, Deloitte
      * @date 2020
      *
+     * @description Configure and create the DomainFactory for this Application
+     */
+    public static final fflib_Application.DomainFactory Domain =
+            new fflib_Application.DomainFactory(
+                    IRR_Application.Selector,
+                    new Map<SObjectType, Type> {
+                            IRR_CommunicationLog__c.SObjectType => IRR_DOM_CommunicationLogs.Constructor.class
+                    });
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
      * @description Configure and create the ServiceFactory for this Application.
      */
     public static final fflib_Application.ServiceFactory Service =
             new fflib_Application.ServiceFactory(
                     new Map<Type, Type>{
-                            IRR_SVC_IEventService.class => IRR_SVC_EventServiceImpl.class,
+                            IRR_SVC_ICommunicationService.class => IRR_SVC_CommunicationServiceImpl.class,
                             IRR_SVC_ISFMCService.class => IRR_SVC_SFMCServiceImpl.class,
                             IRR_SVC_ITedsService.class => IRR_SVC_TedsServiceImpl.class
                     }

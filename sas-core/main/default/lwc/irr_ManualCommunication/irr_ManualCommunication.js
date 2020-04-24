@@ -23,7 +23,7 @@ const columns = [
     { label: 'Phone', fieldName: 'phoneNumber', sortable: true },
     { label: 'Email Address', fieldName: 'emailAddress', sortable: true },
     { label: 'Status', fieldName: 'thisSegment.status', sortable: true },
-    { label: 'Booking Class', fieldName: 'thisSegment.bookingClass', sortable: true },
+    { label: 'Booking Class', fieldName: 'thisSegment.bookingClass', sortable: true, initialWidth: 50 },
     { label: 'SSR', fieldName: 'SSR', sortable: true  },
     { label: 'EB', fieldName: 'ebLevel', sortable: true, initialWidth: 50  },
 ];
@@ -54,7 +54,10 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     @track showSuccess = false;
 
-    flightId = '';
+    @track showRecipientModal = false;
+    @track additionalRecipients = [];
+
+    retrieveParameters = {};
 
     templatesBySendMode = {};
 
@@ -76,6 +79,11 @@ export default class IRR_ManualCommunication extends LightningElement {
         }
     }
 
+    get tableHeading() {
+        const params = Object.values(this.retrieveParameters).join(' - ');
+        return `Results for ${params}`;
+    }
+
     handleLoad(finished) {
         if (finished && this.loadCount === 0) return;
         this.loadCount += finished ? -1 : 1;
@@ -95,8 +103,21 @@ export default class IRR_ManualCommunication extends LightningElement {
         this.selectedRows = event.detail.selectedRows;
     }
 
-    handleFilterParameterChange(event) {
-        this.filterParameters[event.target.name] = event.target.value;
+    handleHideRecipientModal() {
+        this.showRecipientModal = false;
+    }
+
+    handleShowRecipientModal() {
+        this.showRecipientModal = true;
+    }
+
+    handleUpdateAdditionalRecipients(event) {
+        this.additionalRecipients = event.detail;
+        this.showRecipientModal = false;
+    }
+
+    handleFilterApplyEvent(event) {
+        this.filterParameters = event.detail;
         this.processTable();
     }
 
@@ -105,9 +126,7 @@ export default class IRR_ManualCommunication extends LightningElement {
     }
 
     processTable() {
-        console.log(JSON.stringify(this.passengerResult));
         let filteredList = tableUtil.filterData(this.passengerResult, this.filterParameters);
-        console.log(JSON.stringify(filteredList));
         tableUtil.sortData(filteredList, this.sortBy, this.sortDirection);
         this.hasResults = filteredList.length > 0;
         this.processedTable = filteredList;
@@ -142,9 +161,17 @@ export default class IRR_ManualCommunication extends LightningElement {
             this.handleLoad(false);
             const { sendSMS, sendEmail } = event.detail;
             const { parameters, sendMode, manualTemplate } = this.confirmDetail;
-            const unFlattenedPassengers = this.selectedRows.map(row => tableUtil.unFlatten(row));
+            const passengerInfos = this.selectedRows.map(row => tableUtil.unFlatten(row));
+            passengerInfos.push(...this.additionalRecipients.map((rec) => {
+                return {
+                    hasPhoneNumber: !!rec.phoneNumber,
+                    hasEmailAddress: !!rec.emailAddress,
+                    phoneNumber: rec.phoneNumber,
+                    emailAddress: rec.emailAddress
+                };
+            }));
             const payload = {
-                passengerInfos: unFlattenedPassengers,
+                passengerInfos: passengerInfos,
                 sendSMSMessages: sendSMS,
                 sendEmailMessages: sendEmail,
                 emailTemplate: manualTemplate.IRR_EmailTemplate__c,
@@ -172,6 +199,7 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     handleResetEvent(_) {
         this.flightId = '';
+        this.filterParameters = {};
         this.processedTable = [];
         this.passengerResult = [];
         this.showRetrieve = true;
@@ -182,10 +210,10 @@ export default class IRR_ManualCommunication extends LightningElement {
         try {
             this.handleLoad(false);
             const { parameters, retrievalMode }  = event.detail;
+            this.retrieveParameters = parameters;
             let result;
             switch (retrievalMode) {
                 case "FLIGHT_REFERENCE":
-                    this.flightId = parameters.flightId;
                     result = await getFlightPassengerInfos({flightId: parameters.flightId});
                     break;
                 case "BOOKING_REFERENCE":

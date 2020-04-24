@@ -7,7 +7,7 @@
 
 public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
 
-    private static final String ERROR_NO_EVENT = 'Manual message info is missing';
+    private static final String ERROR_NO_EVENT = 'Manual message request is missing';
     private static final String ERROR_NO_PASSENGERS = 'No passengers to send message to';
     private static final String ERROR_NO_EMAIL_TEMPLATE = 'No Email template selected';
     private static final String ERROR_NO_SMS_TEMPLATE = 'No SMS template selected';
@@ -22,21 +22,21 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
 
     public void validateEvent() {
         if (manualRequest == null) {
-            throw new IRR_SVC_EventService.EventException(ERROR_NO_EVENT);
+            throw new IRR_SVC_CommunicationService.EventException(ERROR_NO_EVENT);
         }
         if (manualRequest.passengerInfos == null || manualRequest.passengerInfos.isEmpty()) {
-            throw new IRR_SVC_EventService.EventException(ERROR_NO_PASSENGERS);
+            throw new IRR_SVC_CommunicationService.EventException(ERROR_NO_PASSENGERS);
         }
         if (manualRequest.sendEmailMessages != null && manualRequest.sendEmailMessages &&
                 String.isBlank(manualRequest.emailTemplate)) {
-            throw new IRR_SVC_EventService.EventException(ERROR_NO_EMAIL_TEMPLATE);
+            throw new IRR_SVC_CommunicationService.EventException(ERROR_NO_EMAIL_TEMPLATE);
         }
         if (manualRequest.sendSMSMessages != null && manualRequest.sendSMSMessages &&
                 String.isBlank(manualRequest.smsTemplate)) {
-            throw new IRR_SVC_EventService.EventException(ERROR_NO_SMS_TEMPLATE);
+            throw new IRR_SVC_CommunicationService.EventException(ERROR_NO_SMS_TEMPLATE);
         }
         if (!manualRequest.sendSMSMessages && !manualRequest.sendEmailMessages) {
-            throw new IRR_SVC_EventService.EventException(ERROR_NO_MESSAGE_TO_SEND);
+            throw new IRR_SVC_CommunicationService.EventException(ERROR_NO_MESSAGE_TO_SEND);
         }
     }
 

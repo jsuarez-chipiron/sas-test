@@ -29,8 +29,5 @@ public class IRR_MOD_SegmentInfo {
     public String bookingClass { get; set; }
 
     @AuraEnabled
-    public String SSR { get; set; }
-
-    @AuraEnabled
     public String flightId { get; set; }
 }

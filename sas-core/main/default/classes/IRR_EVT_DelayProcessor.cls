@@ -81,6 +81,8 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
         IRR_MOD_FlowVariables flowVariables = new IRR_MOD_FlowVariables();
         flowVariables.delayInfo = delayInfo;
         for (IRR_MOD_PassengerInfo passengerInfo : passengerInfos) {
+            //Only process passengers confirmed for this segment
+            if (!passengerInfo.thisSegment.isConfirmed) continue;
             flowVariables.passengerInfo = passengerInfo;
             executeFlow(EVENT_FLOW_NAME, flowVariables);
         }

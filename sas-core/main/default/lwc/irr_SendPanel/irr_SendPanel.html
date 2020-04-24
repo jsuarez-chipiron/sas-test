@@ -7,12 +7,19 @@
 <template>
     <lightning-card title="Send Messages" icon-name="standard:calibration">
         <lightning-button
-                class="slds-p-horizontal_small"
                 slot="actions"
                 variant="destructive"
                 label="Cancel"
                 title="Cancel"
                 onclick={handleCancel}>
+        </lightning-button>
+        <lightning-button
+                class="slds-p-horizontal_small"
+                slot="actions"
+                variant="neutral"
+                label="Add Recipients"
+                title="Add Additional Recipients"
+                onclick={handleShowRecipientModal}>
         </lightning-button>
         <lightning-button
                 slot="actions"
@@ -31,25 +38,24 @@
                             title="Send a custom message"
                             onactive={handleTabSwitch}>
                         <lightning-layout>
-                            <lightning-layout-item padding="around-small">
+                            <lightning-layout-item padding="around-small" size="3">
                                 <lightning-input
                                         type="text"
                                         name="subject"
                                         label="Subject"
-                                        required
                                         data-tab-group="CUSTOM"
                                         onchange={handleParameterChange}>
                                 </lightning-input>
                             </lightning-layout-item>
-                            <lightning-layout-item padding="around-small">
-                                <lightning-input
-                                        type="text"
+                            <lightning-layout-item padding="around-small" size="3">
+                                <lightning-textarea
                                         name="content"
-                                        label="Content"
+                                        label={customContentLabel}
+                                        variant="standard"
                                         required
                                         data-tab-group="CUSTOM"
                                         onchange={handleParameterChange}>
-                                </lightning-input>
+                                </lightning-textarea>
                             </lightning-layout-item>
                         </lightning-layout>
                     </lightning-tab>
@@ -67,6 +73,7 @@
                                         name="flightId"
                                         label="Flight Id"
                                         value={flightId}
+                                        field-level-help="Format SK1238-20200213-ARN-CPH"
                                         pattern="([A-Z]{2})([0-9]{4})-([0-9]{8})-([A-Z]{3})-([A-Z]{3})"
                                         required
                                         message-when-pattern-mismatch="Input format SK1238-20200213-ARN-CPH"

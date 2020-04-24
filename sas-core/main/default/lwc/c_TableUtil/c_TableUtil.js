@@ -17,9 +17,13 @@ function sortData(data, fieldName, direction) {
 function filterData(data, filterParams) {
     const filterEntries = Object.entries(filterParams);
     if (filterEntries.length === 0 ) return [...data];
-    const evalField = (row, fieldName, value) => row && row[fieldName] && row[fieldName] === value;
+    const evalField = (row, fieldName, value) =>
+        (row[fieldName] === value) || (!row[fieldName] && value === null) || (row[fieldName] && value === '*');
     return data.filter(row => {
-        return filterEntries.every(entry => evalField(row, entry[0], entry[1]));
+        return filterEntries.every(entry => {
+            const filterValues = Array.isArray(entry[1]) ? entry[1] : [entry[1]];
+            return filterValues.some(val => evalField(row, entry[0], val));
+        });
     });
 }
 
