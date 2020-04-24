@@ -64,11 +64,15 @@ private class IRR_SVC_TedsService_Test {
         IRR_MOD_PassengerInfo passengerInfo = passengerInfos[0];
         System.assertEquals('P2WNNO', passengerInfo.bookingReference);
         System.assertEquals('ABC1234', passengerInfo.codsId);
+        System.assertEquals('MILLEY/SAM', passengerInfo.lastNameSlashFirstName);
         System.assert(passengerInfo.hasPhoneNumber);
         System.assert(passengerInfo.hasEmailAddress);
         System.assertEquals('+46701234567', passengerInfo.phoneNumber);
         System.assertEquals('name@email.com', passengerInfo.emailAddress);
         System.assertEquals('SK0946-20200211-ORD-ARN', passengerInfo.thisSegment.flightId);
+        System.assertEquals('Y', passengerInfo.thisSegment.bookingClass);
+        System.assertEquals('C', passengerInfo.thisSegment.serviceClass);
+        System.assertEquals('HK', passengerInfo.thisSegment.statusCode);
         System.assertEquals(true, passengerInfo.thisSegment.isSASTicket);
         System.assertEquals(false, passengerInfo.thisSegment.isWideroeTicket);
         System.assertEquals('117-3456789009876', passengerInfo.thisSegment.ticketNumber);
@@ -78,6 +82,9 @@ private class IRR_SVC_TedsService_Test {
         System.assertEquals('Confirmed', passengerInfo.thisSegment.status);
         System.assertEquals(true, passengerInfo.hasNextSegment);
         System.assertEquals('SK1407-20200212-ARN-CPH', passengerInfo.nextSegment.flightId);
+        System.assertEquals('Y', passengerInfo.nextSegment.bookingClass);
+        System.assertEquals('C', passengerInfo.nextSegment.serviceClass);
+        System.assertEquals('TK', passengerInfo.nextSegment.statusCode);
         System.assertEquals(true, passengerInfo.nextSegment.isSASTicket);
         System.assertEquals(false, passengerInfo.nextSegment.isWideroeTicket);
         System.assertEquals('117-3456789009876', passengerInfo.nextSegment.ticketNumber);
@@ -86,6 +93,7 @@ private class IRR_SVC_TedsService_Test {
         System.assertEquals(true, passengerInfo.nextSegment.isConfirmed);
         System.assertEquals('Confirmed', passengerInfo.nextSegment.status);
         System.assertEquals('EBB', passengerInfo.ebLevel);
+        System.assertEquals('LH', passengerInfo.otherFQTVCarrier);
         System.assertEquals('WCHR', passengerInfo.SSR);
     }
 
