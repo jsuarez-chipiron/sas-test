@@ -1,3 +1,8 @@
+/**
+ * @author Philip Ossler
+ * @date 2020-04-22
+ * @description Class for Take Ownership and Remove Ownership buttons in Social Post List Views
+ */
 public with sharing class FCS_SocialPostController {
     ApexPages.StandardSetController setCon;
 
@@ -20,8 +25,10 @@ public with sharing class FCS_SocialPostController {
         List<SocialPost> spIds = (List<SocialPost>) setCon.getSelected();
         List<SocialPost> spToUpdate = new List<SocialPost>();
         for(SocialPost sp : [SELECT Id, OwnerId, FCS_PreviousQueue__c FROM SocialPost WHERE Id IN :spIds]) {
-            sp.OwnerId = sp.FCS_PreviousQueue__c;
-            spToUpdate.add(sp);
+            if(sp.FCS_PreviousQueue__c != null) {
+                sp.OwnerId = sp.FCS_PreviousQueue__c;
+                spToUpdate.add(sp);
+            }
         }
         update spToUpdate;
         return setCon.cancel();
