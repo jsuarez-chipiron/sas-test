@@ -1,34 +1,14 @@
 /**
  * @author Philip Ossler
  * @date 2020-04-22
- * @description Test class for FCS_SocialPostController class
+ * @description Test class for FCS_SocialPostController class, Visualforce Pages (FCS_SocialPostRemoveOwnershipButton, FCS_SocialPostTakeOwnershipButton) and Process Builder
  */
 @isTest
 private class FCS_SocialPostControllerTest {
     @testSetup
     static void testSetup(){
-        Group g = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1];
-
-        SocialPost sp1 = new SocialPost(
-            Name = 'Test1',
-            OwnerId = g.Id
-        );
-        insert sp1;
-
-        SocialPost sp2 = new SocialPost(
-            Name = 'Test2',
-            OwnerId = g.Id
-        );
-        insert sp2;
-    }
-
-    @isTest
-    static void takeOwnershipTest() {
         Profile p = [SELECT id FROM Profile WHERE Name = 'Agent'];
-        User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
-        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'SocialMediaUser'];
         Group g = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1];
-        List<SocialPost> spList = [SELECT Id, Name, OwnerId, FCS_PreviousQueue__c FROM SocialPost];
 
         User u = new User(
             Alias = 'test',
@@ -43,6 +23,29 @@ private class FCS_SocialPostControllerTest {
         );
         insert u;
 
+        SocialPost sp1 = new SocialPost(
+            Name = 'Test1',
+            OwnerId = g.Id
+        );
+        insert sp1;
+
+        SocialPost sp2 = new SocialPost(
+            Name = 'Test2',
+            OwnerId = g.Id
+        );
+        insert sp2;
+    }
+
+    /**
+     * Test for Take Ownership button in Social Post listviews
+     */
+    @isTest
+    static void takeOwnershipTest() {
+        User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+        User u = [SELECT Id FROM User WHERE Alias = 'test'];
+        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'SocialMediaUser'];
+        Group g = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1];
+        List<SocialPost> spList = [SELECT Id, Name, OwnerId, FCS_PreviousQueue__c FROM SocialPost];
         
         System.runAs(thisUser) {
             PermissionSetAssignment psa = new PermissionSetAssignment(
@@ -65,38 +68,35 @@ private class FCS_SocialPostControllerTest {
                 
                 setCon.setSelected(spList);
                 FCS_SocialPostController ext = new FCS_SocialPostController(setCon);
+                System.debug('Test'+spList);
+                System.debug('Test'+setCon);
+                System.debug('Test'+setCon.getSelected());
                 ext.takeOwnership();
+                System.debug('Test'+spList);
             Test.stopTest();
         }
-
-        System.assertEquals(u.Id, spList[0].OwnerId);
-        System.assertEquals(u.Id, spList[1].OwnerId);
         
-        //Assert of Social Post Process Builder
+        List<SocialPost> spListUpdated = [SELECT Id, Name, OwnerId, FCS_PreviousQueue__c FROM SocialPost];
+
+        //Assert to check if Owner has been assigned to running user
+        System.assertEquals(u.Id, spListUpdated[0].OwnerId);
+        System.assertEquals(u.Id, spListUpdated[1].OwnerId);
+        
+        //Assert of Social Post Process Builder to set PreviousQueue
         System.assertEquals(g.Id, spList[0].FCS_PreviousQueue__c);
         System.assertEquals(g.Id, spList[1].FCS_PreviousQueue__c);
     }
 
+    /**
+     * Test for Remove Ownership button in Social Post listviews
+     */
     @isTest
     static void removeOwnershipTest() {
-        Profile p = [SELECT id FROM Profile WHERE Name = 'Agent'];
         User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+        User u = [SELECT Id FROM User WHERE Alias = 'test'];
         PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'SocialMediaUser'];
         Group g = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1];
         List<SocialPost> spList = [SELECT Id, Name, OwnerId FROM SocialPost];
-
-        User u = new User(
-            Alias = 'test',
-            Email = 'test@test.com',
-            EmailEncodingKey = 'UTF-8',
-            LastName = 'test',
-            LanguageLocaleKey = 'en_US',
-            LocaleSidKey = 'sv_SE',
-            ProfileId = p.Id,
-            TimeZoneSidKey = 'Europe/Paris',
-            UserName = 'test@test.com.flysas'
-        );
-        insert u;
 
         System.runAs(thisUser) {
             PermissionSetAssignment psa = new PermissionSetAssignment(
@@ -129,7 +129,10 @@ private class FCS_SocialPostControllerTest {
             Test.stopTest();
         }
 
-        System.assertEquals(g.Id, spList[0].OwnerId);
-        System.assertEquals(g.Id, spList[1].OwnerId);
+        List<SocialPost> spListUpdated = [SELECT Id, Name, OwnerId, FCS_PreviousQueue__c FROM SocialPost];
+
+        //Assert to check if Owners has been removed and assigned back to PreviousQueue
+        System.assertEquals(g.Id, spListUpdated[0].OwnerId);
+        System.assertEquals(g.Id, spListUpdated[1].OwnerId);
     }
 }
