@@ -37,6 +37,19 @@ private class FCS_SocialPostControllerTest {
     }
 
     @isTest
+    static void noSelectedRecords() {
+        List<SocialPost> spList = null;
+
+        Test.startTest();
+        PageReference pref = Page.FCS_SocialPostTakeOwnershipButton;
+            ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(spList);
+            setCon.setSelected(spList);
+            FCS_SocialPostController ext = new FCS_SocialPostController(setCon);
+            ext.takeOwnership();
+        Test.stopTest();
+    }
+
+    @isTest
     static void takeOwnershipTest() {
         User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
         User u = [SELECT Id FROM User WHERE LastName = 'test'];
