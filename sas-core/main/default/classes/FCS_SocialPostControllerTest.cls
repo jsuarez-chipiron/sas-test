@@ -7,21 +7,7 @@
 private class FCS_SocialPostControllerTest {
     @testSetup
     static void testSetup(){
-        Profile p = [SELECT id FROM Profile WHERE Name = 'Agent'];
         Group g = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1];
-
-        User u = new User(
-            Alias = 'test',
-            Email = 'test@test.com',
-            EmailEncodingKey = 'UTF-8',
-            LastName = 'test',
-            LanguageLocaleKey = 'en_US',
-            LocaleSidKey = 'sv_SE',
-            ProfileId = p.Id,
-            TimeZoneSidKey = 'Europe/Paris',
-            UserName = 'test@test.com.flysas'
-        );
-        insert u;
 
         SocialPost sp1 = new SocialPost(
             Name = 'Test1',
@@ -37,27 +23,28 @@ private class FCS_SocialPostControllerTest {
     }
 
     @isTest
-    static void noSelectedRecords() {
-        List<SocialPost> spList = null;
-
-        Test.startTest();
-        PageReference pref = Page.FCS_SocialPostTakeOwnershipButton;
-            ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(spList);
-            setCon.setSelected(spList);
-            FCS_SocialPostController ext = new FCS_SocialPostController(setCon);
-            ext.takeOwnership();
-        Test.stopTest();
-    }
-
-    @isTest
     static void takeOwnershipTest() {
+        Profile p = [SELECT id FROM Profile WHERE Name = 'Agent'];
         User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
-        User u = [SELECT Id FROM User WHERE LastName = 'test'];
+        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'SocialMediaUser'];
+        Group g = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1];
         List<SocialPost> spList = [SELECT Id, Name, OwnerId, FCS_PreviousQueue__c FROM SocialPost];
 
-        System.runAs(thisUser) {
-            PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'SocialMediaUser'];
+        User u = new User(
+            Alias = 'test',
+            Email = 'test@test.com',
+            EmailEncodingKey = 'UTF-8',
+            LastName = 'test',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'sv_SE',
+            ProfileId = p.Id,
+            TimeZoneSidKey = 'Europe/Paris',
+            UserName = 'test@test.com.flysas'
+        );
+        insert u;
 
+        
+        System.runAs(thisUser) {
             PermissionSetAssignment psa = new PermissionSetAssignment(
                 AssigneeId = u.id, 
                 PermissionSetId = ps.Id
@@ -67,53 +54,82 @@ private class FCS_SocialPostControllerTest {
 
         System.runAs(u){
             Test.startTest();
-            PageReference pref = Page.FCS_SocialPostTakeOwnershipButton;
                 ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(spList);
+                
+                try {
+                    FCS_SocialPostController ext = new FCS_SocialPostController(setCon);
+                    ext.takeOwnership();
+                } catch(DmlException e) {
+                    System.debug(e);
+                }
+                
                 setCon.setSelected(spList);
                 FCS_SocialPostController ext = new FCS_SocialPostController(setCon);
                 ext.takeOwnership();
             Test.stopTest();
-
-            System.assertEquals([SELECT Id FROM User WHERE LastName = 'test'].Id, spList[0].OwnerId);
-            System.assertEquals([SELECT Id FROM User WHERE LastName = 'test'].Id, spList[1].OwnerId);
-            System.assertEquals([SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1].Id, spList[0].FCS_PreviousQueue__c);
-            System.assertEquals([SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1].Id, spList[1].FCS_PreviousQueue__c);
         }
+
+        System.assertEquals(u.Id, spList[0].OwnerId);
+        System.assertEquals(u.Id, spList[1].OwnerId);
+        
+        //Assert of Social Post Process Builder
+        System.assertEquals(g.Id, spList[0].FCS_PreviousQueue__c);
+        System.assertEquals(g.Id, spList[1].FCS_PreviousQueue__c);
     }
 
     @isTest
     static void removeOwnershipTest() {
+        Profile p = [SELECT id FROM Profile WHERE Name = 'Agent'];
         User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
-        User u = [SELECT Id FROM User WHERE LastName = 'test'];
+        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'SocialMediaUser'];
         Group g = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1];
         List<SocialPost> spList = [SELECT Id, Name, OwnerId FROM SocialPost];
 
-        for(SocialPost sp : spList) {
-            sp.FCS_PreviousQueue__c = g.Id;
-        }
-        update spList;
+        User u = new User(
+            Alias = 'test',
+            Email = 'test@test.com',
+            EmailEncodingKey = 'UTF-8',
+            LastName = 'test',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'sv_SE',
+            ProfileId = p.Id,
+            TimeZoneSidKey = 'Europe/Paris',
+            UserName = 'test@test.com.flysas'
+        );
+        insert u;
 
         System.runAs(thisUser) {
-            PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'SocialMediaUser'];
-            
             PermissionSetAssignment psa = new PermissionSetAssignment(
                 AssigneeId = u.id, 
                 PermissionSetId = ps.Id
             );
             insert psa;
+
+            for(SocialPost sp : spList) {
+                sp.OwnerId = u.Id;
+                sp.FCS_PreviousQueue__c = g.Id;
+            }
+            update spList;
         }
 
         System.runAs(u) {
             Test.startTest();
-                PageReference pref = Page.FCS_SocialPostRemoveOwnershipButton;
                 ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(spList);
+                    
+                try {
+                    FCS_SocialPostController ext = new FCS_SocialPostController(setCon);
+                    ext.removeOwnership();
+                } catch(DmlException e) {
+                    System.debug(e);
+                }
+                
                 setCon.setSelected(spList);
                 FCS_SocialPostController ext = new FCS_SocialPostController(setCon);
                 ext.removeOwnership();
             Test.stopTest();
-
-            System.assertEquals([SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1].Id, spList[0].OwnerId);
-            System.assertEquals([SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1].Id, spList[1].OwnerId);
         }
+
+        System.assertEquals(g.Id, spList[0].OwnerId);
+        System.assertEquals(g.Id, spList[1].OwnerId);
     }
 }

@@ -9,6 +9,10 @@ public with sharing class FCS_SocialPostController {
 
     public FCS_SocialPostController(ApexPages.StandardSetController controller) {
         retUrl = ApexPages.currentPage().getParameters().get('vfRetURLInSFX');
+        if(Test.isRunningTest()) {
+            String listView = [SELECT Id FROM ListView WHERE SobjectType = 'SocialPost' LIMIT 1].Id;
+            retUrl = Url.getSalesforceBaseUrl().toExternalForm() + '/lightning/o/SocialPost/list?filterName=' + listView;
+        }
         System.debug('URL to redirect: ' + retUrl);
         setCon = controller;
     }
@@ -16,46 +20,33 @@ public with sharing class FCS_SocialPostController {
     public PageReference takeOwnership() {
         System.debug('Action Take Ownership executing');
         List<SocialPost> spIds = (List<SocialPost>) setCon.getSelected();
+        System.debug(spIds);
 
-        if(spIds.isEmpty()) {
-            //add error message
-            return null;
-        } else {
+        if(!spIds.isEmpty()) {
             List<SocialPost> spToUpdate = new List<SocialPost>();
 
             for(SocialPost sp : [SELECT Id, OwnerId, FCS_PreviousQueue__c FROM SocialPost WHERE Id IN :spIds]) {
                 sp.OwnerId = UserInfo.getUserId();
                 spToUpdate.add(sp);
             }
-    
-            try {
-                update spToUpdate;
-            } catch (DmlException dmx) {
-                //add error handling
-                ApexPages.addMessages(dmx);
-                return null;
-            }
+            update spToUpdate;
     
             //Redirect user to listview
-            if(String.isNotBlank(retUrl)) {
-                System.debug('Redirecting to listview');
-                PageReference pageRef = new PageReference(retUrl);
-                return pageRef;            
-            } else {
-                System.debug('retUrl is null');
-                return setCon.cancel();
-            }
+            System.debug('Redirecting to listview');
+            PageReference pageRef = new PageReference(retUrl);
+            return pageRef;
+        } else {
+            System.debug('No selected records');
+            return setCon.cancel();
         }
     }
 
     public PageReference removeOwnership() {
         System.debug('Action Remove Ownership executing');
         List<SocialPost> spIds = (List<SocialPost>) setCon.getSelected();
-        
-        if(spIds.isEmpty()) {
-            //add error message
-            return null;
-        } else {
+        System.debug(spIds);
+
+        if(!spIds.isEmpty()) {
             List<SocialPost> spToUpdate = new List<SocialPost>();
 
             for(SocialPost sp : [SELECT Id, OwnerId, FCS_PreviousQueue__c FROM SocialPost WHERE Id IN :spIds]) {
@@ -64,24 +55,15 @@ public with sharing class FCS_SocialPostController {
                     spToUpdate.add(sp);
                 }
             }
-    
-            try {
-                update spToUpdate;
-            } catch (DmlException dmx) {
-                //add error handling
-                ApexPages.addMessages(dmx);
-                return null;
-            }
-    
+            update spToUpdate;
+
             //Redirect user to listview
-            if(String.isNotBlank(retUrl)) {
-                System.debug('Redirecting to listview');
-                PageReference pageRef = new PageReference(retUrl);
-                return pageRef;            
-            } else {
-                System.debug('retUrl is null');
-                return setCon.cancel();
-            }
+            System.debug('Redirecting to listview');
+            PageReference pageRef = new PageReference(retUrl);
+            return pageRef;            
+        } else {
+            System.debug('No selected records');
+            return setCon.cancel();
         }
     }
 }
