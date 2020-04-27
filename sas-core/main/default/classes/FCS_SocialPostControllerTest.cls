@@ -55,24 +55,12 @@ private class FCS_SocialPostControllerTest {
             insert psa;
         }
 
-        System.runAs(u){
+        System.runAs(u) {
             Test.startTest();
                 ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(spList);
-                
-                try {
-                    FCS_SocialPostController ext = new FCS_SocialPostController(setCon);
-                    ext.takeOwnership();
-                } catch(DmlException e) {
-                    System.debug(e);
-                }
-                
                 setCon.setSelected(spList);
                 FCS_SocialPostController ext = new FCS_SocialPostController(setCon);
-                System.debug('Test'+spList);
-                System.debug('Test'+setCon);
-                System.debug('Test'+setCon.getSelected());
                 ext.takeOwnership();
-                System.debug('Test'+spList);
             Test.stopTest();
         }
         
@@ -115,14 +103,6 @@ private class FCS_SocialPostControllerTest {
         System.runAs(u) {
             Test.startTest();
                 ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(spList);
-                    
-                try {
-                    FCS_SocialPostController ext = new FCS_SocialPostController(setCon);
-                    ext.removeOwnership();
-                } catch(DmlException e) {
-                    System.debug(e);
-                }
-                
                 setCon.setSelected(spList);
                 FCS_SocialPostController ext = new FCS_SocialPostController(setCon);
                 ext.removeOwnership();
@@ -134,5 +114,25 @@ private class FCS_SocialPostControllerTest {
         //Assert to check if Owners has been removed and assigned back to PreviousQueue
         System.assertEquals(g.Id, spListUpdated[0].OwnerId);
         System.assertEquals(g.Id, spListUpdated[1].OwnerId);
+    }
+
+    /**
+     * Test for no selected records in listview
+     */
+    @isTest
+    static void noSelectedRecordsTest() {
+        User u = [SELECT Id FROM User WHERE Alias = 'test'];
+        List<SocialPost> spList = new List<SocialPost>();
+
+        System.runAs(u) {
+            Test.startTest();
+                ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(spList);
+                FCS_SocialPostController ext = new FCS_SocialPostController(setCon);
+                ext.takeOwnership();
+                ext.removeOwnership();
+            Test.stopTest();
+
+        System.assert(setCon.getSelected().isEmpty(), 'No selected records');
+        }
     }
 }

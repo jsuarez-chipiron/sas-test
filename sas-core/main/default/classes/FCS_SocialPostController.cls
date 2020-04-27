@@ -4,6 +4,10 @@
  * @description Class for Take Ownership and Remove Ownership buttons in Social Post List Views
  */
 public with sharing class FCS_SocialPostController {
+    /**
+     * @param setCon Variable for passing the current listview
+     * @param retUrl Url to return to after performed action
+     */
     ApexPages.StandardSetController setCon;
     String retUrl;
 
@@ -17,6 +21,10 @@ public with sharing class FCS_SocialPostController {
         setCon = controller;
     }
 
+    /**
+     * Used to take over ownership of SocialPost to current User
+     * @return If selected Social Post/s return to previous listview otherwise cancel action
+     */
     public PageReference takeOwnership() {
         System.debug('Action Take Ownership executing');
         List<SocialPost> spIds = (List<SocialPost>) setCon.getSelected();
@@ -41,6 +49,10 @@ public with sharing class FCS_SocialPostController {
         }
     }
 
+    /**
+     * Used to remove ownership of SocialPost and assign it back to queue
+     * @return If selected Social Post/s return to previous listview otherwise cancel action
+     */
     public PageReference removeOwnership() {
         System.debug('Action Remove Ownership executing');
         List<SocialPost> spIds = (List<SocialPost>) setCon.getSelected();
