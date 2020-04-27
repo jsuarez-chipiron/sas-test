@@ -155,6 +155,7 @@ private class IRR_EVT_ManualProcessor_Test {
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
         manualRequest.sendSMSMessages = null;
         manualRequest.sendEmailMessages = null;
+        manualRequest.responseMessage = null;
         IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
 
         //When
@@ -163,6 +164,7 @@ private class IRR_EVT_ManualProcessor_Test {
         //Then
         System.assertEquals(false, eventProcessor.manualRequest.sendEmailMessages);
         System.assertEquals(false, eventProcessor.manualRequest.sendSMSMessages);
+        System.assertEquals(false, eventProcessor.manualRequest.responseMessage);
     }
 
     @IsTest
@@ -185,7 +187,7 @@ private class IRR_EVT_ManualProcessor_Test {
     }
 
     @IsTest
-    static void testProcessEvent_SendMessages() {
+    static void testProcessEvent_SendMessages_NoResponse() {
         //Given
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
         manualRequest.flowVariables = new IRR_MOD_FlowVariables();
@@ -228,5 +230,38 @@ private class IRR_EVT_ManualProcessor_Test {
                 messages[1].variables.containsKey('delayInfo')); //TODO ADD OTHER EVENTS
         System.assert(messages[1].variables.containsKey('passengerInfo') &&
                 messages[1].variables.containsKey('customInfo'));
+        System.assert(!messages[0].responseMessage, 'Message 1 Response not expected');
+        System.assert(!messages[1].responseMessage, 'Message 2 Response not expected');
+    }
+
+    @IsTest
+    static void testProcessEvent_SendMessages_Response() {
+        //Given
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.flowVariables = new IRR_MOD_FlowVariables();
+        manualRequest.flowVariables.delayInfo = new IRR_MOD_DelayInfo();
+        manualRequest.emailTemplate = 'EMAIL_TEMPLATE';
+        manualRequest.smsTemplate = 'SMS_TEMPLATE';
+        manualRequest.sendSMSMessages = true;
+        manualRequest.sendEmailMessages = true;
+        manualRequest.responseMessage = true;
+        manualRequest.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
+        manualRequest.passengerInfos[0].hasPhoneNumber = true;
+        manualRequest.passengerInfos[0].phoneNumber = 'TEST_PHONE';
+        manualRequest.passengerInfos[0].hasEmailAddress = true;
+        manualRequest.passengerInfos[0].emailAddress = 'TEST_EMAIL';
+        manualRequest.customInfo = new IRR_MOD_CustomInfo();
+        manualRequest.customInfo.subject = 'TEST_SUBJECT';
+        manualRequest.customInfo.content = 'TEST_CONTENT';
+        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+
+        //When
+        eventProcessor.processEvent();
+
+        //Then
+        List<IRR_MOD_Message> messages = eventProcessor.messages;
+        System.assertEquals(2, messages.size());
+        System.assert(messages[0].responseMessage, 'Message 1 Response not expected');
+        System.assert(messages[1].responseMessage, 'Message 2 Response not expected');
     }
 }

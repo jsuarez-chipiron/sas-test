@@ -43,6 +43,7 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
     public void initiateEvent() {
         if (manualRequest.sendEmailMessages == null) manualRequest.sendEmailMessages = false;
         if (manualRequest.sendSMSMessages == null) manualRequest.sendSMSMessages = false;
+        if (manualRequest.responseMessage == null) manualRequest.responseMessage = false;
         if (manualRequest.delayInfo != null && String.isNotBlank(manualRequest.delayInfo.flightId)) {
             List<String> flightIdSplit = manualRequest.delayInfo.flightId.split('-');
             manualRequest.delayInfo.flightRef = flightIdSplit[0];
@@ -62,7 +63,8 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
 
             if (sendEmail || sendSMS) {
                 flowVariables.passengerInfo = passengerInfo;
-                createMessages(sendSMS, manualRequest.smsTemplate, sendEmail, manualRequest.emailTemplate, flowVariables);
+                createMessages(sendSMS, manualRequest.smsTemplate, sendEmail, manualRequest.emailTemplate,
+                        flowVariables, manualRequest.responseMessage);
             }
         }
     }

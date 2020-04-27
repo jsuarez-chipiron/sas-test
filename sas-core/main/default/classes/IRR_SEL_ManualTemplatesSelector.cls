@@ -21,6 +21,7 @@ public class IRR_SEL_ManualTemplatesSelector extends fflib_SObjectSelector imple
                 IRR_ManualCommunicationTemplate__mdt.MasterLabel,
                 IRR_ManualCommunicationTemplate__mdt.IRR_EmailTemplate__c,
                 IRR_ManualCommunicationTemplate__mdt.IRR_Priority__c,
+                IRR_ManualCommunicationTemplate__mdt.IRR_ResponseTemplate__c,
                 IRR_ManualCommunicationTemplate__mdt.IRR_SendMode__c,
                 IRR_ManualCommunicationTemplate__mdt.IRR_SMSTemplate__c
 

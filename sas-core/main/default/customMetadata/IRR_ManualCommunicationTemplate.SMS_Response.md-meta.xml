@@ -11,6 +11,10 @@
         <value xsi:type="xsd:double">2.0</value>
     </values>
     <values>
+        <field>IRR_ResponseTemplate__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>IRR_SMSTemplate__c</field>
         <value xsi:type="xsd:string">irr_sms_manual_response_1587729273180</value>
     </values>

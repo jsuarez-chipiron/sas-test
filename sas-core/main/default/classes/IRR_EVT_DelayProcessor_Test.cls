@@ -314,7 +314,7 @@ private class IRR_EVT_DelayProcessor_Test {
         delayInfo.flightId = 'TEST_FLIGHT_ID';
         delayInfo.delayedMinutes = 10;
         IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
-        passengerInfo.lastName = 'TEST_LAST_NAME';
+        passengerInfo.lastNameSlashFirstName = 'TEST_LAST_NAME/TEST_FIRST_NAME';
         passengerInfo.phoneNumber = 'TEST_PHONE';
         passengerInfo.emailAddress = 'TEST_EMAIL';
         passengerInfo.codsId = 'TEST_CODS_ID';
@@ -324,7 +324,7 @@ private class IRR_EVT_DelayProcessor_Test {
         IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
                 .newInstance(delayInfo);
         IRR_MOD_Message message = new IRR_MOD_Message('TEST_STATUS', IRR_MOD_Message.MessageChannel.SMS, null, null,
-                passengerInfo, 'TEST_TYPE');
+                passengerInfo, 'TEST_TYPE', null);
         message.SFMCMessage = smsMessage;
         eventProcessor.messages.add(message);
 
@@ -341,7 +341,7 @@ private class IRR_EVT_DelayProcessor_Test {
                 IRR_CommunicationLog__c.IRR_MessageKey__c => 'TEST_MESSAGE_KEY',
                 IRR_CommunicationLog__c.IRR_Recipient__c => 'TEST_PHONE',
                 IRR_CommunicationLog__c.IRR_Status__c => 'TEST_STATUS',
-                IRR_CommunicationLog__c.IRR_LastName__c => 'TEST_LAST_NAME'
+                IRR_CommunicationLog__c.IRR_PassengerName__c => 'TEST_LAST_NAME/TEST_FIRST_NAME'
         };
         ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock))
                 .registerNew(fflib_Match.sObjectOfType(IRR_CommunicationLog__c.SObjectType));
@@ -397,7 +397,7 @@ private class IRR_EVT_DelayProcessor_Test {
         IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
                 .newInstance(delayInfo);
         IRR_MOD_Message message = new IRR_MOD_Message('TEST_STATUS', IRR_MOD_Message.MessageChannel.SMS, null, null,
-                passengerInfo, 'TEST_TYPE');
+                passengerInfo, 'TEST_TYPE', null);
         message.SFMCMessage = smsMessage;
         eventProcessor.messages.add(message);
 
@@ -454,7 +454,7 @@ private class IRR_EVT_DelayProcessor_Test {
         passengerInfo.codsId = 'TEST_CODS_ID';
         passengerInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
         IRR_MOD_Message message = new IRR_MOD_Message('Created', IRR_MOD_Message.MessageChannel.SMS, null,
-                'TEST_TEMPLATE', passengerInfo, 'Delay');
+                'TEST_TEMPLATE', passengerInfo, 'Delay', null);
         IRR_MOD_Message messageDuplicate = message.clone();
         IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
                 .newInstance(null);
@@ -505,7 +505,7 @@ private class IRR_EVT_DelayProcessor_Test {
         passengerInfo.codsId = 'TEST_CODS_ID';
         passengerInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
         IRR_MOD_Message message = new IRR_MOD_Message('Created', IRR_MOD_Message.MessageChannel.SMS, null,
-                'TEST_TEMPLATE', passengerInfo, 'Delay');
+                'TEST_TEMPLATE', passengerInfo, 'Delay', null);
         IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
                 .newInstance(null);
         eventProcessor.messages.add(message);
@@ -553,7 +553,7 @@ private class IRR_EVT_DelayProcessor_Test {
         passengerInfo.codsId = 'TEST_CODS_ID';
         passengerInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
         IRR_MOD_Message message = new IRR_MOD_Message('Created', IRR_MOD_Message.MessageChannel.SMS, null,
-                'TEST_TEMPLATE', passengerInfo, 'Delay');
+                'TEST_TEMPLATE', passengerInfo, 'Delay', null);
         IRR_MOD_Message messageDuplicate = message.clone();
         IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
                 .newInstance(null);

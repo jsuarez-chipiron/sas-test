@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>IRR_LastName__c</fullName>
+    <fullName>IRR_PassengerName__c</fullName>
     <externalId>false</externalId>
-    <label>Last Name</label>
+    <label>Passenger Name</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

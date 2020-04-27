@@ -58,13 +58,14 @@ public class IRR_SVC_CommunicationService {
                 }
                 log.IRR_BookingReference__c = message.passengerInfo.bookingReference;
                 log.IRR_CodsId__c = message.passengerInfo.codsId;
-                log.IRR_LastName__c = message.passengerInfo.lastName;
+                log.IRR_PassengerName__c = message.passengerInfo.lastNameSlashFirstName;
             }
             log.IRR_Channel__c = String.valueOf(message.channel);
             log.IRR_ContactKey__c = message.contactKey;
             log.IRR_MessageKey__c = message.messageKey;
             log.IRR_Recipient__c = message.recipient;
             log.IRR_MessageType__c = message.type;
+            log.IRR_ResponseMessage__c = message.responseMessage;
             log.IRR_Status__c = message.status;
             if (message.SFMCMessage != null && message.SFMCMessage.errorCode != null &&
                     message.SFMCMessage.errorCode != 0) {
@@ -91,7 +92,7 @@ public class IRR_SVC_CommunicationService {
             log.IRR_ExternalId__c = sms.externalId;
             log.IRR_ExternalGroupId__c = groupExtId;
             log.IRR_MessageType__c = messageType;
-            if(sms.errorCode==null || sms.errorCode==0){
+            if(sms.errorCode==null || sms.errorCode==0) {
                 log.IRR_Status__c = COM_LOG_STATUS_CREATED;
             }
             else {

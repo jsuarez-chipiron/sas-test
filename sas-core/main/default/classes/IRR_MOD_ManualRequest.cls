@@ -14,6 +14,9 @@ public class IRR_MOD_ManualRequest {
     public List<IRR_MOD_PassengerInfo> passengerInfos { get; set; }
 
     @AuraEnabled
+    public Boolean responseMessage { get; set; }
+
+    @AuraEnabled
     public Boolean sendSMSMessages { get; set; }
 
     @AuraEnabled

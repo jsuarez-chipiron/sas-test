@@ -164,23 +164,23 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
                 !flowVariables.passengerInfo.hasPhoneNumber ? false : sendSMSMessage;
 
         if (sendSMSMessage || sendEmailMessage){
-            createMessages(sendSMSMessage, smsTemplateName, sendEmailMessage, emailTemplateName, flowVariables);
+            createMessages(sendSMSMessage, smsTemplateName, sendEmailMessage, emailTemplateName, flowVariables, false);
         }
     }
 
     protected void createMessages(Boolean sendSMS, String SMSTemplate, Boolean sendEmail, String emailTemplate,
-            IRR_MOD_FlowVariables flowVariables) {
+            IRR_MOD_FlowVariables flowVariables, Boolean responseMessage) {
         String serializedVariables = JSON.serialize(flowVariables);
         Map<String, Object> templateParams = (Map<String,Object>) JSON.deserializeUntyped(serializedVariables);
 
         if (sendSMS) {
             IRR_MOD_Message smsMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.SMS,
-                    templateParams, SMSTemplate, flowVariables.passengerInfo, getEventName());
+                    templateParams, SMSTemplate, flowVariables.passengerInfo, getEventName(), responseMessage);
             messages.add(smsMessage);
         }
         if (sendEmail) {
             IRR_MOD_Message emailMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.Email,
-                    templateParams,emailTemplate, flowVariables.passengerInfo, getEventName());
+                    templateParams,emailTemplate, flowVariables.passengerInfo, getEventName(), responseMessage);
             messages.add(emailMessage);
         }
     }

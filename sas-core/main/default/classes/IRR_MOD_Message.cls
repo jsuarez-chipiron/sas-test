@@ -20,6 +20,7 @@ public class IRR_MOD_Message {
     public IRR_SVC_SFMCService.SFMCMessage SFMCMessage;
     public String subject;
     public String type;
+    public Boolean responseMessage;
 
     public String messageKey {
         get {
@@ -28,7 +29,8 @@ public class IRR_MOD_Message {
     }
 
     public IRR_MOD_Message(String status, MessageChannel channel, Map<String, Object> variables, String template,
-            IRR_MOD_PassengerInfo passengerInfo, String type) {
+            IRR_MOD_PassengerInfo passengerInfo, String type, Boolean responseMessage) {
+        this.responseMessage = responseMessage;
         this.type = type;
         this.status = status;
         this.channel = channel;

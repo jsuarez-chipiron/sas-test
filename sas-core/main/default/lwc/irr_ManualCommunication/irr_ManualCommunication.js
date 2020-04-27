@@ -174,6 +174,8 @@ export default class IRR_ManualCommunication extends LightningElement {
             const passengerInfos = this.selectedRows.map(row => tableUtil.unFlatten(row));
             passengerInfos.push(...this.additionalRecipients.map((rec) => {
                 return {
+                    thisSegment: { flightId: this.retrieveParameters.flightId },
+                    lastNameSlashFirstName: 'ADDITIONAL/RECIPIENT',
                     hasPhoneNumber: !!rec.phoneNumber,
                     hasEmailAddress: !!rec.emailAddress,
                     phoneNumber: rec.phoneNumber,
@@ -181,6 +183,7 @@ export default class IRR_ManualCommunication extends LightningElement {
                 };
             }));
             const payload = {
+                responseMessage: manualTemplate.IRR_ResponseTemplate__c,
                 passengerInfos: passengerInfos,
                 sendSMSMessages: sendSMS,
                 sendEmailMessages: sendEmail,
