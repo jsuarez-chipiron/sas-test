@@ -17,5 +17,5 @@
         <operation>equals</operation>
         <value>Needed</value>
     </filters>
-    <label>My open social posts</label>
+    <label>My Open Social Posts</label>
 </ListView>

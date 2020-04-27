@@ -17,5 +17,5 @@
         <operation>equals</operation>
         <value>Ignore,Reviewed</value>
     </filters>
-    <label>My handled social posts</label>
+    <label>My Handled Social Posts</label>
 </ListView>
