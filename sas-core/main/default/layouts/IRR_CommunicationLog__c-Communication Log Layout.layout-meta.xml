@@ -34,7 +34,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>IRR_PassengerName__c</field>
+                <field>IRR_RecipientName__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

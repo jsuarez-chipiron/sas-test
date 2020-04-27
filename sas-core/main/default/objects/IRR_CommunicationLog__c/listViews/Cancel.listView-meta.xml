@@ -7,7 +7,7 @@
     <columns>IRR_Channel__c</columns>
     <columns>IRR_Recipient__c</columns>
 	<columns>IRR_MessageType__c</columns>
-    <columns>IRR_LastName__c</columns>
+    <columns>IRR_RecipientName__c</columns>
     <columns>IRR_Status__c</columns>
 	<columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>

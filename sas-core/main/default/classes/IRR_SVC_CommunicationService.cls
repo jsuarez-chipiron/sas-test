@@ -58,7 +58,7 @@ public class IRR_SVC_CommunicationService {
                 }
                 log.IRR_BookingReference__c = message.passengerInfo.bookingReference;
                 log.IRR_CodsId__c = message.passengerInfo.codsId;
-                log.IRR_PassengerName__c = message.passengerInfo.lastNameSlashFirstName;
+                log.IRR_RecipientName__c = message.passengerInfo.lastNameSlashFirstName;
             }
             log.IRR_Channel__c = String.valueOf(message.channel);
             log.IRR_ContactKey__c = message.contactKey;

@@ -196,6 +196,7 @@ private class IRR_EVT_ManualProcessor_Test {
         manualRequest.smsTemplate = 'SMS_TEMPLATE';
         manualRequest.sendSMSMessages = true;
         manualRequest.sendEmailMessages = true;
+        manualRequest.responseMessage = false;
         manualRequest.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
         manualRequest.passengerInfos[0].hasPhoneNumber = true;
         manualRequest.passengerInfos[0].phoneNumber = 'TEST_PHONE';
@@ -263,5 +264,72 @@ private class IRR_EVT_ManualProcessor_Test {
         System.assertEquals(2, messages.size());
         System.assert(messages[0].responseMessage, 'Message 1 Response not expected');
         System.assert(messages[1].responseMessage, 'Message 2 Response not expected');
+    }
+
+
+
+    @IsTest
+    static void testFinalizeEvent_MessageResponse() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        fflib_ISObjectUnitOfWork uowMock = (fflib_ISObjectUnitOfWork) mocks.mock(fflib_SObjectUnitOfWork.class);
+
+        //Given
+        IRR_SVC_SFMCService.SMSMessage smsMessage = new IRR_SVC_SFMCService.SMSMessage(null, null, null);
+        smsMessage.messageKey = 'TEST_MESSAGE_KEY';
+        IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
+        passengerInfo.lastNameSlashFirstName = 'TEST_LAST_NAME/TEST_FIRST_NAME';
+        passengerInfo.phoneNumber = 'TEST_PHONE';
+        passengerInfo.emailAddress = 'TEST_EMAIL';
+        passengerInfo.codsId = 'TEST_CODS_ID';
+        passengerInfo.thisSegment = new IRR_MOD_SegmentInfo();
+        passengerInfo.thisSegment.flightId = 'TEST_FLIGHT_ID';
+        passengerInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
+        IRR_EVT_ManualProcessor eventProcessor = (IRR_EVT_ManualProcessor) new IRR_EVT_ManualProcessor.Constructor()
+                .newInstance(null);
+        IRR_MOD_Message message = new IRR_MOD_Message('TEST_STATUS', IRR_MOD_Message.MessageChannel.SMS, null, null,
+                passengerInfo, 'TEST_TYPE', true);
+        message.SFMCMessage = smsMessage;
+        eventProcessor.messages.add(message);
+
+        //When
+        eventProcessor.finalizeEvent(uowMock);
+
+        //Then
+        Map<SObjectField, Object> cLogMatcher = new Map<SObjectField, Object>{
+                IRR_CommunicationLog__c.IRR_FlightId__c => 'TEST_FLIGHT_ID',
+                IRR_CommunicationLog__c.IRR_BookingReference__c => 'TEST_BOOKING_REFERENCE',
+                IRR_CommunicationLog__c.IRR_CodsId__c => 'TEST_CODS_ID',
+                IRR_CommunicationLog__c.IRR_Channel__c => 'SMS',
+                IRR_CommunicationLog__c.IRR_ContactKey__c => 'TEST_EMAIL',
+                IRR_CommunicationLog__c.IRR_MessageKey__c => 'TEST_MESSAGE_KEY',
+                IRR_CommunicationLog__c.IRR_Recipient__c => 'TEST_PHONE',
+                IRR_CommunicationLog__c.IRR_Status__c => 'TEST_STATUS',
+                IRR_CommunicationLog__c.IRR_RecipientName__c => 'TEST_LAST_NAME/TEST_FIRST_NAME',
+                IRR_CommunicationLog__c.IRR_ResponseMessage__c => true
+        };
+        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock))
+                .registerNew(fflib_Match.sObjectOfType(IRR_CommunicationLog__c.SObjectType));
+        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock)).registerNew(fflib_Match.sObjectWith(cLogMatcher));
+    }
+
+
+
+    @IsTest
+    static void testFinalizeEvent_NoMessage() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        fflib_ISObjectUnitOfWork uowMock = (fflib_ISObjectUnitOfWork) mocks.mock(fflib_SObjectUnitOfWork.class);
+
+        //Given
+        IRR_EVT_ManualProcessor eventProcessor = (IRR_EVT_ManualProcessor) new IRR_EVT_ManualProcessor.Constructor()
+                .newInstance(null);
+
+        //When
+        eventProcessor.finalizeEvent(uowMock);
+
+        //Then
+        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock, 0))
+                .registerNew(fflib_Match.anySObject());
     }
 }

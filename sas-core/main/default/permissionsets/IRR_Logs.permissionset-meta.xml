@@ -57,7 +57,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>IRR_CommunicationLog__c.IRR_PassengerName__c</field>
+        <field>IRR_CommunicationLog__c.IRR_RecipientName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

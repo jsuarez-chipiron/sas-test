@@ -324,7 +324,7 @@ private class IRR_EVT_DelayProcessor_Test {
         IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
                 .newInstance(delayInfo);
         IRR_MOD_Message message = new IRR_MOD_Message('TEST_STATUS', IRR_MOD_Message.MessageChannel.SMS, null, null,
-                passengerInfo, 'TEST_TYPE', null);
+                passengerInfo, 'TEST_TYPE', false);
         message.SFMCMessage = smsMessage;
         eventProcessor.messages.add(message);
 
@@ -341,7 +341,7 @@ private class IRR_EVT_DelayProcessor_Test {
                 IRR_CommunicationLog__c.IRR_MessageKey__c => 'TEST_MESSAGE_KEY',
                 IRR_CommunicationLog__c.IRR_Recipient__c => 'TEST_PHONE',
                 IRR_CommunicationLog__c.IRR_Status__c => 'TEST_STATUS',
-                IRR_CommunicationLog__c.IRR_PassengerName__c => 'TEST_LAST_NAME/TEST_FIRST_NAME'
+                IRR_CommunicationLog__c.IRR_RecipientName__c => 'TEST_LAST_NAME/TEST_FIRST_NAME'
         };
         ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock))
                 .registerNew(fflib_Match.sObjectOfType(IRR_CommunicationLog__c.SObjectType));
@@ -397,7 +397,7 @@ private class IRR_EVT_DelayProcessor_Test {
         IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
                 .newInstance(delayInfo);
         IRR_MOD_Message message = new IRR_MOD_Message('TEST_STATUS', IRR_MOD_Message.MessageChannel.SMS, null, null,
-                passengerInfo, 'TEST_TYPE', null);
+                passengerInfo, 'TEST_TYPE', false);
         message.SFMCMessage = smsMessage;
         eventProcessor.messages.add(message);
 
@@ -415,7 +415,8 @@ private class IRR_EVT_DelayProcessor_Test {
                 IRR_CommunicationLog__c.IRR_Recipient__c => 'TEST_PHONE',
                 IRR_CommunicationLog__c.IRR_Status__c => 'Error',
                 IRR_CommunicationLog__c.IRR_StatusCode__c => 9000,
-                IRR_CommunicationLog__c.IRR_ErrorMessage__c => 'TEST_ERROR'
+                IRR_CommunicationLog__c.IRR_ErrorMessage__c => 'TEST_ERROR',
+                IRR_CommunicationLog__c.IRR_ResponseMessage__c => false
 
         };
         ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock))
@@ -454,7 +455,7 @@ private class IRR_EVT_DelayProcessor_Test {
         passengerInfo.codsId = 'TEST_CODS_ID';
         passengerInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
         IRR_MOD_Message message = new IRR_MOD_Message('Created', IRR_MOD_Message.MessageChannel.SMS, null,
-                'TEST_TEMPLATE', passengerInfo, 'Delay', null);
+                'TEST_TEMPLATE', passengerInfo, 'Delay', false);
         IRR_MOD_Message messageDuplicate = message.clone();
         IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
                 .newInstance(null);
@@ -505,7 +506,7 @@ private class IRR_EVT_DelayProcessor_Test {
         passengerInfo.codsId = 'TEST_CODS_ID';
         passengerInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
         IRR_MOD_Message message = new IRR_MOD_Message('Created', IRR_MOD_Message.MessageChannel.SMS, null,
-                'TEST_TEMPLATE', passengerInfo, 'Delay', null);
+                'TEST_TEMPLATE', passengerInfo, 'Delay', false);
         IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
                 .newInstance(null);
         eventProcessor.messages.add(message);
@@ -553,7 +554,7 @@ private class IRR_EVT_DelayProcessor_Test {
         passengerInfo.codsId = 'TEST_CODS_ID';
         passengerInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
         IRR_MOD_Message message = new IRR_MOD_Message('Created', IRR_MOD_Message.MessageChannel.SMS, null,
-                'TEST_TEMPLATE', passengerInfo, 'Delay', null);
+                'TEST_TEMPLATE', passengerInfo, 'Delay', false);
         IRR_MOD_Message messageDuplicate = message.clone();
         IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
                 .newInstance(null);
