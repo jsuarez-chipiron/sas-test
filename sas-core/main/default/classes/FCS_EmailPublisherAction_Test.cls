@@ -7,7 +7,9 @@
 private class FCS_EmailPublisherAction_Test {
     @isTest
     static void defaultFromAddressSalesInformation() {
-        C_Settings.getSettings('EMAIL ADDRESS').set('Sales Information', 'salesinformation@test.com');
+        C_Settings.SETTINGS_OVERRIDE = new C_GeneralSetting__mdt[]{
+            new C_GeneralSetting__mdt(MasterLabel='Sales Information',Value__c='salesinformation@test.com',Group__c='EMAIL ADDRESS')
+        };
 
         List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
         cases[0].Type = 'Sales Information';
@@ -36,12 +38,16 @@ private class FCS_EmailPublisherAction_Test {
         Test.startTest();
         (new FCS_EmailPublisherAction()).onInitDefaults(defaultsSettings);
         Test.stopTest();
+        System.debug(C_Settings.getSettings('EMAIL ADDRESS').get('Sales Information'));
+        System.debug(((EmailMessage)defaultsSettings[0].getTargetSObject()).FromAddress);
         System.assertEquals(C_Settings.getSettings('EMAIL ADDRESS').get('Sales Information'), ((EmailMessage)defaultsSettings[0].getTargetSObject()).FromAddress);
     }
 
     @isTest
     static void defaultFromAddressSASSIInternal() {
-        C_Settings.getSettings('EMAIL ADDRESS').set('SASSI Internal', 'sassiinternal@test.com');
+        C_Settings.SETTINGS_OVERRIDE = new C_GeneralSetting__mdt[]{
+            new C_GeneralSetting__mdt(MasterLabel='SASSI Internal',Value__c='sassiinternal@test.com',Group__c='EMAIL ADDRESS')
+        };
 
         List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
         cases[0].Type = 'SASSI Internal';
@@ -70,12 +76,16 @@ private class FCS_EmailPublisherAction_Test {
         Test.startTest();
         (new FCS_EmailPublisherAction()).onInitDefaults(defaultsSettings);
         Test.stopTest();
+        System.debug(C_Settings.getSettings('EMAIL ADDRESS').get('SASSI Internal'));
+        System.debug(((EmailMessage)defaultsSettings[0].getTargetSObject()).FromAddress);
         System.assertEquals(C_Settings.getSettings('EMAIL ADDRESS').get('SASSI Internal'), ((EmailMessage)defaultsSettings[0].getTargetSObject()).FromAddress);
     }
 
     @isTest
     static void defaultFromAddressSystemTariff() {
-        C_Settings.getSettings('EMAIL ADDRESS').set('System & Tariff', 'systemtariff@test.com');
+        C_Settings.SETTINGS_OVERRIDE = new C_GeneralSetting__mdt[]{
+            new C_GeneralSetting__mdt(MasterLabel='System & Tariff',Value__c='systemtariff@test.com',Group__c='EMAIL ADDRESS')
+        };
 
         List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
         insert cases;
@@ -104,6 +114,8 @@ private class FCS_EmailPublisherAction_Test {
         Test.startTest();
         (new FCS_EmailPublisherAction()).onInitDefaults(defaultsSettings);
         Test.stopTest();
+        System.debug(C_Settings.getSettings('EMAIL ADDRESS').get('System & Tariff'));
+        System.debug(((EmailMessage)defaultsSettings[0].getTargetSObject()).FromAddress);
         System.assertEquals(C_Settings.getSettings('EMAIL ADDRESS').get('System & Tariff'), ((EmailMessage)defaultsSettings[0].getTargetSObject()).FromAddress);
     }
 }
