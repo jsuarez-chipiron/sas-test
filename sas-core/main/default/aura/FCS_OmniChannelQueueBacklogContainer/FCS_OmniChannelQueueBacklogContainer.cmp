@@ -1,0 +1,4 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global">
+    <lightning:utilityBarAPI aura:id="utilitybar" />
+    <lightning:button label="Register Event Handler" onclick="{!c.registerUtilityClickHandler}"/>
+</aura:component>
