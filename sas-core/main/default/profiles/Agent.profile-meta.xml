@@ -180,7 +180,7 @@
         <field>Case.FCS_IsReopened__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+    <fieldPermissions>    
         <editable>true</editable>
         <field>Case.FCS_Language__c</field>
         <readable>true</readable>
@@ -241,16 +241,6 @@
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
-        <editable>true</editable>
-        <field>Case.GDPR_Consent__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
-        <editable>false</editable>
-        <field>Case.GDPR_Consent__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Case.ContactId</field>
         <readable>true</readable>
