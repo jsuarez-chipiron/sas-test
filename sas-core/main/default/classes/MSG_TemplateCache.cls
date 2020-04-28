@@ -91,6 +91,87 @@ global with sharing class MSG_TemplateCache implements MSG_ITemplateCache {
     }
 
     /**
+        Loads letterheads referenced by loaded email templates but where the letterhead has yet to be loaded
+    */
+    private void loadPendingLetterheads(){
+        if(!pendingLetterheadIds.isEmpty()){
+            EnhancedLetterhead[] elList = EL_LIST_OVERRIDE!=null ? EL_LIST_OVERRIDE : [SELECT Id,LetterheadHeader,LetterheadFooter FROM EnhancedLetterhead WHERE Id IN :pendingLetterheadIds];
+            for(Integer i=0,sz=elList.size();i<sz;i++){
+                EnhancedLetterhead el = elList[i];
+                lhMap.put(el.Id,new TemplateLetterhead(el.Id,el.LetterheadHeader,el.LetterheadFooter));
+            }
+            pendingLetterheadIds.clear();
+        }
+        if(!pendingBrandTemplateIds.isEmpty()){
+            BrandTemplate[] btList = BT_LIST_OVERRIDE!=null ? BT_LIST_OVERRIDE : [SELECT Id,Value FROM BrandTemplate WHERE Id IN :pendingBrandTemplateIds];
+            for(Integer i=0,sz=btList.size();i<sz;i++){
+                BrandTemplate bt = btList[i];
+                lhMap.put(bt.Id,createLetterhead(bt));
+            }
+            pendingBrandTemplateIds.clear();
+        }
+
+        for(Integer i=0,sz=tcPendingLhList.size();i<sz;i++){
+            TemplateContent tc = tcPendingLhList[i];
+            tc.letterhead = lhMap.get(tc.letterheadId);
+        }
+        tcPendingLhList.clear();
+    }
+
+    /**
+        Creates a letterhead from a brand template
+        @param bt The brand template from which to create the letterhead
+        @return The letterhead
+    */
+    private static TemplateLetterhead createLetterhead(BrandTemplate bt){
+        String s = bt.Value;
+        String h = null;
+        String o = '';
+        Integer cdCnt = 0;
+        Integer idx = 0;
+        Integer sIdx = s.indexOf('<style');
+        Integer cdIdx = s.indexOf('<![CDATA[');
+        while(sIdx!=-1 || cdIdx!=-1){
+            if(sIdx!=-1 && (sIdx<cdIdx || cdIdx==-1)){
+                Integer toIdx = s.indexOf('>',sIdx);
+                String css = s.substring(sIdx+6,toIdx);
+                css = css.replaceAll('\\=\\"', ':');
+                css = css.replaceAll('\\"',';');
+                o+=s.substring(idx,s.lastIndexOf('>', sIdx))+' style="'+css+'">';
+                idx = s.indexOf('</style>',idx)+8;
+                sIdx = s.indexOf('<style',idx);
+            }
+            else {
+                cdCnt++;
+                Integer toIdx = s.indexOf(']]>',cdIdx+9);
+                Integer lastTagStart = s.lastIndexOf('<', cdIdx-1);
+                if(s.substring(lastTagStart,lastTagStart+5)=='<img '){
+                    String d = s.substring(cdIdx+9,toIdx).replaceAll('&','&amp;');
+                    if(!String.isBlank(d)){
+                        o+=s.substring(idx,s.lastIndexOf('>', cdIdx))+' src="https://'+URL.getSalesforceBaseUrl().getHost()+d+'"><!-- </img> -->';
+                    }
+                    else {
+                        o+=s.substring(idx,lastTagStart);
+                    }
+                    idx=s.indexOf('</img>',toIdx)+6;
+                }
+                else {
+                    o+=s.substring(idx,cdIdx);
+                    idx=toIdx+3;
+                }
+                if(cdCnt==3){
+                    h = o;
+                    o = '';
+                }
+                cdIdx = s.indexOf('<![CDATA[',idx);
+            }
+        }
+        o+=s.substring(idx);
+        if(cdCnt!=6)throw new TemplateException('Unexpected structure in brand template with id: '+bt.Id);
+        return new TemplateLetterhead(bt.Id,h,o);
+    }
+
+    /**
         Loads templates using the set of provided template developer names
         @param tDevNameSet The developer names of the email templates to load
     */
@@ -147,6 +228,7 @@ global with sharing class MSG_TemplateCache implements MSG_ITemplateCache {
             }
 
         }
+        loadPendingLetterheads();
     }
 
     /**

@@ -28,6 +28,10 @@ public class IRR_MOD_Message {
         }
     }
 
+    public IRR_MOD_Message() {
+        //CONSTRUCTOR INTENTIONALLY LEFT EMPTY
+    }
+
     public IRR_MOD_Message(String status, MessageChannel channel, Map<String, Object> variables, String template,
             IRR_MOD_PassengerInfo passengerInfo, String type, Boolean responseMessage) {
         this.responseMessage = responseMessage;
