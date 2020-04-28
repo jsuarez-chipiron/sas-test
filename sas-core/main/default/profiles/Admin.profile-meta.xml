@@ -507,6 +507,76 @@
         <field>GDPRExtractObjectSetting__mdt.RelationshipName__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_CompositeId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_DateUTC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_DefinitionId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_DefinitionKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_EID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_EventCategoryType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_InfoFrom__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_InfoMessageNouns__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_InfoMessageVerb__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_InfoMessage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_InfoShortCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_InfoStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_MID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_TimeUTC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Knowledge__kav.FCS_Body__c</field>
@@ -850,6 +920,9 @@
     <layoutAssignments>
         <layout>GDPRExtractObjectSetting__mdt-GDPR Extract Object Setting Layout</layout>
     </layoutAssignments>
+	    <layoutAssignments>
+        <layout>IRR_SMSResponse__c-SMS Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Knowledge__kav-SAS SSI Layout</layout>
     </layoutAssignments>
@@ -926,6 +999,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>FCS_FrequentFlyer__x</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+	<objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>IRR_SMSResponse__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
