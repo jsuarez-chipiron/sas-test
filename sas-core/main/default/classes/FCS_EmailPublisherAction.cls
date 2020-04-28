@@ -30,26 +30,20 @@ global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaults
         System.debug('sendEmailDefaults' + sendEmailDefaults);
         if(sendEmailDefaults != null) {
             Case c = [SELECT CaseNumber, Type FROM Case WHERE Id = :sendEmailDefaults.getContextId()];
-            List<C_GeneralSetting__mdt> gsList = [SELECT Id, MasterLabel, Value__c FROM C_GeneralSetting__mdt WHERE Group__c = 'EMAIL ADDRESS'];
-
+            System.debug('Case Type: ' + c.Type);
             EmailMessage emailMessage = (EmailMessage) sendEmailDefaults.getTargetSObject(); 
             System.debug(emailMessage);
-
-            for (C_GeneralSetting__mdt email : gsList) {
-                System.debug('GeneralSetting Label: ' + email.MasterLabel);
-                System.debug('Case Type: ' + c.Type);
-                // Assign default FromAddress based on the Case Type
-                if (c.Type != null && c.Type.equals(email.MasterLabel)) {
-                    emailMessage.ValidatedFromAddress = C_Settings.getSettings('EMAIL ADDRESS').get(c.Type);
-                    System.debug('From: ' + emailMessage.ValidatedFromAddress);
-                    break;
-                } else if (c.Type == null || c.Type.equals('System') || c.Type.equals('Tariff')) {
-                    emailMessage.ValidatedFromAddress = C_Settings.getSettings('EMAIL ADDRESS').get('System & Tariff');
-                    System.debug('From: ' + emailMessage.ValidatedFromAddress);
-                } else {
-                    emailMessage.addError('No default Email Address found for Type');
-                    System.debug('From: ' + emailMessage.ValidatedFromAddress);
-                }
+            
+            // Assign default FromAddress based on the Case Type
+            if(c.Type != null && !c.Type.equals('System') || c.Type != null && !c.Type.equals('Tariff')) {
+                emailMessage.ValidatedFromAddress = C_Settings.getSettings('EMAIL ADDRESS').get(c.Type);
+                System.debug('From: ' + emailMessage.ValidatedFromAddress);
+            } else if(c.Type == null || c.Type.equals('System') || c.Type.equals('Tariff')) {
+                emailMessage.ValidatedFromAddress = C_Settings.getSettings('EMAIL ADDRESS').get('System & Tariff');
+                System.debug('From: ' + emailMessage.ValidatedFromAddress);
+            } else {
+                emailMessage.addError('No default Email Address found for Type');
+                System.debug('From: ' + emailMessage.ValidatedFromAddress);
             }
         }
     }
