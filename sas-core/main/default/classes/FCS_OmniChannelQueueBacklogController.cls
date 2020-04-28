@@ -1,11 +1,15 @@
 /**
  * @author Anton Norell
- * @description Controller for component used to display queue status in component in utility bar
+ * @description Controller for component used to display queue status in in utility bar
  * @date 2020-04-20
 */
 public with sharing class FCS_OmniChannelQueueBacklogController {
-
-
+    /**
+     * Used to retrieve Ids for all the queues that the supplied user is a member of, either directly or indirectly.
+     * Indirect membership could be membership through a role or another public group.
+     * @param userId Id of user to retrieve queues for.
+     * @return List if Ids of the queues that the user is a member of. If no memberships are found, null is returned.
+     */
     @AuraEnabled
     public static List<Id> getQueueIds(Id userId){
         Set<Id> groupsWithUser = new Set<Id>();
@@ -45,10 +49,16 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
         for(GroupMember member:queueMemberships){
             queueIds.add(member.GroupId);
         }
-
-        return queueIds;
+        if(!queueIds.isEmpty()) return queueIds;
+        return null;
     }
 
+    /**
+     * Used to retrieve Queue status for supplied queue Ids. Generates a customer data structure containing informations
+     * about the queue, such as name and number of items in queue.
+     * @param queueIds Ids of queues to generate status records for
+     * @return List of custom queue status data structure
+     */
     @AuraEnabled
     public static QueueStatus[] getQueueStatus(Id[] queueIds){
         Map<Id, QueueStatus> queueStatusById = new Map<Id, QueueStatus>();
@@ -74,18 +84,42 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
 
         QueueStatus[] sortedQueueStatuses = queueStatusById.values();
         sortedQueueStatuses.sort();
-        if(!sortedQueueStatuses.isEmpty()) return sortedQueueStatuses;
-        return null;
+        return sortedQueueStatuses;
     }
 
-
+    /**
+     * Custom class used as data structure to hold information about a queue, such as number of items waiting in queue.
+     * The class is instantiated once per queue, but as queues can contain multiple SObject types which are retrieved separately,
+     * the addQueue() method is used to supply information about queue.
+     * Implements comparable interface to enable custom sorting.
+     */
     private class QueueStatus implements Comparable {
+        /**
+         * Id of queue
+         */
         @AuraEnabled public Id queueId { get; private set; }
+        /**
+         * Name of queue
+         */
         @AuraEnabled public String queueName { get; private set; }
+        /**
+         * Number of items waiting in queue
+         */
         @AuraEnabled public Integer countWaiting { get; private set;}
+        /**
+         * Datetime when the first item still waiting in queue was opened
+         */
         private Datetime oldestOpenTime;
+        /**
+         * Formatted string to display the time since the first waiting item in the queue was opened.
+         */
         @AuraEnabled public String longestWaitTime { get; private set;}
 
+        /**
+         * Constructor for class. Assigns initial values to class variables.
+         * @param queueId Id of queue to hold information for
+         * @param queueName Name of queue
+         */
         public QueueStatus(Id queueId, String queueName){
             this.queueId = queueId;
             this.queueName = queueName;
@@ -93,6 +127,12 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
             this.longestWaitTime = '--';
         }
 
+        /**
+         * Adds a new queue to the Queue status data structure. As records in queues are retrieved per object type,
+         * this method is used to add e.g. queue status each object in the same queue.
+         * @param countWaiting Number of items of a certain SObject type in queue
+         * @param oldestOpenTime Datetime for when the oldest record  of a certain SObject type still waiting in queue was opened.
+         */
         public void addQueue(Integer countWaiting, Datetime oldestOpenTime){
             this.countWaiting += countWaiting;
             if(this.oldestOpenTime == null || this.oldestOpenTime > oldestOpenTime){
@@ -108,6 +148,12 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
             }
         }
 
+        /**
+         * Implementation if Comparable interface to enable custom sorting. Sorts QueueStatus depending on
+         * number if items waiting in queue, where the most number of items should be first in a list.
+         * @param compareTo QueueStatus data type to compare to
+         * @return Sort order for compared record
+         */
         public Integer compareTo(Object compareTo) {
             QueueStatus compareToQueueStatus = (QueueStatus)compareTo;
             if(this.countWaiting == compareToQueueStatus.countWaiting) return 0;
