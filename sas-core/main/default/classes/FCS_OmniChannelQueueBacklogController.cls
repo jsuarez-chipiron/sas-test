@@ -4,6 +4,8 @@
  * @date 2020-04-20
 */
 public with sharing class FCS_OmniChannelQueueBacklogController {
+
+
     @AuraEnabled
     public static List<Id> getQueueIds(Id userId){
         Set<Id> groupsWithUser = new Set<Id>();
@@ -72,8 +74,10 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
 
         QueueStatus[] sortedQueueStatuses = queueStatusById.values();
         sortedQueueStatuses.sort();
-        return sortedQueueStatuses;
+        if(!sortedQueueStatuses.isEmpty()) return sortedQueueStatuses;
+        return null;
     }
+
 
     private class QueueStatus implements Comparable {
         @AuraEnabled public Id queueId { get; private set; }
