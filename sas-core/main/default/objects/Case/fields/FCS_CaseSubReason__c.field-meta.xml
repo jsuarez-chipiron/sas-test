@@ -15,6 +15,11 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Access rights</fullName>
+                <default>false</default>
+                <label>Access rights</label>
+            </value>
+            <value>
                 <fullName>Add EB in booking</fullName>
                 <default>false</default>
                 <label>Add EB in booking</label>
@@ -113,6 +118,11 @@
                 <fullName>Booking confirmation</fullName>
                 <default>false</default>
                 <label>Booking confirmation</label>
+            </value>
+            <value>
+                <fullName>Bug created</fullName>
+                <default>false</default>
+                <label>Bug created</label>
             </value>
             <value>
                 <fullName>BULK</fullName>
@@ -488,6 +498,11 @@
                 <fullName>Life time gold</fullName>
                 <default>false</default>
                 <label>Life time gold</label>
+            </value>
+            <value>
+                <fullName>Login</fullName>
+                <default>false</default>
+                <label>Login</label>
             </value>
             <value>
                 <fullName>Login/password issues</fullName>
@@ -968,6 +983,16 @@
                 <fullName>User guidance - web</fullName>
                 <default>false</default>
                 <label>User guidance - web</label>
+            </value>
+            <value>
+                <fullName>User related</fullName>
+                <default>false</default>
+                <label>User related</label>
+            </value>
+            <value>
+                <fullName>User story created</fullName>
+                <default>false</default>
+                <label>User story created</label>
             </value>
             <value>
                 <fullName>Waiting time</fullName>
