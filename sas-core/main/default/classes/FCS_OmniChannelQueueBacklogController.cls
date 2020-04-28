@@ -14,7 +14,12 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
     public static List<Id> getQueueIds(Id userId){
         Set<Id> groupsWithUser = new Set<Id>();
         //Populating the Group with User with GroupId we are filtering only for Group of Type Regular,Role and RoleAndSubordinates
-        for(GroupMember u :[SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :userId AND (Group.Type = 'Regular' OR Group.Type='Role' OR Group.Type='RoleAndSubordinates')]) {
+        for(GroupMember u :[
+                SELECT GroupId
+                FROM GroupMember
+                WHERE UserOrGroupId = :userId
+                AND (Group.Type = 'Regular' OR Group.Type='Role' OR Group.Type='RoleAndSubordinates')])
+        {
             groupsWithUser.add(u.GroupId);
         }
 
@@ -35,7 +40,10 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
 
         //Traversing the whole list of Groups to check any other nested Group
         Map<Id,Id> grMap = new Map<Id,Id>();
-        for(GroupMember gr : [SELECT Id,UserOrGroupId,GroupId FROM GroupMember WHERE (Group.Type = 'Regular' OR Group.Type='Role' OR Group.Type='RoleAndSubordinates')]) {
+        for(GroupMember gr : [
+                SELECT Id,UserOrGroupId,GroupId
+                FROM GroupMember
+                WHERE (Group.Type = 'Regular' OR Group.Type='Role' OR Group.Type='RoleAndSubordinates')]) {
             grMap.put(gr.UserOrGroupId,gr.GroupId);
         }
         for(Id i :memberOfGroupIds) {
@@ -44,7 +52,11 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
             }
         }
 
-        GroupMember[] queueMemberships = [SELECT Id, Group.Name, Group.Type, GroupId FROM GroupMember WHERE (UserOrGroupId IN :memberOfGroupIds OR UserOrGroupId = :userId) AND Group.QueueRoutingConfigId != NULL];
+        GroupMember[] queueMemberships = [
+                SELECT Id, Group.Name, Group.Type, GroupId
+                FROM GroupMember
+                WHERE (UserOrGroupId IN :memberOfGroupIds OR UserOrGroupId = :userId)
+                AND Group.QueueRoutingConfigId != NULL];
         Id[] queueIds = new Id[]{};
         for(GroupMember member:queueMemberships){
             queueIds.add(member.GroupId);
@@ -67,9 +79,21 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
         }
 
         AggregateResult[] queueItems = new AggregateResult[]{};
-        AggregateResult[] messagingSessions = [SELECT COUNT(Id), MIN(CreatedDate), OwnerId, Owner.Name FROM MessagingSession WHERE OwnerId IN :queueIds GROUP BY OwnerId, Owner.Name];
-        AggregateResult[] cases = [SELECT COUNT(Id), MIN(CreatedDate), OwnerId, Owner.Name FROM Case WHERE OwnerId IN :queueIds GROUP BY OwnerId, Owner.Name];
-        AggregateResult[] chatTranscripts = [SELECT COUNT(Id), MIN(CreatedDate), OwnerId, Owner.Name FROM LiveChatTranscript WHERE OwnerId IN :queueIds GROUP BY OwnerId, Owner.Name];
+        AggregateResult[] messagingSessions = [
+                SELECT COUNT(Id), MIN(CreatedDate), OwnerId, Owner.Name
+                FROM MessagingSession
+                WHERE OwnerId IN :queueIds
+                GROUP BY OwnerId, Owner.Name];
+        AggregateResult[] cases = [
+                SELECT COUNT(Id), MIN(CreatedDate), OwnerId, Owner.Name
+                FROM Case
+                WHERE OwnerId IN :queueIds
+                GROUP BY OwnerId, Owner.Name];
+        AggregateResult[] chatTranscripts = [
+                SELECT COUNT(Id), MIN(CreatedDate), OwnerId, Owner.Name
+                FROM LiveChatTranscript
+                WHERE OwnerId IN :queueIds
+                GROUP BY OwnerId, Owner.Name];
         queueItems.addAll(messagingSessions);
         queueItems.addAll(cases);
         queueItems.addAll(chatTranscripts);
