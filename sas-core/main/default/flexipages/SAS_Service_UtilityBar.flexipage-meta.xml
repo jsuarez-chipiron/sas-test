@@ -41,7 +41,7 @@
                 <type>decorator</type>
                 <value>440</value>
             </componentInstanceProperties>
-            <componentName>fcs_OmniChannelQueueBacklog</componentName>
+            <componentName>FCS_OmniChannelQueueBacklogContainer</componentName>
         </componentInstances>
         <name>utilityItems</name>
         <type>Region</type>

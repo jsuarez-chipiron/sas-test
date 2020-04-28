@@ -3,7 +3,7 @@
  * @description JS controller for component used to display queue status to an agent in Salesforce
  * @date 2020-04-20
  */
-import { LightningElement, track } from "lwc";
+import { LightningElement, track, api } from "lwc";
 import userId from '@salesforce/user/Id';
 import locale from '@salesforce/i18n/locale'
 import getQueueIds from '@salesforce/apex/FCS_OmniChannelQueueBacklogController.getQueueIds';
@@ -35,7 +35,7 @@ export default class FCS_OmniChannelQueueBacklog extends LightningElement {
   /**
    * Indicates that an error has occurred and should be shown in the component.
    */
-  error = undefined;
+  @api error = undefined;
   /**
    * Datetime storing the values for when the data in the component was last refreshed. Used to display value in component.
    */
@@ -45,6 +45,7 @@ export default class FCS_OmniChannelQueueBacklog extends LightningElement {
    * Method running when the component is inserted into the DOM. Performs a first data refresh.
    */
   connectedCallback() {
+    this.dispatchEvent(new CustomEvent('componentInitiated'));
     this.refreshQueueStatus();
   }
 
@@ -53,7 +54,8 @@ export default class FCS_OmniChannelQueueBacklog extends LightningElement {
    * if the value has not been set before. Then the status for those queues are retrieved.
    * @returns List of queue statuses in custom format (see controller).
    */
-  async refreshQueueStatus(){
+  @api async refreshQueueStatus(){
+    console.log('Running refresh');
     this.error = undefined;
     this.showSpinner = true;
     try{
