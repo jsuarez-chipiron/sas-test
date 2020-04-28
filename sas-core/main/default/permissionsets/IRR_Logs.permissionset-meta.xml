@@ -47,6 +47,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_LastResponseDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>IRR_CommunicationLog__c.IRR_MessageKey__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -68,6 +73,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>IRR_CommunicationLog__c.IRR_ResponseMessage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_Response__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
