@@ -6,6 +6,10 @@
 @RestResource(urlMapping='/mid/sendsms')
 global without sharing class MID_SendSMS {
     /**
+     * Set by test classes to disable whitelisting functionality
+     */
+    @TestVisible static Boolean DISABLE_WHITELIST = false;
+    /**
      * POST
      * Allows the caller to send an SMS to multiple recipients routed via marketing cloud
      */
@@ -20,24 +24,32 @@ global without sharing class MID_SendSMS {
                 if(String.isBlank(req.messageType))req.messageType='MID';
                 if(req.recipients==null || req.recipients.size()==0)C_RestUtil.badRequest('Must specify a recipients');
 
+                Organization org = IRR_SEL_OrganizationSelector.newInstance().selectOrganization();
+                Set<String> whitelistedRecipients = !org.IsSandbox || DISABLE_WHITELIST ? null : IRR_SEL_RecipientWhitelistSelector.newInstance().getAllWhitelistedRecipients();
+
                 Integer recSz = req.recipients.size();
                 SMSResultWrapper[] resultWrapperList = new SMSResultWrapper[recSz];
                 List<IRR_SVC_SFMCService.SMSMessage> messages = new List<IRR_SVC_SFMCService.SMSMessage>();
                 for(Integer i=0;i<recSz;i++){
                     SendSMSRecipient rec = req.recipients[i];
                     SMSResultWrapper smsw = new SMSResultWrapper();
+                    smsw.filtered = false;
                     resultWrapperList[i] = smsw;
                     if(String.isBlank(rec.phoneNumber)){
                         smsw.errorCode = 40001;
                         smsw.errorMessage = 'No phone number specified';
-                        //TODO maybe add additional validations
                     }
                     else {
                         if(rec.phoneNumber.startsWith('+'))rec.phoneNumber=rec.phoneNumber.substring(1);
-                        IRR_SVC_SFMCService.SMSMessage sms = new IRR_SVC_SFMCService.SMSMessage(req.message,rec.phoneNumber,rec.phoneNumber);
-                        sms.externalId = rec.externalId;
-                        messages.add(sms);
-                        smsw.smsIdx = messages.size()-1;
+                        smsw.sms = new IRR_SVC_SFMCService.SMSMessage(req.message,rec.phoneNumber,rec.phoneNumber);
+                        smsw.sms.externalId = rec.externalId;
+                        if(whitelistedRecipients==null || whitelistedRecipients.contains(rec.phoneNumber)){
+                            messages.add(smsw.sms);
+                            smsw.smsIdx = messages.size()-1;
+                        }
+                        else {
+                            smsw.filtered = true;
+                        }
                     }
                 }
                 if(!messages.isEmpty())IRR_SVC_SFMCService.sendSMSMessages(messages);
@@ -51,12 +63,12 @@ global without sharing class MID_SendSMS {
                     SMSResultWrapper smsw = resultWrapperList[i];
                     SendSMSResult res = new SendSMSResult();
                     if(smsw.smsIdx!=null){
-                        IRR_SVC_SFMCService.SMSMessage sms = messages[smsw.smsIdx];
+                        IRR_SVC_SFMCService.SMSMessage sms = smsw.filtered ? smsw.sms : messages[smsw.smsIdx];
                         res.success = sms.errorCode==null;
                         res.messageKey = sms.messageKey;
                         res.errorCode = sms.errorCode;
                         res.errorMessage = sms.errorMessage;
-                        logFactory.add(sms, req.messageType, req.messageGroupId);
+                        logFactory.add(sms, req.messageType, req.messageGroupId, smsw.filtered);
                     }
                     else {
                         res.success = false;
@@ -91,6 +103,14 @@ global without sharing class MID_SendSMS {
          * THe index of the SMS object in the messages list
          */
         Integer smsIdx;
+        /**
+         * Whether the sms was filtered
+         */
+        Boolean filtered;
+        /**
+         * The sms message sent
+         */
+        IRR_SVC_SFMCService.SMSMessage sms;
     }
 
     /**
