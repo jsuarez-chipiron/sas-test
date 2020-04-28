@@ -5,6 +5,6 @@
  <body style="height: auto; min-height: auto;">
   {{{customInfo.content}}} 
   <br />
-  <br />Please answer SAS YES to confirm or SAS NO to decline.
+  <br />Please reply SASYES to confirm or SASNO to decline.
  </body>
 </html>
