@@ -63,10 +63,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Ticket Status</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Travel pass</fullName>
             <default>false</default>
         </values>
@@ -214,10 +210,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Musical</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Name change</fullName>
             <default>false</default>
         </values>
@@ -247,14 +239,6 @@
         </values>
         <values>
             <fullName>Receipt</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Referred to Travel Agency</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Refund status</fullName>
             <default>false</default>
         </values>
         <values>
@@ -322,27 +306,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Voucher_Expire date</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Voucher_Help with usage</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Voucher_How to request</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Voucher_Online problem during request</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Voucher_Status waiting time</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Wheelchair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong department</fullName>
             <default>false</default>
         </values>
     </picklistValues>
