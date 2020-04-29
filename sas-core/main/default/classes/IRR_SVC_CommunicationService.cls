@@ -30,9 +30,8 @@ public class IRR_SVC_CommunicationService {
     public static void processEvent(String eventType, Object payload) {
         service().processEvent(eventType, payload);
     }
-
-    public static void processGDPRLogs(Set<Id> idSet) {
-        service().processGDPRLogs(idSet);
+    public static void processGDPRLogs(Set<Id> idSet, DateTime lastRetentionDate) {
+        service().processGDPRLogs(idSet, lastRetentionDate);
     }
 
     private static IRR_SVC_ICommunicationService service() {

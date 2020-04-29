@@ -9,10 +9,10 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
 
     private static final String SMS_ENDPOINT = '/messaging/v1/sms/messages/';
     private static final String EMAIL_ENDPOINT = '/messaging/v1/email/messages/';
-
+    private static final String CONTACT_DELETE_ENDPOINT = '/contacts/v1/contacts/actions/delete';
     private static final String EMAIL_SEND_DEFINITION = 'generic_transactional_email';
-
     private static final String NAMED_CREDENTIAL = 'callout:SAS_MC_API';
+    private static final String NAMED_CREDENTIAL_MAIN_BU = 'callout:SAS_MC_API_MAIN_BU';
 
     private static C_IIntegrationExecutor integrationExecutor {
         get {
@@ -27,8 +27,40 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
         private set;
     }
 
-    public void deleteContacts(Set<String> contactKeys) {
-        //TODO
+    private static C_IIntegrationExecutor integrationExecutorMainBU {
+        get {
+            if (integrationExecutorMainBU == null) {
+                integrationExecutorMainBU =
+                        IRR_Application.IntegrationExecutorBuilder.newInstance(IRR_Application.IntegrationType.REST)
+                                .setBaseURL(NAMED_CREDENTIAL_MAIN_BU)
+                                .build();
+            }
+            return integrationExecutorMainBU;
+        }
+        private set;
+    }
+
+    public Boolean deleteContacts(Set<String> contactKeys) {
+        Map<String, Object> requestBody = createDeleteContactsBody(contactKeys);
+                                        
+        Map<String, Object> queryParams = new Map<String, Object>{
+            'type' => 'keys'
+        };
+        C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutorMainBU.executeRequest(
+            CONTACT_DELETE_ENDPOINT, C_IntegrationExecutor.Method.POST, requestBody, queryParams);
+
+        if(responseObject.statusCode>=200 && responseObject.statusCode<300){
+            System.debug(responseObject.responseBody.substringAfter('resultMessages'));
+            System.debug('OK Callout');
+            return true;
+        }
+        else {
+            System.debug(responseObject.responseBody.substringAfter('resultMessages'));
+            System.debug(responseObject.responseBody);
+
+            throw new IRR_SVC_SFMCService.SFMCException('Something went wrong deleting contacts in MC: ' + contactKeys);
+            
+        } 
     }
 
     public List<IRR_SVC_SFMCService.EmailMessage> sendEmailMessages(List<IRR_SVC_SFMCService.EmailMessage> messages) {
@@ -202,6 +234,28 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
                 'definitionKey' => sendDefinition,
                 'recipients' => recipients
         };
+        return requestBody;
+    }
+
+    /**
+     * @author Ludvig Wälimaa, Deloitte
+     * @date 2020
+     *
+     * @description TODO
+     *
+     * @param sendDefinition SFMC Send Definition key
+     * @param messages List of SMS Messages
+     *
+     * @return SFMC Request body structure
+     */
+    private Map<String, Object> createDeleteContactsBody(Set<String> contactKeys) {
+        
+        Map<String, Object> requestBody = new Map<String, Object>{
+                'ContactTypeId' => '0',
+                'values' => contactKeys,
+                'DeleteOperationType' => 'ContactAndAttributes'
+        };
+
         return requestBody;
     }
 }

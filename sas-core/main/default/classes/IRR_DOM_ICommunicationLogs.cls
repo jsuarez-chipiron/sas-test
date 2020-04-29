@@ -6,5 +6,5 @@
 */
 
 public interface IRR_DOM_ICommunicationLogs extends fflib_ISObjectDomain {
-    Set<String> processGDPRLogs(fflib_ISObjectUnitOfWork uow);
+    void processGDPRLogs(fflib_ISObjectUnitOfWork uow, DateTime lastRetentionDate);
 }
