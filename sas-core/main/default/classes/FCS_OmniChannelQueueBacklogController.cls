@@ -11,6 +11,7 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
      * @return List if Ids of the queues that the user is a member of. If no memberships are found, null is returned.
      */
     @AuraEnabled
+    @TestVisible
     public static List<Id> getQueueIds(Id userId){
         Set<Id> groupsWithUser = new Set<Id>();
         //Populating the Group with User with GroupId we are filtering only for Group of Type Regular,Role and RoleAndSubordinates
@@ -71,6 +72,7 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
      * @param queueIds Ids of queues to generate status records for
      * @return List of custom queue status data structure
      */
+    @TestVisible
     @AuraEnabled
     public static QueueStatus[] getQueueStatus(Id[] queueIds){
         Map<Id, QueueStatus> queueStatusById = new Map<Id, QueueStatus>();
