@@ -24,7 +24,7 @@
      */
     @isTest static void selectMostRecentLog(){
         insert new IRR_CommunicationLog__c(IRR_Status__c='Sent',IRR_Recipient__c='46700000000',IRR_ExternalId__c='SMSResponseTest11');
-        insert new IRR_SMSResponse__c(IRR_InfoMessage__c='MSG1',IRR_InfoFrom__c='46700000000',IRR_DateUTC__c=Date.newInstance(2020,05,01),IRR_TimeUTC__c=Time.newInstance(8,30,24,0));
+        insert new IRR_SMSResponse__c(IRR_InfoMessageNouns__c='MSG1',IRR_InfoFrom__c='46700000000',IRR_DateUTC__c=Date.newInstance(2020,05,01),IRR_TimeUTC__c=Time.newInstance(8,30,24,0));
         IRR_CommunicationLog__c comLog0 = [SELECT Id,IRR_Status__c,IRR_LastResponseDate__c,IRR_Response__c FROM IRR_CommunicationLog__c WHERE IRR_ExternalId__c='SMSResponseTest0'];
         IRR_CommunicationLog__c comLog11 = [SELECT Id,IRR_Status__c,IRR_LastResponseDate__c,IRR_Response__c FROM IRR_CommunicationLog__c WHERE IRR_ExternalId__c='SMSResponseTest11'];
         System.assertEquals('Sent', comLog0.IRR_Status__c);
@@ -41,7 +41,7 @@
      * Tests that a response which cannot be associated to a log does not cause an error
      */
     @isTest static void noLogPresent(){
-        insert new IRR_SMSResponse__c(IRR_InfoMessage__c='MSG1',IRR_InfoFrom__c='46730000000',IRR_DateUTC__c=Date.newInstance(2020,05,01),IRR_TimeUTC__c=Time.newInstance(8,30,24,0));
+        insert new IRR_SMSResponse__c(IRR_InfoMessageNouns__c='MSG1',IRR_InfoFrom__c='46730000000',IRR_DateUTC__c=Date.newInstance(2020,05,01),IRR_TimeUTC__c=Time.newInstance(8,30,24,0));
         
         System.assertEquals(1,[SELECT Id FROM C_Log__c WHERE Severity__c='Warning'].size());
     }
@@ -50,7 +50,7 @@
      * Tests that message is properly truncated when too long to store
      */
     @isTest static void truncateMessage(){
-        insert new IRR_SMSResponse__c(IRR_InfoMessage__c='MESSAGE LONG ENOUGH TO BREAK 255 CHARS',IRR_InfoFrom__c='46700000002',IRR_DateUTC__c=Date.newInstance(2020,05,01),IRR_TimeUTC__c=Time.newInstance(8,30,24,0));
+        insert new IRR_SMSResponse__c(IRR_InfoMessageNouns__c='MESSAGE LONG ENOUGH TO BREAK 255 CHARS',IRR_InfoFrom__c='46700000002',IRR_DateUTC__c=Date.newInstance(2020,05,01),IRR_TimeUTC__c=Time.newInstance(8,30,24,0));
         IRR_CommunicationLog__c comLog2 = [SELECT Id,IRR_Status__c,IRR_LastResponseDate__c,IRR_Response__c FROM IRR_CommunicationLog__c WHERE IRR_ExternalId__c='SMSResponseTest2'];
 
         System.debug([SELECT Id,Message__c FROM C_Log__c]);
