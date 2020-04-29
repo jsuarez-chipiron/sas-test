@@ -72,6 +72,11 @@ export default class IRR_ManualCommunication extends LightningElement {
         const _ = this.init();
     }
 
+    get noPassengersFoundText() {
+        return this.passengerResult.length === 0 ?
+            'No passengers found, or flight does not exist. Please check Flight ID.' : 'No passengers matching filter';
+    }
+
     async init() {
         try {
             this.templatesBySendMode = await getManualTemplatesBySendMode();
