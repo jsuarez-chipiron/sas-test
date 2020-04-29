@@ -308,8 +308,8 @@ public without sharing class MCENS_EnsEventTriggerHandler {
          */
         override void setStatus(IRR_CommunicationLog__c log){
             log.IRR_Status__c = 'Bounced';
-            log.IRR_StatusCode__c = Decimal.valueOf((String)this.infoMap.get('bounceCode'));
-            log.IRR_ErrorMessage__c = ((String)this.infoMap.get('bounceMessage')).abbreviate(2000);
+            log.IRR_StatusCode__c = -1;
+            log.IRR_ErrorMessage__c = (((String)this.infoMap.get('bounceCode')) +': '+ ((String)this.infoMap.get('bounceMessage'))).abbreviate(2000);
             log.IRR_ErrorReason__c = ((String)this.infoMap.get('smtpReason')).abbreviate(2000);
         }
     }
