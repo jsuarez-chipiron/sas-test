@@ -2,6 +2,11 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldPermissions>
         <editable>false</editable>
+        <field>IRR_SMSResponse__c.IRR_CommunicationLog__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>IRR_SMSResponse__c.IRR_CompositeId__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -74,10 +79,10 @@
     <label>IRR SMSResponse</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
+        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>IRR_SMSResponse__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
