@@ -23,6 +23,11 @@ public class IRR_SVC_CommunicationService {
      */
     static final String COM_LOG_CHANNEL_SMS = 'SMS';
 
+    /**
+     * Starting text of copyright notice to strip from communication log message content
+     */
+    static final String COM_LOG_COPYRIGHT_NOTICE = 'Scandinavian Airlines ©';
+
     public static void processEvent(String eventType, String payload) {
         service().processEvent(eventType, payload);
     }
@@ -47,8 +52,7 @@ public class IRR_SVC_CommunicationService {
          **/
         public List<IRR_CommunicationLog__c> communicationLogs {get; private set;}
 
-        public CommunicationLogFactory(fflib_ISObjectUnitOfWork unitOfWork)
-        {
+        public CommunicationLogFactory(fflib_ISObjectUnitOfWork unitOfWork) {
             this.unitOfWork = unitOfWork;
             this.communicationLogs = new List<IRR_CommunicationLog__c>();
         }
@@ -76,7 +80,8 @@ public class IRR_SVC_CommunicationService {
                 log.IRR_StatusCode__c = message.SFMCMessage.errorCode;
                 log.IRR_ErrorMessage__c = message.SFMCMessage.errorMessage;
             }
-            //TODO CONTENT?
+            log.IRR_MessageContent__c = String.isNotBlank(message.content) && message.content.startsWith('<!DOCTYPE') ?
+                    message.content.stripHtmlTags().substringBeforeLast(COM_LOG_COPYRIGHT_NOTICE) : message.content;
             unitOfWork.registerNew(log);
         }
 
@@ -107,6 +112,7 @@ public class IRR_SVC_CommunicationService {
                 log.IRR_StatusCode__c = sms.errorCode;
                 log.IRR_ErrorMessage__c = sms.errorMessage;
             }
+            log.IRR_MessageContent__c = sms.content;
             unitOfWork.registerNew(log);
         }
     }
