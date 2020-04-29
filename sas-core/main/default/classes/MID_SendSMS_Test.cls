@@ -59,6 +59,7 @@ private class MID_SendSMS_Test {
      * Tests sending an SMS with no message
      */
     @isTest private static void sendSMSNoMessage(){
+        MID_SendSMS.DISABLE_WHITELIST = true;
         setupRequest('{"messageGroupId":"TEST1234567","messageType":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTNoMessage1'},
@@ -77,6 +78,7 @@ private class MID_SendSMS_Test {
      * Tests sending an SMS with no recipients
      */
     @isTest private static void sendSMSNoRecipients(){
+        MID_SendSMS.DISABLE_WHITELIST = true;
         setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTNoRecipients1'},
@@ -96,6 +98,7 @@ private class MID_SendSMS_Test {
      * Tests sending an SMS where the recipient has no phone number
      */
     @isTest private static void sendSMSNoPhoneNumber(){
+        MID_SendSMS.DISABLE_WHITELIST = true;
         setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[{}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTNoPhoneNumber1'},
@@ -121,6 +124,7 @@ private class MID_SendSMS_Test {
      * Tests sending an SMS during system maintainence
      */
     @isTest private static void sendSMSSystemMaintainence(){
+        MID_SendSMS.DISABLE_WHITELIST = true;
         setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSystemMaintainence1'},
@@ -141,6 +145,7 @@ private class MID_SendSMS_Test {
      * Tests sending a successful SMS to a single recipient
      */
     @isTest private static void sendSuccessfulSMSToSingleRecipient(){
+        MID_SendSMS.DISABLE_WHITELIST = true;
         setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSend1'},
@@ -166,6 +171,7 @@ private class MID_SendSMS_Test {
      * Tests sending a failed SMS to a single recipient
      */
     @isTest private static void sendFailedSMSToSingleRecipient(){
+        MID_SendSMS.DISABLE_WHITELIST = true;
         setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[{"phoneNumber":"+46700000000"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSendFail1'},
@@ -191,6 +197,7 @@ private class MID_SendSMS_Test {
      * Tests sending a successful SMS to a single recipient
      */
     @isTest private static void sendSuccessfulSMSToMultipleRecipient(){
+        MID_SendSMS.DISABLE_WHITELIST = true;
         setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSendMulti1','TESTSendMulti2','TESTSendMulti3'},
@@ -224,6 +231,7 @@ private class MID_SendSMS_Test {
      * Tests sending a mixed result SMS to a single recipient
      */
     @isTest private static void sendMixedSMSToMultipleRecipient(){
+        MID_SendSMS.DISABLE_WHITELIST = true;
         setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSendMultiMixed1','TESTSendMultiMixed2','TESTSendMultiMixed3'},
@@ -257,6 +265,7 @@ private class MID_SendSMS_Test {
      * Tests sending a failed SMS to a multiple recipient
      */
     @isTest private static void sendFailedSMSToMutipleRecipient(){
+        MID_SendSMS.DISABLE_WHITELIST = true;
         setupRequest('{"message":"TEST MESSAGE","messageGroupId":"TEST1234567","messageType":"MID","recipients":[{"phoneNumber":"+46700000000"},{"phoneNumber":"+46700000001"},{"phoneNumber":"+46700000002"}]}');
         SMSAnswerMock smsMock = new SMSAnswerMock(
             new String[]{'TESTSendMultiFail1','TESTSendMultiFail2','TESTSendMultiFail3'},

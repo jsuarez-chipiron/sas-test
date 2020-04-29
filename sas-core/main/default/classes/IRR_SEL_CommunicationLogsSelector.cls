@@ -1,8 +1,7 @@
 /**
-* @author Niklas Lundkvist, Deloitte
+* @author Ludvig Wälimaa, Deloitte
 * @date 2020
 *
-* @description TODO
 */
 
 public class IRR_SEL_CommunicationLogsSelector extends fflib_SObjectSelector
@@ -16,7 +15,9 @@ public class IRR_SEL_CommunicationLogsSelector extends fflib_SObjectSelector
     public List<Schema.SObjectField> getSObjectFieldList() {
         return new List<Schema.SObjectField>
         {
-                IRR_CommunicationLog__c.Id
+                IRR_CommunicationLog__c.Id,
+                IRR_CommunicationLog__c.CreatedDate,
+                IRR_CommunicationLog__c.IRR_ContactKey__c
         };
     }
 
@@ -24,12 +25,18 @@ public class IRR_SEL_CommunicationLogsSelector extends fflib_SObjectSelector
         return IRR_CommunicationLog__c.SObjectType;
     }
 
-    public Database.QueryLocator getGDPRLogsQueryLocator(Integer olderThanDays) {
-        return null;
+    public Database.QueryLocator getGDPRLogsQueryLocator(DateTime lastRetentionDate) {
+        fflib_QueryFactory queryFactory = newQueryFactory()
+                .setCondition('CreatedDate <= :lastRetentionDate');
+        System.debug(queryFactory.toSOQL());
+        return Database.getQueryLocator(queryFactory.toSOQL());
     }
 
     public List<IRR_CommunicationLog__c> selectLogsNewerThanForContactKey(Set<String> contactKeys,
-            Integer newerThanDays) {
-        return null;
+        DateTime lastRetentionDate) {
+        fflib_QueryFactory queryFactory = newQueryFactory()
+        .setCondition('CreatedDate > :lastRetentionDate AND IRR_ContactKey__c IN :contactKeys');
+        System.debug(queryFactory.toSOQL());
+        return Database.query(queryFactory.toSOQL());
     }
 }

@@ -70,7 +70,7 @@ global class MSG_RendererEnhanced implements MSG_IRenderer{
             tm = new TemplateModel(tc, tlm, isHtml);
             templateModelsByTemplateNameHTML.put(message.template, tm);
         }
-        ObjectValueResolver resolver = new ObjectValueResolver(message.variables);
+        ObjectValueResolver resolver = new ObjectValueResolver(message.variables, isHtml);
         if (tm.subject!=null) message.subject = tm.subject.render(resolver);
         String body;
         if (tm.letterhead == null || !isHtml) {
@@ -445,9 +445,11 @@ global class MSG_RendererEnhanced implements MSG_IRenderer{
     global class ObjectValueResolver extends Expr_Expr.SymbolValueResolver {
 
         Map<String, Object> variableMap;
+        Boolean isHTML;
 
-        public ObjectValueResolver(Map<String, Object> variableMap) {
+        public ObjectValueResolver(Map<String, Object> variableMap, Boolean isHTML) {
             this.variableMap = variableMap;
+            this.isHTML = isHTML;
         }
 
         /**
@@ -465,6 +467,10 @@ global class MSG_RendererEnhanced implements MSG_IRenderer{
                 } else {
                     return null;
                 }
+            }
+            if (parsedValue instanceof String && isHTML) {
+                String parsedString = (String) parsedValue;
+                parsedValue = parsedString.replace('\n', '<br />');
             }
             return parsedValue;
         }

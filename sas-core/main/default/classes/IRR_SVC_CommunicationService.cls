@@ -15,9 +15,18 @@ public class IRR_SVC_CommunicationService {
      */
     static final String COM_LOG_STATUS_ERROR = 'Error';
     /**
+     * The status set for created communication log records which were filtered due to not being in the whitelist
+     */
+    static final String COM_LOG_STATUS_FILTERED = 'Not Whitelisted';
+    /**
      * The channel set fior created sms communication log records
      */
     static final String COM_LOG_CHANNEL_SMS = 'SMS';
+
+    /**
+     * Starting text of copyright notice to strip from communication log message content
+     */
+    static final String COM_LOG_COPYRIGHT_NOTICE = 'Scandinavian Airlines ©';
 
     public static void processEvent(String eventType, String payload) {
         service().processEvent(eventType, payload);
@@ -26,9 +35,8 @@ public class IRR_SVC_CommunicationService {
     public static void processEvent(String eventType, Object payload) {
         service().processEvent(eventType, payload);
     }
-
-    public static void processGDPRLogs(Set<Id> idSet) {
-        service().processGDPRLogs(idSet);
+    public static void processGDPRLogs(Set<Id> idSet, DateTime lastRetentionDate) {
+        service().processGDPRLogs(idSet, lastRetentionDate);
     }
 
     private static IRR_SVC_ICommunicationService service() {
@@ -44,8 +52,7 @@ public class IRR_SVC_CommunicationService {
          **/
         public List<IRR_CommunicationLog__c> communicationLogs {get; private set;}
 
-        public CommunicationLogFactory(fflib_ISObjectUnitOfWork unitOfWork)
-        {
+        public CommunicationLogFactory(fflib_ISObjectUnitOfWork unitOfWork) {
             this.unitOfWork = unitOfWork;
             this.communicationLogs = new List<IRR_CommunicationLog__c>();
         }
@@ -73,7 +80,8 @@ public class IRR_SVC_CommunicationService {
                 log.IRR_StatusCode__c = message.SFMCMessage.errorCode;
                 log.IRR_ErrorMessage__c = message.SFMCMessage.errorMessage;
             }
-            //TODO CONTENT?
+            log.IRR_MessageContent__c = String.isNotBlank(message.content) && message.content.startsWith('<!DOCTYPE') ?
+                    message.content.stripHtmlTags().substringBeforeLast(COM_LOG_COPYRIGHT_NOTICE) : message.content;
             unitOfWork.registerNew(log);
         }
 
@@ -82,8 +90,9 @@ public class IRR_SVC_CommunicationService {
          * @param sms The sms message for which to add a communication log record
          * @param messageType The type of message sent
          * @param groupExtId The external id of the group of the message sent
+         * @param filtered Whether the message was filtered due to not being in the whitelist
          */
-        public void add(IRR_SVC_SFMCService.SMSMessage sms, String messageType, String groupExtId) {
+        public void add(IRR_SVC_SFMCService.SMSMessage sms, String messageType, String groupExtId,Boolean filtered) {
             IRR_CommunicationLog__c log = new IRR_CommunicationLog__c();
             log.IRR_Channel__c = COM_LOG_CHANNEL_SMS;
             log.IRR_ContactKey__c = sms.contactKey;
@@ -92,6 +101,9 @@ public class IRR_SVC_CommunicationService {
             log.IRR_ExternalId__c = sms.externalId;
             log.IRR_ExternalGroupId__c = groupExtId;
             log.IRR_MessageType__c = messageType;
+            if(filtered){
+                log.IRR_Status__c = COM_LOG_STATUS_FILTERED;
+            }
             if(sms.errorCode==null || sms.errorCode==0) {
                 log.IRR_Status__c = COM_LOG_STATUS_CREATED;
             }
@@ -100,6 +112,7 @@ public class IRR_SVC_CommunicationService {
                 log.IRR_StatusCode__c = sms.errorCode;
                 log.IRR_ErrorMessage__c = sms.errorMessage;
             }
+            log.IRR_MessageContent__c = sms.content;
             unitOfWork.registerNew(log);
         }
     }

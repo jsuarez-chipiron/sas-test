@@ -71,11 +71,20 @@ public class IRR_SVC_CommunicationServiceImpl implements IRR_SVC_ICommunicationS
         System.debug('\n\nPERF - Committed Work in: ' + (endTime - startTime) + '\n\n');
     }
 
-    public void processGDPRLogs(Set<Id> idSet) {
+    /**
+     * @author Ludvig Wälimaa, Deloitte
+     * @date 2020
+     *
+     * @description Initiates process for removing Communiction Logs from Service Cloud and MC.
+     *
+     * @param idSet Ids of Communication Logs valid for deletion
+     * @param lastRetentionDate The last retention date of a Communication Log
+     */
+    public void processGDPRLogs(Set<Id> idSet, DateTime lastRetentionDate) {
         List<IRR_CommunicationLog__c> logs = IRR_SEL_CommunicationLogsSelector.newInstance().selectSObjectsById(idSet);
         IRR_DOM_ICommunicationLogs domain = IRR_DOM_CommunicationLogs.newInstance(logs);
         fflib_ISObjectUnitOfWork uow = IRR_Application.UnitOfWork.newInstance();
-        Set<String> contactKeysToDelete = domain.processGDPRLogs(uow);
+        domain.processGDPRLogs(uow, lastRetentionDate);
 
         uow.commitWork();
     }

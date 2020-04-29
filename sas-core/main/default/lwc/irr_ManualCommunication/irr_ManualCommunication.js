@@ -22,8 +22,8 @@ const columns = [
     { label: 'Name', fieldName: 'lastNameSlashFirstName', sortable: true },
     { label: 'Phone', fieldName: 'phoneNumber', sortable: true, initialWidth: 115 },
     { label: 'Email', fieldName: 'emailAddress', sortable: true },
-    { label: 'Bkg Class', fieldName: 'thisSegment.bookingClass', sortable: true, initialWidth: 60 },
     { label: 'Serv Class', fieldName: 'thisSegment.serviceClass', sortable: true, initialWidth: 60 },
+    { label: 'Bkg Class', fieldName: 'thisSegment.bookingClass', sortable: true, initialWidth: 60 },
     { label: 'Status', fieldName: 'thisSegment.status', sortable: true },
     { label: 'Code', fieldName: 'thisSegment.statusCode', sortable: true, initialWidth: 70 },
     { label: 'SSR', fieldName: 'SSR', sortable: true, initialWidth: 70 },
@@ -70,6 +70,11 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     connectedCallback() {
         const _ = this.init();
+    }
+
+    get noPassengersFoundText() {
+        return this.passengerResult.length === 0 ?
+            'No passengers found, or flight does not exist. Please check Flight ID.' : 'No passengers matching filter';
     }
 
     async init() {

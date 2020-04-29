@@ -11,7 +11,7 @@
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>SAS IRR</label>
-    <navType>Console</navType>
+    <navType>Standard</navType>
     <tabs>standard-home</tabs>
     <tabs>IRR_CommunicationLog__c</tabs>
     <tabs>Manual_Communication</tabs>
