@@ -21,7 +21,6 @@ global with sharing class GDPR_DeleteCommunicationLog_Batch extends SBS_Schedule
         @param bc The batch context
     */
     global Database.QueryLocator start(Database.BatchableContext bc){
-        System.debug('lastRetentionDate ' + lastRetentionDate);
         return IRR_SEL_CommunicationLogsSelector.newInstance().getGDPRLogsQueryLocator(lastRetentionDate);
     }
 
@@ -34,7 +33,6 @@ global with sharing class GDPR_DeleteCommunicationLog_Batch extends SBS_Schedule
 	global override void executeScope(Database.BatchableContext bc, SObject[] sObjScope){
         Set<Id> idSet = new Set<Id>();
         for(SObject so : sObjScope) idSet.add(so.Id);
-        System.debug('idSet ' + idSet);
         IRR_SVC_CommunicationService.processGDPRLogs(idSet, lastRetentionDate);
     }
 

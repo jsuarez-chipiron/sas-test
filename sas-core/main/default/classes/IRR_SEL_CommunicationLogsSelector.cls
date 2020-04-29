@@ -28,7 +28,6 @@ public class IRR_SEL_CommunicationLogsSelector extends fflib_SObjectSelector
     public Database.QueryLocator getGDPRLogsQueryLocator(DateTime lastRetentionDate) {
         fflib_QueryFactory queryFactory = newQueryFactory()
                 .setCondition('CreatedDate <= :lastRetentionDate');
-        System.debug(queryFactory.toSOQL());
         return Database.getQueryLocator(queryFactory.toSOQL());
     }
 
@@ -36,7 +35,6 @@ public class IRR_SEL_CommunicationLogsSelector extends fflib_SObjectSelector
         DateTime lastRetentionDate) {
         fflib_QueryFactory queryFactory = newQueryFactory()
         .setCondition('CreatedDate > :lastRetentionDate AND IRR_ContactKey__c IN :contactKeys');
-        System.debug(queryFactory.toSOQL());
         return Database.query(queryFactory.toSOQL());
     }
 }

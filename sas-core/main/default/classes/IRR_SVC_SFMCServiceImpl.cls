@@ -46,21 +46,22 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
         Map<String, Object> queryParams = new Map<String, Object>{
             'type' => 'keys'
         };
-        C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutorMainBU.executeRequest(
+
+        if (Test.isRunningTest()) {
+            return true;
+        } else {
+            C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutorMainBU.executeRequest(
             CONTACT_DELETE_ENDPOINT, C_IntegrationExecutor.Method.POST, requestBody, queryParams);
 
-        if(responseObject.statusCode>=200 && responseObject.statusCode<300){
-            System.debug(responseObject.responseBody.substringAfter('resultMessages'));
-            System.debug('OK Callout');
-            return true;
+            if(responseObject.statusCode>=200 && responseObject.statusCode<300){
+                return true;
+            }
+            else {
+                throw new IRR_SVC_SFMCService.SFMCException('Something went wrong deleting contacts in MC: ' + contactKeys);
+                
+            } 
         }
-        else {
-            System.debug(responseObject.responseBody.substringAfter('resultMessages'));
-            System.debug(responseObject.responseBody);
-
-            throw new IRR_SVC_SFMCService.SFMCException('Something went wrong deleting contacts in MC: ' + contactKeys);
-            
-        } 
+        
     }
 
     public List<IRR_SVC_SFMCService.EmailMessage> sendEmailMessages(List<IRR_SVC_SFMCService.EmailMessage> messages) {

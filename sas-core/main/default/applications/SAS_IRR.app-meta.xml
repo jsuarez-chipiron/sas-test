@@ -11,11 +11,10 @@
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>SAS IRR</label>
-    <navType>Standard</navType>
+    <navType>Console</navType>
     <tabs>standard-home</tabs>
     <tabs>IRR_CommunicationLog__c</tabs>
     <tabs>Manual_Communication</tabs>
-    <tabs>IRR_SMSResponse__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SAS_IRR_UtilityBar</utilityBar>
 </CustomApplication>

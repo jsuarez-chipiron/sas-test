@@ -39,6 +39,10 @@ private class GDPR_Delete_Test {
         insert spList;
         spList[0].ParentId = cList[3].Id;
         update spList;
+
+        IRR_CommunicationLog__c comlog = new IRR_CommunicationLog__c();
+        comlog.IRR_ContactKey__c = 'test@email.com';
+        insert comlog;
     }
     /**
         Sets up mock retention fields for tests due to a Salesforce bug which occurs when running all tests and fetching field definitions
@@ -319,5 +323,31 @@ private class GDPR_Delete_Test {
         System.assertEquals(1,[SELECT Id FROM MessagingEndUser].size());
         System.assertEquals(1,[SELECT Id FROM SocialPost].size());
     }
+
+    
+
+    /**
+        Tests deletion of Communication Logs 
+    */
+    @isTest static void deleteCommunicationLogs(){
+        IRR_CommunicationLog__c c = new IRR_CommunicationLog__c(IRR_ContactKey__c='test@email.com');
+        insert c;
+        DateTime dtTomorrow = DateTime.now();
+        dtTomorrow = dtTomorrow.addDays(1);
+        Test.setCreatedDate(c.Id, dtTomorrow);
+        Test.startTest();
+        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
+        sg.set('DeletePeriodCommunucationLog','-1');
+        Database.executeBatch(new GDPR_DeleteCommunicationLog_Batch());
+        Test.stopTest();
+        IRR_CommunicationLog__c[] comlogList = [SELECT Id, IRR_ContactKey__c FROM IRR_CommunicationLog__c];
+        System.assertEquals(1, comlogList.size());
+    }
+
+
+
+
+    
 }
+
 
