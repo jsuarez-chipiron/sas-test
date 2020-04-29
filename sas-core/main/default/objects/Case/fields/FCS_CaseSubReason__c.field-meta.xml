@@ -430,9 +430,9 @@
                 <label>Group</label>
             </value>
             <value>
-                <fullName>Handling status</fullName>
+                <fullName>Handling advice</fullName>
                 <default>false</default>
-                <label>Handling status</label>
+                <label>Handling advice</label>
             </value>
             <value>
                 <fullName>Hotel</fullName>
@@ -685,11 +685,6 @@
                 <label>Referred to SAS Medical</label>
             </value>
             <value>
-                <fullName>Referred to Travel Agency</fullName>
-                <default>false</default>
-                <label>Referred to Travel Agency</label>
-            </value>
-            <value>
                 <fullName>Refund status</fullName>
                 <default>false</default>
                 <label>Refund status</label>
@@ -920,11 +915,6 @@
                 <label>Ticketing</label>
             </value>
             <value>
-                <fullName>Ticket status</fullName>
-                <default>false</default>
-                <label>Ticket status</label>
-            </value>
-            <value>
                 <fullName>Traffic</fullName>
                 <default>false</default>
                 <label>Traffic</label>
@@ -978,31 +968,6 @@
                 <fullName>User guidance - web</fullName>
                 <default>false</default>
                 <label>User guidance - web</label>
-            </value>
-            <value>
-                <fullName>Voucher_Expire date</fullName>
-                <default>false</default>
-                <label>Voucher_Expire date</label>
-            </value>
-            <value>
-                <fullName>Voucher_Help with usage</fullName>
-                <default>false</default>
-                <label>Voucher_Help with usage</label>
-            </value>
-            <value>
-                <fullName>Voucher_How to request</fullName>
-                <default>false</default>
-                <label>Voucher_How to request</label>
-            </value>
-            <value>
-                <fullName>Voucher_Online problem during request</fullName>
-                <default>false</default>
-                <label>Voucher_Online problem during request</label>
-            </value>
-            <value>
-                <fullName>Voucher_Status waiting time</fullName>
-                <default>false</default>
-                <label>Voucher_Status waiting time</label>
             </value>
             <value>
                 <fullName>Waiting time</fullName>
@@ -1250,6 +1215,26 @@
             <valueName>SAS staff</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Look here before you ask R</controllingFieldValue>
+            <valueName>Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Look here before you ask R</controllingFieldValue>
+            <valueName>Fraud</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Look here before you ask R</controllingFieldValue>
+            <valueName>GDPR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Look here before you ask R</controllingFieldValue>
+            <valueName>Handling advice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Look here before you ask R</controllingFieldValue>
+            <valueName>Releases</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
             <valueName>Allowance</valueName>
         </valueSettings>
@@ -1278,7 +1263,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
-            <controllingFieldValue>Special service requests</controllingFieldValue>
             <valueName>Musical</valueName>
         </valueSettings>
         <valueSettings>
@@ -1302,24 +1286,39 @@
             <valueName>Wheelchair</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Look here before you ask R</controllingFieldValue>
-            <valueName>Error</valueName>
+            <controllingFieldValue>Minor</controllingFieldValue>
+            <valueName>Child</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Look here before you ask R</controllingFieldValue>
-            <valueName>Fraud</valueName>
+            <controllingFieldValue>Minor</controllingFieldValue>
+            <valueName>Infant</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Look here before you ask R</controllingFieldValue>
-            <valueName>GDPR</valueName>
+            <controllingFieldValue>Minor</controllingFieldValue>
+            <valueName>UMNR</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Look here before you ask R</controllingFieldValue>
-            <valueName>Handling status</valueName>
+            <controllingFieldValue>Minor</controllingFieldValue>
+            <valueName>INF</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Look here before you ask R</controllingFieldValue>
-            <valueName>Releases</valueName>
+            <controllingFieldValue>Name change</controllingFieldValue>
+            <controllingFieldValue>Changes</controllingFieldValue>
+            <valueName>Name change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Name change</controllingFieldValue>
+            <controllingFieldValue>Eurobonus</controllingFieldValue>
+            <valueName>Name change on Eurobonus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Name change</controllingFieldValue>
+            <controllingFieldValue>Changes</controllingFieldValue>
+            <valueName>Name correction</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Name change</controllingFieldValue>
+            <valueName>On corporate account</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Campaigns</controllingFieldValue>
@@ -1334,28 +1333,20 @@
             <valueName>Social media</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Minor</controllingFieldValue>
-            <valueName>Child</valueName>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Availability</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Minor</controllingFieldValue>
-            <valueName>INF</valueName>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Campaign booking</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Minor</controllingFieldValue>
-            <valueName>Infant</valueName>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Price inquiry</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Minor</controllingFieldValue>
-            <valueName>UMNR</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
-            <controllingFieldValue>Missing offer</controllingFieldValue>
-            <controllingFieldValue>Name change</controllingFieldValue>
-            <controllingFieldValue>Rebooking</controllingFieldValue>
-            <controllingFieldValue>Eurobonus</controllingFieldValue>
-            <valueName>AMEX 2 for 1</valueName>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Route inquiry</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
@@ -1366,57 +1357,12 @@
             <valueName>Refund status</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
-            <controllingFieldValue>Rebooking</controllingFieldValue>
-            <controllingFieldValue>Error</controllingFieldValue>
-            <valueName>Voucher_Expire date</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
-            <controllingFieldValue>Rebooking</controllingFieldValue>
-            <controllingFieldValue>Error</controllingFieldValue>
-            <valueName>Voucher_Help with usage</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
-            <controllingFieldValue>Rebooking</controllingFieldValue>
-            <controllingFieldValue>Error</controllingFieldValue>
-            <valueName>Voucher_How to request</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
-            <controllingFieldValue>Rebooking</controllingFieldValue>
-            <controllingFieldValue>Error</controllingFieldValue>
-            <valueName>Voucher_Online problem during request</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
-            <controllingFieldValue>Rebooking</controllingFieldValue>
-            <controllingFieldValue>Error</controllingFieldValue>
-            <valueName>Voucher_Status waiting time</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Changes</controllingFieldValue>
             <valueName>Add EB in booking</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Changes</controllingFieldValue>
             <valueName>Add infant in booking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Changes</controllingFieldValue>
-            <controllingFieldValue>Name change</controllingFieldValue>
-            <valueName>Name change</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Changes</controllingFieldValue>
-            <controllingFieldValue>Name change</controllingFieldValue>
-            <valueName>Name correction</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Changes</controllingFieldValue>
-            <controllingFieldValue>Rebooking</controllingFieldValue>
-            <valueName>Referred to Travel Agency</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Claims</controllingFieldValue>
@@ -1605,11 +1551,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Rebooking</controllingFieldValue>
-            <valueName>Ticket status</valueName>
+            <valueName>Travel agent booking</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Rebooking</controllingFieldValue>
-            <valueName>Travel agent booking</valueName>
+            <valueName>Ticket status</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
@@ -1725,36 +1671,12 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
+            <valueName>Wrong department</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error</controllingFieldValue>
             <controllingFieldValue>Special service requests</controllingFieldValue>
             <valueName>Other</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
-            <valueName>Cancellation/refund of ticket</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
-            <valueName>New booking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
-            <valueName>New Group booking - agent groups</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
-            <valueName>New Group booking - bulk</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
-            <valueName>Overbooked flights</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
-            <valueName>Rebooking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
-            <valueName>Rebooking of groups</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
