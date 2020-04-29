@@ -14,9 +14,7 @@
     <navType>Console</navType>
     <tabs>standard-home</tabs>
     <tabs>IRR_CommunicationLog__c</tabs>
-    <tabs>IRR_DelayLog__c</tabs>
     <tabs>Manual_Communication</tabs>
-    <tabs>standard-EmailTemplate</tabs>
     <tabs>IRR_SMSResponse__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SAS_IRR_UtilityBar</utilityBar>
