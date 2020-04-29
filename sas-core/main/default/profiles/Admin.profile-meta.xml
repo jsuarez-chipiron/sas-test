@@ -818,6 +818,10 @@
         <recordType>Case.Feedback</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-SAS FP Support</layout>
+        <recordType>Case.FunctionalProductSupport</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-SAS Information Layout</layout>
         <recordType>Case.Information</recordType>
     </layoutAssignments>
@@ -976,6 +980,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Feedback</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Case.FunctionalProductSupport</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
