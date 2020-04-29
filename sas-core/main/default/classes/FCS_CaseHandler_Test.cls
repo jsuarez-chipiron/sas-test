@@ -224,4 +224,12 @@ private class FCS_CaseHandler_Test {
         insert newCase;
         System.AssertEquals(true, [SELECT Id, FCS_CaseCreated__c FROM SocialPost WHERE Id =:newCase[0].SourceId][0].FCS_CaseCreated__c);
     }
+
+    @IsTest
+    static void shouldDeleteRelatedSurveyInvitationsOnDelete(){
+        Case[] cases = FCS_TestDataFactory.createCases(2, null, null, null ,null);
+        insert cases;
+
+        delete cases;
+    }
 }
