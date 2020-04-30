@@ -33,5 +33,5 @@
         <operation>equals</operation>
         <value>0</value>
     </filters>
-    <label>Customer Post</label>
+    <label>Customer Posts</label>
 </ListView>
