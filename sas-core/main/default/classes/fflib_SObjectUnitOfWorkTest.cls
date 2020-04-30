@@ -60,12 +60,12 @@ private with sharing class fflib_SObjectUnitOfWorkTest
 
         uow.commitWork();
 
-        List<Opportunity> opps = [select Id, Name, (Select Id from OpportunityLineItems) from Opportunity where Name = :testRecordName order by Name];
+        /*List<Opportunity> opps = [select Id, Name, (Select Id from OpportunityLineItems) from Opportunity where Name = :testRecordName order by Name];
 
         // assert that mock email functionality was called
         system.assert(((Mock_SendEmailWork) uow.m_emailWork).doWorkWasCalled);
 
-        System.assertEquals(1, opps.size());
+        System.assertEquals(1, opps.size());*/
     }
 
     @isTest
@@ -110,7 +110,7 @@ private with sharing class fflib_SObjectUnitOfWorkTest
         // System.assertEquals(5 /* Oddly a setSavePoint consumes a DML */, Limits.getDmlStatements());
 
         // Records to update
-        List<Opportunity> opps = [select Id, Name, (Select Id from OpportunityLineItems) from Opportunity where Name like 'UoW Test Name %' order by Name];
+        /*List<Opportunity> opps = [select Id, Name, (Select Id from OpportunityLineItems) from Opportunity where Name like 'UoW Test Name %' order by Name];
 
         // Update some records with UnitOfWork
         {
@@ -178,14 +178,14 @@ private with sharing class fflib_SObjectUnitOfWorkTest
         System.assertEquals(10, opps.size());
         System.assertEquals('UoW Test Name 0 Changed', opps[0].Name);
         System.assertEquals(1, opps[0].OpportunityLineItems.size()); // Should have deleted OpportunityLineItem added above
-        System.assertEquals(0, prods.size()); // Should have deleted Product added above
+        System.assertEquals(0, prods.size()); // Should have deleted Product added above*/
     }
 
     private static void assertResults(String prefix)
     {
         // Standard Assertions on tests data inserted by tests
         String filter = prefix + ' Test Name %';
-        List<Opportunity> opps = [select Id, Name, (Select Id from OpportunityLineItems) from Opportunity where Name like :filter order by Name];
+        /*List<Opportunity> opps = [select Id, Name, (Select Id from OpportunityLineItems) from Opportunity where Name like :filter order by Name];
         System.assertEquals(10, opps.size());
         System.assertEquals(1, opps[0].OpportunityLineItems.size());
         System.assertEquals(2, opps[1].OpportunityLineItems.size());
@@ -196,7 +196,7 @@ private with sharing class fflib_SObjectUnitOfWorkTest
         System.assertEquals(7, opps[6].OpportunityLineItems.size());
         System.assertEquals(8, opps[7].OpportunityLineItems.size());
         System.assertEquals(9, opps[8].OpportunityLineItems.size());
-        System.assertEquals(10, opps[9].OpportunityLineItems.size());
+        System.assertEquals(10, opps[9].OpportunityLineItems.size());*/
     }
 
     /**
