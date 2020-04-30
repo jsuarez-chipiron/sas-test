@@ -31,7 +31,7 @@
         System.assertEquals(null, comLog0.IRR_LastResponseDate__c);
         System.assertEquals(null, comLog0.IRR_Response__c);
         System.assertEquals('Responded', comLog11.IRR_Status__c);
-        System.assertEquals(DateTime.newInstance(2020,05,01,8,30,24), comLog11.IRR_LastResponseDate__c);
+        System.assertEquals(DateTime.newInstanceGmt(2020,05,01,8,30,24), comLog11.IRR_LastResponseDate__c);
         System.assertEquals('MSG1', comLog11.IRR_Response__c);
         
         System.assertEquals(0,[SELECT Id FROM C_Log__c].size());
@@ -55,7 +55,7 @@
 
         System.debug([SELECT Id,Message__c FROM C_Log__c]);
         System.assertEquals('Responded', comLog2.IRR_Status__c);
-        System.assertEquals(DateTime.newInstance(2020,05,01,8,30,24), comLog2.IRR_LastResponseDate__c);
+        System.assertEquals(DateTime.newInstanceGmt(2020,05,01,8,30,24), comLog2.IRR_LastResponseDate__c);
         System.assertEquals(255, comLog2.IRR_Response__c.length());
         
         System.assertEquals(0,[SELECT Id FROM C_Log__c].size());

@@ -48,7 +48,7 @@ public class IRR_DOM_SMSResponses extends fflib_SObjectDomain {
                     comLog.IRR_Response__c = (sms.IRR_InfoMessageVerb__c!=null && sms.IRR_InfoMessageVerb__c.length()<10 ? sms.IRR_InfoMessageVerb__c : '') + sms.IRR_InfoMessageNouns__c + (String.isBlank(comLog.IRR_Response__c) ? '' : ', '+comLog.IRR_Response__c);
                     if(comLog.IRR_Response__c.length()>255)comLog.IRR_Response__c = comLog.IRR_Response__c.substring(0,255);
                     //Setting the response date of the last response
-                    DateTime smsTime = sms.IRR_DateUTC__c!=null && sms.IRR_TimeUTC__c!=null ? DateTime.newInstance(sms.IRR_DateUTC__c,sms.IRR_TimeUTC__c) : sms.CreatedDate;
+                    DateTime smsTime = sms.IRR_DateUTC__c!=null && sms.IRR_TimeUTC__c!=null ? DateTime.newInstanceGmt(sms.IRR_DateUTC__c,sms.IRR_TimeUTC__c) : sms.CreatedDate;
                     if(comLog.IRR_LastResponseDate__c == null || comLog.IRR_LastResponseDate__c < smsTime)comLog.IRR_LastResponseDate__c = smsTime;
                     //Relates the sms message to the communication log
                     sms.IRR_CommunicationLog__c = comLog.Id;
