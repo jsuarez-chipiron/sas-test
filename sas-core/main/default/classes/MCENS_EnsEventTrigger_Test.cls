@@ -34,7 +34,7 @@ private class MCENS_EnsEventTrigger_Test {
         StatusAsserter sa = new StatusAsserter();
         sa.assert('MCENS_EnsEventTrigger_Test_1', 'Sent', null, null, null);
         sa.assert('MCENS_EnsEventTrigger_Test_2', 'Error', 1234, 'ERRORMESSAGE', 'ERRORREASON');
-        sa.assert('MCENS_EnsEventTrigger_Test_3', 'Bounced', 4321, 'BOUNCEMESSAGE', 'SMTPREASON');
+        sa.assert('MCENS_EnsEventTrigger_Test_3', 'Bounced', -1, '4321: BOUNCEMESSAGE', 'SMTPREASON');
         sa.assert('MCENS_EnsEventTrigger_Test_4', 'Sent', null, null, null);
         sa.assert('MCENS_EnsEventTrigger_Test_5', 'Error', 47, null, 'ERRORREASON');
 
@@ -84,7 +84,7 @@ private class MCENS_EnsEventTrigger_Test {
         sa = new StatusAsserter();
         sa.assert('MCENS_EnsEventTrigger_Test_1', 'Sent', null, null, null);
         sa.assert('MCENS_EnsEventTrigger_Test_2', 'Error', 1234, 'ERRORMESSAGE', 'ERRORREASON');
-        sa.assert('MCENS_EnsEventTrigger_Test_3', 'Bounced', 4321, 'BOUNCEMESSAGE', 'SMTPREASON');
+        sa.assert('MCENS_EnsEventTrigger_Test_3', 'Bounced', -1, '4321: BOUNCEMESSAGE', 'SMTPREASON');
         sa.assert('MCENS_EnsEventTrigger_Test_4', 'Created', null, null, null);
         sa.assert('MCENS_EnsEventTrigger_Test_5', 'Created', null, null, null);
         
@@ -168,7 +168,7 @@ private class MCENS_EnsEventTrigger_Test {
         StatusAsserter sa = new StatusAsserter();
         sa.assert('MCENS_EnsEventTrigger_Test_1', 'Sent', null, null, null);
         sa.assert('MCENS_EnsEventTrigger_Test_2', 'Created', null, null, null);
-        sa.assert('MCENS_EnsEventTrigger_Test_3', 'Bounced', 4321, 'BOUNCEMESSAGE', 'SMTPREASON');
+        sa.assert('MCENS_EnsEventTrigger_Test_3', 'Bounced', -1, '4321: BOUNCEMESSAGE', 'SMTPREASON');
         sa.assert('MCENS_EnsEventTrigger_Test_4', 'Sent', null, null, null);
         sa.assert('MCENS_EnsEventTrigger_Test_5', 'Error', 47, null, 'ERRORREASON');
 
