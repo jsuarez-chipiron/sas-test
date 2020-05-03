@@ -17,6 +17,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_CompositeId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>IRR_CommunicationLog__c.IRR_ContactKey__c</field>
         <readable>true</readable>
     </fieldPermissions>

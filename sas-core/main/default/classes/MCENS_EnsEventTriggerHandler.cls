@@ -38,6 +38,10 @@ public without sharing class MCENS_EnsEventTriggerHandler {
      */
     String[] messageKeys;
     /**
+     * The composite ids referenced by the events
+     */
+    String[] compositeIds;
+    /**
      * Errors occuring due to not finding the appropriate ( will trigger retries)
      */
     String[] notFoundErrors;
@@ -48,7 +52,7 @@ public without sharing class MCENS_EnsEventTriggerHandler {
     /**
      * The list of events processed in scope in the handler
      */
-    TransactionalSendEvent[] evtList;
+    EnsEvent[] evtList;
     /**
      * The communication log records updated with status from the events
      */
@@ -70,6 +74,7 @@ public without sharing class MCENS_EnsEventTriggerHandler {
         this.lastScopeSize = getLastScopeSize(lastError);
 
         messageKeys = new List<String>();
+        compositeIds = new List<String>();
         notFoundErrors = new List<String>();
         eventErrors = new List<String>();
         cutoffMode = retryCount > MIN_RETRY_COUNT;
@@ -92,19 +97,21 @@ public without sharing class MCENS_EnsEventTriggerHandler {
     void selectEvents(){
         sz = lastScopeSize!=null ? lastScopeSize : evtSourceList.size();
         if(sz>MAX_SCOPE_SIZE)sz = MAX_SCOPE_SIZE;
-        evtList = new TransactionalSendEvent[sz];
+        evtList = new EnsEvent[sz];
         for(Integer i=0;i<sz;i++){
             MCENS_EnsEvent__e evt = evtSourceList[i];
-            TransactionalSendEvent tse;
-            if(evt.Type__c == 'TransactionalSendEvents.EmailSent')tse = new EmailSent(evt);
-            else if(evt.Type__c == 'TransactionalSendEvents.EmailNotSent')tse = new EmailNotSent(evt);
-            else if(evt.Type__c == 'TransactionalSendEvents.EmailBounced')tse = new EmailBounced(evt);
-            else if(evt.Type__c == 'TransactionalSendEvents.SmsSent')tse = new SmsSent(evt);
-            else if(evt.Type__c == 'TransactionalSendEvents.SmsNotSent')tse = new SmsNotSent(evt);
+            EnsEvent e;
+            if(evt.Type__c == 'TransactionalSendEvents.EmailSent')e = new EmailSent(evt);
+            else if(evt.Type__c == 'TransactionalSendEvents.EmailNotSent')e = new EmailNotSent(evt);
+            else if(evt.Type__c == 'TransactionalSendEvents.EmailBounced')e = new EmailBounced(evt);
+            else if(evt.Type__c == 'TransactionalSendEvents.SmsSent')e = new SmsSent(evt);
+            else if(evt.Type__c == 'TransactionalSendEvents.SmsNotSent')e = new SmsNotSent(evt);
+            else if(evt.Type__c == 'EngagementEvents.EmailOpen')e = new EmailOpen(evt);
             else eventErrors.add('Unknown ENS Event Type: '+evt.Type__c);
-            if(tse!=null){
-                evtList[i] = tse;
-                messageKeys.add(tse.messageKey);
+            if(e!=null){
+                evtList[i] = e;
+                if(e.messageKey!=null)messageKeys.add(e.messageKey);
+                if(e.compositeId!=null)compositeIds.add(e.compositeId);
             }
         }
     }
@@ -113,9 +120,10 @@ public without sharing class MCENS_EnsEventTriggerHandler {
      */
     void loadMessages(){
         Map<String,IRR_CommunicationLog__c> comLogMap = new Map<String,IRR_CommunicationLog__c>();
-        if(!messageKeys.isEmpty()){
+        if(!messageKeys.isEmpty() || !compositeIds.isEmpty()){
             try{
-                comLogList = [SELECT Id,IRR_MessageKey__c FROM IRR_CommunicationLog__c WHERE IRR_MessageKey__c IN :messageKeys FOR UPDATE];
+                comLogList = [SELECT Id,IRR_MessageKey__c,IRR_CompositeId__c FROM IRR_CommunicationLog__c WHERE IRR_MessageKey__c IN :messageKeys FOR UPDATE];
+                comLogList.addAll([SELECT Id,IRR_MessageKey__c,IRR_CompositeId__c FROM IRR_CommunicationLog__c WHERE IRR_CompositeId__c IN :compositeIds FOR UPDATE]);
             }
             catch(DmlException e){
                 throwRetryableException('Cannot obtain lock on Communication Logs');
@@ -123,14 +131,19 @@ public without sharing class MCENS_EnsEventTriggerHandler {
             
             for(Integer i=0,comLogSz=comLogList.size();i<comLogSz;i++){
                 IRR_CommunicationLog__c comLog = comLogList[i];
-                comLogMap.put(comLog.IRR_MessageKey__c,comLog);
+                if(comLog.IRR_MessageKey__c!=null)comLogMap.put(comLog.IRR_MessageKey__c,comLog);
+                if(comLog.IRR_CompositeId__c!=null)comLogMap.put(comLog.IRR_CompositeId__c,comLog);
             }
         }
         for(Integer i=0;i<sz;i++){
-            TransactionalSendEvent evt = evtList[i];
+            EnsEvent evt = evtList[i];
             if(evt!=null){
-                IRR_CommunicationLog__c comLog = comLogMap.get(evt.messageKey);
+                IRR_CommunicationLog__c comLog = comLogMap.get(evt.messageKey!=null ? evt.messageKey : evt.compositeId);
                 if(comLog!=null){
+                    if(evt.compositeId!=null){
+                        comLog.IRR_CompositeId__c = evt.compositeId;
+                        comLogMap.put(evt.compositeId,comLog);
+                    }
                     evt.setStatus(comLog);
                 }
                 else {                
@@ -163,7 +176,7 @@ public without sharing class MCENS_EnsEventTriggerHandler {
             }
             if(!prevBufferMode)C_Log.flush();
             C_Log.setBuffered(prevBufferMode);
-            update comLogList;
+            if(comLogList!=null)update comLogList;
             lastProcessedReplayId = evtSourceList[sz-1].ReplayId;
         }
     }
@@ -219,9 +232,42 @@ public without sharing class MCENS_EnsEventTriggerHandler {
     }
 
     /**
+     * Base class for all Event Notifcation Service Events
+     */
+    abstract class EnsEvent{
+        /**
+         * The untyped deserialized form of all info for the event
+         */
+        Map<String,Object> infoMap;
+        /**
+         * The unique id of the message to which this event relates, set only for transactional events
+         */
+        String messageKey;
+        /**
+         * The alternative unique id of the message to which this event relates, set for both transactional and engagement event
+         */
+        String compositeId;
+        /**
+         * Creates an event instance from a platform event record representing the event notification service event
+         * @param evt The event record
+         */
+        EnsEvent(MCENS_EnsEvent__e evt){
+            this.infoMap = (Map<String,Object>)JSON.deserializeUntyped(evt.Info__c);
+            this.messageKey = (String)infoMap.get('messageKey');
+            this.compositeId = evt.CompositeId__c;
+        }
+
+        /**
+         * Sets the status of the log record according to the event
+         * @param log The communication log record of which to set the 
+         */
+        abstract void setStatus(IRR_CommunicationLog__c log);
+    }
+
+    /**
      * Base class for all transactional send events
      */
-    abstract class TransactionalSendEvent{
+    abstract class TransactionalSendEvent extends EnsEvent{
         /**
          * The address of the intended recipient of the message to which this event related
          */
@@ -231,28 +277,14 @@ public without sharing class MCENS_EnsEventTriggerHandler {
          */
         String subscriberKey;
         /**
-         * The unique id of the message to which this event relates
-         */
-        String messageKey;
-        /**
-         * The untyped deserialized form of all info for the event
-         */
-        Map<String,Object> infoMap;
-        /**
          * Creates an event instance from a platform event record representing the event notification service event
          * @param evt The event record
          */
         TransactionalSendEvent(MCENS_EnsEvent__e evt){
-            this.infoMap = (Map<String,Object>)JSON.deserializeUntyped(evt.Info__c);
+            super(evt);
             this.to = (String)infoMap.get('to');
             this.subscriberKey = (String)infoMap.get('subscriberKey');
-            this.messageKey = (String)infoMap.get('messageKey');
         }
-        /**
-         * Sets the status of the log record according to the event
-         * @param log The communication log record of which to set the 
-         */
-        abstract void setStatus(IRR_CommunicationLog__c log);
     }
 
     /**
@@ -311,6 +343,37 @@ public without sharing class MCENS_EnsEventTriggerHandler {
             log.IRR_StatusCode__c = -1;
             log.IRR_ErrorMessage__c = (((String)this.infoMap.get('bounceCode')) +': '+ ((String)this.infoMap.get('bounceMessage'))).abbreviate(2000);
             log.IRR_ErrorReason__c = ((String)this.infoMap.get('smtpReason')).abbreviate(2000);
+        }
+    }
+
+    /**
+     * Base class for all engagement events
+     */
+    abstract class EngagementEvent extends EnsEvent{
+        /**
+         * Creates an event instance from a platform event record representing the event notification service event
+         * @param evt The event record
+         */
+        EngagementEvent(MCENS_EnsEvent__e evt){
+            super(evt);
+        }
+    }
+
+    /**
+     * Event representing when an email was opened
+     */
+    class EmailOpen extends EngagementEvent {
+        /**
+         * Creates instance of the event type
+         * @param evt The event record
+         */
+        EmailOpen(MCENS_EnsEvent__e evt){super(evt);}
+        /**
+         * Sets the status of the log record according to the event
+         * @param log The communication log record of which to set the 
+         */
+        override void setStatus(IRR_CommunicationLog__c log){
+            log.IRR_Status__c = 'Opened';
         }
     }
 

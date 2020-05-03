@@ -176,6 +176,61 @@ private class MCENS_EnsEventTrigger_Test {
     }
 
     /**
+     * Test to ensure that the email open event is handled correctly when email is first registered as sent and then as opened in a seperate event handler run
+     */
+    @isTest static void emailOpenSeperateRun(){
+        EventCreator ec = new EventCreator();
+        List<MCENS_EnsEvent__e> evtList = new List<MCENS_EnsEvent__e>();
+        evtList.add(ec.create(true,'TransactionalSendEvents.EmailSent','{"to":"test@test.com.invalid","subscriberKey":"test@test.com.invalid","messageKey":"MCENS_EnsEventTrigger_Test_1","status":"Sent"}'));
+        String compositeId = evtList[0].CompositeId__c;
+        MCENS_EnsEventTriggerHandler h = new MCENS_EnsEventTriggerHandler(evtList,0,null);
+        h.run();
+        evtList = new List<MCENS_EnsEvent__e>();
+        evtList.add(ec.create(true,'EngagementEvents.EmailOpen','{"ipAddress":"1982.168.0.0","userAgent":{},"location":{"country":"US","region":"SC","city":"CHARLESTON","postalCode":"29401-29403+29406-29407+29409+29412-29414+29416-29417+29422-29425+29492","latitude":"32.7795","longitude":"-79.9364"}}'));
+        evtList[0].CompositeId__c = compositeId;
+        h = new MCENS_EnsEventTriggerHandler(evtList,0,null);
+        h.run();
+
+        StatusAsserter sa = new StatusAsserter();
+        sa.assert('MCENS_EnsEventTrigger_Test_1', 'Opened', null, null, null);
+
+        System.assertEquals(0,[SELECT Id FROM C_Log__c WHERE LogGroup__c='MCENS'].size());
+    }
+
+    /**
+     * Test to ensure that the email open event is handled correctly when email is registered as sent and opened in the same event handler run
+     */
+    @isTest static void emailOpenSameRun(){
+        EventCreator ec = new EventCreator();
+        List<MCENS_EnsEvent__e> evtList = new List<MCENS_EnsEvent__e>();
+        evtList.add(ec.create(true,'TransactionalSendEvents.EmailSent','{"to":"test@test.com.invalid","subscriberKey":"test@test.com.invalid","messageKey":"MCENS_EnsEventTrigger_Test_1","status":"Sent"}'));
+        evtList.add(ec.create(true,'EngagementEvents.EmailOpen','{"ipAddress":"1982.168.0.0","userAgent":{},"location":{"country":"US","region":"SC","city":"CHARLESTON","postalCode":"29401-29403+29406-29407+29409+29412-29414+29416-29417+29422-29425+29492","latitude":"32.7795","longitude":"-79.9364"}}'));
+        evtList[1].CompositeId__c = evtList[0].CompositeId__c;
+        MCENS_EnsEventTriggerHandler h = new MCENS_EnsEventTriggerHandler(evtList,0,null);
+        h.run();
+        
+        StatusAsserter sa = new StatusAsserter();
+        sa.assert('MCENS_EnsEventTrigger_Test_1', 'Opened', null, null, null);
+
+        System.assertEquals(0,[SELECT Id FROM C_Log__c WHERE LogGroup__c='MCENS'].size());
+    }
+
+    /**
+     * Test to check the process when email with mathcing composite id cannot be found for an email open event
+     */
+    @isTest static void emailOpenNoMatch(){
+        EventCreator ec = new EventCreator();
+        List<MCENS_EnsEvent__e> evtList = new List<MCENS_EnsEvent__e>();
+        evtList.add(ec.create(true,'EngagementEvents.EmailOpen','{"ipAddress":"1982.168.0.0","userAgent":{},"location":{"country":"US","region":"SC","city":"CHARLESTON","postalCode":"29401-29403+29406-29407+29409+29412-29414+29416-29417+29422-29425+29492","latitude":"32.7795","longitude":"-79.9364"}}'));
+        MCENS_EnsEventTriggerHandler h = new MCENS_EnsEventTriggerHandler(evtList,5,null);
+        h.run();
+        
+        
+        System.assertEquals(0,[SELECT Id FROM IRR_CommunicationLog__c WHERE IRR_Status__c!='Created'].size());
+        System.assertEquals(1,[SELECT Id FROM C_Log__c WHERE LogGroup__c='MCENS' AND Severity__c='Warning'].size());
+    }
+
+    /**
      * Utility class to create ENS platform events
      */
     class EventCreator{
@@ -218,8 +273,8 @@ private class MCENS_EnsEventTrigger_Test {
          */
         MCENS_EnsEvent__e create(Boolean includeSystemFields, String type, String info){
             MCENS_EnsEvent__e e = includeSystemFields ? ((MCENS_EnsEvent__e)JSON.deserialize('{"CreatedDate":'+JSON.serialize(createdDate)+',"ReplayId":'+replayId+'}',MCENS_EnsEvent__e.class)) : new MCENS_EnsEvent__e();
+            e.CompositeId__c = compositeId+'.'+replayId;
             if(includeSystemFields)replayId++;
-            e.CompositeId__c = compositeId;
             e.DefinitionKey__c = definitionKey;
             e.EId__c = eid;
             e.MId__c = mid;

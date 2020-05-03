@@ -119,6 +119,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>IRR_CompositeId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>IRR_ExternalId__c</field>
             </layoutItems>
             <layoutItems>
