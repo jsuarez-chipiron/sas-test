@@ -183,6 +183,8 @@ private class MCENS_EnsEventTrigger_Test {
         List<MCENS_EnsEvent__e> evtList = new List<MCENS_EnsEvent__e>();
         evtList.add(ec.create(true,'TransactionalSendEvents.EmailSent','{"to":"test@test.com.invalid","subscriberKey":"test@test.com.invalid","messageKey":"MCENS_EnsEventTrigger_Test_1","status":"Sent"}'));
         String compositeId = evtList[0].CompositeId__c;
+        //Transactional sends from MC have a UUID prefixed to the composite id but not engagement events
+        evtList[0].CompositeId__c = '8364e9c4-be75-ea11-b83b-b88303587ac1.'+evtList[0].CompositeId__c;
         MCENS_EnsEventTriggerHandler h = new MCENS_EnsEventTriggerHandler(evtList,0,null);
         h.run();
         evtList = new List<MCENS_EnsEvent__e>();

@@ -14,6 +14,10 @@ public without sharing class MCENS_EnsEventTriggerHandler {
      */
     static final Integer MAX_SCOPE_SIZE = 200;
     /**
+     * Pattern to check whether the composite id has a UUID prefix
+     */
+    static final Pattern UUID_PREFIX_PATTERN = Pattern.compile('[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\..*');
+    /**
      * The full list of events which are present in the trigger
      */
     MCENS_EnsEvent__e[] evtSourceList;
@@ -147,7 +151,7 @@ public without sharing class MCENS_EnsEventTriggerHandler {
                     evt.setStatus(comLog);
                 }
                 else {                
-                    notFoundErrors.add('Cannot find matching communication log: '+evt.messageKey);
+                    notFoundErrors.add('Cannot find matching communication log: '+evt.messageKey+'/'+evt.compositeId);
                 }
             }
         }
@@ -282,6 +286,8 @@ public without sharing class MCENS_EnsEventTriggerHandler {
          */
         TransactionalSendEvent(MCENS_EnsEvent__e evt){
             super(evt);
+            //Remove the UUID since it is not present in the engagement events
+            if(this.compositeId!=null && UUID_PREFIX_PATTERN.matcher(this.compositeId).matches())this.compositeId = this.compositeId.substring(37);
             this.to = (String)infoMap.get('to');
             this.subscriberKey = (String)infoMap.get('subscriberKey');
         }
