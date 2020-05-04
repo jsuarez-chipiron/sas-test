@@ -22,6 +22,10 @@
         <enabled>true</enabled>
         <name>Manual_GDPR_Delete</name>
     </customPermissions>
+	<customPermissions>
+        <enabled>true</enabled>
+        <name>Special_User_Permission</name>
+    </customPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>AD_RoleUserDetail__mdt.Value__c</field>
@@ -275,6 +279,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.GDPR_Consent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Consent__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

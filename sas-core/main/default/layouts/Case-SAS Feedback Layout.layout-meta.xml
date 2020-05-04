@@ -122,10 +122,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Priority</field>
-            </layoutItems>	
-			<layoutItems>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
-                <field>GDPR_Consent__c</field>
+                <field>Consent__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -248,7 +248,6 @@
             <actionType>StandardButton</actionType>
             <sortOrder>9</sortOrder>
         </platformActionListItems>
-        
         <platformActionListItems>
             <actionName>PrintableView</actionName>
             <actionType>StandardButton</actionType>
