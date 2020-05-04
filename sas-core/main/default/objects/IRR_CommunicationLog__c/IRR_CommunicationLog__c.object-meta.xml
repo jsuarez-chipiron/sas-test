@@ -160,7 +160,15 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Communication Logs</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <searchResultsAdditionalFields>IRR_BookingReference__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IRR_FlightId__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IRR_Channel__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IRR_Recipient__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IRR_MessageType__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IRR_RecipientName__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IRR_Status__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
