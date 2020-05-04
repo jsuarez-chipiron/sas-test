@@ -11,6 +11,7 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
      * @return List if Ids of the queues that the user is a member of. If no memberships are found, null is returned.
      */
     @AuraEnabled
+    @TestVisible
     public static List<Id> getQueueIds(Id userId){
         Set<Id> groupsWithUser = new Set<Id>();
         //Populating the Group with User with GroupId we are filtering only for Group of Type Regular,Role and RoleAndSubordinates
@@ -22,6 +23,8 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
         {
             groupsWithUser.add(u.GroupId);
         }
+
+        System.debug('Groups with user: ' + groupsWithUser);
 
         Map<Id,Id> groupRoleMap = new Map<Id,Id>();
         //Populating the Map with RelatedID(i.e.UserRoledId) as Key
@@ -57,6 +60,7 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
                 FROM GroupMember
                 WHERE (UserOrGroupId IN :memberOfGroupIds OR UserOrGroupId = :userId)
                 AND Group.QueueRoutingConfigId != NULL];
+        System.debug('Queues: ' + JSON.serializePretty(queueMemberships));
         Id[] queueIds = new Id[]{};
         for(GroupMember member:queueMemberships){
             queueIds.add(member.GroupId);
@@ -71,6 +75,7 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
      * @param queueIds Ids of queues to generate status records for
      * @return List of custom queue status data structure
      */
+    @TestVisible
     @AuraEnabled
     public static QueueStatus[] getQueueStatus(Id[] queueIds){
         Map<Id, QueueStatus> queueStatusById = new Map<Id, QueueStatus>();
@@ -117,6 +122,7 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
      * the addQueue() method is used to supply information about queue.
      * Implements comparable interface to enable custom sorting.
      */
+    @TestVisible
     private class QueueStatus implements Comparable {
         /**
          * Id of queue
