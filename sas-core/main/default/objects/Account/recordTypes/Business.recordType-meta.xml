@@ -4,29 +4,6 @@
     <active>true</active>
     <label>Business</label>
     <picklistValues>
-        <picklist>AccountSource</picklist>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Partner Referral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Phone Inquiry</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Purchased List</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Web</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>FCS_EBLevel__c</picklist>
         <values>
             <fullName>B</fullName>
