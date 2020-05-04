@@ -24,6 +24,8 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
             groupsWithUser.add(u.GroupId);
         }
 
+        System.debug('Groups with user: ' + groupsWithUser);
+
         Map<Id,Id> groupRoleMap = new Map<Id,Id>();
         //Populating the Map with RelatedID(i.e.UserRoledId) as Key
         for(Group gr : [SELECT Id, RelatedId, Name FROM Group]) {
@@ -58,6 +60,7 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
                 FROM GroupMember
                 WHERE (UserOrGroupId IN :memberOfGroupIds OR UserOrGroupId = :userId)
                 AND Group.QueueRoutingConfigId != NULL];
+        System.debug('Queues: ' + JSON.serializePretty(queueMemberships));
         Id[] queueIds = new Id[]{};
         for(GroupMember member:queueMemberships){
             queueIds.add(member.GroupId);
@@ -119,6 +122,7 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
      * the addQueue() method is used to supply information about queue.
      * Implements comparable interface to enable custom sorting.
      */
+    @TestVisible
     private class QueueStatus implements Comparable {
         /**
          * Id of queue
