@@ -18,9 +18,16 @@ global class IRR_API_IncomingEvent {
      */
     @HttpPost
     global static void handleIncomingEvent() {
-        RestRequest req = RestContext.request;
-        String eventType = req.requestURI.substringAfterLast('/');
-        String eventPayload = req.requestBody.toString();
-        IRR_SVC_CommunicationService.processEvent(eventType, eventPayload);
+        try {
+            RestRequest req = RestContext.request;
+            String eventType = req.requestURI.substringAfterLast('/');
+            String eventPayload = req.requestBody.toString();
+            IRR_SVC_CommunicationService.processEvent(eventType, eventPayload);
+        }
+        catch (Exception e) {
+            C_Log.logException(e, 'IRR', C_Log.generateLogHttpData(RestContext.request));
+            RestContext.response.responseBody = Blob.valueOf(e.getMessage());
+            RestContext.response.statusCode = 500;
+        }
     }
 }
