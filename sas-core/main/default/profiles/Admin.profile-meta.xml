@@ -978,7 +978,8 @@
         <enabled>true</enabled>
     </pageAccesses>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Account.Business</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
