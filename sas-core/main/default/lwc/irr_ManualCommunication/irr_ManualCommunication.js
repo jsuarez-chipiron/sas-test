@@ -218,6 +218,7 @@ export default class IRR_ManualCommunication extends LightningElement {
     handleResetEvent(_) {
         this.flightId = '';
         this.filterParameters = {};
+        this.retrieveParameters = {};
         this.processedTable = [];
         this.passengerResult = [];
         this.showRetrieve = true;
