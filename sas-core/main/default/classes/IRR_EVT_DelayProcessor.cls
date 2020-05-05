@@ -26,7 +26,8 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
      * @author Niklas Lundkvist, Deloitte
      * @date 2020
      *
-     * @description Validates event before processing. Throws on error.
+     * @description Validates event before processing.
+     *      Throws Event Exception if event info is not complete.
      */
     public void validateEvent() {
         if (delayInfo == null) {
@@ -53,6 +54,7 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
      * @description Populates event object with additional information and initiates passengerInfo list.
      */
     public void initiateEvent() {
+        //Retrieve previous delay and calculate difference
         Map<String, Integer> delayMinutesByFlightIds = IRR_SEL_DelayLogsSelector.newInstance()
                 .getLatestDelayByFlightIds(new Set<String>{delayInfo.flightId});
         delayInfo.previousDelayedMinutes = delayMinutesByFlightIds.containsKey(delayInfo.flightId) ?
@@ -60,14 +62,17 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
         delayInfo.firstDelay = delayInfo.previousDelayedMinutes == 0;
         delayInfo.delayDifference = Math.abs(delayInfo.delayedMinutes - delayInfo.previousDelayedMinutes);
 
+        //Split flightId into Flight Reference, and Departure and Arrival stations.
         List<String> flightIdSplit = delayInfo.flightId.split('-');
         delayInfo.flightRef = flightIdSplit[0];
         delayInfo.stationDeparture = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
         delayInfo.stationArrival = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
 
+        //Calculate time difference of scheduled time of departure and estimated time of departure in minutes
         Long millisecondsToScheduledTime = delayInfo.scheduledTimeOfDepartureUTC.getTime() - Datetime.now().getTime();
         delayInfo.minutesToScheduledTime = (Integer) millisecondsToScheduledTime / 60000;
 
+        //Retrieve passengers for flight
         this.passengerInfos = IRR_SVC_TedsService.getPassengerInfosForFlight(delayInfo.flightId);
     }
 
@@ -78,11 +83,16 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
      * @description Executes flow with for each passenger with event specific information.
      */
     public void processEvent() {
+        //Initiate variable container object for Flow
         IRR_MOD_FlowVariables flowVariables = new IRR_MOD_FlowVariables();
         flowVariables.delayInfo = delayInfo;
+
+        //Process passengers
         for (IRR_MOD_PassengerInfo passengerInfo : passengerInfos) {
             //Only process passengers confirmed for this segment
-            if (!passengerInfo.thisSegment.isConfirmed) continue;
+            if (passengerInfo.thisSegment != null && !passengerInfo.thisSegment.isConfirmed) continue;
+
+            //Set passenger info in flowVariables and execute flow
             flowVariables.passengerInfo = passengerInfo;
             executeFlow(EVENT_FLOW_NAME, flowVariables);
         }
