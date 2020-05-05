@@ -494,6 +494,7 @@ global class MSG_RendererEnhanced implements MSG_IRenderer{
         global override Object getFunctionValue(String sourceRef,Expr_Expr[] exprParamList,Expr_Expr.SymbolSubReference[] path){
             if (sourceRef=='formatDatetimeUTC') {
                 String stringValue = (String) this.eval(exprParamList[0]);
+                if (String.isBlank(stringValue)) return null;
                 //Parse Datetime ISO String into Datetime using de-serialization, string must be wrapped in quotes
                 Datetime datetimeValue = (Datetime) JSON.deserialize('"' + stringValue + '"', Datetime.class);
                 String format = (String) this.eval(exprParamList[1]);
