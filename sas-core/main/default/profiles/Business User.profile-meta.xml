@@ -28,6 +28,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <custom>true</custom>
+	<customPermissions>
+        <enabled>true</enabled>
+        <name>Special_User_Permission</name>
+    </customPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.FCS_AnswerTime__c</field>
@@ -281,6 +285,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.ContactId</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Consent__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
