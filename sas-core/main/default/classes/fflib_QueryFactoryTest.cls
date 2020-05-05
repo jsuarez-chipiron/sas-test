@@ -299,7 +299,7 @@ private class fflib_QueryFactoryTest {
         insert tsk;
 
 		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType);
-		qf.selectField('name').selectField('Id').setCondition( 'name like \'%test%\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING, true);
+		qf.selectField('name').selectField('Id').setCondition( 'name = \'test test\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING, true);
 		Schema.DescribeSObjectResult descResult = Contact.SObjectType.getDescribe();
 		//explicitly assert object accessibility when creating the subselect
 		qf.subselectQuery('Tasks', true).selectField('Id').selectField('Subject').setCondition(' IsDeleted = false ');
@@ -328,7 +328,7 @@ private class fflib_QueryFactoryTest {
         insert tsk;
 
 		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType);
-		qf.selectField('name').selectField('Id').setCondition( 'name like \'%test%\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING, true);
+		qf.selectField('name').selectField('Id').setCondition( 'name = \'test test\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING, true);
 		//explicitly assert object accessibility when creating the subselect
 		qf.subselectQuery('Tasks').selectField('Id').selectField('Subject').setCondition(' IsDeleted = false ');
 		List<fflib_QueryFactory> queries = qf.getSubselectQueries();
@@ -358,7 +358,7 @@ private class fflib_QueryFactoryTest {
         insert tsk;
 
 		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType);
-		qf.selectField('name').selectField('Id').setCondition( 'name like \'%test%\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING, true);
+		qf.selectField('name').selectField('Id').setCondition( 'name = \'test test\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING, true);
 		Schema.DescribeSObjectResult descResult = Contact.SObjectType.getDescribe();
 		Schema.ChildRelationship relationship;
 		for (Schema.ChildRelationship childRow : descResult.getChildRelationships()){
@@ -395,7 +395,7 @@ private class fflib_QueryFactoryTest {
         insert tsk;
 
 		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType);
-		qf.selectField('name').selectField('Id').setCondition( 'name like \'%test%\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING, true);
+		qf.selectField('name').selectField('Id').setCondition( 'name = \'test test\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING, true);
 		Schema.DescribeSObjectResult descResult = Contact.SObjectType.getDescribe();
 		Schema.ChildRelationship relationship;
 		for (Schema.ChildRelationship childRow : descResult.getChildRelationships()){
@@ -432,7 +432,7 @@ private class fflib_QueryFactoryTest {
         insert tsk;
 
 		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType);
-		qf.selectField('name').selectField('Id').setCondition( 'name like \'%test%\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING, true);
+		qf.selectField('name').selectField('Id').setCondition( 'name = \'test test\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING, true);
 		Schema.DescribeSObjectResult descResult = Contact.SObjectType.getDescribe();
 		//explicitly assert object accessibility when creating the subselect
 		//
@@ -462,7 +462,7 @@ private class fflib_QueryFactoryTest {
         insert tsk;
 
 		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType);
-		qf.selectField('name').selectField('Id').setCondition( 'name like \'%test%\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING, true);
+		qf.selectField('name').selectField('Id').setCondition( 'name = \'test test\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING, true);
 		Schema.DescribeSObjectResult descResult = Contact.SObjectType.getDescribe();
 		//explicitly assert object accessibility when creating the subselect
 		qf.subselectQuery(Task.SObjectType, true).selectField('Id').selectField('Subject').setCondition(' IsDeleted = false ');
@@ -492,7 +492,7 @@ private class fflib_QueryFactoryTest {
 		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType);
 		qf.selectField('name');
 		qf.selectField('Id');
-		qf.setCondition( 'name like \'%test%\'' );
+		qf.setCondition( 'name = \'test test\'' );
 		qf.addOrdering( new fflib_QueryFactory.Ordering('Contact','name',fflib_QueryFactory.SortOrder.ASCENDING) ).addOrdering('CreatedBy.Name',fflib_QueryFactory.SortOrder.DESCENDING);
 		Schema.DescribeSObjectResult descResult = Contact.SObjectType.getDescribe();
        	Schema.ChildRelationship relationship;
@@ -525,7 +525,7 @@ private class fflib_QueryFactoryTest {
 		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType);
 		qf.selectField('name');
 		qf.selectField('email');
-		qf.setCondition( 'name like \'%test%\'' );
+		qf.setCondition( 'name = \'test test\'' );
 		qf.addOrdering( new fflib_QueryFactory.Ordering('Contact','name',fflib_QueryFactory.SortOrder.ASCENDING) ).addOrdering( 'CreatedDATE',fflib_QueryFactory.SortOrder.DESCENDING);
 		Schema.DescribeSObjectResult descResult = Account.SObjectType.getDescribe();
         Exception e;
@@ -552,7 +552,7 @@ private class fflib_QueryFactoryTest {
 		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType);
 		qf.selectField('name');
 		qf.selectField('email');
-		qf.setCondition( 'name like \'%test%\'' );
+		qf.setCondition( 'name = \'test test\'' );
 		qf.addOrdering( new fflib_QueryFactory.Ordering('Contact','name',fflib_QueryFactory.SortOrder.ASCENDING) ).addOrdering('CreatedDATE',fflib_QueryFactory.SortOrder.DESCENDING);
 		Schema.DescribeSObjectResult descResult = Contact.SObjectType.getDescribe();
   
@@ -579,7 +579,7 @@ private class fflib_QueryFactoryTest {
 		  .setEnforceFLS(false)
 		  .selectField(Contact.LastName)
 		  .selectFields(new List<SObjectField>{Contact.Id})
-		  .setCondition( 'name like \'%test%\'' )
+		  .setCondition( 'name = \'test test\'' )
 		  .setEnforceFLS(true)
 		  .selectFields(new Set<SObjectField>{Contact.FirstName})
 		  .addOrdering(new fflib_QueryFactory.Ordering('Contact','name',fflib_QueryFactory.SortOrder.ASCENDING) )
@@ -643,7 +643,7 @@ private class fflib_QueryFactoryTest {
 	@isTest
 	static void queryWith_noFields(){
 		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType);
-		qf.assertIsAccessible().setEnforceFLS(true).setCondition( 'name like \'%test%\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING);
+		qf.assertIsAccessible().setEnforceFLS(true).setCondition( 'name = \'test test\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING);
 		String query = qf.toSOQL();
 		System.assert(query.containsIgnoreCase('SELECT Id FROM Contact'),'Expected \'SELECT Id FROM Contact\' in the SOQL, found: ' + query);
 	}  
