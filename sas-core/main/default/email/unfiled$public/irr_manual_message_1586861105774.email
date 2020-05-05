@@ -2,171 +2,25 @@
 <html style="overflow-y: hidden;">
 <head>
 	<title></title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"><meta content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport"><meta content="text/html; charset=UTF-8">
 </head>
-<body bgcolor="#ffffff" style="padding: 0px; height: auto; color: rgb(0, 0, 0); font-family: arial,helvetica,sans-serif; font-size: 16px; min-height: auto; -ms-text-size-adjust: none; background-color: rgb(255, 255, 255);">
-<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
-	<tbody>
-		<tr>
-			<td align="center">
-			<table align="center" border="0" cellpadding="0" cellspacing="0" class="container" width="600">
-				<tbody>
-					<tr>
-						<td>
-						<table bgcolor="#ffffff" cellpadding="0" cellspacing="0" class="tb_properties border_style" style="background-color:#FFFFFF;" width="100%">
-							<tbody>
-								<tr>
-									<td align="center" valign="top">
-									<table align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
-										<tbody>
-											<tr>
-												<td class="content_padding" style="">
-												<table border="0" cellpadding="0" cellspacing="0" width="100%">
-													<tbody>
-														<tr>
-															<td align="center" class="header" valign="top">
-															<table align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
-																<tbody>
-																	<tr>
-																		<td align="left" valign="top">
-																		<table cellpadding="0" cellspacing="0" style="width:100%">
-																			<tbody>
-																				<tr>
-																					<td class="responsive-td" style="width: 100%;" valign="top">
-																					<table cellpadding="0" cellspacing="0" class="stylingblock-content-wrapper" style="min-width: 100%;" width="100%">
-																						<tbody>
-																							<tr>
-																								<td class="stylingblock-content-wrapper camarker-inner">
-																								<table cellpadding="0" cellspacing="0" width="100%">
-																									<tbody>
-																										<tr>
-																											<td align="center"><img height="63" src="https://image.s50.sfmc-content.com/lib/fe3e11717564047d741777/m/1/16092f30-85ad-4ba1-ba69-6abd88696641.png" style="display: block; padding: 0px; text-align: center; height: 63px; width: 600px; border: 0px;" width="600" /></td>
-																										</tr>
-																									</tbody>
-																								</table>
-																								</td>
-																							</tr>
-																						</tbody>
-																					</table>
+<body bgcolor="#ffffff" style="padding: 0px; height: auto; width: 100%; color: rgb(0, 0, 0); font-family: arial,helvetica,sans-serif; font-size: 16px; min-height: auto; background-color: rgb(255, 255, 255);">
+<div style="margin: 0px auto; width: 600px;"><img height="63" src="https://image.s50.sfmc-content.com/lib/fe3e11717564047d741777/m/1/16092f30-85ad-4ba1-ba69-6abd88696641.png" style="display: block; padding: 0px; text-align: center; height: 63px; width: 600px; border: 0px;" width="600" /></div>
 
-																					<table cellpadding="0" cellspacing="0" class="stylingblock-content-wrapper" style="min-width: 100%;" width="100%">
-																						<tbody>
-																							<tr>
-																								<td class="stylingblock-content-wrapper camarker-inner">
-																								<table cellpadding="0" cellspacing="0" width="100%">
-																									<tbody>
-																										<tr>
-																											<td align="center"><img height="258" src="https://image.msg.flysas.com/lib/fe3e11717564047d741777/m/1/f9328c84-6322-4942-ad7d-e0ba8ac864c0.png" style="display: block; padding: 0px; text-align: center; height: 258px; width: 600px; border: 0px;" width="600" /></td>
-																										</tr>
-																									</tbody>
-																								</table>
-																								</td>
-																							</tr>
-																						</tbody>
-																					</table>
+<div style="margin: 0px auto; width: 600px; margin-top: 0px;"><img height="258" src="https://image.msg.flysas.com/lib/fe3e11717564047d741777/m/1/f9328c84-6322-4942-ad7d-e0ba8ac864c0.png" style="display: block; padding: 0px; text-align: center; height: 258px; width: 600px; border: 0px;" width="600" /></div>
 
-																					<table cellpadding="0" cellspacing="0" class="stylingblock-content-wrapper" style="background-color: transparent; min-width: 100%;" width="100%">
-																						<tbody>
-																							<tr>
-																								<td class="stylingblock-content-wrapper camarker-inner" style="padding: 20px 50px;">
-																									<div style="min-height: 400px;"><span style="font-size:11px;"><span style="unicode-bidi:embed"><span style="word-break:normal"><span style="color:black"><span style="font-family:Verdana,Geneva,sans-serif;">{{{customInfo.content}}}</span></span></span></span></span></div>
-																								</td>
-																							</tr>
-																						</tbody>
-																					</table>
-																					<table cellpadding="0" cellspacing="0" class="stylingblock-content-wrapper" style="background-color: transparent; min-width: 100%;" width="100%">
-																						<tbody>
-																							<tr>
-																								<td class="stylingblock-content-wrapper camarker-inner" style="padding: 10px;">
-																								<table cellpadding="0" cellspacing="0" style="width: 100%;">
-																									<tbody>
-																										<tr>
-																											<td>
-																											<table cellpadding="0" cellspacing="0" style="width: 100%;">
-																												<tbody>
-																													<tr>
-																														<td style="width: 50%; padding-right: 3px;" valign="top">
-																														<table cellpadding="0" cellspacing="0" class="stylingblock-content-wrapper" style="background-color: transparent; min-width: 100%;" width="100%">
-																															<tbody>
-																																<tr>
-																																	<td class="stylingblock-content-wrapper camarker-inner" style="padding: 0px 0px 10px;"><span style="color:#999999;"><span style="font-size:12px;"><span style="font-family:Arial,Helvetica,sans-serif;">Scandinavian Airlines&nbsp;&copy; 2020</span></span></span></td>
-																																</tr>
-																															</tbody>
-																														</table>
+<div style="margin: 0px auto; width: 600px; margin-top: 0px; padding: 20px 50px;">
+<div style="min-height: 400px;"><span style="font-size:11px; color:black; word-break:normal; font-family:Verdana,Geneva,sans-serif; unicode-bidi:embed">{{{customInfo.content}}}</span></div>
+</div>
 
-																														<table cellpadding="0" cellspacing="0" class="stylingblock-content-wrapper" style="min-width: 100%;" width="100%">
-																															<tbody>
-																																<tr>
-																																	<td class="stylingblock-content-wrapper camarker-inner"><span style="color:#999999;"><span style="font-size:10px;">This email has been sent by Scandinavian Airlines System Denmark-Norway-Sweden SE-195 87 Stockholm-Arlanda, Sweden, to {{{passengerInfo.emailAddress}}}.</span></span></td>
-																																</tr>
-																															</tbody>
-																														</table>
-																														</td>
-																														<td style="width: 50%; padding-left: 3px;" valign="top">
-																														<table cellpadding="0" cellspacing="0" class="stylingblock-content-wrapper" style="background-color: transparent; min-width: 100%;" width="100%">
-																															<tbody>
-																																<tr>
-																																	<td class="stylingblock-content-wrapper camarker-inner" style="padding: 0px;">
-																																	<table cellpadding="0" cellspacing="0" width="100%">
-																																		<tbody>
-																																			<tr>
-																																				<td align="left"><img height="19" src="https://image.s50.sfmc-content.com/lib/fe3e11717564047d741777/m/1/1ec482c9-24f9-41d5-8467-516832f22192.png" style="display: block; padding: 0px; text-align: left; height: 19px; width: 200px;" width="200" /></td>
-																																			</tr>
-																																		</tbody>
-																																	</table>
-																																	</td>
-																																</tr>
-																															</tbody>
-																														</table>
+<div style="margin: 0px auto; width: 600px; margin-top: 0px; padding: 20px 50px;">
+<div style="float:left; width: 45%; max-width: 45%; padding-left: 5px;">
+<div style="color:#999999;"><span style="font-size:12px;"><span style="font-family:Arial,Helvetica,sans-serif;">Scandinavian Airlines&nbsp;&copy; 2020X</span></span></div>
 
-																														<table cellpadding="0" cellspacing="0" class="stylingblock-content-wrapper" style="min-width: 100%;" width="100%">
-																															<tbody>
-																																<tr>
-																																	<td class="stylingblock-content-wrapper camarker-inner">
-																																	<div><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">SAS respects your privacy. Please read our </span></span></span><a href="https://www.sas.se/juridisk-information/integritetspolicy/"><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">guidelines </span></span></span></a> <span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">for handling personal data. We welcome </span></span></span><a href="https://www.sas.se/kundservice/kontakt/"><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">feedback </span></span></span></a> <span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">from our customers.</span></span></span></div>
-																																	</td>
-																																</tr>
-																															</tbody>
-																														</table>
-																														</td>
-																													</tr>
-																												</tbody>
-																											</table>
-																											</td>
-																										</tr>
-																									</tbody>
-																								</table>
-																								</td>
-																							</tr>
-																						</tbody>
-																					</table>
-																					</td>
-																				</tr>
-																			</tbody>
-																		</table>
-																		</td>
-																	</tr>
-																</tbody>
-															</table>
-															</td>
-														</tr>
-													</tbody>
-												</table>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			</td>
-		</tr>
-	</tbody>
-</table>
+<div style="color:#999999;"><span style="font-size:10px;">This email has been sent by Scandinavian Airlines System Denmark-Norway-Sweden SE-195 87 Stockholm-Arlanda, Sweden, to {{{passengerInfo.emailAddress}}}.</span></div>
+</div>
+
+<div style="float: right; width: 45%; max-width: 45%; padding-right: 5px;"><img height="19" src="https://image.s50.sfmc-content.com/lib/fe3e11717564047d741777/m/1/1ec482c9-24f9-41d5-8467-516832f22192.png" style="display: block; padding: 0px; text-align: left; height: 19px; width: 200px;" width="200" /> <span style="font-size:10px;color:#999999;font-family:Arial,Helvetica,sans-serif;">SAS respects your privacy. Please read our </span> <a href="https://www.sas.se/juridisk-information/integritetspolicy/"> <span style="color:#999999;font-size:10px;font-family:Arial,Helvetica,sans-serif;">guidelines </span> </a> <span style="color:#999999;font-size:10px;font-family:Arial,Helvetica,sans-serif;">for handling personal data. We welcome </span> <a href="https://www.sas.se/kundservice/kontakt/"> <span style="color:#999999;font-size:10px;font-family:Arial,Helvetica,sans-serif;">feedback </span> </a> <span style="font-size:10px;color:#999999;font-family:Arial,Helvetica,sans-serif;">from our customers.</span></div>
+</div>
 </body>
 </html>
