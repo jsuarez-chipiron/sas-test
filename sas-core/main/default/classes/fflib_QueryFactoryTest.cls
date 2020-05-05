@@ -61,14 +61,14 @@ private class fflib_QueryFactoryTest {
 
 	@isTest
 	static void simpleFieldCondition(){
-		String whereClause = 'name = \'test\'';
+		String whereClause = 'lastname = \'test\'';
 		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType);
 		qf.selectField('name');
 		qf.selectField('email');
 		qf.setCondition( whereClause );
 		System.assertEquals(whereClause,qf.getCondition()); 
 		String query = qf.toSOQL();
-		System.assert(query.endsWith('WHERE name = \'test\''),'Query should have ended with a filter on name, got: '+query);
+		System.assert(query.endsWith('WHERE lastname = \'test\''),'Query should have ended with a filter on name, got: '+query);
 	}
 
 	@isTest
@@ -148,7 +148,7 @@ private class fflib_QueryFactoryTest {
 		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType);
 		qf.selectField('name');
 		qf.selectField('email');
-		qf.setCondition( 'name = \'test\'' );
+		qf.setCondition( 'lastname = \'test\'' );
 		qf.addOrdering( new fflib_QueryFactory.Ordering('Contact','name',fflib_QueryFactory.SortOrder.ASCENDING) ).addOrdering( new fflib_QueryFactory.Ordering('Contact','CreatedDATE',fflib_QueryFactory.SortOrder.DESCENDING) );
 		String query = qf.toSOQL();
 
@@ -166,7 +166,7 @@ private class fflib_QueryFactoryTest {
 		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType);
 		qf.selectField('name');
 		qf.selectField('email');
-		qf.setCondition( 'name = \'test\'' );
+		qf.setCondition( 'lastname = \'test\'' );
 
 		//test base method with ordeting by OwnerId Descending
 		qf.setOrdering( new fflib_QueryFactory.Ordering('Contact','OwnerId',fflib_QueryFactory.SortOrder.DESCENDING) );
