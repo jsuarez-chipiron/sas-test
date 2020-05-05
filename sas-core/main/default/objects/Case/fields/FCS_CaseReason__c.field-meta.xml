@@ -670,7 +670,7 @@
             <valueName>Ticketing</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <valueName>Ticket Status</valueName>
         </valueSettings>
