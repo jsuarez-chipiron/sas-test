@@ -229,18 +229,21 @@ export default class IRR_ManualCommunication extends LightningElement {
         try {
             this.handleLoad(false);
             const { parameters, retrievalMode }  = event.detail;
-            this.retrieveParameters = parameters;
             let result;
+            let eventParameters;
             switch (retrievalMode) {
                 case "FLIGHT_REFERENCE":
-                    result = await getFlightPassengerInfos({flightId: parameters.flightId});
+                    eventParameters = {flightId: parameters.flightId};
+                    result = await getFlightPassengerInfos(eventParameters);
                     break;
                 case "BOOKING_REFERENCE":
-                    result = await getBookingPassengerInfos({bookingId: parameters.bookingId});
+                    eventParameters = {bookingId: parameters.bookingId};
+                    result = await getFlightPassengerInfos(eventParameters);
                     break;
                 default:
                     return;
             }
+            this.retrieveParameters = eventParameters;
             this.passengerResult = result.map(item => tableUtil.flatten(item));
             this.processTable();
             this.showRetrieve = false;
