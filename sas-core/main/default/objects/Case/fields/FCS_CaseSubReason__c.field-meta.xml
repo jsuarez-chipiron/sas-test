@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FCS_CaseSubReason__c</fullName>
-    <complianceGroup>WipeRetain</complianceGroup>
-    
+    <complianceGroup>WipeRetain</complianceGroup>    
     <description>Third level categorization for cases.</description>
     <externalId>false</externalId>
     <label>Case Sub-reason</label>
@@ -711,14 +710,11 @@
                 <label>Referred to SAS Medical</label>
             </value>
             <value>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
-========================================================================
                 <fullName>Referred to Travel agency</fullName>
                 <default>false</default>
                 <label>Referred to Travel agency</label>
             </value>
             <value>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
                 <fullName>Refund status</fullName>
                 <default>false</default>
                 <label>Refund status</label>
@@ -1004,8 +1000,8 @@
                 <label>User guidance - web</label>
             </value>
             <value>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
-========================================================================
+
+
                 <fullName>User related</fullName>
                 <default>false</default>
                 <label>User related</label>
@@ -1041,7 +1037,6 @@
                 <label>Voucher_Status waiting time</label>
             </value>
             <value>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
                 <fullName>Waiting time</fullName>
                 <default>false</default>
                 <label>Waiting time</label>
@@ -1204,13 +1199,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
             <valueName>Musical</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
-========================================================================
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
             <valueName>Rules and policy</valueName>
         </valueSettings>
         <valueSettings>
@@ -1218,7 +1210,6 @@
             <valueName>Sport</valueName>
         </valueSettings>
         <valueSettings>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
             <controllingFieldValue>Baggage</controllingFieldValue>
             <controllingFieldValue>SAS Medical</controllingFieldValue>
             <controllingFieldValue>Special service requests</controllingFieldValue>
@@ -1236,31 +1227,23 @@
         <valueSettings>
             <controllingFieldValue>Minor</controllingFieldValue>
             <valueName>UMNR</valueName>
-========================================================================
             <controllingFieldValue>Campaigns</controllingFieldValue>
             <valueName>Big/Supersale</valueName>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
         </valueSettings>
         <valueSettings>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
             <controllingFieldValue>Minor</controllingFieldValue>
             <valueName>INF</valueName>
-========================================================================
             <controllingFieldValue>Campaigns</controllingFieldValue>
             <controllingFieldValue>Fares</controllingFieldValue>
             <valueName>Domestic</valueName>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
         </valueSettings>
         <valueSettings>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
             <controllingFieldValue>Name change</controllingFieldValue>
             <controllingFieldValue>Changes</controllingFieldValue>
             <valueName>Name change</valueName>
-========================================================================
             <controllingFieldValue>Campaigns</controllingFieldValue>
             <controllingFieldValue>Fares</controllingFieldValue>
             <valueName>Europe</valueName>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Name change</controllingFieldValue>
@@ -1290,43 +1273,38 @@
             <valueName>Social media</valueName>
         </valueSettings>
         <valueSettings>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Availability</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Campaign booking</valueName>
-========================================================================
             <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
             <controllingFieldValue>Missing offer</controllingFieldValue>
             <controllingFieldValue>Name change</controllingFieldValue>
             <controllingFieldValue>Rebooking</controllingFieldValue>
             <valueName>AMEX 2 for 1</valueName>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
         </valueSettings>
         <valueSettings>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
+
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Price inquiry</valueName>
-========================================================================
+
             <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
             <controllingFieldValue>Flight info</controllingFieldValue>
             <controllingFieldValue>Rebooking</controllingFieldValue>
             <valueName>Corona virus</valueName>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
         </valueSettings>
         <valueSettings>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
+
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Route inquiry</valueName>
-========================================================================
+
             <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
             <controllingFieldValue>Flight info</controllingFieldValue>
             <controllingFieldValue>Rebooking</controllingFieldValue>
             <valueName>Corona virus asian customer</valueName>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
@@ -1337,8 +1315,8 @@
             <valueName>Refund status</valueName>
         </valueSettings>
         <valueSettings>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
-========================================================================
+
+
             <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
             <controllingFieldValue>Changes</controllingFieldValue>
             <controllingFieldValue>Corporate product</controllingFieldValue>
@@ -1378,7 +1356,6 @@
             <valueName>Voucher_Status waiting time</valueName>
         </valueSettings>
         <valueSettings>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
             <controllingFieldValue>Changes</controllingFieldValue>
             <valueName>Add EB in booking</valueName>
         </valueSettings>
@@ -1387,8 +1364,6 @@
             <valueName>Add infant in booking</valueName>
         </valueSettings>
         <valueSettings>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
-========================================================================
             <controllingFieldValue>Changes</controllingFieldValue>
             <controllingFieldValue>Name change</controllingFieldValue>
             <valueName>Name change</valueName>
@@ -1404,7 +1379,6 @@
             <valueName>Referred to Travel agency</valueName>
         </valueSettings>
         <valueSettings>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
             <controllingFieldValue>Claims</controllingFieldValue>
             <valueName>Create case</valueName>
         </valueSettings>
@@ -1730,22 +1704,20 @@
             <valueName>Denied boarding</valueName>
         </valueSettings>
         <valueSettings>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
+
             <controllingFieldValue>Rebooking</controllingFieldValue>
             <valueName>Travel agent booking</valueName>
-========================================================================
+
             <controllingFieldValue>Flight disruptions</controllingFieldValue>
             <valueName>Downgrading</valueName>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
         </valueSettings>
         <valueSettings>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
+
             <controllingFieldValue>Rebooking</controllingFieldValue>
             <valueName>Ticket status</valueName>
-========================================================================
+
             <controllingFieldValue>Flight disruptions</controllingFieldValue>
             <valueName>Flight cancellations</valueName>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Flight disruptions</controllingFieldValue>
@@ -1864,7 +1836,7 @@
             <valueName>Handling status</valueName>
         </valueSettings>
         <valueSettings>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
+
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>Wrong department</valueName>
         </valueSettings>
@@ -1872,16 +1844,15 @@
             <controllingFieldValue>Error</controllingFieldValue>
             <controllingFieldValue>Special service requests</controllingFieldValue>
             <valueName>Other</valueName>
-========================================================================
+
             <controllingFieldValue>Look here before you ask R</controllingFieldValue>
             <valueName>Releases</valueName>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
         </valueSettings>
         <valueSettings>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
+
             <controllingFieldValue>Eurobonus</controllingFieldValue>
             <valueName>Airlines</valueName>
-========================================================================
+
             <controllingFieldValue>Minor</controllingFieldValue>
             <valueName>Child</valueName>
         </valueSettings>
@@ -1912,7 +1883,6 @@
         <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Price inquiry</valueName>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
