@@ -242,8 +242,6 @@
             <default>false</default>
         </values>
         <values>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
-========================================================================
             <fullName>Referred to Travel agency</fullName>
             <default>false</default>
         </values>
@@ -252,7 +250,6 @@
             <default>false</default>
         </values>
         <values>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
             <fullName>Report of damaged baggage</fullName>
             <default>false</default>
         </values>
