@@ -16,11 +16,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FCS_CaseSubReason__c</picklist>
-        <values>
-            <fullName>Access rights</fullName>
-            <default>false</default>
-        </values>
+        <picklist>FCS_CaseSubReason__c</picklist>        
         <values>
             <fullName>Bug created</fullName>
             <default>false</default>
