@@ -205,7 +205,6 @@ export default class IRR_ManualCommunication extends LightningElement {
                 default:
                     return;
             }
-            console.log(JSON.stringify(payload));
             await sendManualCommunication({ manualRequest: payload });
             this.handleLoad(true);
             this.showSuccess = true;
@@ -238,7 +237,7 @@ export default class IRR_ManualCommunication extends LightningElement {
                     break;
                 case "BOOKING_REFERENCE":
                     eventParameters = {bookingId: parameters.bookingId};
-                    result = await getFlightPassengerInfos(eventParameters);
+                    result = await getBookingPassengerInfos(eventParameters);
                     break;
                 default:
                     return;
