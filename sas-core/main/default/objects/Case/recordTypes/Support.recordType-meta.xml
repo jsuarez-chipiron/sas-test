@@ -242,14 +242,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Referred to Travel agency</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Refund status</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Report of damaged baggage</fullName>
             <default>false</default>
         </values>
