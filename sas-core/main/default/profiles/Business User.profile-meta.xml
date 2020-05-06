@@ -23,7 +23,15 @@
         <apexClass>FCS_ConsoleAutomationController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>FCS_OmniChannelQueueBacklogController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <custom>true</custom>
+	<customPermissions>
+        <enabled>true</enabled>
+        <name>Special_User_Permission</name>
+    </customPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.FCS_AnswerTime__c</field>
@@ -269,9 +277,19 @@
         <field>Case.FCS_VirtualOrganization__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Case.GDPR_Consent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.ContactId</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Consent__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

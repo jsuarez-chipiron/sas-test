@@ -270,6 +270,13 @@
             <default>false</default>
         </values>
         <values>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
+========================================================================
+            <fullName>Referred to Travel agency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> support/master
             <fullName>Referred to group form</fullName>
             <default>false</default>
         </values>
@@ -343,6 +350,10 @@
         </values>
         <values>
             <fullName>Wheelchair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong department</fullName>
             <default>false</default>
         </values>
         <values>
