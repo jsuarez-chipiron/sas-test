@@ -117,7 +117,7 @@ private class MID_SendSMS_Test {
         System.assertEquals(false,resp.result[0].success);
         System.assertEquals(40001,resp.result[0].errorCode);
         System.assertNotEquals(null,resp.result[0].errorMessage);
-        verifyCommunicationLog(0,0);
+        verifyCommunicationLog(0,1);
     }
 
     /**

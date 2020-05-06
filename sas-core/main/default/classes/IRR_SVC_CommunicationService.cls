@@ -90,9 +90,8 @@ public class IRR_SVC_CommunicationService {
          * @param sms The sms message for which to add a communication log record
          * @param messageType The type of message sent
          * @param groupExtId The external id of the group of the message sent
-         * @param filtered Whether the message was filtered due to not being in the whitelist
          */
-        public void add(IRR_SVC_SFMCService.SMSMessage sms, String messageType, String groupExtId,Boolean filtered) {
+        public void add(IRR_SVC_SFMCService.SMSMessage sms, String messageType, String groupExtId) {
             IRR_CommunicationLog__c log = new IRR_CommunicationLog__c();
             log.IRR_Channel__c = COM_LOG_CHANNEL_SMS;
             log.IRR_ContactKey__c = sms.contactKey;
@@ -101,9 +100,6 @@ public class IRR_SVC_CommunicationService {
             log.IRR_ExternalId__c = sms.externalId;
             log.IRR_ExternalGroupId__c = groupExtId;
             log.IRR_MessageType__c = messageType;
-            if(filtered){
-                log.IRR_Status__c = COM_LOG_STATUS_FILTERED;
-            }
             if(sms.errorCode==null || sms.errorCode==0) {
                 log.IRR_Status__c = COM_LOG_STATUS_CREATED;
             }
@@ -113,6 +109,30 @@ public class IRR_SVC_CommunicationService {
                 log.IRR_ErrorMessage__c = sms.errorMessage;
             }
             log.IRR_MessageContent__c = sms.content;
+            unitOfWork.registerNew(log);
+        }
+
+        /**
+         * Add a generic sms errors to the log for messsages filtered and not forwarded to marketing cloud
+         * @param contactKey The key which wouldhave been used to identify the contact
+         * @param recipient The phone number of the recipient 
+         * @param content The message which should have been sent to the recipient
+         * @param messageType The type of message sent
+         * @param groupExtId The external id of the group of the message sent
+         * @param filtered Whether the message was filtered due to not being in the whitelist
+         * @param errorCode The custom error code to describe the error
+         * @param errorMessage The customer error message to describe the error
+         */
+        public void addSMSError(String contactKey, String recipient, String content, String messageType, String groupExtId, Boolean filtered, Integer errorCode, String errorMessage) {
+            IRR_CommunicationLog__c log = new IRR_CommunicationLog__c();
+            log.IRR_Channel__c = COM_LOG_CHANNEL_SMS;
+            log.IRR_Recipient__c = recipient;
+            log.IRR_ExternalGroupId__c = groupExtId;
+            log.IRR_MessageType__c = messageType;
+            log.IRR_Status__c = filtered ? COM_LOG_STATUS_FILTERED : COM_LOG_STATUS_ERROR;
+            log.IRR_StatusCode__c = errorCode;
+            log.IRR_ErrorMessage__c = errorMessage;
+            log.IRR_MessageContent__c = content;
             unitOfWork.registerNew(log);
         }
     }
