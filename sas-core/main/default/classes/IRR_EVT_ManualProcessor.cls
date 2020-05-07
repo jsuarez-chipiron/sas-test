@@ -69,12 +69,6 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
         }
     }
 
-    public void finalizeEvent(fflib_ISObjectUnitOfWork uow) {
-        if (messages != null && !messages.isEmpty()) {
-            insertCommunicationLogs(uow);
-        }
-    }
-
     public IRR_EVT_ManualProcessor(IRR_MOD_ManualRequest manualRequest) {
         this.manualRequest = manualRequest;
     }

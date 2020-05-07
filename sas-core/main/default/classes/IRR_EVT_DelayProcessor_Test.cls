@@ -9,6 +9,30 @@
 private class IRR_EVT_DelayProcessor_Test {
 
     @IsTest
+    static void testInitiateEvent_Object() {
+        //Given
+        IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
+
+        //When
+        Object result = IRR_Application.EventProcessor.newInstance('flightDepartureDelay', delayInfo);
+
+        //Then
+        System.assert(result instanceof IRR_EVT_DelayProcessor, 'Expected result of type DelayProcessor');
+    }
+
+    @IsTest
+    static void testInitiateEvent_JSON() {
+        //Given
+        String jsonPayload = '{}';
+
+        //When
+        Object result = IRR_Application.EventProcessor.newInstance('flightDepartureDelay', jsonPayload);
+
+        //Then
+        System.assert(result instanceof IRR_EVT_DelayProcessor, 'Expected result of type DelayProcessor');
+    }
+
+    @IsTest
     static void testGetEventName() {
         //Given
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
@@ -171,6 +195,7 @@ private class IRR_EVT_DelayProcessor_Test {
         System.assertEquals(0, delayInfo.previousDelayedMinutes);
         System.assertEquals(10, delayInfo.delayDifference);
         System.assertEquals(10, delayInfo.delayedMinutes);
+        System.assertEquals('SK1429', delayInfo.flightRef);
         System.assertEquals('ARN', delayInfo.stationDeparture);
         System.assertEquals('CPH', delayInfo.stationArrival);
         System.assert(delayInfo.firstDelay);
@@ -277,7 +302,7 @@ private class IRR_EVT_DelayProcessor_Test {
     }
 
     @IsTest
-    static void testProcessEvent_NotConfirmed_NoSMS() {
+    static void testProcessEvent_NotConfirmed_NoMessage() {
         //Given
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.delayDifference = 10;

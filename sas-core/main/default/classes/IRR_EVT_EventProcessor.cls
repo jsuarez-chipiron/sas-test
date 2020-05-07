@@ -119,6 +119,20 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
      * @author Niklas Lundkvist, Deloitte
      * @date 2020
      *
+     * @description Creates communication logs for scoped messages, if any.
+     *
+     * @param uow Unit of Work
+     */
+    public virtual void finalizeEvent(fflib_ISObjectUnitOfWork uow) {
+        if (messages != null && !messages.isEmpty()) {
+            insertCommunicationLogs(uow);
+        }
+    }
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
      * @description Creates Communication Logs from messages in scope.
      *
      * @param uow Unit of Work

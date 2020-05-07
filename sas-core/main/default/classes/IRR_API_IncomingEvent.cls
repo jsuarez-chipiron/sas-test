@@ -26,6 +26,7 @@ global class IRR_API_IncomingEvent {
         }
         catch (Exception e) {
             C_Log.logException(e, 'IRR', C_Log.generateLogHttpData(RestContext.request));
+            RestContext.response = new RestResponse();
             RestContext.response.responseBody = Blob.valueOf(e.getMessage());
             RestContext.response.statusCode = 500;
         }

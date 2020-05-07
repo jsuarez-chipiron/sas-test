@@ -14,7 +14,6 @@ private class IRR_EVT_ManualProcessor_Test {
         IRR_EVT_ManualProcessor manualProcessor = (IRR_EVT_ManualProcessor)
                 new IRR_EVT_ManualProcessor.Constructor().newInstance(null);
 
-
         //When
         String eventName = manualProcessor.getEventName();
 
