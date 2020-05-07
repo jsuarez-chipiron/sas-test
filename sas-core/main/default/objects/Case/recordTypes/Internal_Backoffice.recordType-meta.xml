@@ -376,7 +376,11 @@
         <values>
             <fullName>Gift voucher</fullName>
             <default>false</default>
-        </values>        
+        </values>
+        <values>
+            <fullName>Handling status</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Hotels</fullName>
             <default>false</default>
