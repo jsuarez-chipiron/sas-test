@@ -126,8 +126,7 @@ public without sharing class MCENS_EnsEventTriggerHandler {
         Map<String,IRR_CommunicationLog__c> comLogMap = new Map<String,IRR_CommunicationLog__c>();
         if(!messageKeys.isEmpty() || !compositeIds.isEmpty()){
             try{
-                comLogList = [SELECT Id,IRR_MessageKey__c,IRR_CompositeId__c FROM IRR_CommunicationLog__c WHERE IRR_MessageKey__c IN :messageKeys FOR UPDATE];
-                comLogList.addAll([SELECT Id,IRR_MessageKey__c,IRR_CompositeId__c FROM IRR_CommunicationLog__c WHERE IRR_CompositeId__c IN :compositeIds FOR UPDATE]);
+                comLogList = [SELECT Id,IRR_MessageKey__c,IRR_CompositeId__c FROM IRR_CommunicationLog__c WHERE IRR_MessageKey__c IN :messageKeys OR IRR_CompositeId__c IN :compositeIds FOR UPDATE];
             }
             catch(DmlException e){
                 throwRetryableException('Cannot obtain lock on Communication Logs');
