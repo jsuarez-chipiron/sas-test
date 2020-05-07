@@ -106,10 +106,10 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
      *
      * @param uow Unit of Work
      */
-    public void finalizeEvent(fflib_ISObjectUnitOfWork uow) {
+    public override void finalizeEvent(fflib_ISObjectUnitOfWork uow) {
+        super.finalizeEvent(uow);
         if (messages != null && !messages.isEmpty()) {
             insertDelayLog(uow);
-            insertCommunicationLogs(uow);
         }
     }
 

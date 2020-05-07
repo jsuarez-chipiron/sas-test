@@ -7,8 +7,10 @@
 
 public class C_IntegrationExecutorRest implements C_IIntegrationExecutor {
 
+    @TestVisible
     private final String BASE_URL;
 
+    @TestVisible
     private final Map<String, String> REQUEST_HEADERS;
 
     public C_IntegrationExecutorRest(String baseUrl, Map<String, String> requestHeaders) {
@@ -51,10 +53,19 @@ public class C_IntegrationExecutorRest implements C_IIntegrationExecutor {
         HttpResponse res = http.send(request);
         String response = String.isNotBlank(res.getBody()) ? res.getBody() : '';
         System.debug(response);
-        return new C_IntegrationExecutor.IntegrationResponse(res.getStatusCode(),response);
+        return new C_IntegrationExecutor.IntegrationResponse(res.getStatusCode(), response);
     }
 
-    public void setRequestHeaders(HttpRequest request, Map<String, String> requestHeaders) {
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Constructs a Query Endpoint using a map of query parameters and assigns it to the request.
+     *
+     * @param request HttpRequest object to modify
+     * @param requestHeaders Map of Request Headers
+     */
+    private void setRequestHeaders(HttpRequest request, Map<String, String> requestHeaders) {
         for (String key : requestHeaders.keySet()) {
             String value = requestHeaders.get(key);
             request.setHeader(key, value);

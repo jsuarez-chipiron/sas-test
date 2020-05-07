@@ -33,7 +33,6 @@ global without sharing class MID_SendSMS {
                 for(Integer i=0;i<recSz;i++){
                     SendSMSRecipient rec = req.recipients[i];
                     SMSResultWrapper smsw = new SMSResultWrapper();
-                    smsw.filtered = false;
                     resultWrapperList[i] = smsw;
                     if(String.isBlank(rec.phoneNumber)){
                         smsw.errorCode = 40001;
@@ -41,14 +40,15 @@ global without sharing class MID_SendSMS {
                     }
                     else {
                         if(rec.phoneNumber.startsWith('+'))rec.phoneNumber=rec.phoneNumber.substring(1);
-                        smsw.sms = new IRR_SVC_SFMCService.SMSMessage(req.message,rec.phoneNumber,rec.phoneNumber);
-                        smsw.sms.externalId = rec.externalId;
                         if(whitelistedRecipients==null || whitelistedRecipients.contains(rec.phoneNumber)){
+                            smsw.sms = new IRR_SVC_SFMCService.SMSMessage(req.message,rec.phoneNumber,rec.phoneNumber);
+                            smsw.sms.externalId = rec.externalId;
                             messages.add(smsw.sms);
                             smsw.smsIdx = messages.size()-1;
                         }
                         else {
-                            smsw.filtered = true;
+                            smsw.errorCode = 40002;
+                            smsw.errorMessage = 'Phone number not in whitelist';
                         }
                     }
                 }
@@ -60,20 +60,30 @@ global without sharing class MID_SendSMS {
                 SendSMSResponse resp = new SendSMSResponse();
                 resp.result = new SendSMSResult[recSz];
                 for(Integer i=0;i<recSz;i++){
+                    SendSMSRecipient rec = req.recipients[i];
                     SMSResultWrapper smsw = resultWrapperList[i];
                     SendSMSResult res = new SendSMSResult();
                     if(smsw.smsIdx!=null){
-                        IRR_SVC_SFMCService.SMSMessage sms = smsw.filtered ? smsw.sms : messages[smsw.smsIdx];
+                        IRR_SVC_SFMCService.SMSMessage sms = messages[smsw.smsIdx];
                         res.success = sms.errorCode==null;
                         res.messageKey = sms.messageKey;
                         res.errorCode = sms.errorCode;
                         res.errorMessage = sms.errorMessage;
-                        logFactory.add(sms, req.messageType, req.messageGroupId, smsw.filtered);
+                        logFactory.add(sms, req.messageType, req.messageGroupId);
                     }
                     else {
                         res.success = false;
                         res.errorCode = smsw.errorCode;
                         res.errorMessage = smsw.errorMessage;
+                        logFactory.addSMSError(
+                            rec.phoneNumber, 
+                            rec.phoneNumber, 
+                            req.message, 
+                            req.messageType, 
+                            req.messageGroupId, 
+                            smsw.errorCode==40002, 
+                            smsw.errorCode, 
+                            smsw.errorMessage);
                     }
                     resp.result[i] = res;
                 }
@@ -103,10 +113,6 @@ global without sharing class MID_SendSMS {
          * THe index of the SMS object in the messages list
          */
         Integer smsIdx;
-        /**
-         * Whether the sms was filtered
-         */
-        Boolean filtered;
         /**
          * The sms message sent
          */

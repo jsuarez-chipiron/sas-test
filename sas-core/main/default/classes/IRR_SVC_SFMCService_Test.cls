@@ -54,8 +54,8 @@ private class IRR_SVC_SFMCService_Test {
 
         //Given
         List<SFMC_SMSDefinition__mdt> smsDefinitions = new List<SFMC_SMSDefinition__mdt>{
-                new SFMC_SMSDefinition__mdt(SFMC_CountryPrefix__c = 'TEST', SFMC_DefinitionKey__c='TEST_DEF_KEY'),
-                new SFMC_SMSDefinition__mdt(SFMC_CountryPrefix__c = null, SFMC_DefinitionKey__c='TEST_NULL_KEY')
+                new SFMC_SMSDefinition__mdt(SFMC_CountryPrefix__c = 'TES', SFMC_DefinitionKey__c='TES_DEF_KEY'),
+                new SFMC_SMSDefinition__mdt(SFMC_CountryPrefix__c = 'O', SFMC_DefinitionKey__c='O_DEF_KEY')
         };
         C_IntegrationExecutor.IntegrationResponse response = new C_IntegrationExecutor.IntegrationResponse(
                 202, '{"requestId": "ccdb94bf-fcac-4fef-b194-08f534a2079a", "errorcode": 0, "responses": [{"messageKey": "GV1LhQ6NFkqFUAE1IsoQ9Q"}]}');
@@ -94,7 +94,7 @@ private class IRR_SVC_SFMCService_Test {
                 'recipients[0].to' => 'TEST_RECIPIENT',
                 'recipients[0].contactKey' => 'TEST_CONTACT_KEY',
                 'recipients[0].attributes.content' => 'TEST_CONTENT',
-                'definitionKey' => 'TEST_DEF_KEY'
+                'definitionKey' => 'TES_DEF_KEY'
         };
         ((C_IIntegrationExecutor) mocks.verify(executorMock)).executeRequest(
                 fflib_Match.eqString('/messaging/v1/sms/messages/'),
@@ -106,7 +106,7 @@ private class IRR_SVC_SFMCService_Test {
                 'recipients[0].to' => 'OTHER_RECIPIENT',
                 'recipients[0].contactKey' => 'OTHER_CONTACT_KEY',
                 'recipients[0].attributes.content' => 'OTHER_CONTENT',
-                'definitionKey' => 'TEST_NULL_KEY'
+                'definitionKey' => 'O_DEF_KEY'
         };
         ((C_IIntegrationExecutor) mocks.verify(executorMock)).executeRequest(
                 fflib_Match.eqString('/messaging/v1/sms/messages/'),
