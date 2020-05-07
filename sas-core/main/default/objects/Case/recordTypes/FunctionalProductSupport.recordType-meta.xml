@@ -14,7 +14,30 @@
             <fullName>Salesforce</fullName>
             <default>false</default>
         </values>
-    </picklistValues>    
+    </picklistValues>
+    <picklistValues>
+        <picklist>FCS_CaseSubReason__c</picklist>
+        <values>
+            <fullName>Access rights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bug created</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Login</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User related</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User story created</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
     <picklistValues>
         <picklist>FCS_CaseTags__c</picklist>
         <values>
