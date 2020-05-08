@@ -70,6 +70,14 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     }
 
     /**
+    Used to call the trigger in the after delete context
+    */
+    public override void afterDelete() {
+        //Make sure that related Survey Invitations are deleted upon case deletion
+        delete [SELECT Id FROM SurveyInvitation WHERE FCS_RelatedCase__c IN :oldCaseMap.keySet()];
+    }
+
+    /**
     Method to set owner on case created from SoMe-post quick actions
     @param newCaseList The list of new version of the case i.e. the Trigger.new variable
     */

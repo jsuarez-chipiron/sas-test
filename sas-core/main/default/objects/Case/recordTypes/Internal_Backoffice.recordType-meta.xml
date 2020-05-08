@@ -378,7 +378,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Handling advice</fullName>
+            <fullName>Handling status</fullName>
             <default>false</default>
         </values>
         <values>
@@ -685,11 +685,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Eurobonus</fullName>
+            <fullName>EuroBonus procedures R</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>EuroBonus procedures R</fullName>
+            <fullName>Eurobonus</fullName>
             <default>false</default>
         </values>
         <values>

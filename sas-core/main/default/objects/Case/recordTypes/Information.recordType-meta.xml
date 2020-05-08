@@ -31,6 +31,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Digital support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Error</fullName>
             <default>false</default>
         </values>
@@ -226,6 +230,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Musical</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Name change</fullName>
             <default>false</default>
         </values>
@@ -267,6 +275,10 @@
         </values>
         <values>
             <fullName>Referred to SAS Medical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to Travel agency</fullName>
             <default>false</default>
         </values>
         <values>
@@ -339,6 +351,34 @@
         </values>
         <values>
             <fullName>Upgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User guidance - App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User guidance - web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher_Expire date</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher_Help with usage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher_How to request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher_Online problem during request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher_Status waiting time</fullName>
             <default>false</default>
         </values>
         <values>
