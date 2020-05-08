@@ -220,6 +220,8 @@ export default class IRR_ManualCommunication extends LightningElement {
         this.retrieveParameters = {};
         this.processedTable = [];
         this.passengerResult = [];
+        this.additionalRecipients = [];
+        this.template.querySelector('c-irr_-recipient-modal').reset();
         this.showRetrieve = true;
         this.showSuccess = false;
     }

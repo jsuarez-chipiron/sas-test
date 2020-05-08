@@ -13,6 +13,11 @@ export default class IRR_RecipientModal extends LightningElement {
 
     @api selectedRecipients;
 
+    @api
+    reset() {
+        this.recipients = [];
+    }
+
     @track recipients = [];
 
     idTracker = 0;
