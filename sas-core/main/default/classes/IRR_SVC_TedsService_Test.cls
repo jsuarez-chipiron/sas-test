@@ -24,6 +24,7 @@ private class IRR_SVC_TedsService_Test {
         mocks.when(builderMock.setBaseURL(fflib_Match.anyString())).thenReturn(builderMock);
         mocks.when(builderMock.setAPIMSubscriptionKey(fflib_Match.anyString())).thenReturn(builderMock);
         mocks.when(builderMock.setAPIVersion(fflib_Match.anyString())).thenReturn(builderMock);
+        mocks.when(builderMock.enableSASTracking()).thenReturn(builderMock);
         mocks.when(builderMock.build()).thenReturn(executorMock);
         mocks.when(executorMock.executeRequest(
                     fflib_Match.anyString(),
@@ -113,6 +114,7 @@ private class IRR_SVC_TedsService_Test {
         mocks.when(builderMock.setBaseURL(fflib_Match.anyString())).thenReturn(builderMock);
         mocks.when(builderMock.setAPIMSubscriptionKey(fflib_Match.anyString())).thenReturn(builderMock);
         mocks.when(builderMock.setAPIVersion(fflib_Match.anyString())).thenReturn(builderMock);
+        mocks.when(builderMock.enableSASTracking()).thenReturn(builderMock);
         mocks.when(builderMock.build()).thenReturn(executorMock);
         mocks.when(executorMock.executeRequest(
                     fflib_Match.anyString(),
@@ -175,6 +177,7 @@ private class IRR_SVC_TedsService_Test {
         mocks.when(builderMock.setBaseURL(fflib_Match.anyString())).thenReturn(builderMock);
         mocks.when(builderMock.setAPIMSubscriptionKey(fflib_Match.anyString())).thenReturn(builderMock);
         mocks.when(builderMock.setAPIVersion(fflib_Match.anyString())).thenReturn(builderMock);
+        mocks.when(builderMock.enableSASTracking()).thenReturn(builderMock);
         mocks.when(builderMock.build()).thenReturn(executorMock);
         mocks.when(executorMock.executeRequest(
                     fflib_Match.anyString(),
@@ -215,6 +218,7 @@ private class IRR_SVC_TedsService_Test {
         mocks.when(builderMock.setBaseURL(fflib_Match.anyString())).thenReturn(builderMock);
         mocks.when(builderMock.setAPIMSubscriptionKey(fflib_Match.anyString())).thenReturn(builderMock);
         mocks.when(builderMock.setAPIVersion(fflib_Match.anyString())).thenReturn(builderMock);
+        mocks.when(builderMock.enableSASTracking()).thenReturn(builderMock);
         mocks.when(builderMock.build()).thenReturn(executorMock);
         mocks.when(executorMock.executeRequest(
                     fflib_Match.anyString(),
@@ -269,6 +273,7 @@ private class IRR_SVC_TedsService_Test {
         mocks.when(builderMock.setBaseURL(fflib_Match.anyString())).thenReturn(builderMock);
         mocks.when(builderMock.setAPIMSubscriptionKey(fflib_Match.anyString())).thenReturn(builderMock);
         mocks.when(builderMock.setAPIVersion(fflib_Match.anyString())).thenReturn(builderMock);
+        mocks.when(builderMock.enableSASTracking()).thenReturn(builderMock);
         mocks.when(builderMock.build()).thenReturn(executorMock);
         mocks.when(executorMock.executeRequest(
                     fflib_Match.anyString(),
