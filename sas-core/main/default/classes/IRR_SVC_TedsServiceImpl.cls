@@ -34,6 +34,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
                                 .setBaseURL(NAMED_CREDENTIAL)
                                 .setAPIVersion(API_VERSION)
                                 .setAPIMSubscriptionKey(APIM_SUBSCRIPTION_KEY)
+                                .enableSASTracking()
                                 .build();
             }
             return integrationExecutor;

@@ -16,8 +16,16 @@ public class C_IntegrationExecutorBuilder implements C_IIntegrationExecutorBuild
     @TestVisible
     private Type integrationExecutorType;
 
+    private static final String API_SYSTEM_NAME = 'Salesforce';
+
     public C_IntegrationExecutorBuilder(Type integrationExecutorType) {
         this.integrationExecutorType = integrationExecutorType;
+    }
+
+    public C_IntegrationExecutorBuilder enableSASTracking() {
+        requestHeaders.put('sas-system-name', API_SYSTEM_NAME);
+        requestHeaders.put('sas-tracking-id', C_Util.getUUID());
+        return this;
     }
 
     /**
