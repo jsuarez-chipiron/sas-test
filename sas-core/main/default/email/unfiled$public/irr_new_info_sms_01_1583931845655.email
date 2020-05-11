@@ -1,0 +1,15 @@
+<html>
+ <head> 
+  <title></title> 
+ </head> 
+ <body style="height: auto; min-height: auto;">
+  Important information about your SAS booking ABC123 
+  <br /> Hi! 
+  <br /> Your Flight SK2315 CPH - OSL 13 Sep, with departure time 06.00 will be delayed, new departure time is unknown. 
+  <br /> New info will be given at 07.00. 
+  <br /> Please check in according to original departure time. 
+  <br /> Read more about your rights here 
+  <a href="https://www.flysas.com/en/legal-info/eu-passenger-rights/">https://www.flysas.com/en/legal-info/eu-passenger-rights</a> 
+  <br /> Regards, SAS
+ </body>
+</html>

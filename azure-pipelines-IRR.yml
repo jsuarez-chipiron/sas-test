@@ -27,6 +27,9 @@ steps:
     sudo npm install sfdx-cli --global
     sfdx --version
     sfdx plugins --core
+    git clone https://github.com/psodergren/sfdx-lexemail $(Agent.HomeDirectory)/sfdx-lexemail
+    sfdx plugins:link $(Agent.HomeDirectory)/sfdx-lexemail
+    sfdx plugins
   displayName: 'Install SFDX'
 
 - script: |
@@ -36,9 +39,7 @@ steps:
   displayName: 'Setup Org'
 
 - script: |
-    if [ -e ./$(PACKAGE_FOLDER)/EmailTemplate.json ]; then
-      sfdx force:data:tree:import -f ./$(PACKAGE_FOLDER)/EmailTemplate.json
-    fi
+    sfdx email:push
   displayName: 'Import email templates'
 
 - script: |
@@ -54,7 +55,7 @@ steps:
 - script: |
     numCls="`find ./ -name '*.cls' -not -path './sfdx/*' | wc -l`"
     if [ $numCls -gt 0 ]; then 
-      sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat junit --outputdir $(Common.TestResultsDirectory) --codecoverage --testlevel RunLocalTests
+      sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat junit --outputdir $(Common.TestResultsDirectory) --codecoverage --testlevel RunLocalTests --synchronous
     else 
       echo "Test skipped due to no classes"
     fi
@@ -91,7 +92,7 @@ steps:
   inputs:
     testResultsFormat: 'JUnit'
     testResultsFiles: '$(Common.TestResultsDirectory)/test-*-junit.xml'
-    failTaskOnFailedTests: true
+    failTaskOnFailedTests: false
 
 - script: |
     if [ -d ./$(PACKAGE_FOLDER)/sharingRules ]; then
@@ -107,9 +108,10 @@ steps:
     if [ -e ./$(PACKAGE_FOLDER)/destructiveChangesPost.xml ]; then
       cp ./$(PACKAGE_FOLDER)/destructiveChangesPost.xml ./package-md/destructiveChangesPost.xml
     fi
-    if [ -e ./$(PACKAGE_FOLDER)/EmailTemplate.json ]; then
-      mv ./$(PACKAGE_FOLDER)/EmailTemplate.json $(Build.ArtifactStagingDirectory)/EmailTemplate.json
+    if [ ! -d ./$(PACKAGE_FOLDER)/emails ]; then
+      mkdir ./$(PACKAGE_FOLDER)/emails
     fi
+    cp -r ./$(PACKAGE_FOLDER)/emails $(Build.ArtifactStagingDirectory)/emails
   displayName: 'Convert to metadata package'
 
 - task: ArchiveFiles@2

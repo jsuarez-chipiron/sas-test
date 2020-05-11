@@ -1,0 +1,126 @@
+<!--
+ - @author Niklas Lundkvist, Deloitte
+ - @date 2020
+ -->
+
+<!-- IRR Send Panel -->
+<template>
+    <lightning-card title="Send Messages" icon-name="utility:email">
+        <lightning-button
+                class={cancelButtonClass}
+                slot="actions"
+                variant="destructive"
+                label="Cancel"
+                title="Cancel"
+                onclick={handleCancel}>
+        </lightning-button>
+        <lightning-combobox
+                if:true={showTemplatePicklist}
+                class="combobox-actions slds-p-left_small"
+                slot="actions"
+                variant="label-hidden"
+                label="Select template"
+                value={manualTemplate.DeveloperName}
+                options={templatePicklistOptions}
+                onchange={handleTemplateChange}>
+        </lightning-combobox>
+        <lightning-button
+                class="slds-p-left_small"
+                slot="actions"
+                variant="neutral"
+                label="Add Recipients"
+                title="Add Additional Recipients"
+                onclick={handleShowRecipientModal}>
+        </lightning-button>
+        <lightning-button
+                class="slds-p-left_small"
+                slot="actions"
+                variant="brand"
+                label="Send Messages"
+                title="Send Messages"
+                onclick={handleSend}>
+        </lightning-button>
+        <div class="slds-media">
+            <div class="slds-media__body">
+                <lightning-tabset>
+                    <lightning-tab
+                            class="no-padding"
+                            value="CUSTOM"
+                            label="Custom Message"
+                            title="Send a custom message"
+                            onactive={handleTabSwitch}>
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small" size="3">
+                                <lightning-input
+                                        type="text"
+                                        name="subject"
+                                        label="Subject"
+                                        required
+                                        field-level-help="Used as subject line in both SMS and Email"
+                                        data-tab-group="CUSTOM"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small" size="3">
+                                <lightning-textarea
+                                        name="content"
+                                        label={customContentLabel}
+                                        variant="standard"
+                                        required
+                                        data-tab-group="CUSTOM"
+                                        onchange={handleParameterChange}>
+                                </lightning-textarea>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-tab>
+                    <lightning-tab
+                            class="no-padding"
+                            value="DELAY"
+                            label="Delay Message"
+                            title="Send delay message"
+                            onactive={handleTabSwitch}>
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small" size="3" class="pull-down">
+                                <lightning-input
+                                        class="slds-p-vertical_xx-small"
+                                        type="text"
+                                        name="flightId"
+                                        label="Flight Id"
+                                        value={flightId}
+                                        field-level-help="Format SK1238-20200213-ARN-CPH"
+                                        pattern="([A-Z]{2})([0-9]{4})-([0-9]{8})-([A-Z]{3})-([A-Z]{3})"
+                                        required
+                                        message-when-pattern-mismatch="Input format SK1238-20200213-ARN-CPH"
+                                        data-tab-group="DELAY"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input
+                                        type="datetime"
+                                        timezone="GMT"
+                                        name="scheduledTimeOfDepartureLocal"
+                                        label="Scheduled Time of Departure (Local)"
+                                        required
+                                        data-tab-group="DELAY"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input
+                                        type="datetime"
+                                        timezone="GMT"
+                                        name="estimatedTimeOfDepartureLocal"
+                                        label="Estimated Time of Departure (Local)"
+                                        required
+                                        data-tab-group="DELAY"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-tab>
+                </lightning-tabset>
+            </div>
+        </div>
+    </lightning-card>
+</template>
