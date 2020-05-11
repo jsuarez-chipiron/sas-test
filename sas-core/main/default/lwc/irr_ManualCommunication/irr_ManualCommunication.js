@@ -80,7 +80,6 @@ export default class IRR_ManualCommunication extends LightningElement {
     async init() {
         try {
             this.templatesBySendMode = await getManualTemplatesBySendMode();
-            console.log(JSON.stringify(this.templatesBySendMode));
         }
         catch (e) {
             this.handleError(e, true);
