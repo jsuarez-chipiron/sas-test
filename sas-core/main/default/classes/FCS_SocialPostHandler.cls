@@ -173,6 +173,7 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
                 }
             }
             sp.OwnerId=soMeQueue[0].Id;
+            sp.FCS_PreviousQueue__c = soMeQueue[0].Id;
             if(sp.ParentId != null && sp.IsOutbound == false){
                 sp.ParentId = null;
                 sp.ReviewedStatus = STATUS_NEEDED;
