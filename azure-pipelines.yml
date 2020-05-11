@@ -95,7 +95,7 @@ steps:
   inputs:
     testResultsFormat: 'JUnit'
     testResultsFiles: '$(Common.TestResultsDirectory)/test-*-junit.xml'
-    failTaskOnFailedTests: true
+    failTaskOnFailedTests: false
 
 - script: |
     if [ -d ./$(PACKAGE_FOLDER)/sharingRules ]; then
