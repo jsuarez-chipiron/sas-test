@@ -10,8 +10,8 @@ import {LightningElement} from 'lwc';
 const segmentOptions = [
     { label: 'Cancelled', value: 'Cancelled' },
     { label: 'Confirmed', value: 'Confirmed' },
-    { label: 'Call to confirm', value: 'Call to confirm' },
-    { label: 'Space available', value: 'Space available' },
+    { label: 'CallToConfirm', value: 'CallToConfirm' },
+    { label: 'SpaceAvailable', value: 'SpaceAvailable' },
     { label: 'Suspended', value: 'Suspended' },
     { label: 'Unconfirmed', value: 'Unconfirmed' },
     { label: 'Waitlisted', value: 'Waitlisted' },
