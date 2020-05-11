@@ -40,8 +40,14 @@ public class IRR_MOD_Message {
         this.channel = channel;
         this.template = template;
         this.variables = variables;
-        this.recipient = channel == MessageChannel.SMS ? passengerInfo.phoneNumber.replace('+','').replace('00', '') :
-                passengerInfo.emailAddress;
+        if (channel == MessageChannel.SMS) {
+            this.recipient = passengerInfo.phoneNumber;
+            if (this.recipient.startsWith('00')) this.recipient = this.recipient.substring(2);
+            if (this.recipient.startsWith('+')) this.recipient = this.recipient.substring(1);
+        }
+        else {
+            this.recipient = passengerInfo.emailAddress;
+        }
         this.contactKey = String.isNotBlank(passengerInfo.emailAddress) ? passengerInfo.emailAddress :
                 this.recipient;
         this.passengerInfo = passengerInfo;
