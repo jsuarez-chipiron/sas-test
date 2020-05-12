@@ -1785,11 +1785,7 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>EmailSingle</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>EnableCommunityAppLauncher</name>
-    </userPermissions>
+    </userPermissions>    
     <userPermissions>
         <enabled>true</enabled>
         <name>EnableNotifications</name>
