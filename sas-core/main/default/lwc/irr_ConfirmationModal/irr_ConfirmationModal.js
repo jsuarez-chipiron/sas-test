@@ -2,22 +2,37 @@
  * @author Niklas Lundkvist, Deloitte
  * @date 2020
  *
- * @description TODO
+ * @description Send confirmation modal for the Manual Communication web app.
  */
 
-import {LightningElement, api} from 'lwc';
+import {LightningElement, api, track} from 'lwc';
 
 export default class IRR_ConfirmationModal extends LightningElement {
 
-    @api showConfirmation;
-
-    @api confirmDetail;
+    _confirmDetail;
 
     @api selectedCount;
 
-    sendSMS = false;
+    @api showConfirmation;
 
-    sendEmail = false;
+    @track sendSMS = false;
+
+    @track sendEmail = false;
+
+    @api
+    get confirmDetail() {
+        return this._confirmDetail;
+    }
+
+    set confirmDetail(value) {
+        if (value && value.manualTemplate &&
+                (!this._confirmDetail || value.manualTemplate !== this._confirmDetail.manualTemplate)) {
+            this.sendEmail = value.manualTemplate.IRR_DefaultSendEmail__c &&
+                !!value.manualTemplate.IRR_EmailTemplate__c;
+            this.sendSMS = value.manualTemplate.IRR_DefaultSendSMS__c && !!value.manualTemplate.IRR_SMSTemplate__c;
+        }
+        this._confirmDetail = value;
+    }
 
     get recipientText() {
         return this.selectedCount > 1 ? 'recipients' : 'recipient';
@@ -51,7 +66,6 @@ export default class IRR_ConfirmationModal extends LightningElement {
     handleCancel() {
         const event = new CustomEvent("hideconfirm");
         this.dispatchEvent(event);
-        this.reset();
     }
 
     handleSend() {
