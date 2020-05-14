@@ -10,11 +10,22 @@
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
-    <label>SAS IRR</label>
+    <label>SAS Disruption</label>
     <navType>Console</navType>
     <tabs>standard-home</tabs>
     <tabs>IRR_CommunicationLog__c</tabs>
     <tabs>Manual_Communication</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SAS_IRR_UtilityBar</utilityBar>
+    <workspaceConfig>
+        <mappings>
+            <tab>IRR_CommunicationLog__c</tab>
+        </mappings>
+        <mappings>
+            <tab>Manual_Communication</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-home</tab>
+        </mappings>
+    </workspaceConfig>
 </CustomApplication>
