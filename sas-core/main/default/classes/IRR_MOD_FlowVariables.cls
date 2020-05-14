@@ -6,6 +6,10 @@
 */
 
 public class IRR_MOD_FlowVariables {
+
+    @InvocableVariable
+    public IRR_MOD_CancelInfo cancelInfo;
+
     @InvocableVariable
     public IRR_MOD_DelayInfo delayInfo;
 
