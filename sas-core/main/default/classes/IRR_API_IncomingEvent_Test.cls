@@ -20,6 +20,7 @@ private class IRR_API_IncomingEvent_Test {
         req.httpMethod = 'POST';
         req.requestURI = 'https://instance_name.salesforce.com/services/apexrest/EventAPI/testEventName';
         RestContext.request = req;
+        RestContext.response = new RestResponse();
         IRR_Application.Service.setMock(IRR_SVC_ICommunicationService.class, serviceMock);
 
         //When
@@ -46,6 +47,7 @@ private class IRR_API_IncomingEvent_Test {
         req.httpMethod = 'POST';
         req.requestURI = 'https://instance_name.salesforce.com/services/apexrest/EventAPI/testEventName';
         RestContext.request = req;
+        RestContext.response = new RestResponse();
         IRR_Application.Service.setMock(IRR_SVC_ICommunicationService.class, serviceMock);
 
         //When
