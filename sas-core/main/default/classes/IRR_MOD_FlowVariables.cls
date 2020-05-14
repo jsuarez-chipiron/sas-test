@@ -20,5 +20,8 @@ public class IRR_MOD_FlowVariables {
     public IRR_MOD_PassengerInfo passengerInfo;
 
     @InvocableVariable
+    public IRR_MOD_RebookInfo rebookInfo;
+
+    @InvocableVariable
     public IRR_MOD_CustomInfo customInfo;
 }

@@ -21,6 +21,11 @@ public class IRR_MOD_SegmentInfo {
     public String stationDeparture { get; set; }
 
     @AuraEnabled
+    public String departureTimeLocal { get; set; }
+    @AuraEnabled
+    public String arrivalTimeLocal { get; set; }
+
+    @AuraEnabled
     public Boolean isConfirmed { get; set; }
     @AuraEnabled
     public String status { get; set; }
@@ -35,4 +40,7 @@ public class IRR_MOD_SegmentInfo {
 
     @AuraEnabled
     public String flightId { get; set; }
+
+    @AuraEnabled
+    public String flightNumber { get; set; }
 }

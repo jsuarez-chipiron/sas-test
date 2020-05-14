@@ -76,9 +76,6 @@
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tbody>
 		<tr>
-			<td align="center" valign="top">&nbsp;</td>
-		</tr>
-		<tr>
 			<td align="center">
 			<table align="center" border="0" cellpadding="0" cellspacing="0" class="container" width="600">
 				<tbody>
@@ -111,7 +108,7 @@
 																								<table cellpadding="0" cellspacing="0" width="100%">
 																									<tbody>
 																										<tr>
-																											<td align="center"><img height="63" src="https://image.s50.sfmc-content.com/lib/fe3e11717564047d741777/m/1/16092f30-85ad-4ba1-ba69-6abd88696641.png" style="display: block; padding: 0px; text-align: center; height: 63px; width: 600px; border: 0px;" width="600" /></td>
+																											<td align="center"><img height="63" src="https://image.msg.flysas.com/lib/fe3e11717564047d741777/m/1/16092f30-85ad-4ba1-ba69-6abd88696641.png" style="display: block; padding: 0px; text-align: center; height: 63px; width: 600px; border: 0px;" width="600" /></td>
 																										</tr>
 																									</tbody>
 																								</table>
@@ -127,7 +124,7 @@
 																								<table cellpadding="0" cellspacing="0" width="100%">
 																									<tbody>
 																										<tr>
-																											<td align="center"><img height="258" src="https://image.s50.sfmc-content.com/lib/fe3e11717564047d741777/m/1/35d95ebe-0ddb-48bc-b5d3-6b83ae741f45.png" style="display: block; padding: 0px; text-align: center; height: 258px; width: 600px; border: 0px;" width="600" /></td>
+																											<td align="center"><img height="258" src="https://image.msg.flysas.com/lib/fe3e11717564047d741777/m/1/35d95ebe-0ddb-48bc-b5d3-6b83ae741f45.png" style="display: block; padding: 0px; text-align: center; height: 258px; width: 600px; border: 0px;" width="600" /></td>
 																										</tr>
 																									</tbody>
 																								</table>
@@ -142,8 +139,7 @@
 																								<td class="stylingblock-content-wrapper camarker-inner" style="padding: 0px 50px;">
 																								<div style="text-align: center;"><br />
 																								<br />
-																								<span style="font-size:16px;">Important information about your SAS booking <span style="color:#e74c3c;">ABC123</span></span><br />
-																								<br />
+																								<span style="font-size:16px;">Important information about your SAS booking {{{rebookInfo.bookingReference}}}</span><br />
 																								<br />
 																								&nbsp;</div>
 
@@ -151,24 +147,22 @@
 																								<br />
 																								Due to earlier flight disruptions, you have been rebooked.<br />
 																								<br />
-																								<br />
 																								Your new itinerary is:</span><br />
 																								<br />
-																								<meta content="text/html; charset=utf-8"> <meta content="PowerPoint.Slide" name="ProgId"> <meta content="Microsoft PowerPoint 15" name="Generator">
-																								<p style="language:sv;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
-text-align:left;direction:ltr;unicode-bidi:embed;mso-line-break-override:none;
-word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span style="font-family:Arial,Helvetica,sans-serif;"><span style="color: red;">LH0824 23 Mar<br />
-																								Frankfurt (FRA) 08:00<br />
-																								Copenhagen (CPH) 09:25<br />
-																								&nbsp;<br />
-																								SK2323 23 Mar<br />
-																								Copenhagen (CPH) 11:00<br />
-																								Stockholm (ARN) 12:10</span></span></span></p>
-																								<br />
-																								<br />
+																								<p style="language:sv;margin-top:0pt;margin-bottom:0pt;margin-left:0in;text-align:left;direction:ltr;unicode-bidi:embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span style="font-family:Arial,Helvetica,sans-serif;">
+																								[[[LOOP(passengerInfo.itinerary, "trip")]]]
+																									<span style="font-size: 16px; font-weight: bold;">{{{trip.tripType}}}</span><br/>
+																									[[[LOOP(trip.segments, "segment")]]]
+																										{{{segment.flightNumber}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'dd MMM')]]]<br />
+																										{{{segment.stationDeparture}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]]<br />
+																										{{{segment.stationArrival}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]]<br />
+																										<br/>
+																									[[[ENDLOOP()]]]
+																								[[[ENDLOOP()]]]
+																								</span></span></p>
 																								<span style="font-size:11px;">We apologize for this change.<br />
 																								<br />
-																								Read more about your rights here </span> <a href="http://https://www.flysas.com/en/legal-info/eu-passenger-rights/"><span style="font-size:11px;">https://www.flysas.com/en/legal-info/eu-passenger-rights/</span></a><br />
+																								Read more about your rights here </span> <a href="https://www.flysas.com/en/legal-info/eu-passenger-rights/"><span style="font-size:11px;">https://www.flysas.com/en/legal-info/eu-passenger-rights/</span></a><br />
 																								<br />
 																								<span style="font-size:11px;">Regards, SAS</span><br />
 																								<br />
@@ -203,7 +197,7 @@ word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span 
 																														<table cellpadding="0" cellspacing="0" class="stylingblock-content-wrapper" style="min-width: 100%;" width="100%">
 																															<tbody>
 																																<tr>
-																																	<td class="stylingblock-content-wrapper camarker-inner"><span style="color:#999999;"><span style="font-size:10px;">This email has been sent by Scandinavian Airlines System Denmark-Norway-Sweden SE-195 87 Stockholm-Arlanda, Sweden, to {{{Recipient.Email}}}.</span></span></td>
+																																	<td class="stylingblock-content-wrapper camarker-inner"><span style="color:#999999;"><span style="font-size:10px;">This email has been sent by Scandinavian Airlines System Denmark-Norway-Sweden SE-195 87 Stockholm-Arlanda, Sweden, to {{{passengerInfo.emailAddress}}}.</span></span></td>
 																																</tr>
 																															</tbody>
 																														</table>
@@ -216,7 +210,7 @@ word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span 
 																																	<table cellpadding="0" cellspacing="0" width="100%">
 																																		<tbody>
 																																			<tr>
-																																				<td align="left"><img height="19" src="https://image.s50.sfmc-content.com/lib/fe3e11717564047d741777/m/1/1ec482c9-24f9-41d5-8467-516832f22192.png" style="display: block; padding: 0px; text-align: left; height: 19px; width: 200px;" width="200" /></td>
+																																				<td align="left"><img height="19" src="https://image.msg.flysas.com/lib/fe3e11717564047d741777/m/1/1ec482c9-24f9-41d5-8467-516832f22192.png" style="display: block; padding: 0px; text-align: left; height: 19px; width: 200px;" width="200" /></td>
 																																			</tr>
 																																		</tbody>
 																																	</table>
@@ -229,7 +223,7 @@ word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span 
 																															<tbody>
 																																<tr>
 																																	<td class="stylingblock-content-wrapper camarker-inner">
-																																	<div><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">SAS respects your privacy. Please read our </span></span></span><a href="https://www.sas.se/juridisk-information/integritetspolicy/?eCodsId=%2FeLLmyqvktj0JkHCVDJXgw%3D%3D"><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">guidelines </span></span></span></a> <span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">for handling personal data. We welcome </span></span></span><a href="https://www.sas.se/kundservice/kontakt/?rid=%40myREb7hkf7GO3w25sXI9yA%3D%3D&utm_source=ac&utm_medium=email&utm_campaign=200310_Srvc_Push_SE_EBNEB&utm_content=feedback&eCodsId=%2FeLLmyqvktj0JkHCVDJXgw%3D%3D&dclid=CI7pzcbvuugCFYKCmgod7qoLGg"><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">feedback </span></span></span></a> <span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">from our customers.</span></span></span></div>
+																																	<div><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">SAS respects your privacy. Please read our </span></span></span><a href="https://www.sas.se/juridisk-information/integritetspolicy/"><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">guidelines </span></span></span></a> <span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">for handling personal data. We welcome </span></span></span><a href="https://www.sas.se/kundservice/kontakt/"><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">feedback </span></span></span></a> <span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">from our customers.</span></span></span></div>
 																																	</td>
 																																</tr>
 																															</tbody>
