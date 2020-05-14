@@ -14,7 +14,7 @@ private class IRR_EVT_DelayProcessor_Test {
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
 
         //When
-        Object result = IRR_Application.EventProcessor.newInstance('flightDepartureDelay', delayInfo);
+        Object result = IRR_Application.EventProcessor.newInstance('flightDelayDeparture', delayInfo);
 
         //Then
         System.assert(result instanceof IRR_EVT_DelayProcessor, 'Expected result of type DelayProcessor');
@@ -26,7 +26,7 @@ private class IRR_EVT_DelayProcessor_Test {
         String jsonPayload = '{}';
 
         //When
-        Object result = IRR_Application.EventProcessor.newInstance('flightDepartureDelay', jsonPayload);
+        Object result = IRR_Application.EventProcessor.newInstance('flightDelayDeparture', jsonPayload);
 
         //Then
         System.assert(result instanceof IRR_EVT_DelayProcessor, 'Expected result of type DelayProcessor');
