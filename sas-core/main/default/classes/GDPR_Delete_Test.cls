@@ -335,6 +335,8 @@ private class GDPR_Delete_Test {
         
         IRR_CommunicationLog__c c2 = new IRR_CommunicationLog__c(IRR_ContactKey__c='test@email.com');
         insert c2;
+        IRR_SMSResponse__c s2 = new IRR_SMSResponse__c(IRR_CommunicationLog__c = c2.Id);
+        insert s2;
         DateTime dtLastWeek = DateTime.now();
         dtLastWeek = dtLastWeek.addDays(-60);
         Test.setCreatedDate(c2.Id, dtLastWeek);
@@ -345,13 +347,11 @@ private class GDPR_Delete_Test {
         Database.executeBatch(new GDPR_DeleteCommunicationLog_Batch());
         Test.stopTest();
         IRR_CommunicationLog__c[] comlogList = [SELECT Id, IRR_ContactKey__c, CreatedDate FROM IRR_CommunicationLog__c];
+        IRR_SMSResponse__c[] smsreponseList = [SELECT Id FROM IRR_SMSResponse__c];
         System.assertEquals(1, comlogList.size());
-    }
+        System.assertEquals(0, smsreponseList.size());
 
-
-
-
-    
+    }    
 }
 
 
