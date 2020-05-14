@@ -10,6 +10,9 @@ public class IRR_MOD_FlowVariables {
     public IRR_MOD_DelayInfo delayInfo;
 
     @InvocableVariable
+    public IRR_MOD_NewInfo newInfo;
+
+    @InvocableVariable
     public IRR_MOD_PassengerInfo passengerInfo;
 
     @InvocableVariable
