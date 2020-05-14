@@ -3,6 +3,14 @@
     <label>SMS Response</label>
     <protected>false</protected>
     <values>
+        <field>IRR_DefaultSendEmail__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IRR_DefaultSendSMS__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>IRR_EmailTemplate__c</field>
         <value xsi:nil="true"/>
     </values>
