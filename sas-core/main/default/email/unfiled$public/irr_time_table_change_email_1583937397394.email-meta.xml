@@ -3,7 +3,7 @@
     <available>true</available>
     <description>Email - Time Table Change</description>
     <encodingKey>ISO-8859-1</encodingKey>
-    <name>irr_time_table_change_email_01</name>
+    <name>irr_time_table_change_email_02</name>
     <style>none</style>
     <subject>Time table change from SAS - Booking reference ABC123</subject>
     <type>custom</type>
