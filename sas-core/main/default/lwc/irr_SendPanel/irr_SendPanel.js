@@ -33,13 +33,13 @@ export default class irr_SendPanel extends LightningElement {
 
     get templatePicklistOptions() {
         return this.templatesBySendMode[this.sendMode].map((template => {
-            return { label: template.MasterLabel, value: template.DeveloperName };
+            return { label: template.templateLabel, value: template.templateName };
         }));
     }
 
     handleTemplateChange(event) {
         this.manualTemplate = this.templatesBySendMode[this.sendMode]
-            .find(template => template.DeveloperName === event.detail.value);
+            .find(template => template.templateName === event.detail.value);
     }
 
     get cancelButtonClass() {

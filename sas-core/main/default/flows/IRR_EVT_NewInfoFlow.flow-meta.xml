@@ -28,7 +28,7 @@
             <assignToReference>smsTemplateName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>irr_new_info_sms_01_1583931845655</stringValue>
+                <stringValue>irr_new_info_sms_01</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>

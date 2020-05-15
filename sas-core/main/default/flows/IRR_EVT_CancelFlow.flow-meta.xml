@@ -28,7 +28,7 @@
             <assignToReference>smsTemplateName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>irr_cancellation_sms_01_1583931048365</stringValue>
+                <stringValue>irr_cancellation_sms_01</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -42,7 +42,7 @@
             <assignToReference>emailTemplateName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>irr_cancellation_email_01_1583921696384</stringValue>
+                <stringValue>irr_cancellation_email_01</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>

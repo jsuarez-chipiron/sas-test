@@ -144,7 +144,7 @@ private class IRR_EVT_NewInfoProcessor_Test {
         //Then
         List<IRR_MOD_Message> messages = eventProcessor.messages;
         System.assertEquals(1, messages.size());
-        System.assertEquals('irr_new_info_sms_01_1583931845655', messages[0].template);
+        System.assertEquals('irr_new_info_sms_01', messages[0].template);
         System.assertEquals('New Info', messages[0].type);
         System.assertEquals(passengerInfos[0], messages[0].passengerInfo);
         System.assertEquals(messages[0].recipient, 'TEST_PHONE');

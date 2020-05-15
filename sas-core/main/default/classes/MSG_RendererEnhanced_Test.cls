@@ -35,13 +35,13 @@ private class MSG_RendererEnhanced_Test {
         MSG_TemplateCache.EL_LIST_OVERRIDE = elList;
 
         EmailTemplate[] etList = new EmailTemplate[]{
-                new EmailTemplate(Id='00X000000000000EAW',DeveloperName='TEST_MSGSERVICE_ET_CLASSIC_0',UiType='Aloha',TemplateType='html',BrandTemplateId='0163N0000000000QAC',EnhancedLetterheadId=null,Subject='TestCLASSIC0',Body='BODY_CLASSIC_0',HtmlValue='<p>BODY_CLASSIC_0</p>'),
-                new EmailTemplate(Id='00X000000000001EAW',DeveloperName='TEST_MSGSERVICE_ET_CLASSIC_1',UiType='Aloha',TemplateType='html',BrandTemplateId='0163N0000000001QAC',EnhancedLetterheadId=null,Subject='TestCLASSIC1',Body='BODY_CLASSIC_1',HtmlValue='<p>BODY_CLASSIC_1</p>'),
-                new EmailTemplate(Id='00X000000000002EAW',DeveloperName='TEST_MSGSERVICE_ET_CLASSIC_2',UiType='Aloha',TemplateType='html',BrandTemplateId=null,EnhancedLetterheadId=null,Subject='TestCLASSIC2',Body='BODY_CLASSIC_2',HtmlValue='<p>BODY_CLASSIC_2</p>'),
+                new EmailTemplate(Id='00X000000000000EAW',DeveloperName='TEST_MSGSERVICE_ET_CLASSIC_0',Name = 'TEST_MSGSERVICE_ET_CLASSIC_0', UiType='Aloha',TemplateType='html',BrandTemplateId='0163N0000000000QAC',EnhancedLetterheadId=null,Subject='TestCLASSIC0',Body='BODY_CLASSIC_0',HtmlValue='<p>BODY_CLASSIC_0</p>'),
+                new EmailTemplate(Id='00X000000000001EAW',DeveloperName='TEST_MSGSERVICE_ET_CLASSIC_1',Name = 'TEST_MSGSERVICE_ET_CLASSIC_1', UiType='Aloha',TemplateType='html',BrandTemplateId='0163N0000000001QAC',EnhancedLetterheadId=null,Subject='TestCLASSIC1',Body='BODY_CLASSIC_1',HtmlValue='<p>BODY_CLASSIC_1</p>'),
+                new EmailTemplate(Id='00X000000000002EAW',DeveloperName='TEST_MSGSERVICE_ET_CLASSIC_2',Name = 'TEST_MSGSERVICE_ET_CLASSIC_2', UiType='Aloha',TemplateType='html',BrandTemplateId=null,EnhancedLetterheadId=null,Subject='TestCLASSIC2',Body='BODY_CLASSIC_2',HtmlValue='<p>BODY_CLASSIC_2</p>'),
 
-                new EmailTemplate(Id='00X000000000000UAA',DeveloperName='TEST_MSGSERVICE_ET_LEX_0',UiType='SFX',TemplateType='custom',BrandTemplateId=null,EnhancedLetterheadId='0Rn000000000000SAA',Subject='TestLEX0',Body=null,HtmlValue='<html style="overflow-y: hidden;"><head>	<title></title></head><body style="height: auto; min-height: auto;">BODY_LEX_0</body></html>'),
-                new EmailTemplate(Id='00X000000000001UAA',DeveloperName='TEST_MSGSERVICE_ET_LEX_1',UiType='SFX',TemplateType='custom',BrandTemplateId=null,EnhancedLetterheadId=null,Subject='TestLEX1',Body=null,HtmlValue='<html style="overflow-y: hidden;"><head>	<title></title></head><body style="height: auto; min-height: auto;">BODY_LEX_1</body></html>'),
-                new EmailTemplate(Id='00X000000000002UAA',DeveloperName='TEST_MSGSERVICE_ET_LEX_2',UiType='SFX',TemplateType='custom',BrandTemplateId=null,EnhancedLetterheadId=null,Subject='TestLEX1',Body=null,HtmlValue='<html style="overflow-y: hidden;"><head>	<title></title></head><body style="height: auto; min-height: auto;">{{{Case.BADMERGEFIELD.Name}}}</body></html>')
+                new EmailTemplate(Id='00X000000000000UAA',DeveloperName='TEST_MSGSERVICE_ET_LEX_0',Name = 'TEST_MSGSERVICE_ET_LEX_0', UiType='SFX',TemplateType='custom',BrandTemplateId=null,EnhancedLetterheadId='0Rn000000000000SAA',Subject='TestLEX0',Body=null,HtmlValue='<html style="overflow-y: hidden;"><head>	<title></title></head><body style="height: auto; min-height: auto;">BODY_LEX_0</body></html>'),
+                new EmailTemplate(Id='00X000000000001UAA',DeveloperName='TEST_MSGSERVICE_ET_LEX_1',Name = 'TEST_MSGSERVICE_ET_LEX_1', UiType='SFX',TemplateType='custom',BrandTemplateId=null,EnhancedLetterheadId=null,Subject='TestLEX1',Body=null,HtmlValue='<html style="overflow-y: hidden;"><head>	<title></title></head><body style="height: auto; min-height: auto;">BODY_LEX_1</body></html>'),
+                new EmailTemplate(Id='00X000000000002UAA',DeveloperName='TEST_MSGSERVICE_ET_LEX_2',Name = 'TEST_MSGSERVICE_ET_LEX_2', UiType='SFX',TemplateType='custom',BrandTemplateId=null,EnhancedLetterheadId=null,Subject='TestLEX1',Body=null,HtmlValue='<html style="overflow-y: hidden;"><head>	<title></title></head><body style="height: auto; min-height: auto;">{{{Case.BADMERGEFIELD.Name}}}</body></html>')
         };
         MSG_TemplateCache.ET_LIST_OVERRIDE = etList;
 
@@ -62,32 +62,32 @@ private class MSG_RendererEnhanced_Test {
 
     /**
         Adds a LEX template to the template cache
-        @param devName The developer name of the email template
+        @param name Both the developer name and name (label) of the email template
         @param subject The subject of the email template
         @param htmlValue The body of the email template
         @return The virtual id of the email template
     */
-    static Id addLEXTemplate(String devName,String subject,String htmlValue){
+    static Id addLEXTemplate(String name,String subject,String htmlValue){
         if(MSG_TemplateCache.ET_LIST_OVERRIDE==null)MSG_TemplateCache.ET_LIST_OVERRIDE = new List<EmailTemplate>();
         Id etId = '00X0000000010'+(ET_ID_IDX<10?'0':'')+ET_ID_IDX;
         ET_ID_IDX++;
-        MSG_TemplateCache.ET_LIST_OVERRIDE.add(new EmailTemplate(Id=etId,DeveloperName=devName,UiType='SFX',TemplateType='custom',BrandTemplateId=null,EnhancedLetterheadId=null,Subject=subject,Body=null,HtmlValue=htmlValue));
+        MSG_TemplateCache.ET_LIST_OVERRIDE.add(new EmailTemplate(Id=etId,DeveloperName=name, Name = name, UiType='SFX',TemplateType='custom',BrandTemplateId=null,EnhancedLetterheadId=null,Subject=subject,Body=null,HtmlValue=htmlValue));
         return etId;
     }
 
     /**
         Adds a classic template to the template cache
-        @param devName The developer name of the email template
+        @param name Both the developer name and name (label) of the email template
         @param subject The subject of the email template
         @param htmlValue The body of the email template
         @param textValue The body of the email template
         @return The virtual id of the email template
     */
-    static Id addClassicTemplate(String devName,String subject,String htmlValue,String textValue){
+    static Id addClassicTemplate(String name,String subject,String htmlValue,String textValue){
         if(MSG_TemplateCache.ET_LIST_OVERRIDE==null)MSG_TemplateCache.ET_LIST_OVERRIDE = new List<EmailTemplate>();
         Id etId = '00X0000000010'+(ET_ID_IDX<10?'0':'')+ET_ID_IDX;
         ET_ID_IDX++;
-        MSG_TemplateCache.ET_LIST_OVERRIDE.add(new EmailTemplate(Id=etId,DeveloperName=devName,UiType='Aloha',TemplateType='html',BrandTemplateId=null,EnhancedLetterheadId=null,Subject=subject,Body=textValue,HtmlValue=htmlValue));
+        MSG_TemplateCache.ET_LIST_OVERRIDE.add(new EmailTemplate(Id=etId,DeveloperName=name,Name = name, UiType='Aloha',TemplateType='html',BrandTemplateId=null,EnhancedLetterheadId=null,Subject=subject,Body=textValue,HtmlValue=htmlValue));
         return etId;
     }
 
@@ -99,14 +99,14 @@ private class MSG_RendererEnhanced_Test {
     static void enhancedRendererClassicTemplate(){
         setupTemplates();
         String baseUrl = 'https://'+Url.getSalesforceBaseUrl().getHost();
-        Set<String> templateDevNameSet = new Set<String>{
+        Set<String> templateNameSet = new Set<String>{
                 'TEST_MSGSERVICE_ET_CLASSIC_0',
                 'TEST_MSGSERVICE_ET_CLASSIC_1',
                 'TEST_MSGSERVICE_ET_CLASSIC_2'
         };
 
         MSG_TemplateCache tc = new MSG_TemplateCache();
-        tc.loadTemplates(templateDevNameSet);
+        tc.loadTemplates(templateNameSet);
         MSG_TemplateCache.TemplateContent t0 = tc.getTemplate('00X000000000000EAW');
         MSG_TemplateCache.TemplateContent t1 = tc.getTemplate('00X000000000001EAW');
         MSG_TemplateCache.TemplateContent t2 = tc.getTemplate('00X000000000002EAW');
@@ -246,13 +246,13 @@ private class MSG_RendererEnhanced_Test {
         messages[0].template='TEST_MSGSERVICE_ET_LEX_0';
         messages[1].template='TEST_MSGSERVICE_ET_LEX_1';
         
-        Set<String> templateDevNames = new Set<String>{
+        Set<String> templateNames = new Set<String>{
                 'TEST_MSGSERVICE_ET_LEX_0',
                 'TEST_MSGSERVICE_ET_LEX_1'
         };
 
         MSG_TemplateCache tc = new MSG_TemplateCache();
-        tc.loadTemplates(templateDevNames);
+        tc.loadTemplates(templateNames);
 
         MSG_TemplateCache.TemplateContent t0 = tc.getTemplate('00X000000000000UAA');
         MSG_TemplateCache.TemplateContent t1 = tc.getTemplate('00X000000000001UAA');
@@ -310,7 +310,7 @@ private class MSG_RendererEnhanced_Test {
         messages[2].template='TEST_MSGSERVICE_FA_LEX_0';
         messages[3].template='TEST_MSGSERVICE_FA_LEX_1';
 
-        Set<String> templateDevNames = new Set<String>{
+        Set<String> templateNames = new Set<String>{
                 'TEST_MSGSERVICE_FA_CLASSIC_0',
                 'TEST_MSGSERVICE_FA_CLASSIC_1',
                 'TEST_MSGSERVICE_FA_LEX_0',
@@ -318,7 +318,7 @@ private class MSG_RendererEnhanced_Test {
         };
 
         MSG_TemplateCache tc = new MSG_TemplateCache();
-        tc.loadTemplates(templateDevNames);
+        tc.loadTemplates(templateNames);
 
         MSG_TemplateCache.TemplateContent t0 = tc.getTemplateByName(messages[0].template);
         MSG_TemplateCache.TemplateContent t1 = tc.getTemplateByName(messages[1].template);
@@ -376,14 +376,14 @@ private class MSG_RendererEnhanced_Test {
         messages[1].template='TEST_EXPR_1';
         messages[2].template='TEST_EXPR_2';
 
-        Set<String> templateDevNames = new Set<String>{
+        Set<String> templateNames = new Set<String>{
                 'TEST_EXPR_0',
                 'TEST_EXPR_1',
                 'TEST_EXPR_2'
         };
 
         MSG_TemplateCache tc = new MSG_TemplateCache();
-        tc.loadTemplates(templateDevNames);
+        tc.loadTemplates(templateNames);
 
         MSG_RendererEnhanced r = new MSG_RendererEnhanced((MSG_ITemplateCache) tc);
         r.renderMessage(messages[0]);
@@ -456,7 +456,7 @@ private class MSG_RendererEnhanced_Test {
         messages[2].template='TEST_EXPR_2';
         messages[3].template='TEST_FMT_DATE';
 
-        Set<String> templateDevNames = new Set<String>{
+        Set<String> templateNames = new Set<String>{
                 'TEST_EXPR_0',
                 'TEST_EXPR_1',
                 'TEST_EXPR_2',
@@ -464,7 +464,7 @@ private class MSG_RendererEnhanced_Test {
         };
 
         MSG_TemplateCache tc = new MSG_TemplateCache();
-        tc.loadTemplates(templateDevNames);
+        tc.loadTemplates(templateNames);
 
         MSG_RendererEnhanced r = new MSG_RendererEnhanced((MSG_ITemplateCache) tc);
         r.renderMessage(messages[0]);
@@ -547,14 +547,14 @@ private class MSG_RendererEnhanced_Test {
         messages[1].template='TEST_CTRL_1';
         messages[2].template='TEST_CTRL_2';
 
-        Set<String> templateDevNames = new Set<String>{
+        Set<String> templateNames = new Set<String>{
                 'TEST_CTRL_0',
                 'TEST_CTRL_1',
                 'TEST_CTRL_2'
         };
 
         MSG_TemplateCache tc = new MSG_TemplateCache();
-        tc.loadTemplates(templateDevNames);
+        tc.loadTemplates(templateNames);
 
         MSG_RendererEnhanced r = new MSG_RendererEnhanced((MSG_ITemplateCache) tc);
         r.renderMessage(messages[0]);

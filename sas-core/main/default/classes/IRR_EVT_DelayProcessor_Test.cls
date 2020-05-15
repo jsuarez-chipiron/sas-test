@@ -267,7 +267,7 @@ private class IRR_EVT_DelayProcessor_Test {
         //Then
         List<IRR_MOD_Message> messages = eventProcessor.messages;
         System.assertEquals(1, messages.size());
-        System.assertEquals('irr_delay_sms_01_1583931681582', messages[0].template);
+        System.assertEquals('irr_delay_sms_01', messages[0].template);
         System.assertEquals('Delay', messages[0].type);
         System.assertEquals(passengerInfos[0], messages[0].passengerInfo);
         System.assertEquals(messages[0].recipient, 'TEST_PHONE');

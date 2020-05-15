@@ -179,8 +179,8 @@ private class IRR_EVT_RebookProcessor_Test {
         //Then
         List<IRR_MOD_Message> messages = eventProcessor.messages;
         System.assertEquals(2, messages.size());
-        System.assertEquals('irr_rebooking_sms_01_1583931331857', messages[0].template);
-        System.assertEquals('irr_rebooking_email_01_1583937683653', messages[1].template);
+        System.assertEquals('irr_rebooking_sms_01', messages[0].template);
+        System.assertEquals('irr_rebooking_email_01', messages[1].template);
         System.assertEquals('Rebook', messages[0].type);
         System.assertEquals('Rebook', messages[1].type);
         System.assertEquals(passengerInfos[0], messages[0].passengerInfo);

@@ -130,8 +130,8 @@ private class IRR_EVT_CancelProcessor_Test {
         //Then
         List<IRR_MOD_Message> messages = eventProcessor.messages;
         System.assertEquals(2, messages.size());
-        System.assertEquals('irr_cancellation_sms_01_1583931048365', messages[0].template);
-        System.assertEquals('irr_cancellation_email_01_1583921696384', messages[1].template);
+        System.assertEquals('irr_cancellation_sms_01', messages[0].template);
+        System.assertEquals('irr_cancellation_email_01', messages[1].template);
         System.assertEquals('Cancel', messages[0].type);
         System.assertEquals(passengerInfos[0], messages[0].passengerInfo);
         System.assertEquals(passengerInfos[0], messages[1].passengerInfo);

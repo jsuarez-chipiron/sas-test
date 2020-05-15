@@ -24,9 +24,9 @@ public class IRR_SVC_CommunicationService {
     static final String COM_LOG_CHANNEL_SMS = 'SMS';
 
     /**
-     * Starting text of copyright notice to strip from communication log message content
+     * Starting text of email copyright notice
      */
-    static final String COM_LOG_COPYRIGHT_NOTICE = 'Scandinavian Airlines ©';
+    public static final String SAS_COPYRIGHT_NOTICE = 'Scandinavian Airlines ©';
 
     public static void processEvent(String eventType, String payload) {
         service().processEvent(eventType, payload);
@@ -81,7 +81,7 @@ public class IRR_SVC_CommunicationService {
                 log.IRR_ErrorMessage__c = message.SFMCMessage.errorMessage;
             }
             log.IRR_MessageContent__c = String.isNotBlank(message.content) && message.content.startsWith('<!DOCTYPE') ?
-                    message.content.stripHtmlTags().substringBeforeLast(COM_LOG_COPYRIGHT_NOTICE) : message.content;
+                    message.content.stripHtmlTags().substringBeforeLast(SAS_COPYRIGHT_NOTICE) : message.content;
             unitOfWork.registerNew(log);
         }
 

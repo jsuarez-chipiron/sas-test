@@ -46,18 +46,37 @@ public class IRR_CON_ManualCommunication {
     }
 
     @AuraEnabled
-    public static Map<String, List<IRR_ManualCommunicationTemplate__mdt>> getManualTemplatesBySendMode() {
+    public static Map<String, List<ManualTemplate>> getManualTemplatesBySendMode() {
         try {
             List<IRR_ManualCommunicationTemplate__mdt> templates = IRR_SEL_ManualTemplatesSelector.newInstance()
                     .selectAllManualCommunicationTemplates();
-            Map<String, List<IRR_ManualCommunicationTemplate__mdt>> manualTemplatesBySendMode =
-                    new Map<String, List<IRR_ManualCommunicationTemplate__mdt>>();
-            for (IRR_ManualCommunicationTemplate__mdt template : templates) {
-                if (!manualTemplatesBySendMode.containsKey(template.IRR_SendMode__c)) {
-                    manualTemplatesBySendMode.put(
-                            template.IRR_SendMode__c, new List<IRR_ManualCommunicationTemplate__mdt>());
+
+            Set<String> manualTemplateNames = new Set<String>();
+            for (IRR_ManualCommunicationTemplate__mdt mct : templates) {
+                //Use SMS template if available, otherwise Email template
+                String templateName = String.isNotBlank(mct.IRR_SMSTemplate__c) ? mct.IRR_SMSTemplate__c :
+                        mct.IRR_EmailTemplate__c;
+                if (!manualTemplateNames.contains(templateName)) {
+                    manualTemplateNames.add(templateName);
                 }
-                manualTemplatesBySendMode.get(template.IRR_SendMode__c).add(template);
+            }
+            //Get Email Templates
+            Map<String, EmailTemplate> emailTemplateByNames = IRR_SEL_EmailTemplatesSelector.newInstance()
+                    .selectEmailTemplatesByName(manualTemplateNames);
+
+            //Initialize ManualTemplate objects and sort them by Send Mode, skip non-existing Email Templates
+            Map<String, List<ManualTemplate>> manualTemplatesBySendMode = new Map<String, List<ManualTemplate>>();
+            for (IRR_ManualCommunicationTemplate__mdt mct : templates) {
+                String templateName = String.isNotBlank(mct.IRR_SMSTemplate__c) ? mct.IRR_SMSTemplate__c.toLowerCase() :
+                        mct.IRR_EmailTemplate__c.toLowerCase();
+                if (!emailTemplateByNames.containsKey(templateName)) continue;
+
+                ManualTemplate mt = new ManualTemplate(mct, emailTemplateByNames.get(templateName));
+                if (!manualTemplatesBySendMode.containsKey(mct.IRR_SendMode__c)) {
+                    manualTemplatesBySendMode.put(mct.IRR_SendMode__c, new List<ManualTemplate>());
+                }
+
+                manualTemplatesBySendMode.get(mct.IRR_SendMode__c).add(mt);
             }
             return manualTemplatesBySendMode;
         }
@@ -65,6 +84,46 @@ public class IRR_CON_ManualCommunication {
             AuraHandledException ahe = new AuraHandledException(e.getMessage());
             ahe.setMessage(e.getMessage());
             throw ahe;
+        }
+    }
+
+    public class ManualTemplate {
+        @AuraEnabled
+        public String templateLabel;
+
+        @AuraEnabled
+        public String templateName;
+
+        @AuraEnabled
+        public String emailTemplate;
+
+        @AuraEnabled
+        public String smsTemplate;
+
+        @AuraEnabled
+        public Boolean defaultSendEmail;
+
+        @AuraEnabled
+        public Boolean defaultSendSMS;
+
+        @AuraEnabled
+        public String templatePreview;
+
+        @AuraEnabled
+        public Boolean responseTemplate;
+
+
+        public ManualTemplate(IRR_ManualCommunicationTemplate__mdt mct, EmailTemplate et) {
+            templateLabel = mct.MasterLabel;
+            templateName = mct.DeveloperName;
+            emailTemplate = mct.IRR_EmailTemplate__c;
+            defaultSendEmail = String.isNotBlank(emailTemplate) && mct.IRR_DefaultSendEmail__c;
+            smsTemplate = mct.IRR_SMSTemplate__c;
+            defaultSendSMS = String.isNotBlank(smsTemplate) && mct.IRR_DefaultSendSMS__c;
+            responseTemplate = mct.IRR_ResponseTemplate__c;
+            String templateText = String.isNotBlank(et.HtmlValue) ? et.HtmlValue : et.Body;
+            templatePreview = templateText.stripHtmlTags()
+                    .substringBeforeLast(IRR_SVC_CommunicationService.SAS_COPYRIGHT_NOTICE);
         }
     }
 }

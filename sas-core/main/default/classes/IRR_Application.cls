@@ -36,8 +36,9 @@ public class IRR_Application {
     public static final fflib_Application.SelectorFactory Selector =
             new fflib_Application.SelectorFactory(
                     new Map<SObjectType, Type> {
+                            EmailTemplate.SObjectType => IRR_SEL_EmailTemplatesSelector.class,
                             IRR_CommunicationLog__c.SObjectType => IRR_SEL_CommunicationLogsSelector.class,
-                            IRR_SMSResponse__c.sObjectType => IRR_SEL_SMSResponsesSelector.class,
+                            IRR_SMSResponse__c.SObjectType => IRR_SEL_SMSResponsesSelector.class,
                             IRR_DelayLog__c.SObjectType => IRR_SEL_DelayLogsSelector.class,
                             IRR_ManualCommunicationTemplate__mdt.SObjectType => IRR_SEL_ManualTemplatesSelector.class,
                             IRR_RecipientWhitelist__mdt.SObjectType => IRR_SEL_RecipientWhitelistSelector.class,

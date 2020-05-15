@@ -35,7 +35,7 @@
             <assignToReference>emailTemplateName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>irr_time_table_change_email_1583937397394</stringValue>
+                <stringValue>irr_time_table_change_email</stringValue>
             </value>
         </assignmentItems>
     </assignments>
@@ -55,7 +55,7 @@
             <assignToReference>emailTemplateName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>irr_rebooking_email_01_1583937683653</stringValue>
+                <stringValue>irr_rebooking_email_01</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -69,7 +69,7 @@
             <assignToReference>smsTemplateName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>irr_rebooking_sms_01_1583931331857</stringValue>
+                <stringValue>irr_rebooking_sms_01</stringValue>
             </value>
         </assignmentItems>
     </assignments>

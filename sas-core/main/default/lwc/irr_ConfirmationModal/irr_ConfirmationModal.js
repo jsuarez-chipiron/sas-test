@@ -27,9 +27,8 @@ export default class IRR_ConfirmationModal extends LightningElement {
     set confirmDetail(value) {
         if (value && value.manualTemplate &&
                 (!this._confirmDetail || value.manualTemplate !== this._confirmDetail.manualTemplate)) {
-            this.sendEmail = value.manualTemplate.IRR_DefaultSendEmail__c &&
-                !!value.manualTemplate.IRR_EmailTemplate__c;
-            this.sendSMS = value.manualTemplate.IRR_DefaultSendSMS__c && !!value.manualTemplate.IRR_SMSTemplate__c;
+            this.sendEmail = value.manualTemplate.defaultSendEmail
+            this.sendSMS = value.manualTemplate.defaultSendEmail;
         }
         this._confirmDetail = value;
     }
@@ -47,11 +46,11 @@ export default class IRR_ConfirmationModal extends LightningElement {
     }
 
     get disableSMS() {
-        return this.confirmDetail.manualTemplate && !this.confirmDetail.manualTemplate.IRR_SMSTemplate__c;
+        return this.confirmDetail.manualTemplate && !this.confirmDetail.manualTemplate.smsTemplate;
     }
 
     get disableEmail() {
-        return this.confirmDetail.manualTemplate && !this.confirmDetail.manualTemplate.IRR_EmailTemplate__c;
+        return this.confirmDetail.manualTemplate && !this.confirmDetail.manualTemplate.emailTemplate;
     }
 
     handleChange(event) {

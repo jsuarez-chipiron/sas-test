@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>IRR_SMSTemplate__c</field>
-        <value xsi:type="xsd:string">irr_sms_manual_response_1587729273180</value>
+        <value xsi:type="xsd:string">irr_sms_manual_response</value>
     </values>
     <values>
         <field>IRR_SendMode__c</field>

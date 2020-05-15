@@ -187,12 +187,12 @@ export default class IRR_ManualCommunication extends LightningElement {
                 };
             }));
             const payload = {
-                responseMessage: manualTemplate.IRR_ResponseTemplate__c,
+                responseMessage: manualTemplate.responseTemplate,
                 passengerInfos: passengerInfos,
                 sendSMSMessages: sendSMS,
                 sendEmailMessages: sendEmail,
-                emailTemplate: manualTemplate.IRR_EmailTemplate__c,
-                smsTemplate: manualTemplate.IRR_SMSTemplate__c
+                emailTemplate: manualTemplate.emailTemplate,
+                smsTemplate: manualTemplate.smsTemplate
             };
             switch (sendMode) {
                 case "CUSTOM":
