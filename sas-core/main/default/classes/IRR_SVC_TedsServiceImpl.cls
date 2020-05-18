@@ -121,7 +121,6 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         throw new IRR_SVC_TedsService.TedsException(message);
     }
 
-
     /**
      * @author Niklas Lundkvist, Deloitte
      * @date 2020
@@ -138,11 +137,11 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
     private List<IRR_MOD_PassengerInfo> initiatePassengerInfos(List<IRR_MOD_TedsBooking> tedsBookings, String flightId){
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
         for (IRR_MOD_TedsBooking booking : tedsBookings) {
-            IRR_MOD_TedsBooking.Segments_Z thisSegment;
-            IRR_MOD_TedsBooking.Segments_Z nextSegment;
-            for (IRR_MOD_TedsBooking.Trips trip : booking.trips) {
+            IRR_MOD_TedsBooking.SegmentTrip thisSegment;
+            IRR_MOD_TedsBooking.SegmentTrip nextSegment;
+            for (IRR_MOD_TedsBooking.Trip trip : booking.trips) {
                 if (String.isBlank(flightId)) break; //Don't look for segments if there is no current flightId
-                for (IRR_MOD_TedsBooking.Segments_Z segment : trip.segments) {
+                for (IRR_MOD_TedsBooking.SegmentTrip segment : trip.segments) {
                     if (segment.flight.id == flightId) {
                         thisSegment = segment;
                         continue;
@@ -154,10 +153,9 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
                         break;
                     }
                 }
-                if (thisSegment!=null) break;
             }
 
-            for (IRR_MOD_TedsBooking.Passengers passenger : booking.passengers) {
+            for (IRR_MOD_TedsBooking.Passenger passenger : booking.passengers) {
                 IRR_MOD_PassengerInfo passengerInfo = createPassengerInfo(booking, passenger, thisSegment,
                         nextSegment);
                 passengerInfos.add(passengerInfo);
@@ -177,17 +175,17 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      *
      * @return Segment Info object
      */
-    private IRR_MOD_SegmentInfo createSegmentInfo(IRR_MOD_TedsBooking.Segments_Z tripSegment,
-            IRR_MOD_TedsBooking.Segments passengerSegment) {
+    private IRR_MOD_SegmentInfo createSegmentInfo(IRR_MOD_TedsBooking.SegmentTrip tripSegment,
+            IRR_MOD_TedsBooking.Segment passengerSegment) {
         IRR_MOD_SegmentInfo segmentInfo = new IRR_MOD_SegmentInfo();
         if (passengerSegment != null && passengerSegment.ticket != null) {
-            segmentInfo.ticketNumber = passengerSegment.ticket.number_Z;
+            segmentInfo.ticketNumber = passengerSegment.ticket.number_x;
         }
+        segmentInfo.flightId = tripSegment.flight.id;
         segmentInfo.stationArrival = tripSegment.flight.arrival.station;
         segmentInfo.stationDeparture = tripSegment.flight.departure.station;
         segmentInfo.status = tripSegment.status;
         segmentInfo.statusCode = tripSegment.statusCode;
-        segmentInfo.flightId = tripSegment.flight.id;
         segmentInfo.bookingClass = tripSegment.bookingClass;
         segmentInfo.serviceClass = tripSegment.serviceClass;
 
@@ -212,13 +210,14 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      *
      * @param booking Teds Booking details
      * @param passenger Passenger specific booking details
-     * @param tripThisSegment Current trip segment details
+     * @param tripThisSegment Current trip segment details (optional)
      * @param tripNextSegment Next trip segment details (optional)
      *
      * @return Passenger Info object
      */
-    private IRR_MOD_PassengerInfo createPassengerInfo(IRR_MOD_TedsBooking booking, IRR_MOD_TedsBooking.Passengers passenger,
-            IRR_MOD_TedsBooking.Segments_Z tripThisSegment, IRR_MOD_TedsBooking.Segments_Z tripNextSegment) {
+    private IRR_MOD_PassengerInfo createPassengerInfo(IRR_MOD_TedsBooking booking,
+            IRR_MOD_TedsBooking.Passenger passenger, IRR_MOD_TedsBooking.SegmentTrip tripThisSegment,
+            IRR_MOD_TedsBooking.SegmentTrip tripNextSegment) {
 
         IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
         passengerInfo.passengerId = booking.id + passenger.id;
@@ -235,12 +234,11 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
 
         if (passenger.frequentTraveler != null && passenger.frequentTraveler.other != null) {
             passengerInfo.otherFQTVCarrier = '';
-            for (IRR_MOD_TedsBooking.Other otherFQTV : passenger.frequentTraveler.other) {
+            for (IRR_MOD_TedsBooking.OtherFQTV otherFQTV : passenger.frequentTraveler.other) {
                 if (String.isNotBlank(passengerInfo.otherFQTVCarrier)) passengerInfo.otherFQTVCarrier += '; ';
                 passengerInfo.otherFQTVCarrier += otherFQTV.carrier;
             }
         }
-
 
         if (passenger.specialServiceRequests != null) {
             passengerInfo.SSR = '';
@@ -253,12 +251,12 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         String phoneAP;
         String phoneCTC;
         for (IRR_MOD_TedsBooking.Phone phone  : passenger.contact.phone) {
-            if (String.isBlank(phone.type_Z)) continue;
-            if (phone.type_Z.startsWith('CTC')) {
-                phoneCTC = phone.number_Z;
+            if (String.isBlank(phone.type)) continue;
+            if (phone.type.startsWith('CTC')) {
+                phoneCTC = phone.number_x;
             }
-            else if (phone.type_Z.startsWith('AP')) {
-                phoneAP = phone.number_Z;
+            else if (phone.type.startsWith('AP')) {
+                phoneAP = phone.number_x;
             }
         }
         passengerInfo.phoneNumber = String.isNotBlank(phoneCTC) ? phoneCTC : phoneAP;
@@ -266,21 +264,21 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         String emailAP;
         String emailCTC;
         for (IRR_MOD_TedsBooking.Email email : passenger.contact.email) {
-            if (String.isBlank(email.type_Z)) continue;
-            if (email.type_Z.startsWith('CTC')) {
+            if (String.isBlank(email.type)) continue;
+            if (email.type.startsWith('CTC')) {
                 emailCTC = email.address;
             }
-            else if (email.type_Z.startsWith('AP')) {
+            else if (email.type.startsWith('AP')) {
                 emailAP = email.address;
             }
         }
         passengerInfo.emailAddress = String.isNotBlank(emailCTC) ? emailCTC : emailAP;
 
         if (tripThisSegment != null) {
-            IRR_MOD_TedsBooking.Segments passengerThisSegment;
-            IRR_MOD_TedsBooking.Segments passengerNextSegment;
+            IRR_MOD_TedsBooking.Segment passengerThisSegment;
+            IRR_MOD_TedsBooking.Segment passengerNextSegment;
 
-            for (IRR_MOD_TedsBooking.Segments segment : passenger.segments) {
+            for (IRR_MOD_TedsBooking.Segment segment : passenger.segments) {
                 if (segment.segmentId == tripThisSegment.id) passengerThisSegment = segment;
                 if (tripNextSegment != null && segment.segmentId == tripNextSegment.id) passengerNextSegment = segment;
             }
