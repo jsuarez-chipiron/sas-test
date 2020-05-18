@@ -2,7 +2,7 @@
 * @author Niklas Lundkvist, Deloitte
 * @date 2020
 *
-* @description TODO
+* @description Apex Defined Data Structure for IRR Event Flows and Message Templates.
 */
 
 public class IRR_MOD_TripInfo {
