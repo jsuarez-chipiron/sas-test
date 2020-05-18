@@ -97,7 +97,7 @@
             <targetReference>Retrieve_Flow_Variables</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>cancelInfo</name>
         <apexClass>IRR_MOD_CancelInfo</apexClass>

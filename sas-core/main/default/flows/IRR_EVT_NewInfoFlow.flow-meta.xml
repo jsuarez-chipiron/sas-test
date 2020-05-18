@@ -62,7 +62,7 @@
             <targetReference>Retrieve_Flow_Variables</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>emailTemplateName</name>
         <dataType>String</dataType>

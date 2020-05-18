@@ -4,6 +4,22 @@
         <apexClass>IRR_API_IncomingEvent</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>IRR_EVT_CancelFlow</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>IRR_EVT_DelayFlow</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>IRR_EVT_NewInfoFlow</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>IRR_EVT_RebookFlow</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>IRR Event Integration Access</label>
     <license>Salesforce</license>
