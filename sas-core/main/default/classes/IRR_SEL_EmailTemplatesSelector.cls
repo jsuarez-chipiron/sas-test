@@ -34,7 +34,7 @@ public class IRR_SEL_EmailTemplatesSelector extends fflib_SObjectSelector implem
         Id orgId = IRR_SEL_OrganizationSelector.newInstance().selectOrganization().Id;
         fflib_QueryFactory queryFactory = newQueryFactory()
                 .setCondition('Name IN :templateNames AND (FolderId = :orgId OR Folder.AccessType = :accessPublic)')
-                .setOrdering(EmailTemplate.Name, fflib_QueryFactory.SortOrder.ASCENDING);
+                .setOrdering(EmailTemplate.CreatedDate, fflib_QueryFactory.SortOrder.ASCENDING);
         List<EmailTemplate> emailTemplates = Database.query(queryFactory.toSOQL());
         Map<String, EmailTemplate> emailTemplateByNames = new Map<String, EmailTemplate>();
         for (EmailTemplate emailTemplate : emailTemplates) {
