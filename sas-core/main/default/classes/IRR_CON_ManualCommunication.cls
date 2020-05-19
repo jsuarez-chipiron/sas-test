@@ -122,7 +122,7 @@ public class IRR_CON_ManualCommunication {
             defaultSendSMS = String.isNotBlank(smsTemplate) && mct.IRR_DefaultSendSMS__c;
             responseTemplate = mct.IRR_ResponseTemplate__c;
             String templateText = String.isNotBlank(et.HtmlValue) ? et.HtmlValue : et.Body;
-            templatePreview = templateText.stripHtmlTags()
+            templatePreview = templateText.stripHtmlTags().replace('\n ', '\n')
                     .substringBeforeLast(IRR_SVC_CommunicationService.SAS_COPYRIGHT_NOTICE);
         }
     }

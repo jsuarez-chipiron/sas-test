@@ -312,7 +312,7 @@ global with sharing class MSG_TemplateCache implements MSG_ITemplateCache {
             @return Retrieves the data to use depending on appropriate html and text versions
         */
         global String getData(Boolean isHtml){
-            return isHtml ? htmlVersion : (String.isBlank(textVersion) && !String.isBlank(htmlVersion) ? htmlVersion.stripHtmlTags() : textVersion);
+            return isHtml ? htmlVersion : (String.isBlank(textVersion) && !String.isBlank(htmlVersion) ? htmlVersion.stripHtmlTags().replace('\n ', '\n') : textVersion);
         }
 
         /**
