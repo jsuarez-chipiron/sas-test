@@ -8,9 +8,17 @@
     <lightning-card title="Retrieve List" icon-name="utility:salesforce1">
         <lightning-button
                 slot="actions"
+                variant="neutral"
+                label="Bypass"
+                title="Enter without retrieving a passenger list"
+                onclick={handleBypass}>
+        </lightning-button>
+        <lightning-button
+                slot="actions"
+                class="slds-p-left_small"
                 variant="brand"
                 label="Retrieve"
-                title="Retrieve List"
+                title="Retrieve Passenger List"
                 onclick={handleRetrieve}>
         </lightning-button>
         <div class="slds-media" onkeypress={handleKeyPress}>

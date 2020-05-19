@@ -37,6 +37,7 @@
                         if:false={showRetrieve}
                         templates-by-send-mode={templatesBySendMode}
                         flight-id={retrieveParameters.flightId}
+                        ontemplatechange={handleTemplateChange}
                         onshowrecipientmodal={handleShowRecipientModal}
                         onsend={handleSendEvent}
                         oncancel={handleResetEvent}>
@@ -46,11 +47,40 @@
         <lightning-layout-item size="12" if:false={showRetrieve}>
             <lightning-layout>
                 <lightning-layout-item padding="around-small" size="2">
-                    <div class="page-section page-left">
-                        <c-irr_-filter-panel
-                            onapplyfilter={handleFilterApplyEvent}>
-                        </c-irr_-filter-panel>
-                    </div>
+                    <lightning-card title={leftPanelTitle} icon-name={leftPanelIcon}>
+                        <lightning-tabset active-tab-value={leftPanelTab}>
+                            <lightning-tab
+                                    label="Filter"
+                                    value="LEFT_FILTER"
+                                    title="Filter retrieved passengers"
+                                    onactive={handleTabSwitch}>
+                                <div class="slds-p-horizontal_small">
+                                    <c-irr_-filter-panel
+                                            onapplyfilter={handleFilterApplyEvent}>
+                                    </c-irr_-filter-panel>
+                                </div>
+                            </lightning-tab>
+                            <lightning-tab
+                                    label="Preview"
+                                    value="LEFT_PREVIEW"
+                                    title="Preview selected template"
+                                    onactive={handleTabSwitch}>
+                                <div class="slds-p-horizontal_small">
+                                    <div class="slds-form-element">
+                                        <span class="slds-form-element__label">Template Text</span>
+                                        <div class="slds-form-element__control slds-border_bottom">
+                                            <div class="slds-form-element__static">
+                                                <p>
+                                                    <lightning-formatted-text value={templatePreview}>
+                                                    </lightning-formatted-text>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-tab>
+                        </lightning-tabset>
+                    </lightning-card>
                 </lightning-layout-item>
                 <lightning-layout-item padding="around-small" size="10">
                     <div class="page-section page-main">

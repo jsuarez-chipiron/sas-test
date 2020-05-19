@@ -60,6 +60,10 @@ export default class IRR_ManualCommunication extends LightningElement {
     @track showRecipientModal = false;
     @track additionalRecipients = [];
 
+    @track leftPanelTab = "LEFT_FILTER";
+
+    @track templatePreview = "";
+
     retrieveParameters = {};
 
     templatesBySendMode = {};
@@ -77,6 +81,14 @@ export default class IRR_ManualCommunication extends LightningElement {
             'No passengers found, or flight does not exist. Please check Flight ID.' : 'No passengers matching filter';
     }
 
+    get leftPanelTitle() {
+        return this.leftPanelTab === "LEFT_FILTER" ? "Apply Filters" : "Preview Template";
+    }
+
+    get leftPanelIcon() {
+        return this.leftPanelTab === "LEFT_FILTER" ? "utility:filterList" : "utility:preview";
+    }
+
     async init() {
         try {
             this.templatesBySendMode = await getManualTemplatesBySendMode();
@@ -87,8 +99,20 @@ export default class IRR_ManualCommunication extends LightningElement {
     }
 
     get tableHeading() {
+        if (Object.keys(this.retrieveParameters).length === 0) return "No filters active";
         const params = Object.values(this.retrieveParameters).join(' - ');
         return `Results for ${params}`;
+    }
+
+    get recipientCount() {
+        const additionalRecipients = this.additionalRecipients ?
+            this.additionalRecipients.filter(r => r.phoneNumber || r.emailAddress).length : 0;
+        const recipients = this.selectedRows ? this.selectedRows.length : 0;
+        return additionalRecipients + recipients;
+    }
+
+    handleTabSwitch(event) {
+        this.leftPanelTab = event.target.value;
     }
 
     handleLoad(finished) {
@@ -149,11 +173,10 @@ export default class IRR_ManualCommunication extends LightningElement {
         this.showConfirmation = false;
     }
 
-    get recipientCount() {
-        const additionalRecipients = this.additionalRecipients ?
-            this.additionalRecipients.filter(r => r.phoneNumber || r.emailAddress).length : 0;
-        const recipients = this.selectedRows ? this.selectedRows.length : 0;
-        return additionalRecipients + recipients;
+    handleTemplateChange(event) {
+        const { template } = event.detail;
+        this.templatePreview = template.templatePreview;
+        if (this.leftPanelTab !== "LEFT_PREVIEW") this.leftPanelTab = "LEFT_PREVIEW";
     }
 
     handleSendEvent(event) {
@@ -221,6 +244,7 @@ export default class IRR_ManualCommunication extends LightningElement {
         this.passengerResult = [];
         this.additionalRecipients = [];
         this.template.querySelector('c-irr_-recipient-modal').reset();
+        this.leftPanelTab = "LEFT_FILTER";
         this.showRetrieve = true;
         this.showSuccess = false;
     }
@@ -240,11 +264,13 @@ export default class IRR_ManualCommunication extends LightningElement {
                     eventParameters = {bookingId: parameters.bookingId};
                     result = await getBookingPassengerInfos(eventParameters);
                     break;
+                case "BYPASS":
+                    break;
                 default:
                     return;
             }
-            this.retrieveParameters = eventParameters;
-            this.passengerResult = result.map(item => tableUtil.flatten(item));
+            if (eventParameters) this.retrieveParameters = eventParameters;
+            if (result) this.passengerResult = result.map(item => tableUtil.flatten(item));
             this.processTable();
             this.showRetrieve = false;
             this.handleLoad(true);

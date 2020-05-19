@@ -40,4 +40,11 @@ export default class irr_RetrievePanel extends LightningElement {
         });
         this.dispatchEvent(retrievalEvent);
     }
+
+    handleBypass() {
+        const retrievalEvent = new CustomEvent('retrieve' , {
+            detail: { retrievalMode: 'BYPASS' }
+        });
+        this.dispatchEvent(retrievalEvent);
+    }
 }
