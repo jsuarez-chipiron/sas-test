@@ -28,7 +28,7 @@ export default class IRR_ConfirmationModal extends LightningElement {
         if (value && value.manualTemplate &&
                 (!this._confirmDetail || value.manualTemplate !== this._confirmDetail.manualTemplate)) {
             this.sendEmail = value.manualTemplate.defaultSendEmail
-            this.sendSMS = value.manualTemplate.defaultSendEmail;
+            this.sendSMS = value.manualTemplate.defaultSendSMS;
         }
         this._confirmDetail = value;
     }
