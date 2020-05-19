@@ -224,8 +224,6 @@ export default class IRR_ManualCommunication extends LightningElement {
                 case "DELAY":
                     payload.delayInfo = parameters;
                     break;
-                case "TEMPLATE":
-                    break;
                 default:
                     return;
             }
