@@ -23,6 +23,12 @@ public class IRR_SEL_SMSResponsesSelector extends fflib_SObjectSelector
     public Schema.SObjectType getSObjectType() {
         return IRR_SMSResponse__c.SObjectType;
     }
+
+    public Database.QueryLocator getGDPRLogsQueryLocator(DateTime lastRetentionDate) {
+        fflib_QueryFactory queryFactory = newQueryFactory()
+                .setCondition('CreatedDate <= :lastRetentionDate');
+        return Database.getQueryLocator(queryFactory.toSOQL());
+    }
     
     public List<IRR_SMSResponse__c> selectSMSResponsesWithCommunicationLogs(Set<Id> comIds) {
         fflib_QueryFactory queryFactory = newQueryFactory()
