@@ -75,6 +75,18 @@
                     </lightning-tab>
                     <lightning-tab
                             class="no-padding"
+                            value="TEMPLATE"
+                            label="Template Message"
+                            title="Send a template message"
+                            onactive={handleTabSwitch}>
+                        <div class="slds-p-around_small">
+                            <lightning-formatted-text
+                                    value="Please choose a template to continue. No input is necessary.">
+                            </lightning-formatted-text>
+                        </div>
+                    </lightning-tab>
+                    <lightning-tab
+                            class="no-padding"
                             value="DELAY"
                             label="Delay Message"
                             title="Send delay message"
