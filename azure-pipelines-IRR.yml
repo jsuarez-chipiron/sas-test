@@ -14,13 +14,7 @@ variables:
   SFDX_DOMAIN_RETRY: 300
   SFDX_DISABLE_APP_HUB: true
   SFDX_LOG_LEVEL: DEBUG
-  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
 steps:
-- task: Cache@2
-  inputs:
-    key: yarn | $(Agent.OS)
-    path: $(YARN_CACHE_FOLDER)
-  displayName: Cache Yarn packages
 - task: DownloadSecureFile@1
   name: ci_cert
   displayName: 'Download Certificate'
