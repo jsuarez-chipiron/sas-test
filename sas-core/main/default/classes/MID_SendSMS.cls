@@ -7,8 +7,10 @@
 global without sharing class MID_SendSMS {
     /**
      * Set by test classes to disable whitelisting functionality
+     *
+     * Note: 2020-05-19 Disable Whitelist due to MID team request, approved by Michaela Fritofsson
      */
-    @TestVisible static Boolean DISABLE_WHITELIST = false;
+    @TestVisible static Boolean DISABLE_WHITELIST = true;
     /**
      * POST
      * Allows the caller to send an SMS to multiple recipients routed via marketing cloud
