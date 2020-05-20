@@ -50,12 +50,26 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
             manualRequest.delayInfo.stationDeparture = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
             manualRequest.delayInfo.stationArrival = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
         }
+        if (manualRequest.newInfo != null && String.isNotBlank(manualRequest.newInfo.flightId)) {
+            List<String> flightIdSplit = manualRequest.newInfo.flightId.split('-');
+            manualRequest.newInfo.flightRef = flightIdSplit[0];
+            manualRequest.newInfo.stationDeparture = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
+            manualRequest.newInfo.stationArrival = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
+        }
+        if (manualRequest.cancelInfo != null && String.isNotBlank(manualRequest.cancelInfo.flightId)) {
+            List<String> flightIdSplit = manualRequest.cancelInfo.flightId.split('-');
+            manualRequest.cancelInfo.flightRef = flightIdSplit[0];
+            manualRequest.cancelInfo.stationDeparture = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
+            manualRequest.cancelInfo.stationArrival = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
+        }
     }
 
     public void processEvent() {
         IRR_MOD_FlowVariables flowVariables = new IRR_MOD_FlowVariables();
         flowVariables.customInfo = manualRequest.customInfo;
         flowVariables.delayInfo = manualRequest.delayInfo;
+        flowVariables.newInfo = manualRequest.newInfo;
+        flowVariables.cancelInfo = manualRequest.cancelInfo;
 
         for (IRR_MOD_PassengerInfo passengerInfo : manualRequest.passengerInfos) {
             Boolean sendEmail = manualRequest.sendEmailMessages && passengerInfo.hasEmailAddress;

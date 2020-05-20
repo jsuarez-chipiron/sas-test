@@ -89,7 +89,7 @@
                             class="no-padding"
                             value="DELAY"
                             label="Delay Message"
-                            title="Send delay message"
+                            title="Send Delay message"
                             onactive={handleTabSwitch}>
                         <lightning-layout>
                             <lightning-layout-item padding="around-small" size="3" class="pull-down">
@@ -111,6 +111,7 @@
                                 <lightning-input
                                         type="datetime"
                                         timezone="GMT"
+                                        value={sendParameters.scheduledTimeOfDepartureLocal}
                                         name="scheduledTimeOfDepartureLocal"
                                         label="Scheduled Time of Departure (Local)"
                                         required
@@ -130,6 +131,101 @@
                                 </lightning-input>
                             </lightning-layout-item>
                         </lightning-layout>
+                    </lightning-tab>
+                    <lightning-tab
+                            class="no-padding"
+                            value="NEW_INFO"
+                            label="New Info Message"
+                            title="Send New Info message"
+                            onactive={handleTabSwitch}>
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small" size="3" class="pull-down">
+                                <lightning-input
+                                        class="slds-p-vertical_xx-small"
+                                        type="text"
+                                        name="flightId"
+                                        label="Flight Id"
+                                        value={flightId}
+                                        field-level-help="Format SK1238-20200213-ARN-CPH"
+                                        pattern="([A-Z]{2})([0-9]{4})-([0-9]{8})-([A-Z]{3})-([A-Z]{3})"
+                                        required
+                                        message-when-pattern-mismatch="Input format SK1238-20200213-ARN-CPH"
+                                        data-tab-group="NEW_INFO"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input
+                                        type="datetime"
+                                        timezone="GMT"
+                                        value={sendParameters.scheduledTimeOfDepartureLocal}
+                                        name="scheduledTimeOfDepartureLocal"
+                                        label="Scheduled Time of Departure (Local)"
+                                        required
+                                        data-tab-group="NEW_INFO"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input
+                                        type="datetime"
+                                        timezone="GMT"
+                                        name="newInfoTimeLocal"
+                                        label="New Info Time (Local)"
+                                        required
+                                        data-tab-group="NEW_INFO"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-tab>
+                    <lightning-tab
+                            class="no-padding"
+                            value="CANCEL"
+                            label="Cancellation Message"
+                            title="Send Cancellation Message"
+                            onactive={handleTabSwitch}>
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small" size="3" class="pull-down">
+                                <lightning-input
+                                        class="slds-p-vertical_xx-small"
+                                        type="text"
+                                        name="flightId"
+                                        label="Flight Id"
+                                        value={flightId}
+                                        field-level-help="Format SK1238-20200213-ARN-CPH"
+                                        pattern="([A-Z]{2})([0-9]{4})-([0-9]{8})-([A-Z]{3})-([A-Z]{3})"
+                                        required
+                                        message-when-pattern-mismatch="Input format SK1238-20200213-ARN-CPH"
+                                        data-tab-group="CANCEL"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input
+                                        type="datetime"
+                                        timezone="GMT"
+                                        value={sendParameters.scheduledTimeOfDepartureLocal}
+                                        name="scheduledTimeOfDepartureLocal"
+                                        label="Scheduled Time of Departure (Local)"
+                                        required
+                                        data-tab-group="CANCEL"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-tab>
+                    <lightning-tab
+                            class="no-padding"
+                            value="REBOOK"
+                            label="Rebooking Message"
+                            title="Send Rebooking Message"
+                            onactive={handleTabSwitch}>
+                        <div class="slds-p-around_small">
+                            <lightning-formatted-text
+                                    value="Passengers will be sent their current booking itinerary. No input is necessary.">
+                            </lightning-formatted-text>
+                        </div>
                     </lightning-tab>
                 </lightning-tabset>
             </div>

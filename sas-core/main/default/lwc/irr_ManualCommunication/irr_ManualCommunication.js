@@ -17,7 +17,7 @@ import getBookingPassengerInfos from '@salesforce/apex/IRR_CON_ManualCommunicati
 import * as tableUtil from 'c/c_TableUtil';
 import { reduceErrors } from 'c/c_LdsUtils';
 
-const columns = [
+const COLUMNS = [
     { label: 'PNR', fieldName: 'bookingReference', sortable: true, initialWidth: 75 },
     { label: 'Name', fieldName: 'lastNameSlashFirstName', sortable: true },
     { label: 'Phone', fieldName: 'phoneNumber', sortable: true, initialWidth: 115 },
@@ -33,7 +33,7 @@ const columns = [
 
 export default class IRR_ManualCommunication extends LightningElement {
 
-    @track columns = columns;
+    COLUMNS = COLUMNS;
 
     @track passengerResult = [];
 
@@ -223,6 +223,14 @@ export default class IRR_ManualCommunication extends LightningElement {
                     break;
                 case "DELAY":
                     payload.delayInfo = parameters;
+                    break;
+                case "NEW_INFO":
+                    payload.newInfo = parameters;
+                    break;
+                case "CANCEL":
+                    payload.cancelInfo = parameters;
+                    break;
+                case "REBOOK":
                     break;
                 case "TEMPLATE":
                     break;

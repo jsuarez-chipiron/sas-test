@@ -156,20 +156,14 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
                         }
                     }
                 }
-                //Only process itinerary when there is no current flightId
-                else if (String.isBlank(flightId)) {
-                    List<IRR_MOD_SegmentInfo> tripSegments = new List<IRR_MOD_SegmentInfo>();
-                    for (IRR_MOD_TedsBooking.SegmentTrip segment : trip.segments) {
-                        //Discard unconfirmed segments when constructing itinerary
-                        if (segment.status != IRR_SVC_TedsService.BOOKING_STATUS_CONFIRMED) continue;
-                        tripSegments.add(createSegmentInfo(segment, null));
-                    }
-                    if (!tripSegments.isEmpty()) itinerary.add(createTripInfo(trip, tripSegments));
+                //Process Itinerary
+                List<IRR_MOD_SegmentInfo> tripSegments = new List<IRR_MOD_SegmentInfo>();
+                for (IRR_MOD_TedsBooking.SegmentTrip segment : trip.segments) {
+                    //Discard unconfirmed segments when constructing itinerary
+                    if (segment.status != IRR_SVC_TedsService.BOOKING_STATUS_CONFIRMED) continue;
+                    tripSegments.add(createSegmentInfo(segment, null));
                 }
-                //Nothing to do, break loop
-                else {
-                    break;
-                }
+                if (!tripSegments.isEmpty()) itinerary.add(createTripInfo(trip, tripSegments));
             }
 
             for (IRR_MOD_TedsBooking.Passenger passenger : booking.passengers) {
