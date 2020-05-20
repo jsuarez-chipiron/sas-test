@@ -12,9 +12,9 @@
             msg240+='A';
         }
         IRR_CommunicationLog__c[] comLog = new IRR_CommunicationLog__c[]{
-            new IRR_CommunicationLog__c(IRR_Status__c='Sent',IRR_Recipient__c='46700000000',IRR_ExternalId__c='SMSResponseTest0'),
+            new IRR_CommunicationLog__c(IRR_Status__c='Sent',IRR_Recipient__c='46700000000',IRR_ExternalId__c='SMSResponseTest0', IRR_ResponseMessage__c=true),
             new IRR_CommunicationLog__c(IRR_Status__c='Sent',IRR_Recipient__c='46700000001',IRR_ExternalId__c='SMSResponseTest1'),
-            new IRR_CommunicationLog__c(IRR_Status__c='Sent',IRR_Recipient__c='46700000002',IRR_ExternalId__c='SMSResponseTest2',IRR_Response__c=msg240)
+            new IRR_CommunicationLog__c(IRR_Status__c='Sent',IRR_Recipient__c='46700000002',IRR_ExternalId__c='SMSResponseTest2',IRR_Response__c=msg240, IRR_ResponseMessage__c = true)
         };
         insert comLog;
     }
@@ -23,7 +23,7 @@
      * Tests that the most recent log is being used when associating a response to a log
      */
     @isTest static void selectMostRecentLog(){
-        insert new IRR_CommunicationLog__c(IRR_Status__c='Sent',IRR_Recipient__c='46700000000',IRR_ExternalId__c='SMSResponseTest11');
+        insert new IRR_CommunicationLog__c(IRR_Status__c='Sent',IRR_Recipient__c='46700000000',IRR_ExternalId__c='SMSResponseTest11', IRR_ResponseMessage__c=true);
         insert new IRR_SMSResponse__c(IRR_InfoMessageNouns__c='MSG1',IRR_InfoFrom__c='46700000000',IRR_DateUTC__c=Date.newInstance(2020,05,01),IRR_TimeUTC__c=Time.newInstance(8,30,24,0));
         IRR_CommunicationLog__c comLog0 = [SELECT Id,IRR_Status__c,IRR_LastResponseDate__c,IRR_Response__c FROM IRR_CommunicationLog__c WHERE IRR_ExternalId__c='SMSResponseTest0'];
         IRR_CommunicationLog__c comLog11 = [SELECT Id,IRR_Status__c,IRR_LastResponseDate__c,IRR_Response__c FROM IRR_CommunicationLog__c WHERE IRR_ExternalId__c='SMSResponseTest11'];
@@ -50,14 +50,16 @@
      * Tests that message is properly truncated when too long to store
      */
     @isTest static void truncateMessage(){
+        insert new IRR_CommunicationLog__c(IRR_Status__c='Sent',IRR_Recipient__c='46700000002',IRR_ExternalId__c='SMSResponseTest22', IRR_ResponseMessage__c=false);
         insert new IRR_SMSResponse__c(IRR_InfoMessageNouns__c='MESSAGE LONG ENOUGH TO BREAK 255 CHARS',IRR_InfoFrom__c='46700000002',IRR_DateUTC__c=Date.newInstance(2020,05,01),IRR_TimeUTC__c=Time.newInstance(8,30,24,0));
         IRR_CommunicationLog__c comLog2 = [SELECT Id,IRR_Status__c,IRR_LastResponseDate__c,IRR_Response__c FROM IRR_CommunicationLog__c WHERE IRR_ExternalId__c='SMSResponseTest2'];
-
-        System.debug([SELECT Id,Message__c FROM C_Log__c]);
+        IRR_CommunicationLog__c comLog22 = [SELECT Id,IRR_Status__c,IRR_LastResponseDate__c,IRR_Response__c FROM IRR_CommunicationLog__c WHERE IRR_ExternalId__c='SMSResponseTest22'];
+        System.assertEquals('Sent', comLog22.IRR_Status__c);
+        System.assertEquals(null, comLog22.IRR_LastResponseDate__c);
+        System.assertEquals(null, comLog22.IRR_Response__c);
         System.assertEquals('Responded', comLog2.IRR_Status__c);
         System.assertEquals(DateTime.newInstanceGmt(2020,05,01,8,30,24), comLog2.IRR_LastResponseDate__c);
         System.assertEquals(255, comLog2.IRR_Response__c.length());
-        
         System.assertEquals(0,[SELECT Id FROM C_Log__c].size());
     }
 }
