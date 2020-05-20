@@ -36,4 +36,10 @@
 		<members>Case.CaseTags__c</members>
 		<name>CustomField</name>
 	</types>
+	
+	<!-- 2020-05-20 Delete CustomApplication -->
+	<types>
+		<members>SAS_IRR</members>
+		<name>CustomApplication</name>
+	</types>
 </Package>
