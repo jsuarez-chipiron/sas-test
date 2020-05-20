@@ -78,7 +78,7 @@ public class IRR_Application {
     public static final C_Application.EventProcessorFactory EventProcessor =
             new C_Application.EventProcessorFactory(
                     new Map<String, C_Application.EventDefinition> {
-                            'bookingItineraryUpdate' => new C_Application.EventDefinition(
+                            'bookingItineraryUpdateSASDisruption' => new C_Application.EventDefinition(
                                     IRR_MOD_RebookInfo.class, IRR_EVT_RebookProcessor.Constructor.class),
                             'flightDelayDeparture' => new C_Application.EventDefinition(
                                     IRR_MOD_DelayInfo.class, IRR_EVT_DelayProcessor.Constructor.class),
