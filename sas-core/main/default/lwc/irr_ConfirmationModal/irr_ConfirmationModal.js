@@ -58,8 +58,8 @@ export default class IRR_ConfirmationModal extends LightningElement {
     }
 
     reset() {
-        this.sendSMS = false;
-        this.sendEmail = false;
+        this.sendEmail = this.confirmDetail ? this.confirmDetail.manualTemplate.defaultSendEmail : false;
+        this.sendSMS = this.confirmDetail ? this.confirmDetail.manualTemplate.defaultSendSMS : false;
     }
 
     handleCancel() {
