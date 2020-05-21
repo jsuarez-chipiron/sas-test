@@ -3,7 +3,7 @@
     <fullName>Consent__c</fullName>
     <externalId>false</externalId>
     <inlineHelpText>Give consent to save data</inlineHelpText>
-    <label>Consent</label>
+    <label>Manual Consent</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
