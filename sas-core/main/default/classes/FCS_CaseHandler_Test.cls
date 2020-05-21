@@ -32,6 +32,9 @@ private class FCS_CaseHandler_Test {
     }
 
     static void createTestData() {
+        Integer maxRetriesInDML = 3;
+        Integer count = 0;
+        boolean retry;
         List<SocialPost> socialPosts = FCS_TestDataFactory.createSocialPosts(4);
         insert socialPosts;
         List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null, null);
@@ -39,7 +42,30 @@ private class FCS_CaseHandler_Test {
         newCases[0].Subject = 'TestCase 2';
         newCases[0].FCS_CaseSubReason__c = 'TestSubReason 1';
         newCases[0].FCS_CaseTags__c = 'CommonTestTag1;CommonTestTag2';
-        insert newCases;
+        do
+        {
+         retry=false;
+         try
+         {
+           insert newCases;
+         }
+         Catch(Exception lockerror)
+         { 
+          count ++;
+          String lockingissue=String.valueOf(lockerror);
+           if(lockingissue.contains('UNABLE_TO_LOCK_ROW') && count <=maxRetriesInDML)
+           {
+               System.debug('lockingissue'+lockingissue);
+             retry=true;                            
+           }
+           else if((!lockingissue.contains('UNABLE_TO_LOCK_ROW')) || count > maxRetriesInDML)
+           {
+               throw lockerror;
+           }
+         }       
+        }
+        while(retry);
+        
     }
     /**
     Test method for generation of case tag records from case
@@ -116,8 +142,8 @@ private class FCS_CaseHandler_Test {
     }
 
     /**
-		Tests that cases (used to save tagging of cases where case is created with status closed) created from social posts is assigned to the owner of the source post if owner is a user
-	*/
+        Tests that cases (used to save tagging of cases where case is created with status closed) created from social posts is assigned to the owner of the source post if owner is a user
+    */
     @isTest static void addSocialMediaTag(){
         createTestData();
         List<SocialPost> socialPosts = [SELECT Id FROM SocialPost];
