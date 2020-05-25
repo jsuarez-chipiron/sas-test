@@ -48,7 +48,7 @@ public class IRR_DOM_SMSResponses extends fflib_SObjectDomain {
             comLog.IRR_Status__c='Responded';
 
             //Appending the previous response, discarding long verbs and capping length to 255 characters
-            comLog.IRR_Response__c = (sms.IRR_InfoMessageVerb__c!=null && sms.IRR_InfoMessageVerb__c.length()<10 ? sms.IRR_InfoMessageVerb__c : '') + sms.IRR_InfoMessageNouns__c + (String.isBlank(comLog.IRR_Response__c) ? '' : ', '+comLog.IRR_Response__c);
+            comLog.IRR_Response__c = (sms.IRR_InfoMessageVerb__c!=null && sms.IRR_InfoMessageVerb__c.length()<10 ? sms.IRR_InfoMessageVerb__c + ' ' : '') + sms.IRR_InfoMessageNouns__c + (String.isBlank(comLog.IRR_Response__c) ? '' : ', '+comLog.IRR_Response__c);
             if(comLog.IRR_Response__c.length()>255)comLog.IRR_Response__c = comLog.IRR_Response__c.substring(0,255);
 
             //Setting the response date of the last response
