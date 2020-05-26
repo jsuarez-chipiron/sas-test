@@ -224,6 +224,19 @@ private class IRR_EVT_ManualProcessor_Test {
     }
 
     @IsTest
+    static void testCheckActiveBlock() {
+        //Given
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+
+        //When
+        Boolean result = eventProcessor.checkActiveBlock();
+
+        //Then
+        System.assertEquals(false, result);
+    }
+
+    @IsTest
     static void testProcessEvent_SendMessages_NoResponse() {
         //Given
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();

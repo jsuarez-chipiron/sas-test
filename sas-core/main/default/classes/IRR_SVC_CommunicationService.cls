@@ -43,6 +43,32 @@ public class IRR_SVC_CommunicationService {
         return (IRR_SVC_ICommunicationService) IRR_Application.Service.newInstance(IRR_SVC_ICommunicationService.class);
     }
 
+    public class FlightIdSplit {
+        public String flightId;
+        public String flightNumber;
+        public Date departureDate;
+        public String departureDateString;
+        public String stationArrival;
+        public String stationDeparture;
+
+        public FlightIdSplit(String flightId) {
+            //Split flightId into Flight Reference, Departure and Arrival stations, and Departure Date
+            List<String> flightIdSplit = flightId.split('-');
+            this.flightNumber = flightIdSplit[0];
+            if (flightIdSplit.size() >= 2 && flightIdSplit[1].length() == 8) {
+                this.departureDateString = flightIdSplit[1];
+
+                Integer year = Integer.valueOf(this.departureDateString.substring(0, 4));
+                Integer month = Integer.valueOf(this.departureDateString.substring(4, 6));
+                Integer day = Integer.valueOf(this.departureDateString.substring(6, 8));
+
+                this.departureDate = Date.newInstance(year, month, day);
+            }
+            this.stationDeparture = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
+            this.stationArrival = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
+        }
+    }
+
     public class CommunicationLogFactory {
 
         private fflib_ISObjectUnitOfWork unitOfWork;

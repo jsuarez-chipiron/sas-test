@@ -52,14 +52,28 @@ public class IRR_EVT_NewInfoProcessor extends IRR_EVT_EventProcessor {
      * @description Populates event object with additional information and initiates passengerInfo list.
      */
     public void initiateEvent() {
-        //Split flightId into Flight Reference, and Departure and Arrival stations.
-        List<String> flightIdSplit = newInfo.flightId.split('-');
-        newInfo.flightRef = flightIdSplit[0];
-        newInfo.stationDeparture = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
-        newInfo.stationArrival = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
+        IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
+                new IRR_SVC_CommunicationService.FlightIdSplit(newInfo.flightId);
+        newInfo.flightRef = flightIdSplit.flightNumber;
+        newInfo.stationDeparture = flightIdSplit.stationDeparture;
+        newInfo.stationArrival = flightIdSplit.stationArrival;
 
         //Retrieve passengers for flight
         this.passengerInfos = IRR_SVC_TedsService.getPassengerInfosForFlight(newInfo.flightId);
+    }
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Checks if any active manual override blocks exist for this flight.
+     *
+     * @return If any active manual overrides exist
+     */
+    public Boolean checkActiveBlock() {
+        List<IRR_ManualOverride__c> manualOverrides = IRR_SEL_ManualOverridesSelector.newInstance()
+                .selectActiveManualOverridesByFlightId(newInfo.flightId);
+        return !manualOverrides.isEmpty();
     }
 
     /**

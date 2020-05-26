@@ -46,11 +46,11 @@ public class IRR_EVT_CancelProcessor extends IRR_EVT_EventProcessor {
      * @description Populates event object with additional information and initiates passengerInfo list.
      */
     public void initiateEvent() {
-        //Split flightId into Flight Reference, and Departure and Arrival stations.
-        List<String> flightIdSplit = cancelInfo.flightId.split('-');
-        cancelInfo.flightRef = flightIdSplit[0];
-        cancelInfo.stationDeparture = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
-        cancelInfo.stationArrival = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
+        IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
+                new IRR_SVC_CommunicationService.FlightIdSplit(cancelInfo.flightId);
+        cancelInfo.flightRef = flightIdSplit.flightNumber;
+        cancelInfo.stationDeparture = flightIdSplit.stationDeparture;
+        cancelInfo.stationArrival = flightIdSplit.stationArrival;
 
         //Calculate time difference of scheduled time of departure and estimated time of departure in minutes
         Long millisecondsToScheduledTime = cancelInfo.scheduledTimeOfDepartureUTC.getTime() - Datetime.now().getTime();
@@ -60,7 +60,19 @@ public class IRR_EVT_CancelProcessor extends IRR_EVT_EventProcessor {
         this.passengerInfos = IRR_SVC_TedsService.getPassengerInfosForFlight(cancelInfo.flightId);
     }
 
-
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Checks if any active manual override blocks exist for this flight.
+     *
+     * @return If any active manual overrides exist
+     */
+    public Boolean checkActiveBlock() {
+        List<IRR_ManualOverride__c> manualOverrides = IRR_SEL_ManualOverridesSelector.newInstance()
+                .selectActiveManualOverridesByFlightId(cancelInfo.flightId);
+        return !manualOverrides.isEmpty();
+    }
 
     /**
      * @author Niklas Lundkvist, Deloitte

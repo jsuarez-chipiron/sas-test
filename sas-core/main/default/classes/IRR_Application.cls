@@ -41,6 +41,7 @@ public class IRR_Application {
                             IRR_SMSResponse__c.SObjectType => IRR_SEL_SMSResponsesSelector.class,
                             IRR_DelayLog__c.SObjectType => IRR_SEL_DelayLogsSelector.class,
                             IRR_ManualCommunicationTemplate__mdt.SObjectType => IRR_SEL_ManualTemplatesSelector.class,
+                            IRR_ManualOverride__c.SObjectType => IRR_SEL_ManualOverridesSelector.class,
                             IRR_RecipientWhitelist__mdt.SObjectType => IRR_SEL_RecipientWhitelistSelector.class,
                             Organization.SObjectType => IRR_SEL_OrganizationSelector.class,
                             SFMC_SMSDefinition__mdt.SObjectType => IRR_SEL_SMSDefinitionsSelector.class
@@ -57,7 +58,8 @@ public class IRR_Application {
             new fflib_Application.DomainFactory(
                     IRR_Application.Selector,
                     new Map<SObjectType, Type> {
-                            IRR_CommunicationLog__c.SObjectType => IRR_DOM_CommunicationLogs.Constructor.class
+                            IRR_CommunicationLog__c.SObjectType => IRR_DOM_CommunicationLogs.Constructor.class,
+                            IRR_SMSResponse__c.SObjectType => IRR_DOM_SMSResponses.Constructor.class
                     });
 
     /**

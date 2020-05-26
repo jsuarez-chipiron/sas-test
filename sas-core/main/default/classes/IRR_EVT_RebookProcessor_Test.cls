@@ -158,6 +158,19 @@ private class IRR_EVT_RebookProcessor_Test {
     }
 
     @IsTest
+    static void testCheckActiveBlock() {
+        //Given
+        IRR_MOD_RebookInfo rebookInfo = new IRR_MOD_RebookInfo();
+        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_RebookProcessor.Constructor().newInstance(rebookInfo);
+
+        //When
+        Boolean result = eventProcessor.checkActiveBlock();
+
+        //Then
+        System.assertEquals(false, result);
+    }
+
+    @IsTest
     static void testProcessEventSASDisruption_Confirmed_SendSMSEmail() {
         //Given
         IRR_MOD_RebookInfo rebookInfo = new IRR_MOD_RebookInfo();

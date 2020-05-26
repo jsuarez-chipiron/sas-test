@@ -61,6 +61,19 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
         this.passengerInfos = IRR_SVC_TedsService.getPassengerInfosForBooking(rebookInfo.bookingId);
     }
 
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Checks if any active manual override blocks exist for this flight.
+     *
+     * @return If any active manual overrides exist
+     */
+    public Boolean checkActiveBlock() {
+        //Active blocks are currently not applicable for Rebook event
+        return false;
+    }
+
 
     /**
      * @author Niklas Lundkvist, Deloitte

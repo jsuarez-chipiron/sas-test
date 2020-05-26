@@ -125,6 +125,60 @@ private class IRR_EVT_NewInfoProcessor_Test {
     }
 
     @IsTest
+    static void testCheckActiveBlock_Block() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IRR_SEL_IManualOverridesSelector selectorMock = (IRR_SEL_IManualOverridesSelector) mocks.mock(
+                IRR_SEL_ManualOverridesSelector.class);
+
+        //Given
+        mocks.startStubbing();
+        mocks.when(selectorMock.selectActiveManualOverridesByFlightId(fflib_Match.anyString()))
+                .thenReturn(new List<IRR_ManualOverride__c>{new IRR_ManualOverride__c()});
+        mocks.when(selectorMock.sObjectType()).thenReturn(IRR_ManualOverride__c.SObjectType);
+        mocks.stopStubbing();
+        IRR_Application.Selector.setMock(selectorMock);
+        IRR_MOD_NewInfo newInfo = new IRR_MOD_NewInfo();
+        newInfo.flightId = 'SK1429-20191104-ARN-CPH';
+        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_NewInfoProcessor.Constructor().newInstance(newInfo);
+
+        //When
+        Boolean result = eventProcessor.checkActiveBlock();
+
+        //Then
+        ((IRR_SEL_IManualOverridesSelector) mocks.verify(selectorMock))
+                .selectActiveManualOverridesByFlightId('SK1429-20191104-ARN-CPH');
+        System.assertEquals(true, result);
+    }
+
+    @IsTest
+    static void testCheckActiveBlock_NoBlock() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IRR_SEL_IManualOverridesSelector selectorMock = (IRR_SEL_IManualOverridesSelector) mocks.mock(
+                IRR_SEL_ManualOverridesSelector.class);
+
+        //Given
+        mocks.startStubbing();
+        mocks.when(selectorMock.selectActiveManualOverridesByFlightId(fflib_Match.anyString()))
+                .thenReturn(new List<IRR_ManualOverride__c>());
+        mocks.when(selectorMock.sObjectType()).thenReturn(IRR_ManualOverride__c.SObjectType);
+        mocks.stopStubbing();
+        IRR_Application.Selector.setMock(selectorMock);
+        IRR_MOD_NewInfo newInfo = new IRR_MOD_NewInfo();
+        newInfo.flightId = 'SK1429-20191104-ARN-CPH';
+        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_NewInfoProcessor.Constructor().newInstance(newInfo);
+
+        //When
+        Boolean result = eventProcessor.checkActiveBlock();
+
+        //Then
+        ((IRR_SEL_IManualOverridesSelector) mocks.verify(selectorMock))
+                .selectActiveManualOverridesByFlightId('SK1429-20191104-ARN-CPH');
+        System.assertEquals(false, result);
+    }
+
+    @IsTest
     static void testProcessEvent_Confirmed_SendSMS() {
         //Given
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};

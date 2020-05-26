@@ -108,6 +108,60 @@ private class IRR_EVT_CancelProcessor_Test {
     }
 
     @IsTest
+    static void testCheckActiveBlock_Block() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IRR_SEL_IManualOverridesSelector selectorMock = (IRR_SEL_IManualOverridesSelector) mocks.mock(
+                IRR_SEL_ManualOverridesSelector.class);
+
+        //Given
+        mocks.startStubbing();
+        mocks.when(selectorMock.selectActiveManualOverridesByFlightId(fflib_Match.anyString()))
+                .thenReturn(new List<IRR_ManualOverride__c>{new IRR_ManualOverride__c()});
+        mocks.when(selectorMock.sObjectType()).thenReturn(IRR_ManualOverride__c.SObjectType);
+        mocks.stopStubbing();
+        IRR_Application.Selector.setMock(selectorMock);
+        IRR_MOD_CancelInfo cancelInfo = new IRR_MOD_CancelInfo();
+        cancelInfo.flightId = 'SK1429-20191104-ARN-CPH';
+        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_CancelProcessor.Constructor().newInstance(cancelInfo);
+
+        //When
+        Boolean result = eventProcessor.checkActiveBlock();
+
+        //Then
+        ((IRR_SEL_IManualOverridesSelector) mocks.verify(selectorMock))
+                .selectActiveManualOverridesByFlightId('SK1429-20191104-ARN-CPH');
+        System.assertEquals(true, result);
+    }
+
+    @IsTest
+    static void testCheckActiveBlock_NoBlock() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IRR_SEL_IManualOverridesSelector selectorMock = (IRR_SEL_IManualOverridesSelector) mocks.mock(
+                IRR_SEL_ManualOverridesSelector.class);
+
+        //Given
+        mocks.startStubbing();
+        mocks.when(selectorMock.selectActiveManualOverridesByFlightId(fflib_Match.anyString()))
+                .thenReturn(new List<IRR_ManualOverride__c>());
+        mocks.when(selectorMock.sObjectType()).thenReturn(IRR_ManualOverride__c.SObjectType);
+        mocks.stopStubbing();
+        IRR_Application.Selector.setMock(selectorMock);
+        IRR_MOD_CancelInfo cancelInfo = new IRR_MOD_CancelInfo();
+        cancelInfo.flightId = 'SK1429-20191104-ARN-CPH';
+        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_CancelProcessor.Constructor().newInstance(cancelInfo);
+
+        //When
+        Boolean result = eventProcessor.checkActiveBlock();
+
+        //Then
+        ((IRR_SEL_IManualOverridesSelector) mocks.verify(selectorMock))
+                .selectActiveManualOverridesByFlightId('SK1429-20191104-ARN-CPH');
+        System.assertEquals(false, result);
+    }
+
+    @IsTest
     static void testProcessEventCloseToDeparture_Confirmed_SendSMSEmail() {
         //Given
         IRR_MOD_CancelInfo cancelInfo = new IRR_MOD_CancelInfo();
