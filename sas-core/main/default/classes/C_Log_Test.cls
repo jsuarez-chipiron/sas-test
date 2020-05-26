@@ -23,11 +23,23 @@ private class C_Log_Test {
         System.assertNotEquals(null,l.Duration__c);
         System.assert(l.Duration__c>=0);
     }
-
+   /**
+        Logging using the standard logging method
+    */
+     @isTest static void logStandard1(){
+        C_Log.init();
+        Test.startTest();
+        C_Log.log(C_Log.Severity.Error.name(), 'TEST MESSAGE','TEST Stack Race');
+        Test.StopTest();
+        C_Log__c l = [SELECT Id,Severity__c,Message__c,StackTrace__c,LogGroup__c,Timestamp__c,Duration__c FROM C_Log__c ORDER BY CreatedDate DESC LIMIT 1];
+        System.assertEquals(C_Log.Severity.Error.name(),l.Severity__c);
+        System.assertEquals('TEST MESSAGE',l.Message__c);
+        System.assertEquals('TEST Stack Race',l.StackTrace__c);        
+    }
     /**
         Logs a message without intializing the log class
     */
-    @isTest static void logNoInit(){
+    @isTest static void logNoInit(){        
         C_Log.log(C_Log.Severity.Warning, 'TEST MESSAGE', null, 'TEST GROUP', null);
         C_Log__c l = [SELECT Id,Severity__c,Message__c,StackTrace__c,LogGroup__c,Timestamp__c,Duration__c FROM C_Log__c ORDER BY CreatedDate DESC LIMIT 1];
         System.assertEquals(C_Log.Severity.Warning.name(),l.Severity__c);

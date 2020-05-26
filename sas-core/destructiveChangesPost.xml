@@ -14,7 +14,12 @@
 
 <!-- 2020-02-16 Delete permission set and replace with new one using SF-licence to be able to set tab visibilities -->
 	<types>
-		<members>Social_Media_User</members>
+		<members>Social_Media_User</members>		
+		<name>PermissionSet</name>
+	</types>
+	<!--2020-05-16 Delete permission set created for Analytics, Since it requires additional licence so removing-->
+	<types>		
+		<members>Analytic_User</members>
 		<name>PermissionSet</name>
 	</types>
 <!-- 2020-02-16 Delete apex class that is obsolete -->
