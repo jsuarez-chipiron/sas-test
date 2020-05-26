@@ -17,6 +17,10 @@
             new IRR_CommunicationLog__c(IRR_Status__c='Sent',IRR_Recipient__c='46700000002',IRR_ExternalId__c='SMSResponseTest2',IRR_Response__c=msg240, IRR_ResponseMessage__c = true)
         };
         insert comLog;
+        Datetime createdTime = Datetime.now().addHours(-1);
+        Test.setCreatedDate(comLog[0].Id, createdTime);
+        Test.setCreatedDate(comLog[1].Id, createdTime);
+        Test.setCreatedDate(comLog[2].Id, createdTime);
     }
 
     /**
