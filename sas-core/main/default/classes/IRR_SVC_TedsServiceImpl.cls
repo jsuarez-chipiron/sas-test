@@ -26,6 +26,8 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
     private static final String BOOKING_ENDPOINT_TEMPLATE = '/teds-booking/bookings/{0}';
     private static final String BOOKINGS_FILTER_ENDPOINT = '/teds-booking/bookings';
 
+    private static final String INTEGRATION_ERROR_TEMPLATE = 'Integration Response: {0} - {1}';
+
     private static C_IIntegrationExecutor integrationExecutor {
         get {
             if (integrationExecutor == null) {
@@ -57,7 +59,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
                 .executeRequest(endpointURL, C_IntegrationExecutor.Method.GET, null, null);
         if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
-            throwTedsException(responseObject.responseBody);
+            throwTedsException(responseObject);
         }
         IRR_MOD_TedsBooking parsedResponse = IRR_MOD_TedsBooking.parse(responseObject.responseBody);
         return parsedResponse;
@@ -96,7 +98,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
                 .executeRequest(BOOKINGS_FILTER_ENDPOINT, C_IntegrationExecutor.Method.GET, null, queryParams);
         if (responseObject.statusCode >= 300 || responseObject.statusCode < 200) {
-            throwTedsException(responseObject.responseBody);
+            throwTedsException(responseObject);
         }
         List<IRR_MOD_TedsBooking> tedsBookings = IRR_MOD_TedsBooking.parseArray(responseObject.responseBody);
         return tedsBookings;
@@ -117,8 +119,9 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         return initiatePassengerInfos(tedsBookings, flightId);
     }
 
-    private void throwTedsException(String message) {
-        throw new IRR_SVC_TedsService.TedsException(message);
+    private void throwTedsException(C_IntegrationExecutor.IntegrationResponse response) {
+        throw new IRR_SVC_TedsService.TedsException(String.format(INTEGRATION_ERROR_TEMPLATE, new List<String>{
+                String.valueOf(response.statusCode), response.responseBody}));
     }
 
     /**
