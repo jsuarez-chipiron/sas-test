@@ -76,7 +76,7 @@ public with sharing class C_Log {
      * @param http HTTP inforamation supplied in the log
      */
     public static void logException(Exception e,String logGroup,HttpData http){
-        log(Severity.Error,e.getMessage(),e.getStackTraceString(),logGroup,http);
+        log(Severity.Error,e.getTypeName() + ': ' + e.getMessage(),e.getStackTraceString(),logGroup,http);
     }
 
     /**
