@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>PermissionType__c</field>
-        <value xsi:type="xsd:string">Permission Set</value>
+        <value xsi:type="xsd:string">Permission License</value>
     </values>
     <values>
         <field>Role__c</field>
