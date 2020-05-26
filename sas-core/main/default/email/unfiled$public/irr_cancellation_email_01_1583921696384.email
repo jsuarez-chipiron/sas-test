@@ -147,7 +147,7 @@
 
 																								<div><span style="font-size:11px;"><span style="font-family:Arial,Helvetica,sans-serif;"><span style="unicode-bidi:embed"><span style="word-break:normal"><span style="color:black">Dear {{{passengerInfo.title}}}&nbsp;{{{passengerInfo.lastName}}},</span></span></span><br />
 																								<br />
-																								<span style="unicode-bidi:embed"><span style="word-break:normal"><span style="color:black">Your flight </span><span style="color:red">{{{cancelInfo.flightRef}}} {{{cancelInfo.stationDeparture}}} - {{{cancelInfo.stationArrival}}} [[[formatDatetimeUTC(cancelInfo.scheduledTimeOfDepartureLocal, 'dd MMM')]]]</span><span style="color:black"> has been cancelled.</span></span></span><br />
+																								<span style="unicode-bidi:embed"><span style="word-break:normal"><span style="color:black">Your flight </span><span style="color:black">{{{cancelInfo.flightRef}}} {{{cancelInfo.stationDeparture}}} - {{{cancelInfo.stationArrival}}} [[[formatDatetimeUTC(cancelInfo.scheduledTimeOfDepartureLocal, 'dd MMM')]]]</span><span style="color:black"> has been cancelled.</span></span></span><br />
 																								<br />
 																								<span style="unicode-bidi:embed"><span style="word-break:normal"><span style="color:black">We apologize and we&rsquo;re working to book you on another flight. </span></span></span><br />
 																								<br />

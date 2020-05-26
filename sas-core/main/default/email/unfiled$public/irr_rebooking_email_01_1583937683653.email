@@ -155,7 +155,7 @@
 																									[[[LOOP(trip.segments, "segment")]]]
 																										{{{segment.flightNumber}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'dd MMM')]]]<br />
 																										{{{segment.stationDeparture}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]]<br />
-																										{{{segment.stationArrival}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]]<br />
+																										{{{segment.stationArrival}}} [[[formatDatetimeUTC(segment.arrivalTimeLocal, 'HH:mm')]]]<br />
 																										<br/>
 																									[[[ENDLOOP()]]]
 																								[[[ENDLOOP()]]]
