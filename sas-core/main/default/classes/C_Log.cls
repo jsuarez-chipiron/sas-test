@@ -55,7 +55,7 @@ public with sharing class C_Log {
      * @param stackTrace The strack trace to log 
      * @param logGroup The group of logs to which the log record belongs
      * @param http HTTP inforamation supplied in the log
-     */
+     */     
     public static void log(Severity severity,String msg,String stackTrace,String logGroup,HttpData http){
         Long tsNow = System.currentTimeMillis();
         C_Log__c l = new C_Log__c();
@@ -64,6 +64,25 @@ public with sharing class C_Log {
         if(stackTrace!=null)l.StackTrace__c = stackTrace.abbreviate(10000);
         l.LogGroup__c = logGroup;
         if(http!=null)http.setRecord(l);
+        l.Timestamp__c = tsNow;
+        if(TS!=null)l.Duration__c = tsNow-TS;
+        l.Transaction__c = C_Util.getUUID();
+        insert l;
+    }
+    
+    /*
+     log can not captured during set up and non set up in single transaction
+     setup object and non set up object can not run in Single transaction(Mixed DML error)
+     so created future method to capture logs in these situations.
+    */
+    @future
+    Public static void log(String errorType, String msg, String stackTrace)
+    {
+        Long tsNow = System.currentTimeMillis();
+        C_Log__c l = new C_Log__c();
+        l.Severity__c = errorType;
+        if(msg!=null)l.Message__c = msg.abbreviate(10000);
+        if(stackTrace!=null)l.StackTrace__c = stackTrace.abbreviate(10000);    
         l.Timestamp__c = tsNow;
         if(TS!=null)l.Duration__c = tsNow-TS;
         l.Transaction__c = C_Util.getUUID();
