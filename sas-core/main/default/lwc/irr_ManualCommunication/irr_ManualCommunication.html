@@ -35,6 +35,7 @@
                 </c-irr_-retrieve-panel>
                 <c-irr_-send-panel
                         if:false={showRetrieve}
+                        additional-recipient-count={additionalRecipients.length}
                         templates-by-send-mode={templatesBySendMode}
                         flight-id={retrieveParameters.flightId}
                         ontemplatechange={handleTemplateChange}

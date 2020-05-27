@@ -17,6 +17,8 @@ export default class irr_SendPanel extends LightningElement {
 
     @api flightId = '';
 
+    @api additionalRecipientCount;
+
     @track showTemplatePicklist = false;
 
     manualTemplate = {};
@@ -35,6 +37,10 @@ export default class irr_SendPanel extends LightningElement {
         return this.templatesBySendMode[this.sendMode].map((template => {
             return { label: template.templateLabel, value: template.templateName };
         }));
+    }
+
+    get additionalRecipientLabel() {
+        return this.additionalRecipientCount ? `Add Recipients (${this.additionalRecipientCount})` : 'Add Recipients';
     }
 
     handleTemplateChange(event) {
