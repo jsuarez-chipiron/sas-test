@@ -70,7 +70,7 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     selectedRows = [];
 
-    filterParameters = {};
+    filterParameters = {'thisSegment.status': ['Confirmed']};
 
     connectedCallback() {
         const _ = this.init();
