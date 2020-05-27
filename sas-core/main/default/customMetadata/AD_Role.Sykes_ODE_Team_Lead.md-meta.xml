@@ -4,10 +4,14 @@
     <protected>false</protected>
     <values>
         <field>GroupId__c</field>
-        <value xsi:type="xsd:string">25ff2f29-5be2-4d48-99e6-a7c2b2e2ebd</value>
+        <value xsi:type="xsd:string">25ff2f29-5be2-4d48-99e6-a7c2b2e2ebd7</value>
     </values>
     <values>
         <field>Priority__c</field>
         <value xsi:type="xsd:double">60.0</value>
+    </values>
+    <values>
+        <field>TestOnly__c</field>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
 </CustomMetadata>
