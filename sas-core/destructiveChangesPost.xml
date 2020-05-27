@@ -35,6 +35,7 @@
 		<members>AD_RolePermission.SAS_Social_Media_User</members>
 		<name>CustomMetadata</name>
 	</types>
+	
 	<!-- 2020-05-26 Delete CustomMetadata Thippeswamy Aravinda -->
 	<types>
 		<members>AD_RolePermission.SAS_Analytic_User</members>
