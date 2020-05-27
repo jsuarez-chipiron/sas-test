@@ -13,11 +13,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>IRR_StationArrival__c</field>
+                <field>IRR_StationDeparture__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>IRR_StationDeparture__c</field>
+                <field>IRR_StationArrival__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
