@@ -202,6 +202,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         if (passengerSegment != null && passengerSegment.ticket != null) {
             segmentInfo.ticketNumber = passengerSegment.ticket.number_x;
         }
+        segmentInfo.segmentId = tripSegment.id;
         segmentInfo.flightId = tripSegment.flight.id;
         segmentInfo.flightNumber = tripSegment.flight.id.split('-')[0];
         segmentInfo.arrivalTimeLocal = tripSegment.flight.arrival.scheduledTime.local;

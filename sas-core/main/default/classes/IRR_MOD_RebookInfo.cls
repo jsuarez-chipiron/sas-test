@@ -10,7 +10,6 @@ public class IRR_MOD_RebookInfo {
     @AuraEnabled
     public String bookingId { get; set; }
 
-
     @AuraEnabled
     public String bookingReference { get; set; }
 
@@ -19,4 +18,8 @@ public class IRR_MOD_RebookInfo {
 
     @AuraEnabled
     public Datetime eventTime { get; set; }
+
+    @AuraEnabled
+    public List<String> addedSegments { get; set; }
+
 }

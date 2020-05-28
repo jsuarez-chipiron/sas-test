@@ -31,6 +31,7 @@ private class IRR_EVT_RebookProcessor_Test {
         rebookInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
         rebookInfo.eventTime = Datetime.now();
         rebookInfo.source = 'TEST_SOURCE';
+        rebookInfo.addedSegments = new List<String>{'TEST_SEGMENT'};
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_RebookProcessor.Constructor().newInstance(rebookInfo);
 
         //When
@@ -48,6 +49,7 @@ private class IRR_EVT_RebookProcessor_Test {
         rebookInfo.bookingId = 'TEST_BOOKING_ID';
         rebookInfo.eventTime = Datetime.now();
         rebookInfo.source = 'TEST_SOURCE';
+        rebookInfo.addedSegments = new List<String>{'TEST_SEGMENT'};
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_RebookProcessor.Constructor().newInstance(rebookInfo);
 
         //When
@@ -71,6 +73,7 @@ private class IRR_EVT_RebookProcessor_Test {
         rebookInfo.bookingId = 'TEST_BOOKING_ID';
         rebookInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
         rebookInfo.eventTime = Datetime.now();
+        rebookInfo.addedSegments = new List<String>{'TEST_SEGMENT'};
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_RebookProcessor.Constructor().newInstance(rebookInfo);
 
         //When
@@ -94,6 +97,7 @@ private class IRR_EVT_RebookProcessor_Test {
         rebookInfo.bookingId = 'TEST_BOOKING_ID';
         rebookInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
         rebookInfo.source = 'TEST_SOURCE';
+        rebookInfo.addedSegments = new List<String>{'TEST_SEGMENT'};
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_RebookProcessor.Constructor().newInstance(rebookInfo);
 
         //When
@@ -117,6 +121,7 @@ private class IRR_EVT_RebookProcessor_Test {
         rebookInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
         rebookInfo.eventTime = Datetime.now();
         rebookInfo.source = 'TEST_SOURCE';
+        rebookInfo.addedSegments = new List<String>{'TEST_SEGMENT'};
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_RebookProcessor.Constructor().newInstance(rebookInfo);
 
         //When
@@ -126,6 +131,30 @@ private class IRR_EVT_RebookProcessor_Test {
         }
         catch (IRR_SVC_CommunicationService.EventException eventException) {
             if (eventException.getMessage().contains('Booking Id is missing from event')) caughtException = true;
+        }
+
+        //Then
+        System.assert(caughtException);
+    }
+
+
+    @IsTest
+    static void testValidateEvent_ThrowsNoAddedSegments() {
+        //Given
+        IRR_MOD_RebookInfo rebookInfo = new IRR_MOD_RebookInfo();
+        rebookInfo.bookingId = 'TEST_BOOKING_ID';
+        rebookInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
+        rebookInfo.eventTime = Datetime.now();
+        rebookInfo.source = 'TEST_SOURCE';
+        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_RebookProcessor.Constructor().newInstance(rebookInfo);
+
+        //When
+        Boolean caughtException = false;
+        try {
+            eventProcessor.validateEvent();
+        }
+        catch (IRR_SVC_CommunicationService.EventException eventException) {
+            if (eventException.getMessage().contains('Added Segments are missing from event')) caughtException = true;
         }
 
         //Then

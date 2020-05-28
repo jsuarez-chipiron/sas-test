@@ -412,6 +412,7 @@ private class MSG_RendererEnhanced_Test {
         addLEXTemplate('TEST_EXPR_1', 'TEST TO {{{Recipient.lastName}}}', '<p>STARTPOS{{{Sender.UserName}}} TEST TO {{{Lead.FirstName}}} - {{{Case.Subject}}}ENDPOS</p>');
         addLEXTemplate('TEST_EXPR_2', 'TEST TO {{{Recipient.lastName}}}', '<p>STARTPOS{{{Sender.UserName}}} TEST TO {{{Contact.FirstName}}} - {{{Case.Account.Name}}}ENDPOS</p>');
         addLEXTemplate('TEST_FMT_DATE', 'TEST TO {{{Recipient.lastName}}}', '<p>STARTPOSNEW DEPARTURE TIME: [[[formatDatetimeUTC(flight.delayedTime, "HH:mm")]]]ENDPOS</p>');
+        addLEXTemplate('TEST_CONTAINS', 'TEST CONTAINS', '<p>STARTPOS[[[LOOP(Recipients, "rec")]]][[[DISPLAYIF(contains(rec.lastName, DisplayRecipients))]]][[[rec.value]]][[[ENDDISPLAYIF()]]][[[ENDLOOP()]]]ENDPOS</p>');
 
         Datetime delayedTime = Datetime.newInstanceGmt(2020, 5, 28, 14, 35, 0);
         //Renderer expects serialized Datetime
@@ -438,10 +439,19 @@ private class MSG_RendererEnhanced_Test {
                 new Map<String, Object>{
                         'Recipient' => new Map<String, Object>{'lastName' => 'DATENAME'},
                         'flight' => new Map<String, Object>{'delayedTime' => serializedDelayedTime}
+                },
+                new Map<String, Object>{
+                        'DisplayRecipients' => new List<String>{'EXISTS', 'ALSO_EXISTS'},
+                        'Recipients' => new List<Map<String, Object>> {
+                                new Map<String, Object>{'lastName' => 'EXISTS', 'value' => 'EXISTS_VALUE'},
+                                new Map<String, Object>{'lastName' => 'NOT_EXISTS', 'value' => 'NOT_EXISTS_VALUE'},
+                                new Map<String, Object>{'lastName' => 'ALSO_EXISTS', 'value' => 'ALSO_EXISTS_VALUE'}
+                        }
                 }
         };
 
         List<IRR_MOD_Message> messages = new List<IRR_MOD_Message>{
+                new IRR_MOD_Message(),
                 new IRR_MOD_Message(),
                 new IRR_MOD_Message(),
                 new IRR_MOD_Message(),
@@ -451,16 +461,19 @@ private class MSG_RendererEnhanced_Test {
         messages[1].variables = variableList[1];
         messages[2].variables = variableList[2];
         messages[3].variables = variableList[3];
+        messages[4].variables = variableList[4];
         messages[0].template='TEST_EXPR_0';
         messages[1].template='TEST_EXPR_1';
         messages[2].template='TEST_EXPR_2';
         messages[3].template='TEST_FMT_DATE';
+        messages[4].template='TEST_CONTAINS';
 
         Set<String> templateNames = new Set<String>{
                 'TEST_EXPR_0',
                 'TEST_EXPR_1',
                 'TEST_EXPR_2',
-                'TEST_FMT_DATE'
+                'TEST_FMT_DATE',
+                'TEST_CONTAINS'
         };
 
         MSG_TemplateCache tc = new MSG_TemplateCache();
@@ -471,21 +484,25 @@ private class MSG_RendererEnhanced_Test {
         r.renderMessage(messages[1]);
         r.renderMessage(messages[2]);
         r.renderMessage(messages[3]);
+        r.renderMessage(messages[4]);
 
         System.assertEquals('TEST TO ULN1',messages[0].subject);
         System.assertEquals('TEST TO LLN0',messages[1].subject);
         System.assertEquals('TEST TO CLN0',messages[2].subject);
         System.assertEquals('TEST TO DATENAME',messages[3].subject);
+        System.assertEquals('TEST CONTAINS',messages[4].subject);
 
         String b0 = messages[0].content.substring(messages[0].content.indexOf('STARTPOS')+8,messages[0].content.indexOf('ENDPOS'));
         String b1 = messages[1].content.substring(messages[1].content.indexOf('STARTPOS')+8,messages[1].content.indexOf('ENDPOS'));
         String b2 = messages[2].content.substring(messages[2].content.indexOf('STARTPOS')+8,messages[2].content.indexOf('ENDPOS'));
         String b3 = messages[3].content.substring(messages[3].content.indexOf('STARTPOS')+8,messages[3].content.indexOf('ENDPOS'));
+        String b4 = messages[4].content.substring(messages[4].content.indexOf('STARTPOS')+8,messages[4].content.indexOf('ENDPOS'));
 
         System.assertEquals('test@test.com TEST TO test2@test.com - TEST SUBJECT',b0);
         System.assertEquals('test@test.com TEST TO  - TEST SUBJECT',b1);
         System.assertEquals('test@test.com TEST TO CFN0 - ACCNAME0',b2);
         System.assertEquals('NEW DEPARTURE TIME: 14:35', b3);
+        System.assertEquals('EXISTS_VALUEALSO_EXISTS_VALUE', b4);
     }
 
 

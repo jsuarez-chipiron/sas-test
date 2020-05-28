@@ -8,6 +8,9 @@
 public class IRR_MOD_SegmentInfo {
 
     @AuraEnabled
+    public String segmentId { get; set; }
+
+    @AuraEnabled
     public Boolean isSASTicket { get; set; }
     @AuraEnabled
     public Boolean isWideroeTicket { get; set; }

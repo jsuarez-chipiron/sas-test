@@ -13,6 +13,7 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
     private static final String ERROR_BOOKING_REF = 'Booking Ref is missing from event: {0}';
     private static final String ERROR_NO_SOURCE = 'Source is missing from event: {0}';
     private static final String ERROR_NO_EVENT_TIME = 'Event time is missing from event: {0}';
+    private static final String ERROR_NO_ADDED_SEGMENTS = 'Added Segments are missing from event: {0}';
 
     private static final String EVENT_FLOW_NAME = 'IRR_EVT_RebookFlow';
 
@@ -47,6 +48,9 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
         if (rebookInfo.eventTime == null) {
             throwEventException(ERROR_NO_EVENT_TIME, rebookInfo);
         }
+        if (rebookInfo.addedSegments == null || rebookInfo.addedSegments.isEmpty()) {
+            throwEventException(ERROR_NO_ADDED_SEGMENTS, rebookInfo);
+        }
     }
 
 
@@ -65,7 +69,7 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
      * @author Niklas Lundkvist, Deloitte
      * @date 2020
      *
-     * @description Checks if any active manual override blocks exist for this flight.
+     * @description Checks if any active manual override blocks exist.
      *
      * @return If any active manual overrides exist
      */

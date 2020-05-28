@@ -71,8 +71,6 @@
 	</style>
 </head>
 <body bgcolor="#ffffff" style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); padding: 0px; text-size-adjust: none; font-size: 16px; font-family: arial, helvetica, sans-serif; height: auto; min-height: auto;">
-<div style="font-size:0; line-height:0;">&nbsp;</div>
-
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tbody>
 		<tr>
@@ -141,34 +139,30 @@
 																								<br />
 																								<span style="font-size:16px;">Important information about your SAS booking {{{rebookInfo.bookingReference}}}</span><br />
 																								<br />
-																								&nbsp;</div>
+																								</div>
 
-																								<div><span style="font-size:11px;">Hi!<br />
+																								<div><span style="font-size:11px;">Hi,<br />
 																								<br />
-																								Due to earlier flight disruptions, you have been rebooked.<br />
-																								<br />
-																								Your new itinerary is:</span><br />
+																								Due to earlier flight disruptions, you have been rebooked to the following flight(s):<br />
 																								<br />
 																								<p style="language:sv;margin-top:0pt;margin-bottom:0pt;margin-left:0in;text-align:left;direction:ltr;unicode-bidi:embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span style="font-family:Arial,Helvetica,sans-serif;">
-																								[[[LOOP(passengerInfo.itinerary, "trip")]]]
-																									<span style="font-size: 16px; font-weight: bold;">{{{trip.tripType}}}</span><br/>
-																									[[[LOOP(trip.segments, "segment")]]]
-																										{{{segment.flightNumber}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'dd MMM')]]]<br />
-																										{{{segment.stationDeparture}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]]<br />
-																										{{{segment.stationArrival}}} [[[formatDatetimeUTC(segment.arrivalTimeLocal, 'HH:mm')]]]<br />
-																										<br/>
-																									[[[ENDLOOP()]]]
-																								[[[ENDLOOP()]]]
+																								[[[LOOP(passengerInfo.itinerary, "trip")]]][[[LOOP(trip.segments, "segment")]]][[[DISPLAYIF(contains(segment.segmentId, rebookInfo.addedSegments))]]]
+																									{{{segment.flightNumber}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'dd MMM')]]]<br />
+																									{{{segment.stationDeparture}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]]<br />
+																									{{{segment.stationArrival}}} [[[formatDatetimeUTC(segment.arrivalTimeLocal, 'HH:mm')]]]<br />
+																									<br/>
+																								[[[ENDDISPLAYIF()]]][[[ENDLOOP()]]][[[ENDLOOP()]]]
 																								</span></span></p>
-																								<span style="font-size:11px;">We apologize for this change.<br />
+																								<span style="font-size:11px;">We apologize for this change. To check your full reservation:<br />
+																								<a href="https://sas.travel/go/mmb?l=en&r={{{passengerInfo.bookingReference}}}&n={{{passengerInfo.lastName}}}"><span style="font-size:11px;">https://sas.travel/go/mmb?l=en&r={{{passengerInfo.bookingReference}}}&n={{{passengerInfo.lastName}}}<</span></a><br />
 																								<br />
 																								Read more about your rights here </span> <a href="https://www.flysas.com/en/legal-info/eu-passenger-rights/"><span style="font-size:11px;">https://www.flysas.com/en/legal-info/eu-passenger-rights/</span></a><br />
 																								<br />
-																								<span style="font-size:11px;">Regards, SAS</span><br />
+																								<span style="font-size:11px;">Best Regards, <br />SAS</span><br />
 																								<br />
 																								<br />
 																								<br />
-																								&nbsp;</div>
+																								</div>
 																								</td>
 																							</tr>
 																						</tbody>
@@ -265,9 +259,6 @@
 				</tbody>
 			</table>
 			</td>
-		</tr>
-		<tr>
-			<td valign="top">&nbsp;</td>
 		</tr>
 	</tbody>
 </table>
