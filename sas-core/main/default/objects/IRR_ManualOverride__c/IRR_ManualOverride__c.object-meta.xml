@@ -160,7 +160,17 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Manual Overrides</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <searchResultsAdditionalFields>IRR_FlightId__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IRR_FlightNumber__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IRR_DepartureDate__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IRR_StationDeparture__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IRR_StationArrival__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IRR_StartBlockDate__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IRR_StartBlockTime__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IRR_StopBlockDate__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IRR_StopBlockTime__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
