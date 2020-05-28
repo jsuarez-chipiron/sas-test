@@ -177,6 +177,11 @@
         <field>C_Log__c.StackTrace__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>C_Log__c.User_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.FCS_AskedForHelp__c</field>

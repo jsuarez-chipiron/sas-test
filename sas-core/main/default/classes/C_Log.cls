@@ -76,7 +76,7 @@ public with sharing class C_Log {
      so created future method to capture logs in these situations.
     */
     @future
-    Public static void log(String errorType, String msg, String stackTrace)
+    Public static void log(String errorType, String msg, String stackTrace , String userName)
     {
         Long tsNow = System.currentTimeMillis();
         C_Log__c l = new C_Log__c();
@@ -86,6 +86,7 @@ public with sharing class C_Log {
         l.Timestamp__c = tsNow;
         if(TS!=null)l.Duration__c = tsNow-TS;
         l.Transaction__c = C_Util.getUUID();
+        l.User_Name__c = userName;
         insert l;
     }
     /**
