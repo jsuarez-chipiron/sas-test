@@ -13,7 +13,7 @@
         <expandOthers>true</expandOthers>
         <groupingColumn>CUST_CREATED_DATE</groupingColumn>
         <location>CHART_BOTTOM</location>
-        <showAxisLabels>true</showAxisLabels>
+        <showAxisLabels>false</showAxisLabels>
         <showPercentage>false</showPercentage>
         <showTotal>false</showTotal>
         <showValues>false</showValues>
@@ -25,25 +25,25 @@
         <titleSize>18</titleSize>
     </chart>
     <columns>
-        <field>CUST_ID</field>
+        <field>CUST_NAME</field>
     </columns>
     <format>Summary</format>
     <groupingsDown>
         <field>CUST_CREATED_DATE</field>
-        <sortOrder>Desc</sortOrder>
+        <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Disruption activity today</name>
+    <name>Disruption activity last 30 days v2</name>
     <params>
         <name>co</name>
         <value>1</value>
     </params>
     <reportType>CustomEntity$IRR_CommunicationLog__c</reportType>
     <scope>organization</scope>
-    <showDetails>true</showDetails>
+    <showDetails>false</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>CUST_CREATED_DATE</dateColumn>
-        <interval>INTERVAL_TODAY</interval>
+        <interval>INTERVAL_LAST30</interval>
     </timeFrameFilter>
 </Report>
