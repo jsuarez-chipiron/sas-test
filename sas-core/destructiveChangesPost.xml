@@ -46,16 +46,10 @@
 	<types>
 		<members>Case.CaseTags__c</members>
 		<name>CustomField</name>
-	</types>  
-	<!--2020-05-27 unused reports-->
-	<types>        
-        <members>SAS_Hot_Topic_Reports/SAS_Case_Reason_Last_30_days</members>       
-        <members>SAS_Hot_Topic_Reports/SAS_Case_Sub_Reason_Last_30_days</members>
-        <name>Report</name>
-    </types>
-</Package>
-<!--2020-05-28 Delete Role and use SAS instead-->
-<types>
+	</types>
+	<!--2020-05-28 Delete Role and use SAS instead-->
+	<types>
         <members>SAS_Analyst</members>
         <name>Role</name>
     </types>
+</Package>
