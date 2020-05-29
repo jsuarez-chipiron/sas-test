@@ -47,9 +47,9 @@
 		<members>Case.CaseTags__c</members>
 		<name>CustomField</name>
 	</types>
-</Package>
-<!--2020-05-28 Delete Role and use SAS instead-->
-<types>
+	<!--2020-05-28 Delete Role and use SAS instead-->
+	<types>
         <members>SAS_Analyst</members>
         <name>Role</name>
     </types>
+</Package>
