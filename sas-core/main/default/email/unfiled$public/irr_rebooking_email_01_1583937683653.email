@@ -154,7 +154,7 @@
 																								[[[ENDDISPLAYIF()]]][[[ENDLOOP()]]][[[ENDLOOP()]]]
 																								</span></span></p>
 																								<span style="font-size:11px;">We apologize for this change. To check your full reservation:<br />
-																								<a href="https://sas.travel/go/mmb?l=en&r={{{passengerInfo.bookingReference}}}&n={{{passengerInfo.lastName}}}"><span style="font-size:11px;">https://sas.travel/go/mmb?l=en&r={{{passengerInfo.bookingReference}}}&n={{{passengerInfo.lastName}}}<</span></a><br />
+																								<a href="https://sas.travel/go/mmb?l=en&r={{{passengerInfo.bookingReference}}}&n={{{passengerInfo.lastName}}}"><span style="font-size:11px;">https://sas.travel/go/mmb?l=en&r={{{passengerInfo.bookingReference}}}&n={{{passengerInfo.lastName}}}</span></a><br />
 																								<br />
 																								Read more about your rights here </span> <a href="https://www.flysas.com/en/legal-info/eu-passenger-rights/"><span style="font-size:11px;">https://www.flysas.com/en/legal-info/eu-passenger-rights/</span></a><br />
 																								<br />

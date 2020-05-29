@@ -5,7 +5,7 @@
  <body style="height: auto; min-height: auto;">
   Important information about your SAS booking {{{passengerInfo.bookingReference}}}
   <br />
-  <br />Hi!​
+  <br />Hi,
   <br />
   <br />Due to earlier flight disruptions, you have been rebooked to the following flight(s):​
   [[[LOOP(passengerInfo.itinerary, "trip")]]][[[LOOP(trip.segments, "segment")]]][[[DISPLAYIF(contains(segment.segmentId, rebookInfo.addedSegments))]]]
