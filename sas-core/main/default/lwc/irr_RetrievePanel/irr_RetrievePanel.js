@@ -11,7 +11,7 @@ export default class irr_RetrievePanel extends LightningElement {
 
     retrievalMode = "FLIGHT_REFERENCE";
 
-    @track retrieveParameters = {};
+    @track retrieveParameters = {departureDate: new Date().toJSON().slice(0,10)};
 
     handleKeyPress(event) {
         if (event.key === 'Enter') {
