@@ -104,7 +104,8 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
         }
         catch(Exception e)
         {
-            C_Log.log(C_Log.Severity.Error.name(),e.getMessage(),e.getStackTraceString());  
+          String userName = u.FirstName + u.LastName ;
+          C_Log.log(C_Log.Severity.Error.name(),e.getMessage(),e.getStackTraceString(),userName); 
         }
         return u;
     }

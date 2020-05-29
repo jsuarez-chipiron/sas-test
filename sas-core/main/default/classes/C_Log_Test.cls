@@ -29,7 +29,7 @@ private class C_Log_Test {
      @isTest static void logStandard1(){
         C_Log.init();
         Test.startTest();
-        C_Log.log(C_Log.Severity.Error.name(), 'TEST MESSAGE','TEST Stack Race');
+        C_Log.log(C_Log.Severity.Error.name(), 'TEST MESSAGE','TEST Stack Race', 'testUser');
         Test.StopTest();
         C_Log__c l = [SELECT Id,Severity__c,Message__c,StackTrace__c,LogGroup__c,Timestamp__c,Duration__c FROM C_Log__c ORDER BY CreatedDate DESC LIMIT 1];
         System.assertEquals(C_Log.Severity.Error.name(),l.Severity__c);
