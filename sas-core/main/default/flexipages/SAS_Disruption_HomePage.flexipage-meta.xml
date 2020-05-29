@@ -61,7 +61,7 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>context</name>
-                <value>BOOKMARKS</value>
+                <value>TO</value>
             </componentInstanceProperties>
             <componentName>forceChatter:exposedFeed</componentName>
         </componentInstances>
