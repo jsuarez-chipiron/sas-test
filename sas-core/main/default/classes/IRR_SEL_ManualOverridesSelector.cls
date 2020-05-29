@@ -48,10 +48,12 @@ public class IRR_SEL_ManualOverridesSelector extends fflib_SObjectSelector
         Decimal nowValue = Decimal.valueOf(now.formatGmt('yyyyMMddHHmm'));
 
         fflib_QueryFactory queryFactory = newQueryFactory()
-                .setCondition('IRR_StartBlockValue__c < :nowValue AND IRR_StopBlockValue__c > :nowValue AND (' +
-                        'IRR_FlightId__c = :flightId OR IRR_FlightNumber__c = :flightNumber OR ' +
-                        'IRR_StationArrival__c = :stationArrival OR IRR_StationDeparture__c = :stationDeparture OR ' +
-                        'IRR_DepartureDate__c = :departureDate)');
+                .setCondition('IRR_StartBlockValue__c < :nowValue AND IRR_StopBlockValue__c > :nowValue AND ' +
+                        '(IRR_FlightId__c = :flightId OR IRR_FlightId__c = NULL ) AND ' +
+                        '(IRR_FlightNumber__c = :flightNumber OR IRR_FlightNumber__c = NULL) AND ' +
+                        '(IRR_StationArrival__c = :stationArrival OR IRR_StationArrival__c = NULL) AND ' +
+                        '(IRR_StationDeparture__c = :stationDeparture OR IRR_StationDeparture__c = NULL) AND' +
+                        '(IRR_DepartureDate__c = :departureDate OR IRR_DepartureDate__c = NULL)');
         return Database.query(queryFactory.toSOQL());
     }
 }
