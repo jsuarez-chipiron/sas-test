@@ -10,7 +10,7 @@
   <br />Due to earlier flight disruptions, you have been rebooked to the following flight(s):​
   [[[LOOP(passengerInfo.itinerary, "trip")]]][[[LOOP(trip.segments, "segment")]]][[[DISPLAYIF(contains(segment.segmentId, rebookInfo.addedSegments))]]]
   <br />
-  <br />{{{segment.flightNumber}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'dd MMM')]]]
+  <br />{{{segment.flightNumber}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'd MMM')]]]
   <br />{{{segment.stationDeparture}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]]
   <br />{{{segment.stationArrival}}} [[[formatDatetimeUTC(segment.arrivalTimeLocal, 'HH:mm')]]]
   [[[ENDDISPLAYIF()]]][[[ENDLOOP()]]][[[ENDLOOP()]]]

@@ -7,7 +7,7 @@
   <br />
   <br />Hi,
   <br />
-  <br />Flight {{{cancelInfo.flightRef}}} on [[[formatDatetimeUTC(cancelInfo.scheduledTimeOfDepartureLocal, 'dd MMM')]]] from {{{cancelInfo.stationDeparture}}} to {{{cancelInfo.stationArrival}}} has been cancelled.
+  <br />Flight {{{cancelInfo.flightRef}}} on [[[formatDatetimeUTC(cancelInfo.scheduledTimeOfDepartureLocal, 'd MMM')]]] from {{{cancelInfo.stationDeparture}}} to {{{cancelInfo.stationArrival}}} has been cancelled.
   <br />
   <br />We apologize and we’re working to book you on another flight. We’ll let you know as soon as we have information about your new flight. 
   <br />
