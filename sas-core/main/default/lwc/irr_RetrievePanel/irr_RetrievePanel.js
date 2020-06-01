@@ -45,7 +45,7 @@ export default class irr_RetrievePanel extends LightningElement {
     constructFlightId() {
         const { flightNumber, departureDate, stationDeparture, stationArrival } = this.retrieveParameters;
         this.retrieveParameters.flightId =
-            `${flightNumber}-${departureDate.replace(/-/g,'')}-${stationDeparture}-${stationArrival}`;
+            `SK${flightNumber}-${departureDate.replace(/-/g,'')}-${stationDeparture}-${stationArrival}`;
     }
 
     handleBypass() {

@@ -32,17 +32,25 @@
                             onactive={handleTabSwitch}>
                         <lightning-layout>
                             <lightning-layout-item padding="around-small">
-                                <lightning-input
-                                        value={retrieveParameters.flightNumber}
-                                        type="text"
-                                        name="flightNumber"
-                                        label="Flight Number"
-                                        data-tab-group="FLIGHT_REFERENCE"
-                                        pattern="([A-Z]{2})([0-9]{4})"
-                                        required
-                                        message-when-pattern-mismatch="Input format SK1238"
-                                        onchange={handleParameterChange}>
-                                </lightning-input>
+                                <lightning-layout>
+                                    <lightning-layout-item size="2"
+                                                           class="slds-p-left_x-small slds-p-right_small slds-m-top_x-large">
+                                        <lightning-formatted-text class="pull-down" value="SK"></lightning-formatted-text>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="10">
+                                        <lightning-input
+                                                value={retrieveParameters.flightNumber}
+                                                type="text"
+                                                name="flightNumber"
+                                                label="Flight Number"
+                                                data-tab-group="FLIGHT_REFERENCE"
+                                                pattern="([0-9]{4})"
+                                                required
+                                                message-when-pattern-mismatch="Input format 1238"
+                                                onchange={handleParameterChange}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                </lightning-layout>
                             </lightning-layout-item>
                             <lightning-layout-item padding="around-small">
                                 <lightning-input
