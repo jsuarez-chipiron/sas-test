@@ -27,12 +27,21 @@
     <columns>
         <field>CUST_NAME</field>
     </columns>
+    <filter>
+        <criteriaItems>
+            <column>IRR_CommunicationLog__c.IRR_MessageType__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>MID</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
     <format>Summary</format>
     <groupingsDown>
         <field>CUST_CREATED_DATE</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Disruption activity last 30 days v2</name>
+    <name>Communication activity last 30 days</name>
     <params>
         <name>co</name>
         <value>1</value>

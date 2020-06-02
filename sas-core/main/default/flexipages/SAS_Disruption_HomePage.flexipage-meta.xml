@@ -83,7 +83,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>richTextValue</name>
-                <value>&lt;p&gt;To report an error, please send an email to disruptioncommunication@sas.se.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Please include a short descrption of the error with screenshot.&lt;/p&gt;</value>
+                <value>&lt;p&gt;To report an error&lt;span style=&quot;color: black;&quot;&gt; in the disruption communication tool&lt;/span&gt;, please send an email to disruptioncommunication@sas.se. &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Please include a short description of the error with screenshot.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;</value>
             </componentInstanceProperties>
             <componentName>flexipage:richText</componentName>
         </componentInstances>
