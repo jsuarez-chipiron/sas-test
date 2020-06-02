@@ -6,7 +6,7 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
     /**
         Custom exception thrown when errors occurs in the setup process
     */
-	private class JitException extends Exception{}
+    private class JitException extends Exception{}
 
     /**
         Permission type API name for type profile
@@ -96,11 +96,17 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
         u.CallCenterId = ai.loadCallCenterId(u.CallCenterId);
         
         ai.setUserDetails(u);
-
-        if(userId!=null)update u;
-        else insert u;
-        ai.updateAssignments(u.Id);
-
+        try
+        {
+            if(userId!=null)update u;
+            else insert u;
+            ai.updateAssignments(u.Id);
+        }
+        catch(Exception e)
+        {
+          String userName = u.FirstName + u.LastName ;
+          C_Log.log(C_Log.Severity.Error.name(),e.getMessage(),e.getStackTraceString(),userName); 
+        }
         return u;
     }
 
@@ -449,9 +455,9 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
         @param assertion The base 64 encoded SAML assertion body
         @return The created user record
     */
-	global User createUser(Id samlSsoProviderId, Id communityId, Id portalId, String federationId, Map<String, String> attributes, String assertion) {
+    global User createUser(Id samlSsoProviderId, Id communityId, Id portalId, String federationId, Map<String, String> attributes, String assertion) {
         return setupUser(null,federationId,attributes,assertion);
-	}
+    }
 
     /**
         Called by the single sign on configuration when a user is identified and should be updated
@@ -462,7 +468,7 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
         @param attributes Automatically identified attributes of the user in the SAML assertion
         @param assertion The base 64 encoded SAML assertion body
     */
-	global void updateUser(Id userId, Id samlSsoProviderId, Id communityId, Id portalId, String federationId, Map<String, String> attributes, String assertion) {
-		setupUser(userId,federationId,attributes,assertion);
-	}
+    global void updateUser(Id userId, Id samlSsoProviderId, Id communityId, Id portalId, String federationId, Map<String, String> attributes, String assertion) {
+        setupUser(userId,federationId,attributes,assertion);
+    }
 }
