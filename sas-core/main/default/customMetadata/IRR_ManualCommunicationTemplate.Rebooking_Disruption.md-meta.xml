@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>IRR_EmailTemplate__c</field>
-        <value xsi:type="xsd:string">irr_rebooking_email_01</value>
+        <value xsi:type="xsd:string">irr_rebooking_email_02</value>
     </values>
     <values>
         <field>IRR_Priority__c</field>
@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>IRR_SMSTemplate__c</field>
-        <value xsi:type="xsd:string">irr_rebooking_sms_01</value>
+        <value xsi:type="xsd:string">irr_rebooking_sms_02</value>
     </values>
     <values>
         <field>IRR_SendMode__c</field>
