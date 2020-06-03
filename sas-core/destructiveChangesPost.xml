@@ -17,6 +17,11 @@
 		<members>Social_Media_User</members>
 		<name>PermissionSet</name>
 	</types>
+	<!--2020-05-16 Delete permission set created for Analytics, Since it requires additional licence so removing-->
+	<types>
+		<members>Analytic_User</members>
+		<name>PermissionSet</name>
+	</types>
 <!-- 2020-02-16 Delete apex class that is obsolete -->
 	<types>
 		<members>FCS_InboundSocialPostHandlerImpl</members>
@@ -31,15 +36,26 @@
 		<name>CustomMetadata</name>
 	</types>
 	
+	<!-- 2020-05-26 Delete CustomMetadata Thippeswamy Aravinda -->
+	<types>
+		<members>AD_RolePermission.SAS_Analytic_User</members>
+		<name>CustomMetadata</name>
+	</types>
+
 	<!-- 2020-02-20 Delete field when adding namespace Sanna Sörberg -->
 	<types>
 		<members>Case.CaseTags__c</members>
 		<name>CustomField</name>
 	</types>
-	
+
 	<!-- 2020-05-20 Delete CustomApplication -->
 	<types>
 		<members>SAS_IRR</members>
 		<name>CustomApplication</name>
 	</types>
+	<!--2020-05-28 Delete Role and use SAS instead-->
+	<types>
+        <members>SAS_Analyst</members>
+        <name>Role</name>
+    </types>
 </Package>

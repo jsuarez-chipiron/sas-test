@@ -282,6 +282,11 @@
         <field>Case.Consent__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Queue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>	
     <fieldPermissions>
         <editable>false</editable>
         <field>FCS_CaseTag__c.FCS_CaseTag__c</field>
