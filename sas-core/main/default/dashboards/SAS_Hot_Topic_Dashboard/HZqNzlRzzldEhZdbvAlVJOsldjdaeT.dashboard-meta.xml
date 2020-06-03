@@ -562,7 +562,7 @@
     </dashboardGridLayout>
     <dashboardType>SpecifiedUser</dashboardType>
     <isGridLayout>true</isGridLayout>
-    <runningUser>thippeswamy.aravinda@sas.dk.uat</runningUser>
+    <runningUser>thippeswamy.aravinda@sas.dk</runningUser>
     <textColor>#000000</textColor>
     <title>SAS - Hot Topic Dashboard</title>
     <titleColor>#000000</titleColor>

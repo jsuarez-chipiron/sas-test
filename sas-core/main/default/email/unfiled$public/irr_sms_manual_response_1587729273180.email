@@ -6,7 +6,5 @@
   {{{customInfo.subject}}}
   <br />
   <br />{{{customInfo.content}}}
-  <br />
-  <br />Please reply with SAS YES to confirm or SAS NO to decline.
  </body>
 </html>
