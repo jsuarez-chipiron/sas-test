@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>SFMC_DefinitionKey__c</field>
-        <value xsi:type="xsd:string">generic_transactional_smsGB</value>
+        <value xsi:type="xsd:string">generic_transactional_smsFI</value>
     </values>
 </CustomMetadata>
