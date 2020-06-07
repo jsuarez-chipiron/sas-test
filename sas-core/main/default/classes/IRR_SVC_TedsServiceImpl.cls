@@ -26,6 +26,8 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
     private static final String BOOKING_ENDPOINT_TEMPLATE = '/teds-booking/bookings/{0}';
     private static final String BOOKINGS_FILTER_ENDPOINT = '/teds-booking/bookings';
 
+    private static final String INTEGRATION_ERROR_TEMPLATE = 'Integration Response: {0} - {1}';
+
     private static C_IIntegrationExecutor integrationExecutor {
         get {
             if (integrationExecutor == null) {
@@ -57,7 +59,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
                 .executeRequest(endpointURL, C_IntegrationExecutor.Method.GET, null, null);
         if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
-            throwTedsException(responseObject.responseBody);
+            throwTedsException(responseObject);
         }
         IRR_MOD_TedsBooking parsedResponse = IRR_MOD_TedsBooking.parse(responseObject.responseBody);
         return parsedResponse;
@@ -96,7 +98,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
                 .executeRequest(BOOKINGS_FILTER_ENDPOINT, C_IntegrationExecutor.Method.GET, null, queryParams);
         if (responseObject.statusCode >= 300 || responseObject.statusCode < 200) {
-            throwTedsException(responseObject.responseBody);
+            throwTedsException(responseObject);
         }
         List<IRR_MOD_TedsBooking> tedsBookings = IRR_MOD_TedsBooking.parseArray(responseObject.responseBody);
         return tedsBookings;
@@ -117,8 +119,9 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         return initiatePassengerInfos(tedsBookings, flightId);
     }
 
-    private void throwTedsException(String message) {
-        throw new IRR_SVC_TedsService.TedsException(message);
+    private void throwTedsException(C_IntegrationExecutor.IntegrationResponse response) {
+        throw new IRR_SVC_TedsService.TedsException(String.format(INTEGRATION_ERROR_TEMPLATE, new List<String>{
+                String.valueOf(response.statusCode), response.responseBody}));
     }
 
     /**
@@ -139,29 +142,47 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         for (IRR_MOD_TedsBooking booking : tedsBookings) {
             IRR_MOD_TedsBooking.SegmentTrip thisSegment;
             IRR_MOD_TedsBooking.SegmentTrip nextSegment;
+            List<IRR_MOD_TripInfo> itinerary = new List<IRR_MOD_TripInfo>();
             for (IRR_MOD_TedsBooking.Trip trip : booking.trips) {
-                if (String.isBlank(flightId)) break; //Don't look for segments if there is no current flightId
-                for (IRR_MOD_TedsBooking.SegmentTrip segment : trip.segments) {
-                    if (segment.flight.id == flightId) {
-                        thisSegment = segment;
-                        continue;
-                    }
-                    //Discard unconfirmed segments when looking for next segment
-                    if (segment.status != IRR_SVC_TedsService.BOOKING_STATUS_CONFIRMED) continue;
-                    if (thisSegment!=null) {
-                        nextSegment = segment;
-                        break;
+                //Only process current and next segments when they have not been found and flightId is available
+                if (String.isNotBlank(flightId) && thisSegment == null) {
+                    for (IRR_MOD_TedsBooking.SegmentTrip segment : trip.segments) {
+                        if (segment.flight.id == flightId) {
+                            thisSegment = segment;
+                            continue;
+                        }
+                        //Discard unconfirmed segments when looking for next segment
+                        if (segment.status != IRR_SVC_TedsService.BOOKING_STATUS_CONFIRMED) continue;
+                        if (thisSegment!=null) {
+                            nextSegment = segment;
+                            break;
+                        }
                     }
                 }
+                //Process Itinerary
+                List<IRR_MOD_SegmentInfo> tripSegments = new List<IRR_MOD_SegmentInfo>();
+                for (IRR_MOD_TedsBooking.SegmentTrip segment : trip.segments) {
+                    //Discard unconfirmed segments when constructing itinerary
+                    if (segment.status != IRR_SVC_TedsService.BOOKING_STATUS_CONFIRMED) continue;
+                    tripSegments.add(createSegmentInfo(segment, null));
+                }
+                if (!tripSegments.isEmpty()) itinerary.add(createTripInfo(trip, tripSegments));
             }
 
             for (IRR_MOD_TedsBooking.Passenger passenger : booking.passengers) {
                 IRR_MOD_PassengerInfo passengerInfo = createPassengerInfo(booking, passenger, thisSegment,
-                        nextSegment);
+                        nextSegment, itinerary);
                 passengerInfos.add(passengerInfo);
             }
         }
         return passengerInfos;
+    }
+
+    private IRR_MOD_TripInfo createTripInfo(IRR_MOD_TedsBooking.Trip trip, List<IRR_MOD_SegmentInfo> segments) {
+        IRR_MOD_TripInfo tripInfo = new IRR_MOD_TripInfo();
+        tripInfo.segments = segments;
+        tripInfo.tripType = trip.type;
+        return tripInfo;
     }
 
     /**
@@ -181,7 +202,11 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         if (passengerSegment != null && passengerSegment.ticket != null) {
             segmentInfo.ticketNumber = passengerSegment.ticket.number_x;
         }
+        segmentInfo.segmentId = tripSegment.id;
         segmentInfo.flightId = tripSegment.flight.id;
+        segmentInfo.flightNumber = tripSegment.flight.id.split('-')[0];
+        segmentInfo.arrivalTimeLocal = tripSegment.flight.arrival.scheduledTime.local;
+        segmentInfo.departureTimeLocal = tripSegment.flight.departure.scheduledTime.local;
         segmentInfo.stationArrival = tripSegment.flight.arrival.station;
         segmentInfo.stationDeparture = tripSegment.flight.departure.station;
         segmentInfo.status = tripSegment.status;
@@ -212,20 +237,23 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      * @param passenger Passenger specific booking details
      * @param tripThisSegment Current trip segment details (optional)
      * @param tripNextSegment Next trip segment details (optional)
+     * @param itinerary Booking Itinerary (optional)
      *
      * @return Passenger Info object
      */
     private IRR_MOD_PassengerInfo createPassengerInfo(IRR_MOD_TedsBooking booking,
             IRR_MOD_TedsBooking.Passenger passenger, IRR_MOD_TedsBooking.SegmentTrip tripThisSegment,
-            IRR_MOD_TedsBooking.SegmentTrip tripNextSegment) {
+            IRR_MOD_TedsBooking.SegmentTrip tripNextSegment, List<IRR_MOD_TripInfo> itinerary) {
 
         IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
         passengerInfo.passengerId = booking.id + passenger.id;
         passengerInfo.bookingReference = booking.reference;
         passengerInfo.codsId = booking.codsId;
+        passengerInfo.title = passenger.title;
         passengerInfo.firstName = passenger.firstName;
         passengerInfo.lastName  = passenger.lastName;
         passengerInfo.lastNameSlashFirstName = (passengerInfo.lastName + '/' + passengerInfo.firstName).toUpperCase();
+        passengerInfo.itinerary = itinerary;
 
         if (passenger.frequentTraveler != null && passenger.frequentTraveler.euroBonus != null &&
                 !passenger.frequentTraveler.euroBonus.isEmpty()) {

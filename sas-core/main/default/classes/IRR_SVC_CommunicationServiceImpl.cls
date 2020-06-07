@@ -21,6 +21,8 @@ public class IRR_SVC_CommunicationServiceImpl implements IRR_SVC_ICommunicationS
         IRR_EVT_IEventProcessor eventProcessor = IRR_Application.EventProcessor.newInstance(eventType, payload);
         eventProcessor.validateEvent();
         eventProcessor.initiateEvent();
+        //Stop processing event if there is an active manual override block
+        if (eventProcessor.checkActiveBlock()) return;
         eventProcessor.processEvent();
         eventProcessor.processMessages();
         eventProcessor.finalizeEvent(uow);
@@ -49,6 +51,9 @@ public class IRR_SVC_CommunicationServiceImpl implements IRR_SVC_ICommunicationS
         eventProcessor.initiateEvent();
         endTime = Limits.getCpuTime();
         System.debug('\n\nPERF - Initiated Event in: ' + (endTime - startTime) + '\n\n');
+
+        //Stop processing event if there is an active manual override block
+        if (eventProcessor.checkActiveBlock()) return;
 
         startTime = Limits.getCpuTime();
         eventProcessor.processEvent();

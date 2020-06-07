@@ -5,7 +5,7 @@
     <encodingKey>ISO-8859-1</encodingKey>
     <name>irr_cancellation_email_01</name>
     <style>none</style>
-    <subject>Cancellation information from SAS - Booking reference ABC123</subject>
+    <subject>Cancellation information from SAS - Booking reference {{{passengerInfo.bookingReference}}}</subject>
     <type>custom</type>
     <uiType>SFX</uiType>
 </EmailTemplate>

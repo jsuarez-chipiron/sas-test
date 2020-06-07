@@ -3,13 +3,17 @@
   <title></title> 
  </head> 
  <body style="height: auto; min-height: auto;">
-  Important information about your SAS booking ABC123 
-  <br /> Hi! 
-  <br /> Flight SK2315 on 12 Sept from Stockholm (ARN) to Copenhagen (CPH) has been cancelled. 
-  <br /> We apologize and we’re working to book you on another flight. 
-  <br /> We’ll let you know as soon as we have information about your new flight.&nbsp; 
-  <br /> Read more about your rights here 
-  <a href="https://www.flysas.com/en/legal-info/eu-passenger-rights/">https://www.flysas.com/en/legal-info/eu-passenger-rights/</a> 
-  <br /> Regards, SAS
+  Important information about your SAS booking {{{passengerInfo.bookingReference}}}
+  <br />
+  <br />Hi,
+  <br />
+  <br />Flight {{{cancelInfo.flightRef}}} on [[[formatDatetimeUTC(cancelInfo.scheduledTimeOfDepartureLocal, 'd MMM')]]] from {{{cancelInfo.stationDeparture}}} to {{{cancelInfo.stationArrival}}} has been cancelled.
+  <br />
+  <br />We apologize and we’re working to book you on another flight. We’ll let you know as soon as we have information about your new flight. 
+  <br />
+  <br />Read more about your rights here
+  https://www.flysas.com/en/legal-info/eu-passenger-rights/
+  <br />
+  <br />Regards, SAS
  </body>
 </html>

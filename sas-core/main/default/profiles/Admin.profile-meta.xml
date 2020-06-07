@@ -6,7 +6,7 @@
         <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
-        <application>SAS_IRR</application>
+        <application>SAS_Disruption</application>
         <default>true</default>
         <visible>true</visible>
     </applicationVisibilities>

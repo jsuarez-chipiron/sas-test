@@ -25,48 +25,54 @@ public class IRR_DOM_SMSResponses extends fflib_SObjectDomain {
      * Note: This method does not use an fflib unit of work since it want to log errors rather than propagate them.
      */
     public void setCommunicationLogData(){
-        Set<String> fromNo = new Set<String>();
-        for(IRR_SMSResponse__c sms : (List<IRR_SMSResponse__c>)records){
+        Set<String> recipients = new Set<String>();
+        for(IRR_SMSResponse__c sms : (List<IRR_SMSResponse__c>) Records){
             if(!String.isBlank(sms.IRR_InfoFrom__c)){
-                fromNo.add(sms.IRR_InfoFrom__c);
+                recipients.add(sms.IRR_InfoFrom__c);
             }
+        }
+        if (recipients.isEmpty()) return;
+
+        Map<String, IRR_CommunicationLog__c> comLogByRecipient = IRR_SEL_CommunicationLogsSelector.newInstance()
+                .getLatestResponseMessageByRecipients(recipients);
+
+        Boolean prevMode = C_Log.setBuffered(true);
+        List<IRR_CommunicationLog__c> comLogsForUpdate = new List<IRR_CommunicationLog__c>();
+        for(IRR_SMSResponse__c sms : (List<IRR_SMSResponse__c>) Records){
+            if(String.isBlank(sms.IRR_InfoFrom__c) || !comLogByRecipient.containsKey(sms.IRR_InfoFrom__c)) {
+                C_Log.log(C_Log.Severity.Warning,
+                        'Cannot find related communication log for sms: ' + sms.Id, null, 'SMSResponse', null);
+                continue;
+            }
+            IRR_CommunicationLog__c comLog = comLogByRecipient.get(sms.IRR_InfoFrom__c);
+            comLog.IRR_Status__c='Responded';
+
+            //Appending the previous response, discarding long verbs and capping length to 255 characters
+            comLog.IRR_Response__c = (sms.IRR_InfoMessageVerb__c!=null && sms.IRR_InfoMessageVerb__c.length()<10 ? sms.IRR_InfoMessageVerb__c + ' ' : '') + sms.IRR_InfoMessageNouns__c + (String.isBlank(comLog.IRR_Response__c) ? '' : ', '+comLog.IRR_Response__c);
+            if(comLog.IRR_Response__c.length()>255)comLog.IRR_Response__c = comLog.IRR_Response__c.substring(0,255);
+
+            //Setting the response date of the last response
+            Datetime smsTime = sms.IRR_DateUTC__c!=null && sms.IRR_TimeUTC__c!=null ?
+                    Datetime.newInstanceGmt(sms.IRR_DateUTC__c,sms.IRR_TimeUTC__c) : sms.CreatedDate;
+            if (comLog.IRR_LastResponseDate__c == null || comLog.IRR_LastResponseDate__c < smsTime) {
+                comLog.IRR_LastResponseDate__c = smsTime;
+            }
+            comLogsForUpdate.add(comLog);
+            //Relates the sms message to the communication log
+            sms.IRR_CommunicationLog__c = comLog.Id;
         }
 
-        if(!fromNo.isEmpty()){
-            List<IRR_CommunicationLog__c> comLogList = [SELECT Id,CreatedDate,IRR_Recipient__c,IRR_Response__c,IRR_LastResponseDate__c FROM IRR_CommunicationLog__c WHERE IRR_Recipient__c IN :fromNo FOR UPDATE];
-            Map<String,IRR_CommunicationLog__c> comLogMap = new Map<String,IRR_CommunicationLog__c>();
-            for(IRR_CommunicationLog__c comLog : comLogList){
-                IRR_CommunicationLog__c comLogCurrent = comLogMap.get(comLog.IRR_Recipient__c);
-                if(comLogCurrent==null || comLogCurrent.CreatedDate <= comLog.CreatedDate)comLogMap.put(comLog.IRR_Recipient__c,comLog);
+        try {
+            Database.SaveResult[] srList = Database.update(comLogsForUpdate, false);
+            for(Integer i=0;i<srList.size();i++){
+                Database.SaveResult sr = srList[i];
+                if(!sr.isSuccess())C_Log.log(C_Log.Severity.Error, 'Cannot update communication log '+comLogsForUpdate[i].Id+': '+sr.getErrors()[0].getMessage(), null, 'SMSResponse', null);
             }
-            Boolean prevMode = C_Log.setBuffered(true);
-            for(IRR_SMSResponse__c sms : (List<IRR_SMSResponse__c>)records){
-                if(!String.isBlank(sms.IRR_InfoFrom__c) && comLogMap.containsKey(sms.IRR_InfoFrom__c)){
-                    IRR_CommunicationLog__c comLog = comLogMap.get(sms.IRR_InfoFrom__c);
-                    comLog.IRR_Status__c='Responded';
-                    //Setting the response capped at 255 chars
-                    comLog.IRR_Response__c = (sms.IRR_InfoMessageVerb__c!=null && sms.IRR_InfoMessageVerb__c.length()<10 ? sms.IRR_InfoMessageVerb__c : '') + sms.IRR_InfoMessageNouns__c + (String.isBlank(comLog.IRR_Response__c) ? '' : ', '+comLog.IRR_Response__c);
-                    if(comLog.IRR_Response__c.length()>255)comLog.IRR_Response__c = comLog.IRR_Response__c.substring(0,255);
-                    //Setting the response date of the last response
-                    DateTime smsTime = sms.IRR_DateUTC__c!=null && sms.IRR_TimeUTC__c!=null ? DateTime.newInstanceGmt(sms.IRR_DateUTC__c,sms.IRR_TimeUTC__c) : sms.CreatedDate;
-                    if(comLog.IRR_LastResponseDate__c == null || comLog.IRR_LastResponseDate__c < smsTime)comLog.IRR_LastResponseDate__c = smsTime;
-                    //Relates the sms message to the communication log
-                    sms.IRR_CommunicationLog__c = comLog.Id;
-                }
-                else C_Log.log(C_Log.Severity.Warning, 'Cannot find related communication log for sms: '+sms.Id, null, 'SMSResponse', null);
-            }
-            try{
-                Database.SaveResult[] srList = Database.update(comLogList, false);
-                for(Integer i=0;i<srList.size();i++){
-                    Database.SaveResult sr = srList[i];
-                    if(!sr.isSuccess())C_Log.log(C_Log.Severity.Error, 'Cannot update communication log '+comLogList[i].Id+': '+sr.getErrors()[0].getMessage(), null, 'SMSResponse', null);
-                }
-            }
-            catch(Exception e){
-                C_Log.logException(e, 'SMSResponse', null);
-            }
-            C_Log.setBuffered(prevMode);
         }
+        catch(Exception e){
+            C_Log.logException(e, 'SMSResponse', null);
+        }
+        C_Log.setBuffered(prevMode);
     }
     
     /**

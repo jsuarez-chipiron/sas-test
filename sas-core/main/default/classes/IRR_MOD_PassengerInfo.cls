@@ -17,6 +17,9 @@ public class IRR_MOD_PassengerInfo {
     public String passengerId { get; set; }
 
     @AuraEnabled
+    public String title { get; set; }
+
+    @AuraEnabled
     public String lastName { get; set; }
 
     @AuraEnabled
@@ -54,4 +57,6 @@ public class IRR_MOD_PassengerInfo {
     @AuraEnabled
     public IRR_MOD_SegmentInfo nextSegment { get; set; }
 
+    @AuraEnabled
+    public List<IRR_MOD_TripInfo> itinerary { get; set; }
 }

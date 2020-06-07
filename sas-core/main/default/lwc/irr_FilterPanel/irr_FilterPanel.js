@@ -2,10 +2,10 @@
  * @author Niklas Lundkvist, Deloitte
  * @date 2020
  *
- * @description TODO
+ * @description Filter component for the Manual Communication app.
  */
 
-import {LightningElement} from 'lwc';
+import {LightningElement, track} from 'lwc';
 
 const segmentOptions = [
     { label: 'Cancelled', value: 'Cancelled' },
@@ -21,7 +21,9 @@ export default class IRR_FilterPanel extends LightningElement {
 
     segmentOptions = segmentOptions;
 
-    filterParameters = {};
+    filterParameters = {'thisSegment.status': ['Confirmed']};
+
+    @track segmentStatusGroupValue = ['Confirmed'];
 
     handleValueSelect(event) {
         const fieldName = event.target.name;

@@ -24,9 +24,9 @@ public class IRR_SVC_CommunicationService {
     static final String COM_LOG_CHANNEL_SMS = 'SMS';
 
     /**
-     * Starting text of copyright notice to strip from communication log message content
+     * Starting text of email copyright notice
      */
-    static final String COM_LOG_COPYRIGHT_NOTICE = 'Scandinavian Airlines ©';
+    public static final String SAS_COPYRIGHT_NOTICE = 'Scandinavian Airlines ©';
 
     public static void processEvent(String eventType, String payload) {
         service().processEvent(eventType, payload);
@@ -41,6 +41,32 @@ public class IRR_SVC_CommunicationService {
 
     private static IRR_SVC_ICommunicationService service() {
         return (IRR_SVC_ICommunicationService) IRR_Application.Service.newInstance(IRR_SVC_ICommunicationService.class);
+    }
+
+    public class FlightIdSplit {
+        public String flightId;
+        public String flightNumber;
+        public Date departureDate;
+        public String departureDateString;
+        public String stationArrival;
+        public String stationDeparture;
+
+        public FlightIdSplit(String flightId) {
+            //Split flightId into Flight Reference, Departure and Arrival stations, and Departure Date
+            List<String> flightIdSplit = flightId.split('-');
+            this.flightNumber = flightIdSplit[0];
+            if (flightIdSplit.size() >= 2 && flightIdSplit[1].length() == 8) {
+                this.departureDateString = flightIdSplit[1];
+
+                Integer year = Integer.valueOf(this.departureDateString.substring(0, 4));
+                Integer month = Integer.valueOf(this.departureDateString.substring(4, 6));
+                Integer day = Integer.valueOf(this.departureDateString.substring(6, 8));
+
+                this.departureDate = Date.newInstance(year, month, day);
+            }
+            this.stationDeparture = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
+            this.stationArrival = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
+        }
     }
 
     public class CommunicationLogFactory {
@@ -81,7 +107,7 @@ public class IRR_SVC_CommunicationService {
                 log.IRR_ErrorMessage__c = message.SFMCMessage.errorMessage;
             }
             log.IRR_MessageContent__c = String.isNotBlank(message.content) && message.content.startsWith('<!DOCTYPE') ?
-                    message.content.stripHtmlTags().substringBeforeLast(COM_LOG_COPYRIGHT_NOTICE) : message.content;
+                    message.content.stripHtmlTags().substringBeforeLast(SAS_COPYRIGHT_NOTICE) : message.content;
             unitOfWork.registerNew(log);
         }
 

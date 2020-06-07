@@ -4,14 +4,12 @@
 # https://aka.ms/yaml
 
 trigger:
-- IRR
+- irr/develop
 
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  CLIURL: https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
-  SFDX_AUTOUPDATE_DISABLE: false
   SFDX_USE_GENERIC_UNIX_KEYCHAIN: true
   SFDX_DOMAIN_RETRY: 300
   SFDX_DISABLE_APP_HUB: true
@@ -24,12 +22,9 @@ steps:
     secureFile: 'ci_cert.key'
 
 - script: |
-    sudo npm install sfdx-cli --global
+    sudo yarn global add sfdx-cli
     sfdx --version
     sfdx plugins --core
-    git clone https://github.com/psodergren/sfdx-lexemail $(Agent.HomeDirectory)/sfdx-lexemail
-    sfdx plugins:link $(Agent.HomeDirectory)/sfdx-lexemail
-    sfdx plugins
   displayName: 'Install SFDX'
 
 - script: |
@@ -37,10 +32,6 @@ steps:
     sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1
     sfdx force:org:display --targetusername ciorg
   displayName: 'Setup Org'
-
-- script: |
-    sfdx email:push
-  displayName: 'Import email templates'
 
 - script: |
     if [ -d ./$(PACKAGE_FOLDER)/main/default/sharingRules ]; then

@@ -33,4 +33,10 @@ public class IRR_MOD_ManualRequest {
 
     @AuraEnabled
     public IRR_MOD_CustomInfo customInfo { get; set; }
+
+    @AuraEnabled
+    public IRR_MOD_CancelInfo cancelInfo { get; set; }
+
+    @AuraEnabled
+    public IRR_MOD_NewInfo newInfo { get; set; }
 }

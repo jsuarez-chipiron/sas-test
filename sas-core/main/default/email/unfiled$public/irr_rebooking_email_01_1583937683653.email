@@ -1,83 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html style="overflow-y: hidden;">
+<html>
 <head>
 	<title></title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"><meta content="text/html; charset=UTF-8">
-	<style type="text/css">ReadMsgBody{ width: 100%;}
-      .ExternalClass {width: 100%;}
-      .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;}
-      body {-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;margin:0 !important;}
-      p { margin: 1em 0;}
-      table td { border-collapse: collapse;}
-      img {outline:0;}
-      a img {border:none;}
-      @-ms-viewport{ width: device-width;}
-	</style>
-	<style type="text/css">@media only screen and (max-width: 480px) {
-        .container {width: 100% !important;}
-        .footer { width:auto !important; margin-left:0; }
-        .mobile-hidden { display:none !important; }
-        .logo { display:block !important; padding:0 !important; }
-        img { max-width:100% !important; height:auto !important; max-height:auto !important;}
-        .header img{max-width:100% !important;height:auto !important; max-height:auto !important;}
-        .photo img { width:100% !important; max-width:100% !important; height:auto !important;}
-        .drop { display:block !important; width: 100% !important; float:left; clear:both;}
-        .footerlogo { display:block !important; width: 100% !important; padding-top:15px; float:left; clear:both;}
-        .nav4, .nav5, .nav6 { display: none !important; }
-        .tableBlock {width:100% !important;}
-        .responsive-td {width:100% !important; display:block !important; padding:0 !important; }
-        .fluid, .fluid-centered {
-          width: 100% !important;
-          max-width: 100% !important;
-          height: auto !important;
-          margin-left: auto !important;
-          margin-right: auto !important;
-        }
-        .fluid-centered {
-          margin-left: auto !important;
-          margin-right: auto !important;
-        }
-        /* MOBILE GLOBAL STYLES - DO NOT CHANGE */
-        body { padding: 0px !important; font-size: 16px !important; line-height: 150% !important;}
-        h1 { font-size: 22px !important; line-height: normal !important;}
-        h2 { font-size: 20px !important; line-height: normal !important;}
-        h3 { font-size: 18px !important; line-height: normal !important;}
-        .buttonstyles {
-          font-family:arial,helvetica,sans-serif !important;
-          font-size: 16px !important;
-          color: #FFFFFF !important;
-          padding: 10px !important;
-        }
-        /* END OF MOBILE GLOBAL STYLES - DO NOT CHANGE */
-      }
-      @media only screen and (max-width: 640px) {
-        .container { width:100% !important; }
-        .mobile-hidden { display:none !important; }
-        .logo { display:block !important; padding:0 !important; }
-        .photo img { width:100% !important; height:auto !important;}
-        .nav5, .nav6 { display: none !important;}
-        .fluid, .fluid-centered {
-          width: 100% !important;
-          max-width: 100% !important;
-          height: auto !important;
-          margin-left: auto !important;
-          margin-right: auto !important;
-        }
-        .fluid-centered {
-          margin-left: auto !important;
-          margin-right: auto !important;
-        }
-      }
-	</style>
 </head>
 <body bgcolor="#ffffff" style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); padding: 0px; text-size-adjust: none; font-size: 16px; font-family: arial, helvetica, sans-serif; height: auto; min-height: auto;">
-<div style="font-size:0; line-height:0;">&nbsp;</div>
-
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tbody>
-		<tr>
-			<td align="center" valign="top">&nbsp;</td>
-		</tr>
 		<tr>
 			<td align="center">
 			<table align="center" border="0" cellpadding="0" cellspacing="0" class="container" width="600">
@@ -111,7 +39,7 @@
 																								<table cellpadding="0" cellspacing="0" width="100%">
 																									<tbody>
 																										<tr>
-																											<td align="center"><img height="63" src="https://image.s50.sfmc-content.com/lib/fe3e11717564047d741777/m/1/16092f30-85ad-4ba1-ba69-6abd88696641.png" style="display: block; padding: 0px; text-align: center; height: 63px; width: 600px; border: 0px;" width="600" /></td>
+																											<td align="center"><img height="63" src="https://image.msg.flysas.com/lib/fe3e11717564047d741777/m/1/16092f30-85ad-4ba1-ba69-6abd88696641.png" style="display: block; padding: 0px; text-align: center; height: 63px; width: 600px; border: 0px;" width="600" /></td>
 																										</tr>
 																									</tbody>
 																								</table>
@@ -127,7 +55,7 @@
 																								<table cellpadding="0" cellspacing="0" width="100%">
 																									<tbody>
 																										<tr>
-																											<td align="center"><img height="258" src="https://image.s50.sfmc-content.com/lib/fe3e11717564047d741777/m/1/35d95ebe-0ddb-48bc-b5d3-6b83ae741f45.png" style="display: block; padding: 0px; text-align: center; height: 258px; width: 600px; border: 0px;" width="600" /></td>
+																											<td align="center"><img height="258" src="https://image.msg.flysas.com/lib/fe3e11717564047d741777/m/1/35d95ebe-0ddb-48bc-b5d3-6b83ae741f45.png" style="display: block; padding: 0px; text-align: center; height: 258px; width: 600px; border: 0px;" width="600" /></td>
 																										</tr>
 																									</tbody>
 																								</table>
@@ -142,39 +70,32 @@
 																								<td class="stylingblock-content-wrapper camarker-inner" style="padding: 0px 50px;">
 																								<div style="text-align: center;"><br />
 																								<br />
-																								<span style="font-size:16px;">Important information about your SAS booking <span style="color:#e74c3c;">ABC123</span></span><br />
+																								<span style="font-size:16px;">Important information about your SAS booking {{{rebookInfo.bookingReference}}}</span><br />
 																								<br />
-																								<br />
-																								&nbsp;</div>
+																								</div>
 
-																								<div><span style="font-size:11px;">Hi!<br />
+																								<div><span style="font-size:11px;">Hi,<br />
 																								<br />
-																								Due to earlier flight disruptions, you have been rebooked.<br />
+																								Due to earlier flight disruptions, you have been rebooked to the following flight(s):<br />
 																								<br />
+																								<p style="language:sv;margin-top:0pt;margin-bottom:0pt;margin-left:0in;text-align:left;direction:ltr;unicode-bidi:embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span style="font-family:Arial,Helvetica,sans-serif;">
+																								[[[LOOP(passengerInfo.itinerary, 'trip')]]][[[LOOP(trip.segments, 'segment')]]][[[DISPLAYIF(contains(segment.segmentId, rebookInfo.addedSegments))]]]
+																									{{{segment.flightNumber}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'd MMM')]]]<br />
+																									{{{segment.stationDeparture}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]]<br />
+																									{{{segment.stationArrival}}} [[[formatDatetimeUTC(segment.arrivalTimeLocal, 'HH:mm')]]]<br />
+																									<br/>
+																								[[[ENDDISPLAYIF()]]][[[ENDLOOP()]]][[[ENDLOOP()]]]
+																								</span></span></p>
+																								<span style="font-size:11px;">We apologize for this change. To check your full reservation:<br />
+																								<a href="https://sas.travel/go/mmb?l=en&r={{{passengerInfo.bookingReference}}}&n={{{passengerInfo.lastName}}}"><span style="font-size:11px;">https://sas.travel/go/mmb?l=en&r={{{passengerInfo.bookingReference}}}&n={{{passengerInfo.lastName}}}</span></a><br />
 																								<br />
-																								Your new itinerary is:</span><br />
+																								Read more about your rights here </span> <a href="https://www.flysas.com/en/legal-info/eu-passenger-rights/"><span style="font-size:11px;">https://www.flysas.com/en/legal-info/eu-passenger-rights/</span></a><br />
 																								<br />
-																								<meta content="text/html; charset=utf-8"> <meta content="PowerPoint.Slide" name="ProgId"> <meta content="Microsoft PowerPoint 15" name="Generator">
-																								<p style="language:sv;margin-top:0pt;margin-bottom:0pt;margin-left:0in;
-text-align:left;direction:ltr;unicode-bidi:embed;mso-line-break-override:none;
-word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span style="font-family:Arial,Helvetica,sans-serif;"><span style="color: red;">LH0824 23 Mar<br />
-																								Frankfurt (FRA) 08:00<br />
-																								Copenhagen (CPH) 09:25<br />
-																								&nbsp;<br />
-																								SK2323 23 Mar<br />
-																								Copenhagen (CPH) 11:00<br />
-																								Stockholm (ARN) 12:10</span></span></span></p>
-																								<br />
-																								<br />
-																								<span style="font-size:11px;">We apologize for this change.<br />
-																								<br />
-																								Read more about your rights here </span> <a href="http://https://www.flysas.com/en/legal-info/eu-passenger-rights/"><span style="font-size:11px;">https://www.flysas.com/en/legal-info/eu-passenger-rights/</span></a><br />
-																								<br />
-																								<span style="font-size:11px;">Regards, SAS</span><br />
+																								<span style="font-size:11px;">Best Regards, <br />SAS</span><br />
 																								<br />
 																								<br />
 																								<br />
-																								&nbsp;</div>
+																								</div>
 																								</td>
 																							</tr>
 																						</tbody>
@@ -203,7 +124,7 @@ word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span 
 																														<table cellpadding="0" cellspacing="0" class="stylingblock-content-wrapper" style="min-width: 100%;" width="100%">
 																															<tbody>
 																																<tr>
-																																	<td class="stylingblock-content-wrapper camarker-inner"><span style="color:#999999;"><span style="font-size:10px;">This email has been sent by Scandinavian Airlines System Denmark-Norway-Sweden SE-195 87 Stockholm-Arlanda, Sweden, to {{{Recipient.Email}}}.</span></span></td>
+																																	<td class="stylingblock-content-wrapper camarker-inner"><span style="color:#999999;"><span style="font-size:10px;">This email has been sent by Scandinavian Airlines System Denmark-Norway-Sweden SE-195 87 Stockholm-Arlanda, Sweden, to {{{passengerInfo.emailAddress}}}.</span></span></td>
 																																</tr>
 																															</tbody>
 																														</table>
@@ -216,7 +137,7 @@ word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span 
 																																	<table cellpadding="0" cellspacing="0" width="100%">
 																																		<tbody>
 																																			<tr>
-																																				<td align="left"><img height="19" src="https://image.s50.sfmc-content.com/lib/fe3e11717564047d741777/m/1/1ec482c9-24f9-41d5-8467-516832f22192.png" style="display: block; padding: 0px; text-align: left; height: 19px; width: 200px;" width="200" /></td>
+																																				<td align="left"><img height="19" src="https://image.msg.flysas.com/lib/fe3e11717564047d741777/m/1/1ec482c9-24f9-41d5-8467-516832f22192.png" style="display: block; padding: 0px; text-align: left; height: 19px; width: 200px;" width="200" /></td>
 																																			</tr>
 																																		</tbody>
 																																	</table>
@@ -229,7 +150,7 @@ word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span 
 																															<tbody>
 																																<tr>
 																																	<td class="stylingblock-content-wrapper camarker-inner">
-																																	<div><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">SAS respects your privacy. Please read our </span></span></span><a href="https://www.sas.se/juridisk-information/integritetspolicy/?eCodsId=%2FeLLmyqvktj0JkHCVDJXgw%3D%3D"><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">guidelines </span></span></span></a> <span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">for handling personal data. We welcome </span></span></span><a href="https://www.sas.se/kundservice/kontakt/?rid=%40myREb7hkf7GO3w25sXI9yA%3D%3D&utm_source=ac&utm_medium=email&utm_campaign=200310_Srvc_Push_SE_EBNEB&utm_content=feedback&eCodsId=%2FeLLmyqvktj0JkHCVDJXgw%3D%3D&dclid=CI7pzcbvuugCFYKCmgod7qoLGg"><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">feedback </span></span></span></a> <span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">from our customers.</span></span></span></div>
+																																	<div><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">SAS respects your privacy. Please read our </span></span></span><a href="https://www.sas.se/juridisk-information/integritetspolicy/"><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">guidelines </span></span></span></a> <span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">for handling personal data. We welcome </span></span></span><a href="https://www.sas.se/kundservice/kontakt/"><span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">feedback </span></span></span></a> <span style="color:#999999;"><span style="font-size:10px;"><span style="font-family:Arial,Helvetica,sans-serif;">from our customers.</span></span></span></div>
 																																	</td>
 																																</tr>
 																															</tbody>
@@ -271,9 +192,6 @@ word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span 
 				</tbody>
 			</table>
 			</td>
-		</tr>
-		<tr>
-			<td valign="top">&nbsp;</td>
 		</tr>
 	</tbody>
 </table>

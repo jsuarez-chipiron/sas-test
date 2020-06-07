@@ -177,40 +177,63 @@ private class IRR_CON_ManualCommunication_Test {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IRR_SEL_IManualTemplatesSelector selectorMock = (IRR_SEL_IManualTemplatesSelector)
                 mocks.mock(IRR_SEL_ManualTemplatesSelector.class);
+        IRR_SEL_IEmailTemplatesSelector etSelectorMock = (IRR_SEL_IEmailTemplatesSelector)
+                mocks.mock(IRR_SEL_IEmailTemplatesSelector.class);
 
         //Given
         List<IRR_ManualCommunicationTemplate__mdt> manualCommunicationTemplates =
                 new List<IRR_ManualCommunicationTemplate__mdt>{
                         new IRR_ManualCommunicationTemplate__mdt(
+                                MasterLabel = 'TEST_LABEL',
+                                DeveloperName = 'TEST_DEV_NAME',
                                 IRR_SendMode__c = 'TEST_SEND_MODE',
                                 IRR_EmailTemplate__c = 'TEST_EMAIL_TEMPLATE',
                                 IRR_SMSTemplate__c = 'TEST_SMS_TEMPLATE'),
                         new IRR_ManualCommunicationTemplate__mdt(
+                                MasterLabel = 'OTHER_LABEL',
+                                DeveloperName = 'OTHER_DEV_NAME',
                                 IRR_SendMode__c = 'OTHER_SEND_MODE',
                                 IRR_EmailTemplate__c = 'OTHER_EMAIL_TEMPLATE',
                                 IRR_SMSTemplate__c = 'OTHER_SMS_TEMPLATE')
                 };
+        Map<String, EmailTemplate> emailTemplatesByName = new Map<String, EmailTemplate>{
+                'test_sms_template' => new EmailTemplate(Name = 'TEST_SMS_TEMPLATE', HtmlValue = '<html>test</html>'),
+                'other_sms_template' => new EmailTemplate(Name = 'OTHER_SMS_TEMPLATE', HtmlValue = '<html>other</html>')
+        };
         mocks.startStubbing();
+        mocks.when(etSelectorMock.sObjectType()).thenReturn(EmailTemplate.SObjectType);
+        mocks.when(etSelectorMock.selectEmailTemplatesByName((Set<String>) fflib_Match.anyObject()))
+                .thenReturn(emailTemplatesByName);
         mocks.when(selectorMock.sObjectType()).thenReturn(IRR_ManualCommunicationTemplate__mdt.SObjectType);
         mocks.when(selectorMock.selectAllManualCommunicationTemplates()).thenReturn(manualCommunicationTemplates);
         mocks.stopStubbing();
         IRR_Application.Selector.setMock(selectorMock);
+        IRR_Application.Selector.setMock(etSelectorMock);
 
         //When
-        Map<String, List<IRR_ManualCommunicationTemplate__mdt>> templateResult =
+        Map<String, List<IRR_CON_ManualCommunication.ManualTemplate>> templateResult =
                 IRR_CON_ManualCommunication.getManualTemplatesBySendMode();
+        System.debug(JSON.serializePretty(templateResult));
 
         //Then
         ((IRR_SEL_IManualTemplatesSelector) mocks.verify(selectorMock))
                 .selectAllManualCommunicationTemplates();
+        ((IRR_SEL_IEmailTemplatesSelector) mocks.verify(etSelectorMock))
+                .selectEmailTemplatesByName(new Set<String>{'TEST_SMS_TEMPLATE','OTHER_SMS_TEMPLATE'});
         System.assert(templateResult.containsKey('TEST_SEND_MODE'), 'Result should contain test send mode');
         System.assert(templateResult.containsKey('OTHER_SEND_MODE'), 'Result should contain other send mode');
         System.assertEquals(1, templateResult.get('TEST_SEND_MODE').size());
         System.assertEquals(1, templateResult.get('OTHER_SEND_MODE').size());
-        System.assertEquals('TEST_EMAIL_TEMPLATE', templateResult.get('TEST_SEND_MODE')[0].IRR_EmailTemplate__c);
-        System.assertEquals('OTHER_EMAIL_TEMPLATE', templateResult.get('OTHER_SEND_MODE')[0].IRR_EmailTemplate__c);
-        System.assertEquals('TEST_SMS_TEMPLATE', templateResult.get('TEST_SEND_MODE')[0].IRR_SMSTemplate__c);
-        System.assertEquals('OTHER_SMS_TEMPLATE', templateResult.get('OTHER_SEND_MODE')[0].IRR_SMSTemplate__c);
+        System.assertEquals('TEST_EMAIL_TEMPLATE', templateResult.get('TEST_SEND_MODE')[0].emailTemplate);
+        System.assertEquals('OTHER_EMAIL_TEMPLATE', templateResult.get('OTHER_SEND_MODE')[0].emailTemplate);
+        System.assertEquals('TEST_LABEL', templateResult.get('TEST_SEND_MODE')[0].templateLabel);
+        System.assertEquals('OTHER_LABEL', templateResult.get('OTHER_SEND_MODE')[0].templateLabel);
+        System.assertEquals('TEST_DEV_NAME', templateResult.get('TEST_SEND_MODE')[0].templateName);
+        System.assertEquals('OTHER_DEV_NAME', templateResult.get('OTHER_SEND_MODE')[0].templateName);
+        System.assertEquals('TEST_SMS_TEMPLATE', templateResult.get('TEST_SEND_MODE')[0].smsTemplate);
+        System.assertEquals('test', templateResult.get('TEST_SEND_MODE')[0].templatePreview);
+        System.assertEquals('OTHER_SMS_TEMPLATE', templateResult.get('OTHER_SEND_MODE')[0].smsTemplate);
+        System.assertEquals('other', templateResult.get('OTHER_SEND_MODE')[0].templatePreview);
     }
 
     @IsTest

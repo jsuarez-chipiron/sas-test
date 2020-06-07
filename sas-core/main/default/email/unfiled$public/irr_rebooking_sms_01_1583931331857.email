@@ -3,13 +3,24 @@
   <title></title> 
  </head> 
  <body style="height: auto; min-height: auto;">
-  Important information about your SAS booking ABC123​ 
-  <br /> Hi!​ 
-  <br /> Due to earlier flight disruptions, you have been rebooked.​ 
-  <br /> Your new itinerary is: ​ SK2313 12 Sep​ Stockholm (ARN) 19:00 ​ Copenhagen (CPH) 20:10​ 
-  <br /> We apologize for this change. 
-  <br /> Read more about your rights here ​ 
-  <a href="https://www.flysas.com/en/legal-info/eu-passenger-rights/http://">https://www.flysas.com/en/legal-info/eu-passenger-rights/​</a> 
-  <br /> Regards, SAS​
+  Important information about your SAS booking {{{passengerInfo.bookingReference}}}
+  <br />
+  <br />Hi,
+  <br />
+  <br />Due to earlier flight disruptions, you have been rebooked to the following flight(s):​
+  [[[LOOP(passengerInfo.itinerary, "trip")]]][[[LOOP(trip.segments, "segment")]]][[[DISPLAYIF(contains(segment.segmentId, rebookInfo.addedSegments))]]]
+  <br />
+  <br />{{{segment.flightNumber}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'd MMM')]]]
+  <br />{{{segment.stationDeparture}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]]
+  <br />{{{segment.stationArrival}}} [[[formatDatetimeUTC(segment.arrivalTimeLocal, 'HH:mm')]]]
+  [[[ENDDISPLAYIF()]]][[[ENDLOOP()]]][[[ENDLOOP()]]]
+  <br />
+  <br />We apologize for this change. To check your full reservation:
+  <br />https://sas.travel/go/mmb?l=en&r={{{passengerInfo.bookingReference}}}&n={{{passengerInfo.lastName}}}
+  <br />
+  <br />Read more about your rights here ​
+  https://www.flysas.com/en/legal-info/eu-passenger-rights/​
+  <br />
+  <br />Regards, SAS​
  </body>
 </html>

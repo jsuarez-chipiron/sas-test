@@ -335,8 +335,10 @@ private class GDPR_Delete_Test {
         
         IRR_CommunicationLog__c c2 = new IRR_CommunicationLog__c(IRR_ContactKey__c='test@email.com');
         insert c2;
+        IRR_SMSResponse__c s2 = new IRR_SMSResponse__c(IRR_CommunicationLog__c = c2.Id);
+        insert s2;
         DateTime dtLastWeek = DateTime.now();
-        dtLastWeek = dtLastWeek.addDays(-60);
+        dtLastWeek = dtLastWeek.addDays(-61);
         Test.setCreatedDate(c2.Id, dtLastWeek);
         
         Test.startTest();
@@ -345,13 +347,30 @@ private class GDPR_Delete_Test {
         Database.executeBatch(new GDPR_DeleteCommunicationLog_Batch());
         Test.stopTest();
         IRR_CommunicationLog__c[] comlogList = [SELECT Id, IRR_ContactKey__c, CreatedDate FROM IRR_CommunicationLog__c];
+        IRR_SMSResponse__c[] smsreponseList = [SELECT Id FROM IRR_SMSResponse__c];
         System.assertEquals(1, comlogList.size());
-    }
+        System.assertEquals(0, smsreponseList.size());
+    }    
 
+     /**
+        Tests deletion of SMS Reponse 
+    */
+    @isTest static void deleteSMSResponse(){
+        IRR_SMSResponse__c s1 = new IRR_SMSResponse__c();
+        insert s1;
+        DateTime dtLastMonths = DateTime.now();
+        dtLastMonths = dtLastMonths.addDays(-61);
+        Test.setCreatedDate(s1.Id, dtLastMonths);
+        
+        Test.startTest();
+        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
+        sg.set('DeletePeriodSMSReponse','-1');
+        Database.executeBatch(new GDPR_DeleteSMSResponse_Batch());
+        Test.stopTest();
+        IRR_SMSResponse__c[] smsreponseList = [SELECT Id FROM IRR_SMSResponse__c];
+        System.assertEquals(0, smsreponseList.size());
 
-
-
-    
+    }    
 }
 
 

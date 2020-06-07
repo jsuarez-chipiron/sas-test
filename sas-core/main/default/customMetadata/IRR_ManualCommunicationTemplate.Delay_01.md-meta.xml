@@ -3,6 +3,14 @@
     <label>Delay 01</label>
     <protected>false</protected>
     <values>
+        <field>IRR_DefaultSendEmail__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IRR_DefaultSendSMS__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>IRR_EmailTemplate__c</field>
         <value xsi:nil="true"/>
     </values>
@@ -11,8 +19,12 @@
         <value xsi:type="xsd:double">1.0</value>
     </values>
     <values>
+        <field>IRR_ResponseTemplate__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>IRR_SMSTemplate__c</field>
-        <value xsi:type="xsd:string">irr_delay_sms_01_1583931681582</value>
+        <value xsi:type="xsd:string">irr_delay_sms_01</value>
     </values>
     <values>
         <field>IRR_SendMode__c</field>

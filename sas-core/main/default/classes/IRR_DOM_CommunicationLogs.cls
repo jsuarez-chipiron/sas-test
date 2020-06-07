@@ -25,11 +25,16 @@ public class IRR_DOM_CommunicationLogs extends fflib_SObjectDomain
         //We have the Ids of the Communication Logs to be deleted
         List<IRR_CommunicationLog__c> logs = (List<IRR_CommunicationLog__c>) records;
         Set<String> contactKeys = new Set<String>();
+        Set<Id> logIds = new Set<Id>();
         for(IRR_CommunicationLog__c c : logs){
             contactKeys.add(c.IRR_ContactKey__c);
             uow.registerDeleted(c);
+            logIds.add(c.Id);
         }
 
+        //Deleting related SMS Reponses to the Communication Log
+        List<IRR_SMSResponse__c> smsResponses = IRR_SEL_SMSResponsesSelector.newInstance().selectSMSResponsesWithCommunicationLogs(logIds);
+        uow.registerDeleted(smsResponses);
         //Check if there are other communication logs with the same contactKey (phone/email) but outside of retentionDate
         List<IRR_CommunicationLog__c> newerLogs = IRR_SEL_CommunicationLogsSelector.newInstance()
                 .selectLogsNewerThanForContactKey(contactKeys, lastRetentionDate);
