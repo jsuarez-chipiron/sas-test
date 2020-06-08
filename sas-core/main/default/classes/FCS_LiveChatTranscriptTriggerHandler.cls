@@ -76,7 +76,10 @@ public class FCS_LiveChatTranscriptTriggerHandler extends C_TriggerHandler {
         }
           if(!Test.isRunningTest() && ipWhiteList.size()>0){
               for(LiveChatTranscript lct : lctList){
-                  if(!ipWhiteList.contains(lct.IpAddress))lct.addError('Ip Address Not Allowed: '+lct.IpAddress);
+                  if(!ipWhiteList.contains(lct.IpAddress) && !C_Util.isSandbox())
+                  {
+                      lct.addError('Ip Address Not Allowed: '+lct.IpAddress);
+                  }    
               }
           }
       }
