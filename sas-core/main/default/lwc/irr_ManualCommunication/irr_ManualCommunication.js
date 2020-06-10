@@ -70,7 +70,7 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     selectedRows = [];
 
-    filterParameters = {'thisSegment.status': ['Confirmed']};
+    filterParameters = {};
 
     connectedCallback() {
         const _ = this.init();
@@ -248,7 +248,6 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     handleResetEvent(_) {
         this.flightId = '';
-        this.filterParameters = {'thisSegment.status': ['Confirmed']};
         this.retrieveParameters = {};
         this.processedTable = [];
         this.passengerResult = [];
@@ -269,12 +268,15 @@ export default class IRR_ManualCommunication extends LightningElement {
                 case "FLIGHT_REFERENCE":
                     eventParameters = {flightId: parameters.flightId};
                     result = await getFlightPassengerInfos(eventParameters);
+                    this.filterParameters = {'thisSegment.status': ['Confirmed']};
                     break;
                 case "BOOKING_REFERENCE":
                     eventParameters = {bookingId: parameters.bookingId};
                     result = await getBookingPassengerInfos(eventParameters);
+                    this.filterParameters = {};
                     break;
                 case "BYPASS":
+                    this.filterParameters = {};
                     break;
                 default:
                     return;
