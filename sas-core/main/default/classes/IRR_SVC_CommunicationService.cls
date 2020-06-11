@@ -28,7 +28,14 @@ public class IRR_SVC_CommunicationService {
      */
     public static final String SAS_COPYRIGHT_NOTICE = 'Scandinavian Airlines ©';
 
+    public static final String EVENT_API_RESOURCE_URL = '/services/apexrest/EventAPI/';
+
     public static void processEvent(String eventType, String payload) {
+        service().processEvent(eventType, payload);
+    }
+
+    @Future(Callout=true)
+    public static void processEventFuture(String eventType, String payload) {
         service().processEvent(eventType, payload);
     }
 
