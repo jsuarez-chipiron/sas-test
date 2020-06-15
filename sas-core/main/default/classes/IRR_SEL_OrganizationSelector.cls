@@ -2,7 +2,7 @@
 * @author Niklas Lundkvist, Deloitte
 * @date 2020
 *
-* @description TODO
+* @description Selector for the Organization object.
 */
 
 public class IRR_SEL_OrganizationSelector extends fflib_SObjectSelector implements IRR_SEL_IOrganizationSelector {

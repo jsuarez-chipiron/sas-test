@@ -8,9 +8,17 @@
     <lightning-card title="Retrieve List" icon-name="utility:salesforce1">
         <lightning-button
                 slot="actions"
+                variant="neutral"
+                label="Bypass"
+                title="Enter without retrieving a passenger list"
+                onclick={handleBypass}>
+        </lightning-button>
+        <lightning-button
+                slot="actions"
+                class="slds-p-left_small"
                 variant="brand"
                 label="Retrieve"
-                title="Retrieve List"
+                title="Retrieve Passenger List"
                 onclick={handleRetrieve}>
         </lightning-button>
         <div class="slds-media" onkeypress={handleKeyPress}>
@@ -19,21 +27,65 @@
                     <lightning-tab
                             class="no-padding"
                             value="FLIGHT_REFERENCE"
-                            label="Flight Id"
-                            title="Filter passengers by Flight Id"
+                            label="Flight"
+                            title="Retrieve passengers by Flight"
                             onactive={handleTabSwitch}>
                         <lightning-layout>
-                            <lightning-layout-item padding="around-small" size="3">
+                            <lightning-layout-item padding="around-small">
+                                <lightning-layout>
+                                    <lightning-layout-item size="2"
+                                                           class="slds-p-left_x-small slds-p-right_small slds-m-top_x-large">
+                                        <lightning-formatted-text class="pull-down" value="SK"></lightning-formatted-text>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="10">
+                                        <lightning-input
+                                                value={retrieveParameters.flightNumber}
+                                                type="text"
+                                                name="flightNumber"
+                                                label="Flight Number"
+                                                data-tab-group="FLIGHT_REFERENCE"
+                                                pattern="([0-9]{4})"
+                                                required
+                                                message-when-pattern-mismatch="Input format 1238"
+                                                onchange={handleParameterChange}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
                                 <lightning-input
-                                        value={retrieveParameters.flightId}
-                                        type="text"
-                                        name="flightId"
-                                        label="Flight Id"
+                                        value={retrieveParameters.departureDate}
+                                        type="date"
+                                        name="departureDate"
+                                        label="Departure Date"
                                         data-tab-group="FLIGHT_REFERENCE"
-                                        pattern="([A-Z]{2})([0-9]{4})-([0-9]{8})-([A-Z]{3})-([A-Z]{3})"
                                         required
-                                        message-when-pattern-mismatch="Input format SK1238-20200213-ARN-CPH"
-                                        field-level-help="Format SK1238-20200213-ARN-CPH"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input
+                                        value={retrieveParameters.stationDeparture}
+                                        type="text"
+                                        name="stationDeparture"
+                                        label="Station Departure"
+                                        data-tab-group="FLIGHT_REFERENCE"
+                                        pattern="([A-Z]{3})"
+                                        required
+                                        message-when-pattern-mismatch="Enter three letter station code"
+                                        onchange={handleParameterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input
+                                        value={retrieveParameters.stationArrival}
+                                        type="text"
+                                        name="stationArrival"
+                                        label="Station Arrival"
+                                        data-tab-group="FLIGHT_REFERENCE"
+                                        pattern="([A-Z]{3})"
+                                        required
+                                        message-when-pattern-mismatch="Enter three letter station code"
                                         onchange={handleParameterChange}>
                                 </lightning-input>
                             </lightning-layout-item>
@@ -42,8 +94,8 @@
                     <lightning-tab
                             class="no-padding"
                             value="BOOKING_REFERENCE"
-                            label="Booking Reference"
-                            title="Filter passengers by Booking Reference"
+                            label="Booking"
+                            title="Retrieve passengers by Booking"
                             onactive={handleTabSwitch}>
                         <lightning-layout>
                             <lightning-layout-item padding="around-small" size="3">

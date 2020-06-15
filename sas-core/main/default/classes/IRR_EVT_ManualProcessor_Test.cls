@@ -186,6 +186,57 @@ private class IRR_EVT_ManualProcessor_Test {
     }
 
     @IsTest
+    static void testInitiateEvent_NewInfoEvent() {
+        //Given
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.sendSMSMessages = true;
+        manualRequest.sendEmailMessages = false;
+        manualRequest.newInfo = new IRR_MOD_NewInfo();
+        manualRequest.newInfo.flightId = 'SK0579-20200503-ARN-CDG';
+        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+
+        //When
+        eventProcessor.initiateEvent();
+
+        //Then
+        System.assertEquals('SK0579', manualRequest.newInfo.flightRef);
+        System.assertEquals('ARN', manualRequest.newInfo.stationDeparture);
+        System.assertEquals('CDG', manualRequest.newInfo.stationArrival);
+    }
+
+    @IsTest
+    static void testInitiateEvent_CancelEvent() {
+        //Given
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.sendSMSMessages = true;
+        manualRequest.sendEmailMessages = false;
+        manualRequest.cancelInfo = new IRR_MOD_CancelInfo();
+        manualRequest.cancelInfo.flightId = 'SK1501-20191205-LLA-ARN';
+        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+
+        //When
+        eventProcessor.initiateEvent();
+
+        //Then
+        System.assertEquals('SK1501', manualRequest.cancelInfo.flightRef);
+        System.assertEquals('LLA', manualRequest.cancelInfo.stationDeparture);
+        System.assertEquals('ARN', manualRequest.cancelInfo.stationArrival);
+    }
+
+    @IsTest
+    static void testCheckActiveBlock() {
+        //Given
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+
+        //When
+        Boolean result = eventProcessor.checkActiveBlock();
+
+        //Then
+        System.assertEquals(false, result);
+    }
+
+    @IsTest
     static void testProcessEvent_SendMessages_NoResponse() {
         //Given
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
@@ -223,12 +274,14 @@ private class IRR_EVT_ManualProcessor_Test {
         System.assertEquals(IRR_MOD_Message.MessageChannel.SMS, messages[0].channel);
         System.assertEquals(IRR_MOD_Message.MessageChannel.Email, messages[1].channel);
         System.assert(messages[0].variables.containsKey('passengerInfo') &&
-                messages[0].variables.containsKey('delayInfo')); //TODO ADD OTHER EVENTS
-        System.assert(messages[0].variables.containsKey('passengerInfo') &&
+                messages[0].variables.containsKey('delayInfo') &&
+                messages[0].variables.containsKey('cancelInfo') &&
+                messages[0].variables.containsKey('newInfo') &&
                 messages[0].variables.containsKey('customInfo'));
         System.assert(messages[1].variables.containsKey('passengerInfo') &&
-                messages[1].variables.containsKey('delayInfo')); //TODO ADD OTHER EVENTS
-        System.assert(messages[1].variables.containsKey('passengerInfo') &&
+                messages[1].variables.containsKey('delayInfo') &&
+                messages[1].variables.containsKey('cancelInfo') &&
+                messages[1].variables.containsKey('newInfo') &&
                 messages[1].variables.containsKey('customInfo'));
         System.assert(!messages[0].responseMessage, 'Message 1 Response not expected');
         System.assert(!messages[1].responseMessage, 'Message 2 Response not expected');
@@ -261,8 +314,8 @@ private class IRR_EVT_ManualProcessor_Test {
         //Then
         List<IRR_MOD_Message> messages = eventProcessor.messages;
         System.assertEquals(2, messages.size());
-        System.assert(messages[0].responseMessage, 'Message 1 Response not expected');
-        System.assert(messages[1].responseMessage, 'Message 2 Response not expected');
+        System.assert(messages[0].responseMessage, 'Message 1 Response expected');
+        System.assert(messages[1].responseMessage, 'Message 2 Response expected');
     }
 
 

@@ -62,11 +62,12 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
         delayInfo.firstDelay = delayInfo.previousDelayedMinutes == 0;
         delayInfo.delayDifference = Math.abs(delayInfo.delayedMinutes - delayInfo.previousDelayedMinutes);
 
-        //Split flightId into Flight Reference, and Departure and Arrival stations.
-        List<String> flightIdSplit = delayInfo.flightId.split('-');
-        delayInfo.flightRef = flightIdSplit[0];
-        delayInfo.stationDeparture = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
-        delayInfo.stationArrival = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
+
+        IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
+                new IRR_SVC_CommunicationService.FlightIdSplit(delayInfo.flightId);
+        delayInfo.flightRef = flightIdSplit.flightNumber;
+        delayInfo.stationDeparture = flightIdSplit.stationDeparture;
+        delayInfo.stationArrival = flightIdSplit.stationArrival;
 
         //Calculate time difference of scheduled time of departure and estimated time of departure in minutes
         Long millisecondsToScheduledTime = delayInfo.scheduledTimeOfDepartureUTC.getTime() - Datetime.now().getTime();
@@ -74,6 +75,20 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
 
         //Retrieve passengers for flight
         this.passengerInfos = IRR_SVC_TedsService.getPassengerInfosForFlight(delayInfo.flightId);
+    }
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Checks if any active manual override blocks exist for this flight.
+     *
+     * @return If any active manual overrides exist
+     */
+    public Boolean checkActiveBlock() {
+        List<IRR_ManualOverride__c> manualOverrides = IRR_SEL_ManualOverridesSelector.newInstance()
+                .selectActiveManualOverridesByFlightId(delayInfo.flightId);
+        return !manualOverrides.isEmpty();
     }
 
     /**

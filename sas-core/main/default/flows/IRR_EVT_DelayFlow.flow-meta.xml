@@ -35,7 +35,7 @@
             <assignToReference>smsTemplateName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>irr_delay_sms_01_1583931681582</stringValue>
+                <stringValue>irr_delay_sms_01</stringValue>
             </value>
         </assignmentItems>
     </assignments>
@@ -177,7 +177,7 @@
             <targetReference>Retrieve_Flow_Variables</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>delayInfo</name>
         <apexClass>IRR_MOD_DelayInfo</apexClass>

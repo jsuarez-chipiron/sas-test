@@ -2,7 +2,7 @@
 * @author Niklas Lundkvist, Deloitte
 * @date 2020
 *
-* @description TODO
+* @description Apex Defined Data Structure for Manual Communication Custom Message Templates.
 */
 
 public class IRR_MOD_CustomInfo {

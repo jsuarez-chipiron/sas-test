@@ -17,14 +17,23 @@ public class IRR_SVC_CommunicationServiceImpl implements IRR_SVC_ICommunicationS
      * @param payload JSON Serialized event payload
      */
     public void processEvent(String eventType, String payload) {
-        fflib_ISObjectUnitOfWork uow = IRR_Application.UnitOfWork.newInstance();
-        IRR_EVT_IEventProcessor eventProcessor = IRR_Application.EventProcessor.newInstance(eventType, payload);
-        eventProcessor.validateEvent();
-        eventProcessor.initiateEvent();
-        eventProcessor.processEvent();
-        eventProcessor.processMessages();
-        eventProcessor.finalizeEvent(uow);
-        uow.commitWork();
+        try {
+            fflib_ISObjectUnitOfWork uow = IRR_Application.UnitOfWork.newInstance();
+            IRR_EVT_IEventProcessor eventProcessor = IRR_Application.EventProcessor.newInstance(eventType, payload);
+            eventProcessor.validateEvent();
+            eventProcessor.initiateEvent();
+            //Stop processing event if there is an active manual override block
+            if (eventProcessor.checkActiveBlock()) return;
+            eventProcessor.processEvent();
+            eventProcessor.processMessages();
+            eventProcessor.finalizeEvent(uow);
+            uow.commitWork();
+        } catch (Exception e) {
+            C_Log.HttpData httpData = new C_Log.HttpData();
+            httpData.body = payload;
+            httpData.resource = IRR_SVC_CommunicationService.EVENT_API_RESOURCE_URL + eventType;
+            C_Log.logException(e, 'IRR', httpData);
+        }
     }
 
     /**
@@ -39,36 +48,14 @@ public class IRR_SVC_CommunicationServiceImpl implements IRR_SVC_ICommunicationS
     public void processEvent(String eventType, Object payload) {
         fflib_ISObjectUnitOfWork uow = IRR_Application.UnitOfWork.newInstance();
         IRR_EVT_IEventProcessor eventProcessor = IRR_Application.EventProcessor.newInstance(eventType, payload);
-
-        Integer startTime = Limits.getCpuTime();
         eventProcessor.validateEvent();
-        Integer endTime = Limits.getCpuTime();
-        System.debug('\n\nPERF - Validated Event in: ' + (endTime - startTime) + '\n\n');
-
-        startTime = Limits.getCpuTime();
         eventProcessor.initiateEvent();
-        endTime = Limits.getCpuTime();
-        System.debug('\n\nPERF - Initiated Event in: ' + (endTime - startTime) + '\n\n');
-
-        startTime = Limits.getCpuTime();
+        //Stop processing event if there is an active manual override block
+        if (eventProcessor.checkActiveBlock()) return;
         eventProcessor.processEvent();
-        endTime = Limits.getCpuTime();
-        System.debug('\n\nPERF - Processed Event in: ' + (endTime - startTime) + '\n\n');
-
-        startTime = Limits.getCpuTime();
         eventProcessor.processMessages();
-        endTime = Limits.getCpuTime();
-        System.debug('\n\nPERF - Processed Messages in: ' + (endTime - startTime) + '\n\n');
-
-        startTime = Limits.getCpuTime();
         eventProcessor.finalizeEvent(uow);
-        endTime = Limits.getCpuTime();
-        System.debug('\n\nPERF - Finalized Event in: ' + (endTime - startTime) + '\n\n');
-
-        startTime = Limits.getCpuTime();
         uow.commitWork();
-        endTime = Limits.getCpuTime();
-        System.debug('\n\nPERF - Committed Work in: ' + (endTime - startTime) + '\n\n');
     }
 
     /**

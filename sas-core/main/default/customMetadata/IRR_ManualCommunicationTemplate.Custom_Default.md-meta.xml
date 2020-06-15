@@ -3,16 +3,28 @@
     <label>Custom Default</label>
     <protected>false</protected>
     <values>
+        <field>IRR_DefaultSendEmail__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IRR_DefaultSendSMS__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>IRR_EmailTemplate__c</field>
-        <value xsi:type="xsd:string">irr_manual_message_1586861105774</value>
+        <value xsi:type="xsd:string">irr_manual_message</value>
     </values>
     <values>
         <field>IRR_Priority__c</field>
         <value xsi:type="xsd:double">1.0</value>
     </values>
     <values>
+        <field>IRR_ResponseTemplate__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>IRR_SMSTemplate__c</field>
-        <value xsi:type="xsd:string">irr_sms_manual_message_1586963497578</value>
+        <value xsi:type="xsd:string">irr_sms_manual_message</value>
     </values>
     <values>
         <field>IRR_SendMode__c</field>

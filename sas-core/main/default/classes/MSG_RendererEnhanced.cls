@@ -492,7 +492,21 @@ global class MSG_RendererEnhanced implements MSG_IRenderer{
 		 * @return The data value for the data source and reference path
 		 */
         global override Object getFunctionValue(String sourceRef,Expr_Expr[] exprParamList,Expr_Expr.SymbolSubReference[] path){
-            if (sourceRef=='formatDatetimeUTC') {
+            if (sourceRef == 'contains') {
+                Object value = this.eval(exprParamList[0]);
+                Object iterable = this.eval(exprParamList[1]);
+                if (iterable instanceof List<Object>) {
+                    List<Object> objList = (List<Object>) iterable;
+                    return objList.contains(value);
+                }
+                else if (iterable instanceof Set<Object>) {
+                    Set<Object> objSet = (Set<Object>) iterable;
+                    return objSet.contains(value);
+                } else {
+                    return false;
+                }
+            }
+            else if (sourceRef=='formatDatetimeUTC') {
                 String stringValue = (String) this.eval(exprParamList[0]);
                 if (String.isBlank(stringValue)) return null;
                 //Parse Datetime ISO String into Datetime using de-serialization, string must be wrapped in quotes

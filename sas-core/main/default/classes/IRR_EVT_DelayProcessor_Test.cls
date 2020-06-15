@@ -14,7 +14,7 @@ private class IRR_EVT_DelayProcessor_Test {
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
 
         //When
-        Object result = IRR_Application.EventProcessor.newInstance('flightDepartureDelay', delayInfo);
+        Object result = IRR_Application.EventProcessor.newInstance('flightDelayDeparture', delayInfo);
 
         //Then
         System.assert(result instanceof IRR_EVT_DelayProcessor, 'Expected result of type DelayProcessor');
@@ -26,7 +26,7 @@ private class IRR_EVT_DelayProcessor_Test {
         String jsonPayload = '{}';
 
         //When
-        Object result = IRR_Application.EventProcessor.newInstance('flightDepartureDelay', jsonPayload);
+        Object result = IRR_Application.EventProcessor.newInstance('flightDelayDeparture', jsonPayload);
 
         //Then
         System.assert(result instanceof IRR_EVT_DelayProcessor, 'Expected result of type DelayProcessor');
@@ -245,6 +245,60 @@ private class IRR_EVT_DelayProcessor_Test {
     }
 
     @IsTest
+    static void testCheckActiveBlock_Block() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IRR_SEL_IManualOverridesSelector selectorMock = (IRR_SEL_IManualOverridesSelector) mocks.mock(
+                IRR_SEL_ManualOverridesSelector.class);
+
+        //Given
+        mocks.startStubbing();
+        mocks.when(selectorMock.selectActiveManualOverridesByFlightId(fflib_Match.anyString()))
+                .thenReturn(new List<IRR_ManualOverride__c>{new IRR_ManualOverride__c()});
+        mocks.when(selectorMock.sObjectType()).thenReturn(IRR_ManualOverride__c.SObjectType);
+        mocks.stopStubbing();
+        IRR_Application.Selector.setMock(selectorMock);
+        IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
+        delayInfo.flightId = 'SK1429-20191104-ARN-CPH';
+        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_DelayProcessor.Constructor().newInstance(delayInfo);
+
+        //When
+        Boolean result = eventProcessor.checkActiveBlock();
+
+        //Then
+        ((IRR_SEL_IManualOverridesSelector) mocks.verify(selectorMock))
+                .selectActiveManualOverridesByFlightId('SK1429-20191104-ARN-CPH');
+        System.assertEquals(true, result);
+    }
+
+    @IsTest
+    static void testCheckActiveBlock_NoBlock() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IRR_SEL_IManualOverridesSelector selectorMock = (IRR_SEL_IManualOverridesSelector) mocks.mock(
+                IRR_SEL_ManualOverridesSelector.class);
+
+        //Given
+        mocks.startStubbing();
+        mocks.when(selectorMock.selectActiveManualOverridesByFlightId(fflib_Match.anyString()))
+                .thenReturn(new List<IRR_ManualOverride__c>());
+        mocks.when(selectorMock.sObjectType()).thenReturn(IRR_ManualOverride__c.SObjectType);
+        mocks.stopStubbing();
+        IRR_Application.Selector.setMock(selectorMock);
+        IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
+        delayInfo.flightId = 'SK1429-20191104-ARN-CPH';
+        IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_DelayProcessor.Constructor().newInstance(delayInfo);
+
+        //When
+        Boolean result = eventProcessor.checkActiveBlock();
+
+        //Then
+        ((IRR_SEL_IManualOverridesSelector) mocks.verify(selectorMock))
+                .selectActiveManualOverridesByFlightId('SK1429-20191104-ARN-CPH');
+        System.assertEquals(false, result);
+    }
+
+    @IsTest
     static void testProcessEventCloseToDeparture_Confirmed_SendSMS() {
         //Given
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
@@ -267,7 +321,7 @@ private class IRR_EVT_DelayProcessor_Test {
         //Then
         List<IRR_MOD_Message> messages = eventProcessor.messages;
         System.assertEquals(1, messages.size());
-        System.assertEquals('irr_delay_sms_01_1583931681582', messages[0].template);
+        System.assertEquals('irr_delay_sms_01', messages[0].template);
         System.assertEquals('Delay', messages[0].type);
         System.assertEquals(passengerInfos[0], messages[0].passengerInfo);
         System.assertEquals(messages[0].recipient, 'TEST_PHONE');

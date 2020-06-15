@@ -22,11 +22,10 @@ global class IRR_API_IncomingEvent {
             RestRequest req = RestContext.request;
             String eventType = req.requestURI.substringAfterLast('/');
             String eventPayload = req.requestBody.toString();
-            IRR_SVC_CommunicationService.processEvent(eventType, eventPayload);
+            IRR_SVC_CommunicationService.processEventFuture(eventType, eventPayload);
         }
         catch (Exception e) {
             C_Log.logException(e, 'IRR', C_Log.generateLogHttpData(RestContext.request));
-            RestContext.response = new RestResponse();
             RestContext.response.responseBody = Blob.valueOf(e.getMessage());
             RestContext.response.statusCode = 500;
         }

@@ -9,10 +9,6 @@ global with sharing class MSG_TemplateCache implements MSG_ITemplateCache {
     */
     class TemplateException extends Exception{}
     /**
-        Map of email template id by template dev name
-    */
-    Map<String,Id> tIdMap;
-    /**
         Map of email templates by template Id
     */
     Map<Id,TemplateContent> tcMap;
@@ -80,7 +76,6 @@ global with sharing class MSG_TemplateCache implements MSG_ITemplateCache {
         Creates an empty template cache instance
     */
     global MSG_TemplateCache(){
-        tIdMap = new Map<String,Id>();
         tcMap = new Map<Id,TemplateContent>();
         lhMap = new Map<Id,TemplateLetterhead>();
         taMap = new Map<Id,TemplateAttachment>();
@@ -173,21 +168,22 @@ global with sharing class MSG_TemplateCache implements MSG_ITemplateCache {
 
     /**
         Loads templates using the set of provided template developer names
-        @param tDevNameSet The developer names of the email templates to load
+        @param tNameSet The names (labels) of the email templates to load
     */
-    public void loadTemplates(Set<String> tDevNameSet){
-        for(String tDevName : tDevNameSet){
-            tIdMap.put(tDevName.toLowerCase(),null);
+    public void loadTemplates(Set<String> tNameSet){
+        Set<String> lowerCaseNames = new Set<String>();
+        for(String tDevName : tNameSet){
+            lowerCaseNames.add(tDevName.toLowerCase());
         }
-        EmailTemplate[] etList = ET_LIST_OVERRIDE!=null ? ET_LIST_OVERRIDE : [SELECT Id,BrandTemplateId,DeveloperName,EnhancedLetterheadId,UiType,TemplateType,Subject,Body,HtmlValue FROM EmailTemplate WHERE DeveloperName IN :tDevNameSet];
+        EmailTemplate[] etList = ET_LIST_OVERRIDE!=null ? ET_LIST_OVERRIDE : [SELECT Id,BrandTemplateId,DeveloperName,Name,EnhancedLetterheadId,UiType,TemplateType,Subject,Body,HtmlValue FROM EmailTemplate WHERE Name IN :tNameSet ORDER BY CreatedDate];
         List<Id> etClassicIds = new List<Id>();
         List<Id> etLEXIds = new List<Id>();
         for(Integer i=0,etSz=etList.size();i<etSz;i++){
             EmailTemplate et = etList[i];
-            tIdMap.put(et.DeveloperName.toLowerCase(),et.Id);
+            if (templateContentByTemplateNames.containsKey(et.Name.toLowerCase())) continue;
             TemplateContent tc = new TemplateContent(et);
+            templateContentByTemplateNames.put(et.Name.toLowerCase(), tc);
             tcMap.put(et.Id,tc);
-            templateContentByTemplateNames.put(et.DeveloperName, tc);
             if(tc.letterheadId!=null){
                 tc.letterhead = lhMap.get(tc.letterheadId);
                 if(tc.letterhead==null){
@@ -241,7 +237,7 @@ global with sharing class MSG_TemplateCache implements MSG_ITemplateCache {
     }
 
     public TemplateContent getTemplateByName(String templateName) {
-        return templateContentByTemplateNames.get(templateName);
+        return templateContentByTemplateNames.get(templateName.toLowerCase());
     }
 
     /**
@@ -316,7 +312,7 @@ global with sharing class MSG_TemplateCache implements MSG_ITemplateCache {
             @return Retrieves the data to use depending on appropriate html and text versions
         */
         global String getData(Boolean isHtml){
-            return isHtml ? htmlVersion : (String.isBlank(textVersion) && !String.isBlank(htmlVersion) ? htmlVersion.stripHtmlTags() : textVersion);
+            return isHtml ? htmlVersion : (String.isBlank(textVersion) && !String.isBlank(htmlVersion) ? htmlVersion.stripHtmlTags().replace('\n ', '\n') : textVersion);
         }
 
         /**
