@@ -2,7 +2,7 @@
  * @author Niklas Lundkvist, Deloitte
  * @date 2020
  *
- * @description TODO
+ * @description LWC App for IRR Manual Communication.
  */
 
 import {LightningElement, track} from 'lwc';
@@ -229,6 +229,9 @@ export default class IRR_ManualCommunication extends LightningElement {
                     break;
                 case "CANCEL":
                     payload.cancelInfo = parameters;
+                    break;
+                case "SCHEDULED_CHANGE":
+                    payload.scheduledChangeInfo = parameters;
                     break;
                 case "REBOOK":
                     break;

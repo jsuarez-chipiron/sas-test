@@ -2,7 +2,7 @@
  * @author Niklas Lundkvist, Deloitte
  * @date 2020
  *
- * @description TODO
+ * @description Send Panel for the Manual Communication app.
  */
 
 import {LightningElement, api, track} from 'lwc';
@@ -60,7 +60,8 @@ export default class irr_SendPanel extends LightningElement {
     }
 
     handleParameterChange(event) {
-        this.sendParameters[event.target.name] = event.target.value;
+        this.sendParameters[event.target.name] = event.target.type === "checkbox" ?
+            event.target.checked : event.target.value;
     }
 
     handleTabSwitch(event) {
