@@ -82,6 +82,8 @@ public class IRR_Application {
                     new Map<String, C_Application.EventDefinition> {
                             'bookingItineraryUpdateSASDisruption' => new C_Application.EventDefinition(
                                     IRR_MOD_RebookInfo.class, IRR_EVT_RebookProcessor.Constructor.class),
+                            'bookingItineraryUpdateSASScheduleChange' => new C_Application.EventDefinition(
+                                    IRR_MOD_ScheduledChangeInfo.class, IRR_EVT_ScheduledChangeProcessor.Constructor.class),
                             'flightDelayDeparture' => new C_Application.EventDefinition(
                                     IRR_MOD_DelayInfo.class, IRR_EVT_DelayProcessor.Constructor.class),
                             'flightNewInfoDeparture' => new C_Application.EventDefinition(
