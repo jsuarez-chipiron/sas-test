@@ -85,22 +85,18 @@
 																									{{{segment.stationArrival}}} [[[formatDatetimeUTC(segment.arrivalTimeLocal, 'HH:mm')]]]<br />
 																									<br/>
 																								[[[ENDDISPLAYIF()]]][[[ENDLOOP()]]][[[ENDLOOP()]]]
-																								</span></span></p>
-																								<span style="font-size:11px;">We apologize for this change. To check your full reservation:<br />
-																								<a href="https://sas.travel/go/mmb?l=en&r={{{passengerInfo.bookingReference}}}&n={{{passengerInfo.lastName}}}"><span style="font-size:11px;">https://sas.travel/go/mmb?l=en&r={{{passengerInfo.bookingReference}}}&n={{{passengerInfo.lastName}}}</span></a><br />
-																								<br />
-																								Read more about your rights here </span> <a href="https://www.flysas.com/en/legal-info/eu-passenger-rights/"><span style="font-size:11px;">https://www.flysas.com/en/legal-info/eu-passenger-rights/</span></a><br />
+																								</span></span></p></span>
+																								<span style="font-size:11px;">We apologize for this change.</span><br />
 																								<br />
 																								<span style="font-size:11px;">Best Regards, <br />SAS</span><br />
-																								<br />
-																								<br />
-																								<br />
 																								</div>
 																								</td>
 																							</tr>
 																						</tbody>
 																					</table>
-
+																					<table cellpadding="0" cellspacing="0" width="100%" class="stylingblock-content-wrapper" style="min-width: 100%; "><tr><td class="stylingblock-content-margin-cell" style="padding: 15px; "><table cellpadding="0" cellspacing="0" width="100%" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table border="0" cellspacing="0" cellpadding="0"><tr><td class="innertd buttonblock" bgcolor="#000099" style=" border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; background-color: #000099;"><a target="_blank" class="buttonstyles" style=" font-size: 14px; font-family: Arial, helvetica, sans-serif; color: #FFFFFF; text-align: center; text-decoration: none; display: block; min-width: 200px; width: 100%; background-color: #000099; border: 1px solid #5D5D5D; padding: 10px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" href="https://sas.travel/go/mmb?l=en&r={{{passengerInfo.bookingReference}}}&n={{{passengerInfo.lastName}}}">VIEW CURRENT ITINERARY</a></td></tr></table></td></tr></table></td></tr></table></td></tr></table>
+																					<table cellpadding="0" cellspacing="0" width="100%" class="stylingblock-content-wrapper" style="min-width: 100%; "><tr><td class="stylingblock-content-margin-cell" style="padding: 15px; "><table cellpadding="0" cellspacing="0" width="100%" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table border="0" cellspacing="0" cellpadding="0"><tr><td class="innertd buttonblock" bgcolor="#000099" style=" border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; background-color: #000099;"><a target="_blank" class="buttonstyles" style=" font-size: 14px; font-family: Arial, helvetica, sans-serif; color: #FFFFFF; text-align: center; text-decoration: none; display: block; min-width: 200px; width: 100%; background-color: #000099; border: 1px solid #5D5D5D; padding: 10px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" href="https://www.flysas.com/en/traffic-information/message/">MORE INFORMATION</a></td></tr></table></td></tr></table></td></tr></table></td></tr></table>
+																					<table cellpadding="0" cellspacing="0" width="100%" class="stylingblock-content-wrapper" style="min-width: 100%; "><tr><td class="stylingblock-content-margin-cell" style="padding: 15px; "><table cellpadding="0" cellspacing="0" width="100%" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table border="0" cellspacing="0" cellpadding="0"><tr><td class="innertd buttonblock" bgcolor="#000099" style=" border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; background-color: #000099;"><a target="_blank" class="buttonstyles" style=" font-size: 14px; font-family: Arial, helvetica, sans-serif; color: #FFFFFF; text-align: center; text-decoration: none; display: block; min-width: 200px; width: 100%; background-color: #000099; border: 1px solid #5D5D5D; padding: 10px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" href="https://www.flysas.com/en/legal-info/eu-passenger-rights/">PASSENGER RIGHTS</a></td></tr></table></td></tr></table></td></tr></table></td></tr></table>
 																					<table cellpadding="0" cellspacing="0" class="stylingblock-content-wrapper" style="min-width: 100%;" width="100%">
 																						<tbody>
 																							<tr>
