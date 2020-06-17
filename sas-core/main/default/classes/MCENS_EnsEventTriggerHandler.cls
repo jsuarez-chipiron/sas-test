@@ -171,9 +171,6 @@ public without sharing class MCENS_EnsEventTriggerHandler {
         }
         else {
             Boolean prevBufferMode = C_Log.setBuffered(true);
-            for(String err : notFoundErrors){
-                C_Log.log(C_Log.Severity.Warning, err, null, 'MCENS', null);
-            }
             for(String err : eventErrors){
                 C_Log.log(C_Log.Severity.Error, err, null, 'MCENS', null);
             }
