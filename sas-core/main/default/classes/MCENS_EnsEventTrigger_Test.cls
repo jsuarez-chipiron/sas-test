@@ -141,8 +141,6 @@ private class MCENS_EnsEventTrigger_Test {
         sa.assert('MCENS_EnsEventTrigger_Test_3', 'Created', null, null, null);
         sa.assert('MCENS_EnsEventTrigger_Test_4', 'Created', null, null, null);
         sa.assert('MCENS_EnsEventTrigger_Test_5', 'Created', null, null, null);
-
-        System.assertEquals(1,[SELECT Id FROM C_Log__c WHERE Severity__c='Warning' AND LogGroup__c='MCENS'].size());
     }
 
     /**
@@ -171,8 +169,6 @@ private class MCENS_EnsEventTrigger_Test {
         sa.assert('MCENS_EnsEventTrigger_Test_3', 'Bounced', -1, '4321: BOUNCEMESSAGE', 'SMTPREASON');
         sa.assert('MCENS_EnsEventTrigger_Test_4', 'Sent', null, null, null);
         sa.assert('MCENS_EnsEventTrigger_Test_5', 'Error', 47, null, 'ERRORREASON');
-
-        System.assertEquals(1,[SELECT Id FROM C_Log__c WHERE Severity__c='Warning' AND LogGroup__c='MCENS'].size());
     }
 
     /**
@@ -229,7 +225,6 @@ private class MCENS_EnsEventTrigger_Test {
         
         
         System.assertEquals(0,[SELECT Id FROM IRR_CommunicationLog__c WHERE IRR_Status__c!='Created'].size());
-        System.assertEquals(1,[SELECT Id FROM C_Log__c WHERE LogGroup__c='MCENS' AND Severity__c='Warning'].size());
     }
 
     /**
