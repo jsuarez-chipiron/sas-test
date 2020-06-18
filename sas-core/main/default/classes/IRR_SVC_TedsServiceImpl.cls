@@ -147,7 +147,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
                 //Only process current and next segments when they have not been found and flightId is available
                 if (String.isNotBlank(flightId) && thisSegment == null) {
                     for (IRR_MOD_TedsBooking.SegmentTrip segment : trip.segments) {
-                        if (segment.flight.id == flightId) {
+                        if (segment.flight.operatingId == flightId || segment.flight.id == flightId) {
                             thisSegment = segment;
                             continue;
                         }
@@ -203,8 +203,9 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
             segmentInfo.ticketNumber = passengerSegment.ticket.number_x;
         }
         segmentInfo.segmentId = tripSegment.id;
-        segmentInfo.flightId = tripSegment.flight.id;
-        segmentInfo.flightNumber = tripSegment.flight.id.split('-')[0];
+        segmentInfo.flightId = String.isNotBlank(tripSegment.flight.operatingId) ? tripSegment.flight.operatingId :
+                tripSegment.flight.id;
+        segmentInfo.flightNumber = segmentInfo.flightId.split('-')[0];
         segmentInfo.arrivalTimeLocal = tripSegment.flight.arrival.scheduledTime.local;
         segmentInfo.departureTimeLocal = tripSegment.flight.departure.scheduledTime.local;
         segmentInfo.stationArrival = tripSegment.flight.arrival.station;
