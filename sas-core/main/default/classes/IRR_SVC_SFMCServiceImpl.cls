@@ -66,8 +66,10 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
 
     public List<IRR_SVC_SFMCService.EmailMessage> sendEmailMessages(List<IRR_SVC_SFMCService.EmailMessage> messages) {
         List<IRR_SVC_SFMCService.SFMCMessage> messagesWithRecipient = discardMessagesWithoutRecipient(messages);
-        Map<String, Object> requestBody = createEmailRequestBody(EMAIL_SEND_DEFINITION, messagesWithRecipient);
-        sendSFMCMessages(requestBody, EMAIL_ENDPOINT, messagesWithRecipient);
+        if (!messagesWithRecipient.isEmpty()) {
+            Map<String, Object> requestBody = createEmailRequestBody(EMAIL_SEND_DEFINITION, messagesWithRecipient);
+            sendSFMCMessages(requestBody, EMAIL_ENDPOINT, messagesWithRecipient);
+        }
         return messages;
     }
 
@@ -84,12 +86,14 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
      */
     public List<IRR_SVC_SFMCService.SMSMessage> sendSMSMessages(List<IRR_SVC_SFMCService.SMSMessage> messages) {
         List<IRR_SVC_SFMCService.SFMCMessage> messagesWithRecipient = discardMessagesWithoutRecipient(messages);
-        Map<String, List<IRR_SVC_SFMCService.SFMCMessage>> smsMessagesBySendDefinitions =
-                sortMessagesBySendDefinitions(messagesWithRecipient);
-        for (String definition : smsMessagesBySendDefinitions.keySet()) {
-            List<IRR_SVC_SFMCService.SFMCMessage> scopedMessages = smsMessagesBySendDefinitions.get(definition);
-            Map<String, Object> requestBody = createSMSRequestBody(definition, scopedMessages);
-            sendSFMCMessages(requestBody, SMS_ENDPOINT, scopedMessages);
+        if (!messagesWithRecipient.isEmpty()) {
+            Map<String, List<IRR_SVC_SFMCService.SFMCMessage>> smsMessagesBySendDefinitions =
+                    sortMessagesBySendDefinitions(messagesWithRecipient);
+            for (String definition : smsMessagesBySendDefinitions.keySet()) {
+                List<IRR_SVC_SFMCService.SFMCMessage> scopedMessages = smsMessagesBySendDefinitions.get(definition);
+                Map<String, Object> requestBody = createSMSRequestBody(definition, scopedMessages);
+                sendSFMCMessages(requestBody, SMS_ENDPOINT, scopedMessages);
+            }
         }
         return messages;
     }

@@ -331,6 +331,38 @@ private class IRR_EVT_DelayProcessor_Test {
     }
 
     @IsTest
+    static void testProcessEventCloseToDeparture_Confirmed_SendSMS_NoPhone() {
+        //Given
+        IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
+        delayInfo.delayDifference = 10;
+        delayInfo.minutesToScheduledTime = 100;
+        List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
+        passengerInfos[0].thisSegment = new IRR_MOD_SegmentInfo();
+        passengerInfos[0].thisSegment.isConfirmed = true;
+        passengerInfos[0].hasPhoneNumber = false;
+        passengerInfos[0].phoneNumber = null;
+        passengerInfos[0].hasEmailAddress = true;
+        passengerInfos[0].emailAddress = 'TEST_EMAIL';
+        IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
+                .newInstance(delayInfo);
+        eventProcessor.passengerInfos = passengerInfos;
+
+        //When
+        eventProcessor.processEvent();
+
+        //Then
+        List<IRR_MOD_Message> messages = eventProcessor.messages;
+        System.assertEquals(1, messages.size());
+        System.assertEquals('irr_delay_sms_01', messages[0].template);
+        System.assertEquals('Delay', messages[0].type);
+        System.assertEquals(passengerInfos[0], messages[0].passengerInfo);
+        System.assertEquals(null, messages[0].recipient);
+        System.assertEquals(IRR_MOD_Message.MessageChannel.SMS, messages[0].channel);
+        System.assert(messages[0].variables.containsKey('passengerInfo') &&
+                messages[0].variables.containsKey('delayInfo'));
+    }
+
+    @IsTest
     static void testProcessEventCloseToDeparture_Confirmed_NoSMS() {
         //Given
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
