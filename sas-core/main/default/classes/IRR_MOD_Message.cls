@@ -42,8 +42,10 @@ public class IRR_MOD_Message {
         this.variables = variables;
         if (channel == MessageChannel.SMS) {
             this.recipient = passengerInfo.phoneNumber;
-            if (this.recipient.startsWith('00')) this.recipient = this.recipient.substring(2);
-            if (this.recipient.startsWith('+')) this.recipient = this.recipient.substring(1);
+            if (String.isNotBlank(this.recipient)) {
+                if (this.recipient.startsWith('00')) this.recipient = this.recipient.substring(2);
+                if (this.recipient.startsWith('+')) this.recipient = this.recipient.substring(1);
+            }
         }
         else {
             this.recipient = passengerInfo.emailAddress;
