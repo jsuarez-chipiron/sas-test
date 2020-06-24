@@ -1,7 +1,7 @@
 <template>
-    <div class="slds-m-around_medium">
+    <template if:true={cse} class="slds-m-around_medium">
         <lightning-card title="Tag Case" icon-name="action:new_case">
-            <lightning-record-edit-form object-api-name="Case" record-id={recordId} record-type-id={recordTypeId}
+            <lightning-record-edit-form object-api-name="Case" record-id={cse.Id} record-type-id={cse.RecordTypeId}
                 onsuccess={handleSuccess}>
                 <lightning-messages></lightning-messages>
                 <div class="slds-grid slds-wrap" onkeydown={handleSubmitOnKeyPress}>
@@ -23,7 +23,6 @@
                         <lightning-input-field field-name="FCS_CaseTags__c" value={FCS_CaseTags__c}>
                         </lightning-input-field>
                     </div>
-
                 </div>
                 <div class="slds-button-group-row slds-align_absolute-center">
                     <div class="slds-button-group-item">
@@ -36,5 +35,5 @@
                 </div>
             </lightning-record-edit-form>
         </lightning-card>
-    </div>
+    </template>
 </template>
