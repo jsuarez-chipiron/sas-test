@@ -115,23 +115,7 @@
             <componentName>console:relatedRecord</componentName>
         </componentInstances>
         <componentInstances>
-            <componentInstanceProperties>
-                <name>createQuickActionName</name>
-                <value>NewCase</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>lookupFieldName</name>
-                <value>CaseId</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>titleFieldName</name>
-                <value>Tag Case</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>updateQuickActionName</name>
-                <value>Case.CloseCase</value>
-            </componentInstanceProperties>
-            <componentName>console:relatedRecord</componentName>
+            <componentName>fcs_CaseTag_ChatTranscript</componentName>
         </componentInstances>
         <name>sidebar</name>
         <type>Region</type>
