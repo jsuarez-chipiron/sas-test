@@ -55,7 +55,7 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
         Set<String> whitelistedRecipients = IRR_SEL_RecipientWhitelistSelector.newInstance()
                 .getAllWhitelistedRecipients();
         for (IRR_MOD_Message message : messages) {
-            if (!whitelistedRecipients.contains(message.recipient)) {
+            if (String.isNotBlank(message.recipient) && !whitelistedRecipients.contains(message.recipient)) {
                 message.status = MESSAGE_STATUS_NOT_WHITELISTED;
             }
         }
