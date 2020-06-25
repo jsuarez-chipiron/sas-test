@@ -2,10 +2,10 @@
 * @author Niklas Lundkvist, Deloitte
 * @date 2020
 *
-* @description Apex Defined Data Structure for Disruption Rebook Flow and Message Templates.
+* @description Apex Defined Data Structure for Scheduled Change Flow and Message Templates.
 */
 
-public class IRR_MOD_RebookInfo {
+public class IRR_MOD_ScheduledChangeInfo {
 
     @AuraEnabled
     public String bookingId { get; set; }
@@ -17,6 +17,5 @@ public class IRR_MOD_RebookInfo {
     public Datetime eventTime { get; set; }
 
     @AuraEnabled
-    public List<String> addedSegments { get; set; }
-
+    public Boolean isDayChange { get; set; }
 }

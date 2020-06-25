@@ -23,5 +23,8 @@ public class IRR_MOD_FlowVariables {
     public IRR_MOD_RebookInfo rebookInfo;
 
     @InvocableVariable
+    public IRR_MOD_ScheduledChangeInfo scheduledChangeInfo;
+
+    @InvocableVariable
     public IRR_MOD_CustomInfo customInfo;
 }
