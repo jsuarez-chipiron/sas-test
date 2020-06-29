@@ -24,6 +24,10 @@
         <enabled>true</enabled>
         <flow>IRR_EVT_RebookFlow</flow>
     </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>IRR_EVT_ScheduledChangeFlow</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>IRR Event Integration Access</label>
     <license>Salesforce</license>

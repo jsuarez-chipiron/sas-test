@@ -2,25 +2,25 @@
 * @author Niklas Lundkvist, Deloitte
 * @date 2020
 *
-* @description Event Processor for the Disruption Rebook event.
+* @description Event Processor for the Scheduled Change Rebook event.
 *      Inherits and uses functionality from EventProcessor abstract class.
 */
 
-public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
+public class IRR_EVT_ScheduledChangeProcessor extends IRR_EVT_EventProcessor {
 
-    private static final String ERROR_NO_EVENT = 'Rebook event details are missing: {0}';
+    private static final String ERROR_NO_EVENT = 'Scheduled Change event details are missing: {0}';
     private static final String ERROR_BOOKING_ID = 'Booking Id is missing from event: {0}';
     private static final String ERROR_BOOKING_REF = 'Booking Ref is missing from event: {0}';
     private static final String ERROR_NO_EVENT_TIME = 'Event time is missing from event: {0}';
-    private static final String ERROR_NO_ADDED_SEGMENTS = 'Added Segments are missing from event: {0}';
+    private static final String ERROR_NO_IS_DAY_CHANGE = 'Is Day Change is missing from event: {0}';
 
-    private static final String EVENT_FLOW_NAME = 'IRR_EVT_RebookFlow';
+    private static final String EVENT_FLOW_NAME = 'IRR_EVT_ScheduledChangeFlow';
 
     @TestVisible
-    private IRR_MOD_RebookInfo rebookInfo;
+    private IRR_MOD_ScheduledChangeInfo scheduledChangeInfo;
 
     public String getEventName() {
-        return 'Rebook';
+        return 'Scheduled Change';
     }
 
 
@@ -32,20 +32,20 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
      *      Throws Event Exception if event info is not complete.
      */
     public void validateEvent() {
-        if (rebookInfo == null) {
-            throwEventException(ERROR_NO_EVENT, rebookInfo);
+        if (scheduledChangeInfo == null) {
+            throwEventException(ERROR_NO_EVENT, scheduledChangeInfo);
         }
-        if (String.isBlank(rebookInfo.bookingId)) {
-            throwEventException(ERROR_BOOKING_ID, rebookInfo);
+        if (String.isBlank(scheduledChangeInfo.bookingId)) {
+            throwEventException(ERROR_BOOKING_ID, scheduledChangeInfo);
         }
-        if (String.isBlank(rebookInfo.bookingReference)) {
-            throwEventException(ERROR_BOOKING_REF, rebookInfo);
+        if (String.isBlank(scheduledChangeInfo.bookingReference)) {
+            throwEventException(ERROR_BOOKING_REF, scheduledChangeInfo);
         }
-        if (rebookInfo.eventTime == null) {
-            throwEventException(ERROR_NO_EVENT_TIME, rebookInfo);
+        if (scheduledChangeInfo.eventTime == null) {
+            throwEventException(ERROR_NO_EVENT_TIME, scheduledChangeInfo);
         }
-        if (rebookInfo.addedSegments == null || rebookInfo.addedSegments.isEmpty()) {
-            throwEventException(ERROR_NO_ADDED_SEGMENTS, rebookInfo);
+        if (scheduledChangeInfo.isDayChange == null) {
+            throwEventException(ERROR_NO_IS_DAY_CHANGE, scheduledChangeInfo);
         }
     }
 
@@ -58,7 +58,7 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
      */
     public void initiateEvent() {
         //Retrieve passengers for booking
-        this.passengerInfos = IRR_SVC_TedsService.getPassengerInfosForBooking(rebookInfo.bookingId);
+        this.passengerInfos = IRR_SVC_TedsService.getPassengerInfosForBooking(scheduledChangeInfo.bookingId);
     }
 
     /**
@@ -70,7 +70,7 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
      * @return If any active manual overrides exist
      */
     public Boolean checkActiveBlock() {
-        //Active blocks are currently not applicable for Rebook event
+        //Active blocks are currently not applicable for Scheduled Change event
         return false;
     }
 
@@ -84,7 +84,7 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
     public void processEvent() {
         //Initiate variable container object for Flow
         IRR_MOD_FlowVariables flowVariables = new IRR_MOD_FlowVariables();
-        flowVariables.rebookInfo = rebookInfo;
+        flowVariables.scheduledChangeInfo = scheduledChangeInfo;
 
         //Process passengers
         for (IRR_MOD_PassengerInfo passengerInfo : passengerInfos) {
@@ -95,13 +95,13 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
     }
 
 
-    public IRR_EVT_RebookProcessor(IRR_MOD_RebookInfo rebookInfo) {
-        this.rebookInfo = rebookInfo;
+    public IRR_EVT_ScheduledChangeProcessor(IRR_MOD_ScheduledChangeInfo scheduledChangeInfo) {
+        this.scheduledChangeInfo = scheduledChangeInfo;
     }
 
     public class Constructor implements IRR_EVT_EventProcessor.IConstructable {
         public IRR_EVT_IEventProcessor newInstance(Object payload) {
-            return (IRR_EVT_IEventProcessor) new IRR_EVT_RebookProcessor((IRR_MOD_RebookInfo) payload);
+            return (IRR_EVT_IEventProcessor) new IRR_EVT_ScheduledChangeProcessor((IRR_MOD_ScheduledChangeInfo)payload);
         }
     }
 }

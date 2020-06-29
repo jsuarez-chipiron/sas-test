@@ -35,13 +35,6 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>context</name>
-                <value>TO</value>
-            </componentInstanceProperties>
-            <componentName>forceChatter:exposedFeed</componentName>
-        </componentInstances>
         <name>bottomLeft</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -52,13 +45,6 @@
     <flexiPageRegions>
         <componentInstances>
             <componentInstanceProperties>
-                <name>context</name>
-                <value>GLOBAL</value>
-            </componentInstanceProperties>
-            <componentName>forceChatter:publisher</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
                 <name>decorate</name>
                 <value>true</value>
             </componentInstanceProperties>
@@ -67,6 +53,20 @@
                 <value>&lt;p&gt;To report an error&lt;span style=&quot;color: black;&quot;&gt; in the disruption communication tool&lt;/span&gt;, please send an email to disruptioncommunication@sas.se. &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Please include a short description of the error with screenshot.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;</value>
             </componentInstanceProperties>
             <componentName>flexipage:richText</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>context</name>
+                <value>GLOBAL</value>
+            </componentInstanceProperties>
+            <componentName>forceChatter:publisher</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>context</name>
+                <value>TO</value>
+            </componentInstanceProperties>
+            <componentName>forceChatter:exposedFeed</componentName>
         </componentInstances>
         <name>sidebar</name>
         <type>Region</type>

@@ -117,6 +117,19 @@ private class IRR_SVC_SFMCService_Test {
     }
 
     @IsTest
+    static void testSendSMSMessages_NoRecipient() {
+        IRR_SVC_SFMCService.SMSMessage smsMessage = new IRR_SVC_SFMCService.SMSMessage(
+                'TEST_CONTENT', null, 'TEST_CONTACT_KEY');
+
+        //When
+        IRR_SVC_SFMCService.sendSMSMessages(new List<IRR_SVC_SFMCService.SMSMessage>{smsMessage});
+
+        //Then
+        System.assertEquals(12002, smsMessage.errorCode);
+        System.assertEquals('No contact details available for passenger', smsMessage.errorMessage);
+    }
+
+    @IsTest
     static void testSendEmailMessage() {
         //Set up mocks
         fflib_ApexMocks mocks = new fflib_ApexMocks();
@@ -283,6 +296,19 @@ private class IRR_SVC_SFMCService_Test {
         System.assertEquals('Not Authorized', emailMessage.errorMessage);
         System.assertEquals(401, emailMessageOther.errorCode);
         System.assertEquals('Not Authorized', emailMessageOther.errorMessage);
+    }
+
+    @IsTest
+    static void testSendEmailMessages_NoRecipient() {
+        IRR_SVC_SFMCService.EmailMessage emailMessage = new IRR_SVC_SFMCService.EmailMessage(
+                'TEST_CONTENT', 'TEST_SUBJECT', null, 'TEST_CONTACT_KEY');
+
+        //When
+        IRR_SVC_SFMCService.sendEmailMessages(new List<IRR_SVC_SFMCService.EmailMessage>{emailMessage});
+
+        //Then
+        System.assertEquals(12002, emailMessage.errorCode);
+        System.assertEquals('No contact details available for passenger', emailMessage.errorMessage);
     }
 
     @IsTest

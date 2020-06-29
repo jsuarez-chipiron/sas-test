@@ -63,6 +63,7 @@ public class IRR_MOD_TedsBooking {
 
     public class Flight {
         public String id { get; set; }
+        public String operatingId { get; set; }
         public String operatingCarrier { get; set; }
         public String operatingFlightNumber { get; set; }
         public String marketingCarrier { get; set; }

@@ -92,10 +92,11 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
         flowVariables.delayInfo = manualRequest.delayInfo;
         flowVariables.newInfo = manualRequest.newInfo;
         flowVariables.cancelInfo = manualRequest.cancelInfo;
+        flowVariables.scheduledChangeInfo = manualRequest.scheduledChangeInfo;
 
         for (IRR_MOD_PassengerInfo passengerInfo : manualRequest.passengerInfos) {
-            Boolean sendEmail = manualRequest.sendEmailMessages && passengerInfo.hasEmailAddress;
-            Boolean sendSMS = manualRequest.sendSMSMessages && passengerInfo.hasPhoneNumber;
+            Boolean sendEmail = manualRequest.sendEmailMessages;
+            Boolean sendSMS = manualRequest.sendSMSMessages;
 
             if (sendEmail || sendSMS) {
                 flowVariables.passengerInfo = passengerInfo;

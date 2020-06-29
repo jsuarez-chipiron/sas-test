@@ -15,15 +15,15 @@
             <name>passengerInfo</name>
         </outputParameters>
         <outputParameters>
-            <assignToReference>rebookInfo</assignToReference>
-            <name>rebookInfo</name>
+            <assignToReference>scheduledChangeInfo</assignToReference>
+            <name>scheduledChangeInfo</name>
         </outputParameters>
     </actionCalls>
     <assignments>
         <name>Send_SMS_and_Email</name>
         <label>Send SMS and Email</label>
         <locationX>299</locationX>
-        <locationY>305</locationY>
+        <locationY>302</locationY>
         <assignmentItems>
             <assignToReference>sendEmailMessage</assignToReference>
             <operator>Assign</operator>
@@ -35,7 +35,7 @@
             <assignToReference>emailTemplateName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>irr_rebooking_email_01</stringValue>
+                <stringValue>irr_schedule_change_email_01</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -49,12 +49,12 @@
             <assignToReference>smsTemplateName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>irr_rebooking_sms_01</stringValue>
+                <stringValue>irr_schedule_change_sms_01</stringValue>
             </value>
         </assignmentItems>
     </assignments>
-    <interviewLabel>IRR_EVT_RebookFlow {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>IRR EVT RebookFlow</label>
+    <interviewLabel>IRR EVT ScheduledChangeFlow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>IRR EVT ScheduledChangeFlow</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -92,8 +92,8 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>rebookInfo</name>
-        <apexClass>IRR_MOD_RebookInfo</apexClass>
+        <name>scheduledChangeInfo</name>
+        <apexClass>IRR_MOD_ScheduledChangeInfo</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
