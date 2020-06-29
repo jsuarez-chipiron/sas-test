@@ -69,7 +69,7 @@
                    <br />
                    [[[DISPLAYIF(scheduledChangeInfo.isDayChange)]]]<span style="font-size:11px;">PLEASE NOTE - DATE CHANGE in itinerary.<br /></span>
                    <br />[[[ENDDISPLAYIF()]]]
-                   <span style="font-size:11px;">We’ve made an adjustment to our flight schedule that impacts your SAS trip with booking reference {{{passengerInfo.bookingReference}}}.<br /></span>
+                   <span style="font-size:11px;">We’ve made an adjustment to our flight schedule that impacts your SAS trip with booking reference {{{passengerInfo.bookingReference}}}. Your new itinerary is shown in Manage My Booking (link below).<br /></span>
                    <br />
                    <span style="font-size:11px;">We apologize and hope that the new times will work for you. Kindly inform anyone else traveling with you about the change.<br /></span>
                    <br />
@@ -77,7 +77,7 @@
                    <br />
                    <span style="font-size:11px;">If we haven't heard from you within 5 days, we will understand that you've accepted the new trip and this will constitute our new agreement with you.<br /></span>
                    <br />
-                   <span style="font-size:11px;">Best Regards, <br />SAS</span><br />
+                   <span style="font-size:11px;">Best Regards, <br />SAS<br /><br />Read more about Safe Travel with SAS here: https://www.flysas.com/en/safe-travel/<br />If you need to get in touch with us: https://www.flysas.com/en/customer-service/</span><br />
                    </div>
                   </td>
                  </tr>
