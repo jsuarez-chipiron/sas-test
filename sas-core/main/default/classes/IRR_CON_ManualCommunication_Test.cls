@@ -2,7 +2,7 @@
 * @author Niklas Lundkvist, Deloitte
 * @date 2020
 *
-* @description TODO
+* @description Test class for the Manual Communication LWC Controller.
 */
 
 @IsTest
@@ -13,7 +13,6 @@ private class IRR_CON_ManualCommunication_Test {
         //Set up mocks
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
-
 
         //Given
         IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
@@ -35,6 +34,71 @@ private class IRR_CON_ManualCommunication_Test {
         System.assertEquals(1, passengerResult.size());
         System.assertEquals(passengerInfo.emailAddress, passengerResult[0].emailAddress);
         ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getPassengerInfosForBooking('TEST_BOOKING_ID');
+    }
+
+    @IsTest
+    static void testGetBookingPassengerInfos_Error() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
+
+        //Given
+        IRR_SVC_TedsService.TedsException tedsException =
+                new IRR_SVC_TedsService.TedsException('Integration Response: 404 - Not Found');
+        mocks.startStubbing();
+        mocks.when(serviceMock.getPassengerInfosForBooking('TEST_BOOKING_ID')).thenThrow(tedsException);
+        mocks.stopStubbing();
+        IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
+
+        //When
+        Boolean caughtException = false;
+        try {
+            List<IRR_MOD_PassengerInfo> passengerResult = IRR_CON_ManualCommunication.getBookingPassengerInfos(
+                    'TEST_BOOKING_ID');
+        }
+        catch (AuraHandledException ahe) {
+            if (ahe.getMessage() == 'TEST_BOOKING_ID - Integration Response: 404 - Not Found') caughtException = true;
+        }
+
+        //Then
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getPassengerInfosForBooking('TEST_BOOKING_ID');
+        System.assert(caughtException, 'Expected to catch AuraHandledException');
+    }
+
+    @IsTest
+    static void testGetBookingPassengerInfos_Multiple() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
+
+
+        //Given
+        IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
+        passengerInfo.emailAddress = 'TEST_EMAIL';
+        List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>{
+                passengerInfo
+        };
+        IRR_MOD_PassengerInfo passengerInfoOther = new IRR_MOD_PassengerInfo();
+        passengerInfo.emailAddress = 'OTHER_EMAIL';
+        List<IRR_MOD_PassengerInfo> passengerInfosOther = new List<IRR_MOD_PassengerInfo>{
+                passengerInfoOther
+        };
+        mocks.startStubbing();
+        mocks.when(serviceMock.getPassengerInfosForBooking('TEST_BOOKING_ID')).thenReturn(passengerInfos);
+        mocks.when(serviceMock.getPassengerInfosForBooking('OTHER_BOOKING_ID')).thenReturn(passengerInfosOther);
+        mocks.stopStubbing();
+        IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
+
+        //When
+        List<IRR_MOD_PassengerInfo> passengerResult = IRR_CON_ManualCommunication.getBookingPassengerInfos(
+                'TEST_BOOKING_ID,OTHER_BOOKING_ID');
+
+        //Then
+        System.assertEquals(2, passengerResult.size());
+        System.assertEquals(passengerInfo.emailAddress, passengerResult[0].emailAddress);
+        System.assertEquals(passengerInfoOther.emailAddress, passengerResult[1].emailAddress);
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getPassengerInfosForBooking('TEST_BOOKING_ID');
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getPassengerInfosForBooking('OTHER_BOOKING_ID');
     }
 
     @IsTest
