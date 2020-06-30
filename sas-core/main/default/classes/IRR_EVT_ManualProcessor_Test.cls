@@ -186,11 +186,60 @@ private class IRR_EVT_ManualProcessor_Test {
     }
 
     @IsTest
+    static void testInitiateEvent_NewInfoEvent() {
+        //Given
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.sendSMSMessages = true;
+        manualRequest.sendEmailMessages = false;
+        manualRequest.newInfo = new IRR_MOD_NewInfo();
+        manualRequest.newInfo.flightId = 'SK0579-20200503-ARN-CDG';
+        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+
+        //When
+        eventProcessor.initiateEvent();
+
+        //Then
+        System.assertEquals('SK0579', manualRequest.newInfo.flightRef);
+        System.assertEquals('ARN', manualRequest.newInfo.stationDeparture);
+        System.assertEquals('CDG', manualRequest.newInfo.stationArrival);
+    }
+
+    @IsTest
+    static void testInitiateEvent_CancelEvent() {
+        //Given
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.sendSMSMessages = true;
+        manualRequest.sendEmailMessages = false;
+        manualRequest.cancelInfo = new IRR_MOD_CancelInfo();
+        manualRequest.cancelInfo.flightId = 'SK1501-20191205-LLA-ARN';
+        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+
+        //When
+        eventProcessor.initiateEvent();
+
+        //Then
+        System.assertEquals('SK1501', manualRequest.cancelInfo.flightRef);
+        System.assertEquals('LLA', manualRequest.cancelInfo.stationDeparture);
+        System.assertEquals('ARN', manualRequest.cancelInfo.stationArrival);
+    }
+
+    @IsTest
+    static void testCheckActiveBlock() {
+        //Given
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+
+        //When
+        Boolean result = eventProcessor.checkActiveBlock();
+
+        //Then
+        System.assertEquals(false, result);
+    }
+
+    @IsTest
     static void testProcessEvent_SendMessages_NoResponse() {
         //Given
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
-        manualRequest.flowVariables = new IRR_MOD_FlowVariables();
-        manualRequest.flowVariables.delayInfo = new IRR_MOD_DelayInfo();
         manualRequest.emailTemplate = 'EMAIL_TEMPLATE';
         manualRequest.smsTemplate = 'SMS_TEMPLATE';
         manualRequest.sendSMSMessages = true;
@@ -201,9 +250,11 @@ private class IRR_EVT_ManualProcessor_Test {
         manualRequest.passengerInfos[0].phoneNumber = 'TEST_PHONE';
         manualRequest.passengerInfos[0].hasEmailAddress = true;
         manualRequest.passengerInfos[0].emailAddress = 'TEST_EMAIL';
+        manualRequest.delayInfo = new IRR_MOD_DelayInfo();
         manualRequest.customInfo = new IRR_MOD_CustomInfo();
-        manualRequest.customInfo.subject = 'TEST_SUBJECT';
-        manualRequest.customInfo.content = 'TEST_CONTENT';
+        manualRequest.scheduledChangeInfo = new IRR_MOD_ScheduledChangeInfo();
+        manualRequest.newInfo = new IRR_MOD_NewInfo();
+        manualRequest.cancelInfo = new IRR_MOD_CancelInfo();
         IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
 
         //When
@@ -222,14 +273,19 @@ private class IRR_EVT_ManualProcessor_Test {
         System.assertEquals(messages[1].recipient, 'TEST_EMAIL');
         System.assertEquals(IRR_MOD_Message.MessageChannel.SMS, messages[0].channel);
         System.assertEquals(IRR_MOD_Message.MessageChannel.Email, messages[1].channel);
-        System.assert(messages[0].variables.containsKey('passengerInfo') &&
-                messages[0].variables.containsKey('delayInfo')); //TODO ADD OTHER EVENTS
-        System.assert(messages[0].variables.containsKey('passengerInfo') &&
-                messages[0].variables.containsKey('customInfo'));
-        System.assert(messages[1].variables.containsKey('passengerInfo') &&
-                messages[1].variables.containsKey('delayInfo')); //TODO ADD OTHER EVENTS
-        System.assert(messages[1].variables.containsKey('passengerInfo') &&
-                messages[1].variables.containsKey('customInfo'));
+        System.debug(JSON.serializePretty(messages[0].variables));
+        System.assert(messages[0].variables.get('passengerInfo') != null &&
+                messages[0].variables.get('delayInfo') != null &&
+                messages[0].variables.get('cancelInfo') != null &&
+                messages[0].variables.get('newInfo') != null &&
+                messages[0].variables.get('scheduledChangeInfo') != null &&
+                messages[0].variables.get('customInfo') != null);
+        System.assert(messages[1].variables.get('passengerInfo') != null &&
+                messages[1].variables.get('delayInfo') != null &&
+                messages[1].variables.get('cancelInfo') != null &&
+                messages[1].variables.get('newInfo') != null &&
+                messages[1].variables.get('scheduledChangeInfo') != null &&
+                messages[1].variables.get('customInfo') != null);
         System.assert(!messages[0].responseMessage, 'Message 1 Response not expected');
         System.assert(!messages[1].responseMessage, 'Message 2 Response not expected');
     }
@@ -238,8 +294,6 @@ private class IRR_EVT_ManualProcessor_Test {
     static void testProcessEvent_SendMessages_Response() {
         //Given
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
-        manualRequest.flowVariables = new IRR_MOD_FlowVariables();
-        manualRequest.flowVariables.delayInfo = new IRR_MOD_DelayInfo();
         manualRequest.emailTemplate = 'EMAIL_TEMPLATE';
         manualRequest.smsTemplate = 'SMS_TEMPLATE';
         manualRequest.sendSMSMessages = true;
@@ -250,9 +304,6 @@ private class IRR_EVT_ManualProcessor_Test {
         manualRequest.passengerInfos[0].phoneNumber = 'TEST_PHONE';
         manualRequest.passengerInfos[0].hasEmailAddress = true;
         manualRequest.passengerInfos[0].emailAddress = 'TEST_EMAIL';
-        manualRequest.customInfo = new IRR_MOD_CustomInfo();
-        manualRequest.customInfo.subject = 'TEST_SUBJECT';
-        manualRequest.customInfo.content = 'TEST_CONTENT';
         IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
 
         //When
@@ -261,8 +312,8 @@ private class IRR_EVT_ManualProcessor_Test {
         //Then
         List<IRR_MOD_Message> messages = eventProcessor.messages;
         System.assertEquals(2, messages.size());
-        System.assert(messages[0].responseMessage, 'Message 1 Response not expected');
-        System.assert(messages[1].responseMessage, 'Message 2 Response not expected');
+        System.assert(messages[0].responseMessage, 'Message 1 Response expected');
+        System.assert(messages[1].responseMessage, 'Message 2 Response expected');
     }
 
 

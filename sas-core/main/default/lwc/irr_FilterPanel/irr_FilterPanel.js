@@ -2,10 +2,10 @@
  * @author Niklas Lundkvist, Deloitte
  * @date 2020
  *
- * @description TODO
+ * @description Filter component for the Manual Communication app.
  */
 
-import {LightningElement} from 'lwc';
+import {LightningElement, api} from 'lwc';
 
 const segmentOptions = [
     { label: 'Cancelled', value: 'Cancelled' },
@@ -21,47 +21,54 @@ export default class IRR_FilterPanel extends LightningElement {
 
     segmentOptions = segmentOptions;
 
-    filterParameters = {};
+    @api filterParameters;
+
+    get segmentStatusGroupValue() {
+        return this.filterParameters['thisSegment.status'] || [];
+    }
 
     handleValueSelect(event) {
         const fieldName = event.target.name;
         const value = event.detail.value;
+        let newParameters = JSON.parse(JSON.stringify(this.filterParameters));
 
         if (value && !(Array.isArray(value) && value.length === 0)) {
-            this.filterParameters[fieldName] = value;
+            newParameters[fieldName] = value;
         } else {
-            delete this.filterParameters[fieldName];
+            delete newParameters[fieldName];
         }
 
-        this.applyFilter();
+        this.applyFilter(newParameters);
     }
 
     handleAllCheckbox(event) {
         const fieldName = event.target.name;
         const checkBoxType = event.target.dataset.checkboxType;
+        let newParameters = JSON.parse(JSON.stringify(this.filterParameters));
 
         if (event.detail.checked) {
-            this.filterParameters[fieldName] = '*';
+            newParameters[fieldName] = '*';
         } else {
-            delete this.filterParameters[fieldName];
+            delete newParameters[fieldName];
         }
 
         this.unsetOppositeCheckbox(fieldName, checkBoxType);
-        this.applyFilter();
+        this.applyFilter(newParameters);
     }
 
     handleNoneCheckbox(event) {
         const fieldName = event.target.name;
         const checkBoxType = event.target.dataset.checkboxType;
+        let newParameters = JSON.parse(JSON.stringify(this.filterParameters));
 
         if (event.detail.checked) {
-            this.filterParameters[fieldName] = null;
+            newParameters[fieldName] = null;
         } else {
-            delete this.filterParameters[fieldName];
+            delete newParameters[fieldName];
         }
 
         this.unsetOppositeCheckbox(fieldName, checkBoxType);
-        this.applyFilter();
+        this.applyFilter(newParameters);
     }
 
     unsetOppositeCheckbox(fieldName, thisCheckboxType) {
@@ -71,9 +78,9 @@ export default class IRR_FilterPanel extends LightningElement {
             });
     }
 
-    applyFilter() {
+    applyFilter(newParameters) {
         const event = new CustomEvent('applyfilter', {
-            detail: this.filterParameters
+            detail: newParameters
         });
         setTimeout(() => { this.dispatchEvent(event); });
     }

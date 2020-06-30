@@ -65,8 +65,11 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
     }
 
     public List<IRR_SVC_SFMCService.EmailMessage> sendEmailMessages(List<IRR_SVC_SFMCService.EmailMessage> messages) {
-        Map<String, Object> requestBody = createEmailRequestBody(EMAIL_SEND_DEFINITION, messages);
-        sendSFMCMessages(requestBody, EMAIL_ENDPOINT, messages);
+        List<IRR_SVC_SFMCService.SFMCMessage> messagesWithRecipient = discardMessagesWithoutRecipient(messages);
+        if (!messagesWithRecipient.isEmpty()) {
+            Map<String, Object> requestBody = createEmailRequestBody(EMAIL_SEND_DEFINITION, messagesWithRecipient);
+            sendSFMCMessages(requestBody, EMAIL_ENDPOINT, messagesWithRecipient);
+        }
         return messages;
     }
 
@@ -82,14 +85,32 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
      * @return Input Message List
      */
     public List<IRR_SVC_SFMCService.SMSMessage> sendSMSMessages(List<IRR_SVC_SFMCService.SMSMessage> messages) {
-        Map<String, List<IRR_SVC_SFMCService.SFMCMessage>> smsMessagesBySendDefinitions =
-                sortMessagesBySendDefinitions(messages);
-        for (String definition : smsMessagesBySendDefinitions.keySet()) {
-            List<IRR_SVC_SFMCService.SFMCMessage> scopedMessages = smsMessagesBySendDefinitions.get(definition);
-            Map<String, Object> requestBody = createSMSRequestBody(definition, scopedMessages);
-            sendSFMCMessages(requestBody, SMS_ENDPOINT, scopedMessages);
+        List<IRR_SVC_SFMCService.SFMCMessage> messagesWithRecipient = discardMessagesWithoutRecipient(messages);
+        if (!messagesWithRecipient.isEmpty()) {
+            Map<String, List<IRR_SVC_SFMCService.SFMCMessage>> smsMessagesBySendDefinitions =
+                    sortMessagesBySendDefinitions(messagesWithRecipient);
+            for (String definition : smsMessagesBySendDefinitions.keySet()) {
+                List<IRR_SVC_SFMCService.SFMCMessage> scopedMessages = smsMessagesBySendDefinitions.get(definition);
+                Map<String, Object> requestBody = createSMSRequestBody(definition, scopedMessages);
+                sendSFMCMessages(requestBody, SMS_ENDPOINT, scopedMessages);
+            }
         }
         return messages;
+    }
+
+    private List<IRR_SVC_SFMCService.SFMCMessage> discardMessagesWithoutRecipient(
+            List<IRR_SVC_SFMCService.SFMCMessage> messages) {
+        List<IRR_SVC_SFMCService.SFMCMessage> messagesWithRecipients = new List<IRR_SVC_SFMCService.SFMCMessage>();
+        for (IRR_SVC_SFMCService.SFMCMessage message : messages) {
+            if (String.isNotBlank(message.recipient)) {
+                messagesWithRecipients.add(message);
+            }
+            else {
+                message.errorCode = 12002;
+                message.errorMessage = 'No contact details available for passenger';
+            }
+        }
+        return messagesWithRecipients;
     }
 
     private void sendSFMCMessages(Map<String, Object> requestBody, String endPoint,
@@ -221,9 +242,10 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
      * @return SFMC Request body structure
      */
     private Map<String, Object> createEmailRequestBody(String sendDefinition,
-            List<IRR_SVC_SFMCService.EmailMessage> messages) {
+            List<IRR_SVC_SFMCService.SFMCMessage> messages) {
         List<Map<String, Object>> recipients = new List<Map<String, Object>>();
-        for (IRR_SVC_SFMCService.EmailMessage emailMessage : messages) {
+        for (IRR_SVC_SFMCService.SFMCMessage message : messages) {
+            IRR_SVC_SFMCService.EmailMessage emailMessage = (IRR_SVC_SFMCService.EmailMessage) message;
             Map<String, Object> recipient = new Map<String, Object> {
                     'to' => emailMessage.recipient,
                     'contactKey' => emailMessage.contactKey,

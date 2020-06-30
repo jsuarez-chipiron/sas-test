@@ -2,7 +2,7 @@
 * @author Niklas Lundkvist, Deloitte
 * @date 2020
 *
-* @description TODO
+* @description Contains factory methods for various objects.
 */
 
 public class C_Application {
@@ -77,6 +77,10 @@ public class C_Application {
             }
 
             EventDefinition definition = eventDefinitionsByEventType.get(eventType);
+            if (definition==null) {
+                throw new EventDefinitionException('No definition found for event type ' + eventType);
+            }
+
             Object payload = JSON.deserialize(jsonPayload, definition.payloadModel);
             return newInstance(eventType, payload);
         }
@@ -89,7 +93,7 @@ public class C_Application {
 
             EventDefinition definition = eventDefinitionsByEventType.get(eventType);
             if (definition==null) {
-                throw new DeveloperException('No definition found for event type ' + eventType);
+                throw new EventDefinitionException('No definition found for event type ' + eventType);
             }
 
             IRR_EVT_EventProcessor.IConstructable constructable = (IRR_EVT_EventProcessor.IConstructable)
@@ -112,6 +116,8 @@ public class C_Application {
             this.processorConstructor = processorConstructor;
         }
     }
+
+    public class EventDefinitionException extends Exception { }
 
     /**
      * Exception representing a developer coding error, not intended for end user eyes

@@ -2,7 +2,7 @@
  * @author Niklas Lundkvist, Deloitte
  * @date 2020
  *
- * @description TODO
+ * @description LWC App for IRR Manual Communication.
  */
 
 import {LightningElement, track} from 'lwc';
@@ -17,7 +17,7 @@ import getBookingPassengerInfos from '@salesforce/apex/IRR_CON_ManualCommunicati
 import * as tableUtil from 'c/c_TableUtil';
 import { reduceErrors } from 'c/c_LdsUtils';
 
-const columns = [
+const COLUMNS = [
     { label: 'PNR', fieldName: 'bookingReference', sortable: true, initialWidth: 75 },
     { label: 'Name', fieldName: 'lastNameSlashFirstName', sortable: true },
     { label: 'Phone', fieldName: 'phoneNumber', sortable: true, initialWidth: 115 },
@@ -33,7 +33,7 @@ const columns = [
 
 export default class IRR_ManualCommunication extends LightningElement {
 
-    @track columns = columns;
+    COLUMNS = COLUMNS;
 
     @track passengerResult = [];
 
@@ -60,6 +60,10 @@ export default class IRR_ManualCommunication extends LightningElement {
     @track showRecipientModal = false;
     @track additionalRecipients = [];
 
+    @track leftPanelTab = "LEFT_FILTER";
+
+    @track templatePreview = "";
+
     retrieveParameters = {};
 
     templatesBySendMode = {};
@@ -77,6 +81,14 @@ export default class IRR_ManualCommunication extends LightningElement {
             'No passengers found, or flight does not exist. Please check Flight ID.' : 'No passengers matching filter';
     }
 
+    get leftPanelTitle() {
+        return this.leftPanelTab === "LEFT_FILTER" ? "Apply Filters" : "Preview Template";
+    }
+
+    get leftPanelIcon() {
+        return this.leftPanelTab === "LEFT_FILTER" ? "utility:filterList" : "utility:preview";
+    }
+
     async init() {
         try {
             this.templatesBySendMode = await getManualTemplatesBySendMode();
@@ -87,8 +99,20 @@ export default class IRR_ManualCommunication extends LightningElement {
     }
 
     get tableHeading() {
+        if (Object.keys(this.retrieveParameters).length === 0) return "No filters active";
         const params = Object.values(this.retrieveParameters).join(' - ');
         return `Results for ${params}`;
+    }
+
+    get recipientCount() {
+        const additionalRecipients = this.additionalRecipients ?
+            this.additionalRecipients.filter(r => r.phoneNumber || r.emailAddress).length : 0;
+        const recipients = this.selectedRows ? this.selectedRows.length : 0;
+        return additionalRecipients + recipients;
+    }
+
+    handleTabSwitch(event) {
+        this.leftPanelTab = event.target.value;
     }
 
     handleLoad(finished) {
@@ -149,11 +173,10 @@ export default class IRR_ManualCommunication extends LightningElement {
         this.showConfirmation = false;
     }
 
-    get recipientCount() {
-        const additionalRecipients = this.additionalRecipients ?
-            this.additionalRecipients.filter(r => r.phoneNumber || r.emailAddress).length : 0;
-        const recipients = this.selectedRows ? this.selectedRows.length : 0;
-        return additionalRecipients + recipients;
+    handleTemplateChange(event) {
+        const { template } = event.detail;
+        this.templatePreview = template.templatePreview;
+        if (this.leftPanelTab !== "LEFT_PREVIEW") this.leftPanelTab = "LEFT_PREVIEW";
     }
 
     handleSendEvent(event) {
@@ -187,12 +210,12 @@ export default class IRR_ManualCommunication extends LightningElement {
                 };
             }));
             const payload = {
-                responseMessage: manualTemplate.IRR_ResponseTemplate__c,
+                responseMessage: manualTemplate.responseTemplate,
                 passengerInfos: passengerInfos,
                 sendSMSMessages: sendSMS,
                 sendEmailMessages: sendEmail,
-                emailTemplate: manualTemplate.IRR_EmailTemplate__c,
-                smsTemplate: manualTemplate.IRR_SMSTemplate__c
+                emailTemplate: manualTemplate.emailTemplate,
+                smsTemplate: manualTemplate.smsTemplate
             };
             switch (sendMode) {
                 case "CUSTOM":
@@ -200,6 +223,19 @@ export default class IRR_ManualCommunication extends LightningElement {
                     break;
                 case "DELAY":
                     payload.delayInfo = parameters;
+                    break;
+                case "NEW_INFO":
+                    payload.newInfo = parameters;
+                    break;
+                case "CANCEL":
+                    payload.cancelInfo = parameters;
+                    break;
+                case "SCHEDULED_CHANGE":
+                    payload.scheduledChangeInfo = parameters;
+                    break;
+                case "REBOOK":
+                    break;
+                case "TEMPLATE":
                     break;
                 default:
                     return;
@@ -215,12 +251,12 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     handleResetEvent(_) {
         this.flightId = '';
-        this.filterParameters = {};
         this.retrieveParameters = {};
         this.processedTable = [];
         this.passengerResult = [];
         this.additionalRecipients = [];
         this.template.querySelector('c-irr_-recipient-modal').reset();
+        this.leftPanelTab = "LEFT_FILTER";
         this.showRetrieve = true;
         this.showSuccess = false;
     }
@@ -235,16 +271,21 @@ export default class IRR_ManualCommunication extends LightningElement {
                 case "FLIGHT_REFERENCE":
                     eventParameters = {flightId: parameters.flightId};
                     result = await getFlightPassengerInfos(eventParameters);
+                    this.filterParameters = {'thisSegment.status': ['Confirmed']};
                     break;
                 case "BOOKING_REFERENCE":
                     eventParameters = {bookingId: parameters.bookingId};
                     result = await getBookingPassengerInfos(eventParameters);
+                    this.filterParameters = {};
+                    break;
+                case "BYPASS":
+                    this.filterParameters = {};
                     break;
                 default:
                     return;
             }
-            this.retrieveParameters = eventParameters;
-            this.passengerResult = result.map(item => tableUtil.flatten(item));
+            if (eventParameters) this.retrieveParameters = eventParameters;
+            if (result) this.passengerResult = result.map(item => tableUtil.flatten(item));
             this.processTable();
             this.showRetrieve = false;
             this.handleLoad(true);

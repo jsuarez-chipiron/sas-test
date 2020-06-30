@@ -36,9 +36,12 @@ public class IRR_Application {
     public static final fflib_Application.SelectorFactory Selector =
             new fflib_Application.SelectorFactory(
                     new Map<SObjectType, Type> {
+                            EmailTemplate.SObjectType => IRR_SEL_EmailTemplatesSelector.class,
                             IRR_CommunicationLog__c.SObjectType => IRR_SEL_CommunicationLogsSelector.class,
+                            IRR_SMSResponse__c.SObjectType => IRR_SEL_SMSResponsesSelector.class,
                             IRR_DelayLog__c.SObjectType => IRR_SEL_DelayLogsSelector.class,
                             IRR_ManualCommunicationTemplate__mdt.SObjectType => IRR_SEL_ManualTemplatesSelector.class,
+                            IRR_ManualOverride__c.SObjectType => IRR_SEL_ManualOverridesSelector.class,
                             IRR_RecipientWhitelist__mdt.SObjectType => IRR_SEL_RecipientWhitelistSelector.class,
                             Organization.SObjectType => IRR_SEL_OrganizationSelector.class,
                             SFMC_SMSDefinition__mdt.SObjectType => IRR_SEL_SMSDefinitionsSelector.class
@@ -55,7 +58,8 @@ public class IRR_Application {
             new fflib_Application.DomainFactory(
                     IRR_Application.Selector,
                     new Map<SObjectType, Type> {
-                            IRR_CommunicationLog__c.SObjectType => IRR_DOM_CommunicationLogs.Constructor.class
+                            IRR_CommunicationLog__c.SObjectType => IRR_DOM_CommunicationLogs.Constructor.class,
+                            IRR_SMSResponse__c.SObjectType => IRR_DOM_SMSResponses.Constructor.class
                     });
 
     /**
@@ -76,8 +80,16 @@ public class IRR_Application {
     public static final C_Application.EventProcessorFactory EventProcessor =
             new C_Application.EventProcessorFactory(
                     new Map<String, C_Application.EventDefinition> {
-                            'flightDepartureDelay' => new C_Application.EventDefinition(
+                            'bookingItineraryUpdateSASDisruption' => new C_Application.EventDefinition(
+                                    IRR_MOD_RebookInfo.class, IRR_EVT_RebookProcessor.Constructor.class),
+                            'bookingItineraryUpdateSASScheduleChange' => new C_Application.EventDefinition(
+                                    IRR_MOD_ScheduledChangeInfo.class, IRR_EVT_ScheduledChangeProcessor.Constructor.class),
+                            'flightDelayDeparture' => new C_Application.EventDefinition(
                                     IRR_MOD_DelayInfo.class, IRR_EVT_DelayProcessor.Constructor.class),
+                            'flightNewInfoDeparture' => new C_Application.EventDefinition(
+                                    IRR_MOD_NewInfo.class, IRR_EVT_NewInfoProcessor.Constructor.class),
+                            'flightCancellation' => new C_Application.EventDefinition(
+                                    IRR_MOD_CancelInfo.class, IRR_EVT_CancelProcessor.Constructor.class),
                             'manualCommunication' => new C_Application.EventDefinition(
                                     IRR_MOD_ManualRequest.class, IRR_EVT_ManualProcessor.Constructor.class)
                     }
@@ -94,6 +106,7 @@ public class IRR_Application {
             new fflib_Application.UnitOfWorkFactory(
                     new List<SObjectType> {
                             IRR_DelayLog__c.SObjectType,
-                            IRR_CommunicationLog__c.SObjectType
+                            IRR_CommunicationLog__c.SObjectType,
+                            IRR_SMSResponse__c.SObjectType
                     });
 }

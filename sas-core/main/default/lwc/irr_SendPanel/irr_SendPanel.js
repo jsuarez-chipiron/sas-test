@@ -2,7 +2,7 @@
  * @author Niklas Lundkvist, Deloitte
  * @date 2020
  *
- * @description TODO
+ * @description Send Panel for the Manual Communication app.
  */
 
 import {LightningElement, api, track} from 'lwc';
@@ -16,6 +16,8 @@ export default class irr_SendPanel extends LightningElement {
     @api templatesBySendMode = {};
 
     @api flightId = '';
+
+    @api additionalRecipientCount;
 
     @track showTemplatePicklist = false;
 
@@ -33,13 +35,18 @@ export default class irr_SendPanel extends LightningElement {
 
     get templatePicklistOptions() {
         return this.templatesBySendMode[this.sendMode].map((template => {
-            return { label: template.MasterLabel, value: template.DeveloperName };
+            return { label: template.templateLabel, value: template.templateName };
         }));
     }
 
+    get additionalRecipientLabel() {
+        return this.additionalRecipientCount ? `Add Recipients (${this.additionalRecipientCount})` : 'Add Recipients';
+    }
+
     handleTemplateChange(event) {
-        this.manualTemplate = this.templatesBySendMode[this.sendMode]
-            .find(template => template.DeveloperName === event.detail.value);
+        const template = this.templatesBySendMode[this.sendMode]
+            .find(template => template.templateName === event.detail.value);
+        this.setManualTemplate(template);
     }
 
     get cancelButtonClass() {
@@ -53,7 +60,8 @@ export default class irr_SendPanel extends LightningElement {
     }
 
     handleParameterChange(event) {
-        this.sendParameters[event.target.name] = event.target.value;
+        this.sendParameters[event.target.name] = event.target.type === "checkbox" ?
+            event.target.checked : event.target.value;
     }
 
     handleTabSwitch(event) {
@@ -62,8 +70,14 @@ export default class irr_SendPanel extends LightningElement {
 
     setSendMode(sendMode) {
         this.sendMode = sendMode;
-        this.manualTemplate = this.templatesBySendMode[this.sendMode][0];
+        this.setManualTemplate(this.templatesBySendMode[this.sendMode][0]);
         this.showTemplatePicklist = this.templatesBySendMode[this.sendMode].length !== 1;
+    }
+
+    setManualTemplate(template) {
+        this.manualTemplate = template;
+        const templateEvent = new CustomEvent('templatechange', { detail: { template: this.manualTemplate } } );
+        this.dispatchEvent(templateEvent);
     }
 
     validateFields() {

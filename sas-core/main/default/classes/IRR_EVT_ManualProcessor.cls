@@ -45,21 +45,58 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
         if (manualRequest.sendSMSMessages == null) manualRequest.sendSMSMessages = false;
         if (manualRequest.responseMessage == null) manualRequest.responseMessage = false;
         if (manualRequest.delayInfo != null && String.isNotBlank(manualRequest.delayInfo.flightId)) {
-            List<String> flightIdSplit = manualRequest.delayInfo.flightId.split('-');
-            manualRequest.delayInfo.flightRef = flightIdSplit[0];
-            manualRequest.delayInfo.stationDeparture = flightIdSplit.size() >= 3 ? flightIdSplit[2] : null;
-            manualRequest.delayInfo.stationArrival = flightIdSplit.size() >= 4 ? flightIdSplit[3] : null;
+            IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
+                    new IRR_SVC_CommunicationService.FlightIdSplit(manualRequest.delayInfo.flightId);
+            manualRequest.delayInfo.flightRef = flightIdSplit.flightNumber;
+            manualRequest.delayInfo.stationDeparture = flightIdSplit.stationDeparture;
+            manualRequest.delayInfo.stationArrival = flightIdSplit.stationArrival;
+        }
+        if (manualRequest.newInfo != null && String.isNotBlank(manualRequest.newInfo.flightId)) {
+            IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
+                    new IRR_SVC_CommunicationService.FlightIdSplit(manualRequest.newInfo.flightId);
+            manualRequest.newInfo.flightRef = flightIdSplit.flightNumber;
+            manualRequest.newInfo.stationDeparture = flightIdSplit.stationDeparture;
+            manualRequest.newInfo.stationArrival = flightIdSplit.stationArrival;
+        }
+        if (manualRequest.cancelInfo != null && String.isNotBlank(manualRequest.cancelInfo.flightId)) {
+            IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
+                    new IRR_SVC_CommunicationService.FlightIdSplit(manualRequest.cancelInfo.flightId);
+            manualRequest.cancelInfo.flightRef = flightIdSplit.flightNumber;
+            manualRequest.cancelInfo.stationDeparture = flightIdSplit.stationDeparture;
+            manualRequest.cancelInfo.stationArrival = flightIdSplit.stationArrival;
         }
     }
 
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Checks if any active manual override blocks exist for this flight.
+     *
+     * @return If any active manual overrides exist
+     */
+    public Boolean checkActiveBlock() {
+        //Active blocks are currently not applicable for Manual Message event
+        return false;
+    }
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Process passenger infos and create messages according to event info and passenger contact info.
+     */
     public void processEvent() {
         IRR_MOD_FlowVariables flowVariables = new IRR_MOD_FlowVariables();
         flowVariables.customInfo = manualRequest.customInfo;
         flowVariables.delayInfo = manualRequest.delayInfo;
+        flowVariables.newInfo = manualRequest.newInfo;
+        flowVariables.cancelInfo = manualRequest.cancelInfo;
+        flowVariables.scheduledChangeInfo = manualRequest.scheduledChangeInfo;
 
         for (IRR_MOD_PassengerInfo passengerInfo : manualRequest.passengerInfos) {
-            Boolean sendEmail = manualRequest.sendEmailMessages && passengerInfo.hasEmailAddress;
-            Boolean sendSMS = manualRequest.sendSMSMessages && passengerInfo.hasPhoneNumber;
+            Boolean sendEmail = manualRequest.sendEmailMessages;
+            Boolean sendSMS = manualRequest.sendSMSMessages;
 
             if (sendEmail || sendSMS) {
                 flowVariables.passengerInfo = passengerInfo;

@@ -64,7 +64,7 @@ private class C_Log_Test {
 
         C_Log__c l = [SELECT Id,Severity__c,Message__c,StackTrace__c,LogGroup__c,Timestamp__c,Duration__c FROM C_Log__c ORDER BY CreatedDate DESC LIMIT 1];
         System.assertEquals(C_Log.Severity.Error.name(),l.Severity__c);
-        System.assertEquals('TEST ERROR MESSAGE',l.Message__c);
+        System.assertEquals('C_Log_Test.TestException: TEST ERROR MESSAGE',l.Message__c);
         System.assertNotEquals(null,l.StackTrace__c);
         System.assertEquals(null,l.LogGroup__c);
         System.assertNotEquals(null,l.Timestamp__c);

@@ -55,7 +55,7 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
         Set<String> whitelistedRecipients = IRR_SEL_RecipientWhitelistSelector.newInstance()
                 .getAllWhitelistedRecipients();
         for (IRR_MOD_Message message : messages) {
-            if (!whitelistedRecipients.contains(message.recipient)) {
+            if (String.isNotBlank(message.recipient) && !whitelistedRecipients.contains(message.recipient)) {
                 message.status = MESSAGE_STATUS_NOT_WHITELISTED;
             }
         }
@@ -169,13 +169,11 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
 
         String emailTemplateName = (String) interview.getVariableValue('emailTemplateName');
         Boolean sendEmailMessage = (Boolean) interview.getVariableValue('sendEmailMessage');
-        sendEmailMessage = sendEmailMessage == null || String.isBlank(emailTemplateName) ||
-                !flowVariables.passengerInfo.hasEmailAddress ? false : sendEmailMessage;
+        sendEmailMessage = sendEmailMessage == null || String.isBlank(emailTemplateName) ? false : sendEmailMessage;
 
         String smsTemplateName = (String) interview.getVariableValue('smsTemplateName');
         Boolean sendSMSMessage = (Boolean) interview.getVariableValue('sendSMSMessage');
-        sendSMSMessage = sendSMSMessage == null || String.isBlank(smsTemplateName) ||
-                !flowVariables.passengerInfo.hasPhoneNumber ? false : sendSMSMessage;
+        sendSMSMessage = sendSMSMessage == null || String.isBlank(smsTemplateName) ? false : sendSMSMessage;
 
         if (sendSMSMessage || sendEmailMessage){
             createMessages(sendSMSMessage, smsTemplateName, sendEmailMessage, emailTemplateName, flowVariables, false);

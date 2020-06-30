@@ -14,11 +14,11 @@
 
 <!-- 2020-02-16 Delete permission set and replace with new one using SF-licence to be able to set tab visibilities -->
 	<types>
-		<members>Social_Media_User</members>		
+		<members>Social_Media_User</members>
 		<name>PermissionSet</name>
 	</types>
 	<!--2020-05-16 Delete permission set created for Analytics, Since it requires additional licence so removing-->
-	<types>		
+	<types>
 		<members>Analytic_User</members>
 		<name>PermissionSet</name>
 	</types>
@@ -41,11 +41,17 @@
 		<members>AD_RolePermission.SAS_Analytic_User</members>
 		<name>CustomMetadata</name>
 	</types>
-	
+
 	<!-- 2020-02-20 Delete field when adding namespace Sanna Sörberg -->
 	<types>
 		<members>Case.CaseTags__c</members>
 		<name>CustomField</name>
+	</types>
+
+	<!-- 2020-05-20 Delete CustomApplication -->
+	<types>
+		<members>SAS_IRR</members>
+		<name>CustomApplication</name>
 	</types>
 	<!--2020-05-28 Delete Role and use SAS instead-->
 	<types>

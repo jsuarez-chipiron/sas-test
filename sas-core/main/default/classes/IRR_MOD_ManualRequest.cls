@@ -8,9 +8,6 @@
 public class IRR_MOD_ManualRequest {
 
     @AuraEnabled
-    public IRR_MOD_FlowVariables flowVariables { get; set; }
-
-    @AuraEnabled
     public List<IRR_MOD_PassengerInfo> passengerInfos { get; set; }
 
     @AuraEnabled
@@ -33,4 +30,13 @@ public class IRR_MOD_ManualRequest {
 
     @AuraEnabled
     public IRR_MOD_CustomInfo customInfo { get; set; }
+
+    @AuraEnabled
+    public IRR_MOD_CancelInfo cancelInfo { get; set; }
+
+    @AuraEnabled
+    public IRR_MOD_ScheduledChangeInfo scheduledChangeInfo { get; set; }
+
+    @AuraEnabled
+    public IRR_MOD_NewInfo newInfo { get; set; }
 }
