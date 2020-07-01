@@ -274,7 +274,7 @@ export default class IRR_ManualCommunication extends LightningElement {
                     this.filterParameters = {'thisSegment.status': ['Confirmed']};
                     break;
                 case "BOOKING_REFERENCE":
-                    eventParameters = {bookingId: parameters.bookingId};
+                    eventParameters = {bookings: parameters.bookingId};
                     result = await getBookingPassengerInfos(eventParameters);
                     this.filterParameters = {};
                     break;

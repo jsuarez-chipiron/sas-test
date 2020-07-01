@@ -10,13 +10,21 @@ public class IRR_CON_ManualCommunication {
     private static final String EVENT_TYPE = 'manualCommunication';
 
     @AuraEnabled
-    public static List<IRR_MOD_PassengerInfo> getBookingPassengerInfos(String bookingId) {
+    public static List<IRR_MOD_PassengerInfo> getBookingPassengerInfos(String bookings) {
+        String currentBookingReference;
         try {
-            return IRR_SVC_TedsService.getPassengerInfosForBooking(bookingId);
+            List<String> splitBookingReferences = bookings.split(',');
+            List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
+            for (String bookingReference : splitBookingReferences) {
+                if (String.isBlank(bookingReference)) continue;
+                currentBookingReference = bookingReference;
+                passengerInfos.addAll(IRR_SVC_TedsService.getPassengerInfosForBooking(bookingReference));
+            }
+            return passengerInfos;
         }
         catch (Exception e) {
-            AuraHandledException ahe = new AuraHandledException(e.getMessage());
-            ahe.setMessage(e.getMessage());
+            AuraHandledException ahe = new AuraHandledException(currentBookingReference + ' - ' + e.getMessage());
+            ahe.setMessage(currentBookingReference + ' - ' + e.getMessage());
             throw ahe;
         }
     }
