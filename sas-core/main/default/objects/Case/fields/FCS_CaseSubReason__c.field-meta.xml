@@ -235,16 +235,6 @@
                 <label>Control status</label>
             </value>
             <value>
-                <fullName>Corona virus</fullName>
-                <default>false</default>
-                <label>Corona virus</label>
-            </value>
-            <value>
-                <fullName>Corona virus asian customer</fullName>
-                <default>false</default>
-                <label>Corona virus asian customer</label>
-            </value>
-            <value>
                 <fullName>Create case</fullName>
                 <default>false</default>
                 <label>Create case</label>
@@ -1334,18 +1324,6 @@
         <valueSettings>
             <controllingFieldValue>Login issues</controllingFieldValue>
             <valueName>SAS staff</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
-            <controllingFieldValue>Flight info</controllingFieldValue>
-            <controllingFieldValue>Rebooking</controllingFieldValue>
-            <valueName>Corona virus</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
-            <controllingFieldValue>Flight info</controllingFieldValue>
-            <controllingFieldValue>Rebooking</controllingFieldValue>
-            <valueName>Corona virus asian customer</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
