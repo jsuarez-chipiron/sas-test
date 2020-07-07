@@ -522,6 +522,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Support</controllingFieldValue>
+			<controllingFieldValue>Information</controllingFieldValue>
             <valueName>Rebooking</valueName>
         </valueSettings>
         <valueSettings>
