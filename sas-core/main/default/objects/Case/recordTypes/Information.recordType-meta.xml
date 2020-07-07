@@ -5,6 +5,17 @@
     <businessProcess>Default</businessProcess>
     <label>Information</label>
     <picklistValues>
+        <picklist>Consent__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
         <values>
             <fullName>Airport Services</fullName>
@@ -71,6 +82,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rebooking</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Refund</fullName>
             <default>false</default>
         </values>
@@ -93,6 +108,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>FCS_CaseSubReason__c</picklist>
+        <values>
+            <fullName>AMEX 2 for 1</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Add EB in booking</fullName>
             <default>false</default>
@@ -150,7 +169,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Commercial</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Connections</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consolidation of flights</fullName>
             <default>false</default>
         </values>
         <values>
@@ -190,6 +217,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EuroBonus ticket</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Extra seat for comfort</fullName>
             <default>false</default>
         </values>
@@ -206,11 +237,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Hotel</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Inactive customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Irregularity</fullName>
             <default>false</default>
         </values>
         <values>
@@ -286,11 +325,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Referred to phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Refund status</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Retroregistration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revenue ticket</fullName>
             <default>false</default>
         </values>
         <values>
@@ -330,7 +377,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Strike</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Strike related information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket status</fullName>
             <default>false</default>
         </values>
         <values>
@@ -339,6 +394,10 @@
         </values>
         <values>
             <fullName>Travel Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel agent booking</fullName>
             <default>false</default>
         </values>
         <values>
