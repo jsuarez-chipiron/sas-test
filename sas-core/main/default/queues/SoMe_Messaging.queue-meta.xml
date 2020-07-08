@@ -5,6 +5,10 @@
     <queueMembers>
         <publicGroups>
             <publicGroup>SASEmergency</publicGroup>
+            <publicGroup>SykesDirectSalesChatDK</publicGroup>
+            <publicGroup>SykesDirectSalesChatEN</publicGroup>
+            <publicGroup>SykesDirectSalesChatNO</publicGroup>
+            <publicGroup>SykesDirectSalesChatSE</publicGroup>
         </publicGroups>
     </queueMembers>
     <queueRoutingConfig>DirectSales</queueRoutingConfig>
