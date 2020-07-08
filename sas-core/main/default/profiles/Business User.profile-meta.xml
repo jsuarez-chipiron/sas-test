@@ -346,7 +346,6 @@
         <field>MessagingEndUser.IsOptedOut</field>
         <readable>false</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>SocialPost.FCS_Done__c</field>
@@ -577,6 +576,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>SurveySubject</object>
         <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+	<objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>MessagingEndUser</object>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
 	<objectPermissions>
         <allowCreate>false</allowCreate>
