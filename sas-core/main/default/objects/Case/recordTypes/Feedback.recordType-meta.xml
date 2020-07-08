@@ -200,15 +200,7 @@
         <values>
             <fullName>Content and Dangerous goods</fullName>
             <default>false</default>
-        </values>
-        <values>
-            <fullName>Corona virus</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Corona virus asian customer</fullName>
-            <default>false</default>
-        </values>
+        </values>        
         <values>
             <fullName>Create case</fullName>
             <default>false</default>
