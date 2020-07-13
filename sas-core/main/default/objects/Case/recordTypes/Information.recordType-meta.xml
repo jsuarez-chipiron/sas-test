@@ -183,7 +183,7 @@
         <values>
             <fullName>Content and Dangerous goods</fullName>
             <default>false</default>
-        </values>        
+        </values>
         <values>
             <fullName>Customer hangs up</fullName>
             <default>false</default>
@@ -318,6 +318,10 @@
         </values>
         <values>
             <fullName>Referred to phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund escalation</fullName>
             <default>false</default>
         </values>
         <values>
