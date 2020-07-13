@@ -715,6 +715,11 @@
                 <label>Referred to Travel agency</label>
             </value>
             <value>
+                <fullName>Refund escalation</fullName>
+                <default>false</default>
+                <label>Refund escalation</label>
+            </value>
+            <value>
                 <fullName>Refund status</fullName>
                 <default>false</default>
                 <label>Refund status</label>
@@ -1328,6 +1333,10 @@
         <valueSettings>
             <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
             <valueName>Make cancellation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
+            <valueName>Refund escalation</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
