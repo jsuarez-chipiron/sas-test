@@ -72,6 +72,7 @@ from date used to fetch audit trail, this will be updated after batch run.
     private  string formQuery()
     { String query;
      lstDelegatedAdminUsers =  new List<String>(); 
+     orgWideAddr = new OrgWideEmailAddress();
      orgWideAddr = [SELECT
                     Id ,
                     DisplayName
