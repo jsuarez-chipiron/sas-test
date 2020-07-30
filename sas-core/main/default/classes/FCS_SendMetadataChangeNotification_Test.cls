@@ -6,7 +6,8 @@ private class FCS_SendMetadataChangeNotification_Test {
         FCS_Audit_Trail__c fcsAuditTrilCustSetting =  New  FCS_Audit_Trail__c();
         fcsAuditTrilCustSetting.Name = 'Fcs Audit trial Date';
         fcsAuditTrilCustSetting.From_Date__c = System.now().addDays(-1);
-        insert fcsAuditTrilCustSetting;    
+        insert fcsAuditTrilCustSetting;  
+        
     }  
     static testMethod void TestAuditTrail(){
         Test.startTest();

@@ -20,7 +20,7 @@ admin user email address to send the notification if the metadata changes by del
     /**
 Orgwide address to represent it is from Salesforce.
 */
-    private  OrgWideEmailAddress orgWideAddr;
+    private  List<OrgWideEmailAddress> lstOrgWideAddr;
     /**
 from date used to fetch audit trail, this will be updated after batch run.
 */
@@ -51,7 +51,10 @@ from date used to fetch audit trail, this will be updated after batch run.
                  msg.Subject = setUpAuditTrail.Action;
                  msg.PlainTextBody = setUpAuditTrail.Action+': '+setUpAuditTrail.Display;
                  msg.ToAddresses = lstAdminUserEmail; 
-                 msg.setOrgWideEmailAddressId(orgWideAddr.Id);
+                 if(!lstOrgWideAddr.isEmpty())
+                 {
+                   msg.setOrgWideEmailAddressId(lstOrgWideAddr[0].Id);
+                 }
                  messages.add(msg);         
              }
              
@@ -71,16 +74,16 @@ from date used to fetch audit trail, this will be updated after batch run.
     }                                                              
     private  string formQuery()
     { String query;
-     lstDelegatedAdminUsers =  new List<String>(); 
-     orgWideAddr = new OrgWideEmailAddress();
-     orgWideAddr = [SELECT
-                    Id ,
-                    DisplayName
-                    FROM 
-                    OrgWideEmailAddress
-                    WHERE
-                    DisplayName ='Salesforce Audit Trail'
-                    Limit 1];
+     lstDelegatedAdminUsers =  new List<String>();
+     lstOrgWideAddr = new List<OrgWideEmailAddress>(); 
+     lstOrgWideAddr = [SELECT
+                        Id ,
+                        DisplayName
+                        FROM 
+                        OrgWideEmailAddress
+                        WHERE
+                        DisplayName ='Salesforce Audit Trail'
+                        Limit 1];
      List<Delegated_Administrator__mdt> lstDelegaAdmin = [SELECT  
                                                           Label,                                                              
                                                           Delegated_Group__c,
@@ -104,8 +107,7 @@ from date used to fetch audit trail, this will be updated after batch run.
              }         
          } 
      }   
-     system.debug('lstDelegatedAdminUsers***'+lstDelegatedAdminUsers);
-     system.debug('orgWideAddr***'+orgWideAddr);
+     system.debug('lstDelegatedAdminUsers***'+lstDelegatedAdminUsers);     
      system.debug('lstAdminUserEmail***'+lstAdminUserEmail);
      lstAuditTrail = FCS_Audit_Trail__c.getall().values();
      
