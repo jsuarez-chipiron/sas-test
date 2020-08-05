@@ -209,11 +209,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Error on app</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error on web</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EuroBonus ticket</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Extra seat for comfort</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Face Mask</fullName>
             <default>false</default>
         </values>
         <values>
@@ -246,6 +258,10 @@
         </values>
         <values>
             <fullName>Life time gold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Login%2Fpassword issues</fullName>
             <default>false</default>
         </values>
         <values>
