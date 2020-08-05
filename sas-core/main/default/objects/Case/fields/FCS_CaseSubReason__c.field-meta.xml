@@ -360,6 +360,11 @@
                 <label>Extra seat for comfort</label>
             </value>
             <value>
+                <fullName>Face Mask</fullName>
+                <default>false</default>
+                <label>Face Mask</label>
+            </value>
+            <value>
                 <fullName>Fare concept</fullName>
                 <default>false</default>
                 <label>Fare concept</label>
@@ -1020,6 +1025,11 @@
                 <label>User story created</label>
             </value>
             <value>
+                <fullName>Voucher</fullName>
+                <default>false</default>
+                <label>Voucher</label>
+            </value>
+            <value>
                 <fullName>Voucher_Expire date</fullName>
                 <default>false</default>
                 <label>Voucher_Expire date</label>
@@ -1300,6 +1310,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
+            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
+            <valueName>Face Mask</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Price inquiry</valueName>
         </valueSettings>
         <valueSettings>
@@ -1332,6 +1347,12 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
+            <controllingFieldValue>Rebooking</controllingFieldValue>
+            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
+            <valueName>Consolidation of flights</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
             <valueName>Make cancellation</valueName>
         </valueSettings>
         <valueSettings>
@@ -1341,6 +1362,11 @@
         <valueSettings>
             <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
             <valueName>Refund status</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
+            <controllingFieldValue>Rebooking</controllingFieldValue>
+            <valueName>Travel agent booking</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Cancellation/refund of ticket</controllingFieldValue>
@@ -1559,10 +1585,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Rebooking</controllingFieldValue>
-            <valueName>Consolidation of flights</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rebooking</controllingFieldValue>
             <valueName>EuroBonus ticket</valueName>
         </valueSettings>
         <valueSettings>
@@ -1584,10 +1606,6 @@
         <valueSettings>
             <controllingFieldValue>Rebooking</controllingFieldValue>
             <valueName>Ticket status</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rebooking</controllingFieldValue>
-            <valueName>Travel agent booking</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
@@ -1895,6 +1913,10 @@
         <valueSettings>
             <controllingFieldValue>Products</controllingFieldValue>
             <valueName>Sustainability</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Products</controllingFieldValue>
+            <valueName>Voucher</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel pass</controllingFieldValue>

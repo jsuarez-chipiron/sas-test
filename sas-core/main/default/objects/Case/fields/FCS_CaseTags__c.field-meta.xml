@@ -490,6 +490,81 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Cancellation/refund of ticket</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Changes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Credit card</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Delayed/damaged luggage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Digital support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Missing offer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Name change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Rebooking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Requesting documentation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Special service requests</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Star Award Online</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Travel pass</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
             <valueName>ADM</valueName>
         </valueSettings>
@@ -532,26 +607,12 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>EuroBonus</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
             <valueName>Irregularity / Schedule change</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
             <controllingFieldValue>Sales Information</controllingFieldValue>
             <valueName>Minor</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Name change</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
@@ -587,14 +648,6 @@
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
             <valueName>Ticketing</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Tariff</controllingFieldValue>
@@ -635,35 +688,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Cancellation/refund of ticket</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Changes</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>Claims</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Credit card</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Delayed/damaged luggage</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Error</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -700,11 +725,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Requesting documentation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <valueName>Rules &amp; Informaton</valueName>
         </valueSettings>
@@ -717,17 +737,6 @@
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Sales Information</controllingFieldValue>
             <valueName>Schedule changes</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Special service requests</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Travel pass</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Information</controllingFieldValue>
@@ -872,22 +881,6 @@
         <valueSettings>
             <controllingFieldValue>SASSI Internal</controllingFieldValue>
             <valueName>Login issues</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Digital support</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Missing offer</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Rebooking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Star Award Online</valueName>
         </valueSettings>
     </valueSet>
     <visibleLines>4</visibleLines>
