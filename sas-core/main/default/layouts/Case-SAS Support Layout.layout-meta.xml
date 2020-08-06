@@ -79,6 +79,10 @@
                 <behavior>Edit</behavior>
                 <field>FCS_Language__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Previous_Owner__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
