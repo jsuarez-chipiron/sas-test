@@ -1350,7 +1350,7 @@
                 <stringValue>[EmailMessage].Parent.Owner:User.FirstName +&apos; &apos; +[EmailMessage].Parent.Owner:User.LastName </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_16_myRule_15_A1_7444928248</name>
+        <name>formula_16_myRule_15_A1_4374186342</name>
         <dataType>String</dataType>
         <expression>{!myVariable_current.Parent.Owner:User.FirstName} +&apos; &apos; +{!myVariable_current.Parent.Owner:User.LastName}</expression>
     </formulas>
@@ -1361,7 +1361,7 @@
                 <stringValue>[EmailMessage].Parent.Owner:User.FirstName +&apos; &apos; +[EmailMessage].Parent.Owner:User.LastName </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_19_myRule_18_A1_8372955967</name>
+        <name>formula_19_myRule_18_A1_1452205362</name>
         <dataType>String</dataType>
         <expression>{!myVariable_current.Parent.Owner:User.FirstName} +&apos; &apos; +{!myVariable_current.Parent.Owner:User.LastName}</expression>
     </formulas>
@@ -1372,7 +1372,7 @@
                 <stringValue>[EmailMessage].Parent.Owner:User.FirstName +&apos; &apos;+[EmailMessage].Parent.Owner:User.LastName </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_22_myRule_21_A1_3474316135</name>
+        <name>formula_22_myRule_21_A1_9120089303</name>
         <dataType>String</dataType>
         <expression>{!myVariable_current.Parent.Owner:User.FirstName} +&apos; &apos;+{!myVariable_current.Parent.Owner:User.LastName}</expression>
     </formulas>
@@ -1383,11 +1383,11 @@
                 <stringValue>[EmailMessage].Parent.Owner:User.FirstName  + &apos; &apos;+[EmailMessage].Parent.Owner:User.LastName </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_25_myRule_24_A1_2381276143</name>
+        <name>formula_25_myRule_24_A1_7347582138</name>
         <dataType>String</dataType>
         <expression>{!myVariable_current.Parent.Owner:User.FirstName}  + &apos; &apos;+{!myVariable_current.Parent.Owner:User.LastName}</expression>
     </formulas>
-    <interviewLabel>Email_Message-4_InterviewLabel</interviewLabel>
+    <interviewLabel>Email_Message-5_InterviewLabel</interviewLabel>
     <label>Email Message</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -1694,7 +1694,7 @@
             </processMetadataValues>
             <field>Previous_Owner__c</field>
             <value>
-                <elementReference>formula_16_myRule_15_A1_7444928248</elementReference>
+                <elementReference>formula_16_myRule_15_A1_4374186342</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1852,7 +1852,7 @@
             </processMetadataValues>
             <field>Previous_Owner__c</field>
             <value>
-                <elementReference>formula_19_myRule_18_A1_8372955967</elementReference>
+                <elementReference>formula_19_myRule_18_A1_1452205362</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2093,7 +2093,7 @@
             </processMetadataValues>
             <field>Previous_Owner__c</field>
             <value>
-                <elementReference>formula_22_myRule_21_A1_3474316135</elementReference>
+                <elementReference>formula_22_myRule_21_A1_9120089303</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2180,6 +2180,48 @@
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Owner ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue>Group;User</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideLabel</name>
+                <value>
+                    <stringValue>STOPQSASSIInternal</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Queue</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>OwnerId</field>
+            <value>
+                <stringValue>00G1j000003T1gYEAS</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
                     <stringValue>String</stringValue>
                 </value>
             </processMetadataValues>
@@ -2209,7 +2251,7 @@
             </processMetadataValues>
             <field>Previous_Owner__c</field>
             <value>
-                <elementReference>formula_25_myRule_24_A1_2381276143</elementReference>
+                <elementReference>formula_25_myRule_24_A1_7347582138</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
