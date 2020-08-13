@@ -5,6 +5,17 @@
     <businessProcess>Default</businessProcess>
     <label>Support</label>
     <picklistValues>
+        <picklist>Consent__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
         <values>
             <fullName>Cancellation%2Frefund of ticket</fullName>
@@ -43,7 +54,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Other</fullName>
+            <fullName>New booking</fullName>
             <default>false</default>
         </values>
         <values>
@@ -126,11 +137,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Corona virus</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Corona virus asian customer</fullName>
+            <fullName>Consolidation of flights</fullName>
             <default>false</default>
         </values>
         <values>
@@ -163,6 +170,10 @@
         </values>
         <values>
             <fullName>EuroBonus ticket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Face Mask</fullName>
             <default>false</default>
         </values>
         <values>
