@@ -64,14 +64,24 @@ from date used to fetch audit trail, this will be updated after batch run.
         {
             try {
                 Messaging.sendEmail(messages); 
-                lstAuditTrail[0].From_Date__c = System.now();  
-                Update lstAuditTrail;  
             } catch (Exception e) {
                 System.debug('Exception'+e);
             }
             
         }                                                       
-    }                                                              
+    } 
+    global override void finishOverridable(Database.BatchableContext bc)
+ {
+      try{
+        lstAuditTrail[0].From_Date__c = System.now();  
+        Update lstAuditTrail;  
+        }
+    catch(Exception e)
+     {
+       System.debug('Exception'+e);
+     }   
+ }
+                                                                 
     private  string formQuery()
     { String query;
      lstDelegatedAdminUsers =  new List<String>();
