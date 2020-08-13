@@ -6,6 +6,7 @@
     <inlineHelpText>The response message from the customer. Separated by comma if multiple with the most recent response first.</inlineHelpText>
     <label>Response</label>
     <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>TextArea</type>
 </CustomField>
