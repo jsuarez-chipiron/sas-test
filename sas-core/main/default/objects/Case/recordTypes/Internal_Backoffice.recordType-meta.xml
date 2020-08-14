@@ -5,6 +5,17 @@
     <businessProcess>Internal%2FBackoffice</businessProcess>
     <label>Internal/Backoffice</label>
     <picklistValues>
+        <picklist>Consent__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
         <values>
             <fullName>ADM</fullName>
@@ -187,6 +198,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>OCC Daily Reports</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
             <default>false</default>
         </values>
@@ -224,6 +239,10 @@
         </values>
         <values>
             <fullName>Reservation issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Agent News%2FFlash</fullName>
             <default>false</default>
         </values>
         <values>
@@ -555,6 +574,10 @@
         </values>
         <values>
             <fullName>Upgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher</fullName>
             <default>false</default>
         </values>
         <values>
