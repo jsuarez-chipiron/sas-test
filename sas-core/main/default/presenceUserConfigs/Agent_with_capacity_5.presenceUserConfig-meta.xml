@@ -3,7 +3,7 @@
     <assignments>
         <profiles>
             <profile>Admin</profile>
-            <profile>agent</profile>
+            <profile>Vendor</profile>
             <profile>business user</profile>
         </profiles>
     </assignments>
