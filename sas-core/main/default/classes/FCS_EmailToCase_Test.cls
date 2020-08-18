@@ -260,6 +260,7 @@ private class FCS_EmailToCase_Test {
         cases[0].FCS_CaseReason__c = 'Ancillary';
         cases[0].FCS_CaseSubReason__c = 'Meals'; 
         cases[0].Status = 'Closed';
+        cases[0].Origin = 'Email';
         update cases[0];
         
         //SKicka till email 
