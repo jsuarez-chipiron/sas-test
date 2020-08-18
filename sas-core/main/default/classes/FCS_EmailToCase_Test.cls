@@ -251,7 +251,7 @@ private class FCS_EmailToCase_Test {
         Tests the Process on Email Message where sending a new Email to a Closed Case will re-open the Case and set in a new status.
         @author Ludvig Wälimaa - Deloitte
     */
-    /* commenting because Process is failing need to investigate further.
+   
     @isTest
     static void setNewResponseStatusOnCase(){
         List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
@@ -277,5 +277,5 @@ private class FCS_EmailToCase_Test {
         System.assertEquals('New Response', c.Status);
     }
 
-*/
+
  }
