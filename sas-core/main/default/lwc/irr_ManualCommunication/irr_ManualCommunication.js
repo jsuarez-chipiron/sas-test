@@ -269,7 +269,7 @@ export default class IRR_ManualCommunication extends LightningElement {
             let eventParameters;
             switch (retrievalMode) {
                 case "FLIGHT_REFERENCE":
-                    eventParameters = {flightId: parameters.flightId};
+                    eventParameters = {flightIds: parameters.flightIds};
                     result = await getFlightPassengerInfos(eventParameters);
                     this.filterParameters = {'thisSegment.status': ['Confirmed']};
                     break;

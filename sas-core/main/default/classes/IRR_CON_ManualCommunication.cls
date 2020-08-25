@@ -30,13 +30,20 @@ public class IRR_CON_ManualCommunication {
     }
 
     @AuraEnabled
-    public static List<IRR_MOD_PassengerInfo> getFlightPassengerInfos(String flightId) {
+    public static List<IRR_MOD_PassengerInfo> getFlightPassengerInfos(String flightIds) {
+        String currentFlightId;
         try {
-            return IRR_SVC_TedsService.getPassengerInfosForFlight(flightId);
+            List<String> splitFlightIds = flightIds.split(',');
+            List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
+            for (String flightId : splitFlightIds) {
+                currentFlightId = flightId;
+                passengerInfos.addAll(IRR_SVC_TedsService.getPassengerInfosForFlight(flightId));
+            }
+            return passengerInfos;
         }
         catch (Exception e) {
-            AuraHandledException ahe = new AuraHandledException(e.getMessage());
-            ahe.setMessage(e.getMessage());
+            AuraHandledException ahe = new AuraHandledException(currentFlightId + ' - ' + e.getMessage());
+            ahe.setMessage(currentFlightId + ' - ' + e.getMessage());
             throw ahe;
         }
     }
