@@ -33,4 +33,16 @@ private class FCS_EmailMessageHandler_Test {
 
         System.assertEquals('S', [SELECT Id, HtmlBody, TextBody, Incoming FROM EmailMessage LIMIT 1].HtmlBody);
     }
+
+    /**
+     * Test Email-to-case forwarding internalley.
+     **/
+    @isTest
+    static void forwardEmail() {
+        String TextBody = 'Forwarding internalley--------------- Forwarded Message ---------------';
+        insert new EmailMessage(HtmlBody = 'SSSSSSSSSSS', ToAddress = 'test@sas.se', TextBody = TextBody,
+            Incoming = true, Subject = 'Test Auto forward Email[ ref:_00D376q6G._5006548mY2:ref ]');
+
+    }
+
 }
