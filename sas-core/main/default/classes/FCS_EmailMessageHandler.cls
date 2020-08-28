@@ -72,18 +72,18 @@ public with sharing class FCS_EmailMessageHandler extends C_TriggerHandler {
         List < EmailServicesAddress > lstEmailtoCaseAddres = new List < EmailServicesAddress > ();
         Map < String, String > mapEmailAddrrstoServiceAdre = new Map < String, String > ();
         lstEmailToCaseAddres = [SELECT
-                                Id,
-                                DeveloperName,
-                                EmailDomainName,
-                                FunctionId,
-                                IsActive,
-                                LocalPart
-                                FROM
-                                EmailServicesAddress
-                                WHERE
-                                Function.FunctionName = 'EmailToCase'
-                                AND
-                                IsActive = true
+            Id,
+            DeveloperName,
+            EmailDomainName,
+            FunctionId,
+            IsActive,
+            LocalPart
+            FROM
+            EmailServicesAddress
+            WHERE
+            Function.FunctionName = 'EmailToCase'
+            AND
+            IsActive = true
         ];
         if (!lstEmailToCaseAddres.isEmpty()) {
             for (EmailServicesAddress emailaddr: lstEmailToCaseAddres) {
@@ -94,8 +94,9 @@ public with sharing class FCS_EmailMessageHandler extends C_TriggerHandler {
             mapEmailAddrrstoServiceAdre.put('test', 'test@sas.se');
         }
         for (EmailMessage msg: newEmailList) {
-            if (msg.TextBody.contains('Forwarded Message')) {
-                if (msg.subject.contains('[ ref:') && msg.subject.contains(':ref ]')) {
+
+            if (msg.TextBody.contains != null && msg.TextBody.contains('Forwarded Message')) {
+                if (msg.subject.contains != null && msg.subject.contains('[ ref:') && msg.subject.contains(':ref ]')) {
                     threadId = '[ ref:' + msg.Subject.substringBetween('[ ref:', ':ref ]') + ':ref ]';
                 } else if (msg.TextBody.contains('[ ref:') && msg.TextBody.contains(':ref ]')) {
                     threadId = '[ ref:' + msg.TextBody.substringBetween('[ ref:', ':ref ]') + ':ref ]';
@@ -108,14 +109,13 @@ public with sharing class FCS_EmailMessageHandler extends C_TriggerHandler {
                     singleEmailMess.subject = Subject;
                     singleEmailMess.PlainTextBody = TextBody;
                     singleEmailMess.toAddresses = new string[] {
-                    mapEmailAddrrstoServiceAdre.get(emailAddrs)
+                        mapEmailAddrrstoServiceAdre.get(emailAddrs)
                     };
                     lstSingleEmalMessages.add(singleEmailMess);
                     lstDeleteEmailMessage.add(new EmailMessage(Id = msg.Id));
                 }
 
             }
-
         }
         if (!lstSingleEmalMessages.isEmpty()) {
             Messaging.sendEmail(lstSingleEmalMessages);
