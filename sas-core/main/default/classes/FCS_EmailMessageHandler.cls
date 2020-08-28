@@ -95,8 +95,8 @@ public with sharing class FCS_EmailMessageHandler extends C_TriggerHandler {
         }
         for (EmailMessage msg: newEmailList) {
 
-            if (msg.TextBody.contains != null && msg.TextBody.contains('Forwarded Message')) {
-                if (msg.subject.contains != null && msg.subject.contains('[ ref:') && msg.subject.contains(':ref ]')) {
+            if (msg.TextBody != null && msg.TextBody.contains('Forwarded Message')) {
+                if (msg.subject != null && msg.subject.contains('[ ref:') && msg.subject.contains(':ref ]')) {
                     threadId = '[ ref:' + msg.Subject.substringBetween('[ ref:', ':ref ]') + ':ref ]';
                 } else if (msg.TextBody.contains('[ ref:') && msg.TextBody.contains(':ref ]')) {
                     threadId = '[ ref:' + msg.TextBody.substringBetween('[ ref:', ':ref ]') + ':ref ]';
