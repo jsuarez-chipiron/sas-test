@@ -17,7 +17,7 @@
             </criteriaItems>
             <notifyCcRecipients>false</notifyCcRecipients>
             <replyToEmail>salesforce_uat4@sas.se</replyToEmail>
-            <senderEmail>madis.tepp@sas.se</senderEmail>
+            <senderEmail>salesforce_noreply@sas.se</senderEmail>
             <senderName>Functional Product Support</senderName>
             <template>unfiled$public/internal_cs_auto_reply_template</template>
         </ruleEntry>
@@ -34,7 +34,7 @@
             </criteriaItems>
             <notifyCcRecipients>false</notifyCcRecipients>
             <replyToEmail>salesforce_uat2@sas.se</replyToEmail>
-            <senderEmail>madis.tepp@sas.se</senderEmail>
+            <senderEmail>salesforce_noreply@sas.se</senderEmail>
             <senderName>Salesinformation (STOPQ)</senderName>
             <template>unfiled$public/internal_cs_auto_reply_template</template>
         </ruleEntry>
@@ -51,7 +51,7 @@
             </criteriaItems>
             <notifyCcRecipients>false</notifyCcRecipients>
             <replyToEmail>salesforce_uat3@sas.se</replyToEmail>
-            <senderEmail>madis.tepp@sas.se</senderEmail>
+            <senderEmail>salesforce_noreply@sas.se</senderEmail>
             <senderName>SASSI Internal</senderName>
             <template>unfiled$public/internal_cs_auto_reply_template</template>
         </ruleEntry>
@@ -68,7 +68,7 @@
             </criteriaItems>
             <notifyCcRecipients>false</notifyCcRecipients>
             <replyToEmail>salesforce_uat@sas.se</replyToEmail>
-            <senderEmail>madis.tepp@sas.se</senderEmail>
+            <senderEmail>salesforce_noreply@sas.se</senderEmail>
             <senderName>PQ Commercial Procedures and Tariff Support</senderName>
             <template>unfiled$public/internal_cs_auto_reply_template</template>
         </ruleEntry>
