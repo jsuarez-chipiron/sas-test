@@ -86,6 +86,7 @@
                         </div>
                     </lightning-tab>
                     <lightning-tab
+                            if:false={hideFlightIdTabs}
                             class="no-padding"
                             value="DELAY"
                             label="Delay"
@@ -133,6 +134,7 @@
                         </lightning-layout>
                     </lightning-tab>
                     <lightning-tab
+                            if:false={hideFlightIdTabs}
                             class="no-padding"
                             value="NEW_INFO"
                             label="New Info"
@@ -180,6 +182,7 @@
                         </lightning-layout>
                     </lightning-tab>
                     <lightning-tab
+                            if:false={hideFlightIdTabs}
                             class="no-padding"
                             value="CANCEL"
                             label="Cancellation"

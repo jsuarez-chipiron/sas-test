@@ -126,7 +126,7 @@ public without sharing class MCENS_EnsEventTriggerHandler {
         Map<String,IRR_CommunicationLog__c> comLogMap = new Map<String,IRR_CommunicationLog__c>();
         if(!messageKeys.isEmpty() || !compositeIds.isEmpty()){
             try{
-                comLogList = [SELECT Id,IRR_MessageKey__c,IRR_CompositeId__c FROM IRR_CommunicationLog__c WHERE IRR_MessageKey__c IN :messageKeys OR IRR_CompositeId__c IN :compositeIds FOR UPDATE];
+                comLogList = [SELECT Id, IRR_MessageKey__c, IRR_CompositeId__c, IRR_Status__c FROM IRR_CommunicationLog__c WHERE IRR_MessageKey__c IN :messageKeys OR IRR_CompositeId__c IN :compositeIds FOR UPDATE];
             }
             catch(DmlException e){
                 throwRetryableException('Cannot obtain lock on Communication Logs');
@@ -147,7 +147,12 @@ public without sharing class MCENS_EnsEventTriggerHandler {
                         comLog.IRR_CompositeId__c = evt.compositeId;
                         comLogMap.put(evt.compositeId,comLog);
                     }
-                    evt.setStatus(comLog);
+                    //Evaluate Integer value of new and old Status to avoid changing Status to a previous value
+                    Integer oldStatusValue = IRR_DOM_CommunicationLogs.STATUS_VALUE.get(comLog.IRR_Status__c);
+                    Integer newStatusValue = IRR_DOM_CommunicationLogs.STATUS_VALUE.get(evt.getStatus());
+                    if (oldStatusValue == null || newStatusValue == null || newStatusValue > oldStatusValue) {
+                        evt.setStatus(comLog);
+                    }
                 }
                 else {                
                     notFoundErrors.add('Cannot find matching communication log: '+evt.messageKey+'/'+evt.compositeId);
@@ -262,6 +267,8 @@ public without sharing class MCENS_EnsEventTriggerHandler {
          * @param log The communication log record of which to set the 
          */
         abstract void setStatus(IRR_CommunicationLog__c log);
+
+        abstract String getStatus();
     }
 
     /**
@@ -305,6 +312,10 @@ public without sharing class MCENS_EnsEventTriggerHandler {
         override void setStatus(IRR_CommunicationLog__c log){
             log.IRR_Status__c = 'Sent';
         }
+
+        override String getStatus() {
+            return 'Sent';
+        }
     }
 
     /**
@@ -326,6 +337,10 @@ public without sharing class MCENS_EnsEventTriggerHandler {
             log.IRR_ErrorMessage__c = ((String)this.infoMap.get('statusMessage')).abbreviate(2000);
             log.IRR_ErrorReason__c = ((String)this.infoMap.get('reason')).abbreviate(2000);
         }
+
+        override String getStatus() {
+            return 'Error';
+        }
     }
     /**
      * Event representing a bounced email
@@ -345,6 +360,10 @@ public without sharing class MCENS_EnsEventTriggerHandler {
             log.IRR_StatusCode__c = -1;
             log.IRR_ErrorMessage__c = (((String)this.infoMap.get('bounceCode')) +': '+ ((String)this.infoMap.get('bounceMessage'))).abbreviate(2000);
             log.IRR_ErrorReason__c = ((String)this.infoMap.get('smtpReason')).abbreviate(2000);
+        }
+
+        override String getStatus() {
+            return 'Bounced';
         }
     }
 
@@ -377,6 +396,10 @@ public without sharing class MCENS_EnsEventTriggerHandler {
         override void setStatus(IRR_CommunicationLog__c log){
             log.IRR_Status__c = 'Opened';
         }
+
+        override String getStatus() {
+            return 'Opened';
+        }
     }
 
     /**
@@ -394,6 +417,10 @@ public without sharing class MCENS_EnsEventTriggerHandler {
          */
         override void setStatus(IRR_CommunicationLog__c log){
             log.IRR_Status__c = 'Sent';
+        }
+
+        override String getStatus() {
+            return 'Sent';
         }
     }
 
@@ -414,6 +441,10 @@ public without sharing class MCENS_EnsEventTriggerHandler {
             log.IRR_Status__c = 'Error';
             log.IRR_StatusCode__c = Decimal.valueOf((String)this.infoMap.get('statusCode'));
             log.IRR_ErrorReason__c = ((String)this.infoMap.get('reason')).abbreviate(2000);
+        }
+
+        override String getStatus() {
+            return 'Error';
         }
     }
 }
