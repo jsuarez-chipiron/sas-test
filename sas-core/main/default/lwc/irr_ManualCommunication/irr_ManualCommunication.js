@@ -76,6 +76,15 @@ export default class IRR_ManualCommunication extends LightningElement {
         const _ = this.init();
     }
 
+    async init() {
+        try {
+            this.templatesBySendMode = await getManualTemplatesBySendMode();
+        }
+        catch (e) {
+            this.handleError(e, true);
+        }
+    }
+
     get noPassengersFoundText() {
         return this.passengerResult.length === 0 ?
             'No passengers found, or flight does not exist. Please check Flight ID.' : 'No passengers matching filter';
@@ -89,15 +98,6 @@ export default class IRR_ManualCommunication extends LightningElement {
         return this.leftPanelTab === "LEFT_FILTER" ? "utility:filterList" : "utility:preview";
     }
 
-    async init() {
-        try {
-            this.templatesBySendMode = await getManualTemplatesBySendMode();
-        }
-        catch (e) {
-            this.handleError(e, true);
-        }
-    }
-
     get tableHeading() {
         if (Object.keys(this.retrieveParameters).length === 0) return "No filters active";
         const params = Object.values(this.retrieveParameters).join(' - ');
@@ -109,6 +109,16 @@ export default class IRR_ManualCommunication extends LightningElement {
             this.additionalRecipients.filter(r => r.phoneNumber || r.emailAddress).length : 0;
         const recipients = this.selectedRows ? this.selectedRows.length : 0;
         return additionalRecipients + recipients;
+    }
+
+    handleGlobalKeyUp(event) {
+        if (event.key === 'Escape') {
+            if (this.errors && this.errors.length > 0 && !this.criticalError) this.clearErrors();
+            else if (this.showConfirmation) this.handleHideConfirmEvent();
+            else if (this.showRecipientModal) this.template.querySelector('c-irr_-recipient-modal').handleCancel();
+            else if (this.showSuccess) this.handleHideSuccessEvent();
+            else if (!this.showRetrieve) this.handleResetEvent();
+        }
     }
 
     handleTabSwitch(event) {
@@ -287,6 +297,8 @@ export default class IRR_ManualCommunication extends LightningElement {
             if (eventParameters) this.retrieveParameters = eventParameters;
             if (result) this.passengerResult = result.map(item => tableUtil.flatten(item));
             this.processTable();
+            //Focus container div to capture keyboard events
+            this.template.querySelector('div[focusable=""]').focus();
             this.showRetrieve = false;
             this.handleLoad(true);
         }
