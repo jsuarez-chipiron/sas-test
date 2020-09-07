@@ -72,7 +72,7 @@ export default class irr_RetrievePanel extends LightningElement {
     constructFlightIds() {
         this.retrieveParameters.flightIds = this.flights.map(flight => {
             const { flightNumber, departureDate, stationDeparture, stationArrival } = flight;
-            return `SK${flightNumber}-${departureDate.replace(/-/g,'')}-${stationDeparture}-${stationArrival}`;
+            return `SK${flightNumber.padStart(4, '0')}-${departureDate.replace(/-/g,'')}-${stationDeparture}-${stationArrival}`;
         }).join(',');
     }
 

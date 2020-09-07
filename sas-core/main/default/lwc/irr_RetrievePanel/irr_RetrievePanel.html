@@ -46,9 +46,9 @@
                                                     name="flightNumber"
                                                     label="Flight Number"
                                                     data-tab-group="FLIGHT_REFERENCE"
-                                                    pattern="([0-9]{4})"
+                                                    pattern="^([0-9]{1,4})$"
                                                     required
-                                                    message-when-pattern-mismatch="Input format 1238"
+                                                    message-when-pattern-mismatch="Input 1 to 4 digits"
                                                     onchange={handleFlightChange}>
                                             </lightning-input>
                                         </lightning-layout-item>

@@ -39,9 +39,10 @@
 	<!-- 2020-05-26 Delete CustomMetadata Thippeswamy Aravinda -->
 	<types>
 		<members>AD_RolePermission.SAS_Analytic_User</members>
+		<members>AD_RolePermission.SYKES_Agent</members>
+		<members>AD_RolePermission.SUTHERLAND_Agent</members>
 		<name>CustomMetadata</name>
 	</types>
-
 	<!-- 2020-02-20 Delete field when adding namespace Sanna Sörberg -->
 	<types>
 		<members>Case.CaseTags__c</members>

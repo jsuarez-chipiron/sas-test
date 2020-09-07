@@ -56,6 +56,7 @@ export default class IRR_RecipientModal extends LightningElement {
         this.recipients.push({ id: `rec${idNumber}`});
     }
 
+    @api
     handleCancel() {
         this.recipients = JSON.parse(JSON.stringify(this.selectedRecipients));
         const event = new CustomEvent('hiderecipientmodal');
