@@ -56,4 +56,19 @@
         <default>false</default>
         <label>Functional Product Support</label>
     </standardValue>
+    <standardValue>
+        <fullName>Pandion SE</fullName>
+        <default>false</default>
+        <label>Pandion SE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pandion NO</fullName>
+        <default>false</default>
+        <label>Pandion NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pandion DK</fullName>
+        <default>false</default>
+        <label>Pandion DK</label>
+    </standardValue>
 </StandardValueSet>
