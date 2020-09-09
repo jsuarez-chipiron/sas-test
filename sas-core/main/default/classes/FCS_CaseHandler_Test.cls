@@ -9,8 +9,8 @@ private class FCS_CaseHandler_Test {
 
     private static final String CASE_STATUS_NEW= 'New';
     /**
-   Test method for generation of test data used in more than one method
-  */
+       Test method for generation of test data used in more than one method
+   */
     @TestSetup static void createTestUserSetup(){
         PermissionSet socialMediaPermission = [SELECT Id FROM PermissionSet WHERE Name = 'SocialMediaUser'];
         Profile agentProfile = [SELECT Id FROM Profile WHERE Name = 'Agent'];
@@ -47,7 +47,9 @@ private class FCS_CaseHandler_Test {
          retry=false;
          try
          {
+           System.debug('before insert');
            insert newCases;
+           System.debug('After Insert');
          }
          Catch(Exception lockerror)
          { 
@@ -80,7 +82,8 @@ private class FCS_CaseHandler_Test {
         newCase[0].FCS_CaseTags__c = 'TestTag1;TestTag2';
         newCase[0].Subject = 'TestCase';
         insert newCase;
-        Case c = [SELECT Id FROM CASE WHERE Subject = 'TestCase'];
+        Case c = [SELECT Id,Subject FROM CASE where Subject = 'TestCase'];
+        System.debug('Subject****'+c.Subject);
         List<FCS_CaseTag__c> ctList = [SELECT Id, FCS_CaseTag__c, FCS_Type__c FROM FCS_CaseTag__c WHERE FCS_CaseId__c = :c.Id];
         Map<String, List<FCS_CaseTag__c>> typeToTags = new Map<String, List<FCS_CaseTag__c>>();
         for (FCS_CaseTag__c ct :ctList) {
@@ -99,8 +102,9 @@ private class FCS_CaseHandler_Test {
         System.AssertEquals(2, typeToTags.get(FCS_CaseHandler.ADDITIONAL_TAG).size());
         System.AssertEquals(4, ctList.size());
     }
-
-    //Test if case tag records is updated when a case is updated
+    /**
+       Test if case tag records is updated when a case is updated
+    */   
     @isTest
     static void updateCaseTagRecords() {
         createTestData();
@@ -131,8 +135,9 @@ private class FCS_CaseHandler_Test {
         System.AssertEquals(3, ctList.Size());
     }
 
-
-    //Test if case tag records is deleted if case is deleted
+    /**
+       Test if case tag records is deleted if case is deleted
+    */
     @isTest
     static void deleteCaseTagRecords() {
         createTestData();
@@ -172,7 +177,7 @@ private class FCS_CaseHandler_Test {
 
     /**
       Tests that it is not possible to create a case (as tag eg. in status closed) assigned to the owner of the source post if owner is a user
-  */
+   */
     @isTest static void errorAddSocialMediaTag(){
         createTestData();
         List<SocialPost> socialPosts = [SELECT Id FROM SocialPost LIMIT 1];
@@ -189,8 +194,8 @@ private class FCS_CaseHandler_Test {
         System.assert(result.isSuccess() == false);
         System.assert(result.getErrors().size() == 1);
     }
-
-    /**
+  
+    /**  
        Test method for ValidateCaseTags - method check that you can not add a case tag with the same value as the case reason
        Test not to be able to create case with case reason and case tag with same value
     */
@@ -215,7 +220,7 @@ private class FCS_CaseHandler_Test {
 
     /**
      Test method for ValidateCaseTags - method check that you can not add a case tag with the same value as the case reason on update
-  */
+    */
     @isTest
     static void testValidateCaseTagsOnUpdate() {
         createTestData();
@@ -230,8 +235,8 @@ private class FCS_CaseHandler_Test {
     }
 
     /**
-    Test Method to see if social posts are updated correctly if new case is created from there (not closed).
- */
+        Test Method to see if social posts are updated correctly if new case is created from there (not closed).
+    */
     @isTest
     static void testUpdateSocialPosts() {
         createTestData();
@@ -258,4 +263,26 @@ private class FCS_CaseHandler_Test {
 
         delete cases;
     }
+    
+    /**
+        Test EuroBonus Account tagged to Case
+    */
+    @isTest
+    static void testAssignEurobonusAccountToCase()
+    {
+      List<Account> lstAcc = FCS_TestDataFactory.createFrequentFlyers(1);
+      lstAcc[0].FCS_EBNumber__c = '123789';      
+       insert lstAcc;
+       
+       Case cse = new Case();
+       cse.Subject = 'TestEurobonusNumber';
+       cse.SuppliedEmail = lstAcc[0].PersonEmail;
+       
+       insert cse;
+       
+       Case cse1 = [Select Id,FCS_EBNumber__c From Case limit 1];            
+       System.AssertEquals(lstAcc[0].FCS_EBNumber__c,cse1.FCS_EBNumber__c);      
+          
+    }
+    
 }
