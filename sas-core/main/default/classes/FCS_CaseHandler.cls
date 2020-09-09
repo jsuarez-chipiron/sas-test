@@ -214,7 +214,10 @@ public class FCS_CaseHandler extends C_TriggerHandler {
         List < Account > lstAccount = New List < Account > ();
         Map < String, Account > mapEmailToEurobonsAcc = new Map < String, Account > ();
         for (Case cse: newCaseList) {
-            lstEmailAddress.add(cse.SuppliedEmail);
+            if(cse.SuppliedEmail != null && cse.SuppliedEmail != '')
+                {
+                    lstEmailAddress.add(cse.SuppliedEmail);
+                }
         }
         lstAccount = [SELECT
                         Id,
