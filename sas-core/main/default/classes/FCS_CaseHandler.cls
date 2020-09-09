@@ -46,7 +46,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
    */
     public override void beforeInsert() {
         assignOwnerFromSoMe(newCaseList);
-        //assignEurobonusAccountToCase(newCaseList);
+        assignEurobonusAccountToCase(newCaseList);
         validateCaseTags(newCaseList);
     }
     /**
