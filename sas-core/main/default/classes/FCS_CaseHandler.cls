@@ -211,43 +211,27 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     }
     public static void assignEurobonusAccountToCase(List < Case > newCaseList) {
         List < String > lstEmailAddress = new List < String > ();
-        List < Account > lstAccount = New List < Account > ();
+        Account acc;
         Map < String, Account > mapEmailToEurobonsAcc = new Map < String, Account > ();
         for (Case cse: newCaseList) {
-            if(cse.SuppliedEmail != null && cse.SuppliedEmail != '')
-                {
+            if (cse.Origin == 'Pandion SE' || cse.Origin == 'Pandion NO' || cse.Origin == 'Pandion DK') {
+                if (cse.SuppliedEmail != null && cse.SuppliedEmail != '') {
                     lstEmailAddress.add(cse.SuppliedEmail);
                 }
-        }
-        lstAccount = [SELECT
-                        Id,
-                        Name,
-                        PersonEmail,
-                        FCS_EBNumber__c
-                        FROM
-                        Account
-                        Where
-                        IsPersonAccount = true
-                        AND
-                        PersonEmail =: lstEmailAddress
-                    ];
-
-        if (!lstAccount.isEmpty()) {
-            for (Account acc: lstAccount) {
-                mapEmailToEurobonsAcc.put(acc.PersonEmail, acc);
             }
-        }
 
-        if (mapEmailToEurobonsAcc.size() > 0) {
+        }
+        if (!lstEmailAddress.isEmpty()) {
+            acc = FCS_IdentifyCustomerController.findCustomer('EmailPersonal__c', lstEmailAddress[0]);
+        }
+        if (acc != null) {
             for (Case cse: newCaseList) {
-                if (mapEmailToEurobonsAcc.containsKey(cse.SuppliedEmail)) {
-                    cse.FCS_EBNumber__c = mapEmailToEurobonsAcc.get(cse.SuppliedEmail).FCS_EBNumber__c;
-                    cse.AccountId = mapEmailToEurobonsAcc.get(cse.SuppliedEmail).Id;
+                if (cse.Origin == 'Pandion SE' || cse.Origin == 'Pandion NO' || cse.Origin == 'Pandion DK') {
+                    cse.FCS_EBNumber__c = acc.FCS_EBNumber__c;
+                    cse.AccountId = acc.Id;
                 }
             }
         }
-
-
     }
 
 }
