@@ -265,7 +265,8 @@ private class FCS_CaseHandler_Test {
     }
     
     /**
-        Test EuroBonus Account tagged to Case
+        test negative scenario of EuroBonus Account tagged to Case
+        postive scenario covered in CSharkIntegrationService_Test
     */
     @isTest
     static void testAssignEurobonusAccountToCase()
@@ -277,12 +278,15 @@ private class FCS_CaseHandler_Test {
        Case cse = new Case();
        cse.Subject = 'TestEurobonusNumber';
        cse.SuppliedEmail = lstAcc[0].PersonEmail;
+       cse.origin ='Pandion DK';
        
        insert cse;
        
        Case cse1 = [Select Id,FCS_EBNumber__c From Case limit 1];            
-       System.AssertEquals(lstAcc[0].FCS_EBNumber__c,cse1.FCS_EBNumber__c);      
+       System.AssertEquals(null,cse1.FCS_EBNumber__c);
+       
           
     }
+   
     
 }

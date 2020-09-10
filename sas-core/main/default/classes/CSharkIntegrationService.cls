@@ -31,7 +31,7 @@ public with sharing class   CSharkIntegrationService {
             'EuroBonusNumber',
             'TravelPassAccountNumber',
             'ExternalId',
-            'HomeEMail'
+            'HomeE-mail'
     };
 
     /**
@@ -46,17 +46,32 @@ public with sharing class   CSharkIntegrationService {
     public static List<Map<String, Object>> getCustomer(SearchType searchEngagementType, Object engagementSearchKey){
         //TODO Extend class with method for C-Shark service CustomersGet. Wrap CustomerGet and CustomersGet in method
         // and determine which method to call based on provided SearchType
-
         List<Map<String, Object>> customerRows = new List<Map<String, Object>>();
-
         Http http = new Http();
-        HttpRequest request = createAPIMRequest(OperationName.CustomerGet);
-        request.setBody(generateCustomerGetBody(searchEngagementType, engagementSearchKey));
+        HttpRequest request;
+        String engagementSearchType = getSearchTermBySearchType(searchEngagementType);
+        if(engagementSearchType == 'Email')
+        {
+           request = createAPIMRequest(OperationName.CustomersGet);
+           request.setBody(generateCustomersGetBody(engagementSearchType, engagementSearchKey));
+        }
+        else
+        {
+            request = createAPIMRequest(OperationName.CustomerGet);
+            request.setBody(generateCustomerGetBody(engagementSearchType, engagementSearchKey));
+        }
 
         HttpResponse response = http.send(request);
 
         if(response.getStatusCode() == 200){
+           if(engagementSearchType == 'Email')
+           {
+            customerRows = CSharkResponseParser.parseCustomersGetResponse(response.getBody());
+           }
+           else
+           {
             customerRows = CSharkResponseParser.parseCustomerGetResponse(response.getBody());
+           } 
         } else {
             C_Log.HttpData httpDataLog = C_Log.generateLogHttpData(request);
             httpDataLog.headers = request.getHeader('Content-Type');
@@ -103,16 +118,16 @@ public with sharing class   CSharkIntegrationService {
      * @param SearchKey The value to search for, e.g. '554422441'
      * @return Request body string in XML-format.
      */
-    private static String generateCustomersGetBody(SearchType searchType, Object SearchKey){
+    private static String generateCustomersGetBody(String searchTerm, Object SearchKey){
         //TODO Create switch statement like in CustomerGet request with valid search terms for this operation
         String requestBody = '<?xml version="1.0" encoding="utf-8"?>' +
                 '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' +
                 '<Body>' +
-                '<CustomerGet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1">' +
-                '<SearchType>' + searchType +'</SearchType>' +
+                '<CustomersGet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1">' +
+                '<SearchType>' + searchTerm +'</SearchType>' +
                 '<SearchKey>' + SearchKey +'</SearchKey>' +
                 '<FirstName>' + '' +'</FirstName>' +
-                '</CustomerGet>' +
+                '</CustomersGet>' +
                 '</Body>' +
                 '</Envelope>';
         return requestBody;
@@ -126,29 +141,7 @@ public with sharing class   CSharkIntegrationService {
      * @return Request body string in XML-format.
      */
     @TestVisible
-    private static String generateCustomerGetBody(SearchType searchEngagementType, Object engagementSearchKey){
-        String searchTerm;
-        switch on searchEngagementType{
-            when EB_NUMBER {
-                searchTerm = 'EuroBonus';
-            }
-            when TP_ACCOUNT {
-                searchTerm = 'TP';
-            }
-            when CODS_ID {
-                searchTerm = 'Default';
-            }
-            when EMAIL {
-                searchTerm = 'Email';
-            }
-            when SUBSCRIPTION_ID {
-                searchTerm = 'Subscription';
-            }
-            when SITE_MEMBER {
-                searchTerm = 'SiteMember';
-            }
-        }
-
+    private static String generateCustomerGetBody(String searchTerm, Object engagementSearchKey){        
         String requestBody =
                 '<?xml version="1.0" encoding="utf-8"?>' +
                 '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' +
@@ -201,7 +194,7 @@ public with sharing class   CSharkIntegrationService {
             when 'ExternalId'{
                 matchedSearchType = SearchType.CODS_ID;
             }
-            when 'HomeEMail'{
+            when 'HomeE-mail'{
                 matchedSearchType = SearchType.EMAIL;
             }
             when 'SubscriptionID'{
@@ -212,5 +205,38 @@ public with sharing class   CSharkIntegrationService {
             }
         }
         return matchedSearchType;
+    }
+    /**
+     helper method to get the searchTerm for frequentflyer External object
+     searchTerm used in constructing request body for c-shark.
+     @param searchEngagementType  searchtype  to match searchTerm
+     @retun corresponding searchTerm.
+    */
+    @TestVisible
+    private static String getSearchTermBySearchType(SearchType searchEngagementType)
+    {
+      String searchTerm;
+        switch on searchEngagementType{
+            when EB_NUMBER {
+                searchTerm = 'EuroBonus';
+            }
+            when TP_ACCOUNT {
+                searchTerm = 'TP';
+            }
+            when CODS_ID {
+                searchTerm = 'Default';
+            }
+            when EMAIL {
+                searchTerm = 'Email';
+            }
+            when SUBSCRIPTION_ID {
+                searchTerm = 'Subscription';
+            }
+            when SITE_MEMBER {
+                searchTerm = 'SiteMember';
+            }
+        }
+         return searchTerm;
+
     }
 }
