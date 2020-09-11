@@ -41,34 +41,34 @@ export default class IRR_FilterPanel extends LightningElement {
         this.applyFilter(newParameters);
     }
 
-    handleAllCheckbox(event) {
+    handleSingleCheckbox(event) {
         const fieldName = event.target.name;
-        const checkBoxType = event.target.dataset.checkboxType;
         let newParameters = JSON.parse(JSON.stringify(this.filterParameters));
 
         if (event.detail.checked) {
-            newParameters[fieldName] = '*';
+            let filterValue = event.target.dataset.checkboxFilterValue;
+            filterValue = filterValue === "NULL" ? null : filterValue === "TRUE" ? true :
+                filterValue === "FALSE" ? false : filterValue;
+            newParameters[fieldName] = filterValue;
+            this.unsetOtherGroupCheckboxes(event.target, newParameters);
         } else {
             delete newParameters[fieldName];
         }
 
-        this.unsetOppositeCheckbox(fieldName, checkBoxType);
         this.applyFilter(newParameters);
     }
 
-    handleNoneCheckbox(event) {
-        const fieldName = event.target.name;
-        const checkBoxType = event.target.dataset.checkboxType;
-        let newParameters = JSON.parse(JSON.stringify(this.filterParameters));
-
-        if (event.detail.checked) {
-            newParameters[fieldName] = null;
-        } else {
-            delete newParameters[fieldName];
-        }
-
-        this.unsetOppositeCheckbox(fieldName, checkBoxType);
-        this.applyFilter(newParameters);
+    unsetOtherGroupCheckboxes(thisComponent, newParameters) {
+        const checkboxSingleGroup = thisComponent.dataset.checkboxSingleGroup;
+        this.template.querySelectorAll(`lightning-input[data-checkbox-single-group="${checkboxSingleGroup}"]`)
+            .forEach(loopComponent => {
+                if (thisComponent !== loopComponent && loopComponent.checked) {
+                    loopComponent.checked = false;
+                    if (thisComponent.name !== loopComponent.name) {
+                        delete newParameters[loopComponent.name];
+                    }
+                }
+            });
     }
 
     unsetOppositeCheckbox(fieldName, thisCheckboxType) {
