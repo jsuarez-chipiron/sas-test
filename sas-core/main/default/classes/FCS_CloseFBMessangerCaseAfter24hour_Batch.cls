@@ -1,8 +1,10 @@
 /**
-  Purpose : Used to close the case
+  Purpose : Used to close the case when customer not contacted in last 24 hours
+            Also close the cases which are created due to chat error
+         @author Thippeswamy A
 */
 
-public with sharing class FCS_CloseFBMessangerCaseAfter24hour extends SBS_ScheduledBatch{
+public with sharing class FCS_CloseFBMessangerCaseAfter24hour_Batch extends SBS_ScheduledBatch{
     /**
       dateTime is used to find the messagingsession ended in last 24 hours. 
     */

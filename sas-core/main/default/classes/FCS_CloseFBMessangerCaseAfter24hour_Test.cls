@@ -174,7 +174,7 @@ public class Test_FCS_CloseFBMessangerCaseAfter24hour
         
      insert sessions;
      Test.StartTest();     
-     Database.executeBatch(new FCS_CloseFBMessangerCaseAfter24hour());
+     Database.executeBatch(new FCS_CloseFBMessngerCaseAfter24hour_Batch());
      Test.StopTest();
      Case cse = [Select Id,Status from Case where Id =: lstCases[0].Id];
      System.assertEquals('New', cse.Status);
