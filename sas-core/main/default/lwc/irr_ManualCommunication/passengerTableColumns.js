@@ -16,8 +16,8 @@ const eb = { label: 'EB', fieldName: 'ebLevel', sortable: true, initialWidth: 50
 const fqtv = { label: 'FQTV', fieldName: 'otherFQTVCarrier', sortable: true, initialWidth: 70 };
 
 const cFlight = { label: 'Flight', fieldName: 'thisSegment.flightId', sortable: true };
-const nFlight = { label: 'Next Flight', fieldName: 'nextSegment.flightId', sortable: true };
-const pFlight = { label: 'Previous Flight', fieldName: 'previousSegment.flightId', sortable: true };
+const nFlight = { label: 'Outbound', fieldName: 'nextSegment.flightId', sortable: true };
+const pFlight = { label: 'Inbound', fieldName: 'previousSegment.flightId', sortable: true };
 
 export const FLIGHT_COLUMNS = [cFlight, pnr, name, phone, email, sClass, bClass, status, code, ssr, eb, fqtv];
 export const PREVIOUS_FLIGHT_COLUMNS = [pFlight, pnr, name, phone, email, sClass, bClass, status, code, ssr, eb, fqtv];
