@@ -6,5 +6,9 @@
     <fields>OwnerId</fields>
     <fields>Status</fields>
     <fields>Priority</fields>
+	<fields>FCS_EBNumber__c</fields>
+    <fields>AccountId</fields>
     <label>SAS Case Compact Layout</label>
 </CompactLayout>
+
+
