@@ -27,6 +27,8 @@
 		<members>FCS_InboundSocialPostHandlerImpl</members>
 		<members>FCS_InboundSocialPostHandlerImpl_Test</members>
 		<members>AirportCityNames</members>
+	    <members>FCS_CloseFBMessangerCaseAfter24hour</members>
+	    <members>Test_FCS_CloseFBMessangerCaseAfter24hour</members>
 		<name>ApexClass</name>
 	</types>
 	

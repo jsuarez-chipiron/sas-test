@@ -9,7 +9,7 @@ public with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
       dateTime is used to find the messagingsession ended in last 24 hours. 
     */
      DateTime  lastRetentionDate;
-    public FCS_CloseFBMessangerCaseAfter24hour() {
+    public FCS_CloseFBMessgerCaseAfter24hr_Batch() {
 
     }   
     public  Database.QueryLocator start(Database.BatchableContext bc ){
