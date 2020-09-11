@@ -41,6 +41,8 @@
 		<members>AD_RolePermission.SAS_Analytic_User</members>
 		<members>AD_RolePermission.SYKES_Agent</members>
 		<members>AD_RolePermission.SUTHERLAND_Agent</members>
+		<members>IRR_RecipientWhitelist.nlundkvist_deloitte_se</members>
+		<members>IRR_RecipientWhitelist.X46700802723</members>
 		<name>CustomMetadata</name>
 	</types>
 	<!-- 2020-02-20 Delete field when adding namespace Sanna Sörberg -->
