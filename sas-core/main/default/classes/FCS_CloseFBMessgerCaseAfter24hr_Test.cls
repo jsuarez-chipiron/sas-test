@@ -1,5 +1,5 @@
 @isTest
-public class Test_FCS_CloseFBMessangerCaseAfter24hour
+public class FCS_CloseFBMessgerCaseAfter24hr_Test
 {
    /**
      * Setting up setup objects in setup method
@@ -174,7 +174,7 @@ public class Test_FCS_CloseFBMessangerCaseAfter24hour
         
      insert sessions;
      Test.StartTest();     
-     Database.executeBatch(new FCS_CloseFBMessngerCaseAfter24hour_Batch());
+     Database.executeBatch(new FCS_CloseFBMessgerCaseAfter24hr_Batch());
      Test.StopTest();
      Case cse = [Select Id,Status from Case where Id =: lstCases[0].Id];
      System.assertEquals('New', cse.Status);
