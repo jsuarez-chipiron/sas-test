@@ -4,7 +4,7 @@
          @author Thippeswamy A
 */
 
-public with sharing class FCS_CloseFBMessangerCaseAfter24hour_Batch extends SBS_ScheduledBatch{
+public with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_ScheduledBatch{
     /**
       dateTime is used to find the messagingsession ended in last 24 hours. 
     */
