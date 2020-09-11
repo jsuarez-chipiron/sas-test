@@ -18,6 +18,9 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
     @TestVisible
     protected List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
 
+    @TestVisible
+    protected Map<String,String> airportInfoMap = new Map<String,String>();
+
     abstract String getEventName();
 
     /**

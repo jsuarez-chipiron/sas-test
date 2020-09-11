@@ -68,6 +68,12 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
         delayInfo.flightRef = flightIdSplit.flightNumber;
         delayInfo.stationDeparture = flightIdSplit.stationDeparture;
         delayInfo.stationArrival = flightIdSplit.stationArrival;
+        
+        //Retrieve Airport city names from TEDS
+        this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new List<String> {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
+        delayInfo.departureCity = airportInfoMap.get(delayinfo.stationDeparture);
+        delayInfo.arrivalCity = airportInfoMap.get(delayinfo.stationarrival);
+
 
         //Calculate time difference of scheduled time of departure and estimated time of departure in minutes
         Long millisecondsToScheduledTime = delayInfo.scheduledTimeOfDepartureUTC.getTime() - Datetime.now().getTime();
