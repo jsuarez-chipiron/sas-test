@@ -53,7 +53,7 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test
         
      insert sessions;
      Test.StartTest();     
-     Database.executeBatch(new FCS_CloseFBMessangerCaseAfter24hour());
+     Database.executeBatch(new FCS_CloseFBMessgerCaseAfter24hr_Batch());
      Test.StopTest();
      Case cse = [Select Id,Status from Case where Id =: lstCases[0].Id];
      System.assertEquals('Closed', cse.Status);
@@ -93,7 +93,7 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test
         
      insert sessions;
      Test.StartTest();     
-     Database.executeBatch(new FCS_CloseFBMessangerCaseAfter24hour());
+     Database.executeBatch(new FCS_CloseFBMessgerCaseAfter24hr_Batch());
      Test.StopTest();
      Case cse = [Select Id,Status from Case where Id =: lstCases[0].Id];
      System.assertEquals('New', cse.Status);
@@ -134,7 +134,7 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test
         
      insert sessions;
      Test.StartTest();     
-     Database.executeBatch(new FCS_CloseFBMessangerCaseAfter24hour());
+     Database.executeBatch(new FCS_CloseFBMessgerCaseAfter24hr_Batch());
      Test.StopTest();
      Case cse = [Select Id,Status from Case where Id =: lstCases[0].Id];
      System.assertEquals('Closed', cse.Status);
