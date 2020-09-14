@@ -168,18 +168,32 @@ private class IRR_EVT_ManualProcessor_Test {
 
     @IsTest
     static void testInitiateEvent_DelayEvent() {
+        
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
+
         //Given
+        Map<String,String> airportInfoMap = new Map<String,String>();
+        airportInfoMap.put('ARN','Stockholm');
+        airportInfoMap.put('CPH','Copenhagen');
+        mocks.startStubbing();
+        mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
+                .thenReturn(airportInfoMap);
+        mocks.stopStubbing();
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
         manualRequest.sendSMSMessages = true;
         manualRequest.sendEmailMessages = false;
         manualRequest.delayInfo = new IRR_MOD_DelayInfo();
         manualRequest.delayInfo.flightId = 'SK1429-20191104-ARN-CPH';
         IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+        IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
 
         //When
         eventProcessor.initiateEvent();
 
         //Then
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CPH'});
         System.assertEquals('SK1429', manualRequest.delayInfo.flightRef);
         System.assertEquals('ARN', manualRequest.delayInfo.stationDeparture);
         System.assertEquals('CPH', manualRequest.delayInfo.stationArrival);
@@ -187,18 +201,31 @@ private class IRR_EVT_ManualProcessor_Test {
 
     @IsTest
     static void testInitiateEvent_NewInfoEvent() {
-        //Given
-        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+       //Set up mocks
+       fflib_ApexMocks mocks = new fflib_ApexMocks();
+       IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
+
+       //Given
+       Map<String,String> airportInfoMap = new Map<String,String>();
+       airportInfoMap.put('ARN','Stockholm');
+       airportInfoMap.put('CDG','Copenhagen');
+       mocks.startStubbing();
+       mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CDG'}))
+               .thenReturn(airportInfoMap);
+       mocks.stopStubbing();
+       IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
         manualRequest.sendSMSMessages = true;
         manualRequest.sendEmailMessages = false;
         manualRequest.newInfo = new IRR_MOD_NewInfo();
         manualRequest.newInfo.flightId = 'SK0579-20200503-ARN-CDG';
         IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
-
+        IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
+      
         //When
         eventProcessor.initiateEvent();
 
         //Then
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CDG'});
         System.assertEquals('SK0579', manualRequest.newInfo.flightRef);
         System.assertEquals('ARN', manualRequest.newInfo.stationDeparture);
         System.assertEquals('CDG', manualRequest.newInfo.stationArrival);
@@ -206,18 +233,31 @@ private class IRR_EVT_ManualProcessor_Test {
 
     @IsTest
     static void testInitiateEvent_CancelEvent() {
-        //Given
+         //Set up mocks
+         fflib_ApexMocks mocks = new fflib_ApexMocks();
+         IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
+ 
+         //Given
+         Map<String,String> airportInfoMap = new Map<String,String>();
+         airportInfoMap.put('ARN','Stockholm');
+         airportInfoMap.put('LLA','Copenhagen');
+         mocks.startStubbing();
+         mocks.when(serviceMock.getAirportCityNames(new List<String>{'LLA','ARN'}))
+                 .thenReturn(airportInfoMap);
+         mocks.stopStubbing();
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
         manualRequest.sendSMSMessages = true;
         manualRequest.sendEmailMessages = false;
         manualRequest.cancelInfo = new IRR_MOD_CancelInfo();
         manualRequest.cancelInfo.flightId = 'SK1501-20191205-LLA-ARN';
         IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+        IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
 
         //When
         eventProcessor.initiateEvent();
 
         //Then
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'LLA','ARN'});
         System.assertEquals('SK1501', manualRequest.cancelInfo.flightRef);
         System.assertEquals('LLA', manualRequest.cancelInfo.stationDeparture);
         System.assertEquals('ARN', manualRequest.cancelInfo.stationArrival);
@@ -292,7 +332,19 @@ private class IRR_EVT_ManualProcessor_Test {
 
     @IsTest
     static void testProcessEvent_SendMessages_Response() {
-        //Given
+
+         //Set up mocks
+         fflib_ApexMocks mocks = new fflib_ApexMocks();
+         IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
+ 
+         //Given
+         Map<String,String> airportInfoMap = new Map<String,String>();
+         airportInfoMap.put('ARN','Stockholm');
+         airportInfoMap.put('CPH','Copenhagen');
+         mocks.startStubbing();
+         mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
+                 .thenReturn(airportInfoMap);
+         mocks.stopStubbing();
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
         manualRequest.emailTemplate = 'EMAIL_TEMPLATE';
         manualRequest.smsTemplate = 'SMS_TEMPLATE';
@@ -304,12 +356,24 @@ private class IRR_EVT_ManualProcessor_Test {
         manualRequest.passengerInfos[0].phoneNumber = 'TEST_PHONE';
         manualRequest.passengerInfos[0].hasEmailAddress = true;
         manualRequest.passengerInfos[0].emailAddress = 'TEST_EMAIL';
+        manualRequest.passengerInfos[0].itinerary = new List<IRR_MOD_TripInfo>();
+        List<IRR_MOD_SegmentInfo> segments = new List<IRR_MOD_SegmentInfo>();
+        IRR_MOD_SegmentInfo sinfo = new IRR_MOD_SegmentInfo();
+        sinfo.stationArrival = 'ARN';
+        sinfo.stationDeparture = 'CPH';
+        segments.add(sinfo);
+        IRR_MOD_TripInfo tInfo = new IRR_MOD_TripInfo();
+        tInfo.segments = segments;
+        manualRequest.passengerInfos[0].itinerary.add(tInfo);
         IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+        IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
+
 
         //When
         eventProcessor.processEvent();
 
         //Then
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CPH'});
         List<IRR_MOD_Message> messages = eventProcessor.messages;
         System.assertEquals(2, messages.size());
         System.assert(messages[0].responseMessage, 'Message 1 Response expected');
