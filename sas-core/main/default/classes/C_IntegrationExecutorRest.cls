@@ -43,6 +43,7 @@ public class C_IntegrationExecutorRest implements C_IIntegrationExecutor {
         request.setMethod(String.valueOf(method));
         if (REQUEST_HEADERS!=null && !REQUEST_HEADERS.isEmpty()) {
             setRequestHeaders(request, REQUEST_HEADERS);
+            
         }
         if (body != null && !body.isEmpty()) {
             setRequestBody(request, body);
@@ -69,6 +70,7 @@ public class C_IntegrationExecutorRest implements C_IIntegrationExecutor {
         for (String key : requestHeaders.keySet()) {
             String value = requestHeaders.get(key);
             request.setHeader(key, value);
+            System.debug('<<requestHeader>>'+request);
         }
     }
 
@@ -89,8 +91,9 @@ public class C_IntegrationExecutorRest implements C_IIntegrationExecutor {
             queryString += String.isBlank(queryString) ? '?' : '&';
             queryString += key + '=' + value;
         }
-        System.debug(queryString);
+        System.debug('<<queryString>>'+queryString);
         request.setEndpoint(request.getEndpoint() + queryString);
+        System.debug('<<requestqyeryp>>'+request);
     }
 
     /**
@@ -107,7 +110,7 @@ public class C_IntegrationExecutorRest implements C_IIntegrationExecutor {
         String jsonBody = JSON.serialize(body);
         request.setBody(jsonBody);
         request.setHeader('Content-Type', 'application/json');
-        System.debug(JSON.serializePretty(body));
+        System.debug('<<body>>'+JSON.serializePretty(body));
     }
 
     public class Constructor implements C_IntegrationExecutor.IConstructable {

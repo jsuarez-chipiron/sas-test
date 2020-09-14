@@ -209,6 +209,7 @@ export default class IRR_ManualCommunication extends LightningElement {
             const { sendSMS, sendEmail } = event.detail;
             const { parameters, sendMode, manualTemplate } = this.confirmDetail;
             const passengerInfos = this.selectedRows.map(row => tableUtil.unFlatten(row));
+            console.log(`passengerInfos :${JSON.stringify(passengerInfos)}`);
             passengerInfos.push(...this.additionalRecipients.map((rec) => {
                 return {
                     thisSegment: { flightId: this.retrieveParameters.flightId },
@@ -250,6 +251,7 @@ export default class IRR_ManualCommunication extends LightningElement {
                 default:
                     return;
             }
+            console.log(`payload : ${JSON.stringify(payload)} ${sendMode}`);
             await sendManualCommunication({ manualRequest: payload });
             this.handleLoad(true);
             this.showSuccess = true;

@@ -25,8 +25,8 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
 
     private static final String BOOKING_ENDPOINT_TEMPLATE = '/teds-booking/bookings/{0}';
     private static final String BOOKINGS_FILTER_ENDPOINT = '/teds-booking/bookings';
-    private static final String AIRPORTCODE_ENDPOINT_TEMPLATE = '/teds-airport/airports?ids=\'\'{0},{1}\'\'';
-    
+    private static final String AIRPORTCODE_ENDPOINT_TEMPLATE = '/teds-airport/airports?ids=';
+
     private static final String INTEGRATION_ERROR_TEMPLATE = 'Integration Response: {0} - {1}';
 
     private static C_IIntegrationExecutor integrationExecutor {
@@ -75,15 +75,17 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      *
      * @return Retrieved Airport Details
      */
-    public Map<String,String> getAirportCityNames(List<String> iataCodes) {
-        String endpointURL = String.format(AIRPORTCODE_ENDPOINT_TEMPLATE,iataCodes);
+    public Map<String,String> getAirportCityNames(String [] iataCodes) {
+        System.debug('<<iataCodes>>'+iataCodes);
+        String endpointURL = AIRPORTCODE_ENDPOINT_TEMPLATE + String.join(iataCodes,',');
         System.debug('<<endpointURL: >>' + endpointURL);
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
                 .executeRequest(endpointURL, C_IntegrationExecutor.Method.GET, null, null);
-        if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
+        System.debug('<<responseRaw>>' +responseObject);
+                if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
             throwTedsException(responseObject);
         }
-
+        System.debug('<<responseObject>>'+responseObject.responseBody);
         List<IRR_MOD_AirportInfo> airportNames = IRR_MOD_AirportInfo.parseArray(responseObject.responseBody);
         Map<String,String> airportInfoMap = new Map<String, String>();
         for(IRR_MOD_AirportInfo apInfo : airportNames){

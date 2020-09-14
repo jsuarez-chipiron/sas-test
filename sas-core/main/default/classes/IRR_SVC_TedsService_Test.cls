@@ -28,7 +28,7 @@ private class IRR_SVC_TedsService_Test {
         mocks.when(builderMock.build()).thenReturn(executorMock);
         mocks.when(executorMock.executeRequest(
                     fflib_Match.anyString(),
-                    (C_IntegrationExecutor.Method) fflib_Match.eq(C_IntegrationExecutor.Method.GET),
+                    (C_IntegrationExecutor.Method) fflib_Match.eq(C_IntegrationExecutor.Method.GET),    
                     (Map<String, Object>) fflib_Match.isNull(),
                     (Map<String, Object>) fflib_Match.anyObject()))
                 .thenReturn(new C_IntegrationExecutor.IntegrationResponse(200, jsonResponse));
@@ -297,6 +297,65 @@ private class IRR_SVC_TedsService_Test {
         //Then
         System.assert(caughtException, 'Expected to catch TedsException');
     }
+
+    @isTest
+    static void testGetAirportCityNames() {
+        String jsonResponse = '[{"id":"ARN","name":"Stockholm-Arlanda Airport","city":"Stockholm","country":{"code":"SE","name":"Sweden"},"coordinates":{"latitude":"59.651901245117","longitude":"17.918600082397"}},{"id":"CPH","name":"Copenhagen Kastrup Airport","city":"Copenhagen","country":{"code":"DK","name":"Denmark"},"coordinates":{"latitude":"55.617900848389","longitude":"12.656000137329"}},{"id":"KEF","name":"Keflavik International Airport","city":"Reykjavík","country":{"code":"IS","name":"Iceland"},"coordinates":{"latitude":"63.985001","longitude":"-22.6056"}},{"id":"LLA","name":"Luleå Airport","city":"Luleå","country":{"code":"SE","name":"Sweden"},"coordinates":{"latitude":"65.543800354004","longitude":"22.121999740601"}},{"id":"OSL","name":"Oslo Gardermoen Airport","city":"Oslo","country":{"code":"NO","name":"Norway"},"coordinates":{"latitude":"60.193901062012","longitude":"11.100399971008"}},{"id":"WAW","name":"Warsaw Chopin Airport","city":"Warsaw","country":{"code":"PL","name":"Poland"},"coordinates":{"latitude":"52.1656990051","longitude":"20.967100143399996"}}]';
+
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        C_IIntegrationExecutorBuilder builderMock = (C_IIntegrationExecutorBuilder) mocks.mock(
+                C_IntegrationExecutorBuilder.class);
+        C_IIntegrationExecutor executorMock = (C_IIntegrationExecutor) mocks.mock(C_IntegrationExecutorRest.class);
+
+
+        //Given
+        mocks.startStubbing();
+        mocks.when(builderMock.setBaseURL(fflib_Match.anyString())).thenReturn(builderMock);
+        mocks.when(builderMock.setAPIMSubscriptionKey(fflib_Match.anyString())).thenReturn(builderMock);
+        mocks.when(builderMock.setAPIVersion(fflib_Match.anyString())).thenReturn(builderMock);
+        mocks.when(builderMock.enableSASTracking()).thenReturn(builderMock);
+        mocks.when(builderMock.build()).thenReturn(executorMock);
+        mocks.when(executorMock.executeRequest(
+                    fflib_Match.anyString(),
+                    (C_IntegrationExecutor.Method) fflib_Match.eq(C_IntegrationExecutor.Method.GET),    
+                    (Map<String, Object>) fflib_Match.isNull(),
+                    (Map<String, Object>) fflib_Match.anyObject()))
+                .thenReturn(new C_IntegrationExecutor.IntegrationResponse(200, jsonResponse));
+        mocks.stopStubbing();
+        IRR_Application.IntegrationExecutorBuilder.setMock(IRR_Application.IntegrationType.REST, builderMock);
+         String[] airportCodes = new List<String>();
+         airportCodes.add('ARN');
+         airportCodes.add('CPH');
+
+        //When
+        Map<String,String> airportInfoMap = IRR_SVC_TedsService.getAirportCityNames(airportCodes);
+
+        //Then
+        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setBaseURL('callout:SAS_APIM_TEDS');
+        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock))
+                .setAPIMSubscriptionKey('b8568217401c49acb3931605cea78835');
+        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setAPIVersion('v2');
+        ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).build();
+        ((C_IIntegrationExecutor) mocks.verify(executorMock)).executeRequest(
+                (String) fflib_Match.anyObject(),
+                (C_IntegrationExecutor.Method) fflib_Match.anyObject(),
+                (Map<String, Object>) fflib_Match.isNull(),
+                (Map<String, Object>) fflib_Match.anyObject()
+        );
+        ((C_IIntegrationExecutor) mocks.verify(executorMock)).executeRequest(
+                (String) fflib_Match.eqString('/teds-airport/airports?ids=ARN,CPH'),
+                (C_IntegrationExecutor.Method) fflib_Match.eq(C_IntegrationExecutor.Method.GET),
+                (Map<String, Object>) fflib_Match.isNull(),
+                (Map<String, Object>) fflib_Match.isNull()
+        );
+        // System.assertEquals(1, airportInfoMap.size());
+        // System.assertEquals('Arlanda Airport', airportInfoMap.get('name'));
+        // System.assertEquals('ARN', airportInfoMap.get('Id'));
+        // System.assertEquals('Stockholm', airportInfoMap.get('city'));
+        
+    }
+
 
 
 }

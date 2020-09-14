@@ -186,6 +186,7 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
     protected void createMessages(Boolean sendSMS, String SMSTemplate, Boolean sendEmail, String emailTemplate,
             IRR_MOD_FlowVariables flowVariables, Boolean responseMessage) {
         String serializedVariables = JSON.serialize(flowVariables);
+        System.debug('flowVariables:' +flowVariables);
         Map<String, Object> templateParams = (Map<String,Object>) JSON.deserializeUntyped(serializedVariables);
 
         if (sendSMS) {

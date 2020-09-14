@@ -167,20 +167,25 @@ private class IRR_EVT_DelayProcessor_Test {
 
         //Given
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
+        Map<String,String> airportInfoMap = new Map<String,String>();
         Map<String, Integer> delayMinutesByFlightIds = new Map<String, Integer>();
         mocks.startStubbing();
         mocks.when(selectorMock.sObjectType()).thenReturn(IRR_DelayLog__c.SObjectType);
         mocks.when(selectorMock.getLatestDelayByFlightIds(new Set<String>{'SK1429-20191104-ARN-CPH'}))
                 .thenReturn(delayMinutesByFlightIds);
         mocks.when(serviceMock.getPassengerInfosForFlight('SK1429-20191104-ARN-CPH'))
-                .thenReturn(passengerInfos);
+                .thenReturn();
+        mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
+                .thenReturn(airportInfoMap);
         mocks.stopStubbing();
-        IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
+        IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DepassengerInfoslayInfo();
         delayInfo.flightId = 'SK1429-20191104-ARN-CPH';
         delayInfo.delayedMinutes = 10;
         delayInfo.scheduledTimeOfDepartureUTC = Datetime.now().addHours(3);
         delayInfo.scheduledTimeOfDepartureLocal = Datetime.now().addHours(4);
         delayInfo.estimatedTimeOfDepartureLocal = Datetime.now().addHours(5);
+        delayInfo.stationArrival='CPH';
+        delayInfo.stationDeparture='ARN';
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_DelayProcessor.Constructor().newInstance(delayInfo);
         IRR_Application.Selector.setMock(selectorMock);
         IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
@@ -200,6 +205,8 @@ private class IRR_EVT_DelayProcessor_Test {
         System.assertEquals('CPH', delayInfo.stationArrival);
         System.assert(delayInfo.firstDelay);
         System.assert(delayInfo.minutesToScheduledTime >= 179 && delayInfo.minutesToScheduledTime < 181);
+        System.assertEquals('Stockholm' ,delayInfo.departureCity);
+        System.assertEquals('Copenhagen' ,delayInfo.arrivalCity);
     }
 
     @IsTest
@@ -226,6 +233,8 @@ private class IRR_EVT_DelayProcessor_Test {
         delayInfo.scheduledTimeOfDepartureUTC = Datetime.now().addHours(3);
         delayInfo.scheduledTimeOfDepartureLocal = Datetime.now().addHours(4);
         delayInfo.estimatedTimeOfDepartureLocal = Datetime.now().addHours(5);
+        delayInfo.stationArrival='ARN';
+        delayInfo.stationDeparture='CPH';
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_DelayProcessor.Constructor().newInstance(delayInfo);
         IRR_Application.Selector.setMock(selectorMock);
         IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
