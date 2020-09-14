@@ -174,11 +174,11 @@ private class IRR_EVT_DelayProcessor_Test {
         mocks.when(selectorMock.getLatestDelayByFlightIds(new Set<String>{'SK1429-20191104-ARN-CPH'}))
                 .thenReturn(delayMinutesByFlightIds);
         mocks.when(serviceMock.getPassengerInfosForFlight('SK1429-20191104-ARN-CPH'))
-                .thenReturn();
+                .thenReturn(passengerInfos);
         mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
                 .thenReturn(airportInfoMap);
         mocks.stopStubbing();
-        IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DepassengerInfoslayInfo();
+        IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.flightId = 'SK1429-20191104-ARN-CPH';
         delayInfo.delayedMinutes = 10;
         delayInfo.scheduledTimeOfDepartureUTC = Datetime.now().addHours(3);
