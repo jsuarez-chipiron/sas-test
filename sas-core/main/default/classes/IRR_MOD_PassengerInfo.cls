@@ -58,5 +58,10 @@ public class IRR_MOD_PassengerInfo {
     public IRR_MOD_SegmentInfo nextSegment { get; set; }
 
     @AuraEnabled
+    public Boolean hasPrevSegment { get; set; }
+    @AuraEnabled
+    public IRR_MOD_SegmentInfo prevSegment { get; set; }
+
+    @AuraEnabled
     public List<IRR_MOD_TripInfo> itinerary { get; set; }
 }
