@@ -58,6 +58,13 @@ public class IRR_EVT_NewInfoProcessor extends IRR_EVT_EventProcessor {
         newInfo.stationDeparture = flightIdSplit.stationDeparture;
         newInfo.stationArrival = flightIdSplit.stationArrival;
 
+        //Retrieve Airport city names from TEDS
+        if(newInfo.stationDeparture != null && newInfo.stationDeparture != '' && newInfo.stationArrival != null && newInfo.stationArrival != ''){
+            this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames(new List<String>{newInfo.stationDeparture,newInfo.stationArrival} );        
+            newInfo.departureCity = airportInfoMap.get(newInfo.stationDeparture);
+            newInfo.arrivalCity = airportInfoMap.get(newInfo.stationArrival);
+        }
+
         //Retrieve passengers for flight
         this.passengerInfos = IRR_SVC_TedsService.getPassengerInfosForFlight(newInfo.flightId);
     }

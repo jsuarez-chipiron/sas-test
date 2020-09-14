@@ -86,7 +86,7 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
         IRR_MOD_FlowVariables flowVariables = new IRR_MOD_FlowVariables();
         flowVariables.rebookInfo = rebookInfo;
         String[] airportCodes = new List<String>();
-        System.debug('<<passengerInfos>>'+passengerInfos);
+        
         //Process passengers
         if(passengerInfos != null && passengerInfos.size() > 0){
             for (IRR_MOD_PassengerInfo passengerInfo : passengerInfos) {
@@ -105,7 +105,7 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
             }
         }
                 this.airportInfoMap = IRR_SVC_TedsService.getAirportCityNames(airportCodes);
-                System.debug('<<airportInfoMap>>'+airportInfoMap);
+
             //Get the equivalent airport city names and set it in passenger info so that they are accesible in reboooking templates
         for(IRR_MOD_PassengerInfo passengerInfo : passengerInfos){
             if(passengerInfo.itinerary != null && passengerInfo.itinerary.size() > 0){
@@ -122,7 +122,6 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
             }
             //Set passenger info in flowVariables and execute flow
             flowVariables.passengerInfo = passengerInfo;
-            System.debug('<<passengerInfo>>'+passengerInfo);
             executeFlow(EVENT_FLOW_NAME, flowVariables);  
         }
                 

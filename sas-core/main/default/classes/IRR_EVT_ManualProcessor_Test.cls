@@ -358,10 +358,10 @@ private class IRR_EVT_ManualProcessor_Test {
         manualRequest.passengerInfos[0].emailAddress = 'TEST_EMAIL';
         manualRequest.passengerInfos[0].itinerary = new List<IRR_MOD_TripInfo>();
         List<IRR_MOD_SegmentInfo> segments = new List<IRR_MOD_SegmentInfo>();
-        IRR_MOD_SegmentInfo sinfo = new IRR_MOD_SegmentInfo();
-        sinfo.stationArrival = 'ARN';
-        sinfo.stationDeparture = 'CPH';
-        segments.add(sinfo);
+        IRR_MOD_SegmentInfo sInfo = new IRR_MOD_SegmentInfo();
+        sInfo.stationArrival = 'ARN';
+        sInfo.stationDeparture = 'CPH';
+        segments.add(sInfo);
         IRR_MOD_TripInfo tInfo = new IRR_MOD_TripInfo();
         tInfo.segments = segments;
         manualRequest.passengerInfos[0].itinerary.add(tInfo);
