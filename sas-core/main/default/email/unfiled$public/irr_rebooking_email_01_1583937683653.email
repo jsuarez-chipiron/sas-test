@@ -73,8 +73,8 @@
 																			<p style="language:sv;margin-top:0pt;margin-bottom:0pt;margin-left:0in;text-align:left;direction:ltr;unicode-bidi:embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span style="font-family:Arial,Helvetica,sans-serif;">
 																			[[[LOOP(passengerInfo.itinerary, 'trip')]]][[[LOOP(trip.segments, 'segment')]]][[[DISPLAYIF(contains(segment.segmentId, rebookInfo.addedSegments))]]]
 																				{{{segment.flightNumber}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'd MMM')]]]<br />
-																				{{{segment.stationDeparture}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]]<br />
-																				{{{segment.stationArrival}}} [[[formatDatetimeUTC(segment.arrivalTimeLocal, 'HH:mm')]]]<br />
+																				{{{segment.departureCity}}} ({{{segment.stationDeparture}}}) [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]]<br />
+																				{{{segment.arrivalCity}}} ({{{segment.stationArrival}}}) [[[formatDatetimeUTC(segment.arrivalTimeLocal, 'HH:mm')]]]<br />
 																				<br/>
 																			[[[ENDDISPLAYIF()]]][[[ENDLOOP()]]][[[ENDLOOP()]]]
 																			</span></span></p></span>
