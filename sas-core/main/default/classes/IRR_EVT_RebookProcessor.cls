@@ -80,6 +80,7 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
      * @date 2020
      *
      * @description Executes flow with for each passenger with event specific information.
+     * Added AirportCityNames callout to TEDS to render citynames on the templates
      */
     public void processEvent() {
         //Initiate variable container object for Flow

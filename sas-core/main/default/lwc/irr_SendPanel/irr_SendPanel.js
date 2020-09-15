@@ -100,7 +100,6 @@ export default class irr_SendPanel extends LightningElement {
         const sendEvent = new CustomEvent('send', {
             detail: { sendMode: this.sendMode, parameters: this.sendParameters, manualTemplate: this.manualTemplate }
         });
-        console.log(`sendEvent : ${JSON.stringify(sendEvent.detail)}`);
         this.dispatchEvent(sendEvent);
     }
 

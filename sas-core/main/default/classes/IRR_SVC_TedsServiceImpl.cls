@@ -79,7 +79,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         String endpointURL = AIRPORTCODE_ENDPOINT_TEMPLATE + String.join(iataCodes,',');
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
                 .executeRequest(endpointURL, C_IntegrationExecutor.Method.GET, null, null);
-                if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
+        if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
             throwTedsException(responseObject);
         }
         List<IRR_MOD_AirportInfo> airportNames = IRR_MOD_AirportInfo.parseArray(responseObject.responseBody);

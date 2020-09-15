@@ -52,6 +52,7 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
      * @date 2020
      *
      * @description Populates event object with additional information and initiates passengerInfo list.
+     * Added AirportCityNames callout to TEDS to render citynames on the templates
      */
     public void initiateEvent() {
         //Retrieve previous delay and calculate difference
@@ -70,10 +71,12 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
         delayInfo.stationArrival = flightIdSplit.stationArrival;
 
         //Retrieve Airport city names from TEDS
-        if(delayinfo.stationDeparture != null && delayinfo.stationDeparture != '' && delayinfo.stationArrival != null && delayinfo.stationArrival != ''){
-            this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames(new List<String>{delayinfo.stationDeparture,delayinfo.stationArrival} );        
-            delayInfo.departureCity = airportInfoMap.get(delayinfo.stationDeparture);
-            delayInfo.arrivalCity = airportInfoMap.get(delayinfo.stationArrival);
+        if(delayinfo.stationDeparture != null && delayinfo.stationDeparture != '' 
+                && delayinfo.stationArrival != null && delayinfo.stationArrival != ''){
+        this.airportInfoMap =IRR_SVC_TedsService
+                .getAirportCityNames(new List<String>{delayinfo.stationDeparture,delayinfo.stationArrival} );        
+        delayInfo.departureCity = airportInfoMap.get(delayinfo.stationDeparture);
+        delayInfo.arrivalCity = airportInfoMap.get(delayinfo.stationArrival);
         }
 
         //Calculate time difference of scheduled time of departure and estimated time of departure in minutes
