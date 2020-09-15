@@ -76,16 +76,12 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      * @return Retrieved Airport Details
      */
     public Map<String,String> getAirportCityNames(String [] iataCodes) {
-        System.debug('<<iataCodes>>'+iataCodes);
         String endpointURL = AIRPORTCODE_ENDPOINT_TEMPLATE + String.join(iataCodes,',');
-        System.debug('<<endpointURL: >>' + endpointURL);
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
                 .executeRequest(endpointURL, C_IntegrationExecutor.Method.GET, null, null);
-        System.debug('<<responseRaw>>' +responseObject);
                 if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
             throwTedsException(responseObject);
         }
-        System.debug('<<responseObject>>'+responseObject.responseBody);
         List<IRR_MOD_AirportInfo> airportNames = IRR_MOD_AirportInfo.parseArray(responseObject.responseBody);
         Map<String,String> airportInfoMap = new Map<String, String>();
         for(IRR_MOD_AirportInfo apInfo : airportNames){
