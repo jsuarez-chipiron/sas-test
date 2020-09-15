@@ -85,15 +85,51 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
         //Initiate variable container object for Flow
         IRR_MOD_FlowVariables flowVariables = new IRR_MOD_FlowVariables();
         flowVariables.rebookInfo = rebookInfo;
-
+        String[] airportCodes = new List<String>();
+        
         //Process passengers
-        for (IRR_MOD_PassengerInfo passengerInfo : passengerInfos) {
+        if(passengerInfos != null && passengerInfos.size() > 0){
+            for (IRR_MOD_PassengerInfo passengerInfo : passengerInfos) {
+                if(passengerInfo.itinerary != null && passengerInfo.itinerary.size() > 0){
+                    for(IRR_MOD_TripInfo tripInfo: passengerInfo.itinerary){
+                        if(tripInfo.segments != null && tripInfo.segments.size() > 0){
+                            for(IRR_MOD_SegmentInfo segmentInfo: tripInfo.segments){
+                                airportCodes.add(segmentInfo.stationArrival);
+                                airportCodes.add(segmentInfo.stationDeparture);
+                            }
+                        }
+
+                    }
+
+                }
+            }
+        }
+                this.airportInfoMap = IRR_SVC_TedsService.getAirportCityNames(airportCodes);
+
+            //Get the equivalent airport city names and set it in passenger info so that they are accesible in reboooking templates
+        for(IRR_MOD_PassengerInfo passengerInfo : passengerInfos){
+            if(passengerInfo.itinerary != null && passengerInfo.itinerary.size() > 0){
+                for(IRR_MOD_TripInfo tripInfo: passengerInfo.itinerary){
+                    if(tripInfo.segments != null && tripInfo.segments.size() > 0){
+                        for(IRR_MOD_SegmentInfo segmentInfo: tripInfo.segments){
+                           segmentInfo.arrivalCity = this.airportInfoMap.get(segmentInfo.stationArrival);
+                           segmentInfo.departureCity = this.airportInfoMap.get(segmentInfo.stationDeparture);
+                        }
+                    }
+
+                }
+
+            }
             //Set passenger info in flowVariables and execute flow
             flowVariables.passengerInfo = passengerInfo;
-            executeFlow(EVENT_FLOW_NAME, flowVariables);
+            executeFlow(EVENT_FLOW_NAME, flowVariables);  
         }
-    }
+                
+            
 
+        
+        
+    }
 
     public IRR_EVT_RebookProcessor(IRR_MOD_RebookInfo rebookInfo) {
         this.rebookInfo = rebookInfo;

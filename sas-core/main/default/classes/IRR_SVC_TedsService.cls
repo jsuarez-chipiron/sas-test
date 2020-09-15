@@ -20,6 +20,10 @@ public class IRR_SVC_TedsService {
         return service().getPassengerInfosForFlight(flightId);
     }
 
+    public static Map<String,String> getAirportCityNames(String [] iataCodes) {
+        return service().getAirportCityNames(iataCodes);
+    }
+
     private static IRR_SVC_ITedsService service() {
         return (IRR_SVC_ITedsService) IRR_Application.Service.newInstance(IRR_SVC_ITedsService.class);
     }

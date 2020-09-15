@@ -52,6 +52,13 @@ public class IRR_EVT_CancelProcessor extends IRR_EVT_EventProcessor {
         cancelInfo.stationDeparture = flightIdSplit.stationDeparture;
         cancelInfo.stationArrival = flightIdSplit.stationArrival;
 
+         //Retrieve Airport city names from TEDS
+         if(cancelInfo.stationDeparture != null && cancelInfo.stationDeparture != '' && cancelInfo.stationArrival != null && cancelInfo.stationArrival != ''){
+            this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames(new List<String>{cancelInfo.stationDeparture,cancelInfo.stationArrival} );        
+            cancelInfo.departureCity = airportInfoMap.get(cancelInfo.stationDeparture);
+            cancelInfo.arrivalCity = airportInfoMap.get(cancelInfo.stationArrival);
+        }
+
         //Calculate time difference of scheduled time of departure and estimated time of departure in minutes
         Long millisecondsToScheduledTime = cancelInfo.scheduledTimeOfDepartureUTC.getTime() - Datetime.now().getTime();
         cancelInfo.minutesToScheduledTime = (Integer) millisecondsToScheduledTime / 60000;
