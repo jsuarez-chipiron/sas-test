@@ -73,8 +73,7 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
         //Retrieve Airport city names from TEDS
         if(delayinfo.stationDeparture != null && delayinfo.stationDeparture != '' 
                 && delayinfo.stationArrival != null && delayinfo.stationArrival != ''){
-        this.airportInfoMap =IRR_SVC_TedsService
-                .getAirportCityNames(new List<String>{delayinfo.stationDeparture,delayinfo.stationArrival} );        
+        this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames(new List<String>{delayinfo.stationDeparture,delayinfo.stationArrival} );        
         delayInfo.departureCity = airportInfoMap.get(delayinfo.stationDeparture);
         delayInfo.arrivalCity = airportInfoMap.get(delayinfo.stationArrival);
         }

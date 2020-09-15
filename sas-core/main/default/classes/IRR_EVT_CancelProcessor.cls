@@ -56,8 +56,7 @@ public class IRR_EVT_CancelProcessor extends IRR_EVT_EventProcessor {
          //Retrieve Airport city names from TEDS
         if(cancelInfo.stationDeparture != null && cancelInfo.stationDeparture != '' 
                 && cancelInfo.stationArrival != null && cancelInfo.stationArrival != ''){
-        this.airportInfoMap =IRR_SVC_TedsService
-                .getAirportCityNames(new List<String>{cancelInfo.stationDeparture,cancelInfo.stationArrival} );        
+        this.airportInfoMap = IRR_SVC_TedsService.getAirportCityNames(new List<String>{cancelInfo.stationDeparture,cancelInfo.stationArrival} );        
         cancelInfo.departureCity = airportInfoMap.get(cancelInfo.stationDeparture);
         cancelInfo.arrivalCity = airportInfoMap.get(cancelInfo.stationArrival);
         }

@@ -51,8 +51,7 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
             manualRequest.delayInfo.flightRef = flightIdSplit.flightNumber;
             manualRequest.delayInfo.stationDeparture = flightIdSplit.stationDeparture;
             manualRequest.delayInfo.stationArrival = flightIdSplit.stationArrival;
-            this.airportInfoMap =IRR_SVC_TedsService
-                    .getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
+            this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
             manualRequest.delayInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
             manualRequest.delayInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
 
@@ -63,8 +62,7 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
             manualRequest.newInfo.flightRef = flightIdSplit.flightNumber;
             manualRequest.newInfo.stationDeparture = flightIdSplit.stationDeparture;
             manualRequest.newInfo.stationArrival = flightIdSplit.stationArrival;
-            this.airportInfoMap =IRR_SVC_TedsService
-                    .getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
+            this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
             manualRequest.newInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
             manualRequest.newInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
         }
@@ -74,8 +72,7 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
             manualRequest.cancelInfo.flightRef = flightIdSplit.flightNumber;
             manualRequest.cancelInfo.stationDeparture = flightIdSplit.stationDeparture;
             manualRequest.cancelInfo.stationArrival = flightIdSplit.stationArrival;
-            this.airportInfoMap =IRR_SVC_TedsService
-                    .getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
+            this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
             manualRequest.cancelInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
             manualRequest.cancelInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
         }
@@ -136,9 +133,9 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
                 //Allow only Rebook event to pass through as other events are being handled in initiate event method
                     if (manualRequest.delayInfo == null &&  manualRequest.newInfo == null && manualRequest.cancelInfo == null){
                         if (passengerInfo.itinerary != null && passengerInfo.itinerary.size() > 0) {
-                            for(IRR_MOD_TripInfo tInfo: passengerInfo.itinerary) {
+                            for(IRR_MOD_TripInfo tripInfo: passengerInfo.itinerary) {
                                 if(tripInfo.segments!= null && tripInfo.segments.size() > 0) {
-                                    for (IRR_MOD_SegmentInfo sInfo: tripInfo.segments) {
+                                    for (IRR_MOD_SegmentInfo segInfo: tripInfo.segments) {
                                         segInfo.arrivalCity = this.airportInfoMap.get(segInfo.stationArrival);
                                         segInfo.departureCity = this.airportInfoMap.get(segInfo.stationDeparture);
                                     }
