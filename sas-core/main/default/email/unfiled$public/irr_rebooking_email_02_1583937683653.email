@@ -62,7 +62,7 @@
 																			<td class="stylingblock-content-wrapper camarker-inner" style="padding: 0px 50px;">
 																			<div style="text-align: center;"><br />
 																			<br />
-																			<span style="font-size:16px;">Important information about your SAS booking {{{rebookInfo.bookingReference}}}</span><br />
+																			<span style="font-size:16px;">Important information about your SAS booking {{{passengerInfo.bookingReference}}}</span><br />
 																			<br />
 																			</div>
 																			<div><span style="font-size:11px;">Hi,<br />
