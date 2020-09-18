@@ -46,7 +46,6 @@ public class FCS_CaseHandler extends C_TriggerHandler {
    */
     public override void beforeInsert() {
         assignOwnerFromSoMe(newCaseList);
-        assignEurobonusAccountToCase(newCaseList);
         validateCaseTags(newCaseList);
     }
     /**
@@ -61,6 +60,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     public override void afterInsert() {
         manageCaseTagRecords(newCaseList, newCaseMap);
         updateSocialPost(newCaseList);
+        assignEurobonusAccountToCase(newCaseList);
     }
 
     /**
@@ -209,28 +209,65 @@ public class FCS_CaseHandler extends C_TriggerHandler {
         }
         return newTagsByKeyId;
     }
+    /**
+     * @param newCaseList The list of the new version of the case i.e. the Trigger.new variable
+       assign the EuroBonus Account to Case based on the Email for Pandion customers
+       It search If there is any existing Account in salesforce , if not then call the Feature method , in turn call 
+       the C shark to fetch the details
+    */
     public static void assignEurobonusAccountToCase(List < Case > newCaseList) {
         List < String > lstEmailAddress = new List < String > ();
-        Account acc;
-        Map < String, Account > mapEmailToEurobonsAcc = new Map < String, Account > ();
+        List < Case > lstUpdateCases = new List < Case > ();
+        List < Id > lstCaseIds = new List < Id > ();
+        List < Account > lstAcc = new List < Account > ();
         for (Case cse: newCaseList) {
             if (cse.Origin == 'Pandion SE' || cse.Origin == 'Pandion NO' || cse.Origin == 'Pandion DK') {
                 if (cse.SuppliedEmail != null && cse.SuppliedEmail != '') {
                     lstEmailAddress.add(cse.SuppliedEmail);
+                    lstCaseIds.add(cse.Id);
                 }
             }
 
         }
         if (!lstEmailAddress.isEmpty()) {
-            acc = FCS_IdentifyCustomerController.findCustomer('EmailPersonal__c', lstEmailAddress[0]);
+            lstAcc = [SELECT Id, FCS_EBNumber__c From Account where PersonEmail =: lstEmailAddress[0] AND isPersonAccount = true];
         }
-        if (acc != null) {
-            for (Case cse: newCaseList) {
-                if (cse.Origin == 'Pandion SE' || cse.Origin == 'Pandion NO' || cse.Origin == 'Pandion DK') {
-                    cse.FCS_EBNumber__c = acc.FCS_EBNumber__c;
-                    cse.AccountId = acc.Id;
-                }
+        if (!lstAcc.isEmpty()) {
+            Case cse = new Case();
+            cse.FCS_EBNumber__c = lstAcc[0].FCS_EBNumber__c;
+            cse.accountId = lstAcc[0].Id;
+            cse.Id = newCaseList[0].Id;
+            lstUpdateCases.add(cse);
+        } else if (lstCaseIds.size() > 0) {
+            findEuroBonusAccount(lstCaseIds);
+        }
+        if (!lstUpdateCases.isEmpty()) {
+            Update lstUpdateCases;
+        }
+    }
+    /**
+     get the eurobonus account from C-shark using Email
+     @param set of caseIds
+    */
+    @future(callOut = true)
+    public static void findEuroBonusAccount(List < Id > lstCseIds) {
+        Account acc;
+        List < Case > lstUpdateCases = new List < Case > ();
+        List < Case > lstCases = new List < Case > ();
+        lstCases = [Select Id, FCS_EBNumber__c, SuppliedEmail, AccountId From Case where Id =: lstCseIds[0] And SuppliedEmail != null LIMIT 1];
+        if (!lstCases.isEmpty()) {
+            acc = FCS_IdentifyCustomerController.findCustomer('EmailPersonal__c', lstCases[0].SuppliedEmail);
+            if (acc != null) {
+                Case cs = new Case();
+                cs.Id = lstCases[0].Id;
+                cs.FCS_EBNumber__c = acc.FCS_EBNumber__c;
+                cs.accountId = acc.Id;
+                lstUpdateCases.add(cs);
             }
+            if (!lstUpdateCases.isEmpty()) {
+                Update lstUpdateCases;
+            }
+
         }
     }
 
