@@ -7,7 +7,7 @@
   <br /> 
   <br /> Hi, 
   <br /> 
-  <br /> Your Flight {{{newInfo.flightRef}}} {{{newInfo.departureCity}}} ({{{newInfo.stationDeparture}}}) - {{{newInfo.arrivalCity}}} ({{{newInfo.stationArrival}}}) [[[formatDatetimeUTC(newInfo.scheduledTimeOfDepartureLocal, 'd MMM')]]], with departure time [[[formatDatetimeUTC(newInfo.scheduledTimeOfDepartureLocal, 'HH:mm')]]] will be delayed, new departure time is unknown. 
+  <br /> Your Flight {{{newInfo.flightRef}}} {{{newInfo.stationDeparture}}} - {{{newInfo.stationArrival}}} [[[formatDatetimeUTC(newInfo.scheduledTimeOfDepartureLocal, 'd MMM')]]], with departure time [[[formatDatetimeUTC(newInfo.scheduledTimeOfDepartureLocal, 'HH:mm')]]] will be delayed, new departure time is unknown. 
   <br /> 
   <br /> New information will be given at [[[formatDatetimeUTC(newInfo.newInfoTimeLocal, 'HH:mm')]]] [[[formatDatetimeUTC(newInfo.newInfoTimeLocal, 'd MMM')]]]. 
   <br /> 
