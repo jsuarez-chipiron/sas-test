@@ -86,14 +86,14 @@ private class IRR_EVT_CancelProcessor_Test {
 
         //Given
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
-        // Map<String,String> airportInfoMap = new Map<String,String>();
-        // airportInfoMap.put('ARN','Stockholm');
-        // airportInfoMap.put('CPH','Copenhagen');
+        Map<String,String> airportInfoMap = new Map<String,String>();
+        airportInfoMap.put('ARN','Stockholm');
+        airportInfoMap.put('CPH','Copenhagen');
         mocks.startStubbing();
         mocks.when(serviceMock.getPassengerInfosForFlight('SK1429-20191104-ARN-CPH'))
                 .thenReturn(passengerInfos);
-        // mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
-        //         .thenReturn(airportInfoMap);
+        mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
+                .thenReturn(airportInfoMap);
         mocks.stopStubbing();
         IRR_MOD_CancelInfo cancelInfo = new IRR_MOD_CancelInfo();
         cancelInfo.flightId = 'SK1429-20191104-ARN-CPH';
@@ -106,14 +106,14 @@ private class IRR_EVT_CancelProcessor_Test {
 
         //Then
         ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getPassengerInfosForFlight('SK1429-20191104-ARN-CPH');
-        // ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CPH'});
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CPH'});
 
         System.assertEquals('SK1429', cancelInfo.flightRef);
         System.assertEquals('ARN', cancelInfo.stationDeparture);
         System.assertEquals('CPH', cancelInfo.stationArrival);
         System.assert(cancelInfo.minutesToScheduledTime >= 179 && cancelInfo.minutesToScheduledTime < 181);
-        // System.assertEquals('Copenhagen' ,airportInfoMap.get(cancelInfo.stationArrival));
-        // System.assertEquals('Stockholm' ,airportInfoMap.get(cancelInfo.stationDeparture));
+        System.assertEquals('Copenhagen' ,airportInfoMap.get(cancelInfo.stationArrival));
+        System.assertEquals('Stockholm' ,airportInfoMap.get(cancelInfo.stationDeparture));
     }
 
     @IsTest

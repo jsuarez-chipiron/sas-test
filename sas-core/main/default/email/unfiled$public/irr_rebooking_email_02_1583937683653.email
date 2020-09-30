@@ -59,12 +59,12 @@
                           <div style="text-align: center;"> 
                            <br /> 
                            <br /> 
-                           <span style="font-size:16px;">Important information about your SAS booking {{{rebookInfo.bookingReference}}}</span> 
+                           <span style="font-size:16px;">Important information about your SAS booking {{{passengerInfo.bookingReference}}}</span> 
                            <br /> 
                            <br /> 
                           </div> 
                           <div> 
-                           <span style="font-size:11px;">Hi,<br /> <br /> Due to earlier flight disruptions, you have been rebooked. Your new itinerary is:<br /> <br /> <p style="language:sv;margin-top:0pt;margin-bottom:0pt;margin-left:0in;text-align:left;direction:ltr;unicode-bidi:embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span style="font-family:Arial,Helvetica,sans-serif;"> [[[LOOP(passengerInfo.itinerary, 'trip')]]][[[LOOP(trip.segments, 'segment')]]] {{{segment.flightNumber}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'd MMM')]]]<br /> {{{segment.stationDeparture}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]]<br /> {{{segment.stationArrival}}} [[[formatDatetimeUTC(segment.arrivalTimeLocal, 'HH:mm')]]]<br /> <br /> [[[ENDLOOP()]]][[[ENDLOOP()]]] </span></span></p></span> 
+                           <span style="font-size:11px;">Hi,<br /> <br /> Due to earlier flight disruptions, you have been rebooked. Your new itinerary is:<br /> <br /> <p style="language:sv;margin-top:0pt;margin-bottom:0pt;margin-left:0in;text-align:left;direction:ltr;unicode-bidi:embed;mso-line-break-override:none;word-break:normal;punctuation-wrap:hanging"><span style="font-size:11px;"><span style="font-family:Arial,Helvetica,sans-serif;"> [[[LOOP(passengerInfo.itinerary, 'trip')]]][[[LOOP(trip.segments, 'segment')]]] {{{segment.flightNumber}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'd MMM')]]]<br /> {{{segment.departureCity}}} ({{{segment.stationDeparture}}}) [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]]<br /> {{{segment.arrivalCity}}} ({{{segment.stationArrival}}}) [[[formatDatetimeUTC(segment.arrivalTimeLocal, 'HH:mm')]]]<br /> <br /> [[[ENDLOOP()]]][[[ENDLOOP()]]] </span></span></p></span> 
                            <span style="font-size:11px;">We apologize for this change.</span> 
                            <br /> 
                            <br /> 

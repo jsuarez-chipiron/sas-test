@@ -5,7 +5,7 @@
     <encodingKey>ISO-8859-1</encodingKey>
     <name>irr_rebooking_email_02</name>
     <style>none</style>
-    <subject>Rebooking information from SAS - Booking reference {{{rebookInfo.bookingReference}}}</subject>
+    <subject>Rebooking information from SAS - Booking reference {{{passengerInfo.bookingReference}}}</subject>
     <type>custom</type>
     <uiType>SFX</uiType>
 </EmailTemplate>
