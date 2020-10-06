@@ -26,6 +26,7 @@
 	<types>
 		<members>FCS_InboundSocialPostHandlerImpl</members>
 		<members>FCS_InboundSocialPostHandlerImpl_Test</members>
+		<members>AirportCityNames</members>
 		<name>ApexClass</name>
 	</types>
 	

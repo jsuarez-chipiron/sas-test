@@ -167,9 +167,9 @@ private class IRR_EVT_DelayProcessor_Test {
 
         //Given
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
-        // Map<String,String> airportInfoMap = new Map<String,String>();
-        // airportInfoMap.put('ARN','Stockholm');
-        // airportInfoMap.put('CPH','Copenhagen');
+        Map<String,String> airportInfoMap = new Map<String,String>();
+        airportInfoMap.put('ARN','Stockholm');
+        airportInfoMap.put('CPH','Copenhagen');
         Map<String, Integer> delayMinutesByFlightIds = new Map<String, Integer>();
         mocks.startStubbing();
         mocks.when(selectorMock.sObjectType()).thenReturn(IRR_DelayLog__c.SObjectType);
@@ -177,8 +177,8 @@ private class IRR_EVT_DelayProcessor_Test {
                 .thenReturn(delayMinutesByFlightIds);
         mocks.when(serviceMock.getPassengerInfosForFlight('SK1429-20191104-ARN-CPH'))
                 .thenReturn(passengerInfos);
-        // mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
-        //         .thenReturn(airportInfoMap);
+        mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
+                .thenReturn(airportInfoMap);
         mocks.stopStubbing();
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.flightId = 'SK1429-20191104-ARN-CPH';
@@ -199,7 +199,7 @@ private class IRR_EVT_DelayProcessor_Test {
         ((IRR_SEL_IDelayLogsSelector) mocks.verify(selectorMock))
                 .getLatestDelayByFlightIds(new Set<String>{'SK1429-20191104-ARN-CPH'});
         ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getPassengerInfosForFlight('SK1429-20191104-ARN-CPH');
-        // ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CPH'});
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CPH'});
 
         System.assertEquals(0, delayInfo.previousDelayedMinutes);
         System.assertEquals(10, delayInfo.delayDifference);
@@ -209,8 +209,8 @@ private class IRR_EVT_DelayProcessor_Test {
         System.assertEquals('CPH', delayInfo.stationArrival);
         System.assert(delayInfo.firstDelay);
         System.assert(delayInfo.minutesToScheduledTime >= 179 && delayInfo.minutesToScheduledTime < 181);
-        // System.assertEquals('Copenhagen' ,airportInfoMap.get(delayInfo.stationArrival));
-        // System.assertEquals('Stockholm' ,airportInfoMap.get(delayInfo.stationDeparture));
+        System.assertEquals('Copenhagen' ,airportInfoMap.get(delayInfo.stationArrival));
+        System.assertEquals('Stockholm' ,airportInfoMap.get(delayInfo.stationDeparture));
     }
 
     @IsTest
