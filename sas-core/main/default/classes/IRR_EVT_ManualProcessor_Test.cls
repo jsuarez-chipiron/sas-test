@@ -174,13 +174,13 @@ private class IRR_EVT_ManualProcessor_Test {
         IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
 
         //Given
-        // Map<String,String> airportInfoMap = new Map<String,String>();
-        // airportInfoMap.put('ARN','Stockholm');
-        // airportInfoMap.put('CPH','Copenhagen');
-        // mocks.startStubbing();
-        //  mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
-        //         .thenReturn(airportInfoMap);
-        // mocks.stopStubbing();
+        Map<String,String> airportInfoMap = new Map<String,String>();
+        airportInfoMap.put('ARN','Stockholm');
+        airportInfoMap.put('CPH','Copenhagen');
+        mocks.startStubbing();
+         mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
+                .thenReturn(airportInfoMap);
+        mocks.stopStubbing();
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
         manualRequest.sendSMSMessages = true;
         manualRequest.sendEmailMessages = false;
@@ -193,7 +193,7 @@ private class IRR_EVT_ManualProcessor_Test {
         eventProcessor.initiateEvent();
 
         //Then
-        // ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CPH'});
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CPH'});
         System.assertEquals('SK1429', manualRequest.delayInfo.flightRef);
         System.assertEquals('ARN', manualRequest.delayInfo.stationDeparture);
         System.assertEquals('CPH', manualRequest.delayInfo.stationArrival);
@@ -206,13 +206,13 @@ private class IRR_EVT_ManualProcessor_Test {
        IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
 
        //Given
-    //    Map<String,String> airportInfoMap = new Map<String,String>();
-    //    airportInfoMap.put('ARN','Stockholm');
-    //    airportInfoMap.put('CDG','Copenhagen');
-    //    mocks.startStubbing();
-    //    mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CDG'}))
-    //            .thenReturn(airportInfoMap);
-    //    mocks.stopStubbing();
+       Map<String,String> airportInfoMap = new Map<String,String>();
+       airportInfoMap.put('ARN','Stockholm');
+       airportInfoMap.put('CDG','Copenhagen');
+       mocks.startStubbing();
+       mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CDG'}))
+               .thenReturn(airportInfoMap);
+       mocks.stopStubbing();
        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
         manualRequest.sendSMSMessages = true;
         manualRequest.sendEmailMessages = false;
@@ -225,7 +225,7 @@ private class IRR_EVT_ManualProcessor_Test {
         eventProcessor.initiateEvent();
 
         //Then
-        // ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CDG'});
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CDG'});
         System.assertEquals('SK0579', manualRequest.newInfo.flightRef);
         System.assertEquals('ARN', manualRequest.newInfo.stationDeparture);
         System.assertEquals('CDG', manualRequest.newInfo.stationArrival);
@@ -238,13 +238,13 @@ private class IRR_EVT_ManualProcessor_Test {
          IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
  
          //Given
-        //  Map<String,String> airportInfoMap = new Map<String,String>();
-        //  airportInfoMap.put('ARN','Stockholm');
-        //  airportInfoMap.put('LLA','Copenhagen');
-        //  mocks.startStubbing();
-        //  mocks.when(serviceMock.getAirportCityNames(new List<String>{'LLA','ARN'}))
-        //          .thenReturn(airportInfoMap);
-        //  mocks.stopStubbing();
+         Map<String,String> airportInfoMap = new Map<String,String>();
+         airportInfoMap.put('ARN','Stockholm');
+         airportInfoMap.put('LLA','Copenhagen');
+         mocks.startStubbing();
+         mocks.when(serviceMock.getAirportCityNames(new List<String>{'LLA','ARN'}))
+                 .thenReturn(airportInfoMap);
+         mocks.stopStubbing();
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
         manualRequest.sendSMSMessages = true;
         manualRequest.sendEmailMessages = false;
@@ -257,7 +257,7 @@ private class IRR_EVT_ManualProcessor_Test {
         eventProcessor.initiateEvent();
 
         //Then
-        // ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'LLA','ARN'});
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'LLA','ARN'});
         System.assertEquals('SK1501', manualRequest.cancelInfo.flightRef);
         System.assertEquals('LLA', manualRequest.cancelInfo.stationDeparture);
         System.assertEquals('ARN', manualRequest.cancelInfo.stationArrival);
@@ -338,13 +338,13 @@ private class IRR_EVT_ManualProcessor_Test {
          IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
  
          //Given
-        //  Map<String,String> airportInfoMap = new Map<String,String>();
-        //  airportInfoMap.put('ARN','Stockholm');
-        //  airportInfoMap.put('CPH','Copenhagen');
-        //  mocks.startStubbing();
-        // //  mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
-        // //          .thenReturn(airportInfoMap);
-        //  mocks.stopStubbing();
+         Map<String,String> airportInfoMap = new Map<String,String>();
+         airportInfoMap.put('ARN','Stockholm');
+         airportInfoMap.put('CPH','Copenhagen');
+         mocks.startStubbing();
+         mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
+                 .thenReturn(airportInfoMap);
+         mocks.stopStubbing();
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
         manualRequest.emailTemplate = 'EMAIL_TEMPLATE';
         manualRequest.smsTemplate = 'SMS_TEMPLATE';
@@ -373,7 +373,7 @@ private class IRR_EVT_ManualProcessor_Test {
         eventProcessor.processEvent();
 
         //Then
-        // ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CPH'});
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CPH'});
         List<IRR_MOD_Message> messages = eventProcessor.messages;
         System.assertEquals(2, messages.size());
         System.assert(messages[0].responseMessage, 'Message 1 Response expected');

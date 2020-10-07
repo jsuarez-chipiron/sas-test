@@ -10,8 +10,8 @@
   <br /> Due to earlier flight disruptions, you have been rebooked to the following flight(s):​ [[[LOOP(passengerInfo.itinerary, &quot;trip&quot;)]]][[[LOOP(trip.segments, &quot;segment&quot;)]]][[[DISPLAYIF(contains(segment.segmentId, rebookInfo.addedSegments))]]] 
   <br /> 
   <br /> {{{segment.flightNumber}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'd MMM')]]] 
-  <br /> {{{segment.stationDeparture}}} [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]] 
-  <br /> {{{segment.stationArrival}}} [[[formatDatetimeUTC(segment.arrivalTimeLocal, 'HH:mm')]]] [[[ENDDISPLAYIF()]]][[[ENDLOOP()]]][[[ENDLOOP()]]] 
+  <br /> {{{segment.departureCity}}} ({{{segment.stationDeparture}}}) [[[formatDatetimeUTC(segment.departureTimeLocal, 'HH:mm')]]] 
+  <br /> {{{segment.arrivalCity}}} ({{{segment.stationArrival}}}) [[[formatDatetimeUTC(segment.arrivalTimeLocal, 'HH:mm')]]] [[[ENDDISPLAYIF()]]][[[ENDLOOP()]]][[[ENDLOOP()]]] 
   <br /> 
   <br /> We apologize for this change. To check your full reservation; 
   <br /> https://sas.travel/go/mmb?l=en&amp;r={{{passengerInfo.bookingReference}}}&amp;n={{{passengerInfo.lastName}}} 
