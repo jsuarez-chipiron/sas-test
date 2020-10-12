@@ -41,6 +41,10 @@ public class IRR_MOD_TedsBooking {
         public String at { get; set; }
     }
 
+    public class CheckIn {
+        public String status { get; set; }
+    }
+
 
     public class Departure {
         public String station { get; set; }

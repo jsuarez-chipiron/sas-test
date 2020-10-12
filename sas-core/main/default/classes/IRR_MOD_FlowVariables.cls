@@ -27,4 +27,7 @@ public class IRR_MOD_FlowVariables {
 
     @InvocableVariable
     public IRR_MOD_CustomInfo customInfo;
+
+    @InvocableVariable
+    public IRR_MOD_CheckinInfo checkinInfo;
 }

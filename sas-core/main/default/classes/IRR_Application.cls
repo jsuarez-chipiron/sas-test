@@ -38,6 +38,7 @@ public class IRR_Application {
                     new Map<SObjectType, Type> {
                             EmailTemplate.SObjectType => IRR_SEL_EmailTemplatesSelector.class,
                             IRR_CommunicationLog__c.SObjectType => IRR_SEL_CommunicationLogsSelector.class,
+                            IRR_EventLog__c.SObjectType => IRR_SEL_EventLogsSelector.class,
                             IRR_SMSResponse__c.SObjectType => IRR_SEL_SMSResponsesSelector.class,
                             IRR_DelayLog__c.SObjectType => IRR_SEL_DelayLogsSelector.class,
                             IRR_ManualCommunicationTemplate__mdt.SObjectType => IRR_SEL_ManualTemplatesSelector.class,
@@ -91,7 +92,9 @@ public class IRR_Application {
                             'flightCancellation' => new C_Application.EventDefinition(
                                     IRR_MOD_CancelInfo.class, IRR_EVT_CancelProcessor.Constructor.class),
                             'manualCommunication' => new C_Application.EventDefinition(
-                                    IRR_MOD_ManualRequest.class, IRR_EVT_ManualProcessor.Constructor.class)
+                                    IRR_MOD_ManualRequest.class, IRR_EVT_ManualProcessor.Constructor.class),
+                            'flightCheckInOpen' => new C_Application.EventDefinition(
+                                    IRR_MOD_CheckinInfo.class, IRR_EVT_CheckinProcessor.Constructor.class)
                     }
             );
 
@@ -105,6 +108,7 @@ public class IRR_Application {
     public static final fflib_Application.UnitOfWorkFactory UnitOfWork =
             new fflib_Application.UnitOfWorkFactory(
                     new List<SObjectType> {
+                            IRR_EventLog__c.SObjectType,
                             IRR_DelayLog__c.SObjectType,
                             IRR_CommunicationLog__c.SObjectType,
                             IRR_SMSResponse__c.SObjectType
