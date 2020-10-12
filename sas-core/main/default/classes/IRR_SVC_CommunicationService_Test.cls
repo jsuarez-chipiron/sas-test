@@ -58,8 +58,8 @@ private class IRR_SVC_CommunicationService_Test {
         ((IRR_EVT_IEventProcessor) mocks.verify(eventMock)).checkActiveBlock();
         ((IRR_EVT_IEventProcessor) mocks.verify(eventMock, 0)).processEvent();
         ((IRR_EVT_IEventProcessor) mocks.verify(eventMock, 0)).processMessages();
-        ((IRR_EVT_IEventProcessor) mocks.verify(eventMock, 0)).finalizeEvent(uowMock);
-        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock, 0)).commitWork();
+        ((IRR_EVT_IEventProcessor) mocks.verify(eventMock, 1)).finalizeEvent(uowMock);
+        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock, 1)).commitWork();
     }
 
     @IsTest

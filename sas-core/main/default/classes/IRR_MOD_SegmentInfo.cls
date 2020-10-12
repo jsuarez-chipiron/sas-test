@@ -49,7 +49,9 @@ public class IRR_MOD_SegmentInfo {
 
     @AuraEnabled
     public String departureCity { get; set; }
-
     @AuraEnabled
     public String arrivalCity { get; set; }
+
+    @AuraEnabled
+    public String checkinStatus { get; set; }
 }
