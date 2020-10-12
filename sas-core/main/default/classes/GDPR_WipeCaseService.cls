@@ -66,6 +66,7 @@ global with sharing class GDPR_WipeCaseService {
         Integer sz = caseList.size();
         Integer fSz = fieldsToClear.size();
         Set<Id> caseIds = new Set<Id>();
+        boolean wipeCase = true;
         for(Integer i=0;i<sz;i++){
             Case c = caseList[i];
             caseIds.add(c.Id);
@@ -74,15 +75,17 @@ global with sharing class GDPR_WipeCaseService {
             }
             c.GDPR_Wiped__c = true;
         }
-        deleteRelatedEntities(caseIds);
+        deleteRelatedEntities(caseIds,wipeCase);
         update caseList;
     }
 
     /**
         Deletes the entities related to the provided case ids
         @param caseIds The case ids for which to delete the related entities
+        @param wipecase used to recognize whether we are wiping the cases or deleting the cases.
+        
     */
-    global static void deleteRelatedEntities(Set<Id> caseIds){
+    global static void deleteRelatedEntities(Set<Id> caseIds, boolean wipeCase){
         LiveChatTranscript[] lctList = [SELECT Id,LiveChatVisitorId FROM LiveChatTranscript WHERE CaseId IN :caseIds];
         EmailMessage[] emList = [SELECT Id FROM EmailMessage WHERE ParentId IN :caseIds];
         MessagingSession[] msList = [SELECT Id,MessagingEndUserId FROM MessagingSession WHERE CaseId IN :caseIds];
@@ -96,14 +99,17 @@ global with sharing class GDPR_WipeCaseService {
             if(cdl.ContentDocument.LatestPublishedVersion.FirstPublishLocationId!=null && caseIds.contains(cdl.ContentDocument.LatestPublishedVersion.FirstPublishLocationId))cdDelList.add(new ContentDocument(Id=cdl.ContentDocumentId));
         }
         
-        delete lctList;
-        delete emList;
+        delete lctList;       
         delete msList;
         delete spList;
         delete tList;
         delete ccList;
         delete cdlList;
         delete cdDelList;
+        if(!wipeCase)
+        {
+           delete emList;
+        }
 
         Set<Id> lcvIds = new Set<Id>();
         for(Integer i=0,lctSz=lctList.size();i<lctSz;i++){
