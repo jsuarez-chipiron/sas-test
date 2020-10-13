@@ -64,16 +64,7 @@
         <members>SAS_Analyst</members>
         <name>Role</name>
     </types>
-	<!--2020-10-13 Delete queues-->
-	<types>
-        <members>Agent_Fares_Ticketing_EU</members>
-		<members>Agent_Helpdesk_SIA</members>
-		<members>Pandion_DK</members>
-		<members>Pandion_NO</members>
-		<members>Pandion_SE</members>
-        <name>Queue</name>
-    </types>
-	<!--2020-10-13 Delete listviews-->
+	<!--2020-10-13 Delete listviews -->
 	<types>
 		<members>case.Pandion_DK_Case</members>
 		<members>case.Pandion_NO_Case</members>
