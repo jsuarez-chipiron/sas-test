@@ -67,4 +67,11 @@
 		<members>Agent_Helpdesk_SIA</members>
         <name>Queue</name>
     </types>
+	<!--2020-10-13 Delete listviews -->
+	<types>
+		<members>case.Pandion_DK_Case</members>
+		<members>case.Pandion_NO_Case</members>
+		<members>case.Pandion_SE_Case</members>
+        <name>ListView</name>
+    </types>
 </Package>
