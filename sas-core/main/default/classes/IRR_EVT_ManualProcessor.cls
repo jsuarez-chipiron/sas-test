@@ -76,6 +76,16 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
             manualRequest.cancelInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
             manualRequest.cancelInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
         }
+        if (manualRequest.checkinInfo != null && String.isNotBlank(manualRequest.checkinInfo.flightId)) {
+            IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
+                    new IRR_SVC_CommunicationService.FlightIdSplit(manualRequest.checkinInfo.flightId);
+            manualRequest.checkinInfo.flightRef = flightIdSplit.flightNumber;
+            manualRequest.checkinInfo.stationDeparture = flightIdSplit.stationDeparture;
+            manualRequest.checkinInfo.stationArrival = flightIdSplit.stationArrival;
+            this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
+            manualRequest.checkinInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
+            manualRequest.checkinInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
+        }
 
     }
 
@@ -105,10 +115,12 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
             flowVariables.delayInfo = manualRequest.delayInfo;
             flowVariables.newInfo = manualRequest.newInfo;
             flowVariables.cancelInfo = manualRequest.cancelInfo;
+            flowVariables.checkinInfo = manualRequest.checkinInfo;
             flowVariables.scheduledChangeInfo = manualRequest.scheduledChangeInfo;
-
+            
             //Retrieving airport codes equivalent city names from Teds for Rebooking
-            if (manualRequest.delayInfo == null &&  manualRequest.newInfo == null && manualRequest.cancelInfo == null){
+            if (manualRequest.delayInfo == null &&  manualRequest.newInfo == null && manualRequest.cancelInfo == null 
+                    && manualRequest.scheduledChangeInfo == null && manualRequest.checkinInfo == null ){
                 if(manualRequest.passengerInfos!= null && manualRequest.passengerInfos.size()>0) {
                     String[] iataCodes = new List<String>();
                     List<IRR_MOD_TripInfo> itinerary = new List<IRR_MOD_TripInfo>();

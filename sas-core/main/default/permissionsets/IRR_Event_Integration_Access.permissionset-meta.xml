@@ -14,6 +14,10 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>
+        <flow>IRR_EVT_CheckinFlow</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
         <flow>IRR_EVT_DelayFlow</flow>
     </flowAccesses>
     <flowAccesses>

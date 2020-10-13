@@ -66,6 +66,7 @@ public class IRR_EVT_CheckinProcessor extends IRR_EVT_EventProcessor {
         Long utcDeparture = checkinInfo.scheduledTimeOfDepartureUTC.gettime();
         Long difference = ((localDeparture-utcDeparture)/1000)/60;
 
+
         //Add the difference betwwen local and UTC departure time to Eventtime and convert it to local time
         checkinInfo.eventTime = checkinInfo.eventTime.addMinutes(Integer.valueOf(difference));
 
@@ -170,14 +171,19 @@ public class IRR_EVT_CheckinProcessor extends IRR_EVT_EventProcessor {
                                 Integer.valueOf(curfewTime.get(1).split(':').get(0)), 
                                 Integer.valueOf(curfewTime.get(1).split(':').get(1)), 0);
             }
+            System.debug('##endCurfew##'+endCurfew);
 
         IRR_EventLog__c eventLog = new IRR_EventLog__c();
         eventLog.IRR_FlightId__c = checkinInfo.flightId;
 
         Long difference = ((endCurFew.getTime()-checkinInfo.eventTime.getTime())/1000)/60;
+        System.debug('##difference##'+difference);
+        System.debug('##endCurFew##'+endCurFew.getTime());
+        System.debug('##eventTime##'+checkinInfo.eventTime);
 
         // Preparing ScheduleTime to be the time when Batch job will reprocess these messages
         eventLog.IRR_ScheduleTime__c = Datetime.now().addMinutes(Integer.valueof(Difference));
+        System.debug('##SchTime##'+eventLog.IRR_ScheduleTime__c);
         String payloadJSON = JSON.serialize(checkinInfo);
         eventLog.IRR_EventPayload__c = payloadJSON;
         uow.registerNew(eventLog);

@@ -33,6 +33,9 @@ public class IRR_MOD_ManualRequest {
 
     @AuraEnabled
     public IRR_MOD_CancelInfo cancelInfo { get; set; }
+    
+    @AuraEnabled
+    public IRR_MOD_CheckinInfo checkinInfo { get; set; }
 
     @AuraEnabled
     public IRR_MOD_ScheduledChangeInfo scheduledChangeInfo { get; set; }

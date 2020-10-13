@@ -85,6 +85,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IRR_MOD_CheckinInfo</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IRR_MOD_DelayInfo</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -113,7 +117,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IRR_SEL_EventLogsSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IRR_SEL_DelayLogsSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IRR_SEL_IEventLogsSelector</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

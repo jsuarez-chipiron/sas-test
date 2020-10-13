@@ -32,18 +32,18 @@ global with sharing class IRR_ProcessCheckinCurfewMessages_Batch extends SBS_Sch
 	*/
 	global override void executeScope(Database.BatchableContext bc, SObject[] sObjScope){
          for(IRR_EventLog__c so : (List<IRR_EventLog__c>) sObjScope){
-             System.debug('## EventLog'+so);
             IRR_SVC_CommunicationServiceImpl c = new IRR_SVC_CommunicationServiceImpl();
             IRR_MOD_CheckinInfo cInfo= (IRR_MOD_CheckinInfo)JSON.deserialize(so.IRR_EventPayload__c, IRR_MOD_CheckinInfo.class);
             cInfo.eventTime= Datetime.now();
             String payloadJSON = JSON.serialize(cInfo);
-            System.debug('<<payload>>'+payloadJSON);
             IRR_SVC_CommunicationService.processEvent(eventType, payloadJSON);
          }
+         delete sObjScope ;
     }
 
     global override void finishOverridable(Database.BatchableContext bc){
-        String scheduleTime = C_Settings.getSettings('IRR_Checkin_SchTime').get('CheckinCurfew');
+        String scheduleTime = C_Settings.getSettings('IRR_Checkin').get('ScheduleTime');
+        System.debug(scheduleTime);
         System.schedule('ProcessQueuedCheckin'+Datetime.Now(), scheduleTime, new IRR_ProcessCheckinCurfewMessages_Batch());
         
     }

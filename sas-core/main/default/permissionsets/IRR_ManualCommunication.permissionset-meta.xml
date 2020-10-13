@@ -24,6 +24,10 @@
         <apexClass>IRR_MOD_SegmentInfo</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>IRR_MOD_CheckinInfo</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>IRR Manual Communication</label>
     <license>Salesforce</license>
