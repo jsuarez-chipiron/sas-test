@@ -20,6 +20,6 @@
     </filters>
     <label>Agent Fares Ticketing EU Open Cases</label>
     <sharedTo>
-        <group>Agent_Fares_Ticketing_EU</group>
+        <group>SAS_Agent_Helpdesk</group>
     </sharedTo>
 </ListView>
