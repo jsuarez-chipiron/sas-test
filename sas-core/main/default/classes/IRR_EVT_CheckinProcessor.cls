@@ -19,7 +19,7 @@ public class IRR_EVT_CheckinProcessor extends IRR_EVT_EventProcessor {
     List<String> curfewTime;
     private static Datetime startCurfew;
     private static Datetime endCurfew;
-    private static Datetime eventTime;
+    private static Datetime localTime;
     
     @TestVisible
     private IRR_MOD_CheckinInfo checkinInfo;
@@ -68,10 +68,10 @@ public class IRR_EVT_CheckinProcessor extends IRR_EVT_EventProcessor {
 
 
         //Add the difference betwwen local and UTC departure time to Eventtime and convert it to local time
-        checkinInfo.eventTime = checkinInfo.eventTime.addMinutes(Integer.valueOf(difference));
+        localTime = checkinInfo.eventTime.addMinutes(Integer.valueOf(difference));
 
         //Check for the curfew criteria
-        if (checkinInfo.eventTime.timeGmt() <= startCurfew.timeGmt() && checkinInfo.eventTime.timeGmt() >= endCurfew.timeGmt()) {
+        if (localTime.timeGmt() <= startCurfew.timeGmt() && localTime.timeGmt() >= endCurfew.timeGmt()) {
             IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
                 new IRR_SVC_CommunicationService.FlightIdSplit(checkinInfo.flightId);
         checkinInfo.flightRef = flightIdSplit.flightNumber;
@@ -161,8 +161,8 @@ public class IRR_EVT_CheckinProcessor extends IRR_EVT_EventProcessor {
                         Date.today().month(),Date.today().day(),
                         Integer.valueOf(curfewTime.get(0).split(':').get(0)), Integer.valueOf(curfewTime.get(0).split(':').get(1)), 0);
         endCurfew = null;
-        
-        if(Integer.valueOf(curfewTime.get(0).split(':').get(0)) > Integer.valueOf(curfewTime.get(1).split(':').get(0))){
+        // To set the correct day(next day or the same day) for the endcurfew based on event time received in the payload
+        if(localTime.hourGmt() >= Integer.valueOf(curfewTime.get(1).split(':').get(0))){
             endCurfew = Datetime.newInstanceGmt(Date.today().year(),Date.today().month(),
                             Date.today().addDays(1).day(),Integer.valueOf(curfewTime.get(1).split(':').get(0)), 
                             Integer.valueOf(curfewTime.get(1).split(':').get(1)), 0);
@@ -172,16 +172,18 @@ public class IRR_EVT_CheckinProcessor extends IRR_EVT_EventProcessor {
                                 Integer.valueOf(curfewTime.get(1).split(':').get(1)), 0);
             }
             System.debug('##endCurfew##'+endCurfew);
-
         IRR_EventLog__c eventLog = new IRR_EventLog__c();
         eventLog.IRR_FlightId__c = checkinInfo.flightId;
 
-        Long difference = ((endCurFew.getTime()-checkinInfo.eventTime.getTime())/1000)/60;
+        //difference between endcurfew and eventTime in minutes
+        Long difference = ((endCurFew.getTime()-localTime.getTime())/1000)/60;
         System.debug('##difference##'+difference);
         System.debug('##endCurFew##'+endCurFew.getTime());
-        System.debug('##eventTime##'+checkinInfo.eventTime);
+        System.debug('##localTime##'+localTime);
 
-        // Preparing ScheduleTime to be the time when Batch job will reprocess these messages
+        // Preparing ScheduleTime to be the time(currentTime plus difference between endCurfew and Local eventTime)
+        // Checkin Batch job will reprocess these messages based on schedule time
+
         eventLog.IRR_ScheduleTime__c = Datetime.now().addMinutes(Integer.valueof(Difference));
         System.debug('##SchTime##'+eventLog.IRR_ScheduleTime__c);
         String payloadJSON = JSON.serialize(checkinInfo);
