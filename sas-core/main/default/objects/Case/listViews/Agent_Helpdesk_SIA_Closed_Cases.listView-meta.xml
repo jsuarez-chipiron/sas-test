@@ -20,6 +20,6 @@
     </filters>
     <label>Agent Helpdesk SIA Closed Cases</label>
     <sharedTo>
-        <group>Agent_Helpdesk_SIA</group>
+        <group>SAS_Agent_Helpdesk</group>
     </sharedTo>
 </ListView>
