@@ -674,7 +674,7 @@
         <name>SelectFilesFromSalesforce</name>
     </userPermissions>
     <userPermissions>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
         <name>SendExternalEmailAvailable</name>
     </userPermissions>
     <userPermissions>
@@ -686,7 +686,7 @@
         <name>EmailMass</name>
     </userPermissions>
     <userPermissions>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
         <name>EmailSingle</name>
     </userPermissions>
     <userPermissions>
