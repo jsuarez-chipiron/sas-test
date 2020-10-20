@@ -902,6 +902,45 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>FCS_SubOrigin_c__c</picklist>
+        <values>
+            <fullName>Agent Fares Ticketing EU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent Helpdesk SIA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functional Product Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pandion DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pandion NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pandion SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SASSI Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System %26 Tariff</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>FCS_SubTeam__c</picklist>
         <values>
             <fullName>Team 1%2E1</fullName>
