@@ -37,6 +37,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.FCS_SubOrigin_c__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>User.FCS_SubTeam__c</field>
         <readable>true</readable>
@@ -442,6 +447,10 @@
         <layout>Case-SAS Internal%2FBackoffice Layout</layout>
         <recordType>Case.Internal_Backoffice</recordType>
     </layoutAssignments>
+        <layoutAssignments>
+        <layout>Case-SAS Support Layout</layout>
+        <recordType>Case.Channel</recordType>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Support</recordType>
@@ -600,6 +609,11 @@
         <object>MessagingSession</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+        <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Case.Channel</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Feedback</recordType>
