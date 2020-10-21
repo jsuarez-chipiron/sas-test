@@ -488,6 +488,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Functional Product Support</fullName>
             <default>false</default>
         </values>
@@ -652,6 +656,10 @@
         </values>
         <values>
             <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus</fullName>
             <default>false</default>
         </values>
         <values>

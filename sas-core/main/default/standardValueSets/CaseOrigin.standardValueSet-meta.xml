@@ -71,14 +71,19 @@
         <default>false</default>
         <label>Pandion DK</label>
     </standardValue>
-        <standardValue>
+    <standardValue>
         <fullName>Agent Helpdesk SIA</fullName>
         <default>false</default>
         <label>Agent Helpdesk SIA</label>
     </standardValue>
-        <standardValue>
+    <standardValue>
         <fullName>Agent Fares Ticketing EU</fullName>
         <default>false</default>
         <label>Agent Fares Ticketing EU</label>
+    </standardValue>
+    <standardValue>
+        <fullName>EuroBonus</fullName>
+        <default>false</default>
+        <label>EuroBonus</label>
     </standardValue>
 </StandardValueSet>
