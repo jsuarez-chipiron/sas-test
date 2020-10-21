@@ -58,6 +58,11 @@
                 <default>false</default>
                 <label>SASSI Internal</label>
             </value>
+            <value>
+                <fullName>EuroBonus</fullName>
+                <default>false</default>
+                <label>EuroBonus</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

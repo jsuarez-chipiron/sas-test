@@ -12,6 +12,17 @@
         <targetObject>ParentId</targetObject>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Case_Owner_Update_EuroBonus</fullName>
+        <field>OwnerId</field>
+        <lookupValue>SAS_EuroBonus</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Case Owner Update EuroBonus</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <targetObject>ParentId</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Case_Owner_Update_Functional_product_sup</fullName>
         <field>OwnerId</field>
         <lookupValue>FunctionalProductSupport</lookupValue>
@@ -168,6 +179,49 @@
             <field>Case.FCS_SubOrigin_c__c</field>
             <operation>equals</operation>
             <value>Agent Helpdesk SIA</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for EuroBonus Customer</fullName>
+        <actions>
+            <name>Case_Owner_Update_EuroBonus</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>EuroBonus</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>
@@ -413,7 +467,7 @@
             <value>Email</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
-        <triggerType>onCreateOnly</triggerType>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Close case email messages for system and tariff</fullName>
