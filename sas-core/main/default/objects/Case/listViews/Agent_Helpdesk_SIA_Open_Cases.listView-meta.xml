@@ -9,7 +9,7 @@
     <columns>CASES.STATUS</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>CASES.ORIGIN</field>
+        <field>FCS_SubOrigin_c__c</field>
         <operation>equals</operation>
         <value>Agent Helpdesk SIA</value>
     </filters>

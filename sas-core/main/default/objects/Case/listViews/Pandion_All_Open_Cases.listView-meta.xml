@@ -9,9 +9,10 @@
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
     <columns>OWNER_NAME</columns>
+    <columns>FCS_SubOrigin_c__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>CASES.ORIGIN</field>
+        <field>FCS_SubOrigin_c__c</field>
         <operation>equals</operation>
         <value>Pandion SE,Pandion NO,Pandion DK</value>
     </filters>

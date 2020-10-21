@@ -2,6 +2,11 @@
 <StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <sorted>true</sorted>
     <standardValue>
+        <fullName>Channel</fullName>
+        <default>false</default>
+        <label>Channel</label>
+    </standardValue>
+    <standardValue>
         <fullName>Feedback</fullName>
         <default>false</default>
         <label>Feedback</label>
