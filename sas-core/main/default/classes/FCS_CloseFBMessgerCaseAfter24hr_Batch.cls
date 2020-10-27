@@ -63,6 +63,7 @@ public with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
         if (cse.FCS_CaseReason__c == null || cse.FCS_CaseReason__c == '') {
           cse.Type = 'Information';
           cse.FCS_CaseReason__c = 'Error';
+          cse.FCS_CaseSubReason__c = 'Inactive customer';
           tagCases.add(cse);
         }
       }
