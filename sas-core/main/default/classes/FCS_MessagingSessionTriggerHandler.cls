@@ -76,15 +76,14 @@ public with sharing class FCS_MessagingSessionTriggerHandler extends C_TriggerHa
                 System.debug('inside 1');
                 if (mesgSesion.CaseId == null && mesgSesion.Status == 'Active' && mesgSesion.Origin == 'InboundInitiated') {
                     If(lstMessingSesions[0].Case.Status != 'Closed') {
-                         System.debug('inside 2');
                         mesgSesion.CaseId = lstMessingSesions[0].CaseId;
                         newCases.add(new Case(Id = lstMessingSesions[0].CaseId, Status = 'New Response'));
                     }
                     else {
-                       System.debug('inside 3');
                         OldCaseClosed = true;
                         Case cCloneCase = cse.clone(false, false, false, false);
                         cCloneCase.RecordTypeId = C_RecordTypeHelper.CASE_INFORMATION;
+                        cCloneCase.Origin = 'Facebook Messenger';
                         newCases.add(cCloneCase);
                     }
                 }
