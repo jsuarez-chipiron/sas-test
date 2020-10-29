@@ -17,8 +17,4 @@
         <tab>standard-Macro</tab>
         <visibility>Visible</visibility>
     </tabSettings>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>SubmitMacrosAllowed</name>
-    </userPermissions>
 </PermissionSet>
