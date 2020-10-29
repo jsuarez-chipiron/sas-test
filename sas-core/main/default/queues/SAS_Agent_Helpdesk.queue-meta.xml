@@ -4,7 +4,7 @@
     <name>Agent Helpdesk SAS</name>
     <queueMembers>
         <publicGroups>
-            <publicGroup>SAS_Agent_Helpdesk</publicGroup>
+            <publicGroup>AgentHelpdesk</publicGroup>
         </publicGroups>
     </queueMembers>
     <queueSobject>
