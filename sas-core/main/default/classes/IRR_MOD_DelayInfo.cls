@@ -48,10 +48,4 @@ public class IRR_MOD_DelayInfo {
 
     @AuraEnabled
     public Integer delayDifference { get; set; }
-
-    @AuraEnabled
-    public String arrivalCity { get; set; }
-
-    @AuraEnabled
-    public String departureCity { get; set; }
 }

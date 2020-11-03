@@ -1,4 +1,4 @@
-    /**
+/**
      * @author Anton Norell
      * @date 2020-04-07
      * @description Trigger handler for Email Message object

@@ -27,10 +27,6 @@ export default class irr_SendPanel extends LightningElement {
 
     @track sendParameters = {};
 
-    get hideFlightIdTabs() {
-        return this.flightId && this.flightId.indexOf(',') !== -1;
-    }
-
     get customContentLabel() {
         const length = this.sendParameters && this.sendParameters.content ? this.sendParameters.content.length : 0;
         const smsMessages =  Math.ceil(length / 160);

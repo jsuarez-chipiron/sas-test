@@ -17,11 +17,23 @@ import getBookingPassengerInfos from '@salesforce/apex/IRR_CON_ManualCommunicati
 import * as tableUtil from 'c/c_TableUtil';
 import { reduceErrors } from 'c/c_LdsUtils';
 
-import { FLIGHT_COLUMNS, PREVIOUS_FLIGHT_COLUMNS, NEXT_FLIGHT_COLUMNS, BOOKING_COLUMNS } from './passengerTableColumns';
+const COLUMNS = [
+    { label: 'PNR', fieldName: 'bookingReference', sortable: true, initialWidth: 75 },
+    { label: 'Name', fieldName: 'lastNameSlashFirstName', sortable: true },
+    { label: 'Phone', fieldName: 'phoneNumber', sortable: true, initialWidth: 115 },
+    { label: 'Email', fieldName: 'emailAddress', sortable: true },
+    { label: 'Serv Class', fieldName: 'thisSegment.serviceClass', sortable: true, initialWidth: 60 },
+    { label: 'Bkg Class', fieldName: 'thisSegment.bookingClass', sortable: true, initialWidth: 60 },
+    { label: 'Status', fieldName: 'thisSegment.status', sortable: true },
+    { label: 'Code', fieldName: 'thisSegment.statusCode', sortable: true, initialWidth: 70 },
+    { label: 'SSR', fieldName: 'SSR', sortable: true, initialWidth: 70 },
+    { label: 'EB', fieldName: 'ebLevel', sortable: true, initialWidth: 50  },
+    { label: 'FQTV', fieldName: 'otherFQTVCarrier', sortable: true, initialWidth: 70 },
+];
 
 export default class IRR_ManualCommunication extends LightningElement {
 
-    @track COLUMNS = [];
+    COLUMNS = COLUMNS;
 
     @track passengerResult = [];
 
@@ -64,15 +76,6 @@ export default class IRR_ManualCommunication extends LightningElement {
         const _ = this.init();
     }
 
-    async init() {
-        try {
-            this.templatesBySendMode = await getManualTemplatesBySendMode();
-        }
-        catch (e) {
-            this.handleError(e, true);
-        }
-    }
-
     get noPassengersFoundText() {
         return this.passengerResult.length === 0 ?
             'No passengers found, or flight does not exist. Please check Flight ID.' : 'No passengers matching filter';
@@ -86,6 +89,15 @@ export default class IRR_ManualCommunication extends LightningElement {
         return this.leftPanelTab === "LEFT_FILTER" ? "utility:filterList" : "utility:preview";
     }
 
+    async init() {
+        try {
+            this.templatesBySendMode = await getManualTemplatesBySendMode();
+        }
+        catch (e) {
+            this.handleError(e, true);
+        }
+    }
+
     get tableHeading() {
         if (Object.keys(this.retrieveParameters).length === 0) return "No filters active";
         const params = Object.values(this.retrieveParameters).join(' - ');
@@ -97,16 +109,6 @@ export default class IRR_ManualCommunication extends LightningElement {
             this.additionalRecipients.filter(r => r.phoneNumber || r.emailAddress).length : 0;
         const recipients = this.selectedRows ? this.selectedRows.length : 0;
         return additionalRecipients + recipients;
-    }
-
-    handleGlobalKeyUp(event) {
-        if (event.key === 'Escape') {
-            if (this.errors && this.errors.length > 0 && !this.criticalError) this.clearErrors();
-            else if (this.showConfirmation) this.handleHideConfirmEvent();
-            else if (this.showRecipientModal) this.template.querySelector('c-irr_-recipient-modal').handleCancel();
-            else if (this.showSuccess) this.handleHideSuccessEvent();
-            else if (!this.showRetrieve) this.handleResetEvent();
-        }
     }
 
     handleTabSwitch(event) {
@@ -147,17 +149,6 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     handleFilterApplyEvent(event) {
         this.filterParameters = event.detail;
-        
-        if (this.filterParameters.hasNextSegment) {
-            this.COLUMNS = NEXT_FLIGHT_COLUMNS;
-        }
-        else if (this.filterParameters.hasPrevSegment) {
-            this.COLUMNS = PREVIOUS_FLIGHT_COLUMNS;
-        }
-        else if (this.retrieveParameters.flightIds) {
-            this.COLUMNS = FLIGHT_COLUMNS;
-        }
-        
         this.processTable();
     }
 
@@ -210,7 +201,7 @@ export default class IRR_ManualCommunication extends LightningElement {
             const passengerInfos = this.selectedRows.map(row => tableUtil.unFlatten(row));
             passengerInfos.push(...this.additionalRecipients.map((rec) => {
                 return {
-                    thisSegment: { flightId: this.retrieveParameters.flightIds },
+                    thisSegment: { flightId: this.retrieveParameters.flightId },
                     lastNameSlashFirstName: 'ADDITIONAL/RECIPIENT',
                     hasPhoneNumber: !!rec.phoneNumber,
                     hasEmailAddress: !!rec.emailAddress,
@@ -278,19 +269,16 @@ export default class IRR_ManualCommunication extends LightningElement {
             let eventParameters;
             switch (retrievalMode) {
                 case "FLIGHT_REFERENCE":
-                    this.COLUMNS = FLIGHT_COLUMNS;
-                    eventParameters = {flightIds: parameters.flightIds};
+                    eventParameters = {flightId: parameters.flightId};
                     result = await getFlightPassengerInfos(eventParameters);
                     this.filterParameters = {'thisSegment.status': ['Confirmed', 'SpaceAvailable', 'Waitlisted']};
                     break;
                 case "BOOKING_REFERENCE":
-                    this.COLUMNS = BOOKING_COLUMNS;
                     eventParameters = {bookings: parameters.bookingId};
                     result = await getBookingPassengerInfos(eventParameters);
                     this.filterParameters = {};
                     break;
                 case "BYPASS":
-                    this.COLUMNS = [];
                     this.filterParameters = {};
                     break;
                 default:
@@ -299,8 +287,6 @@ export default class IRR_ManualCommunication extends LightningElement {
             if (eventParameters) this.retrieveParameters = eventParameters;
             if (result) this.passengerResult = result.map(item => tableUtil.flatten(item));
             this.processTable();
-            //Focus container div to capture keyboard events
-            this.template.querySelector('div[focusable=""]').focus();
             this.showRetrieve = false;
             this.handleLoad(true);
         }

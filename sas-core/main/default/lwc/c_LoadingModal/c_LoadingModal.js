@@ -2,7 +2,7 @@
  * @author Niklas Lundkvist, Deloitte
  * @date 2020
  *
- * @description Simple loading modal LWC.
+ * @description TODO
  */
 
 import {LightningElement, api} from 'lwc';

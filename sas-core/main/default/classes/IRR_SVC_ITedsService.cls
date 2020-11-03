@@ -6,5 +6,4 @@
 public interface IRR_SVC_ITedsService {
     List<IRR_MOD_PassengerInfo> getPassengerInfosForBooking(String bookingId);
     List<IRR_MOD_PassengerInfo> getPassengerInfosForFlight(String flightId);
-    Map<String,String> getAirportCityNames(String [] iataCodes);
 }

@@ -12,19 +12,6 @@ public class IRR_DOM_CommunicationLogs extends fflib_SObjectDomain
         return (IRR_DOM_ICommunicationLogs) IRR_Application.Domain.newInstance(sObjectList);
     }
 
-    /*
-     * Map of Communication Log Status text to integer value according to expected Status progression.
-     */
-    public static Map<String, Integer> STATUS_VALUE =
-            new Map<String, Integer> {
-                    'Created' => 1,
-                    'Sent' => 2,
-                    'Bounced' => 3,
-                    'Opened' => 4,
-                    'Responded' => 5,
-                    'Error' =>  6
-            };
-
      /**
      * @author Ludvig Wälimaa, Deloitte
      * @date 2020

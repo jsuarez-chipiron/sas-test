@@ -26,7 +26,8 @@
 	<types>
 		<members>FCS_InboundSocialPostHandlerImpl</members>
 		<members>FCS_InboundSocialPostHandlerImpl_Test</members>
-		<members>AirportCityNames</members>
+	   <members>FCS_CloseFBMessangerCaseAfter24hour</members>
+	   <members>Test_FCS_CloseFBMessangerCaseAfter24hour</members>
 		<name>ApexClass</name>
 	</types>
 	
@@ -42,8 +43,6 @@
 		<members>AD_RolePermission.SAS_Analytic_User</members>
 		<members>AD_RolePermission.SYKES_Agent</members>
 		<members>AD_RolePermission.SUTHERLAND_Agent</members>
-		<members>IRR_RecipientWhitelist.nlundkvist_deloitte_se</members>
-		<members>IRR_RecipientWhitelist.X46700802723</members>
 		<name>CustomMetadata</name>
 	</types>
 	<!-- 2020-02-20 Delete field when adding namespace Sanna Sörberg -->
@@ -62,4 +61,26 @@
         <members>SAS_Analyst</members>
         <name>Role</name>
     </types>
+	<!--2020-10-13 Delete listviews -->
+	<types>
+		<members>case.Pandion_DK_Case</members>
+		<members>case.Pandion_NO_Case</members>
+		<members>case.Pandion_SE_Case</members>
+        <name>ListView</name>
+    </types>
+	<!--2020-10-13 Delete queues -->
+	<types>
+		<members>Agent_Fares_Ticketing_EU</members>
+		<members>Agent_Helpdesk_SIA</members>
+		<members>Pandion_DK</members>
+		<members>Pandion_NO</members>
+		<members>Pandion_SE</members>
+		<name>Queue</name>
+	</types>
+	<!--2020-10-13 remove unused public groups -->
+	<types>
+		<members>Agent_Fares_Ticketing_EU</members>
+		<members>Agent_Helpdesk_SIA</members>
+		<name>Group</name>
+	</types>
 </Package>

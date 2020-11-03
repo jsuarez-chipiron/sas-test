@@ -20,43 +20,22 @@
             <div class="slds-p-vertical_x-small">
                 <div class="slds-text-heading_small">Special Service Req</div>
                 <lightning-input
-                        name="SSR"
-                        data-checkbox-filter-value="*"
-                        data-checkbox-single-group="SSR"
+                        data-checkbox-field="SSR"
+                        data-checkbox-type="ALL"
                         class="slds-m-horizontal_small"
                         type="checkbox"
                         label="Only show SSR"
-                        onchange={handleSingleCheckbox}>
+                        name="SSR"
+                        onchange={handleAllCheckbox}>
                 </lightning-input>
                 <lightning-input
-                        name="SSR"
-                        data-checkbox-filter-value="NULL"
-                        data-checkbox-single-group="SSR"
+                        data-checkbox-field="SSR"
+                        data-checkbox-type="NONE"
                         class="slds-m-horizontal_small"
                         type="checkbox"
                         label="Don't show SSR"
-                        onchange={handleSingleCheckbox}>
-                </lightning-input>
-            </div>
-            <div class="slds-p-vertical_x-small">
-                <div class="slds-text-heading_small">Connecting Flight</div>
-                <lightning-input
-                        name="hasPrevSegment"
-                        data-checkbox-filter-value="TRUE"
-                        data-checkbox-single-group="FILTER_CONNECTION"
-                        class="slds-m-horizontal_small"
-                        type="checkbox"
-                        label="Inbound Flight"
-                        onchange={handleSingleCheckbox}>
-                </lightning-input>
-                <lightning-input
-                        name="hasNextSegment"
-                        data-checkbox-filter-value="TRUE"
-                        data-checkbox-single-group="FILTER_CONNECTION"
-                        class="slds-m-horizontal_small"
-                        type="checkbox"
-                        label="Outbound Flight"
-                        onchange={handleSingleCheckbox}>
+                        name="SSR"
+                        onchange={handleNoneCheckbox}>
                 </lightning-input>
             </div>
         </div>

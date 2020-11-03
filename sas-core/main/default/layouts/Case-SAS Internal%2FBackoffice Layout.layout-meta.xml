@@ -58,6 +58,10 @@
                 <behavior>Readonly</behavior>
                 <field>CaseNumber</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FCS_SubOrigin_c__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -40,38 +40,6 @@ private class MCENS_EnsEventTrigger_Test {
 
     }
     /**
-     * Test Status update progression where Status shouldn't be changed to a previous Status.
-     */
-    @isTest static void processEvents_StatusOrder(){
-        List<IRR_CommunicationLog__c> communicationLogs = new List<IRR_CommunicationLog__c>{
-                new IRR_CommunicationLog__c(IRR_MessageKey__c='MCENS_EnsEventTrigger_Test_6',IRR_Status__c='Error'),
-                new IRR_CommunicationLog__c(IRR_MessageKey__c='MCENS_EnsEventTrigger_Test_7',IRR_Status__c='Responded'),
-                new IRR_CommunicationLog__c(IRR_MessageKey__c='MCENS_EnsEventTrigger_Test_8',IRR_Status__c='Bounced'),
-                new IRR_CommunicationLog__c(IRR_MessageKey__c='MCENS_EnsEventTrigger_Test_9',IRR_Status__c='NEW_STATUS')
-        };
-        insert communicationLogs;
-        EventCreator ec = new EventCreator();
-        List<MCENS_EnsEvent__e> evtList = new List<MCENS_EnsEvent__e>();
-        evtList.add(ec.create(true,'TransactionalSendEvents.EmailSent','{"to":"test@test.com.invalid","subscriberKey":"test@test.com.invalid","messageKey":"MCENS_EnsEventTrigger_Test_6","status":"Sent"}'));
-        evtList.add(ec.create(true,'TransactionalSendEvents.EmailBounced','{"to":"test@test.com.invalid","subscriberKey":"test@test.com.invalid","messageKey":"MCENS_EnsEventTrigger_Test_6","bounceCode":"4321","bounceMessage":"BOUNCEMESSAGE","smtpReason":"SMTPREASON"}'));
-        evtList.add(ec.create(true,'TransactionalSendEvents.SmsSent','{"to":"46700000000","subscriberKey":"46700000000","messageKey":"MCENS_EnsEventTrigger_Test_6"}'));
-        evtList.add(ec.create(true,'TransactionalSendEvents.EmailSent','{"to":"test@test.com.invalid","subscriberKey":"test@test.com.invalid","messageKey":"MCENS_EnsEventTrigger_Test_7","status":"Sent"}'));
-        evtList.add(ec.create(true,'TransactionalSendEvents.EmailBounced','{"to":"test@test.com.invalid","subscriberKey":"test@test.com.invalid","messageKey":"MCENS_EnsEventTrigger_Test_7","bounceCode":"4321","bounceMessage":"BOUNCEMESSAGE","smtpReason":"SMTPREASON"}'));
-        evtList.add(ec.create(true,'TransactionalSendEvents.SmsSent','{"to":"46700000000","subscriberKey":"46700000000","messageKey":"MCENS_EnsEventTrigger_Test_7"}'));
-        evtList.add(ec.create(true,'TransactionalSendEvents.EmailSent','{"to":"test@test.com.invalid","subscriberKey":"test@test.com.invalid","messageKey":"MCENS_EnsEventTrigger_Test_8","status":"Sent"}'));
-        evtList.add(ec.create(true,'TransactionalSendEvents.EmailSent','{"to":"test@test.com.invalid","subscriberKey":"test@test.com.invalid","messageKey":"MCENS_EnsEventTrigger_Test_9","status":"Sent"}'));
-        MCENS_EnsEventTriggerHandler h = new MCENS_EnsEventTriggerHandler(evtList,0,null);
-        h.run();
-        System.assertEquals('8',h.getLastReplayId());
-        StatusAsserter sa = new StatusAsserter();
-        sa.assert('MCENS_EnsEventTrigger_Test_6', 'Error', null, null, null);
-        sa.assert('MCENS_EnsEventTrigger_Test_7', 'Responded', null, null, null);
-        sa.assert('MCENS_EnsEventTrigger_Test_8', 'Bounced', null, null, null);
-        //Unknown Status should be updated
-        sa.assert('MCENS_EnsEventTrigger_Test_9', 'Sent', null, null, null);
-
-    }
-    /**
      * Tests behaviour where the event cannot be found but found at a later point in time
      * Tests that only the initial scope is being reprocessed
      */
