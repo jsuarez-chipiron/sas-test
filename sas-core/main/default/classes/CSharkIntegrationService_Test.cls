@@ -58,58 +58,7 @@ public with sharing class CSharkIntegrationService_Test {
         System.assertEquals(Date.valueOf('2016-09-28T00:00:00'), dataRow.get('EnrollmentDate'));
         System.assertEquals('NOSECUR', dataRow.get('CMP'));
     }
-    /**
-     * Asserts that a search for a certain Email customer returns the correct information for that customer.
-     * All expected fields should be validated against the content of the mock file in static resources.
-     */
-     @IsTest
-    static void shouldReturnEmailCustomer(){
-        StaticResourceCalloutMock mock = new StaticResourceCalloutMock();
-        mock.setStaticResource('CustomersGetResponseWithCustomer');
-        mock.setStatusCode(200);
-        mock.setHeader('Content-Type', 'text/xml');
 
-        Test.setMock(HttpCalloutMock.class, mock);
-
-        Test.startTest();
-        List<Map<String, Object>> response = CSharkIntegrationService.getCustomer(
-                CSharkIntegrationService.SearchType.EMAIL,
-                'testskapp@gmail.comm');
-        Test.stopTest();
-
-        System.assertEquals(1, response.size(), 'Operation did not return the expected number of rows');
-        Map<String,Object> dataRow = response[0];
-        System.assertEquals(Date.valueOf('1988-10-13T00:00:00'), dataRow.get('BirthDate'));
-        System.assertEquals('Marcus', dataRow.get('FirstName'));
-        System.assertEquals('M', dataRow.get('Gender'));
-        System.assertEquals('10401209', dataRow.get('ExternalId'));
-        System.assertEquals('CLMTestSix', dataRow.get('LastName'));
-        System.assertEquals('Senior Title', dataRow.get('Title'));
-        System.assertEquals('Middle', dataRow.get('MiddleName'));
-        System.assertEquals('Mr', dataRow.get('Salutation'));
-        System.assertEquals('Teststreet 11', dataRow.get('HomeAddressLine1'));
-        System.assertEquals('', dataRow.get('HomeAddressLine2'));
-        System.assertEquals('', dataRow.get('HomeAddressLine2'));
-        System.assertEquals('Stockholm', dataRow.get('HomeCityName'));
-        System.assertEquals('SE', dataRow.get('HomeCountryCode'));
-        System.assertEquals('', dataRow.get('HomeCountyState'));
-        System.assertEquals('117 30', dataRow.get('HomeZipCode'));
-        System.assertEquals('false', dataRow.get('ConsentEMail'));
-        System.assertEquals('true', dataRow.get('ConsentSMS'));
-        System.assertEquals('false', dataRow.get('ConsentTelemarketing'));
-        System.assertEquals('true', dataRow.get('ConsentEB'));
-        System.assertEquals(null, dataRow.get('ConsentEB0'));
-        System.assertEquals('testskapp@gmail.comm', dataRow.get('HomeE-mail'));
-        System.assertEquals('+46725465098', dataRow.get('HomeMobile'));
-        System.assertEquals('testskapp@gmail.com', dataRow.get('AltE-mail'));
-        System.assertEquals('B', dataRow.get('IncentiveLevel'));
-        System.assertEquals('11866721', dataRow.get('CompanyIdentifier'));
-        System.assertEquals('RockFish', dataRow.get('CompanyName'));
-        System.assertEquals('11866633', dataRow.get('ParentIdentifier'));
-        System.assertEquals('928004605', dataRow.get('TravelPassAccountNumber'));
-        System.assertEquals(Date.valueOf('2016-09-28T00:00:00'), dataRow.get('EnrollmentDate'));
-        System.assertEquals('NOSECUR', dataRow.get('CMP'));
-    }
     /**
      * Asserts that the parser can select and prioritize CMP value from different engagements.
      */
@@ -247,7 +196,7 @@ public with sharing class CSharkIntegrationService_Test {
                 'EuroBonusNumber',
                 'TravelPassAccountNumber',
                 'ExternalId',
-                'HomeE-mail',
+                'HomeEMail',
                 'SubscriptionID',
                 'UserName'
         };
@@ -274,8 +223,7 @@ public with sharing class CSharkIntegrationService_Test {
     static void shouldGenerateCustomerGetBodyBasedInSearchType(){
         List<String> bodyList = new List<String>();
         for(CSharkIntegrationService.SearchType searchType:CSharkIntegrationService.SearchType.values()){
-           string searchTerm = CSharkIntegrationService.getSearchTermBySearchType(searchType);
-            bodyList.add(CSharkIntegrationService.generateCustomerGetBody(searchTerm, ''));
+            bodyList.add(CSharkIntegrationService.generateCustomerGetBody(searchType, ''));
         }
         System.debug(bodyList);
         System.assert(bodyList[0].contains('<searchEngagementType>EuroBonus</searchEngagementType>'));

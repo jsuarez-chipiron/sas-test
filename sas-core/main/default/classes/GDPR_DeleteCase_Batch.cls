@@ -25,22 +25,21 @@ global with sharing class GDPR_DeleteCase_Batch extends SBS_ScheduledBatch{
 
 
     /**
-        Deletes the cases and any related interactions
+		Deletes the cases and any related interactions
         - Chat Transcripts
         - Emails
         - Messaging Sessions
         - Social Posts
-        @param bc The batchable context of the batch job
-        @param sObjScope The cases to delete
-    */
-    global override void executeScope(Database.BatchableContext bc, SObject[] sObjScope){
+		@param bc The batchable context of the batch job
+		@param sObjScope The cases to delete
+	*/
+	global override void executeScope(Database.BatchableContext bc, SObject[] sObjScope){
         Integer sz = sObjScope.size();
         Set<Id> caseIds = new Set<Id>();
-        boolean wipeCases = false; // to recognize whether we are wiping the cases or not.
         for(Integer i=0;i<sz;i++){
             caseIds.add(sObjScope[i].Id);
         }
-        GDPR_WipeCaseService.deleteRelatedEntities(caseIds,wipeCases);
+        GDPR_WipeCaseService.deleteRelatedEntities(caseIds);
         delete sObjScope;
     }
 

@@ -21,9 +21,9 @@ private class GDPR_Delete_Test {
         cList[4].Status = 'Closed';
         cList[5].Status = 'Open';
         insert cList;
-        insert new EmailMessage(FromAddress='test@example.com.invalid',FromName='Test',Incoming=true,Subject='TestSubject',TextBody='TestBody',ToAddress='test@sas.se',ParentId=cList[0].Id);
-        cList[0].Status = 'Closed';
-        update cList;
+		insert new EmailMessage(FromAddress='test@example.com.invalid',FromName='Test',Incoming=true,Subject='TestSubject',TextBody='TestBody',ToAddress='test@sas.se',ParentId=cList[0].Id);
+		cList[0].Status = 'Closed';
+		update cList;
         LiveChatVisitor lcv = new LiveChatVisitor();
         insert lcv;
         insert new LiveChatTranscript(AccountId=accs[0].Id,Body='Test',CaseId=cList[1].Id,Status='Completed',LiveChatVisitorId=lcv.Id);
@@ -107,7 +107,7 @@ private class GDPR_Delete_Test {
         System.assertEquals(true,cClosed[3].GDPR_Wiped__c);
         System.assertEquals(true,cClosed[4].GDPR_Wiped__c);
 
-        System.assertEquals(1,[SELECT Id FROM EmailMessage].size());
+        System.assertEquals(0,[SELECT Id FROM EmailMessage].size());
         System.assertEquals(0,[SELECT Id FROM LiveChatTranscript].size());
         System.assertEquals(0,[SELECT Id FROM LiveChatVisitor].size());
         System.assertEquals(0,[SELECT Id FROM MessagingSession].size());
@@ -216,7 +216,7 @@ private class GDPR_Delete_Test {
 
         Case[] cClosed = [SELECT Id FROM Case WHERE IsClosed=true];
         System.assertEquals(5,cClosed.size());
-        System.assertEquals(1,[SELECT Id FROM EmailMessage].size());
+        System.assertEquals(0,[SELECT Id FROM EmailMessage].size());
         System.assertEquals(0,[SELECT Id FROM LiveChatTranscript].size());
         System.assertEquals(0,[SELECT Id FROM MessagingSession].size());
         System.assertEquals(0,[SELECT Id FROM SocialPost].size());
@@ -372,3 +372,5 @@ private class GDPR_Delete_Test {
 
     }    
 }
+
+

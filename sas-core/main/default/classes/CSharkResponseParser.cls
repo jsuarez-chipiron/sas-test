@@ -23,34 +23,15 @@ public with sharing class CSharkResponseParser {
     public static List<Map<String, Object>> parseCustomerGetResponse(String responseBody){
         List<Map<String, Object>> dataRows = new List<Map<String, Object>>();
         Dom.XmlNode customerGetResponse = getDocumentBody(responseBody).getChildElement('CustomerGetResponse', XMLNS);
-          List<Dom.XmlNode> customerGetResults = customerGetResponse.getChildElements();        
-        for(Dom.XmlNode customerGetResult : customerGetResults){
+        List<Dom.XmlNode> customerGetResults = customerGetResponse.getChildElements();
+        for(Dom.XmlNode customerGetResult:customerGetResults){
             if(customerGetResult.getAttributeValue('nil', XMLNS_I) == null){
                 Map<String,Object> customerRow = parseCustomerGetResult(customerGetResult);
                 dataRows.add(customerRow);
             }
         }
-        
         return dataRows;
     }
-    /**
-     * Used to parse a response for operation CustomersGet.
-     * @return List of customer rows that can be translated by Apex Customer Adapter for a SQL/SOQL result.
-     */
-    public static List<Map<String, Object>> parseCustomersGetResponse(String responseBody){
-        List<Map<String, Object>> dataRows = new List<Map<String, Object>>();
-        Dom.XmlNode customersGetResponse = getDocumentBody(responseBody).getChildElement('CustomersGetResponse', XMLNS);        
-         Dom.XmlNode customersGetResults = customersGetResponse.getChildElement('CustomersGetResult',xmlns);
-        List<Dom.XmlNode> customers = customersGetResults.getchildElements(); 
-        for(Dom.XmlNode customerGetResult : customers){
-            if(customerGetResult.getAttributeValue('nil', XMLNS_I) == null){
-                Map<String,Object> customerRow = parseCustomerGetResult(customerGetResult);
-                dataRows.add(customerRow);
-            }
-        }        
-        return dataRows;
-    }
-
 
     /**
      * Extracts body from XML document. This method is common for all responses from C-Shark and can
@@ -72,8 +53,9 @@ public with sharing class CSharkResponseParser {
      * @return A new customer row based on the content of the CustomerGetResult
      */
     @TestVisible
-    private static Map<String,Object> parseCustomerGetResult(Dom.XmlNode customersGetResult ){
-        List<Dom.XmlNode> elements = customersGetResult.getChildElements();
+    private static Map<String,Object> parseCustomerGetResult(Dom.XmlNode customerGetResult){
+        List<Dom.XmlNode> elements = customerGetResult.getChildElements();
+
         Map<String,Object> customerRow = new Map<String, Object>();
         for(Dom.XmlNode element : elements){
             String elementName = element.getName();

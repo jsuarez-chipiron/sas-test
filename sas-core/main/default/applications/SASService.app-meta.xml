@@ -75,7 +75,6 @@
     <tabs>standard-report</tabs>
     <tabs>Knowledge__kav</tabs>
     <tabs>FCS_CaseTag__c</tabs>
-    <tabs>standard-Macro</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SAS_Service_UtilityBar</utilityBar>
     <workspaceConfig>
@@ -101,9 +100,6 @@
         </mappings>
         <mappings>
             <tab>standard-LiveChatTranscript</tab>
-        </mappings>
-        <mappings>
-            <tab>standard-Macro</tab>
         </mappings>
         <mappings>
             <tab>standard-SocialPost</tab>

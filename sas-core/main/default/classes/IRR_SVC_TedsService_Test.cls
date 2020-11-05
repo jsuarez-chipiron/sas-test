@@ -28,7 +28,7 @@ private class IRR_SVC_TedsService_Test {
         mocks.when(builderMock.build()).thenReturn(executorMock);
         mocks.when(executorMock.executeRequest(
                     fflib_Match.anyString(),
-                    (C_IntegrationExecutor.Method) fflib_Match.eq(C_IntegrationExecutor.Method.GET),
+                    (C_IntegrationExecutor.Method) fflib_Match.eq(C_IntegrationExecutor.Method.GET),    
                     (Map<String, Object>) fflib_Match.isNull(),
                     (Map<String, Object>) fflib_Match.anyObject()))
                 .thenReturn(new C_IntegrationExecutor.IntegrationResponse(200, jsonResponse));
@@ -298,5 +298,57 @@ private class IRR_SVC_TedsService_Test {
         System.assert(caughtException, 'Expected to catch TedsException');
     }
 
+//     @isTest
+//     static void testGetAirportCityNames() {
+//         String jsonResponse = '[{"id":"ARN","name":"Stockholm-Arlanda Airport","city":"Stockholm","country":{"code":"SE","name":"Sweden"},"coordinates":{"latitude":"59.651901245117","longitude":"17.918600082397"}},{"id":"CPH","name":"Copenhagen Kastrup Airport","city":"Copenhagen","country":{"code":"DK","name":"Denmark"},"coordinates":{"latitude":"55.617900848389","longitude":"12.656000137329"}}]';
 
-}
+//         //Set up mocks
+//         fflib_ApexMocks mocks = new fflib_ApexMocks();
+//         C_IIntegrationExecutorBuilder builderMock = (C_IIntegrationExecutorBuilder) mocks.mock(
+//                 C_IntegrationExecutorBuilder.class);
+//         C_IIntegrationExecutor executorMock = (C_IIntegrationExecutor) mocks.mock(C_IntegrationExecutorRest.class);
+
+
+//         //Given
+//         mocks.startStubbing();
+//         mocks.when(builderMock.setBaseURL(fflib_Match.anyString())).thenReturn(builderMock);
+//         mocks.when(builderMock.setAPIMSubscriptionKey(fflib_Match.anyString())).thenReturn(builderMock);
+//         mocks.when(builderMock.setAPIVersion(fflib_Match.anyString())).thenReturn(builderMock);
+//         mocks.when(builderMock.enableSASTracking()).thenReturn(builderMock);
+//         mocks.when(builderMock.build()).thenReturn(executorMock);
+//         mocks.when(executorMock.executeRequest(
+//                     fflib_Match.anyString(),
+//                     (C_IntegrationExecutor.Method) fflib_Match.eq(C_IntegrationExecutor.Method.GET),    
+//                     (Map<String, Object>) fflib_Match.isNull(),
+//                     (Map<String, Object>) fflib_Match.isNull()))
+//                 .thenReturn(new C_IntegrationExecutor.IntegrationResponse(200, jsonResponse));
+//         mocks.stopStubbing();
+//         IRR_Application.IntegrationExecutorBuilder.setMock(IRR_Application.IntegrationType.REST, builderMock);
+//          String[] airportCodes = new List<String>();
+//          airportCodes.add('ARN');
+//          airportCodes.add('CPH');
+
+//         //When
+//         Map<String,String> airportInfoMap = IRR_SVC_TedsService.getAirportCityNames(airportCodes);
+
+//         //Then
+//         ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setBaseURL('callout:SAS_APIM_TEDS');
+//         ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock))
+//                 .setAPIMSubscriptionKey('b8568217401c49acb3931605cea78835');
+//         ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).setAPIVersion('v2');
+//         ((C_IIntegrationExecutorBuilder) mocks.verify(builderMock)).build();
+//         ((C_IIntegrationExecutor) mocks.verify(executorMock)).executeRequest(
+//                 (String) fflib_Match.anyObject(),
+//                 (C_IntegrationExecutor.Method) fflib_Match.anyObject(),
+//                 (Map<String, Object>) fflib_Match.isNull(),
+//                 (Map<String, Object>) fflib_Match.isNull()
+//         );
+//         System.assertEquals(2, airportInfoMap.size());
+//         System.assertEquals('Stockholm', airportInfoMap.get('ARN'));
+//         System.assertEquals('Copenhagen', airportInfoMap.get('CPH'));
+        
+//     }
+
+
+
+ }
