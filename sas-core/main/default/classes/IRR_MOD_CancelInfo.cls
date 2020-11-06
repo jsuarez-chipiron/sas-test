@@ -27,4 +27,10 @@ public class IRR_MOD_CancelInfo {
 
     @AuraEnabled
     public Datetime scheduledTimeOfDepartureUTC { get; set; }
+
+    @AuraEnabled
+    public String arrivalCity { get; set; }
+
+    @AuraEnabled
+    public String departureCity { get; set; }
 }

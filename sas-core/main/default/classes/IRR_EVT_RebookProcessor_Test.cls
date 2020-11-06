@@ -172,7 +172,18 @@ private class IRR_EVT_RebookProcessor_Test {
 
     @IsTest
     static void testProcessEvent_Confirmed_SendSMSEmail() {
+        //Set up mocks
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
+
         //Given
+        Map<String,String> airportInfoMap = new Map<String,String>();
+        airportInfoMap.put('ARN','Stockholm');
+        airportInfoMap.put('CPH','Copenhagen');
+        mocks.startStubbing();
+        mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
+                .thenReturn(airportInfoMap);
+        mocks.stopStubbing();
         IRR_MOD_RebookInfo rebookInfo = new IRR_MOD_RebookInfo();
         rebookInfo.eventTime = Datetime.now();
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
@@ -182,14 +193,25 @@ private class IRR_EVT_RebookProcessor_Test {
         passengerInfos[0].phoneNumber = 'TEST_PHONE';
         passengerInfos[0].hasEmailAddress = true;
         passengerInfos[0].emailAddress = 'TEST_EMAIL';
+        passengerInfos[0].itinerary = new List<IRR_MOD_TripInfo>();
+        IRR_MOD_TripInfo tripInfo = new IRR_MOD_TripInfo();
+        List<IRR_MOD_SegmentInfo> segments = new List<IRR_MOD_SegmentInfo>();
+        IRR_MOD_SegmentInfo segmentInfo = new IRR_MOD_SegmentInfo();
+        segmentInfo.stationArrival= 'ARN';
+        segmentInfo.stationDeparture= 'CPH';
+        segments.add(segmentInfo);
+        tripInfo.segments = segments;
+        passengerInfos[0].itinerary.add(tripInfo);
         IRR_EVT_RebookProcessor eventProcessor = (IRR_EVT_RebookProcessor) new IRR_EVT_RebookProcessor.Constructor()
                 .newInstance(rebookInfo);
         eventProcessor.passengerInfos = passengerInfos;
+        IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
 
         //When
         eventProcessor.processEvent();
 
         //Then
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CPH'});
         List<IRR_MOD_Message> messages = eventProcessor.messages;
         System.assertEquals(2, messages.size());
         System.assertEquals('irr_rebooking_sms_01', messages[0].template);
