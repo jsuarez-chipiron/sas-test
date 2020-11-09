@@ -608,11 +608,31 @@
     <picklistValues>
         <picklist>Origin</picklist>
         <values>
+            <fullName>Agent Fares Ticketing EU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent Helpdesk SIA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Chat</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pandion DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pandion NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pandion SE</fullName>
             <default>false</default>
         </values>
         <values>

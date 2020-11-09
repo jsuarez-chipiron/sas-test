@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pandion_All_Closed_Cases</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>CASES.EMAIL</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>FCS_SubOrigin_c__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>FCS_SubOrigin_c__c</field>
+        <operation>equals</operation>
+        <value>Pandion SE,Pandion NO,Pandion DK</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>Closed,Merged</value>
+    </filters>
+    <label>Pandion All Closed Cases</label>
+    <sharedTo>
+        <role>SAS</role>
+    </sharedTo>
+</ListView>

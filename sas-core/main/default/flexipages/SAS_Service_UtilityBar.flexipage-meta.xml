@@ -43,6 +43,9 @@
             </componentInstanceProperties>
             <componentName>FCS_OmniChannelQueueBacklogContainer</componentName>
         </componentInstances>
+        <componentInstances>
+            <componentName>macros:macroUtilityItem</componentName>
+        </componentInstances>
         <name>utilityItems</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -56,6 +59,10 @@
     <masterLabel>SAS Service UtilityBar</masterLabel>
     <template>
         <name>one:utilityBarTemplateDesktop</name>
+        <properties>
+            <name>isLeftAligned</name>
+            <value>true</value>
+        </properties>
     </template>
     <type>UtilityBar</type>
 </FlexiPage>
