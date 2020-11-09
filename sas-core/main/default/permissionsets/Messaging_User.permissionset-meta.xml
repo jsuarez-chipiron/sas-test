@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Enables the use of Messaging for a user, including object access and service presence status.</description>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SurveyInvitation.FCS_NumberOfResponses__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SurveyInvitation.FCS_RelatedCase__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Messaging User</label>
     <objectPermissions>
@@ -31,10 +21,6 @@
         <object>MessagingSession</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>LMEndMessagingSessionUserPerm</name>
-    </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>LMOutboundMessagingUserPerm</name>
