@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldUpdates>
-        <fullName>Case_Owner_Update_Agent_Helpdesk</fullName>
-        <field>OwnerId</field>
-        <lookupValue>SAS_Agent_Helpdesk</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Case Owner Update Agent Helpdesk</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <targetObject>ParentId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Case_Owner_Update_EuroBonus</fullName>
         <field>OwnerId</field>
         <lookupValue>SAS_EuroBonus</lookupValue>
@@ -28,6 +17,17 @@
         <lookupValue>FunctionalProductSupport</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Case Owner Update Functional product sup</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <targetObject>ParentId</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Case_Owner_Update_Group_Sales</fullName>
+        <field>OwnerId</field>
+        <lookupValue>SAS_Group_Sales</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Case Owner Update Group Sales</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
@@ -100,7 +100,7 @@
     <rules>
         <fullName>Close case email messages for Agent Fares Ticketing EU</fullName>
         <actions>
-            <name>Case_Owner_Update_Agent_Helpdesk</name>
+            <name>Case_Owner_Update_Group_Sales</name>
             <type>FieldUpdate</type>
         </actions>
         <actions>
@@ -143,7 +143,7 @@
     <rules>
         <fullName>Close case email messages for Agent Helpdesk SIA</fullName>
         <actions>
-            <name>Case_Owner_Update_Agent_Helpdesk</name>
+            <name>Case_Owner_Update_Group_Sales</name>
             <type>FieldUpdate</type>
         </actions>
         <actions>
@@ -222,6 +222,952 @@
             <field>Case.FCS_SubOrigin_c__c</field>
             <operation>equals</operation>
             <value>EuroBonus</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales ACE</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales ACE</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales AT</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales AT</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales Benelux</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales Benelux</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales CH</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales CH</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales DE</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales DE</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales DK</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales DK</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales EE</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales EE</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales ES</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales ES</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales FI</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales FI</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales FR</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales FR</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales IE</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales IE</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales IS</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales IS</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales IT</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales IT</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales Interline</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales Interline</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales LT</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales LT</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales LV</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales LV</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales NO</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales NO</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales PL</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales PL</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales RU</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales RU</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales SE</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales SE</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales UK</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales UK</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Close case email messages for Group Sales US</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Channel</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.FCS_SubOrigin_c__c</field>
+            <operation>equals</operation>
+            <value>Group Sales US</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>
