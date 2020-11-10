@@ -23,8 +23,12 @@
     </objectPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>LMEndMessagingSessionUserPerm</name>
+    </userPermissions>  
+    <userPermissions>
+        <enabled>true</enabled>
         <name>LMOutboundMessagingUserPerm</name>
-    </userPermissions>
+    </userPermissions>     
     <userPermissions>
         <enabled>true</enabled>
         <name>LiveMessageAgent</name>
