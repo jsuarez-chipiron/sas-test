@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Group_Sales_CH_New_Requests</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.EMAIL</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>FCS_SubOrigin_c__c</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>PNR_Payment_Status__c</columns>
+    <columns>CASES.STATUS</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>New</value>
+    </filters>
+    <filters>
+        <field>FCS_SubOrigin_c__c</field>
+        <operation>equals</operation>
+        <value>Group Sales CH</value>
+    </filters>
+    <label>Group Sales CH New Requests</label>
+    <sharedTo>
+        <group>GroupSales</group>
+    </sharedTo>
+</ListView>

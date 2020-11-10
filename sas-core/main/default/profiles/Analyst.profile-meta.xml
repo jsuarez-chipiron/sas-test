@@ -557,6 +557,46 @@
         <field>C_Log__c.StackTrace__c</field>
         <readable>false</readable>
     </fieldPermissions>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.PNR_Payment_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Additional_PNRs__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+  <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Deposit_Due_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+  <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Deposit_Payment_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+ <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Final_Payment_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Final_Payment_Due_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.PNR_Payment_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Case_Grouping__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Consent__c</field>
