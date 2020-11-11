@@ -13,6 +13,7 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
     private static final String EMAIL_SEND_DEFINITION = 'generic_transactional_email';
     private static final String NAMED_CREDENTIAL = 'callout:SAS_MC_API';
     private static final String NAMED_CREDENTIAL_MAIN_BU = 'callout:SAS_MC_API_MAIN_BU';
+    private static final String DEFAULT_FROM_NAME = 'SAS';
 
     private static C_IIntegrationExecutor integrationExecutor {
         get {
@@ -211,12 +212,15 @@ public class IRR_SVC_SFMCServiceImpl implements IRR_SVC_ISFMCService {
     private Map<String, Object> createSMSRequestBody(String sendDefinition,
             List<IRR_SVC_SFMCService.SFMCMessage> messages) {
         List<Map<String, Object>> recipients = new List<Map<String, Object>>();
-        for (IRR_SVC_SFMCService.SFMCMessage smsMessage : messages) {
+        for (IRR_SVC_SFMCService.SFMCMessage sfmcMessage : messages) {
+            IRR_SVC_SFMCService.SMSMessage smsMessage = (IRR_SVC_SFMCService.SMSMessage) sfmcMessage;
             Map<String, Object> recipient = new Map<String, Object> {
                     'to' => smsMessage.recipient,
                     'contactKey' => smsMessage.contactKey,
                     'attributes' => new Map<String, Object> {
-                            'content' => smsMessage.content
+                            'content' => smsMessage.content,
+                            //Set blank From Name for response messages to use long/short code instead of SAS
+                            'from' => smsMessage.responseMessage ? '' : DEFAULT_FROM_NAME
                     }
             };
             recipients.add(recipient);
