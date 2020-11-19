@@ -173,6 +173,26 @@
                 <default>false</default>
                 <label>Group Sales DK</label>
             </value>
+            <value>
+                <fullName>Forsvaret NO</fullName>
+                <default>false</default>
+                <label>Forsvaret NO</label>
+            </value>
+            <value>
+                <fullName>Olympic SE</fullName>
+                <default>false</default>
+                <label>Olympic SE</label>
+            </value>
+            <value>
+                <fullName>Olympic NO</fullName>
+                <default>false</default>
+                <label>Olympic NO</label>
+            </value>
+            <value>
+                <fullName>Olympic DK</fullName>
+                <default>false</default>
+                <label>Olympic DK</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

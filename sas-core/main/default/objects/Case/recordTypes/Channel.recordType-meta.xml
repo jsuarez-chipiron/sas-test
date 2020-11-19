@@ -5,6 +5,13 @@
     <businessProcess>Default</businessProcess>
     <label>Channel</label>
     <picklistValues>
+        <picklist>Case_Grouping__c</picklist>
+        <values>
+            <fullName>Group Sales</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Consent__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -492,6 +499,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Forsvaret NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Functional Product Support</fullName>
             <default>false</default>
         </values>
@@ -581,6 +592,18 @@
         </values>
         <values>
             <fullName>Group Sales US</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympic DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympic NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympic SE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -751,6 +774,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Forsvaret NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Group Sales ACE</fullName>
             <default>false</default>
         </values>
@@ -839,6 +866,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Olympic DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympic NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympic SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Pandion DK</fullName>
             <default>false</default>
         </values>
@@ -856,6 +895,29 @@
         </values>
         <values>
             <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PNR_Payment_Status__c</picklist>
+        <values>
+            <fullName>Not Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for Deposit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for Final Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for NC</fullName>
             <default>false</default>
         </values>
     </picklistValues>

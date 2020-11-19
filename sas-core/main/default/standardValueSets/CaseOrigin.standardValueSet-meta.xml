@@ -196,4 +196,24 @@
         <default>false</default>
         <label>Group Sales DK</label>
     </standardValue>
+    <standardValue>
+        <fullName>Forsvaret NO</fullName>
+        <default>false</default>
+        <label>Forsvaret NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Olympic SE</fullName>
+        <default>false</default>
+        <label>Olympic SE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Olympic NO</fullName>
+        <default>false</default>
+        <label>Olympic NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Olympic DK</fullName>
+        <default>false</default>
+        <label>Olympic DK</label>
+    </standardValue>
 </StandardValueSet>
