@@ -161,6 +161,9 @@
                 </criteria>
             </visibilityRule>
         </componentInstances>
+        <componentInstances>
+            <componentName>forceKnowledge:articleSearchDesktop</componentName>
+        </componentInstances>
         <mode>Replace</mode>
         <name>main</name>
         <type>Region</type>
@@ -200,9 +203,6 @@
         </componentInstances>
         <componentInstances>
             <componentName>fcs_CaseTag</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentName>forceKnowledge:articleSearchDesktop</componentName>
         </componentInstances>
         <componentInstances>
             <componentName>gdpr_GDPRDelete</componentName>
