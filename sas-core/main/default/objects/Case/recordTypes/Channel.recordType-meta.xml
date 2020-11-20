@@ -93,6 +93,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ad-hoc Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Add EB in booking</fullName>
             <default>false</default>
         </values>
@@ -305,6 +309,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sport Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Strike</fullName>
             <default>false</default>
         </values>
@@ -354,6 +362,10 @@
         </values>
         <values>
             <fullName>Wheelchair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Youth Groups</fullName>
             <default>false</default>
         </values>
     </picklistValues>
