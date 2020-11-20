@@ -30,6 +30,11 @@
                 <label>Add infant in booking</label>
             </value>
             <value>
+                <fullName>Ad-hoc Groups</fullName>
+                <default>false</default>
+                <label>Ad-hoc Groups</label>
+            </value>
+            <value>
                 <fullName>Airlines</fullName>
                 <default>false</default>
                 <label>Airlines</label>
@@ -890,6 +895,11 @@
                 <label>Sport</label>
             </value>
             <value>
+                <fullName>Sport Groups</fullName>
+                <default>false</default>
+                <label>Sport Groups</label>
+            </value>
+            <value>
                 <fullName>Sports/Marine</fullName>
                 <default>false</default>
                 <label>Sports/Marine</label>
@@ -1083,6 +1093,11 @@
                 <fullName>Youth</fullName>
                 <default>false</default>
                 <label>Youth</label>
+            </value>
+            <value>
+                <fullName>Youth Groups</fullName>
+                <default>false</default>
+                <label>Youth Groups</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -1302,6 +1317,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Ad-hoc Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Availability</valueName>
         </valueSettings>
         <valueSettings>
@@ -1320,6 +1339,14 @@
         <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Route inquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Sport Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Youth Groups</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>News</controllingFieldValue>
