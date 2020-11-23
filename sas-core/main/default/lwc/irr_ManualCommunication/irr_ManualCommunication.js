@@ -239,9 +239,6 @@ export default class IRR_ManualCommunication extends LightningElement {
                 case "CANCEL":
                     payload.cancelInfo = parameters;
                     break;
-                case "CHECKIN":
-                    payload.checkinInfo = parameters;
-                    break;
                 case "SCHEDULED_CHANGE":
                     payload.scheduledChangeInfo = parameters;
                     break;
