@@ -126,25 +126,12 @@
         <object>IRR_DelayLog__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>IRR_EventLog__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
     <tabSettings>
         <tab>IRR_CommunicationLog__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
         <tab>IRR_DelayLog__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>IRR_EventLog__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>
