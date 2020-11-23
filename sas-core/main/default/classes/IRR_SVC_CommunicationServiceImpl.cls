@@ -23,10 +23,9 @@ public class IRR_SVC_CommunicationServiceImpl implements IRR_SVC_ICommunicationS
             eventProcessor.validateEvent();
             eventProcessor.initiateEvent();
             //Stop processing event if there is an active manual override block
-            if (!eventProcessor.checkActiveBlock()) {
-                eventProcessor.processEvent();
-                eventProcessor.processMessages();
-            }
+            if (eventProcessor.checkActiveBlock()) return;
+            eventProcessor.processEvent();
+            eventProcessor.processMessages();
             eventProcessor.finalizeEvent(uow);
             uow.commitWork();
         } catch (Exception e) {
