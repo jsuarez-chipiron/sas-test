@@ -3,7 +3,7 @@
     <available>true</available>
     <description>FI Payment Instructions Template</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>FI Payment Instructions</name>
+    <name>GS FI Payment Instructions</name>
     <relatedEntityType>Case</relatedEntityType>
     <style>none</style>
     <type>custom</type>

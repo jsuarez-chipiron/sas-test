@@ -3,7 +3,7 @@
     <available>true</available>
     <description>Offer template for High-Demand</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>High-Demand</name>
+    <name>GS Germand Offer High-Demand</name>
     <relatedEntityType>Case</relatedEntityType>
     <style>none</style>
     <subject>{{{Case.Id}}}</subject>

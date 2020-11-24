@@ -3,7 +3,7 @@
     <available>true</available>
     <description>CH Payment Instructions Tempalte</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>CH Payment Instructions</name>
+    <name>GS CH Payment Instructions</name>
     <relatedEntityType>Case</relatedEntityType>
     <style>none</style>
     <type>custom</type>

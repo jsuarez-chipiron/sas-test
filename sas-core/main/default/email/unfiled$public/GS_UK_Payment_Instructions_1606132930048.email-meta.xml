@@ -3,7 +3,7 @@
     <available>true</available>
     <description>UK Payment Instructions Template</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>UK Payment Instructions</name>
+    <name>GS UK Payment Instructions</name>
     <relatedEntityType>Case</relatedEntityType>
     <style>none</style>
     <type>custom</type>
