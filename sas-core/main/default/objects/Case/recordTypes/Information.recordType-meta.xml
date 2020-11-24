@@ -495,10 +495,6 @@
             <fullName>Corporate product</fullName>
             <default>false</default>
         </values>
-         <values>
-            <fullName>COVID-19 Testing</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Error</fullName>
             <default>false</default>
