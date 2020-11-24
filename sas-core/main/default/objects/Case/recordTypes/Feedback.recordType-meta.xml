@@ -19,6 +19,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>COVID-19 Testing</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cancellation%2Frefund of ticket</fullName>
             <default>false</default>
         </values>
@@ -375,6 +379,10 @@
         </values>
         <values>
             <fullName>Receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund - Done</fullName>
             <default>false</default>
         </values>
         <values>

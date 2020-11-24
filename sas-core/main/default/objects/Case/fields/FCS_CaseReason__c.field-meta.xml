@@ -145,6 +145,11 @@
                 <label>Corporate R</label>
             </value>
             <value>
+                <fullName>COVID-19 Testing</fullName>
+                <default>false</default>
+                <label>COVID-19 Testing</label>
+            </value>
+            <value>
                 <fullName>Credit card</fullName>
                 <default>false</default>
                 <label>Credit card</label>
@@ -350,11 +355,6 @@
                 <label>OCC Daily Reports</label>
             </value>
             <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
-            </value>
-            <value>
                 <fullName>Overbooked flights</fullName>
                 <default>false</default>
                 <label>Overbooked flights</label>
@@ -509,7 +509,36 @@
                 <default>false</default>
                 <label>WiFi</label>
             </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <controllingFieldValue>Channel</controllingFieldValue>
+            <valueName>AEM issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <valueName>CR requests</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <valueName>Deployment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <valueName>Login issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>No action taken</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
@@ -523,6 +552,12 @@
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <valueName>Changes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>COVID-19 Testing</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Support</controllingFieldValue>
@@ -579,13 +614,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Support</controllingFieldValue>
-            <controllingFieldValue>System</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Other</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <valueName>Rebooking</valueName>
         </valueSettings>
@@ -614,6 +642,13 @@
             <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>Travel pass</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
@@ -667,13 +702,6 @@
             <controllingFieldValue>System</controllingFieldValue>
             <controllingFieldValue>Sales Information</controllingFieldValue>
             <valueName>Minor</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <valueName>No action taken</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
@@ -737,11 +765,6 @@
         <valueSettings>
             <controllingFieldValue>Tariff</controllingFieldValue>
             <valueName>Tax/YQ</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Channel</controllingFieldValue>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <valueName>AEM issues</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Channel</controllingFieldValue>
@@ -954,18 +977,6 @@
         <valueSettings>
             <controllingFieldValue>Sales Information</controllingFieldValue>
             <valueName>System</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <valueName>CR requests</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <valueName>Deployment</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <valueName>Login issues</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
