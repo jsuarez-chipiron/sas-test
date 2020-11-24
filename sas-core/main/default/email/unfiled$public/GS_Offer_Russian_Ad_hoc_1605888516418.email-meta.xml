@@ -3,7 +3,7 @@
     <available>true</available>
     <description>Offer Template Ad-hoc</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>Ad-hoc</name>
+    <name>GS Russian Offer Ad-hoc</name>
     <relatedEntityType>Case</relatedEntityType>
     <style>none</style>
     <subject>{{{Case.CaseNumber}}}</subject>

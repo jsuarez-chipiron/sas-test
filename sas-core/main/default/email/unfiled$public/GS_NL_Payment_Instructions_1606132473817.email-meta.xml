@@ -3,7 +3,7 @@
     <available>true</available>
     <description>NL Payment Instructions Template</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>NL Payment Instructions</name>
+    <name>GS NL Payment Instructions</name>
     <relatedEntityType>Case</relatedEntityType>
     <style>none</style>
     <type>custom</type>

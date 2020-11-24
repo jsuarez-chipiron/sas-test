@@ -3,7 +3,7 @@
     <available>true</available>
     <description>EE+LV Payment Instructions Template</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>EE+LV Payment Instructions</name>
+    <name>GS EE+LV Payment Instructions</name>
     <relatedEntityType>Case</relatedEntityType>
     <style>none</style>
     <type>custom</type>

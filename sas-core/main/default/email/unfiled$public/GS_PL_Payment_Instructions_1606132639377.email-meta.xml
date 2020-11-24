@@ -3,7 +3,7 @@
     <available>true</available>
     <description>PL Payment Instructions Template</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>PL Payment Instructions</name>
+    <name>GS PL Payment Instructions</name>
     <relatedEntityType>Case</relatedEntityType>
     <style>none</style>
     <type>custom</type>

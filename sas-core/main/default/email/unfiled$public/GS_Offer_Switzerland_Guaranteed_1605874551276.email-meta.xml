@@ -3,7 +3,7 @@
     <available>true</available>
     <description>Offer Template for Guaranteed</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>Guaranteed</name>
+    <name>GS Switzerland Offer Guaranteed</name>
     <relatedEntityType>Case</relatedEntityType>
     <style>none</style>
     <subject>{{{Case.CaseNumber}}}</subject>

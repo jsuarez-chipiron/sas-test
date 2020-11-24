@@ -3,7 +3,7 @@
     <available>true</available>
     <description>FR Payment Instructions Template</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>FR Payment Instructions</name>
+    <name>GS FR Payment Instructions</name>
     <relatedEntityType>Case</relatedEntityType>
     <style>none</style>
     <type>custom</type>

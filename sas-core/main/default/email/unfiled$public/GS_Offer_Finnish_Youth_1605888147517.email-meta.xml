@@ -3,7 +3,7 @@
     <available>true</available>
     <description>Offer template Youth</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>Youth</name>
+    <name>GS Finnish Offer Youth</name>
     <relatedEntityType>Case</relatedEntityType>
     <style>none</style>
     <subject>{{{Case.CaseNumber}}}</subject>

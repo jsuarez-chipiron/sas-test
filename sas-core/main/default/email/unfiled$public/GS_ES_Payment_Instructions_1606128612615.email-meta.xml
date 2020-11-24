@@ -3,7 +3,7 @@
     <available>true</available>
     <description>ES Payment Instructions Template</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>ES Payment Instructions</name>
+    <name>GS ES Payment Instructions</name>
     <relatedEntityType>Case</relatedEntityType>
     <style>none</style>
     <type>custom</type>
