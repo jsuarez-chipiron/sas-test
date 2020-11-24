@@ -78,13 +78,21 @@ public class IRR_SVC_SFMCService {
     }
 
     public class SMSMessage extends SFMCMessage {
+        public Boolean responseMessage;
+
+        public SMSMessage(String content, String recipient, String contactKey, Boolean responseMessage) {
+            super(content, recipient, contactKey);
+            this.responseMessage = responseMessage;
+        }
 
         public SMSMessage(String content, String recipient, String contactKey) {
             super(content, recipient, contactKey);
+            this.responseMessage = false;
         }
 
         public SMSMessage(IRR_MOD_Message message) {
             super(message);
+            responseMessage = message.responseMessage;
         }
     }
 
