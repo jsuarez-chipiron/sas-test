@@ -19,7 +19,13 @@ public class IRR_SVC_SFMCService {
     }
 
     public static IRR_SVC_SFMCService.SMSMessage sendSMSMessage(String content, String recipient, String contactKey) {
-        IRR_SVC_SFMCService.SMSMessage message = new IRR_SVC_SFMCService.SMSMessage(content, recipient, contactKey);
+        return sendSMSMessage(content, recipient, contactKey, false);
+    }
+
+    public static IRR_SVC_SFMCService.SMSMessage sendSMSMessage(String content, String recipient, String contactKey,
+            Boolean responseMessage) {
+        IRR_SVC_SFMCService.SMSMessage message = new IRR_SVC_SFMCService.SMSMessage(
+                content, recipient, contactKey, responseMessage);
         return sendSMSMessages(new List<IRR_SVC_SFMCService.SMSMessage>{message})[0];
     }
 
