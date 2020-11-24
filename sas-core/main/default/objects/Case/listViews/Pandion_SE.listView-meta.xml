@@ -12,7 +12,7 @@
     <filters>
         <field>FCS_SubOrigin_c__c</field>
         <operation>equals</operation>
-        <value>Pandion DK</value>
+        <value>Pandion SE</value>
     </filters>
     <label>Pandion SE</label>
     <sharedTo>
