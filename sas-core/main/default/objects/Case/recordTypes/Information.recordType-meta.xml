@@ -30,6 +30,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>COVID-19 Testing</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cancellation%2Frefund of ticket</fullName>
             <default>false</default>
         </values>
@@ -337,6 +341,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Refund - Done</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Refund escalation</fullName>
             <default>false</default>
         </values>
@@ -473,6 +481,10 @@
         </values>
         <values>
             <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>COVID-19 Testing</fullName>
             <default>false</default>
         </values>
         <values>
