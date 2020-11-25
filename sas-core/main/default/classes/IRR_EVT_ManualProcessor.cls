@@ -14,6 +14,9 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
     private static final String ERROR_NO_MESSAGE_TO_SEND = 'There is no message to send';
 
     @TestVisible
+    private Boolean isQueued = false;
+
+    @TestVisible
     private IRR_MOD_ManualRequest manualRequest;
 
     public String getEventName() {
@@ -44,39 +47,42 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
         if (manualRequest.sendEmailMessages == null) manualRequest.sendEmailMessages = false;
         if (manualRequest.sendSMSMessages == null) manualRequest.sendSMSMessages = false;
         if (manualRequest.responseMessage == null) manualRequest.responseMessage = false;
-
-        if (manualRequest.delayInfo != null && String.isNotBlank(manualRequest.delayInfo.flightId)) {
-            IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
-                    new IRR_SVC_CommunicationService.FlightIdSplit(manualRequest.delayInfo.flightId);
-            manualRequest.delayInfo.flightRef = flightIdSplit.flightNumber;
-            manualRequest.delayInfo.stationDeparture = flightIdSplit.stationDeparture;
-            manualRequest.delayInfo.stationArrival = flightIdSplit.stationArrival;
-            this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
-            manualRequest.delayInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
-            manualRequest.delayInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
+        if(manualRequest.sendMessageTime!=null){
+            this.isQueued = true;
+        }else{
+            if (manualRequest.delayInfo != null && String.isNotBlank(manualRequest.delayInfo.flightId)) {
+                IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
+                        new IRR_SVC_CommunicationService.FlightIdSplit(manualRequest.delayInfo.flightId);
+                manualRequest.delayInfo.flightRef = flightIdSplit.flightNumber;
+                manualRequest.delayInfo.stationDeparture = flightIdSplit.stationDeparture;
+                manualRequest.delayInfo.stationArrival = flightIdSplit.stationArrival;
+                this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
+                manualRequest.delayInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
+                manualRequest.delayInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
+    
+            }
+            if (manualRequest.newInfo != null && String.isNotBlank(manualRequest.newInfo.flightId)) {
+                IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
+                        new IRR_SVC_CommunicationService.FlightIdSplit(manualRequest.newInfo.flightId);
+                manualRequest.newInfo.flightRef = flightIdSplit.flightNumber;
+                manualRequest.newInfo.stationDeparture = flightIdSplit.stationDeparture;
+                manualRequest.newInfo.stationArrival = flightIdSplit.stationArrival;
+                this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
+                manualRequest.newInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
+                manualRequest.newInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
+            }
+            if (manualRequest.cancelInfo != null && String.isNotBlank(manualRequest.cancelInfo.flightId)) {
+                IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
+                        new IRR_SVC_CommunicationService.FlightIdSplit(manualRequest.cancelInfo.flightId);
+                manualRequest.cancelInfo.flightRef = flightIdSplit.flightNumber;
+                manualRequest.cancelInfo.stationDeparture = flightIdSplit.stationDeparture;
+                manualRequest.cancelInfo.stationArrival = flightIdSplit.stationArrival;
+                this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
+                manualRequest.cancelInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
+                manualRequest.cancelInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
+            }
 
         }
-        if (manualRequest.newInfo != null && String.isNotBlank(manualRequest.newInfo.flightId)) {
-            IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
-                    new IRR_SVC_CommunicationService.FlightIdSplit(manualRequest.newInfo.flightId);
-            manualRequest.newInfo.flightRef = flightIdSplit.flightNumber;
-            manualRequest.newInfo.stationDeparture = flightIdSplit.stationDeparture;
-            manualRequest.newInfo.stationArrival = flightIdSplit.stationArrival;
-            this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
-            manualRequest.newInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
-            manualRequest.newInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
-        }
-        if (manualRequest.cancelInfo != null && String.isNotBlank(manualRequest.cancelInfo.flightId)) {
-            IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
-                    new IRR_SVC_CommunicationService.FlightIdSplit(manualRequest.cancelInfo.flightId);
-            manualRequest.cancelInfo.flightRef = flightIdSplit.flightNumber;
-            manualRequest.cancelInfo.stationDeparture = flightIdSplit.stationDeparture;
-            manualRequest.cancelInfo.stationArrival = flightIdSplit.stationArrival;
-            this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
-            manualRequest.cancelInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
-            manualRequest.cancelInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
-        }
-
     }
 
     /**
@@ -89,7 +95,7 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
      */
     public Boolean checkActiveBlock() {
         //Active blocks are currently not applicable for Manual Message event
-        return false;
+        return this.isQueued;
     }
 
     /**
@@ -152,6 +158,38 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
                 }
             }
         }
+     /**
+     * @author Chetan Singh, CoforgeTech
+     * @date 2020
+     *
+     * @description Finalizes the event by inserting COM logs if messages have been created or inserting Eventlogs if messages were manually scheduled.
+     *
+     * @param uow Unit of Work
+     */
+    public override void finalizeEvent(fflib_ISObjectUnitOfWork uow) {
+        
+        if(!isQueued){
+            super.finalizeEvent(uow);
+        }else{
+            insertEventLog(uow);
+        }
+    }
+
+    /**
+     * @author Chetan Singh, CoforgeTech
+     * @date 2020
+     *
+     * @description Creates a Event Log based on event object information and registers it in the Unit of Work.
+     *
+     * @param uow Unit of Work
+     */
+    private void insertEventLog(fflib_ISObjectUnitOfWork uow) {
+        IRR_EventLog__c eventLog = new IRR_EventLog__c();
+        eventLog.IRR_ScheduleTime__c = manualRequest.sendMessageTime;
+        eventLog.IRR_EventPayload__c = JSON.serialize(manualRequest);
+        uow.registerNew(eventLog);
+    }
+    
 
     public IRR_EVT_ManualProcessor(IRR_MOD_ManualRequest manualRequest) {
         this.manualRequest = manualRequest;

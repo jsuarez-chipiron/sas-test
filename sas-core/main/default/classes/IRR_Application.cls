@@ -37,6 +37,7 @@ public class IRR_Application {
             new fflib_Application.SelectorFactory(
                     new Map<SObjectType, Type> {
                             EmailTemplate.SObjectType => IRR_SEL_EmailTemplatesSelector.class,
+                            IRR_EventLog__c.SObjectType =>IRR_SEL_EventLogsSelector.class,
                             IRR_CommunicationLog__c.SObjectType => IRR_SEL_CommunicationLogsSelector.class,
                             IRR_SMSResponse__c.SObjectType => IRR_SEL_SMSResponsesSelector.class,
                             IRR_DelayLog__c.SObjectType => IRR_SEL_DelayLogsSelector.class,
@@ -106,6 +107,7 @@ public class IRR_Application {
             new fflib_Application.UnitOfWorkFactory(
                     new List<SObjectType> {
                             IRR_DelayLog__c.SObjectType,
+                            IRR_EventLog__c.SObjectType,
                             IRR_CommunicationLog__c.SObjectType,
                             IRR_SMSResponse__c.SObjectType
                     });

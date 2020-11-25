@@ -21,6 +21,12 @@
                 onhidesuccess={handleHideSuccessEvent}
                 onnewsearch={handleResetEvent}>
         </c-irr_-success-modal>
+        <c-irr_-schedule-message
+                show-schedule-success={showScheduleSuccess}
+                selected-count={recipientCount}
+                onhidesuccess={handleHideScheduleEvent}
+                onnewsearch={handleResetEvent}>
+        </c-irr_-schedule-message>
         <c-irr_-recipient-modal
                 onupdaterecipients={handleUpdateAdditionalRecipients}
                 onhiderecipientmodal={handleHideRecipientModal}

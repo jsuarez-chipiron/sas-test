@@ -44,6 +44,7 @@ export default class IRR_ManualCommunication extends LightningElement {
     @track showConfirmation = false;
 
     @track showSuccess = false;
+    @track showScheduleSuccess = false;
 
     @track showRecipientModal = false;
     @track additionalRecipients = [];
@@ -105,6 +106,7 @@ export default class IRR_ManualCommunication extends LightningElement {
             else if (this.showConfirmation) this.handleHideConfirmEvent();
             else if (this.showRecipientModal) this.template.querySelector('c-irr_-recipient-modal').handleCancel();
             else if (this.showSuccess) this.handleHideSuccessEvent();
+            else if (this.showScheduleSuccess) this.handleHideScheduleEvent();
             else if (!this.showRetrieve) this.handleResetEvent();
         }
     }
@@ -165,6 +167,10 @@ export default class IRR_ManualCommunication extends LightningElement {
         this.showSuccess = false;
     }
 
+    handleHideScheduleEvent() {
+        this.showScheduleSuccess = false;
+    }
+
     processTable() {
         let filteredList = tableUtil.filterData(this.passengerResult, this.filterParameters);
         tableUtil.sortData(filteredList, this.sortBy, this.sortDirection);
@@ -205,7 +211,7 @@ export default class IRR_ManualCommunication extends LightningElement {
         try {
             this.showConfirmation = false;
             this.handleLoad(false);
-            const { sendSMS, sendEmail } = event.detail;
+            const { sendTime, sendSMS, sendEmail } = event.detail;
             const { parameters, sendMode, manualTemplate } = this.confirmDetail;
             const passengerInfos = this.selectedRows.map(row => tableUtil.unFlatten(row));
             passengerInfos.push(...this.additionalRecipients.map((rec) => {
@@ -223,6 +229,7 @@ export default class IRR_ManualCommunication extends LightningElement {
                 passengerInfos: passengerInfos,
                 sendSMSMessages: sendSMS,
                 sendEmailMessages: sendEmail,
+                sendMessageTime: sendTime,
                 emailTemplate: manualTemplate.emailTemplate,
                 smsTemplate: manualTemplate.smsTemplate
             };
@@ -239,6 +246,9 @@ export default class IRR_ManualCommunication extends LightningElement {
                 case "CANCEL":
                     payload.cancelInfo = parameters;
                     break;
+                case "CHECKIN":
+                    payload.checkinInfo = parameters;
+                    break;
                 case "SCHEDULED_CHANGE":
                     payload.scheduledChangeInfo = parameters;
                     break;
@@ -251,7 +261,13 @@ export default class IRR_ManualCommunication extends LightningElement {
             }
             await sendManualCommunication({ manualRequest: payload });
             this.handleLoad(true);
-            this.showSuccess = true;
+
+            if(sendTime !== null){
+                this.showScheduleSuccess = true;
+            }else{
+                this.showSuccess = true;
+            }
+            
         }
         catch (e) {
             this.handleError(e);

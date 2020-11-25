@@ -22,7 +22,8 @@
                 <lightning-layout multiple-rows="true">
                     <lightning-layout-item padding="around-small" size="12">
                         <p style="text-align: center;">
-                            This message will be sent to <b>{selectedCount} {recipientText}</b>, please choose channel(s) below before sending.
+                            This message will be sent to <b>{selectedCount} {recipientText}</b>, please choose channel(s) below before sending.<br>
+                            Schedule message if you want it delivered later.
                         </p>
                     </lightning-layout-item>
                     <lightning-layout-item padding="around-small" size="6">
@@ -43,6 +44,29 @@
                                 type="checkbox"
                                 label="Send Email"
                                 name="sendEmail">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-radio-group name="radioGroup"
+                           label="Send Options"
+                           options={sendOptions}
+                           value={value}
+                           required
+                           type="button"
+                           onchange={handleScheduleOptions}>
+                        </lightning-radio-group>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                          if:true={displayScheduleTime}
+                          type="datetime"
+                          class="dateCmp"
+                          timezone="Europe/Stockholm"
+                          name="scheduledTimeOfMessage"
+                          label="Scheduled Time of Message"
+                          value={scheduleTime}
+                          required
+                          onchange={handleScheduleSendTime}>
                         </lightning-input>
                     </lightning-layout-item>
                 </lightning-layout>
