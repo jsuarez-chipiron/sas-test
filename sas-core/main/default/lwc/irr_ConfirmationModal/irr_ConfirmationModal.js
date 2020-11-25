@@ -109,9 +109,16 @@ export default class IRR_ConfirmationModal extends LightningElement {
     }
 
     handleSend() {
-        if (!this.validateFields()) return;
+       if (this.displayScheduleTime){
+            if (!this.validateFields()) return;
+            const event = new CustomEvent("sendconfirm", { detail: {sendTime : this.scheduleTime, sendSMS: this.sendSMS, sendEmail: this.sendEmail } });
+            this.dispatchEvent(event);
+            this.reset();
+       }else{
         const event = new CustomEvent("sendconfirm", { detail: {sendTime : this.scheduleTime, sendSMS: this.sendSMS, sendEmail: this.sendEmail } });
         this.dispatchEvent(event);
         this.reset();
+        }
+        
     }
 }
