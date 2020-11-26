@@ -5,7 +5,7 @@
  */
 public class FCS_LiveChatTranscriptTriggerHandler extends C_TriggerHandler {
     public override void beforeUpdate() {
-        //checkIpWhitelist((List<LiveChatTranscript>) Trigger.new);
+        checkIpWhitelist((List<LiveChatTranscript>) Trigger.new);
         try {
             LiveChatTranscript[] lctList = (List < LiveChatTranscript > ) Trigger.new;
             Integer sz = lctList.size();
@@ -68,7 +68,7 @@ public class FCS_LiveChatTranscriptTriggerHandler extends C_TriggerHandler {
      * Checks the Ip whitelisting of the chats
      * @param lctList The chat transcript to check for whitelisting
      */
-    /*
+    
        static void checkIpWhitelist(List<LiveChatTranscript> lctList){
          C_Settings.SettingsGroup sgIpRestriction = C_Settings.getSettings('ChatIpWhitelist');
          Set<String> ipWhiteList = new Set<String>();
@@ -84,7 +84,7 @@ public class FCS_LiveChatTranscriptTriggerHandler extends C_TriggerHandler {
                }
            }
        }
-     */
+     
     /**
      * @author Thippeswamy ACTIVE
      * @date 08-Oct-2020

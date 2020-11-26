@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FCS_PNR__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>Add the main PNR number</inlineHelpText>
     <label>PNR</label>
     <length>255</length>
     <required>false</required>

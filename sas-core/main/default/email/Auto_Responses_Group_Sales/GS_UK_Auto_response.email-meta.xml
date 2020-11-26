@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Auto response for uk-groupquotes@sas.dk</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>SAS_Logo</letterhead>
+    <name>GS UK Auto response</name>
+    <style>freeForm</style>
+    <subject>We have received your request #{!Case.CaseNumber}  {!Case.Thread_Id}</subject>
+    <textOnly>Hi!
+
+Great to hear from you and thank you for your email.
+
+Your request is #{!Case.CaseNumber}
+
+We will answer you within two business days.
+
+While you are waiting to hear from us, you may take a look at www.flysas.com for travel inspiration!
+
+Best Regards
+SAS Group Sales
+SAS Customer Service
+Monday – Friday 09.00 – 17.00
+Phone: 0871 226 7757 (£0.10 per minute + network extras)
+
+Scandinavian Airlines System
+flysas.com, Facebook, Twitter, Youtube
+
+ {!Case.Thread_Id}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

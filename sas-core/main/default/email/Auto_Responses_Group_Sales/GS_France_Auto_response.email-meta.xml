@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Auto response for groupfr@sas.dk</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>SAS_Logo</letterhead>
+    <name>GS France Auto response</name>
+    <style>freeForm</style>
+    <subject>We have received your request #{!Case.CaseNumber}  {!Case.Thread_Id}</subject>
+    <textOnly>Merci d’avoir contacté SAS Group Sales.
+
+C’est avec plaisir que nous répondrons à votre requête et nous souhaitons vous informer que nos futurs échanges auront lieu en anglais.
+
+Merci de votre compréhension.
+
+We look forward to responding to your request and would like to inform you that further conversation will take place in English
+
+Your request is #{!Case.CaseNumber}
+
+
+Thank you for your understanding
+
+Best Regards
+SAS Group Sales
+SAS Sales and Service
+Monday – Friday 09.00 – 17.00
+Phone: 0825 325 335
+
+
+Scandinavian Airlines System
+flysas.com, Facebook, Twitter, Youtube
+
+
+{!Case.Thread_Id}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

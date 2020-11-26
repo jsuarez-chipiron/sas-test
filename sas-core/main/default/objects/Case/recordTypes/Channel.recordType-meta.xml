@@ -5,6 +5,13 @@
     <businessProcess>Default</businessProcess>
     <label>Channel</label>
     <picklistValues>
+        <picklist>Case_Grouping__c</picklist>
+        <values>
+            <fullName>Group Sales</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Consent__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -90,6 +97,10 @@
         </values>
         <values>
             <fullName>AMEX 2 for 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ad-hoc Groups</fullName>
             <default>false</default>
         </values>
         <values>
@@ -305,6 +316,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sport Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Strike</fullName>
             <default>false</default>
         </values>
@@ -354,6 +369,10 @@
         </values>
         <values>
             <fullName>Wheelchair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Youth Groups</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -492,7 +511,111 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Forsvaret NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Functional Product Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales ACE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales AT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales Benelux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales CH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales DE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales EE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales ES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales FR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales IE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales IS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales Interline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales LT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales LV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales PL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales RU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales UK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales US</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympic DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympic NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympic SE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -663,6 +786,110 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Forsvaret NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales ACE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales AT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales Benelux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales CH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales DE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales EE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales ES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales FR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales IE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales IS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales Interline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales LT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales LV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales PL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales RU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales UK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales US</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympic DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympic NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympic SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Pandion DK</fullName>
             <default>false</default>
         </values>
@@ -680,6 +907,29 @@
         </values>
         <values>
             <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PNR_Payment_Status__c</picklist>
+        <values>
+            <fullName>Not Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for Deposit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for Final Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for NC</fullName>
             <default>false</default>
         </values>
     </picklistValues>
