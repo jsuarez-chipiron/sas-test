@@ -16,7 +16,7 @@ private class IRR_SVC_SFMCService_Test {
 
         //Given
         IRR_SVC_SFMCService.SMSMessage message = new IRR_SVC_SFMCService.SMSMessage('TEST_CONTENT', 'TEST_RECIPIENT',
-                'TEST_CONTACT_KEY');
+                'TEST_CONTACT_KEY', false);
         mocks.startStubbing();
         mocks.when(serviceMock.sendSMSMessages((List<IRR_SVC_SFMCService.SMSMessage>) fflib_Match.anyList()))
                 .thenReturn(new List<IRR_SVC_SFMCService.SMSMessage>{message});
@@ -34,7 +34,8 @@ private class IRR_SVC_SFMCService_Test {
                 new Map<String, Object> {
                         'content' => message.content,
                         'recipient' => message.recipient,
-                        'contactKey' => message.contactKey
+                        'contactKey' => message.contactKey,
+                        'responseMessage' => message.responseMessage
                 }
         };
         ((IRR_SVC_ISFMCService) mocks.verify(serviceMock))
@@ -74,9 +75,9 @@ private class IRR_SVC_SFMCService_Test {
         IRR_Application.Selector.setMock(selectorMock);
         IRR_Application.IntegrationExecutorBuilder.setMock(IRR_Application.IntegrationType.REST, builderMock);
         IRR_SVC_SFMCService.SMSMessage smsMessage = new IRR_SVC_SFMCService.SMSMessage(
-                'TEST_CONTENT', 'TEST_RECIPIENT', 'TEST_CONTACT_KEY');
+                'TEST_CONTENT', 'TEST_RECIPIENT', 'TEST_CONTACT_KEY', false);
         IRR_SVC_SFMCService.SMSMessage smsMessageOther = new IRR_SVC_SFMCService.SMSMessage(
-                'OTHER_CONTENT', 'OTHER_RECIPIENT', 'OTHER_CONTACT_KEY');
+                'OTHER_CONTENT', 'OTHER_RECIPIENT', 'OTHER_CONTACT_KEY', true);
 
         //When
         IRR_SVC_SFMCService.sendSMSMessages(new List<IRR_SVC_SFMCService.SMSMessage>{smsMessage, smsMessageOther});
@@ -94,6 +95,7 @@ private class IRR_SVC_SFMCService_Test {
                 'recipients[0].to' => 'TEST_RECIPIENT',
                 'recipients[0].contactKey' => 'TEST_CONTACT_KEY',
                 'recipients[0].attributes.content' => 'TEST_CONTENT',
+                'recipients[0].attributes.from' => 'SAS',
                 'definitionKey' => 'TES_DEF_KEY'
         };
         ((C_IIntegrationExecutor) mocks.verify(executorMock)).executeRequest(
@@ -106,6 +108,7 @@ private class IRR_SVC_SFMCService_Test {
                 'recipients[0].to' => 'OTHER_RECIPIENT',
                 'recipients[0].contactKey' => 'OTHER_CONTACT_KEY',
                 'recipients[0].attributes.content' => 'OTHER_CONTENT',
+                'recipients[0].attributes.from' => '',
                 'definitionKey' => 'O_DEF_KEY'
         };
         ((C_IIntegrationExecutor) mocks.verify(executorMock)).executeRequest(
@@ -119,7 +122,7 @@ private class IRR_SVC_SFMCService_Test {
     @IsTest
     static void testSendSMSMessages_NoRecipient() {
         IRR_SVC_SFMCService.SMSMessage smsMessage = new IRR_SVC_SFMCService.SMSMessage(
-                'TEST_CONTENT', null, 'TEST_CONTACT_KEY');
+                'TEST_CONTENT', null, 'TEST_CONTACT_KEY', false);
 
         //When
         IRR_SVC_SFMCService.sendSMSMessages(new List<IRR_SVC_SFMCService.SMSMessage>{smsMessage});
