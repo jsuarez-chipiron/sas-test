@@ -184,11 +184,32 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
      * @param uow Unit of Work
      */
     private void insertEventLog(fflib_ISObjectUnitOfWork uow) {
-        IRR_EventLog__c eventLog = new IRR_EventLog__c();
-        eventLog.IRR_ScheduleTime__c = manualRequest.sendMessageTime;
-        eventLog.IRR_EventPayload__c = JSON.serialize(manualRequest);
-        uow.registerNew(eventLog);
+                    
+        IRR_EventLog__c sObj = new IRR_EventLog__c();
+        sObj.IRR_ScheduleTime__c = manualRequest.sendMessageTime;
+        String payloadStr = JSON.serialize(manualRequest);
+        if(payloadStr != null && payloadStr.length() > 131072){
+            sObj.Event_Payload_1__c = payloadStr.substring(0,131072);
+            payloadStr = payloadStr.substring(131072,payloadStr.length());
+            Boolean flag = (payloadStr.length()>131072?true:false);
+            sObj.Event_Payload_2__c = payloadStr.substring(0,(flag?131072:payloadStr.length()));
+            if(flag){
+                payloadStr = payloadStr.substring(131072,payloadStr.length());
+                flag = (payloadStr.length()>131072?true:false);
+                sObj.Event_Payload_3__c = payloadStr.substring(0,(flag?131072:payloadStr.length()));
+                if(flag){
+                    payloadStr = payloadStr.substring(131072,payloadStr.length());
+                    flag = (payloadStr.length()>131072?true:false);
+                    sObj.Event_Payload_4__c = payloadStr.substring(0,payloadStr.length());
+                }
+            }
+        }else{
+
+            sObj.Event_Payload_1__c = payloadStr;
+        }
+        uow.registerNew(sObj);
     }
+
     
 
     public IRR_EVT_ManualProcessor(IRR_MOD_ManualRequest manualRequest) {
