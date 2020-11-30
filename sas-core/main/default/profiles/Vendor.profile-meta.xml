@@ -137,6 +137,11 @@
         <field>Account.FCS_TPAccountNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	 <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.AccountId</field>
+        <readable>true</readable>
+    </fieldPermissions>
      <fieldPermissions>
         <editable>true</editable>
         <field>Case.PNR_Payment_Status__c</field>

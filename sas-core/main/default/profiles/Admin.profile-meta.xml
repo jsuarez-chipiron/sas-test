@@ -877,6 +877,10 @@
     <layoutAssignments>
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
+	 <layoutAssignments>
+        <layout>Account-B2B - Partner</layout>
+        <recordType>Account.Partner</recordType>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>C_GeneralSetting__mdt-General Setting Layout</layout>
     </layoutAssignments>
@@ -1050,6 +1054,11 @@
         <apexPage>C_LocalAuth</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.Partner</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <personAccountDefault>true</personAccountDefault>
