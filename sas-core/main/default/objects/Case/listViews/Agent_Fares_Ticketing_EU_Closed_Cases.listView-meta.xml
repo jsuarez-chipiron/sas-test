@@ -2,11 +2,12 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Agent_Fares_Ticketing_EU_Closed_Cases</fullName>
     <columns>CASES.CASE_NUMBER</columns>
-    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
     <columns>CASES.EMAIL</columns>
     <columns>CASES.SUBJECT</columns>
-    <columns>OWNER_NAME</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
     <columns>CASES.STATUS</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>FCS_SubOrigin_c__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>FCS_SubOrigin_c__c</field>
