@@ -245,6 +245,21 @@
                 <label>Create case</label>
             </value>
             <value>
+                <fullName>Credit expired points</fullName>
+                <default>false</default>
+                <label>Credit expired points</label>
+            </value>
+            <value>
+                <fullName>Credit points</fullName>
+                <default>false</default>
+                <label>Credit points</label>
+            </value>
+            <value>
+                <fullName>CT check</fullName>
+                <default>false</default>
+                <label>CT check</label>
+            </value>
+            <value>
                 <fullName>Customer hangs up</fullName>
                 <default>false</default>
                 <label>Customer hangs up</label>
@@ -258,6 +273,11 @@
                 <fullName>Dangerous goods</fullName>
                 <default>false</default>
                 <label>Dangerous goods</label>
+            </value>
+            <value>
+                <fullName>Deduct points</fullName>
+                <default>false</default>
+                <label>Deduct points</label>
             </value>
             <value>
                 <fullName>Delay certificate</fullName>
@@ -415,6 +435,11 @@
                 <label>GDPR</label>
             </value>
             <value>
+                <fullName>General Information</fullName>
+                <default>false</default>
+                <label>General Information</label>
+            </value>
+            <value>
                 <fullName>General service</fullName>
                 <default>false</default>
                 <label>General service</label>
@@ -545,6 +570,11 @@
                 <label>Meals</label>
             </value>
             <value>
+                <fullName>Merge</fullName>
+                <default>false</default>
+                <label>Merge</label>
+            </value>
+            <value>
                 <fullName>Merge profiles</fullName>
                 <default>false</default>
                 <label>Merge profiles</label>
@@ -553,6 +583,11 @@
                 <fullName>Missed connecting flight</fullName>
                 <default>false</default>
                 <label>Missed connecting flight</label>
+            </value>
+            <value>
+                <fullName>Missing 1000 Status pts MC</fullName>
+                <default>false</default>
+                <label>Missing 1000 Status pts MC</label>
             </value>
             <value>
                 <fullName>Musical</fullName>
@@ -735,6 +770,11 @@
                 <label>Refund escalation</label>
             </value>
             <value>
+                <fullName>Refund points</fullName>
+                <default>false</default>
+                <label>Refund points</label>
+            </value>
+            <value>
                 <fullName>Refund status</fullName>
                 <default>false</default>
                 <label>Refund status</label>
@@ -843,6 +883,11 @@
                 <fullName>Security</fullName>
                 <default>false</default>
                 <label>Security</label>
+            </value>
+            <value>
+                <fullName>Security code sent</fullName>
+                <default>false</default>
+                <label>Security code sent</label>
             </value>
             <value>
                 <fullName>Self Service kiosk / baggage drop</fullName>
@@ -1151,6 +1196,7 @@
         <valueSettings>
             <controllingFieldValue>Special service requests</controllingFieldValue>
             <controllingFieldValue>Error</controllingFieldValue>
+            <controllingFieldValue>Eurobonus</controllingFieldValue>
             <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
@@ -1346,11 +1392,13 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Changes</controllingFieldValue>
+            <controllingFieldValue>Eurobonus</controllingFieldValue>
             <controllingFieldValue>Name change</controllingFieldValue>
             <valueName>Name change</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Changes</controllingFieldValue>
+            <controllingFieldValue>Eurobonus</controllingFieldValue>
             <controllingFieldValue>Name change</controllingFieldValue>
             <valueName>Name correction</valueName>
         </valueSettings>
@@ -1564,6 +1612,22 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
+            <valueName>Credit expired points</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eurobonus</controllingFieldValue>
+            <valueName>Credit points</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eurobonus</controllingFieldValue>
+            <valueName>CT check</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eurobonus</controllingFieldValue>
+            <valueName>Deduct points</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eurobonus</controllingFieldValue>
             <valueName>Delete profiles</valueName>
         </valueSettings>
         <valueSettings>
@@ -1584,6 +1648,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
+            <valueName>General Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eurobonus</controllingFieldValue>
             <valueName>Give away membership</valueName>
         </valueSettings>
         <valueSettings>
@@ -1601,7 +1669,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
+            <valueName>Merge</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eurobonus</controllingFieldValue>
             <valueName>Merge profiles</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eurobonus</controllingFieldValue>
+            <valueName>Missing 1000 Status pts MC</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
@@ -1642,6 +1718,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
+            <valueName>Refund points</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eurobonus</controllingFieldValue>
             <valueName>Reset of password</valueName>
         </valueSettings>
         <valueSettings>
@@ -1651,6 +1731,10 @@
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
             <valueName>Retroregistration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eurobonus</controllingFieldValue>
+            <valueName>Security code sent</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
