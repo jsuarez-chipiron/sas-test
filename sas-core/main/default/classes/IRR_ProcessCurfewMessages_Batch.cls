@@ -50,15 +50,12 @@ global with sharing class IRR_ProcessCurfewMessages_Batch extends SBS_ScheduledB
     }
 
     global override void finishOverridable(Database.BatchableContext bc){
-        String scheduleTime = C_Settings.getSettings('IRR_Checkin').get('ScheduleTime');
-        System.debug(scheduleTime);
-        System.schedule('ProcessQueuedCheckin'+Datetime.Now(), scheduleTime, new IRR_ProcessCurfewMessages_Batch());
         
     }
 
     global void execute(SchedulableContext ctx) {
-        SBS_ScheduledBatch processQueuedCheckin = new IRR_ProcessCurfewMessages_Batch ();
-        ID batchprocessid = Database.executeBatch(processQueuedCheckin,3);
+        SBS_ScheduledBatch processQueuedManual = new IRR_ProcessCurfewMessages_Batch ();
+        ID batchprocessid = Database.executeBatch(processQueuedManual,3);
         }
     
 }
