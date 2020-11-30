@@ -466,6 +466,10 @@
         <field>User.FCS_CustomChatName__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<layoutAssignments>
+        <layout>Account-B2B - Partner</layout>
+        <recordType>Account.Partner</recordType>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
@@ -648,8 +652,13 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>MessagingSession</object>
         <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-        <recordTypeVisibilities>
+    </objectPermissions>		
+	<recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.Partner</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Channel</recordType>
         <visible>true</visible>

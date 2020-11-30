@@ -120,6 +120,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CT check</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Car rental</fullName>
             <default>false</default>
         </values>
@@ -152,11 +156,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Credit expired points</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit points</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Customer hangs up</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Damaged baggage status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deduct points</fullName>
             <default>false</default>
         </values>
         <values>
@@ -189,6 +205,10 @@
         </values>
         <values>
             <fullName>Flight disruption</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Information</fullName>
             <default>false</default>
         </values>
         <values>
@@ -232,7 +252,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Merge</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Merge profiles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing 1000 Status pts MC</fullName>
             <default>false</default>
         </values>
         <values>
@@ -276,6 +304,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Refund points</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Refund status</fullName>
             <default>false</default>
         </values>
@@ -309,6 +341,10 @@
         </values>
         <values>
             <fullName>Seating</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Security code sent</fullName>
             <default>false</default>
         </values>
         <values>
