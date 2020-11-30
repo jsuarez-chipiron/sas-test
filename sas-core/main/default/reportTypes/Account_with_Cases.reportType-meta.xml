@@ -174,12 +174,7 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Website</field>
             <table>Account</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Sic</field>
-            <table>Account</table>
-        </columns>
+        </columns>      
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Industry</field>
@@ -199,12 +194,7 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Ownership</field>
             <table>Account</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>TickerSymbol</field>
-            <table>Account</table>
-        </columns>
+        </columns>      
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Description</field>
@@ -511,16 +501,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>LastModifiedBy</field>
-            <table>Account.Cases</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>AssetWarranty</field>
-            <table>Account.Cases</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>ServiceContract</field>
             <table>Account.Cases</table>
         </columns>
         <columns>
