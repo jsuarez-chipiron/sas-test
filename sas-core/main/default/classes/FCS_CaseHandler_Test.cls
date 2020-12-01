@@ -303,5 +303,48 @@ private class FCS_CaseHandler_Test {
 
     }
 
+    @IsTest
+    static void enrichCaseDataBasedOnOriginConfigMatchingOriginShouldFillCorrectData() {
+        Case testCase = FCS_TestDataFactory.createCases(1, null, null, '0121X000001mT56QAE', null)[0];
+        testCase.Origin = 'Email - Group Sales AT';
+
+        Test.startTest();
+        insert testCase;
+        Test.stopTest();
+
+        Case testCaseAfterTrigger = [SELECT Case_Grouping__c, Type FROM Case Where Id = :testCase.Id][0];
+
+        System.assertEquals(testCaseAfterTrigger.Type, 'Channel');
+        System.assertEquals(testCaseAfterTrigger.Case_Grouping__c, 'Group Sales');
+    }
+
+    @IsTest
+    static void enrichCaseDataBasedOnOriginNonConfigMatchingOriginShouldLeaveBlanks() {
+        Case testCase = FCS_TestDataFactory.createCases(1, null, null, '0121X000001mT56QAE', null)[0];
+        testCase.Origin = 'Chat';
+
+        Test.startTest();
+        insert testCase;
+        Test.stopTest();
+
+        Case testCaseAfterTrigger = [SELECT Case_Grouping__c, Type FROM Case Where Id = :testCase.Id][0];
+
+        System.assert(String.isEmpty(testCaseAfterTrigger.Case_Grouping__c));
+        System.assert(String.isEmpty(testCaseAfterTrigger.Type));
+    }
+
+    @IsTest
+    static void enrichCaseDataBasedOnOriginBlankConfigFieldsShouldLeaveBlanks() {
+        Case testCase = FCS_TestDataFactory.createCases(1, null, null, '0121X000001mT56QAE', null)[0];
+        testCase.Origin = 'Email - Pandion SE';
+
+        Test.startTest();
+        insert testCase;
+        Test.stopTest();
+
+        Case testCaseAfterTrigger = [SELECT Case_Grouping__c, Type FROM Case Where Id = :testCase.Id][0];
+
+        System.assert(String.isEmpty(testCaseAfterTrigger.Case_Grouping__c));
+    }
 
 }
