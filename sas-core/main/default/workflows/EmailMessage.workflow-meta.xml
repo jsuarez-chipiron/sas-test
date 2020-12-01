@@ -1630,4 +1630,256 @@
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
     </rules>
+    <rules>
+        <fullName>Return closed case to queue on new email - EuroBonus</fullName>
+        <actions>
+            <name>Case_Owner_Update_EuroBonus</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email - EuroBonus</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Return closed case to queue on new email - Functional Product Support</fullName>
+        <actions>
+            <name>Case_Owner_Update_Functional_product_sup</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email - Functional Product Support</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Return closed case to queue on new email - Group Sales</fullName>
+        <actions>
+            <name>Case_Owner_Update_Group_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND (3 OR 4 OR 5 OR 6 OR 7)</booleanFilter>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>contains</operation>
+            <value>Email - Group Sales</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>contains</operation>
+            <value>Email - Olympic</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email - Forsvaret NO</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email - Agent Fares Ticketing EU</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email - Agent Helpdesk SIA</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Return closed case to queue on new email - Pandion</fullName>
+        <actions>
+            <name>Case_Owner_Update_Pandion</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>contains</operation>
+            <value>Email - Pandion</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Return closed case to queue on new email - SASSI Internal</fullName>
+        <actions>
+            <name>Case_Owner_Update_Sassi_Internal</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email - SASSI Internal</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Return closed case to queue on new email - Sales Information</fullName>
+        <actions>
+            <name>Case_Owner_Update_for_Sales_Information</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email - Sales Information</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Return closed case to queue on new email - System %26 Tariff</fullName>
+        <actions>
+            <name>Case_Owner_Update_system_and_tariff</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email - System &amp; Tariff</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
 </Workflow>
