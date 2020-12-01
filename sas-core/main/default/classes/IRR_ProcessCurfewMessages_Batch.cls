@@ -5,7 +5,7 @@
 */
 global with sharing class IRR_ProcessCurfewMessages_Batch extends SBS_ScheduledBatch implements Schedulable {
 
-    private String eventLogsStatus = 'Queued';
+    // private String eventLogsStatus = 'Queued';
     private String eventType = 'manualCommunication';
    
     
@@ -20,7 +20,7 @@ global with sharing class IRR_ProcessCurfewMessages_Batch extends SBS_ScheduledB
 
     global Database.QueryLocator start(Database.BatchableContext bc){
 
-        return IRR_SEL_EventLogsSelector.newInstance().getQueuedCheckinQueryLocator(eventLogsStatus);
+        return IRR_SEL_EventLogsSelector.newInstance().getQueuedCheckinQueryLocator();
 
     }
 
@@ -41,8 +41,6 @@ global with sharing class IRR_ProcessCurfewMessages_Batch extends SBS_ScheduledB
             IRR_SVC_CommunicationServiceImpl c = new IRR_SVC_CommunicationServiceImpl();
             IRR_MOD_ManualRequest cInfo = (IRR_MOD_ManualRequest)JSON.deserialize(payloadStr, IRR_MOD_ManualRequest.class);
             cInfo.sendMessageTime = null;
-            //cInfo.eventTime= Datetime.now();
-            //String payloadJSON = JSON.serialize(cInfo);
             IRR_SVC_CommunicationService.processEvent(eventType, cInfo);
             }
             
