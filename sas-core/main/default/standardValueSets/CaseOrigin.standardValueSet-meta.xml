@@ -216,4 +216,9 @@
         <default>false</default>
         <label>Olympic DK</label>
     </standardValue>
+    <standardValue>
+        <fullName>Email - Corporate</fullName>
+        <default>false</default>
+        <label>Email - Corporate</label>
+    </standardValue>
 </StandardValueSet>

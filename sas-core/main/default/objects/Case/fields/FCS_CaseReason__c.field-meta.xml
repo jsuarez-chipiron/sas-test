@@ -514,6 +514,11 @@
                 <default>false</default>
                 <label>Other</label>
             </value>
+            <value>
+                <fullName>Corporate</fullName>
+                <default>false</default>
+                <label>Corporate</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>SASSI Internal</controllingFieldValue>
