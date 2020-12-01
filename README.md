@@ -50,3 +50,21 @@ Run `SFDX: Open Default Org` or by clicking the window icon in the Status Bar
 4. Make the changes you need to do in the scratch org.
 5. Run `SFDX: Pull Source from Default Scratch Org`
 6. Commit, Push and PR.
+
+## Extensions
+
+1. [SFDC Trigger Framework](https://github.com/kevinohara80/sfdc-trigger-framework)
+2. [FFLib Apex Common](https://github.com/apex-enterprise-patterns/fflib-apex-common)
+
+## Structure
+
+### Triggers
+
+For triggers we are using the [SFDC Trigger Framework](https://github.com/kevinohara80/sfdc-trigger-framework).
+
+This means that triggers themselves should be barebones classes that only create 
+an instance of the correct trigger class. E.g. for cases we have the CaseTrigger.trigger file,
+that delegates handling the trigger actions to FCS_CaseHandler.cls, which extends C_TriggerHandler.cls
+base class for all triggers.
+
+

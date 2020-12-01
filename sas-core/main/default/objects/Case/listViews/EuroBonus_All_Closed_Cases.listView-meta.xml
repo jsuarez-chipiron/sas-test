@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>EuroBonus_All_Closed_Cases</fullName>
-    <booleanFilter>1 AND 2</booleanFilter>
+    <booleanFilter>2 AND (1 OR 3)</booleanFilter>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>NAME</columns>
     <columns>CASES.SUBJECT</columns>
@@ -18,6 +18,11 @@
         <field>CASES.CLOSED</field>
         <operation>equals</operation>
         <value>1</value>
+    </filters>
+    <filters>
+        <field>CASES.ORIGIN</field>
+        <operation>equals</operation>
+        <value>Email - EuroBonus</value>
     </filters>
     <label>EuroBonus All Closed Cases</label>
 </ListView>
