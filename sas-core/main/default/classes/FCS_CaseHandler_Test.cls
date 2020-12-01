@@ -305,7 +305,7 @@ private class FCS_CaseHandler_Test {
 
     @IsTest
     static void enrichCaseDataBasedOnOriginConfigMatchingOriginShouldFillCorrectData() {
-        Case testCase = FCS_TestDataFactory.createCases(1, null, null, '0121X000001mT56QAE', null)[0];
+        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
         testCase.Origin = 'Email - Group Sales AT';
 
         Test.startTest();
@@ -320,7 +320,7 @@ private class FCS_CaseHandler_Test {
 
     @IsTest
     static void enrichCaseDataBasedOnOriginNonConfigMatchingOriginShouldLeaveBlanks() {
-        Case testCase = FCS_TestDataFactory.createCases(1, null, null, '0121X000001mT56QAE', null)[0];
+        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
         testCase.Origin = 'Chat';
 
         Test.startTest();
@@ -335,7 +335,7 @@ private class FCS_CaseHandler_Test {
 
     @IsTest
     static void enrichCaseDataBasedOnOriginBlankConfigFieldsShouldLeaveBlanks() {
-        Case testCase = FCS_TestDataFactory.createCases(1, null, null, '0121X000001mT56QAE', null)[0];
+        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
         testCase.Origin = 'Email - Pandion SE';
 
         Test.startTest();
