@@ -4,7 +4,6 @@
     <booleanFilter>((1 OR 2 OR 3 OR 4 OR 5 OR 6) AND 7)</booleanFilter>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>NAME</columns>
-    <columns>CASES.SUBJECT</columns>
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
     <columns>CORE.USERS.ALIAS</columns>
