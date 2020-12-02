@@ -1,43 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Corporate_TPI_OPM</fullName>
-    <booleanFilter>((1 OR 2 OR 3 OR 4 OR 5 OR 6) AND 7)</booleanFilter>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>NAME</columns>
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
     <columns>CORE.USERS.ALIAS</columns>
     <filterScope>Everything</filterScope>
-    <filters>
-        <field>CASES.SUBJECT</field>
-        <operation>contains</operation>
-        <value>Välkommen till SAS Travel Pass</value>
-    </filters>
-    <filters>
-        <field>CASES.SUBJECT</field>
-        <operation>contains</operation>
-        <value>Nå har vi fylt på ditt SAS Travel Pass</value>
-    </filters>
-    <filters>
-        <field>CASES.SUBJECT</field>
-        <operation>contains</operation>
-        <value>Velkommen til en smidig rejse med SAS Travel Pass</value>
-    </filters>
-    <filters>
-        <field>CASES.SUBJECT</field>
-        <operation>contains</operation>
-        <value>Velkommen til en smidig rejse med SAS</value>
-    </filters>
-    <filters>
-        <field>CASES.SUBJECT</field>
-        <operation>contains</operation>
-        <value>Welcome to the SAS Travel Pass</value>
-    </filters>
-    <filters>
-        <field>CASES.SUBJECT</field>
-        <operation>contains</operation>
-        <value>Velkommen til SAS Travel Pass</value>
-    </filters>
     <filters>
         <field>CASES.ORIGIN</field>
         <operation>equals</operation>

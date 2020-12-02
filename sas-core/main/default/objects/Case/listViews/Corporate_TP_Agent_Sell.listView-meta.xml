@@ -6,12 +6,7 @@
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
     <columns>CORE.USERS.ALIAS</columns>
-    <filterScope>Everything</filterScope>
-    <filters>
-        <field>CASES.SUBJECT</field>
-        <operation>contains</operation>
-        <value>Order from SAS Travel Pass</value>
-    </filters>
+    <filterScope>Everything</filterScope>   
     <filters>
         <field>CASES.ORIGIN</field>
         <operation>equals</operation>
