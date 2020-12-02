@@ -60,7 +60,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>FCS_SubOrigin_c__c</field>
+                <field>Origin</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
