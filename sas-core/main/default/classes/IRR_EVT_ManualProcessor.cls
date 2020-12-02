@@ -193,15 +193,15 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
             payloadStr = payloadStr.substring(131072,payloadStr.length());
             Boolean flag = (payloadStr.length()>131072?true:false);
             sObj.Event_Payload_2__c = payloadStr.substring(0,(flag?131072:payloadStr.length()));
-            if(flag){
-                payloadStr = payloadStr.substring(131072,payloadStr.length());
-                flag = (payloadStr.length()>131072?true:false);
-                sObj.Event_Payload_3__c = payloadStr.substring(0,(flag?131072:payloadStr.length()));
-                if(flag){
-                    payloadStr = payloadStr.substring(131072,payloadStr.length());
-                    flag = (payloadStr.length()>131072?true:false);
-                    sObj.Event_Payload_4__c = payloadStr.substring(0,payloadStr.length());
-                }
+        if(flag){
+            payloadStr = payloadStr.substring(131072,payloadStr.length());
+            flag = (payloadStr.length()>131072?true:false);
+            sObj.Event_Payload_3__c = payloadStr.substring(0,(flag?131072:payloadStr.length()));
+        if(flag){
+            payloadStr = payloadStr.substring(131072,payloadStr.length());
+            flag = (payloadStr.length()>131072?true:false);
+            sObj.Event_Payload_4__c = payloadStr.substring(0,payloadStr.length());
+        }
             }
         }else{
 

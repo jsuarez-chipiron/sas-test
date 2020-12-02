@@ -18,7 +18,7 @@ private class IRR_SEL_EventLogsSelector_Test {
         insert eventLogs;
 
         //when
-        Database.QueryLocator queryResult = IRR_SEL_EventLogsSelector.newInstance().getQueuedCheckinQueryLocator();
+        Database.QueryLocator queryResult = IRR_SEL_EventLogsSelector.newInstance().getQueuedManualQueryLocator();
         // Get an iterator
         Database.QueryLocatorIterator i =  queryResult.iterator();
     
