@@ -19,4 +19,7 @@
         <value>1</value>
     </filters>
     <label>Corporate Support All Closed Cases</label>
+    <sharedTo>
+        <group>Corporate</group>
+    </sharedTo>
 </ListView>

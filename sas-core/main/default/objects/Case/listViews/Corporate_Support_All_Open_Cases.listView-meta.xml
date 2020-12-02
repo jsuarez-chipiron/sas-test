@@ -20,4 +20,7 @@
         <value>0</value>
     </filters>
     <label>Corporate Support All Open Cases</label>
+    <sharedTo>
+        <group>Corporate</group>
+    </sharedTo>
 </ListView>
