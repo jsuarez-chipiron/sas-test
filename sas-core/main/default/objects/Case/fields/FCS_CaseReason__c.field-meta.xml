@@ -827,6 +827,10 @@
             <valueName>Rules &amp; Informaton</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Channel</controllingFieldValue>
+            <valueName>Corporate</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <valueName>Airport Services</valueName>
