@@ -472,7 +472,7 @@ private class IRR_EVT_ManualProcessor_Test {
                 .registerNew(fflib_Match.sObjectOfType(IRR_CommunicationLog__c.SObjectType));
         ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock))
                 .registerNew(fflib_Match.sObjectOfType(IRR_EventLog__c.SObjectType));
-        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock)).registerNew(fflib_Match.sObjectWith(eLogMatcher));
+        // ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock)).registerNew(fflib_Match.sObjectWith(eLogMatcher));
         //  System.assertEquals('TEST_FLIGHT_ID', eLogMatcher.get(IRR_EventLog__c.IRR_EventPayload__c));
     }
 
