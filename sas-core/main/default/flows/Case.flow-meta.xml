@@ -869,7 +869,7 @@
                 <stringValue>[Case].FCS_ReopenedCount__c + 1</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_16_myRule_13_A1_1948370363</name>
+        <name>formula_16_myRule_13_A1_6432432473</name>
         <dataType>Number</dataType>
         <expression>{!myVariable_current.FCS_ReopenedCount__c} + 1</expression>
         <scale>18</scale>
@@ -880,8 +880,8 @@
             <value>
                 <stringValue>AND(
     ISNEW(),
-    ISPICKVAL([Case].Origin, &#39;Email&#39;),
-    CONTAINS(LOWER([Case].Subject), &#39;urgent&#39;) 
+    CONTAINS(TEXT([Case].Origin), &apos;Email&apos;), 
+    CONTAINS(LOWER([Case].Subject), &apos;urgent&apos;) 
 )</stringValue>
             </value>
         </processMetadataValues>
@@ -889,20 +889,20 @@
         <dataType>Boolean</dataType>
         <expression>AND(
     ISNEW(),
-    ISPICKVAL({!myVariable_current.Origin}, &#39;Email&#39;),
-    CONTAINS(LOWER({!myVariable_current.Subject}), &#39;urgent&#39;) 
+    CONTAINS(TEXT({!myVariable_current.Origin}), &apos;Email&apos;), 
+    CONTAINS(LOWER({!myVariable_current.Subject}), &apos;urgent&apos;) 
 )</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>AND(ISNEW(), BEGINS([Case].OwnerId ,&#39;00G&#39;) )</stringValue>
+                <stringValue>AND(ISNEW(), BEGINS([Case].OwnerId ,&apos;00G&apos;) )</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_5</name>
         <dataType>Boolean</dataType>
-        <expression>AND(ISNEW(), BEGINS({!myVariable_current.OwnerId} ,&#39;00G&#39;) )</expression>
+        <expression>AND(ISNEW(), BEGINS({!myVariable_current.OwnerId} ,&apos;00G&apos;) )</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -911,13 +911,10 @@
                 <stringValue>AND
 	(
        ISNEW(),
-      OR(ISPICKVAL([Case].Origin, &#39;Facebook&#39;),ISPICKVAL([Case].Origin, 
-            &#39;Twitter&#39;),ISPICKVAL([Case].Origin, &#39;Facebook Messenger&#39;),
-			 AND(OR(ISPICKVAL([Case].Origin, &#39;Email&#39;),
-                                         ISPICKVAL([Case].Origin, &#39;Sales Information&#39;), 
-                                         ISPICKVAL([Case].Origin, &#39;SASSI Internal&#39;),
-	                                 ISPICKVAL([Case].Origin, &#39;System &amp; Tariff&#39;)),
-				         [Case].CreatedBy.LastName = &#39;SAS Automation Process&#39;
+      OR(ISPICKVAL([Case].Origin, &apos;Facebook&apos;),ISPICKVAL([Case].Origin, 
+            &apos;Twitter&apos;),ISPICKVAL([Case].Origin, &apos;Facebook Messenger&apos;),
+			 AND(CONTAINS(TEXT([Case].Origin), &apos;Email&apos;),
+				         [Case].CreatedBy.LastName = &apos;SAS Automation Process&apos;
 	                         )           			
               )
 	)</stringValue>
@@ -928,13 +925,10 @@
         <expression>AND
 	(
        ISNEW(),
-      OR(ISPICKVAL({!myVariable_current.Origin}, &#39;Facebook&#39;),ISPICKVAL({!myVariable_current.Origin}, 
-            &#39;Twitter&#39;),ISPICKVAL({!myVariable_current.Origin}, &#39;Facebook Messenger&#39;),
-			 AND(OR(ISPICKVAL({!myVariable_current.Origin}, &#39;Email&#39;),
-                                         ISPICKVAL({!myVariable_current.Origin}, &#39;Sales Information&#39;), 
-                                         ISPICKVAL({!myVariable_current.Origin}, &#39;SASSI Internal&#39;),
-	                                 ISPICKVAL({!myVariable_current.Origin}, &#39;System &amp; Tariff&#39;)),
-				         {!myVariable_current.CreatedBy.LastName} = &#39;SAS Automation Process&#39;
+      OR(ISPICKVAL({!myVariable_current.Origin}, &apos;Facebook&apos;),ISPICKVAL({!myVariable_current.Origin}, 
+            &apos;Twitter&apos;),ISPICKVAL({!myVariable_current.Origin}, &apos;Facebook Messenger&apos;),
+			 AND(CONTAINS(TEXT({!myVariable_current.Origin}), &apos;Email&apos;),
+				         {!myVariable_current.CreatedBy.LastName} = &apos;SAS Automation Process&apos;
 	                         )           			
               )
 	)</expression>
@@ -1173,7 +1167,7 @@
             </processMetadataValues>
             <field>FCS_ReopenedCount__c</field>
             <value>
-                <elementReference>formula_16_myRule_13_A1_1948370363</elementReference>
+                <elementReference>formula_16_myRule_13_A1_6432432473</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
