@@ -679,11 +679,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.FCS_SubOrigin_c__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.FCS_SubTeam__c</field>
         <readable>true</readable>
     </fieldPermissions>

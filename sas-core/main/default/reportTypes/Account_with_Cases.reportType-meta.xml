@@ -605,11 +605,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>FCS_SubOrigin_c__c</field>
-            <table>Account.Cases</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>FCS_SubTeam__c</field>
             <table>Account.Cases</table>
         </columns>
