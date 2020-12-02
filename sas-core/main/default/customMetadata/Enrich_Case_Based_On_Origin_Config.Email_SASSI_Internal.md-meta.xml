@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Case_Type_To_Assign__c</field>
-        <value xsi:type="xsd:string">Channel</value>
+        <value xsi:type="xsd:string">SASSI Internal</value>
     </values>
     <values>
         <field>Case_Visibility_Grouping_To_Assign__c</field>
