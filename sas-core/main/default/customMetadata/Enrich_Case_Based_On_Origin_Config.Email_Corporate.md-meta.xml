@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Case_Visibility_Grouping_To_Assign__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string"></value>
     </values>
     <values>
         <field>Incoming_Case_Origin__c</field>

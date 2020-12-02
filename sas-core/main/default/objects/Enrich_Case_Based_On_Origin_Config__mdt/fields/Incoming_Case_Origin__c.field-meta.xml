@@ -21,19 +21,24 @@
                 <label>Email - Agent Helpdesk SIA</label>
             </value>
             <value>
+                <fullName>Email - Corporate</fullName>
+                <default>false</default>
+                <label>Email - Corporate</label>
+            </value>
+            <value>
                 <fullName>Email - EuroBonus</fullName>
                 <default>false</default>
                 <label>Email - EuroBonus</label>
             </value>
             <value>
-                <fullName>Email - Functional Product Support</fullName>
-                <default>false</default>
-                <label>Email - Functional Product Support</label>
-            </value>
-            <value>
                 <fullName>Email - Forsvaret NO</fullName>
                 <default>false</default>
                 <label>Email - Forsvaret NO</label>
+            </value>
+            <value>
+                <fullName>Email - Functional Product Support</fullName>
+                <default>false</default>
+                <label>Email - Functional Product Support</label>
             </value>
             <value>
                 <fullName>Email - Group Sales ACE</fullName>
