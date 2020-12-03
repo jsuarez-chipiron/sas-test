@@ -7,6 +7,7 @@
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
     <columns>CORE.USERS.ALIAS</columns>
+    <columns>CASES.LAST_UPDATE_DATE_ONLY</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Case_Grouping__c</field>
