@@ -1195,6 +1195,11 @@
                 <label>Travel Pass - Statistics</label>
             </value>
             <value>
+                <fullName>Travel Pass - TPI OPM</fullName>
+                <default>false</default>
+                <label>Travel Pass - TPI OPM</label>
+            </value>
+            <value>
                 <fullName>Travel Pass - Wrong deb</fullName>
                 <default>false</default>
                 <label>Travel Pass - Wrong deb</label>
@@ -2306,6 +2311,10 @@
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
             <valueName>Travel Pass - Statistics</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass - TPI OPM</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
