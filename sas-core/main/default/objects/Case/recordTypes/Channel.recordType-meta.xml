@@ -970,11 +970,155 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Agent Fares Ticketing EU</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Agent Helpdesk Poland</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Agent Helpdesk SIA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Corporate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Forsvaret NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Functional Product Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales ACE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales AT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales Benelux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales CH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales DE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales EE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales ES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales FR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales IE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales IS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales Interline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales LT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales LV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales PL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales RU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales UK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales US</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Olympic DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Olympic NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Olympic SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Pandion DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Pandion NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Pandion SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - SASSI Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Sales Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - System %26 Tariff</fullName>
             <default>false</default>
         </values>
         <values>
