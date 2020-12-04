@@ -72,11 +72,6 @@
         <label>Pandion DK</label>
     </standardValue>
     <standardValue>
-        <fullName>Agent Helpdesk SIA</fullName>
-        <default>false</default>
-        <label>Agent Helpdesk SIA</label>
-    </standardValue>
-    <standardValue>
         <fullName>Agent Fares Ticketing EU</fullName>
         <default>false</default>
         <label>Agent Fares Ticketing EU</label>
@@ -400,5 +395,10 @@
         <fullName>Email - System &amp; Tariff</fullName>
         <default>false</default>
         <label>Email - System &amp; Tariff</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Agent Helpdesk Poland</fullName>
+        <default>false</default>
+        <label>Email - Agent Helpdesk Poland</label>
     </standardValue>
 </StandardValueSet>
