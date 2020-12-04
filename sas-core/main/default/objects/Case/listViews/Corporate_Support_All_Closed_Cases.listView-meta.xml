@@ -19,9 +19,9 @@
         <value>Email - Corporate</value>
     </filters>
     <filters>
-        <field>CASES.CLOSED</field>
+        <field>CASES.STATUS</field>
         <operation>equals</operation>
-        <value>1</value>
+        <value>Closed</value>
     </filters>
     <label>Corporate Support All Closed Cases</label>
     <sharedTo>
