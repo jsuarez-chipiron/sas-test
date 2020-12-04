@@ -16,8 +16,14 @@
                 <label>Email - Agent Fares Ticketing EU</label>
             </value>
             <value>
+                <fullName>Email - Agent Helpdesk Poland</fullName>
+                <default>false</default>
+                <label>Email - Agent Helpdesk Poland</label>
+            </value>
+            <value>
                 <fullName>Email - Agent Helpdesk SIA</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Email - Agent Helpdesk SIA</label>
             </value>
             <value>

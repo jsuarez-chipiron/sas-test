@@ -934,15 +934,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Agent Helpdesk SIA</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Chat</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Agent Helpdesk Poland</fullName>
             <default>false</default>
         </values>
         <values>

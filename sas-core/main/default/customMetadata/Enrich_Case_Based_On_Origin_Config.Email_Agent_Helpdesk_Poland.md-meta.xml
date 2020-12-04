@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Email - Agent Helpdesk SIA</label>
+    <label>Email - Agent Helpdesk Poland</label>
     <protected>false</protected>
     <values>
         <field>Case_Type_To_Assign__c</field>
@@ -8,10 +8,10 @@
     </values>
     <values>
         <field>Case_Visibility_Grouping_To_Assign__c</field>
-        <value xsi:type="xsd:string"></value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Incoming_Case_Origin__c</field>
-        <value xsi:type="xsd:string">Email - Agent Helpdesk SIA</value>
+        <value xsi:type="xsd:string">Email - Agent Helpdesk Poland</value>
     </values>
 </CustomMetadata>
