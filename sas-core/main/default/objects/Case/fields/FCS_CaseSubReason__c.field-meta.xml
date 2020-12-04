@@ -1005,6 +1005,11 @@
                 <label>Sold</label>
             </value>
             <value>
+                <fullName>Spam</fullName>
+                <default>false</default>
+                <label>Spam</label>
+            </value>
+            <value>
                 <fullName>Special assistance</fullName>
                 <default>false</default>
                 <label>Special assistance</label>
@@ -1726,6 +1731,10 @@
         <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>Inactive customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <valueName>Spam</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>

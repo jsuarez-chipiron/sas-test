@@ -424,6 +424,9 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Spam</fullName>
+            <default>false</default>
+        </values>
             <fullName>Sport Groups</fullName>
             <default>false</default>
         </values>
