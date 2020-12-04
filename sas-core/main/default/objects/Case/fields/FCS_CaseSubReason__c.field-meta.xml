@@ -195,6 +195,11 @@
                 <label>BULK</label>
             </value>
             <value>
+                <fullName>Bulk Groups</fullName>
+                <default>false</default>
+                <label>Bulk Groups</label>
+            </value>
+            <value>
                 <fullName>Campaign booking</fullName>
                 <default>false</default>
                 <label>Campaign booking</label>
@@ -545,9 +550,19 @@
                 <label>Group</label>
             </value>
             <value>
+                <fullName>Guarantee Groups</fullName>
+                <default>false</default>
+                <label>Guarantee Groups</label>
+            </value>
+            <value>
                 <fullName>Handling status</fullName>
                 <default>false</default>
                 <label>Handling status</label>
+            </value>
+            <value>
+                <fullName>High Demand Groups</fullName>
+                <default>false</default>
+                <label>High Demand Groups</label>
             </value>
             <value>
                 <fullName>Hotel</fullName>
@@ -1035,9 +1050,19 @@
                 <label>Sport</label>
             </value>
             <value>
+                <fullName>Sport Domestic Groups</fullName>
+                <default>false</default>
+                <label>Sport Domestic Groups</label>
+            </value>
+            <value>
                 <fullName>Sport Groups</fullName>
                 <default>false</default>
                 <label>Sport Groups</label>
+            </value>
+            <value>
+                <fullName>Sport Int./EU Groups</fullName>
+                <default>false</default>
+                <label>Sport Int./EU Groups</label>
             </value>
             <value>
                 <fullName>Sports/Marine</fullName>
@@ -1218,6 +1243,11 @@
                 <fullName>Unaccompanied minor</fullName>
                 <default>false</default>
                 <label>Unaccompanied minor</label>
+            </value>
+            <value>
+                <fullName>Unique Groups</fullName>
+                <default>false</default>
+                <label>Unique Groups</label>
             </value>
             <value>
                 <fullName>Upgrade</fullName>
@@ -2092,12 +2122,24 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Bulk Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Campaign booking</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
             <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
             <valueName>Face Mask</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Guarantee Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>High Demand Groups</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
@@ -2109,7 +2151,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Sport Domestic Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Sport Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Sport Int./EU Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Unique Groups</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>

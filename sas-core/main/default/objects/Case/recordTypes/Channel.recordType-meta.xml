@@ -172,6 +172,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bulk Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CT check</fullName>
             <default>false</default>
         </values>
@@ -285,6 +289,14 @@
         </values>
         <values>
             <fullName>Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Guarantee Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High Demand Groups</fullName>
             <default>false</default>
         </values>
         <values>
@@ -427,7 +439,16 @@
             <fullName>Spam</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sport Domestic Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sport Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sport Int%2E%2FEU Groups</fullName>
             <default>false</default>
         </values>
         <values>
@@ -504,6 +525,10 @@
         </values>
         <values>
             <fullName>Unaccompanied minor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unique Groups</fullName>
             <default>false</default>
         </values>
         <values>
