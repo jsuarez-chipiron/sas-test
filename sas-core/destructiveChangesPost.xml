@@ -69,6 +69,8 @@
 		<members>case.Pandion_DK_Case</members>
 		<members>case.Pandion_NO_Case</members>
 		<members>case.Pandion_SE_Case</members>
+		<members>case.Agent_Helpdesk_SIA_Closed_Cases</members>		
+		<members>case.Agent_Helpdesk_SIA_Open_Cases</members>		
         <name>ListView</name>
     </types>
 	<!--2020-10-13 Delete queues -->
