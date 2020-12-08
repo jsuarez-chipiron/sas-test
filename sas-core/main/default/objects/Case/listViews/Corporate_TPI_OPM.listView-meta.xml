@@ -55,7 +55,7 @@
         <operation>equals</operation>
         <value>Travel Pass - TPI OPM</value>
     </filters>
-    <label>Corporate TPI OPM</label>
+    <label>Corporate Support TPI OPM</label>
     <sharedTo>
         <group>Corporate</group>
     </sharedTo>
