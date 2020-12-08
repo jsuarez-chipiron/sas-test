@@ -184,9 +184,15 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
      * @param uow Unit of Work
      */
     private void insertEventLog(fflib_ISObjectUnitOfWork uow) {
-                    
         IRR_EventLog__c sObj = new IRR_EventLog__c();
         sObj.IRR_ScheduleTime__c = manualRequest.sendMessageTime;
+        if(manualRequest.passengerInfos != null && manualRequest.passengerInfos.size() > 0) {
+            Set<String> flightIds = new Set<String>();
+            for(IRR_MOD_PassengerInfo pi : manualRequest.passengerInfos){
+                flightIds.add(pi.thisSegment.flightId);
+            }
+            sObj.IRR_FlightId__c = String.Join(new List<String>(flightIds), ', ');
+        }
         String payloadStr = JSON.serialize(manualRequest);
         if(payloadStr != null && payloadStr.length() > 131072){
             sObj.Event_Payload_1__c = payloadStr.substring(0,131072);

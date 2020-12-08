@@ -21,9 +21,9 @@ export default class IRR_ConfirmationModal extends LightningElement {
 
     @track displayScheduleTime = false;
 
-    @track value = '';
+    @track value = 'Now';
 
-    @track scheduleTime = '';
+    @track scheduleTime = null;
 
     @api
     get confirmDetail() {
