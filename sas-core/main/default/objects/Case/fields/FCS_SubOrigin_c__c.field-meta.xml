@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FCS_SubOrigin_c__c</fullName>
+    <description>Obsolete</description>
+    <externalId>false</externalId>
+    <label>Case Sub Origin</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>false</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Obsolete</fullName>
+                <default>true</default>
+                <label>Obsolete</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

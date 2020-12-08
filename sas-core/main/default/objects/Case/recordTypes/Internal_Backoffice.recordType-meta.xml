@@ -1048,6 +1048,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Sales Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - SASSI Internal</fullName>
             <default>false</default>
         </values>

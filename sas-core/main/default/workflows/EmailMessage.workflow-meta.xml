@@ -158,39 +158,6 @@
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>Return closed case to queue on new email - Agent Helpdesk Poland</fullName>
-        <actions>
-            <name>Case_Owner_Update_Agent_Helpdesk</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Case_Previous_Owner_Update</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Case_Status_New_Response</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>EmailMessage.Incoming</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Email - Agent Helpdesk Poland</value>
-        </criteriaItems>
-        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>Return closed case to queue on new email - Corporate Support</fullName>
         <actions>
             <name>Case_Owner_Update_Corporate</name>
@@ -304,7 +271,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND (3 OR 4 OR 5 OR 6 OR 7)</booleanFilter>
+        <booleanFilter>1 AND 2 AND (3 OR 4 OR 5 OR 6)</booleanFilter>
         <criteriaItems>
             <field>EmailMessage.Incoming</field>
             <operation>equals</operation>
@@ -334,11 +301,6 @@
             <field>Case.Origin</field>
             <operation>equals</operation>
             <value>Email - Agent Fares Ticketing EU</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Email - Agent Helpdesk SIA</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>

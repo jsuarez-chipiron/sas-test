@@ -837,14 +837,6 @@
         <values>
             <fullName>Email - Agent Fares Ticketing EU</fullName>
             <default>false</default>
-        </values>       
-        <values>
-            <fullName>Agent Helpdesk SIA</fullName>
-            <default>false</default>
-        </values>
-		<values>
-            <fullName>Email - SAS Poland</fullName>
-            <default>false</default>
         </values>
         <values>
             <fullName>Email - Corporate</fullName>
@@ -907,15 +899,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Group Sales Interline</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Group Sales IS</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Email - Group Sales IT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email - Group Sales Interline</fullName>
             <default>false</default>
         </values>
         <values>
@@ -975,11 +967,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - SASSI Internal</fullName>
+            <fullName>Email - Sales Information</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Email - SAS Poland</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Sales Information</fullName>
+            <fullName>Email - SASSI Internal</fullName>
             <default>false</default>
         </values>
         <values>
