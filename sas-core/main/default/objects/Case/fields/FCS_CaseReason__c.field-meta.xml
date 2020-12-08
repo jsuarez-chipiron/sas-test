@@ -135,6 +135,11 @@
                 <label>Corp Account managers (SAS for busiess)</label>
             </value>
             <value>
+                <fullName>Corporate</fullName>
+                <default>false</default>
+                <label>Corporate</label>
+            </value>
+            <value>
                 <fullName>Corporate product</fullName>
                 <default>false</default>
                 <label>Corporate product</label>
@@ -514,11 +519,6 @@
                 <default>false</default>
                 <label>Other</label>
             </value>
-            <value>
-                <fullName>Corporate</fullName>
-                <default>false</default>
-                <label>Corporate</label>
-            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>SASSI Internal</controllingFieldValue>
@@ -773,6 +773,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Channel</controllingFieldValue>
+            <valueName>Corporate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Channel</controllingFieldValue>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <valueName>Extraordinary</valueName>
@@ -825,10 +829,6 @@
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <valueName>Rules &amp; Informaton</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Channel</controllingFieldValue>
-            <valueName>Corporate</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
