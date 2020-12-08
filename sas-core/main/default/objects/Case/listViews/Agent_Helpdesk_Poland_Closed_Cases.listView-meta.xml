@@ -23,7 +23,7 @@
         <operation>equals</operation>
         <value>Closed</value>
     </filters>
-    <label>Agent Helpdesk Poland Closed Cases</label>
+    <label>SAS Poland Closed Cases</label>
     <sharedTo>
         <group>AgentHelpdesk</group>
     </sharedTo>
