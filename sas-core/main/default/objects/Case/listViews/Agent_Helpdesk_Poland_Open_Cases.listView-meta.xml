@@ -17,9 +17,9 @@
     <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
-        <value>In Progress,On Hold,Awaiting Customer Response,New Response,Escalated,Merged</value>
+        <value>New,In Progress,On Hold,Awaiting Customer Response,New Response,Escalated,Merged</value>
     </filters>
-    <label>Agent Helpdesk Poland Open Cases</label>
+    <label>SAS Poland Open Cases</label>
     <sharedTo>
         <group>AgentHelpdesk</group>
     </sharedTo>
