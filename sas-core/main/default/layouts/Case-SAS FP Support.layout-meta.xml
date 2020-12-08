@@ -68,10 +68,6 @@
                 <behavior>Edit</behavior>
                 <field>Priority</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Origin</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

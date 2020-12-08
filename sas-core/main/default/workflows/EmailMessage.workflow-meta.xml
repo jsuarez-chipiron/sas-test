@@ -145,19 +145,14 @@
             <value>True</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Type</field>
-            <operation>equals</operation>
-            <value>Channel</value>
-        </criteriaItems>
-        <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
             <value>Email</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.FCS_SubOrigin_c__c</field>
+            <field>Case.Origin</field>
             <operation>equals</operation>
-            <value>Agent Fares Ticketing EU</value>
+            <value>Email - Agent Fares Ticketing EU</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>
@@ -186,11 +181,6 @@
             <field>Case.IsClosed</field>
             <operation>equals</operation>
             <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Type</field>
-            <operation>equals</operation>
-            <value>Channel</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Origin</field>
