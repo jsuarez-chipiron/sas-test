@@ -184,6 +184,7 @@ private class IRR_EVT_ManualProcessor_Test {
         IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
         manualRequest.sendSMSMessages = true;
         manualRequest.sendEmailMessages = false;
+        manualRequest.sendMessageTime = null;
         manualRequest.delayInfo = new IRR_MOD_DelayInfo();
         manualRequest.delayInfo.flightId = 'SK1429-20191104-ARN-CPH';
         IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
@@ -197,6 +198,36 @@ private class IRR_EVT_ManualProcessor_Test {
         System.assertEquals('SK1429', manualRequest.delayInfo.flightRef);
         System.assertEquals('ARN', manualRequest.delayInfo.stationDeparture);
         System.assertEquals('CPH', manualRequest.delayInfo.stationArrival);
+    }
+    @IsTest
+    static void testInitiateEvent_DelayEvent_Queued() {
+        
+        //Set up mock implementation of UnitOfWork
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
+
+        //Given
+        Map<String,String> airportInfoMap = new Map<String,String>();
+        airportInfoMap.put('ARN','Stockholm');
+        airportInfoMap.put('CPH','Copenhagen');
+        mocks.startStubbing();
+         mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
+                .thenReturn(airportInfoMap);
+        mocks.stopStubbing();
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.sendSMSMessages = true;
+        manualRequest.sendEmailMessages = false;
+        manualRequest.sendMessageTime = DateTime.newInstancegmt(Date.today(),Time.newInstance(07,0,0,0));
+        manualRequest.delayInfo = new IRR_MOD_DelayInfo();
+        manualRequest.delayInfo.flightId = 'SK1429-20191104-ARN-CPH';
+        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+        IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
+
+        // When method invoked
+        eventProcessor.initiateEvent();
+
+        //Then
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock,0)).getAirportCityNames(new List<String>{'ARN','CPH'});
     }
 
     @IsTest
@@ -229,6 +260,36 @@ private class IRR_EVT_ManualProcessor_Test {
         System.assertEquals('SK0579', manualRequest.newInfo.flightRef);
         System.assertEquals('ARN', manualRequest.newInfo.stationDeparture);
         System.assertEquals('CDG', manualRequest.newInfo.stationArrival);
+    }
+    @IsTest
+    static void testInitiateEvent_NewInfoEvent_Queued() {
+       //Set up mocks
+       fflib_ApexMocks mocks = new fflib_ApexMocks();
+       IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
+
+       //Given
+       Map<String,String> airportInfoMap = new Map<String,String>();
+       airportInfoMap.put('ARN','Stockholm');
+       airportInfoMap.put('CDG','Copenhagen');
+       mocks.startStubbing();
+       mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CDG'}))
+               .thenReturn(airportInfoMap);
+       mocks.stopStubbing();
+       IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.sendSMSMessages = true;
+        manualRequest.sendEmailMessages = false;
+        manualRequest.sendMessageTime = DateTime.newInstanceGmt(Date.today(),Time.newInstance(07,0,0,0));
+        manualRequest.newInfo = new IRR_MOD_NewInfo();
+        manualRequest.newInfo.flightId = 'SK0579-20200503-ARN-CDG';
+        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+        IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
+      
+        //When
+        eventProcessor.initiateEvent();
+
+        //Then
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock,0)).getAirportCityNames(new List<String>{'ARN','CDG'});
+        
     }
 
     @IsTest
@@ -380,7 +441,40 @@ private class IRR_EVT_ManualProcessor_Test {
         System.assert(messages[1].responseMessage, 'Message 2 Response expected');
     }
 
+    @IsTest
+    static void testFinalizeEvent_Queued() {
+        //Set up mock implementation of UnitOfWork
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        fflib_ISObjectUnitOfWork uowMock = (fflib_ISObjectUnitOfWork) mocks.mock(fflib_SObjectUnitOfWork.class);
 
+        //Given
+        IRR_MOD_ManualRequest manualRequest = new IRR_MOD_ManualRequest();
+        manualRequest.emailTemplate = 'EMAIL_TEMPLATE';
+        manualRequest.smsTemplate = 'SMS_TEMPLATE';
+        manualRequest.sendSMSMessages = true;
+        manualRequest.sendEmailMessages = true;
+        manualRequest.responseMessage = true;
+        manualRequest.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
+        manualRequest.sendMessageTime = DateTime.newInstancegmt(Date.today(),Time.newInstance(07,0,0,0));
+        IRR_EVT_ManualProcessor eventProcessor = new IRR_EVT_ManualProcessor(manualRequest);
+        eventProcessor.isQueued = true;
+        IRR_Application.unitOfWork.setMock(uowMock);
+
+
+        // When method invoked
+        eventProcessor.finalizeEvent(uowMock);
+
+        // Then verify new SObjects were created
+        Map<SObjectField, Object> eLogMatcher = new Map<SObjectField, Object>{
+                IRR_EventLog__c.IRR_EventPayload__c => JSON.serialize(manualRequest)
+        };
+        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock,0))
+                .registerNew(fflib_Match.sObjectOfType(IRR_CommunicationLog__c.SObjectType));
+        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock))
+                .registerNew(fflib_Match.sObjectOfType(IRR_EventLog__c.SObjectType));
+        // ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock)).registerNew(fflib_Match.sObjectWith(eLogMatcher));
+        //  System.assertEquals('TEST_FLIGHT_ID', eLogMatcher.get(IRR_EventLog__c.IRR_EventPayload__c));
+    }
 
     @IsTest
     static void testFinalizeEvent_MessageResponse() {

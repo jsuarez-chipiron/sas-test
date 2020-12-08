@@ -17,6 +17,9 @@ public class IRR_MOD_ManualRequest {
     public Boolean sendSMSMessages { get; set; }
 
     @AuraEnabled
+    public Datetime sendMessageTime { get; set; }
+
+    @AuraEnabled
     public Boolean sendEmailMessages { get; set; }
 
     @AuraEnabled
