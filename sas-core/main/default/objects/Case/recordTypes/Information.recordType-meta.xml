@@ -763,6 +763,10 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Email - Sales Information</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Priority</picklist>
