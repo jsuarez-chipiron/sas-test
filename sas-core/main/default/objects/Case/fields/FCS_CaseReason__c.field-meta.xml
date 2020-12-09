@@ -225,6 +225,11 @@
                 <label>EuroBonus</label>
             </value>
             <value>
+                <fullName>EuroBouns Partner</fullName>
+                <default>false</default>
+                <label>EuroBouns Partner</label>
+            </value>
+            <value>
                 <fullName>Eurobonus procedures R</fullName>
                 <default>false</default>
                 <label>EuroBonus procedures R</label>
@@ -774,6 +779,10 @@
         <valueSettings>
             <controllingFieldValue>Channel</controllingFieldValue>
             <valueName>Corporate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Channel</controllingFieldValue>
+            <valueName>EuroBouns Partner</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Channel</controllingFieldValue>

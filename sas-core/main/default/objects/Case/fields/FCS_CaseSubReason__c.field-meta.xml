@@ -194,7 +194,7 @@
                 <default>false</default>
                 <label>BULK</label>
             </value>
-            <value>
+			<value>
                 <fullName>Bulk Groups</fullName>
                 <default>false</default>
                 <label>Bulk Groups</label>
@@ -258,6 +258,11 @@
                 <fullName>Check-in</fullName>
                 <default>false</default>
                 <label>Check-in</label>
+            </value>
+            <value>
+                <fullName>Check missing 20000 Status pts Amex</fullName>
+                <default>false</default>
+                <label>Check missing 20000 Status pts Amex</label>
             </value>
             <value>
                 <fullName>Child</fullName>
@@ -549,7 +554,7 @@
                 <default>false</default>
                 <label>Group</label>
             </value>
-            <value>
+			 <value>
                 <fullName>Guarantee Groups</fullName>
                 <default>false</default>
                 <label>Guarantee Groups</label>
@@ -559,7 +564,7 @@
                 <default>false</default>
                 <label>Handling status</label>
             </value>
-            <value>
+			<value>
                 <fullName>High Demand Groups</fullName>
                 <default>false</default>
                 <label>High Demand Groups</label>
@@ -1020,14 +1025,14 @@
                 <label>Sold</label>
             </value>
             <value>
-                <fullName>Spam</fullName>
-                <default>false</default>
-                <label>Spam</label>
-            </value>
-            <value>
                 <fullName>Special assistance</fullName>
                 <default>false</default>
                 <label>Special assistance</label>
+            </value>
+		    <value>
+                <fullName>Spam</fullName>
+                <default>false</default>
+                <label>Spam</label>
             </value>
             <value>
                 <fullName>Special baggage incl. pets</fullName>
@@ -1059,7 +1064,7 @@
                 <default>false</default>
                 <label>Sport Groups</label>
             </value>
-            <value>
+			<value>
                 <fullName>Sport Int./EU Groups</fullName>
                 <default>false</default>
                 <label>Sport Int./EU Groups</label>
@@ -1244,7 +1249,7 @@
                 <default>false</default>
                 <label>Unaccompanied minor</label>
             </value>
-            <value>
+			<value>
                 <fullName>Unique Groups</fullName>
                 <default>false</default>
                 <label>Unique Groups</label>
@@ -1386,8 +1391,8 @@
         <valueSettings>
             <controllingFieldValue>Special service requests</controllingFieldValue>
             <controllingFieldValue>Error</controllingFieldValue>
-            <controllingFieldValue>Eurobonus</controllingFieldValue>
             <controllingFieldValue>Corporate</controllingFieldValue>
+            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
             <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
@@ -1583,14 +1588,14 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Changes</controllingFieldValue>
-            <controllingFieldValue>Eurobonus</controllingFieldValue>
             <controllingFieldValue>Name change</controllingFieldValue>
+            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
             <valueName>Name change</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Changes</controllingFieldValue>
-            <controllingFieldValue>Eurobonus</controllingFieldValue>
             <controllingFieldValue>Name change</controllingFieldValue>
+            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
             <valueName>Name correction</valueName>
         </valueSettings>
         <valueSettings>
@@ -1656,7 +1661,7 @@
         <valueSettings>
             <controllingFieldValue>Airport Services</controllingFieldValue>
             <valueName>Special assistance</valueName>
-        </valueSettings>
+        </valueSettings>		
         <valueSettings>
             <controllingFieldValue>Airport Services</controllingFieldValue>
             <valueName>Special baggage incl. pets</valueName>
@@ -1762,9 +1767,9 @@
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>Inactive customer</valueName>
         </valueSettings>
-        <valueSettings>
+		 <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
-            <valueName>Spam</valueName>
+			<valueName>Spam</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
@@ -1807,22 +1812,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
-            <valueName>Credit expired points</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Eurobonus</controllingFieldValue>
-            <valueName>Credit points</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Eurobonus</controllingFieldValue>
-            <valueName>CT check</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Eurobonus</controllingFieldValue>
-            <valueName>Deduct points</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Eurobonus</controllingFieldValue>
             <valueName>Delete profiles</valueName>
         </valueSettings>
         <valueSettings>
@@ -1843,16 +1832,16 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
-            <valueName>General Information</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Eurobonus</controllingFieldValue>
             <valueName>Give away membership</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
             <controllingFieldValue>Non-SAS produkter</controllingFieldValue>
             <valueName>Hotel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eurobonus</controllingFieldValue>
+            <valueName>Hotels</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
@@ -1864,15 +1853,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
-            <valueName>Merge</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Eurobonus</controllingFieldValue>
             <valueName>Merge profiles</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Eurobonus</controllingFieldValue>
-            <valueName>Missing 1000 Status pts MC</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
@@ -1913,10 +1894,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
-            <valueName>Refund points</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Eurobonus</controllingFieldValue>
             <valueName>Reset of password</valueName>
         </valueSettings>
         <valueSettings>
@@ -1926,10 +1903,6 @@
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
             <valueName>Retroregistration</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Eurobonus</controllingFieldValue>
-            <valueName>Security code sent</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
@@ -2120,7 +2093,7 @@
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Availability</valueName>
         </valueSettings>
-        <valueSettings>
+		<valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Bulk Groups</valueName>
         </valueSettings>
@@ -2133,7 +2106,7 @@
             <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
             <valueName>Face Mask</valueName>
         </valueSettings>
-        <valueSettings>
+		<valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Guarantee Groups</valueName>
         </valueSettings>
@@ -2149,7 +2122,7 @@
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Route inquiry</valueName>
         </valueSettings>
-        <valueSettings>
+		<valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Sport Domestic Groups</valueName>
         </valueSettings>
@@ -2157,7 +2130,7 @@
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Sport Groups</valueName>
         </valueSettings>
-        <valueSettings>
+		<valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Sport Int./EU Groups</valueName>
         </valueSettings>
@@ -2382,6 +2355,46 @@
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
             <valueName>Travel Pass - Wrong deb</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <valueName>Check missing 20000 Status pts Amex</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <valueName>Credit expired points</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <valueName>Credit points</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <valueName>CT check</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <valueName>Deduct points</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <valueName>General Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <valueName>Merge</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <valueName>Missing 1000 Status pts MC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <valueName>Refund points</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <valueName>Security code sent</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Requesting documentation</controllingFieldValue>

@@ -56,6 +56,10 @@
             <fullName>Eurobonus</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>EuroBouns Partner</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Missing offer</fullName>
             <default>false</default>
@@ -197,6 +201,10 @@
         </values>
         <values>
             <fullName>Check-in</fullName>
+            <default>false</default>
+        </values>
+		 <values>
+            <fullName>Check missing 20000 Status pts Amex</fullName>
             <default>false</default>
         </values>
         <values>
