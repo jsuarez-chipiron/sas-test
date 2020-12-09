@@ -18,6 +18,7 @@
             <value>
                 <fullName>Email - Agent Helpdesk Poland</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Email - Agent Helpdesk Poland</label>
             </value>
             <value>
@@ -190,6 +191,11 @@
                 <fullName>Email - Sales Information</fullName>
                 <default>false</default>
                 <label>Email - Sales Information</label>
+            </value>
+            <value>
+                <fullName>Email - SAS Poland</fullName>
+                <default>false</default>
+                <label>Email - SAS Poland</label>
             </value>
             <value>
                 <fullName>Email - SASSI Internal</fullName>
