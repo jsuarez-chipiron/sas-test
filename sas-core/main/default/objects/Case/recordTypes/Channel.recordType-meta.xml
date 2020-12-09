@@ -978,7 +978,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Agent Helpdesk SIA</fullName>
+            <fullName>Agent Helpdesk SIA</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Email - SAS Poland</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1311,3 +1315,4 @@
         </values>
     </picklistValues>
 </RecordType>
+
