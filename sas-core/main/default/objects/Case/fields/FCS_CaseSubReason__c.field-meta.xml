@@ -194,7 +194,7 @@
                 <default>false</default>
                 <label>BULK</label>
             </value>
-			<value>
+            <value>
                 <fullName>Bulk Groups</fullName>
                 <default>false</default>
                 <label>Bulk Groups</label>
@@ -554,7 +554,7 @@
                 <default>false</default>
                 <label>Group</label>
             </value>
-			 <value>
+            <value>
                 <fullName>Guarantee Groups</fullName>
                 <default>false</default>
                 <label>Guarantee Groups</label>
@@ -564,7 +564,7 @@
                 <default>false</default>
                 <label>Handling status</label>
             </value>
-			<value>
+            <value>
                 <fullName>High Demand Groups</fullName>
                 <default>false</default>
                 <label>High Demand Groups</label>
@@ -1025,14 +1025,14 @@
                 <label>Sold</label>
             </value>
             <value>
-                <fullName>Special assistance</fullName>
-                <default>false</default>
-                <label>Special assistance</label>
-            </value>
-		    <value>
                 <fullName>Spam</fullName>
                 <default>false</default>
                 <label>Spam</label>
+            </value>
+            <value>
+                <fullName>Special assistance</fullName>
+                <default>false</default>
+                <label>Special assistance</label>
             </value>
             <value>
                 <fullName>Special baggage incl. pets</fullName>
@@ -1064,7 +1064,7 @@
                 <default>false</default>
                 <label>Sport Groups</label>
             </value>
-			<value>
+            <value>
                 <fullName>Sport Int./EU Groups</fullName>
                 <default>false</default>
                 <label>Sport Int./EU Groups</label>
@@ -1249,7 +1249,7 @@
                 <default>false</default>
                 <label>Unaccompanied minor</label>
             </value>
-			<value>
+            <value>
                 <fullName>Unique Groups</fullName>
                 <default>false</default>
                 <label>Unique Groups</label>
@@ -1346,6 +1346,31 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <controllingFieldValue>Puzzel</controllingFieldValue>
+            <valueName>Access rights</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <controllingFieldValue>Puzzel</controllingFieldValue>
+            <valueName>Bug created</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <controllingFieldValue>Puzzel</controllingFieldValue>
+            <valueName>Login</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <controllingFieldValue>Puzzel</controllingFieldValue>
+            <valueName>User related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <controllingFieldValue>Puzzel</controllingFieldValue>
+            <valueName>User story created</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>SAS Medical</controllingFieldValue>
             <valueName>Allergies</valueName>
         </valueSettings>
@@ -1390,9 +1415,9 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Special service requests</controllingFieldValue>
-            <controllingFieldValue>Error</controllingFieldValue>
             <controllingFieldValue>Corporate</controllingFieldValue>
-            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
@@ -1442,10 +1467,6 @@
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
             <valueName>SRS</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel pass</controllingFieldValue>
-            <valueName>Flight disruption</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
@@ -1589,13 +1610,13 @@
         <valueSettings>
             <controllingFieldValue>Changes</controllingFieldValue>
             <controllingFieldValue>Name change</controllingFieldValue>
-            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Name change</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Changes</controllingFieldValue>
             <controllingFieldValue>Name change</controllingFieldValue>
-            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Name correction</valueName>
         </valueSettings>
         <valueSettings>
@@ -1661,7 +1682,7 @@
         <valueSettings>
             <controllingFieldValue>Airport Services</controllingFieldValue>
             <valueName>Special assistance</valueName>
-        </valueSettings>		
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Airport Services</controllingFieldValue>
             <valueName>Special baggage incl. pets</valueName>
@@ -1717,6 +1738,140 @@
             <valueName>ESAN/SVAN</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Agent - Agreement related Question</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Agent - Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Agent - TravelPass</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Agent - Travel Pass Booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Agent - Travel Pass CC update</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Agent - Travel Pass Contact Update</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Agent - Travel Pass Receipt</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Agent - Travel Pass Sell</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Agent - Travel Pass Statistics</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Agent - Travel Pass wrong deb</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Agreement related question*</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Booking related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Commercials</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Contact update</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Error – Inactive customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Internet error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>SAS Invoice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <controllingFieldValue>Flight info</controllingFieldValue>
+            <valueName>Strike related information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <controllingFieldValue>Products</controllingFieldValue>
+            <valueName>Sustainability</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass - Add travelpass</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass - App</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass - CC Update</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass - Connect with EB</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass - Contact Update</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass - Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass – Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass - Online booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass - Online Profile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass - Receipt</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass - Sell/Resell</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass - Statistics</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass - TPI OPM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Travel Pass - Wrong deb</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Corporate product</controllingFieldValue>
             <controllingFieldValue>Products</controllingFieldValue>
             <valueName>SAS for business</valueName>
@@ -1767,9 +1922,9 @@
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>Inactive customer</valueName>
         </valueSettings>
-		 <valueSettings>
+        <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
-			<valueName>Spam</valueName>
+            <valueName>Spam</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
@@ -1985,11 +2140,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Flight info</controllingFieldValue>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Strike related information</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight info</controllingFieldValue>
             <valueName>Transfer / Arrival services</valueName>
         </valueSettings>
         <valueSettings>
@@ -2093,7 +2243,7 @@
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Availability</valueName>
         </valueSettings>
-		<valueSettings>
+        <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Bulk Groups</valueName>
         </valueSettings>
@@ -2106,7 +2256,7 @@
             <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
             <valueName>Face Mask</valueName>
         </valueSettings>
-		<valueSettings>
+        <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Guarantee Groups</valueName>
         </valueSettings>
@@ -2122,7 +2272,7 @@
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Route inquiry</valueName>
         </valueSettings>
-		<valueSettings>
+        <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Sport Domestic Groups</valueName>
         </valueSettings>
@@ -2130,7 +2280,7 @@
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Sport Groups</valueName>
         </valueSettings>
-		<valueSettings>
+        <valueSettings>
             <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Sport Int./EU Groups</valueName>
         </valueSettings>
@@ -2172,37 +2322,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Products</controllingFieldValue>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Sustainability</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Products</controllingFieldValue>
             <valueName>Voucher</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Puzzel</controllingFieldValue>
-            <controllingFieldValue>Salesforce</controllingFieldValue>
-            <valueName>Access rights</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Puzzel</controllingFieldValue>
-            <controllingFieldValue>Salesforce</controllingFieldValue>
-            <valueName>Bug created</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Puzzel</controllingFieldValue>
-            <controllingFieldValue>Salesforce</controllingFieldValue>
-            <valueName>Login</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Puzzel</controllingFieldValue>
-            <controllingFieldValue>Salesforce</controllingFieldValue>
-            <valueName>User related</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Puzzel</controllingFieldValue>
-            <controllingFieldValue>Salesforce</controllingFieldValue>
-            <valueName>User story created</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Rebooking</controllingFieldValue>
@@ -2233,167 +2353,47 @@
             <valueName>Ticket status</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Agent - Agreement related Question</valueName>
+            <controllingFieldValue>Travel pass</controllingFieldValue>
+            <valueName>Flight disruption</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Agent - Other</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Agent - TravelPass</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Agent - Travel Pass Booking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Agent - Travel Pass CC update</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Agent - Travel Pass Contact Update</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Agent - Travel Pass Receipt</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Agent - Travel Pass Sell</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Agent - Travel Pass Statistics</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Agent - Travel Pass wrong deb</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Agreement related question*</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Booking related</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Commercials</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Contact update</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Error – Inactive customer</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Internet error</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>SAS Invoice</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass - Add travelpass</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass - App</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass - CC Update</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass - Connect with EB</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass - Contact Update</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass - Error</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass – Information</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass - Online booking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass - Online Profile</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass - Receipt</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass - Sell/Resell</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass - Statistics</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass - TPI OPM</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass - Wrong deb</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Check missing 20000 Status pts Amex</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Credit expired points</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Credit points</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>CT check</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Deduct points</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>General Information</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Merge</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Missing 1000 Status pts MC</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Refund points</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>EuroBouns Partner</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Security code sent</valueName>
         </valueSettings>
         <valueSettings>
