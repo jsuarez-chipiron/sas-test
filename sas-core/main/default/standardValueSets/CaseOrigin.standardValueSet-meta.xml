@@ -406,4 +406,11 @@
         <default>false</default>
         <label>Email - Agent Helpdesk SIA</label>
     </standardValue>
+    <standardValue>
+        <fullName>Email - Agent Helpdesk Poland</fullName>
+        <default>false</default>
+        <label>Email - Agent Helpdesk Poland</label>
+    </standardValue>
 </StandardValueSet>
+
+
