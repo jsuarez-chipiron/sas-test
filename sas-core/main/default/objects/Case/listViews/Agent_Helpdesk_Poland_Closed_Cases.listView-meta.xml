@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Agent_Helpdesk_SIA_Closed_Cases</fullName>
+    <fullName>Agent_Helpdesk_Poland_Closed_Cases</fullName>
+    <booleanFilter>1 AND 2</booleanFilter>
     <columns>CASES.CASE_NUMBER</columns>
-    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
-    <columns>CASES.EMAIL</columns>
+    <columns>NAME</columns>
     <columns>CASES.SUBJECT</columns>
-    <columns>OWNER_NAME</columns>
     <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>FCS_CaseReason__c</columns>
+    <columns>FCS_CaseSubReason__c</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.CLOSED_DATE</columns>
+    <columns>CASES.EMAIL</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>FCS_SubOrigin_c__c</field>
+        <field>CASES.ORIGIN</field>
         <operation>equals</operation>
-        <value>Agent Helpdesk SIA</value>
+        <value>Email - SAS Poland</value>
     </filters>
     <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
         <value>Closed</value>
     </filters>
-    <label>Agent Helpdesk SIA Closed Cases</label>
+    <label>SAS Poland Closed Cases</label>
     <sharedTo>
         <group>AgentHelpdesk</group>
     </sharedTo>

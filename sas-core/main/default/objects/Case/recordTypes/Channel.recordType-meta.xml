@@ -33,6 +33,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Corporate</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Credit card</fullName>
             <default>false</default>
         </values>
@@ -50,6 +54,10 @@
         </values>
         <values>
             <fullName>Eurobonus</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>EuroBonus Partner</fullName>
             <default>false</default>
         </values>
         <values>
@@ -112,11 +120,67 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Agent - Agreement related Question</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent - Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent - Travel Pass Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent - Travel Pass CC update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent - Travel Pass Contact Update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent - Travel Pass Receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent - Travel Pass Sell</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent - Travel Pass Statistics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent - Travel Pass wrong deb</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent - TravelPass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agreement related question*</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bike</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Booking confirmation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking related</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bulk Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT check</fullName>
             <default>false</default>
         </values>
         <values>
@@ -139,6 +203,10 @@
             <fullName>Check-in</fullName>
             <default>false</default>
         </values>
+		 <values>
+            <fullName>Check missing 20000 Status pts Amex</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Co2</fullName>
             <default>false</default>
@@ -148,7 +216,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Commercials</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Consolidation of flights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contact update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit expired points</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit points</fullName>
             <default>false</default>
         </values>
         <values>
@@ -157,6 +241,10 @@
         </values>
         <values>
             <fullName>Damaged baggage status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deduct points</fullName>
             <default>false</default>
         </values>
         <values>
@@ -169,6 +257,10 @@
         </values>
         <values>
             <fullName>Delete profiles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error %E2%80%93 Inactive customer</fullName>
             <default>false</default>
         </values>
         <values>
@@ -192,6 +284,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>General Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Give away membership</fullName>
             <default>false</default>
         </values>
@@ -204,11 +300,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Guarantee Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High Demand Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Hotel</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Inactive customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internet error</fullName>
             <default>false</default>
         </values>
         <values>
@@ -232,7 +340,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Merge</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Merge profiles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing 1000 Status pts MC</fullName>
             <default>false</default>
         </values>
         <values>
@@ -276,6 +392,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Refund points</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Refund status</fullName>
             <default>false</default>
         </values>
@@ -308,7 +428,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SAS Invoice</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Seating</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Security code sent</fullName>
             <default>false</default>
         </values>
         <values>
@@ -316,7 +444,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Spam</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sport Domestic Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sport Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sport Int%2E%2FEU Groups</fullName>
             <default>false</default>
         </values>
         <values>
@@ -332,11 +472,71 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Travel Pass %E2%80%93 Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass - Add travelpass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass - App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass - CC Update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass - Connect with EB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass - Contact Update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass - Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass - Online Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass - Online booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass - Receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass - Sell%2FResell</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass - Statistics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass - TPI OPM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass - Wrong deb</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Travel agent booking</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Unaccompanied minor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unique Groups</fullName>
             <default>false</default>
         </values>
         <values>
@@ -770,15 +970,163 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Agent Helpdesk SIA</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Chat</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Agent Fares Ticketing EU</fullName>
+            <default>false</default>
+        </values>       
+        <values>
+            <fullName>Agent Helpdesk SIA</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Email - SAS Poland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Corporate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Forsvaret NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Functional Product Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales ACE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales AT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales Benelux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales CH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales DE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales EE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales ES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales FR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales IE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales IS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales Interline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales LT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales LV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales PL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales RU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales UK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales US</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Olympic DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Olympic NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Olympic SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Pandion DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Pandion NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Pandion SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - SASSI Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Sales Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - System %26 Tariff</fullName>
             <default>false</default>
         </values>
         <values>
@@ -971,3 +1319,4 @@
         </values>
     </picklistValues>
 </RecordType>
+

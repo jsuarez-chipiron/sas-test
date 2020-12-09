@@ -47,6 +47,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     public override void beforeInsert() {
         assignOwnerFromSoMe(newCaseList);
         validateCaseTags(newCaseList);
+        enrichCaseDataBasedOnOrigin(newCaseList);
     }
     /**
   Used to call the trigger in the before update context
@@ -76,6 +77,31 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     public override void afterDelete() {
         //Make sure that related Survey Invitations are deleted upon case deletion
         delete[SELECT Id FROM SurveyInvitation WHERE FCS_RelatedCase__c IN: oldCaseMap.keySet()];
+    }
+
+    /**
+     * Updates case fields based on Origin of the Case. The Enrich_Case_Based_On_Origin_Config__mdt
+     * custom metadata type is used to defined what data to assign based on Origin.
+     * 
+     * Should be run only on beforeInsert.
+     */
+    private static void enrichCaseDataBasedOnOrigin(List<Case> newCaseList) {
+        for (Case c: newCaseList) {
+            List<Enrich_Case_Based_On_Origin_Config__mdt> enrichmentData = [SELECT Case_Type_To_Assign__c, Case_Visibility_Grouping_To_Assign__c FROM Enrich_Case_Based_On_Origin_Config__mdt WHERE Incoming_Case_Origin__c = :c.Origin];
+            if (!enrichmentData.isEmpty()) {
+                // A configuration was found for this Origin
+                Enrich_Case_Based_On_Origin_Config__mdt caseConfiguration = enrichmentData[0];
+
+                // Fill in fields only if they have a value set in the config
+                if (!String.isEmpty(caseConfiguration.Case_Type_To_Assign__c)) {
+                    c.Type = caseConfiguration.Case_Type_To_Assign__c;
+                }
+
+                if (!String.isEmpty(caseConfiguration.Case_Visibility_Grouping_To_Assign__c)) {
+                    c.Case_Grouping__c = caseConfiguration.Case_Visibility_Grouping_To_Assign__c;
+                }
+            }
+        }
     }
 
     /**

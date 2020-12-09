@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Group_Sales_EE_New_Requests</fullName>
+    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
     <columns>CASES.EMAIL</columns>
@@ -9,6 +10,7 @@
     <columns>OWNER_NAME</columns>
     <columns>PNR_Payment_Status__c</columns>
     <columns>CASES.STATUS</columns>
+    <columns>CASES.LAST_UPDATE_DATE_ONLY</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>CASES.STATUS</field>
@@ -19,6 +21,11 @@
         <field>FCS_SubOrigin_c__c</field>
         <operation>equals</operation>
         <value>Group Sales EE</value>
+    </filters>
+    <filters>
+        <field>CASES.ORIGIN</field>
+        <operation>equals</operation>
+        <value>Email - Group Sales EE</value>
     </filters>
     <label>Group Sales EE New Requests</label>
     <sharedTo>

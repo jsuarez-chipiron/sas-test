@@ -256,6 +256,10 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Email - Functional Product Support</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Priority</picklist>

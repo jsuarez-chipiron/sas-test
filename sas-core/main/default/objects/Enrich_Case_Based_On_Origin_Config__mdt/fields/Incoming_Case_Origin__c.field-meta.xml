@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Incoming_Case_Origin__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Incoming Case Origin</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Email - Agent Fares Ticketing EU</fullName>
+                <default>false</default>
+                <label>Email - Agent Fares Ticketing EU</label>
+            </value>
+            <value>
+                <fullName>Email - Agent Helpdesk Poland</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Email - Agent Helpdesk Poland</label>
+            </value>
+            <value>
+                <fullName>Email - Agent Helpdesk SIA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Email - Agent Helpdesk SIA</label>
+            </value>
+            <value>
+                <fullName>Email - Corporate</fullName>
+                <default>false</default>
+                <label>Email - Corporate</label>
+            </value>
+            <value>
+                <fullName>Email - EuroBonus</fullName>
+                <default>false</default>
+                <label>Email - EuroBonus</label>
+            </value>
+            <value>
+                <fullName>Email - Forsvaret NO</fullName>
+                <default>false</default>
+                <label>Email - Forsvaret NO</label>
+            </value>
+            <value>
+                <fullName>Email - Functional Product Support</fullName>
+                <default>false</default>
+                <label>Email - Functional Product Support</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales ACE</fullName>
+                <default>false</default>
+                <label>Email - Group Sales ACE</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales AT</fullName>
+                <default>false</default>
+                <label>Email - Group Sales AT</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales Benelux</fullName>
+                <default>false</default>
+                <label>Email - Group Sales Benelux</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales CH</fullName>
+                <default>false</default>
+                <label>Email - Group Sales CH</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales DE</fullName>
+                <default>false</default>
+                <label>Email - Group Sales DE</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales DK</fullName>
+                <default>false</default>
+                <label>Email - Group Sales DK</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales EE</fullName>
+                <default>false</default>
+                <label>Email - Group Sales EE</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales ES</fullName>
+                <default>false</default>
+                <label>Email - Group Sales ES</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales FI</fullName>
+                <default>false</default>
+                <label>Email - Group Sales FI</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales FR</fullName>
+                <default>false</default>
+                <label>Email - Group Sales FR</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales IE</fullName>
+                <default>false</default>
+                <label>Email - Group Sales IE</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales Interline</fullName>
+                <default>false</default>
+                <label>Email - Group Sales Interline</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales IS</fullName>
+                <default>false</default>
+                <label>Email - Group Sales IS</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales IT</fullName>
+                <default>false</default>
+                <label>Email - Group Sales IT</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales LT</fullName>
+                <default>false</default>
+                <label>Email - Group Sales LT</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales LV</fullName>
+                <default>false</default>
+                <label>Email - Group Sales LV</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales NO</fullName>
+                <default>false</default>
+                <label>Email - Group Sales NO</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales PL</fullName>
+                <default>false</default>
+                <label>Email - Group Sales PL</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales RU</fullName>
+                <default>false</default>
+                <label>Email - Group Sales RU</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales SE</fullName>
+                <default>false</default>
+                <label>Email - Group Sales SE</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales UK</fullName>
+                <default>false</default>
+                <label>Email - Group Sales UK</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales US</fullName>
+                <default>false</default>
+                <label>Email - Group Sales US</label>
+            </value>
+            <value>
+                <fullName>Email - Olympic DK</fullName>
+                <default>false</default>
+                <label>Email - Olympic DK</label>
+            </value>
+            <value>
+                <fullName>Email - Olympic NO</fullName>
+                <default>false</default>
+                <label>Email - Olympic NO</label>
+            </value>
+            <value>
+                <fullName>Email - Olympic SE</fullName>
+                <default>false</default>
+                <label>Email - Olympic SE</label>
+            </value>
+            <value>
+                <fullName>Email - Pandion DK</fullName>
+                <default>false</default>
+                <label>Email - Pandion DK</label>
+            </value>
+            <value>
+                <fullName>Email - Pandion NO</fullName>
+                <default>false</default>
+                <label>Email - Pandion NO</label>
+            </value>
+            <value>
+                <fullName>Email - Pandion SE</fullName>
+                <default>false</default>
+                <label>Email - Pandion SE</label>
+            </value>
+            <value>
+                <fullName>Email - Sales Information</fullName>
+                <default>false</default>
+                <label>Email - Sales Information</label>
+            </value>
+            <value>
+                <fullName>Email - SAS Poland</fullName>
+                <default>false</default>
+                <label>Email - SAS Poland</label>
+            </value>
+            <value>
+                <fullName>Email - SASSI Internal</fullName>
+                <default>false</default>
+                <label>Email - SASSI Internal</label>
+            </value>
+            <value>
+                <fullName>Email - System &amp; Tariff</fullName>
+                <default>false</default>
+                <label>Email - System &amp; Tariff</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

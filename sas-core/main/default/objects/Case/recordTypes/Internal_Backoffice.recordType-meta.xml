@@ -1086,6 +1086,14 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Email - SASSI Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - System &amp; Tariff</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Priority</picklist>

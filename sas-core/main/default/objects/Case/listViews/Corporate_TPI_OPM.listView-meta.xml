@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Corporate_TPI_OPM</fullName>
+    <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8)</booleanFilter>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>FCS_CaseReason__c</columns>
+    <columns>FCS_CaseSubReason__c</columns>
+    <columns>NAME</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.CLOSED_DATE</columns>
+    <columns>CASES.EMAIL</columns>
+    <columns>CASES.CLOSED</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.ORIGIN</field>
+        <operation>equals</operation>
+        <value>Email - Corporate</value>
+    </filters>
+    <filters>
+        <field>CASES.SUBJECT</field>
+        <operation>equals</operation>
+        <value>Välkommen till SAS Travel Pass</value>
+    </filters>
+    <filters>
+        <field>CASES.SUBJECT</field>
+        <operation>equals</operation>
+        <value>Nå har vi fylt på ditt SAS Travel Pass</value>
+    </filters>
+    <filters>
+        <field>CASES.SUBJECT</field>
+        <operation>equals</operation>
+        <value>Velkommen til en smidig rejse med SAS Travel Pass</value>
+    </filters>
+    <filters>
+        <field>CASES.SUBJECT</field>
+        <operation>equals</operation>
+        <value>Velkommen til en smidig rejse med SAS</value>
+    </filters>
+    <filters>
+        <field>CASES.SUBJECT</field>
+        <operation>equals</operation>
+        <value>Welcome to the SAS Travel Pass</value>
+    </filters>
+    <filters>
+        <field>CASES.SUBJECT</field>
+        <operation>equals</operation>
+        <value>Velkommen til SAS Travel Pass</value>
+    </filters>
+    <filters>
+        <field>FCS_CaseSubReason__c</field>
+        <operation>equals</operation>
+        <value>Travel Pass - TPI OPM</value>
+    </filters>
+    <label>Corporate Support TPI OPM</label>
+    <sharedTo>
+        <group>Corporate</group>
+    </sharedTo>
+</ListView>
