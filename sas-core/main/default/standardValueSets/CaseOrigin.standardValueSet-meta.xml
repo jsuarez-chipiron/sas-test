@@ -401,4 +401,9 @@
         <default>false</default>
         <label>Agent Helpdesk SIA</label>
     </standardValue>
+    <standardValue>
+        <fullName>Email - Agent Helpdesk SIA</fullName>
+        <default>false</default>
+        <label>Email - Agent Helpdesk SIA</label>
+    </standardValue>
 </StandardValueSet>
