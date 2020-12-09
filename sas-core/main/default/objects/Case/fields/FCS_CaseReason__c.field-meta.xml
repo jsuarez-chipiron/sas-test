@@ -225,9 +225,9 @@
                 <label>EuroBonus</label>
             </value>
             <value>
-                <fullName>EuroBouns Partner</fullName>
+                <fullName>EuroBonus Partner</fullName>
                 <default>false</default>
-                <label>EuroBouns Partner</label>
+                <label>EuroBonus Partner</label>
             </value>
             <value>
                 <fullName>Eurobonus procedures R</fullName>
@@ -782,7 +782,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Channel</controllingFieldValue>
-            <valueName>EuroBouns Partner</valueName>
+            <valueName>EuroBonus Partner</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Channel</controllingFieldValue>
