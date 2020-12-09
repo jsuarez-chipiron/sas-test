@@ -15,7 +15,7 @@
     <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
-        <value>In Progress,On Hold,Awaiting Customer Response,New Response,Escalated</value>
+        <value>New,In Progress,On Hold,Awaiting Customer Response,New Response,Escalated</value>
     </filters>
     <filters>
         <field>FCS_SubOrigin_c__c</field>
@@ -25,7 +25,7 @@
     <filters>
         <field>CASES.EMAIL</field>
         <operation>notEqual</operation>
-        <value>credit.stoey@accenture.com,credit.stoey@sas.se</value>
+        <value>credit.stoey@accenture.com,credit.stoey@sas.se,uk-groupquotes@sas.dk</value>
     </filters>
     <filters>
         <field>CASES.ORIGIN</field>
