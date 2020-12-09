@@ -1126,6 +1126,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Star Alliance Upgrades</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - System %26 Tariff</fullName>
             <default>false</default>
         </values>
