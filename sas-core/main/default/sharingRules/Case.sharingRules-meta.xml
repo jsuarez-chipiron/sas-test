@@ -11,7 +11,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Information,Support,Feedback</value>
+            <value>Information,Support,Feedback,Channel</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
@@ -25,7 +25,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Information,Support,Feedback</value>
+            <value>Information,Support,Feedback,Channel</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingOwnerRules>
