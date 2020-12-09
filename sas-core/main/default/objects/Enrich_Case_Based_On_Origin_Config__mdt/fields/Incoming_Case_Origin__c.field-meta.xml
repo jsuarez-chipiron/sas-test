@@ -203,6 +203,11 @@
                 <label>Email - SASSI Internal</label>
             </value>
             <value>
+                <fullName>Email - Star Alliance Upgrades</fullName>
+                <default>false</default>
+                <label>Email - Star Alliance Upgrades</label>
+            </value>
+            <value>
                 <fullName>Email - System &amp; Tariff</fullName>
                 <default>false</default>
                 <label>Email - System &amp; Tariff</label>

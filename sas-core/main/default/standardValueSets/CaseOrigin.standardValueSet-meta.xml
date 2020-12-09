@@ -397,6 +397,11 @@
         <label>Email - SAS Poland</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Star Alliance Upgrades</fullName>
+        <default>false</default>
+        <label>Email - Star Alliance Upgrades</label>
+    </standardValue>
+    <standardValue>
         <fullName>Agent Helpdesk SIA</fullName>
         <default>false</default>
         <label>Agent Helpdesk SIA</label>

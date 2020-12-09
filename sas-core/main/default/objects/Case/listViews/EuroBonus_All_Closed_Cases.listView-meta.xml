@@ -22,7 +22,7 @@
     <filters>
         <field>CASES.ORIGIN</field>
         <operation>equals</operation>
-        <value>Email - EuroBonus</value>
+        <value>Email - EuroBonus,Email - Star Alliance Upgrades</value>
     </filters>
     <label>EuroBonus All Closed Cases</label>
 </ListView>
