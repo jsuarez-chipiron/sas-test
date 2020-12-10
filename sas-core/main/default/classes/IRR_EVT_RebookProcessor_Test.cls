@@ -181,7 +181,7 @@ private class IRR_EVT_RebookProcessor_Test {
         airportInfoMap.put('ARN','Stockholm');
         airportInfoMap.put('CPH','Copenhagen');
         mocks.startStubbing();
-        mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
+        mocks.when(serviceMock.getAirportCityNames(new Set<String>{'ARN','CPH'}))
                 .thenReturn(airportInfoMap);
         mocks.stopStubbing();
         IRR_MOD_RebookInfo rebookInfo = new IRR_MOD_RebookInfo();
@@ -211,7 +211,7 @@ private class IRR_EVT_RebookProcessor_Test {
         eventProcessor.processEvent();
 
         //Then
-        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CPH'});
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new Set<String>{'ARN','CPH'});
         List<IRR_MOD_Message> messages = eventProcessor.messages;
         System.assertEquals(2, messages.size());
         System.assertEquals('irr_rebooking_sms_01', messages[0].template);

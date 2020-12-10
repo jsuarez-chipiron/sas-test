@@ -110,7 +110,7 @@ private class IRR_EVT_NewInfoProcessor_Test {
         mocks.startStubbing();
         mocks.when(serviceMock.getPassengerInfosForFlight('SK1429-20191104-ARN-CPH'))
                 .thenReturn(passengerInfos);
-        mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
+        mocks.when(serviceMock.getAirportCityNames(new Set<String>{'ARN','CPH'}))
                 .thenReturn(airportInfoMap);
         mocks.stopStubbing();
         IRR_MOD_NewInfo newInfo = new IRR_MOD_NewInfo();
@@ -124,7 +124,7 @@ private class IRR_EVT_NewInfoProcessor_Test {
 
         //Then
         ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getPassengerInfosForFlight('SK1429-20191104-ARN-CPH');
-        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CPH'});
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new Set<String>{'ARN','CPH'});
         System.assertEquals('SK1429', newInfo.flightRef);
         System.assertEquals('ARN', newInfo.stationDeparture);
         System.assertEquals('CPH', newInfo.stationArrival);
