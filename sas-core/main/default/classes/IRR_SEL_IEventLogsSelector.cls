@@ -6,6 +6,6 @@
 
 public interface IRR_SEL_IEventLogsSelector extends fflib_ISObjectSelector {
     
-    Database.QueryLocator getQueuedCheckinQueryLocator();
+    Database.QueryLocator getQueuedManualQueryLocator();
 
 }

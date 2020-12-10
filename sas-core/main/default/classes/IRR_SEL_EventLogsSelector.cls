@@ -30,7 +30,7 @@ public class IRR_SEL_EventLogsSelector extends fflib_SObjectSelector
     return IRR_EventLog__c.SObjectType;
     }
 
-    public Database.QueryLocator getQueuedCheckinQueryLocator( ) {
+    public Database.QueryLocator getQueuedManualQueryLocator( ) {
         Datetime currentTime = System.Now();
         fflib_QueryFactory queryFactory = newQueryFactory()
             .setCondition('IRR_ScheduleTime__c <= :currentTime');
