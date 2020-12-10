@@ -8,7 +8,7 @@
 private class IRR_SEL_EventLogsSelector_Test {
     
     @isTest
-    static void getQueuedManualQueryLocator(){
+    static void testGetQueuedManualQueryLocator(){
 
         //Given
         List<IRR_EventLog__c> eventLogs = new List<IRR_EventLog__c>{
