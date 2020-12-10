@@ -20,7 +20,7 @@ public class IRR_SVC_TedsService {
         return service().getPassengerInfosForFlight(flightId);
     }
 
-    public static Map<String,String> getAirportCityNames(String [] iataCodes) {
+    public static Map<String,String> getAirportCityNames(Set<String> iataCodes) {
         return service().getAirportCityNames(iataCodes);
     }
 

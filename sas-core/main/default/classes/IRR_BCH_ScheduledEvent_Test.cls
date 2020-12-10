@@ -23,7 +23,7 @@ private class IRR_BCH_ScheduledEvent_Test {
             airportInfoMap.put('CPH','Copenhagen');
             airportInfoMap.put('ARN','Stockholm');
             mocks.startStubbing();
-            mocks.when(serviceMock.getAirportCityNames(new List<String>{'CPH','ARN'}))
+            mocks.when(serviceMock.getAirportCityNames(new Set<String>{'CPH','ARN'}))
                     .thenReturn(airportInfoMap);
             mocks.stopStubbing();
             
@@ -64,7 +64,7 @@ private class IRR_BCH_ScheduledEvent_Test {
             airportInfoMap.put('CPH','Copenhagen');
             airportInfoMap.put('ARN','Stockholm');
             mocks.startStubbing();
-            mocks.when(serviceMock.getAirportCityNames(new List<String>{'CPH','ARN'}))
+            mocks.when(serviceMock.getAirportCityNames(new Set<String>{'CPH','ARN'}))
                     .thenReturn(airportInfoMap);
             mocks.stopStubbing();
             //When
