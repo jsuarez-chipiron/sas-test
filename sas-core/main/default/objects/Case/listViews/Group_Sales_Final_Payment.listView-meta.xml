@@ -21,11 +21,6 @@
         <operation>equals</operation>
         <value>SAS-No-Reply@sas.se</value>
     </filters>
-    <filters>
-        <field>FCS_SubOrigin_c__c</field>
-        <operation>notEqual</operation>
-        <value>Group Sales SE,Group Sales NO,Group Sales DK</value>
-    </filters>
     <label>Group Sales Final Payment</label>
     <sharedTo>
         <group>GroupSales</group>

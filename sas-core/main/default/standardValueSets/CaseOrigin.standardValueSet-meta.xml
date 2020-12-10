@@ -37,179 +37,9 @@
         <label>Facebook Messenger</label>
     </standardValue>
     <standardValue>
-        <fullName>Sales Information</fullName>
+        <fullName>Email - Agent Fares Ticketing EU</fullName>
         <default>false</default>
-        <label>Sales Information</label>
-    </standardValue>
-    <standardValue>
-        <fullName>SASSI Internal</fullName>
-        <default>false</default>
-        <label>SASSI Internal</label>
-    </standardValue>
-    <standardValue>
-        <fullName>System &amp; Tariff</fullName>
-        <default>false</default>
-        <label>System &amp; Tariff</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Functional Product Support</fullName>
-        <default>false</default>
-        <label>Functional Product Support</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Pandion SE</fullName>
-        <default>false</default>
-        <label>Pandion SE</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Pandion NO</fullName>
-        <default>false</default>
-        <label>Pandion NO</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Pandion DK</fullName>
-        <default>false</default>
-        <label>Pandion DK</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Agent Fares Ticketing EU</fullName>
-        <default>false</default>
-        <label>Agent Fares Ticketing EU</label>
-    </standardValue>
-    <standardValue>
-        <fullName>EuroBonus</fullName>
-        <default>false</default>
-        <label>EuroBonus</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales AT</fullName>
-        <default>false</default>
-        <label>Group Sales AT</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales Benelux</fullName>
-        <default>false</default>
-        <label>Group Sales Benelux</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales EE</fullName>
-        <default>false</default>
-        <label>Group Sales EE</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales FI</fullName>
-        <default>false</default>
-        <label>Group Sales FI</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales FR</fullName>
-        <default>false</default>
-        <label>Group Sales FR</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales DE</fullName>
-        <default>false</default>
-        <label>Group Sales DE</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales IS</fullName>
-        <default>false</default>
-        <label>Group Sales IS</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales IE</fullName>
-        <default>false</default>
-        <label>Group Sales IE</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales IT</fullName>
-        <default>false</default>
-        <label>Group Sales IT</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales LV</fullName>
-        <default>false</default>
-        <label>Group Sales LV</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales LT</fullName>
-        <default>false</default>
-        <label>Group Sales LT</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales PL</fullName>
-        <default>false</default>
-        <label>Group Sales PL</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales ES</fullName>
-        <default>false</default>
-        <label>Group Sales ES</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales CH</fullName>
-        <default>false</default>
-        <label>Group Sales CH</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales UK</fullName>
-        <default>false</default>
-        <label>Group Sales UK</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales RU</fullName>
-        <default>false</default>
-        <label>Group Sales RU</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales US</fullName>
-        <default>false</default>
-        <label>Group Sales US</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales ACE</fullName>
-        <default>false</default>
-        <label>Group Sales ACE</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales Interline</fullName>
-        <default>false</default>
-        <label>Group Sales Interline</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales SE</fullName>
-        <default>false</default>
-        <label>Group Sales SE</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales NO</fullName>
-        <default>false</default>
-        <label>Group Sales NO</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Group Sales DK</fullName>
-        <default>false</default>
-        <label>Group Sales DK</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Forsvaret NO</fullName>
-        <default>false</default>
-        <label>Forsvaret NO</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Olympic SE</fullName>
-        <default>false</default>
-        <label>Olympic SE</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Olympic NO</fullName>
-        <default>false</default>
-        <label>Olympic NO</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Olympic DK</fullName>
-        <default>false</default>
-        <label>Olympic DK</label>
+        <label>Email - Agent Fares Ticketing EU</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Corporate</fullName>
@@ -217,34 +47,24 @@
         <label>Email - Corporate</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - Pandion SE</fullName>
-        <default>false</default>
-        <label>Email - Pandion SE</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Pandion NO</fullName>
-        <default>false</default>
-        <label>Email - Pandion NO</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Pandion DK</fullName>
-        <default>false</default>
-        <label>Email - Pandion DK</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Agent Fares Ticketing EU</fullName>
-        <default>false</default>
-        <label>Email - Agent Fares Ticketing EU</label>
-    </standardValue>
-    <standardValue>
         <fullName>Email - EuroBonus</fullName>
         <default>false</default>
         <label>Email - EuroBonus</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Forsvaret NO</fullName>
+        <default>false</default>
+        <label>Email - Forsvaret NO</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Functional Product Support</fullName>
         <default>false</default>
         <label>Email - Functional Product Support</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Group Sales ACE</fullName>
+        <default>false</default>
+        <label>Email - Group Sales ACE</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Group Sales AT</fullName>
@@ -257,9 +77,29 @@
         <label>Email - Group Sales Benelux</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Group Sales CH</fullName>
+        <default>false</default>
+        <label>Email - Group Sales CH</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Group Sales DE</fullName>
+        <default>false</default>
+        <label>Email - Group Sales DE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Group Sales DK</fullName>
+        <default>false</default>
+        <label>Email - Group Sales DK</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Group Sales EE</fullName>
         <default>false</default>
         <label>Email - Group Sales EE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Group Sales ES</fullName>
+        <default>false</default>
+        <label>Email - Group Sales ES</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Group Sales FI</fullName>
@@ -272,69 +112,9 @@
         <label>Email - Group Sales FR</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - Group Sales DE</fullName>
-        <default>false</default>
-        <label>Email - Group Sales DE</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Group Sales IS</fullName>
-        <default>false</default>
-        <label>Email - Group Sales IS</label>
-    </standardValue>
-    <standardValue>
         <fullName>Email - Group Sales IE</fullName>
         <default>false</default>
         <label>Email - Group Sales IE</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Group Sales IT</fullName>
-        <default>false</default>
-        <label>Email - Group Sales IT</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Group Sales LV</fullName>
-        <default>false</default>
-        <label>Email - Group Sales LV</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Group Sales LT</fullName>
-        <default>false</default>
-        <label>Email - Group Sales LT</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Group Sales PL</fullName>
-        <default>false</default>
-        <label>Email - Group Sales PL</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Group Sales ES</fullName>
-        <default>false</default>
-        <label>Email - Group Sales ES</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Group Sales CH</fullName>
-        <default>false</default>
-        <label>Email - Group Sales CH</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Group Sales UK</fullName>
-        <default>false</default>
-        <label>Email - Group Sales UK</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Group Sales RU</fullName>
-        <default>false</default>
-        <label>Email - Group Sales RU</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Group Sales US</fullName>
-        <default>false</default>
-        <label>Email - Group Sales US</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Group Sales ACE</fullName>
-        <default>false</default>
-        <label>Email - Group Sales ACE</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Group Sales Interline</fullName>
@@ -342,9 +122,24 @@
         <label>Email - Group Sales Interline</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - Group Sales SE</fullName>
+        <fullName>Email - Group Sales IS</fullName>
         <default>false</default>
-        <label>Email - Group Sales SE</label>
+        <label>Email - Group Sales IS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Group Sales IT</fullName>
+        <default>false</default>
+        <label>Email - Group Sales IT</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Group Sales LT</fullName>
+        <default>false</default>
+        <label>Email - Group Sales LT</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Group Sales LV</fullName>
+        <default>false</default>
+        <label>Email - Group Sales LV</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Group Sales NO</fullName>
@@ -352,24 +147,29 @@
         <label>Email - Group Sales NO</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - Group Sales DK</fullName>
+        <fullName>Email - Group Sales PL</fullName>
         <default>false</default>
-        <label>Email - Group Sales DK</label>
+        <label>Email - Group Sales PL</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - Forsvaret NO</fullName>
+        <fullName>Email - Group Sales RU</fullName>
         <default>false</default>
-        <label>Email - Forsvaret NO</label>
+        <label>Email - Group Sales RU</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - Olympic SE</fullName>
+        <fullName>Email - Group Sales SE</fullName>
         <default>false</default>
-        <label>Email - Olympic SE</label>
+        <label>Email - Group Sales SE</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - Olympic NO</fullName>
+        <fullName>Email - Group Sales UK</fullName>
         <default>false</default>
-        <label>Email - Olympic NO</label>
+        <label>Email - Group Sales UK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Group Sales US</fullName>
+        <default>false</default>
+        <label>Email - Group Sales US</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Olympic DK</fullName>
@@ -377,19 +177,34 @@
         <label>Email - Olympic DK</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Olympic NO</fullName>
+        <default>false</default>
+        <label>Email - Olympic NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Olympic SE</fullName>
+        <default>false</default>
+        <label>Email - Olympic SE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Pandion DK</fullName>
+        <default>false</default>
+        <label>Email - Pandion DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Pandion NO</fullName>
+        <default>false</default>
+        <label>Email - Pandion NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Pandion SE</fullName>
+        <default>false</default>
+        <label>Email - Pandion SE</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Sales Information</fullName>
         <default>false</default>
         <label>Email - Sales Information</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - SASSI Internal</fullName>
-        <default>false</default>
-        <label>Email - SASSI Internal</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - System &amp; Tariff</fullName>
-        <default>false</default>
-        <label>Email - System &amp; Tariff</label>
     </standardValue>
     <standardValue>
         <fullName>Email - SAS Poland</fullName>
@@ -397,25 +212,18 @@
         <label>Email - SAS Poland</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - SASSI Internal</fullName>
+        <default>false</default>
+        <label>Email - SASSI Internal</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Star Alliance Upgrades</fullName>
         <default>false</default>
         <label>Email - Star Alliance Upgrades</label>
     </standardValue>
     <standardValue>
-        <fullName>Agent Helpdesk SIA</fullName>
+        <fullName>Email - System &amp; Tariff</fullName>
         <default>false</default>
-        <label>Agent Helpdesk SIA</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Agent Helpdesk SIA</fullName>
-        <default>false</default>
-        <label>Email - Agent Helpdesk SIA</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Agent Helpdesk Poland</fullName>
-        <default>false</default>
-        <label>Email - Agent Helpdesk Poland</label>
+        <label>Email - System &amp; Tariff</label>
     </standardValue>
 </StandardValueSet>
-
-

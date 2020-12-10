@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FCS_SubOrigin_c__c</fullName>
-    <description>Sub origin to determine the origin of email / web to case cases</description>
+    <description>Obsolete</description>
     <externalId>false</externalId>
     <label>Case Sub Origin</label>
     <required>false</required>
@@ -10,188 +10,13 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
+        <restricted>false</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>System &amp; Tariff</fullName>
-                <default>false</default>
-                <label>System &amp; Tariff</label>
-            </value>
-            <value>
-                <fullName>Functional Product Support</fullName>
-                <default>false</default>
-                <label>Functional Product Support</label>
-            </value>
-            <value>
-                <fullName>Pandion SE</fullName>
-                <default>false</default>
-                <label>Pandion SE</label>
-            </value>
-            <value>
-                <fullName>Pandion NO</fullName>
-                <default>false</default>
-                <label>Pandion NO</label>
-            </value>
-            <value>
-                <fullName>Pandion DK</fullName>
-                <default>false</default>
-                <label>Pandion DK</label>
-            </value>
-            <value>
-                <fullName>Agent Helpdesk SIA</fullName>
-                <default>false</default>
-                <label>Agent Helpdesk SIA</label>
-            </value>
-            <value>
-                <fullName>Agent Fares Ticketing EU</fullName>
-                <default>false</default>
-                <label>Agent Fares Ticketing EU</label>
-            </value>
-            <value>
-                <fullName>Sales Information</fullName>
-                <default>false</default>
-                <label>Sales Information</label>
-            </value>
-            <value>
-                <fullName>SASSI Internal</fullName>
-                <default>false</default>
-                <label>SASSI Internal</label>
-            </value>
-            <value>
-                <fullName>EuroBonus</fullName>
-                <default>false</default>
-                <label>EuroBonus</label>
-            </value>
-            <value>
-                <fullName>Group Sales AT</fullName>
-                <default>false</default>
-                <label>Group Sales AT</label>
-            </value>
-            <value>
-                <fullName>Group Sales Benelux</fullName>
-                <default>false</default>
-                <label>Group Sales Benelux</label>
-            </value>
-            <value>
-                <fullName>Group Sales EE</fullName>
-                <default>false</default>
-                <label>Group Sales EE</label>
-            </value>
-            <value>
-                <fullName>Group Sales FI</fullName>
-                <default>false</default>
-                <label>Group Sales FI</label>
-            </value>
-            <value>
-                <fullName>Group Sales FR</fullName>
-                <default>false</default>
-                <label>Group Sales FR</label>
-            </value>
-            <value>
-                <fullName>Group Sales DE</fullName>
-                <default>false</default>
-                <label>Group Sales DE</label>
-            </value>
-            <value>
-                <fullName>Group Sales IS</fullName>
-                <default>false</default>
-                <label>Group Sales IS</label>
-            </value>
-            <value>
-                <fullName>Group Sales IE</fullName>
-                <default>false</default>
-                <label>Group Sales IE</label>
-            </value>
-            <value>
-                <fullName>Group Sales IT</fullName>
-                <default>false</default>
-                <label>Group Sales IT</label>
-            </value>
-            <value>
-                <fullName>Group Sales LV</fullName>
-                <default>false</default>
-                <label>Group Sales LV</label>
-            </value>
-            <value>
-                <fullName>Group Sales LT</fullName>
-                <default>false</default>
-                <label>Group Sales LT</label>
-            </value>
-            <value>
-                <fullName>Group Sales PL</fullName>
-                <default>false</default>
-                <label>Group Sales PL</label>
-            </value>
-            <value>
-                <fullName>Group Sales ES</fullName>
-                <default>false</default>
-                <label>Group Sales ES</label>
-            </value>
-            <value>
-                <fullName>Group Sales CH</fullName>
-                <default>false</default>
-                <label>Group Sales CH</label>
-            </value>
-            <value>
-                <fullName>Group Sales UK</fullName>
-                <default>false</default>
-                <label>Group Sales UK</label>
-            </value>
-            <value>
-                <fullName>Group Sales RU</fullName>
-                <default>false</default>
-                <label>Group Sales RU</label>
-            </value>
-            <value>
-                <fullName>Group Sales US</fullName>
-                <default>false</default>
-                <label>Group Sales US</label>
-            </value>
-            <value>
-                <fullName>Group Sales ACE</fullName>
-                <default>false</default>
-                <label>Group Sales ACE</label>
-            </value>
-            <value>
-                <fullName>Group Sales Interline</fullName>
-                <default>false</default>
-                <label>Group Sales Interline</label>
-            </value>
-            <value>
-                <fullName>Group Sales SE</fullName>
-                <default>false</default>
-                <label>Group Sales SE</label>
-            </value>
-            <value>
-                <fullName>Group Sales NO</fullName>
-                <default>false</default>
-                <label>Group Sales NO</label>
-            </value>
-            <value>
-                <fullName>Group Sales DK</fullName>
-                <default>false</default>
-                <label>Group Sales DK</label>
-            </value>
-            <value>
-                <fullName>Forsvaret NO</fullName>
-                <default>false</default>
-                <label>Forsvaret NO</label>
-            </value>
-            <value>
-                <fullName>Olympic SE</fullName>
-                <default>false</default>
-                <label>Olympic SE</label>
-            </value>
-            <value>
-                <fullName>Olympic NO</fullName>
-                <default>false</default>
-                <label>Olympic NO</label>
-            </value>
-            <value>
-                <fullName>Olympic DK</fullName>
-                <default>false</default>
-                <label>Olympic DK</label>
+                <fullName>Obsolete</fullName>
+                <default>true</default>
+                <label>Obsolete</label>
             </value>
         </valueSetDefinition>
     </valueSet>

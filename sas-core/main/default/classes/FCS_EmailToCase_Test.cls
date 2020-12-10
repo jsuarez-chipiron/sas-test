@@ -99,79 +99,6 @@ private class FCS_EmailToCase_Test {
         System.assertNotEquals('Urgent', updatedCase[0].Priority);
     }
 
-    /**
-        Tests the Process on Email Message where an Email is sent to Sales Information address which should result in the Case having Type Sales Information
-        @author Philip Ossler - Deloitte
-    */
-    @isTest
-    static void sendEmailToSalesInformation(){
-        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
-        cases[0].Origin = 'Sales Information';
-        insert cases;
-
-        EmailMessage email = new EmailMessage();
-        email.FromAddress = 'test@abc.se';
-        email.Incoming = True;
-        email.ToAddress= 'salesinformation@sas.se';
-        email.Subject = 'Test Subject';
-        email.HtmlBody = 'Test Body';
-        email.ParentId = cases[0].Id; 
-        insert email;
-
-        List<Case> updatedCase = [SELECT Type, Origin FROM Case WHERE id =: cases[0].Id];
-        System.assertEquals('Sales Information', updatedCase[0].Type);
-        System.assertEquals('Email', updatedCase[0].Origin);
-    }
-
-    /**
-        Tests the Process on Email Message where an Email is sent to SASSI Internal address which should result in the Case having Type SASSI Internal
-        @author Philip Ossler - Deloitte
-    */
-    @isTest
-    static void sendEmailToSASSIInternal(){
-        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
-        cases[0].Origin = 'SASSI Internal';
-        insert cases;
-
-        EmailMessage email = new EmailMessage();
-        email.FromAddress = 'test@abc.se';
-        email.Incoming = True;
-        email.ToAddress= 'sassi.internal@sas.dk';
-        email.Subject = 'Test Subject';
-        email.HtmlBody = 'Test Body';
-        email.ParentId = cases[0].Id; 
-        insert email;
-
-        List<Case> updatedCase = [SELECT Type, Origin FROM Case WHERE id =: cases[0].Id];
-        System.assertEquals('SASSI Internal', updatedCase[0].Type);
-        System.assertEquals('Email', updatedCase[0].Origin);
-    }
-
-    /**
-        Tests the Process on Email Message where an Email is sent to System/Tariff address which should result in the Case having no Type
-        @author Philip Ossler - Deloitte
-    */
-    @isTest
-    static void sendEmailToSystemTariff(){
-        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
-        cases[0].Origin = 'System & Tariff';
-        insert cases;
-
-        EmailMessage email = new EmailMessage();
-        email.FromAddress = 'test@abc.se';
-        email.Incoming = True;
-        email.ToAddress= 'pq_commercial_procedures_and_tariff_support@sas.se';
-        email.Subject = 'Test Subject';
-        email.HtmlBody = 'Test Body';
-
-        email.ParentId = cases[0].Id; 
-        insert email;
-
-        List<Case> updatedCase = [SELECT Type, Origin FROM Case WHERE id =: cases[0].Id];
-        System.assertEquals(null, updatedCase[0].Type);
-        System.assertEquals('Email', updatedCase[0].Origin);
-    }
-
  /**
         Test creating a Case when userId of Case Owner starts with 005
         @author Josephine Ding - Deloitte
@@ -246,37 +173,5 @@ private class FCS_EmailToCase_Test {
         System.assertEquals(null, updatedCase.FCS_VirtualOrganization__c); 
         
     }
-    
-     /**
-        Tests the Process on Email Message where sending a new Email to a Closed Case will re-open the Case and set in a new status.
-        @author Ludvig Wälimaa - Deloitte
-    */
-   
-    @isTest
-    static void setNewResponseStatusOnCase(){
-        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
-        insert cases;
-        cases[0].Type = 'Sales Information';
-        cases[0].FCS_CaseReason__c = 'Ancillary';
-        cases[0].FCS_CaseSubReason__c = 'Meals'; 
-        cases[0].Status = 'Closed';
-        cases[0].Origin = 'Email';
-        update cases[0];
-        
-        //SKicka till email 
-        EmailMessage email = new EmailMessage();
-        email.FromAddress = 'test@abc.se';
-        email.Incoming = True;
-        email.ToAddress= 'salesinformation@sas.se';
-        email.Subject = 'Test Subject';
-        email.HtmlBody = 'Test Body';
-        email.ParentId = cases[0].Id; 
-        insert email;
-        
-        Case c = [SELECT Status from Case where Id = :cases[0].Id];
-        
-        System.assertEquals('New Response', c.Status);
-    }
-
 
  }

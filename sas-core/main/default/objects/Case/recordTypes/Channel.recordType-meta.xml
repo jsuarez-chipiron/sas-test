@@ -697,145 +697,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FCS_SubOrigin_c__c</picklist>
-        <values>
-            <fullName>Agent Fares Ticketing EU</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Agent Helpdesk SIA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EuroBonus</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Forsvaret NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Functional Product Support</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales ACE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales AT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales Benelux</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales CH</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales DE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales EE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales ES</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales FI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales FR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales IE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales IS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales IT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales Interline</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales LT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales LV</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales PL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales RU</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales SE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales UK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales US</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Olympic DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Olympic NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Olympic SE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pandion DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pandion NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pandion SE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>System %26 Tariff</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>FCS_SubTeam__c</picklist>
         <values>
             <fullName>Team 1%2E1</fullName>
@@ -966,10 +827,6 @@
     <picklistValues>
         <picklist>Origin</picklist>
         <values>
-            <fullName>Agent Fares Ticketing EU</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Chat</fullName>
             <default>false</default>
         </values>
@@ -979,14 +836,6 @@
         </values>
         <values>
             <fullName>Email - Agent Fares Ticketing EU</fullName>
-            <default>false</default>
-        </values>       
-        <values>
-            <fullName>Agent Helpdesk SIA</fullName>
-            <default>false</default>
-        </values>
-		<values>
-            <fullName>Email - SAS Poland</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1050,15 +899,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Group Sales Interline</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Group Sales IS</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Email - Group Sales IT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email - Group Sales Interline</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1118,11 +967,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - SASSI Internal</fullName>
+            <fullName>Email - Sales Information</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Email - SAS Poland</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Sales Information</fullName>
+            <fullName>Email - SASSI Internal</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1131,126 +984,6 @@
         </values>
         <values>
             <fullName>Email - System %26 Tariff</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EuroBonus</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Forsvaret NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales ACE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales AT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales Benelux</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales CH</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales DE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales EE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales ES</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales FI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales FR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales IE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales IS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales IT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales Interline</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales LT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales LV</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales PL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales RU</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales SE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales UK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales US</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Olympic DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Olympic NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Olympic SE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pandion DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pandion NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pandion SE</fullName>
             <default>false</default>
         </values>
         <values>
