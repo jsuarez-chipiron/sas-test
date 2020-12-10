@@ -8,7 +8,7 @@
 private class IRR_SEL_EventLogsSelector_Test {
     
     @isTest
-    static void testGetQueuedCheckinQueryLocator(){
+    static void getQueuedManualQueryLocator(){
 
         //Given
         List<IRR_EventLog__c> eventLogs = new List<IRR_EventLog__c>{
@@ -18,7 +18,7 @@ private class IRR_SEL_EventLogsSelector_Test {
         insert eventLogs;
 
         //when
-        Database.QueryLocator queryResult = IRR_SEL_EventLogsSelector.newInstance().getQueuedCheckinQueryLocator();
+        Database.QueryLocator queryResult = IRR_SEL_EventLogsSelector.newInstance().getQueuedManualQueryLocator();
         // Get an iterator
         Database.QueryLocatorIterator i =  queryResult.iterator();
     
