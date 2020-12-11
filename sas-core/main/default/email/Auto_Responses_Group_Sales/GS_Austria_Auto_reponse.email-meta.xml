@@ -6,7 +6,7 @@
     <letterhead>SAS_Logo</letterhead>
     <name>GS Austria Auto reponse</name>
     <style>freeForm</style>
-    <subject>We have received your request #{!Case.CaseNumber}  {!Case.Thread_Id}</subject>
+    <subject>We have received your request #{!Case.CaseNumber}</subject>
     <textOnly>Vielen Dank, dass Sie sich an SAS Group Sales gewandt haben.
 Wir freuen uns auf Ihre Anfrage und möchten Sie darüber informieren, dass weitere Gespräche auf Englisch stattfinden werden.
 
