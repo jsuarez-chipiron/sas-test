@@ -6,7 +6,7 @@
     <letterhead>SAS_Logo</letterhead>
     <name>GS Poland Auto response</name>
     <style>freeForm</style>
-    <subject>We have received your request #{!Case.CaseNumber}  {!Case.Thread_Id}</subject>
+    <subject>We have received your request #{!Case.CaseNumber}</subject>
     <textOnly>Dziękujemy za kontakt z SAS Group Sales. Odpowiemy na wiadomość najszybciej jak będzie to możliwe. Uprzejmie informujemy, że dalsza komunikacja będzie odbywać się w języku angielskim.
 
 Thank you for contacting SAS Group Sales.
@@ -14,6 +14,7 @@ Thank you for contacting SAS Group Sales.
 We look forward to responding to your request and would like to inform you that further conversation will take place in English
 
 Your request is #{!Case.CaseNumber}
+
 
 Thank you for your understanding.
 
@@ -25,12 +26,12 @@ Monday – Friday 09.00 – 17.00
 Phone: +48 22 338 1379
 
 
-
-
-
-
 Scandinavian Airlines System
-flysas.com, Facebook, Twitter, Youtube</textOnly>
+flysas.com, Facebook, Twitter, Youtube
+
+
+
+{!Case.Thread_Id}</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

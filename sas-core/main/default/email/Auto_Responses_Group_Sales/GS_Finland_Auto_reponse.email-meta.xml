@@ -6,7 +6,7 @@
     <letterhead>SAS_Logo</letterhead>
     <name>GS Finland Auto reponse</name>
     <style>freeForm</style>
-    <subject>We have received your request #{!Case.CaseNumber}  {!Case.Thread_Id}</subject>
+    <subject>We have received your request #{!Case.CaseNumber}</subject>
     <textOnly>Hi!
 
 Great to hear from you and thank you for your email.
