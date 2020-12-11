@@ -15,6 +15,7 @@ We look forward to responding to your request and would like to inform you that 
 
 Your request is #{!Case.CaseNumber}
 
+
 Thank you for your understanding.
 
 Best Regards,
@@ -25,12 +26,12 @@ Monday – Friday 09.00 – 17.00
 Phone: +48 22 338 1379
 
 
-
-
-
-
 Scandinavian Airlines System
-flysas.com, Facebook, Twitter, Youtube</textOnly>
+flysas.com, Facebook, Twitter, Youtube
+
+
+
+{!Case.Thread_Id}</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
