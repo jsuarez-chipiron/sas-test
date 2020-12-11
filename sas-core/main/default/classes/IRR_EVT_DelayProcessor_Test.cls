@@ -177,7 +177,7 @@ private class IRR_EVT_DelayProcessor_Test {
                 .thenReturn(delayMinutesByFlightIds);
         mocks.when(serviceMock.getPassengerInfosForFlight('SK1429-20191104-ARN-CPH'))
                 .thenReturn(passengerInfos);
-        mocks.when(serviceMock.getAirportCityNames(new List<String>{'ARN','CPH'}))
+        mocks.when(serviceMock.getAirportCityNames(new Set<String>{'ARN','CPH'}))
                 .thenReturn(airportInfoMap);
         mocks.stopStubbing();
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
@@ -199,7 +199,7 @@ private class IRR_EVT_DelayProcessor_Test {
         ((IRR_SEL_IDelayLogsSelector) mocks.verify(selectorMock))
                 .getLatestDelayByFlightIds(new Set<String>{'SK1429-20191104-ARN-CPH'});
         ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getPassengerInfosForFlight('SK1429-20191104-ARN-CPH');
-        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new List<String>{'ARN','CPH'});
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new Set<String>{'ARN','CPH'});
 
         System.assertEquals(0, delayInfo.previousDelayedMinutes);
         System.assertEquals(10, delayInfo.delayDifference);

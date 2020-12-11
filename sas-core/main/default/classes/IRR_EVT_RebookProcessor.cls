@@ -86,7 +86,7 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
         //Initiate variable container object for Flow
         IRR_MOD_FlowVariables flowVariables = new IRR_MOD_FlowVariables();
         flowVariables.rebookInfo = rebookInfo;
-        String[] airportCodes = new List<String>();
+        Set<String> airportCodes = new Set<String>();
         
         //Process passengers
         if(passengerInfos != null && passengerInfos.size() > 0){

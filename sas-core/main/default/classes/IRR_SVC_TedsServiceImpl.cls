@@ -75,8 +75,8 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      *
      * @return Retrieved Airport Details
      */
-    public Map<String,String> getAirportCityNames(String [] iataCodes) {
-        String endpointURL = AIRPORTCODE_ENDPOINT_TEMPLATE + String.join(iataCodes,',');
+    public Map<String,String> getAirportCityNames(Set<String> iataCodes) {
+        String endpointURL = AIRPORTCODE_ENDPOINT_TEMPLATE + String.join((Iterable<String>)iataCodes,',');
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
                 .executeRequest(endpointURL, C_IntegrationExecutor.Method.GET, null, null);
         if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
