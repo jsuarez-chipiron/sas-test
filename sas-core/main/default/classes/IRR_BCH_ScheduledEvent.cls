@@ -6,19 +6,15 @@
 global with sharing class IRR_BCH_ScheduledEvent extends SBS_ScheduledBatch implements Schedulable {
 
     private String eventType = 'manualCommunication';
-   
-    
 
-    global IRR_BCH_ScheduledEvent(){
-        this.setUseTransactionControl(false);
-    }
-    /**
+  /**
         Iterates over all Event Logs in the queued Status for manual communication
         @param bc The batch context
     */
 
     global Database.QueryLocator start(Database.BatchableContext bc){
 
+        this.setUseTransactionControl(false);
         return IRR_SEL_EventLogsSelector.newInstance().getQueuedManualQueryLocator();
 
     }
@@ -50,7 +46,7 @@ global with sharing class IRR_BCH_ScheduledEvent extends SBS_ScheduledBatch impl
 
     global void execute(SchedulableContext ctx) {
         SBS_ScheduledBatch processQueuedManual = new IRR_BCH_ScheduledEvent ();
-        ID batchprocessid = Database.executeBatch(processQueuedManual,3);
+        ID batchprocessid = Database.executeBatch(processQueuedManual,1);
     }
     
 }

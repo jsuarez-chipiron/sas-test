@@ -56,7 +56,7 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
                 manualRequest.delayInfo.flightRef = flightIdSplit.flightNumber;
                 manualRequest.delayInfo.stationDeparture = flightIdSplit.stationDeparture;
                 manualRequest.delayInfo.stationArrival = flightIdSplit.stationArrival;
-                this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
+                this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new Set<String> {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
                 manualRequest.delayInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
                 manualRequest.delayInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
     
@@ -67,7 +67,7 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
                 manualRequest.newInfo.flightRef = flightIdSplit.flightNumber;
                 manualRequest.newInfo.stationDeparture = flightIdSplit.stationDeparture;
                 manualRequest.newInfo.stationArrival = flightIdSplit.stationArrival;
-                this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
+                this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new Set<String> {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
                 manualRequest.newInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
                 manualRequest.newInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
             }
@@ -77,7 +77,7 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
                 manualRequest.cancelInfo.flightRef = flightIdSplit.flightNumber;
                 manualRequest.cancelInfo.stationDeparture = flightIdSplit.stationDeparture;
                 manualRequest.cancelInfo.stationArrival = flightIdSplit.stationArrival;
-                this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new String[] {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
+                this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new Set<String> {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
                 manualRequest.cancelInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
                 manualRequest.cancelInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
             }
@@ -116,7 +116,7 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
             //Retrieving airport codes equivalent city names from Teds for Rebooking
             if (manualRequest.delayInfo == null &&  manualRequest.newInfo == null && manualRequest.cancelInfo == null){
                 if(manualRequest.passengerInfos!= null && manualRequest.passengerInfos.size()>0) {
-                    String[] iataCodes = new List<String>();
+                    Set<String> iataCodes = new Set<String>();
                     List<IRR_MOD_TripInfo> itinerary = new List<IRR_MOD_TripInfo>();
                         for (IRR_MOD_PassengerInfo paxInfo : manualRequest.passengerInfos) {
                             if (paxInfo.itinerary != null && paxInfo.itinerary.size() > 0) {
@@ -184,9 +184,15 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
      * @param uow Unit of Work
      */
     private void insertEventLog(fflib_ISObjectUnitOfWork uow) {
-                    
         IRR_EventLog__c sObj = new IRR_EventLog__c();
         sObj.IRR_ScheduleTime__c = manualRequest.sendMessageTime;
+        if(manualRequest.passengerInfos != null && manualRequest.passengerInfos.size() > 0) {
+            Set<String> flightIds = new Set<String>();
+            for(IRR_MOD_PassengerInfo pi : manualRequest.passengerInfos){
+                flightIds.add(pi.thisSegment.flightId);
+            }
+            sObj.IRR_FlightId__c = String.Join(new List<String>(flightIds), ', ');
+        }
         String payloadStr = JSON.serialize(manualRequest);
         if(payloadStr != null && payloadStr.length() > 131072){
             sObj.Event_Payload_1__c = payloadStr.substring(0,131072);
