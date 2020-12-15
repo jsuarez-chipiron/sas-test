@@ -3,6 +3,7 @@
     <fullName>Channel</fullName>
     <active>true</active>
     <businessProcess>Default</businessProcess>
+    <compactLayoutAssignment>SAS_Channel_Case</compactLayoutAssignment>
     <label>Channel</label>
     <picklistValues>
         <picklist>Case_Grouping__c</picklist>
