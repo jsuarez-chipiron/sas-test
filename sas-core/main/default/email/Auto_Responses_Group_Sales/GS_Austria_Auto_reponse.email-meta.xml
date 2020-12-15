@@ -28,7 +28,10 @@ Best Regards,
 SAS Group Sales
 SAS Customer Service
 Monday – Friday 09.00 – 17.00
-Phone: 0820 988 533</textOnly>
+Phone: 0820 988 533
+
+
+{!Case.Thread_Id}</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
