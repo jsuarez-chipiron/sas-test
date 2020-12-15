@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Forsvaret_NO_Open_Cases</fullName>
-    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
     <columns>CASES.EMAIL</columns>
     <columns>CASES.SUBJECT</columns>
-    <columns>FCS_SubOrigin_c__c</columns>
+    <columns>CASES.ORIGIN</columns>
     <columns>OWNER_NAME</columns>
     <columns>PNR_Payment_Status__c</columns>
     <columns>CASES.STATUS</columns>
@@ -15,11 +14,6 @@
         <field>CASES.STATUS</field>
         <operation>equals</operation>
         <value>In Progress,On Hold,Awaiting Customer Response,New Response,Escalated</value>
-    </filters>
-    <filters>
-        <field>FCS_SubOrigin_c__c</field>
-        <operation>equals</operation>
-        <value>Forsvaret NO</value>
     </filters>
     <filters>
         <field>CASES.ORIGIN</field>

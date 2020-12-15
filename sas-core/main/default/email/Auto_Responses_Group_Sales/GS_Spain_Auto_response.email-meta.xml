@@ -6,7 +6,7 @@
     <letterhead>SAS_Logo</letterhead>
     <name>GS Spain Auto response</name>
     <style>freeForm</style>
-    <subject>We have received your request #{!Case.CaseNumber}  {!Case.Thread_Id}</subject>
+    <subject>We have received your request #{!Case.CaseNumber}</subject>
     <textOnly>Gracias por contactar a Venta de Grupos de SAS.
 
 Esperamos responder a su solicitud y nos gustaría informale que a partir de ahora nuestras comunicaciones serán únicamente en Inglés.

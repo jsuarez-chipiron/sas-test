@@ -6,7 +6,7 @@
     <letterhead>SAS_Logo</letterhead>
     <name>GS Estonia Auto response</name>
     <style>freeForm</style>
-    <subject>We have received your request #{!Case.CaseNumber}  {!Case.Thread_Id}</subject>
+    <subject>We have received your request #{!Case.CaseNumber}</subject>
     <textOnly>Täname, et kontakteerusite SAS-iga. Vastame Teile esimesel võimalusel. Käesolevaga informeerime Teid ka sellest, et edasine kommunikatsioon toimub ainult inglise keeles.
 
 Thank you for contacting SAS Group Sales.

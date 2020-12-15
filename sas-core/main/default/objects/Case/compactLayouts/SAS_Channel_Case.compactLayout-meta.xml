@@ -7,6 +7,6 @@
     <fields>Status</fields>
     <fields>Priority</fields>
     <fields>FCS_EBNumber__c</fields>
-    <fields>FCS_SubOrigin_c__c</fields>
+    <fields>Origin</fields>
     <label>SAS Channel Case</label>
 </CompactLayout>

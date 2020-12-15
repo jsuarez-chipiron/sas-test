@@ -5,7 +5,7 @@
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
     <columns>CASES.EMAIL</columns>
     <columns>CASES.SUBJECT</columns>
-    <columns>FCS_SubOrigin_c__c</columns>
+    <columns>CASES.ORIGIN</columns>
     <columns>OWNER_NAME</columns>
     <columns>PNR_Payment_Status__c</columns>
     <columns>CASES.STATUS</columns>

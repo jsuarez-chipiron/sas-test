@@ -7,7 +7,6 @@
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
     <columns>CASES.ORIGIN</columns>
-    <columns>FCS_SubOrigin_c__c</columns>
     <columns>ACCOUNT.NAME</columns>
     <filterScope>Mine</filterScope>
     <filters>

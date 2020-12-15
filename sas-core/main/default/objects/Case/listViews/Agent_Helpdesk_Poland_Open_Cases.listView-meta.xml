@@ -8,6 +8,7 @@
     <columns>CASES.PRIORITY</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
     <columns>OWNER_NAME</columns>
+    <columns>CASES.ORIGIN</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>CASES.ORIGIN</field>

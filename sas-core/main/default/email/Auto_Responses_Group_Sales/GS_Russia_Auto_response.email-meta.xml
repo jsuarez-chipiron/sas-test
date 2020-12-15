@@ -6,7 +6,7 @@
     <letterhead>SAS_Logo</letterhead>
     <name>GS Russia Auto response</name>
     <style>freeForm</style>
-    <subject>We have received your request #{!Case.CaseNumber}  {!Case.Thread_Id}</subject>
+    <subject>We have received your request #{!Case.CaseNumber}</subject>
     <textOnly>Спасибо за обращение в SAS Group Sales,
 
 Мы ожидаем ваших запросов и хотим проиформировать, что последущее общение будет происходить на Английском языке.

@@ -6,7 +6,7 @@
     <letterhead>SAS_Logo</letterhead>
     <name>GS ACE Auto response</name>
     <style>freeForm</style>
-    <subject>We have received your request #{!Case.CaseNumber}  {!Case.Thread_Id}</subject>
+    <subject>We have received your request #{!Case.CaseNumber}</subject>
     <textOnly>Hi!
 
 
@@ -30,7 +30,6 @@ Monday – Friday 09.00 – 17.00
 
 Phone: +372 680 4328
 
-{!Case.Thread_Id}
 
 
 Scandinavian Airlines System
