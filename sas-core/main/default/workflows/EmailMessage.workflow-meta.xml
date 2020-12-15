@@ -218,7 +218,7 @@
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
-            <value>Email - EuroBonus</value>
+            <value>Email - EuroBonus,Email - Star Alliance Upgrades</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>
