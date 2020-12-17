@@ -26,6 +26,10 @@
     <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
         <values>
+            <fullName>Award travel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cancellation%2Frefund of ticket</fullName>
             <default>false</default>
         </values>
@@ -54,11 +58,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EuroBonus Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus status</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Eurobonus</fullName>
             <default>false</default>
         </values>
-		<values>
-            <fullName>EuroBonus Partner</fullName>
+        <values>
+            <fullName>Feedback</fullName>
             <default>false</default>
         </values>
         <values>
@@ -79,6 +91,14 @@
         </values>
         <values>
             <fullName>Requesting documentation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revenue travel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS for business</fullName>
             <default>false</default>
         </values>
         <values>
@@ -165,6 +185,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Air</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Alternatives</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Award seat freesell</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Award seat request</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bike</fullName>
             <default>false</default>
         </values>
@@ -177,11 +213,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Booking site</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bulk Groups</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>CNF</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CT check</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Car</fullName>
             <default>false</default>
         </values>
         <values>
@@ -201,11 +253,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Check-in</fullName>
+            <fullName>Check missing 20000 Status pts Amex</fullName>
             <default>false</default>
         </values>
-		 <values>
-            <fullName>Check missing 20000 Status pts Amex</fullName>
+        <values>
+            <fullName>Check-in</fullName>
             <default>false</default>
         </values>
         <values>
@@ -237,6 +289,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CreditCard</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Customer hangs up</fullName>
             <default>false</default>
         </values>
@@ -258,6 +314,14 @@
         </values>
         <values>
             <fullName>Delete profiles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Downgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Downgrading to EBD</fullName>
             <default>false</default>
         </values>
         <values>
@@ -285,7 +349,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Fraud</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>General Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General request w%2Fo booking</fullName>
             <default>false</default>
         </values>
         <values>
@@ -294,6 +370,10 @@
         </values>
         <values>
             <fullName>Golfbag</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ground</fullName>
             <default>false</default>
         </values>
         <values>
@@ -313,6 +393,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Hotel cost</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inactive customer</fullName>
             <default>false</default>
         </values>
@@ -322,6 +406,10 @@
         </values>
         <values>
             <fullName>Irregularity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Life time gold</fullName>
             <default>false</default>
         </values>
         <values>
@@ -377,11 +465,35 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Onboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Other partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Pet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Points and cash</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post-travel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre-travel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rebooking</fullName>
             <default>false</default>
         </values>
         <values>
@@ -393,11 +505,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Referred to feedback form</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Refund points</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Refund status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reissue</fullName>
             <default>false</default>
         </values>
         <values>
@@ -430,6 +554,14 @@
         </values>
         <values>
             <fullName>SAS Invoice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales fee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales fee exempt</fullName>
             <default>false</default>
         </values>
         <values>
@@ -533,6 +665,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Travel agent refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travelpass</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Unaccompanied minor</fullName>
             <default>false</default>
         </values>
@@ -541,11 +681,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Upgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>User guidance - App</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>User guidance - web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voluntary refund</fullName>
             <default>false</default>
         </values>
         <values>
@@ -900,15 +1048,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Group Sales Interline</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Email - Group Sales IS</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Email - Group Sales IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales Interline</fullName>
             <default>false</default>
         </values>
         <values>
@@ -968,15 +1116,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Sales Information</fullName>
-            <default>false</default>
-        </values>
-		<values>
             <fullName>Email - SAS Poland</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Email - SASSI Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Sales Information</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1057,4 +1205,3 @@
         </values>
     </picklistValues>
 </RecordType>
-
