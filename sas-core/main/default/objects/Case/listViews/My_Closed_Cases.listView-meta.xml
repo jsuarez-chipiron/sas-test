@@ -4,10 +4,13 @@
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.SUBJECT</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.CLOSED_DATE</columns>
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
     <columns>CASES.ORIGIN</columns>
     <columns>ACCOUNT.NAME</columns>
+    <columns>CASES.EMAIL</columns>
+    <columns>CASES.NAME</columns>
     <filterScope>Mine</filterScope>
     <filters>
         <field>CASES.CLOSED</field>
