@@ -10,6 +10,7 @@
     <columns>CASES.CLOSED_DATE</columns>
     <columns>CASES.STATUS</columns>
     <columns>CASES.EMAIL</columns>
+    <columns>CASES.NAME</columns>
     <columns>CASES.PRIORITY</columns>
     <columns>CORE.USERS.ALIAS</columns>
     <filterScope>Everything</filterScope>
