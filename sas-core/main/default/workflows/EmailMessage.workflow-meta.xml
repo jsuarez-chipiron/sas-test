@@ -120,6 +120,39 @@
         <targetObject>ParentId</targetObject>
     </fieldUpdates>
     <rules>
+        <fullName>Return closed case to queue on new email - Agent Helpdesk</fullName>
+        <actions>
+            <name>Case_Owner_Update_Agent_Helpdesk</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Email - Agent Helpdesk Scandinavia</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
         <fullName>Return closed case to queue on new email - Corporate Support</fullName>
         <actions>
             <name>Case_Owner_Update_Corporate</name>
