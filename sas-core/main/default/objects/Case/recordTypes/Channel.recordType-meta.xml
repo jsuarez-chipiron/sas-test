@@ -983,6 +983,10 @@
             <fullName>Email</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>Email - Agent Helpdesk Scandinavia</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Email - Agent Fares Ticketing EU</fullName>
             <default>false</default>

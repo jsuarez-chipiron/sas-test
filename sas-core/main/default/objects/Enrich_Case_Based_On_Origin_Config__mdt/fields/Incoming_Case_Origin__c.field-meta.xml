@@ -16,6 +16,11 @@
                 <label>Email - Agent Fares Ticketing EU</label>
             </value>
             <value>
+                <fullName>Email - Agent Helpdesk Scandinavia</fullName>
+                <default>false</default>
+                <label>Email - Agent Helpdesk Scandinavia</label>
+            </value>
+            <value>
                 <fullName>Email - Corporate</fullName>
                 <default>false</default>
                 <label>Email - Corporate</label>
