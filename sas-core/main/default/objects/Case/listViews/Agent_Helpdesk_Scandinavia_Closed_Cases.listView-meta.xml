@@ -16,6 +16,11 @@
         <operation>equals</operation>
         <value>Closed</value>
     </filters>
+    <filters>
+        <field>CASES.ORIGIN</field>
+        <operation>equals</operation>
+        <value>Email - Agent Helpdesk Scandinavia</value>
+    </filters>
     <label>Agent Helpdesk Scandinavia  Closed Cases</label>
     <sharedTo>
         <group>AgentHelpdesk</group>
