@@ -50,17 +50,20 @@ export default class IRR_FilterPanel extends LightningElement {
             filterValue = filterValue === "NULL" ? null : filterValue === "TRUE" ? true :
                 filterValue === "FALSE" ? false : filterValue;
             newParameters[fieldName] = filterValue;
-            if(fieldName === "hasThisSegment" && filterValue){
+            if (fieldName === "hasThisSegment" && filterValue){
                 newParameters['hasPrevSegment'] = false;
                 newParameters['hasNextSegment'] = false;
             }
             this.unsetOtherGroupCheckboxes(event.target, newParameters);
-        } else if(!event.detail.checked && fieldName === "hasThisSegment") {
+            
+        }
+        else if (!event.detail.checked && fieldName === "hasThisSegment") {
             ['hasThisSegment', 'hasPrevSegment', 'hasNextSegment'].forEach(e => delete newParameters[e]);
-        } else {
+        } 
+        else {
             delete newParameters[fieldName];
         }
-        console.log(`newParametersafr :${JSON.stringify(newParameters)}`);
+
         this.applyFilter(newParameters);
     }
 
