@@ -50,11 +50,17 @@ export default class IRR_FilterPanel extends LightningElement {
             filterValue = filterValue === "NULL" ? null : filterValue === "TRUE" ? true :
                 filterValue === "FALSE" ? false : filterValue;
             newParameters[fieldName] = filterValue;
+            if(fieldName === "hasThisSegment" && filterValue){
+                newParameters['hasPrevSegment'] = false;
+                newParameters['hasNextSegment'] = false;
+            }
             this.unsetOtherGroupCheckboxes(event.target, newParameters);
+        } else if(!event.detail.checked && fieldName === "hasThisSegment") {
+            ['hasThisSegment', 'hasPrevSegment', 'hasNextSegment'].forEach(e => delete newParameters[e]);
         } else {
             delete newParameters[fieldName];
         }
-
+        console.log(`newParametersafr :${JSON.stringify(newParameters)}`);
         this.applyFilter(newParameters);
     }
 
@@ -64,7 +70,13 @@ export default class IRR_FilterPanel extends LightningElement {
             .forEach(loopComponent => {
                 if (thisComponent !== loopComponent && loopComponent.checked) {
                     loopComponent.checked = false;
-                    if (thisComponent.name !== loopComponent.name) {
+                    if (loopComponent.name === "hasThisSegment" && thisComponent.name === "hasPrevSegment") { 
+                        ['hasThisSegment', 'hasNextSegment'].forEach(e => delete newParameters[e]);
+                    }
+                    else if(loopComponent.name === "hasThisSegment" && thisComponent.name === "hasNextSegment"){
+                        ['hasThisSegment', 'hasPrevSegment'].forEach(e => delete newParameters[e]);
+
+                    } else if(thisComponent !== loopComponent && (thisComponent.name == "hasPrevSegment" || thisComponent.name == "hasNextSegment")){
                         delete newParameters[loopComponent.name];
                     }
                 }

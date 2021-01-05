@@ -17,7 +17,7 @@ import getBookingPassengerInfos from '@salesforce/apex/IRR_CON_ManualCommunicati
 import * as tableUtil from 'c/c_TableUtil';
 import { reduceErrors } from 'c/c_LdsUtils';
 
-import { FLIGHT_COLUMNS, PREVIOUS_FLIGHT_COLUMNS, NEXT_FLIGHT_COLUMNS, BOOKING_COLUMNS } from './passengerTableColumns';
+import { FLIGHT_COLUMNS, PREVIOUS_FLIGHT_COLUMNS, NEXT_FLIGHT_COLUMNS, BOOKING_COLUMNS} from './passengerTableColumns';
 
 export default class IRR_ManualCommunication extends LightningElement {
 
@@ -149,12 +149,15 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     handleFilterApplyEvent(event) {
         this.filterParameters = event.detail;
-        
+        this.COLUMNS = [];
         if (this.filterParameters.hasNextSegment) {
             this.COLUMNS = NEXT_FLIGHT_COLUMNS;
         }
         else if (this.filterParameters.hasPrevSegment) {
             this.COLUMNS = PREVIOUS_FLIGHT_COLUMNS;
+        }
+        else if (!this.filterParameters.hasNextSegment && !this.filterParameters.hasPrevSegment) {
+            this.COLUMNS = FLIGHT_COLUMNS;
         }
         else if (this.retrieveParameters.flightIds) {
             this.COLUMNS = FLIGHT_COLUMNS;
