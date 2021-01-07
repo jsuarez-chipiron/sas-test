@@ -98,6 +98,8 @@ public with sharing class FCS_OmniChannelQueueBacklogController {
                 SELECT COUNT(Id), MIN(CreatedDate), OwnerId, Owner.Name
                 FROM LiveChatTranscript
                 WHERE OwnerId IN :queueIds
+                AND
+                Status != 'Completed'
                 GROUP BY OwnerId, Owner.Name];
         queueItems.addAll(messagingSessions);
         queueItems.addAll(cases);
