@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Auto-response for grupperejser.dk@sas.dk</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>SAS_Logo</letterhead>
+    <name>GS Denmark Auto response</name>
+    <style>freeForm</style>
+    <subject>We have received your request #{!Case.CaseNumber}</subject>
+    <textOnly>Hej!
+
+Tak for din henvendelse jeg er glad for at du har kontaktet SAS.
+
+Mens du venter kan du finde masser af inspiration til din rejse her www.sas.dk
+
+Best Regards
+SAS Direct Group Sales
+SAS Customer Service
+Mandag – Fredag 08.00 – 17.00
+Phone: +45 3232 6920
+ 
+Scandinavian Airlines System
+flysas.com, Facebook, Twitter, Youtube
+
+{!Case.Thread_Id}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
