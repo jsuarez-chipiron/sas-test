@@ -120,9 +120,9 @@
         <targetObject>ParentId</targetObject>
     </fieldUpdates>
     <rules>
-        <fullName>Return closed case to queue on new email - Agent Fares Ticketing EU</fullName>
+        <fullName>Return closed case to queue on new email - Agent Helpdesk</fullName>
         <actions>
-            <name>Case_Owner_Update_Group_Sales</name>
+            <name>Case_Owner_Update_Agent_Helpdesk</name>
             <type>FieldUpdate</type>
         </actions>
         <actions>
@@ -147,12 +147,7 @@
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
-            <value>Email</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Email - Agent Fares Ticketing EU</value>
+            <value>Email - Agent Helpdesk Scandinavia</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>
@@ -218,7 +213,7 @@
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
-            <value>Email - EuroBonus</value>
+            <value>Email - EuroBonus,Email - Star Alliance Upgrades</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>

@@ -5,7 +5,7 @@
     <letterhead>SAS_Logo</letterhead>
     <name>Travel Agent Auto response</name>
     <style>freeForm</style>
-    <subject>Case ID {!Case.CaseNumber} has been registered / {!Case.Subject}.  {!Case.Thread_Id}</subject>
+    <subject>Case ID {!Case.CaseNumber} has been registered / {!Case.Subject}</subject>
     <textOnly>Thank you for your e-mail!
 
 We have registered your case ID {!Case.CaseNumber}

@@ -13,7 +13,7 @@
     <valueSet>
         <controllingField>Type</controllingField>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>ADM</fullName>
                 <default>false</default>
@@ -68,6 +68,11 @@
                 <fullName>Availability / MCT</fullName>
                 <default>false</default>
                 <label>Availability / MCT</label>
+            </value>
+            <value>
+                <fullName>Award travel</fullName>
+                <default>false</default>
+                <label>Award travel</label>
             </value>
             <value>
                 <fullName>Back-office R</fullName>
@@ -235,6 +240,11 @@
                 <label>EuroBonus procedures R</label>
             </value>
             <value>
+                <fullName>EuroBonus status</fullName>
+                <default>false</default>
+                <label>EuroBonus status</label>
+            </value>
+            <value>
                 <fullName>Extraordinary</fullName>
                 <default>false</default>
                 <label>Extraordinary</label>
@@ -253,6 +263,11 @@
                 <fullName>Fares</fullName>
                 <default>false</default>
                 <label>Fares</label>
+            </value>
+            <value>
+                <fullName>Feedback</fullName>
+                <default>false</default>
+                <label>Feedback</label>
             </value>
             <value>
                 <fullName>Flight disruptions</fullName>
@@ -365,6 +380,11 @@
                 <label>OCC Daily Reports</label>
             </value>
             <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
                 <fullName>Overbooked flights</fullName>
                 <default>false</default>
                 <label>Overbooked flights</label>
@@ -440,6 +460,11 @@
                 <label>Retroregistration</label>
             </value>
             <value>
+                <fullName>Revenue travel</fullName>
+                <default>false</default>
+                <label>Revenue travel</label>
+            </value>
+            <value>
                 <fullName>Rules &amp; Informaton</fullName>
                 <default>false</default>
                 <label>Rules &amp; Informaton</label>
@@ -463,6 +488,11 @@
                 <fullName>SAS Agent News/Flash</fullName>
                 <default>false</default>
                 <label>SAS Agent News/Flash</label>
+            </value>
+            <value>
+                <fullName>SAS for business</fullName>
+                <default>false</default>
+                <label>SAS for business</label>
             </value>
             <value>
                 <fullName>SAS Medical</fullName>
@@ -518,11 +548,6 @@
                 <fullName>WiFi</fullName>
                 <default>false</default>
                 <label>WiFi</label>
-            </value>
-            <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -624,6 +649,13 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <valueName>Rebooking</valueName>
         </valueSettings>
@@ -652,13 +684,6 @@
             <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>Travel pass</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <controllingFieldValue>System</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
