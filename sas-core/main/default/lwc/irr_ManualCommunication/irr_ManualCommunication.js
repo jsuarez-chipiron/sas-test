@@ -287,6 +287,7 @@ export default class IRR_ManualCommunication extends LightningElement {
         this.leftPanelTab = "LEFT_FILTER";
         this.showRetrieve = true;
         this.showSuccess = false;
+        this.showScheduleSuccess = false;
     }
 
     async handleRetrieveEvent(event) {
