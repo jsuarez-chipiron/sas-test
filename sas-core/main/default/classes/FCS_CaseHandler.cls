@@ -48,6 +48,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
         assignOwnerFromSoMe(newCaseList);
         validateCaseTags(newCaseList);
         enrichCaseDataBasedOnOrigin(newCaseList);
+        enrichCaseDataWithFormData(newCaseList);
     }
     /**
   Used to call the trigger in the before update context
@@ -103,6 +104,46 @@ public class FCS_CaseHandler extends C_TriggerHandler {
             }
         }
     }
+
+    /** 
+    *Reads case subject and case description fields and updates case fields with data from description
+    *if some requirements are met.
+    * Run only on beforeInsert
+     */
+
+    private static void enrichCaseDataWithFormData(List<Case> newCaseList){
+        /**Lisr caseFormKeywords and incomingEmailAddressAsVerification are Used as part of verification to check if email comes from form */
+        List <String> caseFormKeywords=new List<String> {'group-trips', 'sports-trips', 'grouptrips', 'request-grupperejse',
+                                                         'sportgruppereiser', 'gruppresor'};
+        List <String> incomingEmailAddressAsVerification= new List<String>{'gruppresor.se@sas.se', 'gruppereiser.no@sas.no','andreas.henning@sas,se',    
+                                                                           'donotreply@sas.dk', 'uk-groupquotes@sas.dk'};
+        String emailRegex = '([a-zA-Z0-9_\\-\\.]+)@((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})';
+        for (Case c: newCaseList){
+            for(String email:incomingEmailAddressAsVerification){
+                    for(String keyWord: caseFormKeywords) {
+                        Boolean comesFromForm=c.Subject!=Null && c.Subject.toLowercase().Contains(keyWord)  && c.SuppliedEmail==email;
+                            if(comesFromForm){
+                                if(c.Description != '' && c.Description.length()>0){
+                                    String data=c.Description;
+                                    String newSuppliedEmail=data.substringBetween('email : ', '\n');            
+                                    /**
+                                    * validate suppliedEmail email address received from form
+                                    * and assign as suppliedEmail if valid
+                                    */
+                                    Pattern emailPattern = Pattern.compile(emailRegex);
+                                    Matcher emailMatcher = emailPattern.matcher(newSuppliedEmail);
+                                    if(emailMatcher.matches()){
+                                        c.SuppliedEmail=newSuppliedEmail;
+                                    }else{
+                                        c.SuppliedEmail=c.SuppliedEmail;
+                                    }
+                                }
+                            }
+                    }
+                }
+            }
+    }
+
 
     /**
     Method to set owner on case created from SoMe-post quick actions
