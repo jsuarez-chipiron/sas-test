@@ -130,12 +130,17 @@ public class FCS_CaseHandler extends C_TriggerHandler {
                                     * validate suppliedEmail email address received from form
                                     * and assign as suppliedEmail if valid
                                     */
-                                    Pattern emailPattern = Pattern.compile(emailRegex);
-                                    Matcher emailMatcher = emailPattern.matcher(newSuppliedEmail);
-                                    if(emailMatcher.matches()){
-                                        c.SuppliedEmail=newSuppliedEmail;
-                                    }else{
+                                    
+                                    if(newSuppliedEmail == null){
                                         c.SuppliedEmail=c.SuppliedEmail;
+                                    }else{
+                                        Pattern emailPattern = Pattern.compile(emailRegex);
+                                        Matcher emailMatcher = emailPattern.matcher(newSuppliedEmail);
+                                        if(emailMatcher.matches()){
+                                            c.SuppliedEmail=newSuppliedEmail;
+                                        }else{
+                                            c.SuppliedEmail=c.SuppliedEmail;
+                                        }
                                     }
                                 }
                             }
