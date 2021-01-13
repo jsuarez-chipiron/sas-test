@@ -115,8 +115,8 @@ public class FCS_CaseHandler extends C_TriggerHandler {
         /**Lisr caseFormKeywords and incomingEmailAddressAsVerification are Used as part of verification to check if email comes from form */
         List <String> caseFormKeywords=new List<String> {'group-trips', 'sports-trips', 'grouptrips', 'request-grupperejse',
                                                          'sportgruppereiser', 'gruppresor'};
-        List <String> incomingEmailAddressAsVerification= new List<String>{'gruppresor.se@sas.se', 'gruppereiser.no@sas.no','andreas.henning@sas,se',    
-                                                                           'donotreply@sas.dk', 'uk-groupquotes@sas.dk'};
+        List <String> incomingEmailAddressAsVerification= new List<String>{'gruppresor.se@sas.se', 'gruppereiser.no@sas.no',    
+                                                                           'donotreply@sas.dk', 'uk-groupquotes@sas.dk', 'salesforce_uat4@sas.se'};
         String emailRegex = '([a-zA-Z0-9_\\-\\.]+)@((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})';
         for (Case c: newCaseList){
             for(String email:incomingEmailAddressAsVerification){
