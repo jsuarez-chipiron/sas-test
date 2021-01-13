@@ -413,4 +413,21 @@ private class FCS_CaseHandler_Test {
 
     }
 
+    @IsTest
+    static void enrichCaseDataWithFormDataIfDescriptionDoesNotContainSubStringBetweenInfoDoNotChangeSuppliedEmail() {
+        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
+        testCase.Subject = 'group-trips';
+        testCase.SuppliedEmail = 'gruppresor.se@sas.se';
+        testCase.Description = 'subject and from email indicate that email is from form but it is not';
+
+        Test.startTest();
+        insert testCase;
+        Test.stopTest();
+
+        Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
+
+        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'gruppresor.se@sas.se');
+
+    }
+
 }
