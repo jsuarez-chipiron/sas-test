@@ -369,7 +369,7 @@ private class FCS_CaseHandler_Test {
         Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
         testCase.Subject = 'sports-trips';
         testCase.SuppliedEmail = 'gruppresor.se@sas.se';        
-        testCase.Description = 'contact-person : Fr\nemail : correct@format.se\naddress : Tuborgvej 5\nco-address :';
+        testCase.Description = 'contact-person : Fr\nemail : correctformat@example.com\naddress : Tuborgvej 5\nco-address :';
 
         Test.startTest();
         insert testCase;
@@ -377,7 +377,7 @@ private class FCS_CaseHandler_Test {
 
         Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
 
-        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'correct@format.se');
+        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'correctformat@example.com');
 
     }
 
@@ -385,7 +385,7 @@ private class FCS_CaseHandler_Test {
     static void enrichCaseDataWithFormDataShouldNotRunIfIncomingEmailAddressAsVerificationFalse() {
         Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
         testCase.Subject = 'sports-trips';
-        testCase.SuppliedEmail = 'test.email@testing.se';
+        testCase.SuppliedEmail = 'test.email@example.com';
 
         Test.startTest();
         insert testCase;
@@ -393,7 +393,7 @@ private class FCS_CaseHandler_Test {
 
         Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
 
-        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'test.email@testing.se');
+        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'test.email@example.com');
 
     }
 
@@ -401,7 +401,7 @@ private class FCS_CaseHandler_Test {
     static void enrichCaseDataWithFormDataIfCaseFromKeywordsFalse() {
         Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
         testCase.Subject = 'not part of caseFromKeywords';
-        testCase.SuppliedEmail = 'test.email@testing.se';
+        testCase.SuppliedEmail = 'test.email@example.com';
 
         Test.startTest();
         insert testCase;
@@ -409,7 +409,7 @@ private class FCS_CaseHandler_Test {
 
         Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
 
-        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'test.email@testing.se');
+        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'test.email@example.com');
 
     }
 
