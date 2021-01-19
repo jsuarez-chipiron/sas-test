@@ -1968,6 +1968,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Department__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>IRR_CommunicationLog__c.IRR_MessageKey__c</field>
         <readable>false</readable>
@@ -2466,6 +2471,11 @@
         <editable>false</editable>
         <field>SocialPost.FCS_Vendor__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Team__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
