@@ -5,6 +5,13 @@
     <businessProcess>Default</businessProcess>
     <label>Support</label>
     <picklistValues>
+        <picklist>Case_Grouping__c</picklist>
+        <values>
+            <fullName>Group Sales</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Consent__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -614,6 +621,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Flight_Length__c</picklist>
+        <values>
+            <fullName>Long Haul</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Short Haul</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Origin</picklist>
         <values>
             <fullName>Chat</fullName>
@@ -629,6 +647,104 @@
         </values>
         <values>
             <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PNR_Payment_Status__c</picklist>
+        <values>
+            <fullName>Not Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for Deposit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for Final Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for NC</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Point_of_Sale__c</picklist>
+        <values>
+            <fullName>ACE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benelux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>US</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -659,6 +775,36 @@
         <picklist>Reason</picklist>
         <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Sales_Contract_Status__c</picklist>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Season__c</picklist>
+        <values>
+            <fullName>S21</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S22</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S23</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>W21%2F22</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>W22%2F23</fullName>
             <default>false</default>
         </values>
     </picklistValues>

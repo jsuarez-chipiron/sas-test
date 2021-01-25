@@ -171,6 +171,32 @@
     <flexiPageRegions>
         <componentInstances>
             <componentInstanceProperties>
+                <name>createQuickActionName</name>
+                <value>NewCase</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>lookupFieldName</name>
+                <value>Case.Id</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>titleFieldName</name>
+                <value>Group Sales Bulk Information</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>updateQuickActionName</name>
+                <value>Case.Group_Sales_Bulk_Information</value>
+            </componentInstanceProperties>
+            <componentName>console:relatedRecord</componentName>
+            <visibilityRule>
+                <criteria>
+                    <leftValue>{!Record.Origin}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Email - Group Sales Bulk</rightValue>
+                </criteria>
+            </visibilityRule>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
                 <name>lookupFieldName</name>
                 <value>Case.Id</value>
             </componentInstanceProperties>

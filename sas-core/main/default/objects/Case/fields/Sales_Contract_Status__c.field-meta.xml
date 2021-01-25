@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Contract_Status__c</fullName>
+    <description>Shows the lifecycle of the bulk sales contract</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Shows the lifecycle of the bulk sales contract</inlineHelpText>
+    <label>Sales/Contract Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Completed</fullName>
+                <default>false</default>
+                <label>Completed</label>
+            </value>
+            <value>
+                <fullName>Invited</fullName>
+                <default>false</default>
+                <label>Invited</label>
+            </value>
+            <value>
+                <fullName>Ongoing</fullName>
+                <default>false</default>
+                <label>Ongoing</label>
+            </value>
+            <value>
+                <fullName>Confirmed</fullName>
+                <default>false</default>
+                <label>Confirmed</label>
+            </value>
+            <value>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+                <label>Rejected</label>
+            </value>
+            <value>
+                <fullName>Contract sent</fullName>
+                <default>false</default>
+                <label>Contract sent</label>
+            </value>
+            <value>
+                <fullName>Contract Signed</fullName>
+                <default>false</default>
+                <label>Contract Signed</label>
+            </value>
+            <value>
+                <fullName>Booked</fullName>
+                <default>false</default>
+                <label>Booked</label>
+            </value>
+            <value>
+                <fullName>ADM logged</fullName>
+                <default>false</default>
+                <label>ADM logged</label>
+            </value>
+            <value>
+                <fullName>ADM sent</fullName>
+                <default>false</default>
+                <label>ADM sent</label>
+            </value>
+            <value>
+                <fullName>ADM disputed</fullName>
+                <default>false</default>
+                <label>ADM disputed</label>
+            </value>
+            <value>
+                <fullName>In progress</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>In progress</label>
+            </value>
+            <value>
+                <fullName>Negotiation Started</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Negotiation Started</label>
+            </value>
+            <value>
+                <fullName>Pending</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Pending</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
