@@ -3,6 +3,7 @@
     <fullName>Information</fullName>
     <active>true</active>
     <businessProcess>Default</businessProcess>
+    <description>Use for chat cases</description>
     <label>Information</label>
     <picklistValues>
         <picklist>Case_Grouping__c</picklist>
@@ -917,7 +918,7 @@
     <picklistValues>
         <picklist>Sales_Contract_Status__c</picklist>
         <values>
-            <fullName>Completed</fullName>
+            <fullName>Invited</fullName>
             <default>false</default>
         </values>
     </picklistValues>

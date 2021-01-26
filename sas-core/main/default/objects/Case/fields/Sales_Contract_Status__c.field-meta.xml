@@ -15,11 +15,6 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Completed</fullName>
-                <default>false</default>
-                <label>Completed</label>
-            </value>
-            <value>
                 <fullName>Invited</fullName>
                 <default>false</default>
                 <label>Invited</label>
@@ -68,24 +63,6 @@
                 <fullName>ADM disputed</fullName>
                 <default>false</default>
                 <label>ADM disputed</label>
-            </value>
-            <value>
-                <fullName>In progress</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>In progress</label>
-            </value>
-            <value>
-                <fullName>Negotiation Started</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Negotiation Started</label>
-            </value>
-            <value>
-                <fullName>Pending</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Pending</label>
             </value>
         </valueSetDefinition>
     </valueSet>

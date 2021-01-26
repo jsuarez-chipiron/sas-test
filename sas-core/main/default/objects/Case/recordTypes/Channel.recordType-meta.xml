@@ -4,6 +4,7 @@
     <active>true</active>
     <businessProcess>Default</businessProcess>
     <compactLayoutAssignment>SAS_Channel_Case</compactLayoutAssignment>
+    <description>Use for most cases types related to customers</description>
     <label>Channel</label>
     <picklistValues>
         <picklist>Case_Grouping__c</picklist>
@@ -1323,10 +1324,6 @@
         </values>
         <values>
             <fullName>Booked</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completed</fullName>
             <default>false</default>
         </values>
         <values>

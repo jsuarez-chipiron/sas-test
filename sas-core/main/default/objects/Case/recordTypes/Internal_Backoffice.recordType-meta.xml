@@ -3,6 +3,7 @@
     <fullName>Internal_Backoffice</fullName>
     <active>true</active>
     <businessProcess>Internal%2FBackoffice</businessProcess>
+    <description>Use cases for Infohub</description>
     <label>Internal/Backoffice</label>
     <picklistValues>
         <picklist>Case_Grouping__c</picklist>
@@ -1209,7 +1210,7 @@
     <picklistValues>
         <picklist>Sales_Contract_Status__c</picklist>
         <values>
-            <fullName>Completed</fullName>
+            <fullName>Invited</fullName>
             <default>false</default>
         </values>
     </picklistValues>
