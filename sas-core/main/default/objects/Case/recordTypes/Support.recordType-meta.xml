@@ -773,7 +773,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Sales_Contract_Status__c</picklist>
+        <picklist>GSB_Sales_Contract_Status__c</picklist>
         <values>
             <fullName>Invited</fullName>
             <default>false</default>
