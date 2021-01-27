@@ -210,8 +210,14 @@
             </componentInstanceProperties>
             <componentName>console:relatedRecord</componentName>
             <visibilityRule>
+                <booleanFilter>1 OR 2</booleanFilter>
                 <criteria>
                     <leftValue>{!Record.Case_Grouping__c}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Group Sales</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.Department__c}</leftValue>
                     <operator>EQUAL</operator>
                     <rightValue>Group Sales</rightValue>
                 </criteria>

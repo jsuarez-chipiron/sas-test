@@ -924,7 +924,7 @@
                 <stringValue>[Case].FCS_ReopenedCount__c + 1</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_18_myRule_15_A1_0533180431</name>
+        <name>formula_18_myRule_15_A1_0560635660</name>
         <dataType>Number</dataType>
         <expression>{!myVariable_current.FCS_ReopenedCount__c} + 1</expression>
         <scale>18</scale>
@@ -1341,7 +1341,7 @@
             </processMetadataValues>
             <field>FCS_ReopenedCount__c</field>
             <value>
-                <elementReference>formula_18_myRule_15_A1_0533180431</elementReference>
+                <elementReference>formula_18_myRule_15_A1_0560635660</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1562,7 +1562,7 @@
             <processMetadataValues>
                 <name>leftHandSideLabel</name>
                 <value>
-                    <stringValue>Team</stringValue>
+                    <stringValue>Case Owner Team</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>

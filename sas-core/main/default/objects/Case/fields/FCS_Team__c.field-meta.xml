@@ -4,10 +4,11 @@
     <description>The team of the case owner (that is a user)</description>
     <externalId>false</externalId>
     <inlineHelpText>The team of the case owner (that is a user)</inlineHelpText>
-    <label>Team</label>
+    <label>Case Owner Team</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
