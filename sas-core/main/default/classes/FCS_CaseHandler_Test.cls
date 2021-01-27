@@ -315,7 +315,8 @@ private class FCS_CaseHandler_Test {
         Case testCaseAfterTrigger = [SELECT Case_Grouping__c, Type FROM Case Where Id = :testCase.Id][0];
 
         System.assertEquals(testCaseAfterTrigger.Type, 'Channel');
-        System.assertEquals(testCaseAfterTrigger.Case_Grouping__c, 'Group Sales');
+        System.assertEquals(testCaseAfterTrigger.Department__c, 'Group Sales');
+        System.assertEquals(testCaseAfterTrigger.Team__c, 'AT');
     }
 
     @IsTest
