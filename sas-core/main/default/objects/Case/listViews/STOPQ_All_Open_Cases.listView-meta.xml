@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>STOPQ_All_Open_Cases</fullName>
+    <booleanFilter>2 AND (1 OR 3)</booleanFilter>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.SUBJECT</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
@@ -21,6 +22,11 @@
         <field>CASES.CLOSED</field>
         <operation>equals</operation>
         <value>0</value>
+    </filters>
+    <filters>
+        <field>Department__c</field>
+        <operation>equals</operation>
+        <value>Info Hub</value>
     </filters>
     <label>STOPQ All Open Cases</label>
     <sharedTo>

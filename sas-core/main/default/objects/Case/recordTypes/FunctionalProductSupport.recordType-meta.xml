@@ -17,6 +17,33 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Department__c</picklist>
+        <values>
+            <fullName>Agent Helpdesk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functional Product Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info Hub</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
         <values>
             <fullName>Puzzel</fullName>
@@ -439,6 +466,157 @@
         </values>
         <values>
             <fullName>W22%2F23</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Team__c</picklist>
+        <values>
+            <fullName>ACE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent Fares Ticketing EU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benelux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Forsvaret NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympic DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympic NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympic SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pandion DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pandion NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pandion SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partner Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Poland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SASSI Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scandinavia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Star Alliance Upgrades</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System %26 Tariff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>US</fullName>
             <default>false</default>
         </values>
     </picklistValues>
