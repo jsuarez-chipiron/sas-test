@@ -6,7 +6,6 @@
     <description>Use cases for Infohub</description>
     <label>Internal/Backoffice</label>
     <picklistValues>
-    <picklistValues>
         <picklist>Consent__c</picklist>
         <values>
             <fullName>No</fullName>
