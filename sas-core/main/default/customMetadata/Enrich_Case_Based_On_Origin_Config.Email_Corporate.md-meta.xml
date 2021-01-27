@@ -7,10 +7,6 @@
         <value xsi:type="xsd:string">Channel</value>
     </values>
     <values>
-        <field>Case_Visibility_Grouping_To_Assign__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
         <field>Department_To_Assign__c</field>
         <value xsi:type="xsd:string">Corporate</value>
     </values>
