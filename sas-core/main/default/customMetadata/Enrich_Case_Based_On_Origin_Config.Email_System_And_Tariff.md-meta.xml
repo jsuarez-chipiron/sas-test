@@ -4,14 +4,22 @@
     <protected>false</protected>
     <values>
         <field>Case_Type_To_Assign__c</field>
-        <value xsi:type="xsd:string"></value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Case_Visibility_Grouping_To_Assign__c</field>
-        <value xsi:type="xsd:string"></value>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Department_To_Assign__c</field>
+        <value xsi:type="xsd:string">Info Hub</value>
     </values>
     <values>
         <field>Incoming_Case_Origin__c</field>
         <value xsi:type="xsd:string">Email - System &amp; Tariff</value>
+    </values>
+    <values>
+        <field>Team_To_Assign__c</field>
+        <value xsi:type="xsd:string">System &amp; Tariff</value>
     </values>
 </CustomMetadata>

@@ -11,7 +11,15 @@
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>Department_To_Assign__c</field>
+        <value xsi:type="xsd:string">Agent Helpdesk</value>
+    </values>
+    <values>
         <field>Incoming_Case_Origin__c</field>
         <value xsi:type="xsd:string">Email - SAS Poland</value>
+    </values>
+    <values>
+        <field>Team_To_Assign__c</field>
+        <value xsi:type="xsd:string">SAS Poland</value>
     </values>
 </CustomMetadata>

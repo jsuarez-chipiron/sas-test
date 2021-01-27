@@ -8,10 +8,18 @@
     </values>
     <values>
         <field>Case_Visibility_Grouping_To_Assign__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Department_To_Assign__c</field>
         <value xsi:type="xsd:string">Group Sales</value>
     </values>
     <values>
         <field>Incoming_Case_Origin__c</field>
         <value xsi:type="xsd:string">Email - Group Sales PL</value>
+    </values>
+    <values>
+        <field>Team_To_Assign__c</field>
+        <value xsi:type="xsd:string">PL</value>
     </values>
 </CustomMetadata>
