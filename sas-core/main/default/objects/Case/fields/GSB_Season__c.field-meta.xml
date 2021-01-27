@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Season__c</fullName>
+    <fullName>GSB_Season__c</fullName>
     <description>For Bulk Group Sales, it indicates the season related to sales</description>
     <externalId>false</externalId>
     <inlineHelpText>The season for the bulk group sales</inlineHelpText>
-    <label>Season</label>
+    <label>Group Sales Bulk Season</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

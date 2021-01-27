@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Flight_Length__c</fullName>
+    <fullName>GSB_Flight_Length__c</fullName>
     <description>The length of the flight</description>
     <externalId>false</externalId>
     <inlineHelpText>The length of the flight</inlineHelpText>
-    <label>Flight Length</label>
+    <label>Group Sales Bulk Flight Length</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

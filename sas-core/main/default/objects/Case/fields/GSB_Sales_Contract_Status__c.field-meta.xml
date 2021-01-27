@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Sales_Contract_Status__c</fullName>
+    <fullName>GSB_Sales_Contract_Status__c</fullName>
     <description>Shows the lifecycle of the bulk sales contract</description>
     <externalId>false</externalId>
     <inlineHelpText>Shows the lifecycle of the bulk sales contract</inlineHelpText>
-    <label>Sales/Contract Status</label>
+    <label>Group Sales Bulk Sales/Contract Status</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
