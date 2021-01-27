@@ -3,6 +3,7 @@
     <fullName>Information</fullName>
     <active>true</active>
     <businessProcess>Default</businessProcess>
+    <description>Use for chat cases</description>
     <label>Information</label>
     <picklistValues>
         <picklist>Consent__c</picklist>
@@ -738,6 +739,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>GSB_Flight_Length__c</picklist>
+        <values>
+            <fullName>Long Haul</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Short Haul</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Origin</picklist>
         <values>
             <fullName>Chat</fullName>
@@ -745,6 +757,10 @@
         </values>
         <values>
             <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Sales Information</fullName>
             <default>false</default>
         </values>
         <values>
@@ -763,8 +779,102 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PNR_Payment_Status__c</picklist>
         <values>
-            <fullName>Email - Sales Information</fullName>
+            <fullName>Not Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for Deposit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for Final Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for NC</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>GSB_Point_of_Sale__c</picklist>
+        <values>
+            <fullName>ACE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benelux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>US</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -795,6 +905,36 @@
         <picklist>Reason</picklist>
         <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>GSB_Sales_Contract_Status__c</picklist>
+        <values>
+            <fullName>Invited</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>GSB_Season__c</picklist>
+        <values>
+            <fullName>S21</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S22</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S23</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>W21%2F22</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>W22%2F23</fullName>
             <default>false</default>
         </values>
     </picklistValues>
