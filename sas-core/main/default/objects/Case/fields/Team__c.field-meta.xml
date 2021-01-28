@@ -26,6 +26,16 @@
                 <label>AT</label>
             </value>
             <value>
+                <fullName>Benelux</fullName>
+                <default>false</default>
+                <label>Benelux</label>
+            </value>
+            <value>
+                <fullName>Bulk</fullName>
+                <default>false</default>
+                <label>Bulk</label>
+            </value>
+            <value>
                 <fullName>CH</fullName>
                 <default>false</default>
                 <label>CH</label>
@@ -129,11 +139,6 @@
                 <fullName>Agent Fares Ticketing EU</fullName>
                 <default>false</default>
                 <label>Agent Fares Ticketing EU</label>
-            </value>
-            <value>
-                <fullName>Benelux</fullName>
-                <default>false</default>
-                <label>Benelux</label>
             </value>
             <value>
                 <fullName>Forsvaret NO</fullName>
@@ -243,6 +248,14 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Benelux</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Bulk</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>CH</valueName>
         </valueSettings>
         <valueSettings>
@@ -312,10 +325,6 @@
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>IT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Benelux</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>

@@ -124,36 +124,6 @@
                 <default>false</default>
                 <label>Other</label>
             </value>
-            <value>
-                <fullName>Forsvaret NO</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Forsvaret NO</label>
-            </value>
-            <value>
-                <fullName>Interline</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Interline</label>
-            </value>
-            <value>
-                <fullName>Olympic DK</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Olympic DK</label>
-            </value>
-            <value>
-                <fullName>Olympic NO</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Olympic NO</label>
-            </value>
-            <value>
-                <fullName>Olympic SE</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Olympic SE</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
