@@ -56,6 +56,11 @@
                 <label>Email - Group Sales Benelux</label>
             </value>
             <value>
+                <fullName>Email - Group Sales Bulk</fullName>
+                <default>false</default>
+                <label>Email - Group Sales Bulk</label>
+            </value>
+            <value>
                 <fullName>Email - Group Sales CH</fullName>
                 <default>false</default>
                 <label>Email - Group Sales CH</label>

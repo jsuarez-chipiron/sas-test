@@ -6,13 +6,6 @@
     <description>Use for chat cases</description>
     <label>Information</label>
     <picklistValues>
-        <picklist>Case_Grouping__c</picklist>
-        <values>
-            <fullName>Group Sales</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Consent__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -784,60 +777,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Origin</picklist>
-        <values>
-            <fullName>Chat</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email - Sales Information</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Facebook</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Phone</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Twitter</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Web</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PNR_Payment_Status__c</picklist>
-        <values>
-            <fullName>Not Paid</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Paid</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Waiting for Deposit</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Waiting for Final Payment</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Waiting for NC</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>GSB_Point_of_Sale__c</picklist>
         <values>
             <fullName>ACE</fullName>
@@ -913,36 +852,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Priority</picklist>
-        <values>
-            <fullName>Critical</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>High</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Low</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Medium</fullName>
-            <default>true</default>
-        </values>
-        <values>
-            <fullName>Urgent</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Reason</picklist>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>GSB_Sales_Contract_Status__c</picklist>
         <values>
             <fullName>Invited</fullName>
@@ -969,6 +878,90 @@
         </values>
         <values>
             <fullName>W22%2F23</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Origin</picklist>
+        <values>
+            <fullName>Chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Sales Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Facebook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Twitter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PNR_Payment_Status__c</picklist>
+        <values>
+            <fullName>Not Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for Deposit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for Final Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for NC</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>Critical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Urgent</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason</picklist>
+        <values>
+            <fullName>Other</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -188,10 +188,16 @@
             </componentInstanceProperties>
             <componentName>console:relatedRecord</componentName>
             <visibilityRule>
+                <booleanFilter>1 AND 2</booleanFilter>
                 <criteria>
-                    <leftValue>{!Record.Origin}</leftValue>
+                    <leftValue>{!Record.Department__c}</leftValue>
                     <operator>EQUAL</operator>
-                    <rightValue>Email - Group Sales Bulk</rightValue>
+                    <rightValue>Group Sales</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.Team__c}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Bulk</rightValue>
                 </criteria>
             </visibilityRule>
         </componentInstances>
@@ -210,7 +216,7 @@
             </componentInstanceProperties>
             <componentName>console:relatedRecord</componentName>
             <visibilityRule>
-                <booleanFilter>1 OR 2</booleanFilter>
+                <booleanFilter>1 OR (2 AND 3)</booleanFilter>
                 <criteria>
                     <leftValue>{!Record.Case_Grouping__c}</leftValue>
                     <operator>EQUAL</operator>
@@ -220,6 +226,11 @@
                     <leftValue>{!Record.Department__c}</leftValue>
                     <operator>EQUAL</operator>
                     <rightValue>Group Sales</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.Team__c}</leftValue>
+                    <operator>NE</operator>
+                    <rightValue>Bulk</rightValue>
                 </criteria>
             </visibilityRule>
         </componentInstances>
