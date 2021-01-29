@@ -7,13 +7,6 @@
     <description>Use for most cases types related to customers</description>
     <label>Channel</label>
     <picklistValues>
-        <picklist>Case_Grouping__c</picklist>
-        <values>
-            <fullName>Group Sales</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Consent__c</picklist>
         <values>
             <fullName>No</fullName>
