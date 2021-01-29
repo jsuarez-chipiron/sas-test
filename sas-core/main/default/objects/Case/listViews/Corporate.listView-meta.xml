@@ -17,6 +17,11 @@
         <operation>equals</operation>
         <value>Corporate</value>
     </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>New</value>
+    </filters>
     <label>Corporate Support New Requests</label>
     <queue>Corporate</queue>
     <sharedTo>
