@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Group_Sales_SE_New_Requests</fullName>
-    <booleanFilter>1 AND 2 AND (3 OR (4 AND 5))</booleanFilter>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
     <columns>CASES.EMAIL</columns>
@@ -21,11 +20,6 @@
         <field>CASES.EMAIL</field>
         <operation>equals</operation>
         <value>gruppresor.se@sas.se</value>
-    </filters>
-    <filters>
-        <field>CASES.ORIGIN</field>
-        <operation>equals</operation>
-        <value>Email - Group Sales SE</value>
     </filters>
     <filters>
         <field>Department__c</field>
