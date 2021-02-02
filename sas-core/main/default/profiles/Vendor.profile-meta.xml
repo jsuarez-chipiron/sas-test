@@ -324,6 +324,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Request_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
         <editable>false</editable>
         <field>Case.FCS_ReopenedCount__c</field>
         <readable>true</readable>
@@ -755,8 +760,8 @@
         <name>MassInlineEdit</name>
     </userPermissions>
     <userPermissions>
-        <enabled>false</enabled>
-        <name>RemoveDirectMessageMembers</name>
+        <enabled>true</enabled>
+        <name>RunFlow</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
