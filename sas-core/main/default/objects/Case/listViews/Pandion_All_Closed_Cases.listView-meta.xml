@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Pandion_All_Closed_Cases</fullName>
-    <booleanFilter>2 AND (1 OR (3 AND 4))</booleanFilter>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.EMAIL</columns>
     <columns>CASES.SUBJECT</columns>
@@ -10,11 +9,6 @@
     <columns>OWNER_NAME</columns>
     <columns>CASES.ORIGIN</columns>
     <filterScope>Everything</filterScope>
-    <filters>
-        <field>CASES.ORIGIN</field>
-        <operation>equals</operation>
-        <value>Email - Pandion SE,Email - Pandion NO,Email - Pandion DK</value>
-    </filters>
     <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>

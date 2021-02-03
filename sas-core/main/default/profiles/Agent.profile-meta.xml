@@ -174,11 +174,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Case_Grouping__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.FCS_CODSId__c</field>
         <readable>true</readable>
     </fieldPermissions>
