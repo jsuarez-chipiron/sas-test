@@ -254,7 +254,7 @@
     <rules>
         <fullName>Return closed case to queue on new email - Info Hub</fullName>
         <actions>
-            <name>Case_Owner_Update_Sassi_Internal</name>
+            <name>Case_Owner_Update_Info_Hub</name>
             <type>FieldUpdate</type>
         </actions>
         <actions>
