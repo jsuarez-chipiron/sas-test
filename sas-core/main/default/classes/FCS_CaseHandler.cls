@@ -164,7 +164,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     private static void enrichMissingPointsCaseDataWithMissingPointsFormData(List<Case> newCaseList) {
         /* List emailSubjectKeywords and formFromEmailAddress are Used as part of verification to check if email comes from form */
         String emailSubjectKeyword = 'flight retro';
-        List<String> formSentFromEmailAddress = new List<String> {'noreply@flysas.com', 'madis.tepp@sas.se'};
+        List<String> formSentFromEmailAddress = new List<String> {'noreply@flysas.com', 'salesforce_uat5@sas.se'};
 
 
         for (Case c: newCaseList) {
