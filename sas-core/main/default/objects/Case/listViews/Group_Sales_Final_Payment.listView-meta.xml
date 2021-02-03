@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Group_Sales_Final_Payment</fullName>
-    <booleanFilter>2 AND (1 OR 3)</booleanFilter>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
     <columns>CASES.EMAIL</columns>
@@ -12,11 +11,6 @@
     <columns>PNR_Payment_Status__c</columns>
     <columns>CASES.LAST_UPDATE_DATE_ONLY</columns>
     <filterScope>Everything</filterScope>
-    <filters>
-        <field>Case_Grouping__c</field>
-        <operation>equals</operation>
-        <value>Group Sales</value>
-    </filters>
     <filters>
         <field>CASES.EMAIL</field>
         <operation>equals</operation>

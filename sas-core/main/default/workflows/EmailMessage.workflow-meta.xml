@@ -3,7 +3,7 @@
     <fieldUpdates>
         <fullName>Case_Owner_Update_Agent_Helpdesk</fullName>
         <field>OwnerId</field>
-        <lookupValue>SAS_Agent_Helpdesk</lookupValue>
+        <lookupValue>Agent_Helpdesk</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Case Owner Update Agent Helpdesk</name>
         <notifyAssignee>false</notifyAssignee>
@@ -14,7 +14,7 @@
     <fieldUpdates>
         <fullName>Case_Owner_Update_Corporate</fullName>
         <field>OwnerId</field>
-        <lookupValue>SAS_Corporate</lookupValue>
+        <lookupValue>Corporate</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Case Owner Update Corporate</name>
         <notifyAssignee>false</notifyAssignee>
@@ -25,7 +25,7 @@
     <fieldUpdates>
         <fullName>Case_Owner_Update_EuroBonus</fullName>
         <field>OwnerId</field>
-        <lookupValue>SAS_EuroBonus</lookupValue>
+        <lookupValue>EuroBonus</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Case Owner Update EuroBonus</name>
         <notifyAssignee>false</notifyAssignee>
@@ -47,7 +47,7 @@
     <fieldUpdates>
         <fullName>Case_Owner_Update_Group_Sales</fullName>
         <field>OwnerId</field>
-        <lookupValue>SAS_Group_Sales</lookupValue>
+        <lookupValue>Group_Sales</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Case Owner Update Group Sales</name>
         <notifyAssignee>false</notifyAssignee>
@@ -56,44 +56,11 @@
         <targetObject>ParentId</targetObject>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Case_Owner_Update_Pandion</fullName>
+        <fullName>Case_Owner_Update_Info_Hub</fullName>
         <field>OwnerId</field>
-        <lookupValue>SAS_Pandion</lookupValue>
+        <lookupValue>Info_Hub</lookupValue>
         <lookupValueType>Queue</lookupValueType>
-        <name>Case Owner Update Pandion</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <targetObject>ParentId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Case_Owner_Update_Sassi_Internal</fullName>
-        <field>OwnerId</field>
-        <lookupValue>STOPQSASSIInternal</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Case Owner Update Sassi Internal</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <targetObject>ParentId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Case_Owner_Update_for_Sales_Information</fullName>
-        <field>OwnerId</field>
-        <lookupValue>STOPQSalesInformation</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Case Owner Update for Sales Information</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <targetObject>ParentId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Case_Owner_Update_system_and_tariff</fullName>
-        <field>OwnerId</field>
-        <lookupValue>STOPQSystemTariff</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Case Owner Update system and tariff</name>
+        <name>Case Owner Update Info Hub</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
@@ -145,9 +112,9 @@
             <value>True</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Origin</field>
+            <field>Case.Department__c</field>
             <operation>equals</operation>
-            <value>Email - Agent Helpdesk Scandinavia</value>
+            <value>Agent Helpdesk</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>
@@ -178,9 +145,9 @@
             <value>True</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Origin</field>
+            <field>Case.Department__c</field>
             <operation>equals</operation>
-            <value>Email - Corporate</value>
+            <value>Corporate</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>
@@ -211,9 +178,9 @@
             <value>True</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Origin</field>
+            <field>Case.Department__c</field>
             <operation>equals</operation>
-            <value>Email - EuroBonus,Email - Star Alliance Upgrades</value>
+            <value>EuroBonus</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>
@@ -244,9 +211,9 @@
             <value>True</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Origin</field>
+            <field>Case.Department__c</field>
             <operation>equals</operation>
-            <value>Email - Functional Product Support</value>
+            <value>Functional Product Support</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>
@@ -266,7 +233,6 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND (3 OR 4 OR 5 OR 6)</booleanFilter>
         <criteriaItems>
             <field>EmailMessage.Incoming</field>
             <operation>equals</operation>
@@ -278,32 +244,17 @@
             <value>True</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>contains</operation>
-            <value>Email - Group Sales</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>contains</operation>
-            <value>Email - Olympic</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
+            <field>Case.Department__c</field>
             <operation>equals</operation>
-            <value>Email - Forsvaret NO</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Email - Agent Fares Ticketing EU</value>
+            <value>Group Sales</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>Return closed case to queue on new email - Pandion</fullName>
+        <fullName>Return closed case to queue on new email - Info Hub</fullName>
         <actions>
-            <name>Case_Owner_Update_Pandion</name>
+            <name>Case_Owner_Update_Info_Hub</name>
             <type>FieldUpdate</type>
         </actions>
         <actions>
@@ -326,108 +277,9 @@
             <value>True</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>contains</operation>
-            <value>Email - Pandion</value>
-        </criteriaItems>
-        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Return closed case to queue on new email - SASSI Internal</fullName>
-        <actions>
-            <name>Case_Owner_Update_Sassi_Internal</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Case_Previous_Owner_Update</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Case_Status_New_Response</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>EmailMessage.Incoming</field>
+            <field>Case.Department__c</field>
             <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Email - SASSI Internal</value>
-        </criteriaItems>
-        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Return closed case to queue on new email - Sales Information</fullName>
-        <actions>
-            <name>Case_Owner_Update_for_Sales_Information</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Case_Previous_Owner_Update</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Case_Status_New_Response</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>EmailMessage.Incoming</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Email - Sales Information</value>
-        </criteriaItems>
-        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Return closed case to queue on new email - System %26 Tariff</fullName>
-        <actions>
-            <name>Case_Owner_Update_system_and_tariff</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Case_Previous_Owner_Update</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Case_Status_New_Response</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>EmailMessage.Incoming</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Email - System &amp; Tariff</value>
+            <value>Info Hub</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>

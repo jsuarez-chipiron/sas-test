@@ -213,12 +213,7 @@
             </componentInstanceProperties>
             <componentName>console:relatedRecord</componentName>
             <visibilityRule>
-                <booleanFilter>1 OR (2 AND 3)</booleanFilter>
-                <criteria>
-                    <leftValue>{!Record.Case_Grouping__c}</leftValue>
-                    <operator>EQUAL</operator>
-                    <rightValue>Group Sales</rightValue>
-                </criteria>
+                <booleanFilter>1 AND 2</booleanFilter>
                 <criteria>
                     <leftValue>{!Record.Department__c}</leftValue>
                     <operator>EQUAL</operator>
