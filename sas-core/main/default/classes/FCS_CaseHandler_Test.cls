@@ -312,10 +312,11 @@ private class FCS_CaseHandler_Test {
         insert testCase;
         Test.stopTest();
 
-        Case testCaseAfterTrigger = [SELECT Case_Grouping__c, Type FROM Case Where Id = :testCase.Id][0];
+        Case testCaseAfterTrigger = [SELECT Department__c, Team__c, Type FROM Case Where Id = :testCase.Id][0];
 
         System.assertEquals(testCaseAfterTrigger.Type, 'Channel');
-        System.assertEquals(testCaseAfterTrigger.Case_Grouping__c, 'Group Sales');
+        System.assertEquals(testCaseAfterTrigger.Department__c, 'Group Sales');
+        System.assertEquals(testCaseAfterTrigger.Team__c, 'AT');
     }
 
     @IsTest
@@ -345,6 +346,89 @@ private class FCS_CaseHandler_Test {
         Case testCaseAfterTrigger = [SELECT Case_Grouping__c, Type FROM Case Where Id = :testCase.Id][0];
 
         System.assert(String.isEmpty(testCaseAfterTrigger.Case_Grouping__c));
+    }
+
+    @IsTest
+    static void enrichCaseFromFormSuppliedEmailShouldNotChangeIfIncorrectFormatInForm() {
+        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
+        testCase.Subject = 'sports-trips';
+        testCase.SuppliedEmail = 'gruppresor.se@sas.se';        
+        testCase.Description = 'contact-person : Fr\nemail : thisiswrongformat\naddress : Tuborgvej 5\nco-address :';
+
+        Test.startTest();
+        insert testCase;
+        Test.stopTest();
+
+        Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
+
+        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'gruppresor.se@sas.se');
+
+    }
+
+    @IsTest
+    static void enrichCaseFromFormSuppliedEmailShouldChangeIfCorrectFormatInForm() {
+        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
+        testCase.Subject = 'sports-trips';
+        testCase.SuppliedEmail = 'gruppresor.se@sas.se';        
+        testCase.Description = 'contact-person : Fr\nemail : correctformat@example.com\naddress : Tuborgvej 5\nco-address :';
+
+        Test.startTest();
+        insert testCase;
+        Test.stopTest();
+
+        Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
+
+        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'correctformat@example.com');
+
+    }
+
+    @IsTest
+    static void enrichCaseDataWithFormDataShouldNotRunIfIncomingEmailAddressAsVerificationFalse() {
+        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
+        testCase.Subject = 'sports-trips';
+        testCase.SuppliedEmail = 'test.email@example.com';
+
+        Test.startTest();
+        insert testCase;
+        Test.stopTest();
+
+        Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
+
+        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'test.email@example.com');
+
+    }
+
+    @IsTest
+    static void enrichCaseDataWithFormDataIfCaseFromKeywordsFalse() {
+        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
+        testCase.Subject = 'not part of caseFromKeywords';
+        testCase.SuppliedEmail = 'test.email@example.com';
+
+        Test.startTest();
+        insert testCase;
+        Test.stopTest();
+
+        Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
+
+        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'test.email@example.com');
+
+    }
+
+    @IsTest
+    static void enrichCaseDataWithFormDataIfDescriptionDoesNotContainSubStringBetweenInfoDoNotChangeSuppliedEmail() {
+        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
+        testCase.Subject = 'group-trips';
+        testCase.SuppliedEmail = 'gruppresor.se@sas.se';
+        testCase.Description = 'subject and from email indicate that email is from form but it is not';
+
+        Test.startTest();
+        insert testCase;
+        Test.stopTest();
+
+        Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
+
+        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'gruppresor.se@sas.se');
+
     }
 
 }

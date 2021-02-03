@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Case_Visibility_Grouping_To_Assign__c</fullName>
+    <fullName>GSB_Flight_Length__c</fullName>
+    <description>The length of the flight</description>
     <externalId>false</externalId>
-    <fieldManageability>DeveloperControlled</fieldManageability>
-    <label>Case Visibility Grouping To Assign</label>
+    <inlineHelpText>The length of the flight</inlineHelpText>
+    <label>Group Sales Bulk Flight Length</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Group Sales</fullName>
+                <fullName>Short Haul</fullName>
                 <default>false</default>
-                <label>Group Sales</label>
+                <label>Short Haul</label>
             </value>
             <value>
-                <fullName>None</fullName>
+                <fullName>Long Haul</fullName>
                 <default>false</default>
-                <label>None</label>
+                <label>Long Haul</label>
             </value>
         </valueSetDefinition>
     </valueSet>

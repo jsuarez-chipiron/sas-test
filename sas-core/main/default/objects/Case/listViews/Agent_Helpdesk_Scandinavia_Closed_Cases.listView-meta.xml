@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Agent_Helpdesk_Scandinavia_Closed_Cases</fullName>
+    <booleanFilter>(2 OR (3 AND 4)) AND 1</booleanFilter>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.SUBJECT</columns>
     <columns>CASES.STATUS</columns>
@@ -20,6 +21,16 @@
         <field>CASES.ORIGIN</field>
         <operation>equals</operation>
         <value>Email - Agent Helpdesk Scandinavia</value>
+    </filters>
+    <filters>
+    <field>Department__c</field>
+        <operation>equals</operation>
+        <value>Agent Helpdesk</value>
+    </filters>
+    <filters>
+        <field>Team__c</field>
+        <operation>equals</operation>
+        <value>Scandinavia</value>
     </filters>
     <label>Agent Helpdesk Scandinavia  Closed Cases</label>
     <sharedTo>

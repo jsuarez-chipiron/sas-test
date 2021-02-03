@@ -48,6 +48,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
         assignOwnerFromSoMe(newCaseList);
         validateCaseTags(newCaseList);
         enrichCaseDataBasedOnOrigin(newCaseList);
+        enrichCaseDataWithFormData(newCaseList);
     }
     /**
   Used to call the trigger in the before update context
@@ -87,7 +88,12 @@ public class FCS_CaseHandler extends C_TriggerHandler {
      */
     private static void enrichCaseDataBasedOnOrigin(List<Case> newCaseList) {
         for (Case c: newCaseList) {
-            List<Enrich_Case_Based_On_Origin_Config__mdt> enrichmentData = [SELECT Case_Type_To_Assign__c, Case_Visibility_Grouping_To_Assign__c FROM Enrich_Case_Based_On_Origin_Config__mdt WHERE Incoming_Case_Origin__c = :c.Origin];
+            List<Enrich_Case_Based_On_Origin_Config__mdt> enrichmentData = [
+                SELECT Department_To_Assign__c, Team_To_Assign__c, Case_Type_To_Assign__c
+                FROM Enrich_Case_Based_On_Origin_Config__mdt
+                WHERE Incoming_Case_Origin__c = :c.Origin
+            ];
+
             if (!enrichmentData.isEmpty()) {
                 // A configuration was found for this Origin
                 Enrich_Case_Based_On_Origin_Config__mdt caseConfiguration = enrichmentData[0];
@@ -97,12 +103,58 @@ public class FCS_CaseHandler extends C_TriggerHandler {
                     c.Type = caseConfiguration.Case_Type_To_Assign__c;
                 }
 
-                if (!String.isEmpty(caseConfiguration.Case_Visibility_Grouping_To_Assign__c)) {
-                    c.Case_Grouping__c = caseConfiguration.Case_Visibility_Grouping_To_Assign__c;
+                if (!String.isEmpty(caseConfiguration.Department_To_Assign__c)) {
+                    c.Department__c = caseConfiguration.Department_To_Assign__c;
+                }
+
+                if (!String.isEmpty(caseConfiguration.Team_To_Assign__c)) {
+                    c.Team__c = caseConfiguration.Team_To_Assign__c;
                 }
             }
         }
     }
+
+    /**
+    * Reads case subject and case description fields and updates case fields with data from description
+    * if some requirements are met.
+    * Run only on beforeInsert
+    */
+    private static void enrichCaseDataWithFormData(List<Case> newCaseList) {
+        /* List caseFormKeywords and incomingEmailAddressAsVerification are Used as part of verification to check if email comes from form */
+        List<String> caseFormKeywords = new List<String> {'group-trips', 'sports-trips', 'grouptrips', 'request-grupperejse',
+                                                         'sportgruppereiser', 'gruppresor'};
+        List<String> incomingEmailAddressAsVerification = new List<String> {'gruppresor.se@sas.se', 'gruppereiser.no@sas.no',    
+                                                         'donotreply@sas.dk', 'uk-groupquotes@sas.dk', 'salesforce_uat4@sas.se'};
+        String emailRegex = '([a-zA-Z0-9_\\-\\.]+)@((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})';
+        for (Case c: newCaseList) {
+            for (String keyWord: caseFormKeywords) {
+                Boolean comesFromForm = c.Subject != Null && c.Subject.toLowercase().Contains(keyWord) && incomingEmailAddressAsVerification.contains(c.SuppliedEmail);
+                if (comesFromForm) {
+                    if (c.Description != '' && c.Description.length()>0) {
+                        String data = c.Description;
+                        String newSuppliedEmail = data.substringBetween('email : ', '\n');            
+                        /**
+                        * validate suppliedEmail email address received from form
+                        * and assign as suppliedEmail if valid
+                        */
+                            if (newSuppliedEmail == null) {
+                            c.SuppliedEmail=c.SuppliedEmail;
+                        } else {
+                            Pattern emailPattern = Pattern.compile(emailRegex);
+                            Matcher emailMatcher = emailPattern.matcher(newSuppliedEmail);
+
+                            if (emailMatcher.matches()) {
+                                c.SuppliedEmail = newSuppliedEmail;
+                            } else {
+                                c.SuppliedEmail = c.SuppliedEmail;
+                            }
+                        }
+                    }
+                }               
+            }
+        }
+    }
+
 
     /**
     Method to set owner on case created from SoMe-post quick actions

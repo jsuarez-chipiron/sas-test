@@ -161,14 +161,43 @@
                 </criteria>
             </visibilityRule>
         </componentInstances>
-        <componentInstances>
-            <componentName>forceKnowledge:articleSearchDesktop</componentName>
-        </componentInstances>
         <mode>Replace</mode>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>createQuickActionName</name>
+                <value>NewCase</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>lookupFieldName</name>
+                <value>Case.Id</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>titleFieldName</name>
+                <value>Group Sales Bulk Information</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>updateQuickActionName</name>
+                <value>Case.Group_Sales_Bulk_Information</value>
+            </componentInstanceProperties>
+            <componentName>console:relatedRecord</componentName>
+            <visibilityRule>
+                <booleanFilter>1 AND 2</booleanFilter>
+                <criteria>
+                    <leftValue>{!Record.Department__c}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Group Sales</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.Team__c}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Bulk</rightValue>
+                </criteria>
+            </visibilityRule>
+        </componentInstances>
         <componentInstances>
             <componentInstanceProperties>
                 <name>lookupFieldName</name>
@@ -184,10 +213,21 @@
             </componentInstanceProperties>
             <componentName>console:relatedRecord</componentName>
             <visibilityRule>
+                <booleanFilter>1 OR (2 AND 3)</booleanFilter>
                 <criteria>
                     <leftValue>{!Record.Case_Grouping__c}</leftValue>
                     <operator>EQUAL</operator>
                     <rightValue>Group Sales</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.Department__c}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Group Sales</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.Team__c}</leftValue>
+                    <operator>NE</operator>
+                    <rightValue>Bulk</rightValue>
                 </criteria>
             </visibilityRule>
         </componentInstances>

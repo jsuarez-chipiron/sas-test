@@ -4,7 +4,8 @@
     <columns>MasterLabel</columns>
     <columns>Incoming_Case_Origin__c</columns>
     <columns>Case_Type_To_Assign__c</columns>
-    <columns>Case_Visibility_Grouping_To_Assign__c</columns>
+    <columns>Department_To_Assign__c</columns>
+    <columns>Team_To_Assign__c</columns>
     <filterScope>Everything</filterScope>
     <label>Display queues</label>
     <language>en_US</language>
