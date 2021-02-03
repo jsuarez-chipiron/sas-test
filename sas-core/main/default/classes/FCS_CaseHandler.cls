@@ -48,7 +48,8 @@ public class FCS_CaseHandler extends C_TriggerHandler {
         assignOwnerFromSoMe(newCaseList);
         validateCaseTags(newCaseList);
         enrichCaseDataBasedOnOrigin(newCaseList);
-        enrichCaseDataWithFormData(newCaseList);
+        enrichGroupCaseDataWithGroupFormData(newCaseList);
+        enrichMissingPointsCaseDataWithMissingPointsFormData(newCaseList);
     }
     /**
   Used to call the trigger in the before update context
@@ -106,39 +107,49 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     }
 
     /**
-    * Reads case subject and case description fields and updates case fields with data from description
+     * Checks if format of mailaddress provided is correct, if yes it returns the mail address provided else
+     * returns null
+     */
+    private static String emailVerificationOnCaseTrigger(String emailAddress){
+        String emailRegex = '([a-zA-Z0-9_\\-\\.]+)@((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})';
+        Pattern emailPattern = Pattern.compile(emailRegex);
+        Matcher emailMatcher = emailPattern.matcher(emailAddress);
+
+        if (emailMatcher.matches()) {
+            return emailAddress;
+        } else {
+            return null;
+        }  
+    }
+    /**
+    * Reads case subject and case description fields and updates group sales case fields with data from description
     * if some requirements are met.
     * Run only on beforeInsert
     */
-    private static void enrichCaseDataWithFormData(List<Case> newCaseList) {
+    private static void enrichGroupCaseDataWithGroupFormData(List<Case> newCaseList) {
         /* List caseFormKeywords and incomingEmailAddressAsVerification are Used as part of verification to check if email comes from form */
         List<String> caseFormKeywords = new List<String> {'group-trips', 'sports-trips', 'grouptrips', 'request-grupperejse',
                                                          'sportgruppereiser', 'gruppresor'};
         List<String> incomingEmailAddressAsVerification = new List<String> {'gruppresor.se@sas.se', 'gruppereiser.no@sas.no',    
-                                                         'donotreply@sas.dk', 'uk-groupquotes@sas.dk', 'salesforce_uat4@sas.se'};
-        String emailRegex = '([a-zA-Z0-9_\\-\\.]+)@((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})';
+                                                         'donotreply@sas.dk', 'uk-groupquotes@sas.dk', 'salesforce_uat4@sas.se', 'madis.tepp@sas.se'};
         for (Case c: newCaseList) {
             for (String keyWord: caseFormKeywords) {
                 Boolean comesFromForm = c.Subject != Null && c.Subject.toLowercase().Contains(keyWord) && incomingEmailAddressAsVerification.contains(c.SuppliedEmail);
                 if (comesFromForm) {
                     if (c.Description != '' && c.Description.length()>0) {
-                        String data = c.Description;
-                        String newSuppliedEmail = data.substringBetween('email : ', '\n');            
+                        String data = c.Description; 
+                        String newSuppliedEmail = data.substringBetween('email : ', '\n');
+                       
                         /**
                         * validate suppliedEmail email address received from form
                         * and assign as suppliedEmail if valid
                         */
-                            if (newSuppliedEmail == null) {
-                            c.SuppliedEmail=c.SuppliedEmail;
-                        } else {
-                            Pattern emailPattern = Pattern.compile(emailRegex);
-                            Matcher emailMatcher = emailPattern.matcher(newSuppliedEmail);
-
-                            if (emailMatcher.matches()) {
-                                c.SuppliedEmail = newSuppliedEmail;
-                            } else {
-                                c.SuppliedEmail = c.SuppliedEmail;
-                            }
+                        if (newSuppliedEmail == null) {
+                            c.SuppliedEmail = c.SuppliedEmail;
+                        } else if(emailVerificationOnCaseTrigger(newSuppliedEmail) == newSuppliedEmail){
+                            c.SuppliedEmail = newSuppliedEmail;
+                        }else{
+                            c.SuppliedEmail = c.SuppliedEmail;
                         }
                     }
                 }               
@@ -146,6 +157,71 @@ public class FCS_CaseHandler extends C_TriggerHandler {
         }
     }
 
+    /**
+     * Enrich Missing Points EB case with data received from form
+     * Provided tat criteria is met.
+     */
+    private static void enrichMissingPointsCaseDataWithMissingPointsFormData(List<Case> newCaseList) {
+        /* List emailSubjectKeywords and formFromEmailAddress are Used as part of verification to check if email comes from form */
+        String emailSubjectKeyword = 'flight retro';
+        List<String> formSentFromEmailAddress = new List<String> {'noreply@flysas.com', 'madis.tepp@sas.se'};
+
+
+        for (Case c: newCaseList) {
+            Boolean comesFromForm = c.Subject != Null && c.Subject.toLowercase().Contains(emailSubjectKeyword) && formSentFromEmailAddress.contains(c.SuppliedEmail);
+            if (comesFromForm) {
+                if (c.Description != '' && c.Description.length()>0) {
+                    String data = c.Description; 
+
+                    String memberEmailFromForm = data.substringBetween('member-email: ', '\n');
+                    if(memberEmailFromForm == null){
+                        c.SuppliedEmail = c.SuppliedEmail;
+                    } else if(emailVerificationOnCaseTrigger(memberEmailFromForm) == memberEmailFromForm){
+                        c.SuppliedEmail = memberEmailFromForm;
+                    } else {
+                        c.SuppliedEmail = c.SuppliedEmail;
+                    }
+                    
+
+                    String numberOfFlightData = data.substringBetween('number-of-flights: ', '\n');
+                    Integer numberOfFlights = null;
+                    try{
+                        numberOfFlights = Integer.valueOf(numberOfFlightData);
+                    }catch(Exception e){
+                        numberOfFlights = 0;
+                    }
+                    
+
+                    for(Integer i = 1; i <= numberOfFlights; i++){
+                        String airline = data.substringBetween('flight-'+i+'-airline:', '\n');  
+                        String description = data.substringBetween('flight-'+i+'-description:', '\n');
+                        String flightNo = data.substringBetween('flight-'+i+'-flight-no:', '\n');  
+                        String ticketNo = data.substringBetween('flight-'+i+'-ticket-no:', '\n');  
+                        String departure = data.substringBetween('flight-'+i+'-departure:', '\n');  
+                        String arrival = data.substringBetween('flight-'+i+'-arrival:', '\n');  
+                        String firstName = data.substringBetween('flight-'+i+'-ticket-first-name:', '\n');  
+                        String lastName = data.substringBetween('flight-'+i+'-ticket-last-name:', '\n');  
+                        String bookingClass = data.substringBetween('flight-'+i+'-booking-class:', '\n');  
+                        String boardingNumber = data.substringBetween('flight-'+i+'-boarding-number:', '\n');  
+                        String seatNumber = data.substringBetween('flight-'+i+'-seat-number:', '\n');
+                        
+                        c.put('X'+i+'_Flight_Info__c',  
+                            '<b>Airline</b> : '+ airline + '<br/>' +
+                            '<b>Description</b> : ' + description + '<br/>' +
+                            '<b>Flight Nr</b> : ' + flightNo + '<br/>' +
+                            '<b>Ticket Nr</b> : ' + ticketNo + '<br/>' +
+                            '<b>Departure</b> : ' + departure + '<br/>' +
+                            '<b>Arrival</b> : ' + arrival + '<br/>' +
+                            '<b>First Name</b> : ' + firstName + '<br/>' +
+                            '<b>Last Name</b> : ' + lastName + '<br/>' +
+                            '<b>Booking Class</b> : ' + bookingClass + '<br/>' +
+                            '<b>Boarding Number</b> : ' + boardingNumber + '<br/>' +
+                            '<b>Seat Number</b> : ' + seatNumber + '<br/>');
+                    }
+                }
+            } 
+        }
+    }
 
     /**
     Method to set owner on case created from SoMe-post quick actions
@@ -280,26 +356,26 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     }
     /**
      * @param newCaseList The list of the new version of the case i.e. the Trigger.new variable
-       assign the EuroBonus Account to Case based on the Email for Pandion customers
+       assign the EuroBonus Account to Case based on the Email for Pandion customers and missing points cases
        It search If there is any existing Account in salesforce , if not then call the Feature method , in turn call 
        the C shark to fetch the details
     */
     public static void assignEurobonusAccountToCase(List < Case > newCaseList) {
-        List < String > lstEmailAddress = new List < String > ();
-        List < Case > lstUpdateCases = new List < Case > ();
-        List < Id > lstCaseIds = new List < Id > ();
-        List < Account > lstAcc = new List < Account > ();
+        List<String> lstEmailAddress = new List<String> ();
+        List<Case> lstUpdateCases = new List<Case> ();
+        List<Id> lstCaseIds = new List<Id> ();
+        List<Account> lstAcc = new List<Account> ();
+        List<String> caseOriginToProcess = new List<String> {'Email - Pandion SE', 'Email - Pandion NO', 'Email - Pandion DK', 'Email - EB Missing Points'};
         for (Case cse: newCaseList) {
-            if (cse.Origin == 'Pandion SE' || cse.Origin == 'Pandion NO' || cse.Origin == 'Pandion DK') {
+            if (caseOriginToProcess.contains(cse.Origin)) {
                 if (cse.SuppliedEmail != null && cse.SuppliedEmail != '') {
                     lstEmailAddress.add(cse.SuppliedEmail);
                     lstCaseIds.add(cse.Id);
                 }
             }
-
         }
         if (!lstEmailAddress.isEmpty()) {
-            lstAcc = [SELECT Id, FCS_EBNumber__c From Account where PersonEmail =: lstEmailAddress[0] AND isPersonAccount = true];
+                lstAcc = [SELECT Id, FCS_EBNumber__c From Account where PersonEmail =: lstEmailAddress[0] AND isPersonAccount = true];
         }
         if (!lstAcc.isEmpty()) {
             Case cse = new Case();
@@ -325,7 +401,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
         List < Case > lstCases = new List < Case > ();
         lstCases = [Select Id, FCS_EBNumber__c, SuppliedEmail, AccountId From Case where Id =: lstCseIds[0] And SuppliedEmail != null LIMIT 1];
         if (!lstCases.isEmpty()) {
-            acc = FCS_IdentifyCustomerController.findCustomer('EmailPersonal__c', lstCases[0].SuppliedEmail);
+                acc = FCS_IdentifyCustomerController.findCustomer('EmailPersonal__c', lstCases[0].SuppliedEmail);
             if (acc != null) {
                 Case cs = new Case();
                 cs.Id = lstCases[0].Id;
@@ -339,5 +415,5 @@ public class FCS_CaseHandler extends C_TriggerHandler {
 
         }
     }
-
+    
 }

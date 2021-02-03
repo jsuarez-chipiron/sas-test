@@ -271,7 +271,7 @@ private class FCS_CaseHandler_Test {
         Case cse = new Case();
         cse.Subject = 'TestEurobonusNumber';
         cse.SuppliedEmail = lstAcc[0].PersonEmail;
-        cse.origin = 'Pandion DK';
+        cse.origin = 'Email - Pandion DK';
 
         insert cse;
 
@@ -427,6 +427,62 @@ private class FCS_CaseHandler_Test {
         Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
 
         System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'gruppresor.se@sas.se');
+
+    }
+
+    @IsTest
+    static void enrichMissingPointsCaseDataIfNrOfFltsNaNIgnore() {
+        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
+        testCase.Subject = 'flight retro';
+        testCase.SuppliedEmail = 'noreply@flysas.com';
+        testCase.Description = 'number-of-flights: notanumber\n';
+
+
+        Test.startTest();
+        insert testCase;
+        Test.stopTest();
+
+        Case testCaseAfterTrigger = [SELECT X1_Flight_Info__c, X2_Flight_Info__c, X3_Flight_Info__c, X4_Flight_Info__c FROM Case Where Id = :testCase.Id][0];
+
+        System.assertEquals(testCaseAfterTrigger.X1_Flight_Info__c, null);
+        System.assertEquals(testCaseAfterTrigger.X2_Flight_Info__c, null);
+        System.assertEquals(testCaseAfterTrigger.X3_Flight_Info__c, null);
+        System.assertEquals(testCaseAfterTrigger.X4_Flight_Info__c, null);
+
+    }
+
+    @IsTest
+    static void enrichMissingPointsCaseDataPopulateNrOfFieldsAccordingToNrOfFlights() {
+        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
+        testCase.Subject = 'flight retro';
+        testCase.SuppliedEmail = 'noreply@flysas.com';
+        testCase.Description = 'number-of-flights: 1\nmember-first-name: John\nmember-last-name: Doe\nmember-email: test@exampl.com\n'+
+                               + 'eurobonus-number: 123456789\neurobonus-level: pandion\nflight-1\nflight-1-airline: OO\nflight-1-description: This is a test by Eurobonus Digital Team.\n'+
+                               + 'flight-1-flight-no: 1235\nflight-1-ticket-no: 6675234252525\nflight-1-departure: ARN\nflight-1-arrival: CPH\n'+
+                               + 'flight-1-ticket-first-name: Gochujang\nflight-1-ticket-last-name: Prinsesstårta\nflight-1-booking-class: A\nflight-1-boarding-number: 15\nflight-1-seat-number: \n';
+        
+    
+        Test.startTest();
+        insert testCase;
+        Test.stopTest();
+
+        Case testCaseAfterTrigger = [SELECT X1_Flight_Info__c, X2_Flight_Info__c, X3_Flight_Info__c, X4_Flight_Info__c FROM Case Where Id = :testCase.Id][0];
+
+        System.assertEquals(testCaseAfterTrigger.X1_Flight_Info__c,
+                                        '<b>Airline</b> :  OO<br>' +
+                                        '<b>Description</b> :  This is a test by Eurobonus Digital Team.<br>' +
+                                        '<b>Flight Nr</b> :  1235<br>' +
+                                        '<b>Ticket Nr</b> :  6675234252525<br>' +
+                                        '<b>Departure</b> :  ARN<br>' +
+                                        '<b>Arrival</b> :  CPH<br>' +
+                                        '<b>First Name</b> :  Gochujang<br>' +
+                                        '<b>Last Name</b> :  Prinsesstårta<br>' +
+                                        '<b>Booking Class</b> :  A<br>' +
+                                        '<b>Boarding Number</b> :  15<br>' +
+                                        '<b>Seat Number</b> : null<br>');
+        System.assertEquals(testCaseAfterTrigger.X2_Flight_Info__c, null);
+        System.assertEquals(testCaseAfterTrigger.X3_Flight_Info__c, null);
+        System.assertEquals(testCaseAfterTrigger.X4_Flight_Info__c, null);
 
     }
 
