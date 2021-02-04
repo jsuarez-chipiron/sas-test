@@ -51,14 +51,14 @@
                 <label>DK</label>
             </value>
             <value>
-                <fullName>EB Missing Points</fullName>
+                <fullName>Missing Points</fullName>
                 <default>false</default>
-                <label>EB Missing Points</label>
+                <label>Missing Points</label>
             </value>
             <value>
-                <fullName>EB Pai Manual</fullName>
+                <fullName>Pai Manual</fullName>
                 <default>false</default>
-                <label>EB Pai Manual</label>
+                <label>Pai Manual</label>
             </value>
             <value>
                 <fullName>EE</fullName>
@@ -114,11 +114,6 @@
                 <fullName>LV</fullName>
                 <default>false</default>
                 <label>LV</label>
-            </value>
-            <value>
-                <fullName>Missing Points</fullName>
-                <default>false</default>
-                <label>Missing Points</label>
             </value>
             <value>
                 <fullName>NO</fullName>

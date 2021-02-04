@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>Team_To_Assign__c</field>
-        <value xsi:type="xsd:string">EB Pai Manual</value>
+        <value xsi:type="xsd:string">Pai Manual</value>
     </values>
 </CustomMetadata>

@@ -1185,15 +1185,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - EuroBonus</fullName>
-            <default>false</default>
-        </values>
-                <values>
             <fullName>Email - EB Missing Points</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Email - EB Pai Manual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1481,6 +1481,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Missing Points</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>NO</fullName>
             <default>false</default>
         </values>
@@ -1498,6 +1502,10 @@
         </values>
         <values>
             <fullName>PL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pai Manual</fullName>
             <default>false</default>
         </values>
         <values>

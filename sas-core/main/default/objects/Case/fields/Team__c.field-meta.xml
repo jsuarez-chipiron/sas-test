@@ -206,14 +206,14 @@
                 <label>System &amp; Tariff</label>
             </value>
             <value>
-                <fullName>EB Pai Manual</fullName>
+                <fullName>Pai Manual</fullName>
                 <default>false</default>
-                <label>EB Pai Manual</label>
+                <label>Pai Manual</label>
             </value>
             <value>
-                <fullName>EB Missing Points</fullName>
+                <fullName>Missing Points</fullName>
                 <default>false</default>
-                <label>EB Missing Points</label>
+                <label>Missing Points</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -250,11 +250,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <valueName>EB Pai Manual</valueName>
+            <valueName>Pai Manual</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <valueName>EB Missing Points</valueName>
+            <valueName>Missing Points</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>

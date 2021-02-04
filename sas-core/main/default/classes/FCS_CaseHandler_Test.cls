@@ -429,12 +429,12 @@ private class FCS_CaseHandler_Test {
         insert testCase;
         Test.stopTest();
 
-        Case testCaseAfterTrigger = [SELECT X1_Flight_Info__c, X2_Flight_Info__c, X3_Flight_Info__c, X4_Flight_Info__c FROM Case Where Id = :testCase.Id][0];
+        Case testCaseAfterTrigger = [SELECT Flight_Info_Missing_Points_X1__c, Flight_Info_Missing_Points_X2__c, Flight_Info_Missing_Points_X3__c, Flight_Info_Missing_Points_X4__c FROM Case Where Id = :testCase.Id][0];
 
-        System.assertEquals(testCaseAfterTrigger.X1_Flight_Info__c, null);
-        System.assertEquals(testCaseAfterTrigger.X2_Flight_Info__c, null);
-        System.assertEquals(testCaseAfterTrigger.X3_Flight_Info__c, null);
-        System.assertEquals(testCaseAfterTrigger.X4_Flight_Info__c, null);
+        System.assertEquals(testCaseAfterTrigger.Flight_Info_Missing_Points_X1__c, null);
+        System.assertEquals(testCaseAfterTrigger.Flight_Info_Missing_Points_X2__c, null);
+        System.assertEquals(testCaseAfterTrigger.Flight_Info_Missing_Points_X3__c, null);
+        System.assertEquals(testCaseAfterTrigger.Flight_Info_Missing_Points_X4__c, null);
 
     }
 
@@ -453,9 +453,9 @@ private class FCS_CaseHandler_Test {
         insert testCase;
         Test.stopTest();
 
-        Case testCaseAfterTrigger = [SELECT X1_Flight_Info__c, X2_Flight_Info__c, X3_Flight_Info__c, X4_Flight_Info__c FROM Case Where Id = :testCase.Id][0];
+        Case testCaseAfterTrigger = [SELECT Flight_Info_Missing_Points_X1__c, Flight_Info_Missing_Points_X2__c, Flight_Info_Missing_Points_X3__c, Flight_Info_Missing_Points_X4__c FROM Case Where Id = :testCase.Id][0];
 
-        System.assertEquals(testCaseAfterTrigger.X1_Flight_Info__c,
+        System.assertEquals(testCaseAfterTrigger.Flight_Info_Missing_Points_X1__c,
                                         '<b>Airline</b> :  OO<br>' +
                                         '<b>Description</b> :  This is a test by Eurobonus Digital Team.<br>' +
                                         '<b>Flight Nr</b> :  1235<br>' +
@@ -467,9 +467,9 @@ private class FCS_CaseHandler_Test {
                                         '<b>Booking Class</b> :  A<br>' +
                                         '<b>Boarding Number</b> :  15<br>' +
                                         '<b>Seat Number</b> : null<br>');
-        System.assertEquals(testCaseAfterTrigger.X2_Flight_Info__c, null);
-        System.assertEquals(testCaseAfterTrigger.X3_Flight_Info__c, null);
-        System.assertEquals(testCaseAfterTrigger.X4_Flight_Info__c, null);
+        System.assertEquals(testCaseAfterTrigger.Flight_Info_Missing_Points_X2__c, null);
+        System.assertEquals(testCaseAfterTrigger.Flight_Info_Missing_Points_X3__c, null);
+        System.assertEquals(testCaseAfterTrigger.Flight_Info_Missing_Points_X4__c, null);
 
     }
 
