@@ -17,7 +17,7 @@
         <value>Closed,Merged</value>
     </filters>
     <filters>
-        <field>Case_Grouping__c</field>
+        <field>Department__c</field>
         <operation>equals</operation>
         <value>Group Sales</value>
     </filters>

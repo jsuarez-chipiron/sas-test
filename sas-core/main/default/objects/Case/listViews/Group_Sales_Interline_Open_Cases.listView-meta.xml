@@ -22,9 +22,14 @@
         <value>credit.stoey@accenture.com,credit.stoey@sas.se</value>
     </filters>
     <filters>
-        <field>CASES.ORIGIN</field>
+        <field>Department__c</field>
         <operation>equals</operation>
-        <value>Email - Group Sales Interline</value>
+        <value>Group Sales</value>
+    </filters>
+    <filters>
+        <field>Team__c</field>
+        <operation>equals</operation>
+        <value>Interline</value>
     </filters>
     <label>Group Sales Interline Open Cases</label>
     <sharedTo>

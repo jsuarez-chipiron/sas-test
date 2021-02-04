@@ -7,11 +7,15 @@
         <value xsi:type="xsd:string">Channel</value>
     </values>
     <values>
-        <field>Case_Visibility_Grouping_To_Assign__c</field>
+        <field>Department_To_Assign__c</field>
         <value xsi:type="xsd:string">Group Sales</value>
     </values>
     <values>
         <field>Incoming_Case_Origin__c</field>
         <value xsi:type="xsd:string">Email - Group Sales ES</value>
+    </values>
+    <values>
+        <field>Team_To_Assign__c</field>
+        <value xsi:type="xsd:string">ES</value>
     </values>
 </CustomMetadata>

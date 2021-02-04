@@ -15,14 +15,14 @@
     <columns>CORE.USERS.ALIAS</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>CASES.ORIGIN</field>
-        <operation>equals</operation>
-        <value>Email - Corporate</value>
-    </filters>
-    <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
         <value>Closed</value>
+    </filters>
+    <filters>
+        <field>Department__c</field>
+        <operation>equals</operation>
+        <value>Corporate</value>
     </filters>
     <label>Corporate Support All Closed Cases</label>
     <sharedTo>

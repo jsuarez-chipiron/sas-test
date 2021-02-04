@@ -89,7 +89,12 @@ public class FCS_CaseHandler extends C_TriggerHandler {
      */
     private static void enrichCaseDataBasedOnOrigin(List<Case> newCaseList) {
         for (Case c: newCaseList) {
-            List<Enrich_Case_Based_On_Origin_Config__mdt> enrichmentData = [SELECT Case_Type_To_Assign__c, Case_Visibility_Grouping_To_Assign__c FROM Enrich_Case_Based_On_Origin_Config__mdt WHERE Incoming_Case_Origin__c = :c.Origin];
+            List<Enrich_Case_Based_On_Origin_Config__mdt> enrichmentData = [
+                SELECT Department_To_Assign__c, Team_To_Assign__c, Case_Type_To_Assign__c
+                FROM Enrich_Case_Based_On_Origin_Config__mdt
+                WHERE Incoming_Case_Origin__c = :c.Origin
+            ];
+
             if (!enrichmentData.isEmpty()) {
                 // A configuration was found for this Origin
                 Enrich_Case_Based_On_Origin_Config__mdt caseConfiguration = enrichmentData[0];
@@ -99,8 +104,12 @@ public class FCS_CaseHandler extends C_TriggerHandler {
                     c.Type = caseConfiguration.Case_Type_To_Assign__c;
                 }
 
-                if (!String.isEmpty(caseConfiguration.Case_Visibility_Grouping_To_Assign__c)) {
-                    c.Case_Grouping__c = caseConfiguration.Case_Visibility_Grouping_To_Assign__c;
+                if (!String.isEmpty(caseConfiguration.Department_To_Assign__c)) {
+                    c.Department__c = caseConfiguration.Department_To_Assign__c;
+                }
+
+                if (!String.isEmpty(caseConfiguration.Team_To_Assign__c)) {
+                    c.Team__c = caseConfiguration.Team_To_Assign__c;
                 }
             }
         }

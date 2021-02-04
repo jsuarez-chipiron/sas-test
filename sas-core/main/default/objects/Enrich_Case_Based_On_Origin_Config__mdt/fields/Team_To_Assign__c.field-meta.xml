@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Team_To_Assign__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Team To Assign</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>ACE</fullName>
+                <default>true</default>
+                <label>ACE</label>
+            </value>
+            <value>
+                <fullName>Agent Fares Ticketing EU</fullName>
+                <default>false</default>
+                <label>Agent Fares Ticketing EU</label>
+            </value>
+            <value>
+                <fullName>AT</fullName>
+                <default>false</default>
+                <label>AT</label>
+            </value>
+            <value>
+                <fullName>Benelux</fullName>
+                <default>false</default>
+                <label>Benelux</label>
+            </value>
+            <value>
+                <fullName>Bulk</fullName>
+                <default>false</default>
+                <label>Bulk</label>
+            </value>
+            <value>
+                <fullName>CH</fullName>
+                <default>false</default>
+                <label>CH</label>
+            </value>
+            <value>
+                <fullName>DE</fullName>
+                <default>false</default>
+                <label>DE</label>
+            </value>
+            <value>
+                <fullName>DK</fullName>
+                <default>false</default>
+                <label>DK</label>
+            </value>
+            <value>
+                <fullName>EB Missing Points</fullName>
+                <default>false</default>
+                <label>EB Missing Points</label>
+            </value>
+            <value>
+                <fullName>EB Pai Manual</fullName>
+                <default>false</default>
+                <label>EB Pai Manual</label>
+            </value>
+            <value>
+                <fullName>EE</fullName>
+                <default>false</default>
+                <label>EE</label>
+            </value>
+            <value>
+                <fullName>ES</fullName>
+                <default>false</default>
+                <label>ES</label>
+            </value>
+            <value>
+                <fullName>FI</fullName>
+                <default>false</default>
+                <label>FI</label>
+            </value>
+            <value>
+                <fullName>Forsvaret NO</fullName>
+                <default>false</default>
+                <label>Forsvaret NO</label>
+            </value>
+            <value>
+                <fullName>FR</fullName>
+                <default>false</default>
+                <label>FR</label>
+            </value>
+            <value>
+                <fullName>IE</fullName>
+                <default>false</default>
+                <label>IE</label>
+            </value>
+            <value>
+                <fullName>Interline</fullName>
+                <default>false</default>
+                <label>Interline</label>
+            </value>
+            <value>
+                <fullName>IS</fullName>
+                <default>false</default>
+                <label>IS</label>
+            </value>
+            <value>
+                <fullName>IT</fullName>
+                <default>false</default>
+                <label>IT</label>
+            </value>
+            <value>
+                <fullName>LT</fullName>
+                <default>false</default>
+                <label>LT</label>
+            </value>
+            <value>
+                <fullName>LV</fullName>
+                <default>false</default>
+                <label>LV</label>
+            </value>
+            <value>
+                <fullName>Missing Points</fullName>
+                <default>false</default>
+                <label>Missing Points</label>
+            </value>
+            <value>
+                <fullName>NO</fullName>
+                <default>false</default>
+                <label>NO</label>
+            </value>
+            <value>
+                <fullName>Olympic DK</fullName>
+                <default>false</default>
+                <label>Olympic DK</label>
+            </value>
+            <value>
+                <fullName>Olympic NO</fullName>
+                <default>false</default>
+                <label>Olympic NO</label>
+            </value>
+            <value>
+                <fullName>Olympic SE</fullName>
+                <default>false</default>
+                <label>Olympic SE</label>
+            </value>
+            <value>
+                <fullName>Pandion DK</fullName>
+                <default>false</default>
+                <label>Pandion DK</label>
+            </value>
+            <value>
+                <fullName>Pandion NO</fullName>
+                <default>false</default>
+                <label>Pandion NO</label>
+            </value>
+            <value>
+                <fullName>Pandion SE</fullName>
+                <default>false</default>
+                <label>Pandion SE</label>
+            </value>
+            <value>
+                <fullName>Partner Support</fullName>
+                <default>false</default>
+                <label>Partner Support</label>
+            </value>
+            <value>
+                <fullName>PL</fullName>
+                <default>false</default>
+                <label>PL</label>
+            </value>
+            <value>
+                <fullName>RU</fullName>
+                <default>false</default>
+                <label>RU</label>
+            </value>
+            <value>
+                <fullName>Sales Information</fullName>
+                <default>false</default>
+                <label>Sales Information</label>
+            </value>
+            <value>
+                <fullName>SAS Poland</fullName>
+                <default>false</default>
+                <label>SAS Poland</label>
+            </value>
+            <value>
+                <fullName>SASSI Internal</fullName>
+                <default>false</default>
+                <label>SASSI Internal</label>
+            </value>
+            <value>
+                <fullName>Scandinavia</fullName>
+                <default>false</default>
+                <label>Scandinavia</label>
+            </value>
+            <value>
+                <fullName>SE</fullName>
+                <default>false</default>
+                <label>SE</label>
+            </value>
+            <value>
+                <fullName>Star Alliance Upgrades</fullName>
+                <default>false</default>
+                <label>Star Alliance Upgrades</label>
+            </value>
+            <value>
+                <fullName>System &amp; Tariff</fullName>
+                <default>false</default>
+                <label>System &amp; Tariff</label>
+            </value>
+            <value>
+                <fullName>UK</fullName>
+                <default>false</default>
+                <label>UK</label>
+            </value>
+            <value>
+                <fullName>US</fullName>
+                <default>false</default>
+                <label>US</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

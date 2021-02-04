@@ -11,14 +11,19 @@
     <columns>CASES.ORIGIN</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>CASES.ORIGIN</field>
-        <operation>equals</operation>
-        <value>Email - SAS Poland</value>
-    </filters>
-    <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
         <value>New,In Progress,On Hold,Awaiting Customer Response,New Response,Escalated,Merged</value>
+    </filters>
+    <filters>
+        <field>Department__c</field>
+        <operation>equals</operation>
+        <value>Agent Helpdesk</value>
+    </filters>
+    <filters>
+        <field>Team__c</field>
+        <operation>equals</operation>
+        <value>SAS Poland</value>
     </filters>
     <label>SAS Poland Open Cases</label>
     <sharedTo>

@@ -10,14 +10,19 @@
     <columns>CASES.ORIGIN</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>CASES.ORIGIN</field>
-        <operation>equals</operation>
-        <value>Email - Agent Fares Ticketing EU</value>
-    </filters>
-    <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
         <value>New,In Progress,On Hold,Awaiting Customer Response,New Response,Escalated</value>
+    </filters>
+    <filters>
+        <field>Department__c</field>
+        <operation>equals</operation>
+        <value>Agent Helpdesk</value>
+    </filters>
+    <filters>
+        <field>Team__c</field>
+        <operation>equals</operation>
+        <value>Agent Fares Ticketing EU</value>
     </filters>
     <label>Agent Fares Ticketing EU Open Cases</label>
     <sharedTo>

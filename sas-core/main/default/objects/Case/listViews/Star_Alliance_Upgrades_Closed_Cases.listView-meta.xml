@@ -14,9 +14,14 @@
         <value>1</value>
     </filters>
     <filters>
-        <field>CASES.ORIGIN</field>
+        <field>Department__c</field>
         <operation>equals</operation>
-        <value>Email - Star Alliance Upgrades</value>
+        <value>EuroBonus</value>
+    </filters>
+    <filters>
+        <field>Team__c</field>
+        <operation>equals</operation>
+        <value>Star Alliance Upgrades</value>
     </filters>
     <label>Star Alliance Upgrades Closed Cases</label>
 </ListView>

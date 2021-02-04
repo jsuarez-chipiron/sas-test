@@ -11,19 +11,19 @@
     <columns>OWNER_NAME</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>CASES.ORIGIN</field>
-        <operation>equals</operation>
-        <value>Email - Agent Helpdesk Scandinavia</value>
-    </filters>
-    <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
         <value>New,In Progress,On Hold,Awaiting Customer Response,New Response,Escalated</value>
     </filters>
     <filters>
-        <field>OWNER_NAME</field>
-        <operation>notEqual</operation>
-        <value>SAS Agent Helpdesk</value>
+        <field>Department__c</field>
+        <operation>equals</operation>
+        <value>Agent Helpdesk</value>
+    </filters>
+    <filters>
+        <field>Team__c</field>
+        <operation>equals</operation>
+        <value>Scandinavia</value>
     </filters>
     <label>Agent Helpdesk Scandinavia Open Cases</label>
     <sharedTo>

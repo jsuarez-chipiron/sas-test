@@ -22,9 +22,14 @@
         <value>donotreply@sas.dk,noreply@sas.dk</value>
     </filters>
     <filters>
-        <field>CASES.ORIGIN</field>
+        <field>Department__c</field>
         <operation>equals</operation>
-        <value>Email - Group Sales DK</value>
+        <value>Group Sales</value>
+    </filters>
+    <filters>
+        <field>Team__c</field>
+        <operation>equals</operation>
+        <value>DK</value>
     </filters>
     <label>Group Sales DK New Request</label>
     <sharedTo>

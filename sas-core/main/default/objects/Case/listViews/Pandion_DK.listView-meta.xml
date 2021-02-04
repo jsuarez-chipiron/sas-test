@@ -10,9 +10,14 @@
     <columns>OWNER_NAME</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>CASES.ORIGIN</field>
+        <field>Department__c</field>
         <operation>equals</operation>
-        <value>Email - Pandion DK</value>
+        <value>EuroBonus</value>
+    </filters>
+    <filters>
+        <field>Team__c</field>
+        <operation>equals</operation>
+        <value>Pandion DK</value>
     </filters>
     <label>Pandion DK</label>
     <sharedTo>

@@ -22,9 +22,14 @@
         <value>gruppresor.se@sas.se</value>
     </filters>
     <filters>
-        <field>CASES.ORIGIN</field>
+        <field>Department__c</field>
         <operation>equals</operation>
-        <value>Email - Group Sales SE</value>
+        <value>Group Sales</value>
+    </filters>
+    <filters>
+        <field>Team__c</field>
+        <operation>equals</operation>
+        <value>SE</value>
     </filters>
     <label>Group Sales SE Open Cases</label>
     <sharedTo>

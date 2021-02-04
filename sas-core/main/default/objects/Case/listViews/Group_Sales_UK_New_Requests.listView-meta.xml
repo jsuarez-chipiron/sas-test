@@ -17,14 +17,19 @@
         <value>New</value>
     </filters>
     <filters>
-        <field>CASES.ORIGIN</field>
-        <operation>equals</operation>
-        <value>Email - Group Sales UK</value>
-    </filters>
-    <filters>
         <field>CASES.EMAIL</field>
         <operation>equals</operation>
         <value>uk-groupquotes@sas.dk</value>
+    </filters>
+    <filters>
+        <field>Department__c</field>
+        <operation>equals</operation>
+        <value>Group Sales</value>
+    </filters>
+    <filters>
+        <field>Team__c</field>
+        <operation>equals</operation>
+        <value>UK</value>
     </filters>
     <label>Group Sales UK New Requests</label>
     <sharedTo>

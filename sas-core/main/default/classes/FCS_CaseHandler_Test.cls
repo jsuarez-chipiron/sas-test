@@ -312,10 +312,11 @@ private class FCS_CaseHandler_Test {
         insert testCase;
         Test.stopTest();
 
-        Case testCaseAfterTrigger = [SELECT Case_Grouping__c, Type FROM Case Where Id = :testCase.Id][0];
+        Case testCaseAfterTrigger = [SELECT Department__c, Team__c, Type FROM Case Where Id = :testCase.Id][0];
 
         System.assertEquals(testCaseAfterTrigger.Type, 'Channel');
-        System.assertEquals(testCaseAfterTrigger.Case_Grouping__c, 'Group Sales');
+        System.assertEquals(testCaseAfterTrigger.Department__c, 'Group Sales');
+        System.assertEquals(testCaseAfterTrigger.Team__c, 'AT');
     }
 
     @IsTest
@@ -327,24 +328,10 @@ private class FCS_CaseHandler_Test {
         insert testCase;
         Test.stopTest();
 
-        Case testCaseAfterTrigger = [SELECT Case_Grouping__c, Type FROM Case Where Id = :testCase.Id][0];
+        Case testCaseAfterTrigger = [SELECT Department__c, Type FROM Case Where Id = :testCase.Id][0];
 
-        System.assert(String.isEmpty(testCaseAfterTrigger.Case_Grouping__c));
+        System.assert(String.isEmpty(testCaseAfterTrigger.Department__c));
         System.assert(String.isEmpty(testCaseAfterTrigger.Type));
-    }
-
-    @IsTest
-    static void enrichCaseDataBasedOnOriginBlankConfigFieldsShouldLeaveBlanks() {
-        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
-        testCase.Origin = 'Email - Pandion SE';
-
-        Test.startTest();
-        insert testCase;
-        Test.stopTest();
-
-        Case testCaseAfterTrigger = [SELECT Case_Grouping__c, Type FROM Case Where Id = :testCase.Id][0];
-
-        System.assert(String.isEmpty(testCaseAfterTrigger.Case_Grouping__c));
     }
 
     @IsTest

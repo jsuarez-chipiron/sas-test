@@ -22,9 +22,14 @@
         <value>credit.stoey@accenture.com,credit.stoey@sas.se,uk-groupquotes@sas.dk</value>
     </filters>
     <filters>
-        <field>CASES.ORIGIN</field>
+        <field>Department__c</field>
         <operation>equals</operation>
-        <value>Email - Group Sales UK</value>
+        <value>Group Sales</value>
+    </filters>
+    <filters>
+        <field>Team__c</field>
+        <operation>equals</operation>
+        <value>UK</value>
     </filters>
     <label>Group Sales UK Open Cases</label>
     <sharedTo>

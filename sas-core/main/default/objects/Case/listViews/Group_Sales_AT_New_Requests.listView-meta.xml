@@ -17,9 +17,14 @@
         <value>New</value>
     </filters>
     <filters>
-        <field>CASES.ORIGIN</field>
+        <field>Department__c</field>
         <operation>equals</operation>
-        <value>Email - Group Sales AT</value>
+        <value>Group Sales</value>
+    </filters>
+    <filters>
+        <field>Team__c</field>
+        <operation>equals</operation>
+        <value>AT</value>
     </filters>
     <label>Group Sales AT New Requests</label>
     <sharedTo>

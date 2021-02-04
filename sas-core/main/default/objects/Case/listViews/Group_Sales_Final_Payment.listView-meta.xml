@@ -12,14 +12,14 @@
     <columns>CASES.LAST_UPDATE_DATE_ONLY</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>Case_Grouping__c</field>
-        <operation>equals</operation>
-        <value>Group Sales</value>
-    </filters>
-    <filters>
         <field>CASES.EMAIL</field>
         <operation>equals</operation>
         <value>SAS-No-Reply@sas.se</value>
+    </filters>
+    <filters>
+        <field>Department__c</field>
+        <operation>equals</operation>
+        <value>Group Sales</value>
     </filters>
     <label>Group Sales Final Payment</label>
     <sharedTo>
