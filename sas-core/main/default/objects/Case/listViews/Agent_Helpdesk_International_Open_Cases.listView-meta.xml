@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Agent_Fares_Tiketing_EU_Open_Cases</fullName>
+    <fullName>Agent_Fares_International_Open_Cases</fullName>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.EMAIL</columns>
     <columns>CASES.SUBJECT</columns>
@@ -24,7 +24,7 @@
         <operation>equals</operation>
         <value>Agent Fares Ticketing EU</value>
     </filters>
-    <label>Agent Fares Ticketing EU Open Cases</label>
+    <label>Agent Helpdesk International Open Cases</label>
     <sharedTo>
         <group>AgentHelpdesk</group>
     </sharedTo>
