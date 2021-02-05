@@ -37,6 +37,28 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
+            <componentInstanceProperties>
+                <name>lookupFieldName</name>
+                <value>Case.Id</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>titleFieldName</name>
+                <value>Missing Points Flight Data</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>updateQuickActionName</name>
+                <value>Case.Missing_Points_Flight_Data</value>
+            </componentInstanceProperties>
+            <componentName>console:relatedRecord</componentName>
+            <visibilityRule>
+                <criteria>
+                    <leftValue>{!Record.Origin}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Email - EB Missing Points</rightValue>
+                </criteria>
+            </visibilityRule>
+        </componentInstances>
+        <componentInstances>
             <componentName>forceChatter:recordFeedContainer</componentName>
         </componentInstances>
         <mode>Replace</mode>

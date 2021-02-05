@@ -9,11 +9,16 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>ACE</fullName>
                 <default>true</default>
                 <label>ACE</label>
+            </value>
+            <value>
+                <fullName>Agent Fares Ticketing EU</fullName>
+                <default>false</default>
+                <label>Agent Fares Ticketing EU</label>
             </value>
             <value>
                 <fullName>AT</fullName>
@@ -46,6 +51,16 @@
                 <label>DK</label>
             </value>
             <value>
+                <fullName>Missing Points</fullName>
+                <default>false</default>
+                <label>Missing Points</label>
+            </value>
+            <value>
+                <fullName>Pai Manual</fullName>
+                <default>false</default>
+                <label>Pai Manual</label>
+            </value>
+            <value>
                 <fullName>EE</fullName>
                 <default>false</default>
                 <label>EE</label>
@@ -61,6 +76,11 @@
                 <label>FI</label>
             </value>
             <value>
+                <fullName>Forsvaret NO</fullName>
+                <default>false</default>
+                <label>Forsvaret NO</label>
+            </value>
+            <value>
                 <fullName>FR</fullName>
                 <default>false</default>
                 <label>FR</label>
@@ -71,9 +91,19 @@
                 <label>IE</label>
             </value>
             <value>
+                <fullName>Interline</fullName>
+                <default>false</default>
+                <label>Interline</label>
+            </value>
+            <value>
                 <fullName>IS</fullName>
                 <default>false</default>
                 <label>IS</label>
+            </value>
+            <value>
+                <fullName>IT</fullName>
+                <default>false</default>
+                <label>IT</label>
             </value>
             <value>
                 <fullName>LT</fullName>
@@ -89,61 +119,6 @@
                 <fullName>NO</fullName>
                 <default>false</default>
                 <label>NO</label>
-            </value>
-            <value>
-                <fullName>PL</fullName>
-                <default>false</default>
-                <label>PL</label>
-            </value>
-            <value>
-                <fullName>RU</fullName>
-                <default>false</default>
-                <label>RU</label>
-            </value>
-            <value>
-                <fullName>SAS Poland</fullName>
-                <default>false</default>
-                <label>SAS Poland</label>
-            </value>
-            <value>
-                <fullName>SASSI Internal</fullName>
-                <default>false</default>
-                <label>SASSI Internal</label>
-            </value>
-            <value>
-                <fullName>SE</fullName>
-                <default>false</default>
-                <label>SE</label>
-            </value>
-            <value>
-                <fullName>UK</fullName>
-                <default>false</default>
-                <label>UK</label>
-            </value>
-            <value>
-                <fullName>US</fullName>
-                <default>false</default>
-                <label>US</label>
-            </value>
-            <value>
-                <fullName>IT</fullName>
-                <default>false</default>
-                <label>IT</label>
-            </value>
-            <value>
-                <fullName>Agent Fares Ticketing EU</fullName>
-                <default>false</default>
-                <label>Agent Fares Ticketing EU</label>
-            </value>
-            <value>
-                <fullName>Forsvaret NO</fullName>
-                <default>false</default>
-                <label>Forsvaret NO</label>
-            </value>
-            <value>
-                <fullName>Interline</fullName>
-                <default>false</default>
-                <label>Interline</label>
             </value>
             <value>
                 <fullName>Olympic DK</fullName>
@@ -181,14 +156,39 @@
                 <label>Partner Support</label>
             </value>
             <value>
+                <fullName>PL</fullName>
+                <default>false</default>
+                <label>PL</label>
+            </value>
+            <value>
+                <fullName>RU</fullName>
+                <default>false</default>
+                <label>RU</label>
+            </value>
+            <value>
                 <fullName>Sales Information</fullName>
                 <default>false</default>
                 <label>Sales Information</label>
             </value>
             <value>
+                <fullName>SAS Poland</fullName>
+                <default>false</default>
+                <label>SAS Poland</label>
+            </value>
+            <value>
+                <fullName>SASSI Internal</fullName>
+                <default>false</default>
+                <label>SASSI Internal</label>
+            </value>
+            <value>
                 <fullName>Scandinavia</fullName>
                 <default>false</default>
                 <label>Scandinavia</label>
+            </value>
+            <value>
+                <fullName>SE</fullName>
+                <default>false</default>
+                <label>SE</label>
             </value>
             <value>
                 <fullName>Star Alliance Upgrades</fullName>
@@ -199,6 +199,16 @@
                 <fullName>System &amp; Tariff</fullName>
                 <default>false</default>
                 <label>System &amp; Tariff</label>
+            </value>
+            <value>
+                <fullName>UK</fullName>
+                <default>false</default>
+                <label>UK</label>
+            </value>
+            <value>
+                <fullName>US</fullName>
+                <default>false</default>
+                <label>US</label>
             </value>
         </valueSetDefinition>
     </valueSet>
