@@ -6,6 +6,13 @@
     <description>Use for chat cases</description>
     <label>Information</label>
     <picklistValues>
+        <picklist>Case_Grouping__c</picklist>
+        <values>
+            <fullName>Group Sales</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Consent__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -962,6 +969,13 @@
         <picklist>Reason</picklist>
         <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Request_Type__c</picklist>
+        <values>
+            <fullName>Redirection</fullName>
             <default>false</default>
         </values>
     </picklistValues>

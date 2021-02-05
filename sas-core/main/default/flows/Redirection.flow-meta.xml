@@ -5,12 +5,18 @@
         <name>High</name>
         <choiceText>High</choiceText>
         <dataType>String</dataType>
+        <value>
+            <stringValue>&quot;High&quot;</stringValue>
+        </value>
     </choices>
     <choices>
         <description>Medium</description>
         <name>Medium</name>
         <choiceText>Medium</choiceText>
         <dataType>String</dataType>
+        <value>
+            <stringValue>&quot;Medium&quot;</stringValue>
+        </value>
     </choices>
     <description>Redirection flow</description>
     <dynamicChoiceSets>
@@ -20,15 +26,6 @@
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>Department__c</picklistField>
-        <picklistObject>Case</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <description>List of Priorities</description>
-        <name>AvailablePriority</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>Priority</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -50,14 +47,20 @@
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <formulas>
+        <description>Based on the Department and team, the formula shows the defined case type.</description>
+        <name>CaseType</name>
+        <dataType>String</dataType>
+        <expression>IF({!DependentList.middleValue} = &quot;Sales Information&quot; ,  &quot;Sales Information&quot;,  IF({!DependentList.middleValue} = &quot;SASSI Internal&quot;,&quot;SASSI Internal&quot;, IF({!DependentList.middleValue} = &quot;System &amp; Tariff&quot;, &quot; &quot;, IF({!DependentList.topValue} = &quot;Functional Product Support&quot;, &quot;Functional Product Support&quot;, &quot;Channel&quot;))))</expression>
+    </formulas>
+    <formulas>
         <name>InputPriority</name>
         <dataType>String</dataType>
-        <expression>IF({!Priority} = {!Medium}, &quot;Medium&quot;, &quot;High&quot;)</expression>
+        <expression>IF({!Priority} = &quot;Medium&quot;, &quot;Medium&quot;, &quot;High&quot;)</expression>
     </formulas>
     <formulas>
         <name>RecordTypeName</name>
         <dataType>String</dataType>
-        <expression>IF( {!DependentList.topValue} = &quot;Info Hub&quot;, &quot;Internal/Backoffice&quot;, IF( {!DependentList.topValue} = &quot;Functional Product Support&quot;, &quot;Functional Support&quot;, &quot;Channel&quot;))</expression>
+        <expression>IF( {!DependentList.topValue} = &quot;Info Hub&quot;, &quot;Internal/Backoffice&quot;, IF( {!DependentList.topValue} = &quot;Functional Product Support&quot;, &quot;Functional Product Support&quot;, &quot;Channel&quot;))</expression>
     </formulas>
     <formulas>
         <description>Depending on the priority the  IsEscalated value will be set to TRUE or FALSE</description>
@@ -110,7 +113,7 @@
     <recordLookups>
         <name>GetDepartmentQueueId</name>
         <label>GetDepartmentQueueId</label>
-        <locationX>381</locationX>
+        <locationX>294</locationX>
         <locationY>365</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -130,8 +133,8 @@
     <recordLookups>
         <name>GetRecordTypeId</name>
         <label>GetRecordTypeId</label>
-        <locationX>522</locationX>
-        <locationY>366</locationY>
+        <locationX>423</locationX>
+        <locationY>365</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Redirect_Case</targetReference>
@@ -151,8 +154,8 @@
         <description>Update the current case to be directed to the right skill</description>
         <name>Redirect_Case</name>
         <label>Redirect Case</label>
-        <locationX>522</locationX>
-        <locationY>540</locationY>
+        <locationX>566</locationX>
+        <locationY>365</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
         </connector>
@@ -188,6 +191,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>GetRecordTypeId.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Request_Type__c</field>
             <value>
                 <elementReference>Request_Type</elementReference>
@@ -199,13 +208,19 @@
                 <elementReference>DependentList.middleValue</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>CaseType</elementReference>
+            </value>
+        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <screens>
         <name>Redirection_Submission</name>
         <label>Redirection Submission</label>
-        <locationX>661</locationX>
-        <locationY>763</locationY>
+        <locationX>697</locationX>
+        <locationY>365</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -284,12 +299,6 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>middleRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>middleValue</name>
                 <value>
                     <elementReference>AvailableTeam</elementReference>
@@ -303,6 +312,7 @@
             <dataType>String</dataType>
             <fieldText>Internal Comments</fieldText>
             <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;Please provide write the motive for redirecting the case&lt;/p&gt;</helpText>
             <isRequired>true</isRequired>
         </fields>
         <fields>
@@ -324,7 +334,7 @@
             <targetReference>GetCurrentCaseInformation</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <description>The ID of the record from where the flow was triggered</description>
         <name>recordId</name>

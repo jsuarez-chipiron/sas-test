@@ -1395,6 +1395,13 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Request_Type__c</picklist>
+        <values>
+            <fullName>Redirection</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Team__c</picklist>
         <values>
             <fullName>ACE</fullName>
