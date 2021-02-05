@@ -25,11 +25,6 @@
         <operation>equals</operation>
         <value>New,In Progress,On Hold,Awaiting Customer Response,New Response,Escalated</value>
     </filters>
-    <filters>
-        <field>CASES.SUBJECT</field>
-        <operation>contains</operation>
-        <value>EBD</value>
-    </filters>
     <label>EB Missing Points - EBD</label>
     <sharedTo>
         <group>EuroBonus</group>
