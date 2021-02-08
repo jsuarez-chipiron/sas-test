@@ -760,6 +760,10 @@
         <name>MassInlineEdit</name>
     </userPermissions>
     <userPermissions>
+        <enabled>false</enabled>
+        <name>RemoveDirectMessageMembers</name>
+    </userPermissions>
+    <userPermissions>
         <enabled>true</enabled>
         <name>RunFlow</name>
     </userPermissions>
