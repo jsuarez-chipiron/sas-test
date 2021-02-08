@@ -342,7 +342,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Case.IsRedirected__c</field>
         <readable>true</readable>
@@ -363,22 +362,17 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.Request_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Case.Previous_Owner__c</field>
         <readable>true</readable>
     </fieldPermissions>	
     <fieldPermissions>
-        <editable>false</editable>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Team__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>FCS_CaseTag__c.FCS_CaseTag__c</field>
         <readable>true</readable>
     </fieldPermissions>

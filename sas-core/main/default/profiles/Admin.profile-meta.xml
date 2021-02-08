@@ -399,11 +399,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Request_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>FCS_CaseTag__c.FCS_CaseTag__c</field>
         <readable>true</readable>
     </fieldPermissions>
