@@ -158,8 +158,9 @@
         <readable>true</readable>
     </fieldPermissions>
  <fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Final_Payment_Date__c</field>
+        <field>Case.Department__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -286,6 +287,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.FCS_IsReopened__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.IsRedirected__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -42,6 +42,10 @@
                 <behavior>Edit</behavior>
                 <field>Previous_Owner__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IsRedirected__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

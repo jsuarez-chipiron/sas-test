@@ -342,8 +342,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Team__c</field>
+        <field>Case.IsRedirected__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -373,6 +374,11 @@
     </fieldPermissions>	
     <fieldPermissions>
         <editable>false</editable>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Team__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
         <field>FCS_CaseTag__c.FCS_CaseTag__c</field>
         <readable>true</readable>
     </fieldPermissions>

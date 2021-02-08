@@ -18,6 +18,15 @@
             <stringValue>&quot;Medium&quot;</stringValue>
         </value>
     </choices>
+    <choices>
+        <description>Redirection Request Type To Other Department.</description>
+        <name>Redirection</name>
+        <choiceText>Redirection</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Redirection</stringValue>
+        </value>
+    </choices>
     <description>Redirection flow</description>
     <dynamicChoiceSets>
         <description>The department that which the redirection is going to be sent to</description>
@@ -26,15 +35,6 @@
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>Department__c</picklistField>
-        <picklistObject>Case</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <description>Displays the available request types</description>
-        <name>AvailableRequestType</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>Request_Type__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -179,6 +179,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>IsRedirected__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>OwnerId</field>
             <value>
                 <elementReference>GetDepartmentQueueId.Id</elementReference>
@@ -194,12 +200,6 @@
             <field>RecordTypeId</field>
             <value>
                 <elementReference>GetRecordTypeId.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Request_Type__c</field>
-            <value>
-                <elementReference>Request_Type</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -246,7 +246,7 @@
         </connector>
         <fields>
             <name>Request_Type</name>
-            <choiceReferences>AvailableRequestType</choiceReferences>
+            <choiceReferences>Redirection</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Request Type</fieldText>
             <fieldType>DropdownBox</fieldType>

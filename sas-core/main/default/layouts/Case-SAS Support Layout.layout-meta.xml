@@ -70,16 +70,12 @@
                 <field>PNR_Payment_Status__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Department__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Team__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Request_Type__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -98,6 +94,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Previous_Owner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IsRedirected__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -188,10 +188,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Case_Grouping__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
