@@ -8,6 +8,7 @@
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
     <columns>OWNER_NAME</columns>
+    <columns>Team__c</columns>
     <columns>CASES.EMAIL</columns>
     <columns>CASES.TYPE</columns>
     <columns>FCS_CaseReason__c</columns>
