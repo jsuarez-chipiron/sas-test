@@ -8,6 +8,7 @@
     <columns>CASES.PRIORITY</columns>
     <columns>CASES.EMAIL</columns>
     <columns>CASES.ORIGIN</columns>
+    <columns>Team__c</columns>
     <filterScope>Queue</filterScope>
     <filters>
         <field>CASES.CLOSED</field>
