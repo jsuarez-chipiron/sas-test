@@ -164,6 +164,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Final_Payment_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>   
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Final_Payment_Due_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
