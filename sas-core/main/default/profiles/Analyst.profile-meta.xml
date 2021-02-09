@@ -754,6 +754,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.IsRedirected__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Team__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -775,6 +780,11 @@
 	<fieldPermissions>
         <editable>true</editable>
         <field>Case.Queue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Team__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

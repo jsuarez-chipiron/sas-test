@@ -151,17 +151,22 @@
         <editable>true</editable>
         <field>Case.Deposit_Due_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+  </fieldPermissions>
   <fieldPermissions>
         <editable>true</editable>
         <field>Case.Deposit_Payment_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
- <fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Department__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Final_Payment_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions>   
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Final_Payment_Due_Date__c</field>
@@ -182,7 +187,6 @@
         <field>Case.FCS_CaseReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.FCS_CaseSubReason__c</field>
@@ -281,6 +285,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.FCS_IsReopened__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.IsRedirected__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -757,6 +766,10 @@
     <userPermissions>
         <enabled>false</enabled>
         <name>RemoveDirectMessageMembers</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>RunFlow</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

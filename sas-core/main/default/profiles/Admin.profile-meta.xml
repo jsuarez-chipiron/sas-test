@@ -349,7 +349,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Department__c</field>
+        <field>Case.IsRedirected__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -365,6 +365,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.GSB_Sales_Contract_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Department__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
