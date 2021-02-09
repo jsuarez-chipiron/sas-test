@@ -381,13 +381,14 @@ public class FCS_CaseHandler extends C_TriggerHandler {
             }
         }
         if (!lstEmailAddress.isEmpty()) {
-                lstAcc = [SELECT Id, FCS_EBNumber__c From Account where PersonEmail =: lstEmailAddress[0] AND isPersonAccount = true];
+                lstAcc = [SELECT Id, FCS_EBLevel__c, FCS_EBNumber__c From Account where PersonEmail =: lstEmailAddress[0] AND isPersonAccount = true];
         }
         if (!lstAcc.isEmpty()) {
             Case cse = new Case();
             cse.FCS_EBNumber__c = lstAcc[0].FCS_EBNumber__c;
             cse.accountId = lstAcc[0].Id;
             cse.Id = newCaseList[0].Id;
+            cse.FCS_EBLevel__c = lstAcc[0].FCS_EBLevel__c;
             lstUpdateCases.add(cse);
         } else if (lstCaseIds.size() > 0) {
             findEuroBonusAccount(lstCaseIds);
@@ -413,6 +414,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
                 cs.Id = lstCases[0].Id;
                 cs.FCS_EBNumber__c = acc.FCS_EBNumber__c;
                 cs.accountId = acc.Id;
+                cs.FCS_EBLevel__c = acc.FCS_EBLevel__c;
                 lstUpdateCases.add(cs);
             }
             if (!lstUpdateCases.isEmpty()) {

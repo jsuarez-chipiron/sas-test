@@ -17,7 +17,7 @@
     <filters>
         <field>Team__c</field>
         <operation>equals</operation>
-        <value>EB Pai Manual</value>
+        <value>Pai Manual</value>
     </filters>
     <filters>
         <field>CASES.STATUS</field>
