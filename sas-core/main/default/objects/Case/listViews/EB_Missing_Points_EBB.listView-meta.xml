@@ -25,6 +25,11 @@
         <operation>equals</operation>
         <value>New,In Progress,On Hold,Awaiting Customer Response,New Response,Escalated</value>
     </filters>
+    <filters>
+        <field>FCS_EBLevel__c</field>
+        <operation>equals</operation>
+        <value>B</value>
+    </filters>
     <label>EB Missing Points - EBB</label>
     <sharedTo>
         <group>EuroBonus</group>
