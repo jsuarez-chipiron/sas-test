@@ -28,6 +28,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Direct Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EuroBonus</fullName>
             <default>false</default>
         </values>
@@ -1185,6 +1189,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Direct Sales Reservations DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Direct Sales Reservations NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Direct Sales Reservations SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - EB Missing Points</fullName>
             <default>false</default>
         </values>
@@ -1446,6 +1462,10 @@
         </values>
         <values>
             <fullName>Agent Fares Ticketing EU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Backoffice</fullName>
             <default>false</default>
         </values>
         <values>

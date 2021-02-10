@@ -286,4 +286,19 @@
         <default>false</default>
         <label>Email - EuroBonus Name Change</label>
     </standardValue>
+    <standardValue>
+        <fullName>Email - Direct Sales Reservations DK</fullName>
+        <default>false</default>
+        <label>Email - Direct Sales Reservations DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Direct Sales Reservations NO</fullName>
+        <default>false</default>
+        <label>Email - Direct Sales Reservations NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Direct Sales Reservations SE</fullName>
+        <default>false</default>
+        <label>Email - Direct Sales Reservations SE</label>
+    </standardValue>
 </StandardValueSet>

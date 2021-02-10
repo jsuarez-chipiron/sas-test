@@ -25,6 +25,11 @@
                 <label>Corporate</label>
             </value>
             <value>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+                <label>Direct Sales</label>
+            </value>
+            <value>
                 <fullName>EuroBonus</fullName>
                 <default>false</default>
                 <label>EuroBonus</label>

@@ -26,6 +26,21 @@
                 <label>Email - Corporate</label>
             </value>
             <value>
+                <fullName>Email - Direct Sales Reservations DK</fullName>
+                <default>false</default>
+                <label>Email - Direct Sales Reservations DK</label>
+            </value>
+            <value>
+                <fullName>Email - Direct Sales Reservations NO</fullName>
+                <default>false</default>
+                <label>Email - Direct Sales Reservations NO</label>
+            </value>
+            <value>
+                <fullName>Email - Direct Sales Reservations SE</fullName>
+                <default>false</default>
+                <label>Email - Direct Sales Reservations SE</label>
+            </value>
+            <value>
                 <fullName>Email - EB Missing Points</fullName>
                 <default>false</default>
                 <label>Email - EB Missing Points</label>
