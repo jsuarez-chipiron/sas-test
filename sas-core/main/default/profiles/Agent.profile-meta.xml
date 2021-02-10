@@ -151,17 +151,22 @@
         <editable>true</editable>
         <field>Case.Deposit_Due_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+  </fieldPermissions>
   <fieldPermissions>
         <editable>true</editable>
         <field>Case.Deposit_Payment_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
- <fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Department__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Final_Payment_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions>   
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Final_Payment_Due_Date__c</field>
@@ -182,7 +187,6 @@
         <field>Case.FCS_CaseReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.FCS_CaseSubReason__c</field>
@@ -284,6 +288,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.IsRedirected__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Case.FCS_ReopenedCount__c</field>
         <readable>true</readable>
@@ -296,6 +305,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.GSB_Flight_Length__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+      <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Flight_Info_Missing_Points_X1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Flight_Info_Missing_Points_X2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Flight_Info_Missing_Points_X3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Flight_Info_Missing_Points_X4__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -737,6 +766,10 @@
     <userPermissions>
         <enabled>false</enabled>
         <name>RemoveDirectMessageMembers</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>RunFlow</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

@@ -26,6 +26,16 @@
                 <label>Email - Corporate</label>
             </value>
             <value>
+                <fullName>Email - EB Missing Points</fullName>
+                <default>false</default>
+                <label>Email - EB Missing Points</label>
+            </value>
+            <value>
+                <fullName>Email - EB Pai Manual</fullName>
+                <default>false</default>
+                <label>Email - EB Pai Manual</label>
+            </value>
+            <value>
                 <fullName>Email - EuroBonus</fullName>
                 <default>false</default>
                 <label>Email - EuroBonus</label>
