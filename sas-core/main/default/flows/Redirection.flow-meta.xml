@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <description>Posts the internal comments to the chatter feed on the case</description>
+        <name>CaseChatterFeed</name>
+        <label>CaseChatterFeed</label>
+        <locationX>670</locationX>
+        <locationY>365</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <connector>
+            <targetReference>Redirection_Submission</targetReference>
+        </connector>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <elementReference>Chatter_Comment</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <choices>
         <description>High</description>
         <name>High</name>
@@ -157,7 +181,7 @@
         <locationX>566</locationX>
         <locationY>365</locationY>
         <connector>
-            <targetReference>Redirection_Submission</targetReference>
+            <targetReference>CaseChatterFeed</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -219,8 +243,8 @@
     <screens>
         <name>Redirection_Submission</name>
         <label>Redirection Submission</label>
-        <locationX>697</locationX>
-        <locationY>365</locationY>
+        <locationX>774</locationX>
+        <locationY>367</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -308,9 +332,9 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>Internal_Comments</name>
+            <name>Chatter_Comment</name>
             <dataType>String</dataType>
-            <fieldText>Internal Comments</fieldText>
+            <fieldText>Chatter Comment</fieldText>
             <fieldType>InputField</fieldType>
             <helpText>&lt;p&gt;Please provide write the motive for redirecting the case&lt;/p&gt;</helpText>
             <isRequired>true</isRequired>
