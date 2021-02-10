@@ -246,4 +246,44 @@
         <default>false</default>
         <label>Email - EB Pai Manual</label>
     </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Diamond DK</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Diamond DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Diamond NO</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Diamond NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Diamond SE</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Diamond SE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Gold DK</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Gold DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Gold NO</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Gold NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Gold SE</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Gold SE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Identify Customer</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Identify Customer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Name Change</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Name Change</label>
+    </standardValue>
 </StandardValueSet>

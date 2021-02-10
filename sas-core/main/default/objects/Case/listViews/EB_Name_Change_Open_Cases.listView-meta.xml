@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EB_Name_Change_Open_Cases</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Department__c</field>
+        <operation>equals</operation>
+        <value>EuroBonus</value>
+    </filters>
+    <filters>
+        <field>Team__c</field>
+        <operation>equals</operation>
+        <value>Name Change</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Closed</value>
+    </filters>
+    <label>EB Name Change Open Cases</label>
+    <sharedTo>
+        <group>EuroBonus</group>
+    </sharedTo>
+</ListView>

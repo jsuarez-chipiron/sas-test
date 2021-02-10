@@ -41,6 +41,46 @@
                 <label>Email - EuroBonus</label>
             </value>
             <value>
+                <fullName>Email - EuroBonus Diamond DK</fullName>
+                <default>false</default>
+                <label>Email - EuroBonus Diamond DK</label>
+            </value>
+            <value>
+                <fullName>Email - EuroBonus Diamond NO</fullName>
+                <default>false</default>
+                <label>Email - EuroBonus Diamond NO</label>
+            </value>
+            <value>
+                <fullName>Email - EuroBonus Diamond SE</fullName>
+                <default>false</default>
+                <label>Email - EuroBonus Diamond SE</label>
+            </value>
+            <value>
+                <fullName>Email - EuroBonus Gold DK</fullName>
+                <default>false</default>
+                <label>Email - EuroBonus Gold DK</label>
+            </value>
+            <value>
+                <fullName>Email - EuroBonus Gold NO</fullName>
+                <default>false</default>
+                <label>Email - EuroBonus Gold NO</label>
+            </value>
+            <value>
+                <fullName>Email - EuroBonus Gold SE</fullName>
+                <default>false</default>
+                <label>Email - EuroBonus Gold SE</label>
+            </value>
+            <value>
+                <fullName>Email - EuroBonus Identify Customer</fullName>
+                <default>false</default>
+                <label>Email - EuroBonus Identify Customer</label>
+            </value>
+            <value>
+                <fullName>Email - EuroBonus Name Change</fullName>
+                <default>false</default>
+                <label>Email - EuroBonus Name Change</label>
+            </value>
+            <value>
                 <fullName>Email - Forsvaret NO</fullName>
                 <default>false</default>
                 <label>Email - Forsvaret NO</label>

@@ -940,6 +940,38 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - EuroBonus Diamond DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Diamond NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Diamond SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Gold DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Gold NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Gold SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Identify Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Name Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Facebook</fullName>
             <default>false</default>
         </values>
@@ -1040,6 +1072,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Diamond DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diamond NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diamond SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EE</fullName>
             <default>false</default>
         </values>
@@ -1060,6 +1104,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gold DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gold NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gold SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>IE</fullName>
             <default>false</default>
         </values>
@@ -1069,6 +1125,10 @@
         </values>
         <values>
             <fullName>IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Identify Customer</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1085,6 +1145,10 @@
         </values>
         <values>
             <fullName>NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name Change</fullName>
             <default>false</default>
         </values>
         <values>
