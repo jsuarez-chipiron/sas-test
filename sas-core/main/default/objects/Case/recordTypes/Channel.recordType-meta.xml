@@ -28,6 +28,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Direct Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EuroBonus</fullName>
             <default>false</default>
         </values>
@@ -1185,6 +1189,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Direct Sales Reservations DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Direct Sales Reservations NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Direct Sales Reservations SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - EB Missing Points</fullName>
             <default>false</default>
         </values>
@@ -1194,6 +1210,38 @@
         </values>
         <values>
             <fullName>Email - EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Diamond DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Diamond NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Diamond SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Gold DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Gold NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Gold SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Identify Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Name Change</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1417,6 +1465,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Backoffice</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Benelux</fullName>
             <default>false</default>
         </values>
@@ -1434,6 +1486,18 @@
         </values>
         <values>
             <fullName>DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diamond DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diamond NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diamond SE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1457,6 +1521,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gold DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gold NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gold SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>IE</fullName>
             <default>false</default>
         </values>
@@ -1466,6 +1542,10 @@
         </values>
         <values>
             <fullName>IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Identify Customer</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1486,6 +1566,10 @@
         </values>
         <values>
             <fullName>NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name Change</fullName>
             <default>false</default>
         </values>
         <values>

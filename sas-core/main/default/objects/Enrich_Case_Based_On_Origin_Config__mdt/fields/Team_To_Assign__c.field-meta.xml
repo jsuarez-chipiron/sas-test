@@ -26,6 +26,11 @@
                 <label>AT</label>
             </value>
             <value>
+                <fullName>Backoffice</fullName>
+                <default>false</default>
+                <label>Backoffice</label>
+            </value>
+            <value>
                 <fullName>Benelux</fullName>
                 <default>false</default>
                 <label>Benelux</label>
@@ -46,19 +51,24 @@
                 <label>DE</label>
             </value>
             <value>
+                <fullName>Diamond DK</fullName>
+                <default>false</default>
+                <label>Diamond DK</label>
+            </value>
+            <value>
+                <fullName>Diamond NO</fullName>
+                <default>false</default>
+                <label>Diamond NO</label>
+            </value>
+            <value>
+                <fullName>Diamond SE</fullName>
+                <default>false</default>
+                <label>Diamond SE</label>
+            </value>
+            <value>
                 <fullName>DK</fullName>
                 <default>false</default>
                 <label>DK</label>
-            </value>
-            <value>
-                <fullName>Missing Points</fullName>
-                <default>false</default>
-                <label>Missing Points</label>
-            </value>
-            <value>
-                <fullName>Pai Manual</fullName>
-                <default>false</default>
-                <label>Pai Manual</label>
             </value>
             <value>
                 <fullName>EE</fullName>
@@ -84,6 +94,26 @@
                 <fullName>FR</fullName>
                 <default>false</default>
                 <label>FR</label>
+            </value>
+            <value>
+                <fullName>Gold DK</fullName>
+                <default>false</default>
+                <label>Gold DK</label>
+            </value>
+            <value>
+                <fullName>Gold NO</fullName>
+                <default>false</default>
+                <label>Gold NO</label>
+            </value>
+            <value>
+                <fullName>Gold SE</fullName>
+                <default>false</default>
+                <label>Gold SE</label>
+            </value>
+            <value>
+                <fullName>Identify Customer</fullName>
+                <default>false</default>
+                <label>Identify Customer</label>
             </value>
             <value>
                 <fullName>IE</fullName>
@@ -116,6 +146,16 @@
                 <label>LV</label>
             </value>
             <value>
+                <fullName>Missing Points</fullName>
+                <default>false</default>
+                <label>Missing Points</label>
+            </value>
+            <value>
+                <fullName>Name Change</fullName>
+                <default>false</default>
+                <label>Name Change</label>
+            </value>
+            <value>
                 <fullName>NO</fullName>
                 <default>false</default>
                 <label>NO</label>
@@ -134,6 +174,11 @@
                 <fullName>Olympic SE</fullName>
                 <default>false</default>
                 <label>Olympic SE</label>
+            </value>
+            <value>
+                <fullName>Pai Manual</fullName>
+                <default>false</default>
+                <label>Pai Manual</label>
             </value>
             <value>
                 <fullName>Pandion DK</fullName>
