@@ -301,4 +301,9 @@
         <default>false</default>
         <label>Email - Direct Sales Reservations SE</label>
     </standardValue>
+    <standardValue>
+        <fullName>Email - Corporate SME</fullName>
+        <default>false</default>
+        <label>Email - Corporate SME</label>
+    </standardValue>
 </StandardValueSet>

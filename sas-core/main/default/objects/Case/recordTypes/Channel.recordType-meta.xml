@@ -47,6 +47,10 @@
             <fullName>Info Hub</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>SME</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
@@ -1198,6 +1202,10 @@
         </values>
         <values>
             <fullName>Email - Direct Sales Reservations SE</fullName>
+            <default>false</default>
+         </values>
+         <values>
+            <fullName>Email - Corporate SME</fullName>
             <default>false</default>
         </values>
         <values>

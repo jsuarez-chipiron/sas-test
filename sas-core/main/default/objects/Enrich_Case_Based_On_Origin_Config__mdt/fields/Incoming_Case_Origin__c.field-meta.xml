@@ -41,6 +41,11 @@
                 <label>Email - Direct Sales Reservations SE</label>
             </value>
             <value>
+                <fullName>Email - Corporate SME</fullName>
+                <default>false</default>
+                <label>Email - Corporate SME</label>
+            </value>
+            <value>
                 <fullName>Email - EB Missing Points</fullName>
                 <default>false</default>
                 <label>Email - EB Missing Points</label>
