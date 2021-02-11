@@ -23,6 +23,17 @@
         <targetObject>ParentId</targetObject>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Case_Owner_Update_Direct_Sales</fullName>
+        <field>OwnerId</field>
+        <lookupValue>DirectSales</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Case Owner Update Direct Sales</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <targetObject>ParentId</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Case_Owner_Update_EuroBonus</fullName>
         <field>OwnerId</field>
         <lookupValue>EuroBonus</lookupValue>
@@ -148,6 +159,39 @@
             <field>Case.Department__c</field>
             <operation>equals</operation>
             <value>Corporate</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Return closed case to queue on new email - Direct Sales</fullName>
+        <actions>
+            <name>Case_Owner_Update_Direct_Sales</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.Department__c</field>
+            <operation>equals</operation>
+            <value>Direct Sales</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Closed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>
