@@ -97,6 +97,61 @@
         <protected>false</protected>
         <targetObject>ParentId</targetObject>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Increment_Email_Messages_Received</fullName>
+        <field>Number_of_Email_Messages_Received__c</field>
+        <formula>Parent.Number_of_Email_Messages_Received__c + 1</formula>
+        <name>Increment Email Messages Received</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>ParentId</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Increment_Number_of_Email_Messages_Sent</fullName>
+        <field>Number_of_Email_Messages_Sent__c</field>
+        <formula>Parent.Number_of_Email_Messages_Sent__c + 1</formula>
+        <name>Increment Number of Email Messages Sent</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>ParentId</targetObject>
+    </fieldUpdates>
+    <rules>
+        <fullName>Email Message Received</fullName>
+        <actions>
+            <name>Increment_Email_Messages_Received</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Status</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Evaluated whenever an email is received from Salesforce to increment email counter</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Email Message Sent</fullName>
+        <actions>
+            <name>Increment_Number_of_Email_Messages_Sent</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Status</field>
+            <operation>equals</operation>
+            <value>Sent</value>
+        </criteriaItems>
+        <description>Evaluated whenever an email is sent from Salesforce to increment email counter</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
     <rules>
         <fullName>Return closed case to queue on new email - Agent Helpdesk</fullName>
         <actions>
