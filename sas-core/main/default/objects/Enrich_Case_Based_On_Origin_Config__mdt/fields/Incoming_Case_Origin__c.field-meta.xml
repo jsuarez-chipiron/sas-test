@@ -43,7 +43,17 @@
             <value>
                 <fullName>Email - Corporate SME</fullName>
                 <default>false</default>
-                <label>Email - Corporate SME</label>
+                <label>Email - Corporate SME</label>                
+            </value>
+            <value>
+                <fullName>Email - Digital Channel Support External</fullName>
+                <default>false</default>
+                <label>Email - Digital Channel Support External</label>
+            </value>
+            <value>
+                <fullName>Email - Digital Channel Support Internal</fullName>
+                <default>false</default>
+                <label>Email - Digital Channel Support Internal</label>
             </value>
             <value>
                 <fullName>Email - EB Missing Points</fullName>

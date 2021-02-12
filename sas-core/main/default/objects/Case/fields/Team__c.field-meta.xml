@@ -160,10 +160,25 @@
                 <default>false</default>
                 <label>Name Change</label>
             </value>
+            <value>    
+                <fullName>External</fullName>
+                <default>false</default>
+                <label>External</label>
+            </value>
+            <value>
+                <fullName>Forsvaret NO</fullName>
+                <default>false</default>
+                <label>Forsvaret NO</label>
+            </value>
             <value>
                 <fullName>NO</fullName>
                 <default>false</default>
                 <label>NO</label>
+            </value>
+            <value>
+                <fullName>Internal</fullName>
+                <default>false</default>
+                <label>Internal</label>
             </value>
             <value>
                 <fullName>Olympic DK</fullName>
@@ -457,6 +472,14 @@
         <valueSettings>
             <controllingFieldValue>Direct Sales</controllingFieldValue>
             <valueName>Backoffice</valueName>
+        </valueSettings>
+        <valueSettings>    
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <valueName>External</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <valueName>Internal</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

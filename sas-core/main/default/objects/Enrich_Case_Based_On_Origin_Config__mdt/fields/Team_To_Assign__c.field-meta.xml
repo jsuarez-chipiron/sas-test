@@ -81,6 +81,11 @@
                 <label>ES</label>
             </value>
             <value>
+                <fullName>External</fullName>
+                <default>false</default>
+                <label>External</label>
+            </value>
+            <value>
                 <fullName>FI</fullName>
                 <default>false</default>
                 <label>FI</label>
@@ -124,6 +129,11 @@
                 <fullName>Interline</fullName>
                 <default>false</default>
                 <label>Interline</label>
+            </value>
+            <value>
+                <fullName>Internal</fullName>
+                <default>false</default>
+                <label>Internal</label>
             </value>
             <value>
                 <fullName>IS</fullName>

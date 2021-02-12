@@ -52,6 +52,26 @@
         <label>Email - Corporate</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Digital Channel Support External</fullName>
+        <default>false</default>
+        <label>Email - Digital Channel Support External</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Digital Channel Support Internal</fullName>
+        <default>false</default>
+        <label>Email - Digital Channel Support Internal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EB Missing Points</fullName>
+        <default>false</default>
+        <label>Email - EB Missing Points</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EB Pai Manual</fullName>
+        <default>false</default>
+        <label>Email - EB Pai Manual</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - EuroBonus</fullName>
         <default>false</default>
         <label>Email - EuroBonus</label>

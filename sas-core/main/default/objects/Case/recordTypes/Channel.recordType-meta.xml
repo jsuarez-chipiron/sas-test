@@ -31,6 +31,10 @@
             <fullName>Direct Sales</fullName>
             <default>false</default>
         </values>
+        <values>     
+            <fullName>Digital Channel Support</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>EuroBonus</fullName>
             <default>false</default>
@@ -55,7 +59,75 @@
     <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
         <values>
+            <fullName>ADM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEM issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ARI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ATC%2FATC Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent Helpdesk R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Airport</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Airport Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ancillary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Animals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Availability %2F MCT</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Award travel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back-office R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage service R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>COVID-19 Testing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CR requests</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Campaigns</fullName>
             <default>false</default>
         </values>
         <values>
@@ -67,7 +139,51 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Check in</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Claims</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Code Share</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conditions of carriage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contacts R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contacts-Country</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contacts-partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Content</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corp Account managers %28SAS for busiess%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Corporate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate product</fullName>
             <default>false</default>
         </values>
         <values>
@@ -75,11 +191,47 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Customer Care R</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Delayed%2Fdamaged luggage</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Depa%2FDepu</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deployment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital channels R</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Digital support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Sales R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documents%2FVoucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EB membership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Environment</fullName>
             <default>false</default>
         </values>
         <values>
@@ -99,7 +251,83 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Eurobonus procedures R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extraordinary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare Quote</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare Rules</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fares</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Feedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight disruptions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Food</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group booking - direct groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group sales R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inflight %2F Onboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Irregularity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Irregularity %2F Schedule change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Login issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Look here before you ask R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Minor</fullName>
             <default>false</default>
         </values>
         <values>
@@ -115,7 +343,71 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>News</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No action taken</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-SAS produkter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OAL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OCC Daily Reports</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Overbooked flights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Policies and agreements</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Policy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Products</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Puzzel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rebooking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rebooking of groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund %2F SRS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund R</fullName>
             <default>false</default>
         </values>
         <values>
@@ -123,11 +415,55 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Reservation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reservation issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retroregistration</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Revenue travel</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Rules %26 Informaton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Agent News%2FFlash</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Medical</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SAS for business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS%2EXX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SSR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Safety report</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule changes</fullName>
             <default>false</default>
         </values>
         <values>
@@ -139,11 +475,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>System</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax%2FYQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ticket Status</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Ticketing</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Travel pass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WiFi</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -155,6 +507,18 @@
         </values>
         <values>
             <fullName>AMEX 2 for 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ATC refund flow</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AVIH%2FPETC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Access rights</fullName>
             <default>false</default>
         </values>
         <values>
@@ -218,7 +582,63 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Airlines</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Airport service locations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allergies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allowance</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Alternatives</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amadeus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ancillary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ancillary error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arrival information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Author</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Authorization</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Availability</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Availability  -  SFB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Availability - TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Award booking</fullName>
             <default>false</default>
         </values>
         <values>
@@ -230,11 +650,51 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>BULK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage delivery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Big%2FSupersale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bike</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Biofuel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Blocked IP address</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Booking confirmation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking flow</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking flow  - SFB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking flow - TP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -246,7 +706,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bug created</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bulk Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CBBG</fullName>
             <default>false</default>
         </values>
         <values>
@@ -258,7 +726,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Campaign booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Campaigns</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Campaigns%2Futskick</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cancel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancellation%2Frefund of ticket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cannot cancel online</fullName>
             <default>false</default>
         </values>
         <values>
@@ -274,11 +762,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cars</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Change of email</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Change profile</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Charter</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Chat lost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Check in error</fullName>
             <default>false</default>
         </values>
         <values>
@@ -290,7 +794,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Child</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Co2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Codeshare</fullName>
             <default>false</default>
         </values>
         <values>
@@ -302,11 +814,35 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Connection time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Connections</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Consolidation of flights</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Contact update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Content and Dangerous goods</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Control status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Create case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Create profile</fullName>
             <default>false</default>
         </values>
         <values>
@@ -330,6 +866,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Dangerous goods</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Deduct points</fullName>
             <default>false</default>
         </values>
@@ -346,7 +886,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Denied boarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Departure information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Document control %28ESTA %2F VISA %2F DOCS %2F PASSPORT%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Domestic</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Downgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Downgrading</fullName>
             <default>false</default>
         </values>
         <values>
@@ -354,7 +914,39 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Duty 24%2F7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EB highlights%2FError</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EB program</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EB shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ESAN%2FSVAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Earning points</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Error %E2%80%93 Inactive customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error message</fullName>
             <default>false</default>
         </values>
         <values>
@@ -370,7 +962,43 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Europe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extra seat for comfort</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Face Mask</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare  -  SFB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare - TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare concept</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fast Track</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight cancellations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight delays</fullName>
             <default>false</default>
         </values>
         <values>
@@ -378,7 +1006,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Forget password</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Forgot  username</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form of payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Fraud</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GDPR</fullName>
             <default>false</default>
         </values>
         <values>
@@ -391,6 +1035,22 @@
         </values>
         <values>
             <fullName>General request w%2Fo booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General service questions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gift voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Give away card</fullName>
             <default>false</default>
         </values>
         <values>
@@ -414,6 +1074,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Handling status</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>High Demand Groups</fullName>
             <default>false</default>
         </values>
@@ -426,7 +1090,51 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Hotels</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INF</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inactive customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive profile - SFB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive profile - TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Infant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inflight</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Information missing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Information update needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intercont</fullName>
             <default>false</default>
         </values>
         <values>
@@ -438,11 +1146,39 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Kids</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Life time gold</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Link not working</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Log in -  SFB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Log in - TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Login</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Login%2Fpassword issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lost %26 found</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lounges</fullName>
             <default>false</default>
         </values>
         <values>
@@ -466,11 +1202,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Merged flow</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missed connecting flight</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Missing 1000 Status pts MC</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Missing points</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Musical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NDC</fullName>
             <default>false</default>
         </values>
         <values>
@@ -482,7 +1234,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Name change%2FCorrection</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Name correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Group booking - agent groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Group booking - bulk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No sale</fullName>
             <default>false</default>
         </values>
         <values>
@@ -498,6 +1270,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Opening hours</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
             <default>false</default>
         </values>
@@ -506,7 +1282,43 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Overbooked flights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oxygen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pandion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment  - TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment -  SFB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment cards</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Pet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Point related questions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Point sharing</fullName>
             <default>false</default>
         </values>
         <values>
@@ -514,7 +1326,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Points status</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Post-travel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre seating</fullName>
             <default>false</default>
         </values>
         <values>
@@ -522,11 +1342,43 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Price inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Procedures</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Profile update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Program info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Public site</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rebooking</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Rebooking of groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to SAS Medical</fullName>
             <default>false</default>
         </values>
         <values>
@@ -538,7 +1390,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Referred to group form</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Referred to phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund - Done</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund escalation</fullName>
             <default>false</default>
         </values>
         <values>
@@ -554,11 +1418,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Releases</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Report of damaged baggage</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Report of delayed baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reprotection</fullName>
             <default>false</default>
         </values>
         <values>
@@ -570,6 +1442,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rest of the world</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Retroregistration</fullName>
             <default>false</default>
         </values>
@@ -578,11 +1454,51 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Route inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rules %26 information</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Rules and policy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Aircraft</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Fleet</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SAS Invoice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS for business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS staff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SPEQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SRS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales</fullName>
             <default>false</default>
         </values>
         <values>
@@ -594,7 +1510,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Salesforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scandinavian agents</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Seating</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seating error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Security</fullName>
             <default>false</default>
         </values>
         <values>
@@ -602,11 +1534,47 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Self Service kiosk %2F baggage drop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ski %2F Snowboard</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Social media</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sold</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Spam</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special assistance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special baggage incl%2E pets</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spelling mistake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spending points</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sport</fullName>
             <default>false</default>
         </values>
         <values>
@@ -622,7 +1590,35 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sports%2FMarine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Staff %26 Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Star alliance</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Strike</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strike related information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submit more information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sustainability</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System</fullName>
             <default>false</default>
         </values>
         <values>
@@ -630,7 +1626,43 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Taxes and surcharges</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Threat</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ticket status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketing  -  SFB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketing - TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Traffic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer %26 Gate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer %2F Arrival services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Insurance</fullName>
             <default>false</default>
         </values>
         <values>
@@ -702,6 +1734,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>UMNR</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Unaccompanied minor</fullName>
             <default>false</default>
         </values>
@@ -722,7 +1758,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>User related</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User story created</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Voluntary refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher</fullName>
             <default>false</default>
         </values>
         <values>
@@ -746,7 +1794,35 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Waiting time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Webshop</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Wheelchair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wifi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong department</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XBAG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Youth</fullName>
             <default>false</default>
         </values>
         <values>
@@ -757,6 +1833,74 @@
     <picklistValues>
         <picklist>FCS_CaseTags__c</picklist>
         <values>
+            <fullName>ADM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEM issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ARI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ATC%2FATC Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent Helpdesk R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Airport</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Airport Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ancillary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Animals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Availability %2F MCT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back-office R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage service R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CR requests</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Campaigns</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cancellation%2Frefund of ticket</fullName>
             <default>false</default>
         </values>
@@ -765,7 +1909,47 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Claims</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Code Share</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conditions of carriage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contacts R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contacts-Country</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contacts-partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corp Account managers %28SAS for busiess%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate product</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Credit card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Care R</fullName>
             <default>false</default>
         </values>
         <values>
@@ -773,7 +1957,35 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Depa%2FDepu</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deployment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital channels R</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Digital support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Sales R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documents%2FVoucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Environment</fullName>
             <default>false</default>
         </values>
         <values>
@@ -781,7 +1993,83 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EuroBonus procedures R</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Eurobonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extraordinary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare Quote</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare Rules</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fares</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight disruptions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Food</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group booking - direct groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group sales R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inflight %2F Onboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Irregularity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Irregularity %2F Schedule change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Login issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Look here before you ask R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Minor</fullName>
             <default>false</default>
         </values>
         <values>
@@ -789,7 +2077,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Mobile Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Name change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>News</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No action taken</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-SAS produkter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OAL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -797,11 +2109,83 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Overbooked flights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Policies and agreements</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Policy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Products</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rebooking</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Rebooking of groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund %2F SRS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund R</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Requesting documentation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reservation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reservation issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retroregistration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rules %26 Informaton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Medical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS%2EXX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SSR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Safety report</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule changes</fullName>
             <default>false</default>
         </values>
         <values>
@@ -813,7 +2197,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>System</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax%2FYQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket Status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketing</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Travel pass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WiFi</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1209,6 +2617,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Digital Channel Support External</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Digital Channel Support Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - EB Missing Points</fullName>
             <default>false</default>
         </values>
@@ -1517,6 +2933,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>External</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>FI</fullName>
             <default>false</default>
         </values>
@@ -1558,6 +2978,10 @@
         </values>
         <values>
             <fullName>Interline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal</fullName>
             <default>false</default>
         </values>
         <values>

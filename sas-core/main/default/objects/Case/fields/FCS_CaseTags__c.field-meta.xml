@@ -488,7 +488,45 @@
                 <default>false</default>
                 <label>Other</label>
             </value>
+            <value>
+                <fullName>App</fullName>
+                <default>false</default>
+                <label>App</label>
+            </value>
+            <value>
+                <fullName>Web</fullName>
+                <default>false</default>
+                <label>Web</label>
+            </value>
+            <value>
+                <fullName>Mobile Web</fullName>
+                <default>false</default>
+                <label>Mobile Web</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <valueName>AEM issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <valueName>CR requests</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <valueName>Deployment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <valueName>Login issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <valueName>No action taken</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
@@ -624,13 +662,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <valueName>No action taken</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
             <valueName>OAL</valueName>
         </valueSettings>
@@ -746,6 +777,18 @@
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Sales Information</controllingFieldValue>
             <valueName>Schedule changes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Channel</controllingFieldValue>
+            <valueName>App</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Channel</controllingFieldValue>
+            <valueName>Web</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Channel</controllingFieldValue>
+            <valueName>Mobile Web</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -888,22 +931,6 @@
         <valueSettings>
             <controllingFieldValue>Sales Information</controllingFieldValue>
             <valueName>System</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <valueName>AEM issues</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <valueName>CR requests</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <valueName>Deployment</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <valueName>Login issues</valueName>
         </valueSettings>
     </valueSet>
     <visibleLines>4</visibleLines>
