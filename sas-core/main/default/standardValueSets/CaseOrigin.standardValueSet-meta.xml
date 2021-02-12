@@ -67,11 +67,6 @@
         <label>Email - EB Missing Points</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - EB Pai Manual</fullName>
-        <default>false</default>
-        <label>Email - EB Pai Manual</label>
-    </standardValue>
-    <standardValue>
         <fullName>Email - EuroBonus</fullName>
         <default>false</default>
         <label>Email - EuroBonus</label>
