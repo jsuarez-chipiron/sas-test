@@ -625,7 +625,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Availability  -  SFB</fullName>
+            <fullName>Availability - SFB</fullName>
             <default>false</default>
         </values>
         <values>
@@ -685,7 +685,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Booking flow  - SFB</fullName>
+            <fullName>Booking flow - SFB</fullName>
             <default>false</default>
         </values>
         <values>
@@ -969,7 +969,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Fare  -  SFB</fullName>
+            <fullName>Fare - SFB</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1293,7 +1293,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Payment  - TP</fullName>
+            <fullName>Payment - TP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1637,7 +1637,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Ticketing  -  SFB</fullName>
+            <fullName>Ticketing - SFB</fullName>
             <default>false</default>
         </values>
         <values>

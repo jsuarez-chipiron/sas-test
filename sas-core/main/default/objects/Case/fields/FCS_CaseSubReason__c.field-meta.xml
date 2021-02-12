@@ -170,9 +170,9 @@
                 <label>Availability</label>
             </value>
             <value>
-                <fullName>Availability  -  SFB</fullName>
+                <fullName>Availability - SFB</fullName>
                 <default>false</default>
-                <label>Availability  -  SFB</label>
+                <label>Availability - SFB</label>
             </value>
             <value>
                 <fullName>Availability - TP</fullName>
@@ -245,9 +245,9 @@
                 <label>Booking flow</label>
             </value>
             <value>
-                <fullName>Booking flow  - SFB</fullName>
+                <fullName>Booking flow - SFB</fullName>
                 <default>false</default>
-                <label>Booking flow  - SFB</label>
+                <label>Booking flow - SFB</label>
             </value>
             <value>
                 <fullName>Booking flow - TP</fullName>
@@ -615,9 +615,9 @@
                 <label>Fare error</label>
             </value>
             <value>
-                <fullName>Fare  -  SFB</fullName>
+                <fullName>Fare - SFB</fullName>
                 <default>false</default>
-                <label>Fare  -  SFB</label>
+                <label>Fare - SFB</label>
             </value>
             <value>
                 <fullName>Fare - TP</fullName>
@@ -650,9 +650,9 @@
                 <label>Forget password</label>
             </value>
             <value>
-                <fullName>Forgot  username</fullName>
+                <fullName>Forgot username</fullName>
                 <default>false</default>
-                <label>Forgot  username</label>
+                <label>Forgot username</label>
             </value>
             <value>
                 <fullName>Form of payment</fullName>
@@ -1020,9 +1020,9 @@
                 <label>Payment -  SFB</label>
             </value>
             <value>
-                <fullName>Payment  - TP</fullName>
+                <fullName>Payment - TP</fullName>
                 <default>false</default>
-                <label>Payment  - TP</label>
+                <label>Payment - TP</label>
             </value>
             <value>
                 <fullName>Pet</fullName>
@@ -1435,9 +1435,9 @@
                 <label>Ticketing</label>
             </value>
             <value>
-                <fullName>Ticketing  -  SFB</fullName>
+                <fullName>Ticketing - SFB</fullName>
                 <default>false</default>
-                <label>Ticketing  -  SFB</label>
+                <label>Ticketing - SFB</label>
             </value>
             <value>
                 <fullName>Ticketing - TP</fullName>
@@ -2275,7 +2275,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Availability  -  SFB</valueName>
+            <valueName>Availability - SFB</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
@@ -2289,7 +2289,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Booking flow  - SFB</valueName>
+            <valueName>Booking flow - SFB</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
@@ -2313,7 +2313,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Fare  -  SFB</valueName>
+            <valueName>Fare - SFB</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
@@ -2345,7 +2345,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Payment  - TP</valueName>
+            <valueName>Payment - TP</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
@@ -2363,7 +2363,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Ticketing  -  SFB</valueName>
+            <valueName>Ticketing - SFB</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
