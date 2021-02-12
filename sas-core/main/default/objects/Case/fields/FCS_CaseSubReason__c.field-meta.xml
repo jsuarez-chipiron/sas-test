@@ -845,9 +845,9 @@
                 <label>Login/password issues</label>
             </value>
             <value>
-                <fullName>Log in -  SFB</fullName>
+                <fullName>Log in - SFB</fullName>
                 <default>false</default>
-                <label>Log in -  SFB</label>
+                <label>Log in - SFB</label>
             </value>
             <value>
                 <fullName>Log in - TP</fullName>
@@ -1015,9 +1015,9 @@
                 <label>Payment cards</label>
             </value>
             <value>
-                <fullName>Payment -  SFB</fullName>
+                <fullName>Payment - SFB</fullName>
                 <default>false</default>
-                <label>Payment -  SFB</label>
+                <label>Payment - SFB</label>
             </value>
             <value>
                 <fullName>Payment - TP</fullName>
@@ -2333,7 +2333,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Log in -  SFB</valueName>
+            <valueName>Log in - SFB</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
@@ -2341,7 +2341,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Payment -  SFB</valueName>
+            <valueName>Payment - SFB</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
@@ -2819,7 +2819,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Login issues</controllingFieldValue>
-            <valueName>Forgot  username</valueName>
+            <valueName>Forgot username</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Login issues</controllingFieldValue>

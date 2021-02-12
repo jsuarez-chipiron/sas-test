@@ -1005,7 +1005,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Forgot  username</fullName>
+            <fullName>Forgot username</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1153,7 +1153,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Log in -  SFB</fullName>
+            <fullName>Log in - SFB</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1297,7 +1297,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Payment -  SFB</fullName>
+            <fullName>Payment - SFB</fullName>
             <default>false</default>
         </values>
         <values>
