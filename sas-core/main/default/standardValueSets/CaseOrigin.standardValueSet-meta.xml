@@ -257,11 +257,6 @@
         <label>Email - System &amp; Tariff</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - EB Missing Points</fullName>
-        <default>false</default>
-        <label>Email - EB Missing Points</label>
-    </standardValue>
-    <standardValue>
         <fullName>Email - EB Pai Manual</fullName>
         <default>false</default>
         <label>Email - EB Pai Manual</label>

@@ -166,11 +166,6 @@
                 <label>External</label>
             </value>
             <value>
-                <fullName>Forsvaret NO</fullName>
-                <default>false</default>
-                <label>Forsvaret NO</label>
-            </value>
-            <value>
                 <fullName>NO</fullName>
                 <default>false</default>
                 <label>NO</label>
