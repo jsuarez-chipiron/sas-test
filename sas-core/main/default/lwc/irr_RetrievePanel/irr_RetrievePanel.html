@@ -127,20 +127,111 @@
                             title="Retrieve passengers by Booking"
                             onactive={handleTabSwitch}>
                         <lightning-layout>
-                            <lightning-layout-item padding="around-small" size="3">
-                                <lightning-input
-                                        value={retrieveParameters.bookingId}
-                                        type="text"
-                                        name="bookingId"
-                                        label="Booking Reference(s)"
-                                        field-level-help="Specify one or more booking references, separated by comma"
-                                        data-tab-group="BOOKING_REFERENCE"
-                                        required
-                                        onchange={handleParameterChange}>
+                                <lightning-layout-item padding="around-small" size="3">
+                                    <template if:true={showBookingReferenceInput}>
+                                    <lightning-input
+                                            value={retrieveParameters.bookingId}
+                                            type="text"
+                                            name="bookingId"
+                                            label="Booking Reference(s)"
+                                            field-level-help="Specify one or more booking references, separated by comma"
+                                            data-tab-group="BOOKING_REFERENCE"
+                                            required
+                                            onchange={handleParameterChange}>
+                                    </lightning-input>
+                                </template>
+                                <lightning-layout-item padding="around-small" size="3">
+                                    <lightning-input type="checkbox"
+                                    label="Use Advanced Filter" data-advance-filter = "checkbox" onchange={handleAdvanceFilterChange} >
                                 </lightning-input>
+                                </lightning-layout-item>
                             </lightning-layout-item>
                         </lightning-layout>
                     </lightning-tab>
+                    <template if:true={showBookingFiltersTab}>
+                        <template for:each={bookings} for:item="booking" for:index="bookingIdx">
+                            <lightning-layout key={booking.key}>
+                                <lightning-layout-item padding="around-small" class="pull-down">
+                                        <lightning-layout>
+                                            <lightning-layout-item size="10">
+                                                <lightning-input
+                                                        value={bookings.stationDeparture}
+                                                        data-booking-idx={bookingIdx}
+                                                        type="text"
+                                                        name="departureStation"
+                                                        label="Departure Station"
+                                                        data-tab-group="BOOKING_FILTER"
+                                                        pattern="([A-Z]{3})"
+                                                        message-when-pattern-mismatch="Enter three letter station code"
+                                                        onchange={handleBookingsFilter}>
+                                                </lightning-input>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small"  class="pull-down">
+                                        <lightning-input
+                                                class="slds-p-vertical_xx-small"
+                                                value={bookings.arrivalStation}
+                                                data-booking-idx={bookingIdx}
+                                                type="text"
+                                                name="arrivalStation"
+                                                label="Arrival Station"
+                                                pattern="([A-Z]{3})"
+                                                data-tab-group="BOOKING_FILTER"
+                                                message-when-pattern-mismatch="Enter three letter station code"
+                                                onchange={handleBookingsFilter}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small">
+                                        <lightning-input
+                                                value={bookings.departureDate}
+                                                data-booking-idx={bookingIdx}
+                                                type="datetime"
+                                                name="departureDate"
+                                                label="Departure Date"
+                                                data-tab-group="BOOKING_FILTER"
+                                                required
+                                                onchange={handleBookingsFilter}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small">
+                                        <lightning-input
+                                                value={bookings.arrivalDate}
+                                                data-booking-idx={bookingIdx}
+                                                type="datetime"
+                                                name="arrivalDate"
+                                                label="Arrival Date"
+                                                data-tab-group="BOOKING_FILTER"
+                                                required
+                                                onchange={handleBookingsFilter}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                        <lightning-layout-item padding="around-small" size="1" class="pull-down">
+                                            <button
+                                                    data-booking-idx={bookingIdx}
+                                                    onclick={handleBookingsRemove}
+                                                    class="slds-button slds-button_icon"
+                                                    title="Remove">
+                                                <lightning-icon icon-name="utility:close" alternative-text="Remove" title="Remove">
+                                                </lightning-icon>
+                                                <span class="slds-assistive-text">Remove</span>
+                                            </button>
+                                        </lightning-layout-item>
+                                </lightning-layout>
+                            </template>
+                                <lightning-layout>
+                                    <lightning-layout-item padding="around-small" size="1" class="pull-right">
+                                        <button
+                                                onclick={handleBookingAdd}
+                                                class="slds-button slds-button_icon"
+                                                title="Add">
+                                            <lightning-icon icon-name="utility:add" alternative-text="Add" title="Add">
+                                            </lightning-icon>
+                                            <span class="slds-assistive-text">Add</span>
+                                        </button>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                        </template>
                 </lightning-tabset>
             </div>
         </div>
