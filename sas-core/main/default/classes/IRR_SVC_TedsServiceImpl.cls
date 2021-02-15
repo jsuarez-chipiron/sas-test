@@ -66,6 +66,51 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         return parsedResponse;
     }
     /**
+     * @author Chetan Singh, Coforge
+     * @date 2021
+     *
+     * @description Retrieves Booking Details by booking filters.
+     *
+     * @param bookingId Booking Reference to retrieve details for
+     *
+     * @return Retrieved Booking Details
+     */
+    private List<IRR_MOD_TedsBooking> getBookingDetailsWithFilters(String departureStation, String arrivalStation,String fromTimeUTC,String toTimeUTC) {
+        Map<String, String> queryParams = new Map<String, String>{
+            'departureStation' => departureStation,
+            'arrivalStation' => arrivalStation,
+            'fromTimeUTC' => fromTimeUTC,
+            'toTimeUTC' => toTimeUTC
+            
+        };
+        Set<String> mapKeystoRemove = new Set<String> ();
+        for(String key : queryParams.keySet()){
+            System.debug('<<inside>>');
+            if(queryParams.get(key) == null || queryParams.get(key) == 'undefined' ){
+                mapKeystoRemove.add(key);
+            }
+            System.debug('<<mapKeystoRemove>>' +mapKeystoRemove);
+        }
+        // The Map class only comes with a remove() method, which only removes one item from the
+        //   map at a time.
+        // It's not a great idea to modify a collection while you're iterating over it.
+        // The solution is to get the map's keyset, then use the set class's removeAll() method.
+        // This has the effect of removing multiple items from the map in one shot.
+        queryParams.keySet().removeAll(mapKeystoRemove);
+
+        System.debug('<<queryParams>>'+queryParams);
+
+        // String endpointURL = String.format(BOOKINGS_FILTER_ENDPOINT, new List<String>{bookingId});
+        C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
+                .executeRequest(BOOKINGS_FILTER_ENDPOINT, C_IntegrationExecutor.Method.GET, null, queryParams);
+        if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
+            throwTedsException(responseObject);
+        }
+        System.debug('<<responseObject>>'+responseObject.responseBody);
+        List<IRR_MOD_TedsBooking> tedsBookings = IRR_MOD_TedsBooking.parseArray(responseObject.responseBody);
+        return tedsBookings;
+    }
+    /**
      * @author Chetan Singh, Coforgetech
      * @date 2020
      *
@@ -103,6 +148,20 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
     public List<IRR_MOD_PassengerInfo> getPassengerInfosForBooking(String bookingId) {
         IRR_MOD_TedsBooking bookings = getBookingDetails(bookingId);
         return initiatePassengerInfos(new List<IRR_MOD_TedsBooking>{bookings}, null);
+    }
+    /**
+     * @author Chetan Singh, Coforge
+     * @date 2020
+     *
+     * @description Retrieves booking details and creates Passenger Infos for all passengers in a booking.
+     *
+     * @param bookingId Flight Id to retrieve bookings for
+     *
+     * @return List of Retrieved Booking Details
+     */
+    public List<IRR_MOD_PassengerInfo> getPassengerInfosForBookingFilters(String departureStation, String arrivalStation,String fromTimeUTC,String toTimeUTC) {
+        List<IRR_MOD_TedsBooking> bookings = getBookingDetailsWithFilters(departureStation, arrivalStation,fromTimeUTC,toTimeUTC);
+        return initiatePassengerInfos(bookings, null);
     }
 
     /**

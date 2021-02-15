@@ -13,6 +13,7 @@ import getFlightPassengerInfos from '@salesforce/apex/IRR_CON_ManualCommunicatio
 import sendManualCommunication from '@salesforce/apex/IRR_CON_ManualCommunication.sendManualCommunication';
 import getManualTemplatesBySendMode from '@salesforce/apex/IRR_CON_ManualCommunication.getManualTemplatesBySendMode';
 import getBookingPassengerInfos from '@salesforce/apex/IRR_CON_ManualCommunication.getBookingPassengerInfos';
+import getBookingWithFilterPassengerInfos from '@salesforce/apex/IRR_CON_ManualCommunication.getBookingWithFilterPassengerInfos';
 
 import * as tableUtil from 'c/c_TableUtil';
 import { reduceErrors } from 'c/c_LdsUtils';
@@ -300,6 +301,7 @@ export default class IRR_ManualCommunication extends LightningElement {
                 case "FLIGHT_REFERENCE":
                     this.COLUMNS = FLIGHT_COLUMNS;
                     eventParameters = {flightIds: parameters.flightIds};
+                    console.log(`<<F>>: ${JSON.stringify(eventParameters)}`);
                     result = await getFlightPassengerInfos(eventParameters);
                     this.filterParameters = {'thisSegment.status': ['Confirmed', 'SpaceAvailable', 'Waitlisted']};
                     break;
@@ -307,6 +309,13 @@ export default class IRR_ManualCommunication extends LightningElement {
                     this.COLUMNS = BOOKING_COLUMNS;
                     eventParameters = {bookings: parameters.bookingId};
                     result = await getBookingPassengerInfos(eventParameters);
+                    this.filterParameters = {};
+                    break;
+                case "BOOKING_FILTER":
+                    this.COLUMNS = BOOKING_COLUMNS;
+                    eventParameters = {bookings: parameters.bookingIds};
+                    console.log(`<<B>>: ${JSON.stringify(eventParameters)}`);
+                    result = await getBookingWithFilterPassengerInfos(eventParameters);
                     this.filterParameters = {};
                     break;
                 case "BYPASS":

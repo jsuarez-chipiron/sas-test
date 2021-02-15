@@ -51,6 +51,7 @@ public class C_IntegrationExecutorRest implements C_IIntegrationExecutor {
         if (queryParams!=null && !queryParams.isEmpty()) {
             setRequestQueryParams(request, queryParams);
         }
+        System.debug('<<request>>'+request);
         HttpResponse res = http.send(request);
         String response = String.isNotBlank(res.getBody()) ? res.getBody() : '';
         System.debug(response);
@@ -90,6 +91,7 @@ public class C_IntegrationExecutorRest implements C_IIntegrationExecutor {
             queryString += String.isBlank(queryString) ? '?' : '&';
             queryString += key + '=' + value;
         }
+        System.debug('<<queryString>>'+queryString);
         request.setEndpoint(request.getEndpoint() + queryString);
     }
 
