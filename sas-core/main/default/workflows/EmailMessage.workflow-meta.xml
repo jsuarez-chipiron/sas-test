@@ -23,6 +23,17 @@
         <targetObject>ParentId</targetObject>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Case_Owner_Update_DC_Support</fullName>
+        <field>OwnerId</field>
+        <lookupValue>Digital_Channel_Support</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Case Owner Update DC Support</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <targetObject>ParentId</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Case_Owner_Update_Direct_Sales</fullName>
         <field>OwnerId</field>
         <lookupValue>DirectSales</lookupValue>
@@ -384,6 +395,39 @@
             <field>Case.Department__c</field>
             <operation>equals</operation>
             <value>Info Hub</value>
+        </criteriaItems>
+        <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Return closed case to queue on new email -Digital Channel Support</fullName>
+        <actions>
+            <name>Case_Owner_Update_DC_Support</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Previous_Owner_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Case_Status_New_Response</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Department__c</field>
+            <operation>equals</operation>
+            <value>Digital Channel Support</value>
         </criteriaItems>
         <description>Used to change the owner of the Case when Customer send emails after closing the case</description>
         <triggerType>onCreateOnly</triggerType>
