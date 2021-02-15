@@ -52,6 +52,21 @@
         <label>Email - Corporate</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Digital Channel Support External</fullName>
+        <default>false</default>
+        <label>Email - Digital Channel Support External</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Digital Channel Support Internal</fullName>
+        <default>false</default>
+        <label>Email - Digital Channel Support Internal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EB Missing Points</fullName>
+        <default>false</default>
+        <label>Email - EB Missing Points</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - EuroBonus</fullName>
         <default>false</default>
         <label>Email - EuroBonus</label>
@@ -237,13 +252,68 @@
         <label>Email - System &amp; Tariff</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - EB Missing Points</fullName>
-        <default>false</default>
-        <label>Email - EB Missing Points</label>
-    </standardValue>
-    <standardValue>
         <fullName>Email - EB Pai Manual</fullName>
         <default>false</default>
         <label>Email - EB Pai Manual</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Diamond DK</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Diamond DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Diamond NO</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Diamond NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Diamond SE</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Diamond SE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Gold DK</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Gold DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Gold NO</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Gold NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Gold SE</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Gold SE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Identify Customer</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Identify Customer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Name Change</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Name Change</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Direct Sales Reservations DK</fullName>
+        <default>false</default>
+        <label>Email - Direct Sales Reservations DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Direct Sales Reservations NO</fullName>
+        <default>false</default>
+        <label>Email - Direct Sales Reservations NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Direct Sales Reservations SE</fullName>
+        <default>false</default>
+        <label>Email - Direct Sales Reservations SE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Corporate SME</fullName>
+        <default>false</default>
+        <label>Email - Corporate SME</label>
     </standardValue>
 </StandardValueSet>

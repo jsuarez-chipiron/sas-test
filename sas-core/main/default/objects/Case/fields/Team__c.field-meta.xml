@@ -14,16 +14,26 @@
         <controllingField>Department__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>ACE</fullName>
                 <default>false</default>
                 <label>ACE</label>
             </value>
             <value>
+                <fullName>Agent Fares Ticketing EU</fullName>
+                <default>false</default>
+                <label>Agent Fares Ticketing EU</label>
+            </value>
+            <value>
                 <fullName>AT</fullName>
                 <default>false</default>
                 <label>AT</label>
+            </value>
+            <value>
+                <fullName>Backoffice</fullName>
+                <default>false</default>
+                <label>Backoffice</label>
             </value>
             <value>
                 <fullName>Benelux</fullName>
@@ -46,6 +56,21 @@
                 <label>DE</label>
             </value>
             <value>
+                <fullName>Diamond DK</fullName>
+                <default>false</default>
+                <label>Diamond DK</label>
+            </value>
+            <value>
+                <fullName>Diamond NO</fullName>
+                <default>false</default>
+                <label>Diamond NO</label>
+            </value>
+            <value>
+                <fullName>Diamond SE</fullName>
+                <default>false</default>
+                <label>Diamond SE</label>
+            </value>
+            <value>
                 <fullName>DK</fullName>
                 <default>false</default>
                 <label>DK</label>
@@ -66,9 +91,34 @@
                 <label>FI</label>
             </value>
             <value>
+                <fullName>Forsvaret NO</fullName>
+                <default>false</default>
+                <label>Forsvaret NO</label>
+            </value>
+            <value>
                 <fullName>FR</fullName>
                 <default>false</default>
                 <label>FR</label>
+            </value>
+            <value>
+                <fullName>Gold DK</fullName>
+                <default>false</default>
+                <label>Gold DK</label>
+            </value>
+            <value>
+                <fullName>Gold NO</fullName>
+                <default>false</default>
+                <label>Gold NO</label>
+            </value>
+            <value>
+                <fullName>Gold SE</fullName>
+                <default>false</default>
+                <label>Gold SE</label>
+            </value>
+            <value>
+                <fullName>Identify Customer</fullName>
+                <default>false</default>
+                <label>Identify Customer</label>
             </value>
             <value>
                 <fullName>IE</fullName>
@@ -76,9 +126,19 @@
                 <label>IE</label>
             </value>
             <value>
+                <fullName>Interline</fullName>
+                <default>false</default>
+                <label>Interline</label>
+            </value>
+            <value>
                 <fullName>IS</fullName>
                 <default>false</default>
                 <label>IS</label>
+            </value>
+            <value>
+                <fullName>IT</fullName>
+                <default>false</default>
+                <label>IT</label>
             </value>
             <value>
                 <fullName>LT</fullName>
@@ -91,64 +151,29 @@
                 <label>LV</label>
             </value>
             <value>
+                <fullName>Missing Points</fullName>
+                <default>false</default>
+                <label>Missing Points</label>
+            </value>
+            <value>
+                <fullName>Name Change</fullName>
+                <default>false</default>
+                <label>Name Change</label>
+            </value>
+            <value>    
+                <fullName>External</fullName>
+                <default>false</default>
+                <label>External</label>
+            </value>
+            <value>
                 <fullName>NO</fullName>
                 <default>false</default>
                 <label>NO</label>
             </value>
             <value>
-                <fullName>PL</fullName>
+                <fullName>Internal</fullName>
                 <default>false</default>
-                <label>PL</label>
-            </value>
-            <value>
-                <fullName>RU</fullName>
-                <default>false</default>
-                <label>RU</label>
-            </value>
-            <value>
-                <fullName>SAS Poland</fullName>
-                <default>false</default>
-                <label>SAS Poland</label>
-            </value>
-            <value>
-                <fullName>SASSI Internal</fullName>
-                <default>false</default>
-                <label>SASSI Internal</label>
-            </value>
-            <value>
-                <fullName>SE</fullName>
-                <default>false</default>
-                <label>SE</label>
-            </value>
-            <value>
-                <fullName>UK</fullName>
-                <default>false</default>
-                <label>UK</label>
-            </value>
-            <value>
-                <fullName>US</fullName>
-                <default>false</default>
-                <label>US</label>
-            </value>
-            <value>
-                <fullName>IT</fullName>
-                <default>false</default>
-                <label>IT</label>
-            </value>
-            <value>
-                <fullName>Agent Fares Ticketing EU</fullName>
-                <default>false</default>
-                <label>Agent Fares Ticketing EU</label>
-            </value>
-            <value>
-                <fullName>Forsvaret NO</fullName>
-                <default>false</default>
-                <label>Forsvaret NO</label>
-            </value>
-            <value>
-                <fullName>Interline</fullName>
-                <default>false</default>
-                <label>Interline</label>
+                <label>Internal</label>
             </value>
             <value>
                 <fullName>Olympic DK</fullName>
@@ -164,6 +189,11 @@
                 <fullName>Olympic SE</fullName>
                 <default>false</default>
                 <label>Olympic SE</label>
+            </value>
+            <value>
+                <fullName>Pai Manual</fullName>
+                <default>false</default>
+                <label>Pai Manual</label>
             </value>
             <value>
                 <fullName>Pandion DK</fullName>
@@ -186,14 +216,39 @@
                 <label>Partner Support</label>
             </value>
             <value>
+                <fullName>PL</fullName>
+                <default>false</default>
+                <label>PL</label>
+            </value>
+            <value>
+                <fullName>RU</fullName>
+                <default>false</default>
+                <label>RU</label>
+            </value>
+            <value>
                 <fullName>Sales Information</fullName>
                 <default>false</default>
                 <label>Sales Information</label>
             </value>
             <value>
+                <fullName>SAS Poland</fullName>
+                <default>false</default>
+                <label>SAS Poland</label>
+            </value>
+            <value>
+                <fullName>SASSI Internal</fullName>
+                <default>false</default>
+                <label>SASSI Internal</label>
+            </value>
+            <value>
                 <fullName>Scandinavia</fullName>
                 <default>false</default>
                 <label>Scandinavia</label>
+            </value>
+            <value>
+                <fullName>SE</fullName>
+                <default>false</default>
+                <label>SE</label>
             </value>
             <value>
                 <fullName>Star Alliance Upgrades</fullName>
@@ -206,27 +261,68 @@
                 <label>System &amp; Tariff</label>
             </value>
             <value>
-                <fullName>Pai Manual</fullName>
+                <fullName>UK</fullName>
                 <default>false</default>
-                <label>Pai Manual</label>
+                <label>UK</label>
             </value>
             <value>
-                <fullName>Missing Points</fullName>
+                <fullName>US</fullName>
                 <default>false</default>
-                <label>Missing Points</label>
+                <label>US</label>
             </value>
         </valueSetDefinition>
-        <valueSettings>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <valueName>SAS Poland</valueName>
-        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <valueName>Agent Fares Ticketing EU</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <valueName>SAS Poland</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>SME</controllingFieldValue>
             <valueName>Scandinavia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Diamond DK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Diamond NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Diamond SE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Gold DK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Gold NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Gold SE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Identify Customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Missing Points</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Name Change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Pai Manual</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
@@ -247,14 +343,6 @@
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Star Alliance Upgrades</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <valueName>Pai Manual</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <valueName>Missing Points</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
@@ -298,6 +386,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Forsvaret NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>FR</valueName>
         </valueSettings>
         <valueSettings>
@@ -306,7 +398,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Interline</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>IS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>IT</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
@@ -319,6 +419,18 @@
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Olympic DK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Olympic NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Olympic SE</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
@@ -341,28 +453,8 @@
             <valueName>US</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>IT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Forsvaret NO</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Interline</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Olympic DK</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Olympic NO</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Olympic SE</valueName>
+            <controllingFieldValue>Info Hub</controllingFieldValue>
+            <valueName>Sales Information</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info Hub</controllingFieldValue>
@@ -370,11 +462,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info Hub</controllingFieldValue>
-            <valueName>Sales Information</valueName>
+            <valueName>System &amp; Tariff</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Info Hub</controllingFieldValue>
-            <valueName>System &amp; Tariff</valueName>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <valueName>Backoffice</valueName>
+        </valueSettings>
+        <valueSettings>    
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <valueName>External</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <valueName>Internal</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

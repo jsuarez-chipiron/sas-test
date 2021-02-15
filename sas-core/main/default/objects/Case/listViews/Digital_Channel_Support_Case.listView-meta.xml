@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Digital_Channel_Support_Case</fullName>
+    <filterScope>Queue</filterScope>
+    <label>Digital Channel Support</label>
+    <queue>Digital_Channel_Support</queue>
+    <sharedTo>
+        <allInternalUsers/>
+    </sharedTo>
+</ListView>

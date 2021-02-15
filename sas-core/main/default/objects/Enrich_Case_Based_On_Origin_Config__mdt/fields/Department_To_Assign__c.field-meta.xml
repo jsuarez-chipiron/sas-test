@@ -9,7 +9,7 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>Agent Helpdesk</fullName>
                 <default>false</default>
@@ -19,6 +19,16 @@
                 <fullName>Corporate</fullName>
                 <default>false</default>
                 <label>Corporate</label>
+            </value>
+            <value>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+                <label>Direct Sales</label>
+            </value>
+            <value>
+                <fullName>Digital Channel Support</fullName>
+                <default>false</default>
+                <label>Digital Channel Support</label>
             </value>
             <value>
                 <fullName>EuroBonus</fullName>
@@ -39,6 +49,11 @@
                 <fullName>Info Hub</fullName>
                 <default>false</default>
                 <label>Info Hub</label>
+            </value>
+            <value>
+                <fullName>SME</fullName>
+                <default>false</default>
+                <label>SME</label>
             </value>
         </valueSetDefinition>
     </valueSet>

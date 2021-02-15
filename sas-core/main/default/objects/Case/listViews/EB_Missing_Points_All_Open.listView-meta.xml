@@ -25,7 +25,7 @@
         <operation>equals</operation>
         <value>New,In Progress,On Hold,Awaiting Customer Response,New Response,Escalated</value>
     </filters>
-    <label>EB Missing Points - EBG</label>
+    <label>EB Missing Points - All Open</label>
     <sharedTo>
         <group>EuroBonus</group>
     </sharedTo>

@@ -365,6 +365,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Number_of_Email_Messages_Received__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Number_of_Email_Messages_Sent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>FCS_CaseTag__c.FCS_CaseTag__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -393,7 +403,6 @@
         <field>Knowledge__kav.FCS_SubType__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>MessagingEndUser.IsOptedOut</field>

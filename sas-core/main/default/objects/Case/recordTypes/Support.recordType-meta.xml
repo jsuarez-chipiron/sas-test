@@ -27,6 +27,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Direct Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital Channel Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EuroBonus</fullName>
             <default>false</default>
         </values>
@@ -58,6 +66,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Check in</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Content</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Credit card</fullName>
             <default>false</default>
         </values>
@@ -67,6 +83,10 @@
         </values>
         <values>
             <fullName>Digital support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EB membership</fullName>
             <default>false</default>
         </values>
         <values>
@@ -125,6 +145,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>ATC refund flow</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Add EB in booking</fullName>
             <default>false</default>
         </values>
@@ -133,11 +157,59 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ancillary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ancillary error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Authorization</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Availability - SFB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Availability - TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Award booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bike</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Blocked IP address</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Booking confirmation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking flow</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking flow - SFB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking flow - TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Campaigns%2Futskick</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cannot cancel online</fullName>
             <default>false</default>
         </values>
         <values>
@@ -157,6 +229,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Check in error</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Check-in</fullName>
             <default>false</default>
         </values>
@@ -170,6 +246,10 @@
         </values>
         <values>
             <fullName>Consolidation of flights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Create profile</fullName>
             <default>false</default>
         </values>
         <values>
@@ -209,7 +289,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Fare - SFB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare - TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare error</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Flight disruption</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Forgot username</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Give away card</fullName>
             <default>false</default>
         </values>
         <values>
@@ -233,7 +333,35 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inactive profile - SFB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive profile - TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Information missing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Information update needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Irregularity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Link not working</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Log in - SFB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Log in - TP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -254,6 +382,14 @@
         </values>
         <values>
             <fullName>Merge profiles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Merged flow</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing points</fullName>
             <default>false</default>
         </values>
         <values>
@@ -285,7 +421,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment - TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment - SFB</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Pet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Point sharing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Profile update</fullName>
             <default>false</default>
         </values>
         <values>
@@ -337,7 +497,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Seating error</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ski %2F Snowboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spelling mistake</fullName>
             <default>false</default>
         </values>
         <values>
@@ -350,6 +518,14 @@
         </values>
         <values>
             <fullName>Ticket status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketing - SFB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketing - TP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -389,12 +565,24 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Webshop</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Wheelchair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong customer</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>FCS_CaseTags__c</picklist>
+        <values>
+            <fullName>App</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Cancellation%2Frefund of ticket</fullName>
             <default>false</default>
@@ -428,6 +616,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Mobile Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Name change</fullName>
             <default>false</default>
         </values>
@@ -453,6 +645,10 @@
         </values>
         <values>
             <fullName>Travel pass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -768,6 +964,58 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Direct Sales Reservations DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Direct Sales Reservations NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Direct Sales Reservations SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Diamond DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Diamond NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Diamond SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Gold DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Gold NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Gold SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Identify Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Name Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Digital Channel Support External</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Digital Channel Support Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>
@@ -844,6 +1092,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Backoffice</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Benelux</fullName>
             <default>false</default>
         </values>
@@ -860,11 +1112,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Diamond DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diamond NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diamond SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EE</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>ES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>External</fullName>
             <default>false</default>
         </values>
         <values>
@@ -880,6 +1148,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gold DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gold NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gold SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>IE</fullName>
             <default>false</default>
         </values>
@@ -892,7 +1172,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Identify Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Interline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal</fullName>
             <default>false</default>
         </values>
         <values>
@@ -905,6 +1193,10 @@
         </values>
         <values>
             <fullName>NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name Change</fullName>
             <default>false</default>
         </values>
         <values>

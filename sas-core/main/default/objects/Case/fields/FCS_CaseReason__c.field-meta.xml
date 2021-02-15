@@ -105,6 +105,11 @@
                 <label>Changes</label>
             </value>
             <value>
+                <fullName>Check in</fullName>
+                <default>false</default>
+                <label>Check in</label>
+            </value>
+            <value>
                 <fullName>Claims</fullName>
                 <default>false</default>
                 <label>Claims</label>
@@ -133,6 +138,11 @@
                 <fullName>Contacts R</fullName>
                 <default>false</default>
                 <label>Contacts R</label>
+            </value>
+            <value>
+                <fullName>Content</fullName>
+                <default>false</default>
+                <label>Content</label>
             </value>
             <value>
                 <fullName>Corp Account managers (SAS for busiess)</fullName>
@@ -213,6 +223,11 @@
                 <fullName>Documents/Voucher</fullName>
                 <default>false</default>
                 <label>Documents/Voucher</label>
+            </value>
+            <value>
+                <fullName>EB membership</fullName>
+                <default>false</default>
+                <label>EB membership</label>
             </value>
             <value>
                 <fullName>Environment</fullName>
@@ -565,6 +580,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <controllingFieldValue>Channel</controllingFieldValue>
             <valueName>Login issues</valueName>
         </valueSettings>
         <valueSettings>
@@ -656,6 +672,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Channel</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <valueName>Rebooking</valueName>
         </valueSettings>
@@ -803,7 +820,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Channel</controllingFieldValue>
+            <valueName>Check in</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Channel</controllingFieldValue>
+            <valueName>Content</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Channel</controllingFieldValue>
             <valueName>Corporate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Channel</controllingFieldValue>
+            <valueName>EB membership</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Channel</controllingFieldValue>
