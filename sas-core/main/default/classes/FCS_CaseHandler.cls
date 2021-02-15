@@ -48,7 +48,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
         assignOwnerFromSoMe(newCaseList);
         validateCaseTags(newCaseList);
         enrichCaseDataBasedOnOrigin(newCaseList);
-        enrichGroupCaseDataWithGroupFormData(newCaseList);
+        //enrichGroupCaseDataWithGroupFormData(newCaseList);
         enrichMissingPointsCaseDataWithMissingPointsFormData(newCaseList);
     }
     /**
