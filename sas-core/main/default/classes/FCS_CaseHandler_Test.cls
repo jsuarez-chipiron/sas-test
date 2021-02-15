@@ -334,7 +334,7 @@ private class FCS_CaseHandler_Test {
         System.assert(String.isEmpty(testCaseAfterTrigger.Type));
     }
 
-    @IsTest
+    /* @IsTest
     static void enrichCaseFromFormSuppliedEmailShouldNotChangeIfIncorrectFormatInForm() {
         Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
         testCase.Subject = 'sports-trips';
@@ -415,7 +415,7 @@ private class FCS_CaseHandler_Test {
 
         System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'gruppresor.se@sas.se');
 
-    }
+    } */
 
     @IsTest
     static void enrichMissingPointsCaseDataIfNrOfFltsNaNIgnore() {
