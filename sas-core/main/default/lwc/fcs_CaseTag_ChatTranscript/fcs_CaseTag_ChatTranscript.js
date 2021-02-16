@@ -16,7 +16,7 @@ export default class Fcs_CaseTag extends LightningElement {
     }) {
         if (data) {
             this.cse = data;
-            this.RecordTypeId = cse.RecordTypeId;
+            this.RecordTypeId = this.cse.RecordTypeId;
         } else if (error) {
             this.cse = undefined;
             error = 'error occured';
