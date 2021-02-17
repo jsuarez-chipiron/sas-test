@@ -2612,10 +2612,6 @@
             <fullName>Email - Direct Sales Reservations SE</fullName>
             <default>false</default>
          </values>
-         <values>
-            <fullName>Email - Corporate SME</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Email - Digital Channel Support External</fullName>
             <default>false</default>
@@ -2816,7 +2812,6 @@
             <fullName>Email - SME Scandinavia</fullName>
             <default>false</default>
         </values>
-
         <values>
             <fullName>Email - System %26 Tariff</fullName>
             <default>false</default>
