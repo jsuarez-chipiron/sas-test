@@ -301,7 +301,6 @@ export default class IRR_ManualCommunication extends LightningElement {
                 case "FLIGHT_REFERENCE":
                     this.COLUMNS = FLIGHT_COLUMNS;
                     eventParameters = {flightIds: parameters.flightIds};
-                    console.log(`<<F>>: ${JSON.stringify(eventParameters)}`);
                     result = await getFlightPassengerInfos(eventParameters);
                     this.filterParameters = {'thisSegment.status': ['Confirmed', 'SpaceAvailable', 'Waitlisted']};
                     break;
@@ -314,7 +313,6 @@ export default class IRR_ManualCommunication extends LightningElement {
                 case "BOOKING_FILTER":
                     this.COLUMNS = BOOKING_COLUMNS;
                     eventParameters = {bookings: parameters.bookingIds};
-                    console.log(`<<B>>: ${JSON.stringify(eventParameters)}`);
                     result = await getBookingWithFilterPassengerInfos(eventParameters);
                     this.filterParameters = {};
                     break;

@@ -71,9 +71,11 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      *
      * @description Retrieves Booking Details by booking filters.
      *
-     * @param bookingId Booking Reference to retrieve details for
-     *
-     * @return Retrieved Booking Details
+     * @param departureStation returns bookings that have a flight departing from a station
+     * @param arrivalStation returns bookings that have a flight arriving to the station
+     * @param fromTimeUTC returns bookings that have a flight departing/arriving from that time in UTC
+     * @param toTimeUTC returns bookings that have a flight departing/arriving to that time in UTC
+     * @return Retrieved Booking Details fetched from TEDS based on filters
      */
     private List<IRR_MOD_TedsBooking> getBookingDetailsWithFilters(String departureStation, String arrivalStation,String fromTimeUTC,String toTimeUTC) {
         Map<String, String> queryParams = new Map<String, String>{
@@ -85,11 +87,9 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         };
         Set<String> mapKeystoRemove = new Set<String> ();
         for(String key : queryParams.keySet()){
-            System.debug('<<inside>>');
             if(queryParams.get(key) == null || queryParams.get(key) == 'undefined' ){
                 mapKeystoRemove.add(key);
             }
-            System.debug('<<mapKeystoRemove>>' +mapKeystoRemove);
         }
         // The Map class only comes with a remove() method, which only removes one item from the
         //   map at a time.
@@ -98,18 +98,16 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         // This has the effect of removing multiple items from the map in one shot.
         queryParams.keySet().removeAll(mapKeystoRemove);
 
-        System.debug('<<queryParams>>'+queryParams);
 
-        // String endpointURL = String.format(BOOKINGS_FILTER_ENDPOINT, new List<String>{bookingId});
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
                 .executeRequest(BOOKINGS_FILTER_ENDPOINT, C_IntegrationExecutor.Method.GET, null, queryParams);
         if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
             throwTedsException(responseObject);
         }
-        System.debug('<<responseObject>>'+responseObject.responseBody);
         List<IRR_MOD_TedsBooking> tedsBookings = IRR_MOD_TedsBooking.parseArray(responseObject.responseBody);
         return tedsBookings;
     }
+
     /**
      * @author Chetan Singh, Coforgetech
      * @date 2020
@@ -151,11 +149,14 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
     }
     /**
      * @author Chetan Singh, Coforge
-     * @date 2020
+     * @date 2021
      *
-     * @description Retrieves booking details and creates Passenger Infos for all passengers in a booking.
+     * @description Retrieves booking details based on filters and creates Passenger Infos for all passengers in a booking.
      *
-     * @param bookingId Flight Id to retrieve bookings for
+     * @param departureStation returns bookings that have a flight departing from a station
+     * @param arrivalStation returns bookings that have a flight arriving to the station
+     * @param fromTimeUTC returns bookings that have a flight departing/arriving from that time in UTC
+     * @param toTimeUTC returns bookings that have a flight departing/arriving to that time in UTC
      *
      * @return List of Retrieved Booking Details
      */

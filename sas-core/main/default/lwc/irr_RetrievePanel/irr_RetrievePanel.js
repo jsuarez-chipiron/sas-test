@@ -27,7 +27,6 @@ export default class irr_RetrievePanel extends LightningElement {
     showBookingFiltersTab = false;
 
     showBookingReferenceInput =true;
-    // @track checkboxVal = false;
 
     connectedCallback() {
         //Initialize component with first flight
@@ -45,7 +44,7 @@ export default class irr_RetrievePanel extends LightningElement {
             this.showBookingFiltersTab = true;
             this.showBookingReferenceInput = false;
             this.retrieveParameters = {};
-            this.handleFlightAdd();
+            this.handleBookingAdd();
         }
         else {
             this.showBookingReferenceInput = true;
@@ -57,23 +56,18 @@ export default class irr_RetrievePanel extends LightningElement {
 
     handleParameterChange(event) {
         //Text parameters should automatically be upper case
-        console.log(`retrieveParameters: ${JSON.stringify(this.retrieveParameters)}`);
         this.retrieveParameters[event.target.name] = event.target.type === "text" ?
             event.target.value.toUpperCase() : event.target.value;
 
-        console.log(`retrieveParameters: ${JSON.stringify(this.retrieveParameters)}`);
         this.retrievalMode = event.currentTarget.dataset.tabGroup;
     }
 
     handleFlightChange(event) {
         const { name, value, dataset: { flightIdx} } = event.target;
-        console.log(`dataset: ${JSON.stringify(event.target)}`);
         this.flights[flightIdx][name] = event.target.type === "text" ? value.toUpperCase() : value;
-        console.log(`flights: ${JSON.stringify(this.flights)}`);
 
     }
 
-    
     handleBookingsFilter(event) {
         const { name, value, dataset: { bookingIdx } } = event.target;
         this.bookings[bookingIdx][name] = event.target.type === "text" ? value.toUpperCase() : value;
@@ -82,21 +76,19 @@ export default class irr_RetrievePanel extends LightningElement {
     }
 
     handleFlightAdd() {
-        if(this.retrievalMode === "FLIGHT_REFERENCE"){
             const flightKey = ++this.flightKeyTracker;
             this.flights.push( { key: `flight-${flightKey}`, departureDate: DATE_TODAY } );
-        }
-        else {
-            const bookingsKey = ++this.bookingsKeyTracker;
-            this.bookings.push( { key: `bookings-${bookingsKey}`, departureDate: DATE_TODAY } );
-        }
+    }
+
+    handleBookingAdd(){
+        const bookingsKey = ++this.bookingsKeyTracker;
+        this.bookings.push( { key: `bookings-${bookingsKey}` } );
+
     }
 
     handleFlightRemove(event) {
         const index = parseInt(event.currentTarget.dataset.flightIdx);
-        if (index >0){
-            this.flights.splice(index, 1);
-        }
+        this.flights.splice(index, 1);
     }
     handleBookingsRemove(event) {
         const index = parseInt(event.currentTarget.dataset.bookingIdx);
@@ -108,13 +100,15 @@ export default class irr_RetrievePanel extends LightningElement {
         this.retrievalMode = event.target.value;
         this.showBookingFiltersTab = false;
         this.showBookingReferenceInput = true;
-        // this.checkboxVal = false;
 
-        let advanceFilterCheckbox =this.template.querySelectorAll('[data-advance-filter = "checkbox"]');
-            console.log(`advanceFilterCheckbox: ${advanceFilterCheckbox.checked}`);
-            advanceFilterCheckbox.checked = false;
+            let advanceFilterCheckbox = this.template.querySelector('[data-advance-filter = "checkbox"]');
+            // when you query checkbox right after you switched the tab, the element
+            // is stil not available in DOM at that time hence put a timeout 
+            if (advanceFilterCheckbox != null) {
+                setTimeout(()=>this.template.querySelector('[data-advance-filter = "checkbox"]').checked=false);
+            }
+            this.bookings = [];
     }
-
     validateFields() {
         return [...this.template.querySelectorAll(`lightning-input[data-tab-group="${this.retrievalMode}"]`)]
             .reduce((previousValue, cmp) => cmp.reportValidity() && previousValue, true);
@@ -127,7 +121,6 @@ export default class irr_RetrievePanel extends LightningElement {
         const retrievalEvent = new CustomEvent('retrieve' , {
             detail: { parameters: this.retrieveParameters, retrievalMode: this.retrievalMode }
         });
-        console.log(`retrievalEvent : ${JSON.stringify(retrievalEvent)}`);
         this.dispatchEvent(retrievalEvent);
     }
 
@@ -140,7 +133,6 @@ export default class irr_RetrievePanel extends LightningElement {
     constructBookingIds(){
         this.retrieveParameters.bookingIds = this.bookings.map(booking => {
             const { departureStation, arrivalStation, departureDate, arrivalDate } = booking;
-            console.log(`retrieveParameters: ${JSON.stringify(this.retrieveParameters)}`);
             return `${departureStation}!${arrivalStation}!${departureDate}!${arrivalDate}`;
         }).join(',');
     }

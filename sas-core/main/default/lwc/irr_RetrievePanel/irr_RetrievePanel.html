@@ -150,7 +150,7 @@
                     </lightning-tab>
                     <template if:true={showBookingFiltersTab}>
                         <template for:each={bookings} for:item="booking" for:index="bookingIdx">
-                            <lightning-layout key={bookings.key}>
+                            <lightning-layout key={booking.key}>
                                 <lightning-layout-item padding="around-small" class="pull-down">
                                         <lightning-layout>
                                             <lightning-layout-item size="10">
@@ -222,7 +222,7 @@
                                 <lightning-layout>
                                     <lightning-layout-item padding="around-small" size="1" class="pull-right">
                                         <button
-                                                onclick={handleFlightAdd}
+                                                onclick={handleBookingAdd}
                                                 class="slds-button slds-button_icon"
                                                 title="Add">
                                             <lightning-icon icon-name="utility:add" alternative-text="Add" title="Add">

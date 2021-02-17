@@ -46,10 +46,6 @@ public class IRR_CON_ManualCommunication {
                 arrivalStation = currentBookingFilter.size() >= 2 && String.isNotBlank(currentBookingFilter[1]) ? currentBookingFilter[1] : null;
                 departureDate = currentBookingFilter[2] ;
                 arrivalDate = currentBookingFilter[3] ;
-                System.debug('<<departureStation>>' +departureStation);
-                System.debug('<<arrivalStation>>' +arrivalStation);
-                System.debug('<<departureDate>>' +departureDate);
-                System.debug('<<arrivalDate>>' +arrivalDate);
                 passengerInfos.addAll(IRR_SVC_TedsService.getPassengerInfosForBookingFilters(departureStation,arrivalStation,departureDate,arrivalDate));
             }
             return passengerInfos;
