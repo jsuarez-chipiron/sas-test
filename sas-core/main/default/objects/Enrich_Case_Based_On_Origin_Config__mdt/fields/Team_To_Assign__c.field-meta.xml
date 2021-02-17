@@ -136,6 +136,11 @@
                 <label>Internal</label>
             </value>
             <value>
+                <fullName>International</fullName>
+                <default>false</default>
+                <label>International</label>
+            </value>
+            <value>
                 <fullName>IS</fullName>
                 <default>false</default>
                 <label>IS</label>

@@ -2809,6 +2809,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - SME International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - SME Scandinavia</fullName>
+            <default>false</default>
+        </values>
+
+        <values>
             <fullName>Email - System %26 Tariff</fullName>
             <default>false</default>
         </values>
@@ -2982,6 +2991,10 @@
         </values>
         <values>
             <fullName>Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International</fullName>
             <default>false</default>
         </values>
         <values>

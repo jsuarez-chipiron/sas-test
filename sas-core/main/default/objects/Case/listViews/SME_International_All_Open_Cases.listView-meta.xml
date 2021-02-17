@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SME_Scandinavia_All_Closed_Cases</fullName>
+    <fullName>SME_International_All_Open_Cases</fullName>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.EMAIL</columns>
     <columns>CASES.SUBJECT</columns>
@@ -18,14 +18,14 @@
     <filters>
         <field>Team__c</field>
         <operation>equals</operation>
-        <value>Scandinavia</value>
+        <value>International</value>
     </filters>
     <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
-        <value>Closed,Merged</value>
+        <value>In Progress,On Hold,Awaiting Customer Response,New Response,Escalated</value>
     </filters>
-    <label>SME Scandinavia All Closed Cases</label>
+    <label>SME International All Open Cases</label>
     <sharedTo>
         <group>Corporate</group>
     </sharedTo>
