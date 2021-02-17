@@ -155,7 +155,7 @@
                                         <lightning-layout>
                                             <lightning-layout-item size="10">
                                                 <lightning-input
-                                                        value={bookings.stationDeparture}
+                                                        value={booking.departureStation}
                                                         data-booking-idx={bookingIdx}
                                                         type="text"
                                                         name="departureStation"
@@ -170,8 +170,7 @@
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small"  class="pull-down">
                                         <lightning-input
-                                                class="slds-p-vertical_xx-small"
-                                                value={bookings.arrivalStation}
+                                                value={booking.arrivalStation}
                                                 data-booking-idx={bookingIdx}
                                                 type="text"
                                                 name="arrivalStation"
@@ -184,7 +183,8 @@
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small">
                                         <lightning-input
-                                                value={bookings.departureDate}
+                                                value={booking.departureDate}
+                                                timezone="GMT"
                                                 data-booking-idx={bookingIdx}
                                                 type="datetime"
                                                 name="departureDate"
@@ -196,7 +196,8 @@
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small">
                                         <lightning-input
-                                                value={bookings.arrivalDate}
+                                                value={booking.arrivalDate}
+                                                timezone="GMT"
                                                 data-booking-idx={bookingIdx}
                                                 type="datetime"
                                                 name="arrivalDate"

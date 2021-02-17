@@ -45,8 +45,7 @@ export default class irr_RetrievePanel extends LightningElement {
             this.showBookingReferenceInput = false;
             this.retrieveParameters = {};
             this.handleBookingAdd();
-        }
-        else {
+        }else {
             this.showBookingReferenceInput = true;
             this.showBookingFiltersTab = false;
             this.bookings = [];
@@ -63,7 +62,7 @@ export default class irr_RetrievePanel extends LightningElement {
     }
 
     handleFlightChange(event) {
-        const { name, value, dataset: { flightIdx} } = event.target;
+        const { name, value, dataset: { flightIdx } } = event.target;
         this.flights[flightIdx][name] = event.target.type === "text" ? value.toUpperCase() : value;
 
     }
@@ -115,7 +114,7 @@ export default class irr_RetrievePanel extends LightningElement {
     }
 
     handleRetrieve() {
-        if (!this.validateFields()) return;
+        if (!this.validateFields()) return; 
         if (this.retrievalMode === "FLIGHT_REFERENCE") this.constructFlightIds();
         if (this.retrievalMode === "BOOKING_FILTER") this.constructBookingIds();
         const retrievalEvent = new CustomEvent('retrieve' , {

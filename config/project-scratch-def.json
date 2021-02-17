@@ -119,5 +119,22 @@
       "enableEnhancedProfileMgmt":true,
       "enableNewProfileUI":true
     }
+  },
+  "objectSettings": {
+    "account": {
+      "sharingModel": "private"
+    },
+    "case": {
+      "sharingModel": "private"
+    },
+    "contact": {
+      "sharingModel": "private"
+      },
+    "contract": {
+      "sharingModel": "private"
+    },
+    "opportunity": {
+      "sharingModel": "private"
+    }
   }
 }

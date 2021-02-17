@@ -90,8 +90,27 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     get tableHeading() {
         if (Object.keys(this.retrieveParameters).length === 0) return "No filters active";
-        const params = Object.values(this.retrieveParameters).join(' - ');
-        return `Results for ${params}`;
+        if (this.retrieveParameters.hasOwnProperty('flightIds')){
+            const params = Object.values(this.retrieveParameters).join(" - ");
+            return `Results for ${params}`;
+        }
+        else{
+            const params = Object.values(this.retrieveParameters).join(" - ");
+            const param = params.split(",");
+            const tableHeadings = [];
+            for(const p of param){
+                const inputparam = p.split("!");
+                const tableHeading = ` From:${inputparam[0]} To:${inputparam[1]}-
+                ${inputparam[2].replaceAll(/-/g,'').replaceAll(/:00.000Z/g,'')}-${inputparam[3].replaceAll(/-/g,'').replaceAll(/:00.000Z/g,'')} `;
+                tableHeadings.push(tableHeading);
+            }
+            const tableHeadingContent = tableHeadings.join('||');
+            const trimmedTableHeading = tableHeadingContent.replaceAll('From:undefined','');
+            const trimmedTableHeadingFinal = trimmedTableHeading.replaceAll('To:undefined','');
+
+            return `Results for Bookings => ${trimmedTableHeadingFinal}`;
+        }
+       
     }
 
     get recipientCount() {
