@@ -32,7 +32,6 @@ export default class Fcs_CaseTag extends LightningElement {
         this.dispatchEvent(evt);
     }
     handleReset(event) {
-        checkClick = 'reset';
         const inputFields = this.template.querySelectorAll(
             'lightning-input-field'
         );
