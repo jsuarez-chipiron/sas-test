@@ -104,7 +104,10 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
             throwTedsException(responseObject);
         }
-        List<IRR_MOD_TedsBooking> tedsBookings = IRR_MOD_TedsBooking.parseArray(responseObject.responseBody);
+        //mutating the large JSON string prior to deserialization was resulting in "Regex too complicated pattern"
+        //Hence the decision to desrialize it directly rather than using the parseArray method
+
+        List<IRR_MOD_TedsBooking> tedsBookings = (List<IRR_MOD_TedsBooking>)JSON.deserialize(responseObject.responseBody, List<IRR_MOD_TedsBooking>.class);
         return tedsBookings;
     }
 
