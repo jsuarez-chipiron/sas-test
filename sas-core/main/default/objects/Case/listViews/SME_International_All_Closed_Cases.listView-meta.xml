@@ -27,6 +27,6 @@
     </filters>
     <label>SME International All Closed Cases</label>
     <sharedTo>
-        <group>Corporate</group>
+        <group>SME</group>
     </sharedTo>
 </ListView>
