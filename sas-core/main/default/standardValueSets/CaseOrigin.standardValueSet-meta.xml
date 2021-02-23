@@ -321,4 +321,9 @@
         <default>false</default>
         <label>Email - SME International</label>
     </standardValue>
+    <standardValue>
+        <fullName>Email - EB Vendor Support</fullName>
+        <default>false</default>
+        <label>Email - EB Vendor Support</label>
+    </standardValue>
 </StandardValueSet>
