@@ -1984,11 +1984,7 @@
         <default>false</default>
         <recordType>Case.Support</recordType>
         <visible>true</visible>
-    </recordTypeVisibilities>
-    <tabVisibilities>
-        <tab>Claim__c</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>    
+    </recordTypeVisibilities>  
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Contact.EmailContact</recordType>
@@ -2010,6 +2006,10 @@
         <recordType>PersonAccount.EBCustomer</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabVisibilities>
+        <tab>Claim__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>  
     <tabVisibilities>
         <tab>C_Log__c</tab>
         <visibility>Hidden</visibility>
