@@ -176,6 +176,11 @@
                 <label>Internal</label>
             </value>
             <value>
+                <fullName>International</fullName>
+                <default>false</default>
+                <label>International</label>
+            </value>
+            <value>
                 <fullName>Olympic DK</fullName>
                 <default>false</default>
                 <label>Olympic DK</label>
@@ -399,6 +404,10 @@
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Interline</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <valueName>International</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>

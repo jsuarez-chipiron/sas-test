@@ -9,7 +9,7 @@
     <columns>Team__c</columns>
     <columns>Department__c</columns>
     <columns>CORE.USERS.ALIAS</columns>
-    <filterScope>Queue</filterScope>
+    <filterScope>Everything</filterScope>
     <filters>
         <field>Department__c</field>
         <operation>equals</operation>
@@ -21,18 +21,12 @@
         <value>Scandinavia</value>
     </filters>
     <filters>
-        <field>CASES.ORIGIN</field>
-        <operation>equals</operation>
-        <value>Email - Corporate SME</value>
-    </filters>
-    <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
         <value>In Progress,On Hold,Awaiting Customer Response,New Response,Escalated</value>
     </filters>
     <label>SME Scandinavia All Open Cases</label>
-    <queue>Corporate</queue>
     <sharedTo>
-        <group>Corporate</group>
+        <group>SME</group>
     </sharedTo>
 </ListView>

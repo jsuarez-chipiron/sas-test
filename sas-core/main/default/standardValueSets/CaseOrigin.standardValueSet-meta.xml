@@ -312,8 +312,13 @@
         <label>Email - Direct Sales Reservations SE</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - Corporate SME</fullName>
+        <fullName>Email - SME Scandinavia</fullName>
         <default>false</default>
-        <label>Email - Corporate SME</label>
+        <label>Email - SME Scandinavia</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - SME International</fullName>
+        <default>false</default>
+        <label>Email - SME International</label>
     </standardValue>
 </StandardValueSet>
