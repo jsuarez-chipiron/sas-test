@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Id__c</fullName>
+    <description>Auto generated Id for the event</description>
+    <displayFormat>ME # {00000000}</displayFormat>
+    <externalId>false</externalId>
+    <inlineHelpText>Auto generated Id for the event</inlineHelpText>
+    <label>Major Event Id</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>AutoNumber</type>
+</CustomField>
