@@ -61,6 +61,11 @@
                 <label>Email - EB Pai Manual</label>
             </value>
             <value>
+                <fullName>Email - EB Vendor Support</fullName>
+                <default>false</default>
+                <label>Email - EB Vendor Support</label>
+            </value>
+            <value>
                 <fullName>Email - EuroBonus</fullName>
                 <default>false</default>
                 <label>Email - EuroBonus</label>

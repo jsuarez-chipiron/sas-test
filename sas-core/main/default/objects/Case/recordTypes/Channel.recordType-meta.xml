@@ -2629,6 +2629,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - EB Vendor Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - EuroBonus</fullName>
             <default>false</default>
         </values>
@@ -2926,6 +2930,10 @@
         </values>
         <values>
             <fullName>Diamond SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EB Vendor Support</fullName>
             <default>false</default>
         </values>
         <values>

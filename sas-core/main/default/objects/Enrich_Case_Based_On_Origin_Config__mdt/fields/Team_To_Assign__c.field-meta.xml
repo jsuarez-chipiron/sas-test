@@ -71,6 +71,11 @@
                 <label>DK</label>
             </value>
             <value>
+                <fullName>EB Vendor Support</fullName>
+                <default>false</default>
+                <label>EB Vendor Support</label>
+            </value>
+            <value>
                 <fullName>EE</fullName>
                 <default>false</default>
                 <label>EE</label>
