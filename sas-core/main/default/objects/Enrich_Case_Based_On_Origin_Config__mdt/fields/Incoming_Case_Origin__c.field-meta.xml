@@ -21,9 +21,19 @@
                 <label>Email - Agent Helpdesk Scandinavia</label>
             </value>
             <value>
-                <fullName>Email - Corporate</fullName>
+                <fullName>Email - Corporate Support Backoffice</fullName>
                 <default>false</default>
-                <label>Email - Corporate</label>
+                <label>Email - Corporate Support Backoffice</label>
+            </value>
+            <value>
+                <fullName>Email - Corporate Support International</fullName>
+                <default>false</default>
+                <label>Email - Corporate Support International</label>
+            </value>
+            <value>
+                <fullName>Email - Corporate Support Scandinavia</fullName>
+                <default>false</default>
+                <label>Email - Corporate Support Scandinavia</label>
             </value>
             <value>
                 <fullName>Email - Digital Channel Support External</fullName>
@@ -66,11 +76,6 @@
                 <label>Email - EB Vendor Support</label>
             </value>
             <value>
-                <fullName>Email - EuroBonus</fullName>
-                <default>false</default>
-                <label>Email - EuroBonus</label>
-            </value>
-            <value>
                 <fullName>Email - EuroBonus Diamond DK</fullName>
                 <default>false</default>
                 <label>Email - EuroBonus Diamond DK</label>
@@ -109,6 +114,11 @@
                 <fullName>Email - EuroBonus Name Change</fullName>
                 <default>false</default>
                 <label>Email - EuroBonus Name Change</label>
+            </value>
+            <value>
+                <fullName>Email - EuroBonus Partner Support</fullName>
+                <default>false</default>
+                <label>Email - EuroBonus Partner Support</label>
             </value>
             <value>
                 <fullName>Email - Forsvaret NO</fullName>

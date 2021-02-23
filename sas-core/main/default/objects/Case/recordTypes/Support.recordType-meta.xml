@@ -968,6 +968,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Corporate Support Backoffice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Corporate Support International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Corporate Support Scandinavia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Digital Channel Support External</fullName>
             <default>false</default>
         </values>
@@ -1021,6 +1033,10 @@
         </values>
         <values>
             <fullName>Email - Liability Claim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Partner Support</fullName>
             <default>false</default>
         </values>
         <values>
