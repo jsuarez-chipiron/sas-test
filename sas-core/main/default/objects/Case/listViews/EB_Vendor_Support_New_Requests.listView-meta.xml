@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Vendor_Support_All_Open_Cases</fullName>
+    <fullName>EB_Vendor_Support_New_Requests</fullName>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.EMAIL</columns>
     <columns>CASES.SUBJECT</columns>
@@ -23,9 +23,9 @@
     <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
-        <value>New,In Progress,On Hold,Awaiting Customer Response,New Response,Escalated</value>
+        <value>New</value>
     </filters>
-    <label>EB Vendor Support All Open Cases</label>
+    <label>EB Vendor Support New Requests</label>
     <sharedTo>
         <group>EuroBonus</group>
     </sharedTo>
