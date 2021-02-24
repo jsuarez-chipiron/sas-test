@@ -21,14 +21,14 @@
                 <label>Corporate</label>
             </value>
             <value>
-                <fullName>Direct Sales</fullName>
-                <default>false</default>
-                <label>Direct Sales</label>
-            </value>
-            <value>
                 <fullName>Digital Channel Support</fullName>
                 <default>false</default>
                 <label>Digital Channel Support</label>
+            </value>
+            <value>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+                <label>Direct Sales</label>
             </value>
             <value>
                 <fullName>EuroBonus</fullName>
@@ -49,6 +49,11 @@
                 <fullName>Info Hub</fullName>
                 <default>false</default>
                 <label>Info Hub</label>
+            </value>
+            <value>
+                <fullName>Liability</fullName>
+                <default>false</default>
+                <label>Liability</label>
             </value>
             <value>
                 <fullName>SME</fullName>

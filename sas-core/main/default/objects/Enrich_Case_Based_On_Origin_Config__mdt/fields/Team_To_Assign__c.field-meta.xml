@@ -16,6 +16,11 @@
                 <label>ACE</label>
             </value>
             <value>
+                <fullName>Admin</fullName>
+                <default>false</default>
+                <label>Admin</label>
+            </value>
+            <value>
                 <fullName>Agent Fares Ticketing EU</fullName>
                 <default>false</default>
                 <label>Agent Fares Ticketing EU</label>
@@ -49,6 +54,11 @@
                 <fullName>DE</fullName>
                 <default>false</default>
                 <label>DE</label>
+            </value>
+            <value>
+                <fullName>Defense</fullName>
+                <default>false</default>
+                <label>Defense</label>
             </value>
             <value>
                 <fullName>Diamond DK</fullName>
@@ -91,6 +101,11 @@
                 <label>External</label>
             </value>
             <value>
+                <fullName>External Lawyers</fullName>
+                <default>false</default>
+                <label>External Lawyers</label>
+            </value>
+            <value>
                 <fullName>FI</fullName>
                 <default>false</default>
                 <label>FI</label>
@@ -129,6 +144,11 @@
                 <fullName>IE</fullName>
                 <default>false</default>
                 <label>IE</label>
+            </value>
+            <value>
+                <fullName>Inhouse</fullName>
+                <default>false</default>
+                <label>Inhouse</label>
             </value>
             <value>
                 <fullName>Interline</fullName>
@@ -254,6 +274,11 @@
                 <fullName>SE</fullName>
                 <default>false</default>
                 <label>SE</label>
+            </value>
+            <value>
+                <fullName>Settlement</fullName>
+                <default>false</default>
+                <label>Settlement</label>
             </value>
             <value>
                 <fullName>Star Alliance Upgrades</fullName>

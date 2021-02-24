@@ -21,6 +21,11 @@
                 <label>ACE</label>
             </value>
             <value>
+                <fullName>Admin</fullName>
+                <default>false</default>
+                <label>Admin</label>
+            </value>
+            <value>
                 <fullName>Agent Fares Ticketing EU</fullName>
                 <default>false</default>
                 <label>Agent Fares Ticketing EU</label>
@@ -56,6 +61,11 @@
                 <label>DE</label>
             </value>
             <value>
+                <fullName>Defense</fullName>
+                <default>false</default>
+                <label>Defense</label>
+            </value>
+            <value>
                 <fullName>Diamond DK</fullName>
                 <default>false</default>
                 <label>Diamond DK</label>
@@ -89,6 +99,16 @@
                 <fullName>ES</fullName>
                 <default>false</default>
                 <label>ES</label>
+            </value>
+            <value>
+                <fullName>External</fullName>
+                <default>false</default>
+                <label>External</label>
+            </value>
+            <value>
+                <fullName>External Lawyers</fullName>
+                <default>false</default>
+                <label>External Lawyers</label>
             </value>
             <value>
                 <fullName>FI</fullName>
@@ -131,9 +151,24 @@
                 <label>IE</label>
             </value>
             <value>
+                <fullName>Inhouse</fullName>
+                <default>false</default>
+                <label>Inhouse</label>
+            </value>
+            <value>
                 <fullName>Interline</fullName>
                 <default>false</default>
                 <label>Interline</label>
+            </value>
+            <value>
+                <fullName>Internal</fullName>
+                <default>false</default>
+                <label>Internal</label>
+            </value>
+            <value>
+                <fullName>International</fullName>
+                <default>false</default>
+                <label>International</label>
             </value>
             <value>
                 <fullName>IS</fullName>
@@ -165,25 +200,10 @@
                 <default>false</default>
                 <label>Name Change</label>
             </value>
-            <value>    
-                <fullName>External</fullName>
-                <default>false</default>
-                <label>External</label>
-            </value>
             <value>
                 <fullName>NO</fullName>
                 <default>false</default>
                 <label>NO</label>
-            </value>
-            <value>
-                <fullName>Internal</fullName>
-                <default>false</default>
-                <label>Internal</label>
-            </value>
-            <value>
-                <fullName>International</fullName>
-                <default>false</default>
-                <label>International</label>
             </value>
             <value>
                 <fullName>Olympic DK</fullName>
@@ -261,6 +281,11 @@
                 <label>SE</label>
             </value>
             <value>
+                <fullName>Settlement</fullName>
+                <default>false</default>
+                <label>Settlement</label>
+            </value>
+            <value>
                 <fullName>Star Alliance Upgrades</fullName>
                 <default>false</default>
                 <label>Star Alliance Upgrades</label>
@@ -293,6 +318,18 @@
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <controllingFieldValue>SME</controllingFieldValue>
             <valueName>Scandinavia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <valueName>Backoffice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <valueName>External</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <valueName>Internal</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
@@ -415,10 +452,6 @@
             <valueName>Interline</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>SME</controllingFieldValue>
-            <valueName>International</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>IS</valueName>
         </valueSettings>
@@ -483,16 +516,28 @@
             <valueName>System &amp; Tariff</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
-            <valueName>Backoffice</valueName>
-        </valueSettings>
-        <valueSettings>    
-            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <valueName>External</valueName>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <valueName>International</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <valueName>Internal</valueName>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Admin</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Defense</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>External Lawyers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Inhouse</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Settlement</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

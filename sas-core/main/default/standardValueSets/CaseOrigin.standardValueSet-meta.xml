@@ -212,6 +212,11 @@
         <label>Email - Olympic SE</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Liability Claim</fullName>
+        <default>false</default>
+        <label>Email - Liability Claim</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Pandion DK</fullName>
         <default>false</default>
         <label>Email - Pandion DK</label>

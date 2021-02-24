@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationVisibilities>
+        <application>SAS_Liability</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>   
+    <applicationVisibilities>
         <application>SASService</application>
         <default>false</default>
         <visible>true</visible>
@@ -193,6 +198,26 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.CARE_Case_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Claim__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Date_of_Receipt__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Deadline__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Deposit_Due_Date__c</field>
         <readable>true</readable>
@@ -202,6 +227,11 @@
         <field>Case.Deposit_Payment_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.External_Case_Number_Court_Reference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Final_Payment_Date__c</field>
@@ -420,6 +450,116 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Previous_Owner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.CARE_Case_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Claim_Amount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Court_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Date_of_Receipt__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Deadline__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Domain__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.External_Case_Number_Court_Reference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Fees__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Flight_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Flight_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Interest__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Jurisdiction__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Legal_Conclusion__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Legal_Firm__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Major_Event__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Name_of_Passenger_s__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Paid_Amount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Reason_for_Default_Judgement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Reason_for_Delay_Cancellation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Result__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Settlement_Reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -649,6 +789,36 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Legal_Firm__c.BIC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Legal_Firm__c.Comments_About_Firm__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Legal_Firm__c.Country__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Legal_Firm__c.Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Legal_Firm__c.IBAN__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Legal_Firm__c.Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LiveChatTranscript.FCS_CODSId__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -677,6 +847,26 @@
         <field>LiveChatTranscript.GDPR_Consent__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Major_Event__c.End_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Major_Event__c.Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Major_Event__c.Major_Event_Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Major_Event__c.Start_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>false</editable>
         <field>MessagingEndUser.IsOptedOut</field>
@@ -942,6 +1132,10 @@
     <layoutAssignments>
         <layout>C_Log__c-Log Layout</layout>
     </layoutAssignments>
+     <layoutAssignments>
+        <layout>Case-SAS Claim Layout</layout>
+        <recordType>Case.Claim</recordType>
+    </layoutAssignments>    
     <layoutAssignments>
         <layout>Case-SAS Feedback Layout</layout>
         <recordType>Case.Feedback</recordType>
@@ -967,6 +1161,9 @@
         <recordType>Case.Support</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Claim__c-Claim Layout</layout>
+    </layoutAssignments>    
+    <layoutAssignments>
         <layout>Contact-Email Contact Layout</layout>
         <recordType>Contact.EmailContact</recordType>
     </layoutAssignments>
@@ -990,10 +1187,16 @@
         <recordType>Knowledge__kav.SSI</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Legal_Firm__c-Legal Firm Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>LiveChatTranscript-Chat Transcript Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>LocalAuthProvider__mdt-Local Auth Provider Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Major_Event__c-Major Event Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>PersonAccount-B2C - Anonymous Customer</layout>
@@ -1048,6 +1251,15 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
+        <object>Claim__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>    
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>FCS_CaseTag__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -1060,6 +1272,24 @@
         <object>FCS_FrequentFlyer__x</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Legal_Firm__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+     <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Major_Event__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>       
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -1120,7 +1350,12 @@
         <recordType>Account.Business</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-        <recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Case.Claim</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>    
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Channel</recordType>
         <visible>true</visible>
@@ -1171,6 +1406,10 @@
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Claim__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>    
+    <tabVisibilities>
         <tab>FCS_CaseTag__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -1182,6 +1421,14 @@
         <tab>IRR_SMSResponse__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
+    <tabVisibilities>
+        <tab>Legal_Firm__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Major_Event__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>        
     <tabVisibilities>
         <tab>SBS_ScheduledBatchRun__c</tab>
         <visibility>Hidden</visibility>

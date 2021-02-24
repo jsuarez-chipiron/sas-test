@@ -26,6 +26,16 @@
                 <label>Email - Corporate</label>
             </value>
             <value>
+                <fullName>Email - Digital Channel Support External</fullName>
+                <default>false</default>
+                <label>Email - Digital Channel Support External</label>
+            </value>
+            <value>
+                <fullName>Email - Digital Channel Support Internal</fullName>
+                <default>false</default>
+                <label>Email - Digital Channel Support Internal</label>
+            </value>
+            <value>
                 <fullName>Email - Direct Sales Reservations DK</fullName>
                 <default>false</default>
                 <label>Email - Direct Sales Reservations DK</label>
@@ -39,16 +49,6 @@
                 <fullName>Email - Direct Sales Reservations SE</fullName>
                 <default>false</default>
                 <label>Email - Direct Sales Reservations SE</label>
-            </value>
-            <value>
-                <fullName>Email - Digital Channel Support External</fullName>
-                <default>false</default>
-                <label>Email - Digital Channel Support External</label>
-            </value>
-            <value>
-                <fullName>Email - Digital Channel Support Internal</fullName>
-                <default>false</default>
-                <label>Email - Digital Channel Support Internal</label>
             </value>
             <value>
                 <fullName>Email - EB Missing Points</fullName>
@@ -236,6 +236,11 @@
                 <label>Email - Group Sales US</label>
             </value>
             <value>
+                <fullName>Email - Liability Claim</fullName>
+                <default>false</default>
+                <label>Email - Liability Claim</label>
+            </value>
+            <value>
                 <fullName>Email - Olympic DK</fullName>
                 <default>false</default>
                 <label>Email - Olympic DK</label>
@@ -281,11 +286,6 @@
                 <label>Email - SASSI Internal</label>
             </value>
             <value>
-                <fullName>Email - Star Alliance Upgrades</fullName>
-                <default>false</default>
-                <label>Email - Star Alliance Upgrades</label>
-            </value>
-            <value>
                 <fullName>Email - SME International</fullName>
                 <default>false</default>
                 <label>Email - SME International</label>
@@ -294,6 +294,11 @@
                 <fullName>Email - SME Scandinavia</fullName>
                 <default>false</default>
                 <label>Email - SME Scandinavia</label>
+            </value>
+            <value>
+                <fullName>Email - Star Alliance Upgrades</fullName>
+                <default>false</default>
+                <label>Email - Star Alliance Upgrades</label>
             </value>
             <value>
                 <fullName>Email - System &amp; Tariff</fullName>
