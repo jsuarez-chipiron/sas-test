@@ -183,11 +183,6 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
-        <fields>VERSION.CREATED_DATE</fields>
-        <fields>VERSION.LAST_UPDATE</fields>
-        <relatedList>ContentDocumentRelatedList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <relatedList>Claim__c.Legal_Firm__c</relatedList>
     </relatedLists>
