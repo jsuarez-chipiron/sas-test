@@ -29,6 +29,17 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingOwnerRules>
+        <fullName>Liability_Cases_to_Liability_team</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Liability Cases to Liability team</label>
+        <sharedTo>
+            <group>Liability</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Liability</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>SAS_Cases</fullName>
         <accessLevel>Edit</accessLevel>
         <description>SAS can see all Cases</description>
