@@ -183,7 +183,6 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
-        <fields>VERSION.TITLE</fields>
         <fields>VERSION.CREATED_DATE</fields>
         <fields>VERSION.LAST_UPDATE</fields>
         <relatedList>ContentDocumentRelatedList</relatedList>
