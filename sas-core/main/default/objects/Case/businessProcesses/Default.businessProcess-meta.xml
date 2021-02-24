@@ -23,6 +23,10 @@
         <default>true</default>
     </values>
     <values>
+        <fullName>New Response</fullName>
+        <default>false</default>
+    </values>
+    <values>
         <fullName>On Hold</fullName>
         <default>false</default>
     </values>
