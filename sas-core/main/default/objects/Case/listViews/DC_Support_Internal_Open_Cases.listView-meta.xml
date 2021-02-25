@@ -13,7 +13,7 @@
     <filters>
         <field>CASES.STATUS</field>
         <operation>notEqual</operation>
-        <value>Closed</value>
+        <value>On Hold,Awaiting Customer Response,Escalated,Closed,Merged</value>
     </filters>
     <filters>
         <field>Department__c</field>
