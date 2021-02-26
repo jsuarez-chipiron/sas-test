@@ -86,10 +86,14 @@ global with sharing class GDPR_WipeCaseService {
         
     */
     global static void deleteRelatedEntities(Set<Id> caseIds, boolean wipeCase){
+        List<String> socialAccts = new List<String>(); // lst to store social accounts
+        socialAccts.add(C_Settings.getSettings('Social Accounts').get('ManagedFacebookPage'));
+        socialAccts.add(C_Settings.getSettings('Social Accounts').get('ManagedTwitterPage'));
+        
         LiveChatTranscript[] lctList = [SELECT Id,LiveChatVisitorId FROM LiveChatTranscript WHERE CaseId IN :caseIds];
         EmailMessage[] emList = [SELECT Id FROM EmailMessage WHERE ParentId IN :caseIds];
         MessagingSession[] msList = [SELECT Id,MessagingEndUserId FROM MessagingSession WHERE CaseId IN :caseIds];
-        SocialPost[] spList = [SELECT Id FROM SocialPost WHERE ParentId IN :caseIds];
+        SocialPost[] spList = [SELECT Id FROM SocialPost WHERE ParentId IN :caseIds AND Persona.name NOT IN :socialAccts];
         Task[] tList = [SELECT Id FROM Task WHERE WhatId IN :caseIds];
         CaseComment[] ccList = [SELECT Id FROM CaseComment WHERE ParentId IN :caseIds];
         ContentDocumentLink[] cdlList = [SELECT Id,ContentDocumentId,ContentDocument.LatestPublishedVersion.FirstPublishLocationId FROM ContentDocumentLink WHERE LinkedEntityId IN :caseIds];
