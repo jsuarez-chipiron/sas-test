@@ -28,7 +28,7 @@ public without sharing class FCS_IdentifyCustomerController {
 
         //Necessary to do a query for the account after upsert to retrieve the PersonContactId
         if(createdAccount != null){
-            return [SELECT Id, PersonContactId, FCS_EBNumber__c, FCS_TPAccountNumber__c, FCS_CODSId__c, FCS_LastRetrievedFromSource__c
+            return [SELECT Id, PersonContactId, FCS_EBNumber__c,FCS_EBLevel__c,FCS_TPAccountNumber__c, FCS_CODSId__c, FCS_LastRetrievedFromSource__c
             FROM Account
             WHERE Id = :createdAccount.Id];
         } else {
