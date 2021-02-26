@@ -61,21 +61,28 @@ global abstract class GDPR_DeleteInteraction_Batch extends SBS_ScheduledBatch{
         @param bc The batch context
     */
     global Database.QueryLocator start(Database.BatchableContext bc){
+        List<String> socialAccts = new List<String>();
         String q = 'SELECT Id, CreatedDate';
         if(caseField==null)q+=', GDPR_Consent__c';
         else q+=', '+caseField;
         if(relSObjField!=null)q+=', '+relSObjField;
         q+=' FROM '+sObjName+' WHERE CreatedDate<:cutOffConsent';
-        System.debug(q);
+        if(sObjName == 'SocialPost')
+        {
+          socialAccts.add(C_Settings.getSettings('Social Accounts').get('ManagedFacebookPage'));
+          socialAccts.add(C_Settings.getSettings('Social Accounts').get('ManagedTwitterPage')); 
+          q+=' AND persona.name NOT IN : socialAccts';
+        }
+        System.debug('query****'+q);
         return Database.getQueryLocator(q);
     }
 
     /**
-		Deletes the interactions which should be deleted according to the retention logic
-		@param bc The batchable context of the batch job
-		@param sObjScope The interactions to delete
-	*/
-	global override void executeScope(Database.BatchableContext bc, SObject[] sObjScope){
+    Deletes the interactions which should be deleted according to the retention logic
+    @param bc The batchable context of the batch job
+    @param sObjScope The interactions to delete
+  */
+  global override void executeScope(Database.BatchableContext bc, SObject[] sObjScope){
         List<SObject> delList = new List<SObject>();
         Set<Id> relIds = new Set<Id>();
         Map<Id,Case> caseMap;
