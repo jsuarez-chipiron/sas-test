@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DC_Support_External_Open_Cases</fullName>
+    <fullName>DC_Support_External_Awaiting_Customer</fullName>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
     <columns>CASES.EMAIL</columns>
@@ -12,8 +12,8 @@
     <filterScope>Everything</filterScope>
     <filters>
         <field>CASES.STATUS</field>
-        <operation>notEqual</operation>
-        <value>On Hold,Awaiting Customer Response,Escalated,Closed,Merged</value>
+        <operation>equals</operation>
+        <value>On Hold</value>
     </filters>
     <filters>
         <field>Department__c</field>
@@ -25,7 +25,7 @@
         <operation>equals</operation>
         <value>External</value>
     </filters>
-    <label>DC Support External Open Cases</label>
+    <label>DC Support External - Awaiting Customer</label>
     <sharedTo>
         <group>Digital_Channel_Support</group>
     </sharedTo>
