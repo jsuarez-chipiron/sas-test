@@ -27,11 +27,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Direct Sales</fullName>
+            <fullName>Digital Channel Support</fullName>
             <default>false</default>
         </values>
-        <values>            
-            <fullName>Digital Channel Support</fullName>
+        <values>
+            <fullName>Direct Sales</fullName>
             <default>false</default>
         </values>
         <values>
@@ -48,6 +48,10 @@
         </values>
         <values>
             <fullName>Info Hub</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liability</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1293,11 +1297,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Payment - TP</fullName>
+            <fullName>Payment - SFB</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Payment - SFB</fullName>
+            <fullName>Payment - TP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2532,6 +2536,26 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Corporate Support Backoffice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Corporate Support International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Corporate Support Scandinavia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Digital Channel Support External</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Digital Channel Support Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Direct Sales Reservations DK</fullName>
             <default>false</default>
         </values>
@@ -2575,12 +2599,12 @@
             <fullName>Email - EuroBonus Name Change</fullName>
             <default>false</default>
         </values>
-        <values>            
-            <fullName>Email - Digital Channel Support External</fullName>
+        <values>
+            <fullName>Email - Liability Claim</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Digital Channel Support Internal</fullName>
+            <fullName>Email - EuroBonus Partner Support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2668,6 +2692,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Agent Fares Ticketing EU</fullName>
             <default>false</default>
         </values>
@@ -2692,6 +2720,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Defense</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Diamond DK</fullName>
             <default>false</default>
         </values>
@@ -2713,6 +2745,10 @@
         </values>
         <values>
             <fullName>External</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>External Lawyers</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2753,6 +2789,10 @@
         </values>
         <values>
             <fullName>Identify Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inhouse</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2833,6 +2873,10 @@
         </values>
         <values>
             <fullName>Scandinavia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Settlement</fullName>
             <default>false</default>
         </values>
         <values>

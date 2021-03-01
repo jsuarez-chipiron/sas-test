@@ -171,7 +171,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
         /* List emailSubjectKeywords and formFromEmailAddress are Used as part of verification to check if email comes from form */
         String emailSubjectKeyword = 'flight retro';
         List<String> formSentFromEmailAddress = new List<String> {'noreply@flysas.com', 'salesforce_uat5@sas.se', 'madis.tepp@sas.se'};
-
+        List<String> ebTierLevels = new List<String> {'pandion', 'diamond', 'basic', 'silver', 'gold'};
 
         for (Case c: newCaseList) {
             Boolean comesFromForm = c.Subject != Null 
@@ -186,6 +186,11 @@ public class FCS_CaseHandler extends C_TriggerHandler {
 
                     if (isEmailAddress(memberEmailFromForm)) {
                         c.SuppliedEmail = memberEmailFromForm;
+                    }
+
+                    String ebLevel = data.substringBetween('eurobonus-level: ', '\n');
+                    if(ebLevel != null && ebTierLevels.contains(ebLevel)){
+                        c.FCS_EBLevel__c = ebLevel.substring(0, 1); 
                     }
 
 
@@ -203,6 +208,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
                         String description = data.substringBetween('flight-'+i+'-description:', '\n');
                         String flightNo = data.substringBetween('flight-'+i+'-flight-no:', '\n');  
                         String ticketNo = data.substringBetween('flight-'+i+'-ticket-no:', '\n');  
+                        String departureDate = data.substringBetween('flight-'+i+'-departure-date:', '\n');
                         String departure = data.substringBetween('flight-'+i+'-departure:', '\n');  
                         String arrival = data.substringBetween('flight-'+i+'-arrival:', '\n');  
                         String firstName = data.substringBetween('flight-'+i+'-ticket-first-name:', '\n');  
@@ -211,11 +217,14 @@ public class FCS_CaseHandler extends C_TriggerHandler {
                         String boardingNumber = data.substringBetween('flight-'+i+'-boarding-number:', '\n');  
                         String seatNumber = data.substringBetween('flight-'+i+'-seat-number:', '\n');
                         
+
+                        
                         c.put('Flight_Info_Missing_Points_X'+i+'__c',  
                             '<b>Airline</b> : '+ airline + '<br/>' +
                             '<b>Description</b> : ' + description + '<br/>' +
                             '<b>Flight Nr</b> : ' + flightNo + '<br/>' +
                             '<b>Ticket Nr</b> : ' + ticketNo + '<br/>' +
+                            '<b>Departure Date</b> : ' + departureDate + '<br/>' +
                             '<b>Departure</b> : ' + departure + '<br/>' +
                             '<b>Arrival</b> : ' + arrival + '<br/>' +
                             '<b>First Name</b> : ' + firstName + '<br/>' +
@@ -406,7 +415,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
         Account acc;
         List<Case> lstUpdateCases = new List<Case> ();
         List<Case> lstCases = new List<Case> ();
-        lstCases = [Select Id, FCS_EBNumber__c, SuppliedEmail, AccountId From Case where Id =: lstCseIds[0] And SuppliedEmail != null LIMIT 1];
+        lstCases = [Select Id, FCS_EBNumber__c, FCS_EBLevel__c, SuppliedEmail, AccountId From Case where Id =: lstCseIds[0] And SuppliedEmail != null LIMIT 1];
         if (!lstCases.isEmpty()) {
                 acc = FCS_IdentifyCustomerController.findCustomer('EmailPersonal__c', lstCases[0].SuppliedEmail);
             if (acc != null) {
