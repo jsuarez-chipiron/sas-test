@@ -395,8 +395,8 @@ public class FCS_CaseHandler extends C_TriggerHandler {
 		// used to track if more than once cases created for E2C
         if(!lstCaseIds.isEmpty() && !lstEmailAddress.isEmpty() && lstCaseIds.size() > 1 && lstEmailAddress.size() > 1)
             {
-              string msg = 'more than one email adddress present, so not able to get eurbonus details';
-              C_Log.log(C_Log.Severity.Info,msg,null,'Eurobonus',null);
+              string message = 'more than one email adddress present, so not able to get eurbonus details';
+              C_Log.log(C_Log.Severity.Info,message,null,'Eurobonus',null);
             }
          //
         if (!lstAcc.isEmpty()) {
