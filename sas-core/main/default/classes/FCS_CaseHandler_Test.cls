@@ -293,7 +293,7 @@ private class FCS_CaseHandler_Test {
         Case cse = new Case();
         cse.Subject = 'TestEurobonusNumber';
         cse.SuppliedEmail = 'test5678@sas.se';
-        cse.origin = 'Pandion DK';
+        cse.origin = 'Email - Pandion DK';
 
         insert cse;
 
@@ -302,7 +302,32 @@ private class FCS_CaseHandler_Test {
 
 
     }
-
+     // used to tets more than one cases creating at time for E2C
+     @IsTest
+     static void testMultplePandioncases()
+     {
+         List<Case> lstCases = new List<Case>();
+         Case cse = new Case();
+         cse.Subject = 'TestEurobonusNumber';
+         cse.SuppliedEmail = 'test5678@sas.se';
+         cse.origin = 'Email - Pandion DK';
+         lstCases.add(cse);
+         
+         Case cse1 = new Case();
+         cse1.Subject = 'TestEurobonusNumber';
+         cse1.SuppliedEmail = 'test56789@sas.se';
+         cse1.origin = 'Email - Pandion SE';
+         lstCases.add(cse1);
+         
+         Test.startTest();
+          insert lstCases;
+         Test.StopTest();
+         
+         List<C_Log__c> lstlogs = [Select Id, Message__c from C_Log__c];
+         
+         System.assertEquals('more than one email adddress present, so not able to get eurbonus details',lstlogs[0].Message__c);
+     }
+ 
     @IsTest
     static void enrichCaseDataBasedOnOriginConfigMatchingOriginShouldFillCorrectData() {
         Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
