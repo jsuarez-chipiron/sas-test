@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Action to create a claim from Case</description>
+    <fieldOverrides>
+        <field>Name</field>
+        <formula>&quot;Claim #&quot;</formula>
+    </fieldOverrides>
     <label>New Claim</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>
@@ -18,7 +22,7 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Type__c</field>
+                <field>Liability_Claim_Type__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
@@ -34,6 +38,11 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Name_of_Passenger_s__c</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>LIA_Major_Event__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
@@ -55,7 +64,7 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Domain__c</field>
+                <field>Judicial_Body__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
@@ -65,11 +74,11 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Court_Name__c</field>
+                <field>LIA_Firm__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
     </quickActionLayout>
-    <targetObject>Claim__c</targetObject>
+    <targetObject>LIA_Claim__c</targetObject>
     <type>Create</type>
 </QuickAction>

@@ -25,7 +25,7 @@
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
-        <pageOrSobjectType>Legal_Firm__c</pageOrSobjectType>
+        <pageOrSobjectType>LIA_Firm__c</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -34,7 +34,7 @@
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
-        <pageOrSobjectType>Legal_Firm__c</pageOrSobjectType>
+        <pageOrSobjectType>LIA_Firm__c</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -43,7 +43,7 @@
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
-        <pageOrSobjectType>Major_Event__c</pageOrSobjectType>
+        <pageOrSobjectType>LIA_Major_Event__c</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -52,7 +52,7 @@
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
-        <pageOrSobjectType>Major_Event__c</pageOrSobjectType>
+        <pageOrSobjectType>LIA_Major_Event__c</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -61,7 +61,7 @@
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
-        <pageOrSobjectType>Claim__c</pageOrSobjectType>
+        <pageOrSobjectType>LIA_Claim__c</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -70,7 +70,7 @@
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
-        <pageOrSobjectType>Claim__c</pageOrSobjectType>
+        <pageOrSobjectType>LIA_Claim__c</pageOrSobjectType>
     </actionOverrides>
     <brand>
         <headerColor>#000099</headerColor>
@@ -86,20 +86,20 @@
     <label>SAS Liability</label>
     <navType>Console</navType>
     <tabs>standard-Case</tabs>
-    <tabs>Claim__c</tabs>
-    <tabs>Major_Event__c</tabs>
-    <tabs>Legal_Firm__c</tabs>
+    <tabs>LIA_Claim__c</tabs>
+    <tabs>LIA_Major_Event__c</tabs>
+    <tabs>LIA_Firm__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SAS_Liability_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
-            <tab>Claim__c</tab>
+            <tab>LIA_Claim__c</tab>
         </mappings>
         <mappings>
-            <tab>Legal_Firm__c</tab>
+            <tab>LIA_Firm__c</tab>
         </mappings>
         <mappings>
-            <tab>Major_Event__c</tab>
+            <tab>LIA_Major_Event__c</tab>
         </mappings>
         <mappings>
             <tab>standard-Case</tab>
