@@ -26,7 +26,7 @@ export default class irr_RetrievePanel extends LightningElement {
 
     showBookingFiltersTab = false;
 
-    showBookingReferenceInput =true;
+    showFlightInputParams =true;
 
     connectedCallback() {
         //Initialize component with first flight
@@ -42,11 +42,12 @@ export default class irr_RetrievePanel extends LightningElement {
     handleAdvanceFilterChange(event) {
         if (event.target.checked){
             this.showBookingFiltersTab = true;
-            this.showBookingReferenceInput = false;
+            this.showFlightInputParams = false;
+            this.retrievalMode = "BOOKING_FILTER";
             this.retrieveParameters = {};
             this.handleBookingAdd();
         }else {
-            this.showBookingReferenceInput = true;
+            this.showFlightInputParams = true;
             this.showBookingFiltersTab = false;
             this.bookings = [];
         }
@@ -98,8 +99,7 @@ export default class irr_RetrievePanel extends LightningElement {
     handleTabSwitch(event) {
         this.retrievalMode = event.target.value;
         this.showBookingFiltersTab = false;
-        this.showBookingReferenceInput = true;
-
+        this.showFlightInputParams = true;
             let advanceFilterCheckbox = this.template.querySelector('[data-advance-filter = "checkbox"]');
             // when you query checkbox right after you switched the tab, the element
             // is stil not available in DOM at that time hence put a timeout 

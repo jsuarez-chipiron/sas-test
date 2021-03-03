@@ -17,6 +17,9 @@ public class IRR_MOD_PassengerInfo {
     public String passengerId { get; set; }
 
     @AuraEnabled
+    public String bookingFlightId { get; set; }
+
+    @AuraEnabled
     public String title { get; set; }
 
     @AuraEnabled
