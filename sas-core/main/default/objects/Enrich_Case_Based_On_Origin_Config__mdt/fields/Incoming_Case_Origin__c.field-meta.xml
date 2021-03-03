@@ -296,6 +296,21 @@
                 <label>Email - SASSI Internal</label>
             </value>
             <value>
+                <fullName>Email - SGH Bag DK</fullName>
+                <default>false</default>
+                <label>Email - SGH Bag DK</label>
+            </value>
+            <value>
+                <fullName>Email - SGH Bag NO</fullName>
+                <default>false</default>
+                <label>Email - SGH Bag NO</label>
+            </value>
+            <value>
+                <fullName>Email - SGH Bag SE</fullName>
+                <default>false</default>
+                <label>Email - SGH Bag SE</label>
+            </value>
+            <value>
                 <fullName>Email - SME International</fullName>
                 <default>false</default>
                 <label>Email - SME International</label>

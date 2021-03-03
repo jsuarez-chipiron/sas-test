@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>EB_Missing_Points_All_Open</fullName>
+    <fullName>SGH_Bag_NO_All_Closed_Cases</fullName>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
-    <columns>ACCOUNT.NAME</columns>
     <columns>CASES.SUBJECT</columns>
     <columns>CASES.EMAIL</columns>
     <columns>CASES.STATUS</columns>
@@ -14,20 +13,20 @@
     <filters>
         <field>Department__c</field>
         <operation>equals</operation>
-        <value>EuroBonus</value>
+        <value>Care</value>
     </filters>
     <filters>
         <field>Team__c</field>
         <operation>equals</operation>
-        <value>Missing Points</value>
+        <value>SGH Bag NO</value>
     </filters>
     <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
-        <value>New,In Progress,On Hold,Awaiting Customer Response,New Response,Escalated</value>
+        <value>Closed,Merged</value>
     </filters>
-    <label>EB Missing Points - All Open</label>
+    <label>SGH Bag  NO All Closed Cases</label>
     <sharedTo>
-        <group>EuroBonus</group>
+        <group>Care</group>
     </sharedTo>
 </ListView>

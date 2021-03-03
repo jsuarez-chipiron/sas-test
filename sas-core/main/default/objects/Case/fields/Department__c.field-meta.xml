@@ -20,6 +20,11 @@
                 <label>Agent Helpdesk</label>
             </value>
             <value>
+                <fullName>Care</fullName>
+                <default>false</default>
+                <label>Care</label>
+            </value>
+            <value>
                 <fullName>Corporate</fullName>
                 <default>false</default>
                 <label>Corporate</label>
