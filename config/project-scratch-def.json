@@ -14,7 +14,8 @@
     "PersonAccounts",
     "ServiceCloud",
     "ServiceUser",
-    "SocialCustomerService"
+    "SocialCustomerService",
+    "DeferSharingCalc"
   ],
   "settings": {
     "accountSettings":{
