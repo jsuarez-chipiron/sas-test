@@ -186,6 +186,11 @@
         <default>false</default>
         <label>Email - Group Sales US</label>
     </standardValue>
+        <standardValue>
+        <fullName>Email - HQ Special Sales NO</fullName>
+        <default>false</default>
+        <label>Email - HQ Special Sales NO</label>
+    </standardValue>
     <standardValue>
         <fullName>Email - Olympic DK</fullName>
         <default>false</default>

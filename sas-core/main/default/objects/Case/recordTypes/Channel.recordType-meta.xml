@@ -47,6 +47,10 @@
             <fullName>Group Sales</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>HQ</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Info Hub</fullName>
             <default>false</default>
@@ -3110,6 +3114,10 @@
         </values>
         <values>
             <fullName>Scandinavia</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Special Sales NO</fullName>
             <default>false</default>
         </values>
         <values>

@@ -280,6 +280,11 @@
                 <default>false</default>
                 <label>SE</label>
             </value>
+			<value>
+                <fullName>Special Sales NO</fullName>
+                <default>false</default>
+                <label>Special Sales NO</label>
+            </value>
             <value>
                 <fullName>Settlement</fullName>
                 <default>false</default>
@@ -503,9 +508,13 @@
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>US</valueName>
         </valueSettings>
+		<valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>US</valueName>
+        </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Info Hub</controllingFieldValue>
-            <valueName>Sales Information</valueName>
+            <controllingFieldValue>HQ</controllingFieldValue>
+            <valueName>Special Sales NO</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info Hub</controllingFieldValue>

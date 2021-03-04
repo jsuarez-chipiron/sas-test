@@ -16,11 +16,6 @@
                 <label>ACE</label>
             </value>
             <value>
-                <fullName>Admin</fullName>
-                <default>false</default>
-                <label>Admin</label>
-            </value>
-            <value>
                 <fullName>Agent Fares Ticketing EU</fullName>
                 <default>false</default>
                 <label>Agent Fares Ticketing EU</label>
@@ -56,11 +51,6 @@
                 <label>DE</label>
             </value>
             <value>
-                <fullName>Defense</fullName>
-                <default>false</default>
-                <label>Defense</label>
-            </value>
-            <value>
                 <fullName>Diamond DK</fullName>
                 <default>false</default>
                 <label>Diamond DK</label>
@@ -81,11 +71,6 @@
                 <label>DK</label>
             </value>
             <value>
-                <fullName>EB Vendor Support</fullName>
-                <default>false</default>
-                <label>EB Vendor Support</label>
-            </value>
-            <value>
                 <fullName>EE</fullName>
                 <default>false</default>
                 <label>EE</label>
@@ -99,11 +84,6 @@
                 <fullName>External</fullName>
                 <default>false</default>
                 <label>External</label>
-            </value>
-            <value>
-                <fullName>External Lawyers</fullName>
-                <default>false</default>
-                <label>External Lawyers</label>
             </value>
             <value>
                 <fullName>FI</fullName>
@@ -144,11 +124,6 @@
                 <fullName>IE</fullName>
                 <default>false</default>
                 <label>IE</label>
-            </value>
-            <value>
-                <fullName>Inhouse</fullName>
-                <default>false</default>
-                <label>Inhouse</label>
             </value>
             <value>
                 <fullName>Interline</fullName>
@@ -276,9 +251,9 @@
                 <label>SE</label>
             </value>
             <value>
-                <fullName>Settlement</fullName>
+                <fullName>Special Sales NO</fullName>
                 <default>false</default>
-                <label>Settlement</label>
+                <label>Special Sales NO</label>
             </value>
             <value>
                 <fullName>Star Alliance Upgrades</fullName>
