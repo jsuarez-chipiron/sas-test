@@ -346,4 +346,19 @@
         <default>false</default>
         <label>Email - EuroBonus Partner Support</label>
     </standardValue>
+	<standardValue>	
+        <fullName>Email - SGH Bag DK</fullName>	
+        <default>false</default>	
+        <label>Email - SGH Bag DK</label>	
+    </standardValue>	
+    <standardValue>	
+        <fullName>Email - SGH Bag NO</fullName>	
+        <default>false</default>	
+        <label>Email - SGH Bag NO</label>	
+    </standardValue>	
+    <standardValue>	
+        <fullName>Email - SGH Bag SE</fullName>	
+        <default>false</default>	
+        <label>Email - SGH Bag SE</label>	
+    </standardValue>	
 </StandardValueSet>

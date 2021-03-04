@@ -23,6 +23,10 @@
             <fullName>Agent Helpdesk</fullName>
             <default>false</default>
         </values>
+		 <values>	
+            <fullName>Care</fullName>	
+            <default>false</default>	
+        </values>	
         <values>
             <fullName>Corporate</fullName>
             <default>false</default>
@@ -2832,6 +2836,18 @@
             <fullName>Email - Sales Information</fullName>
             <default>false</default>
         </values>
+		<values>	
+            <fullName>Email - SGH Bag DK</fullName>	
+            <default>false</default>	
+        </values>	
+        <values>	
+            <fullName>Email - SGH Bag NO</fullName>	
+            <default>false</default>	
+        </values>	
+        <values>	
+            <fullName>Email - SGH Bag SE</fullName>	
+            <default>false</default>	
+        </values>
         <values>
             <fullName>Email - Star Alliance Upgrades</fullName>
             <default>false</default>
@@ -3103,6 +3119,18 @@
         <values>
             <fullName>SASSI Internal</fullName>
             <default>false</default>
+        </values>
+		<values>	
+            <fullName>SGH Bag DK</fullName>	
+            <default>false</default>	
+        </values>	
+        <values>	
+            <fullName>SGH Bag NO</fullName>	
+            <default>false</default>	
+        </values>	
+        <values>	
+            <fullName>SGH Bag SE</fullName>	
+            <default>false</default>	
         </values>
         <values>
             <fullName>SE</fullName>
