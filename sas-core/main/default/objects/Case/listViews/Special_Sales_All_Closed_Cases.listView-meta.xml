@@ -27,6 +27,6 @@
     </filters>
     <label>Special Sales All Closed Cases</label>
     <sharedTo>
-        <group>SAS_HQ</group>
+        <group>SAS_Operating_Center</group>
     </sharedTo>
 </ListView>
