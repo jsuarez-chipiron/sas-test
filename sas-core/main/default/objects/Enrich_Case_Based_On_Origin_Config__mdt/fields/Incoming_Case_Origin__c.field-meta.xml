@@ -21,9 +21,19 @@
                 <label>Email - Agent Helpdesk Scandinavia</label>
             </value>
             <value>
-                <fullName>Email - Corporate</fullName>
+                <fullName>Email - Corporate Support Backoffice</fullName>
                 <default>false</default>
-                <label>Email - Corporate</label>
+                <label>Email - Corporate Support Backoffice</label>
+            </value>
+            <value>
+                <fullName>Email - Corporate Support International</fullName>
+                <default>false</default>
+                <label>Email - Corporate Support International</label>
+            </value>
+            <value>
+                <fullName>Email - Corporate Support Scandinavia</fullName>
+                <default>false</default>
+                <label>Email - Corporate Support Scandinavia</label>
             </value>
             <value>
                 <fullName>Email - Digital Channel Support External</fullName>
@@ -61,9 +71,9 @@
                 <label>Email - EB Pai Manual</label>
             </value>
             <value>
-                <fullName>Email - EuroBonus</fullName>
+                <fullName>Email - EB Vendor Support</fullName>
                 <default>false</default>
-                <label>Email - EuroBonus</label>
+                <label>Email - EB Vendor Support</label>
             </value>
             <value>
                 <fullName>Email - EuroBonus Diamond DK</fullName>
@@ -104,6 +114,11 @@
                 <fullName>Email - EuroBonus Name Change</fullName>
                 <default>false</default>
                 <label>Email - EuroBonus Name Change</label>
+            </value>
+            <value>
+                <fullName>Email - EuroBonus Partner Support</fullName>
+                <default>false</default>
+                <label>Email - EuroBonus Partner Support</label>
             </value>
             <value>
                 <fullName>Email - Forsvaret NO</fullName>
@@ -234,6 +249,11 @@
                 <fullName>Email - HQ Special Sales NO</fullName>
                 <default>false</default>
                 <label>Email - HQ Special Sales NO</label>
+            </value>
+            <value>
+                <fullName>Email - Liability Claim</fullName>
+                <default>false</default>
+                <label>Email - Liability Claim</label>
             </value>
             <value>
                 <fullName>Email - Olympic DK</fullName>
