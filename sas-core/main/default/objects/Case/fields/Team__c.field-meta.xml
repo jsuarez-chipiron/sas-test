@@ -285,6 +285,21 @@
                 <default>false</default>
                 <label>Settlement</label>
             </value>
+            <value>	
+                <fullName>SGH Bag DK</fullName>
+                <default>false</default>
+                <label>SGH Bag DK</label>
+            </value>
+            <value>
+                <fullName>SGH Bag NO</fullName>
+                <default>false</default>
+                <label>SGH Bag NO</label>
+            </value>
+            <value>
+                <fullName>SGH Bag SE</fullName>
+                <default>false</default>
+                <label>SGH Bag SE</label>
+            </value>
             <value>
                 <fullName>Star Alliance Upgrades</fullName>
                 <default>false</default>
@@ -318,6 +333,18 @@
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <controllingFieldValue>SME</controllingFieldValue>
             <valueName>Scandinavia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Care</controllingFieldValue>
+            <valueName>SGH Bag DK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Care</controllingFieldValue>
+            <valueName>SGH Bag NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Care</controllingFieldValue>
+            <valueName>SGH Bag SE</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Direct Sales</controllingFieldValue>
