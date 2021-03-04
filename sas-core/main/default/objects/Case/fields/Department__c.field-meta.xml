@@ -59,6 +59,11 @@
                 <default>false</default>
                 <label>Info Hub</label>
             </value>
+            <value>	
+                <fullName>Liability</fullName>	
+                <default>false</default>	
+                <label>Liability</label>	
+            </value>
             <value>
                 <fullName>SME</fullName>
                 <default>false</default>
