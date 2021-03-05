@@ -15,11 +15,6 @@
                 <default>false</default>
                 <label>Agent Helpdesk</label>
             </value>
-             <value>	
-                <fullName>Care</fullName>	
-                <default>false</default>	
-                <label>Care</label>	
-            </value>
             <value>
                 <fullName>Care</fullName>
                 <default>false</default>
@@ -78,3 +73,4 @@
         </valueSetDefinition>
     </valueSet>
 </CustomField>
+

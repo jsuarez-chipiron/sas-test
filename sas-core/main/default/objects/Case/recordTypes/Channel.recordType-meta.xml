@@ -26,11 +26,7 @@
 		 <values>	
             <fullName>Care</fullName>	
             <default>false</default>	
-        </values>	
-        <values>
-            <fullName>Care</fullName>
-            <default>false</default>
-        </values>
+        </values>	       
         <values>
             <fullName>Corporate</fullName>
             <default>false</default>
@@ -2839,19 +2835,7 @@
         <values>
             <fullName>Email - Sales Information</fullName>
             <default>false</default>
-        </values>
-		<values>	
-            <fullName>Email - SGH Bag DK</fullName>	
-            <default>false</default>	
-        </values>	
-        <values>	
-            <fullName>Email - SGH Bag NO</fullName>	
-            <default>false</default>	
-        </values>	
-        <values>	
-            <fullName>Email - SGH Bag SE</fullName>	
-            <default>false</default>	
-        </values>
+        </values>		
         <values>
             <fullName>Email - SGH Bag DK</fullName>
             <default>false</default>
@@ -3143,19 +3127,7 @@
         <values>	
             <fullName>SGH Bag NO</fullName>	
             <default>false</default>	
-        </values>	
-        <values>	
-            <fullName>SGH Bag SE</fullName>	
-            <default>false</default>	
-        </values>
-        <values>
-            <fullName>SGH Bag DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SGH Bag NO</fullName>
-            <default>false</default>
-        </values>
+        </values>	       
         <values>
             <fullName>SGH Bag SE</fullName>
             <default>false</default>
@@ -3205,3 +3177,4 @@
         </values>
     </picklistValues>
 </RecordType>
+

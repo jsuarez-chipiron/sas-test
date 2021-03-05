@@ -289,32 +289,17 @@
                 <fullName>SGH Bag DK</fullName>	
                 <default>false</default>	
                 <label>SGH Bag DK</label>	
-            </value>	
-            <value>	
-                <fullName>SGH Bag NO</fullName>	
-                <default>false</default>	
-                <label>SGH Bag NO</label>	
-            </value>	
+            </value>	            
             <value>	
                 <fullName>SGH Bag SE</fullName>	
                 <default>false</default>	
                 <label>SGH Bag SE</label>	
-            </value>
-            <value>
-                <fullName>SGH Bag DK</fullName>
-                <default>false</default>
-                <label>SGH Bag DK</label>
-            </value>
+            </value>           
             <value>
                 <fullName>SGH Bag NO</fullName>
                 <default>false</default>
                 <label>SGH Bag NO</label>
-            </value>
-            <value>
-                <fullName>SGH Bag SE</fullName>
-                <default>false</default>
-                <label>SGH Bag SE</label>
-            </value>
+            </value>          
             <value>
                 <fullName>Star Alliance Upgrades</fullName>
                 <default>false</default>
@@ -338,3 +323,4 @@
         </valueSetDefinition>
     </valueSet>
 </CustomField>
+
