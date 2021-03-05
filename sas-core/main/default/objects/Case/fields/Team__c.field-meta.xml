@@ -280,26 +280,31 @@
                 <default>false</default>
                 <label>SE</label>
             </value>
+			<value>
+                <fullName>Special Sales NO</fullName>
+                <default>false</default>
+                <label>Special Sales NO</label>
+            </value>
             <value>
                 <fullName>Settlement</fullName>
                 <default>false</default>
                 <label>Settlement</label>
             </value>
+            <value>		
+                <fullName>SGH Bag DK</fullName>	
+                <default>false</default>	
+                <label>SGH Bag DK</label>	
+            </value>	
             <value>	
-                <fullName>SGH Bag DK</fullName>
-                <default>false</default>
-                <label>SGH Bag DK</label>
-            </value>
-            <value>
-                <fullName>SGH Bag NO</fullName>
-                <default>false</default>
-                <label>SGH Bag NO</label>
-            </value>
-            <value>
-                <fullName>SGH Bag SE</fullName>
-                <default>false</default>
-                <label>SGH Bag SE</label>
-            </value>
+                <fullName>SGH Bag NO</fullName>	
+                <default>false</default>	
+                <label>SGH Bag NO</label>	
+            </value>	
+            <value>	
+                <fullName>SGH Bag SE</fullName>	
+                <default>false</default>	
+                <label>SGH Bag SE</label>	
+            </value>	
             <value>
                 <fullName>Star Alliance Upgrades</fullName>
                 <default>false</default>
@@ -334,18 +339,18 @@
             <controllingFieldValue>SME</controllingFieldValue>
             <valueName>Scandinavia</valueName>
         </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Care</controllingFieldValue>
-            <valueName>SGH Bag DK</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Care</controllingFieldValue>
-            <valueName>SGH Bag NO</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Care</controllingFieldValue>
-            <valueName>SGH Bag SE</valueName>
-        </valueSettings>
+        <valueSettings>	
+            <controllingFieldValue>Care</controllingFieldValue>	
+            <valueName>SGH Bag DK</valueName>	
+        </valueSettings>	
+        <valueSettings>	
+            <controllingFieldValue>Care</controllingFieldValue>	
+            <valueName>SGH Bag NO</valueName>	
+        </valueSettings>	
+        <valueSettings>	
+            <controllingFieldValue>Care</controllingFieldValue>	
+            <valueName>SGH Bag SE</valueName>	
+        </valueSettings>	
         <valueSettings>
             <controllingFieldValue>Direct Sales</controllingFieldValue>
             <valueName>Backoffice</valueName>
@@ -530,9 +535,17 @@
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>US</valueName>
         </valueSettings>
+		<valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>US</valueName>
+        </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Info Hub</controllingFieldValue>
-            <valueName>Sales Information</valueName>
+            <controllingFieldValue>HQ</controllingFieldValue>
+            <valueName>Special Sales NO</valueName>
+        </valueSettings>
+        <valueSettings>	
+            <controllingFieldValue>Info Hub</controllingFieldValue>	
+            <valueName>Sales Information</valueName>	
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info Hub</controllingFieldValue>
@@ -545,7 +558,7 @@
         <valueSettings>
             <controllingFieldValue>SME</controllingFieldValue>
             <valueName>International</valueName>
-        </valueSettings>
+        </valueSettings>       
         <valueSettings>
             <controllingFieldValue>Liability</controllingFieldValue>
             <valueName>Admin</valueName>

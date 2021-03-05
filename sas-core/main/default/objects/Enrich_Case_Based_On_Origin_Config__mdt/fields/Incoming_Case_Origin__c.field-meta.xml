@@ -246,6 +246,11 @@
                 <label>Email - Group Sales US</label>
             </value>
             <value>
+                <fullName>Email - HQ Special Sales NO</fullName>
+                <default>false</default>
+                <label>Email - HQ Special Sales NO</label>
+            </value>
+            <value>
                 <fullName>Email - Liability Claim</fullName>
                 <default>false</default>
                 <label>Email - Liability Claim</label>
@@ -294,6 +299,21 @@
                 <fullName>Email - SASSI Internal</fullName>
                 <default>false</default>
                 <label>Email - SASSI Internal</label>
+            </value>
+             <value>	
+                <fullName>Email - SGH Bag DK</fullName>	
+                <default>false</default>	
+                <label>Email - SGH Bag DK</label>	
+            </value>	
+            <value>	
+                <fullName>Email - SGH Bag NO</fullName>	
+                <default>false</default>	
+                <label>Email - SGH Bag NO</label>	
+            </value>	
+            <value>	
+                <fullName>Email - SGH Bag SE</fullName>	
+                <default>false</default>	
+                <label>Email - SGH Bag SE</label>	
             </value>
             <value>
                 <fullName>Email - SGH Bag DK</fullName>

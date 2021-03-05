@@ -23,6 +23,10 @@
             <fullName>Agent Helpdesk</fullName>
             <default>false</default>
         </values>
+		 <values>	
+            <fullName>Care</fullName>	
+            <default>false</default>	
+        </values>	
         <values>
             <fullName>Care</fullName>
             <default>false</default>
@@ -49,6 +53,10 @@
         </values>
         <values>
             <fullName>Group Sales</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>HQ</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2832,6 +2840,18 @@
             <fullName>Email - Sales Information</fullName>
             <default>false</default>
         </values>
+		<values>	
+            <fullName>Email - SGH Bag DK</fullName>	
+            <default>false</default>	
+        </values>	
+        <values>	
+            <fullName>Email - SGH Bag NO</fullName>	
+            <default>false</default>	
+        </values>	
+        <values>	
+            <fullName>Email - SGH Bag SE</fullName>	
+            <default>false</default>	
+        </values>
         <values>
             <fullName>Email - SGH Bag DK</fullName>
             <default>false</default>
@@ -3116,6 +3136,18 @@
             <fullName>SASSI Internal</fullName>
             <default>false</default>
         </values>
+		<values>	
+            <fullName>SGH Bag DK</fullName>	
+            <default>false</default>	
+        </values>	
+        <values>	
+            <fullName>SGH Bag NO</fullName>	
+            <default>false</default>	
+        </values>	
+        <values>	
+            <fullName>SGH Bag SE</fullName>	
+            <default>false</default>	
+        </values>
         <values>
             <fullName>SGH Bag DK</fullName>
             <default>false</default>
@@ -3138,6 +3170,10 @@
         </values>
         <values>
             <fullName>Scandinavia</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Special Sales NO</fullName>
             <default>false</default>
         </values>
         <values>

@@ -266,6 +266,11 @@
                 <label>SASSI Internal</label>
             </value>
             <value>
+                <fullName>Special Sales NO</fullName>
+                <default>false</default>
+                <label>Special Sales NO</label>
+            </value>
+            <value>
                 <fullName>Scandinavia</fullName>
                 <default>false</default>
                 <label>Scandinavia</label>
@@ -279,6 +284,21 @@
                 <fullName>Settlement</fullName>
                 <default>false</default>
                 <label>Settlement</label>
+            </value>
+            <value>	
+                <fullName>SGH Bag DK</fullName>	
+                <default>false</default>	
+                <label>SGH Bag DK</label>	
+            </value>	
+            <value>	
+                <fullName>SGH Bag NO</fullName>	
+                <default>false</default>	
+                <label>SGH Bag NO</label>	
+            </value>	
+            <value>	
+                <fullName>SGH Bag SE</fullName>	
+                <default>false</default>	
+                <label>SGH Bag SE</label>	
             </value>
             <value>
                 <fullName>SGH Bag DK</fullName>
