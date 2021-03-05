@@ -56,6 +56,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
   */
     public override void beforeUpdate() {
         validateCaseTags(newCaseList);
+        completeMilestones(newCaseMap);
     }
     /**
    Used to call the trigger in the after insert context
@@ -88,9 +89,11 @@ public class FCS_CaseHandler extends C_TriggerHandler {
      * Should be run only on beforeInsert.
      */
     private static void enrichCaseDataBasedOnOrigin(List<Case> newCaseList) {
+        List <Entitlement> entitlements = [SELECT Name, Id FROM Entitlement WHERE Type = 'Vendor'];
+
         for (Case c: newCaseList) {
             List<Enrich_Case_Based_On_Origin_Config__mdt> enrichmentData = [
-                SELECT Department_To_Assign__c, Team_To_Assign__c, Case_Type_To_Assign__c
+                SELECT Department_To_Assign__c, Entitlement_To_Assign__c, Team_To_Assign__c, Case_Type_To_Assign__c
                 FROM Enrich_Case_Based_On_Origin_Config__mdt
                 WHERE Incoming_Case_Origin__c = :c.Origin
             ];
@@ -111,8 +114,39 @@ public class FCS_CaseHandler extends C_TriggerHandler {
                 if (!String.isEmpty(caseConfiguration.Team_To_Assign__c)) {
                     c.Team__c = caseConfiguration.Team_To_Assign__c;
                 }
+
+                if (!String.isEmpty(caseConfiguration.Entitlement_To_Assign__c)) {
+                    for (Entitlement e : entitlements) {
+                        if(e.Name == caseConfiguration.Entitlement_To_Assign__c) {
+                            c.EntitlementId = e.Id;
+                        }
+                    }
+                }
             }
         }
+    }
+
+    /**
+     * Completes all milestones of a case when case status changes to one in statusesThatCompleteMilestones.
+     */
+    private static void completeMilestones(Map<Id,Case> newCaseMap) {
+        List<String> statusesThatCompleteMilestones = new list<String> {'Awaiting Customer Response', 'Closed', 'Escalated', 'Merged', 'On Hold'};
+
+        List<CaseMilestone> milestonesOfCases = [
+            SELECT CaseId, CompletionDate, Id
+            FROM CaseMilestone
+            WHERE CaseId IN :newCaseMap.keySet() AND IsCompleted = False];
+
+        List<CaseMilestone> milestonesToComplete = new List<CaseMilestone>();
+        
+        for (CaseMilestone milestone: milestonesOfCases) {
+            if (statusesThatCompleteMilestones.contains(newCaseMap.get(milestone.CaseId).Status)) {
+                milestone.CompletionDate = DateTime.now();
+                milestonesToComplete.add(milestone);
+            }
+        }
+
+        update milestonesToComplete;
     }
 
     /**
