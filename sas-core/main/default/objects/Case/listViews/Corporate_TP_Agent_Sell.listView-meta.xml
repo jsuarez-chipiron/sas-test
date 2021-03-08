@@ -31,7 +31,7 @@
         <value>Order from SAS Travel Pass Several Order Form for Travel Agents</value>
     </filters>
     <filters>
-        <field>ACCOUNT.NAME</field>
+        <field>CASES.SUBJECT</field>
         <operation>equals</operation>
         <value>Order from SAS Travel Pass</value>
     </filters>
