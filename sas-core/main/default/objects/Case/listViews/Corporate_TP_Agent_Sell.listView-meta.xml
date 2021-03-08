@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Corporate_TP_Agent_Sell</fullName>
-    <booleanFilter>1 AND 2 AND (3 OR 4)</booleanFilter>
+    <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.STATUS</columns>
     <columns>CASES.SUBJECT</columns>
