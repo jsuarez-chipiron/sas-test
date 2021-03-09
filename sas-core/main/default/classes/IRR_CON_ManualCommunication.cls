@@ -30,14 +30,14 @@ public class IRR_CON_ManualCommunication {
     }
 
     @AuraEnabled
-    public static List<IRR_MOD_PassengerInfo> getBookingWithFilterPassengerInfos(String bookings) {
+    public static List<IRR_MOD_PassengerInfo> getAdvancedFilterPassengerInfos(String bookingIds) {
         List<String> currentBookingFilter;
         String departureStation;
         String arrivalStation;
         String departureDate;
         String arrivalDate;
         try {
-            List<String> splitBookingFilters = bookings.split(',');
+            List<String> splitBookingFilters = bookingIds.split(',');
             List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
             for (String bookingFilter : splitBookingFilters) {
                 if (String.isBlank(bookingFilter)) continue;
@@ -47,6 +47,34 @@ public class IRR_CON_ManualCommunication {
                 departureDate = currentBookingFilter[2] ;
                 arrivalDate = currentBookingFilter[3] ;
                 passengerInfos.addAll(IRR_SVC_TedsService.getPassengerInfosForBookingFilters(departureStation,arrivalStation,departureDate,arrivalDate));
+            }
+            for(IRR_MOD_PassengerInfo pinfo : passengerInfos){
+                if((departureStation!=null && departureStation!='') || (arrivalStation!=null && arrivalStation!='')){
+                    for(IRR_MOD_TripInfo tInfo : pinfo.itinerary){
+                        Boolean bookingID = false;
+                        for(IRR_MOD_SegmentInfo sInfo : tInfo.segments){
+                            if(departureStation!=null && departureStation!='' && arrivalStation!=null && arrivalStation!='' 
+                                && departureStation==sInfo.stationDeparture && arrivalStation==sInfo.stationArrival){
+                                bookingID = true;
+                                pinfo.bookingFlightId = sInfo.flightId;
+                                break;
+                            }else if(departureStation!=null && departureStation!='' && (arrivalStation==null || arrivalStation=='')
+                                && departureStation==sInfo.stationDeparture){
+                                bookingID = true;
+                                pinfo.bookingFlightId = sInfo.flightId;
+                                break;
+                            }else if(arrivalStation!=null && arrivalStation!='' && (departureStation==null || departureStation=='')
+                                && arrivalStation==sInfo.stationArrival){
+                                bookingID = true;
+                                pinfo.bookingFlightId = sInfo.flightId;
+                                break;
+                            }
+                        }
+                        if(bookingID){
+                            break;
+                        }
+                    }
+                }
             }
             return passengerInfos;
         }

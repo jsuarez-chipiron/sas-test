@@ -340,7 +340,6 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
             IRR_MOD_TedsBooking.Passenger passenger, IRR_MOD_TedsBooking.SegmentTrip tripThisSegment,
             IRR_MOD_TedsBooking.SegmentTrip tripNextSegment, IRR_MOD_TedsBooking.SegmentTrip tripPrevSegment,
             List<IRR_MOD_TripInfo> itinerary) {
-
         IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
         passengerInfo.passengerId = booking.id + passenger.id;
         passengerInfo.bookingReference = booking.reference;

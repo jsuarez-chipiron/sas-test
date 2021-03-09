@@ -30,6 +30,7 @@
                             label="Flight"
                             title="Retrieve passengers by Flight"
                             onactive={handleTabSwitch}>
+                    <template if:true={showFlightInputParams}>
                         <template for:each={flights} for:item="flight" for:index="flightIdx">
                             <lightning-layout key={flight.key}>
                                 <lightning-layout-item padding="around-small">
@@ -107,6 +108,8 @@
                                 </lightning-layout-item>
                             </lightning-layout>
                         </template>
+                    </template>
+                    <template if:true={showFlightInputParams}>
                         <lightning-layout>
                             <lightning-layout-item padding="around-small" size="1" class="pull-right">
                                 <button
@@ -119,6 +122,14 @@
                                 </button>
                             </lightning-layout-item>
                         </lightning-layout>
+                    </template>
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small" size="2" class="slds-p-left_x-small slds-p-right_small slds-m-top_x-large">
+                                <lightning-input type="checkbox" label="Use Advanced Filter" data-advance-filter="checkbox"
+                                    onchange={handleAdvanceFilterChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
                     </lightning-tab>
                     <lightning-tab
                             class="no-padding"
@@ -128,7 +139,6 @@
                             onactive={handleTabSwitch}>
                         <lightning-layout>
                                 <lightning-layout-item padding="around-small" size="3">
-                                    <template if:true={showBookingReferenceInput}>
                                     <lightning-input
                                             value={retrieveParameters.bookingId}
                                             type="text"
@@ -139,12 +149,6 @@
                                             required
                                             onchange={handleParameterChange}>
                                     </lightning-input>
-                                </template>
-                                <lightning-layout-item padding="around-small" size="3">
-                                    <lightning-input type="checkbox"
-                                    label="Use Advanced Filter" data-advance-filter = "checkbox" onchange={handleAdvanceFilterChange} >
-                                </lightning-input>
-                                </lightning-layout-item>
                             </lightning-layout-item>
                         </lightning-layout>
                     </lightning-tab>
