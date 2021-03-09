@@ -15,6 +15,11 @@
         <default>true</default>
         <visible>true</visible>
     </applicationVisibilities>
+    <applicationVisibilities>
+        <application>SAS_Liability</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
     <classAccesses>
         <apexClass>FCS_RemoveAdditionalSurveyResponses</apexClass>
         <enabled>true</enabled>
@@ -458,9 +463,20 @@
         <readable>true</readable>
     </fieldPermissions>
    <fieldPermissions>
+        <editable>true</editable>
         <field>LIA_Claim__c.CARE_Case_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
+   <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>      
+   <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Name</field>
+        <readable>true</readable>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Date_of_Receipt__c</field>
@@ -508,6 +524,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>LIA_Claim__c.IsMerged__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LIA_Claim__c.Judicial_Body__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -539,6 +560,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Name_of_Passenger_s__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Name_of_Judicial_Body__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

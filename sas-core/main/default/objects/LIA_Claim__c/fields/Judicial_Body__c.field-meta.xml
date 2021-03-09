@@ -10,11 +10,21 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
-                <fullName>NEB/ADR</fullName>
+                <fullName>ADR</fullName>
                 <default>false</default>
-                <label>NEB/ADR</label>
+                <label>ADR</label>
+            </value>
+            <value>
+                <fullName>Bailiff</fullName>
+                <default>false</default>
+                <label>Bailiff</label>
+            </value>
+            <value>
+                <fullName>European Court Case</fullName>
+                <default>false</default>
+                <label>European Court Case</label>
             </value>
             <value>
                 <fullName>National Court Case</fullName>
@@ -22,9 +32,9 @@
                 <label>National Court Case</label>
             </value>
             <value>
-                <fullName>European Court Case</fullName>
+                <fullName>NEB</fullName>
                 <default>false</default>
-                <label>European Court Case</label>
+                <label>NEB</label>
             </value>
         </valueSetDefinition>
     </valueSet>

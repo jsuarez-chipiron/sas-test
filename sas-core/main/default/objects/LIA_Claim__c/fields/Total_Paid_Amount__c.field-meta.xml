@@ -2,9 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Total_Paid_Amount__c</fullName>
     <externalId>false</externalId>
-    <formula>IF( Principal_Paid__c = TRUE, Principal__c,0) + IF( Interest_Paid__c = TRUE,  Interest__c , 0) + IF( Fees_Paid__c = TRUE,  Fees__c , 0)</formula>
+    <formula>Fees_Paid__c +  Interest_Paid__c + Principal_Paid__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <inlineHelpText>Total Amount Paid for this claim</inlineHelpText>
+    <inlineHelpText>The final amount paid for this claim.</inlineHelpText>
     <label>Total Paid Amount</label>
     <precision>18</precision>
     <required>false</required>

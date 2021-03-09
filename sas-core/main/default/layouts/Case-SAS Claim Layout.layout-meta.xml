@@ -179,6 +179,10 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ParentId</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LIA_Date_of_Receipt__c</field>
             </layoutItems>
@@ -343,9 +347,14 @@
             <sortOrder>16</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.To_Other_Department</actionName>
+            <actionName>Case.Update_Liability_Team</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>17</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.To_Other_Department</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>18</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -421,6 +430,10 @@
         <fields>LAST_UPDATE</fields>
         <fields>CREATEDBY_USER</fields>
         <relatedList>RelatedArticleList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>LIA_Claim__c.Case__c</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>

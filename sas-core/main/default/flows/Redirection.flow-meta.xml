@@ -4,12 +4,12 @@
         <description>Posts the internal comments to the chatter feed on the case</description>
         <name>CaseChatterFeed</name>
         <label>CaseChatterFeed</label>
-        <locationX>670</locationX>
-        <locationY>365</locationY>
+        <locationX>280</locationX>
+        <locationY>382</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
-            <targetReference>Redirection_Submission</targetReference>
+            <targetReference>GetDepartmentQueueId</targetReference>
         </connector>
         <inputParameters>
             <name>text</name>
@@ -84,7 +84,7 @@
     <formulas>
         <name>RecordTypeName</name>
         <dataType>String</dataType>
-        <expression>IF( {!DependentList.topValue} = &quot;Info Hub&quot;, &quot;Internal/Backoffice&quot;, IF( {!DependentList.topValue} = &quot;Functional Product Support&quot;, &quot;Functional Product Support&quot;, &quot;Channel&quot;))</expression>
+        <expression>IF( {!DependentList.topValue} = &quot;Info Hub&quot;, &quot;Internal/Backoffice&quot;, IF( {!DependentList.topValue} = &quot;Functional Product Support&quot;, &quot;Functional Product Support&quot;, IF( {!DependentList.topValue} = &quot;Liability&quot;, &quot;Claim&quot;, &quot;Channel&quot;)))</expression>
     </formulas>
     <formulas>
         <description>Depending on the priority the  IsEscalated value will be set to TRUE or FALSE</description>
@@ -137,8 +137,8 @@
     <recordLookups>
         <name>GetDepartmentQueueId</name>
         <label>GetDepartmentQueueId</label>
-        <locationX>294</locationX>
-        <locationY>365</locationY>
+        <locationX>373</locationX>
+        <locationY>380</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetRecordTypeId</targetReference>
@@ -157,8 +157,8 @@
     <recordLookups>
         <name>GetRecordTypeId</name>
         <label>GetRecordTypeId</label>
-        <locationX>423</locationX>
-        <locationY>365</locationY>
+        <locationX>468</locationX>
+        <locationY>380</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Redirect_Case</targetReference>
@@ -178,10 +178,10 @@
         <description>Update the current case to be directed to the right skill</description>
         <name>Redirect_Case</name>
         <label>Redirect Case</label>
-        <locationX>566</locationX>
-        <locationY>365</locationY>
+        <locationX>565</locationX>
+        <locationY>380</locationY>
         <connector>
-            <targetReference>CaseChatterFeed</targetReference>
+            <targetReference>Redirection_Submission</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -243,8 +243,8 @@
     <screens>
         <name>Redirection_Submission</name>
         <label>Redirection Submission</label>
-        <locationX>774</locationX>
-        <locationY>367</locationY>
+        <locationX>657</locationX>
+        <locationY>380</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -260,13 +260,13 @@
         <description>Input for making a request to another department</description>
         <name>To_Other_Department</name>
         <label>To Other Department</label>
-        <locationX>173</locationX>
-        <locationY>365</locationY>
+        <locationX>178</locationX>
+        <locationY>382</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>GetDepartmentQueueId</targetReference>
+            <targetReference>CaseChatterFeed</targetReference>
         </connector>
         <fields>
             <name>Request_Type</name>

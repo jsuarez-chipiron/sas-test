@@ -37,6 +37,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>LIA_Claim__c.Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LIA_Claim__c.Date_of_Receipt__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -81,6 +86,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.IsMerged__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Judicial_Body__c</field>
         <readable>true</readable>
@@ -108,6 +118,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Liability_Claim_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Name_of_Judicial_Body__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -215,14 +230,14 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>LIA_Claim__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>LIA_Firm__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -231,7 +246,7 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>LIA_Major_Event__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>

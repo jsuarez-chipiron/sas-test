@@ -156,12 +156,12 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Claim</label>
     <nameField>
-        <label>Claim Name</label>
+        <label>Claim Number</label>
         <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Claims</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

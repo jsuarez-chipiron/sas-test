@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>No</fullName>
+        <default>false</default>
+        <label>No</label>
+    </customValue>
+    <customValue>
+        <fullName>Yes</fullName>
+        <default>false</default>
+        <label>Yes</label>
+    </customValue>
+    <customValue>
+        <fullName>Different_Amount_Paid</fullName>
+        <default>true</default>
+        <label>Different Amount Paid</label>
+    </customValue>
+    <description>Use to indicate the result of the payment</description>
+    <masterLabel>Claim Amount Paid?</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
