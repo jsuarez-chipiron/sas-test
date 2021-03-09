@@ -48,34 +48,6 @@ public class IRR_CON_ManualCommunication {
                 arrivalDate = currentBookingFilter[3] ;
                 passengerInfos.addAll(IRR_SVC_TedsService.getPassengerInfosForBookingFilters(departureStation,arrivalStation,departureDate,arrivalDate));
             }
-            for(IRR_MOD_PassengerInfo pinfo : passengerInfos){
-                if((departureStation!=null && departureStation!='') || (arrivalStation!=null && arrivalStation!='')){
-                    for(IRR_MOD_TripInfo tInfo : pinfo.itinerary){
-                        Boolean bookingID = false;
-                        for(IRR_MOD_SegmentInfo sInfo : tInfo.segments){
-                            if(departureStation!=null && departureStation!='' && arrivalStation!=null && arrivalStation!='' 
-                                && departureStation==sInfo.stationDeparture && arrivalStation==sInfo.stationArrival){
-                                bookingID = true;
-                                pinfo.bookingFlightId = sInfo.flightId;
-                                break;
-                            }else if(departureStation!=null && departureStation!='' && (arrivalStation==null || arrivalStation=='')
-                                && departureStation==sInfo.stationDeparture){
-                                bookingID = true;
-                                pinfo.bookingFlightId = sInfo.flightId;
-                                break;
-                            }else if(arrivalStation!=null && arrivalStation!='' && (departureStation==null || departureStation=='')
-                                && arrivalStation==sInfo.stationArrival){
-                                bookingID = true;
-                                pinfo.bookingFlightId = sInfo.flightId;
-                                break;
-                            }
-                        }
-                        if(bookingID){
-                            break;
-                        }
-                    }
-                }
-            }
             return passengerInfos;
         }
         catch (Exception e) {

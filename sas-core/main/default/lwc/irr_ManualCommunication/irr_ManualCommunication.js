@@ -105,8 +105,8 @@ export default class IRR_ManualCommunication extends LightningElement {
                 tableHeadings.push(tableHeading);
             }
             const tableHeadingContent = tableHeadings.join('||');
-            const trimmedTableHeading = tableHeadingContent.replaceAll('From:undefined','');
-            const trimmedTableHeadingFinal = trimmedTableHeading.replaceAll('To:undefined','');
+            const trimmedTableHeading = tableHeadingContent.replaceAll('From:undefined','From:ALL');
+            const trimmedTableHeadingFinal = trimmedTableHeading.replaceAll('To:undefined','To:ALL');
 
             return `Results for Bookings => ${trimmedTableHeadingFinal}`;
         }
@@ -330,7 +330,7 @@ export default class IRR_ManualCommunication extends LightningElement {
                     this.filterParameters = {};
                     break;
                 case "BOOKING_FILTER":
-                    this.COLUMNS = BOOKING_FILTER_COLUMNS;
+                    this.COLUMNS = BOOKING_COLUMNS;
                     eventParameters = {bookingIds: parameters.bookingIds};
                     result = await getAdvancedFilterPassengerInfos(eventParameters);
                     this.filterParameters = {};
