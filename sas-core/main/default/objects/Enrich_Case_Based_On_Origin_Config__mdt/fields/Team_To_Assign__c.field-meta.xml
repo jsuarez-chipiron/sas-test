@@ -46,6 +46,11 @@
                 <label>Bulk</label>
             </value>
             <value>
+                <fullName>Businesstravel STO</fullName>
+                <default>false</default>
+                <label>Businesstravel STO</label>
+            </value>
+            <value>
                 <fullName>CH</fullName>
                 <default>false</default>
                 <label>CH</label>
@@ -119,6 +124,11 @@
                 <fullName>FR</fullName>
                 <default>false</default>
                 <label>FR</label>
+            </value>
+            <value>
+                <fullName>GDPR</fullName>
+                <default>false</default>
+                <label>GDPR</label>
             </value>
             <value>
                 <fullName>Gold DK</fullName>
@@ -301,6 +311,11 @@
                 <label>SGH Bag NO</label>
             </value>          
             <value>
+                <fullName>SoMe</fullName>
+                <default>false</default>
+                <label>SoMe</label>
+            </value>
+            <value>
                 <fullName>Star Alliance Upgrades</fullName>
                 <default>false</default>
                 <label>Star Alliance Upgrades</label>
@@ -309,6 +324,11 @@
                 <fullName>System &amp; Tariff</fullName>
                 <default>false</default>
                 <label>System &amp; Tariff</label>
+            </value>
+            <value>
+                <fullName>Ticketless Support</fullName>
+                <default>false</default>
+                <label>Ticketless Support</label>
             </value>
             <value>
                 <fullName>UK</fullName>
