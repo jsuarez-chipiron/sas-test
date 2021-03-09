@@ -398,6 +398,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Last_Received_Email_On__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Case.Number_of_Email_Messages_Received__c</field>
         <readable>true</readable>
@@ -405,6 +410,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Number_of_Email_Messages_Sent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EmailMessage.Is_Counted__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

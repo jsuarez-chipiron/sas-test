@@ -66,11 +66,11 @@
                 <field>ContactId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Department__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Team__c</field>
             </layoutItems>
             <layoutItems>
@@ -80,6 +80,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Number_of_Email_Messages_Received__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Last_Received_Email_On__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -387,7 +391,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000001vnyj</masterLabel>
+        <masterLabel>00h1j000002CliV</masterLabel>
         <sizeX>3</sizeX>
         <sizeY>4</sizeY>
         <summaryLayoutItems>
