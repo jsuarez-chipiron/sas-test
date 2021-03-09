@@ -12,9 +12,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Pax entitled to compensation</fullName>
+                <fullName>Pax entitled to compensation/refund</fullName>
                 <default>false</default>
-                <label>Pax entitled to compensation</label>
+                <label>Pax entitled to compensation/refund</label>
+            </value>
+            <value>
+                <fullName>Pax not entitled to refund</fullName>
+                <default>false</default>
+                <label>Pax not entitled to refund</label>
             </value>
             <value>
                 <fullName>Extraordinary circumstances not proven</fullName>
@@ -40,6 +45,11 @@
                 <fullName>Claim submitted too late</fullName>
                 <default>false</default>
                 <label>Claim submitted too late</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
             </value>
             <value>
                 <fullName>N/A</fullName>

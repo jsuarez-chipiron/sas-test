@@ -10,86 +10,161 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
             <value>
-                <fullName>ACE</fullName>
+                <fullName>Austria</fullName>
                 <default>false</default>
-                <label>ACE</label>
+                <label>Austria</label>
             </value>
             <value>
-                <fullName>AT</fullName>
+                <fullName>Belgium</fullName>
                 <default>false</default>
-                <label>AT</label>
+                <label>Belgium</label>
             </value>
             <value>
-                <fullName>Benelux</fullName>
+                <fullName>Bulgaria</fullName>
                 <default>false</default>
-                <label>Benelux</label>
+                <label>Bulgaria</label>
             </value>
             <value>
-                <fullName>CH</fullName>
+                <fullName>Croatia</fullName>
                 <default>false</default>
-                <label>CH</label>
+                <label>Croatia</label>
             </value>
             <value>
-                <fullName>DE</fullName>
+                <fullName>Cyprus</fullName>
                 <default>false</default>
-                <label>DE</label>
+                <label>Cyprus</label>
             </value>
             <value>
-                <fullName>DK</fullName>
+                <fullName>Czech_Republic</fullName>
                 <default>false</default>
-                <label>DK</label>
+                <label>Czech Republic</label>
             </value>
             <value>
-                <fullName>EE</fullName>
+                <fullName>Denmark</fullName>
                 <default>false</default>
-                <label>EE</label>
+                <label>Denmark</label>
             </value>
             <value>
-                <fullName>ES</fullName>
+                <fullName>Estonia</fullName>
                 <default>false</default>
-                <label>ES</label>
+                <label>Estonia</label>
             </value>
             <value>
-                <fullName>FI</fullName>
+                <fullName>Finland</fullName>
                 <default>false</default>
-                <label>FI</label>
+                <label>Finland</label>
             </value>
             <value>
-                <fullName>FR</fullName>
+                <fullName>France</fullName>
                 <default>false</default>
-                <label>FR</label>
+                <label>France</label>
             </value>
             <value>
-                <fullName>IE</fullName>
+                <fullName>Germany</fullName>
                 <default>false</default>
-                <label>IE</label>
+                <label>Germany</label>
             </value>
             <value>
-                <fullName>IS</fullName>
+                <fullName>Greece</fullName>
                 <default>false</default>
-                <label>IS</label>
+                <label>Greece</label>
             </value>
             <value>
-                <fullName>IT</fullName>
+                <fullName>Hungary</fullName>
                 <default>false</default>
-                <label>IT</label>
+                <label>Hungary</label>
             </value>
             <value>
-                <fullName>LT</fullName>
+                <fullName>Iceland</fullName>
                 <default>false</default>
-                <label>LT</label>
+                <label>Iceland</label>
             </value>
             <value>
-                <fullName>LV</fullName>
+                <fullName>Ireland</fullName>
                 <default>false</default>
-                <label>LV</label>
+                <label>Ireland</label>
             </value>
             <value>
-                <fullName>NO</fullName>
+                <fullName>Italy</fullName>
                 <default>false</default>
-                <label>NO</label>
+                <label>Italy</label>
+            </value>
+            <value>
+                <fullName>Latvia</fullName>
+                <default>false</default>
+                <label>Latvia</label>
+            </value>
+            <value>
+                <fullName>Lithuania</fullName>
+                <default>false</default>
+                <label>Lithuania</label>
+            </value>
+            <value>
+                <fullName>Luxembourg</fullName>
+                <default>false</default>
+                <label>Luxembourg</label>
+            </value>
+            <value>
+                <fullName>Malta</fullName>
+                <default>false</default>
+                <label>Malta</label>
+            </value>
+            <value>
+                <fullName>Netherlands</fullName>
+                <default>false</default>
+                <label>Netherlands</label>
+            </value>
+            <value>
+                <fullName>Norway</fullName>
+                <default>false</default>
+                <label>Norway</label>
+            </value>
+            <value>
+                <fullName>Poland</fullName>
+                <default>false</default>
+                <label>Poland</label>
+            </value>
+            <value>
+                <fullName>Portugal</fullName>
+                <default>false</default>
+                <label>Portugal</label>
+            </value>
+            <value>
+                <fullName>Romania</fullName>
+                <default>false</default>
+                <label>Romania</label>
+            </value>
+            <value>
+                <fullName>Slovakia</fullName>
+                <default>false</default>
+                <label>Slovakia</label>
+            </value>
+            <value>
+                <fullName>Slovenia</fullName>
+                <default>false</default>
+                <label>Slovenia</label>
+            </value>
+            <value>
+                <fullName>Spain</fullName>
+                <default>false</default>
+                <label>Spain</label>
+            </value>
+            <value>
+                <fullName>Sweden</fullName>
+                <default>false</default>
+                <label>Sweden</label>
+            </value>
+            <value>
+                <fullName>United Kingdom</fullName>
+                <default>false</default>
+                <label>United Kingdom</label>
+            </value>
+            <value>
+                <fullName>United States</fullName>
+                <default>false</default>
+                <label>United States</label>
             </value>
             <value>
                 <fullName>Other</fullName>
@@ -97,28 +172,123 @@
                 <label>Other</label>
             </value>
             <value>
+                <fullName>AT</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>AT</label>
+            </value>
+            <value>
+                <fullName>Benelux</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Benelux</label>
+            </value>
+            <value>
+                <fullName>CH</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>CH</label>
+            </value>
+            <value>
+                <fullName>DE</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>DE</label>
+            </value>
+            <value>
+                <fullName>DK</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>DK</label>
+            </value>
+            <value>
+                <fullName>EE</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>EE</label>
+            </value>
+            <value>
+                <fullName>ES</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ES</label>
+            </value>
+            <value>
+                <fullName>FI</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>FI</label>
+            </value>
+            <value>
+                <fullName>FR</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>FR</label>
+            </value>
+            <value>
+                <fullName>IE</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>IE</label>
+            </value>
+            <value>
+                <fullName>IS</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>IS</label>
+            </value>
+            <value>
+                <fullName>IT</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>IT</label>
+            </value>
+            <value>
+                <fullName>LT</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>LT</label>
+            </value>
+            <value>
+                <fullName>LV</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>LV</label>
+            </value>
+            <value>
+                <fullName>NO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>NO</label>
+            </value>
+            <value>
                 <fullName>PL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>PL</label>
             </value>
             <value>
                 <fullName>RU</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>RU</label>
             </value>
             <value>
                 <fullName>SE</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>SE</label>
             </value>
             <value>
                 <fullName>UK</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>UK</label>
             </value>
             <value>
                 <fullName>US</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>US</label>
             </value>
         </valueSetDefinition>

@@ -32,6 +32,11 @@
                 <label>Low amount/high legal cost</label>
             </value>
             <value>
+                <fullName>Lack of evidence</fullName>
+                <default>false</default>
+                <label>Lack of evidence</label>
+            </value>
+            <value>
                 <fullName>Incomplete data for investigation</fullName>
                 <default>false</default>
                 <label>Incomplete data for investigation</label>
