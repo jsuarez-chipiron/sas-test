@@ -27,6 +27,6 @@
     </filters>
     <label>SoMe Support All Open Cases</label>
     <sharedTo>
-        <group>SoMe Support</group>
+        <group>SoMe_Support</group>
     </sharedTo>
 </ListView>
