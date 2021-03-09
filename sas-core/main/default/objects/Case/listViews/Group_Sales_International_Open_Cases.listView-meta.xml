@@ -9,6 +9,7 @@
     <columns>Team__c</columns>
     <columns>CASES.NAME</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.LAST_UPDATE_DATE_ONLY</columns>
     <columns>OWNER_NAME</columns>
     <filterScope>Everything</filterScope>
     <filters>
