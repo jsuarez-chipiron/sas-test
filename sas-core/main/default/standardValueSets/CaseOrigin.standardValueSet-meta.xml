@@ -346,20 +346,39 @@
         <default>false</default>
         <label>Email - EuroBonus Partner Support</label>
     </standardValue>
-	<standardValue>	
-        <fullName>Email - SGH Bag DK</fullName>	
-        <default>false</default>	
-        <label>Email - SGH Bag DK</label>	
-    </standardValue>	
-    <standardValue>	
-        <fullName>Email - SGH Bag NO</fullName>	
-        <default>false</default>	
-        <label>Email - SGH Bag NO</label>	
-    </standardValue>	
-    <standardValue>	
-        <fullName>Email - SGH Bag SE</fullName>	
-        <default>false</default>	
-        <label>Email - SGH Bag SE</label>	
-    </standardValue>	
+    <standardValue>
+        <fullName>Email - SGH Bag DK</fullName>
+        <default>false</default>
+        <label>Email - SGH Bag DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - SGH Bag NO</fullName>
+        <default>false</default>
+        <label>Email - SGH Bag NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - SGH Bag SE</fullName>
+        <default>false</default>
+        <label>Email - SGH Bag SE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - GDPR Secure Data</fullName>
+        <default>false</default>
+        <label>Email - GDPR Secure Data</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Ticketless Support</fullName>
+        <default>false</default>
+        <label>Email - Ticketless Support</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Businesstravel STO</fullName>
+        <default>false</default>
+        <label>Email - Businesstravel STO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - SoMe Support</fullName>
+        <default>false</default>
+        <label>Email - SoMe Support</label>
+    </standardValue>
 </StandardValueSet>
-

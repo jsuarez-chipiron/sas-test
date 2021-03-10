@@ -21,6 +21,11 @@
                 <label>Email - Agent Helpdesk Scandinavia</label>
             </value>
             <value>
+                <fullName>Email - Businesstravel STO</fullName>
+                <default>false</default>
+                <label>Email - Businesstravel STO</label>
+            </value>
+            <value>
                 <fullName>Email - Corporate Support Backoffice</fullName>
                 <default>false</default>
                 <label>Email - Corporate Support Backoffice</label>
@@ -129,6 +134,11 @@
                 <fullName>Email - Functional Product Support</fullName>
                 <default>false</default>
                 <label>Email - Functional Product Support</label>
+            </value>
+            <value>
+                <fullName>Email - GDPR Secure Data</fullName>
+                <default>false</default>
+                <label>Email - GDPR Secure Data</label>
             </value>
             <value>
                 <fullName>Email - Group Sales ACE</fullName>
@@ -326,6 +336,11 @@
                 <label>Email - SME Scandinavia</label>
             </value>
             <value>
+                <fullName>Email - SoMe Support</fullName>
+                <default>false</default>
+                <label>Email - SoMe Support</label>
+            </value>
+            <value>
                 <fullName>Email - Star Alliance Upgrades</fullName>
                 <default>false</default>
                 <label>Email - Star Alliance Upgrades</label>
@@ -334,6 +349,11 @@
                 <fullName>Email - System &amp; Tariff</fullName>
                 <default>false</default>
                 <label>Email - System &amp; Tariff</label>
+            </value>
+            <value>
+                <fullName>Email - Ticketless Support</fullName>
+                <default>false</default>
+                <label>Email - Ticketless Support</label>
             </value>
         </valueSetDefinition>
     </valueSet>

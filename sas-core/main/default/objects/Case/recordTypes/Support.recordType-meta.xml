@@ -54,6 +54,10 @@
             <fullName>Liability</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>SoMe Support</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
@@ -1040,6 +1044,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - SoMe Support</fullName>
+            <default>false</default>
+        </values>   
+        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>
@@ -1297,6 +1305,10 @@
         </values>
         <values>
             <fullName>Settlement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SoMe</fullName>
             <default>false</default>
         </values>
         <values>

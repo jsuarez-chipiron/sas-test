@@ -51,7 +51,7 @@
             <fullName>Group Sales</fullName>
             <default>false</default>
         </values>
-		<values>
+        <values>
             <fullName>HQ</fullName>
             <default>false</default>
         </values>
@@ -65,6 +65,10 @@
         </values>
         <values>
             <fullName>SME</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SoMe Support</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2609,6 +2613,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Businesstravel STO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Corporate Support Backoffice</fullName>
             <default>false</default>
         </values>
@@ -2696,6 +2704,10 @@
             <fullName>Email - Functional Product Support</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Email - GDPR Secure Data</fullName>
+            <default>false</default>
+        </values>   
         <values>
             <fullName>Email - Group Sales ACE</fullName>
             <default>false</default>
@@ -2849,11 +2861,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - SoMe Support</fullName>
+            <default>false</default>
+        </values>   
+        <values>
             <fullName>Email - Star Alliance Upgrades</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Email - System %26 Tariff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Ticketless Support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3153,6 +3173,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SoMe</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Star Alliance Upgrades</fullName>
             <default>false</default>
         </values>
@@ -3177,4 +3201,3 @@
         </values>
     </picklistValues>
 </RecordType>
-

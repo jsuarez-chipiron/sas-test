@@ -50,12 +50,17 @@
                 <label>Functional Product Support</label>
             </value>
             <value>
+                <fullName>SoMe Support</fullName>
+                <default>false</default>
+                <label>SoMe Support</label>
+            </value>
+            <value>
                 <fullName>Group Sales</fullName>
                 <default>false</default>
                 <label>Group Sales</label>
             </value>
             <value>
-                <fullName>HQ</fullName>
+                <fullName>HQ</fullName>    
                 <default>false</default>
                 <label>HQ</label>
             </value>

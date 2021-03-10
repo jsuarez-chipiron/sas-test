@@ -4,6 +4,7 @@
     <name>Global Support SoMe</name>
     <queueMembers>
         <publicGroups>
+            <publicGroup>SoMe_Support</publicGroup>
             <publicGroup>Sutherland</publicGroup>
         </publicGroups>
     </queueMembers>
