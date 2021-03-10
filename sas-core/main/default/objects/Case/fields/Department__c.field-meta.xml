@@ -62,7 +62,8 @@
             <value>
                 <fullName>HQ</fullName>    
                 <default>false</default>
-                <label>HQ</label>
+				<isActive>false</isActive>
+                <label>HQ</label>				
             </value>
             <value>
                 <fullName>Info Hub</fullName>
@@ -73,6 +74,11 @@
                 <fullName>Liability</fullName>	
                 <default>false</default>	
                 <label>Liability</label>	
+            </value>
+			 <value>
+                <fullName>SAS Operating Center</fullName>
+                <default>false</default>
+                <label>SAS Operating Center</label>
             </value>
             <value>
                 <fullName>SME</fullName>

@@ -40,6 +40,11 @@
                 <default>false</default>
                 <label>Email - Corporate Support Scandinavia</label>
             </value>
+			<value>
+                <fullName>Email - CS Feedback</fullName>
+                <default>false</default>
+                <label>Email - CS Feedback</label>
+            </value>
             <value>
                 <fullName>Email - Digital Channel Support External</fullName>
                 <default>false</default>

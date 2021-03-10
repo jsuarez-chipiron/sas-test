@@ -120,6 +120,11 @@
                 <default>false</default>
                 <label>FI</label>
             </value>
+			 <value>
+                <fullName>Feedback</fullName>
+                <default>false</default>
+                <label>Feedback</label>
+            </value>
             <value>
                 <fullName>Forsvaret NO</fullName>
                 <default>false</default>
@@ -346,6 +351,14 @@
                 <label>US</label>
             </value>
         </valueSetDefinition>
+		     <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Feedback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Special Sales NO</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <valueName>Agent Fares Ticketing EU</valueName>

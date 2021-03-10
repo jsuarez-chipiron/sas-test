@@ -115,6 +115,11 @@
                 <default>false</default>
                 <label>FI</label>
             </value>
+			<value>
+                <fullName>Feedback</fullName>
+                <default>false</default>
+                <label>Feedback</label>
+            </value>
             <value>
                 <fullName>Forsvaret NO</fullName>
                 <default>false</default>
