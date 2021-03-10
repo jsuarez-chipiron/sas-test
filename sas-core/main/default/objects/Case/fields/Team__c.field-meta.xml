@@ -573,15 +573,15 @@
             <valueName>US</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>HQ</controllingFieldValue>     
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>     
             <valueName>Businesstravel STO</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>HQ</controllingFieldValue>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>GDPR</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>HQ</controllingFieldValue>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>Ticketless Support</valueName>
         </valueSettings>
         <valueSettings>
