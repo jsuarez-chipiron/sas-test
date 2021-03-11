@@ -23,7 +23,7 @@
     <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
-        <value>In Progress,On Hold,Awaiting Customer Response,New Response,Escalated</value>
+        <value>New, In Progress,On Hold,Awaiting Customer Response,New Response,Escalated</value>
     </filters>
     <label>SoMe Support All Open Cases</label>
     <sharedTo>

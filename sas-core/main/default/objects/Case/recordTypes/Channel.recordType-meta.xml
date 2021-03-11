@@ -2973,6 +2973,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Businesstravel STO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CH</fullName>
             <default>false</default>
         </values>
@@ -3035,6 +3039,10 @@
         </values>
         <values>
             <fullName>Forsvaret NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GDPR</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3191,6 +3199,10 @@
         </values>
         <values>
             <fullName>System %26 Tariff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketless Support</fullName>
             <default>false</default>
         </values>
         <values>
