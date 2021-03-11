@@ -381,4 +381,9 @@
         <default>false</default>
         <label>Email - SoMe Support</label>
     </standardValue>
+    <standardValue>
+        <fullName>Email - CS Feedback</fullName>
+        <default>false</default>
+        <label>Email - CS Feedback</label>
+    </standardValue>
 </StandardValueSet>

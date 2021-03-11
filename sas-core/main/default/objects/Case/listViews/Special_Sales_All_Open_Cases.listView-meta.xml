@@ -12,7 +12,7 @@
     <filters>
         <field>Department__c</field>
         <operation>equals</operation>
-        <value>HQ</value>
+        <value>SAS Operating Center</value>
     </filters>
     <filters>
         <field>Team__c</field>
@@ -29,4 +29,3 @@
         <group>SAS_Operating_Center</group>
     </sharedTo>
 </ListView>
-

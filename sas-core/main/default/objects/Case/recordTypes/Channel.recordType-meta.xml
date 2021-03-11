@@ -50,11 +50,7 @@
         <values>
             <fullName>Group Sales</fullName>
             <default>false</default>
-        </values>
-        <values>
-            <fullName>HQ</fullName>
-            <default>false</default>
-        </values>
+        </values>        
         <values>
             <fullName>Info Hub</fullName>
             <default>false</default>
@@ -71,6 +67,10 @@
             <fullName>SoMe Support</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>SAS Operating Center</fullName>
+            <default>false</default>
+        </values>		
     </picklistValues>
     <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
@@ -2628,6 +2628,10 @@
             <fullName>Email - Corporate Support Scandinavia</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>Email - CS Feedback</fullName>
+            <default>false</default>
+        </values>		
         <values>
             <fullName>Email - Digital Channel Support External</fullName>
             <default>false</default>
@@ -3016,10 +3020,15 @@
             <fullName>External Lawyers</fullName>
             <default>false</default>
         </values>
+	   <values>
+            <fullName>Feedback</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>FI</fullName>
             <default>false</default>
         </values>
+		
         <values>
             <fullName>FR</fullName>
             <default>false</default>

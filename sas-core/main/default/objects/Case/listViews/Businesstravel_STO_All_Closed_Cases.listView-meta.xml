@@ -13,7 +13,7 @@
     <filters>
         <field>Department__c</field>
         <operation>equals</operation>
-        <value>HQ</value>
+        <value>SAS Operating Center</value>
     </filters>
     <filters>
         <field>Team__c</field>
@@ -27,6 +27,6 @@
     </filters>
     <label>Businesstravel STO All Closed Cases</label>
     <sharedTo>
-        <group>SAS_HQ</group>
+        <group>SAS_Operating_Center</group>
     </sharedTo>
 </ListView>
