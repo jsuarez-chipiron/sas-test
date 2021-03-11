@@ -2831,6 +2831,10 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>White Paper - Liability Claim</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PNR_Payment_Status__c</picklist>
