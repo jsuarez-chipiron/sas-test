@@ -180,6 +180,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>LIA_CARE_Case_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>LIA_External_Case_Number_Court_Reference__c</field>
             </layoutItems>
             <layoutItems>
