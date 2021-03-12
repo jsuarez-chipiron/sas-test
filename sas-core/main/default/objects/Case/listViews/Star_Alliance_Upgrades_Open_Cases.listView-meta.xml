@@ -3,10 +3,11 @@
     <fullName>Star_Alliance_Upgrades_Open_Cases</fullName>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>NAME</columns>
+    <columns>CASES.EMAIL</columns>
     <columns>CASES.SUBJECT</columns>
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
-    <columns>CORE.USERS.ALIAS</columns>
+    <columns>OWNER_NAME</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>CASES.CLOSED</field>

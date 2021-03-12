@@ -9,6 +9,7 @@
     <columns>OWNER_NAME</columns>
     <columns>CASES.NAME</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>Last_Received_Email_On__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>CASES.STATUS</field>

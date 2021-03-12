@@ -8,6 +8,7 @@
     <columns>OWNER_NAME</columns>
     <columns>GSB_Sales_Contract_Status__c</columns>
     <columns>CASES.STATUS</columns>
+    <columns>Last_Received_Email_On__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>CASES.STATUS</field>
