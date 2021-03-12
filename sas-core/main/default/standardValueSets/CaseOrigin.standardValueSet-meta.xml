@@ -386,4 +386,9 @@
         <default>false</default>
         <label>Email - CS Feedback</label>
     </standardValue>
+    <standardValue>
+        <fullName>White Paper - Liability Claim</fullName>
+        <default>false</default>
+        <label>White Paper - Liability Claim</label>
+    </standardValue>        
 </StandardValueSet>

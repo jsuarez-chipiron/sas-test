@@ -221,7 +221,12 @@
         <editable>false</editable>
         <field>Case.LIA_Deadline__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.LIA_Jurisdiction__c</field>
+        <readable>true</readable>
+    </fieldPermissions>       
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Deposit_Due_Date__c</field>
@@ -567,6 +572,11 @@
         <field>LIA_Claim__c.Liability_Claim_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Liability_PNR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Name_of_Passenger_s__c</field>

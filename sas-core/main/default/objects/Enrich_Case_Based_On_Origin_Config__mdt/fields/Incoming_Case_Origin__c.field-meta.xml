@@ -360,6 +360,11 @@
                 <default>false</default>
                 <label>Email - Ticketless Support</label>
             </value>
+            <value>
+                <fullName>White Paper - Liability Claim</fullName>
+                <default>false</default>
+                <label>White Paper - Liability Claim</label>
+            </value>            
         </valueSetDefinition>
     </valueSet>
 </CustomField>

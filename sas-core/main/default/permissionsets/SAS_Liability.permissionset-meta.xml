@@ -31,6 +31,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.LIA_Jurisdiction__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.CARE_Case_Number__c</field>
         <readable>true</readable>
@@ -88,7 +93,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.IsMerged__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -118,6 +123,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Liability_Claim_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Liability_PNR__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
