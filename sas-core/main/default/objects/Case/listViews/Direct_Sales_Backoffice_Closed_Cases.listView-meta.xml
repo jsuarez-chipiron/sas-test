@@ -6,7 +6,7 @@
     <columns>CASES.SUBJECT</columns>
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
-    <columns>CORE.USERS.ALIAS</columns>
+    <columns>OWNER_NAME</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Department__c</field>
