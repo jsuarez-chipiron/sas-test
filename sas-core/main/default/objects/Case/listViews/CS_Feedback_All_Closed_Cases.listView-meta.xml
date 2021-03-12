@@ -2,11 +2,18 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CS_Feedback_All_Closed_Cases</fullName>
     <columns>CASES.CASE_NUMBER</columns>
-    <columns>NAME</columns>
     <columns>CASES.SUBJECT</columns>
+    <columns>FCS_CaseReason__c</columns>
+    <columns>FCS_CaseSubReason__c</columns>
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
-    <columns>CORE.USERS.ALIAS</columns>
+    <columns>CASES.EMAIL</columns>
+    <columns>CASES.NAME</columns>
+    <columns>CASES.CLOSED_DATE</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>CASES.LAST_UPDATE_DATE_ONLY</columns>
+    <columns>NAME</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>CASES.STATUS</field>
