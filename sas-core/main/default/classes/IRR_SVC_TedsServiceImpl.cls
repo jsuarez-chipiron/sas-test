@@ -46,6 +46,31 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
     }
 
     /**
+     * @author Chetan Singh, Coforgetech
+     * @date 2020
+     *
+     * @description Retrieves Airport Information from Teds.
+     *
+     * @param iataCodes airport codes received in the event info
+     *
+     * @return Retrieved Airport Details
+     */
+    public Map<String,String> getAirportCityNames(Set<String> iataCodes) {
+        String endpointURL = AIRPORTCODE_ENDPOINT_TEMPLATE + String.join((Iterable<String>)iataCodes,',');
+        C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
+                .executeRequest(endpointURL, C_IntegrationExecutor.Method.GET, null, null);
+        if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
+            throwTedsException(responseObject);
+        }
+        List<IRR_MOD_AirportInfo> airportNames = IRR_MOD_AirportInfo.parseArray(responseObject.responseBody);
+        Map<String,String> airportInfoMap = new Map<String, String>();
+        for(IRR_MOD_AirportInfo apInfo : airportNames){
+            airportInfoMap.put(apInfo.id,apInfo.city);
+        }
+        return airportInfoMap;
+    }
+
+    /**
      * @author Niklas Lundkvist, Deloitte
      * @date 2020
      *
@@ -65,6 +90,23 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         IRR_MOD_TedsBooking parsedResponse = IRR_MOD_TedsBooking.parse(responseObject.responseBody);
         return parsedResponse;
     }
+
+    /**
+     * @author Niklas Lundkvist, Deloitte
+     * @date 2020
+     *
+     * @description Retrieves booking details and creates Passenger Infos for all passengers in a booking.
+     *
+     * @param bookingId Flight Id to retrieve bookings for
+     *
+     * @return List of Retrieved Booking Details
+     */
+    public List<IRR_MOD_PassengerInfo> getPassengerInfosForBooking(String bookingId) {
+        IRR_MOD_TedsBooking bookings = getBookingDetails(bookingId);
+        System.debug('<<bookingswithid>>'+JSON.serialize(bookings));
+        return initiatePassengerInfos(new List<IRR_MOD_TedsBooking>{bookings}, null,null,null);
+    }
+
     /**
      * @author Chetan Singh, Coforge
      * @date 2021
@@ -106,50 +148,11 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         }
         //mutating the large JSON string prior to deserialization was resulting in "Regex too complicated pattern"
         //Hence the decision to desrialize it directly rather than using the parseArray method
-
-        List<IRR_MOD_TedsBooking> tedsBookings = (List<IRR_MOD_TedsBooking>)JSON.deserialize(responseObject.responseBody, List<IRR_MOD_TedsBooking>.class);
+        String responseBody = responseObject.responseBody.replace('"number"', '"number_x"');
+        List<IRR_MOD_TedsBooking> tedsBookings = (List<IRR_MOD_TedsBooking>)JSON.deserialize(responseBody, List<IRR_MOD_TedsBooking>.class);
         return tedsBookings;
     }
 
-    /**
-     * @author Chetan Singh, Coforgetech
-     * @date 2020
-     *
-     * @description Retrieves Airport Information from Teds.
-     *
-     * @param iataCodes airport codes received in the event info
-     *
-     * @return Retrieved Airport Details
-     */
-    public Map<String,String> getAirportCityNames(Set<String> iataCodes) {
-        String endpointURL = AIRPORTCODE_ENDPOINT_TEMPLATE + String.join((Iterable<String>)iataCodes,',');
-        C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
-                .executeRequest(endpointURL, C_IntegrationExecutor.Method.GET, null, null);
-        if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
-            throwTedsException(responseObject);
-        }
-        List<IRR_MOD_AirportInfo> airportNames = IRR_MOD_AirportInfo.parseArray(responseObject.responseBody);
-        Map<String,String> airportInfoMap = new Map<String, String>();
-        for(IRR_MOD_AirportInfo apInfo : airportNames){
-            airportInfoMap.put(apInfo.id,apInfo.city);
-        }
-        return airportInfoMap;
-    }
-
-    /**
-     * @author Niklas Lundkvist, Deloitte
-     * @date 2020
-     *
-     * @description Retrieves booking details and creates Passenger Infos for all passengers in a booking.
-     *
-     * @param bookingId Flight Id to retrieve bookings for
-     *
-     * @return List of Retrieved Booking Details
-     */
-    public List<IRR_MOD_PassengerInfo> getPassengerInfosForBooking(String bookingId) {
-        IRR_MOD_TedsBooking bookings = getBookingDetails(bookingId);
-        return initiatePassengerInfos(new List<IRR_MOD_TedsBooking>{bookings}, null);
-    }
     /**
      * @author Chetan Singh, Coforge
      * @date 2021
@@ -165,7 +168,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      */
     public List<IRR_MOD_PassengerInfo> getPassengerInfosForBookingFilters(String departureStation, String arrivalStation,String fromTimeUTC,String toTimeUTC) {
         List<IRR_MOD_TedsBooking> bookings = getBookingDetailsWithFilters(departureStation, arrivalStation,fromTimeUTC,toTimeUTC);
-        return initiatePassengerInfos(bookings, null);
+        return initiatePassengerInfos(bookings, null, departureStation, arrivalStation);
     }
 
     /**
@@ -203,7 +206,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      */
     public List<IRR_MOD_PassengerInfo> getPassengerInfosForFlight(String flightId) {
         List<IRR_MOD_TedsBooking> tedsBookings = getBookingDetailsForFlight(flightId);
-        return initiatePassengerInfos(tedsBookings, flightId);
+        return initiatePassengerInfos(tedsBookings, flightId, null, null);
     }
 
     private void throwTedsException(C_IntegrationExecutor.IntegrationResponse response) {
@@ -221,10 +224,12 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      *
      * @param tedsBookings List of bookings to create Passenger Infos for
      * @param flightId Current flight id to find segments for (optional)
+     * @param departureStation From Station(optional)
+     * @param arrivalStation To Station(optional)
      *
      * @return List of Passenger Infos
      */
-    private List<IRR_MOD_PassengerInfo> initiatePassengerInfos(List<IRR_MOD_TedsBooking> tedsBookings, String flightId){
+    private List<IRR_MOD_PassengerInfo> initiatePassengerInfos(List<IRR_MOD_TedsBooking> tedsBookings, String flightId, String departureStation, String arrivalStation){
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
         for (IRR_MOD_TedsBooking booking : tedsBookings) {
             IRR_MOD_TedsBooking.SegmentTrip thisSegment;
@@ -232,11 +237,33 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
             IRR_MOD_TedsBooking.SegmentTrip prevSegment;
             List<IRR_MOD_TripInfo> itinerary = new List<IRR_MOD_TripInfo>();
             for (IRR_MOD_TedsBooking.Trip trip : booking.trips) {
+                //For Advanced Booking Filter ,need to show FlightIds for all the matching segments
+                String cFlightId = '';
+                if(flightId != null && flightId != ''){
+                }else if((departureStation == null || departureStation == '') && (arrivalStation == null || arrivalStation == '')){
+                }else if((departureStation != null && departureStation !='') || (arrivalStation != null && arrivalStation != '')){
+                    for(IRR_MOD_TedsBooking.SegmentTrip sTrip : trip.segments){
+                        if((departureStation != null && departureStation != '') && (arrivalStation != null && arrivalStation != '' )
+                            && (departureStation == sTrip.flight.departure.station ) && (arrivalStation == sTrip.flight.arrival.station)){
+                            cFlightId = sTrip.flight.id;
+                            break;
+                        }else if(departureStation!=null && departureStation!= 'undefined' && (arrivalStation==null || arrivalStation=='undefined')
+                            && departureStation==sTrip.flight.departure.station){
+                            cFlightID = sTrip.flight.id;
+                            break;
+                        }else if(arrivalStation!=null && arrivalStation!='undefined' && (departureStation==null || departureStation=='undefined')
+                            && arrivalStation==sTrip.flight.arrival.station){
+                            cFlightID = sTrip.flight.id;
+                            break;
+                        }
+                    }
+                }
                 //Only process current and next segments when they have not been found and flightId is available
-                if (String.isNotBlank(flightId) && thisSegment == null) {
+                if ((String.isNotBlank(flightId) || String.isNotBlank(cFlightId)) && thisSegment == null) {
                     for (Integer i = 0; i < trip.segments.size(); i++) {
                         IRR_MOD_TedsBooking.SegmentTrip segment = trip.segments[i];
-                        if (segment.flight.operatingId == flightId || segment.flight.id == flightId) {
+                        if ((segment.flight.operatingId == flightId || segment.flight.id == flightId) || 
+                                (segment.flight.operatingId == cFlightId || segment.flight.id == cFlightId)) {
                             thisSegment = segment;
                             //Use previous segment in trip as previous segment if available
                             if (i != 0 && segment.status == IRR_SVC_TedsService.BOOKING_STATUS_CONFIRMED) {
@@ -340,6 +367,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
             IRR_MOD_TedsBooking.Passenger passenger, IRR_MOD_TedsBooking.SegmentTrip tripThisSegment,
             IRR_MOD_TedsBooking.SegmentTrip tripNextSegment, IRR_MOD_TedsBooking.SegmentTrip tripPrevSegment,
             List<IRR_MOD_TripInfo> itinerary) {
+
         IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
         passengerInfo.passengerId = booking.id + passenger.id;
         passengerInfo.bookingReference = booking.reference;
@@ -383,6 +411,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
             }
         }
         passengerInfo.phoneNumber = String.isNotBlank(phoneCTC) ? phoneCTC : phoneAP;
+
 
         String emailAP;
         String emailCTC;
