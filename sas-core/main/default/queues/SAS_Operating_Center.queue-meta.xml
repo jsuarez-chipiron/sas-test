@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <name>HQ</name>
+    <name>SAS Operating Center</name>
     <queueMembers>
         <publicGroups>
             <publicGroup>SAS_Operating_Center</publicGroup>
@@ -10,5 +10,4 @@
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
-    
 </Queue>
