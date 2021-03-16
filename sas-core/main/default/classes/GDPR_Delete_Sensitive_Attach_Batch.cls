@@ -49,7 +49,7 @@ Initiates the batch class and extracts the date used to filter out cases for rem
 
 	**/
     global override void executeScope(Database.BatchableContext bc, SObject[] sObjScope){
-        GDPR_WipeEmailService.deleteEmailMessageSensitivAttach((EmailMessage[])sObjScope);
+        GDPR_WipeEmailService.deleteEmailMessageAttachments((EmailMessage[])sObjScope);
         
     }
     
