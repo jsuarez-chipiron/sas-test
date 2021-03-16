@@ -2841,6 +2841,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Sales Control</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - SME International</fullName>
             <default>false</default>
         </values>
@@ -3151,6 +3155,10 @@
         </values>
         <values>
             <fullName>SAS Poland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Control</fullName>
             <default>false</default>
         </values>
         <values>
