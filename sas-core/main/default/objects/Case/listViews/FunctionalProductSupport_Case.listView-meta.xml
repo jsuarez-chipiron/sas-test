@@ -7,7 +7,7 @@
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
-    <columns>CORE.USERS.ALIAS</columns>
+    <columns>OWNER_NAME</columns>
     <filterScope>Queue</filterScope>
     <label>Functional Product Support</label>
     <queue>FunctionalProductSupport</queue>

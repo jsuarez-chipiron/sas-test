@@ -30,6 +30,10 @@
                 <behavior>Edit</behavior>
                 <field>Team_To_Assign__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Entitlement_To_Assign__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

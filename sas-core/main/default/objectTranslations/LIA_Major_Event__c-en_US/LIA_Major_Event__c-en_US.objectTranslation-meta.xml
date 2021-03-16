@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Major Event</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Major Events</value>
+    </caseValues>
+    <layouts>
+        <layout>Major Event Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Detailed Information --></label>
+            <section>Detailed Information</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Update Major Event --></label>
+        <name>Update_Major_Event</name>
+    </quickActions>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

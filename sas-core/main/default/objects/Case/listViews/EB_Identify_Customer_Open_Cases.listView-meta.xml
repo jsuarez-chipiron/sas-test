@@ -3,10 +3,12 @@
     <fullName>EB_Identify_Customer_Open_Cases</fullName>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>NAME</columns>
+    <columns>CASES.EMAIL</columns>
     <columns>CASES.SUBJECT</columns>
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
-    <columns>CORE.USERS.ALIAS</columns>
+    <columns>Last_Received_Email_On__c</columns>
+    <columns>OWNER_NAME</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Department__c</field>

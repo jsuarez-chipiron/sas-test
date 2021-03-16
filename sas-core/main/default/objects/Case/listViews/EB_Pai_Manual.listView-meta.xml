@@ -2,6 +2,7 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>EB_Pai_Manual</fullName>
     <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
     <columns>CASES.SUBJECT</columns>
     <columns>CASES.EMAIL</columns>
     <columns>CASES.STATUS</columns>

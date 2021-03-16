@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Liability_Admin_Closed_Cases</fullName>
-    <columns>CASES.CASE_NUMBER</columns>
-    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
     <columns>CASES.SUBJECT</columns>
+    <columns>LIA_External_Case_Number_Court_Reference__c</columns>
+    <columns>LIA_CARE_Case_Number__c</columns>
+    <columns>LIA_Claim__c</columns>
+    <columns>LIA_Jurisdiction__c</columns>
+    <columns>LIA_Date_of_Receipt__c</columns>
+    <columns>LIA_Deadline__c</columns>
     <columns>CASES.STATUS</columns>
-    <columns>Date_of_Receipt__c</columns>
-    <columns>Deadline__c</columns>
+    <columns>OWNER_NAME</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>CASES.STATUS</field>

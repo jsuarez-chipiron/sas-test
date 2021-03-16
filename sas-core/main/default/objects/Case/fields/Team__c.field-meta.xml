@@ -51,6 +51,11 @@
                 <label>Bulk</label>
             </value>
             <value>
+                <fullName>Businesstravel STO</fullName>
+                <default>false</default>
+                <label>Businesstravel STO</label>
+            </value>
+            <value>
                 <fullName>CH</fullName>
                 <default>false</default>
                 <label>CH</label>
@@ -115,6 +120,11 @@
                 <default>false</default>
                 <label>FI</label>
             </value>
+			 <value>
+                <fullName>Feedback</fullName>
+                <default>false</default>
+                <label>Feedback</label>
+            </value>
             <value>
                 <fullName>Forsvaret NO</fullName>
                 <default>false</default>
@@ -124,6 +134,11 @@
                 <fullName>FR</fullName>
                 <default>false</default>
                 <label>FR</label>
+            </value>
+            <value>
+                <fullName>GDPR</fullName>
+                <default>false</default>
+                <label>GDPR</label>
             </value>
             <value>
                 <fullName>Gold DK</fullName>
@@ -280,10 +295,35 @@
                 <default>false</default>
                 <label>SE</label>
             </value>
+			<value>
+                <fullName>Special Sales NO</fullName>
+                <default>false</default>
+                <label>Special Sales NO</label>
+            </value>
             <value>
                 <fullName>Settlement</fullName>
                 <default>false</default>
                 <label>Settlement</label>
+            </value>
+            <value>		
+                <fullName>SGH Bag DK</fullName>	
+                <default>false</default>	
+                <label>SGH Bag DK</label>	
+            </value>	
+            <value>	
+                <fullName>SGH Bag NO</fullName>	
+                <default>false</default>	
+                <label>SGH Bag NO</label>	
+            </value>	
+            <value>	
+                <fullName>SGH Bag SE</fullName>	
+                <default>false</default>	
+                <label>SGH Bag SE</label>	
+            </value>	
+            <value>
+                <fullName>SoMe</fullName>
+                <default>false</default>
+                <label>SoMe</label>
             </value>
             <value>
                 <fullName>Star Alliance Upgrades</fullName>
@@ -296,6 +336,11 @@
                 <label>System &amp; Tariff</label>
             </value>
             <value>
+                <fullName>Ticketless Support</fullName>
+                <default>false</default>
+                <label>Ticketless Support</label>
+            </value>
+            <value>
                 <fullName>UK</fullName>
                 <default>false</default>
                 <label>UK</label>
@@ -306,6 +351,14 @@
                 <label>US</label>
             </value>
         </valueSetDefinition>
+		     <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Feedback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Special Sales NO</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <valueName>Agent Fares Ticketing EU</valueName>
@@ -319,6 +372,18 @@
             <controllingFieldValue>SME</controllingFieldValue>
             <valueName>Scandinavia</valueName>
         </valueSettings>
+        <valueSettings>	
+            <controllingFieldValue>Care</controllingFieldValue>	
+            <valueName>SGH Bag DK</valueName>	
+        </valueSettings>	
+        <valueSettings>	
+            <controllingFieldValue>Care</controllingFieldValue>	
+            <valueName>SGH Bag NO</valueName>	
+        </valueSettings>	
+        <valueSettings>	
+            <controllingFieldValue>Care</controllingFieldValue>	
+            <valueName>SGH Bag SE</valueName>	
+        </valueSettings>	
         <valueSettings>
             <controllingFieldValue>Direct Sales</controllingFieldValue>
             <valueName>Backoffice</valueName>
@@ -503,6 +568,22 @@
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>US</valueName>
         </valueSettings>
+		<valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>US</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>     
+            <valueName>Businesstravel STO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>GDPR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Ticketless Support</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info Hub</controllingFieldValue>
             <valueName>Sales Information</valueName>
@@ -518,6 +599,10 @@
         <valueSettings>
             <controllingFieldValue>SME</controllingFieldValue>
             <valueName>International</valueName>
+        </valueSettings>       
+        <valueSettings>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <valueName>SoMe</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Liability</controllingFieldValue>

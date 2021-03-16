@@ -16,6 +16,11 @@
                 <label>Agent Helpdesk</label>
             </value>
             <value>
+                <fullName>Care</fullName>
+                <default>false</default>
+                <label>Care</label>
+            </value>
+            <value>
                 <fullName>Corporate</fullName>
                 <default>false</default>
                 <label>Corporate</label>
@@ -41,19 +46,35 @@
                 <label>Functional Product Support</label>
             </value>
             <value>
+                <fullName>SoMe Support</fullName>
+                <default>false</default>
+                <label>SoMe Support</label>
+            </value>
+            <value>
                 <fullName>Group Sales</fullName>
                 <default>false</default>
                 <label>Group Sales</label>
+            </value>
+            <value>
+                <fullName>HQ</fullName>
+                <default>false</default>
+				<isActive>false</isActive>
+                <label>HQ</label>
             </value>
             <value>
                 <fullName>Info Hub</fullName>
                 <default>false</default>
                 <label>Info Hub</label>
             </value>
-            <value>
+             <value>
                 <fullName>Liability</fullName>
                 <default>false</default>
                 <label>Liability</label>
+            </value>
+			 <value>
+                <fullName>SAS Operating Center</fullName>
+                <default>false</default>
+                <label>SAS Operating Center</label>
             </value>
             <value>
                 <fullName>SME</fullName>
@@ -63,3 +84,4 @@
         </valueSetDefinition>
     </valueSet>
 </CustomField>
+

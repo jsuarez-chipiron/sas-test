@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Corporate_TP_Agent_Sell</fullName>
+    <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.STATUS</columns>
     <columns>CASES.SUBJECT</columns>
@@ -20,14 +21,19 @@
         <value>Corporate</value>
     </filters>
     <filters>
-        <field>CASES.SUBJECT</field>
-        <operation>equals</operation>
-        <value>Order from SAS Travel Pass</value>
-    </filters>
-    <filters>
         <field>FCS_CaseSubReason__c</field>
         <operation>equals</operation>
         <value>Agent - Travel Pass Sell</value>
+    </filters>
+    <filters>
+        <field>CASES.SUBJECT</field>
+        <operation>equals</operation>
+        <value>Order from SAS Travel Pass Several Order Form for Travel Agents</value>
+    </filters>
+    <filters>
+        <field>CASES.SUBJECT</field>
+        <operation>equals</operation>
+        <value>Order from SAS Travel Pass</value>
     </filters>
     <label>Corporate Support TP Agent Sell</label>
 </ListView>

@@ -21,6 +21,11 @@
                 <label>Email - Agent Helpdesk Scandinavia</label>
             </value>
             <value>
+                <fullName>Email - Businesstravel STO</fullName>
+                <default>false</default>
+                <label>Email - Businesstravel STO</label>
+            </value>
+            <value>
                 <fullName>Email - Corporate Support Backoffice</fullName>
                 <default>false</default>
                 <label>Email - Corporate Support Backoffice</label>
@@ -34,6 +39,11 @@
                 <fullName>Email - Corporate Support Scandinavia</fullName>
                 <default>false</default>
                 <label>Email - Corporate Support Scandinavia</label>
+            </value>
+			<value>
+                <fullName>Email - CS Feedback</fullName>
+                <default>false</default>
+                <label>Email - CS Feedback</label>
             </value>
             <value>
                 <fullName>Email - Digital Channel Support External</fullName>
@@ -129,6 +139,11 @@
                 <fullName>Email - Functional Product Support</fullName>
                 <default>false</default>
                 <label>Email - Functional Product Support</label>
+            </value>
+            <value>
+                <fullName>Email - GDPR Secure Data</fullName>
+                <default>false</default>
+                <label>Email - GDPR Secure Data</label>
             </value>
             <value>
                 <fullName>Email - Group Sales ACE</fullName>
@@ -246,6 +261,11 @@
                 <label>Email - Group Sales US</label>
             </value>
             <value>
+                <fullName>Email - HQ Special Sales NO</fullName>
+                <default>false</default>
+                <label>Email - HQ Special Sales NO</label>
+            </value>
+            <value>
                 <fullName>Email - Liability Claim</fullName>
                 <default>false</default>
                 <label>Email - Liability Claim</label>
@@ -294,6 +314,21 @@
                 <fullName>Email - SASSI Internal</fullName>
                 <default>false</default>
                 <label>Email - SASSI Internal</label>
+            </value>          	
+            <value>	
+                <fullName>Email - SGH Bag SE</fullName>	
+                <default>false</default>	
+                <label>Email - SGH Bag SE</label>	
+            </value>
+            <value>
+                <fullName>Email - SGH Bag DK</fullName>
+                <default>false</default>
+                <label>Email - SGH Bag DK</label>
+            </value>
+            <value>
+                <fullName>Email - SGH Bag NO</fullName>
+                <default>false</default>
+                <label>Email - SGH Bag NO</label>
             </value>
             <value>
                 <fullName>Email - SME International</fullName>
@@ -306,6 +341,11 @@
                 <label>Email - SME Scandinavia</label>
             </value>
             <value>
+                <fullName>Email - SoMe Support</fullName>
+                <default>false</default>
+                <label>Email - SoMe Support</label>
+            </value>
+            <value>
                 <fullName>Email - Star Alliance Upgrades</fullName>
                 <default>false</default>
                 <label>Email - Star Alliance Upgrades</label>
@@ -315,6 +355,17 @@
                 <default>false</default>
                 <label>Email - System &amp; Tariff</label>
             </value>
+            <value>
+                <fullName>Email - Ticketless Support</fullName>
+                <default>false</default>
+                <label>Email - Ticketless Support</label>
+            </value>
+            <value>
+                <fullName>White Paper - Liability Claim</fullName>
+                <default>false</default>
+                <label>White Paper - Liability Claim</label>
+            </value>            
         </valueSetDefinition>
     </valueSet>
 </CustomField>
+

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Share_Claims_with_Public_Group_Liability</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Shares all the claims with users in Public Group Liability</description>
+        <label>Share Claims with Public Group Liability</label>
+        <sharedTo>
+            <group>Liability</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value/>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>Claims_share_with_Liability_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Shares all the claims with all the users in Liability public group</description>
+        <label>Claims share with Liability Group</label>
+        <sharedTo>
+            <group>Liability</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Liability</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

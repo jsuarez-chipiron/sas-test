@@ -574,22 +574,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.CARE_Case_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.Claim__c</field>
+        <field>Case.LIA_CARE_Case_Number__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Date_of_Receipt__c</field>
-        <readable>true</readable>
+        <field>Case.LIA_Claim__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Deadline__c</field>
+        <field>Case.LIA_Date_of_Receipt__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.LIA_Deadline__c</field>
         <readable>false</readable>
     </fieldPermissions>        
     <fieldPermissions>
@@ -604,8 +604,8 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.External_Case_Number_Court_Reference__c</field>
-        <readable>true</readable>
+        <field>Case.LIA_External_Case_Number_Court_Reference__c</field>
+        <readable>false</readable>
     </fieldPermissions>    
     <fieldPermissions>
         <editable>true</editable>
@@ -804,6 +804,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Last_Received_Email_On__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Team__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -833,113 +838,128 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>EmailMessage.Is_Counted__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.CARE_Case_Number__c</field>
+        <field>LIA_Claim__c.CARE_Case_Number__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Claim_Amount__c</field>
+        <field>LIA_Claim__c.Date_of_Receipt__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Court_Name__c</field>
+        <field>LIA_Claim__c.Deadline__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Date_of_Receipt__c</field>
+        <field>LIA_Claim__c.External_Case_Number_Court_Reference__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Deadline__c</field>
+        <field>LIA_Claim__c.Fees_Paid__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Domain__c</field>
+        <field>LIA_Claim__c.Fees__c</field>
+        <readable>false</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.Flight_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.External_Case_Number_Court_Reference__c</field>
+        <field>LIA_Claim__c.Flight_Number__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Fees__c</field>
+        <field>LIA_Claim__c.Interest__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Flight_Date__c</field>
+        <field>LIA_Claim__c.Interest_Paid__c</field>
+        <readable>false</readable>
+    </fieldPermissions>    
+     <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.Judicial_Body__c</field>
+        <readable>false</readable>
+    </fieldPermissions>   
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.Jurisdiction__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Flight_Number__c</field>
+        <field>LIA_Claim__c.LIA_Firm__c</field>
+        <readable>false</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.LIA_Major_Event__c</field>
+        <readable>false</readable>
+    </fieldPermissions>       
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.Legal_Conclusion__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Interest__c</field>
+        <field>LIA_Claim__c.Liability_Claim_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.Name_of_Passenger_s__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Jurisdiction__c</field>
+        <field>LIA_Claim__c.Principal_Paid__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Legal_Conclusion__c</field>
+        <field>LIA_Claim__c.Principal__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Legal_Firm__c</field>
+        <field>LIA_Claim__c.Reason_for_Delay_Cancellation__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Major_Event__c</field>
+        <field>LIA_Claim__c.Result__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Name_of_Passenger_s__c</field>
+        <field>LIA_Claim__c.Settlement_Reason__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Paid_Amount__c</field>
+        <field>LIA_Claim__c.Total_Paid_Amount__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim__c.Reason_for_Default_Judgement__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Claim__c.Reason_for_Delay_Cancellation__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Claim__c.Result__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Claim__c.Settlement_Reason__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Claim__c.Type__c</field>
+        <field>LIA_Claim__c.Total_Claim_Amount__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1227,34 +1247,39 @@
         <field>Knowledge__kav.FCS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
+     <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Firm__c.Bank_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>            
     <fieldPermissions>
         <editable>false</editable>
-        <field>Legal_Firm__c.BIC__c</field>
+        <field>LIA_Firm__c.BIC__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Legal_Firm__c.Comments_About_Firm__c</field>
+        <field>LIA_Firm__c.Comments_About_Firm__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Legal_Firm__c.Country__c</field>
+        <field>LIA_Firm__c.Country__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Legal_Firm__c.Email__c</field>
+        <field>LIA_Firm__c.Email__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Legal_Firm__c.IBAN__c</field>
+        <field>LIA_Firm__c.IBAN__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Legal_Firm__c.Phone__c</field>
+        <field>LIA_Firm__c.Phone__c</field>
         <readable>false</readable>
     </fieldPermissions>    
     <fieldPermissions>
@@ -1289,22 +1314,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Major_Event__c.End_Date__c</field>
+        <field>LIA_Major_Event__c.End_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Major_Event__c.Id__c</field>
+        <field>LIA_Major_Event__c.Id__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Major_Event__c.Major_Event_Description__c</field>
+        <field>LIA_Major_Event__c.Major_Event_Description__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Major_Event__c.Start_Date__c</field>
+        <field>LIA_Major_Event__c.Start_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1847,7 +1872,7 @@
         <recordType>Case.Support</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Claim__c-Claim Layout</layout>
+        <layout>LIA_Claim__c-Claim Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Contact-Email Contact Layout</layout>
@@ -1879,7 +1904,7 @@
         <recordType>Knowledge__kav.SSI</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Legal_Firm__c-Legal Firm Layout</layout>
+        <layout>LIA_Firm__c-Legal Firm Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>LiveChatTranscript-Chat Transcript Layout</layout>
@@ -1888,7 +1913,7 @@
         <layout>LocalAuthProvider__mdt-Local Auth Provider Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Major_Event__c-Major Event Layout</layout>
+        <layout>LIA_Major_Event__c-Major Event Layout</layout>
     </layoutAssignments>    
     <layoutAssignments>
         <layout>PersonAccount-B2C - Anonymous Customer</layout>
@@ -2012,7 +2037,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
-        <tab>Claim__c</tab>
+        <tab>LIA_Claim__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>  
     <tabVisibilities>
@@ -2036,11 +2061,11 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Legal_Firm__c</tab>
+        <tab>LIA_Firm__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Major_Event__c</tab>
+        <tab>LIA_Major_Event__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>        
     <tabVisibilities>

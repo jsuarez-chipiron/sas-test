@@ -36,6 +36,10 @@
                 <behavior>Readonly</behavior>
                 <field>Number_of_Email_Messages_Received__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Last_Received_Email_On__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
