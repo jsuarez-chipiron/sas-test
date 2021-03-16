@@ -9,7 +9,7 @@ global with sharing class GDPR_WipeEmailService
 used the delete the sensitive attachment related to email message
 @param list of EmailMessage
 */
-    global static void deleteEmailMessageSensitivAttach(EmailMessage[] emailmesgList){
+    global static void deleteEmailMessageAttachments(EmailMessage[] emailmesgList){
         Set<Id> setEmailMsgIds =  C_Util.getIdSet(emailmesgList);
         deleteRelatedEntities(setEmailMsgIds);
     }
