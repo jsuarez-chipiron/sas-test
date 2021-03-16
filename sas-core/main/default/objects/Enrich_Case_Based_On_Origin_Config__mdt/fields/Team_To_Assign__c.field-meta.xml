@@ -271,6 +271,11 @@
                 <label>Sales Information</label>
             </value>
             <value>
+                <fullName>Sales Control</fullName>
+                <default>false</default>
+                <label>Sales Control</label>
+            </value>
+            <value>
                 <fullName>SAS Poland</fullName>
                 <default>false</default>
                 <label>SAS Poland</label>
@@ -348,4 +353,3 @@
         </valueSetDefinition>
     </valueSet>
 </CustomField>
-

@@ -306,6 +306,11 @@
                 <label>Email - Sales Information</label>
             </value>
             <value>
+                <fullName>Email - Sales Control</fullName>
+                <default>false</default>
+                <label>Email - Sales Control</label>
+            </value>
+            <value>
                 <fullName>Email - SAS Poland</fullName>
                 <default>false</default>
                 <label>Email - SAS Poland</label>
@@ -368,4 +373,3 @@
         </valueSetDefinition>
     </valueSet>
 </CustomField>
-
