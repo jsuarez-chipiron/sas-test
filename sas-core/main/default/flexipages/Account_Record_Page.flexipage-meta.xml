@@ -2,19 +2,21 @@
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
-            <componentInstanceProperties>
-                <name>collapsed</name>
-                <value>false</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>hideChatterActions</name>
-                <value>false</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>numVisibleActions</name>
-                <value>3</value>
-            </componentInstanceProperties>
-            <componentName>force:highlightsPanel</componentName>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>collapsed</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideChatterActions</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numVisibleActions</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentName>force:highlightsPanel</componentName>
+            </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
         <name>header</name>
@@ -22,26 +24,30 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <componentInstanceProperties>
-                <name>displayOption</name>
-                <value>BOTH</value>
-            </componentInstanceProperties>
-            <componentName>runtime_sales_merge:mergeCandidatesPreviewCard</componentName>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>displayOption</name>
+                    <value>BOTH</value>
+                </componentInstanceProperties>
+                <componentName>runtime_sales_merge:mergeCandidatesPreviewCard</componentName>
+            </componentInstance>
         </itemInstances>
         <itemInstances>
-            <componentInstanceProperties>
-                <name>parentFieldApiName</name>
-                <value>Account.Id</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relatedListApiName</name>
-                <value>Cases</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relatedListComponentOverride</name>
-                <value>GRID</value>
-            </componentInstanceProperties>
-            <componentName>force:relatedListSingleContainer</componentName>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Account.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Cases</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>GRID</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
         <name>relatedTabContent</name>
@@ -49,7 +55,9 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <componentName>force:detailPanel</componentName>
+            <componentInstance>
+                <componentName>force:detailPanel</componentName>
+            </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
         <name>detailTabContent</name>
@@ -57,7 +65,9 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <componentName>runtime_sales_social:socialPanel</componentName>
+            <componentInstance>
+                <componentName>runtime_sales_social:socialPanel</componentName>
+            </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
         <name>newsTabContent</name>
@@ -65,41 +75,47 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <componentInstanceProperties>
-                <name>active</name>
-                <value>true</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>relatedTabContent</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Standard.Tab.relatedLists</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>relatedTabContent</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.relatedLists</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
         </itemInstances>
         <itemInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>detailTabContent</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Standard.Tab.detail</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>detailTabContent</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.detail</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
         </itemInstances>
         <itemInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>newsTabContent</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Standard.Tab.news</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>newsTabContent</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.news</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
         <name>maintabs</name>
@@ -107,11 +123,13 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <componentInstanceProperties>
-                <name>tabs</name>
-                <value>maintabs</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tabset</componentName>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>maintabs</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+            </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
         <name>main</name>
@@ -119,7 +137,9 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <componentName>runtime_sales_activities:activityPanel</componentName>
+            <componentInstance>
+                <componentName>runtime_sales_activities:activityPanel</componentName>
+            </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
         <name>activityTabContent</name>
@@ -127,7 +147,9 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <componentName>forceChatter:recordFeedContainer</componentName>
+            <componentInstance>
+                <componentName>forceChatter:recordFeedContainer</componentName>
+            </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
         <name>feedTabContent</name>
@@ -135,30 +157,34 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <componentInstanceProperties>
-                <name>active</name>
-                <value>true</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>activityTabContent</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Standard.Tab.activity</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>activityTabContent</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.activity</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
         </itemInstances>
         <itemInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>feedTabContent</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Standard.Tab.collaborate</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>feedTabContent</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.collaborate</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
         <name>sidebartabs</name>
@@ -166,11 +192,13 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <componentInstanceProperties>
-                <name>tabs</name>
-                <value>sidebartabs</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tabset</componentName>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>sidebartabs</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+            </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
         <name>sidebar</name>
