@@ -1,58 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+<FlexiPage
+    xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
-        <componentInstances>
-            <componentName>runtime_service_omnichannel:omniWidget</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentName>console:history</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentName>notes:utilityBarNoteList</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>eager</name>
-                <type>decorator</type>
-                <value>false</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>height</name>
-                <type>decorator</type>
-                <value>400</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>icon</name>
-                <type>decorator</type>
-                <value>agent_session</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>label</name>
-                <type>decorator</type>
-                <value>Queue Status</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>scrollable</name>
-                <type>decorator</type>
-                <value>true</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>width</name>
-                <type>decorator</type>
-                <value>440</value>
-            </componentInstanceProperties>
-            <componentName>FCS_OmniChannelQueueBacklogContainer</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentName>macros:macroUtilityItem</componentName>
-        </componentInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>runtime_service_omnichannel:omniWidget</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>console:history</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>notes:utilityBarNoteList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>eager</name>
+                    <type>decorator</type>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>height</name>
+                    <type>decorator</type>
+                    <value>400</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>icon</name>
+                    <type>decorator</type>
+                    <value>agent_session</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <type>decorator</type>
+                    <value>Queue Status</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>scrollable</name>
+                    <type>decorator</type>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>width</name>
+                    <type>decorator</type>
+                    <value>440</value>
+                </componentInstanceProperties>
+                <componentName>FCS_OmniChannelQueueBacklogContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>macros:macroUtilityItem</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>utilityItems</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentName>FCS_ConsoleAutomation</componentName>
-        </componentInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>FCS_ConsoleAutomation</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>backgroundComponents</name>
         <type>Background</type>
     </flexiPageRegions>
