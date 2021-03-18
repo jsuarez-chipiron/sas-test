@@ -103,7 +103,6 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      */
     public List<IRR_MOD_PassengerInfo> getPassengerInfosForBooking(String bookingId) {
         IRR_MOD_TedsBooking bookings = getBookingDetails(bookingId);
-        System.debug('<<bookingswithid>>'+JSON.serialize(bookings));
         return initiatePassengerInfos(new List<IRR_MOD_TedsBooking>{bookings}, null,null,null);
     }
 
@@ -168,6 +167,8 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      */
     public List<IRR_MOD_PassengerInfo> getPassengerInfosForBookingFilters(String departureStation, String arrivalStation,String fromTimeUTC,String toTimeUTC) {
         List<IRR_MOD_TedsBooking> bookings = getBookingDetailsWithFilters(departureStation, arrivalStation,fromTimeUTC,toTimeUTC);
+        departureStation = departureStation == 'undefined' ? null : departureStation;
+        arrivalStation = arrivalStation == 'undefined' ? null : arrivalStation;
         return initiatePassengerInfos(bookings, null, departureStation, arrivalStation);
     }
 
@@ -235,31 +236,28 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
             IRR_MOD_TedsBooking.SegmentTrip thisSegment;
             IRR_MOD_TedsBooking.SegmentTrip nextSegment;
             IRR_MOD_TedsBooking.SegmentTrip prevSegment;
+            Boolean hasFlightId = String.isNotBlank(flightId);
+            Boolean hasDeparturesStation = String.isNotBlank(departureStation);
+            Boolean hasArrivalStation = String.isNotBlank(arrivalStation);
             List<IRR_MOD_TripInfo> itinerary = new List<IRR_MOD_TripInfo>();
             for (IRR_MOD_TedsBooking.Trip trip : booking.trips) {
-                //For Advanced Booking Filter ,need to show FlightIds for all the matching segments
+                //For Advanced Booking Filter ,need to show SK operated FlightIds for all the matching segments
                 String cFlightId = '';
-                if(flightId != null && flightId != ''){
-                }else if((departureStation == null || departureStation == '') && (arrivalStation == null || arrivalStation == '')){
-                }else if((departureStation != null && departureStation !='') || (arrivalStation != null && arrivalStation != '')){
-                    for(IRR_MOD_TedsBooking.SegmentTrip sTrip : trip.segments){
-                        if((departureStation != null && departureStation != '') && (arrivalStation != null && arrivalStation != '' )
-                            && (departureStation == sTrip.flight.departure.station ) && (arrivalStation == sTrip.flight.arrival.station)){
+                //Using De Morgan's law and XOR operation ,we optimize the entire if else logic.For detailed analysis,
+                //check :https://sas-digital.atlassian.net/wiki/spaces/ISol/pages/2180218883/Code+Optimization+decisons
+                if (hasFlightId) {
+                } else if(!(hasDeparturesStation | hasArrivalStation)) {
+                } else {
+                    for (IRR_MOD_TedsBooking.SegmentTrip sTrip : trip.segments) {
+                        if (!((hasDeparturesStation ^ departureStation == sTrip.flight.departure.station) |
+                            (hasArrivalStation ^ arrivalStation == sTrip.flight.arrival.station) ) )  {
                             cFlightId = sTrip.flight.id;
-                            break;
-                        }else if(departureStation!=null && departureStation!= 'undefined' && (arrivalStation==null || arrivalStation=='undefined')
-                            && departureStation==sTrip.flight.departure.station){
-                            cFlightID = sTrip.flight.id;
-                            break;
-                        }else if(arrivalStation!=null && arrivalStation!='undefined' && (departureStation==null || departureStation=='undefined')
-                            && arrivalStation==sTrip.flight.arrival.station){
-                            cFlightID = sTrip.flight.id;
                             break;
                         }
                     }
-                }
+                } 
                 //Only process current and next segments when they have not been found and flightId is available
-                if ((String.isNotBlank(flightId) || String.isNotBlank(cFlightId)) && thisSegment == null) {
+                if ((hasFlightId || String.isNotBlank(cFlightId)) && thisSegment == null) {
                     for (Integer i = 0; i < trip.segments.size(); i++) {
                         IRR_MOD_TedsBooking.SegmentTrip segment = trip.segments[i];
                         if ((segment.flight.operatingId == flightId || segment.flight.id == flightId) || 
@@ -292,7 +290,12 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
             for (IRR_MOD_TedsBooking.Passenger passenger : booking.passengers) {
                 IRR_MOD_PassengerInfo passengerInfo = createPassengerInfo(booking, passenger, thisSegment,
                         nextSegment, prevSegment, itinerary);
-                passengerInfos.add(passengerInfo);
+             //For showing flight Ids in the Advanced booking filter, we only need to show SK operated flights
+                if(!(hasDeparturesStation | hasArrivalStation)){
+                    passengerInfos.add(passengerInfo);
+                }else {
+                    if(thisSegment.flight.operatingCarrier == 'SK') passengerInfos.add(passengerInfo);
+                }     
             }
         }
         return passengerInfos;
