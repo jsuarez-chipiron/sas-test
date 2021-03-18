@@ -7,6 +7,11 @@
         <label>Channel</label>
     </standardValue>
     <standardValue>
+        <fullName>CS Feedback</fullName>
+        <default>false</default>
+        <label>CS Feedback</label>
+    </standardValue>
+    <standardValue>
         <fullName>Feedback</fullName>
         <default>false</default>
         <label>Feedback</label>
