@@ -54,6 +54,10 @@
             <fullName>Liability</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>SAS Operating Center</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
@@ -71,6 +75,10 @@
         </values>
         <values>
             <fullName>ATC%2FATC Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent Helpdesk</fullName>
             <default>false</default>
         </values>
         <values>
@@ -111,6 +119,10 @@
         </values>
         <values>
             <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage Service</fullName>
             <default>false</default>
         </values>
         <values>
@@ -182,6 +194,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Corporate Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Corporate product</fullName>
             <default>false</default>
         </values>
@@ -210,11 +226,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Digital Channel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Digital channels R</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Digital support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Sales</fullName>
             <default>false</default>
         </values>
         <values>
@@ -283,6 +307,10 @@
         </values>
         <values>
             <fullName>Food</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2536,6 +2564,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - CS Feedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Corporate Support Backoffice</fullName>
             <default>false</default>
         </values>
@@ -2600,11 +2632,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Liability Claim</fullName>
+            <fullName>Email - EuroBonus Partner Support</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - EuroBonus Partner Support</fullName>
+            <fullName>Email - Liability Claim</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2760,6 +2792,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Feedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Forsvaret NO</fullName>
             <default>false</default>
         </values>
@@ -2898,6 +2934,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Type</picklist>
+        <values>
+            <fullName>CS Feedback</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>SASSI Internal</fullName>
             <default>false</default>
