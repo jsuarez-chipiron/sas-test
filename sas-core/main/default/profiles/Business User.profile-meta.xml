@@ -806,7 +806,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>LIA_Major_Event__c-Major Event Layout</layout>
-    </layoutAssignments>    
+    </layoutAssignments>  
+    <layoutAssignments>
+        <layout>Macro-Macro Layout</layout>
+    </layoutAssignments>  
     <layoutAssignments>
         <layout>PersonAccount-B2C - Anonymous Customer</layout>
         <recordType>PersonAccount.AnonymousCustomer</recordType>
@@ -1120,6 +1123,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>MassInlineEdit</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>SubmitMacrosAllowed</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
