@@ -11,6 +11,10 @@
         <value xsi:type="xsd:string">EuroBonus</value>
     </values>
     <values>
+        <field>Entitlement_To_Assign__c</field>
+        <value xsi:type="xsd:string">EB Missing Points</value>
+    </values>
+    <values>
         <field>Incoming_Case_Origin__c</field>
         <value xsi:type="xsd:string">Email - EB Pai Manual</value>
     </values>

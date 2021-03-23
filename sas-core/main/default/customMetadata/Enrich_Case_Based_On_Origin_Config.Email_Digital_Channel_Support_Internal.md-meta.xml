@@ -11,6 +11,10 @@
         <value xsi:type="xsd:string">Digital Channel Support</value>
     </values>
     <values>
+        <field>Entitlement_To_Assign__c</field>
+        <value xsi:type="xsd:string">Digital Channel Support</value>
+    </values>
+    <values>
         <field>Incoming_Case_Origin__c</field>
         <value xsi:type="xsd:string">Email - Digital Channel Support Internal</value>
     </values>

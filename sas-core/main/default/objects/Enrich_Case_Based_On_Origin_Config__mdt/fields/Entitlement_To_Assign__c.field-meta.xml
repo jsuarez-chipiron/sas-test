@@ -11,14 +11,29 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
-                <fullName>basic sykes kpi</fullName>
+                <fullName>Basic 8 - 17</fullName>
                 <default>false</default>
-                <label>basic sykes kpi</label>
+                <label>Basic 8 - 17</label>
             </value>
             <value>
-                <fullName>Default</fullName>
+                <fullName>Basic 9 - 17</fullName>
                 <default>false</default>
-                <label>Default</label>
+                <label>Basic 9 - 17</label>
+            </value>
+            <value>
+                <fullName>Digital Channel Support</fullName>
+                <default>false</default>
+                <label>Digital Channel Support</label>
+            </value>
+            <value>
+                <fullName>EB Missing Points</fullName>
+                <default>false</default>
+                <label>EB Missing Points</label>
+            </value>
+            <value>
+                <fullName>Pandion</fullName>
+                <default>false</default>
+                <label>Pandion</label>
             </value>
         </valueSetDefinition>
     </valueSet>
