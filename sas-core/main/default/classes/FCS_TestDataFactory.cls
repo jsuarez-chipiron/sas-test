@@ -80,7 +80,9 @@ public class FCS_TestDataFactory {
     public static User[] createUsers(Integer numUsers) {
         Profile p = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
         List<User> users = new List<User>();
-        for (Integer i = 0, sz = numUsers; i < sz; i++) {
+        double random = Math.random() * 10000;
+        Integer rnd =random.intValue();     
+        for (Integer i = rnd, sz = numUsers+rnd; i < sz; i++) {
             User u = new User(
                     Alias = 'user' + i,
                     Email = 'testUser' + i + '@test.com',
