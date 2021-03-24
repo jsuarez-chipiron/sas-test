@@ -103,14 +103,14 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      */
     public List<IRR_MOD_PassengerInfo> getPassengerInfosForBooking(String bookingId) {
         IRR_MOD_TedsBooking bookings = getBookingDetails(bookingId);
-        return initiatePassengerInfos(new List<IRR_MOD_TedsBooking>{bookings}, null,null,null);
+        return initiatePassengerInfos(new List<IRR_MOD_TedsBooking>{bookings}, null,null,null,null,null);
     }
 
     /**
      * @author Chetan Singh, Coforge
      * @date 2021
      *
-     * @description Retrieves Booking Details by booking filters.
+     * @description Retrieves Booking Details by Advanced booking filters.
      *
      * @param departureStation returns bookings that have a flight departing from a station
      * @param arrivalStation returns bookings that have a flight arriving to the station
@@ -118,7 +118,10 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      * @param toTimeUTC returns bookings that have a flight departing/arriving to that time in UTC
      * @return Retrieved Booking Details fetched from TEDS based on filters
      */
-    private List<IRR_MOD_TedsBooking> getBookingDetailsWithFilters(String departureStation, String arrivalStation,String fromTimeUTC,String toTimeUTC) {
+    private List<IRR_MOD_TedsBooking> getBookingDetailsWithFilters(String departureStation, 
+                                                                    String arrivalStation,
+                                                                    String fromTimeUTC,
+                                                                    String toTimeUTC) {
         Map<String, String> queryParams = new Map<String, String>{
             'departureStation' => departureStation,
             'arrivalStation' => arrivalStation,
@@ -165,11 +168,14 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      *
      * @return List of Retrieved Booking Details
      */
-    public List<IRR_MOD_PassengerInfo> getPassengerInfosForBookingFilters(String departureStation, String arrivalStation,String fromTimeUTC,String toTimeUTC) {
+    public List<IRR_MOD_PassengerInfo> getPassengerInfosForBookingFilters(String departureStation, 
+                                                                            String arrivalStation,
+                                                                            String fromTimeUTC,
+                                                                            String toTimeUTC) {
         List<IRR_MOD_TedsBooking> bookings = getBookingDetailsWithFilters(departureStation, arrivalStation,fromTimeUTC,toTimeUTC);
         departureStation = departureStation == 'undefined' ? null : departureStation;
         arrivalStation = arrivalStation == 'undefined' ? null : arrivalStation;
-        return initiatePassengerInfos(bookings, null, departureStation, arrivalStation);
+        return initiatePassengerInfos(bookings, null, departureStation, arrivalStation ,fromTimeUTC,toTimeUTC);
     }
 
     /**
@@ -207,7 +213,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      */
     public List<IRR_MOD_PassengerInfo> getPassengerInfosForFlight(String flightId) {
         List<IRR_MOD_TedsBooking> tedsBookings = getBookingDetailsForFlight(flightId);
-        return initiatePassengerInfos(tedsBookings, flightId, null, null);
+        return initiatePassengerInfos(tedsBookings, flightId, null, null,null,null);
     }
 
     private void throwTedsException(C_IntegrationExecutor.IntegrationResponse response) {
@@ -217,20 +223,30 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
 
     /**
      * @author Niklas Lundkvist, Deloitte
+     * @author Chetan Singh, Coforge
      * @date 2020
      *
      * @description Initiates Passenger Infos from list of TedsBookings.
      *      - Processes trips in the booking to find the current, next and previous segments (if possible)
      *      - Instantiates a Passenger Info object for each passenger in the booking
+     *      - Processes Addvanced booking filter inputs to find current, SK operated segments
      *
      * @param tedsBookings List of bookings to create Passenger Infos for
      * @param flightId Current flight id to find segments for (optional)
-     * @param departureStation From Station(optional)
-     * @param arrivalStation To Station(optional)
+     * @param departureStation From Station for Advanced Booking Filters(optional)
+     * @param arrivalStation To Station for Advanced Booking Filters(optional)
+     * @param fromTimeUTC flight departing/arriving from that time in UTC (optional)
+     * @param toTimeUTC flight departing/arriving to that time in UTC (optional)
      *
      * @return List of Passenger Infos
      */
-    private List<IRR_MOD_PassengerInfo> initiatePassengerInfos(List<IRR_MOD_TedsBooking> tedsBookings, String flightId, String departureStation, String arrivalStation){
+    private List<IRR_MOD_PassengerInfo> initiatePassengerInfos(List<IRR_MOD_TedsBooking> tedsBookings, 
+                                                                String flightId, 
+                                                                String departureStation, 
+                                                                String arrivalStation,
+                                                                String fromTimeUTC, 
+                                                                String toTimeUTC ){
+
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
         for (IRR_MOD_TedsBooking booking : tedsBookings) {
             IRR_MOD_TedsBooking.SegmentTrip thisSegment;
@@ -288,13 +304,20 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
             }
 
             for (IRR_MOD_TedsBooking.Passenger passenger : booking.passengers) {
-                IRR_MOD_PassengerInfo passengerInfo = createPassengerInfo(booking, passenger, thisSegment,
+                
+              IRR_MOD_PassengerInfo passengerInfo = createPassengerInfo(booking, passenger, thisSegment,
                         nextSegment, prevSegment, itinerary);
-             //For showing flight Ids in the Advanced booking filter, we only need to show SK operated flights
+             //Need to show SK operated flights and only the flights within the departure and arrival time(not flown flights), 
+             //for Advanced booking filters 
                 if(!(hasDeparturesStation | hasArrivalStation)){
                     passengerInfos.add(passengerInfo);
                 }else {
-                    if(thisSegment.flight.operatingCarrier == 'SK') passengerInfos.add(passengerInfo);
+                    Datetime fromDate = Datetime.valueOfGmt(fromTimeUTC.replace('T' , ' '));
+                    Datetime toDate = Datetime.valueOfGmt(toTimeUTC.replace('T' , ' '));
+                    Datetime departureDate = Datetime.valueOfGmt(thisSegment.flight.departure.scheduledTime.utc.replace('T', ' '));
+                    Datetime arrivalDate = Datetime.valueOfGmt(thisSegment.flight.arrival.scheduledTime.utc.replace('T', ' '));
+                    if(thisSegment.flight.operatingCarrier == 'SK' && departureDate >= fromDate &&
+                    arrivalDate <= toDate) passengerInfos.add(passengerInfo);
                 }     
             }
         }
