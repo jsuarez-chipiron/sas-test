@@ -13,11 +13,12 @@ import getFlightPassengerInfos from '@salesforce/apex/IRR_CON_ManualCommunicatio
 import sendManualCommunication from '@salesforce/apex/IRR_CON_ManualCommunication.sendManualCommunication';
 import getManualTemplatesBySendMode from '@salesforce/apex/IRR_CON_ManualCommunication.getManualTemplatesBySendMode';
 import getBookingPassengerInfos from '@salesforce/apex/IRR_CON_ManualCommunication.getBookingPassengerInfos';
+import getAdvancedFilterPassengerInfos from "@salesforce/apex/IRR_CON_ManualCommunication.getAdvancedFilterPassengerInfos";
 
 import * as tableUtil from 'c/c_TableUtil';
 import { reduceErrors } from 'c/c_LdsUtils';
 
-import { FLIGHT_COLUMNS, PREVIOUS_FLIGHT_COLUMNS, NEXT_FLIGHT_COLUMNS, BOOKING_COLUMNS} from './passengerTableColumns';
+import { FLIGHT_COLUMNS, PREVIOUS_FLIGHT_COLUMNS, NEXT_FLIGHT_COLUMNS, BOOKING_COLUMNS, BOOKING_FILTER_COLUMNS} from './passengerTableColumns';
 
 export default class IRR_ManualCommunication extends LightningElement {
 
@@ -89,8 +90,27 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     get tableHeading() {
         if (Object.keys(this.retrieveParameters).length === 0) return "No filters active";
-        const params = Object.values(this.retrieveParameters).join(' - ');
-        return `Results for ${params}`;
+        if (this.retrieveParameters.hasOwnProperty('flightIds') || this.retrieveParameters.hasOwnProperty('bookings')) {
+            const params = Object.values(this.retrieveParameters).join(" - ");
+            return `Results for ${params}`;
+        }
+        else{
+            const params = Object.values(this.retrieveParameters).join(" - ");
+            const param = params.split(",");
+            const tableHeadings = [];
+            for(const p of param){
+                const inputparam = p.split("!");
+                const tableHeading = ` From:${inputparam[0]} To:${inputparam[1]}-
+                ${inputparam[2].replaceAll(/-/g,'').replaceAll(/:00.000Z/g,'')}-${inputparam[3].replaceAll(/-/g,'').replaceAll(/:00.000Z/g,'')} `;
+                tableHeadings.push(tableHeading);
+            }
+            const tableHeadingContent = tableHeadings.join('||');
+            const trimmedTableHeading = tableHeadingContent.replaceAll('From:undefined','From:ALL');
+            const trimmedTableHeadingFinal = trimmedTableHeading.replaceAll('To:undefined','To:ALL');
+
+            return `Results for Bookings => ${trimmedTableHeadingFinal}`;
+        }
+       
     }
 
     get recipientCount() {
@@ -307,6 +327,12 @@ export default class IRR_ManualCommunication extends LightningElement {
                     this.COLUMNS = BOOKING_COLUMNS;
                     eventParameters = {bookings: parameters.bookingId};
                     result = await getBookingPassengerInfos(eventParameters);
+                    this.filterParameters = {};
+                    break;
+                case "BOOKING_FILTER":
+                    this.COLUMNS = BOOKING_COLUMNS;
+                    eventParameters = {bookingIds: parameters.bookingIds};
+                    result = await getAdvancedFilterPassengerInfos(eventParameters);
                     this.filterParameters = {};
                     break;
                 case "BYPASS":

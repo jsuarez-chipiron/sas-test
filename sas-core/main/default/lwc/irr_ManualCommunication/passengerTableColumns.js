@@ -22,4 +22,4 @@ const pFlight = { label: 'Inbound', fieldName: 'prevSegment.flightId', sortable:
 export const FLIGHT_COLUMNS = [cFlight, pnr, name, phone, email, sClass, bClass, status, code, ssr, eb, fqtv];
 export const PREVIOUS_FLIGHT_COLUMNS = [pFlight, pnr, name, phone, email, sClass, bClass, status, code, ssr, eb, fqtv];
 export const NEXT_FLIGHT_COLUMNS = [nFlight, pnr, name, phone, email, sClass, bClass, status, code, ssr, eb, fqtv];
-export const BOOKING_COLUMNS = [pnr, name, phone, email, ssr, eb, fqtv];
+export const BOOKING_COLUMNS = [cFlight,pnr, name, phone, email, ssr, eb, fqtv];
