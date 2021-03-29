@@ -20,6 +20,10 @@ public class IRR_SVC_TedsService {
         return service().getPassengerInfosForFlight(flightId);
     }
 
+    public static List<IRR_MOD_PassengerInfo> getPassengerInfosForBookingFilters(String departureStation, String arrivalStation,String fromTimeUTC,String toTimeUTC) {
+        return service().getPassengerInfosForBookingFilters(departureStation,arrivalStation,fromTimeUTC,toTimeUTC);
+    }
+
     public static Map<String,String> getAirportCityNames(Set<String> iataCodes) {
         return service().getAirportCityNames(iataCodes);
     }

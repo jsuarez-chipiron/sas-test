@@ -11,3 +11,7 @@
 .no-focus:focus {
     outline: none;
 }
+
+.no-wrap {
+    white-space: normal;
+}
