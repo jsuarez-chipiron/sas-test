@@ -330,7 +330,7 @@ export default class IRR_ManualCommunication extends LightningElement {
                     this.filterParameters = {};
                     break;
                 case "BOOKING_FILTER":
-                    this.COLUMNS = BOOKING_COLUMNS;
+                    this.COLUMNS = BOOKING_FILTER_COLUMNS;
                     eventParameters = {bookingIds: parameters.bookingIds};
                     result = await getAdvancedFilterPassengerInfos(eventParameters);
                     this.filterParameters = {};
