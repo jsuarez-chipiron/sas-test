@@ -396,4 +396,9 @@
         <default>false</default>
         <label>Email - Sales Control</label>
     </standardValue>
+    <standardValue>
+        <fullName>Email - Premium Corporate Support</fullName>
+        <default>false</default>
+        <label>Email - Premium Corporate Support</label>
+    </standardValue>
 </StandardValueSet>

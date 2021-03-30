@@ -301,6 +301,11 @@
                 <label>Email - Pandion SE</label>
             </value>
             <value>
+                <fullName>Email - Premium Corporate Support</fullName>
+                <default>false</default>
+                <label>Email - Premium Corporate Support</label>
+            </value>            
+            <value>
                 <fullName>Email - Sales Information</fullName>
                 <default>false</default>
                 <label>Email - Sales Information</label>

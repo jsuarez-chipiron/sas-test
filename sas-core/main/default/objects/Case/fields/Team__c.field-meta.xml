@@ -266,6 +266,11 @@
                 <label>PL</label>
             </value>
             <value>
+                <fullName>Premium Corporate Support</fullName>
+                <default>false</default>
+                <label>Premium Corporate Support</label>
+            </value>            
+            <value>
                 <fullName>RU</fullName>
                 <default>false</default>
                 <label>RU</label>
