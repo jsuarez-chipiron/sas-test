@@ -390,6 +390,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Open coupon</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
             <default>false</default>
         </values>
@@ -511,6 +515,10 @@
         </values>
         <values>
             <fullName>Ticket Status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket wrongly rewritten</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2939,6 +2947,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EB Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SASSI Internal</fullName>
             <default>false</default>
         </values>
@@ -2952,6 +2964,10 @@
         </values>
         <values>
             <fullName>Tariff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketless</fullName>
             <default>false</default>
         </values>
     </picklistValues>

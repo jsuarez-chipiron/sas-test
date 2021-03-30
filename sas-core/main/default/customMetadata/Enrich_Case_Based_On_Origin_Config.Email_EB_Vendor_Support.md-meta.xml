@@ -4,11 +4,11 @@
     <protected>false</protected>
     <values>
         <field>Case_Type_To_Assign__c</field>
-        <value xsi:type="xsd:string">Channel</value>
+        <value xsi:type="xsd:string">EB Vendor</value>
     </values>
     <values>
         <field>Department_To_Assign__c</field>
-        <value xsi:type="xsd:string">EuroBonus</value>
+        <value xsi:type="xsd:string">SAS Operating Center</value>
     </values>
     <values>
         <field>Entitlement_To_Assign__c</field>
