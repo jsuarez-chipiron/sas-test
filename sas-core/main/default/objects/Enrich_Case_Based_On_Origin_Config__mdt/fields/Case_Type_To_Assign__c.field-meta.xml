@@ -16,6 +16,16 @@
                 <label>Channel</label>
             </value>
             <value>
+                <fullName>CS Feedback</fullName>
+                <default>false</default>
+                <label>CS Feedback</label>
+            </value>
+            <value>
+                <fullName>EB Vendor</fullName>
+                <default>false</default>
+                <label>EB Vendor</label>
+            </value>
+            <value>
                 <fullName>Feedback</fullName>
                 <default>false</default>
                 <label>Feedback</label>
@@ -55,7 +65,11 @@
                 <default>false</default>
                 <label>Tariff</label>
             </value>
+            <value>
+                <fullName>Ticketless</fullName>
+                <default>false</default>
+                <label>Ticketless</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
-

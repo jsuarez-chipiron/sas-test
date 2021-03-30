@@ -424,6 +424,11 @@
                 <default>false</default>
                 <label>OCC Daily Reports</label>
             </value>
+			 <value>
+                <fullName>Open coupon</fullName>
+                <default>false</default>
+                <label>Open coupon</label>
+            </value>
             <value>
                 <fullName>Other</fullName>
                 <default>false</default>
@@ -584,6 +589,11 @@
                 <default>false</default>
                 <label>Ticket Status</label>
             </value>
+			  <value>
+                <fullName>Ticket wrongly rewritten</fullName>
+                <default>false</default>
+                <label>Ticket wrongly rewritten</label>
+            </value>
             <value>
                 <fullName>Travel pass</fullName>
                 <default>false</default>
@@ -700,6 +710,8 @@
             <controllingFieldValue>Tariff</controllingFieldValue>
             <controllingFieldValue>CS Feedback</controllingFieldValue>
             <controllingFieldValue>Feedback</controllingFieldValue>
+			<controllingFieldValue>Ticketless</controllingFieldValue>
+            <controllingFieldValue>EB Vendor</controllingFieldValue>
             <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
@@ -840,6 +852,10 @@
             <controllingFieldValue>Tariff</controllingFieldValue>
             <valueName>Policy</valueName>
         </valueSettings>
+		<valueSettings>
+           <controllingFieldValue>Ticketless</controllingFieldValue>
+            <valueName>Open coupon</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Tariff</controllingFieldValue>
             <controllingFieldValue>CS Feedback</controllingFieldValue>
@@ -850,6 +866,10 @@
         <valueSettings>
             <controllingFieldValue>Tariff</controllingFieldValue>
             <valueName>Tax/YQ</valueName>
+        </valueSettings>
+		<valueSettings>
+            <controllingFieldValue>Ticketless</controllingFieldValue>
+            <valueName>Ticket wrongly rewritten</valueName>			
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>CS Feedback</controllingFieldValue>
