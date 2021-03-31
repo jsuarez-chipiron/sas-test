@@ -2833,6 +2833,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Premium Corporate Support</fullName>
+            <default>false</default>
+        </values>        
+        <values>
             <fullName>Email - SAS Poland</fullName>
             <default>false</default>
         </values>
@@ -3147,6 +3151,10 @@
         </values>
         <values>
             <fullName>Partner Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Premium Corporate Support</fullName>
             <default>false</default>
         </values>
         <values>

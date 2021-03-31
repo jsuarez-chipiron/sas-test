@@ -266,6 +266,11 @@
                 <label>PL</label>
             </value>
             <value>
+                <fullName>Premium Corporate Support</fullName>
+                <default>false</default>
+                <label>Premium Corporate Support</label>
+            </value>            
+            <value>
                 <fullName>RU</fullName>
                 <default>false</default>
                 <label>RU</label>
@@ -633,5 +638,9 @@
             <controllingFieldValue>Liability</controllingFieldValue>
             <valueName>Settlement</valueName>
         </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Premium Corporate Support</valueName>
+        </valueSettings>        
     </valueSet>
 </CustomField>
