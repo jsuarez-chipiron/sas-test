@@ -25,6 +25,7 @@
         <locationY>300</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>customNotifTypeId</name>
             <value>
@@ -111,6 +112,7 @@
         <locationY>300</locationY>
         <actionName>EmailProcessHelper</actionName>
         <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -154,6 +156,7 @@
             </value>
         </inputParameters>
     </actionCalls>
+    <apiVersion>51.0</apiVersion>
     <assignments>
         <name>myAssignment_myRule_12_A2</name>
         <label>myAssignment_myRule_12_A2</label>
@@ -512,37 +515,6 @@
                     <stringValue>salesforce_noreply@sas.se</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.Is_Counted__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>myRule_3_A1</targetReference>
             </connector>
@@ -627,37 +599,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>0</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.Is_Counted__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -760,7 +701,7 @@
                 <stringValue>[EmailMessage].Parent.Owner:User.FirstName + &apos; &apos; + [EmailMessage].Parent.Owner:User.LastName</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_10_myRule_9_A1_4590816047</name>
+        <name>formula_10_myRule_9_A1_0045010758</name>
         <dataType>String</dataType>
         <expression>{!myVariable_current.Parent.Owner:User.FirstName} + &apos; &apos; + {!myVariable_current.Parent.Owner:User.LastName}</expression>
     </formulas>
@@ -771,7 +712,7 @@
                 <stringValue>IF(ISBLANK([EmailMessage].Parent.Number_of_Email_Messages_Sent__c ), 1, [EmailMessage].Parent.Number_of_Email_Messages_Sent__c +1)</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_4_myRule_3_A1_4653017485</name>
+        <name>formula_4_myRule_3_A1_0549048393</name>
         <dataType>Number</dataType>
         <expression>IF(ISBLANK({!myVariable_current.Parent.Number_of_Email_Messages_Sent__c} ), 1, {!myVariable_current.Parent.Number_of_Email_Messages_Sent__c} +1)</expression>
         <scale>18</scale>
@@ -784,12 +725,12 @@
 </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_7_myRule_6_A1_4957871847</name>
+        <name>formula_7_myRule_6_A1_3656646877</name>
         <dataType>Number</dataType>
         <expression>IF(ISBLANK({!myVariable_current.Parent.Number_of_Email_Messages_Received__c} ), 1, {!myVariable_current.Parent.Number_of_Email_Messages_Received__c}  + 1)</expression>
         <scale>18</scale>
     </formulas>
-    <interviewLabel>Email_Message-4_InterviewLabel</interviewLabel>
+    <interviewLabel>Email_Message-2_InterviewLabel</interviewLabel>
     <label>Email Message</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -848,6 +789,7 @@
         <connector>
             <targetReference>myAssignment_myRule_12_A2</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
@@ -931,6 +873,7 @@
         <connector>
             <targetReference>myDecision2</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
@@ -1012,8 +955,9 @@
         <locationX>300</locationX>
         <locationY>200</locationY>
         <connector>
-            <targetReference>myRule_3_A2</targetReference>
+            <targetReference>myDecision5</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
@@ -1060,93 +1004,10 @@
             </processMetadataValues>
             <field>Number_of_Email_Messages_Sent__c</field>
             <value>
-                <elementReference>formula_4_myRule_3_A1_4653017485</elementReference>
+                <elementReference>formula_4_myRule_3_A1_0549048393</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
-    </recordUpdates>
-    <recordUpdates>
-        <processMetadataValues>
-            <name>evaluationType</name>
-            <value>
-                <stringValue>always</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>extraTypeInfo</name>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>isChildRelationship</name>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>reference</name>
-            <value>
-                <stringValue>[EmailMessage]</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>referenceTargetField</name>
-        </processMetadataValues>
-        <name>myRule_3_A2</name>
-        <label>Mark email as counted</label>
-        <locationX>300</locationX>
-        <locationY>300</locationY>
-        <connector>
-            <targetReference>myDecision5</targetReference>
-        </connector>
-        <filters>
-            <processMetadataValues>
-                <name>implicit</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>Boolean</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Is Counted</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Boolean</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>Is_Counted__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <object>EmailMessage</object>
     </recordUpdates>
     <recordUpdates>
         <processMetadataValues>
@@ -1180,6 +1041,7 @@
         <connector>
             <targetReference>myRule_6_A2</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
@@ -1226,93 +1088,10 @@
             </processMetadataValues>
             <field>Number_of_Email_Messages_Received__c</field>
             <value>
-                <elementReference>formula_7_myRule_6_A1_4957871847</elementReference>
+                <elementReference>formula_7_myRule_6_A1_3656646877</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
-    </recordUpdates>
-    <recordUpdates>
-        <processMetadataValues>
-            <name>evaluationType</name>
-            <value>
-                <stringValue>always</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>extraTypeInfo</name>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>isChildRelationship</name>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>reference</name>
-            <value>
-                <stringValue>[EmailMessage]</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>referenceTargetField</name>
-        </processMetadataValues>
-        <name>myRule_6_A2</name>
-        <label>Mark as counted</label>
-        <locationX>600</locationX>
-        <locationY>300</locationY>
-        <connector>
-            <targetReference>myRule_6_A3</targetReference>
-        </connector>
-        <filters>
-            <processMetadataValues>
-                <name>implicit</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>Boolean</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Is Counted</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Boolean</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>Is_Counted__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <object>EmailMessage</object>
     </recordUpdates>
     <recordUpdates>
         <processMetadataValues>
@@ -1339,13 +1118,14 @@
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_6_A3</name>
+        <name>myRule_6_A2</name>
         <label>Add last received date to case</label>
         <locationX>600</locationX>
-        <locationY>400</locationY>
+        <locationY>300</locationY>
         <connector>
             <targetReference>myDecision8</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
@@ -1429,6 +1209,7 @@
         <connector>
             <targetReference>myRule_9_A2</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
@@ -1475,7 +1256,7 @@
             </processMetadataValues>
             <field>Previous_Owner__c</field>
             <value>
-                <elementReference>formula_10_myRule_9_A1_4590816047</elementReference>
+                <elementReference>formula_10_myRule_9_A1_0045010758</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
