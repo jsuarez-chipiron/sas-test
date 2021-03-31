@@ -419,6 +419,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
+			<controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>EB Vendor Support</valueName>
         </valueSettings>
         <valueSettings>
