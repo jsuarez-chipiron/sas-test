@@ -2600,11 +2600,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Functional Product Support</fullName>
+            <fullName>Email - EuroBonus Partner Support</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - EuroBonus Partner Support</fullName>
+            <fullName>Email - Functional Product Support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2613,6 +2613,10 @@
         </values>
         <values>
             <fullName>Facebook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal - Support</fullName>
             <default>false</default>
         </values>
         <values>

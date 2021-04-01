@@ -2600,7 +2600,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Corporate</fullName>
+            <fullName>Email - Corporate Support Backoffice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Corporate Support International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Corporate Support Scandinavia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2629,10 +2637,6 @@
         </values>
         <values>
             <fullName>Email - EB Pai Manual</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email - EuroBonus</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2665,6 +2669,10 @@
         </values>
         <values>
             <fullName>Email - EuroBonus Name Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Partner Support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2824,15 +2832,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Internal - Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Web</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>White Paper - Liability Claim</fullName>
             <default>false</default>
         </values>
     </picklistValues>

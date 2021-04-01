@@ -23,10 +23,10 @@
             <fullName>Agent Helpdesk</fullName>
             <default>false</default>
         </values>
-		 <values>	
-            <fullName>Care</fullName>	
-            <default>false</default>	
-        </values>	       
+        <values>
+            <fullName>Care</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Corporate</fullName>
             <default>false</default>
@@ -50,13 +50,17 @@
         <values>
             <fullName>Group Sales</fullName>
             <default>false</default>
-        </values>        
+        </values>
         <values>
             <fullName>Info Hub</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Liability</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Operating Center</fullName>
             <default>false</default>
         </values>
         <values>
@@ -67,10 +71,6 @@
             <fullName>SoMe Support</fullName>
             <default>false</default>
         </values>
-		<values>
-            <fullName>SAS Operating Center</fullName>
-            <default>false</default>
-        </values>		
     </picklistValues>
     <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
@@ -2617,6 +2617,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - CS Feedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Corporate Support Backoffice</fullName>
             <default>false</default>
         </values>
@@ -2628,10 +2632,6 @@
             <fullName>Email - Corporate Support Scandinavia</fullName>
             <default>false</default>
         </values>
-		<values>
-            <fullName>Email - CS Feedback</fullName>
-            <default>false</default>
-        </values>		
         <values>
             <fullName>Email - Digital Channel Support External</fullName>
             <default>false</default>
@@ -2657,11 +2657,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - EB Vendor Support</fullName>
+            <fullName>Email - EB Pai Manual</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - EB Pai Manual</fullName>
+            <fullName>Email - EB Vendor Support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2711,7 +2711,7 @@
         <values>
             <fullName>Email - GDPR Secure Data</fullName>
             <default>false</default>
-        </values>   
+        </values>
         <values>
             <fullName>Email - Group Sales ACE</fullName>
             <default>false</default>
@@ -2845,22 +2845,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Sales Control</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email - SME International</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email - SME Scandinavia</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email - Sales Information</fullName>
-            <default>false</default>
-        </values>		
-        <values>
             <fullName>Email - SGH Bag DK</fullName>
             <default>false</default>
         </values>
@@ -2873,9 +2857,25 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - SME International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - SME Scandinavia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Sales Control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Sales Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - SoMe Support</fullName>
             <default>false</default>
-        </values>   
+        </values>
         <values>
             <fullName>Email - Star Alliance Upgrades</fullName>
             <default>false</default>
@@ -2886,6 +2886,10 @@
         </values>
         <values>
             <fullName>Email - Ticketless Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal - Support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3032,17 +3036,16 @@
             <fullName>External Lawyers</fullName>
             <default>false</default>
         </values>
-	   <values>
-            <fullName>Feedback</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>FI</fullName>
             <default>false</default>
         </values>
-		
         <values>
             <fullName>FR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Feedback</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3166,27 +3169,27 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Sales Control</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>SASSI Internal</fullName>
             <default>false</default>
         </values>
-		<values>	
-            <fullName>SGH Bag DK</fullName>	
-            <default>false</default>	
-        </values>	
-        <values>	
-            <fullName>SGH Bag NO</fullName>	
-            <default>false</default>	
-        </values>	       
+        <values>
+            <fullName>SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGH Bag DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGH Bag NO</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>SGH Bag SE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SE</fullName>
+            <fullName>Sales Control</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3197,16 +3200,16 @@
             <fullName>Scandinavia</fullName>
             <default>false</default>
         </values>
-		<values>
-            <fullName>Special Sales NO</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Settlement</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>SoMe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special Sales NO</fullName>
             <default>false</default>
         </values>
         <values>
