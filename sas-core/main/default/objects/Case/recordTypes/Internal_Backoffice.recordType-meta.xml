@@ -2608,6 +2608,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - EB Vendor Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - EuroBonus Diamond DK</fullName>
             <default>false</default>
         </values>
@@ -2657,6 +2661,10 @@
         </values>
         <values>
             <fullName>Email - System %26 Tariff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Ticketless Support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2773,6 +2781,10 @@
         </values>
         <values>
             <fullName>Diamond SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EB Vendor Support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2929,6 +2941,10 @@
         </values>
         <values>
             <fullName>System %26 Tariff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketless Support</fullName>
             <default>false</default>
         </values>
         <values>
