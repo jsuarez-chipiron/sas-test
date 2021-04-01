@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>IsRedirected__c</fullName>
+    <fullName>IsEscalated__c</fullName>
     <defaultValue>false</defaultValue>
-    <description>To indicate that the case has been redirected to another department/team</description>
+    <description>Indicates whether or not the case has been escalated using to other department action</description>
     <externalId>false</externalId>
-    <inlineHelpText>To indicate that the case has been redirected to another department/team</inlineHelpText>
-    <label>IsRedirected</label>
+    <inlineHelpText>Indicates whether or not the case has been escalated using to other department action</inlineHelpText>
+    <label>IsEscalated</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>

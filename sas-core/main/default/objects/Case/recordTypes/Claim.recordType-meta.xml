@@ -2640,10 +2640,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - EuroBonus Partner Support</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Email - EuroBonus Diamond DK</fullName>
             <default>false</default>
         </values>
@@ -2673,6 +2669,10 @@
         </values>
         <values>
             <fullName>Email - EuroBonus Name Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EuroBonus Partner Support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2829,6 +2829,14 @@
         </values>
         <values>
             <fullName>Email - System %26 Tariff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal - Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>White Paper - Liability Claim</fullName>
             <default>false</default>
         </values>
         <values>

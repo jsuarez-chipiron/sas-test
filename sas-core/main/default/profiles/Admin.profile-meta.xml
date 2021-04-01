@@ -372,6 +372,11 @@
         <field>Case.Consent__c</field>
         <readable>true</readable>
     </fieldPermissions>
+       <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Created_Support_Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.GDPR_Wiped__c</field>
@@ -390,6 +395,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.FCS_ReopenedCount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.IsEscalated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

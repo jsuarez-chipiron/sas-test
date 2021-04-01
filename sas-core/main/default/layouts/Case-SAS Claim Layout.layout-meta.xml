@@ -6,6 +6,10 @@
         <compactFeed>false</compactFeed>
         <feedFilterPosition>LeftFixed</feedFilterPosition>
         <feedFilters>
+            <feedFilterType>FeedItemType</feedFilterType>
+            <feedItemType>EmailMessageEvent</feedItemType>
+        </feedFilters>
+        <feedFilters>
             <feedFilterType>AllUpdates</feedFilterType>
         </feedFilters>
         <feedFilters>
@@ -107,6 +111,14 @@
                 <behavior>Readonly</behavior>
                 <field>IsRedirected__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Created_Support_Case__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IsEscalated__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -140,6 +152,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Origin</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ParentId</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -392,44 +408,7 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
-        <fields>Name</fields>
-        <fields>Owner</fields>
-        <fields>StartTime</fields>
-        <fields>EndTime</fields>
-        <fields>Status</fields>
-        <relatedList>RelatedLiveChatTranscriptList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Name</fields>
-        <fields>MessagingEndUser</fields>
-        <fields>Owner</fields>
-        <fields>StartTime</fields>
-        <fields>Status</fields>
-        <fields>EndTime</fields>
-        <fields>MessagingChannel</fields>
-        <relatedList>MessagingSession</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Name</fields>
-        <fields>Persona</fields>
-        <fields>Headline</fields>
-        <fields>Who</fields>
-        <relatedList>SocialPosts</relatedList>
-    </relatedLists>
-    <relatedLists>
         <relatedList>RelatedFileList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedEntityHistoryList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedContentNoteList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>TITLE</fields>
-        <fields>LAST_UPDATE</fields>
-        <fields>CREATEDBY_USER</fields>
-        <relatedList>RelatedArticleList</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
@@ -441,6 +420,27 @@
         <fields>Result__c</fields>
         <relatedList>LIA_Claim__c.Case__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedContentNoteList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>MergedRecord.CaseNumber</fields>
+        <fields>MergedRecord.Subject</fields>
+        <fields>LatestMaster.CaseNumber</fields>
+        <fields>CreatedDate</fields>
+        <relatedList>RelatedMergeHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.SUBJECT</fields>
+        <fields>CASES.PRIORITY</fields>
+        <fields>CASES.STATUS</fields>
+        <fields>OWNER_NAME</fields>
+        <relatedList>RelatedChildCaseList</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -450,7 +450,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000002Cli8</masterLabel>
+        <masterLabel>00h3N000002Cdnd</masterLabel>
         <sizeX>3</sizeX>
         <sizeY>4</sizeY>
         <summaryLayoutItems>

@@ -2604,11 +2604,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Liability Claim</fullName>
+            <fullName>Email - EuroBonus Partner Support</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - EuroBonus Partner Support</fullName>
+            <fullName>Email - Liability Claim</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2618,9 +2618,13 @@
         <values>
             <fullName>Email - SoMe Support</fullName>
             <default>false</default>
-        </values>   
+        </values>
         <values>
             <fullName>Facebook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal - Support</fullName>
             <default>false</default>
         </values>
         <values>

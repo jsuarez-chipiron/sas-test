@@ -312,9 +312,19 @@
         <field>Case.ContactId</field>
         <readable>true</readable>
     </fieldPermissions>
+       <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Created_Support_Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.FCS_IsReopened__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.IsEscalated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
