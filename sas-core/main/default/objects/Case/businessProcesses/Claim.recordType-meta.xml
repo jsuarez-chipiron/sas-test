@@ -2273,15 +2273,27 @@
     <picklistValues>
         <picklist>FCS_Site__c</picklist>
         <values>
+            <fullName>BOM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EVG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LCA</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>ODE</fullName>
             <default>false</default>
         </values>
-        <values>
+		<values>
             <fullName>OER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STO</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2387,10 +2399,14 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <picklistValues>
         <picklist>FCS_Vendor__c</picklist>
         <values>
             <fullName>SAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Student Consulting</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2405,14 +2421,35 @@
     <picklistValues>
         <picklist>FCS_VirtualOrganization__c</picklist>
         <values>
+            <fullName>Agent Helpdesk</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Direct Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Global Support</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Group Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liability NEB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Control</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
+
     <picklistValues>
         <picklist>GSB_Flight_Length__c</picklist>
         <values>
@@ -2581,6 +2618,7 @@
             <default>false</default>
         </values>
     </picklistValues>
+	
     <picklistValues>
         <picklist>Origin</picklist>
         <values>

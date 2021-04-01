@@ -15,6 +15,11 @@
         <default>false</default>
         <label>SAS</label>
     </customValue>
+    <customValue>
+        <fullName>Student Consulting</fullName>
+        <default>false</default>
+        <label>Student Consulting</label>
+    </customValue>
     <description>The vendor of the user or record owner (that is a user)</description>
     <masterLabel>FCS Vendor</masterLabel>
     <sorted>true</sorted>
