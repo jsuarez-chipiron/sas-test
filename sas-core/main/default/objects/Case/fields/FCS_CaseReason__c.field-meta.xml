@@ -204,6 +204,11 @@
                 <default>false</default>
                 <label>Delayed/damaged baggage</label>
             </value>
+			<value>
+                <fullName>Deletion</fullName>
+                <default>false</default>
+                <label>Deletion</label>
+            </value>
             <value>
                 <fullName>Depa/Depu</fullName>
                 <default>false</default>
@@ -283,6 +288,11 @@
                 <fullName>EuroBonus status</fullName>
                 <default>false</default>
                 <label>EuroBonus status</label>
+            </value>
+			<value>
+                <fullName>Extract</fullName>
+                <default>false</default>
+                <label>Extract</label>
             </value>
             <value>
                 <fullName>Extraordinary</fullName>
@@ -711,7 +721,9 @@
             <controllingFieldValue>CS Feedback</controllingFieldValue>
             <controllingFieldValue>Feedback</controllingFieldValue>
 			<controllingFieldValue>Ticketless</controllingFieldValue>
+			<controllingFieldValue>Booking</controllingFieldValue>
             <controllingFieldValue>EB Vendor</controllingFieldValue>
+			<controllingFieldValue>Businesstravel</controllingFieldValue>
             <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
@@ -870,6 +882,14 @@
 		<valueSettings>
             <controllingFieldValue>Ticketless</controllingFieldValue>
             <valueName>Ticket wrongly rewritten</valueName>			
+        </valueSettings>
+		<valueSettings>
+            <controllingFieldValue>GDPR</controllingFieldValue>
+            <valueName>Deletion</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>GDPR</controllingFieldValue>
+            <valueName>Extract</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>CS Feedback</controllingFieldValue>

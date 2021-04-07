@@ -214,6 +214,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Deletion</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Depa%2FDepu</fullName>
             <default>false</default>
         </values>
@@ -275,6 +279,10 @@
         </values>
         <values>
             <fullName>Eurobonus procedures R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extract</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2703,7 +2711,7 @@
             <fullName>Email - Ticketless Support</fullName>
             <default>false</default>
         </values>
-        <values>                        
+        <values>
             <fullName>Internal - Support</fullName>
             <default>false</default>
         </values>
@@ -2999,11 +3007,23 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
+            <fullName>Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Businesstravel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CS Feedback</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>EB Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GDPR</fullName>
             <default>false</default>
         </values>
         <values>
