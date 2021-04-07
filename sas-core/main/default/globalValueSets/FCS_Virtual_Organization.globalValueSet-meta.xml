@@ -10,6 +10,31 @@
         <default>false</default>
         <label>Global Support</label>
     </customValue>
+    <customValue>
+        <fullName>Liability NEB</fullName>
+        <default>false</default>
+        <label>Liability NEB</label>
+    </customValue>
+    <customValue>
+        <fullName>Agent Helpdesk</fullName>
+        <default>false</default>
+        <label>Agent Helpdesk</label>
+    </customValue>
+    <customValue>
+        <fullName>Sales Control</fullName>
+        <default>false</default>
+        <label>Sales Control</label>
+    </customValue>
+    <customValue>
+        <fullName>EuroBonus</fullName>
+        <default>false</default>
+        <label>EuroBonus</label>
+    </customValue>
+    <customValue>
+        <fullName>Group Sales</fullName>
+        <default>false</default>
+        <label>Group Sales</label>
+    </customValue>
     <description>The virtual organization of the user or record owner</description>
     <masterLabel>FCS Virtual Organization</masterLabel>
     <sorted>true</sorted>

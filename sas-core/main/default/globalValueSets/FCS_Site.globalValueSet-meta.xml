@@ -15,6 +15,21 @@
         <default>false</default>
         <label>OER</label>
     </customValue>
+    <customValue>
+        <fullName>LCA</fullName>
+        <default>false</default>
+        <label>LCA</label>
+    </customValue>
+    <customValue>
+        <fullName>STO</fullName>
+        <default>false</default>
+        <label>STO</label>
+    </customValue>
+    <customValue>
+        <fullName>BOM</fullName>
+        <default>false</default>
+        <label>BOM</label>
+    </customValue>
     <description>The site of the user or record owner</description>
     <masterLabel>FCS Site</masterLabel>
     <sorted>true</sorted>
