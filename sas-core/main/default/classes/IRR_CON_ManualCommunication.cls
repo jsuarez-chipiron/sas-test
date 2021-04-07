@@ -30,6 +30,34 @@ public class IRR_CON_ManualCommunication {
     }
 
     @AuraEnabled
+    public static List<IRR_MOD_PassengerInfo> getAdvancedFilterPassengerInfos(String bookingIds) {
+        List<String> currentBookingFilter;
+        String departureStation;
+        String arrivalStation;
+        String departureDate;
+        String arrivalDate;
+        try {
+            List<String> splitBookingFilters = bookingIds.split(',');
+            List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
+            for (String bookingFilter : splitBookingFilters) {
+                if (String.isBlank(bookingFilter)) continue;
+                currentBookingFilter = bookingFilter.split('!');
+                departureStation = currentBookingFilter.size() >= 1 && String.isNotBlank(currentBookingFilter[0]) ? currentBookingFilter[0] : null ;
+                arrivalStation = currentBookingFilter.size() >= 2 && String.isNotBlank(currentBookingFilter[1]) ? currentBookingFilter[1] : null;
+                departureDate = currentBookingFilter[2] ;
+                arrivalDate = currentBookingFilter[3] ;
+                passengerInfos.addAll(IRR_SVC_TedsService.getPassengerInfosForBookingFilters(departureStation,arrivalStation,departureDate,arrivalDate));
+            }
+            return passengerInfos;
+        }
+        catch (Exception e) {
+            AuraHandledException ahe = new AuraHandledException(currentBookingFilter + ' - ' + e.getMessage());
+            ahe.setMessage(currentBookingFilter + ' - ' + e.getMessage());
+            throw ahe;
+        }
+    }
+
+    @AuraEnabled
     public static List<IRR_MOD_PassengerInfo> getFlightPassengerInfos(String flightIds) {
         String currentFlightId;
         try {

@@ -127,6 +127,67 @@ private class IRR_CON_ManualCommunication_Test {
         System.assert(caughtException, 'Expected to catch AuraHandledException');
     }
 
+    @isTest
+    static void testGetAdvancedFilterPassengerInfos() {
+
+        //Set up mock
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
+
+        //Given
+        IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
+        passengerInfo.emailAddress = 'TEST_EMAIL';
+        List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>{
+                passengerInfo
+        };
+        mocks.startStubbing();
+        mocks.when(serviceMock.getPassengerInfosForBookingFilters('ARN', 'CPH', '2021-03-03', '2021-03-04'))
+                .thenReturn(passengerInfos);
+        mocks.stopStubbing();
+        IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
+
+        //when
+        List<IRR_MOD_PassengerInfo> passengerResult = IRR_CON_ManualCommunication.getAdvancedFilterPassengerInfos(
+                'ARN!CPH!2021-03-03!2021-03-04');
+
+        //Then
+        System.assertEquals(passengerInfos, passengerResult);
+        System.assertEquals(1, passengerResult.size());
+        System.assertEquals(passengerInfo.emailAddress, passengerResult[0].emailAddress);
+        ((IRR_SVC_ITedsService) mocks.verify(serviceMock))
+                .getPassengerInfosForBookingFilters('ARN', 'CPH', '2021-03-03', '2021-03-04');
+
+    }
+
+    @isTest
+    static void testGetAdvancedFilterPassengerInfos_Error (){
+
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IRR_SVC_ITedsService serviceMock = (IRR_SVC_ITedsService) mocks.mock(IRR_SVC_TedsServiceImpl.class);
+
+        //Given
+        IRR_SVC_TedsService.TedsException tedsException = new IRR_SVC_TedsService.TedsException('Integration Response: 404 - Not Found');
+        mocks.startStubbing();
+        mocks.when(serviceMock.getPassengerInfosForBookingFilters('ARN', 'CPH', '2021-03-03', '2021-03-04'))
+                .thenThrow(tedsException);
+        mocks.stopStubbing();
+        IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
+
+        //When
+        Boolean caughtException = false;
+        try {
+             List<IRR_MOD_PassengerInfo> passengerResult = IRR_CON_ManualCommunication.getAdvancedFilterPassengerInfos(
+                     'ARN!CPH!2021-03-03!2021-03-04');
+        } catch (AuraHandledException ahe) {
+                if(ahe.getMessage().contains('Integration Response: 404 - Not Found')) caughtException = true;
+                
+        }
+        //Then
+       ((IRR_SVC_ITedsService) mocks.verify(serviceMock))
+                .getPassengerInfosForBookingFilters('ARN', 'CPH', '2021-03-03', '2021-03-04');
+        System.assert(caughtException , 'Expected to catch AuraHandledException');
+    }
+
     @IsTest
     static void testGetFlightPassengerInfos() {
         //Set up mocks
