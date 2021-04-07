@@ -4,11 +4,15 @@
     <protected>false</protected>
     <values>
         <field>Case_Type_To_Assign__c</field>
-        <value xsi:type="xsd:string">Channel</value>
+        <value xsi:type="xsd:string">Ticketless</value>
     </values>
     <values>
         <field>Department_To_Assign__c</field>
         <value xsi:type="xsd:string">SAS Operating Center</value>
+    </values>
+    <values>
+        <field>Entitlement_To_Assign__c</field>
+        <value xsi:type="xsd:string">Basic 8 - 17</value>
     </values>
     <values>
         <field>Incoming_Case_Origin__c</field>

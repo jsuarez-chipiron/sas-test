@@ -301,9 +301,19 @@
                 <label>Email - Pandion SE</label>
             </value>
             <value>
+                <fullName>Email - Premium Corporate Support</fullName>
+                <default>false</default>
+                <label>Email - Premium Corporate Support</label>
+            </value>            
+            <value>
                 <fullName>Email - Sales Information</fullName>
                 <default>false</default>
                 <label>Email - Sales Information</label>
+            </value>
+            <value>
+                <fullName>Email - Sales Control</fullName>
+                <default>false</default>
+                <label>Email - Sales Control</label>
             </value>
             <value>
                 <fullName>Email - SAS Poland</fullName>
@@ -368,4 +378,3 @@
         </valueSetDefinition>
     </valueSet>
 </CustomField>
-

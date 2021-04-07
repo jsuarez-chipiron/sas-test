@@ -54,6 +54,10 @@
             <fullName>Liability</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>SAS Operating Center</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
@@ -71,6 +75,10 @@
         </values>
         <values>
             <fullName>ATC%2FATC Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent Helpdesk</fullName>
             <default>false</default>
         </values>
         <values>
@@ -111,6 +119,10 @@
         </values>
         <values>
             <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage Service</fullName>
             <default>false</default>
         </values>
         <values>
@@ -182,6 +194,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Corporate Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Corporate product</fullName>
             <default>false</default>
         </values>
@@ -210,11 +226,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Digital Channel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Digital channels R</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Digital support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Sales</fullName>
             <default>false</default>
         </values>
         <values>
@@ -283,6 +307,10 @@
         </values>
         <values>
             <fullName>Food</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales</fullName>
             <default>false</default>
         </values>
         <values>
@@ -359,6 +387,10 @@
         </values>
         <values>
             <fullName>OCC Daily Reports</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open coupon</fullName>
             <default>false</default>
         </values>
         <values>
@@ -483,6 +515,10 @@
         </values>
         <values>
             <fullName>Ticket Status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket wrongly rewritten</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2269,7 +2305,15 @@
     <picklistValues>
         <picklist>FCS_Site__c</picklist>
         <values>
+            <fullName>BOM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EVG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LCA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2278,6 +2322,10 @@
         </values>
         <values>
             <fullName>OER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STO</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2390,6 +2438,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Student Consulting</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sutherland</fullName>
             <default>false</default>
         </values>
@@ -2401,11 +2453,31 @@
     <picklistValues>
         <picklist>FCS_VirtualOrganization__c</picklist>
         <values>
+            <fullName>Agent Helpdesk</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Direct Sales</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Global Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liability NEB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Control</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2536,6 +2608,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - CS Feedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Corporate Support Backoffice</fullName>
             <default>false</default>
         </values>
@@ -2565,6 +2641,10 @@
         </values>
         <values>
             <fullName>Email - Direct Sales Reservations SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EB Vendor Support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2600,11 +2680,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Liability Claim</fullName>
+            <fullName>Email - EuroBonus Partner Support</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - EuroBonus Partner Support</fullName>
+            <fullName>Email - Liability Claim</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2617,6 +2697,14 @@
         </values>
         <values>
             <fullName>Email - System %26 Tariff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Ticketless Support</fullName>
+            <default>false</default>
+        </values>
+        <values>                        
+            <fullName>Internal - Support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2736,6 +2824,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EB Vendor Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EE</fullName>
             <default>false</default>
         </values>
@@ -2757,6 +2849,10 @@
         </values>
         <values>
             <fullName>FR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Feedback</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2888,6 +2984,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ticketless Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>UK</fullName>
             <default>false</default>
         </values>
@@ -2898,6 +2998,14 @@
     </picklistValues>
     <picklistValues>
         <picklist>Type</picklist>
+        <values>
+            <fullName>CS Feedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EB Vendor</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>SASSI Internal</fullName>
             <default>false</default>
@@ -2912,6 +3020,10 @@
         </values>
         <values>
             <fullName>Tariff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketless</fullName>
             <default>false</default>
         </values>
     </picklistValues>

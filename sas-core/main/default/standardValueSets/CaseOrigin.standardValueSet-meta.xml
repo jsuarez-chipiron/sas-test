@@ -186,7 +186,7 @@
         <default>false</default>
         <label>Email - Group Sales US</label>
     </standardValue>
-        <standardValue>
+    <standardValue>
         <fullName>Email - HQ Special Sales NO</fullName>
         <default>false</default>
         <label>Email - HQ Special Sales NO</label>
@@ -387,8 +387,23 @@
         <label>Email - CS Feedback</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Sales Control</fullName>
+        <default>false</default>
+        <label>Email - Sales Control</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Internal - Support</fullName>
+        <default>false</default>
+        <label>Internal - Support</label>
+    </standardValue>
+    <standardValue>
         <fullName>White Paper - Liability Claim</fullName>
         <default>false</default>
         <label>White Paper - Liability Claim</label>
-    </standardValue>        
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Premium Corporate Support</fullName>
+        <default>false</default>
+        <label>Email - Premium Corporate Support</label>
+    </standardValue>
 </StandardValueSet>

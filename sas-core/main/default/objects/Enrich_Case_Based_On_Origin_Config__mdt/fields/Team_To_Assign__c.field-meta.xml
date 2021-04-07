@@ -261,6 +261,11 @@
                 <label>PL</label>
             </value>
             <value>
+                <fullName>Premium Corporate Support</fullName>
+                <default>false</default>
+                <label>Premium Corporate Support</label>
+            </value>            
+            <value>
                 <fullName>RU</fullName>
                 <default>false</default>
                 <label>RU</label>
@@ -269,6 +274,11 @@
                 <fullName>Sales Information</fullName>
                 <default>false</default>
                 <label>Sales Information</label>
+            </value>
+            <value>
+                <fullName>Sales Control</fullName>
+                <default>false</default>
+                <label>Sales Control</label>
             </value>
             <value>
                 <fullName>SAS Poland</fullName>
@@ -348,4 +358,3 @@
         </valueSetDefinition>
     </valueSet>
 </CustomField>
-

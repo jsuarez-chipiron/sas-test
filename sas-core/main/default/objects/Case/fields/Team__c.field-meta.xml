@@ -266,6 +266,11 @@
                 <label>PL</label>
             </value>
             <value>
+                <fullName>Premium Corporate Support</fullName>
+                <default>false</default>
+                <label>Premium Corporate Support</label>
+            </value>            
+            <value>
                 <fullName>RU</fullName>
                 <default>false</default>
                 <label>RU</label>
@@ -274,6 +279,11 @@
                 <fullName>Sales Information</fullName>
                 <default>false</default>
                 <label>Sales Information</label>
+            </value>
+            <value>
+                <fullName>Sales Control</fullName>
+                <default>false</default>
+                <label>Sales Control</label>
             </value>
             <value>
                 <fullName>SAS Poland</fullName>
@@ -389,6 +399,10 @@
             <valueName>Backoffice</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <valueName>Sales Control</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
             <valueName>External</valueName>
         </valueSettings>
@@ -410,6 +424,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
+			<controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>EB Vendor Support</valueName>
         </valueSettings>
         <valueSettings>
@@ -624,5 +639,9 @@
             <controllingFieldValue>Liability</controllingFieldValue>
             <valueName>Settlement</valueName>
         </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Premium Corporate Support</valueName>
+        </valueSettings>        
     </valueSet>
 </CustomField>

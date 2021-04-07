@@ -7,6 +7,16 @@
         <label>Channel</label>
     </standardValue>
     <standardValue>
+        <fullName>CS Feedback</fullName>
+        <default>false</default>
+        <label>CS Feedback</label>
+    </standardValue>
+    <standardValue>
+        <fullName>EB Vendor</fullName>
+        <default>false</default>
+        <label>EB Vendor</label>
+    </standardValue>
+    <standardValue>
         <fullName>Feedback</fullName>
         <default>false</default>
         <label>Feedback</label>
@@ -45,5 +55,10 @@
         <fullName>Tariff</fullName>
         <default>false</default>
         <label>Tariff</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Ticketless</fullName>
+        <default>false</default>
+        <label>Ticketless</label>
     </standardValue>
 </StandardValueSet>

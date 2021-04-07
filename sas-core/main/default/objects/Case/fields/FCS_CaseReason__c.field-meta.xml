@@ -25,6 +25,11 @@
                 <label>AEM issues</label>
             </value>
             <value>
+                <fullName>Agent Helpdesk</fullName>
+                <default>false</default>
+                <label>Agent Helpdesk</label>
+            </value>
+            <value>
                 <fullName>Agent Helpdesk R</fullName>
                 <default>false</default>
                 <label>Agent Helpdesk R</label>
@@ -83,6 +88,11 @@
                 <fullName>Baggage</fullName>
                 <default>false</default>
                 <label>Baggage</label>
+            </value>
+            <value>
+                <fullName>Baggage Service</fullName>
+                <default>false</default>
+                <label>Baggage Service</label>
             </value>
             <value>
                 <fullName>Baggage service R</fullName>
@@ -165,6 +175,11 @@
                 <label>Corporate R</label>
             </value>
             <value>
+                <fullName>Corporate Support</fullName>
+                <default>false</default>
+                <label>Corporate Support</label>
+            </value>
+            <value>
                 <fullName>COVID-19 Testing</fullName>
                 <default>false</default>
                 <label>COVID-19 Testing</label>
@@ -205,6 +220,11 @@
                 <label>Digital</label>
             </value>
             <value>
+                <fullName>Digital Channel</fullName>
+                <default>false</default>
+                <label>Digital Channel</label>
+            </value>
+            <value>
                 <fullName>Digital channels R</fullName>
                 <default>false</default>
                 <label>Digital channels R</label>
@@ -213,6 +233,11 @@
                 <fullName>Digital support</fullName>
                 <default>false</default>
                 <label>Digital support</label>
+            </value>
+            <value>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+                <label>Direct Sales</label>
             </value>
             <value>
                 <fullName>Direct Sales R</fullName>
@@ -315,6 +340,11 @@
                 <label>Groups</label>
             </value>
             <value>
+                <fullName>Group Sales</fullName>
+                <default>false</default>
+                <label>Group Sales</label>
+            </value>
+            <value>
                 <fullName>Group sales R</fullName>
                 <default>false</default>
                 <label>Group sales R</label>
@@ -393,6 +423,11 @@
                 <fullName>OCC Daily Reports</fullName>
                 <default>false</default>
                 <label>OCC Daily Reports</label>
+            </value>
+			 <value>
+                <fullName>Open coupon</fullName>
+                <default>false</default>
+                <label>Open coupon</label>
             </value>
             <value>
                 <fullName>Other</fullName>
@@ -554,6 +589,11 @@
                 <default>false</default>
                 <label>Ticket Status</label>
             </value>
+			  <value>
+                <fullName>Ticket wrongly rewritten</fullName>
+                <default>false</default>
+                <label>Ticket wrongly rewritten</label>
+            </value>
             <value>
                 <fullName>Travel pass</fullName>
                 <default>false</default>
@@ -639,6 +679,7 @@
         <valueSettings>
             <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
@@ -667,7 +708,10 @@
             <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>System</controllingFieldValue>
             <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
             <controllingFieldValue>Feedback</controllingFieldValue>
+			<controllingFieldValue>Ticketless</controllingFieldValue>
+            <controllingFieldValue>EB Vendor</controllingFieldValue>
             <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
@@ -808,8 +852,13 @@
             <controllingFieldValue>Tariff</controllingFieldValue>
             <valueName>Policy</valueName>
         </valueSettings>
+		<valueSettings>
+           <controllingFieldValue>Ticketless</controllingFieldValue>
+            <valueName>Open coupon</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Sales Information</controllingFieldValue>
             <valueName>Refund</valueName>
@@ -817,6 +866,39 @@
         <valueSettings>
             <controllingFieldValue>Tariff</controllingFieldValue>
             <valueName>Tax/YQ</valueName>
+        </valueSettings>
+		<valueSettings>
+            <controllingFieldValue>Ticketless</controllingFieldValue>
+            <valueName>Ticket wrongly rewritten</valueName>			
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
+            <valueName>Agent Helpdesk</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
+            <valueName>Baggage Service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Claims</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
+            <valueName>Corporate Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
+            <valueName>Digital Channel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
+            <valueName>Direct Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
+            <valueName>Group Sales</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Channel</controllingFieldValue>
@@ -897,10 +979,6 @@
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <valueName>Airport Services</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Claims</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
