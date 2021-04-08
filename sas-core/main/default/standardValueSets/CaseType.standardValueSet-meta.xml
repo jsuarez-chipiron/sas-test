@@ -2,6 +2,16 @@
 <StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <sorted>true</sorted>
     <standardValue>
+        <fullName>Booking</fullName>
+        <default>false</default>
+        <label>Booking</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Businesstravel</fullName>
+        <default>false</default>
+        <label>Businesstravel</label>
+    </standardValue>
+    <standardValue>
         <fullName>Channel</fullName>
         <default>false</default>
         <label>Channel</label>
@@ -25,6 +35,11 @@
         <fullName>Functional Product Support</fullName>
         <default>false</default>
         <label>Functional Product Support</label>
+    </standardValue>
+    <standardValue>
+        <fullName>GDPR</fullName>
+        <default>false</default>
+        <label>GDPR</label>
     </standardValue>
     <standardValue>
         <fullName>Information</fullName>
