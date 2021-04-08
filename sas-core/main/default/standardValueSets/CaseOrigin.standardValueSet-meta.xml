@@ -396,4 +396,9 @@
         <default>false</default>
         <label>Email - Sales Control</label>
     </standardValue>
+    <standardValue>
+        <fullName>Internal - Manual</fullName>
+        <default>false</default>
+        <label>Internal - Manual</label>
+    </standardValue>
 </StandardValueSet>
