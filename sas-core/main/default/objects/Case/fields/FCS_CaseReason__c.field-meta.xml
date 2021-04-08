@@ -100,6 +100,11 @@
                 <label>Baggage service R</label>
             </value>
             <value>
+                <fullName>Bank Payment FIIBP</fullName>
+                <default>false</default>
+                <label>Bank Payment FIIBP</label>
+            </value>
+            <value>
                 <fullName>Campaigns</fullName>
                 <default>false</default>
                 <label>Campaigns</label>
@@ -268,6 +273,16 @@
                 <fullName>Error</fullName>
                 <default>false</default>
                 <label>Error</label>
+            </value>
+            <value>
+                <fullName>Error Handling Paypal</fullName>
+                <default>false</default>
+                <label>Error Handling Paypal</label>
+            </value>
+            <value>
+                <fullName>Error Handling Swish</fullName>
+                <default>false</default>
+                <label>Error Handling Swish</label>
             </value>
             <value>
                 <fullName>Eurobonus</fullName>

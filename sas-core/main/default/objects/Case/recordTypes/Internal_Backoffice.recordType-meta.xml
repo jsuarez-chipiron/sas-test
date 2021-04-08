@@ -55,6 +55,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Refunds</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refunds Agent Tickets</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SAS Operating Center</fullName>
             <default>false</default>
         </values>
@@ -127,6 +135,10 @@
         </values>
         <values>
             <fullName>Baggage service R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank Payment FIIBP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -263,6 +275,14 @@
         </values>
         <values>
             <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error Handling Paypal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error Handling Swish</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2778,6 +2798,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Refund_Flights_To_Cancel__c</picklist>
+        <values>
+            <fullName>Both</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outbound</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Team__c</picklist>
         <values>
             <fullName>ACE</fullName>
@@ -2793,6 +2828,14 @@
         </values>
         <values>
             <fullName>Agent Fares Ticketing EU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ancillaries</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BSP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2856,6 +2899,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>FIIBP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>FR</fullName>
             <default>false</default>
         </values>
@@ -2865,6 +2912,10 @@
         </values>
         <values>
             <fullName>Forsvaret NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2916,6 +2967,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>NCE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>NO</fullName>
             <default>false</default>
         </values>
@@ -2956,6 +3011,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>PayPal</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RU</fullName>
             <default>false</default>
         </values>
@@ -2988,11 +3047,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Swish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Swish Bot Output</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>System %26 Tariff</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>TAWEB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Agent Tickets</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ticketless Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UC04</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3001,6 +3080,10 @@
         </values>
         <values>
             <fullName>US</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>US ARC</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3024,6 +3107,10 @@
         </values>
         <values>
             <fullName>GDPR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund</fullName>
             <default>false</default>
         </values>
         <values>

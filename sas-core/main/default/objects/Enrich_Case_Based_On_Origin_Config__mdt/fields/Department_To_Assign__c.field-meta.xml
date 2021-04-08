@@ -56,12 +56,6 @@
                 <label>Group Sales</label>
             </value>
             <value>
-                <fullName>HQ</fullName>
-                <default>false</default>
-				<isActive>false</isActive>
-                <label>HQ</label>
-            </value>
-            <value>
                 <fullName>Info Hub</fullName>
                 <default>false</default>
                 <label>Info Hub</label>
