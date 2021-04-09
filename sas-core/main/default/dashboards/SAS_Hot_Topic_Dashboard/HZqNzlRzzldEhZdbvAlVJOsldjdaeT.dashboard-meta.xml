@@ -37,30 +37,7 @@
             <values>Facebook Messenger</values>
         </dashboardFilterOptions>
         <name>Case Origin</name>
-    </dashboardFilters>
-    <dashboardFilters>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>DirectSalesDK</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>DirectSalesEN</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>DirectSalesNO</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>DirectSalesSE</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>Global Support SoMe</values>
-        </dashboardFilterOptions>
-        <name>Queue</name>
-    </dashboardFilters>
+    </dashboardFilters>   
     <dashboardFilters>
         <dashboardFilterOptions>
             <operator>equals</operator>
