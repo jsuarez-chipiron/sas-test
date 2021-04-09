@@ -174,7 +174,7 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Website</field>
             <table>Account</table>
-        </columns>      
+        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Industry</field>
@@ -194,7 +194,7 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Ownership</field>
             <table>Account</table>
-        </columns>      
+        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Description</field>
@@ -244,12 +244,12 @@
             <checkedByDefault>false</checkedByDefault>
             <field>PersonContact</field>
             <table>Account</table>
-        </columns>        
+        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>AccountSource</field>
             <table>Account</table>
-        </columns>              
+        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>FCS_CMP__c</field>
@@ -665,10 +665,14 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Queue__c</field>
+            <field>Team__c</field>
+            <table>Account.Cases</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Department__c</field>
             <table>Account.Cases</table>
         </columns>
         <masterLabel>Cases</masterLabel>
     </sections>
 </ReportType>
-
