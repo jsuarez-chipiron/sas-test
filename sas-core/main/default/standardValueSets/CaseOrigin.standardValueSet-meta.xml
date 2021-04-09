@@ -397,8 +397,8 @@
         <label>Email - Sales Control</label>
     </standardValue>
     <standardValue>
-        <fullName>Internal - Manual</fullName>
+        <fullName>Manual</fullName>
         <default>false</default>
-        <label>Internal - Manual</label>
+        <label>Manual</label>
     </standardValue>
 </StandardValueSet>

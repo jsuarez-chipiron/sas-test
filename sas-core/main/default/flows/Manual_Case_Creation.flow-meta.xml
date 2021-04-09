@@ -61,7 +61,7 @@
         <expression>IF( {!DepartmentTeamList.topValue} = &quot;Info Hub&quot;, &quot;Internal/Backoffice&quot;, IF( {!DepartmentTeamList.topValue} = &quot;Functional Product Support&quot;, &quot;Functional Product Support&quot;, IF( {!DepartmentTeamList.topValue} = &quot;Liability&quot;, &quot;Claim&quot;, &quot;Channel&quot;)))</expression>
     </formulas>
     <interviewLabel>Manual Case Creation {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Manual Case Creation</label>
+    <label>Create new Case</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -98,7 +98,7 @@
         <inputAssignments>
             <field>Description</field>
             <value>
-                <elementReference>Description</elementReference>
+                <elementReference>CaseDescription</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -110,7 +110,7 @@
         <inputAssignments>
             <field>Origin</field>
             <value>
-                <stringValue>Internal - Manual</stringValue>
+                <stringValue>Manual</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -204,7 +204,7 @@
         <name>GetRecordTypeId</name>
         <label>GetRecordTypeId</label>
         <locationX>341</locationX>
-        <locationY>242</locationY>
+        <locationY>241</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CreateManualCase</targetReference>
@@ -221,6 +221,7 @@
         <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Case_Creation_Confirmation</name>
         <label>Case Creation Confirmation</label>
@@ -240,8 +241,8 @@
     <screens>
         <name>Get_information_from_user</name>
         <label>Get information from user</label>
-        <locationX>49</locationX>
-        <locationY>236</locationY>
+        <locationX>50</locationX>
+        <locationY>241</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -312,10 +313,9 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Description</name>
-            <dataType>String</dataType>
+            <name>CaseDescription</name>
             <fieldText>Description</fieldText>
-            <fieldType>InputField</fieldType>
+            <fieldType>LargeTextArea</fieldType>
             <isRequired>false</isRequired>
         </fields>
         <fields>
@@ -323,7 +323,7 @@
             <choiceReferences>ConsentYes</choiceReferences>
             <choiceReferences>ConsentNo</choiceReferences>
             <dataType>Boolean</dataType>
-            <fieldText>Manual Consent</fieldText>
+            <fieldText>Should customer data be retained?</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
