@@ -406,4 +406,9 @@
         <default>false</default>
         <label>Email - Premium Corporate Support</label>
     </standardValue>
+    <standardValue>
+        <fullName>Manual</fullName>
+        <default>false</default>
+        <label>Manual</label>
+    </standardValue>
 </StandardValueSet>
