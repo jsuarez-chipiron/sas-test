@@ -61,7 +61,6 @@
         <field>User.FCS_VirtualOrganization__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.FCS_CODSId__c</field>

@@ -230,12 +230,7 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Case.Subject</field>
             <table>MessagingSession</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Case.FCS_SubTeam__c</field>
-            <table>MessagingSession</table>
-        </columns>
+        </columns>      
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Case.Type</field>
