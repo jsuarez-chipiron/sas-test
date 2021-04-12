@@ -37,30 +37,7 @@
             <values>Facebook Messenger</values>
         </dashboardFilterOptions>
         <name>Case Origin</name>
-    </dashboardFilters>
-    <dashboardFilters>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>DirectSalesDK</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>DirectSalesEN</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>DirectSalesNO</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>DirectSalesSE</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>Global Support SoMe</values>
-        </dashboardFilterOptions>
-        <name>Queue</name>
-    </dashboardFilters>
+    </dashboardFilters>   
     <dashboardFilters>
         <dashboardFilterOptions>
             <operator>equals</operator>
@@ -98,10 +75,7 @@
                 <componentType>Column</componentType>
                 <dashboardFilterColumns>
                     <column>ORIGIN</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Queue__c</column>
-                </dashboardFilterColumns>
+                </dashboardFilterColumns>               
                 <dashboardFilterColumns>
                     <column>CREATED_DATE</column>
                 </dashboardFilterColumns>
@@ -145,9 +119,6 @@
                     <column>ORIGIN</column>
                 </dashboardFilterColumns>
                 <dashboardFilterColumns>
-                    <column>Case.Queue__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
                     <column>CREATED_DATE</column>
                 </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
@@ -188,10 +159,7 @@
                 <componentType>Column</componentType>
                 <dashboardFilterColumns>
                     <column>ORIGIN</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Queue__c</column>
-                </dashboardFilterColumns>
+                </dashboardFilterColumns>                
                 <dashboardFilterColumns>
                     <column>CREATED_DATE</column>
                 </dashboardFilterColumns>
@@ -233,10 +201,7 @@
                 <componentType>Donut</componentType>
                 <dashboardFilterColumns>
                     <column>ORIGIN</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Queue__c</column>
-                </dashboardFilterColumns>
+                </dashboardFilterColumns>              
                 <dashboardFilterColumns>
                     <column>CREATED_DATE</column>
                 </dashboardFilterColumns>
@@ -280,10 +245,7 @@
                 <componentType>Donut</componentType>
                 <dashboardFilterColumns>
                     <column>ORIGIN</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Queue__c</column>
-                </dashboardFilterColumns>
+                </dashboardFilterColumns>                
                 <dashboardFilterColumns>
                     <column>CREATED_DATE</column>
                 </dashboardFilterColumns>
@@ -327,10 +289,7 @@
                 <componentType>Donut</componentType>
                 <dashboardFilterColumns>
                     <column>ORIGIN</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Queue__c</column>
-                </dashboardFilterColumns>
+                </dashboardFilterColumns>              
                 <dashboardFilterColumns>
                     <column>CREATED_DATE</column>
                 </dashboardFilterColumns>
@@ -374,10 +333,7 @@
                 <componentType>Donut</componentType>
                 <dashboardFilterColumns>
                     <column>ORIGIN</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Queue__c</column>
-                </dashboardFilterColumns>
+                </dashboardFilterColumns>              
                 <dashboardFilterColumns>
                     <column>CREATED_DATE</column>
                 </dashboardFilterColumns>
@@ -423,9 +379,6 @@
                     <column>ORIGIN</column>
                 </dashboardFilterColumns>
                 <dashboardFilterColumns>
-                    <column>Case.Queue__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
                     <column>CREATED_DATE</column>
                 </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
@@ -468,10 +421,7 @@
                 <componentType>ColumnGrouped</componentType>
                 <dashboardFilterColumns>
                     <column>ORIGIN</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Queue__c</column>
-                </dashboardFilterColumns>
+                </dashboardFilterColumns>               
                 <dashboardFilterColumns>
                     <column>CREATED_DATE</column>
                 </dashboardFilterColumns>
@@ -519,10 +469,7 @@
                 <componentType>ColumnGrouped</componentType>
                 <dashboardFilterColumns>
                     <column>ORIGIN</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Case.Queue__c</column>
-                </dashboardFilterColumns>
+                </dashboardFilterColumns>              
                 <dashboardFilterColumns>
                     <column>CREATED_DATE</column>
                 </dashboardFilterColumns>

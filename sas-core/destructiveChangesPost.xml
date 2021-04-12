@@ -53,6 +53,11 @@
 		<members>Case.CaseTags__c</members>
 		<name>CustomField</name>
 	</types>
+	<!-- 2020-04-209 Delete field Queue Thippeswamy A -->
+	<types>
+		<members>Case.Queue__c</members>
+		<name>CustomField</name>
+	</types>
 
 	<!-- 2020-05-20 Delete CustomApplication -->
 	<types>
@@ -89,4 +94,9 @@
 		<members>Agent_Helpdesk_SIA</members>
 		<name>Group</name>
 	</types>
+<!--2020-04-19 remove Social post process builder updating Site, vendor, team and Sub team Thippeswamy Aravinda -->
+	<types>
+        <members>SocialPost-3</members>
+        <name>Flow</name>
+    </types>
 </Package>

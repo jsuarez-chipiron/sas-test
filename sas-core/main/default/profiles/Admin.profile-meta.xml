@@ -471,12 +471,7 @@
         <editable>true</editable>
         <field>Case.Team__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>Case.Queue__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions>	
     <fieldPermissions>
         <editable>true</editable>
         <field>EmailMessage.Is_Counted__c</field>
