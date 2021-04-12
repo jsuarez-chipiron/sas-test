@@ -59,6 +59,26 @@
 		<name>CustomField</name>
 	</types>
 
+	<!-- 2020-04-12 Delete case fields Thippeswamy A -->
+	<types>
+		<members>Case.FCS_Team__c</members>
+		<members>Case.FCS_SubTeam__c</members>
+		<members>Case.FCS_Vendor__c</members>
+		<members>Case.FCS_Site__c</members>
+		<members>Case.FCS_VirtualOrganization__c</members>
+		<name>CustomField</name>
+	</types>
+
+	<!-- 2020-04-12 Delete case fields Thippeswamy A -->
+	<types>
+		<members>SocialPost.FCS_Team__c</members>
+		<members>SocialPost.FCS_SubTeam__c</members>
+		<members>SocialPost.FCS_Vendor__c</members>
+		<members>SocialPost.FCS_Site__c</members>
+		<members>SocialPost.FCS_VirtualOrganization__c</members>
+		<name>CustomField</name>
+	</types>
+
 	<!-- 2020-05-20 Delete CustomApplication -->
 	<types>
 		<members>SAS_IRR</members>
@@ -97,6 +117,10 @@
 <!--2020-04-19 remove Social post process builder updating Site, vendor, team and Sub team Thippeswamy Aravinda -->
 	<types>
         <members>SocialPost-3</members>
+		<members>SocialPost-1</members>
+		<members>SocialPost-2</members>
+		<members>SocialPost-4</members>
+		<members>SocialPost-5</members>
         <name>Flow</name>
     </types>
 </Package>

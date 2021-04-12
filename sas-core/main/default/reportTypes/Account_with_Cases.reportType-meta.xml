@@ -595,16 +595,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>FCS_Site__c</field>
-            <table>Account.Cases</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>FCS_SubTeam__c</field>
-            <table>Account.Cases</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>FCS_SurveyInvitationLink__c</field>
             <table>Account.Cases</table>
         </columns>
@@ -616,21 +606,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>FCS_TPAccountNumber__c</field>
-            <table>Account.Cases</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>FCS_Team__c</field>
-            <table>Account.Cases</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>FCS_Vendor__c</field>
-            <table>Account.Cases</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>FCS_VirtualOrganization__c</field>
             <table>Account.Cases</table>
         </columns>
         <columns>
