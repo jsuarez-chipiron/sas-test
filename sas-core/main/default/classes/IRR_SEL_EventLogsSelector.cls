@@ -16,10 +16,6 @@ public class IRR_SEL_EventLogsSelector extends fflib_SObjectSelector
         {
                 IRR_EventLog__c.Id,
                 IRR_EventLog__c.CreatedDate,
-                IRR_EventLog__c.Event_Payload_1__c,
-                IRR_EventLog__c.Event_Payload_2__c,
-                IRR_EventLog__c.Event_Payload_3__c,
-                IRR_EventLog__c.Event_Payload_4__c,
                 IRR_EventLog__c.IRR_EventTime__c,
                 IRR_EventLog__c.IRR_ScheduleTime__c,
                 IRR_EventLog__c.IRR_FlightId__c
