@@ -539,7 +539,7 @@
         <description>Input for making a request to another department</description>
         <name>To_Other_Department</name>
         <label>To Other Department</label>
-        <locationX>174</locationX>
+        <locationX>175</locationX>
         <locationY>378</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -627,7 +627,7 @@
             <dataType>String</dataType>
             <fieldText>Chatter Comment</fieldText>
             <fieldType>InputField</fieldType>
-            <helpText>&lt;p&gt;Please provide write the motive for redirecting or escalating the case&lt;/p&gt;</helpText>
+            <helpText>&lt;p&gt;Please write the motive for redirecting or escalating the case&lt;/p&gt;</helpText>
             <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>

@@ -4,7 +4,7 @@
     <feedLayout>
         <autocollapsePublisher>false</autocollapsePublisher>
         <compactFeed>false</compactFeed>
-        <feedFilterPosition>LeftFixed</feedFilterPosition>
+        <feedFilterPosition>CenterDropDown</feedFilterPosition>
         <feedFilters>
             <feedFilterType>FeedItemType</feedFilterType>
             <feedItemType>EmailMessageEvent</feedItemType>
@@ -15,10 +15,6 @@
         <feedFilters>
             <feedFilterType>FeedItemType</feedFilterType>
             <feedItemType>TextPost</feedItemType>
-        </feedFilters>
-        <feedFilters>
-            <feedFilterType>FeedItemType</feedFilterType>
-            <feedItemType>ChangeStatusPost</feedItemType>
         </feedFilters>
         <feedFilters>
             <feedFilterType>FeedItemType</feedFilterType>
@@ -91,14 +87,6 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>FCS_PNR__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>FCS_PIR__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>FCS_Language__c</field>
@@ -191,6 +179,18 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LIA_Deadline__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>LIA_PNR__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>LIA_Flight_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>LIA_Flight_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -323,11 +323,6 @@
             <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Share</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>9</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>PrintableView</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>10</sortOrder>
@@ -363,14 +358,24 @@
             <sortOrder>16</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Update_Liability_Team</actionName>
+            <actionName>Case.Create_Liability_Claim</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>17</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.To_Other_Department</actionName>
+            <actionName>Case.Update_Liability_Team</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>18</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.To_Other_Department</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>19</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Share</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>9</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -450,7 +455,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000002Cdnd</masterLabel>
+        <masterLabel>00h3N000002DDc5</masterLabel>
         <sizeX>3</sizeX>
         <sizeY>4</sizeY>
         <summaryLayoutItems>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Lock_Claim_After_Merge</fullName>
-    <active>true</active>
-    <description>Prevents any update to a claim that has been merged</description>
-    <errorConditionFormula>IsMerged__c = True</errorConditionFormula>
-    <errorMessage>This Liability Claim cannot be updated since it has been merged</errorMessage>
-</ValidationRule>

@@ -32,7 +32,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.LIA_Flight_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.LIA_Flight_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.LIA_Jurisdiction__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.LIA_PNR__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -91,11 +106,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.IsMerged__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Judicial_Body__c</field>
         <readable>true</readable>
@@ -118,6 +128,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Legal_Conclusion__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Liability_Claim_Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
