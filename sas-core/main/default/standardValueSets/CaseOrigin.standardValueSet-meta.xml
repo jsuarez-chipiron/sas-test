@@ -187,9 +187,9 @@
         <label>Email - Group Sales US</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - HQ Special Sales NO</fullName>
+        <fullName>Email - Special Sales NO</fullName>
         <default>false</default>
-        <label>Email - HQ Special Sales NO</label>
+        <label>Email - Special Sales NO</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Olympic DK</fullName>

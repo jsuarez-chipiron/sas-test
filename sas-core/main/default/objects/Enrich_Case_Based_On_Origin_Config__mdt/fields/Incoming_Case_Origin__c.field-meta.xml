@@ -261,9 +261,9 @@
                 <label>Email - Group Sales US</label>
             </value>
             <value>
-                <fullName>Email - HQ Special Sales NO</fullName>
+                <fullName>Email - Special Sales NO</fullName>
                 <default>false</default>
-                <label>Email - HQ Special Sales NO</label>
+                <label>Email - Special Sales NO</label>
             </value>
             <value>
                 <fullName>Email - Liability Claim</fullName>
