@@ -26,11 +26,6 @@
                 <label>Admin</label>
             </value>
             <value>
-                <fullName>Agent Fares Ticketing EU</fullName>
-                <default>false</default>
-                <label>Agent Fares Ticketing EU</label>
-            </value>
-            <value>
                 <fullName>Ancillaries</fullName>
                 <default>false</default>
                 <label>Ancillaries</label>
@@ -527,6 +522,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SME</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <valueName>International</valueName>
         </valueSettings>
         <valueSettings>
@@ -537,10 +533,6 @@
         <valueSettings>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <valueName>SoMe</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <valueName>Agent Fares Ticketing EU</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>

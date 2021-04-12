@@ -2661,7 +2661,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Agent Fares Ticketing EU</fullName>
+            <fullName>Email - Agent Helpdesk International</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3037,10 +3037,6 @@
         </values>
         <values>
             <fullName>Admin</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Agent Fares Ticketing EU</fullName>
             <default>false</default>
         </values>
         <values>

@@ -37,9 +37,9 @@
         <label>Facebook Messenger</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - Agent Fares Ticketing EU</fullName>
+        <fullName>Email - Agent Helpdesk International</fullName>
         <default>false</default>
-        <label>Email - Agent Fares Ticketing EU</label>
+        <label>Email - Agent Helpdesk International</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Agent Helpdesk Scandinavia</fullName>

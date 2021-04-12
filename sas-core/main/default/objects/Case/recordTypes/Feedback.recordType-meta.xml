@@ -2596,6 +2596,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Agent Helpdesk International</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Corporate Support Backoffice</fullName>
             <default>false</default>
         </values>
@@ -2775,10 +2779,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Agent Fares Ticketing EU</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Ancillaries</fullName>
             <default>false</default>
         </values>
@@ -2896,6 +2896,10 @@
         </values>
         <values>
             <fullName>Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International</fullName>
             <default>false</default>
         </values>
         <values>

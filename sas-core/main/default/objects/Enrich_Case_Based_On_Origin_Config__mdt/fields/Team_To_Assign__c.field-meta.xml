@@ -21,11 +21,6 @@
                 <label>Admin</label>
             </value>
             <value>
-                <fullName>Agent Fares Ticketing EU</fullName>
-                <default>false</default>
-                <label>Agent Fares Ticketing EU</label>
-            </value>
-            <value>
                 <fullName>AT</fullName>
                 <default>false</default>
                 <label>AT</label>

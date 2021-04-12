@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Email - Agent Fares Ticketing EU</label>
+    <label>Email - Agent Helpdesk International</label>
     <protected>false</protected>
     <values>
         <field>Case_Type_To_Assign__c</field>
@@ -16,10 +16,10 @@
     </values>
     <values>
         <field>Incoming_Case_Origin__c</field>
-        <value xsi:type="xsd:string">Email - Agent Fares Ticketing EU</value>
+        <value xsi:type="xsd:string">Email - Agent Helpdesk International</value>
     </values>
     <values>
         <field>Team_To_Assign__c</field>
-        <value xsi:type="xsd:string">Agent Fares Ticketing EU</value>
+        <value xsi:type="xsd:string">International</value>
     </values>
 </CustomMetadata>
