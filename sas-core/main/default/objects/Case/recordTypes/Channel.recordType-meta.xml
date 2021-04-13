@@ -2712,7 +2712,7 @@
         <values>
             <fullName>Email - Premium Corporate Support</fullName>
             <default>false</default>
-        </values>        
+        </values>
         <values>
             <fullName>Email - SAS Poland</fullName>
             <default>false</default>
@@ -3172,11 +3172,51 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
+            <fullName>Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Businesstravel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS Feedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Channel</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>EB Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GDPR</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SASSI Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tariff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketless</fullName>
             <default>false</default>
         </values>
     </picklistValues>

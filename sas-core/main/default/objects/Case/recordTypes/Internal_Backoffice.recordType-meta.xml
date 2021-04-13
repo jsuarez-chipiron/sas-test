@@ -2888,11 +2888,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Travel Agent Tickets</fullName>
+            <fullName>Ticketless Support</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Ticketless Support</fullName>
+            <fullName>Travel Agent Tickets</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2924,6 +2924,10 @@
         </values>
         <values>
             <fullName>CS Feedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Channel</fullName>
             <default>false</default>
         </values>
         <values>
