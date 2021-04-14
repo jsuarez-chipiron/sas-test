@@ -39,6 +39,10 @@ steps:
     fi
   displayName: 'Remove sharing rules'
 
+  - script: |
+    sleep 2m
+  displayName: 'Sleep for 2 minutes to allow sharing rule changes to complete'
+
 - script: |
     sfdx force:source:push --targetusername ciorg --forceoverwrite
   displayName: 'Push Source'
