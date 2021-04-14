@@ -37,7 +37,7 @@
                 <componentInstanceProperties>
                     <name>icon</name>
                     <type>decorator</type>
-                    <value>fallback</value>
+                    <value>case</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
