@@ -70,11 +70,6 @@
                 <label>Refunds</label>
             </value>
             <value>
-                <fullName>Refunds Agent Tickets</fullName>
-                <default>false</default>
-                <label>Refunds Agent Tickets</label>
-            </value>
-            <value>
                 <fullName>SAS Operating Center</fullName>
                 <default>false</default>
                 <label>SAS Operating Center</label>

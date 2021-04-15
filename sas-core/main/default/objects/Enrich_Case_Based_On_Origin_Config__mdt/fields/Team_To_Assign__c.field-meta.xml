@@ -36,6 +36,46 @@
                 <label>Benelux</label>
             </value>
             <value>
+                <fullName>BOM BSP</fullName>
+                <default>false</default>
+                <label>BOM BSP </label>
+            </value>
+            <value>
+                <fullName>BOM Forms Customer</fullName>
+                <default>false</default>
+                <label>BOM Forms Customer</label>
+            </value>
+            <value>
+                <fullName>BOM Forms Travel Agent</fullName>
+                <default>false</default>
+                <label>BOM Forms Travel Agent</label>
+            </value>
+            <value>
+                <fullName>BOM Forsvaret</fullName>
+                <default>false</default>
+                <label>BOM Forsvaret</label>
+            </value>
+            <value>
+                <fullName>BOM General</fullName>
+                <default>false</default>
+                <label>BOM General</label>
+            </value>
+            <value>
+                <fullName>BOM Groups</fullName>
+                <default>false</default>
+                <label>BOM Groups</label>
+            </value>
+            <value>
+                <fullName>BOM Reminders</fullName>
+                <default>false</default>
+                <label>BOM Reminders</label>
+            </value>
+            <value>
+                <fullName>BOM Tenured</fullName>
+                <default>false</default>
+                <label>BOM Tenured</label>
+            </value>
+            <value>
                 <fullName>Bulk</fullName>
                 <default>false</default>
                 <label>Bulk</label>
@@ -209,6 +249,36 @@
                 <fullName>NO</fullName>
                 <default>false</default>
                 <label>NO</label>
+            </value>
+            <value>
+                <fullName>OC Bank Transfer</fullName>
+                <default>false</default>
+                <label>OC Bank Transfer</label>
+            </value>
+            <value>
+                <fullName>OC General</fullName>
+                <default>false</default>
+                <label>OC General</label>
+            </value>
+            <value>
+                <fullName>OC Groups</fullName>
+                <default>false</default>
+                <label>OC Groups</label>
+            </value>
+            <value>
+                <fullName>OC Klarna Disputes</fullName>
+                <default>false</default>
+                <label>OC Klarna Disputes</label>
+            </value>
+            <value>
+                <fullName>OC Reserved Amount</fullName>
+                <default>false</default>
+                <label>OC Reserved Amount</label>
+            </value>
+            <value>
+                <fullName>OC Travel Agent</fullName>
+                <default>false</default>
+                <label>OC Travel Agent</label>
             </value>
             <value>
                 <fullName>Olympic DK</fullName>

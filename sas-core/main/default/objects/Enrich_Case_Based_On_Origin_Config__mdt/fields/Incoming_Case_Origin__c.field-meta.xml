@@ -40,7 +40,7 @@
                 <default>false</default>
                 <label>Email - Corporate Support Scandinavia</label>
             </value>
-			<value>
+            <value>
                 <fullName>Email - CS Feedback</fullName>
                 <default>false</default>
                 <label>Email - CS Feedback</label>
@@ -261,11 +261,6 @@
                 <label>Email - Group Sales US</label>
             </value>
             <value>
-                <fullName>Email - Special Sales NO</fullName>
-                <default>false</default>
-                <label>Email - Special Sales NO</label>
-            </value>
-            <value>
                 <fullName>Email - Liability Claim</fullName>
                 <default>false</default>
                 <label>Email - Liability Claim</label>
@@ -304,16 +299,66 @@
                 <fullName>Email - Premium Corporate Support</fullName>
                 <default>false</default>
                 <label>Email - Premium Corporate Support</label>
-            </value>            
+            </value>
             <value>
-                <fullName>Email - Sales Information</fullName>
+                <fullName>Email - Refund BSP General</fullName>
                 <default>false</default>
-                <label>Email - Sales Information</label>
+                <label>Email - Refund BSP General</label>
+            </value>
+            <value>
+                <fullName>Email - Refund BSP General 2</fullName>
+                <default>false</default>
+                <label>Email - Refund BSP General 2</label>
+            </value>
+            <value>
+                <fullName>Email - Refund DK General</fullName>
+                <default>false</default>
+                <label>Email - Refund DK General</label>
+            </value>
+            <value>
+                <fullName>Email - Refund FI General</fullName>
+                <default>false</default>
+                <label>Email - Refund FI General</label>
+            </value>
+            <value>
+                <fullName>Email - Refund NCE General</fullName>
+                <default>false</default>
+                <label>Email - Refund NCE General</label>
+            </value>
+            <value>
+                <fullName>Email - Refund NO General</fullName>
+                <default>false</default>
+                <label>Email - Refund NO General</label>
+            </value>
+            <value>
+                <fullName>Email - Refund Operating Center</fullName>
+                <default>false</default>
+                <label>Email - Refund Operating Center</label>
+            </value>
+            <value>
+                <fullName>Email - Refund SE General</fullName>
+                <default>false</default>
+                <label>Email - Refund SE General</label>
+            </value>
+            <value>
+                <fullName>Email - Refund SE General 2</fullName>
+                <default>false</default>
+                <label>Email - Refund SE General 2</label>
+            </value>
+            <value>
+                <fullName>Email - Refund US General</fullName>
+                <default>false</default>
+                <label>Email - Refund US General</label>
             </value>
             <value>
                 <fullName>Email - Sales Control</fullName>
                 <default>false</default>
                 <label>Email - Sales Control</label>
+            </value>
+            <value>
+                <fullName>Email - Sales Information</fullName>
+                <default>false</default>
+                <label>Email - Sales Information</label>
             </value>
             <value>
                 <fullName>Email - SAS Poland</fullName>
@@ -324,11 +369,6 @@
                 <fullName>Email - SASSI Internal</fullName>
                 <default>false</default>
                 <label>Email - SASSI Internal</label>
-            </value>          	
-            <value>	
-                <fullName>Email - SGH Bag SE</fullName>	
-                <default>false</default>	
-                <label>Email - SGH Bag SE</label>	
             </value>
             <value>
                 <fullName>Email - SGH Bag DK</fullName>
@@ -339,6 +379,11 @@
                 <fullName>Email - SGH Bag NO</fullName>
                 <default>false</default>
                 <label>Email - SGH Bag NO</label>
+            </value>
+            <value>
+                <fullName>Email - SGH Bag SE</fullName>
+                <default>false</default>
+                <label>Email - SGH Bag SE</label>
             </value>
             <value>
                 <fullName>Email - SME International</fullName>
@@ -356,6 +401,11 @@
                 <label>Email - SoMe Support</label>
             </value>
             <value>
+                <fullName>Email - Special Sales NO</fullName>
+                <default>false</default>
+                <label>Email - Special Sales NO</label>
+            </value>
+            <value>
                 <fullName>Email - Star Alliance Upgrades</fullName>
                 <default>false</default>
                 <label>Email - Star Alliance Upgrades</label>
@@ -371,10 +421,25 @@
                 <label>Email - Ticketless Support</label>
             </value>
             <value>
+                <fullName>Form - Refund Customer</fullName>
+                <default>false</default>
+                <label>Form - Refund Customer</label>
+            </value>
+            <value>
+                <fullName>Form - Refund Forsvaret</fullName>
+                <default>false</default>
+                <label>Form - Refund Forsvaret</label>
+            </value>
+            <value>
+                <fullName>Form - Refund Travel Agent</fullName>
+                <default>false</default>
+                <label>Form - Refund Travel Agent</label>
+            </value>
+            <value>
                 <fullName>White Paper - Liability Claim</fullName>
                 <default>false</default>
                 <label>White Paper - Liability Claim</label>
-            </value>            
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -59,10 +59,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Refunds Agent Tickets</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>SoMe Support</fullName>
             <default>false</default>
         </values>
@@ -127,10 +123,6 @@
         </values>
         <values>
             <fullName>Baggage service R</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bank Payment FIIBP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -251,14 +243,6 @@
         </values>
         <values>
             <fullName>Error</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Error Handling Paypal</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Error Handling Swish</fullName>
             <default>false</default>
         </values>
         <values>
@@ -434,6 +418,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Refund not received</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Requesting documentation</fullName>
             <default>false</default>
         </values>
@@ -515,6 +503,10 @@
         </values>
         <values>
             <fullName>Travel pass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1045,6 +1037,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Full</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>GDPR</fullName>
             <default>false</default>
         </values>
@@ -1314,6 +1310,10 @@
         </values>
         <values>
             <fullName>Pandion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partial</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2493,11 +2493,63 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Refund BSP General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund BSP General 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund DK General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund FI General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund NCE General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund NO General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund Operating Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund SE General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund SE General 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund US General</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - SoMe Support</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Facebook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refund Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refund Forsvaret</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refund Travel Agent</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2600,11 +2652,35 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Ancillaries</fullName>
+            <fullName>BOM BSP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>BSP</fullName>
+            <fullName>BOM Forms Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM Forms Travel Agent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM Forsvaret</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM Reminders</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM Tenured</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2661,10 +2737,6 @@
         </values>
         <values>
             <fullName>FI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FIIBP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2732,15 +2804,35 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>NCE</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>NO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Name Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Bank Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Klarna Disputes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Reserved Amount</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Travel Agent</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2773,10 +2865,6 @@
         </values>
         <values>
             <fullName>Partner Support</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PayPal</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2816,27 +2904,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Swish</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Swish Bot Output</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>System %26 Tariff</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TAWEB</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Travel Agent Tickets</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>UC04</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2845,10 +2913,6 @@
         </values>
         <values>
             <fullName>US</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>US ARC</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -40,6 +40,10 @@
                 <behavior>Edit</behavior>
                 <field>Last_Received_Email_On__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Refund_Request__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

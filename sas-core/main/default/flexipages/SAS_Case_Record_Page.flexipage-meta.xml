@@ -224,13 +224,44 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>titleFieldName</name>
-                    <value>Refund Request</value>
+                    <value>Case Refund Information</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>updateQuickActionName</name>
                     <value>Case.Update_Case_Refund</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Refund</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>lookupFieldName</name>
+                    <value>Case.Refund_Request__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>titleFieldName</name>
+                    <value>Refund Request</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>updateQuickActionName</name>
+                    <value>Refund_Request__c.Refund_Request</value>
+                </componentInstanceProperties>
+                <componentName>console:relatedRecord</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Refund</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

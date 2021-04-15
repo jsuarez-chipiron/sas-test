@@ -137,11 +137,6 @@
         <field>Account.FCS_TPAccountNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.FCS_AskedForHelp__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
      <fieldPermissions>
         <editable>true</editable>
         <field>Case.PNR_Payment_Status__c</field>
@@ -391,6 +386,36 @@
         <editable>false</editable>
         <field>Case.SuppliedEmail</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Refund_Request__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.Country_of_Purchase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.Note__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.PNR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.Refund_Macro__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.Ticket_Numbers__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

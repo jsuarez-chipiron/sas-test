@@ -26,11 +26,6 @@
                 <label>Admin</label>
             </value>
             <value>
-                <fullName>Ancillaries</fullName>
-                <default>false</default>
-                <label>Ancillaries</label>
-            </value>
-            <value>
                 <fullName>AT</fullName>
                 <default>false</default>
                 <label>AT</label>
@@ -46,9 +41,44 @@
                 <label>Benelux</label>
             </value>
             <value>
-                <fullName>BSP</fullName>
+                <fullName>BOM BSP</fullName>
                 <default>false</default>
-                <label>BSP</label>
+                <label>BOM BSP </label>
+            </value>
+            <value>
+                <fullName>BOM Forms Customer</fullName>
+                <default>false</default>
+                <label>BOM Forms Customer</label>
+            </value>
+            <value>
+                <fullName>BOM Forms Travel Agent</fullName>
+                <default>false</default>
+                <label>BOM Forms Travel Agent</label>
+            </value>
+            <value>
+                <fullName>BOM Forsvaret</fullName>
+                <default>false</default>
+                <label>BOM Forsvaret</label>
+            </value>
+            <value>
+                <fullName>BOM General</fullName>
+                <default>false</default>
+                <label>BOM General</label>
+            </value>
+            <value>
+                <fullName>BOM Groups</fullName>
+                <default>false</default>
+                <label>BOM Groups</label>
+            </value>
+            <value>
+                <fullName>BOM Reminders</fullName>
+                <default>false</default>
+                <label>BOM Reminders</label>
+            </value>
+            <value>
+                <fullName>BOM Tenured</fullName>
+                <default>false</default>
+                <label>BOM Tenured</label>
             </value>
             <value>
                 <fullName>Bulk</fullName>
@@ -129,11 +159,6 @@
                 <fullName>FI</fullName>
                 <default>false</default>
                 <label>FI</label>
-            </value>
-            <value>
-                <fullName>FIIBP</fullName>
-                <default>false</default>
-                <label>FIIBP</label>
             </value>
             <value>
                 <fullName>Forsvaret NO</fullName>
@@ -231,14 +256,39 @@
                 <label>Name Change</label>
             </value>
             <value>
-                <fullName>NCE</fullName>
-                <default>false</default>
-                <label>NCE</label>
-            </value>
-            <value>
                 <fullName>NO</fullName>
                 <default>false</default>
                 <label>NO</label>
+            </value>
+            <value>
+                <fullName>OC Bank Transfer</fullName>
+                <default>false</default>
+                <label>OC Bank Transfer</label>
+            </value>
+            <value>
+                <fullName>OC General</fullName>
+                <default>false</default>
+                <label>OC General</label>
+            </value>
+            <value>
+                <fullName>OC Groups</fullName>
+                <default>false</default>
+                <label>OC Groups</label>
+            </value>
+            <value>
+                <fullName>OC Klarna Disputes</fullName>
+                <default>false</default>
+                <label>OC Klarna Disputes</label>
+            </value>
+            <value>
+                <fullName>OC Reserved Amount</fullName>
+                <default>false</default>
+                <label>OC Reserved Amount</label>
+            </value>
+            <value>
+                <fullName>OC Travel Agent</fullName>
+                <default>false</default>
+                <label>OC Travel Agent</label>
             </value>
             <value>
                 <fullName>Olympic DK</fullName>
@@ -281,11 +331,6 @@
                 <label>Partner Support</label>
             </value>
             <value>
-                <fullName>PayPal</fullName>
-                <default>false</default>
-                <label>PayPal</label>
-            </value>
-            <value>
                 <fullName>PL</fullName>
                 <default>false</default>
                 <label>PL</label>
@@ -294,7 +339,7 @@
                 <fullName>Premium Corporate Support</fullName>
                 <default>false</default>
                 <label>Premium Corporate Support</label>
-            </value>            
+            </value>
             <value>
                 <fullName>RU</fullName>
                 <default>false</default>
@@ -366,39 +411,14 @@
                 <label>Star Alliance Upgrades</label>
             </value>
             <value>
-                <fullName>Swish</fullName>
-                <default>false</default>
-                <label>Swish</label>
-            </value>
-            <value>
-                <fullName>Swish Bot Output</fullName>
-                <default>false</default>
-                <label>Swish Bot Output</label>
-            </value>
-            <value>
                 <fullName>System &amp; Tariff</fullName>
                 <default>false</default>
                 <label>System &amp; Tariff</label>
             </value>
             <value>
-                <fullName>TAWEB</fullName>
-                <default>false</default>
-                <label>TAWEB</label>
-            </value>
-            <value>
                 <fullName>Ticketless Support</fullName>
                 <default>false</default>
                 <label>Ticketless Support</label>
-            </value>
-            <value>
-                <fullName>Travel Agent Tickets</fullName>
-                <default>false</default>
-                <label>Travel Agent Tickets</label>
-            </value>
-            <value>
-                <fullName>UC04</fullName>
-                <default>false</default>
-                <label>UC04</label>
             </value>
             <value>
                 <fullName>UK</fullName>
@@ -410,95 +430,71 @@
                 <default>false</default>
                 <label>US</label>
             </value>
-            <value>
-                <fullName>US ARC</fullName>
-                <default>false</default>
-                <label>US ARC</label>
-            </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>Admin</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>Defense</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>External Lawyers</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>Inhouse</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>Settlement</valueName>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM BSP</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <valueName>Ancillaries</valueName>
+            <valueName>BOM Forms Customer</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <valueName>BSP</valueName>
+            <valueName>BOM Forms Travel Agent</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>DK</valueName>
+            <valueName>BOM Forsvaret</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <valueName>NCE</valueName>
+            <valueName>BOM General</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>NO</valueName>
+            <valueName>BOM Groups</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <valueName>PayPal</valueName>
+            <valueName>BOM Reminders</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>SE</valueName>
+            <valueName>BOM Tenured</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <valueName>Swish</valueName>
+            <valueName>OC Bank Transfer</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <valueName>Swish Bot Output</valueName>
+            <valueName>OC General</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <valueName>TAWEB</valueName>
+            <valueName>OC Groups</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <valueName>Travel Agent Tickets</valueName>
+            <valueName>OC Klarna Disputes</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <valueName>UC04</valueName>
+            <valueName>OC Reserved Amount</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>US</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refunds</controllingFieldValue>
-            <valueName>US ARC</valueName>
+            <valueName>OC Travel Agent</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>Businesstravel STO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>EB Vendor Support</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
@@ -511,7 +507,7 @@
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>Premium Corporate Support</valueName>
-        </valueSettings>  
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>Special Sales NO</valueName>
@@ -577,11 +573,6 @@
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Diamond SE</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-			<controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <valueName>EB Vendor Support</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
@@ -657,6 +648,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>DK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>EE</valueName>
         </valueSettings>
         <valueSettings>
@@ -701,6 +696,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Olympic DK</valueName>
         </valueSettings>
         <valueSettings>
@@ -721,7 +720,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>SE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>UK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>US</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info Hub</controllingFieldValue>
@@ -734,6 +741,26 @@
         <valueSettings>
             <controllingFieldValue>Info Hub</controllingFieldValue>
             <valueName>System &amp; Tariff</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Admin</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Defense</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>External Lawyers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Inhouse</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Settlement</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

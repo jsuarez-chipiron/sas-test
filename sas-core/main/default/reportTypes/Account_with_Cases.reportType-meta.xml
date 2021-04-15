@@ -525,11 +525,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>FCS_AskedForHelp__c</field>
-            <table>Account.Cases</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>FCS_CODSId__c</field>
             <table>Account.Cases</table>
         </columns>
