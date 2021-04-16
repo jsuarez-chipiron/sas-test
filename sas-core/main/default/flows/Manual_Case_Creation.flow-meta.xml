@@ -19,20 +19,30 @@
             <booleanValue>true</booleanValue>
         </value>
     </choices>
+    <choices>
+        <description>High</description>
+        <name>High</name>
+        <choiceText>High</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>High</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <description>Medium</description>
+        <name>Medium</name>
+        <choiceText>Medium</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Medium</stringValue>
+        </value>
+    </choices>
     <dynamicChoiceSets>
         <name>Department</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>Department__c</picklistField>
-        <picklistObject>Case</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>Priority</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>Priority</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -50,7 +60,7 @@
         <expression>LEFT({!$Api.Partner_Server_URL_340}, FIND( &apos;/services&apos;, {!$Api.Partner_Server_URL_340}))</expression>
     </formulas>
     <interviewLabel>Manual Case Creation {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Create new Case</label>
+    <label>Create New Case</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -111,7 +121,7 @@
         <inputAssignments>
             <field>Priority</field>
             <value>
-                <elementReference>Priority</elementReference>
+                <elementReference>PriorityPicker</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -291,8 +301,10 @@
         </fields>
         <fields>
             <name>PriorityPicker</name>
-            <choiceReferences>Priority</choiceReferences>
+            <choiceReferences>Medium</choiceReferences>
+            <choiceReferences>High</choiceReferences>
             <dataType>String</dataType>
+            <defaultSelectedChoiceReference>Medium</defaultSelectedChoiceReference>
             <fieldText>Priority</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
