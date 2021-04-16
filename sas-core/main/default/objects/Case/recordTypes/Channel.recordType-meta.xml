@@ -2884,21 +2884,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Refund_Flights_To_Cancel__c</picklist>
-        <values>
-            <fullName>Both</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inbound</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Outbound</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Team__c</picklist>
         <values>
             <fullName>ACE</fullName>
