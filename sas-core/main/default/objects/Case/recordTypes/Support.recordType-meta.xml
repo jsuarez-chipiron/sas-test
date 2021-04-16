@@ -6,17 +6,6 @@
     <description>Use for chat and facebook messanger</description>
     <label>Support</label>
     <picklistValues>
-        <picklist>Consent__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Department__c</picklist>
         <values>
             <fullName>Agent Helpdesk</fullName>

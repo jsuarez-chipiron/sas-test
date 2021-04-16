@@ -167,11 +167,7 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>FCS_CaseSubReason__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Consent__c</field>
-            </layoutItems>
+            </layoutItems>           
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
