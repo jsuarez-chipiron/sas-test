@@ -80,6 +80,52 @@
         </connector>
     </assignments>
     <assignments>
+        <name>SetCaseFields13</name>
+        <label>SetCaseFields13</label>
+        <locationX>655</locationX>
+        <locationY>161</locationY>
+        <assignmentItems>
+            <assignToReference>TeamToSet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>OC Reserved Amount</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseReasonToSet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reserved Amount</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Refund_Request</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>SetCaseFields14</name>
+        <label>SetCaseFields14</label>
+        <locationX>665</locationX>
+        <locationY>831</locationY>
+        <assignmentItems>
+            <assignToReference>TeamToSet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>OC Voucher</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseReasonToSet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Voucher</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Refund_Request</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>SetCaseFields2</name>
         <label>SetCaseFields2</label>
         <locationX>548</locationX>
@@ -356,6 +402,14 @@
         </value>
     </choices>
     <choices>
+        <name>ReservedAmountChoice</name>
+        <choiceText>Reserved Amount</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ReservedAmount</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>SevenDayRefundGuarantee</name>
         <choiceText>7 Day Refund Guarantee</choiceText>
         <dataType>String</dataType>
@@ -369,6 +423,14 @@
         <dataType>String</dataType>
         <value>
             <stringValue>SWISH</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>VoucherChoice</name>
+        <choiceText>Voucher</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Voucher</stringValue>
         </value>
     </choices>
     <choices>
@@ -572,6 +634,36 @@
                 <targetReference>SetCaseFields12</targetReference>
             </connector>
             <label>Agent Helpdesk</label>
+        </rules>
+        <rules>
+            <name>ReservedAmountOutcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RefundRequestType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ReservedAmountChoice</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetCaseFields13</targetReference>
+            </connector>
+            <label>Reserved amount</label>
+        </rules>
+        <rules>
+            <name>VoucherOutcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RefundRequestType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>VoucherChoice</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetCaseFields14</targetReference>
+            </connector>
+            <label>Voucher</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
@@ -882,6 +974,8 @@
             <choiceReferences>PassengerBankDetailsChoice</choiceReferences>
             <choiceReferences>ForsvaretChoice</choiceReferences>
             <choiceReferences>AgentHelpdeskChoice</choiceReferences>
+            <choiceReferences>ReservedAmountChoice</choiceReferences>
+            <choiceReferences>VoucherChoice</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Refund request type</fieldText>
             <fieldType>DropdownBox</fieldType>

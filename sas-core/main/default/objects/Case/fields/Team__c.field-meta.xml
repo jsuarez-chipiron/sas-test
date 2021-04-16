@@ -291,6 +291,11 @@
                 <label>OC Travel Agent</label>
             </value>
             <value>
+                <fullName>OC Voucher</fullName>
+                <default>false</default>
+                <label>OC Voucher</label>
+            </value>
+            <value>
                 <fullName>Olympic DK</fullName>
                 <default>false</default>
                 <label>Olympic DK</label>
@@ -486,6 +491,10 @@
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>OC Travel Agent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC Voucher</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>

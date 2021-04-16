@@ -146,14 +146,14 @@
                 <label>External Lawyers</label>
             </value>
             <value>
-                <fullName>FI</fullName>
-                <default>false</default>
-                <label>FI</label>
-            </value>
-			<value>
                 <fullName>Feedback</fullName>
                 <default>false</default>
                 <label>Feedback</label>
+            </value>
+            <value>
+                <fullName>FI</fullName>
+                <default>false</default>
+                <label>FI</label>
             </value>
             <value>
                 <fullName>Forsvaret NO</fullName>
@@ -281,6 +281,11 @@
                 <label>OC Travel Agent</label>
             </value>
             <value>
+                <fullName>OC Voucher</fullName>
+                <default>false</default>
+                <label>OC Voucher</label>
+            </value>
+            <value>
                 <fullName>Olympic DK</fullName>
                 <default>false</default>
                 <label>Olympic DK</label>
@@ -329,21 +334,21 @@
                 <fullName>Premium Corporate Support</fullName>
                 <default>false</default>
                 <label>Premium Corporate Support</label>
-            </value>            
+            </value>
             <value>
                 <fullName>RU</fullName>
                 <default>false</default>
                 <label>RU</label>
             </value>
             <value>
-                <fullName>Sales Information</fullName>
-                <default>false</default>
-                <label>Sales Information</label>
-            </value>
-            <value>
                 <fullName>Sales Control</fullName>
                 <default>false</default>
                 <label>Sales Control</label>
+            </value>
+            <value>
+                <fullName>Sales Information</fullName>
+                <default>false</default>
+                <label>Sales Information</label>
             </value>
             <value>
                 <fullName>SAS Poland</fullName>
@@ -354,11 +359,6 @@
                 <fullName>SASSI Internal</fullName>
                 <default>false</default>
                 <label>SASSI Internal</label>
-            </value>
-            <value>
-                <fullName>Special Sales NO</fullName>
-                <default>false</default>
-                <label>Special Sales NO</label>
             </value>
             <value>
                 <fullName>Scandinavia</fullName>
@@ -375,25 +375,30 @@
                 <default>false</default>
                 <label>Settlement</label>
             </value>
-            <value>	
-                <fullName>SGH Bag DK</fullName>	
-                <default>false</default>	
-                <label>SGH Bag DK</label>	
-            </value>	            
-            <value>	
-                <fullName>SGH Bag SE</fullName>	
-                <default>false</default>	
-                <label>SGH Bag SE</label>	
-            </value>           
+            <value>
+                <fullName>SGH Bag DK</fullName>
+                <default>false</default>
+                <label>SGH Bag DK</label>
+            </value>
             <value>
                 <fullName>SGH Bag NO</fullName>
                 <default>false</default>
                 <label>SGH Bag NO</label>
-            </value>          
+            </value>
+            <value>
+                <fullName>SGH Bag SE</fullName>
+                <default>false</default>
+                <label>SGH Bag SE</label>
+            </value>
             <value>
                 <fullName>SoMe</fullName>
                 <default>false</default>
                 <label>SoMe</label>
+            </value>
+            <value>
+                <fullName>Special Sales NO</fullName>
+                <default>false</default>
+                <label>Special Sales NO</label>
             </value>
             <value>
                 <fullName>Star Alliance Upgrades</fullName>
