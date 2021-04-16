@@ -510,11 +510,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Consent__c</field>
-            <table>Account.Cases</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Deposit_Due_Date__c</field>
             <table>Account.Cases</table>
         </columns>

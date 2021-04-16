@@ -66,6 +66,7 @@
 		<members>Case.FCS_Vendor__c</members>
 		<members>Case.FCS_Site__c</members>
 		<members>Case.FCS_VirtualOrganization__c</members>
+		<members>Case.consent__c</members>
 		<name>CustomField</name>
 	</types>
 
@@ -83,6 +84,11 @@
 	<types>
 		<members>SAS_IRR</members>
 		<name>CustomApplication</name>
+	</types>
+	<!-- 2021-04-16 Delete Consent field validation -->
+	<types>
+		<members>Case.Consent_Field_Validation</members>
+		<name>ValidationRule</name>
 	</types>
 	<!--2020-05-28 Delete Role and use SAS instead-->
 	<types>

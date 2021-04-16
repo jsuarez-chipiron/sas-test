@@ -353,11 +353,6 @@
     </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
-        <field>Case.Consent__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.Last_Received_Email_On__c</field>
         <readable>true</readable>
     </fieldPermissions>	
