@@ -803,7 +803,12 @@
                     <dataType>String</dataType>
                     <fieldText>PNR</fieldText>
                     <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;The booking&apos;s PNR. If you have multiple, create multiple refund requests. If one isn&apos;t available, enter six dashes ------.&lt;/p&gt;</helpText>
                     <isRequired>true</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;PNR should be six characters long. If one isn&apos;t applicable, enter six dashes ------. &lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!PNR}) = 6</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>TicketNumbers</name>
