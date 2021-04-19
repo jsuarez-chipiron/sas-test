@@ -16,6 +16,11 @@
                 <label>Channel</label>
             </value>
             <value>
+                <fullName>Claim</fullName>
+                <default>false</default>
+                <label>Claim</label>
+            </value>
+            <value>
                 <fullName>CS Feedback</fullName>
                 <default>false</default>
                 <label>CS Feedback</label>

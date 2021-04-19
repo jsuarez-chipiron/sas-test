@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>49.0</apiVersion>
+    <description>To update the result, legal conclusion, settlement reason and payment information</description>
+    <dynamicChoiceSets>
+        <description>Shows the available legal conclusions</description>
+        <name>AvailableLegalConclusion</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Legal_Conclusion__c</picklistField>
+        <picklistObject>LIA_Claim__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <description>Shows the available options for result</description>
+        <name>AvailableResult</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Result__c</picklistField>
+        <picklistObject>LIA_Claim__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <description>Shows the Available Settlement Reason</description>
+        <name>AvalaibleSettlementReason</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Settlement_Reason__c</picklistField>
+        <picklistObject>LIA_Claim__c</picklistObject>
+    </dynamicChoiceSets>
+    <interviewLabel>Update the Liability Claim Result {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update the Liability Claim Result</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Gets all the information in the claim</description>
+        <name>Get_Current_Claim_Information</name>
+        <label>Get Current Claim Information</label>
+        <locationX>176</locationX>
+        <locationY>186</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Liability_Claim_Result</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>LIA_Claim__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Updates the Liability Claim information based on the user&apos;s input</description>
+        <name>Update_Liability_Claim_Information</name>
+        <label>Update Liability Claim Information</label>
+        <locationX>178</locationX>
+        <locationY>515</locationY>
+        <connector>
+            <targetReference>Liability_Claim_Updated</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Fees_Paid__c</field>
+            <value>
+                <elementReference>Fees_Paid</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interest_Paid__c</field>
+            <value>
+                <elementReference>Interest_Paid</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Legal_Conclusion__c</field>
+            <value>
+                <elementReference>Legal_Conclusion</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Principal_Paid__c</field>
+            <value>
+                <elementReference>Principal_Paid</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Result__c</field>
+            <value>
+                <elementReference>Result</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Settlement_Reason__c</field>
+            <value>
+                <elementReference>Settlement_Reason</elementReference>
+            </value>
+        </inputAssignments>
+        <object>LIA_Claim__c</object>
+    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <description>Confirms the user that the Liability Claim has been updated</description>
+        <name>Liability_Claim_Updated</name>
+        <label>Liability Claim Updated</label>
+        <locationX>328</locationX>
+        <locationY>512</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Outcome</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Liability Claim has been updated&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Update_Liability_Claim_Result</name>
+        <label>Update Liability Claim Result</label>
+        <locationX>175</locationX>
+        <locationY>361</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Update_Liability_Claim_Information</targetReference>
+        </connector>
+        <fields>
+            <name>Result</name>
+            <choiceReferences>AvailableResult</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Result</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Legal_Conclusion</name>
+            <choiceReferences>AvailableLegalConclusion</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Legal Conclusion</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Settlement_Reason</name>
+            <choiceReferences>AvalaibleSettlementReason</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Settlement Reason</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Principal_Paid</name>
+            <dataType>Currency</dataType>
+            <defaultValue>
+                <elementReference>Get_Current_Claim_Information.Principal__c</elementReference>
+            </defaultValue>
+            <fieldText>Principal Paid</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <scale>2</scale>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Result</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Negative, Partly, Settlement, Default Judgement</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Fees_Paid</name>
+            <dataType>Currency</dataType>
+            <defaultValue>
+                <elementReference>Get_Current_Claim_Information.Fees__c</elementReference>
+            </defaultValue>
+            <fieldText>Fees Paid</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <scale>2</scale>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Result</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Negative, Partly, Settlement, Default Judgement</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Interest_Paid</name>
+            <dataType>Currency</dataType>
+            <defaultValue>
+                <elementReference>Get_Current_Claim_Information.Interest__c</elementReference>
+            </defaultValue>
+            <fieldText>Interest Paid</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <scale>2</scale>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Result</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Negative, Partly, Settlement, Default Judgement</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_Current_Claim_Information</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Captures the Id of the record from where the screen flow was triggered from</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

@@ -46,7 +46,7 @@
         <values>
             <fullName>Refunds</fullName>
             <default>false</default>
-        </values>
+        </values>        
         <values>
             <fullName>SME</fullName>
             <default>false</default>
@@ -137,6 +137,10 @@
         <values>
             <fullName>Check in</fullName>
             <default>false</default>
+        </values>
+        <values>
+            <fullName>Claim</fullName>
+            <default>true</default>
         </values>
         <values>
             <fullName>Claims</fullName>
@@ -1144,6 +1148,10 @@
         <values>
             <fullName>Kids</fullName>
             <default>false</default>
+        </values>
+        <values>
+            <fullName>Liability Claim</fullName>
+            <default>true</default>
         </values>
         <values>
             <fullName>Life time gold</fullName>
@@ -2686,15 +2694,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>White Paper - Liability Claim</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>White Paper - Liability Claim</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2771,38 +2779,6 @@
         </values>
         <values>
             <fullName>Benelux</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM BSP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM Forms Customer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM Forms Travel Agent</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM Forsvaret</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM General</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM Groups</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM Reminders</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM Tenured</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2930,30 +2906,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>OC Bank Transfer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OC General</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OC Groups</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OC Klarna Disputes</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OC Reserved Amount</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OC Travel Agent</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Olympic DK</fullName>
             <default>false</default>
         </values>
@@ -3037,8 +2989,8 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Channel</fullName>
-            <default>false</default>
+            <fullName>Claim</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
 </RecordType>
