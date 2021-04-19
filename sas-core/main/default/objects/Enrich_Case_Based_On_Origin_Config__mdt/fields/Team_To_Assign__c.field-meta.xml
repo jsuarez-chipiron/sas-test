@@ -401,6 +401,11 @@
                 <label>Special Sales NO</label>
             </value>
             <value>
+                <fullName>Star Alliance Request</fullName>
+                <default>false</default>
+                <label>Star Alliance Request</label>
+            </value>
+            <value>
                 <fullName>Star Alliance Upgrades</fullName>
                 <default>false</default>
                 <label>Star Alliance Upgrades</label>

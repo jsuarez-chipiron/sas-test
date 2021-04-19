@@ -406,6 +406,11 @@
                 <label>Email - Special Sales NO</label>
             </value>
             <value>
+                <fullName>Email - Star Alliance Request</fullName>
+                <default>false</default>
+                <label>Email - Star Alliance Request</label>
+            </value>
+            <value>
                 <fullName>Email - Star Alliance Upgrades</fullName>
                 <default>false</default>
                 <label>Email - Star Alliance Upgrades</label>
