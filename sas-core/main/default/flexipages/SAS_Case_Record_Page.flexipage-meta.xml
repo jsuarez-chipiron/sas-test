@@ -243,6 +243,10 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>createQuickActionName</name>
+                    <value>Create_Refund_Request</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>lookupFieldName</name>
                     <value>Case.Refund_Request__c</value>
                 </componentInstanceProperties>
