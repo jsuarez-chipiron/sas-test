@@ -45,7 +45,8 @@ public class IRR_Application {
                             IRR_ManualOverride__c.SObjectType => IRR_SEL_ManualOverridesSelector.class,
                             IRR_RecipientWhitelist__mdt.SObjectType => IRR_SEL_RecipientWhitelistSelector.class,
                             Organization.SObjectType => IRR_SEL_OrganizationSelector.class,
-                            SFMC_SMSDefinition__mdt.SObjectType => IRR_SEL_SMSDefinitionsSelector.class
+                            SFMC_SMSDefinition__mdt.SObjectType => IRR_SEL_SMSDefinitionsSelector.class,
+                            ContentDocumentLink.SObjectType =>IRR_SEL_ContentDocumentLinksSelector.class
                     }
             );
 
@@ -60,7 +61,9 @@ public class IRR_Application {
                     IRR_Application.Selector,
                     new Map<SObjectType, Type> {
                             IRR_CommunicationLog__c.SObjectType => IRR_DOM_CommunicationLogs.Constructor.class,
-                            IRR_SMSResponse__c.SObjectType => IRR_DOM_SMSResponses.Constructor.class
+                            IRR_SMSResponse__c.SObjectType => IRR_DOM_SMSResponses.Constructor.class,
+                            IRR_EventLog__c.SObjectType => IRR_DOM_EventLogs.Constructor.class,
+                            ContentDocumentLink.SObjectType => IRR_DOM_ContentDocumentLinks.Constructor.class
                     });
 
     /**
@@ -74,7 +77,8 @@ public class IRR_Application {
                     new Map<Type, Type>{
                             IRR_SVC_ICommunicationService.class => IRR_SVC_CommunicationServiceImpl.class,
                             IRR_SVC_ISFMCService.class => IRR_SVC_SFMCServiceImpl.class,
-                            IRR_SVC_ITedsService.class => IRR_SVC_TedsServiceImpl.class
+                            IRR_SVC_ITedsService.class => IRR_SVC_TedsServiceImpl.class,
+                            IRR_SVC_ILogsService.class => IRR_SVC_LogsServiceImpl.class
                     }
             );
 
