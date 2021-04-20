@@ -33,6 +33,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Fraud</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Functional Product Support</fullName>
             <default>false</default>
         </values>
@@ -84,6 +88,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>ATO Account Takeover</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Agent Helpdesk R</fullName>
             <default>false</default>
         </values>
@@ -125,6 +133,10 @@
         </values>
         <values>
             <fullName>Baggage service R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAR</fullName>
             <default>false</default>
         </values>
         <values>
@@ -177,6 +189,10 @@
         </values>
         <values>
             <fullName>Content</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Coop</fullName>
             <default>false</default>
         </values>
         <values>
@@ -252,6 +268,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EuroBonus Shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EuroBonus status</fullName>
             <default>false</default>
         </values>
@@ -296,6 +316,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>GAC Give Away Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Group booking</fullName>
             <default>false</default>
         </values>
@@ -309,6 +333,10 @@
         </values>
         <values>
             <fullName>Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hotel Fraud</fullName>
             <default>false</default>
         </values>
         <values>
@@ -377,6 +405,10 @@
         </values>
         <values>
             <fullName>Overbooked flights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Point Sharing</fullName>
             <default>false</default>
         </values>
         <values>
@@ -452,6 +484,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SAS Flights</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SAS Medical</fullName>
             <default>false</default>
         </values>
@@ -485,6 +521,10 @@
         </values>
         <values>
             <fullName>Star Award Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Star Online</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2571,6 +2611,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Fraud EMEA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Fraud Investigation</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Functional Product Support</fullName>
             <default>false</default>
         </values>
@@ -2975,6 +3023,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EMEA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>ES</fullName>
             <default>false</default>
         </values>
@@ -3000,6 +3052,10 @@
         </values>
         <values>
             <fullName>Forsvaret NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fraud Investigation</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3239,6 +3295,10 @@
         </values>
         <values>
             <fullName>EB Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fraud</fullName>
             <default>false</default>
         </values>
         <values>

@@ -46,7 +46,7 @@
         <values>
             <fullName>Refunds</fullName>
             <default>false</default>
-        </values>        
+        </values>
         <values>
             <fullName>SME</fullName>
             <default>false</default>
@@ -2537,6 +2537,14 @@
             <fullName>Email - Forsvaret NO</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Email - Fraud EMEA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Fraud Investigation</fullName>
+            <default>false</default>
+        </values>        
         <values>
             <fullName>Email - Functional Product Support</fullName>
             <default>false</default>

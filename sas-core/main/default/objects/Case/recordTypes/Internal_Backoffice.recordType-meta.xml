@@ -28,6 +28,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Fraud</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Functional Product Support</fullName>
             <default>false</default>
         </values>
@@ -68,6 +72,10 @@
         </values>
         <values>
             <fullName>ATC%2FATC Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ATO Account Takeover</fullName>
             <default>false</default>
         </values>
         <values>
@@ -123,6 +131,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Boozt Attack</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAR</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>COVID-19 Testing</fullName>
             <default>false</default>
         </values>
@@ -175,6 +191,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Coop</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Corp Account managers %28SAS for busiess%29</fullName>
             <default>false</default>
         </values>
@@ -196,6 +216,10 @@
         </values>
         <values>
             <fullName>Credit card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Crime Prevention</fullName>
             <default>false</default>
         </values>
         <values>
@@ -259,7 +283,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EuroBonus CN</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EuroBonus Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus Shop</fullName>
             <default>false</default>
         </values>
         <values>
@@ -311,6 +343,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>GAC Give Away Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Group Sales</fullName>
             <default>false</default>
         </values>
@@ -328,6 +364,10 @@
         </values>
         <values>
             <fullName>Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hotel Fraud</fullName>
             <default>false</default>
         </values>
         <values>
@@ -403,6 +443,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Point Sharing</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Policies and agreements</fullName>
             <default>false</default>
         </values>
@@ -475,6 +519,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SAS Flights</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SAS Medical</fullName>
             <default>false</default>
         </values>
@@ -508,6 +556,10 @@
         </values>
         <values>
             <fullName>Star Award Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Star Online</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2526,6 +2578,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Fraud EMEA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Fraud Investigation</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Liability Claim</fullName>
             <default>false</default>
         </values>
@@ -2754,6 +2814,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EMEA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>ES</fullName>
             <default>false</default>
         </values>
@@ -2779,6 +2843,10 @@
         </values>
         <values>
             <fullName>Forsvaret NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fraud Investigation</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2974,6 +3042,10 @@
         </values>
         <values>
             <fullName>EB Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fraud</fullName>
             <default>false</default>
         </values>
         <values>

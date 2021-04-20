@@ -41,14 +41,14 @@
                 <label>EuroBonus</label>
             </value>
             <value>
+                <fullName>Fraud</fullName>
+                <default>false</default>
+                <label>Fraud</label>
+            </value>
+            <value>
                 <fullName>Functional Product Support</fullName>
                 <default>false</default>
                 <label>Functional Product Support</label>
-            </value>
-            <value>
-                <fullName>SoMe Support</fullName>
-                <default>false</default>
-                <label>SoMe Support</label>
             </value>
             <value>
                 <fullName>Group Sales</fullName>
@@ -70,7 +70,7 @@
                 <default>false</default>
                 <label>Refunds</label>
             </value>
-			<value>
+            <value>
                 <fullName>SAS Operating Center</fullName>
                 <default>false</default>
                 <label>SAS Operating Center</label>
@@ -80,7 +80,11 @@
                 <default>false</default>
                 <label>SME</label>
             </value>
+            <value>
+                <fullName>SoMe Support</fullName>
+                <default>false</default>
+                <label>SoMe Support</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
-

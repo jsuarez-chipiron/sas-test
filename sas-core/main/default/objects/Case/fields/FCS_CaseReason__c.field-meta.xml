@@ -75,6 +75,11 @@
                 <label>ATC/ATC Refund</label>
             </value>
             <value>
+                <fullName>ATO Account Takeover</fullName>
+                <default>false</default>
+                <label>ATO Account Takeover</label>
+            </value>
+            <value>
                 <fullName>Availability / MCT</fullName>
                 <default>false</default>
                 <label>Availability / MCT</label>
@@ -115,6 +120,11 @@
                 <label>Bank Transfer</label>
             </value>
             <value>
+                <fullName>Boozt Attack</fullName>
+                <default>false</default>
+                <label>Boozt Attack</label>
+            </value>
+            <value>
                 <fullName>Campaigns</fullName>
                 <default>false</default>
                 <label>Campaigns</label>
@@ -123,6 +133,11 @@
                 <fullName>Cancellation/refund of ticket</fullName>
                 <default>false</default>
                 <label>Cancellation/refund of ticket</label>
+            </value>
+            <value>
+                <fullName>CAR</fullName>
+                <default>false</default>
+                <label>CAR</label>
             </value>
             <value>
                 <fullName>Changes</fullName>
@@ -180,6 +195,11 @@
                 <label>Content</label>
             </value>
             <value>
+                <fullName>Coop</fullName>
+                <default>false</default>
+                <label>Coop</label>
+            </value>
+            <value>
                 <fullName>Corp Account managers (SAS for busiess)</fullName>
                 <default>false</default>
                 <label>Corp Account managers (SAS for busiess)</label>
@@ -213,6 +233,11 @@
                 <fullName>Credit card</fullName>
                 <default>false</default>
                 <label>Credit card</label>
+            </value>
+            <value>
+                <fullName>Crime Prevention</fullName>
+                <default>false</default>
+                <label>Crime Prevention</label>
             </value>
             <value>
                 <fullName>CR requests</fullName>
@@ -315,6 +340,11 @@
                 <label>EuroBonus</label>
             </value>
             <value>
+                <fullName>EuroBonus CN</fullName>
+                <default>false</default>
+                <label>EuroBonus CN</label>
+            </value>
+            <value>
                 <fullName>EuroBonus Partner</fullName>
                 <default>false</default>
                 <label>EuroBonus Partner</label>
@@ -323,6 +353,11 @@
                 <fullName>Eurobonus procedures R</fullName>
                 <default>false</default>
                 <label>EuroBonus procedures R</label>
+            </value>
+            <value>
+                <fullName>EuroBonus Shop</fullName>
+                <default>false</default>
+                <label>EuroBonus Shop</label>
             </value>
             <value>
                 <fullName>EuroBonus status</fullName>
@@ -375,6 +410,11 @@
                 <label>Food</label>
             </value>
             <value>
+                <fullName>GAC Give Away Card</fullName>
+                <default>false</default>
+                <label>GAC Give Away Card</label>
+            </value>
+            <value>
                 <fullName>Group booking</fullName>
                 <default>false</default>
                 <label>Group booking</label>
@@ -398,6 +438,11 @@
                 <fullName>Group sales R</fullName>
                 <default>false</default>
                 <label>Group sales R</label>
+            </value>
+            <value>
+                <fullName>Hotel Fraud</fullName>
+                <default>false</default>
+                <label>Hotel Fraud</label>
             </value>
             <value>
                 <fullName>Inflight / Onboard</fullName>
@@ -503,6 +548,11 @@
                 <fullName>Overbooked flights</fullName>
                 <default>false</default>
                 <label>Overbooked flights</label>
+            </value>
+            <value>
+                <fullName>Point Sharing</fullName>
+                <default>false</default>
+                <label>Point Sharing</label>
             </value>
             <value>
                 <fullName>Policies and agreements</fullName>
@@ -620,6 +670,11 @@
                 <label>SAS Agent News/Flash</label>
             </value>
             <value>
+                <fullName>SAS Flights</fullName>
+                <default>false</default>
+                <label>SAS Flights</label>
+            </value>
+            <value>
                 <fullName>SAS for business</fullName>
                 <default>false</default>
                 <label>SAS for business</label>
@@ -648,6 +703,11 @@
                 <fullName>Star Award Online</fullName>
                 <default>false</default>
                 <label>Star Award Online</label>
+            </value>
+            <value>
+                <fullName>Star Online</fullName>
+                <default>false</default>
+                <label>Star Online</label>
             </value>
             <value>
                 <fullName>System</fullName>
@@ -883,6 +943,54 @@
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Travel pass</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>ATO Account Takeover</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Boozt Attack</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>CAR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Coop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Crime Prevention</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>EuroBonus CN</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>EuroBonus Shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>GAC Give Away Card</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Hotel Fraud</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Point Sharing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>SAS Flights</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Star Online</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Functional Product Support</controllingFieldValue>

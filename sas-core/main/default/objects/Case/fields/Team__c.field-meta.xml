@@ -136,6 +136,11 @@
                 <label>EE</label>
             </value>
             <value>
+                <fullName>EMEA</fullName>
+                <default>false</default>
+                <label>EMEA</label>
+            </value>
+            <value>
                 <fullName>ES</fullName>
                 <default>false</default>
                 <label>ES</label>
@@ -169,6 +174,11 @@
                 <fullName>FR</fullName>
                 <default>false</default>
                 <label>FR</label>
+            </value>
+            <value>
+                <fullName>Fraud Investigation</fullName>
+                <default>false</default>
+                <label>Fraud Investigation</label>
             </value>
             <value>
                 <fullName>GDPR</fullName>
@@ -515,6 +525,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Fraud Investigation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>GDPR</valueName>
         </valueSettings>
         <valueSettings>
@@ -542,6 +556,10 @@
         <valueSettings>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <valueName>SoMe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>EMEA</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>

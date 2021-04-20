@@ -137,6 +137,16 @@
         <label>Email - Forsvaret NO</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Fraud EMEA</fullName>
+        <default>false</default>
+        <label>Email - Fraud EMEA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Fraud Investigation</fullName>
+        <default>false</default>
+        <label>Email - Fraud Investigation</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Functional Product Support</fullName>
         <default>false</default>
         <label>Email - Functional Product Support</label>
