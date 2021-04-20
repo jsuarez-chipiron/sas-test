@@ -184,36 +184,35 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
      * @param uow Unit of Work
      */
     private void insertEventLog(fflib_ISObjectUnitOfWork uow) {
-        IRR_EventLog__c sObj = new IRR_EventLog__c();
-        sObj.IRR_ScheduleTime__c = manualRequest.sendMessageTime;
+        IRR_EventLog__c eventLog = new IRR_EventLog__c();
+        eventLog.IRR_ScheduleTime__c = manualRequest.sendMessageTime;
         if(manualRequest.passengerInfos != null && manualRequest.passengerInfos.size() > 0) {
             Set<String> flightIds = new Set<String>();
             for(IRR_MOD_PassengerInfo pi : manualRequest.passengerInfos){
                 flightIds.add(pi.thisSegment.flightId);
             }
-            sObj.IRR_FlightId__c = String.Join(new List<String>(flightIds), ', ');
+            eventLog.IRR_FlightId__c = String.Join(new List<String>(flightIds), ', ');
         }
         String payloadStr = JSON.serialize(manualRequest);
-        if(payloadStr != null && payloadStr.length() > 131072){
-            sObj.Event_Payload_1__c = payloadStr.substring(0,131072);
-            payloadStr = payloadStr.substring(131072,payloadStr.length());
-            Boolean flag = (payloadStr.length()>131072?true:false);
-            sObj.Event_Payload_2__c = payloadStr.substring(0,(flag?131072:payloadStr.length()));
-        if(flag){
-            payloadStr = payloadStr.substring(131072,payloadStr.length());
-            flag = (payloadStr.length()>131072?true:false);
-            sObj.Event_Payload_3__c = payloadStr.substring(0,(flag?131072:payloadStr.length()));
-        if(flag){
-            payloadStr = payloadStr.substring(131072,payloadStr.length());
-            flag = (payloadStr.length()>131072?true:false);
-            sObj.Event_Payload_4__c = payloadStr.substring(0,payloadStr.length());
-        }
-            }
-        }else{
+        fflib_SObjectUnitOfWork unitOfWork = new fflib_SObjectUnitOfWork(
+                                                new List<Schema.SObjectType>{
+                                                        IRR_EventLog__c.SObjectType,
+                                                        ContentVersion.SObjectType
+                                                }
+         );
 
-            sObj.Event_Payload_1__c = payloadStr;
-        }
-        uow.registerNew(sObj);
+            String fileName ='EventPayload';
+            unitOfWork.registerNew(eventLog);
+
+            ContentVersion fileToUpload = new ContentVersion();
+            fileToUpload.ContentLocation = 'S';
+            fileToUpload.PathOnClient = fileName;
+            fileToUpload.Title = fileName;
+            fileToUpload.VersionData = Blob.valueOf(payloadStr);
+
+            unitOfWork.registerNew(fileToUpload, ContentVersion.FirstPublishLocationId, eventLog);
+
+            unitOfWork.commitWork();
     }
 
     

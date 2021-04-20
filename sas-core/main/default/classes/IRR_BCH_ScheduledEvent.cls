@@ -27,16 +27,16 @@ global with sharing class IRR_BCH_ScheduledEvent extends SBS_ScheduledBatch impl
 	*/
 	global override void executeScope(Database.BatchableContext bc, SObject[] sObjScope){
          
-        for(IRR_EventLog__c so : (List<IRR_EventLog__c>) sObjScope){
-            String payloadStr= '';
-            payloadStr += ((so.Event_Payload_1__c!=null && so.Event_Payload_1__c!='')?so.Event_Payload_1__c:'');
-            payloadStr += ((so.Event_Payload_2__c!=null && so.Event_Payload_2__c!='')?so.Event_Payload_2__c:'');
-            payloadStr += ((so.Event_Payload_3__c!=null && so.Event_Payload_3__c!='')?so.Event_Payload_3__c:'');
-            payloadStr += ((so.Event_Payload_4__c!=null && so.Event_Payload_4__c!='')?so.Event_Payload_4__c:'');
-            IRR_MOD_ManualRequest cInfo = (IRR_MOD_ManualRequest)JSON.deserialize(payloadStr, IRR_MOD_ManualRequest.class);
-            cInfo.sendMessageTime = null;
-            IRR_SVC_CommunicationService.processEvent(eventType, cInfo);
-        }
+        
+
+            Map<Id,String> bodyAsStringByLinkedEntityId = IRR_SVC_LogsService.getFilesforEventLogs(sObjScope);
+            for (Id evId : bodyAsStringByLinkedEntityId.keySet()){
+                String payload = bodyAsStringByLinkedEntityId.get(evId);
+                IRR_MOD_ManualRequest cInfo = (IRR_MOD_ManualRequest)JSON.deserialize(payload, IRR_MOD_ManualRequest.class);
+                cInfo.sendMessageTime = null;
+                IRR_SVC_CommunicationService.processEvent(eventType, cInfo);
+            }
+
             delete sObjScope ;
     }
 
