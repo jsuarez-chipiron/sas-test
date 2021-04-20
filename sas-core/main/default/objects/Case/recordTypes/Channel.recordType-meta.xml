@@ -2783,6 +2783,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Star Alliance Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Star Alliance Upgrades</fullName>
             <default>false</default>
         </values>
@@ -3188,6 +3192,10 @@
         </values>
         <values>
             <fullName>Special Sales NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Star Alliance Request</fullName>
             <default>false</default>
         </values>
         <values>

@@ -411,6 +411,11 @@
                 <label>Special Sales NO</label>
             </value>
             <value>
+                <fullName>Star Alliance Request</fullName>
+                <default>false</default>
+                <label>Star Alliance Request</label>
+            </value>
+            <value>
                 <fullName>Star Alliance Upgrades</fullName>
                 <default>false</default>
                 <label>Star Alliance Upgrades</label>
@@ -625,6 +630,10 @@
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Partner Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Star Alliance Request</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
