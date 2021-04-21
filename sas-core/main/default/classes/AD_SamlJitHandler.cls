@@ -48,7 +48,11 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
         Namespace of the SAML assertion
     */
     private static final String NS_ASSERTION = 'urn:oasis:names:tc:SAML:2.0:assertion';
-
+    /**
+        Permission type API name for Chatter group
+    */
+    private static final String PERMISSION_TYPE_CHATTER_GROUP = 'Collaboration Group';
+    
     /**
         Configures the user details and sets the permission for the user.
         The mehtod work for both create and update of user
@@ -164,6 +168,10 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
         */
         Set<String> inclGroups;
         /**
+           The Chatter group in which include the user
+        */
+        Set<String> inclChatterGroups;
+        /**
             The permission sets from which to remove from the user
         */
         Set<String> exclPS;
@@ -176,8 +184,12 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
         */
         Set<String> exclGroups;
         /**
-            THe call centers which should automatically be removed from the user
+          The Chatter group in whihc remove the user
         */
+        Set<String> exclChatterGroups;
+        /**
+            THe call centers which should automatically be removed from the user
+        */      
         Set<String> exclCallCenters;
         /**
             User permissions set for the user
@@ -225,9 +237,11 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
             inclPS = new Set<String>();
             inclPL = new Set<String>();
             inclGroups = new Set<String>();
+            inclChatterGroups = new Set<String>();
             exclPS = new Set<String>();
             exclPL = new Set<String>();
             exclGroups = new Set<String>();
+            exclChatterGroups = new Set<String>();
             exclCallCenters = new Set<String>();
             userPermissions = new Map<String,Boolean>();
             userDetails = new Map<String,Object>();
@@ -255,9 +269,14 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
                         else if(adp.PermissionType__c==PERMISSION_TYPE_GROUP){
                             inclGroups.add(adp.MasterLabel);
                         }
+                        else if(adp.PermissionType__c==PERMISSION_TYPE_CHATTER_GROUP)
+                        {
+                            inclChatterGroups.add(adp.MasterLabel);
+                            System.debug('inclChatterGroups&&&&'+inclChatterGroups);
+                        }
                         else if(adp.PermissionType__c==PERMISSION_TYPE_CALL_CENTER){
                             if(callCenterName==null)callCenterName=adp.MasterLabel;
-                        }
+                        }                   
                     }
                 }
             }
@@ -277,6 +296,9 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
                 else if(adp.PermissionType__c==PERMISSION_TYPE_GROUP){
                     if(!inclGroups.contains(adp.MasterLabel))exclGroups.add(adp.MasterLabel);
                 }
+                else if(adp.PermissionType__c==PERMISSION_TYPE_CHATTER_GROUP){
+                    if(!inclChatterGroups.contains(adp.MasterLabel))exclChatterGroups.add(adp.MasterLabel);
+                        }
                 else if(adp.PermissionType__c==PERMISSION_TYPE_CALL_CENTER){
                     if(adp.MasterLabel!=callCenterName)exclCallCenters.add(adp.MasterLabel);
                 }
@@ -358,14 +380,13 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
             allPL.addAll(exclPL);
             Set<String> allGroups = new Set<String>();
             allGroups.addAll(inclGroups);
-            allGroups.addAll(exclGroups);
+            allGroups.addAll(exclGroups);            
             List<PermissionSetAssignment> psaAddList = new List<PermissionSetAssignment>();
             List<PermissionSetAssignment> psaDelList = new List<PermissionSetAssignment>();
             List<PermissionSetLicenseAssign> plaAddList = new List<PermissionSetLicenseAssign>();
             List<PermissionSetLicenseAssign> plaDelList = new List<PermissionSetLicenseAssign>();
             List<GroupMember> gmAddList = new List<GroupMember>();
-            List<GroupMember> gmDelList = new List<GroupMember>();
-
+            List<GroupMember> gmDelList = new List<GroupMember>();         
 
             //Get current permission set license assignments
             PermissionSetLicenseAssign[] plaList = [SELECT Id,AssigneeId,PermissionSetLicenseId FROM PermissionSetLicenseAssign WHERE AssigneeId=:userId];
@@ -420,14 +441,14 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
                 else if(exclGroups.contains(g.DeveloperName)){
                     if(gm!=null)gmDelList.add(gm);
                 }
-            }
-
+            }           
             insert plaAddList;
             insert psaAddList;
-            insert gmAddList;
+            insert gmAddList;           
             delete gmDelList;
             delete psaDelList;
             delete plaDelList;
+            chatGrpAssignment(inclChatterGroups,exclChatterGroups,userId);
         }
     }
 
@@ -470,5 +491,47 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
     */
     global void updateUser(Id userId, Id samlSsoProviderId, Id communityId, Id portalId, String federationId, Map<String, String> attributes, String assertion) {
         setupUser(userId,federationId,attributes,assertion);
+    }
+    /**
+     called by the Update assignment for chatterGroup assignment
+     Set up and non Set up object DML operation can't be performed in single transaction
+     So future method introduced
+     @param inclChatterGroups the set of chatter groups in which login user will be assigned.
+     @param inclChatterGroups the set of chatter groups in which login user will be excluded.
+     @param Id of the User
+    */
+    @future
+    public static void chatGrpAssignment(Set<String> inclChatterGroups, set<String> exclChatterGroups, Id userId)
+    {
+        List<CollaborationGroupMember> cgmAddList = new List<CollaborationGroupMember>();
+        List<CollaborationGroupMember> cgmDelList = new List<CollaborationGroupMember>();
+        Set<String> allChatterGroups = new Set<String>();
+        allChatterGroups.addAll(inclChatterGroups);
+        allChatterGroups.addAll(exclChatterGroups);
+        
+         // Get current chatter group members of
+         System.debug('inclChatterGroups'+inclChatterGroups);
+         
+            CollaborationGroupMember[] cgmList = [SELECT CollaborationGroupId,CollaborationRole,Id,MemberId FROM CollaborationGroupMember WHERE MemberId=:userId];          
+            Map<Id,CollaborationGroupMember> cgmMap = new Map<Id,CollaborationGroupMember>();
+            for(CollaborationGroupMember cgm : cgmList){
+                cgmMap.put(cgm.CollaborationGroupId,cgm);
+            }
+            
+            System.debug('allChatterGroups'+allChatterGroups);
+            //Get all refrenced chatter groups
+            CollaborationGroup[] chatgroupList  = [SELECT Id,Name FROM CollaborationGroup WHERE Name IN : allChatterGroups];
+            for(CollaborationGroup cg : chatgroupList){
+                CollaborationGroupMember cgm = cgmMap.get(cg.Id);
+                if(inclChatterGroups.contains(cg.Name)){
+                    if(cgm==null)cgmAddList.add(new CollaborationGroupMember(MemberId=userId,CollaborationGroupId=cg.Id));
+                }
+                else if(exclChatterGroups.contains(cg.Name)){
+                    if(cgm!=null)cgmDelList.add(cgm);
+                }           
+            }
+
+        insert cgmAddList;
+        delete cgmDelList;
     }
 }
