@@ -758,6 +758,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Card errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Card replacement</fullName>
             <default>false</default>
         </values>
@@ -891,6 +895,10 @@
         </values>
         <values>
             <fullName>Departure information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diplomatic exception</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1134,6 +1142,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Insufficient balance account</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insufficient balance payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Insurance</fullName>
             <default>false</default>
         </values>
@@ -1151,6 +1167,10 @@
         </values>
         <values>
             <fullName>Kids</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Klarna</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1222,6 +1242,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Multiple FOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Musical</fullName>
             <default>false</default>
         </values>
@@ -1255,6 +1279,10 @@
         </values>
         <values>
             <fullName>New booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No money collected</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1595,6 +1623,10 @@
         </values>
         <values>
             <fullName>Sport Int%2E%2FEU Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sporting event cancelled</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2622,6 +2654,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>BOM ARC</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>BOM BSP</fullName>
             <default>false</default>
         </values>
@@ -2790,7 +2826,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>OC Groups</fullName>
+            <fullName>OC Groups Europe</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2807,6 +2843,10 @@
         </values>
         <values>
             <fullName>OC Voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Waivers</fullName>
             <default>false</default>
         </values>
         <values>

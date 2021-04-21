@@ -320,6 +320,11 @@
                 <label>Car</label>
             </value>
             <value>
+                <fullName>Card errors</fullName>
+                <default>false</default>
+                <label>Card errors</label>
+            </value>
+            <value>
                 <fullName>Card replacement</fullName>
                 <default>false</default>
                 <label>Card replacement</label>
@@ -513,6 +518,11 @@
                 <fullName>Departure information</fullName>
                 <default>false</default>
                 <label>Departure information</label>
+            </value>
+            <value>
+                <fullName>Diplomatic exception</fullName>
+                <default>false</default>
+                <label>Diplomatic exception</label>
             </value>
             <value>
                 <fullName>Document control (ESTA / VISA / DOCS / PASSPORT)</fullName>
@@ -825,6 +835,16 @@
                 <label>Informs</label>
             </value>
             <value>
+                <fullName>Insufficient balance account</fullName>
+                <default>false</default>
+                <label>Insufficient balance account</label>
+            </value>
+            <value>
+                <fullName>Insufficient balance payment</fullName>
+                <default>false</default>
+                <label>Insufficient balance payment</label>
+            </value>
+            <value>
                 <fullName>Insurance</fullName>
                 <default>false</default>
                 <label>Insurance</label>
@@ -848,6 +868,11 @@
                 <fullName>Kids</fullName>
                 <default>false</default>
                 <label>Kids</label>
+            </value>
+            <value>
+                <fullName>Klarna</fullName>
+                <default>false</default>
+                <label>Klarna</label>
             </value>
             <value>
                 <fullName>Liability Claim</fullName>
@@ -940,6 +965,11 @@
                 <label>Missing points</label>
             </value>
             <value>
+                <fullName>Multiple FOP</fullName>
+                <default>false</default>
+                <label>Multiple FOP</label>
+            </value>
+            <value>
                 <fullName>Musical</fullName>
                 <default>false</default>
                 <label>Musical</label>
@@ -988,6 +1018,11 @@
                 <fullName>New Group booking - bulk</fullName>
                 <default>false</default>
                 <label>New Group booking - bulk</label>
+            </value>
+            <value>
+                <fullName>No money collected</fullName>
+                <default>false</default>
+                <label>No money collected</label>
             </value>
             <value>
                 <fullName>Non Air partners</fullName>
@@ -1408,6 +1443,11 @@
                 <fullName>Sport Groups</fullName>
                 <default>false</default>
                 <label>Sport Groups</label>
+            </value>
+            <value>
+                <fullName>Sporting event cancelled</fullName>
+                <default>false</default>
+                <label>Sporting event cancelled</label>
             </value>
             <value>
                 <fullName>Sport Int./EU Groups</fullName>
@@ -2521,6 +2561,14 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Waivers</controllingFieldValue>
+            <valueName>Diplomatic exception</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Waivers</controllingFieldValue>
+            <valueName>Sporting event cancelled</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Waivers</controllingFieldValue>
             <valueName>Visa Rejection</valueName>
         </valueSettings>
         <valueSettings>
@@ -2821,6 +2869,30 @@
         <valueSettings>
             <controllingFieldValue>Error Handling</controllingFieldValue>
             <valueName>Alipay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Card errors</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Insufficient balance account</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Insufficient balance payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Klarna</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Multiple FOP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>No money collected</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error Handling</controllingFieldValue>

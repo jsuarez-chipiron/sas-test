@@ -36,6 +36,11 @@
                 <label>Benelux</label>
             </value>
             <value>
+                <fullName>BOM ARC</fullName>
+                <default>false</default>
+                <label>BOM ARC</label>
+            </value>
+            <value>
                 <fullName>BOM BSP</fullName>
                 <default>false</default>
                 <label>BOM BSP </label>
@@ -294,6 +299,11 @@
                 <fullName>OC Voucher</fullName>
                 <default>false</default>
                 <label>OC Voucher</label>
+            </value>
+            <value>
+                <fullName>OC Waivers</fullName>
+                <default>false</default>
+                <label>OC Waivers</label>
             </value>
             <value>
                 <fullName>Olympic DK</fullName>
