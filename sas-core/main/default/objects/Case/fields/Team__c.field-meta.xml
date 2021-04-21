@@ -41,6 +41,11 @@
                 <label>Benelux</label>
             </value>
             <value>
+                <fullName>BOM ARC</fullName>
+                <default>false</default>
+                <label>BOM ARC</label>
+            </value>
+            <value>
                 <fullName>BOM BSP</fullName>
                 <default>false</default>
                 <label>BOM BSP</label>
@@ -281,9 +286,9 @@
                 <label>OC General</label>
             </value>
             <value>
-                <fullName>OC Groups</fullName>
+                <fullName>OC Groups Europe</fullName>
                 <default>false</default>
-                <label>OC Groups</label>
+                <label>OC Groups Europe</label>
             </value>
             <value>
                 <fullName>OC Klarna Disputes</fullName>
@@ -304,6 +309,11 @@
                 <fullName>OC Voucher</fullName>
                 <default>false</default>
                 <label>OC Voucher</label>
+            </value>
+            <value>
+                <fullName>OC Waivers</fullName>
+                <default>false</default>
+                <label>OC Waivers</label>
             </value>
             <value>
                 <fullName>Olympic DK</fullName>
@@ -453,6 +463,10 @@
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM ARC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>BOM BSP</valueName>
         </valueSettings>
         <valueSettings>
@@ -493,7 +507,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <valueName>OC Groups</valueName>
+            <valueName>OC Groups Europe</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
@@ -510,6 +524,10 @@
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>OC Voucher</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC Waivers</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>

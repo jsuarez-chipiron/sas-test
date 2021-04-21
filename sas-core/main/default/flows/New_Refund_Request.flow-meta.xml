@@ -126,6 +126,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>SetCaseFields15</name>
+        <label>SetCaseFields15</label>
+        <locationX>764</locationX>
+        <locationY>239</locationY>
+        <assignmentItems>
+            <assignToReference>TeamToSet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>OC General</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Refund_Request</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>SetCaseFields2</name>
         <label>SetCaseFields2</label>
         <locationX>548</locationX>
@@ -355,10 +371,18 @@
     </choices>
     <choices>
         <name>KlarnaRefundNotReceivedChoice</name>
-        <choiceText>Klarna refund not received</choiceText>
+        <choiceText>Klarna autorefund failed</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>KlarnaRefundNotReceived</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>OtherChoice</name>
+        <choiceText>Other</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Other</stringValue>
         </value>
     </choices>
     <choices>
@@ -371,7 +395,7 @@
     </choices>
     <choices>
         <name>PayPalChoice</name>
-        <choiceText>PayPal</choiceText>
+        <choiceText>PayPal &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;refund not received&lt;/span&gt;</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>PayPal</stringValue>
@@ -379,7 +403,7 @@
     </choices>
     <choices>
         <name>RefundNotReceivedBOMChoice</name>
-        <choiceText>Refund not received - BOM</choiceText>
+        <choiceText>Refund not received - Not in SRS</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>RefundNotReceivedBOM</stringValue>
@@ -387,7 +411,7 @@
     </choices>
     <choices>
         <name>RefundNotReceivedOCChoice</name>
-        <choiceText>Refund not received - OC</choiceText>
+        <choiceText>Refund not received - OK in SRS</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>RefundNotReceivedOC</stringValue>
@@ -419,7 +443,7 @@
     </choices>
     <choices>
         <name>SwishChoice</name>
-        <choiceText>SWISH</choiceText>
+        <choiceText>SWISH refund not received</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>SWISH</stringValue>
@@ -664,6 +688,21 @@
                 <targetReference>SetCaseFields14</targetReference>
             </connector>
             <label>Voucher</label>
+        </rules>
+        <rules>
+            <name>OtherOutcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RefundRequestType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>OtherChoice</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetCaseFields15</targetReference>
+            </connector>
+            <label>Other</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
@@ -976,6 +1015,7 @@
             <choiceReferences>AgentHelpdeskChoice</choiceReferences>
             <choiceReferences>ReservedAmountChoice</choiceReferences>
             <choiceReferences>VoucherChoice</choiceReferences>
+            <choiceReferences>OtherChoice</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Refund request type</fieldText>
             <fieldType>DropdownBox</fieldType>
