@@ -120,7 +120,7 @@
 		<members>Agent_Helpdesk_SIA</members>
 		<name>Group</name>
 	</types>
-<!--2020-04-19 remove Social post process builder updating Site, vendor, team and Sub team Thippeswamy Aravinda -->
+<!--2021-04-19 remove Social post process builder updating Site, vendor, team and Sub team Thippeswamy Aravinda -->
 	<types>
         <members>SocialPost-3</members>
 		<members>SocialPost-1</members>
@@ -129,4 +129,16 @@
 		<members>SocialPost-5</members>
         <name>Flow</name>
     </types>
+	<!--2021-04-22 removing as a part of cross vendor chat removal Thippeswamy Aravinda -->
+	<types>
+		<members>FeedItemTrigger</members>
+		<members>FeedCommentTrigger</members>
+		<name>ApexTrigger</name>
+	</types>
+	<!--2021-04-22 removing as a part of cross vendor chat removal Thippeswamy Aravinda -->
+	<types>
+		<members>FCS_MentionHandler</members>
+		<members>FCS_MentionHandler_Test</members>
+		<name>ApexClass</name>
+	</types>
 </Package>
