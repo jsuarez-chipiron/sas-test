@@ -330,6 +330,9 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <relatedList>RelatedFileList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedContentNoteList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -354,7 +357,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000002QkaD</masterLabel>
+        <masterLabel>00h3N000002OZUt</masterLabel>
         <sizeX>3</sizeX>
         <sizeY>4</sizeY>
         <summaryLayoutItems>
