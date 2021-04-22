@@ -46,6 +46,11 @@
                 <default>false</default>
                 <label>Permission License</label>
             </value>
+            <value>
+                <fullName>Collaboration Group</fullName>
+                <default>false</default>
+                <label>Collaboration Group</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

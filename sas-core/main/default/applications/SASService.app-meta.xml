@@ -88,21 +88,13 @@
     <tabs>standard-Contact</tabs>
     <tabs>standard-Case</tabs>
     <tabs>standard-SocialPost</tabs>
-    <tabs>standard-LiveChatTranscript</tabs>
-    <tabs>standard-Dashboard</tabs>
     <tabs>standard-report</tabs>
-    <tabs>Knowledge__kav</tabs>
-    <tabs>FCS_CaseTag__c</tabs>
+    <tabs>standard-Dashboard</tabs>
     <tabs>standard-Macro</tabs>
+    <tabs>standard-Feed</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SAS_Service_UtilityBar</utilityBar>
     <workspaceConfig>
-        <mappings>
-            <tab>FCS_CaseTag__c</tab>
-        </mappings>
-        <mappings>
-            <tab>Knowledge__kav</tab>
-        </mappings>
         <mappings>
             <tab>standard-Account</tab>
         </mappings>
@@ -118,7 +110,7 @@
             <tab>standard-Dashboard</tab>
         </mappings>
         <mappings>
-            <tab>standard-LiveChatTranscript</tab>
+            <tab>standard-Feed</tab>
         </mappings>
         <mappings>
             <tab>standard-Macro</tab>
