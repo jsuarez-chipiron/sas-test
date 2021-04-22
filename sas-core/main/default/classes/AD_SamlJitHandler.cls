@@ -272,7 +272,6 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
                         else if(adp.PermissionType__c==PERMISSION_TYPE_CHATTER_GROUP)
                         {
                             inclChatterGroups.add(adp.MasterLabel);
-                            System.debug('inclChatterGroups&&&&'+inclChatterGroups);
                         }
                         else if(adp.PermissionType__c==PERMISSION_TYPE_CALL_CENTER){
                             if(callCenterName==null)callCenterName=adp.MasterLabel;
@@ -362,7 +361,6 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
                 u.put(f,userDetails.get(f));
             }
             for(String f : userPermissions.keySet()){
-                System.debug('UP:'+f);
                 u.put(f,userPermissions.get(f));
             }
         }
@@ -509,16 +507,13 @@ global class AD_SamlJitHandler implements Auth.SamlJitHandler {
         allChatterGroups.addAll(inclChatterGroups);
         allChatterGroups.addAll(exclChatterGroups);
         
-         // Get current chatter group members of
-         System.debug('inclChatterGroups'+inclChatterGroups);
-         
+         // Get current chatter group members of         
             CollaborationGroupMember[] cgmList = [SELECT CollaborationGroupId,CollaborationRole,Id,MemberId FROM CollaborationGroupMember WHERE MemberId=:userId];          
             Map<Id,CollaborationGroupMember> cgmMap = new Map<Id,CollaborationGroupMember>();
             for(CollaborationGroupMember cgm : cgmList){
                 cgmMap.put(cgm.CollaborationGroupId,cgm);
             }
             
-            System.debug('allChatterGroups'+allChatterGroups);
             //Get all refrenced chatter groups
             CollaborationGroup[] chatgroupList  = [SELECT Id,Name FROM CollaborationGroup WHERE Name IN : allChatterGroups];
             for(CollaborationGroup cg : chatgroupList){
