@@ -367,6 +367,21 @@
         <label>Email - Sales Control</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Sales Control OC DK</fullName>
+        <default>false</default>
+        <label>Email - Sales Control OC DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Sales Control OC NO</fullName>
+        <default>false</default>
+        <label>Email - Sales Control OC NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Sales Control OC SE</fullName>
+        <default>false</default>
+        <label>Email - Sales Control OC SE</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Sales Information</fullName>
         <default>false</default>
         <label>Email - Sales Information</label>

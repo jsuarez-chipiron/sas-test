@@ -767,8 +767,8 @@
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>EB Vendor</controllingFieldValue>
-            <controllingFieldValue>Ticketless</controllingFieldValue>
             <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Ticketless</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <controllingFieldValue>Refund</controllingFieldValue>
             <controllingFieldValue>Booking</controllingFieldValue>
@@ -777,12 +777,60 @@
             <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Ticketless</controllingFieldValue>
-            <valueName>Open coupon</valueName>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>ARI</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Ticketless</controllingFieldValue>
-            <valueName>Ticket wrongly rewritten</valueName>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <valueName>ATC/ATC Refund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <controllingFieldValue>Channel</controllingFieldValue>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>Baggage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Channel</controllingFieldValue>
+            <valueName>Fare Quote</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Channel</controllingFieldValue>
+            <valueName>Fare Rules</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <controllingFieldValue>Channel</controllingFieldValue>
+            <valueName>Fares</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <controllingFieldValue>SASSI Internal</controllingFieldValue>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>No action taken</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <valueName>Policy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Sales Information</controllingFieldValue>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
+            <valueName>Refund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariff</controllingFieldValue>
+            <valueName>Tax/YQ</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -799,24 +847,15 @@
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
-            <controllingFieldValue>System</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Baggage</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Information</controllingFieldValue>
             <controllingFieldValue>Support</controllingFieldValue>
-            <controllingFieldValue>Channel</controllingFieldValue>
             <valueName>Cancellation/refund of ticket</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Changes</valueName>
         </valueSettings>
         <valueSettings>
@@ -832,31 +871,31 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Credit card</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Delayed/damaged luggage</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Error</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
             <controllingFieldValue>Sales Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
-            <controllingFieldValue>System</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>CS Feedback</controllingFieldValue>
+            <controllingFieldValue>System</controllingFieldValue>
             <valueName>Eurobonus</valueName>
         </valueSettings>
         <valueSettings>
@@ -883,16 +922,16 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>System</controllingFieldValue>
             <valueName>Name change</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>New booking</valueName>
         </valueSettings>
         <valueSettings>
@@ -903,13 +942,6 @@
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>Overbooked flights</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <controllingFieldValue>CS Feedback</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Refund</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
@@ -935,14 +967,22 @@
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Special service requests</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Travel pass</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ticketless</controllingFieldValue>
+            <valueName>Open coupon</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ticketless</controllingFieldValue>
+            <valueName>Ticket wrongly rewritten</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fraud</controllingFieldValue>
@@ -1015,8 +1055,8 @@
         <valueSettings>
             <controllingFieldValue>Information</controllingFieldValue>
             <controllingFieldValue>Sales Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Digital support</valueName>
         </valueSettings>
         <valueSettings>
@@ -1026,8 +1066,8 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Information</controllingFieldValue>
-            <controllingFieldValue>Support</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
+            <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Rebooking</valueName>
         </valueSettings>
         <valueSettings>
@@ -1190,12 +1230,6 @@
         <valueSettings>
             <controllingFieldValue>Sales Information</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Fares</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <controllingFieldValue>Channel</controllingFieldValue>
             <valueName>Group sales R</valueName>
         </valueSettings>
         <valueSettings>
@@ -1218,13 +1252,6 @@
         <valueSettings>
             <controllingFieldValue>Sales Information</controllingFieldValue>
             <valueName>News</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Information</controllingFieldValue>
-            <controllingFieldValue>SASSI Internal</controllingFieldValue>
-            <controllingFieldValue>System</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>No action taken</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sales Information</controllingFieldValue>
@@ -1278,14 +1305,6 @@
             <valueName>Login issues</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Missing offer</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Star Award Online</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Channel</controllingFieldValue>
             <controllingFieldValue>System</controllingFieldValue>
             <valueName>ADM</valueName>
@@ -1309,16 +1328,6 @@
         <valueSettings>
             <controllingFieldValue>Channel</controllingFieldValue>
             <valueName>EuroBonus Partner</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Channel</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Fare Quote</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Channel</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Fare Rules</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Channel</controllingFieldValue>
@@ -1347,9 +1356,32 @@
             <valueName>Claim</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>System</controllingFieldValue>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>ARI</valueName>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Missing offer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Star Award Online</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
+            <valueName>Baggage Service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
+            <valueName>Corporate Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
+            <valueName>Digital Channel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
+            <valueName>Direct Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CS Feedback</controllingFieldValue>
+            <valueName>Group Sales</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
@@ -1386,38 +1418,6 @@
         <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
             <valueName>Ticketing</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CS Feedback</controllingFieldValue>
-            <valueName>Baggage Service</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CS Feedback</controllingFieldValue>
-            <valueName>Corporate Support</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CS Feedback</controllingFieldValue>
-            <valueName>Digital Channel</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CS Feedback</controllingFieldValue>
-            <valueName>Direct Sales</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CS Feedback</controllingFieldValue>
-            <valueName>Group Sales</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>ATC/ATC Refund</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Policy</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Tariff</controllingFieldValue>
-            <valueName>Tax/YQ</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
