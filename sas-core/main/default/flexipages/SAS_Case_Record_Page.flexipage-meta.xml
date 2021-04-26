@@ -232,10 +232,16 @@
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Refund</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Refunds</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -260,10 +266,16 @@
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Refund</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Refunds</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
