@@ -529,6 +529,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>LIA_Claim__c.Eurobonus_Points_Compensation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LIA_Claim__c.External_Case_Number_Court_Reference__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -606,7 +611,12 @@
         <editable>true</editable>
         <field>LIA_Claim__c.Liability_PNR__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Monetary_Compensation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>        
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Name_of_Passenger_s__c</field>
@@ -652,6 +662,11 @@
         <field>LIA_Claim__c.Total_Paid_Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Voucher_Compensation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>     
     <fieldPermissions>
         <editable>true</editable>
         <field>FCS_CaseTag__c.FCS_CaseTag__c</field>
