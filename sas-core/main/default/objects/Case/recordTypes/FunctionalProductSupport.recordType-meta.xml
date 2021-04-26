@@ -2554,6 +2554,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Sales Control OC DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Sales Control OC NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Sales Control OC SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Facebook</fullName>
             <default>false</default>
         </values>
@@ -2679,6 +2691,10 @@
         </values>
         <values>
             <fullName>BOM Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM IOM</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2934,6 +2950,10 @@
         </values>
         <values>
             <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Control</fullName>
             <default>false</default>
         </values>
     </picklistValues>

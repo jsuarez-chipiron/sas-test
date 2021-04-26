@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Case_Type_To_Assign__c</field>
-        <value xsi:type="xsd:string">Channel</value>
+        <value xsi:type="xsd:string">Refunds</value>
     </values>
     <values>
         <field>Department_To_Assign__c</field>

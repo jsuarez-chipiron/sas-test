@@ -62,6 +62,11 @@
         <label>Refund</label>
     </standardValue>
     <standardValue>
+        <fullName>Sales Control</fullName>
+        <default>false</default>
+        <label>Sales Control</label>
+    </standardValue>
+    <standardValue>
         <fullName>Sales Information</fullName>
         <default>false</default>
         <label>Sales Information</label>

@@ -76,6 +76,11 @@
                 <label>BOM Groups</label>
             </value>
             <value>
+                <fullName>BOM IOM</fullName>
+                <default>false</default>
+                <label>BOM IOM</label>
+            </value>
+            <value>
                 <fullName>BOM Reminders</fullName>
                 <default>false</default>
                 <label>BOM Reminders</label>
@@ -462,6 +467,26 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Admin</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Defense</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>External Lawyers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Inhouse</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Settlement</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>BOM ARC</valueName>
         </valueSettings>
@@ -488,6 +513,10 @@
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>BOM Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM IOM</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
@@ -555,6 +584,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <valueName>Sales Control</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>Special Sales NO</valueName>
         </valueSettings>
         <valueSettings>
@@ -574,10 +608,6 @@
         <valueSettings>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <valueName>SoMe</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>EMEA</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
@@ -606,10 +636,6 @@
         <valueSettings>
             <controllingFieldValue>Direct Sales</controllingFieldValue>
             <valueName>Backoffice</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
-            <valueName>Sales Control</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
@@ -674,6 +700,10 @@
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Star Alliance Upgrades</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>EMEA</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
@@ -794,26 +824,6 @@
         <valueSettings>
             <controllingFieldValue>Info Hub</controllingFieldValue>
             <valueName>System &amp; Tariff</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>Admin</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>Defense</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>External Lawyers</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>Inhouse</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>Settlement</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
