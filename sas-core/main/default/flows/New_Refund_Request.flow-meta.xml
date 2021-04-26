@@ -987,7 +987,7 @@
                     <dataType>String</dataType>
                     <fieldText>Customer&apos;s phone number</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>true</isRequired>
+                    <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
