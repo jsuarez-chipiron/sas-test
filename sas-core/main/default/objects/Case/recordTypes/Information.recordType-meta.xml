@@ -6,17 +6,6 @@
     <description>Use for chat cases</description>
     <label>Information</label>
     <picklistValues>
-        <picklist>Consent__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Department__c</picklist>
         <values>
             <fullName>Agent Helpdesk</fullName>
@@ -52,6 +41,10 @@
         </values>
         <values>
             <fullName>Liability</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refunds</fullName>
             <default>false</default>
         </values>
         <values>
@@ -414,6 +407,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Refund not received</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Requesting documentation</fullName>
             <default>false</default>
         </values>
@@ -495,6 +492,10 @@
         </values>
         <values>
             <fullName>Travel pass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher</fullName>
             <default>false</default>
         </values>
         <values>
@@ -761,6 +762,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Card errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Card replacement</fullName>
             <default>false</default>
         </values>
@@ -897,6 +902,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Diplomatic exception</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Document control %28ESTA %2F VISA %2F DOCS %2F PASSPORT%29</fullName>
             <default>false</default>
         </values>
@@ -1025,6 +1034,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Full</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>GDPR</fullName>
             <default>false</default>
         </values>
@@ -1133,6 +1146,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Insufficient balance account</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insufficient balance payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Insurance</fullName>
             <default>false</default>
         </values>
@@ -1150,6 +1171,10 @@
         </values>
         <values>
             <fullName>Kids</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Klarna</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1221,6 +1246,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Multiple FOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Musical</fullName>
             <default>false</default>
         </values>
@@ -1254,6 +1283,10 @@
         </values>
         <values>
             <fullName>New booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No money collected</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1294,6 +1327,10 @@
         </values>
         <values>
             <fullName>Pandion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partial</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1590,6 +1627,10 @@
         </values>
         <values>
             <fullName>Sport Int%2E%2FEU Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sporting event cancelled</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2271,185 +2312,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FCS_Site__c</picklist>
-        <values>
-            <fullName>BOM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EVG</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LCA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ODE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OER</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>STO</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>FCS_SubTeam__c</picklist>
-        <values>
-            <fullName>Team 1%2E1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 1%2E2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 1%2E3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 2%2E1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 2%2E2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 2%2E3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 3%2E1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 3%2E2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 3%2E3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 4%2E1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 4%2E2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 4%2E3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 5%2E1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 5%2E2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 5%2E3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 6%2E1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 6%2E2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 6%2E3</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>FCS_Team__c</picklist>
-        <values>
-            <fullName>Team 1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 5</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 6</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>FCS_Vendor__c</picklist>
-        <values>
-            <fullName>SAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Student Consulting</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sutherland</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sykes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>FCS_VirtualOrganization__c</picklist>
-        <values>
-            <fullName>Agent Helpdesk</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Direct Sales</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EuroBonus</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Global Support</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Liability NEB</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sales Control</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>GSB_Flight_Length__c</picklist>
         <values>
             <fullName>Long Haul</fullName>
@@ -2576,6 +2438,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Agent Helpdesk International</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Corporate Support Backoffice</fullName>
             <default>false</default>
         </values>
@@ -2648,6 +2514,58 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Refund BSP General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund BSP General 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund DK General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund FI General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund NCE General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund NO General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund Operating Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund SE General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund SE General 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund US General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Sales Control OC DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Sales Control OC NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Sales Control OC SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Sales Information</fullName>
             <default>false</default>
         </values>
@@ -2657,6 +2575,18 @@
         </values>
         <values>
             <fullName>Facebook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refund Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refund Forsvaret</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refund Travel Agent</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2744,7 +2674,43 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Agent Fares Ticketing EU</fullName>
+            <fullName>BOM ARC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM BSP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM Forms Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM Forms Travel Agent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM Forsvaret</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM IOM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM Reminders</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM Tenured</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2812,6 +2778,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>General</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gold DK</fullName>
             <default>false</default>
         </values>
@@ -2852,6 +2822,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>International</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>LT</fullName>
             <default>false</default>
         </values>
@@ -2865,6 +2839,38 @@
         </values>
         <values>
             <fullName>Name Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Bank Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Groups Europe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Klarna Disputes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Reserved Amount</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Travel Agent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Waivers</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2953,6 +2959,14 @@
         <values>
             <fullName>Information</fullName>
             <default>true</default>
+        </values>
+        <values>
+            <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Control</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
 </RecordType>

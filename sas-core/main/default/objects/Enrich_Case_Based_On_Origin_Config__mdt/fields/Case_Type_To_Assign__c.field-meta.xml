@@ -16,6 +16,11 @@
                 <label>Channel</label>
             </value>
             <value>
+                <fullName>Claim</fullName>
+                <default>false</default>
+                <label>Claim</label>
+            </value>
+            <value>
                 <fullName>CS Feedback</fullName>
                 <default>false</default>
                 <label>CS Feedback</label>
@@ -31,6 +36,11 @@
                 <label>Feedback</label>
             </value>
             <value>
+                <fullName>Fraud</fullName>
+                <default>false</default>
+                <label>Fraud</label>
+            </value>
+            <value>
                 <fullName>Functional Product Support</fullName>
                 <default>false</default>
                 <label>Functional Product Support</label>
@@ -39,6 +49,16 @@
                 <fullName>Information</fullName>
                 <default>false</default>
                 <label>Information</label>
+            </value>
+            <value>
+                <fullName>Refunds</fullName>
+                <default>false</default>
+                <label>Refunds</label>
+            </value>
+            <value>
+                <fullName>Sales Control</fullName>
+                <default>false</default>
+                <label>Sales Control</label>
             </value>
             <value>
                 <fullName>Sales Information</fullName>

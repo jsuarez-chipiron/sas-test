@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <sorted>false</sorted>
+    <sorted>true</sorted>
     <standardValue>
-        <fullName>Phone</fullName>
+        <fullName>Chat</fullName>
         <default>false</default>
-        <label>Phone</label>
+        <label>Chat</label>
     </standardValue>
     <standardValue>
         <fullName>Email</fullName>
@@ -12,39 +12,39 @@
         <label>Email</label>
     </standardValue>
     <standardValue>
-        <fullName>Web</fullName>
+        <fullName>Email - Agent Helpdesk International</fullName>
         <default>false</default>
-        <label>Web</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Facebook</fullName>
-        <default>false</default>
-        <label>Facebook</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Twitter</fullName>
-        <default>false</default>
-        <label>Twitter</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Chat</fullName>
-        <default>false</default>
-        <label>Chat</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Facebook Messenger</fullName>
-        <default>false</default>
-        <label>Facebook Messenger</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Agent Fares Ticketing EU</fullName>
-        <default>false</default>
-        <label>Email - Agent Fares Ticketing EU</label>
+        <label>Email - Agent Helpdesk International</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Agent Helpdesk Scandinavia</fullName>
         <default>false</default>
         <label>Email - Agent Helpdesk Scandinavia</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Businesstravel STO</fullName>
+        <default>false</default>
+        <label>Email - Businesstravel STO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Corporate Support Backoffice</fullName>
+        <default>false</default>
+        <label>Email - Corporate Support Backoffice</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Corporate Support International</fullName>
+        <default>false</default>
+        <label>Email - Corporate Support International</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Corporate Support Scandinavia</fullName>
+        <default>false</default>
+        <label>Email - Corporate Support Scandinavia</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - CS Feedback</fullName>
+        <default>false</default>
+        <label>Email - CS Feedback</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Digital Channel Support External</fullName>
@@ -57,9 +57,79 @@
         <label>Email - Digital Channel Support Internal</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Direct Sales Reservations DK</fullName>
+        <default>false</default>
+        <label>Email - Direct Sales Reservations DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Direct Sales Reservations NO</fullName>
+        <default>false</default>
+        <label>Email - Direct Sales Reservations NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Direct Sales Reservations SE</fullName>
+        <default>false</default>
+        <label>Email - Direct Sales Reservations SE</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - EB Missing Points</fullName>
         <default>false</default>
         <label>Email - EB Missing Points</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EB Pai Manual</fullName>
+        <default>false</default>
+        <label>Email - EB Pai Manual</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EB Vendor Support</fullName>
+        <default>false</default>
+        <label>Email - EB Vendor Support</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Diamond DK</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Diamond DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Diamond NO</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Diamond NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Diamond SE</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Diamond SE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Gold DK</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Gold DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Gold NO</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Gold NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Gold SE</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Gold SE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Identify Customer</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Identify Customer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Name Change</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Name Change</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Partner Support</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Partner Support</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Forsvaret NO</fullName>
@@ -67,9 +137,24 @@
         <label>Email - Forsvaret NO</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Fraud EMEA</fullName>
+        <default>false</default>
+        <label>Email - Fraud EMEA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Fraud Investigation</fullName>
+        <default>false</default>
+        <label>Email - Fraud Investigation</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Functional Product Support</fullName>
         <default>false</default>
         <label>Email - Functional Product Support</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - GDPR Secure Data</fullName>
+        <default>false</default>
+        <label>Email - GDPR Secure Data</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Group Sales ACE</fullName>
@@ -187,9 +272,9 @@
         <label>Email - Group Sales US</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - HQ Special Sales NO</fullName>
+        <fullName>Email - Liability Claim</fullName>
         <default>false</default>
-        <label>Email - HQ Special Sales NO</label>
+        <label>Email - Liability Claim</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Olympic DK</fullName>
@@ -207,11 +292,6 @@
         <label>Email - Olympic SE</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - Liability Claim</fullName>
-        <default>false</default>
-        <label>Email - Liability Claim</label>
-    </standardValue>
-    <standardValue>
         <fullName>Email - Pandion DK</fullName>
         <default>false</default>
         <label>Email - Pandion DK</label>
@@ -225,6 +305,81 @@
         <fullName>Email - Pandion SE</fullName>
         <default>false</default>
         <label>Email - Pandion SE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Premium Corporate Support</fullName>
+        <default>false</default>
+        <label>Email - Premium Corporate Support</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Refund BSP General</fullName>
+        <default>false</default>
+        <label>Email - Refund BSP General</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Refund BSP General 2</fullName>
+        <default>false</default>
+        <label>Email - Refund BSP General 2</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Refund DK General</fullName>
+        <default>false</default>
+        <label>Email - Refund DK General</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Refund FI General</fullName>
+        <default>false</default>
+        <label>Email - Refund FI General</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Refund NCE General</fullName>
+        <default>false</default>
+        <label>Email - Refund NCE General</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Refund NO General</fullName>
+        <default>false</default>
+        <label>Email - Refund NO General</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Refund Operating Center</fullName>
+        <default>false</default>
+        <label>Email - Refund Operating Center</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Refund SE General</fullName>
+        <default>false</default>
+        <label>Email - Refund SE General</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Refund SE General 2</fullName>
+        <default>false</default>
+        <label>Email - Refund SE General 2</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Refund US General</fullName>
+        <default>false</default>
+        <label>Email - Refund US General</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Sales Control</fullName>
+        <default>false</default>
+        <label>Email - Sales Control</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Sales Control OC DK</fullName>
+        <default>false</default>
+        <label>Email - Sales Control OC DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Sales Control OC NO</fullName>
+        <default>false</default>
+        <label>Email - Sales Control OC NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Sales Control OC SE</fullName>
+        <default>false</default>
+        <label>Email - Sales Control OC SE</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Sales Information</fullName>
@@ -242,111 +397,6 @@
         <label>Email - SASSI Internal</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - Star Alliance Upgrades</fullName>
-        <default>false</default>
-        <label>Email - Star Alliance Upgrades</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - System &amp; Tariff</fullName>
-        <default>false</default>
-        <label>Email - System &amp; Tariff</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - EB Pai Manual</fullName>
-        <default>false</default>
-        <label>Email - EB Pai Manual</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - EuroBonus Diamond DK</fullName>
-        <default>false</default>
-        <label>Email - EuroBonus Diamond DK</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - EuroBonus Diamond NO</fullName>
-        <default>false</default>
-        <label>Email - EuroBonus Diamond NO</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - EuroBonus Diamond SE</fullName>
-        <default>false</default>
-        <label>Email - EuroBonus Diamond SE</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - EuroBonus Gold DK</fullName>
-        <default>false</default>
-        <label>Email - EuroBonus Gold DK</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - EuroBonus Gold NO</fullName>
-        <default>false</default>
-        <label>Email - EuroBonus Gold NO</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - EuroBonus Gold SE</fullName>
-        <default>false</default>
-        <label>Email - EuroBonus Gold SE</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - EuroBonus Identify Customer</fullName>
-        <default>false</default>
-        <label>Email - EuroBonus Identify Customer</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - EuroBonus Name Change</fullName>
-        <default>false</default>
-        <label>Email - EuroBonus Name Change</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Direct Sales Reservations DK</fullName>
-        <default>false</default>
-        <label>Email - Direct Sales Reservations DK</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Direct Sales Reservations NO</fullName>
-        <default>false</default>
-        <label>Email - Direct Sales Reservations NO</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Direct Sales Reservations SE</fullName>
-        <default>false</default>
-        <label>Email - Direct Sales Reservations SE</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - SME Scandinavia</fullName>
-        <default>false</default>
-        <label>Email - SME Scandinavia</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - SME International</fullName>
-        <default>false</default>
-        <label>Email - SME International</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - EB Vendor Support</fullName>
-        <default>false</default>
-        <label>Email - EB Vendor Support</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Corporate Support Backoffice</fullName>
-        <default>false</default>
-        <label>Email - Corporate Support Backoffice</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Corporate Support International</fullName>
-        <default>false</default>
-        <label>Email - Corporate Support International</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Corporate Support Scandinavia</fullName>
-        <default>false</default>
-        <label>Email - Corporate Support Scandinavia</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - EuroBonus Partner Support</fullName>
-        <default>false</default>
-        <label>Email - EuroBonus Partner Support</label>
-    </standardValue>
-    <standardValue>
         <fullName>Email - SGH Bag DK</fullName>
         <default>false</default>
         <label>Email - SGH Bag DK</label>
@@ -362,19 +412,14 @@
         <label>Email - SGH Bag SE</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - GDPR Secure Data</fullName>
+        <fullName>Email - SME International</fullName>
         <default>false</default>
-        <label>Email - GDPR Secure Data</label>
+        <label>Email - SME International</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - Ticketless Support</fullName>
+        <fullName>Email - SME Scandinavia</fullName>
         <default>false</default>
-        <label>Email - Ticketless Support</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Businesstravel STO</fullName>
-        <default>false</default>
-        <label>Email - Businesstravel STO</label>
+        <label>Email - SME Scandinavia</label>
     </standardValue>
     <standardValue>
         <fullName>Email - SoMe Support</fullName>
@@ -382,14 +427,54 @@
         <label>Email - SoMe Support</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - CS Feedback</fullName>
+        <fullName>Email - Special Sales NO</fullName>
         <default>false</default>
-        <label>Email - CS Feedback</label>
+        <label>Email - Special Sales NO</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - Sales Control</fullName>
+        <fullName>Email - Star Alliance Request</fullName>
         <default>false</default>
-        <label>Email - Sales Control</label>
+        <label>Email - Star Alliance Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Star Alliance Upgrades</fullName>
+        <default>false</default>
+        <label>Email - Star Alliance Upgrades</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - System &amp; Tariff</fullName>
+        <default>false</default>
+        <label>Email - System &amp; Tariff</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Ticketless Support</fullName>
+        <default>false</default>
+        <label>Email - Ticketless Support</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Facebook</fullName>
+        <default>false</default>
+        <label>Facebook</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Facebook Messenger</fullName>
+        <default>false</default>
+        <label>Facebook Messenger</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Refund Customer</fullName>
+        <default>false</default>
+        <label>Form - Refund Customer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Refund Forsvaret</fullName>
+        <default>false</default>
+        <label>Form - Refund Forsvaret</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Refund Travel Agent</fullName>
+        <default>false</default>
+        <label>Form - Refund Travel Agent</label>
     </standardValue>
     <standardValue>
         <fullName>Internal - Support</fullName>
@@ -397,13 +482,28 @@
         <label>Internal - Support</label>
     </standardValue>
     <standardValue>
+        <fullName>Manual</fullName>
+        <default>false</default>
+        <label>Manual</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Phone</fullName>
+        <default>false</default>
+        <label>Phone</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Twitter</fullName>
+        <default>false</default>
+        <label>Twitter</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Web</fullName>
+        <default>false</default>
+        <label>Web</label>
+    </standardValue>
+    <standardValue>
         <fullName>White Paper - Liability Claim</fullName>
         <default>false</default>
         <label>White Paper - Liability Claim</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Premium Corporate Support</fullName>
-        <default>false</default>
-        <label>Email - Premium Corporate Support</label>
     </standardValue>
 </StandardValueSet>

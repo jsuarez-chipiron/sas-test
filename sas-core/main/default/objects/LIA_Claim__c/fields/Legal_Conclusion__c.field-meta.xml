@@ -53,7 +53,7 @@
             </value>
             <value>
                 <fullName>N/A</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>N/A</label>
             </value>
         </valueSetDefinition>

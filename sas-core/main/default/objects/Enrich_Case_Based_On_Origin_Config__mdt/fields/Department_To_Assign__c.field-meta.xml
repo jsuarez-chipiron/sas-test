@@ -41,14 +41,14 @@
                 <label>EuroBonus</label>
             </value>
             <value>
+                <fullName>Fraud</fullName>
+                <default>false</default>
+                <label>Fraud</label>
+            </value>
+            <value>
                 <fullName>Functional Product Support</fullName>
                 <default>false</default>
                 <label>Functional Product Support</label>
-            </value>
-            <value>
-                <fullName>SoMe Support</fullName>
-                <default>false</default>
-                <label>SoMe Support</label>
             </value>
             <value>
                 <fullName>Group Sales</fullName>
@@ -56,22 +56,21 @@
                 <label>Group Sales</label>
             </value>
             <value>
-                <fullName>HQ</fullName>
-                <default>false</default>
-				<isActive>false</isActive>
-                <label>HQ</label>
-            </value>
-            <value>
                 <fullName>Info Hub</fullName>
                 <default>false</default>
                 <label>Info Hub</label>
             </value>
-             <value>
+            <value>
                 <fullName>Liability</fullName>
                 <default>false</default>
                 <label>Liability</label>
             </value>
-			 <value>
+            <value>
+                <fullName>Refunds</fullName>
+                <default>false</default>
+                <label>Refunds</label>
+            </value>
+            <value>
                 <fullName>SAS Operating Center</fullName>
                 <default>false</default>
                 <label>SAS Operating Center</label>
@@ -81,7 +80,11 @@
                 <default>false</default>
                 <label>SME</label>
             </value>
+            <value>
+                <fullName>SoMe Support</fullName>
+                <default>false</default>
+                <label>SoMe Support</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
-

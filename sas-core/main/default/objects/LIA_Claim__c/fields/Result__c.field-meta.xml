@@ -27,9 +27,14 @@
                 <label>Negative</label>
             </value>
             <value>
-                <fullName>Partly, Settlement</fullName>
+                <fullName>Settlement</fullName>
                 <default>false</default>
-                <label>Partly, Settlement</label>
+                <label>Settlement</label>
+            </value>
+            <value>
+                <fullName>Partly</fullName>
+                <default>false</default>
+                <label>Partly</label>
             </value>
             <value>
                 <fullName>Claim recalled</fullName>

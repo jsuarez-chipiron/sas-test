@@ -223,11 +223,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Case.Queue__c</field>
-            <table>MessagingSession</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Case.Status</field>
             <table>MessagingSession</table>
         </columns>
@@ -235,15 +230,20 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Case.Subject</field>
             <table>MessagingSession</table>
-        </columns>
+        </columns>      
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Case.FCS_SubTeam__c</field>
+            <field>Case.Type</field>
             <table>MessagingSession</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Case.Type</field>
+            <field>Case.Department__c</field>
+            <table>MessagingSession</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case.Team__c</field>
             <table>MessagingSession</table>
         </columns>
         <masterLabel>Messaging Sessions</masterLabel>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Consent_Field_Validation</fullName>
-    <active>true</active>
-    <errorConditionFormula>AND(NOT(OR(ISPICKVAL( Consent__c,&#39;Yes&#39;),ISPICKVAL( Consent__c,&#39;NO&#39;))),$Permission.Special_User_Permission,IsNEW())</errorConditionFormula>
-    <errorDisplayField>Consent__c</errorDisplayField>
-    <errorMessage>Please evaluate if we can save the data by editing the Consent . If we don&#39;t have consent data will be deleted depending on case origin and status.</errorMessage>
-</ValidationRule>

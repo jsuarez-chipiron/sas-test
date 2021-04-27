@@ -53,11 +53,42 @@
 		<members>Case.CaseTags__c</members>
 		<name>CustomField</name>
 	</types>
+	<!-- 2020-04-209 Delete field Queue Thippeswamy A -->
+	<types>
+		<members>Case.Queue__c</members>
+		<name>CustomField</name>
+	</types>
+
+	<!-- 2020-04-12 Delete case fields Thippeswamy A -->
+	<types>
+		<members>Case.FCS_Team__c</members>
+		<members>Case.FCS_SubTeam__c</members>
+		<members>Case.FCS_Vendor__c</members>
+		<members>Case.FCS_Site__c</members>
+		<members>Case.FCS_VirtualOrganization__c</members>
+		<members>Case.consent__c</members>
+		<name>CustomField</name>
+	</types>
+
+	<!-- 2020-04-12 Delete case fields Thippeswamy A -->
+	<types>
+		<members>SocialPost.FCS_Team__c</members>
+		<members>SocialPost.FCS_SubTeam__c</members>
+		<members>SocialPost.FCS_Vendor__c</members>
+		<members>SocialPost.FCS_Site__c</members>
+		<members>SocialPost.FCS_VirtualOrganization__c</members>
+		<name>CustomField</name>
+	</types>
 
 	<!-- 2020-05-20 Delete CustomApplication -->
 	<types>
 		<members>SAS_IRR</members>
 		<name>CustomApplication</name>
+	</types>
+	<!-- 2021-04-16 Delete Consent field validation -->
+	<types>
+		<members>Case.Consent_Field_Validation</members>
+		<name>ValidationRule</name>
 	</types>
 	<!--2020-05-28 Delete Role and use SAS instead-->
 	<types>
@@ -88,5 +119,26 @@
 		<members>Agent_Fares_Ticketing_EU</members>
 		<members>Agent_Helpdesk_SIA</members>
 		<name>Group</name>
+	</types>
+<!--2021-04-19 remove Social post process builder updating Site, vendor, team and Sub team Thippeswamy Aravinda -->
+	<types>
+        <members>SocialPost-3</members>
+		<members>SocialPost-1</members>
+		<members>SocialPost-2</members>
+		<members>SocialPost-4</members>
+		<members>SocialPost-5</members>
+        <name>Flow</name>
+    </types>
+	<!--2021-04-22 removing as a part of cross vendor chat removal Thippeswamy Aravinda -->
+	<types>
+		<members>FeedItemTrigger</members>
+		<members>FeedCommentTrigger</members>
+		<name>ApexTrigger</name>
+	</types>
+	<!--2021-04-22 removing as a part of cross vendor chat removal Thippeswamy Aravinda -->
+	<types>
+		<members>FCS_MentionHandler</members>
+		<members>FCS_MentionHandler_Test</members>
+		<name>ApexClass</name>
 	</types>
 </Package>

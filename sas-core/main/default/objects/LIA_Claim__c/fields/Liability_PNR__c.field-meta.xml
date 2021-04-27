@@ -3,7 +3,7 @@
     <fullName>Liability_PNR__c</fullName>
     <description>PNR related to the Liability Claim</description>
     <externalId>false</externalId>
-    <label>Liability PNR</label>
+    <label>PNR</label>
     <length>10</length>
     <required>false</required>
     <trackHistory>false</trackHistory>

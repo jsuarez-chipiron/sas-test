@@ -76,6 +76,11 @@
                 <default>false</default>
                 <label>CREW</label>
             </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>false</default>
+                <label>N/A</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

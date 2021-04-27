@@ -21,11 +21,6 @@
                 <label>Admin</label>
             </value>
             <value>
-                <fullName>Agent Fares Ticketing EU</fullName>
-                <default>false</default>
-                <label>Agent Fares Ticketing EU</label>
-            </value>
-            <value>
                 <fullName>AT</fullName>
                 <default>false</default>
                 <label>AT</label>
@@ -39,6 +34,56 @@
                 <fullName>Benelux</fullName>
                 <default>false</default>
                 <label>Benelux</label>
+            </value>
+            <value>
+                <fullName>BOM ARC</fullName>
+                <default>false</default>
+                <label>BOM ARC</label>
+            </value>
+            <value>
+                <fullName>BOM BSP</fullName>
+                <default>false</default>
+                <label>BOM BSP </label>
+            </value>
+            <value>
+                <fullName>BOM Forms Customer</fullName>
+                <default>false</default>
+                <label>BOM Forms Customer</label>
+            </value>
+            <value>
+                <fullName>BOM Forms Travel Agent</fullName>
+                <default>false</default>
+                <label>BOM Forms Travel Agent</label>
+            </value>
+            <value>
+                <fullName>BOM Forsvaret</fullName>
+                <default>false</default>
+                <label>BOM Forsvaret</label>
+            </value>
+            <value>
+                <fullName>BOM General</fullName>
+                <default>false</default>
+                <label>BOM General</label>
+            </value>
+            <value>
+                <fullName>BOM Groups</fullName>
+                <default>false</default>
+                <label>BOM Groups</label>
+            </value>
+            <value>
+                <fullName>BOM IOM</fullName>
+                <default>false</default>
+                <label>BOM IOM</label>
+            </value>
+            <value>
+                <fullName>BOM Reminders</fullName>
+                <default>false</default>
+                <label>BOM Reminders</label>
+            </value>
+            <value>
+                <fullName>BOM Tenured</fullName>
+                <default>false</default>
+                <label>BOM Tenured</label>
             </value>
             <value>
                 <fullName>Bulk</fullName>
@@ -96,6 +141,11 @@
                 <label>EE</label>
             </value>
             <value>
+                <fullName>EMEA</fullName>
+                <default>false</default>
+                <label>EMEA</label>
+            </value>
+            <value>
                 <fullName>ES</fullName>
                 <default>false</default>
                 <label>ES</label>
@@ -111,14 +161,14 @@
                 <label>External Lawyers</label>
             </value>
             <value>
-                <fullName>FI</fullName>
-                <default>false</default>
-                <label>FI</label>
-            </value>
-			<value>
                 <fullName>Feedback</fullName>
                 <default>false</default>
                 <label>Feedback</label>
+            </value>
+            <value>
+                <fullName>FI</fullName>
+                <default>false</default>
+                <label>FI</label>
             </value>
             <value>
                 <fullName>Forsvaret NO</fullName>
@@ -129,6 +179,11 @@
                 <fullName>FR</fullName>
                 <default>false</default>
                 <label>FR</label>
+            </value>
+            <value>
+                <fullName>Fraud Investigation</fullName>
+                <default>false</default>
+                <label>Fraud Investigation</label>
             </value>
             <value>
                 <fullName>GDPR</fullName>
@@ -216,6 +271,46 @@
                 <label>NO</label>
             </value>
             <value>
+                <fullName>OC Bank Transfer</fullName>
+                <default>false</default>
+                <label>OC Bank Transfer</label>
+            </value>
+            <value>
+                <fullName>OC General</fullName>
+                <default>false</default>
+                <label>OC General</label>
+            </value>
+            <value>
+                <fullName>OC Groups</fullName>
+                <default>false</default>
+                <label>OC Groups</label>
+            </value>
+            <value>
+                <fullName>OC Klarna Disputes</fullName>
+                <default>false</default>
+                <label>OC Klarna Disputes</label>
+            </value>
+            <value>
+                <fullName>OC Reserved Amount</fullName>
+                <default>false</default>
+                <label>OC Reserved Amount</label>
+            </value>
+            <value>
+                <fullName>OC Travel Agent</fullName>
+                <default>false</default>
+                <label>OC Travel Agent</label>
+            </value>
+            <value>
+                <fullName>OC Voucher</fullName>
+                <default>false</default>
+                <label>OC Voucher</label>
+            </value>
+            <value>
+                <fullName>OC Waivers</fullName>
+                <default>false</default>
+                <label>OC Waivers</label>
+            </value>
+            <value>
                 <fullName>Olympic DK</fullName>
                 <default>false</default>
                 <label>Olympic DK</label>
@@ -264,21 +359,21 @@
                 <fullName>Premium Corporate Support</fullName>
                 <default>false</default>
                 <label>Premium Corporate Support</label>
-            </value>            
+            </value>
             <value>
                 <fullName>RU</fullName>
                 <default>false</default>
                 <label>RU</label>
             </value>
             <value>
-                <fullName>Sales Information</fullName>
-                <default>false</default>
-                <label>Sales Information</label>
-            </value>
-            <value>
                 <fullName>Sales Control</fullName>
                 <default>false</default>
                 <label>Sales Control</label>
+            </value>
+            <value>
+                <fullName>Sales Information</fullName>
+                <default>false</default>
+                <label>Sales Information</label>
             </value>
             <value>
                 <fullName>SAS Poland</fullName>
@@ -289,11 +384,6 @@
                 <fullName>SASSI Internal</fullName>
                 <default>false</default>
                 <label>SASSI Internal</label>
-            </value>
-            <value>
-                <fullName>Special Sales NO</fullName>
-                <default>false</default>
-                <label>Special Sales NO</label>
             </value>
             <value>
                 <fullName>Scandinavia</fullName>
@@ -310,25 +400,35 @@
                 <default>false</default>
                 <label>Settlement</label>
             </value>
-            <value>	
-                <fullName>SGH Bag DK</fullName>	
-                <default>false</default>	
-                <label>SGH Bag DK</label>	
-            </value>	            
-            <value>	
-                <fullName>SGH Bag SE</fullName>	
-                <default>false</default>	
-                <label>SGH Bag SE</label>	
-            </value>           
+            <value>
+                <fullName>SGH Bag DK</fullName>
+                <default>false</default>
+                <label>SGH Bag DK</label>
+            </value>
             <value>
                 <fullName>SGH Bag NO</fullName>
                 <default>false</default>
                 <label>SGH Bag NO</label>
-            </value>          
+            </value>
+            <value>
+                <fullName>SGH Bag SE</fullName>
+                <default>false</default>
+                <label>SGH Bag SE</label>
+            </value>
             <value>
                 <fullName>SoMe</fullName>
                 <default>false</default>
                 <label>SoMe</label>
+            </value>
+            <value>
+                <fullName>Special Sales NO</fullName>
+                <default>false</default>
+                <label>Special Sales NO</label>
+            </value>
+            <value>
+                <fullName>Star Alliance Request</fullName>
+                <default>false</default>
+                <label>Star Alliance Request</label>
             </value>
             <value>
                 <fullName>Star Alliance Upgrades</fullName>

@@ -3,13 +3,10 @@
     <fullName>LIA_CARE_Case_Number__c</fullName>
     <externalId>false</externalId>
     <formula>LIA_Claim__r.CARE_Case_Number__c</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>CARE Case Number</label>
-    <precision>18</precision>
     <required>false</required>
-    <scale>0</scale>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>

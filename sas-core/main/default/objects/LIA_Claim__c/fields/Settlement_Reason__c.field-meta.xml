@@ -56,6 +56,11 @@
                 <default>false</default>
                 <label>Pax entitled to compensation</label>
             </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>true</default>
+                <label>N/A</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

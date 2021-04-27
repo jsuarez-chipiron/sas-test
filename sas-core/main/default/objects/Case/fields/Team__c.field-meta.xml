@@ -26,11 +26,6 @@
                 <label>Admin</label>
             </value>
             <value>
-                <fullName>Agent Fares Ticketing EU</fullName>
-                <default>false</default>
-                <label>Agent Fares Ticketing EU</label>
-            </value>
-            <value>
                 <fullName>AT</fullName>
                 <default>false</default>
                 <label>AT</label>
@@ -44,6 +39,56 @@
                 <fullName>Benelux</fullName>
                 <default>false</default>
                 <label>Benelux</label>
+            </value>
+            <value>
+                <fullName>BOM ARC</fullName>
+                <default>false</default>
+                <label>BOM ARC</label>
+            </value>
+            <value>
+                <fullName>BOM BSP</fullName>
+                <default>false</default>
+                <label>BOM BSP</label>
+            </value>
+            <value>
+                <fullName>BOM Forms Customer</fullName>
+                <default>false</default>
+                <label>BOM Forms Customer</label>
+            </value>
+            <value>
+                <fullName>BOM Forms Travel Agent</fullName>
+                <default>false</default>
+                <label>BOM Forms Travel Agent</label>
+            </value>
+            <value>
+                <fullName>BOM Forsvaret</fullName>
+                <default>false</default>
+                <label>BOM Forsvaret</label>
+            </value>
+            <value>
+                <fullName>BOM General</fullName>
+                <default>false</default>
+                <label>BOM General</label>
+            </value>
+            <value>
+                <fullName>BOM Groups</fullName>
+                <default>false</default>
+                <label>BOM Groups</label>
+            </value>
+            <value>
+                <fullName>BOM IOM</fullName>
+                <default>false</default>
+                <label>BOM IOM</label>
+            </value>
+            <value>
+                <fullName>BOM Reminders</fullName>
+                <default>false</default>
+                <label>BOM Reminders</label>
+            </value>
+            <value>
+                <fullName>BOM Tenured</fullName>
+                <default>false</default>
+                <label>BOM Tenured</label>
             </value>
             <value>
                 <fullName>Bulk</fullName>
@@ -101,6 +146,11 @@
                 <label>EE</label>
             </value>
             <value>
+                <fullName>EMEA</fullName>
+                <default>false</default>
+                <label>EMEA</label>
+            </value>
+            <value>
                 <fullName>ES</fullName>
                 <default>false</default>
                 <label>ES</label>
@@ -116,14 +166,14 @@
                 <label>External Lawyers</label>
             </value>
             <value>
-                <fullName>FI</fullName>
-                <default>false</default>
-                <label>FI</label>
-            </value>
-			 <value>
                 <fullName>Feedback</fullName>
                 <default>false</default>
                 <label>Feedback</label>
+            </value>
+            <value>
+                <fullName>FI</fullName>
+                <default>false</default>
+                <label>FI</label>
             </value>
             <value>
                 <fullName>Forsvaret NO</fullName>
@@ -136,9 +186,19 @@
                 <label>FR</label>
             </value>
             <value>
+                <fullName>Fraud Investigation</fullName>
+                <default>false</default>
+                <label>Fraud Investigation</label>
+            </value>
+            <value>
                 <fullName>GDPR</fullName>
                 <default>false</default>
                 <label>GDPR</label>
+            </value>
+            <value>
+                <fullName>General</fullName>
+                <default>false</default>
+                <label>General</label>
             </value>
             <value>
                 <fullName>Gold DK</fullName>
@@ -221,6 +281,46 @@
                 <label>NO</label>
             </value>
             <value>
+                <fullName>OC Bank Transfer</fullName>
+                <default>false</default>
+                <label>OC Bank Transfer</label>
+            </value>
+            <value>
+                <fullName>OC General</fullName>
+                <default>false</default>
+                <label>OC General</label>
+            </value>
+            <value>
+                <fullName>OC Groups Europe</fullName>
+                <default>false</default>
+                <label>OC Groups Europe</label>
+            </value>
+            <value>
+                <fullName>OC Klarna Disputes</fullName>
+                <default>false</default>
+                <label>OC Klarna Disputes</label>
+            </value>
+            <value>
+                <fullName>OC Reserved Amount</fullName>
+                <default>false</default>
+                <label>OC Reserved Amount</label>
+            </value>
+            <value>
+                <fullName>OC Travel Agent</fullName>
+                <default>false</default>
+                <label>OC Travel Agent</label>
+            </value>
+            <value>
+                <fullName>OC Voucher</fullName>
+                <default>false</default>
+                <label>OC Voucher</label>
+            </value>
+            <value>
+                <fullName>OC Waivers</fullName>
+                <default>false</default>
+                <label>OC Waivers</label>
+            </value>
+            <value>
                 <fullName>Olympic DK</fullName>
                 <default>false</default>
                 <label>Olympic DK</label>
@@ -269,21 +369,21 @@
                 <fullName>Premium Corporate Support</fullName>
                 <default>false</default>
                 <label>Premium Corporate Support</label>
-            </value>            
+            </value>
             <value>
                 <fullName>RU</fullName>
                 <default>false</default>
                 <label>RU</label>
             </value>
             <value>
-                <fullName>Sales Information</fullName>
-                <default>false</default>
-                <label>Sales Information</label>
-            </value>
-            <value>
                 <fullName>Sales Control</fullName>
                 <default>false</default>
                 <label>Sales Control</label>
+            </value>
+            <value>
+                <fullName>Sales Information</fullName>
+                <default>false</default>
+                <label>Sales Information</label>
             </value>
             <value>
                 <fullName>SAS Poland</fullName>
@@ -305,35 +405,40 @@
                 <default>false</default>
                 <label>SE</label>
             </value>
-			<value>
-                <fullName>Special Sales NO</fullName>
-                <default>false</default>
-                <label>Special Sales NO</label>
-            </value>
             <value>
                 <fullName>Settlement</fullName>
                 <default>false</default>
                 <label>Settlement</label>
             </value>
-            <value>		
-                <fullName>SGH Bag DK</fullName>	
-                <default>false</default>	
-                <label>SGH Bag DK</label>	
-            </value>	
-            <value>	
-                <fullName>SGH Bag NO</fullName>	
-                <default>false</default>	
-                <label>SGH Bag NO</label>	
-            </value>	
-            <value>	
-                <fullName>SGH Bag SE</fullName>	
-                <default>false</default>	
-                <label>SGH Bag SE</label>	
-            </value>	
+            <value>
+                <fullName>SGH Bag DK</fullName>
+                <default>false</default>
+                <label>SGH Bag DK</label>
+            </value>
+            <value>
+                <fullName>SGH Bag NO</fullName>
+                <default>false</default>
+                <label>SGH Bag NO</label>
+            </value>
+            <value>
+                <fullName>SGH Bag SE</fullName>
+                <default>false</default>
+                <label>SGH Bag SE</label>
+            </value>
             <value>
                 <fullName>SoMe</fullName>
                 <default>false</default>
                 <label>SoMe</label>
+            </value>
+            <value>
+                <fullName>Special Sales NO</fullName>
+                <default>false</default>
+                <label>Special Sales NO</label>
+            </value>
+            <value>
+                <fullName>Star Alliance Request</fullName>
+                <default>false</default>
+                <label>Star Alliance Request</label>
             </value>
             <value>
                 <fullName>Star Alliance Upgrades</fullName>
@@ -361,46 +466,164 @@
                 <label>US</label>
             </value>
         </valueSetDefinition>
-		     <valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Admin</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Defense</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>External Lawyers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Inhouse</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Liability</controllingFieldValue>
+            <valueName>Settlement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM ARC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM BSP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM Forms Customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM Forms Travel Agent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM Forsvaret</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM General</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM IOM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM Reminders</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM Tenured</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC Bank Transfer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC General</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC Groups Europe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC Klarna Disputes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC Reserved Amount</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC Travel Agent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC Voucher</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC Waivers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Businesstravel STO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>EB Vendor Support</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>Feedback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Fraud Investigation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>GDPR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Premium Corporate Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <valueName>Sales Control</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>Special Sales NO</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Ticketless Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <valueName>Agent Fares Ticketing EU</valueName>
+            <valueName>International</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <valueName>Scandinavia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <valueName>SoMe</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <valueName>SAS Poland</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <controllingFieldValue>SME</controllingFieldValue>
-            <valueName>Scandinavia</valueName>
-        </valueSettings>
-        <valueSettings>	
-            <controllingFieldValue>Care</controllingFieldValue>	
-            <valueName>SGH Bag DK</valueName>	
-        </valueSettings>	
-        <valueSettings>	
-            <controllingFieldValue>Care</controllingFieldValue>	
-            <valueName>SGH Bag NO</valueName>	
-        </valueSettings>	
-        <valueSettings>	
-            <controllingFieldValue>Care</controllingFieldValue>	
-            <valueName>SGH Bag SE</valueName>	
-        </valueSettings>	
-        <valueSettings>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
-            <valueName>Backoffice</valueName>
+            <controllingFieldValue>Care</controllingFieldValue>
+            <valueName>SGH Bag DK</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
-            <valueName>Sales Control</valueName>
+            <controllingFieldValue>Care</controllingFieldValue>
+            <valueName>SGH Bag NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Care</controllingFieldValue>
+            <valueName>SGH Bag SE</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
@@ -409,6 +632,10 @@
         <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
             <valueName>Internal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <valueName>Backoffice</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
@@ -421,11 +648,6 @@
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Diamond SE</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-			<controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <valueName>EB Vendor Support</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
@@ -473,7 +695,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Star Alliance Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Star Alliance Upgrades</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>EMEA</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
@@ -583,22 +813,6 @@
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>US</valueName>
         </valueSettings>
-		<valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>US</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>     
-            <valueName>Businesstravel STO</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <valueName>GDPR</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <valueName>Ticketless Support</valueName>
-        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info Hub</controllingFieldValue>
             <valueName>Sales Information</valueName>
@@ -611,37 +825,5 @@
             <controllingFieldValue>Info Hub</controllingFieldValue>
             <valueName>System &amp; Tariff</valueName>
         </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SME</controllingFieldValue>
-            <valueName>International</valueName>
-        </valueSettings>       
-        <valueSettings>
-            <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <valueName>SoMe</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>Admin</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>Defense</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>External Lawyers</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>Inhouse</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Liability</controllingFieldValue>
-            <valueName>Settlement</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <valueName>Premium Corporate Support</valueName>
-        </valueSettings>        
     </valueSet>
 </CustomField>

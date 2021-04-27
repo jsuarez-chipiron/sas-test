@@ -15,7 +15,7 @@
         <inputParameters>
             <name>text</name>
             <value>
-                <elementReference>Chatter_Comment</elementReference>
+                <elementReference>Reason_for_Redirection_Escalation</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -41,7 +41,7 @@
         <inputParameters>
             <name>text</name>
             <value>
-                <elementReference>Chatter_Comment</elementReference>
+                <elementReference>Reason_for_Redirection_Escalation</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -227,6 +227,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>GDPR_Consent__c</field>
+            <value>
+                <elementReference>GetCurrentCaseInformation.GDPR_Consent__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>IsEscalated</field>
             <value>
                 <elementReference>SetEscalatedValue</elementReference>
@@ -259,7 +265,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <elementReference>GetRecordTypeId.Id</elementReference>
+                <elementReference>CaseRecordTypeId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -272,12 +278,6 @@
             <field>Team__c</field>
             <value>
                 <elementReference>DependentList.middleValue</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type</field>
-            <value>
-                <elementReference>CaseType</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -312,7 +312,7 @@
         <locationY>540</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>GetRecordTypeId</targetReference>
+            <targetReference>Get_Case_Record_Type</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -324,27 +324,6 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Group</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>GetRecordTypeId</name>
-        <label>GetRecordTypeId</label>
-        <locationX>296</locationX>
-        <locationY>540</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Redirection_Support_Or_Escalation</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>RecordTypeName</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -395,12 +374,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>GetRecordTypeId.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Status</field>
             <value>
                 <stringValue>Escalated</stringValue>
@@ -414,9 +387,6 @@
         </inputAssignments>
         <inputAssignments>
             <field>Type</field>
-            <value>
-                <elementReference>CaseType</elementReference>
-            </value>
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
@@ -424,7 +394,7 @@
         <description>Update the current case to be directed to the right skill</description>
         <name>Redirect_Case</name>
         <label>Redirect Case</label>
-        <locationX>608</locationX>
+        <locationX>609</locationX>
         <locationY>322</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
@@ -470,7 +440,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <elementReference>GetRecordTypeId.Id</elementReference>
+                <elementReference>CaseRecordTypeId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -481,9 +451,6 @@
         </inputAssignments>
         <inputAssignments>
             <field>Type</field>
-            <value>
-                <elementReference>CaseType</elementReference>
-            </value>
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
@@ -539,7 +506,7 @@
         <description>Input for making a request to another department</description>
         <name>To_Other_Department</name>
         <label>To Other Department</label>
-        <locationX>174</locationX>
+        <locationX>175</locationX>
         <locationY>378</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -623,11 +590,11 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Chatter_Comment</name>
+            <name>Reason_for_Redirection_Escalation</name>
             <dataType>String</dataType>
-            <fieldText>Chatter Comment</fieldText>
+            <fieldText>Reason for Redirection/Escalation</fieldText>
             <fieldType>InputField</fieldType>
-            <helpText>&lt;p&gt;Please provide write the motive for redirecting or escalating the case&lt;/p&gt;</helpText>
+            <helpText>&lt;p&gt;The reason why you are redirecting or escalating the current case&lt;/p&gt;</helpText>
             <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -693,6 +660,41 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <description>Gets the care record type based on the Department and Team</description>
+        <name>Get_Case_Record_Type</name>
+        <label>Get Case Record Type</label>
+        <locationX>290</locationX>
+        <locationY>538</locationY>
+        <connector>
+            <targetReference>Redirection_Support_Or_Escalation</targetReference>
+        </connector>
+        <flowName>Assign_Record_Type_for_Case_Object</flowName>
+        <inputAssignments>
+            <name>Department</name>
+            <value>
+                <elementReference>DependentList.topValue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Team</name>
+            <value>
+                <elementReference>DependentList.middleValue</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>CaseRecordTypeId</assignToReference>
+            <name>RecordTypeOutput</name>
+        </outputAssignments>
+    </subflows>
+    <variables>
+        <description>It is the case record id based on department and team combination</description>
+        <name>CaseRecordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <description>The ID of the record from where the flow was triggered</description>
         <name>recordId</name>

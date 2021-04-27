@@ -224,9 +224,24 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.LIA_Flight_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.LIA_Flight_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.LIA_Jurisdiction__c</field>
         <readable>true</readable>
-    </fieldPermissions>       
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.LIA_PNR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>                   
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Deposit_Due_Date__c</field>
@@ -260,11 +275,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Origin</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.FCS_AskedForHelp__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -319,16 +329,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.FCS_Site__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.FCS_SubTeam__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.FCS_SurveyInvitationLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -341,22 +341,7 @@
         <editable>true</editable>
         <field>Case.FCS_TPAccountNumber__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.FCS_Team__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.FCS_Vendor__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.FCS_VirtualOrganization__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.FCS_FirstClosingDate__c</field>
@@ -367,12 +352,7 @@
         <field>Case.GDPR_Consent__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>Case.Consent__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-       <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Case.Created_Support_Case__c</field>
         <readable>true</readable>
@@ -472,9 +452,44 @@
         <field>Case.Team__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Queue__c</field>
+        <field>Case.Refund_Request__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Refund_PNR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Refund_Country_of_Purchase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.Country_of_Purchase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.Note__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.PNR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.Refund_Macro__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.Ticket_Numbers__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -514,6 +529,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>LIA_Claim__c.Eurobonus_Points_Compensation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LIA_Claim__c.External_Case_Number_Court_Reference__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -549,11 +569,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>LIA_Claim__c.IsMerged__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>LIA_Claim__c.Judicial_Body__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -562,6 +577,16 @@
         <field>LIA_Claim__c.Jurisdiction__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Liability_Claim_Comments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Liability_Claim_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.LIA_Firm__c</field>
@@ -586,7 +611,12 @@
         <editable>true</editable>
         <field>LIA_Claim__c.Liability_PNR__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Monetary_Compensation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>        
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Name_of_Passenger_s__c</field>
@@ -632,6 +662,11 @@
         <field>LIA_Claim__c.Total_Paid_Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Voucher_Compensation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>     
     <fieldPermissions>
         <editable>true</editable>
         <field>FCS_CaseTag__c.FCS_CaseTag__c</field>
@@ -1067,32 +1102,7 @@
         <field>SocialPost.FCS_Done__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SocialPost.FCS_Site__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SocialPost.FCS_SubTeam__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SocialPost.FCS_Team__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SocialPost.FCS_Vendor__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SocialPost.FCS_VirtualOrganization__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.FCS_ParentCommentMessage__c</field>
         <readable>true</readable>
@@ -1364,7 +1374,16 @@
         <modifyAllRecords>true</modifyAllRecords>
         <object>LIA_Major_Event__c</object>
         <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>       
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Refund_Request__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>

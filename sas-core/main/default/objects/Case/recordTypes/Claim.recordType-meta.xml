@@ -6,17 +6,6 @@
     <description>Use for claim related cases</description>
     <label>Claim</label>
     <picklistValues>
-        <picklist>Consent__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Department__c</picklist>
         <values>
             <fullName>Agent Helpdesk</fullName>
@@ -52,6 +41,10 @@
         </values>
         <values>
             <fullName>Liability</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refunds</fullName>
             <default>false</default>
         </values>
         <values>
@@ -144,6 +137,10 @@
         <values>
             <fullName>Check in</fullName>
             <default>false</default>
+        </values>
+        <values>
+            <fullName>Claim</fullName>
+            <default>true</default>
         </values>
         <values>
             <fullName>Claims</fullName>
@@ -1151,6 +1148,10 @@
         <values>
             <fullName>Kids</fullName>
             <default>false</default>
+        </values>
+        <values>
+            <fullName>Liability Claim</fullName>
+            <default>true</default>
         </values>
         <values>
             <fullName>Life time gold</fullName>
@@ -2271,185 +2272,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FCS_Site__c</picklist>
-      <values>
-            <fullName>BOM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EVG</fullName>
-            <default>false</default>
-        </values>
-		<values>
-            <fullName>LCA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ODE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OER</fullName>
-            <default>false</default>
-        </values>
-		<values>
-            <fullName>STO</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>FCS_SubTeam__c</picklist>
-        <values>
-            <fullName>Team 1%2E1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 1%2E2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 1%2E3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 2%2E1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 2%2E2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 2%2E3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 3%2E1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 3%2E2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 3%2E3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 4%2E1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 4%2E2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 4%2E3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 5%2E1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 5%2E2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 5%2E3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 6%2E1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 6%2E2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 6%2E3</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>FCS_Team__c</picklist>
-        <values>
-            <fullName>Team 1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 5</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team 6</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>FCS_Vendor__c</picklist>
-        <values>
-            <fullName>SAS</fullName>
-            <default>false</default>
-        </values>	
-		<values>
-            <fullName>Student Consulting</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sutherland</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sykes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>FCS_VirtualOrganization__c</picklist>
-       <values>
-            <fullName>Agent Helpdesk</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Direct Sales</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EuroBonus</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Global Support</fullName>
-            <default>false</default>
-        </values>
-		<values>
-            <fullName>Group Sales</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Liability NEB</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sales Control</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>GSB_Flight_Length__c</picklist>
         <values>
             <fullName>Long Haul</fullName>
@@ -2628,7 +2450,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Agent Fares Ticketing EU</fullName>
+            <fullName>Email - Agent Helpdesk International</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2715,6 +2537,14 @@
             <fullName>Email - Forsvaret NO</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Email - Fraud EMEA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Fraud Investigation</fullName>
+            <default>false</default>
+        </values>        
         <values>
             <fullName>Email - Functional Product Support</fullName>
             <default>false</default>
@@ -2872,15 +2702,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>White Paper - Liability Claim</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>White Paper - Liability Claim</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2949,10 +2779,6 @@
         </values>
         <values>
             <fullName>Admin</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Agent Fares Ticketing EU</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3171,8 +2997,8 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Channel</fullName>
-            <default>false</default>
+            <fullName>Claim</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
 </RecordType>
