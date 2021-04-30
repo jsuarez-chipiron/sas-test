@@ -224,6 +224,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Deletion</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Depa%2FDepu</fullName>
             <default>false</default>
         </values>
@@ -281,6 +285,10 @@
         </values>
         <values>
             <fullName>Eurobonus procedures R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extract</fullName>
             <default>false</default>
         </values>
         <values>
