@@ -6,6 +6,10 @@
         <compactFeed>false</compactFeed>
         <feedFilterPosition>CenterDropDown</feedFilterPosition>
         <feedFilters>
+            <feedFilterName>Case.Email_Post_and_Status_Update</feedFilterName>
+            <feedFilterType>Custom</feedFilterType>
+        </feedFilters>
+        <feedFilters>
             <feedFilterType>FeedItemType</feedFilterType>
             <feedItemType>EmailMessageEvent</feedItemType>
         </feedFilters>
@@ -308,11 +312,6 @@
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Delete</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>7</sortOrder>
@@ -371,6 +370,11 @@
             <actionName>Case.To_Other_Department</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>18</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>6</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -450,7 +454,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000002QkUS</masterLabel>
+        <masterLabel>00h1X000002PdVr</masterLabel>
         <sizeX>3</sizeX>
         <sizeY>4</sizeY>
         <summaryLayoutItems>
