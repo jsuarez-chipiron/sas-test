@@ -51,9 +51,9 @@
                 <label>Information</label>
             </value>
             <value>
-                <fullName>Refunds</fullName>
+                <fullName>Refund</fullName>
                 <default>false</default>
-                <label>Refunds</label>
+                <label>Refund</label>
             </value>
             <value>
                 <fullName>Sales Control</fullName>

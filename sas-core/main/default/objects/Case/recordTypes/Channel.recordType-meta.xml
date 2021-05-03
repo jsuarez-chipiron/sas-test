@@ -72,6 +72,10 @@
     <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
         <values>
+            <fullName>7 day refund guarantee</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>ADM</fullName>
             <default>false</default>
         </values>
@@ -89,6 +93,10 @@
         </values>
         <values>
             <fullName>ATO Account Takeover</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent Helpdesk</fullName>
             <default>false</default>
         </values>
         <values>
@@ -132,7 +140,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Baggage Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Baggage service R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Boozt Attack</fullName>
             <default>false</default>
         </values>
         <values>
@@ -160,7 +184,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Chargeback</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Check in</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Claim</fullName>
             <default>false</default>
         </values>
         <values>
@@ -208,6 +240,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Corporate Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Corporate product</fullName>
             <default>false</default>
         </values>
@@ -216,11 +252,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Crime Prevention</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Customer Care R</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Delayed%2Fdamaged luggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deletion</fullName>
             <default>false</default>
         </values>
         <values>
@@ -236,11 +284,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Digital Channel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Digital channels R</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Digital support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Sales</fullName>
             <default>false</default>
         </values>
         <values>
@@ -256,11 +312,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EMD</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Environment</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error Handling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus CN</fullName>
             <default>false</default>
         </values>
         <values>
@@ -281,6 +349,10 @@
         </values>
         <values>
             <fullName>Eurobonus procedures R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extract</fullName>
             <default>false</default>
         </values>
         <values>
@@ -320,6 +392,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Group Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Group booking</fullName>
             <default>false</default>
         </values>
@@ -340,7 +416,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>IOM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inflight %2F Onboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interline</fullName>
             <default>false</default>
         </values>
         <values>
@@ -349,6 +433,10 @@
         </values>
         <values>
             <fullName>Irregularity %2F Schedule change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Klarna</fullName>
             <default>false</default>
         </values>
         <values>
@@ -397,6 +485,10 @@
         </values>
         <values>
             <fullName>OCC Daily Reports</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open coupon</fullName>
             <default>false</default>
         </values>
         <values>
@@ -456,6 +548,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Reminder</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Requesting documentation</fullName>
             <default>false</default>
         </values>
@@ -465,6 +561,10 @@
         </values>
         <values>
             <fullName>Reservation issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reserved Amount</fullName>
             <default>false</default>
         </values>
         <values>
@@ -540,6 +640,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ticket wrongly rewritten</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ticketing</fullName>
             <default>false</default>
         </values>
@@ -548,11 +652,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>US ARC</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Voucher</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Waivers</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WiFi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrongly refunded</fullName>
             <default>false</default>
         </values>
     </picklistValues>
