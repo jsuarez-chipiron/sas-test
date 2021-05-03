@@ -22,6 +22,16 @@
 		<members>Analytic_User</members>
 		<name>PermissionSet</name>
 	</types>
+
+	<!-- 2021-05-03 Delete unused permission set Thippeswamy Aravinda -->
+	<types>
+		<members>AD_ManageADMappings</members>
+		<members>Agent_Mentor</members>
+		<members>C_ManageLogs</members>
+		<members>Require_2FA_API_Login</members>
+		<members>C_ViewScheduledBatchRunInfo</members>
+		<name>PermissionSet</name>
+	</types>
 <!-- 2020-02-16 Delete apex class that is obsolete -->
 	<types>
 		<members>FCS_InboundSocialPostHandlerImpl</members>
@@ -94,6 +104,11 @@
 	<types>
         <members>SAS_Analyst</members>
         <name>Role</name>
+    </types>
+	<!--2021-05-03 Delete Agent Profile it renamed to vendor-->
+	<types>
+        <members>Agent</members>
+        <name>Profile</name>
     </types>
 	<!--2020-10-13 Delete listviews -->
 	<types>
