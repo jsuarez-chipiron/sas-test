@@ -1207,6 +1207,10 @@
     <layoutAssignments>
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-B2B - Customer</layout>
+        <recordType>Account.Business</recordType>
+    </layoutAssignments>
 	 <layoutAssignments>
         <layout>Account-B2B - Partner</layout>
         <recordType>Account.Partner</recordType>
