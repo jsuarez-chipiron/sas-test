@@ -7,7 +7,7 @@
 private class FCS_SocialPostControllerTest {
     @testSetup
     static void testSetup(){
-        Profile p = [SELECT id FROM Profile WHERE Name = 'Agent'];
+        Profile p = [SELECT id FROM Profile WHERE Name = 'Vendor'];
         Group g = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1];
 
         User u = new User(
