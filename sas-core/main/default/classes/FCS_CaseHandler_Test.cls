@@ -13,13 +13,13 @@ private class FCS_CaseHandler_Test {
    */
     @TestSetup static void createTestUserSetup() {
         PermissionSet socialMediaPermission = [SELECT Id FROM PermissionSet WHERE Name = 'SocialMediaUser'];
-        Profile agentProfile = [SELECT Id FROM Profile WHERE Name = 'Agent'];
+        Profile vendorProfile = [SELECT Id FROM Profile WHERE Name = 'Vendor'];
         List < User > users = FCS_TestDataFactory.createUsers(4);
         insert users;
         PermissionSetAssignment[] assignments = new PermissionSetAssignment[] {};
         Integer i = 0;
         for (User u: users) {
-            u.ProfileId = agentProfile.Id;
+            u.ProfileId = vendorProfile.Id;
             u.FederationIdentifier = 'SoMe' + i;
             i++;
             assignments.add(new PermissionSetAssignment(

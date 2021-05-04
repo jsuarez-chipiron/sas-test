@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Permission set to ensure that logins using the API require two factor authentication.</description>
-    <hasActivationRequired>false</hasActivationRequired>
-    <label>Require 2FA API Login</label>
-    <license>Salesforce</license>
-</PermissionSet>
