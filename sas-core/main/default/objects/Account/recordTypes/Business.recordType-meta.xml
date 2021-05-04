@@ -11,10 +11,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Partner Referral</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Phone Inquiry</fullName>
             <default>false</default>
         </values>
