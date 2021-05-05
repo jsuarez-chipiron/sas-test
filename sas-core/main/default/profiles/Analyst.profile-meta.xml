@@ -1864,10 +1864,14 @@
     <layoutAssignments>
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
+	 <layoutAssignments>
+        <layout>Account-B2B - Customer</layout>
+        <recordType>Account.Business</recordType>
+    </layoutAssignments>
 	<layoutAssignments>
         <layout>Account-B2B - Partner</layout>
         <recordType>Account.Partner</recordType>
-    </layoutAssignments>
+    </layoutAssignments>	
     <layoutAssignments>
         <layout>C_GeneralSetting__mdt-General Setting Layout</layout>
     </layoutAssignments>
@@ -1998,6 +2002,15 @@
         <object>Refund_Request__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+	<objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>SocialPost</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
 	 <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -2031,6 +2044,11 @@
 	<recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Channel</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.Business</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
 	<recordTypeVisibilities>
