@@ -333,7 +333,7 @@ export default class IRR_ManualCommunication extends LightningElement {
                     this.COLUMNS = BOOKING_FILTER_COLUMNS;
                     eventParameters = {bookingIds: parameters.bookingIds};
                     result = await getAdvancedFilterPassengerInfos(eventParameters);
-                    this.filterParameters = {};
+                    this.filterParameters = {'thisSegment.status': ['Confirmed', 'SpaceAvailable', 'Waitlisted']};
                     break;
                 case "BYPASS":
                     this.COLUMNS = [];
