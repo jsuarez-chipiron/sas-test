@@ -2118,7 +2118,8 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>SurveyInvitation</object>
         <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>   
+    </objectPermissions>
+    <objectPermissions>	
 	    <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -2127,7 +2128,7 @@
         <object>SurveyResponse</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>   
-	</objectPermissions>   
+	<objectPermissions>   
 	    <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
