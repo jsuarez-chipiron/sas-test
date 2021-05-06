@@ -1864,14 +1864,14 @@
     <layoutAssignments>
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
-    <layoutAssignments>
+	 <layoutAssignments>
         <layout>Account-B2B - Customer</layout>
         <recordType>Account.Business</recordType>
     </layoutAssignments>
 	<layoutAssignments>
         <layout>Account-B2B - Partner</layout>
         <recordType>Account.Partner</recordType>
-    </layoutAssignments>
+    </layoutAssignments>	
     <layoutAssignments>
         <layout>C_GeneralSetting__mdt-General Setting Layout</layout>
     </layoutAssignments>
@@ -1975,6 +1975,15 @@
     <layoutAssignments>
         <layout>User-User Layout</layout>
     </layoutAssignments>
+	<objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Case</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -1982,18 +1991,18 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>FCS_CaseTag__c</object>
-        <viewAllRecords>false</viewAllRecords>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Refund_Request__c</object>
-        <viewAllRecords>false</viewAllRecords>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <objectPermissions>
+	<objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -2002,6 +2011,24 @@
         <object>SocialPost</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+	 <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Survey</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>  
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>SurveyInvitation</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>   
     <pageAccesses>
         <apexPage>C_LocalAuth</apexPage>
         <enabled>false</enabled>
@@ -2019,7 +2046,7 @@
         <recordType>Case.Channel</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <recordTypeVisibilities>
+	<recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.Business</recordType>
         <visible>true</visible>
