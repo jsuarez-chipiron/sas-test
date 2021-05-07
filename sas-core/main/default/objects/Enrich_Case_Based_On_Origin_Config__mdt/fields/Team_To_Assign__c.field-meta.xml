@@ -371,6 +371,11 @@
                 <label>Sales Control</label>
             </value>
             <value>
+                <fullName>Sales Control BOM</fullName>
+                <default>false</default>
+                <label>Sales Control BOM</label>
+            </value>
+            <value>
                 <fullName>Sales Information</fullName>
                 <default>false</default>
                 <label>Sales Information</label>

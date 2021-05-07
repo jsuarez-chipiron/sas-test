@@ -127,12 +127,15 @@
 		<members>Pandion_DK</members>
 		<members>Pandion_NO</members>
 		<members>Pandion_SE</members>
+		<members>Sales_Control</members>
 		<name>Queue</name>
 	</types>
 	<!--2020-10-13 remove unused public groups -->
 	<types>
 		<members>Agent_Fares_Ticketing_EU</members>
 		<members>Agent_Helpdesk_SIA</members>
+		<members>Sales_Control</members>
+	    <members>SutherlandGlobalSupportSoMe</members>
 		<name>Group</name>
 	</types>
 <!--2021-04-19 remove Social post process builder updating Site, vendor, team and Sub team Thippeswamy Aravinda -->
