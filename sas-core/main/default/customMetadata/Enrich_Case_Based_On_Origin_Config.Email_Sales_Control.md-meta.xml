@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Department_To_Assign__c</field>
-        <value xsi:type="xsd:string">Direct Sales</value>
+        <value xsi:type="xsd:string">Sales Control BOM</value>
     </values>
     <values>
         <field>Entitlement_To_Assign__c</field>
@@ -20,6 +20,6 @@
     </values>
     <values>
         <field>Team_To_Assign__c</field>
-        <value xsi:type="xsd:string">Sales Control</value>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>

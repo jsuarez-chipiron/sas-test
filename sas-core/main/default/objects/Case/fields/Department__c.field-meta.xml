@@ -75,6 +75,11 @@
                 <label>Refunds</label>
             </value>
             <value>
+                <fullName>Sales Control BOM</fullName>
+                <default>false</default>
+                <label>Sales Control BOM</label>
+            </value>
+            <value>
                 <fullName>SAS Operating Center</fullName>
                 <default>false</default>
                 <label>SAS Operating Center</label>

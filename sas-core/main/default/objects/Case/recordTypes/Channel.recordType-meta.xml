@@ -65,6 +65,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sales Control BOM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SoMe Support</fullName>
             <default>false</default>
         </values>

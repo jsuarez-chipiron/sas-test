@@ -13,11 +13,7 @@
         <values>
             <fullName>Purchased List</fullName>
             <default>false</default>
-        </values>
-        <values>
-            <fullName>Website</fullName>
-            <default>false</default>
-        </values>
+        </values>      
     </picklistValues>
     <picklistValues>
         <picklist>FCS_EBLevel__c</picklist>
