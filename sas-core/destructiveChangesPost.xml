@@ -49,6 +49,38 @@
 		<name>CustomMetadata</name>
 	</types>
 	
+	<!--2020-05-10 Below Matata are deleting as a part of cleaning of data and automating SSO -->
+	
+	<types>
+		<members>AD_RolePermission.SYKES_EVG_Agent_Helpdesk_PG</members>
+		<members>AD_RolePermission.Sykes_LCA_AgentHelpdesk_Agent_Role</members>
+		<members>AD_RolePermission.SYKES_ODE_Agent_Helpdesk_PG</members>
+		<members>AD_RolePermission.SYKES_LCA_Agent_Helpdesk_PG</members>
+		<members>AD_Role.Sykes_ODE_AgentHelpdesk</members>
+		<members>AD_Role.Sykes_LCA_AgentHelpdesk</members>	
+		<members>AD_Role.Sykes_EVG_AgentHelpdesk</members>
+		<members>AD_Role.Sutherland_OER_Team_Lead</members>	
+		<members>AD_Role.Sutherland_OER_Global_Support_VIP</members>
+		<members>AD_RoleLink.Sykes_EVG_AgentHelpdesk</members>
+		<members>AD_RoleLink.Sykes_LCA_AgentHelpdesk</members>
+		<members>AD_RoleLink.Sykes_ODE_AgentHelpdesk</members>
+		<members>AD_RoleLink.Sutherland_OER_TeamLead</members>
+		<members>AD_RoleLink.Sutherland_OER_Global_Support_VIP</members>
+		<members>AD_RoleUserDetail.SykesLCAAgentHelpdesk_Site</members>
+		<members>AD_RoleUserDetail.SykesEVGAgentHelpdesk_Site</members>	
+		<members>AD_RoleUserDetail.SykesODEAgentHelpdesk_Site</members>
+		<members>AD_RoleUserDetail.SykesLCAAgentHelpdesk_Vendor</members>
+		<members>AD_RoleUserDetail.SykesODEAgentHelpdesk_Vendor</members>
+		<members>AD_RoleUserDetail.SykesEVGAgentHelpdesk_Vendor</members>			
+		<members>AD_RoleUserDetail.SykesODEAgentHelpdesk_VO</members>
+		<members>AD_RoleUserDetail.SykesLCAAgentHelpdesk_VO</members>	
+		<members>AD_RoleUserDetail.SykesEVGAgentHelpdesk_VO</members>
+		<members>AD_RoleUserDetail.SutherlandOERGlobalSupport_Site</members>
+		<members>AD_RoleUserDetail.SutherlandOERTeamLead_Site</members>
+		<members>AD_RoleUserDetail.SutherlandOERGlobalSupport_VO</members>		
+		<name>CustomMetadata</name>
+	</types>
+	
 	<!-- 2020-05-26 Delete CustomMetadata Thippeswamy Aravinda -->
 	<types>
 		<members>AD_RolePermission.SAS_Analytic_User</members>
