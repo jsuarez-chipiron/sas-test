@@ -63,13 +63,7 @@
 		<members>AD_RolePermission.SUTHERLAND_GlobalSupport_PG</members>
 		<members>AD_RolePermission.SUTHERLAND_ManageQuickText</members>		
 		<members>AD_RolePermission.Sykes_LCA_EuroBonus_Agent_Role</members>
-		<members>AD_RolePermission.SYKES_LCA_EuroBonus_PG</members>			
-		<members>AD_Role.Sykes_ODE_AgentHelpdesk</members>
-		<members>AD_Role.Sykes_LCA_AgentHelpdesk</members>	
-		<members>AD_Role.Sykes_EVG_AgentHelpdesk</members>
-		<members>AD_Role.Sutherland_OER_Team_Lead</members>	
-		<members>AD_Role.Sutherland_OER_Global_Support_VIP</members>
-		<members>AD_Role.Sykes_LCA_EuroBonus</members>		
+		<members>AD_RolePermission.SYKES_LCA_EuroBonus_PG</members>					
 		<members>AD_RoleLink.Sykes_EVG_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sykes_LCA_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sykes_ODE_AgentHelpdesk</members>
