@@ -1257,6 +1257,9 @@
         <recordType>Contact.EmailContact</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Contact-SAS Contact Layout</layout>
+    </layoutAssignments>    
+    <layoutAssignments>
         <layout>FCS_CaseTag__c-Case Reason Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
