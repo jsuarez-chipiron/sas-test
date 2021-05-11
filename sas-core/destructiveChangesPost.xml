@@ -63,7 +63,7 @@
 		<members>AD_RolePermission.SYKES_EVG_Agent_Helpdesk_PG</members>
 		<members>AD_RolePermission.Sykes_LCA_AgentHelpdesk_Agent_Role</members>
 		<members>AD_RolePermission.SYKES_ODE_Agent_Helpdesk_PG</members>
-		<members>AD_RolePermission.SYKES_LCA_Agent_Helpdesk_PG</members>		
+		<members>AD_RolePermission.SYKES_LCA_Agent_Helpdesk_PG</members>
 		<members>AD_RolePermission.SUTHERLAND_Team_Lead_Role</members>
 		<members>AD_RolePermission.SUTHERLAND_TeamLead_PG</members>
 		<members>AD_RolePermission.SUTHERLAND_Agent_Mentor</members>
@@ -82,7 +82,10 @@
 		<members>AD_RolePermission.SYKES_EVG_Omni_Supervisor</members>
 		<members>AD_RolePermission.SYKES_EVG_Teamlead_PG</members>		
 		<members>AD_RolePermission.SYKES_EVG_Team_Lead_Role</members>
-		<members>AD_RolePermission.Sutherland_BOM_Team_Lead_Role</members>
+		<members>AD_RolePermission.Sutherland_BOM_Team_Lead_Role</members>		
+		<members>AD_RolePermission.SUTHERLAND_ServicePresencesSoME</members>		
+		<members>AD_RolePermission.SUTHERLAND_Service_Presences_Breaks</members>
+		<members>AD_RolePermission.SUTHERLAND_Social_Media_User</members>		
 		<members>AD_RoleLink.Sykes_EVG_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sykes_LCA_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sykes_ODE_AgentHelpdesk</members>
