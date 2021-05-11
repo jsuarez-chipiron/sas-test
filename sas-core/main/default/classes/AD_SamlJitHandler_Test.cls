@@ -23,7 +23,7 @@ private class AD_SamlJitHandler_Test {
     /**
         The role associated with Sykes team lead
     */
-    private static final String SYKES_TEAM_LEAD_ROLE = '4a821bd2-f4bb-4cf8-ae51-0e3f11e6ace2';
+   // private static final String SYKES_TEAM_LEAD_ROLE = '4a821bd2-f4bb-4cf8-ae51-0e3f11e6ace2';
     /**
         Setup which creates the test users which the tests are authenticating against
     */
@@ -119,6 +119,7 @@ private class AD_SamlJitHandler_Test {
         Tests assigning the user the Sykes team lead role which links to the Sykes role
         thus giving the user the Sykes Vendor property and agent profile
     */
+    /*
     @isTest static void testParentRole(){
         String email = USER_EMAIL+'.com';
         SamlAssertion sa = generateAssertion('TFIRST', 'TLAST', email, new String[]{SYKES_TEAM_LEAD_ROLE});
@@ -130,6 +131,7 @@ private class AD_SamlJitHandler_Test {
         System.assertEquals('Vendor',p.Name);
         System.assertEquals('Sykes',u.FCS_Vendor__c);
     }
+    */
 
     /**
         Tests that customers with duplicated aliases are managed correctly

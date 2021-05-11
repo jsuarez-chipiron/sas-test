@@ -63,12 +63,26 @@
 		<members>AD_RolePermission.SUTHERLAND_GlobalSupport_PG</members>
 		<members>AD_RolePermission.SUTHERLAND_ManageQuickText</members>		
 		<members>AD_RolePermission.Sykes_LCA_EuroBonus_Agent_Role</members>
-		<members>AD_RolePermission.SYKES_LCA_EuroBonus_PG</members>					
+		<members>AD_RolePermission.SYKES_LCA_EuroBonus_PG</members>
+		<members>AD_RolePermission.SYKES_ODE_Agent_Mentor</members>
+		<members>AD_RolePermission.SYKES_ODE_ManageQuickText</members>
+		<members>AD_RolePermission.SYKES_ODE_Omni_Supervisor</members>
+		<members>AD_RolePermission.SYKES_ODE_Team_Lead_Role</members>		
+		<members>AD_RolePermission.SYKES_ODE_Teamlead_PG</members>
+		<members>AD_RolePermission.SYKES_EVG_Agent_Mentor</members>
+		<members>AD_RolePermission.SYKES_EVG_ManageQuickText</members>		
+		<members>AD_RolePermission.SYKES_EVG_Omni_Supervisor</members>
+		<members>AD_RolePermission.SYKES_EVG_Teamlead_PG</members>		
+		<members>AD_RolePermission.SYKES_EVG_Team_Lead_Role</members>
+		<members>AD_RolePermission.Sutherland_BOM_Team_Lead_Role</members>
 		<members>AD_RoleLink.Sykes_EVG_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sykes_LCA_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sykes_ODE_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sutherland_OER_TeamLead</members>		
-		<members>AD_RoleLink.Sykes_LCA_EuroBonus</members>		
+		<members>AD_RoleLink.Sykes_LCA_EuroBonus</members>	
+		<members>AD_RoleLink.Sutherland_BOM_TeamLead</members>
+		<members>AD_RoleLink.Sykes_EVG_TeamLead</members>		
+		<members>AD_RoleLink.Sykes_ODE_TeamLead</members>	
 		<members>AD_RoleLink.Sutherland_OER_Global_Support_VIP</members>
 		<members>AD_RoleUserDetail.SykesLCAAgentHelpdesk_Site</members>
 		<members>AD_RoleUserDetail.SykesEVGAgentHelpdesk_Site</members>	
@@ -84,7 +98,12 @@
 		<members>AD_RoleUserDetail.SutherlandOERGlobalSupport_VO</members>
 		<members>AD_RoleUserDetail.SykesLCAEuroBonus_Site</members>
 		<members>AD_RoleUserDetail.SykesLCAEuroBonus_Vendor</members>
-		<members>AD_RoleUserDetail.SykesLCAEuroBonus_VO</members>		
+		<members>AD_RoleUserDetail.SykesLCAEuroBonus_VO</members>
+		<members>AD_RoleUserDetail.SykesODETeamLead_Site</members>
+		<members>AD_RoleUserDetail.SykesEVGTeamLead_Site</members>
+		<members>AD_RoleUserDetail.SutherlandBOMTeamLead_Site</members>
+		<members>AD_RoleUserDetail.SutherlandBOMTeamLead_Vendor</members>
+		<members>AD_RoleUserDetail.SutherlandBOMTeamLead_VO</members>		
 		<name>CustomMetadata</name>
 	</types>
 	
