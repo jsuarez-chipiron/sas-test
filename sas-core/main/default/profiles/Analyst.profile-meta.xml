@@ -1915,6 +1915,9 @@
         <recordType>Contact.EmailContact</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Contact-SAS Contact Layout</layout>
+    </layoutAssignments>    
+    <layoutAssignments>
         <layout>FCS_Booking__x-Booking Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
