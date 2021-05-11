@@ -8,21 +8,10 @@
         <sharedTo>
             <group>All_Vendors</group>
         </sharedTo>
-        <booleanFilter>1 AND ( 2 OR 3)</booleanFilter>
-        <criteriaItems>
-            <field>Department__c</field>
-            <operation>notEqual</operation>
-            <value>SAS Operating Center</value>
-        </criteriaItems>
         <criteriaItems>
             <field>Team__c</field>
             <operation>notEqual</operation>
-            <value>Feedback</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Team__c</field>
-            <operation>notEqual</operation>
-            <value>Fraud Investigation</value>
+            <value>Feedback,Fraud Investigation</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingOwnerRules>
