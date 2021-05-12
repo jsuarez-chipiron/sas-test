@@ -59,7 +59,8 @@
 		<members>AD_Role.Sykes_EVG_AgentHelpdesk</members>
 	    <members>AD_Role.Sutherland_OER_Team_Lead</members>
 		<members>AD_Role.Sutherland_OER_Global_Support_VIP</members>
-		<members>AD_Role.Sutherland_BOM_TeamLead  </members>
+		<members>AD_Role.Sutherland_BOM_TeamLead</members>
+		<members>AD_Role.SASAgent</members>
 		<members>AD_RolePermission.SYKES_EVG_Agent_Helpdesk_PG</members>
 		<members>AD_RolePermission.Sykes_LCA_AgentHelpdesk_Agent_Role</members>
 		<members>AD_RolePermission.SYKES_ODE_Agent_Helpdesk_PG</members>
@@ -100,13 +101,8 @@
 		<members>AD_RolePermission.Sutherland_SAS_Salesforce_Announcements</members>
 		<members>AD_RolePermission.SYKES_EVG_Agent_Role</members>
 		<members>AD_RolePermission.SYKES_ODE_Agent_Role</members>
+		<members>AD_RolePermission.Admin_SAS_Salesforce_Announcements</members>
 		<members>AD_RolePermission.Sykes_SAS_Salesforce_Announcements</members>		
-		<members>AD_RolePermission.SykesLCAGroupSales_Vendor</members>
-		<members>AD_RolePermission.SykesODEGroupSales_Vendor</members>
-		<members>AD_RolePermission.SykesEVGGroupSales_Vendor</members>
-		<members>AD_RolePermission.SutherlandBOMSalesControl_Vendor</members>
-		<members>AD_RolePermission.Student_Consulting_VO</members>
-		<members>AD_RolePermission.Student_Consulting_Site</members>		
 		<members>AD_RoleLink.Sykes_EVG_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sykes_LCA_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sykes_ODE_AgentHelpdesk</members>
@@ -136,7 +132,13 @@
 		<members>AD_RoleUserDetail.SykesEVGTeamLead_Site</members>
 		<members>AD_RoleUserDetail.SutherlandBOMTeamLead_Site</members>
 		<members>AD_RoleUserDetail.SutherlandBOMTeamLead_Vendor</members>
-		<members>AD_RoleUserDetail.SutherlandBOMTeamLead_VO</members>		
+		<members>AD_RoleUserDetail.SutherlandBOMTeamLead_VO</members>	 
+		<members>AD_RoleUserDetail.SykesLCAGroupSales_Vendor</members>
+		<members>AD_RoleUserDetail.SykesODEGroupSales_Vendor</members>
+		<members>AD_RoleUserDetail.SykesEVGGroupSales_Vendor</members>
+		<members>AD_RoleUserDetail.SutherlandBOMSalesControl_Vendor</members>
+		<members>AD_RoleUserDetail.Student_Consulting_VO</members>
+		<members>AD_RoleUserDetail.Student_Consulting_Site</members>			
 		<name>CustomMetadata</name>
 	</types>
 	
