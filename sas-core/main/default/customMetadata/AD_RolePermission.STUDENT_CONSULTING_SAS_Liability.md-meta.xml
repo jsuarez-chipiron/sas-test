@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Role__c</field>
-        <value xsi:type="xsd:string">STUDENT_CONSULTING</value>
+        <value xsi:type="xsd:string">Student_Consulting_Agent</value>
     </values>
 </CustomMetadata>

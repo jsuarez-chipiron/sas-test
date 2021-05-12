@@ -85,7 +85,22 @@
 		<members>AD_RolePermission.Sutherland_BOM_Team_Lead_Role</members>		
 		<members>AD_RolePermission.SUTHERLAND_ServicePresencesSoME</members>		
 		<members>AD_RolePermission.SUTHERLAND_Service_Presences_Breaks</members>
-		<members>AD_RolePermission.SUTHERLAND_Social_Media_User</members>		
+		<members>AD_RolePermission.SUTHERLAND_Social_Media_User</members>
+		<members>AD_RolePermission.Admin_ManageAdMappings</members>
+		<members>AD_RolePermission.Analyst_Social_Media_User</members>
+		<members>AD_RolePermission.Emergency_SAS_Salesforce_Announcements</members>
+		<members>AD_RolePermission.SAS_Business_Manager</members>
+		<members>AD_RolePermission.SAS1_Business_Manager</members>
+		<members>AD_RolePermission.SASAgent_BusinessUser</members>
+		<members>AD_RolePermission.SASAgent_SAS_Salesforce_Announcements</members>
+		<members>AD_RolePermission.SASAnalyst_SAS_Salesforce_Announcements</members>
+		<members>AD_RolePermission.SASEmergency_SASEmergency</members>	
+		<members>AD_RolePermission.STUDENT_CONSULT_CG_Anouncement</members>
+		<members>AD_RolePermission.STUDENT_CONSULTING_Team_Lead_Role</members>
+		<members>AD_RolePermission.Sutherland_SAS_Salesforce_Announcements</members>
+		<members>AD_RolePermission.SYKES_EVG_Agent_Role</members>
+		<members>AD_RolePermission.SYKES_ODE_Agent_Role</members>
+		<members>AD_RolePermission.Sykes_SAS_Salesforce_Announcements</members>		
 		<members>AD_RoleLink.Sykes_EVG_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sykes_LCA_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sykes_ODE_AgentHelpdesk</members>
@@ -94,6 +109,7 @@
 		<members>AD_RoleLink.Sutherland_BOM_TeamLead</members>
 		<members>AD_RoleLink.Sykes_EVG_TeamLead</members>		
 		<members>AD_RoleLink.Sykes_ODE_TeamLead</members>	
+		<members>AD_RoleLink.SASAgent</members>		
 		<members>AD_RoleLink.Sutherland_OER_Global_Support_VIP</members>
 		<members>AD_RoleUserDetail.SykesLCAAgentHelpdesk_Site</members>
 		<members>AD_RoleUserDetail.SykesEVGAgentHelpdesk_Site</members>	
