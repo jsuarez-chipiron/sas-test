@@ -101,6 +101,12 @@
 		<members>AD_RolePermission.SYKES_EVG_Agent_Role</members>
 		<members>AD_RolePermission.SYKES_ODE_Agent_Role</members>
 		<members>AD_RolePermission.Sykes_SAS_Salesforce_Announcements</members>		
+		<members>AD_RolePermission.SykesLCAGroupSales_Vendor</members>
+		<members>AD_RolePermission.SykesODEGroupSales_Vendor</members>
+		<members>AD_RolePermission.SykesEVGGroupSales_Vendor</members>
+		<members>AD_RolePermission.SutherlandBOMSalesControl_Vendor</members>
+		<members>AD_RolePermission.Student_Consulting_VO</members>
+		<members>AD_RolePermission.Student_Consulting_Site</members>		
 		<members>AD_RoleLink.Sykes_EVG_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sykes_LCA_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sykes_ODE_AgentHelpdesk</members>
