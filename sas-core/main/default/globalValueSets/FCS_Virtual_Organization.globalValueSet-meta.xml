@@ -35,6 +35,11 @@
         <default>false</default>
         <label>Group Sales</label>
     </customValue>
+    <customValue>
+        <fullName>Refunds</fullName>
+        <default>false</default>
+        <label>Refunds</label>
+    </customValue>
     <description>The virtual organization of the user or record owner</description>
     <masterLabel>FCS Virtual Organization</masterLabel>
     <sorted>true</sorted>
