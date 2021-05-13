@@ -114,6 +114,7 @@
 		<members>AD_RoleLink.Sykes_ODE_TeamLead</members>	
 		<members>AD_RoleLink.SASAgent</members>		
 		<members>AD_RoleLink.Sutherland_OER_Global_Support_VIP</members>
+		<members>AD_RoleLink.Sykes_Direct_Sales</members>		
 		<members>AD_RoleUserDetail.SykesLCAAgentHelpdesk_Site</members>
 		<members>AD_RoleUserDetail.SykesEVGAgentHelpdesk_Site</members>	
 		<members>AD_RoleUserDetail.SykesODEAgentHelpdesk_Site</members>
