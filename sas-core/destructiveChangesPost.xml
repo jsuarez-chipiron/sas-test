@@ -61,6 +61,7 @@
 		<members>AD_Role.Sutherland_OER_Global_Support_VIP</members>
 		<members>AD_Role.Sutherland_BOM_TeamLead</members>
 		<members>AD_Role.SASAgent</members>
+		<members>AD_Role.Sykes_Direct_Sales</members>		
 		<members>AD_RolePermission.SYKES_EVG_Agent_Helpdesk_PG</members>
 		<members>AD_RolePermission.Sykes_LCA_AgentHelpdesk_Agent_Role</members>
 		<members>AD_RolePermission.SYKES_ODE_Agent_Helpdesk_PG</members>
