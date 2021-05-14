@@ -14,6 +14,20 @@
             <value>Feedback,Fraud Investigation</value>
         </criteriaItems>
     </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Sharing_cases_with_SAS_people</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Shares all the cases with SAS people</description>
+        <label>Sharing cases with SAS people</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>SAS</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>CaseNumber</field>
+            <operation>notEqual</operation>
+            <value>00000000</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>Liability_Cases_to_Liability_team</fullName>
         <accessLevel>Edit</accessLevel>
@@ -23,18 +37,6 @@
         </sharedTo>
         <sharedFrom>
             <group>Liability</group>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>SAS_Cases</fullName>
-        <accessLevel>Edit</accessLevel>
-        <description>SAS can see all Cases</description>
-        <label>SAS Cases</label>
-        <sharedTo>
-            <group>SAS</group>
-        </sharedTo>
-        <sharedFrom>
-            <allInternalUsers/>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>

@@ -2482,14 +2482,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Direct Sales Reservations NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email - Direct Sales Reservations SE</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Email - EB Missing Points</fullName>
             <default>false</default>
         </values>
@@ -2523,10 +2515,6 @@
         </values>
         <values>
             <fullName>Email - EuroBonus Identify Customer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email - EuroBonus Name Change</fullName>
             <default>false</default>
         </values>
         <values>
