@@ -65,8 +65,7 @@
 		<members>AD_RolePermission.SYKES_EVG_Agent_Helpdesk_PG</members>
 		<members>AD_RolePermission.Sykes_LCA_AgentHelpdesk_Agent_Role</members>
 		<members>AD_RolePermission.SYKES_ODE_Agent_Helpdesk_PG</members>
-		<members>AD_RolePermission.SYKES_LCA_Agent_Helpdesk_PG</members>
-		<members>AD_RolePermission.SUTHERLAND_Team_Lead_Role</members>
+		<members>AD_RolePermission.SYKES_LCA_Agent_Helpdesk_PG</members>		
 		<members>AD_RolePermission.SUTHERLAND_TeamLead_PG</members>
 		<members>AD_RolePermission.SUTHERLAND_Agent_Mentor</members>
 		<members>AD_RolePermission.SUTHERLAND_Agent_Role</members>		
