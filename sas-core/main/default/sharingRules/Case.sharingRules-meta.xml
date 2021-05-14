@@ -17,10 +17,10 @@
     <sharingCriteriaRules>
         <fullName>Sharing_cases_with_SAS_people</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>Shares all the cases with SAS people</description>
+        <description>Sharing all cases with SAS people</description>
         <label>Sharing cases with SAS people</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>SAS</roleAndSubordinatesInternal>
+            <role>SAS</role>
         </sharedTo>
         <criteriaItems>
             <field>CaseNumber</field>
