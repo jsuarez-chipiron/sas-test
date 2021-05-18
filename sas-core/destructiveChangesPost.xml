@@ -105,7 +105,9 @@
 		<members>AD_RolePermission.Sykes_SAS_Salesforce_Announcements</members>		
 		<members>AD_RolePermission.SASEmergency_GlobalSupport_PG</members>
 		<members>AD_RolePermission.TestAdmin_ManageAdMappings</members>	
-		<members>AD_RolePermission.SAS_Business_Omni_Supervisor_PS</members>			
+		<members>AD_RolePermission.SAS_Business_Omni_Supervisor_PS</members>
+		<members>AD_RolePermission.SASEmergency_ServicePresencesSoME</members>
+		<members>AD_RolePermission.SASEmergency_SocialMediaUser</members>	
 		<members>AD_RoleLink.Sykes_EVG_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sykes_LCA_AgentHelpdesk</members>
 		<members>AD_RoleLink.Sykes_ODE_AgentHelpdesk</members>
