@@ -50,18 +50,7 @@
 	</types>
 	
 	<!--2020-05-10 Below Matata are deleting as a part of cleaning of data and automating SSO -->
-	<types>	
-		<members>AD_Role.Sykes_EVG_Team_Lead</members>
-		<members>AD_Role.Sykes_ODE_Team_Lead</members>
-		<members>AD_Role.Sykes_LCA_EuroBonus</members>
-		<members>AD_Role.Sykes_ODE_AgentHelpdesk</members>
-		<members>AD_Role.Sykes_LCA_AgentHelpdesk</members>
-		<members>AD_Role.Sykes_EVG_AgentHelpdesk</members>
-	    <members>AD_Role.Sutherland_OER_Team_Lead</members>
-		<members>AD_Role.Sutherland_OER_Global_Support_VIP</members>
-		<members>AD_Role.Sutherland_BOM_TeamLead</members>
-		<members>AD_Role.SASAgent</members>
-		<members>AD_Role.Sykes_Direct_Sales</members>		
+	<types>				
 		<members>AD_RolePermission.SYKES_EVG_Agent_Helpdesk_PG</members>
 		<members>AD_RolePermission.Sykes_LCA_AgentHelpdesk_Agent_Role</members>
 		<members>AD_RolePermission.SYKES_ODE_Agent_Helpdesk_PG</members>
