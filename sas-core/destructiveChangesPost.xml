@@ -26,7 +26,6 @@
 	<!-- 2021-05-03 Delete unused permission set Thippeswamy Aravinda -->
 	<types>
 		<members>AD_ManageADMappings</members>
-		<members>Agent_Mentor</members>
 		<members>C_ManageLogs</members>
 		<members>Require_2FA_API_Login</members>
 		<members>C_ViewScheduledBatchRunInfo</members>
