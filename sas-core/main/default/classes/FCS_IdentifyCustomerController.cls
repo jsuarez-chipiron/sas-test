@@ -15,6 +15,7 @@ public without sharing class FCS_IdentifyCustomerController {
      */
     @AuraEnabled
     public static Account findCustomer(String searchField, String searchValue){
+         Account createdAccount;
         String query = 'SELECT Id, ExternalId, AddressLine1__c, AddressLine2__c, AddressLine3__c, BirthDate__c, ' +
                         'City__c, ConsentTelemarketing__c, ConsentEB0__c, ConsentSMS__c, ConsentEB__c, ConsentEmail__c, ' +
                         'CountryCode__c, CountyState__c, EmailPersonal__c, EBBalance__c, EBLevel__c, EBNumber__c, CMP__c, ' +
@@ -23,17 +24,25 @@ public without sharing class FCS_IdentifyCustomerController {
                         'SubscriptionId__c, TPAccountNumber__c, ZipCode__c, CompanyName__c, Title__c, MiddleName__c, Salutation__c ' +
                         'FROM FCS_FrequentFlyer__x ' +
                         'WHERE ' + searchField + ' = \'' + searchValue + '\'';
-        List<FCS_FrequentFlyer__x> externalData = Database.query(query);
-        Account createdAccount = createAccountRecordBasedOnFrequentFlyers(externalData);
-
-        //Necessary to do a query for the account after upsert to retrieve the PersonContactId
-        if(createdAccount != null){
-            return [SELECT Id, PersonContactId, FCS_EBNumber__c,FCS_EBLevel__c,FCS_TPAccountNumber__c, FCS_CODSId__c, FCS_LastRetrievedFromSource__c
-            FROM Account
-            WHERE Id = :createdAccount.Id];
-        } else {
-            return null;
+         try
+         {               
+            List<FCS_FrequentFlyer__x> externalData = Database.query(query);
+            createdAccount = createAccountRecordBasedOnFrequentFlyers(externalData);
+        
+            //Necessary to do a query for the account after upsert to retrieve the PersonContactId
+            if(createdAccount != null){
+                return [SELECT Id, PersonContactId, FCS_EBNumber__c,FCS_EBLevel__c,FCS_TPAccountNumber__c, FCS_CODSId__c, FCS_LastRetrievedFromSource__c
+                FROM Account
+                WHERE Id = :createdAccount.Id];
+            } 
         }
+        catch(Exception excp)
+        {
+           String msg = excp.getMessage() +searchField +':'+searchValue;
+            C_Log.log(C_Log.Severity.Error,msg,excp.getStackTraceString(),'c-shark',null);
+        }
+        
+        return null;
     }
 
     /**

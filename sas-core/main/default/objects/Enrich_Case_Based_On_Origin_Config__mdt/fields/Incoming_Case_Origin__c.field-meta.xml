@@ -61,16 +61,6 @@
                 <label>Email - Direct Sales Reservations DK</label>
             </value>
             <value>
-                <fullName>Email - Direct Sales Reservations NO</fullName>
-                <default>false</default>
-                <label>Email - Direct Sales Reservations NO</label>
-            </value>
-            <value>
-                <fullName>Email - Direct Sales Reservations SE</fullName>
-                <default>false</default>
-                <label>Email - Direct Sales Reservations SE</label>
-            </value>
-            <value>
                 <fullName>Email - EB Missing Points</fullName>
                 <default>false</default>
                 <label>Email - EB Missing Points</label>
@@ -119,11 +109,6 @@
                 <fullName>Email - EuroBonus Identify Customer</fullName>
                 <default>false</default>
                 <label>Email - EuroBonus Identify Customer</label>
-            </value>
-            <value>
-                <fullName>Email - EuroBonus Name Change</fullName>
-                <default>false</default>
-                <label>Email - EuroBonus Name Change</label>
             </value>
             <value>
                 <fullName>Email - EuroBonus Partner Support</fullName>
@@ -329,6 +314,11 @@
                 <fullName>Email - Refund FI General</fullName>
                 <default>false</default>
                 <label>Email - Refund FI General</label>
+            </value>
+            <value>
+                <fullName>Email - Refund IOM</fullName>
+                <default>false</default>
+                <label>Email - Refund IOM</label>
             </value>
             <value>
                 <fullName>Email - Refund NCE General</fullName>

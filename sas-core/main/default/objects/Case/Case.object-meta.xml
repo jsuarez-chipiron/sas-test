@@ -199,6 +199,8 @@
     <compactLayoutAssignment>SAS_Case_Compact_Layout</compactLayoutAssignment>
     <searchLayouts>
         <excludedStandardButtons>NewCase</excludedStandardButtons>
+        <listViewButtons>Mass_Redirect_Cases</listViewButtons>
+        <massQuickActions>Mass_Close_Cases</massQuickActions>
         <searchResultsAdditionalFields>CASES.CASE_NUMBER</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CASES.SUBJECT</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CASES.STATUS</searchResultsAdditionalFields>

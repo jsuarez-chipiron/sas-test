@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingCriteriaRules>
-        <fullName>Sutherland_Cases</fullName>
+        <fullName>Sharing_Cases_with_all_the_vendor</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>Sutherland can see Sykes cases but not PQs.</description>
-        <label>Sutherland Cases</label>
+        <description>Share read/write access for cases to all vendors</description>
+        <label>Sharing Cases with all the vendor</label>
         <sharedTo>
-            <group>Sutherland</group>
+            <group>All_Vendors</group>
         </sharedTo>
         <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Information,Support,Feedback,Channel</value>
+            <field>Team__c</field>
+            <operation>notEqual</operation>
+            <value>Feedback,Fraud Investigation</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>Sykes_Cases</fullName>
+        <fullName>Sharing_cases_with_SAS_people</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>Sykes can see Sutherlands cases put not PQs.</description>
-        <label>Sykes Cases</label>
+        <description>Sharing all cases with SAS people</description>
+        <label>Sharing cases with SAS people</label>
         <sharedTo>
-            <group>Sykes</group>
+            <role>SAS</role>
         </sharedTo>
         <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Information,Support,Functional Product Support,Feedback,Channel</value>
+            <field>CaseNumber</field>
+            <operation>notEqual</operation>
+            <value>00000000</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingOwnerRules>
@@ -37,18 +37,6 @@
         </sharedTo>
         <sharedFrom>
             <group>Liability</group>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>SAS_Cases</fullName>
-        <accessLevel>Edit</accessLevel>
-        <description>SAS can see all Cases</description>
-        <label>SAS Cases</label>
-        <sharedTo>
-            <group>SAS</group>
-        </sharedTo>
-        <sharedFrom>
-            <allInternalUsers/>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>

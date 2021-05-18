@@ -894,14 +894,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Direct Sales Reservations NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email - Direct Sales Reservations SE</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Email - EuroBonus Diamond DK</fullName>
             <default>false</default>
         </values>
@@ -930,10 +922,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - EuroBonus Name Change</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Email - EuroBonus Partner Support</fullName>
             <default>false</default>
         </values>
@@ -955,6 +943,10 @@
         </values>
         <values>
             <fullName>Email - Refund FI General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund IOM</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1259,6 +1251,10 @@
         </values>
         <values>
             <fullName>OC Bank Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Error Handling</fullName>
             <default>false</default>
         </values>
         <values>

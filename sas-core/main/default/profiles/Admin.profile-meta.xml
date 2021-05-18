@@ -278,6 +278,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Case_Owner_Site__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.FCS_CaseReason__c</field>
         <readable>true</readable>
@@ -1207,6 +1212,10 @@
     <layoutAssignments>
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-B2B - Customer</layout>
+        <recordType>Account.Business</recordType>
+    </layoutAssignments>
 	 <layoutAssignments>
         <layout>Account-B2B - Partner</layout>
         <recordType>Account.Partner</recordType>
@@ -1252,6 +1261,9 @@
         <layout>Contact-Email Contact Layout</layout>
         <recordType>Contact.EmailContact</recordType>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-SAS Contact Layout</layout>
+    </layoutAssignments>    
     <layoutAssignments>
         <layout>FCS_CaseTag__c-Case Reason Layout</layout>
     </layoutAssignments>

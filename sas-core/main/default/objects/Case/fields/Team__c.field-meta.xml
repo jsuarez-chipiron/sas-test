@@ -286,6 +286,11 @@
                 <label>OC Bank Transfer</label>
             </value>
             <value>
+                <fullName>OC Error Handling</fullName>
+                <default>false</default>
+                <label>OC Error Handling</label>
+            </value>
+            <value>
                 <fullName>OC General</fullName>
                 <default>false</default>
                 <label>OC General</label>
@@ -529,6 +534,10 @@
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>OC Bank Transfer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC Error Handling</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
