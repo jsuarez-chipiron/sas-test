@@ -159,7 +159,7 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
        */
     private static void setFieldsOnCreate(List<SocialPost> newSocialPostList) {
         List<C_GeneralSetting__mdt> socialPages = [SELECT Value__c FROM C_GeneralSetting__mdt WHERE Group__c ='Social Accounts'];
-        List<Group> soMeQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe'];
+        List<Group> soMeQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'SoMe_Support'];
         List<Id> parentIds = new List<Id> ();
         List<Id> parentIdsNext = new List<Id> ();
         for(SocialPost sp : newSocialPostList){

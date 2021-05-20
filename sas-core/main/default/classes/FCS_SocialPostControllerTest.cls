@@ -8,7 +8,7 @@ private class FCS_SocialPostControllerTest {
     @testSetup
     static void testSetup(){
         Profile p = [SELECT id FROM Profile WHERE Name = 'Vendor'];
-        Group g = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1];
+        Group g = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'SoMe_Support' LIMIT 1];
 
         User u = new User(
             Alias = 'test',
@@ -44,7 +44,7 @@ private class FCS_SocialPostControllerTest {
         User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
         User u = [SELECT Id FROM User WHERE Alias = 'test'];
         PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'SocialMediaUser'];
-        Group g = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1];
+        Group g = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'SoMe_Support' LIMIT 1];
         List<SocialPost> spList = [SELECT Id, Name, OwnerId, FCS_PreviousQueue__c FROM SocialPost];
         
         System.runAs(thisUser) {
@@ -83,7 +83,7 @@ private class FCS_SocialPostControllerTest {
         User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
         User u = [SELECT Id FROM User WHERE Alias = 'test'];
         PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'SocialMediaUser'];
-        Group g = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'GlobalSupportSoMe' LIMIT 1];
+        Group g = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'SoMe_Support' LIMIT 1];
         List<SocialPost> spList = [SELECT Id, Name, OwnerId FROM SocialPost];
 
         System.runAs(thisUser) {

@@ -175,8 +175,7 @@ private class FCS_CaseHandler_Test {
         List < SocialPost > socialPosts = [SELECT Id FROM SocialPost LIMIT 1];
         List < User > users = [SELECT Id From User WHERE FederationIdentifier = 'SoMe0'];
         List < Group > groupList = [SELECT Id FROM Group WHERE Type = 'Queue'
-            AND DeveloperName = 'GlobalSupportSoMe'
-        ];
+									AND DeveloperName = 'SoMe_Support'];
         for (Integer i = 0, sz = socialPosts.size(); i < sz; i++) {
             socialPosts[i].OwnerId = groupList[i].Id;
         }
