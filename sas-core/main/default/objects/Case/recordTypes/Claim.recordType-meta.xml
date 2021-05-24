@@ -2818,10 +2818,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>External</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>External Lawyers</fullName>
             <default>false</default>
         </values>
