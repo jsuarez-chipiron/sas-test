@@ -2470,10 +2470,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Digital Channel Support External</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Email - Digital Channel Support Internal</fullName>
             <default>false</default>
         </values>
