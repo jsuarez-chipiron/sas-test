@@ -156,11 +156,6 @@
                 <label>ES</label>
             </value>
             <value>
-                <fullName>External</fullName>
-                <default>false</default>
-                <label>External</label>
-            </value>
-            <value>
                 <fullName>External Lawyers</fullName>
                 <default>false</default>
                 <label>External Lawyers</label>
@@ -633,10 +628,6 @@
         <valueSettings>
             <controllingFieldValue>Care</controllingFieldValue>
             <valueName>SGH Bag SE</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <valueName>External</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>

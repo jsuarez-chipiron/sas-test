@@ -151,11 +151,6 @@
                 <label>ES</label>
             </value>
             <value>
-                <fullName>External</fullName>
-                <default>false</default>
-                <label>External</label>
-            </value>
-            <value>
                 <fullName>External Lawyers</fullName>
                 <default>false</default>
                 <label>External Lawyers</label>

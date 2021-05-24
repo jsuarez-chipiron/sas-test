@@ -2691,10 +2691,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Digital Channel Support External</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Email - Digital Channel Support Internal</fullName>
             <default>false</default>
         </values>
@@ -3192,10 +3188,6 @@
         </values>
         <values>
             <fullName>ES</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>External</fullName>
             <default>false</default>
         </values>
         <values>
