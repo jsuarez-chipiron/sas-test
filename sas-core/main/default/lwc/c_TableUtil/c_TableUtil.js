@@ -19,7 +19,8 @@ function filterData(data, filterParams) {
     if (filterEntries.length === 0 ) return [...data];
     const evalField = (row, fieldName, value) => 
         (row[fieldName] === value) || (!row[fieldName] && value === null) || (row[fieldName] && value === '*') 
-            || (value === 'NOTADOC' && row[fieldName] != 'ADOC');
+            || (value === 'NOTADOC' && !(row[fieldName]).includes('ADOC')) || (row[fieldName].includes(value));
+;
     return data.filter(row => {
         return filterEntries.every(entry => {
             const filterValues = Array.isArray(entry[1]) ? entry[1] : [entry[1]];
