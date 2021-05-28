@@ -142,6 +142,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>SetCaseFields16</name>
+        <label>SetCaseFields16</label>
+        <locationX>873</locationX>
+        <locationY>784</locationY>
+        <assignmentItems>
+            <assignToReference>TeamToSet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>OC Travel Agent</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Refund_Request</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>SetCaseFields2</name>
         <label>SetCaseFields2</label>
         <locationX>548</locationX>
@@ -450,6 +466,14 @@
         </value>
     </choices>
     <choices>
+        <name>TravelAgentWebformChoice</name>
+        <choiceText>Travel Agent Webform</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Travel Agent Webform</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>VoucherChoice</name>
         <choiceText>Voucher</choiceText>
         <dataType>String</dataType>
@@ -704,6 +728,21 @@
             </connector>
             <label>Other</label>
         </rules>
+        <rules>
+            <name>TravelAgentWebformOutcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RefundRequestType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>TravelAgentWebformChoice</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetCaseFields16</targetReference>
+            </connector>
+            <label>Travel Agent Webform</label>
+        </rules>
     </decisions>
     <dynamicChoiceSets>
         <name>RefundMacroPicklistChoices</name>
@@ -817,6 +856,12 @@
             <field>Refund_Request__c</field>
             <value>
                 <elementReference>Get_Created_Refund_Request.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Refund Request Form</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1015,6 +1060,7 @@
             <choiceReferences>AgentHelpdeskChoice</choiceReferences>
             <choiceReferences>ReservedAmountChoice</choiceReferences>
             <choiceReferences>VoucherChoice</choiceReferences>
+            <choiceReferences>TravelAgentWebformChoice</choiceReferences>
             <choiceReferences>OtherChoice</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Refund request type</fieldText>
