@@ -22,15 +22,6 @@
 		<members>Analytic_User</members>
 		<name>PermissionSet</name>
 	</types>
-
-	<!-- 2021-05-03 Delete unused permission set Thippeswamy Aravinda -->
-	<types>
-		<members>AD_ManageADMappings</members>
-		<members>C_ManageLogs</members>
-		<members>Require_2FA_API_Login</members>
-		<members>C_ViewScheduledBatchRunInfo</members>
-		<name>PermissionSet</name>
-	</types>
 <!-- 2020-02-16 Delete apex class that is obsolete -->
 	<types>
 		<members>FCS_InboundSocialPostHandlerImpl</members>
@@ -48,105 +39,6 @@
 		<name>CustomMetadata</name>
 	</types>
 	
-	<!--2020-05-10 Below Matata are deleting as a part of cleaning of data and automating SSO -->
-	<types>	
-		<members>AD_Role.Sykes_EVG_Team_Lead</members>
-		<members>AD_Role.Sykes_ODE_Team_Lead</members>
-		<members>AD_Role.Sykes_LCA_EuroBonus</members>
-		<members>AD_Role.Sykes_ODE_AgentHelpdesk</members>
-		<members>AD_Role.Sykes_LCA_AgentHelpdesk</members>
-		<members>AD_Role.Sykes_EVG_AgentHelpdesk</members>
-	    <members>AD_Role.Sutherland_OER_Team_Lead</members>
-		<members>AD_Role.Sutherland_OER_Global_Support_VIP</members>
-		<members>AD_Role.Sutherland_BOM_TeamLead</members>
-		<members>AD_Role.SASAgent</members>
-		<members>AD_Role.Sykes_Direct_Sales</members>				
-		<members>AD_RolePermission.SYKES_EVG_Agent_Helpdesk_PG</members>
-		<members>AD_RolePermission.Sykes_LCA_AgentHelpdesk_Agent_Role</members>
-		<members>AD_RolePermission.SYKES_ODE_Agent_Helpdesk_PG</members>
-		<members>AD_RolePermission.SYKES_LCA_Agent_Helpdesk_PG</members>		
-		<members>AD_RolePermission.SUTHERLAND_TeamLead_PG</members>
-		<members>AD_RolePermission.SUTHERLAND_Agent_Mentor</members>
-		<members>AD_RolePermission.SUTHERLAND_Agent_Role</members>		
-		<members>AD_RolePermission.SUTHERLAND_GlobalSupport_PG</members>
-		<members>AD_RolePermission.SUTHERLAND_ManageQuickText</members>		
-		<members>AD_RolePermission.Sykes_LCA_EuroBonus_Agent_Role</members>
-		<members>AD_RolePermission.SYKES_LCA_EuroBonus_PG</members>
-		<members>AD_RolePermission.SYKES_ODE_Agent_Mentor</members>
-		<members>AD_RolePermission.SYKES_ODE_ManageQuickText</members>
-		<members>AD_RolePermission.SYKES_ODE_Omni_Supervisor</members>
-		<members>AD_RolePermission.SYKES_ODE_Team_Lead_Role</members>		
-		<members>AD_RolePermission.SYKES_ODE_Teamlead_PG</members>
-		<members>AD_RolePermission.SYKES_EVG_Agent_Mentor</members>
-		<members>AD_RolePermission.SYKES_EVG_ManageQuickText</members>		
-		<members>AD_RolePermission.SYKES_EVG_Omni_Supervisor</members>
-		<members>AD_RolePermission.SYKES_EVG_Teamlead_PG</members>		
-		<members>AD_RolePermission.SYKES_EVG_Team_Lead_Role</members>
-		<members>AD_RolePermission.Sutherland_BOM_Team_Lead_Role</members>		
-		<members>AD_RolePermission.SUTHERLAND_ServicePresencesSoME</members>		
-		<members>AD_RolePermission.SUTHERLAND_Service_Presences_Breaks</members>
-		<members>AD_RolePermission.SUTHERLAND_Social_Media_User</members>
-		<members>AD_RolePermission.Admin_ManageAdMappings</members>
-		<members>AD_RolePermission.Analyst_Social_Media_User</members>
-		<members>AD_RolePermission.Emergency_SAS_Salesforce_Announcements</members>
-		<members>AD_RolePermission.SAS_Business_Manager</members>
-		<members>AD_RolePermission.SAS1_Business_Manager</members>
-		<members>AD_RolePermission.SASAgent_BusinessUser</members>
-		<members>AD_RolePermission.SASAgent_SAS_Salesforce_Announcements</members>
-		<members>AD_RolePermission.SASAnalyst_SAS_Salesforce_Announcements</members>
-		<members>AD_RolePermission.SASEmergency_SASEmergency</members>	
-		<members>AD_RolePermission.STUDENT_CONSULT_CG_Anouncement</members>
-		<members>AD_RolePermission.STUDENT_CONSULTING_Team_Lead_Role</members>
-		<members>AD_RolePermission.Sutherland_SAS_Salesforce_Announcements</members>
-		<members>AD_RolePermission.SYKES_EVG_Agent_Role</members>
-		<members>AD_RolePermission.SYKES_ODE_Agent_Role</members>
-		<members>AD_RolePermission.Admin_SAS_Salesforce_Announcements</members>
-		<members>AD_RolePermission.Sykes_SAS_Salesforce_Announcements</members>		
-		<members>AD_RolePermission.SASEmergency_GlobalSupport_PG</members>
-		<members>AD_RolePermission.TestAdmin_ManageAdMappings</members>	
-		<members>AD_RolePermission.SAS_Business_Omni_Supervisor_PS</members>
-		<members>AD_RolePermission.SASEmergency_ServicePresencesSoME</members>
-		<members>AD_RolePermission.SASEmergency_SocialMediaUser</members>	
-		<members>AD_RoleLink.Sykes_EVG_AgentHelpdesk</members>
-		<members>AD_RoleLink.Sykes_LCA_AgentHelpdesk</members>
-		<members>AD_RoleLink.Sykes_ODE_AgentHelpdesk</members>
-		<members>AD_RoleLink.Sutherland_OER_TeamLead</members>		
-		<members>AD_RoleLink.Sykes_LCA_EuroBonus</members>	
-		<members>AD_RoleLink.Sutherland_BOM_TeamLead</members>
-		<members>AD_RoleLink.Sykes_EVG_TeamLead</members>		
-		<members>AD_RoleLink.Sykes_ODE_TeamLead</members>	
-		<members>AD_RoleLink.SASAgent</members>		
-		<members>AD_RoleLink.Sutherland_OER_Global_Support_VIP</members>
-		<members>AD_RoleLink.Sykes_Direct_Sales</members>		
-		<members>AD_RoleUserDetail.SykesLCAAgentHelpdesk_Site</members>
-		<members>AD_RoleUserDetail.SykesEVGAgentHelpdesk_Site</members>	
-		<members>AD_RoleUserDetail.SykesODEAgentHelpdesk_Site</members>
-		<members>AD_RoleUserDetail.SykesLCAAgentHelpdesk_Vendor</members>
-		<members>AD_RoleUserDetail.SykesODEAgentHelpdesk_Vendor</members>
-		<members>AD_RoleUserDetail.SykesEVGAgentHelpdesk_Vendor</members>			
-		<members>AD_RoleUserDetail.SykesODEAgentHelpdesk_VO</members>
-		<members>AD_RoleUserDetail.SykesLCAAgentHelpdesk_VO</members>	
-		<members>AD_RoleUserDetail.SykesEVGAgentHelpdesk_VO</members>
-		<members>AD_RoleUserDetail.SutherlandOERGlobalSupport_Site</members>
-		<members>AD_RoleUserDetail.SutherlandOERTeamLead_Site</members>
-		<members>AD_RoleUserDetail.SutherlandOERGlobalSupport_VO</members>
-		<members>AD_RoleUserDetail.SykesLCAEuroBonus_Site</members>
-		<members>AD_RoleUserDetail.SykesLCAEuroBonus_Vendor</members>
-		<members>AD_RoleUserDetail.SykesLCAEuroBonus_VO</members>
-		<members>AD_RoleUserDetail.SykesODETeamLead_Site</members>
-		<members>AD_RoleUserDetail.SykesEVGTeamLead_Site</members>
-		<members>AD_RoleUserDetail.SutherlandBOMTeamLead_Site</members>
-		<members>AD_RoleUserDetail.SutherlandBOMTeamLead_Vendor</members>
-		<members>AD_RoleUserDetail.SutherlandBOMTeamLead_VO</members>	 
-		<members>AD_RoleUserDetail.SykesLCAGroupSales_Vendor</members>
-		<members>AD_RoleUserDetail.SykesODEGroupSales_Vendor</members>
-		<members>AD_RoleUserDetail.SykesEVGGroupSales_Vendor</members>
-		<members>AD_RoleUserDetail.SutherlandBOMSalesControl_Vendor</members>
-		<members>AD_RoleUserDetail.Student_Consulting_VO</members>
-		<members>AD_RoleUserDetail.Student_Consulting_Site</members>			
-		<name>CustomMetadata</name>
-	</types>
-	
 	<!-- 2020-05-26 Delete CustomMetadata Thippeswamy Aravinda -->
 	<types>
 		<members>AD_RolePermission.SAS_Analytic_User</members>
@@ -161,52 +53,16 @@
 		<members>Case.CaseTags__c</members>
 		<name>CustomField</name>
 	</types>
-	<!-- 2020-04-209 Delete field Queue Thippeswamy A -->
-	<types>
-		<members>Case.Queue__c</members>
-		<name>CustomField</name>
-	</types>
-
-	<!-- 2020-04-12 Delete case fields Thippeswamy A -->
-	<types>
-		<members>Case.FCS_Team__c</members>
-		<members>Case.FCS_SubTeam__c</members>
-		<members>Case.FCS_Vendor__c</members>
-		<members>Case.FCS_Site__c</members>
-		<members>Case.FCS_VirtualOrganization__c</members>
-		<members>Case.consent__c</members>
-		<name>CustomField</name>
-	</types>
-
-	<!-- 2020-04-12 Delete case fields Thippeswamy A -->
-	<types>
-		<members>SocialPost.FCS_Team__c</members>
-		<members>SocialPost.FCS_SubTeam__c</members>
-		<members>SocialPost.FCS_Vendor__c</members>
-		<members>SocialPost.FCS_Site__c</members>
-		<members>SocialPost.FCS_VirtualOrganization__c</members>
-		<name>CustomField</name>
-	</types>
 
 	<!-- 2020-05-20 Delete CustomApplication -->
 	<types>
 		<members>SAS_IRR</members>
 		<name>CustomApplication</name>
 	</types>
-	<!-- 2021-04-16 Delete Consent field validation -->
-	<types>
-		<members>Case.Consent_Field_Validation</members>
-		<name>ValidationRule</name>
-	</types>
 	<!--2020-05-28 Delete Role and use SAS instead-->
 	<types>
         <members>SAS_Analyst</members>
         <name>Role</name>
-    </types>
-	<!--2021-05-03 Delete Agent Profile it renamed to vendor-->
-	<types>
-        <members>Agent</members>
-        <name>Profile</name>
     </types>
 	<!--2020-10-13 Delete listviews -->
 	<types>
@@ -225,36 +81,12 @@
 		<members>Pandion_DK</members>
 		<members>Pandion_NO</members>
 		<members>Pandion_SE</members>
-		<members>Sales_Control</members>
 		<name>Queue</name>
 	</types>
 	<!--2020-10-13 remove unused public groups -->
 	<types>
 		<members>Agent_Fares_Ticketing_EU</members>
 		<members>Agent_Helpdesk_SIA</members>
-		<members>Sales_Control</members>
-	    <members>SutherlandGlobalSupportSoMe</members>
 		<name>Group</name>
-	</types>
-<!--2021-04-19 remove Social post process builder updating Site, vendor, team and Sub team Thippeswamy Aravinda -->
-	<types>
-        <members>SocialPost-3</members>
-		<members>SocialPost-1</members>
-		<members>SocialPost-2</members>
-		<members>SocialPost-4</members>
-		<members>SocialPost-5</members>
-        <name>Flow</name>
-    </types>
-	<!--2021-04-22 removing as a part of cross vendor chat removal Thippeswamy Aravinda -->
-	<types>
-		<members>FeedItemTrigger</members>
-		<members>FeedCommentTrigger</members>
-		<name>ApexTrigger</name>
-	</types>
-	<!--2021-04-22 removing as a part of cross vendor chat removal Thippeswamy Aravinda -->
-	<types>
-		<members>FCS_MentionHandler</members>
-		<members>FCS_MentionHandler_Test</members>
-		<name>ApexClass</name>
 	</types>
 </Package>
