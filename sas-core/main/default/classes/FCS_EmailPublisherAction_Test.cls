@@ -5,116 +5,135 @@
  */
 @isTest
 private class FCS_EmailPublisherAction_Test {
-    @isTest
-    static void defaultFromAddressSalesInformation() {
-        List<C_GeneralSetting__mdt> gs = new List<C_GeneralSetting__mdt> {
-            new C_GeneralSetting__mdt(MasterLabel = 'Sales Information', Value__c = 'salesinformation@test.com', Group__c = 'EMAIL ADDRESS')
-        };
+  // default address for redirected Cases
+  @isTest
+  static void defaultFromAddressforRedirctedCase() {
+    List<From_email_based_on_Dept_and_Teams__c> CSFromEmail = new List<From_email_based_on_Dept_and_Teams__c>{
+      new From_email_based_on_Dept_and_Teams__c(
+        Name = 'Group Sales ACE',
+        Case_Department__c = 'Group Sales',
+        Case_Team__c = 'ACE',
+        From_Email__c = 'groupsalestest@sas.se'
+      )
+    };
 
-        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
-        cases[0].Type = 'Sales Information';
-        insert cases;
+    insert CSFromEmail;
 
-        EmailMessage email = new EmailMessage();
-        email.ToAddress = 'salesinformation@test.com';
-        email.ParentId = cases[0].Id;
-        insert email;
+    List<Case> Cases = FCS_TestDataFactory.createCases(
+      1,
+      null,
+      null,
+      C_RecordTypeHelper.CASE_CHANNEL,
+      null
+    );
+    cases[0].origin = 'Email - EuroBonus Name Change';
+    insert Cases;
 
-        //create QuickActionDefaults
-        List<Map<String, Object>> defaultSettingAsObject = new List<Map<String, Object>>
-        {
-            new Map<String, Object>
-            {
-                'targetSObject' => new EmailMessage(),
-                'contextId' => cases[0].Id,
-                'actionType' => 'Email',
-                'actionName' => 'Case.Email',
-                'fromAddressList' => new List<String> {email.ToAddress}
-            }
-        };
+    // redirect the cases
+    cases[0].IsRedirected__c = true;
+    cases[0].Department__c = 'Group Sales';
+    cases[0].Team__c = 'ACE';
+    update cases;
 
-        List<QuickAction.SendEmailQuickActionDefaults> defaultsSettings = 
-            (List<QuickAction.SendEmailQuickActionDefaults>)JSON.deserialize(JSON.serialize(defaultSettingAsObject), List<QuickAction.SendEmailQuickActionDefaults>.class);
-        Test.startTest();
-            (new FCS_EmailPublisherAction()).onInitDefaults(defaultsSettings);
-        Test.stopTest();
+    EmailMessage email = new EmailMessage();
+    email.ToAddress = 'groupsalestest@sas.se';
+    email.ParentId = cases[0].Id;
+    insert email;
 
-        System.assertEquals(C_Settings.getSettings('EMAIL ADDRESS').get('Sales Information'), ((EmailMessage)defaultsSettings[0].getTargetSObject()).ValidatedFromAddress);
-    }
+    //create QuickActionDefaults
+    List<Map<String, Object>> defaultSettingAsObject = new List<Map<String, Object>>{
+      new Map<String, Object>{
+        'targetSObject' => new EmailMessage(),
+        'contextId' => cases[0].Id,
+        'actionType' => 'Email',
+        'actionName' => 'Case.Email',
+        'fromAddressList' => new List<String>{ email.ToAddress }
+      }
+    };
 
-    @isTest
-    static void defaultFromAddressSASSIInternal() {
-        List<C_GeneralSetting__mdt> gs = new List<C_GeneralSetting__mdt> {
-            new C_GeneralSetting__mdt(MasterLabel = 'SASSI Internal', Value__c = 'sassiinternal@test.com', Group__c = 'EMAIL ADDRESS')
-        };
+    List<QuickAction.SendEmailQuickActionDefaults> defaultsSettings = (List<QuickAction.SendEmailQuickActionDefaults>) JSON.deserialize(
+      JSON.serialize(defaultSettingAsObject),
+      List<QuickAction.SendEmailQuickActionDefaults>.class
+    );
+    Test.startTest();
+    (new FCS_EmailPublisherAction()).onInitDefaults(defaultsSettings);
+    Test.stopTest();
 
-        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
-        cases[0].Type = 'SASSI Internal';
-        insert cases;
-        System.debug(cases);
+    System.assertEquals(
+      CSFromEmail[0].From_Email__c,
+      ((EmailMessage) defaultsSettings[0].getTargetSObject())
+        .ValidatedFromAddress
+    );
+  }
+  // user to default the from address if more than email-to-case present for escalated cases
+  @isTest
+  static void defaultFromAddressEscalatedCase() {
+    List<From_email_based_on_Dept_and_Teams__c> CSFromEmail = new List<From_email_based_on_Dept_and_Teams__c>();
 
-        EmailMessage email = new EmailMessage();
-        email.ToAddress = 'sassiinternal@test.com';
-        email.ParentId = cases[0].Id; 
-        insert email;
-        System.debug(email);
+    CSFromEmail.add(
+      new From_email_based_on_Dept_and_Teams__c(
+        Name = 'Corporate Support International',
+        Case_Department__c = 'Corporate',
+        From_Email__c = 'coporateinternationtest@sas.se',
+        Priority__c = 1
+      )
+    );
+    CSFromEmail.add(
+      new From_email_based_on_Dept_and_Teams__c(
+        Name = 'Corporate Support Scandinavia',
+        Case_Department__c = 'Corporate',
+        From_Email__c = 'coporateScandinavia@sas.se',
+        Priority__c = 2
+      )
+    );
 
-        //create QuickActionDefaults
-        List<Map<String, Object>> defaultSettingAsObject = new List<Map<String, Object>>
-        {
-            new Map<String, Object>
-            {
-                'targetSObject' => new EmailMessage(),
-                'contextId' => cases[0].Id,
-                'actionType' => 'Email',
-                'actionName' => 'Case.Email',
-                'fromAddressList' => new List<String> {email.ToAddress}
-            }
-        };
-        System.debug(defaultSettingAsObject);
+    insert CSFromEmail;
 
-        List<QuickAction.SendEmailQuickActionDefaults> defaultsSettings = 
-            (List<QuickAction.SendEmailQuickActionDefaults>)JSON.deserialize(JSON.serialize(defaultSettingAsObject), List<QuickAction.SendEmailQuickActionDefaults>.class);
-        Test.startTest();
-            (new FCS_EmailPublisherAction()).onInitDefaults(defaultsSettings);
-        Test.stopTest();
+    List<Case> Cases = FCS_TestDataFactory.createCases(
+      1,
+      null,
+      null,
+      C_RecordTypeHelper.CASE_CHANNEL,
+      null
+    );
+    cases[0].origin = 'Email - Pandion DK';
+    insert Cases;
 
-        System.assertEquals(C_Settings.getSettings('EMAIL ADDRESS').get('SASSI Internal'), ((EmailMessage)defaultsSettings[0].getTargetSObject()).ValidatedFromAddress);
-    }
+    // Escalate the cases
+    cases[0].IsEscalated__c = true;
+    cases[0].status = 'Escalated';
+    cases[0].Department__c = 'Corporate';
+    cases[0].Team__c = '';
+    update cases;
 
-    @isTest
-    static void defaultFromAddressSystemTariff() {
-        List<C_GeneralSetting__mdt> gs = new List<C_GeneralSetting__mdt> {
-            new C_GeneralSetting__mdt(MasterLabel = 'System & Tariff', Value__c = 'systemtariff@test.com', Group__c = 'EMAIL ADDRESS')
-        };
+    EmailMessage email = new EmailMessage();
+    email.ToAddress = 'coporateinternationtest@sas.se';
+    email.ParentId = cases[0].Id;
+    insert email;
 
-        List<Case> cases = FCS_TestDataFactory.createCases(1, null, null, C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, null);
-        insert cases;
+    //create QuickActionDefaults
+    List<Map<String, Object>> defaultSettingAsObject = new List<Map<String, Object>>{
+      new Map<String, Object>{
+        'targetSObject' => new EmailMessage(),
+        'contextId' => cases[0].Id,
+        'actionType' => 'Email',
+        'actionName' => 'Case.Email',
+        'fromAddressList' => new List<String>{ email.ToAddress }
+      }
+    };
 
-        EmailMessage email = new EmailMessage();
-        email.ToAddress = 'systemtariff@test.com';
-        email.ParentId = cases[0].Id; 
-        insert email;
+    List<QuickAction.SendEmailQuickActionDefaults> defaultsSettings = (List<QuickAction.SendEmailQuickActionDefaults>) JSON.deserialize(
+      JSON.serialize(defaultSettingAsObject),
+      List<QuickAction.SendEmailQuickActionDefaults>.class
+    );
+    Test.startTest();
+    (new FCS_EmailPublisherAction()).onInitDefaults(defaultsSettings);
+    Test.stopTest();
 
-        //create QuickActionDefaults
-        List<Map<String, Object>> defaultSettingAsObject = new List<Map<String, Object>>
-        {
-            new Map<String, Object>
-            {
-                'targetSObject' => new EmailMessage(),
-                'contextId' => cases[0].Id,
-                'actionType' => 'Email',
-                'actionName' => 'Case.Email',
-                'fromAddressList' => new List<String> {email.ToAddress}
-            }
-        };
-
-        List<QuickAction.SendEmailQuickActionDefaults> defaultsSettings = 
-            (List<QuickAction.SendEmailQuickActionDefaults>)JSON.deserialize(JSON.serialize(defaultSettingAsObject), List<QuickAction.SendEmailQuickActionDefaults>.class);
-        Test.startTest();
-            (new FCS_EmailPublisherAction()).onInitDefaults(defaultsSettings);
-        Test.stopTest();
-
-        System.assertEquals(C_Settings.getSettings('EMAIL ADDRESS').get('System & Tariff'), ((EmailMessage)defaultsSettings[0].getTargetSObject()).ValidatedFromAddress);
-    }
+    System.assertEquals(
+      CSFromEmail[0].From_Email__c,
+      ((EmailMessage) defaultsSettings[0].getTargetSObject())
+        .ValidatedFromAddress
+    );
+  }
 }
