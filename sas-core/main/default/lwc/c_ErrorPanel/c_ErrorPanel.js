@@ -1,5 +1,5 @@
 import { LightningElement, api, track } from "lwc";
-import createlog from "@salesforce/apex/C_Log.createlog";
+import createLog from "@salesforce/apex/C_Log.createLog";
 export default class C_ErrorPanel extends LightningElement {
   /** Generic / user-friendly message */
   @api friendlyMessage =
@@ -29,7 +29,7 @@ export default class C_ErrorPanel extends LightningElement {
           // UI API read errors
           if (Array.isArray(error.body)) {
             console.log("inside a UI API Error");
-            createlog({
+            createLog({
               errorType: this.errorType,
               errorMsg: e.message,
               stackTrace: e.stack,
@@ -46,7 +46,7 @@ export default class C_ErrorPanel extends LightningElement {
           // UI API DML, Apex and network errors
           else if (error.body && typeof error.body.message === "string") {
             console.log("inside a Apex error");
-            createlog({
+            createLog({
               errorType: this.errorType,
               errorMsg: error.body.message,
               stackTrace: error.body.stackTrace,
@@ -63,7 +63,7 @@ export default class C_ErrorPanel extends LightningElement {
           // JS errors
           else if (typeof error.message === "string") {
             console.log("inside a Js error");
-            createlog({
+            createLog({
               errorType: this.errorType,
               errorMsg: error.message,
               stackTrace: error.stack,
