@@ -14,4 +14,16 @@
             <value>Email Contact</value>
         </criteriaItems>
     </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>Sharing_Contacts_with_all_internal_users</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Sharing all the contact with all internal users</description>
+        <label>Sharing Contacts with all internal users</label>
+        <sharedTo>
+            <allInternalUsers/>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers/>
+        </sharedFrom>
+    </sharingOwnerRules>
 </SharingRules>
