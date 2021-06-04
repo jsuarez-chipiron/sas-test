@@ -54,7 +54,7 @@ global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaults
         if (!lstFromEMails.isEmpty() && lstFromEMails.size() > 0) {
           emailMessage.ValidatedFromAddress = lstFromEMails[0].From_Email__c;
         } else {
-          emailMessage.addError('No default Email Address found for Type');
+           emailMessage.ValidatedFromAddress = From_email_based_on_Dept_and_Teams__c.getValues('Default From Address').From_Email__c;            
         }
       }
     }
