@@ -73,6 +73,23 @@ private class C_Log_Test {
 
 
     /**
+        Logs a caught LWC exception
+    */
+    @isTest static void CreatelogException(){
+        C_Log.init();
+        try{
+            throw new TestException('TEST ERROR MESSAGE');
+        }
+        catch(Exception e){
+            C_Log.createLog('Error', e.getMessage(),e.getStackTraceString(),'LWC');
+        }
+
+        List<C_Log__c> lstLogs = [SELECT Id,Severity__c,Message__c,StackTrace__c,LogGroup__c,Timestamp__c,Duration__c FROM C_Log__c ORDER BY CreatedDate DESC LIMIT 1];
+        System.assertEquals('TEST ERROR MESSAGE',lstLogs[0].Message__c);
+        System.assertNotEquals(null,lstLogs[0].StackTrace__c);
+        System.assertEquals(1,lstLogs.size());
+    }
+    /**
         Tests logging a message using a severity which does not exist 
     */
     @isTest static void logIncorrectSeverity(){

@@ -5,7 +5,7 @@
  */
 import { LightningElement, track, api } from "lwc";
 import generateExtractFile from "@salesforce/apex/GDPR_AccountGDPRExtractController.generateExtractFile";
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
 export default class Gdpr_AccountGDPRExtract extends LightningElement {
   /**
@@ -27,18 +27,28 @@ export default class Gdpr_AccountGDPRExtract extends LightningElement {
    * Used to call controller to generate an extract for the customer in context. Opens a link to download the generated file.
    * @returns {Promise<void>}
    */
-  async downloadExtract(){
-    try{
+  async downloadExtract() {
+    try {
       this.showSpinner = true;
-      let contentVersion = await generateExtractFile({ accountId : this.recordId });
-      await window.open('/sfc/servlet.shepherd/version/download/' + contentVersion.Id);
+      let contentVersion = await generateExtractFile({
+        accountId: this.recordId
+      });
+      await window.open(
+        "/sfc/servlet.shepherd/version/download/" + contentVersion.Id
+      );
       this.showSpinner = false;
-      const event = new ShowToastEvent({title: 'GDPR Extract', message: 'Extract generated successfully', variant: 'success'});
+      const event = new ShowToastEvent({
+        title: "GDPR Extract",
+        message: "Extract generated successfully",
+        variant: "success"
+      });
       this.dispatchEvent(event);
     } catch (error) {
-      this.error = error;
       this.showSpinner = false;
-      console.log('An error occurred: ' + error);
+      this.displayError(error);
     }
+  }
+  displayError(error) {
+    this.error = error;
   }
 }

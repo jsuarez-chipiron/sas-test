@@ -1,39 +1,76 @@
 <template>
-    <template if:true={cse} class="slds-m-around_medium">
-        <lightning-card title="Tag Case" icon-name="action:new_case">
-            <lightning-record-edit-form object-api-name="Case" record-id={cse.Id} record-type-id={cse.RecordTypeId}
-                onsuccess={handleSuccess}>
-                <lightning-messages></lightning-messages>
-                <div class="slds-grid slds-wrap" onkeydown={handleSubmitOnKeyPress}>
-                    <div class="slds-col slds-size_1-of-2">
-                        <lightning-input-field field-name="Status" value={Status}></lightning-input-field>
-                    </div>
-                    <div class="slds-col slds-size_1-of-2">
-                        <lightning-input-field field-name="Type" value={Type} required></lightning-input-field>
-                    </div>
-                    <div class="slds-col slds-size_1-of-2">
-                        <lightning-input-field field-name="FCS_CaseReason__c" value={FCS_CaseReason__c} required>
-                        </lightning-input-field>
-                    </div>
-                    <div class="slds-col slds-size_1-of-2">
-                        <lightning-input-field field-name="FCS_CaseSubReason__c" value={FCS_CaseSubReason__c} required>
-                        </lightning-input-field>
-                    </div>
-                    <div>
-                        <lightning-input-field field-name="FCS_CaseTags__c" value={FCS_CaseTags__c}>
-                        </lightning-input-field>
-                    </div>
-                </div>
-                <div class="slds-button-group-row slds-align_absolute-center">
-                    <div class="slds-button-group-item">
-                        <button name="cancel" class="slds-button slds-button_neutral"
-                            onclick={handleReset}>Cancel</button>
-                    </div>
-                    <div class="slds-button-group-item">
-                        <button name="Save" type="submit" class="slds-button slds-button_brand">Save</button>
-                    </div>
-                </div>
-            </lightning-record-edit-form>
-        </lightning-card>
-    </template>
+  <template if:true={cse} class="slds-m-around_medium">
+    <lightning-card title="Tag Case" icon-name="action:new_case">
+      <lightning-record-edit-form
+        object-api-name="Case"
+        record-id={cse.Id}
+        record-type-id={cse.RecordTypeId}
+        onsuccess={handleSuccess}
+      >
+        <lightning-messages></lightning-messages>
+        <div class="slds-grid slds-wrap" onkeydown={handleSubmitOnKeyPress}>
+          <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field
+              field-name="Status"
+              value={Status}
+            ></lightning-input-field>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field
+              field-name="Type"
+              value={Type}
+              required
+            ></lightning-input-field>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field
+              field-name="FCS_CaseReason__c"
+              value={FCS_CaseReason__c}
+              required
+            >
+            </lightning-input-field>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field
+              field-name="FCS_CaseSubReason__c"
+              value={FCS_CaseSubReason__c}
+              required
+            >
+            </lightning-input-field>
+          </div>
+          <div>
+            <lightning-input-field
+              field-name="FCS_CaseTags__c"
+              value={FCS_CaseTags__c}
+            >
+            </lightning-input-field>
+          </div>
+        </div>
+        <div class="slds-button-group-row slds-align_absolute-center">
+          <div class="slds-button-group-item">
+            <button
+              name="cancel"
+              class="slds-button slds-button_neutral"
+              onclick={handleReset}
+            >
+              Cancel
+            </button>
+          </div>
+          <div class="slds-button-group-item">
+            <button
+              name="Save"
+              type="submit"
+              class="slds-button slds-button_brand"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </lightning-record-edit-form>
+    </lightning-card>
+  </template>
+  <!--Custom child component to render errors in search-->
+  <template if:true={error}>
+    <c-c_-error-panel errors={error}></c-c_-error-panel>
+  </template>
 </template>
