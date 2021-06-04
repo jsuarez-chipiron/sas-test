@@ -19,6 +19,8 @@ public with sharing class C_RecordTypeHelper {
   public static final Id CASE_INTERNAL_BACKOFFICE;
   @TestVisible
   public static final Id CASE_CHANNEL;
+  @TestVisible
+  public static final Id CASE_CHAT;
 
   /**
     Static variables to store id of record types on account object
@@ -53,6 +55,8 @@ public with sharing class C_RecordTypeHelper {
           CASE_INTERNAL_BACKOFFICE = rt.Id;
         if (rt.DeveloperName == 'Channel')
           CASE_CHANNEL = rt.Id;
+       if (rt.DeveloperName == 'chat')
+          CASE_CHAT = rt.Id;
       } else if (rt.SobjectType == 'Account') {
         if (rt.DeveloperName == 'EBCustomer')
           ACCOUNT_PERSON_EBCUSTOMER = rt.Id;
