@@ -1250,6 +1250,10 @@
         <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Channel</recordType>
     </layoutAssignments>
+	 <layoutAssignments>
+        <layout>Case-SAS Support Layout</layout>
+        <recordType>Case.Chat</recordType>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Support</recordType>
@@ -1464,6 +1468,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Channel</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Case.Chat</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
