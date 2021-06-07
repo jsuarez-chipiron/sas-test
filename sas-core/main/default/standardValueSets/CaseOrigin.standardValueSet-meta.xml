@@ -257,6 +257,36 @@
         <label>Email - Liability Claim</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - OC KANA Bank Payment</fullName>
+        <default>false</default>
+        <label>Email - OC KANA Bank Payment</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - OC KANA Groups</fullName>
+        <default>false</default>
+        <label>Email - OC KANA Groups</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - OC KANA HQ Expert</fullName>
+        <default>false</default>
+        <label>Email - OC KANA HQ Expert</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - OC KANA STOPY</fullName>
+        <default>false</default>
+        <label>Email - OC KANA STOPY</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - OC KANA TAWEB</fullName>
+        <default>false</default>
+        <label>Email - OC KANA TAWEB</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - OC KANA US</fullName>
+        <default>false</default>
+        <label>Email - OC KANA US</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Olympic DK</fullName>
         <default>false</default>
         <label>Email - Olympic DK</label>
