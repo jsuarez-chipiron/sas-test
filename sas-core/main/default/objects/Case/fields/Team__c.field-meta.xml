@@ -36,6 +36,11 @@
                 <label>Backoffice</label>
             </value>
             <value>
+                <fullName>Bank Payment</fullName>
+                <default>false</default>
+                <label>Bank Payment</label>
+            </value>
+            <value>
                 <fullName>Benelux</fullName>
                 <default>false</default>
                 <label>Benelux</label>
@@ -156,11 +161,6 @@
                 <label>ES</label>
             </value>
             <value>
-                <fullName>External</fullName>
-                <default>false</default>
-                <label>External</label>
-            </value>
-            <value>
                 <fullName>External Lawyers</fullName>
                 <default>false</default>
                 <label>External Lawyers</label>
@@ -216,6 +216,16 @@
                 <label>Gold SE</label>
             </value>
             <value>
+                <fullName>Groups</fullName>
+                <default>false</default>
+                <label>Groups</label>
+            </value>
+            <value>
+                <fullName>HQ Expert</fullName>
+                <default>false</default>
+                <label>HQ Expert</label>
+            </value>
+            <value>
                 <fullName>Identify Customer</fullName>
                 <default>false</default>
                 <label>Identify Customer</label>
@@ -254,6 +264,11 @@
                 <fullName>IT</fullName>
                 <default>false</default>
                 <label>IT</label>
+            </value>
+            <value>
+                <fullName>KANA US</fullName>
+                <default>false</default>
+                <label>KANA US</label>
             </value>
             <value>
                 <fullName>LT</fullName>
@@ -451,9 +466,19 @@
                 <label>Star Alliance Upgrades</label>
             </value>
             <value>
+                <fullName>STOPY</fullName>
+                <default>false</default>
+                <label>STOPY</label>
+            </value>
+            <value>
                 <fullName>System &amp; Tariff</fullName>
                 <default>false</default>
                 <label>System &amp; Tariff</label>
+            </value>
+            <value>
+                <fullName>TAWEB</fullName>
+                <default>false</default>
+                <label>TAWEB</label>
             </value>
             <value>
                 <fullName>Ticketless Support</fullName>
@@ -619,6 +644,30 @@
             <valueName>SoMe</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
+            <valueName>Bank Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
+            <valueName>Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
+            <valueName>HQ Expert</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
+            <valueName>KANA US</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
+            <valueName>STOPY</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
+            <valueName>TAWEB</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <valueName>SAS Poland</valueName>
         </valueSettings>
@@ -633,10 +682,6 @@
         <valueSettings>
             <controllingFieldValue>Care</controllingFieldValue>
             <valueName>SGH Bag SE</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <valueName>External</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>

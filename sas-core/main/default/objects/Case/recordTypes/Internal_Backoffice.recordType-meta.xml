@@ -52,6 +52,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Refunds OC KANA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SAS Operating Center</fullName>
             <default>false</default>
         </values>
@@ -2550,10 +2554,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Digital Channel Support External</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Email - Digital Channel Support Internal</fullName>
             <default>false</default>
         </values>
@@ -2607,6 +2607,30 @@
         </values>
         <values>
             <fullName>Email - Liability Claim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - OC KANA Bank Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - OC KANA Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - OC KANA HQ Expert</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - OC KANA STOPY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - OC KANA TAWEB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - OC KANA US</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2818,6 +2842,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bank Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Benelux</fullName>
             <default>false</default>
         </values>
@@ -2866,10 +2894,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>External</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>External Lawyers</fullName>
             <default>false</default>
         </values>
@@ -2910,6 +2934,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HQ Expert</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>IE</fullName>
             <default>false</default>
         </values>
@@ -2939,6 +2971,10 @@
         </values>
         <values>
             <fullName>International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KANA US</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3042,6 +3078,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>STOPY</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sales Information</fullName>
             <default>false</default>
         </values>
@@ -3059,6 +3099,10 @@
         </values>
         <values>
             <fullName>System %26 Tariff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TAWEB</fullName>
             <default>false</default>
         </values>
         <values>

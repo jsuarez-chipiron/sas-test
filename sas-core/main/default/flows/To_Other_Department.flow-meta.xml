@@ -4,8 +4,8 @@
         <description>Posts the internal comments to the chatter feed on the case</description>
         <name>CaseChatterFeed</name>
         <label>CaseChatterFeed</label>
-        <locationX>424</locationX>
-        <locationY>323</locationY>
+        <locationX>755</locationX>
+        <locationY>324</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
@@ -30,8 +30,8 @@
         <description>Escalation Reason to chatter</description>
         <name>Posting_Escalation_Reason_to_Chatter</name>
         <label>Posting Escalation Reason to Chatter</label>
-        <locationX>428</locationX>
-        <locationY>780</locationY>
+        <locationX>752</locationX>
+        <locationY>778</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
@@ -99,10 +99,61 @@
         </value>
     </choices>
     <decisions>
+        <name>Is_case_closed</name>
+        <label>Is case closed?</label>
+        <locationX>232</locationX>
+        <locationY>298</locationY>
+        <defaultConnector>
+            <targetReference>To_Other_Department</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>To other department</defaultConnectorLabel>
+        <rules>
+            <name>Closed_Case</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Closed_Case_Error</targetReference>
+            </connector>
+            <label>Closed Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Validating that the department and team is validated for redirection, support and escalations cases</description>
+        <name>Is_the_department_validated</name>
+        <label>Is the department validated?</label>
+        <locationX>233</locationX>
+        <locationY>640</locationY>
+        <defaultConnector>
+            <targetReference>GetDepartmentQueueId</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Refunds_OC_Kana</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DependentList.topValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Refunds OC KANA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Refunds_OC_KANA_Information</targetReference>
+            </connector>
+            <label>Refunds OC Kana</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Redirection_Support_Or_Escalation</name>
         <label>Redirection Support Or Escalation</label>
-        <locationX>420</locationX>
-        <locationY>542</locationY>
+        <locationX>746</locationX>
+        <locationY>538</locationY>
         <defaultConnector>
             <targetReference>CaseChatterFeed</targetReference>
         </defaultConnector>
@@ -209,7 +260,7 @@
         <description>Creates  a support case based on the information capture in the To Other Department Screen</description>
         <name>Create_Support_Case</name>
         <label>Create Support Case</label>
-        <locationX>622</locationX>
+        <locationX>967</locationX>
         <locationY>533</locationY>
         <connector>
             <targetReference>UpdateCurrentCaseInformation</targetReference>
@@ -287,11 +338,11 @@
         <description>Gets all the information of the case where the flow was triggered from</description>
         <name>GetCurrentCaseInformation</name>
         <label>GetCurrentCaseInformation</label>
-        <locationX>174</locationX>
+        <locationX>419</locationX>
         <locationY>189</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>To_Other_Department</targetReference>
+            <targetReference>Is_case_closed</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -308,8 +359,8 @@
     <recordLookups>
         <name>GetDepartmentQueueId</name>
         <label>GetDepartmentQueueId</label>
-        <locationX>174</locationX>
-        <locationY>540</locationY>
+        <locationX>512</locationX>
+        <locationY>537</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Case_Record_Type</targetReference>
@@ -330,8 +381,8 @@
         <description>Escalates the case another department</description>
         <name>EscalateCurrentCase</name>
         <label>EscalateCurrentCase</label>
-        <locationX>631</locationX>
-        <locationY>780</locationY>
+        <locationX>972</locationX>
+        <locationY>778</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
         </connector>
@@ -394,8 +445,8 @@
         <description>Update the current case to be directed to the right skill</description>
         <name>Redirect_Case</name>
         <label>Redirect Case</label>
-        <locationX>609</locationX>
-        <locationY>322</locationY>
+        <locationX>964</locationX>
+        <locationY>324</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
         </connector>
@@ -457,7 +508,7 @@
     <recordUpdates>
         <name>UpdateCurrentCaseInformation</name>
         <label>UpdateCurrentCaseInformation</label>
-        <locationX>757</locationX>
+        <locationX>1072</locationX>
         <locationY>533</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
@@ -486,9 +537,25 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
+        <name>Closed_Case_Error</name>
+        <label>Closed Case Error</label>
+        <locationX>50</locationX>
+        <locationY>289</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Closed_Case_Error_Screen</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;﻿Closed Cases cannot be redirected or escalated to other department.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Redirection_Submission</name>
         <label>Redirection Submission</label>
-        <locationX>1162</locationX>
+        <locationX>1407</locationX>
         <locationY>533</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -503,16 +570,32 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Refunds_OC_KANA_Information</name>
+        <label>Refunds OC KANA Information</label>
+        <locationX>241</locationX>
+        <locationY>883</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Refunds_OC_KANA_Error</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Department Refunds OC KANA is not available for Redirection, Support and Escalations&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <description>Input for making a request to another department</description>
         <name>To_Other_Department</name>
         <label>To Other Department</label>
-        <locationX>175</locationX>
-        <locationY>378</locationY>
+        <locationX>239</locationX>
+        <locationY>478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>GetDepartmentQueueId</targetReference>
+            <targetReference>Is_the_department_validated</targetReference>
         </connector>
         <fields>
             <name>Request_Type</name>
@@ -653,7 +736,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>48</locationX>
+        <locationX>293</locationX>
         <locationY>50</locationY>
         <connector>
             <targetReference>GetCurrentCaseInformation</targetReference>
@@ -664,8 +747,8 @@
         <description>Gets the care record type based on the Department and Team</description>
         <name>Get_Case_Record_Type</name>
         <label>Get Case Record Type</label>
-        <locationX>290</locationX>
-        <locationY>538</locationY>
+        <locationX>635</locationX>
+        <locationY>536</locationY>
         <connector>
             <targetReference>Redirection_Support_Or_Escalation</targetReference>
         </connector>

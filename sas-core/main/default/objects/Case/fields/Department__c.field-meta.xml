@@ -75,6 +75,11 @@
                 <label>Refunds</label>
             </value>
             <value>
+                <fullName>Refunds OC KANA</fullName>
+                <default>false</default>
+                <label>Refunds OC KANA</label>
+            </value>
+            <value>
                 <fullName>Sales Control BOM</fullName>
                 <default>false</default>
                 <label>Sales Control BOM</label>

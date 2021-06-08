@@ -31,25 +31,25 @@ Initiates the batch class and extracts the date used to filter out cases for rem
                 caseOrigins.add(obj.Case_Origin__c);
             }
         }                                                                         
-        lastRetentionDate = DateTime.newInstance(Date.today().addDays(-C_Settings.getSettings('GDPR').getInt('DeleteSensitiveattachments')),Time.newInstance(0,0,0,0));   
+        lastRetentionDate = DateTime.newInstance(Date.today().addDays(-C_Settings.getSettings('GDPR').getInt('DeleteSensitiveattachments')),Time.newInstance(0,0,0,0));
     }
     
     /**
-    Iterates over all cases closed before the retention period
-    @param bc The batch context
-	*/
+Iterates over all cases closed before the retention period
+@param bc The batch context
+*/
     global Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator('SELECT Id,ParentId FROM EmailMessage WHERE Parent.ClosedDate<:lastRetentionDate and HasAttachment = true and Incoming = true and parent.Origin=:caseOrigins');
     }
     
     
     /**
-    Deletes Email message related entities
-    Attachments
+Deletes Email message related entities
+Attachments
 
-	**/
+**/
     global override void executeScope(Database.BatchableContext bc, SObject[] sObjScope){
-        GDPR_WipeEmailService.deleteEmailMessageAttachments((EmailMessage[])sObjScope);
+        GDPR_WipeEmailService.deleteEmailMessageAttachmentandFiles((EmailMessage[])sObjScope);
         
     }
     
