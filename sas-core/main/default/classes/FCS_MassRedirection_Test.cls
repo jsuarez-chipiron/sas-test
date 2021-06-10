@@ -2,7 +2,7 @@
  Test class for class FCS_MassRedirection
 */
 
-@isTest
+@isTest(seeAllData=false)
 public class FCS_MassRedirection_Test {
   @IsTest
   static void testMassRedirection() {
@@ -13,6 +13,8 @@ public class FCS_MassRedirection_Test {
       null,
       null
     );
+    insert newCases;
+
     List<Id> lseCaseIds = new List<Id>();
     lseCaseIds.add(newCases[0].Id);
 
