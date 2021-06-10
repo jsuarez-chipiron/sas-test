@@ -5,7 +5,7 @@
  */
 import { LightningElement, track, api } from "lwc";
 import wipeRecord from "@salesforce/apex/GDPR_DeleteComponentController.deleteRecordData";
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
 export default class AccountGdprExtract extends LightningElement {
   /**
@@ -33,20 +33,23 @@ export default class AccountGdprExtract extends LightningElement {
    * file, and then deletes the file from Salesforce.
    * @returns {Promise<void>}
    */
-  async deleteRecordData(){
-    try{
+  async deleteRecordData() {
+    try {
       this.showSpinner = true;
-      if(!this.validateInput()){
-        await wipeRecord({recordId : this.recordId});
-        const event = new ShowToastEvent({title: 'GDPR Delete', message: 'Successfully deleted data', variant: 'success'});
+      if (!this.validateInput()) {
+        await wipeRecord({ recordId: this.recordId });
+        const event = new ShowToastEvent({
+          title: "GDPR Delete",
+          message: "Successfully deleted data",
+          variant: "success"
+        });
         this.dispatchEvent(event);
         this.deleteDisabled = true;
       }
       this.showSpinner = false;
     } catch (error) {
-      this.error = error;
       this.showSpinner = false;
-      console.log('An error occurred: ' + error);
+      this.displayError(error);
     }
   }
 
@@ -61,7 +64,7 @@ export default class AccountGdprExtract extends LightningElement {
     if (value === "") {
       inputCmp.setCustomValidity("Please insert the record Id");
       fieldError = true;
-    } else if (value === this.recordId){
+    } else if (value === this.recordId) {
       inputCmp.setCustomValidity("");
       fieldError = false;
     } else {
@@ -70,5 +73,8 @@ export default class AccountGdprExtract extends LightningElement {
     }
     inputCmp.reportValidity();
     return fieldError;
+  }
+  displayError(error) {
+    this.error = error;
   }
 }
