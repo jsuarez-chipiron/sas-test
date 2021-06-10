@@ -151,7 +151,7 @@ public with sharing class CSharkResponseParser {
      */
     private static Map<String, Object> getNameValuePair(String elementName, Object elementText){
         Map<String, Object> customerRow = new Map<String, Object>();
-        if(elementName.endsWith('Date') && elementText != null) {
+        if(elementName.endsWith('Date') && elementText != null && elementText !='') {
             customerRow.put(elementName, Date.valueOf(String.valueOf(elementText)));
         } else{
             customerRow.put(elementName, elementText);
