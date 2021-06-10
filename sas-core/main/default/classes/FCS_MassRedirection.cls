@@ -13,6 +13,7 @@ public class FCS_MassRedirection {
       SELECT Id, Department__c, Team__c, IsRedirected__c, RecordTypeId, OwnerId
       FROM Case
       WHERE Id = :requestCases[0].caseIds
+      LIMIT 10000
     ];
 
     Responsecase resCase = new Responsecase();
