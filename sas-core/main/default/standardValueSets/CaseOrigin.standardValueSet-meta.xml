@@ -492,6 +492,11 @@
         <label>Form - Refund Travel Agent</label>
     </standardValue>
     <standardValue>
+        <fullName>Internal - New Refund Request Form</fullName>
+        <default>false</default>
+        <label>Internal - New Refund Request Form</label>
+    </standardValue>
+    <standardValue>
         <fullName>Internal - Support</fullName>
         <default>false</default>
         <label>Internal - Support</label>
