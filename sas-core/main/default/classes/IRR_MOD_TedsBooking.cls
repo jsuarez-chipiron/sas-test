@@ -12,6 +12,7 @@ public class IRR_MOD_TedsBooking {
     public String reference { get; set; }
     public String type { get; set; }
     public String status { get; set; }
+    public Boolean isCancelled { get; set; }
     public String codsId { get; set; }
     public Audit audit { get; set; }
     public List<Passenger> passengers { get; set; }

@@ -1,0 +1,57 @@
+<template>
+    <lightning-card title="Retrieve Customer" if:false={customerIdentified}>
+        <div class="slds-grid slds-gutters slds-grid_vertical-align-end slds-p-left_small">
+            <!--Component that displays buttons where the user can choose a value to search for, e.g. EuroBonus. 
+                Dynimically rendered based on property.-->
+            <div class="slds-col">
+                <lightning-radio-group name="searchOptions" label="Search by" options={options} value={searchOption}
+                    required type="button" if:true={showSearchOptions}></lightning-radio-group>
+                <!--Search field of component-->
+                <lightning-input type="text" label="Enter customer's EuroBonus number" value={searchValue}
+                    onchange={handleSearchValueChange} onkeydown={handlePressEnterKey} class="search-field">
+                </lightning-input>
+            </div>
+            <!--Button to trigger search based on input-->
+            <div class="slds-col">
+                <lightning-button variant="brand" label="Search" title="Search button"
+                    onclick={handleSearchButtonClick}>
+                </lightning-button>
+            </div>
+        </div>
+
+        <!--Spinner graphics dynamically rendered, controlled by JS-->
+        <div if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+        </div>
+        <!--Custom child component to render errors in search-->
+        <template if:true={error}>
+            <c-c_-error-panel errors={error}></c-c_-error-panel>
+        </template>
+        <!--Displays a warning is no result was found in search-->
+        <div class="slds-p-around_medium searchError" if:true={noSearchResult}>
+            <lightning-icon icon-name="utility:warning" variant="warning"></lightning-icon>
+            <div class="slds-p-around_small">
+                <p>Could not find a matching customer</p>
+            </div>
+        </div>
+    </lightning-card>
+
+    <lightning-card title={customerName} if:true={customerIdentified}>
+        <div class="slds-tabs_default">
+            <ul class="slds-tabs_default__nav" role="tablist">
+            <li class="slds-tabs_default__item slds-is-active" title="Cases" role="presentation">
+                <a class="slds-tabs_default__link" href="#" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item">Item One</a>
+            </li>
+            <li class="slds-tabs_default__item" title="Bookings" role="presentation">
+                <a class="slds-tabs_default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id="tab-default-2__item">Item Two</a>
+            </li>
+            <li class="slds-tabs_default__item" title="Communication log" role="presentation">
+                <a class="slds-tabs_default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" id="tab-default-3__item">Item Three</a>
+            </li>
+            </ul>
+            <div id="tab-default-1" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">Item One Content</div>
+            <div id="tab-default-2" class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-2__item">Item Two Content</div>
+            <div id="tab-default-3" class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-3__item">Item Three Content</div>
+        </div>
+    </lightning-card>
+</template>

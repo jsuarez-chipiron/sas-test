@@ -248,6 +248,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>customerCard</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>createQuickActionName</name>
                     <value>Create_Refund_Request</value>
