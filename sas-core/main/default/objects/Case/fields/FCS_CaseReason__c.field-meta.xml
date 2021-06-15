@@ -690,6 +690,11 @@
                 <label>Schedule changes</label>
             </value>
             <value>
+                <fullName>SC Under 180 Minutes</fullName>
+                <default>false</default>
+                <label>SC Under 180 Minutes</label>
+            </value>
+            <value>
                 <fullName>Special service requests</fullName>
                 <default>false</default>
                 <label>Special service requests</label>
@@ -1201,6 +1206,10 @@
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>
             <valueName>Reserved Amount</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>SC Under 180 Minutes</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>

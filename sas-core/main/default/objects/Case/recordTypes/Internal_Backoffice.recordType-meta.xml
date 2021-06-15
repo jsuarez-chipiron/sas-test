@@ -539,6 +539,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SC Under 180 Minutes</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SSR</fullName>
             <default>false</default>
         </values>
@@ -615,6 +619,10 @@
         </values>
         <values>
             <fullName>AVIH%2FPETC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accept</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1551,6 +1559,10 @@
         </values>
         <values>
             <fullName>Reissue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reject</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2714,6 +2726,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Form - Refund SC Under 180 Minutes</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Form - Refund Travel Agent</fullName>
             <default>false</default>
         </values>
@@ -3015,6 +3031,10 @@
         </values>
         <values>
             <fullName>OC Reserved Amount</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC SC Under 180 Minutes</fullName>
             <default>false</default>
         </values>
         <values>
