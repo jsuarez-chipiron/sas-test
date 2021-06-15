@@ -142,7 +142,6 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         // This has the effect of removing multiple items from the map in one shot.
         queryParams.keySet().removeAll(mapKeystoRemove);
 
-
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
                 .executeRequest(BOOKINGS_FILTER_ENDPOINT, C_IntegrationExecutor.Method.GET, null, queryParams);
         if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
@@ -321,6 +320,8 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
                 }     
             }
         }
+        // System.debug('<<passengerInfos>>'+JSON.serialize(passengerInfos));
+        
         return passengerInfos;
     }
 
@@ -354,6 +355,8 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         segmentInfo.flightNumber = segmentInfo.flightId.split('-')[0];
         segmentInfo.arrivalTimeLocal = tripSegment.flight.arrival.scheduledTime.local;
         segmentInfo.departureTimeLocal = tripSegment.flight.departure.scheduledTime.local;
+        segmentInfo.departureTimeUTC = tripSegment.flight.departure.scheduledTime.utc;
+        segmentInfo.arrivalTimeUTC = tripSegment.flight.departure.scheduledTime.utc;
         segmentInfo.stationArrival = tripSegment.flight.arrival.station;
         segmentInfo.stationDeparture = tripSegment.flight.departure.station;
         segmentInfo.status = tripSegment.status;
