@@ -326,6 +326,11 @@
                 <label>OC Reserved Amount</label>
             </value>
             <value>
+                <fullName>OC SC Under 180 Minutes</fullName>
+                <default>false</default>
+                <label>OC SC Under 180 Minutes</label>
+            </value>
+            <value>
                 <fullName>OC Travel Agent</fullName>
                 <default>false</default>
                 <label>OC Travel Agent</label>
@@ -582,6 +587,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC SC Under 180 Minutes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>OC Travel Agent</valueName>
         </valueSettings>
         <valueSettings>
@@ -591,6 +600,30 @@
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>OC Waivers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
+            <valueName>Bank Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
+            <valueName>Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
+            <valueName>HQ Expert</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
+            <valueName>KANA US</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
+            <valueName>STOPY</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
+            <valueName>TAWEB</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
@@ -642,30 +675,6 @@
         <valueSettings>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <valueName>SoMe</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
-            <valueName>Bank Payment</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
-            <valueName>Groups</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
-            <valueName>HQ Expert</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
-            <valueName>KANA US</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
-            <valueName>STOPY</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
-            <valueName>TAWEB</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>

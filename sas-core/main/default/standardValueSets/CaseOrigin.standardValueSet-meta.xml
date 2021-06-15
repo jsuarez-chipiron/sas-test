@@ -487,6 +487,11 @@
         <label>Form - Refund Forsvaret</label>
     </standardValue>
     <standardValue>
+        <fullName>Form - Refund SC Under 180 Minutes</fullName>
+        <default>false</default>
+        <label>Form - Refund SC Under 180 Minutes</label>
+    </standardValue>
+    <standardValue>
         <fullName>Form - Refund Travel Agent</fullName>
         <default>false</default>
         <label>Form - Refund Travel Agent</label>

@@ -15,6 +15,11 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
+                <fullName>Accept</fullName>
+                <default>false</default>
+                <label>Accept</label>
+            </value>
+            <value>
                 <fullName>Access rights</fullName>
                 <default>false</default>
                 <label>Access rights</label>
@@ -1238,6 +1243,11 @@
                 <fullName>Reissue</fullName>
                 <default>false</default>
                 <label>Reissue</label>
+            </value>
+            <value>
+                <fullName>Reject</fullName>
+                <default>false</default>
+                <label>Reject</label>
             </value>
             <value>
                 <fullName>Releases</fullName>
@@ -2934,6 +2944,14 @@
         <valueSettings>
             <controllingFieldValue>Wrongly refunded</controllingFieldValue>
             <valueName>Partial</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
+            <valueName>Accept</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
+            <valueName>Reject</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Digital support</controllingFieldValue>
