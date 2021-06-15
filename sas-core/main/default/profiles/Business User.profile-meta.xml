@@ -91,11 +91,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Booking__c.TEDS_Identifier__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Booking__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -119,19 +114,9 @@
         <field>Flight__c.Scheduled_Departure_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
-        <editable>false</editable>
-        <field>Flight__c.TEDS_Identifier__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Passenger__c.Account__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Passenger__c.Booking__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -157,11 +142,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Passenger__c.Phone__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Segment__c.Booking__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -869,13 +849,13 @@
         <field>User.FCS_CustomChatName__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    </layoutAssignments>
+    <layoutAssignments>
         <layout>Booking__c-Booking Layout</layout>
     </layoutAssignments>
-    </layoutAssignments>
+    <layoutAssignments>
         <layout>CaseToBooking__c-CaseToBooking Layout</layout>
     </layoutAssignments>
-    </layoutAssignments>
+    <layoutAssignments>
         <layout>Flight__c-Flight Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -884,7 +864,7 @@
     <layoutAssignments>
         <layout>Segment__c-Segment Layout</layout>
     </layoutAssignments>
-   <layoutAssignments>
+    <layoutAssignments>
         <layout>Account-B2B - Customer</layout>
         <recordType>Account.Business</recordType>
     </layoutAssignments>    
@@ -901,11 +881,11 @@
     <layoutAssignments>
         <layout>C_Log__c-Log Layout</layout>
     </layoutAssignments>
-     <layoutAssignments>
+    <layoutAssignments>
         <layout>Case-SAS Claim Layout</layout>
         <recordType>Case.Claim</recordType>
     </layoutAssignments>
-	 <layoutAssignments>
+	<layoutAssignments>
         <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Chat</recordType>
     </layoutAssignments>
@@ -921,7 +901,7 @@
         <layout>Case-SAS Internal%2FBackoffice Layout</layout>
         <recordType>Case.Internal_Backoffice</recordType>
     </layoutAssignments>
-        <layoutAssignments>
+    <layoutAssignments>
         <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Channel</recordType>
     </layoutAssignments>

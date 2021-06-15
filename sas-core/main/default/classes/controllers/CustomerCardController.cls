@@ -5,6 +5,9 @@ public without sharing class CustomerCardController {
   static BookingsSelector bookings = (BookingsSelector) SAS_Service_Application.Selector.newInstance(
     Booking__c.SObjectType
   );
+  static CasesSelector cases = (CasesSelector) SAS_Service_Application.Selector.newInstance(
+    Case.SObjectType
+  );
 
   @AuraEnabled
   public static List<Booking__c> addBookingToCase(
@@ -45,8 +48,18 @@ public without sharing class CustomerCardController {
   }
 
   @AuraEnabled(cacheable=true)
-  public static List<Account> getFullAccountDataForEBNumber(String euroBonusNumber) {
-    return accounts.selectByEuroBonusNumberFull(new Set<String>{ euroBonusNumber });
+  public static List<Account> getAccountData(String accountId) {
+    return accounts.selectById(new Set<Id>{ accountId });
+  }
+
+  @AuraEnabled(cacheable=true)
+  public static List<Booking__c> getBookingData(String accountId) {
+    return bookings.selectByAccountId(new Set<Id>{ accountId });
+  }
+
+  @AuraEnabled(cacheable=true)
+  public static List<Case> getCaseData(String accountId) {
+    return cases.selectByAccountId(new Set<Id>{ accountId });
   }
 }
 

@@ -9,12 +9,9 @@
  *   https://sas-digital.atlassian.net/wiki/spaces/CSSolutions/pages/2342289428/Planned%2BTEDS%2BAPI
  */
 public with sharing class TEDSIntegrationService {
-  private static final String SUBSCRIPTION_KEY = [
-    SELECT Value__c
-    FROM C_GeneralSetting__mdt
-    WHERE DeveloperName = 'APIM_Subscription_Key'
-  ][0]
-  .Value__c;
+  private static final String SUBSCRIPTION_KEY = Test.isRunningTest()
+    ? 'TESTKEY'
+    : C_Settings.getSettings('APIM').get('APIM_Subscription_Key');
 
   /** TODO: Implement me
    *

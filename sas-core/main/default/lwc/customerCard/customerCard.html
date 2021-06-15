@@ -1,5 +1,5 @@
 <template>
-    <lightning-card title="Retrieve Customer" if:false={customerIdentified}>
+    <lightning-card title="Retrieve Customer" if:false={account}>
         <div class="slds-grid slds-gutters slds-grid_vertical-align-end slds-p-left_small">
             <!--Component that displays buttons where the user can choose a value to search for, e.g. EuroBonus. 
                 Dynimically rendered based on property.-->
@@ -36,22 +36,29 @@
         </div>
     </lightning-card>
 
-    <lightning-card title={customerName} if:true={customerIdentified}>
-        <div class="slds-tabs_default">
-            <ul class="slds-tabs_default__nav" role="tablist">
-            <li class="slds-tabs_default__item slds-is-active" title="Cases" role="presentation">
-                <a class="slds-tabs_default__link" href="#" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item">Item One</a>
-            </li>
-            <li class="slds-tabs_default__item" title="Bookings" role="presentation">
-                <a class="slds-tabs_default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id="tab-default-2__item">Item Two</a>
-            </li>
-            <li class="slds-tabs_default__item" title="Communication log" role="presentation">
-                <a class="slds-tabs_default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" id="tab-default-3__item">Item Three</a>
-            </li>
-            </ul>
-            <div id="tab-default-1" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">Item One Content</div>
-            <div id="tab-default-2" class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-2__item">Item Two Content</div>
-            <div id="tab-default-3" class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-3__item">Item Three Content</div>
+    <lightning-card if:true={account} title={accountName}>
+        <div class="slds-card__body slds-card__body_inner">
+            <lightning-tabset>
+                <lightning-tab label="Cases">
+                    <ul class="slds-has-dividers_bottom-space">
+                        <template for:each={cases} for:item="c">
+                            <li key={c.CaseNumber}>
+                                <strong>Case <a href={c.recordUrl}>{c.CaseNumber}</a>,</strong> {c.CreatedDate}, {c.StatusOrReason}
+                            </li>
+                        </template>
+                    </ul>
+                </lightning-tab>
+                <lightning-tab label="Bookings">
+                    Hello, world!
+                    <ul class="slds-has-dividers_bottom-space">
+                        <template for:each={bookings} for:item="b">
+                            <li key={c.CaseNumber}>
+                                <strong>Booking {b.bookingReference__c}</strong>
+                            </li>
+                        </template>
+                    </ul>
+                </lightning-tab>
+            </lightning-tabset>
         </div>
     </lightning-card>
 </template>

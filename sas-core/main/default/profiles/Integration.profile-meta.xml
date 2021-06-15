@@ -1217,11 +1217,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Booking__c.TEDS_Identifier__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Booking__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1245,19 +1240,9 @@
         <field>Flight__c.Scheduled_Departure_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
-        <editable>false</editable>
-        <field>Flight__c.TEDS_Identifier__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Passenger__c.Account__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Passenger__c.Booking__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1283,11 +1268,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Passenger__c.Phone__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Segment__c.Booking__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2990,13 +2970,13 @@
         <field>User.FCS_VirtualOrganization__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    </layoutAssignments>
+    <layoutAssignments>
         <layout>Booking__c-Booking Layout</layout>
     </layoutAssignments>
-    </layoutAssignments>
+    <layoutAssignments>
         <layout>CaseToBooking__c-CaseToBooking Layout</layout>
     </layoutAssignments>
-    </layoutAssignments>
+    <layoutAssignments>
         <layout>Flight__c-Flight Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
