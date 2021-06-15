@@ -311,6 +311,11 @@
                 <label>OC Reserved Amount</label>
             </value>
             <value>
+                <fullName>OC SC Under 180 Minutes</fullName>
+                <default>false</default>
+                <label>OC SC Under 180 Minutes</label>
+            </value>
+            <value>
                 <fullName>OC Travel Agent</fullName>
                 <default>false</default>
                 <label>OC Travel Agent</label>

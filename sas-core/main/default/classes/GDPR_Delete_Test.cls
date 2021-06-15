@@ -390,12 +390,12 @@ Tests deletion of Communication Logs
         IRR_SMSResponse__c s2 = new IRR_SMSResponse__c(IRR_CommunicationLog__c = c2.Id);
         insert s2;
         DateTime dtLastWeek = DateTime.now();
-        dtLastWeek = dtLastWeek.addDays(-61);
+        dtLastWeek = dtLastWeek.addDays(-1097);
         Test.setCreatedDate(c2.Id, dtLastWeek);
         
         Test.startTest();
         C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('DeletePeriodCommunucationLog','-1');
+        sg.set('DeletePeriodCommunucationLog','-1096');
         Database.executeBatch(new GDPR_DeleteCommunicationLog_Batch());
         Test.stopTest();
         IRR_CommunicationLog__c[] comlogList = [SELECT Id, IRR_ContactKey__c, CreatedDate FROM IRR_CommunicationLog__c];
