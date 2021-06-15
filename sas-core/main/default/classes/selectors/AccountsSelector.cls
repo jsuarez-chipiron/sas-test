@@ -57,8 +57,4 @@ public inherited sharing class AccountsSelector extends fflib_SObjectSelector {
 
     return (List<Account>) Database.query(accountsQF.toSOQL());
   }
-
-  public override String getOrderBy() {
-    return 'Name';
-  }
 }
