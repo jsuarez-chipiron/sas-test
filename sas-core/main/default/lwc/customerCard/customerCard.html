@@ -18,7 +18,6 @@
                 </lightning-button>
             </div>
         </div>
-
         <!--Spinner graphics dynamically rendered, controlled by JS-->
         <div if:true={showSpinner}>
             <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
@@ -52,8 +51,8 @@
                     Hello, world!
                     <ul class="slds-has-dividers_bottom-space">
                         <template for:each={bookings} for:item="b">
-                            <li key={c.CaseNumber}>
-                                <strong>Booking {b.bookingReference__c}</strong>
+                            <li key={b.bookingReference__c}>
+                                <strong>Booking {b.Booking_Reference__c}</strong>
                             </li>
                         </template>
                     </ul>

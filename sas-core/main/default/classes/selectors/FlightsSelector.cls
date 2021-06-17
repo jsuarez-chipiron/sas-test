@@ -19,13 +19,13 @@ public inherited sharing class FlightsSelector extends fflib_SObjectSelector {
     return (List<Flight__c>) selectSObjectsById(ids);
   }
 
-  public List<Flight__c> selectByFlightId(Set<String> flightIds) {
+  public List<Flight__c> selectByTEDSId(Set<String> flightIds) {
     return (List<Flight__c>) Database.query(
-      newQueryFactory().setCondition('Name = :flightIds').toSOQL()
+      newQueryFactory().setCondition('TEDS_Identifier__c = :flightIds').toSOQL()
     );
   }
 
   public override String getOrderBy() {
-    return 'Name';
+    return 'TEDS_Identifier__c';
   }
 }

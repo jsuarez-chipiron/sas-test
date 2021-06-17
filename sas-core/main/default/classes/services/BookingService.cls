@@ -139,7 +139,6 @@ public with sharing class BookingService {
     List<IRR_MOD_TedsBooking> bookingData,
     fflib_ISObjectUnitOfWork uow
   ) {
-    // TODO: Handle upserts correctly.
     FlightsSelector flights = (FlightsSelector) SAS_Service_Application.Selector.newInstance(
       Flight__c.SObjectType
     );
@@ -160,7 +159,7 @@ public with sharing class BookingService {
       bookingIds.add(booking.id);
     }
 
-    List<Flight__c> flightsFromDB = flights.selectByFlightId(flightsInBookings);
+    List<Flight__c> flightsFromDB = flights.selectByTEDSId(flightsInBookings);
     List<Booking__c> bookingsFromDB = bookings.selectByTEDSIdFull(bookingIds);
 
     Map<String, Flight__c> flightsAlreadyInSF = new Map<String, Flight__c>();
@@ -174,9 +173,11 @@ public with sharing class BookingService {
     }
 
     List<Booking__c> bookingsToReturn = new List<Booking__c>();
+    Map<String, Flight__c> flightsProcessed = new Map<String, Flight__c>();
+
     // Loop through each booking and create all sub objects.
     for (IRR_MOD_TedsBooking booking : bookingData) {
-      // TODO: Handle update vs insert
+      List<Passenger__c> passengersCreated = new List<Passenger__c>();
       Booking__c bookingToUpsert = bookingsAlreadyInSF.get(booking.id);
       Boolean isNew = true;
       if (bookingToUpsert == null) {
@@ -197,56 +198,49 @@ public with sharing class BookingService {
 
       bookingsToReturn.add(bookingToUpsert);
 
-      for (IRR_MOD_TedsBooking.Passenger p : booking.passengers) {
-        if (isNew) {
-          // TODO: Handle update vs insert
-          Passenger__c newPassenger = new Passenger__c(
-            Booking__c = bookingToUpsert.id,
-            First_Name__c = p.firstName,
-            Last_Name__c = p.lastName
-          );
-          if (p.frequentTraveler.euroBonus.size() > 0) {
-            newPassenger.EuroBonus_Number__c = p.frequentTraveler.euroBonus[0]
-              .number_x;
-          }
-          uow.registerNew(newPassenger);
-          uow.registerRelationship(
-            newPassenger,
-            Passenger__c.Booking__c,
-            bookingToUpsert
-          );
-        } else {
-          for (Passenger__c existingPassenger : bookingToUpsert.Passengers__r) {
-            if (existingPassenger.Identifier__c == p.id) {
-              existingPassenger.First_Name__c = p.firstName;
-              existingPassenger.Last_Name__c = p.lastName;
-
-              if (p.frequentTraveler.euroBonus.size() > 0) {
-                existingPassenger.EuroBonus_Number__c = p.frequentTraveler.euroBonus[0]
-                  .number_x;
-              } else {
-                existingPassenger.EuroBonus_Number__c = '';
-              }
-            }
-          }
+      // Remove all existing passengers and segments for existing bookings. Reliable updating is impossible.
+      if (!isNew) {
+        for (Passenger__c existingPassenger : bookingToUpsert.Passengers__r) {
+          uow.registerDeleted(existingPassenger);
         }
+
+        for (Segment__c existingSegment : bookingToUpsert.Segments__r) {
+          uow.registerDeleted(existingSegment);
+        }
+      }
+
+      // Create passengers
+      for (IRR_MOD_TedsBooking.Passenger p : booking.passengers) {
+        Passenger__c newPassenger = new Passenger__c(
+          Booking__c = bookingToUpsert.id,
+          First_Name__c = p.firstName,
+          Identifier__c = p.id,
+          Last_Name__c = p.lastName
+        );
+
+        if (p.frequentTraveler.euroBonus.size() > 0) {
+          newPassenger.EuroBonus_Number__c = p.frequentTraveler.euroBonus[0]
+            .number_x;
+        }
+
+        passengersCreated.add(newPassenger);
+        uow.registerNew(newPassenger);
+        uow.registerRelationship(
+          newPassenger,
+          Passenger__c.Booking__c,
+          bookingToUpsert
+        );
       }
 
       // Loop through all segments in the trip and create segment and flight objects as necessary
       for (IRR_MOD_TedsBooking.Trip trip : booking.trips) {
         for (IRR_MOD_TedsBooking.SegmentTrip segmentTrip : trip.segments) {
-          // TODO: Handle update vs insert
-          Segment__c newSegment = new Segment__c(Name = segmentTrip.flight.id);
-          uow.registerNew(newSegment);
-          uow.registerRelationship(
-            newSegment,
-            Segment__c.Booking__c,
-            bookingToUpsert
-          );
 
-          Flight__c flight = flightsAlreadyInSF.get(segmentTrip.flight.id);
+          // Create flights
+          Boolean flightNotYetProcessed =
+            flightsProcessed.get(segmentTrip.flight.id) == null;
 
-          if (flight != null) {
+          if (flightNotYetProcessed) {
             Datetime arrivalDate = Datetime.valueOf(
               segmentTrip.flight.arrival.scheduledTime.local.replace('T', ' ')
                 .replace('Z', '')
@@ -256,35 +250,100 @@ public with sharing class BookingService {
                 .replace('Z', '')
             );
 
-            flight.Arrival_Airport__c = segmentTrip.flight.arrival.station;
-            flight.Departure_Airport__c = segmentTrip.flight.departure.station;
-            flight.Scheduled_Arrival_Time__c = arrivalDate;
-            flight.Scheduled_Departure_Time__c = departureDate;
-            uow.registerDirty(flight);
-            uow.registerRelationship(newSegment, Segment__c.Flight__c, flight);
-          } else {
-            Datetime arrivalDate = Datetime.valueOf(
-              segmentTrip.flight.arrival.scheduledTime.local.replace('T', ' ')
-                .replace('Z', '')
-            );
-            Datetime departureDate = Datetime.valueOf(
-              segmentTrip.flight.departure.scheduledTime.local.replace('T', ' ')
-                .replace('Z', '')
-            );
+            Flight__c flight = flightsAlreadyInSF.get(segmentTrip.flight.id);
 
-            Flight__c newFlight = new Flight__c(
+            if (flight != null) {
+              flight.Arrival_Airport__c = segmentTrip.flight.arrival.station;
+              flight.Departure_Airport__c = segmentTrip.flight.departure.station;
+              flight.Scheduled_Arrival_Time__c = arrivalDate;
+              flight.Scheduled_Departure_Time__c = departureDate;
+
+              flightsProcessed.put(segmentTrip.flight.id, flight);
+              uow.registerDirty(flight);
+            } else {
+              Flight__c newFlight = new Flight__c(
+                Name = segmentTrip.flight.id,
+                Arrival_Airport__c = segmentTrip.flight.arrival.station,
+                Departure_Airport__c = segmentTrip.flight.departure.station,
+                Scheduled_Arrival_Time__c = arrivalDate,
+                Scheduled_Departure_Time__c = departureDate,
+                TEDS_Identifier__c = segmentTrip.flight.id
+              );
+
+              flightsProcessed.put(segmentTrip.flight.id, newFlight);
+              uow.registerNew(newFlight);
+            }
+          }
+
+          // Create one segment per passenger per flight in the booking.
+          // TODO: Let's see if this works or if we get too much data.
+          for (Passenger__c p : passengersCreated) {
+            IRR_MOD_TedsBooking.Passenger passengerData;
+            IRR_MOD_TedsBooking.Segment segmentPassenger;
+            String ssrs = '';
+
+            for (IRR_MOD_TedsBooking.Passenger pData : booking.passengers) {
+              if (pData != null && pData.id == p.Identifier__c) {
+                passengerData = pData;
+                break;
+              }
+            }
+            for (IRR_MOD_TedsBooking.Segment pSeg : passengerData.segments) {
+              if (pSeg.segmentId == segmentTrip.id) {
+                segmentPassenger = pSeg;
+                break;
+              }
+            }
+
+            for (
+              IRR_MOD_TedsBooking.SpecialServiceRequests ssr : passengerData.specialServiceRequests
+            ) {
+              for (String segId : ssr.segmentIds) {
+                if (segId == segmentTrip.id) {
+                  ssrs += ssrs.length() > 0 ? ',' + ssr.code : ssr.code;
+                  break;
+                }
+              }
+            }
+
+            Integer baggage = (segmentPassenger.baggage != null) &&
+              (segmentPassenger.baggage.quantity != null)
+              ? segmentPassenger.baggage.quantity.allowed +
+                segmentPassenger.baggage.quantity.extra
+              : 0;
+
+            Segment__c newSegment = new Segment__c(
+              Baggage_Quantity__c = baggage,
+              Booking_Class__c = segmentTrip.bookingClass,
+              Check_In_Status__c = segmentPassenger.checkin == null
+                ? 'Unknown'
+                : segmentPassenger.checkin.status,
+              Fare_Basis__c = segmentPassenger.fare == null
+                ? ''
+                : segmentPassenger.fare.basis,
+              Identifier__c = segmentTrip.id + p.Identifier__c,
+              Is_Boarded__c = segmentPassenger.isBoarded,
               Name = segmentTrip.flight.id,
-              Arrival_Airport__c = segmentTrip.flight.arrival.station,
-              Departure_Airport__c = segmentTrip.flight.departure.station,
-              Scheduled_Arrival_Time__c = arrivalDate,
-              Scheduled_Departure_Time__c = departureDate,
-              TEDS_Identifier__c = segmentTrip.flight.id
+              Seat__c = segmentPassenger.seat,
+              Service_Class__c = segmentTrip.serviceClass,
+              Special_Service_Requests__c = ssrs,
+              Ticket_Number__c = segmentPassenger.ticket == null
+                ? ''
+                : segmentPassenger.ticket.number_x,
+              Ticket_Type__c = segmentPassenger.ticket == null
+                ? ''
+                : segmentPassenger.ticket.type
             );
-            uow.registerNew(newFlight);
+            uow.registerNew(newSegment);
+            uow.registerRelationship(
+              newSegment,
+              Segment__c.Booking__c,
+              bookingToUpsert
+            );
             uow.registerRelationship(
               newSegment,
               Segment__c.Flight__c,
-              newFlight
+              flightsProcessed.get(segmentTrip.flight.id)
             );
           }
         }
