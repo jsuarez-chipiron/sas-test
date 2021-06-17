@@ -174,10 +174,10 @@ public with sharing class BookingService {
 
     List<Booking__c> bookingsToReturn = new List<Booking__c>();
     Map<String, Flight__c> flightsProcessed = new Map<String, Flight__c>();
-    List<Passenger__c> passengersCreated = new List<Passenger__c>();
 
     // Loop through each booking and create all sub objects.
     for (IRR_MOD_TedsBooking booking : bookingData) {
+      List<Passenger__c> passengersCreated = new List<Passenger__c>();
       Booking__c bookingToUpsert = bookingsAlreadyInSF.get(booking.id);
       Boolean isNew = true;
       if (bookingToUpsert == null) {
@@ -235,8 +235,8 @@ public with sharing class BookingService {
       // Loop through all segments in the trip and create segment and flight objects as necessary
       for (IRR_MOD_TedsBooking.Trip trip : booking.trips) {
         for (IRR_MOD_TedsBooking.SegmentTrip segmentTrip : trip.segments) {
-          // Create flights
 
+          // Create flights
           Boolean flightNotYetProcessed =
             flightsProcessed.get(segmentTrip.flight.id) == null;
 
@@ -278,9 +278,61 @@ public with sharing class BookingService {
           // Create one segment per passenger per flight in the booking.
           // TODO: Let's see if this works or if we get too much data.
           for (Passenger__c p : passengersCreated) {
+            IRR_MOD_TedsBooking.Passenger passengerData;
+            IRR_MOD_TedsBooking.Segment segmentPassenger;
+            String ssrs = '';
+
+            for (IRR_MOD_TedsBooking.Passenger pData : booking.passengers) {
+              if (pData != null && pData.id == p.Identifier__c) {
+                passengerData = pData;
+                break;
+              }
+            }
+            for (IRR_MOD_TedsBooking.Segment pSeg : passengerData.segments) {
+              if (pSeg.segmentId == segmentTrip.id) {
+                segmentPassenger = pSeg;
+                break;
+              }
+            }
+
+            for (
+              IRR_MOD_TedsBooking.SpecialServiceRequests ssr : passengerData.specialServiceRequests
+            ) {
+              for (String segId : ssr.segmentIds) {
+                if (segId == segmentTrip.id) {
+                  ssrs += ssrs.length() > 0 ? ',' + ssr.code : ssr.code;
+                  break;
+                }
+              }
+            }
+
+            Integer baggage = (segmentPassenger.baggage != null) &&
+              (segmentPassenger.baggage.quantity != null)
+              ? segmentPassenger.baggage.quantity.allowed +
+                segmentPassenger.baggage.quantity.extra
+              : 0;
+
             Segment__c newSegment = new Segment__c(
+              Baggage_Quantity__c = baggage,
+              Booking_Class__c = segmentTrip.bookingClass,
+              Check_In_Status__c = segmentPassenger.checkin == null
+                ? 'Unknown'
+                : segmentPassenger.checkin.status,
+              Fare_Basis__c = segmentPassenger.fare == null
+                ? ''
+                : segmentPassenger.fare.basis,
               Identifier__c = segmentTrip.id + p.Identifier__c,
-              Name = segmentTrip.flight.id
+              Is_Boarded__c = segmentPassenger.isBoarded,
+              Name = segmentTrip.flight.id,
+              Seat__c = segmentPassenger.seat,
+              Service_Class__c = segmentTrip.serviceClass,
+              Special_Service_Requests__c = ssrs,
+              Ticket_Number__c = segmentPassenger.ticket == null
+                ? ''
+                : segmentPassenger.ticket.number_x,
+              Ticket_Type__c = segmentPassenger.ticket == null
+                ? ''
+                : segmentPassenger.ticket.type
             );
             uow.registerNew(newSegment);
             uow.registerRelationship(
