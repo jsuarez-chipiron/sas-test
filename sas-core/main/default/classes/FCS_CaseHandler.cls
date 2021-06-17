@@ -70,6 +70,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     manageCaseTagRecords(newCaseList, newCaseMap);
     updateSocialPost(newCaseList);
     assignEurobonusAccountToCase(newCaseList);
+    updateBookingsForNewAssociatedAccounts(newCaseList);
   }
 
   /**
@@ -77,6 +78,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     */
   public override void afterUpdate() {
     manageCaseTagRecords(newCaseList, newCaseMap);
+    updateBookingsForNewAssociatedAccounts(newCaseList, oldCaseList);
   }
 
   /**
@@ -154,7 +156,11 @@ public class FCS_CaseHandler extends C_TriggerHandler {
         // for refunds requests purely based on case origin, so we have this.
         // TODO: Get rid of this special case and somehow manage these normally.
 
-        if (!String.isEmpty(c.Team__c) && c.Team__c.startsWith('BOM') && refundsEntitlement != null) {
+        if (
+          !String.isEmpty(c.Team__c) &&
+          c.Team__c.startsWith('BOM') &&
+          refundsEntitlement != null
+        ) {
           c.EntitlementId = refundsEntitlement.Id;
         }
       }
@@ -750,6 +756,35 @@ public class FCS_CaseHandler extends C_TriggerHandler {
       }
       if (!lstUpdateCases.isEmpty()) {
         update lstUpdateCases;
+      }
+    }
+  }
+
+  private void updateBookingsForNewAssociatedAccounts(List<Case> newCases) {
+    updateBookingsForNewAssociatedAccounts(newCases, null);
+  }
+
+  /**
+   * Fetches bookings for an account that was added to a case if only one was added.
+   * (Works only for one as the current TEDS doesn't support fetching multiple ones.)
+   * TODO: Batchify when we can get multiple bookings from TEDS.
+   */
+  private void updateBookingsForNewAssociatedAccounts(
+    List<Case> newCases,
+    List<Case> oldCases
+  ) {
+    if (newCases.size() == 1) {
+      Case c = newCases[0];
+      if (c.AccountId != null) {
+        if (oldCases == null || (c.AccountId != oldCases[0].AccountId)) {
+          AccountsSelector accounts = (AccountsSelector) SAS_Service_Application.Selector.newInstance(
+            Account.SObjectType
+          );
+          Account a = accounts.selectById(new Set<Id>{ c.AccountId })[0];
+          if (a.FCS_EBNumber__c != null && a.FCS_EBNumber__c.length() > 0) {
+            BookingService.fetchBookingsByEBNumber(a.FCS_EBNumber__c);
+          }
+        }
       }
     }
   }
