@@ -11,7 +11,7 @@
 public with sharing class TEDSIntegrationService {
   private static final String SUBSCRIPTION_KEY = Test.isRunningTest()
     ? 'TESTKEY'
-    : C_Settings.getSettings('APIM').get('APIM_Subscription_Key');
+    : C_Settings.getSettings('APIM').get('APIM_TEDS_Subscription_Key');
 
   /** TODO: Implement me
    *
@@ -108,7 +108,7 @@ public with sharing class TEDSIntegrationService {
       }
     }
 
-    request.setEndpoint('callout:SAS_APIM_TEDS' + path);
+    request.setEndpoint('callout:SAS_APIM_TEDS_FCS' + path);
     request.setMethod(method);
 
     request.setHeader('api-version', 'v2');
