@@ -139,7 +139,6 @@ public with sharing class BookingService {
     List<IRR_MOD_TedsBooking> bookingData,
     fflib_ISObjectUnitOfWork uow
   ) {
-    // TODO: Handle upserts correctly.
     FlightsSelector flights = (FlightsSelector) SAS_Service_Application.Selector.newInstance(
       Flight__c.SObjectType
     );
@@ -160,7 +159,7 @@ public with sharing class BookingService {
       bookingIds.add(booking.id);
     }
 
-    List<Flight__c> flightsFromDB = flights.selectByFlightId(flightsInBookings);
+    List<Flight__c> flightsFromDB = flights.selectByTEDSId(flightsInBookings);
     List<Booking__c> bookingsFromDB = bookings.selectByTEDSIdFull(bookingIds);
 
     Map<String, Flight__c> flightsAlreadyInSF = new Map<String, Flight__c>();
@@ -174,9 +173,9 @@ public with sharing class BookingService {
     }
 
     List<Booking__c> bookingsToReturn = new List<Booking__c>();
+    Map<String, Flight__c> flightsCreated = new Map<String, Flight__c>();
     // Loop through each booking and create all sub objects.
     for (IRR_MOD_TedsBooking booking : bookingData) {
-      // TODO: Handle update vs insert
       Booking__c bookingToUpsert = bookingsAlreadyInSF.get(booking.id);
       Boolean isNew = true;
       if (bookingToUpsert == null) {
@@ -197,12 +196,13 @@ public with sharing class BookingService {
 
       bookingsToReturn.add(bookingToUpsert);
 
-      for (IRR_MOD_TedsBooking.Passenger p : booking.passengers) {
-        if (isNew) {
-          // TODO: Handle update vs insert
+      // Create passengers
+      if (isNew) {
+        for (IRR_MOD_TedsBooking.Passenger p : booking.passengers) {
           Passenger__c newPassenger = new Passenger__c(
             Booking__c = bookingToUpsert.id,
             First_Name__c = p.firstName,
+            Identifier__c = p.id,
             Last_Name__c = p.lastName
           );
           if (p.frequentTraveler.euroBonus.size() > 0) {
@@ -215,8 +215,11 @@ public with sharing class BookingService {
             Passenger__c.Booking__c,
             bookingToUpsert
           );
-        } else {
-          for (Passenger__c existingPassenger : bookingToUpsert.Passengers__r) {
+        }
+      } else {
+        for (Passenger__c existingPassenger : bookingToUpsert.Passengers__r) {
+          Boolean foundInNewBooking = false;
+          for (IRR_MOD_TedsBooking.Passenger p : booking.passengers) {
             if (existingPassenger.Identifier__c == p.id) {
               existingPassenger.First_Name__c = p.firstName;
               existingPassenger.Last_Name__c = p.lastName;
@@ -227,16 +230,31 @@ public with sharing class BookingService {
               } else {
                 existingPassenger.EuroBonus_Number__c = '';
               }
+
+              uow.registerDirty(existingPassenger);
             }
           }
+          if (!foundInNewBooking) {
+            uow.registerDeleted(existingPassenger);
+          }
+        }
+      }
+
+      if (!isNew) {
+        for (Segment__c existingSegment : bookingToUpsert.Segments__r) {
+          uow.registerDeleted(existingSegment);
         }
       }
 
       // Loop through all segments in the trip and create segment and flight objects as necessary
       for (IRR_MOD_TedsBooking.Trip trip : booking.trips) {
         for (IRR_MOD_TedsBooking.SegmentTrip segmentTrip : trip.segments) {
-          // TODO: Handle update vs insert
-          Segment__c newSegment = new Segment__c(Name = segmentTrip.flight.id);
+          // Create segments
+          // TODO: FIXME: Create segment per passenger flight.
+          Segment__c newSegment = new Segment__c(
+            Identifier__c = segmentTrip.id,
+            Name = segmentTrip.flight.id
+          );
           uow.registerNew(newSegment);
           uow.registerRelationship(
             newSegment,
@@ -244,6 +262,7 @@ public with sharing class BookingService {
             bookingToUpsert
           );
 
+          // Create flights
           Flight__c flight = flightsAlreadyInSF.get(segmentTrip.flight.id);
 
           if (flight != null) {
@@ -260,9 +279,10 @@ public with sharing class BookingService {
             flight.Departure_Airport__c = segmentTrip.flight.departure.station;
             flight.Scheduled_Arrival_Time__c = arrivalDate;
             flight.Scheduled_Departure_Time__c = departureDate;
+
             uow.registerDirty(flight);
             uow.registerRelationship(newSegment, Segment__c.Flight__c, flight);
-          } else {
+          } else if (flightsCreated.get(segmentTrip.flight.id) == null) {
             Datetime arrivalDate = Datetime.valueOf(
               segmentTrip.flight.arrival.scheduledTime.local.replace('T', ' ')
                 .replace('Z', '')
@@ -280,11 +300,20 @@ public with sharing class BookingService {
               Scheduled_Departure_Time__c = departureDate,
               TEDS_Identifier__c = segmentTrip.flight.id
             );
+
+            flightsCreated.put(segmentTrip.flight.id, newFlight);
+
             uow.registerNew(newFlight);
             uow.registerRelationship(
               newSegment,
               Segment__c.Flight__c,
               newFlight
+            );
+          } else {
+            uow.registerRelationship(
+              newSegment,
+              Segment__c.Flight__c,
+              flightsCreated.get(segmentTrip.flight.id)
             );
           }
         }
