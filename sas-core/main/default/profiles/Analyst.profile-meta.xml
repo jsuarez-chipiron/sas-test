@@ -554,6 +554,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Passenger__c.Identifier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Passenger__c.Last_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
