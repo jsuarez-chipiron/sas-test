@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Business</fullName>
     <active>true</active>
-    <compactLayoutAssignment>SAS_Account</compactLayoutAssignment>
+    <compactLayoutAssignment>SAS_Account_Layout</compactLayoutAssignment>
     <description>Companies that are customers of SAS</description>
     <label>B2B - Customer</label>
     <picklistValues>
