@@ -457,6 +457,11 @@
         <label>Email - Star Alliance Upgrades</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Sykes Customer Care</fullName>
+        <default>false</default>
+        <label>Email - Sykes Customer Care</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - System &amp; Tariff</fullName>
         <default>false</default>
         <label>Email - System &amp; Tariff</label>

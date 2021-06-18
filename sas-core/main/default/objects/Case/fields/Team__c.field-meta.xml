@@ -301,6 +301,11 @@
                 <label>OC Bank Transfer</label>
             </value>
             <value>
+                <fullName>OC Customer Care</fullName>
+                <default>false</default>
+                <label>OC Customer Care</label>
+            </value>
+            <value>
                 <fullName>OC Error Handling</fullName>
                 <default>false</default>
                 <label>OC Error Handling</label>
@@ -309,6 +314,11 @@
                 <fullName>OC General</fullName>
                 <default>false</default>
                 <label>OC General</label>
+            </value>
+            <value>
+                <fullName>OC Gift Card</fullName>
+                <default>false</default>
+                <label>OC Gift Card</label>
             </value>
             <value>
                 <fullName>OC Groups Europe</fullName>
@@ -476,6 +486,16 @@
                 <label>STOPY</label>
             </value>
             <value>
+                <fullName>Sykes Customer Care</fullName>
+                <default>false</default>
+                <label>Sykes Customer Care</label>
+            </value>
+            <value>
+                <fullName>Sykes Voucher</fullName>
+                <default>false</default>
+                <label>Sykes Voucher</label>
+            </value>
+            <value>
                 <fullName>System &amp; Tariff</fullName>
                 <default>false</default>
                 <label>System &amp; Tariff</label>
@@ -567,11 +587,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC Customer Care</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>OC Error Handling</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>OC General</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC Gift Card</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
@@ -600,6 +628,14 @@
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>OC Waivers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>Sykes Customer Care</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>Sykes Voucher</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds OC KANA</controllingFieldValue>

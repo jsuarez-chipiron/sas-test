@@ -415,6 +415,11 @@
                 <label>GAC Give Away Card</label>
             </value>
             <value>
+                <fullName>Gift Card</fullName>
+                <default>false</default>
+                <label>Gift Card</label>
+            </value>
+            <value>
                 <fullName>Group booking</fullName>
                 <default>false</default>
                 <label>Group booking</label>
@@ -1176,6 +1181,10 @@
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>
             <valueName>Error Handling</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>Gift Card</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>

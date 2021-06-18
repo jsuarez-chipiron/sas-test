@@ -15,6 +15,11 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
+                <fullName>14 Day Money Back</fullName>
+                <default>false</default>
+                <label>14 Day Money Back</label>
+            </value>
+            <value>
                 <fullName>Accept</fullName>
                 <default>false</default>
                 <label>Accept</label>
@@ -348,6 +353,11 @@
                 <fullName>CBBG</fullName>
                 <default>false</default>
                 <label>CBBG</label>
+            </value>
+            <value>
+                <fullName>Changed Email</fullName>
+                <default>false</default>
+                <label>Changed Email</label>
             </value>
             <value>
                 <fullName>Change of email</fullName>
@@ -970,6 +980,11 @@
                 <label>Missing points</label>
             </value>
             <value>
+                <fullName>MMB Refund Process</fullName>
+                <default>false</default>
+                <label>MMB Refund Process</label>
+            </value>
+            <value>
                 <fullName>Multiple FOP</fullName>
                 <default>false</default>
                 <label>Multiple FOP</label>
@@ -1040,6 +1055,11 @@
                 <label>No sale</label>
             </value>
             <value>
+                <fullName>Not Received - Resend</fullName>
+                <default>false</default>
+                <label>Not Received - Resend</label>
+            </value>
+            <value>
                 <fullName>Onboard</fullName>
                 <default>false</default>
                 <label>Onboard</label>
@@ -1048,6 +1068,11 @@
                 <fullName>On corporate account</fullName>
                 <default>false</default>
                 <label>On corporate account</label>
+            </value>
+            <value>
+                <fullName>Online Email</fullName>
+                <default>false</default>
+                <label>Online Email</label>
             </value>
             <value>
                 <fullName>Opening hours</fullName>
@@ -1083,6 +1108,11 @@
                 <fullName>Partial</fullName>
                 <default>false</default>
                 <label>Partial</label>
+            </value>
+            <value>
+                <fullName>Past Date PNR</fullName>
+                <default>false</default>
+                <label>Past Date PNR</label>
             </value>
             <value>
                 <fullName>Payment</fullName>
@@ -1268,6 +1298,11 @@
                 <fullName>Reprotection</fullName>
                 <default>false</default>
                 <label>Reprotection</label>
+            </value>
+            <value>
+                <fullName>Reserved Amount</fullName>
+                <default>false</default>
+                <label>Reserved Amount</label>
             </value>
             <value>
                 <fullName>Reset of password</fullName>
@@ -1548,6 +1583,11 @@
                 <fullName>Ticketing - TP</fullName>
                 <default>false</default>
                 <label>Ticketing - TP</label>
+            </value>
+            <value>
+                <fullName>Ticket Refund - Expired Voucher - Issue New</fullName>
+                <default>false</default>
+                <label>Ticket Refund - Expired Voucher - Issue New</label>
             </value>
             <value>
                 <fullName>Ticket status</fullName>
@@ -2133,6 +2173,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Look here before you ask R</controllingFieldValue>
+            <controllingFieldValue>Gift Card</controllingFieldValue>
             <valueName>Error</valueName>
         </valueSettings>
         <valueSettings>
@@ -2653,6 +2694,14 @@
             <valueName>Referred to SAS Medical</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
+            <valueName>Accept</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
+            <valueName>Reject</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Special service requests</controllingFieldValue>
             <controllingFieldValue>SSR</controllingFieldValue>
             <valueName>Bike</valueName>
@@ -2910,6 +2959,34 @@
             <valueName>Flight disruption</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>Changed Email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>MMB Refund Process</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>Not Received - Resend</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>Online Email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>Past Date PNR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>Reserved Amount</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>Ticket Refund - Expired Voucher - Issue New</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Waivers</controllingFieldValue>
             <valueName>Death Certificate</valueName>
         </valueSettings>
@@ -2946,12 +3023,8 @@
             <valueName>Partial</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
-            <valueName>Accept</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
-            <valueName>Reject</valueName>
+            <controllingFieldValue>Gift Card</controllingFieldValue>
+            <valueName>14 Day Money Back</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Digital support</controllingFieldValue>

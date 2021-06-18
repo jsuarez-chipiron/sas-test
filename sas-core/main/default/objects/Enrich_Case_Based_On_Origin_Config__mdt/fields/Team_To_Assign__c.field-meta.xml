@@ -291,9 +291,19 @@
                 <label>OC Bank Transfer</label>
             </value>
             <value>
+                <fullName>OC Customer Care</fullName>
+                <default>false</default>
+                <label>OC Customer Care</label>
+            </value>
+            <value>
                 <fullName>OC General</fullName>
                 <default>false</default>
                 <label>OC General</label>
+            </value>
+            <value>
+                <fullName>OC Gift Card</fullName>
+                <default>false</default>
+                <label>OC Gift Card</label>
             </value>
             <value>
                 <fullName>OC Groups</fullName>
@@ -459,6 +469,16 @@
                 <fullName>STOPY</fullName>
                 <default>false</default>
                 <label>STOPY</label>
+            </value>
+            <value>
+                <fullName>Sykes Customer Care</fullName>
+                <default>false</default>
+                <label>Sykes Customer Care</label>
+            </value>
+            <value>
+                <fullName>Sykes Voucher</fullName>
+                <default>false</default>
+                <label>Sykes Voucher</label>
             </value>
             <value>
                 <fullName>System &amp; Tariff</fullName>
