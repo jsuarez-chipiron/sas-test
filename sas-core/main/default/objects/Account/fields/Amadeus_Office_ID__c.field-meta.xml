@@ -3,7 +3,7 @@
     <fullName>Amadeus_Office_ID__c</fullName>
     <caseSensitive>false</caseSensitive>
     <description>Office ID used for travel agencies bulk</description>
-    <externalId>false</externalId>
+    <externalId>true</externalId>
     <inlineHelpText>Amadeus Office ID for travel agency</inlineHelpText>
     <label>Amadeus Office ID</label>
     <length>12</length>
