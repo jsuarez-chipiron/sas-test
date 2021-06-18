@@ -249,6 +249,19 @@
         <itemInstances>
             <componentInstance>
                 <componentName>customerCard</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Group Sales</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Bulk</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -288,102 +301,32 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>flowArguments</name>
-                    <value>[{&quot;label&quot;:&quot;recordId&quot;,&quot;dataType&quot;:&quot;String&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;}]</value>
+                    <name>lookupFieldName</name>
+                    <value>Case.AccountId</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>flowLayout</name>
-                    <value>oneColumn</value>
+                    <name>titleFieldName</name>
+                    <value>Travel Agency Details</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>flowName</name>
-                    <value>LIA_Create_Liability_Claim</value>
+                    <name>updateQuickActionName</name>
+                    <value>Account.Travel_Agency</value>
                 </componentInstanceProperties>
-                <componentName>flowruntime:interview</componentName>
+                <componentName>console:relatedRecord</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.RecordType.Name}</leftValue>
+                        <leftValue>{!Record.Department__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Claim</rightValue>
+                        <rightValue>Group Sales</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.LIA_Claim__r.Name}</leftValue>
+                        <leftValue>{!Record.Team__c}</leftValue>
                         <operator>EQUAL</operator>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>lookupFieldName</name>
-                    <value>Case.LIA_Claim__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>titleFieldName</name>
-                    <value>Liability Claim</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>updateQuickActionName</name>
-                    <value>LIA_Claim__c.Update_Claim</value>
-                </componentInstanceProperties>
-                <componentName>console:relatedRecord</componentName>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                        <operator>CONTAINS</operator>
-                        <rightValue>Claim</rightValue>
+                        <rightValue>Bulk</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.LIA_Claim__r.Name}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>lookupFieldName</name>
-                    <value>Case.LIA_Claim__c.LIA_Major_Event__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>titleFieldName</name>
-                    <value>Liability Major Event</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>updateQuickActionName</name>
-                    <value>LIA_Major_Event__c.Update_Major_Event</value>
-                </componentInstanceProperties>
-                <componentName>console:relatedRecord</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.LIA_Claim__r.Name}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>lookupFieldName</name>
-                    <value>Case.LIA_Claim__c.LIA_Firm__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>titleFieldName</name>
-                    <value>Legal Firm</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>updateQuickActionName</name>
-                    <value>LIA_Firm__c.Update_Legal_Firm</value>
-                </componentInstanceProperties>
-                <componentName>console:relatedRecord</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.LIA_Claim__r.Name}</leftValue>
+                        <leftValue>{!Record.Account.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -457,10 +400,21 @@
             <componentInstance>
                 <componentName>FCS_IdentifyCustomerContainer</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Internal_Backoffice</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Group Sales</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Bulk</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
