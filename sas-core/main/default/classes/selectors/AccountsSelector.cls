@@ -3,6 +3,7 @@ public inherited sharing class AccountsSelector extends fflib_SObjectSelector {
     return new List<Schema.SObjectField>{
       Account.Id,
       Account.Name,
+      Account.FCS_EBLevel__c,
       Account.FCS_EBNumber__c,
       Account.IsPersonAccount
     };

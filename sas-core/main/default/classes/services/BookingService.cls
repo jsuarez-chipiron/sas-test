@@ -9,7 +9,6 @@ public with sharing class BookingService {
    * @param caseId The case to which the booking should be added.
    * @param bookingReference The 6 character code of the booking.
    *
-   * @return True if booking was added to case, false if adding failed.
    */
   public static void addBookingToCase(ID caseId, String bookingReference) {
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
@@ -81,14 +80,19 @@ public with sharing class BookingService {
   /**
    * Fetches all bookings related to an EB customer from TEDS and inserts them into SF DB.
    *
-   * Updates existing bookings and creates new ones.
+   * Updates existing bookings, creates new ones and removes bookings from SF that don't
+   * exist in SF any more.
    *
    * @param euroBonusNumber The EB number to find bookings for.
-   *
-   * @return The list of created bookings.
    */
   @future(callout=true)
   public static void fetchBookingsByEBNumber(String euroBonusNumber) {
+    AccountsSelector accounts = (AccountsSelector) SAS_Service_Application.Selector.newInstance(
+      Account.SObjectType
+    );
+    BookingsSelector bookings = (BookingsSelector) SAS_Service_Application.Selector.newInstance(
+      Booking__c.SObjectType
+    );
     TEDSIntegrationService TEDSService = (TEDSIntegrationService) SAS_Service_Application.Service.newInstance(
       TEDSIntegrationService.class
     );
@@ -105,6 +109,32 @@ public with sharing class BookingService {
 
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<Booking__c> newBookings = constructBookingsForDB(bookingData, uow);
+
+    List<Account> ebAccount = accounts.selectByEuroBonusNumber(
+      new Set<String>{ euroBonusNumber }
+    );
+
+    if (ebAccount.size() > 0) {
+      // Remove bookings which don't exist in TEDS from SF.
+      List<Booking__c> existingBookingsForAccount = bookings.selectByAccountId(
+        new Set<Id>{ ebAccount[0].Id }
+      );
+
+      for (Booking__c existingBooking : existingBookingsForAccount) {
+        Boolean foundInTEDS = false;
+        for (Booking__c newBooking : newBookings) {
+          if (
+            newBooking.TEDS_Identifier__c == existingBooking.TEDS_Identifier__c
+          ) {
+            foundInTEDS = true;
+          }
+        }
+        if (!foundInTEDS) {
+          uow.registerDeleted(existingBooking);
+        }
+      }
+    }
+
     uow.commitWork();
   }
 
@@ -235,7 +265,6 @@ public with sharing class BookingService {
       // Loop through all segments in the trip and create segment and flight objects as necessary
       for (IRR_MOD_TedsBooking.Trip trip : booking.trips) {
         for (IRR_MOD_TedsBooking.SegmentTrip segmentTrip : trip.segments) {
-
           // Create flights
           Boolean flightNotYetProcessed =
             flightsProcessed.get(segmentTrip.flight.id) == null;
