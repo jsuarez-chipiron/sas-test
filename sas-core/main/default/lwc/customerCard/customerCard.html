@@ -35,29 +35,38 @@
         </div>
     </lightning-card>
 
-    <lightning-card if:true={account} title={accountName}>
-        <div class="slds-card__body slds-card__body_inner">
+    <lightning-card if:true={account} title={cardTitle}>
+        <div if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+        </div>
+        <div class="slds-card__body_inner">
             <lightning-tabset>
                 <lightning-tab label="Cases">
                     <ul class="slds-has-dividers_bottom-space">
                         <template for:each={cases} for:item="c">
-                            <li key={c.CaseNumber}>
-                                <strong>Case <a href={c.recordUrl}>{c.CaseNumber}</a>,</strong> {c.CreatedDate}, {c.StatusOrReason}
+                            <li class={c.className} key={c.CaseNumber}>
+                                <strong>Case <a href={c.recordUrl}>{c.CaseNumber}</a>, </strong><lightning-formatted-date-time value={c.CreatedDate}></lightning-formatted-date-time>, {c.StatusOrReason}
                             </li>
                         </template>
                     </ul>
+                    <div class="case-count-text">
+                    <span class="slds-text-align_left slds-text-color_weak slds-text-body_small">Showing {numberOfVisibleCases} of {allCases} cases</span>
+                </div>
                 </lightning-tab>
                 <lightning-tab label="Bookings">
                     Hello, world!
                     <ul class="slds-has-dividers_bottom-space">
                         <template for:each={bookings} for:item="b">
-                            <li key={b.bookingReference__c}>
-                                <strong>Booking {b.Booking_Reference__c}</strong>
+                            <li key={b.bookingReference}>
+                                <strong>Booking {b.bookingReference}</strong>
                             </li>
                         </template>
                     </ul>
                 </lightning-tab>
             </lightning-tabset>
+        </div>
+        <div class="card-footer">
+            <a class="card-footer-action" onclick={removeCustomerFromCase}>Disconnect traveller</a>
         </div>
     </lightning-card>
 </template>
