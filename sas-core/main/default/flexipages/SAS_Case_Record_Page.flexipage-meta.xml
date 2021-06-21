@@ -250,12 +250,6 @@
             <componentInstance>
                 <componentName>customerCard</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Group Sales</rightValue>
-                    </criteria>
                     <criteria>
                         <leftValue>{!Record.Team__c}</leftValue>
                         <operator>NE</operator>
