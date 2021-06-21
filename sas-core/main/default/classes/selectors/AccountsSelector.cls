@@ -17,19 +17,6 @@ public inherited sharing class AccountsSelector extends fflib_SObjectSelector {
     return (List<Account>) selectSObjectsById(ids);
   }
 
-  /*public List<Account> selectByIdFull(Set<Id> ids) {
-    fflib_QueryFactory accountsQF = newQueryFactory()
-      .setCondition('Id in :ids');
-
-    new CasesSelector()
-      .configureQueryFactoryFields(
-        accountsQF,
-        Case.AccountId.getDescribe().getRelationshipName()
-      );
-
-    return (List<Account>) Database.query(accountsQF.toSOQL());
-  }*/
-
   public List<Account> selectByEuroBonusNumber(Set<String> euroBonusNumbers) {
     return (List<Account>) Database.query(
       newQueryFactory()

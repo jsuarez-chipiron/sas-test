@@ -17,16 +17,7 @@ public without sharing class CustomerCardController {
     BookingService.addBookingToCase(caseId, bookingReference);
 
     return bookings.selectByBookingReference(bookingReference);
-    // TODO: Handle errors
     // TODO: This probably can't return anything
-    /*
-      try {
-        BookingService.addBookingToCase(caseId, bookingReference);
-      }
-      catch (Exception e) {
-        Application.throwAuraHandledException(e);
-      }
-    */
   }
 
   @AuraEnabled
@@ -40,11 +31,6 @@ public without sharing class CustomerCardController {
     )[0];
     return bookings.selectByAccountId(new Set<Id>{ acc.Id });
     // TODO: This probably can't return anything
-  }
-
-  @AuraEnabled(cacheable=true)
-  public static Booking__c getBooking(String bookingId) {
-    return bookings.selectByBookingReference('VKQLKR')[0];
   }
 
   @AuraEnabled(cacheable=true)
@@ -71,15 +57,3 @@ public without sharing class CustomerCardController {
     return cases.selectByAccountId(new Set<Id>{ accountId });
   }
 }
-
-/*
-  TODO: Error handler
-  public static void throwAuraHandledException(Exception e) {
-      String message = e.getMessage();
-      AuraHandledException error = 
-        new AuraHandledException(message);
-      error.setMessage(message); 
-      throw error;
-  }
-*/
-

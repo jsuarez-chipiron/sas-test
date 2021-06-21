@@ -19,7 +19,7 @@ public with sharing class Passengers extends fflib_SObjectDomain {
 
   public override void onBeforeInsert() {
     associateWithExistingEBAccountsNoUpdate();
-  } // TODO: This has to work on update also. Handle setting to empty string also correctly.
+  }
 
   /**
    * Associates a passenger record with an EB account if one already exists
