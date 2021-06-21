@@ -415,6 +415,11 @@
                 <label>GAC Give Away Card</label>
             </value>
             <value>
+                <fullName>Gift Card</fullName>
+                <default>false</default>
+                <label>Gift Card</label>
+            </value>
+            <value>
                 <fullName>Group booking</fullName>
                 <default>false</default>
                 <label>Group booking</label>
@@ -713,6 +718,11 @@
                 <fullName>Star Online</fullName>
                 <default>false</default>
                 <label>Star Online</label>
+            </value>
+            <value>
+                <fullName>Support</fullName>
+                <default>false</default>
+                <label>Support</label>
             </value>
             <value>
                 <fullName>System</fullName>
@@ -1179,6 +1189,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>Gift Card</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund</controllingFieldValue>
             <controllingFieldValue>Sales Information</controllingFieldValue>
             <controllingFieldValue>Channel</controllingFieldValue>
             <valueName>Groups</valueName>
@@ -1210,6 +1224,10 @@
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>
             <valueName>SC Under 180 Minutes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>Support</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>
