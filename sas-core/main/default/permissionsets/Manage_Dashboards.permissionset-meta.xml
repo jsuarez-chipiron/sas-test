@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Allows users to have all the dashboard permissions</description>
+    <description>It contains all dashboard related system permission as well as View All Data</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Manage Dashboards</label>
     <license>Salesforce</license>
