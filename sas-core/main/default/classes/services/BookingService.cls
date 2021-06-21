@@ -56,6 +56,14 @@ public with sharing class BookingService {
     return;
   }
 
+  /**
+   * Attempts to fetch the given booking from TEDS, and create necessary DB objects. 
+   * Does nothing if one isn't found.
+   * 
+   * @param bookingReference The booking to find.
+   * 
+   * @throws IntegrationError If there is a problem with the integration.
+   */
   @future(callout=true)
   public static void fetchBookingByBookingReference(String bookingReference) {
     TEDSIntegrationService TEDSService = (TEDSIntegrationService) SAS_Service_Application.Service.newInstance(
@@ -157,8 +165,6 @@ public with sharing class BookingService {
   }
   /**
    * Parses booking data in IRR_MOD_TedsBooking format into DB objects and prepares them for DB insertion.
-   *
-   *
    *
    * @param bookingData List of IRR_MOD_TedsBooking objects containing bookings to create.
    * @param uow Unit of work transaction in which the booking should be committed. Must be committed by caller.

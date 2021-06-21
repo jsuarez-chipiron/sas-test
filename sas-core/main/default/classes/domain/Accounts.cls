@@ -32,6 +32,10 @@ public with sharing class Accounts extends fflib_SObjectDomain {
     }
   }
 
+  /**
+   * Creates relationships between account objects and
+   * existing passengers objects which have the same EB number.
+   */
   private void associateWithPassengers() {
     Set<String> euroBonusNumbers = new Set<String>();
 

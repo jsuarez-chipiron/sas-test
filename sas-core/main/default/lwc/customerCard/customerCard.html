@@ -35,38 +35,49 @@
         </div>
     </lightning-card>
 
-    <lightning-card if:true={account} title={cardTitle}>
+    <article class="slds-card" if:true={account}>
         <div if:true={showSpinner}>
             <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
         </div>
-        <div class="slds-card__body_inner">
-            <lightning-tabset>
-                <lightning-tab label="Cases">
-                    <ul class="slds-has-dividers_bottom-space">
-                        <template for:each={cases} for:item="c">
-                            <li class={c.className} key={c.CaseNumber}>
-                                <strong>Case <a href={c.recordUrl}>{c.CaseNumber}</a>, </strong><lightning-formatted-date-time value={c.CreatedDate}></lightning-formatted-date-time>, {c.StatusOrReason}
-                            </li>
-                        </template>
-                    </ul>
-                    <div class="case-count-text">
-                    <span class="slds-text-align_left slds-text-color_weak slds-text-body_small">Showing {numberOfVisibleCases} of {allCases} cases</span>
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <span class="slds-text-heading_small slds-truncate">{cardTitle}</span>
+                    </h2>
                 </div>
-                </lightning-tab>
-                <lightning-tab label="Bookings">
-                    Hello, world!
-                    <ul class="slds-has-dividers_bottom-space">
-                        <template for:each={bookings} for:item="b">
-                            <li key={b.bookingReference}>
-                                <strong>Booking {b.bookingReference}</strong>
-                            </li>
-                        </template>
-                    </ul>
-                </lightning-tab>
-            </lightning-tabset>
+            </header>
         </div>
-        <div class="card-footer">
+        <div class="slds-card__body">
+            <div class="slds-card__body_inner">
+                <lightning-tabset>
+                    <lightning-tab label="Cases">
+                        <ul class="slds-has-dividers_bottom-space">
+                            <template for:each={cases} for:item="c">
+                                <li class={c.className} key={c.CaseNumber}>
+                                    <strong>Case <a href={c.recordUrl}>{c.CaseNumber}</a>, </strong><lightning-formatted-date-time value={c.CreatedDate}></lightning-formatted-date-time>, {c.StatusOrReason}
+                                </li>
+                            </template>
+                        </ul>
+                        <div class="case-count-text">
+                        <span class="slds-text-align_left slds-text-color_weak slds-text-body_small">Showing {numberOfVisibleCases} of {allCases} cases</span>
+                    </div>
+                    </lightning-tab>
+                    <lightning-tab label="Bookings">
+                        Hello, world!
+                        <ul class="slds-has-dividers_bottom-space">
+                            <template for:each={bookings} for:item="b">
+                                <li key={b.bookingReference}>
+                                    <strong>Booking {b.bookingReference}</strong>
+                                </li>
+                            </template>
+                        </ul>
+                    </lightning-tab>
+                </lightning-tabset>
+            </div>
+        </div>
+        <div class="slds-card__footer">
             <a class="card-footer-action" onclick={removeCustomerFromCase}>Disconnect traveller</a>
         </div>
-    </lightning-card>
+    </article>
 </template>
