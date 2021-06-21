@@ -53,8 +53,17 @@ public without sharing class CustomerCardController {
   }
 
   @AuraEnabled(cacheable=true)
-  public static List<Booking__c> getBookingData(String accountId) {
-    return bookings.selectByAccountId(new Set<Id>{ accountId });
+  public static List<BookingJSON> getBookingData(String accountId) {
+    List<Booking__c> bookingsForCustomer = bookings.selectByAccountId(
+      new Set<Id>{ accountId }
+    );
+    List<BookingJSON> toReturn = new List<BookingJSON>();
+    for (Booking__c b : bookingsForCustomer) {
+      toReturn.add(new BookingJSON(b));
+    }
+    toReturn.sort();
+
+    return toReturn;
   }
 
   @AuraEnabled(cacheable=true)

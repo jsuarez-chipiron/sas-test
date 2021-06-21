@@ -15,9 +15,6 @@ public with sharing class Bookings_IntegrationTest {
   @TestSetup
   static void setup() {
     bookingsInDB = TestDataFactories.createBookings(1, bookingReferenceInDB);
-    C_Settings.SETTINGS_OVERRIDE = new C_GeneralSetting__mdt[]{
-        new C_GeneralSetting__mdt(MasterLabel='APIM_Subscription_Key',Value__c='TESTKEY',Group__c='APIM')
-    };
   }
 
   @IsTest
