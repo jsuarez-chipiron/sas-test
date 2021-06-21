@@ -166,7 +166,21 @@
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>OC Voucher</stringValue>
+                <stringValue>OC Reserved Amount</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseReasonToSet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Voucher</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseSubReasonToSet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reserved Amount</stringValue>
             </value>
         </assignmentItems>
         <connector>

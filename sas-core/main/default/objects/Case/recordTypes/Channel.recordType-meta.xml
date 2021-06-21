@@ -644,6 +644,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>System</fullName>
             <default>false</default>
         </values>
@@ -1263,6 +1267,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>General support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gift voucher</fullName>
             <default>false</default>
         </values>
@@ -1535,6 +1543,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Own Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Oxygen</fullName>
             <default>false</default>
         </values>
@@ -1564,6 +1576,10 @@
         </values>
         <values>
             <fullName>Payment cards</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment correction</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1656,6 +1672,10 @@
         </values>
         <values>
             <fullName>Refund - Done</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund error</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1932,6 +1952,10 @@
         </values>
         <values>
             <fullName>Transfer %2F Arrival services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Agent</fullName>
             <default>false</default>
         </values>
         <values>

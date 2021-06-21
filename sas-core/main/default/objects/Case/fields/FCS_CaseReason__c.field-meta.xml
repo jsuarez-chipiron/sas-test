@@ -720,6 +720,11 @@
                 <label>Star Online</label>
             </value>
             <value>
+                <fullName>Support</fullName>
+                <default>false</default>
+                <label>Support</label>
+            </value>
+            <value>
                 <fullName>System</fullName>
                 <default>false</default>
                 <label>System</label>
@@ -1219,6 +1224,10 @@
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>
             <valueName>SC Under 180 Minutes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>Support</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>

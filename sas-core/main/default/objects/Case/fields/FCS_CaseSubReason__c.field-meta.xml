@@ -745,6 +745,11 @@
                 <label>General service questions</label>
             </value>
             <value>
+                <fullName>General support</fullName>
+                <default>false</default>
+                <label>General support</label>
+            </value>
+            <value>
                 <fullName>Gift voucher</fullName>
                 <default>false</default>
                 <label>Gift voucher</label>
@@ -1095,6 +1100,11 @@
                 <label>Overbooked flights</label>
             </value>
             <value>
+                <fullName>Own Sales</fullName>
+                <default>false</default>
+                <label>Own Sales</label>
+            </value>
+            <value>
                 <fullName>Oxygen</fullName>
                 <default>false</default>
                 <label>Oxygen</label>
@@ -1123,6 +1133,11 @@
                 <fullName>Payment cards</fullName>
                 <default>false</default>
                 <label>Payment cards</label>
+            </value>
+            <value>
+                <fullName>Payment correction</fullName>
+                <default>false</default>
+                <label>Payment correction</label>
             </value>
             <value>
                 <fullName>Payment - SFB</fullName>
@@ -1253,6 +1268,11 @@
                 <fullName>Refund - Done</fullName>
                 <default>false</default>
                 <label>Refund - Done</label>
+            </value>
+            <value>
+                <fullName>Refund error</fullName>
+                <default>false</default>
+                <label>Refund error</label>
             </value>
             <value>
                 <fullName>Refund escalation</fullName>
@@ -1610,6 +1630,11 @@
                 <label>Transfer &amp; Gate</label>
             </value>
             <value>
+                <fullName>Travel Agent</fullName>
+                <default>false</default>
+                <label>Travel Agent</label>
+            </value>
+            <value>
                 <fullName>Travel agent booking</fullName>
                 <default>false</default>
                 <label>Travel agent booking</label>
@@ -1851,6 +1876,20 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Inflight / Onboard</controllingFieldValue>
+            <valueName>General service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Inflight / Onboard</controllingFieldValue>
+            <valueName>General service questions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Inflight / Onboard</controllingFieldValue>
+            <controllingFieldValue>Ancillary</controllingFieldValue>
+            <controllingFieldValue>Special service requests</controllingFieldValue>
+            <valueName>Seating</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Products</controllingFieldValue>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
             <controllingFieldValue>Non-SAS produkter</controllingFieldValue>
@@ -1941,8 +1980,8 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Rebooking</controllingFieldValue>
-            <controllingFieldValue>New booking</controllingFieldValue>
             <controllingFieldValue>Reservation</controllingFieldValue>
+            <controllingFieldValue>New booking</controllingFieldValue>
             <valueName>Availability</valueName>
         </valueSettings>
         <valueSettings>
@@ -1999,9 +2038,8 @@
             <controllingFieldValue>Refund</controllingFieldValue>
             <controllingFieldValue>Irregularity</controllingFieldValue>
             <controllingFieldValue>Irregularity / Schedule change</controllingFieldValue>
-            <controllingFieldValue>Name change</controllingFieldValue>
             <controllingFieldValue>Assistance</controllingFieldValue>
-            <controllingFieldValue>New booking</controllingFieldValue>
+            <controllingFieldValue>Name change</controllingFieldValue>
             <controllingFieldValue>Baggage</controllingFieldValue>
             <controllingFieldValue>Requesting documentation</controllingFieldValue>
             <controllingFieldValue>Ancillary</controllingFieldValue>
@@ -2011,6 +2049,7 @@
             <controllingFieldValue>Corporate</controllingFieldValue>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
             <controllingFieldValue>Extraordinary</controllingFieldValue>
+            <controllingFieldValue>New booking</controllingFieldValue>
             <controllingFieldValue>Group booking</controllingFieldValue>
             <valueName>Referred to phone</valueName>
         </valueSettings>
@@ -2079,9 +2118,8 @@
             <controllingFieldValue>Refund</controllingFieldValue>
             <controllingFieldValue>Irregularity</controllingFieldValue>
             <controllingFieldValue>Irregularity / Schedule change</controllingFieldValue>
-            <controllingFieldValue>Name change</controllingFieldValue>
             <controllingFieldValue>Assistance</controllingFieldValue>
-            <controllingFieldValue>New booking</controllingFieldValue>
+            <controllingFieldValue>Name change</controllingFieldValue>
             <controllingFieldValue>Baggage</controllingFieldValue>
             <controllingFieldValue>Requesting documentation</controllingFieldValue>
             <controllingFieldValue>Ancillary</controllingFieldValue>
@@ -2091,6 +2129,7 @@
             <controllingFieldValue>Corporate</controllingFieldValue>
             <controllingFieldValue>Eurobonus</controllingFieldValue>
             <controllingFieldValue>Extraordinary</controllingFieldValue>
+            <controllingFieldValue>New booking</controllingFieldValue>
             <controllingFieldValue>Group booking</controllingFieldValue>
             <valueName>Referred to feedback form</valueName>
         </valueSettings>
@@ -2229,59 +2268,6 @@
         <valueSettings>
             <controllingFieldValue>Name change</controllingFieldValue>
             <valueName>On corporate account</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>New booking</controllingFieldValue>
-            <valueName>Ad-hoc Groups</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>New booking</controllingFieldValue>
-            <valueName>Bulk Groups</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>New booking</controllingFieldValue>
-            <valueName>Campaign booking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>New booking</controllingFieldValue>
-            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
-            <valueName>Face Mask</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>New booking</controllingFieldValue>
-            <valueName>Guarantee Groups</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>New booking</controllingFieldValue>
-            <valueName>High Demand Groups</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>New booking</controllingFieldValue>
-            <valueName>Price inquiry</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>New booking</controllingFieldValue>
-            <valueName>Route inquiry</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>New booking</controllingFieldValue>
-            <valueName>Sport Domestic Groups</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>New booking</controllingFieldValue>
-            <valueName>Sport Groups</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>New booking</controllingFieldValue>
-            <valueName>Sport Int./EU Groups</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>New booking</controllingFieldValue>
-            <valueName>Unique Groups</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>New booking</controllingFieldValue>
-            <valueName>Youth Groups</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Award travel</controllingFieldValue>
@@ -2440,30 +2426,6 @@
             <valueName>Sales fee exempt</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
-            <valueName>Cancellation/refund of ticket</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
-            <valueName>New booking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
-            <valueName>New Group booking - agent groups</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
-            <valueName>New Group booking - bulk</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
-            <valueName>Overbooked flights</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
-            <valueName>Rebooking of groups</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Airport Services</controllingFieldValue>
             <valueName>Airport service locations</valueName>
         </valueSettings>
@@ -2527,6 +2489,35 @@
             <valueName>Waiting time</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
+            <valueName>Cancellation/refund of ticket</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Face Mask</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
+            <valueName>New booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
+            <valueName>New Group booking - agent groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
+            <valueName>New Group booking - bulk</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
+            <valueName>Overbooked flights</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rules &amp; Informaton</controllingFieldValue>
+            <valueName>Rebooking of groups</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Ancillary</controllingFieldValue>
             <valueName>Baggage</valueName>
         </valueSettings>
@@ -2551,12 +2542,6 @@
         <valueSettings>
             <controllingFieldValue>Ancillary</controllingFieldValue>
             <valueName>Pre seating</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Ancillary</controllingFieldValue>
-            <controllingFieldValue>Special service requests</controllingFieldValue>
-            <controllingFieldValue>Inflight / Onboard</controllingFieldValue>
-            <valueName>Seating</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Ancillary</controllingFieldValue>
@@ -2987,6 +2972,18 @@
             <valueName>Ticket Refund - Expired Voucher - Issue New</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Customer Care</controllingFieldValue>
+            <valueName>NEB</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
+            <valueName>Report of damaged baggage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
+            <valueName>Report of delayed baggage</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Waivers</controllingFieldValue>
             <valueName>Death Certificate</valueName>
         </valueSettings>
@@ -3003,18 +3000,6 @@
             <valueName>Visa Rejection</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Customer Care</controllingFieldValue>
-            <valueName>NEB</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
-            <valueName>Report of damaged baggage</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
-            <valueName>Report of delayed baggage</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Wrongly refunded</controllingFieldValue>
             <valueName>Full</valueName>
         </valueSettings>
@@ -3023,8 +3008,12 @@
             <valueName>Partial</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Gift Card</controllingFieldValue>
-            <valueName>14 Day Money Back</valueName>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Own Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Travel Agent</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Digital support</controllingFieldValue>
@@ -3100,6 +3089,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>General support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
             <valueName>Insufficient balance account</valueName>
         </valueSettings>
         <valueSettings>
@@ -3120,7 +3113,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Payment correction</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
             <valueName>PayPal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Refund error</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error Handling</controllingFieldValue>
@@ -3394,6 +3395,54 @@
             <valueName>Transfer / Arrival services</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Ad-hoc Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Bulk Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Campaign booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Guarantee Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>High Demand Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Price inquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Route inquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Sport Domestic Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Sport Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Sport Int./EU Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Unique Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New booking</controllingFieldValue>
+            <valueName>Youth Groups</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>News</controllingFieldValue>
             <valueName>Informs</valueName>
         </valueSettings>
@@ -3406,6 +3455,10 @@
             <valueName>Travel Insurance</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Gift Card</controllingFieldValue>
+            <valueName>14 Day Money Back</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Group booking</controllingFieldValue>
             <valueName>Referred to group form</valueName>
         </valueSettings>
@@ -3416,14 +3469,6 @@
         <valueSettings>
             <controllingFieldValue>Groups</controllingFieldValue>
             <valueName>Scandinavian agents</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Inflight / Onboard</controllingFieldValue>
-            <valueName>General service</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Inflight / Onboard</controllingFieldValue>
-            <valueName>General service questions</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
