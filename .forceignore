@@ -7,6 +7,7 @@ package.xml
 **/destructiveChangesPre.xml
 **/emails/**
 
+
 # LWC configuration files
 **/jsconfig.json
 **/.eslintrc.json
@@ -20,7 +21,7 @@ package.xml
 
 #Data Files
 **/EmailTemplate.json
-
+**/email/**
 #Authentication entities (use manual deployments)
 **/authproviders/**
 **/namedCredentials/**

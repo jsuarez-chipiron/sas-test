@@ -46,8 +46,6 @@ public class IRR_EVT_AutomatedProcessor extends IRR_EVT_EventProcessor {
     public void initiateEvent() {
         if (AutomatedRequest.sendEmailMessages == null) AutomatedRequest.sendEmailMessages = false;
         if (AutomatedRequest.sendSMSMessages == null) AutomatedRequest.sendSMSMessages = false;
-            
-        //TODO
 
     }
 

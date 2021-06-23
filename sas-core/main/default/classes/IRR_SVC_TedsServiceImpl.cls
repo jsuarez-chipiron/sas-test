@@ -319,9 +319,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
                     arrivalDate <= toDate) passengerInfos.add(passengerInfo);
                 }     
             }
-        }
-        // System.debug('<<passengerInfos>>'+JSON.serialize(passengerInfos));
-        
+        }        
         return passengerInfos;
     }
 

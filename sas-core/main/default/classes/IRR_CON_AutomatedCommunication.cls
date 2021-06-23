@@ -12,32 +12,28 @@ public with sharing class IRR_CON_AutomatedCommunication {
     public static List<IRR_MOD_PassengerInfo> getPassengerInfos(String arrivalStation,String departureStation,String daysBeforeDepartureDate ) {
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
         try {
-            
             Date DepartureDate = System.today().addDays(integer.valueOf(daysBeforeDepartureDate));
             String DepDate = String.valueOf(DepartureDate) + 'T00:00:00.000Z';
-            System.debug('<<DepDate>>'+DepDate);
             Date ArrivalDate = DepartureDate.addDays(2);
             String ArrDate = String.valueOf(ArrivalDate) + 'T00:00:00.000Z';
-            passengerInfos.addAll(IRR_SVC_TedsService.getPassengerInfosForBookingFilters(departureStation,arrivalStation,DepDate,ArrDate));
-            System.debug('<<utc>>'+passengerInfos.get(0).thisSegment.departureTimeUTC +'<<DepDate>>'+DepDate);
             List<IRR_MOD_PassengerInfo> paxInfos = new List<IRR_MOD_PassengerInfo>();
+            passengerInfos.addAll(IRR_SVC_TedsService.getPassengerInfosForBookingFilters(departureStation,arrivalStation,DepDate,ArrDate));
             DepDate = DepDate.substring(0,10);
-            for(IRR_MOD_PassengerInfo pInfo: passengerInfos){
+            if(passengerInfos.size() > 0){
+                for(IRR_MOD_PassengerInfo pInfo: passengerInfos) {
                 String DepDateUTC = pInfo.thisSegment.departureTimeUTC.substring(0,10);
-
-                 if(DepDateUTC == DepDate){
-                     paxInfos.add(pInfo);
-                 }
-
+                    if(DepDateUTC == DepDate) {
+                        paxInfos.add(pInfo);
+                    }
+                }
             }
-            System.debug('<<passengerInfos>>'+passengerInfos.size() +'<<paxInfos>>'+paxInfos.size());
-            return paxInfos;
+            return paxInfos;    
         }
         catch (Exception e) {
-            AuraHandledException ahe = new AuraHandledException(passengerInfos + ' - ' + e.getMessage());
-            ahe.setMessage(passengerInfos + ' - ' + e.getMessage());
-            throw ahe;
+             System.debug(passengerInfos + ' - ' + e.getMessage());
+             throw e;
         }
+         
 
     }
 
@@ -46,14 +42,13 @@ public with sharing class IRR_CON_AutomatedCommunication {
                 IRR_SVC_CommunicationService.processEvent(EVENT_TYPE, automatedRequest);
             }
             catch (Exception e) {
-                AuraHandledException ahe = new AuraHandledException(e.getMessage());
-                ahe.setMessage(e.getMessage());
-                throw ahe;
+                System.debug(e.getMessage());
+                throw e;
             }
         }
 
 
-        public static AutomatedTemplate getAutomatedTemplate( String automatedTemplateName) {
+        public static AutomatedTemplate getAutomatedTemplates( String automatedTemplateName) {
             try {
                 List<IRR_ManualCommunicationTemplate__mdt> templates = IRR_SEL_ManualTemplatesSelector.newInstance()
                                                                             .selectAllManualCommunicationTemplates();
@@ -80,9 +75,8 @@ public with sharing class IRR_CON_AutomatedCommunication {
                 return mt;
             }
             catch (Exception e) {
-                AuraHandledException ahe = new AuraHandledException(e.getMessage());
-                ahe.setMessage(e.getMessage());
-                throw ahe;
+            System.debug('Email templates not found' + ' - ' + e.getMessage());
+             throw e;
             }
         }
     

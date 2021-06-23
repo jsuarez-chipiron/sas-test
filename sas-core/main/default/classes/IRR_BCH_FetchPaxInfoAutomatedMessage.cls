@@ -30,14 +30,15 @@ global with sharing class IRR_BCH_FetchPaxInfoAutomatedMessage extends SBS_Sched
             If(message.IRR_Duration__c != null && message.IRR_Departure_Country__c != null){
             
                 List<IRR_MOD_PassengerInfo> PaxInfo =  IRR_CON_AutomatedCommunication.getPassengerInfos(message.IRR_Arrival_Country__c,message.IRR_Departure_Country__c,message.IRR_Duration__c);
-                IRR_CON_AutomatedCommunication.AutomatedTemplate mp = IRR_CON_AutomatedCommunication.getAutomatedTemplate(message.IRR_Template_Name__c);
+                IRR_CON_AutomatedCommunication.AutomatedTemplate mp = IRR_CON_AutomatedCommunication.getAutomatedTemplates(message.IRR_Template_Name__c);
                 IRR_MOD_AutomatedRequest automatedRequest = new IRR_MOD_AutomatedRequest();
                 automatedRequest.passengerInfos = PaxInfo;
                 automatedRequest.sendSMSMessages = true;
                 automatedRequest.sendEmailMessages = false;
                 automatedRequest.emailTemplate = mp.emailTemplate;
                 automatedRequest.smsTemplate = mp.smsTemplate;
-               IRR_CON_AutomatedCommunication.sendAutomatedCommunication(automatedRequest);
+                IRR_CON_AutomatedCommunication.sendAutomatedCommunication(automatedRequest);
+        
             }
         }   
     }
