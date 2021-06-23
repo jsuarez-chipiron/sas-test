@@ -4,6 +4,7 @@ import getBookingData from "@salesforce/apex/CustomerCardController.getBookingDa
 import getCaseData from "@salesforce/apex/CustomerCardController.getCaseData";
 import Case_ACCOUNTID_FIELD from "@salesforce/schema/Case.AccountId";
 import Case_ID_FIELD from "@salesforce/schema/Case.Id";
+import Case_EBNUMBER_FIELD from "@salesforce/schema/Case.FCS_EBNumber__c";
 import { getRecord, updateRecord } from "lightning/uiRecordApi";
 import findCustomer from "@salesforce/apex/FCS_IdentifyCustomerController.findCustomer";
 
@@ -27,10 +28,22 @@ export default class CustomerCard extends LightningElement {
   @track error = false;
   @track searchValue = "";
 
-  @wire(getRecord, { recordId: "$recordId", fields: [Case_ACCOUNTID_FIELD] })
+  @wire(getRecord, {
+    recordId: "$recordId",
+    fields: [Case_ACCOUNTID_FIELD, Case_EBNUMBER_FIELD]
+  })
   wiredRecord({ error, data }) {
     if (!error && data) {
-      this.accountId = data.fields.AccountId.value;
+      if (!data.fields.AccountId.value) {
+        if (!!data.fields.FCS_EBNumber__c.value) {
+          // If a case has an EB number, but no linked account, attempt to do that.
+          // This is necessary for automatic linking in chat cases. This logic should really be in a trigger
+          // FIXME: Move this logic to trigger (if a case has eb number, assign account to it. After fix this so that we don't need eb number in the case.)
+          this.addCustomerToCase(data.fields.FCS_EBNumber__c.value);
+        }
+      } else {
+        this.accountId = data.fields.AccountId.value;
+      }
     } else {
       this.accountId = undefined;
     }
@@ -101,7 +114,8 @@ export default class CustomerCard extends LightningElement {
         const recordInput = {
           fields: {
             [Case_ID_FIELD.fieldApiName]: this.recordId,
-            [Case_ACCOUNTID_FIELD.fieldApiName]: account.Id
+            [Case_ACCOUNTID_FIELD.fieldApiName]: account.Id,
+            [Case_EBNUMBER_FIELD.fieldApiName]: account.FCS_EBNumber__c // TODO: Move this to trigger
           }
         };
 
@@ -125,7 +139,8 @@ export default class CustomerCard extends LightningElement {
     const recordInput = {
       fields: {
         [Case_ID_FIELD.fieldApiName]: this.recordId,
-        [Case_ACCOUNTID_FIELD.fieldApiName]: ""
+        [Case_ACCOUNTID_FIELD.fieldApiName]: "",
+        [Case_EBNUMBER_FIELD.fieldApiName]: "" // TODO: Move this to trigger
       }
     };
 
