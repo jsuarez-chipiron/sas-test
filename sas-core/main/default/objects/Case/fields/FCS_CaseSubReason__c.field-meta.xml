@@ -630,6 +630,11 @@
                 <label>Europe</label>
             </value>
             <value>
+                <fullName>Extension</fullName>
+                <default>false</default>
+                <label>Extension</label>
+            </value>
+            <value>
                 <fullName>Extra seat for comfort</fullName>
                 <default>false</default>
                 <label>Extra seat for comfort</label>
@@ -1265,6 +1270,11 @@
                 <label>Referred to Travel agency</label>
             </value>
             <value>
+                <fullName>Refund COVID19</fullName>
+                <default>false</default>
+                <label>Refund COVID19</label>
+            </value>
+            <value>
                 <fullName>Refund - Done</fullName>
                 <default>false</default>
                 <label>Refund - Done</label>
@@ -1283,6 +1293,11 @@
                 <fullName>Refund points</fullName>
                 <default>false</default>
                 <label>Refund points</label>
+            </value>
+            <value>
+                <fullName>Refund RTCREDIT</fullName>
+                <default>false</default>
+                <label>Refund RTCREDIT</label>
             </value>
             <value>
                 <fullName>Refund status</fullName>
@@ -2924,6 +2939,14 @@
             <valueName>Travel Pass - Wrong deb</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Own Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <valueName>Travel Agent</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>System</controllingFieldValue>
             <valueName>Amadeus</valueName>
         </valueSettings>
@@ -2944,8 +2967,24 @@
             <valueName>Flight disruption</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Customer Care</controllingFieldValue>
+            <valueName>NEB</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
+            <valueName>Report of damaged baggage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
+            <valueName>Report of delayed baggage</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Voucher</controllingFieldValue>
             <valueName>Changed Email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>Extension</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Voucher</controllingFieldValue>
@@ -2965,23 +3004,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>Refund COVID19</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>Refund RTCREDIT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher</controllingFieldValue>
             <valueName>Reserved Amount</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Voucher</controllingFieldValue>
             <valueName>Ticket Refund - Expired Voucher - Issue New</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Customer Care</controllingFieldValue>
-            <valueName>NEB</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
-            <valueName>Report of damaged baggage</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Delayed/damaged luggage</controllingFieldValue>
-            <valueName>Report of delayed baggage</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Waivers</controllingFieldValue>
@@ -3006,14 +3041,6 @@
         <valueSettings>
             <controllingFieldValue>Wrongly refunded</controllingFieldValue>
             <valueName>Partial</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Own Sales</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <valueName>Travel Agent</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Digital support</controllingFieldValue>

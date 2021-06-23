@@ -1183,6 +1183,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Extension</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Extra seat for comfort</fullName>
             <default>false</default>
         </values>
@@ -1672,6 +1676,14 @@
         </values>
         <values>
             <fullName>Refund - Done</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund COVID19</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund RTCREDIT</fullName>
             <default>false</default>
         </values>
         <values>
