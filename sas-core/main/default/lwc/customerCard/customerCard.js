@@ -3,12 +3,17 @@ import getAccountData from "@salesforce/apex/CustomerCardController.getAccountDa
 import getBookingData from "@salesforce/apex/CustomerCardController.getBookingData";
 import getCaseData from "@salesforce/apex/CustomerCardController.getCaseData";
 import Case_ACCOUNTID_FIELD from "@salesforce/schema/Case.AccountId";
-import Case_ID_FIELD from "@salesforce/schema/Case.Id";
 import Case_EBNUMBER_FIELD from "@salesforce/schema/Case.FCS_EBNumber__c";
+import Case_ID_FIELD from "@salesforce/schema/Case.Id";
+import ChatTranscript_ACCOUNTID_FIELD from "@salesforce/schema/LiveChatTranscript.AccountId";
+import ChatTranscript_CASEID_FIELD from "@salesforce/schema/LiveChatTranscript.CaseId";
+import ChatTranscript_EBNUMBER_FIELD from "@salesforce/schema/LiveChatTranscript.FCS_EBNumber__c";
+import ChatTranscript_ID_FIELD from "@salesforce/schema/LiveChatTranscript.Id";
 import { getRecord, updateRecord } from "lightning/uiRecordApi";
 import findCustomer from "@salesforce/apex/FCS_IdentifyCustomerController.findCustomer";
 
 export default class CustomerCard extends LightningElement {
+  @api objectApiName;
   @api recordId;
 
   // data fields
@@ -21,6 +26,8 @@ export default class CustomerCard extends LightningElement {
   @track numberOfVisibleCases = 0;
   @track cardTitle = "";
   accountId = undefined;
+  caseIdForChats = undefined;
+  isChatTranscript = this.objectApiName === "LiveChatTranscript";
 
   // UI state
   @track showSpinner = false;
@@ -30,9 +37,18 @@ export default class CustomerCard extends LightningElement {
 
   @wire(getRecord, {
     recordId: "$recordId",
-    fields: [Case_ACCOUNTID_FIELD, Case_EBNUMBER_FIELD]
+    optionalFields: [
+      // Use optional fields because object type varies
+      ChatTranscript_ACCOUNTID_FIELD,
+      ChatTranscript_CASEID_FIELD,
+      ChatTranscript_EBNUMBER_FIELD,
+      Case_ACCOUNTID_FIELD,
+      Case_EBNUMBER_FIELD
+    ]
   })
   wiredRecord({ error, data }) {
+    console.log("apiName", this.objectApiName);
+    console.log("data", data);
     if (!error && data) {
       if (!data.fields.AccountId.value) {
         if (!!data.fields.FCS_EBNumber__c.value) {
@@ -40,17 +56,24 @@ export default class CustomerCard extends LightningElement {
           // This is necessary for automatic linking in chat cases. This logic should really be in a trigger
           // FIXME: Move this logic to trigger (if a case has eb number, assign account to it. After fix this so that we don't need eb number in the case.)
           this.addCustomerToCase(data.fields.FCS_EBNumber__c.value);
+        } else {
+          this.accountId = undefined;
         }
       } else {
         this.accountId = data.fields.AccountId.value;
       }
+      if (this.isChatTranscript) {
+        this.caseIdForChats = data.fields.CaseId.value;
+      }
     } else {
       this.accountId = undefined;
     }
+    console.log("accountId", this.accountId);
   }
 
   @wire(getAccountData, { accountId: "$accountId" })
   wiredAccount({ error, data }) {
+    console.log("get account data", data);
     if (!error && data != undefined && data.length > 0) {
       this.account = data[0];
       this.cardTitle = `${data[0].Name} (EB${data[0].FCS_EBLevel__c}${data[0].FCS_EBNumber__c})`;
@@ -62,6 +85,7 @@ export default class CustomerCard extends LightningElement {
 
   @wire(getCaseData, { accountId: "$accountId" })
   wiredCases({ error, data }) {
+    console.log("#wiredCases.start");
     if (!error && data != undefined && data.length > 0) {
       this.cases = data
         .map(function (elem) {
@@ -92,18 +116,22 @@ export default class CustomerCard extends LightningElement {
       this.numberOfVisibleCases = 0;
       this.allCases = 0;
     }
+    console.log("#wiredCases.end");
   }
 
   @wire(getBookingData, { accountId: "$accountId" })
   wiredBookings({ error, data }) {
+    console.log("#wiredBookings.start");
     if (!error && data != undefined && data.length > 0) {
       this.bookings = data;
     } else {
       this.bookings = [];
     }
+    console.log("#wiredBookings.end");
   }
 
   async addCustomerToCase(searchString) {
+    console.log("#addCustomerToCase.start");
     this.showSpinner = true;
     try {
       let account = await findCustomer({
@@ -111,16 +139,37 @@ export default class CustomerCard extends LightningElement {
         searchValue: searchString.trim()
       });
       if (account) {
-        const recordInput = {
-          fields: {
-            [Case_ID_FIELD.fieldApiName]: this.recordId,
-            [Case_ACCOUNTID_FIELD.fieldApiName]: account.Id,
-            [Case_EBNUMBER_FIELD.fieldApiName]: account.FCS_EBNumber__c // TODO: Move this to trigger
-          }
-        };
-
         try {
-          await updateRecord(recordInput);
+          if (this.isChatTranscript) {
+            console.log("#addCustomerFromCase.chatTranscript");
+            const caseRecordInput = {
+              fields: {
+                [Case_ID_FIELD.fieldApiName]: this.caseIdForChats,
+                [Case_ACCOUNTID_FIELD.fieldApiName]: account.Id,
+                [Case_EBNUMBER_FIELD.fieldApiName]: account.FCS_EBNumber__c
+              }
+            };
+            const chatRecordInput = {
+              fields: {
+                [ChatTranscript_ID_FIELD.fieldApiName]: this.recordId,
+                [ChatTranscript_ACCOUNTID_FIELD.fieldApiName]: account.Id,
+                [ChatTranscript_EBNUMBER_FIELD.fieldApiName]:
+                  account.FCS_EBNumber__c
+              }
+            };
+            await updateRecord(chatRecordInput);
+            await updateRecord(caseRecordInput);
+          } else {
+            console.log("#addCustomerFromCase.notChatTranscript");
+            const caseRecordInput = {
+              fields: {
+                [Case_ID_FIELD.fieldApiName]: this.recordId,
+                [Case_ACCOUNTID_FIELD.fieldApiName]: account.Id,
+                [Case_EBNUMBER_FIELD.fieldApiName]: account.FCS_EBNumber__c
+              }
+            };
+            await updateRecord(caseRecordInput);
+          }
         } catch (error) {
           this.error = error;
         }
@@ -131,21 +180,42 @@ export default class CustomerCard extends LightningElement {
       this.error = error;
     }
     this.showSpinner = false;
+    console.log("#addCustomerToCase.end");
   }
 
   async removeCustomerFromCase() {
+    console.log("#removeCustomerToCase.start");
     this.showSpinner = true;
-
-    const recordInput = {
-      fields: {
-        [Case_ID_FIELD.fieldApiName]: this.recordId,
-        [Case_ACCOUNTID_FIELD.fieldApiName]: "",
-        [Case_EBNUMBER_FIELD.fieldApiName]: "" // TODO: Move this to trigger
-      }
-    };
-
     try {
-      await updateRecord(recordInput);
+      if (this.isChatTranscript) {
+        console.log("#removeCustomerFromCase.chatTranscript");
+        const caseRecordInput = {
+          fields: {
+            [Case_ID_FIELD.fieldApiName]: this.caseIdForChats,
+            [Case_ACCOUNTID_FIELD.fieldApiName]: "",
+            [Case_EBNUMBER_FIELD.fieldApiName]: ""
+          }
+        };
+        const chatRecordInput = {
+          fields: {
+            [ChatTranscript_ID_FIELD.fieldApiName]: this.recordId,
+            [ChatTranscript_ACCOUNTID_FIELD.fieldApiName]: "",
+            [ChatTranscript_EBNUMBER_FIELD.fieldApiName]: ""
+          }
+        };
+        await updateRecord(chatRecordInput);
+        await updateRecord(caseRecordInput);
+      } else {
+        console.log("#removeCustomerFromCase.notChatTranscript");
+        const caseRecordInput = {
+          fields: {
+            [Case_ID_FIELD.fieldApiName]: this.recordId,
+            [Case_ACCOUNTID_FIELD.fieldApiName]: "",
+            [Case_EBNUMBER_FIELD.fieldApiName]: ""
+          }
+        };
+        await updateRecord(caseRecordInput);
+      }
     } catch (error) {
       this.error = error;
     }
@@ -153,6 +223,11 @@ export default class CustomerCard extends LightningElement {
     this.searchValue = "";
     this.showSpinner = false;
     this.noSearchResult = false;
+    this.accountId = undefined;
+    this.account = undefined;
+    this.bookings = [];
+    this.cases = [];
+    console.log("#removeCustomerToCase.end");
   }
 
   handlePressEnterKey(event) {
