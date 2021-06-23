@@ -1,5 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Notify_User_of_created_Case</name>
+        <label>Notify User of created Case</label>
+        <locationX>578</locationX>
+        <locationY>1334</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>Case_Creation_Confirmation</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <elementReference>GetCustomNotificationId.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <stringValue>You created a new case with the case number {!GetCaseNumber.CaseNumber}</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>New Case created</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>UsersToNotify</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <elementReference>CreateManualCase</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
         <name>FlowUserCaseOwner</name>
@@ -9,6 +51,13 @@
         <assignmentItems>
             <assignToReference>SetCaseOwner</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UsersToNotify</assignToReference>
+            <operator>Add</operator>
             <value>
                 <elementReference>$User.Id</elementReference>
             </value>
@@ -266,7 +315,7 @@
         <locationY>1094</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Case_Creation_Confirmation</targetReference>
+            <targetReference>GetCustomNotificationId</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -278,6 +327,28 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Returns Custom Notification Type ID used by the flow</description>
+        <name>GetCustomNotificationId</name>
+        <label>GetCustomNotificationId</label>
+        <locationX>578</locationX>
+        <locationY>1214</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Notify_User_of_created_Case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>CaseFromFlow</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CustomNotificationType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -306,13 +377,13 @@
         <name>Case_Creation_Confirmation</name>
         <label>Case Creation Confirmation</label>
         <locationX>578</locationX>
-        <locationY>1214</locationY>
+        <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Outcome</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Case &lt;/span&gt;&lt;span style=&quot;font-size: 16px; color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!CreatedCaseLink} &lt;/span&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;has been created to {!GetCaseNumber.Department__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Case&lt;/span&gt;&lt;span style=&quot;font-size: 16px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt; &lt;/span&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;has been created to {!GetCaseNumber.Department__c}.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Click the notification in the top right corner to view the case!&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -489,6 +560,13 @@
         <name>SetCaseOwner</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>UsersToNotify</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
