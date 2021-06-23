@@ -124,7 +124,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>FCS_IdentifyCustomerContainer</componentName>
+                <componentName>customerCard</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
