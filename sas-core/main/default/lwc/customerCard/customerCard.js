@@ -127,13 +127,44 @@ export default class CustomerCard extends LightningElement {
 
   @wire(getBookingData, { accountId: "$accountId" })
   wiredBookings({ error, data }) {
-    console.log("#wiredBookings.start", data);
+    function getAirportListForBooking(elem) {
+      if (!elem || !elem.flights || elem.flights.length < 1) {
+        return "";
+      }
+      return elem.flights
+        .reduce((acc, curr) => {
+          if (acc.length === 0) {
+            return [curr.departureAirport, curr.arrivalAirport];
+          } else {
+            if (acc[acc.length - 1] === curr.departureAirport) {
+              return acc.concat(curr.arrivalAirport);
+            }
+            return acc.concat([curr.departureAirport, curr.arrivalAirport]);
+          }
+        }, [])
+        .join("-");
+    }
+    function getDateToString(dateTime) {
+      var date = new Date(dateTime);
+      var month = (date.getMonth() + 1).toString();
+      month = month.length > 1 ? month : "0" + month;
+      var day = date.getDate().toString();
+      day = day.length > 1 ? day : "0" + day;
+
+      return day + "-" + month + "-" + date.getFullYear();
+    }
     if (!error && data != undefined && data.length > 0) {
-      this.bookings = data;
+      this.bookings = data.map(function (elem) {
+        return {
+          ...elem,
+          accordionTitle: `${getDateToString(
+            elem.flights[0].scheduledDepartureTime
+          )} ${getAirportListForBooking(elem)}`
+        };
+      });
     } else {
       this.bookings = [];
     }
-    console.log("#wiredBookings.end");
   }
 
   async addCustomerToCase(searchString) {
