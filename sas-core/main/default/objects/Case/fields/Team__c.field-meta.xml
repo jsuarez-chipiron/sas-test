@@ -416,6 +416,11 @@
                 <label>Sales Control</label>
             </value>
             <value>
+                <fullName>Sales Control BOM</fullName>
+                <default>false</default>
+                <label>Sales Control BOM</label>
+            </value>
+            <value>
                 <fullName>Sales Information</fullName>
                 <default>false</default>
                 <label>Sales Information</label>
@@ -484,6 +489,21 @@
                 <fullName>STOPY</fullName>
                 <default>false</default>
                 <label>STOPY</label>
+            </value>
+            <value>
+                <fullName>Support Backoffice</fullName>
+                <default>false</default>
+                <label>Support Backoffice</label>
+            </value>
+            <value>
+                <fullName>Support International</fullName>
+                <default>false</default>
+                <label>Support International</label>
+            </value>
+            <value>
+                <fullName>Support Scandinavia</fullName>
+                <default>false</default>
+                <label>Support Scandinavia</label>
             </value>
             <value>
                 <fullName>Sykes Customer Care</fullName>
@@ -662,6 +682,10 @@
             <valueName>TAWEB</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Sales Control BOM</controllingFieldValue>
+            <valueName>Sales Control BOM</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>Businesstravel STO</valueName>
         </valueSettings>
@@ -727,6 +751,18 @@
         <valueSettings>
             <controllingFieldValue>Care</controllingFieldValue>
             <valueName>SGH Bag SE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Support Backoffice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Support International</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Support Scandinavia</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
