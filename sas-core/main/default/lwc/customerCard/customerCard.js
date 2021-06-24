@@ -34,6 +34,12 @@ export default class CustomerCard extends LightningElement {
   @track noSearchResult = false;
   @track error = false;
   @track searchValue = "";
+  activeSectionMessage = "";
+
+  handleToggleSection(event) {
+    this.activeSectionMessage =
+      "Open section name:  " + event.detail.openSections;
+  }
 
   @wire(getRecord, {
     recordId: "$recordId",
@@ -121,7 +127,7 @@ export default class CustomerCard extends LightningElement {
 
   @wire(getBookingData, { accountId: "$accountId" })
   wiredBookings({ error, data }) {
-    console.log("#wiredBookings.start");
+    console.log("#wiredBookings.start", data);
     if (!error && data != undefined && data.length > 0) {
       this.bookings = data;
     } else {

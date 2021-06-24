@@ -1,83 +1,268 @@
 <template>
-    <lightning-card title="Retrieve Customer" if:false={account}>
-        <div class="slds-grid slds-gutters slds-grid_vertical-align-end slds-p-left_small">
-            <!--Component that displays buttons where the user can choose a value to search for, e.g. EuroBonus. 
+  <lightning-card title="Retrieve Customer" if:false={account}>
+    <div
+      class="
+        slds-grid slds-gutters
+        slds-grid_vertical-align-end
+        slds-p-left_small
+      "
+    >
+      <!--Component that displays buttons where the user can choose a value to search for, e.g. EuroBonus. 
                 Dynimically rendered based on property.-->
-            <div class="slds-col">
-                <lightning-radio-group name="searchOptions" label="Search by" options={options} value={searchOption}
-                    required type="button" if:true={showSearchOptions}></lightning-radio-group>
-                <!--Search field of component-->
-                <lightning-input type="text" label="Enter customer's EuroBonus number" value={searchValue}
-                    onchange={handleSearchValueChange} onkeydown={handlePressEnterKey} class="search-field">
-                </lightning-input>
-            </div>
-            <!--Button to trigger search based on input-->
-            <div class="slds-col">
-                <lightning-button variant="brand" label="Search" title="Search button"
-                    onclick={handleSearchButtonClick}>
-                </lightning-button>
-            </div>
-        </div>
-        <!--Spinner graphics dynamically rendered, controlled by JS-->
-        <div if:true={showSpinner}>
-            <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
-        </div>
-        <!--Custom child component to render errors in search-->
-        <template if:true={error}>
-            <c-c_-error-panel errors={error}></c-c_-error-panel>
-        </template>
-        <!--Displays a warning is no result was found in search-->
-        <div class="slds-p-around_medium searchError" if:true={noSearchResult}>
-            <lightning-icon icon-name="utility:warning" variant="warning"></lightning-icon>
-            <div class="slds-p-around_small">
-                <p>Could not find a matching customer</p>
-            </div>
-        </div>
-    </lightning-card>
+      <div class="slds-col">
+        <lightning-radio-group
+          name="searchOptions"
+          label="Search by"
+          options={options}
+          value={searchOption}
+          required
+          type="button"
+          if:true={showSearchOptions}
+        ></lightning-radio-group>
+        <!--Search field of component-->
+        <lightning-input
+          type="text"
+          label="Enter customer's EuroBonus number"
+          value={searchValue}
+          onchange={handleSearchValueChange}
+          onkeydown={handlePressEnterKey}
+          class="search-field"
+        >
+        </lightning-input>
+      </div>
+      <!--Button to trigger search based on input-->
+      <div class="slds-col">
+        <lightning-button
+          variant="brand"
+          label="Search"
+          title="Search button"
+          onclick={handleSearchButtonClick}
+        >
+        </lightning-button>
+      </div>
+    </div>
+    <!--Spinner graphics dynamically rendered, controlled by JS-->
+    <div if:true={showSpinner}>
+      <lightning-spinner
+        alternative-text="Loading"
+        size="medium"
+        variant="brand"
+      ></lightning-spinner>
+    </div>
+    <!--Custom child component to render errors in search-->
+    <template if:true={error}>
+      <c-c_-error-panel errors={error}></c-c_-error-panel>
+    </template>
+    <!--Displays a warning is no result was found in search-->
+    <div class="slds-p-around_medium searchError" if:true={noSearchResult}>
+      <lightning-icon
+        icon-name="utility:warning"
+        variant="warning"
+      ></lightning-icon>
+      <div class="slds-p-around_small">
+        <p>Could not find a matching customer</p>
+      </div>
+    </div>
+  </lightning-card>
 
-    <article class="slds-card" if:true={account}>
-        <div if:true={showSpinner}>
-            <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+  <article class="slds-card" if:true={account}>
+    <div if:true={showSpinner}>
+      <lightning-spinner
+        alternative-text="Loading"
+        size="medium"
+        variant="brand"
+      ></lightning-spinner>
+    </div>
+    <div class="slds-card__header slds-grid">
+      <header class="slds-media slds-media_center slds-has-flexi-truncate">
+        <div class="slds-media__body">
+          <h2 class="slds-card__header-title">
+            <span class="slds-text-heading_small slds-truncate"
+              >{cardTitle}</span
+            >
+          </h2>
         </div>
-        <div class="slds-card__header slds-grid">
-            <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                <div class="slds-media__body">
-                    <h2 class="slds-card__header-title">
-                        <span class="slds-text-heading_small slds-truncate">{cardTitle}</span>
-                    </h2>
-                </div>
-            </header>
-        </div>
-        <div class="slds-card__body">
-            <div class="slds-card__body_inner">
-                <lightning-tabset>
-                    <lightning-tab label="Cases">
-                        <ul class="slds-has-dividers_bottom-space">
-                            <template for:each={cases} for:item="c">
-                                <li class={c.className} key={c.CaseNumber}>
-                                    <strong>Case <a href={c.recordUrl}>{c.CaseNumber}</a>, </strong><lightning-formatted-date-time value={c.CreatedDate}></lightning-formatted-date-time>, {c.StatusOrReason}
-                                </li>
-                            </template>
-                        </ul>
-                        <div class="case-count-text">
-                        <span class="slds-text-align_left slds-text-color_weak slds-text-body_small">Showing {numberOfVisibleCases} of {allCases} cases</span>
-                    </div>
-                    </lightning-tab>
-                    <lightning-tab label="Bookings">
-                        Hello, world!
-                        <ul class="slds-has-dividers_bottom-space">
-                            <template for:each={bookings} for:item="b">
-                                <li key={b.bookingReference}>
-                                    <strong>Booking {b.bookingReference}</strong>
-                                </li>
-                            </template>
-                        </ul>
-                    </lightning-tab>
-                </lightning-tabset>
+      </header>
+    </div>
+    <div class="slds-card__body">
+      <div class="slds-card__body_inner">
+        <lightning-tabset>
+          <lightning-tab label="Cases">
+            <ul class="slds-has-dividers_bottom-space">
+              <template for:each={cases} for:item="c">
+                <li class={c.className} key={c.CaseNumber}>
+                  <strong
+                    >Case <a href={c.recordUrl}>{c.CaseNumber}</a>, </strong
+                  ><lightning-formatted-date-time
+                    value={c.CreatedDate}
+                  ></lightning-formatted-date-time
+                  >, {c.StatusOrReason}
+                </li>
+              </template>
+            </ul>
+            <div class="case-count-text">
+              <span
+                class="
+                  slds-text-align_left
+                  slds-text-color_weak
+                  slds-text-body_small
+                "
+                >Showing {numberOfVisibleCases} of {allCases} cases</span
+              >
             </div>
-        </div>
-        <div class="slds-card__footer">
-            <a class="card-footer-action" onclick={removeCustomerFromCase}>Disconnect traveller</a>
-        </div>
-    </article>
+          </lightning-tab>
+          <lightning-tab label="Bookings">
+            Hello, world 120
+            <ul class="slds-has-dividers_bottom-space">
+              <lightning-accordion
+                class="example-accordion"
+                onsectiontoggle={handleToggleSection}
+                active-section-name="Booking"
+              >
+                <template for:each={bookings} for:item="b">
+                  <lightning-accordion-section
+                    name="A"
+                    label={b.flights}
+                    key={b.bookingReference}
+                  >
+                    <div>
+                      -------------------------------------------------------------
+                    </div>
+                    <table key={b.bookingReference}>
+                      <tr>
+                        <td>
+                          <div>
+                            <strong>Travelers</strong>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="slds-grid_pull-padded-large">
+                            <strong> {b.bookingReference}</strong>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                    <table key={b.bookingReference}>
+                      <thead>
+                        <tr>
+                          <th class="" scope="col">
+                            <div class="slds-truncate" title="Arrival">
+                              Full name
+                            </div>
+                          </th>
+                          <th class="" scope="col">
+                            <div class="slds-truncate" title="Arrival">
+                              EuroBonus
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <template
+                          title="Passengers"
+                          for:each={b.passengers}
+                          for:item="p"
+                        >
+                          <tr class="slds-hint-parent" key={p.euroBonusNumber}>
+                            <td data-label="Full Name">
+                              <div class="slds-truncate" title="Full Name">
+                                {p.firstName} {p.lastName}
+                              </div>
+                            </td>
+                            <td data-label="Eurobonus Number">
+                              <div class="slds-truncate" title="Full Name">
+                                {p.euroBonusNumber}
+                              </div>
+                            </td>
+                          </tr>
+                        </template>
+                      </tbody>
+                    </table>
+                    <div>
+                      -------------------------------------------------------------
+                    </div>
+                    <strong key={b.bookingReference}>Flights</strong>
+                    <table
+                      aria-label="Flight"
+                      key={b.bookingReference}
+                      title="f"
+                    >
+                      <thead>
+                        <tr>
+                          <th class="" scope="col">
+                            <div class="slds-truncate" title="Flight number">
+                              Flight number
+                            </div>
+                          </th>
+                          <th class="" scope="col">
+                            <div class="slds-truncate" title="Departure Time">
+                              Date
+                            </div>
+                          </th>
+                          <th class="" scope="col">
+                            <div class="slds-truncate" title="Booking Class">
+                              Bkg.class
+                            </div>
+                          </th>
+                          <th class="" scope="col">
+                            <div
+                              class="slds-truncate"
+                              title="Arrival And Departure"
+                            >
+                              O&D
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <template
+                          title="Flight"
+                          for:each={b.flights}
+                          for:item="f"
+                        >
+                          <tr class="slds-hint-parent" key={f.flightNumber}>
+                            <td data-label="Arrival Airport">
+                              <div class="slds-truncate" title="Flight Number">
+                                {f.flightNumber}
+                              </div>
+                            </td>
+                            <td data-label="Departure Date">
+                              <div class="slds-truncate" title="Departure Date">
+                                <lightning-formatted-date-time
+                                  value={f.scheduledDepartureTime}
+                                >
+                                </lightning-formatted-date-time>
+                              </div>
+                            </td>
+                            <td data-label="Booking Class">
+                              <div class="slds-truncate" title="Booking Class">
+                                {f.bookingClass}
+                              </div>
+                            </td>
+                            <td data-label="Arr-Dep Airport">
+                              <div
+                                class="slds-truncate"
+                                title="Arr-Dep Airport"
+                              >
+                                {f.departureAirport}-{f.arrivalAirport}
+                              </div>
+                            </td>
+                          </tr>
+                        </template>
+                      </tbody>
+                    </table>
+                  </lightning-accordion-section>
+                </template>
+              </lightning-accordion>
+            </ul>
+          </lightning-tab>
+        </lightning-tabset>
+      </div>
+    </div>
+    <div class="slds-card__footer">
+      <a class="card-footer-action" onclick={removeCustomerFromCase}
+        >Disconnect traveller</a
+      >
+    </div>
+  </article>
 </template>
