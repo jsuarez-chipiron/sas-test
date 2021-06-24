@@ -1,7 +1,7 @@
 /**
  * Service class for managing bookings and flights in Salesforce.
  */
-public with sharing class BookingService {
+public without sharing class BookingService {
   /**
    * Adds a booking to the case. If necessary booking or flight objects do not exist
    * in Salesforce, attempts to fetch them from TEDS and commit to SF DB.

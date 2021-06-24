@@ -1,4 +1,4 @@
-public with sharing class Accounts extends fflib_SObjectDomain {
+public without sharing class Accounts extends fflib_SObjectDomain {
   public Accounts(List<SObject> records) {
     super(records);
   }
