@@ -1,4 +1,4 @@
-public with sharing class Passengers extends fflib_SObjectDomain {
+public without sharing class Passengers extends fflib_SObjectDomain {
   public Passengers(List<SObject> records) {
     super(records);
   }
