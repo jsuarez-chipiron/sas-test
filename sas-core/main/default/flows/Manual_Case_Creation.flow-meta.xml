@@ -78,6 +78,13 @@
                 <elementReference>GetDepartmentQueueId.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UsersToNotify</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>CreateManualCase</targetReference>
         </connector>
