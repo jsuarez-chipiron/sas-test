@@ -112,7 +112,6 @@
             </div>
           </lightning-tab>
           <lightning-tab label="Bookings">
-            Hello, world 120
             <ul class="slds-has-dividers_bottom-space">
               <lightning-accordion
                 class="example-accordion"
@@ -122,7 +121,7 @@
                 <template for:each={bookings} for:item="b">
                   <lightning-accordion-section
                     name="A"
-                    label={b.bookingReference}
+                    label={b.accordionTitle}
                     key={b.bookingReference}
                   >
                     <div>
