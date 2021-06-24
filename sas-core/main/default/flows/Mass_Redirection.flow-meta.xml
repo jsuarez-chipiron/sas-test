@@ -270,6 +270,12 @@
                     <elementReference>DepartmentTeamList.middleValue</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>middleRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
