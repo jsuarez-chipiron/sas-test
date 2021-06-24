@@ -24,11 +24,15 @@
     <tabs>IRR_CommunicationLog__c</tabs>
     <tabs>Manual_Communication</tabs>
     <tabs>IRR_ManualOverride__c</tabs>
+    <tabs>IRR_EventLog__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SAS_IRR_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
             <tab>IRR_CommunicationLog__c</tab>
+        </mappings>
+        <mappings>
+            <tab>IRR_EventLog__c</tab>
         </mappings>
         <mappings>
             <tab>IRR_ManualOverride__c</tab>
