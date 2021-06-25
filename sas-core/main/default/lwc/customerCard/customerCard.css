@@ -1,7 +1,9 @@
 .case-count-text {
   margin: 5px 0 -5px 0;
 }
-
+.vertical-line {
+  border-top: 0.5px solid #bbb;
+}
 .case-bullet::before {
   content: "\2022"; /* \2022 is unicode for a bullet */
   display: inline-block;
@@ -31,4 +33,11 @@
   background-color: #ecebea;
   padding: 5px 20px;
   text-align: right;
+}
+.header-padding {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.table-text-header {
+  color: darkgrey;
 }
