@@ -121,16 +121,15 @@
                 <template for:each={bookings} for:item="b">
                   <lightning-accordion-section
                     name="A"
+                    class="slds-item case-bullet open-case-bullet"
                     label={b.accordionTitle}
                     key={b.bookingReference}
                   >
-                    <div>
-                      -------------------------------------------------------------
-                    </div>
+                    <div class="vertical-line"></div>
                     <table key={b.bookingReference}>
                       <tr>
                         <td>
-                          <div>
+                          <div class="header-padding">
                             <strong>Travelers</strong>
                           </div>
                         </td>
@@ -145,12 +144,18 @@
                       <thead>
                         <tr>
                           <th class="" scope="col">
-                            <div class="slds-truncate" title="Arrival">
+                            <div
+                              class="slds-truncate table-text-header"
+                              title="Arrival"
+                            >
                               Full name
                             </div>
                           </th>
                           <th class="" scope="col">
-                            <div class="slds-truncate" title="Arrival">
+                            <div
+                              class="slds-truncate table-text-header"
+                              title="Arrival"
+                            >
                               EuroBonus
                             </div>
                           </th>
@@ -177,10 +182,10 @@
                         </template>
                       </tbody>
                     </table>
-                    <div>
-                      -------------------------------------------------------------
+                    <div class="vertical-line"></div>
+                    <div class="header-padding">
+                      <strong key={b.bookingReference}>Flights</strong>
                     </div>
-                    <strong key={b.bookingReference}>Flights</strong>
                     <table
                       aria-label="Flight"
                       key={b.bookingReference}
@@ -189,23 +194,32 @@
                       <thead>
                         <tr>
                           <th class="" scope="col">
-                            <div class="slds-truncate" title="Flight number">
+                            <div
+                              class="slds-truncate table-text-header"
+                              title="Flight number"
+                            >
                               Flight number
                             </div>
                           </th>
                           <th class="" scope="col">
-                            <div class="slds-truncate" title="Departure Time">
+                            <div
+                              class="slds-truncate table-text-header"
+                              title="Departure Time"
+                            >
                               Date
                             </div>
                           </th>
                           <th class="" scope="col">
-                            <div class="slds-truncate" title="Booking Class">
+                            <div
+                              class="slds-truncate table-text-header"
+                              title="Booking Class"
+                            >
                               Bkg.class
                             </div>
                           </th>
                           <th class="" scope="col">
                             <div
-                              class="slds-truncate"
+                              class="slds-truncate table-text-header"
                               title="Arrival And Departure"
                             >
                               O&D
