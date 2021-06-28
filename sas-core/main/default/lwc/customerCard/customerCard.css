@@ -21,7 +21,21 @@
 .closed-case-bullet::before {
   color: #c9c7c5;
 }
-
+.booking-bullet::before {
+  content: "\2022"; /* \2022 is unicode for a bullet */
+  display: inline-block;
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 13px;
+  margin-right: 0.1em;
+  vertical-align: text-top;
+}
+.future-booking-bullet::before {
+  color: #2e844a;
+}
+.past-booking-bullet::before {
+  color: grey;
+}
 .slds-card__body {
   margin-bottom: 0;
 }

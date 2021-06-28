@@ -52,8 +52,6 @@ export default class CustomerCard extends LightningElement {
     ]
   })
   wiredRecord(value) {
-    console.log("apiName", this.objectApiName);
-    console.log("data", value.data);
     this.wiredRecordReference = value;
     const { data, error } = value;
     if (!error && data) {
@@ -75,12 +73,10 @@ export default class CustomerCard extends LightningElement {
     } else {
       this.accountId = undefined;
     }
-    console.log("accountId", this.accountId);
   }
 
   @wire(getAccountData, { accountId: "$accountId" })
   wiredAccount({ error, data }) {
-    console.log("get account data", data);
     if (!error && data != undefined && data.length > 0) {
       this.account = data[0];
       this.cardTitle = `${data[0].Name} (EB${data[0].FCS_EBLevel__c}${data[0].FCS_EBNumber__c})`;
@@ -92,7 +88,6 @@ export default class CustomerCard extends LightningElement {
 
   @wire(getCaseData, { accountId: "$accountId" })
   wiredCases({ error, data }) {
-    console.log("#wiredCases.start");
     if (!error && data != undefined && data.length > 0) {
       this.cases = data
         .map(function (elem) {
@@ -123,7 +118,6 @@ export default class CustomerCard extends LightningElement {
       this.numberOfVisibleCases = 0;
       this.allCases = 0;
     }
-    console.log("#wiredCases.end");
   }
 
   @wire(getBookingData, { accountId: "$accountId" })
@@ -154,8 +148,14 @@ export default class CustomerCard extends LightningElement {
     }
     if (!error && data != undefined && data.length > 0) {
       this.bookings = data.map(function (elem) {
+        var today = new Date();
+        var scheduleddate = new Date(elem.flights[0].scheduledDepartureTime);
         return {
           ...elem,
+          class:
+            scheduleddate >= today
+              ? "slds-item booking-bullet future-booking-bullet"
+              : "slds-item booking-bullet past-booking-bullet",
           accordionTitle: `${getDateToString(
             elem.flights[0].scheduledDepartureTime
           )} ${getAirportListForBooking(elem)}`,
@@ -174,7 +174,6 @@ export default class CustomerCard extends LightningElement {
   }
 
   async addCustomerToCase(searchString) {
-    console.log("#addCustomerToCase.start");
     this.showSpinner = true;
     try {
       let account = await findCustomer({
@@ -206,11 +205,9 @@ export default class CustomerCard extends LightningElement {
       this.error = error;
     }
     this.showSpinner = false;
-    console.log("#addCustomerToCase.end");
   }
 
   async removeCustomerFromCase() {
-    console.log("#removeCustomerToCase.start");
     this.showSpinner = true;
     try {
       const recordInput = {
@@ -237,7 +234,6 @@ export default class CustomerCard extends LightningElement {
     this.bookings = [];
     this.cases = [];
     this.caseIdForChats = undefined;
-    console.log("#removeCustomerToCase.end");
   }
 
   handlePressEnterKey(event) {
