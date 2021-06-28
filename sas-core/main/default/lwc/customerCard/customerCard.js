@@ -10,6 +10,7 @@ import ChatTranscript_EBNUMBER_FIELD from "@salesforce/schema/LiveChatTranscript
 import { getRecord } from "lightning/uiRecordApi";
 import findCustomer from "@salesforce/apex/FCS_IdentifyCustomerController.findCustomer";
 import updateRecordDataWithApex from "@salesforce/apex/FCS_IdentifyCustomerController.updateRecordDataWithApex";
+import { refreshApex } from "@salesforce/apex";
 
 export default class CustomerCard extends LightningElement {
   @api objectApiName;
@@ -19,6 +20,7 @@ export default class CustomerCard extends LightningElement {
   @track account = undefined;
   @track bookings = [];
   @track cases = [];
+  wiredRecordReference;
 
   // properties calculated from data
   @track allCases = 0;
@@ -44,9 +46,11 @@ export default class CustomerCard extends LightningElement {
       Case_EBNUMBER_FIELD
     ]
   })
-  wiredRecord({ error, data }) {
+  wiredRecord(value) {
     console.log("apiName", this.objectApiName);
-    console.log("data", data);
+    console.log("data", value.data);
+    this.wiredRecordReference = value;
+    const { data, error } = value;
     if (!error && data) {
       if (!data.fields.AccountId.value) {
         if (!!data.fields.FCS_EBNumber__c.value) {
@@ -150,6 +154,7 @@ export default class CustomerCard extends LightningElement {
           await updateRecordDataWithApex({
             jsonData: JSON.stringify(recordInput)
           });
+          refreshApex(this.wiredRecordReference);
         } catch (error) {
           this.error = error;
         }
@@ -178,6 +183,7 @@ export default class CustomerCard extends LightningElement {
             : this.recordId
       };
       await updateRecordDataWithApex({ jsonData: JSON.stringify(recordInput) });
+      refreshApex(this.wiredRecordReference);
     } catch (error) {
       this.error = error;
     }
