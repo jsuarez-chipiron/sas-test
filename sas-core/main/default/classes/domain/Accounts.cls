@@ -1,6 +1,7 @@
 public without sharing class Accounts extends fflib_SObjectDomain {
   public Accounts(List<SObject> records) {
     super(records);
+    Configuration.disableTriggerCRUDSecurity();
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
