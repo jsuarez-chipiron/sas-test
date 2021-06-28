@@ -20,6 +20,6 @@
     </values>
     <values>
         <field>Team_To_Assign__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Support Backoffice</value>
     </values>
 </CustomMetadata>

@@ -401,6 +401,11 @@
                 <label>Sales Control</label>
             </value>
             <value>
+                <fullName>Sales Control BOM</fullName>
+                <default>false</default>
+                <label>Sales Control BOM</label>
+            </value>
+            <value>
                 <fullName>Sales Information</fullName>
                 <default>false</default>
                 <label>Sales Information</label>
@@ -469,6 +474,21 @@
                 <fullName>STOPY</fullName>
                 <default>false</default>
                 <label>STOPY</label>
+            </value>
+            <value>
+                <fullName>Support Backoffice</fullName>
+                <default>false</default>
+                <label>Support Backoffice</label>
+            </value>
+            <value>
+                <fullName>Support International</fullName>
+                <default>false</default>
+                <label>Support International</label>
+            </value>
+            <value>
+                <fullName>Support Scandinavia</fullName>
+                <default>false</default>
+                <label>Support Scandinavia</label>
             </value>
             <value>
                 <fullName>Sykes Customer Care</fullName>

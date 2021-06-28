@@ -3154,6 +3154,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sales Control BOM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sales Information</fullName>
             <default>false</default>
         </values>
@@ -3167,6 +3171,18 @@
         </values>
         <values>
             <fullName>Star Alliance Upgrades</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Support Backoffice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Support International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Support Scandinavia</fullName>
             <default>false</default>
         </values>
         <values>
