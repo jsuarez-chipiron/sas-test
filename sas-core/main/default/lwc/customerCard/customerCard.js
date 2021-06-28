@@ -27,7 +27,6 @@ export default class CustomerCard extends LightningElement {
   @track cardTitle = "";
   accountId = undefined;
   caseIdForChats = undefined;
-  isChatTranscript = this.objectApiName === "LiveChatTranscript";
 
   // UI state
   @track showSpinner = false;
@@ -62,7 +61,7 @@ export default class CustomerCard extends LightningElement {
       } else {
         this.accountId = data.fields.AccountId.value;
       }
-      if (this.isChatTranscript) {
+      if (this.objectApiName === "LiveChatTranscript") {
         this.caseIdForChats = data.fields.CaseId.value;
       }
     } else {
@@ -140,7 +139,7 @@ export default class CustomerCard extends LightningElement {
       });
       if (account) {
         try {
-          if (this.isChatTranscript) {
+          if (this.objectApiName === "LiveChatTranscript") {
             console.log("#addCustomerFromCase.chatTranscript");
             const caseRecordInput = {
               fields: {
@@ -187,7 +186,7 @@ export default class CustomerCard extends LightningElement {
     console.log("#removeCustomerToCase.start");
     this.showSpinner = true;
     try {
-      if (this.isChatTranscript) {
+      if (this.objectApiName === "LiveChatTranscript") {
         console.log("#removeCustomerFromCase.chatTranscript");
         const caseRecordInput = {
           fields: {
