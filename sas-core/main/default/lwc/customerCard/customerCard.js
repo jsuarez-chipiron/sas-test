@@ -4,13 +4,13 @@ import getBookingData from "@salesforce/apex/CustomerCardController.getBookingDa
 import getCaseData from "@salesforce/apex/CustomerCardController.getCaseData";
 import Case_ACCOUNTID_FIELD from "@salesforce/schema/Case.AccountId";
 import Case_EBNUMBER_FIELD from "@salesforce/schema/Case.FCS_EBNumber__c";
-import Case_ID_FIELD from "@salesforce/schema/Case.Id";
 import ChatTranscript_ACCOUNTID_FIELD from "@salesforce/schema/LiveChatTranscript.AccountId";
 import ChatTranscript_CASEID_FIELD from "@salesforce/schema/LiveChatTranscript.CaseId";
 import ChatTranscript_EBNUMBER_FIELD from "@salesforce/schema/LiveChatTranscript.FCS_EBNumber__c";
-import ChatTranscript_ID_FIELD from "@salesforce/schema/LiveChatTranscript.Id";
-import { getRecord, updateRecord } from "lightning/uiRecordApi";
+import { getRecord } from "lightning/uiRecordApi";
 import findCustomer from "@salesforce/apex/FCS_IdentifyCustomerController.findCustomer";
+import updateRecordDataWithApex from "@salesforce/apex/FCS_IdentifyCustomerController.updateRecordDataWithApex";
+import { refreshApex } from "@salesforce/apex";
 
 export default class CustomerCard extends LightningElement {
   @api objectApiName;
@@ -20,6 +20,7 @@ export default class CustomerCard extends LightningElement {
   @track account = undefined;
   @track bookings = [];
   @track cases = [];
+  wiredRecordReference;
 
   // properties calculated from data
   @track allCases = 0;
@@ -27,7 +28,6 @@ export default class CustomerCard extends LightningElement {
   @track cardTitle = "";
   accountId = undefined;
   caseIdForChats = undefined;
-  isChatTranscript = this.objectApiName === "LiveChatTranscript";
 
   // UI state
   @track showSpinner = false;
@@ -51,9 +51,11 @@ export default class CustomerCard extends LightningElement {
       Case_EBNUMBER_FIELD
     ]
   })
-  wiredRecord({ error, data }) {
+  wiredRecord(value) {
     console.log("apiName", this.objectApiName);
-    console.log("data", data);
+    console.log("data", value.data);
+    this.wiredRecordReference = value;
+    const { data, error } = value;
     if (!error && data) {
       if (!data.fields.AccountId.value) {
         if (!!data.fields.FCS_EBNumber__c.value) {
@@ -67,7 +69,7 @@ export default class CustomerCard extends LightningElement {
       } else {
         this.accountId = data.fields.AccountId.value;
       }
-      if (this.isChatTranscript) {
+      if (this.objectApiName === "LiveChatTranscript") {
         this.caseIdForChats = data.fields.CaseId.value;
       }
     } else {
@@ -145,12 +147,10 @@ export default class CustomerCard extends LightningElement {
     }
     function getDateToString(dateTime) {
       var date = new Date(dateTime);
-      var month = (date.getMonth() + 1).toString();
-      month = month.length > 1 ? month : "0" + month;
+      var month = date.toLocaleString("default", { month: "short" });
       var day = date.getDate().toString();
       day = day.length > 1 ? day : "0" + day;
-
-      return day + "-" + month + "-" + date.getFullYear();
+      return day + " " + month + " " + date.getFullYear();
     }
     if (!error && data != undefined && data.length > 0) {
       this.bookings = data.map(function (elem) {
@@ -183,36 +183,19 @@ export default class CustomerCard extends LightningElement {
       });
       if (account) {
         try {
-          if (this.isChatTranscript) {
-            console.log("#addCustomerFromCase.chatTranscript");
-            const caseRecordInput = {
-              fields: {
-                [Case_ID_FIELD.fieldApiName]: this.caseIdForChats,
-                [Case_ACCOUNTID_FIELD.fieldApiName]: account.Id,
-                [Case_EBNUMBER_FIELD.fieldApiName]: account.FCS_EBNumber__c
-              }
-            };
-            const chatRecordInput = {
-              fields: {
-                [ChatTranscript_ID_FIELD.fieldApiName]: this.recordId,
-                [ChatTranscript_ACCOUNTID_FIELD.fieldApiName]: account.Id,
-                [ChatTranscript_EBNUMBER_FIELD.fieldApiName]:
-                  account.FCS_EBNumber__c
-              }
-            };
-            await updateRecord(chatRecordInput);
-            await updateRecord(caseRecordInput);
-          } else {
-            console.log("#addCustomerFromCase.notChatTranscript");
-            const caseRecordInput = {
-              fields: {
-                [Case_ID_FIELD.fieldApiName]: this.recordId,
-                [Case_ACCOUNTID_FIELD.fieldApiName]: account.Id,
-                [Case_EBNUMBER_FIELD.fieldApiName]: account.FCS_EBNumber__c
-              }
-            };
-            await updateRecord(caseRecordInput);
-          }
+          const recordInput = {
+            recordId: this.recordId,
+            accountId: account.Id,
+            euroBonusNumber: account.FCS_EBNumber__c,
+            caseId:
+              this.objectApiName === "LiveChatTranscript"
+                ? this.caseIdForChats
+                : this.recordId
+          };
+          await updateRecordDataWithApex({
+            jsonData: JSON.stringify(recordInput)
+          });
+          refreshApex(this.wiredRecordReference);
         } catch (error) {
           this.error = error;
         }
@@ -230,35 +213,18 @@ export default class CustomerCard extends LightningElement {
     console.log("#removeCustomerToCase.start");
     this.showSpinner = true;
     try {
-      if (this.isChatTranscript) {
-        console.log("#removeCustomerFromCase.chatTranscript");
-        const caseRecordInput = {
-          fields: {
-            [Case_ID_FIELD.fieldApiName]: this.caseIdForChats,
-            [Case_ACCOUNTID_FIELD.fieldApiName]: "",
-            [Case_EBNUMBER_FIELD.fieldApiName]: ""
-          }
-        };
-        const chatRecordInput = {
-          fields: {
-            [ChatTranscript_ID_FIELD.fieldApiName]: this.recordId,
-            [ChatTranscript_ACCOUNTID_FIELD.fieldApiName]: "",
-            [ChatTranscript_EBNUMBER_FIELD.fieldApiName]: ""
-          }
-        };
-        await updateRecord(chatRecordInput);
-        await updateRecord(caseRecordInput);
-      } else {
-        console.log("#removeCustomerFromCase.notChatTranscript");
-        const caseRecordInput = {
-          fields: {
-            [Case_ID_FIELD.fieldApiName]: this.recordId,
-            [Case_ACCOUNTID_FIELD.fieldApiName]: "",
-            [Case_EBNUMBER_FIELD.fieldApiName]: ""
-          }
-        };
-        await updateRecord(caseRecordInput);
-      }
+      const recordInput = {
+        recordId: this.recordId,
+        accountId: null,
+        euroBonusNumber: null,
+        codsId: null,
+        caseId:
+          this.objectApiName === "LiveChatTranscript"
+            ? this.caseIdForChats
+            : this.recordId
+      };
+      await updateRecordDataWithApex({ jsonData: JSON.stringify(recordInput) });
+      refreshApex(this.wiredRecordReference);
     } catch (error) {
       this.error = error;
     }
@@ -270,6 +236,7 @@ export default class CustomerCard extends LightningElement {
     this.account = undefined;
     this.bookings = [];
     this.cases = [];
+    this.caseIdForChats = undefined;
     console.log("#removeCustomerToCase.end");
   }
 
