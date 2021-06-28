@@ -141,17 +141,21 @@ export default class CustomerCard extends LightningElement {
     }
     function getDateToString(dateTime) {
       var date = new Date(dateTime);
-      var month = (date.getMonth() + 1).toString();
-      month = month.length > 1 ? month : "0" + month;
+      var month = date.toLocaleString("default", { month: "short" });
       var day = date.getDate().toString();
       day = day.length > 1 ? day : "0" + day;
-
-      return day + "-" + month + "-" + date.getFullYear();
+      return day + " " + month + " " + date.getFullYear();
     }
     if (!error && data != undefined && data.length > 0) {
       this.bookings = data.map(function (elem) {
+        var today = new Date();
+        var scheduleddate = new Date(elem.flights[0].scheduledDepartureTime);
         return {
           ...elem,
+          class:
+            scheduleddate >= today
+              ? "slds-item booking-bullet future-booking-bullet"
+              : "slds-item booking-bullet past-booking-bullet",
           accordionTitle: `${getDateToString(
             elem.flights[0].scheduledDepartureTime
           )} ${getAirportListForBooking(elem)}`,

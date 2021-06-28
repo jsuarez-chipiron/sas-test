@@ -121,7 +121,7 @@
                 <template for:each={bookings} for:item="b">
                   <lightning-accordion-section
                     name="A"
-                    class="slds-item case-bullet open-case-bullet"
+                    class={b.class}
                     label={b.accordionTitle}
                     key={b.bookingReference}
                   >
