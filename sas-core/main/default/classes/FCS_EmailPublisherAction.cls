@@ -37,19 +37,18 @@ global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaults
           Department__c,
           Team__c,
           IsRedirected__c,
-          IsEscalated__c
+          IsEscalated__c,
+          Origin
         FROM Case
         WHERE Id = :sendEmailDefaults.getContextId()
       ];
       EmailMessage emailMessage = (EmailMessage) sendEmailDefaults.getTargetSObject();
-      if (cse != null && (cse.IsRedirected__c || cse.IsEscalated__c)) {
+      if (cse != null && (cse.IsRedirected__c || cse.IsEscalated__c || cse.Origin == 'Manual'|| cse.Origin == 'Internal - New Refund Request Form')) {
         List<From_email_based_on_Dept_and_Teams__c> lstFromEMails = [
           SELECT Id, From_Email__c
           FROM From_email_based_on_Dept_and_Teams__c
           WHERE
             Case_Department__c = :cse.Department__c
-            AND Case_Team__c = :cse.Team__c
-          ORDER BY Priority__c
         ];
         if (!lstFromEMails.isEmpty() && lstFromEMails.size() > 0) {
           emailMessage.ValidatedFromAddress = lstFromEMails[0].From_Email__c;
