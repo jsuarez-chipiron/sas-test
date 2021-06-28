@@ -40,7 +40,6 @@ export default class CustomerCard extends LightningElement {
     this.activeSectionMessage =
       "Open section name:  " + event.detail.openSections;
   }
-
   @wire(getRecord, {
     recordId: "$recordId",
     optionalFields: [
@@ -159,7 +158,14 @@ export default class CustomerCard extends LightningElement {
           ...elem,
           accordionTitle: `${getDateToString(
             elem.flights[0].scheduledDepartureTime
-          )} ${getAirportListForBooking(elem)}`
+          )} ${getAirportListForBooking(elem)}`,
+          passengers: elem.passengers.map((p) => ({
+            ...p,
+            ssrs:
+              p.specialServiceRequests && p.specialServiceRequests.length > 0
+                ? p.specialServiceRequests[0]
+                : ""
+          }))
         };
       });
     } else {
