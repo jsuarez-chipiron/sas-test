@@ -35,6 +35,11 @@
                 <default>false</default>
                 <label>Pandion</label>
             </value>
+            <value>
+                <fullName>Refunds BOM</fullName>
+                <default>false</default>
+                <label>Refunds BOM</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

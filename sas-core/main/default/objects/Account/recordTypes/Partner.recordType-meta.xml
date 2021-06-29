@@ -2,8 +2,9 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Partner</fullName>
     <active>true</active>
+    <compactLayoutAssignment>SAS_Account_Layout</compactLayoutAssignment>
     <label>B2B - Partner</label>
-   <picklistValues>
+    <picklistValues>
         <picklist>FCS_EBLevel__c</picklist>
         <values>
             <fullName>B</fullName>

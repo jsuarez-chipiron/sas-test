@@ -351,6 +351,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gift Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Group Sales</fullName>
             <default>false</default>
         </values>
@@ -605,6 +609,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>FCS_CaseSubReason__c</picklist>
+        <values>
+            <fullName>14 Day Money Back</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>AMEX</fullName>
             <default>false</default>
@@ -883,6 +891,10 @@
         </values>
         <values>
             <fullName>Change profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Changed Email</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1314,6 +1326,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>MMB Refund Process</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Make cancellation</fullName>
             <default>false</default>
         </values>
@@ -1402,11 +1418,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Not Received - Resend</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>On corporate account</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Onboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online Email</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1435,6 +1459,10 @@
         </values>
         <values>
             <fullName>Partial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Past Date PNR</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1579,6 +1607,10 @@
         </values>
         <values>
             <fullName>Reprotection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reserved Amount</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1783,6 +1815,10 @@
         </values>
         <values>
             <fullName>Threat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket Refund - Expired Voucher - Issue New</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2710,6 +2746,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Sykes Customer Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - System %26 Tariff</fullName>
             <default>false</default>
         </values>
@@ -2731,6 +2771,10 @@
         </values>
         <values>
             <fullName>Form - Refund Travel Agent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal - New Refund Request Form</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3014,11 +3058,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>OC Customer Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>OC Error Handling</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>OC General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OC Gift Card</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3102,6 +3154,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sales Control BOM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sales Information</fullName>
             <default>false</default>
         </values>
@@ -3115,6 +3171,26 @@
         </values>
         <values>
             <fullName>Star Alliance Upgrades</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Support Backoffice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Support International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Support Scandinavia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sykes Customer Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sykes Voucher</fullName>
             <default>false</default>
         </values>
         <values>

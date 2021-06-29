@@ -378,12 +378,15 @@ private class FCS_CaseHandler_Test {
 
   /**
         Test postive scenario of EuroBonus Account tagged to Case
-        
+        TODO
     */
   @isTest
   static void testAssignEurobonusAccountToCase() {
     List<Account> lstAcc = FCS_TestDataFactory.createFrequentFlyers(1);
     lstAcc[0].FCS_EBNumber__c = '123789';
+
+    Test.startTest();
+    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
     insert lstAcc;
 
     Case cse = new Case();
@@ -393,17 +396,21 @@ private class FCS_CaseHandler_Test {
 
     insert cse;
 
+    Test.stopTest();
     Case cse1 = [SELECT Id, FCS_EBNumber__c FROM Case LIMIT 1];
     System.AssertEquals('123789', cse1.FCS_EBNumber__c);
   }
   /**
         Test negative scenario of EuroBonus Account tagged to Case
-        
+        TODO
     */
   @isTest
   static void testnotAssignEurobonusAccountToCase() {
     List<Account> lstAcc = FCS_TestDataFactory.createFrequentFlyers(1);
     lstAcc[0].FCS_EBNumber__c = '123789';
+
+    Test.startTest();
+    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
     insert lstAcc;
 
     Case cse = new Case();
@@ -413,6 +420,7 @@ private class FCS_CaseHandler_Test {
 
     insert cse;
 
+    Test.stopTest();
     Case cse1 = [SELECT Id, FCS_EBNumber__c FROM Case LIMIT 1];
     System.AssertEquals(null, cse1.FCS_EBNumber__c);
   }
@@ -494,89 +502,6 @@ private class FCS_CaseHandler_Test {
     System.assert(String.isEmpty(testCaseAfterTrigger.Department__c));
     System.assert(String.isEmpty(testCaseAfterTrigger.Type));
   }
-
-  /* @IsTest
-    static void enrichCaseFromFormSuppliedEmailShouldNotChangeIfIncorrectFormatInForm() {
-        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
-        testCase.Subject = 'sports-trips';
-        testCase.SuppliedEmail = 'gruppresor.se@sas.se';        
-        testCase.Description = 'contact-person : Fr\nemail : thisiswrongformat\naddress : Tuborgvej 5\nco-address :';
-
-        Test.startTest();
-        insert testCase;
-        Test.stopTest();
-
-        Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
-
-        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'gruppresor.se@sas.se');
-
-    }
-
-    @IsTest
-    static void enrichCaseFromFormSuppliedEmailShouldChangeIfCorrectFormatInForm() {
-        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
-        testCase.Subject = 'sports-trips';
-        testCase.SuppliedEmail = 'gruppresor.se@sas.se';        
-        testCase.Description = 'contact-person : Fr\nemail : correctformat@example.com\naddress : Tuborgvej 5\nco-address :';
-
-        Test.startTest();
-        insert testCase;
-        Test.stopTest();
-
-        Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
-
-        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'correctformat@example.com');
-
-    }
-
-    @IsTest
-    static void enrichCaseDataWithFormDataShouldNotRunIfIncomingEmailAddressAsVerificationFalse() {
-        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
-        testCase.Subject = 'sports-trips';
-        testCase.SuppliedEmail = 'test.email@example.com';
-
-        Test.startTest();
-        insert testCase;
-        Test.stopTest();
-
-        Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
-
-        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'test.email@example.com');
-
-    }
-
-    @IsTest
-    static void enrichCaseDataWithFormDataIfCaseFromKeywordsFalse() {
-        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
-        testCase.Subject = 'not part of caseFromKeywords';
-        testCase.SuppliedEmail = 'test.email@example.com';
-
-        Test.startTest();
-        insert testCase;
-        Test.stopTest();
-
-        Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
-
-        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'test.email@example.com');
-
-    }
-
-    @IsTest
-    static void enrichCaseDataWithFormDataIfDescriptionDoesNotContainSubStringBetweenInfoDoNotChangeSuppliedEmail() {
-        Case testCase = FCS_TestDataFactory.createCases(1, null, null, null, null)[0];
-        testCase.Subject = 'group-trips';
-        testCase.SuppliedEmail = 'gruppresor.se@sas.se';
-        testCase.Description = 'subject and from email indicate that email is from form but it is not';
-
-        Test.startTest();
-        insert testCase;
-        Test.stopTest();
-
-        Case testCaseAfterTrigger = [SELECT SuppliedEmail FROM Case Where Id = :testCase.Id][0];
-
-        System.assertEquals(testCaseAfterTrigger.SuppliedEmail, 'gruppresor.se@sas.se');
-
-    } */
 
   @IsTest
   static void enrichMissingPointsCaseDataIfNrOfFltsNaNIgnore() {

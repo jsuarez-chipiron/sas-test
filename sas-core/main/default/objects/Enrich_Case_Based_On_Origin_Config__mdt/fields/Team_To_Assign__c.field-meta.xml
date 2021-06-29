@@ -291,9 +291,19 @@
                 <label>OC Bank Transfer</label>
             </value>
             <value>
+                <fullName>OC Customer Care</fullName>
+                <default>false</default>
+                <label>OC Customer Care</label>
+            </value>
+            <value>
                 <fullName>OC General</fullName>
                 <default>false</default>
                 <label>OC General</label>
+            </value>
+            <value>
+                <fullName>OC Gift Card</fullName>
+                <default>false</default>
+                <label>OC Gift Card</label>
             </value>
             <value>
                 <fullName>OC Groups</fullName>
@@ -391,6 +401,11 @@
                 <label>Sales Control</label>
             </value>
             <value>
+                <fullName>Sales Control BOM</fullName>
+                <default>false</default>
+                <label>Sales Control BOM</label>
+            </value>
+            <value>
                 <fullName>Sales Information</fullName>
                 <default>false</default>
                 <label>Sales Information</label>
@@ -459,6 +474,31 @@
                 <fullName>STOPY</fullName>
                 <default>false</default>
                 <label>STOPY</label>
+            </value>
+            <value>
+                <fullName>Support Backoffice</fullName>
+                <default>false</default>
+                <label>Support Backoffice</label>
+            </value>
+            <value>
+                <fullName>Support International</fullName>
+                <default>false</default>
+                <label>Support International</label>
+            </value>
+            <value>
+                <fullName>Support Scandinavia</fullName>
+                <default>false</default>
+                <label>Support Scandinavia</label>
+            </value>
+            <value>
+                <fullName>Sykes Customer Care</fullName>
+                <default>false</default>
+                <label>Sykes Customer Care</label>
+            </value>
+            <value>
+                <fullName>Sykes Voucher</fullName>
+                <default>false</default>
+                <label>Sykes Voucher</label>
             </value>
             <value>
                 <fullName>System &amp; Tariff</fullName>

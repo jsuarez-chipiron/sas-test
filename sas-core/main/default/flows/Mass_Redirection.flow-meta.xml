@@ -4,8 +4,8 @@
         <description>Posts the internal comments to the chatter feed on the case</description>
         <name>CaseChatterFeed</name>
         <label>CaseChatterFeed</label>
-        <locationX>1054</locationX>
-        <locationY>208</locationY>
+        <locationX>138</locationX>
+        <locationY>1118</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
@@ -21,22 +21,45 @@
         <inputParameters>
             <name>subjectNameOrId</name>
             <value>
-                <elementReference>Loop_through_selected_Cases</elementReference>
+                <elementReference>Loop_through_selected_Cases.Id</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <description>Since we can get maximum 100 records in flow due to governor limits, so using apex</description>
+        <name>Get_Caes_from_Apex</name>
+        <label>Get Caes from Apex</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <actionName>FCS_MassRedirection</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Loop_through_selected_Cases</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>caseIds</name>
+            <value>
+                <elementReference>ids</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>lstCasesfromapex</assignToReference>
+            <name>lstCases</name>
+        </outputParameters>
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
         <name>Add_Case_to_new_List</name>
         <label>Add Case to new List</label>
-        <locationX>1055</locationX>
-        <locationY>50</locationY>
+        <locationX>138</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>CasesToUpdate</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Case_in_loop</elementReference>
+                <elementReference>Loop_through_selected_Cases</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -46,38 +69,38 @@
     <assignments>
         <name>Assign_Case_Values</name>
         <label>Assign Case Values</label>
-        <locationX>722</locationX>
-        <locationY>50</locationY>
+        <locationX>138</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
-            <assignToReference>Case_in_loop.Department__c</assignToReference>
+            <assignToReference>Loop_through_selected_Cases.Department__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DepartmentTeamList.topValue</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Case_in_loop.Team__c</assignToReference>
+            <assignToReference>Loop_through_selected_Cases.Team__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DepartmentTeamList.middleValue</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Case_in_loop.IsRedirected__c</assignToReference>
+            <assignToReference>Loop_through_selected_Cases.IsRedirected__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Case_in_loop.RecordTypeId</assignToReference>
+            <assignToReference>Loop_through_selected_Cases.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>NewRecordType</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Case_in_loop.OwnerId</assignToReference>
+            <assignToReference>Loop_through_selected_Cases.OwnerId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>GetDepartmentQueueId.Id</elementReference>
@@ -91,8 +114,8 @@
         <description>Verify that cases have been selected</description>
         <name>Verify_Selected_Records</name>
         <label>Verify Selected Records</label>
-        <locationX>303</locationX>
-        <locationY>314</locationY>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>SelectedRecords</name>
@@ -116,12 +139,12 @@
     <loops>
         <name>Loop_through_selected_Cases</name>
         <label>Loop through selected Cases</label>
-        <locationX>772</locationX>
-        <locationY>312</locationY>
-        <collectionReference>ids</collectionReference>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <collectionReference>lstCasesfromapex</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Case_in_loop</targetReference>
+            <targetReference>Assign_Case_Values</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Update_selected_Cases</targetReference>
@@ -136,7 +159,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -147,34 +170,13 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Case_in_loop</name>
-        <label>Case in loop</label>
-        <locationX>500</locationX>
-        <locationY>49</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Assign_Case_Values</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Loop_through_selected_Cases</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>GetDepartmentQueueId</name>
         <label>GetDepartmentQueueId</label>
-        <locationX>585</locationX>
-        <locationY>319</locationY>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Loop_through_selected_Cases</targetReference>
+            <targetReference>Get_Caes_from_Apex</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -191,8 +193,8 @@
     <recordUpdates>
         <name>Update_selected_Cases</name>
         <label>Update selected Cases</label>
-        <locationX>1070</locationX>
-        <locationY>321</locationY>
+        <locationX>50</locationX>
+        <locationY>1334</locationY>
         <connector>
             <targetReference>Success_Confirmation</targetReference>
         </connector>
@@ -203,8 +205,8 @@
         <description>To redirect multiple cases</description>
         <name>Mass_Redirection</name>
         <label>Mass Redirection</label>
-        <locationX>176</locationX>
-        <locationY>311</locationY>
+        <locationX>182</locationX>
+        <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -268,6 +270,12 @@
                     <elementReference>DepartmentTeamList.middleValue</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>middleRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -285,8 +293,8 @@
     <screens>
         <name>Success_Confirmation</name>
         <label>Success Confirmation</label>
-        <locationX>1238</locationX>
-        <locationY>321</locationY>
+        <locationX>50</locationX>
+        <locationY>1454</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -299,8 +307,8 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>152</locationY>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Mass_Redirection</targetReference>
         </connector>
@@ -309,8 +317,8 @@
     <subflows>
         <name>CaseRecordType</name>
         <label>CaseRecordType</label>
-        <locationX>433</locationX>
-        <locationY>318</locationY>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
         <connector>
             <targetReference>GetDepartmentQueueId</targetReference>
         </connector>
@@ -347,6 +355,14 @@
         <isCollection>true</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>lstCasesfromapex</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Case</objectType>
     </variables>
     <variables>
         <name>NewRecordType</name>

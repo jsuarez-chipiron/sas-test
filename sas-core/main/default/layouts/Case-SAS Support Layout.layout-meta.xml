@@ -427,6 +427,10 @@
         <fields>CREATEDBY_USER</fields>
         <relatedList>RelatedArticleList</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>CaseToBooking__c.Case__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

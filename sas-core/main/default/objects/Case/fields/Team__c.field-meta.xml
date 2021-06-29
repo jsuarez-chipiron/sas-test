@@ -301,6 +301,11 @@
                 <label>OC Bank Transfer</label>
             </value>
             <value>
+                <fullName>OC Customer Care</fullName>
+                <default>false</default>
+                <label>OC Customer Care</label>
+            </value>
+            <value>
                 <fullName>OC Error Handling</fullName>
                 <default>false</default>
                 <label>OC Error Handling</label>
@@ -309,6 +314,11 @@
                 <fullName>OC General</fullName>
                 <default>false</default>
                 <label>OC General</label>
+            </value>
+            <value>
+                <fullName>OC Gift Card</fullName>
+                <default>false</default>
+                <label>OC Gift Card</label>
             </value>
             <value>
                 <fullName>OC Groups Europe</fullName>
@@ -406,6 +416,11 @@
                 <label>Sales Control</label>
             </value>
             <value>
+                <fullName>Sales Control BOM</fullName>
+                <default>false</default>
+                <label>Sales Control BOM</label>
+            </value>
+            <value>
                 <fullName>Sales Information</fullName>
                 <default>false</default>
                 <label>Sales Information</label>
@@ -474,6 +489,31 @@
                 <fullName>STOPY</fullName>
                 <default>false</default>
                 <label>STOPY</label>
+            </value>
+            <value>
+                <fullName>Support Backoffice</fullName>
+                <default>false</default>
+                <label>Support Backoffice</label>
+            </value>
+            <value>
+                <fullName>Support International</fullName>
+                <default>false</default>
+                <label>Support International</label>
+            </value>
+            <value>
+                <fullName>Support Scandinavia</fullName>
+                <default>false</default>
+                <label>Support Scandinavia</label>
+            </value>
+            <value>
+                <fullName>Sykes Customer Care</fullName>
+                <default>false</default>
+                <label>Sykes Customer Care</label>
+            </value>
+            <value>
+                <fullName>Sykes Voucher</fullName>
+                <default>false</default>
+                <label>Sykes Voucher</label>
             </value>
             <value>
                 <fullName>System &amp; Tariff</fullName>
@@ -567,11 +607,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC Customer Care</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>OC Error Handling</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>OC General</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>OC Gift Card</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
@@ -602,6 +650,14 @@
             <valueName>OC Waivers</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>Sykes Customer Care</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>Sykes Voucher</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
             <valueName>Bank Payment</valueName>
         </valueSettings>
@@ -624,6 +680,10 @@
         <valueSettings>
             <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
             <valueName>TAWEB</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Control BOM</controllingFieldValue>
+            <valueName>Sales Control BOM</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
@@ -691,6 +751,18 @@
         <valueSettings>
             <controllingFieldValue>Care</controllingFieldValue>
             <valueName>SGH Bag SE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Support Backoffice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Support International</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Support Scandinavia</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
