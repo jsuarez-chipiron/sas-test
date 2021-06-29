@@ -11,8 +11,9 @@ import { getRecord } from "lightning/uiRecordApi";
 import findCustomer from "@salesforce/apex/FCS_IdentifyCustomerController.findCustomer";
 import updateRecordDataWithApex from "@salesforce/apex/FCS_IdentifyCustomerController.updateRecordDataWithApex";
 import { refreshApex } from "@salesforce/apex";
+import { NavigationMixin } from "lightning/navigation";
 
-export default class CustomerCard extends LightningElement {
+export default class CustomerCard extends NavigationMixin(LightningElement) {
   @api objectApiName;
   @api recordId;
 
@@ -40,6 +41,17 @@ export default class CustomerCard extends LightningElement {
   handleToggleSection(event) {
     this.activeSectionMessage =
       "Open section name:  " + event.detail.openSections;
+  }
+  // Navigate to view case Page
+  navigateToCaseViewPage(event) {
+    this[NavigationMixin.Navigate]({
+      type: "standard__recordPage",
+      attributes: {
+        recordId: event.target.dataset.id,
+        objectApiName: "Case",
+        actionName: "view"
+      }
+    });
   }
   @wire(getRecord, {
     recordId: "$recordId",
