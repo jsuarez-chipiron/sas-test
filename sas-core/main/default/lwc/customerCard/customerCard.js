@@ -21,6 +21,7 @@ export default class CustomerCard extends LightningElement {
   @track bookings = [];
   @track cases = [];
   wiredRecordReference;
+  wiredBookingsReference;
 
   // properties calculated from data
   @track allCases = 0;
@@ -121,7 +122,9 @@ export default class CustomerCard extends LightningElement {
   }
 
   @wire(getBookingData, { accountId: "$accountId" })
-  wiredBookings({ error, data }) {
+  wiredBookings(value) {
+    this.wiredBookingsReference = value;
+    const { data, error } = value;
     function getAirportListForBooking(elem) {
       if (!elem || !elem.flights || elem.flights.length < 1) {
         return "";
@@ -195,6 +198,9 @@ export default class CustomerCard extends LightningElement {
             jsonData: JSON.stringify(recordInput)
           });
           refreshApex(this.wiredRecordReference);
+          // Force refetch of bookings after 5s so that all fetches and DML have had time to finish
+          // FIXME: Make booking data fetches awaitable so that we can remove this hack
+          this.setTimeout(() => refreshApex(this.wiredBookingsReference), 5000);
         } catch (error) {
           this.error = error;
         }
