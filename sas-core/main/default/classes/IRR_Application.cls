@@ -96,7 +96,9 @@ public class IRR_Application {
                             'flightCancellation' => new C_Application.EventDefinition(
                                     IRR_MOD_CancelInfo.class, IRR_EVT_CancelProcessor.Constructor.class),
                             'manualCommunication' => new C_Application.EventDefinition(
-                                    IRR_MOD_ManualRequest.class, IRR_EVT_ManualProcessor.Constructor.class)
+                                    IRR_MOD_ManualRequest.class, IRR_EVT_ManualProcessor.Constructor.class),
+                            'automatedCommunication' => new C_Application.EventDefinition(
+                                    IRR_MOD_AutomatedRequest.class, IRR_EVT_AutomatedProcessor.Constructor.class)
                     }
             );
 

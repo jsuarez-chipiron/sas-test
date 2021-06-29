@@ -27,6 +27,10 @@ public class IRR_MOD_SegmentInfo {
     public String departureTimeLocal { get; set; }
     @AuraEnabled
     public String arrivalTimeLocal { get; set; }
+    @AuraEnabled
+    public String departureTimeUTC { get; set; }
+    @AuraEnabled
+    public String arrivalTimeUTC { get; set; }
 
     @AuraEnabled
     public Boolean isConfirmed { get; set; }

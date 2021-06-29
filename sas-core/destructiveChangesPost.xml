@@ -13,8 +13,5 @@
 -->
 
 <!-- 2020-02-16 Delete permission set and replace with new one using SF-licence to be able to set tab visibilities -->
-	<types>
-		<members>Social_Media_User</members>
-		<name>PermissionSet</name>
-	</types>
+
 </Package>
