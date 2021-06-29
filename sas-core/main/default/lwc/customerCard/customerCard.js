@@ -200,7 +200,7 @@ export default class CustomerCard extends LightningElement {
           refreshApex(this.wiredRecordReference);
           // Force refetch of bookings after 5s so that all fetches and DML have had time to finish
           // FIXME: Make booking data fetches awaitable so that we can remove this hack
-          this.setTimeout(() => refreshApex(this.wiredBookingsReference), 5000);
+          setTimeout(() => refreshApex(this.wiredBookingsReference), 5000);
         } catch (error) {
           this.error = error;
         }
