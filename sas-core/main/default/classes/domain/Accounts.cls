@@ -58,7 +58,13 @@ public without sharing class Accounts extends fflib_SObjectDomain {
 
   private void fetchBookingsFromTEDS() {
     Account acc = (Account) Records[0];
-    if (acc.FCS_EBNumber__c != null) {
+    if (
+      acc.FCS_EBNumber__c != null &&
+      !System.isFuture() &&
+      !System.isBatch() &&
+      !System.isQueueable()
+    ) {
+      // Guard against nesting futures. FIXME: update logic so that this isn't needed
       BookingService.fetchBookingsByEBNumber(acc.FCS_EBNumber__c);
     }
   }
