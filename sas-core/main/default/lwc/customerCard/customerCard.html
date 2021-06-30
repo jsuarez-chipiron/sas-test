@@ -92,7 +92,10 @@
               <template for:each={cases} for:item="c">
                 <li class={c.className} key={c.CaseNumber}>
                   <strong
-                    >Case <a href={c.recordUrl}>{c.CaseNumber}</a>, </strong
+                    >Case&nbsp;
+                    <a onclick={navigateToCaseViewPage} data-id={c.Id}
+                      >{c.CaseNumber}</a
+                    >, </strong
                   ><lightning-formatted-date-time
                     value={c.CreatedDate}
                   ></lightning-formatted-date-time

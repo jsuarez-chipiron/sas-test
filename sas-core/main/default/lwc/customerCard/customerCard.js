@@ -11,8 +11,9 @@ import { getRecord } from "lightning/uiRecordApi";
 import findCustomer from "@salesforce/apex/FCS_IdentifyCustomerController.findCustomer";
 import updateRecordDataWithApex from "@salesforce/apex/FCS_IdentifyCustomerController.updateRecordDataWithApex";
 import { refreshApex } from "@salesforce/apex";
+import { NavigationMixin } from "lightning/navigation";
 
-export default class CustomerCard extends LightningElement {
+export default class CustomerCard extends NavigationMixin(LightningElement) {
   @api objectApiName;
   @api recordId;
 
@@ -21,6 +22,7 @@ export default class CustomerCard extends LightningElement {
   @track bookings = [];
   @track cases = [];
   wiredRecordReference;
+  wiredBookingsReference;
 
   // properties calculated from data
   @track allCases = 0;
@@ -39,6 +41,17 @@ export default class CustomerCard extends LightningElement {
   handleToggleSection(event) {
     this.activeSectionMessage =
       "Open section name:  " + event.detail.openSections;
+  }
+  // Navigate to view case Page
+  navigateToCaseViewPage(event) {
+    this[NavigationMixin.Navigate]({
+      type: "standard__recordPage",
+      attributes: {
+        recordId: event.target.dataset.id,
+        objectApiName: "Case",
+        actionName: "view"
+      }
+    });
   }
   @wire(getRecord, {
     recordId: "$recordId",
@@ -121,7 +134,9 @@ export default class CustomerCard extends LightningElement {
   }
 
   @wire(getBookingData, { accountId: "$accountId" })
-  wiredBookings({ error, data }) {
+  wiredBookings(value) {
+    this.wiredBookingsReference = value;
+    const { data, error } = value;
     function getAirportListForBooking(elem) {
       if (!elem || !elem.flights || elem.flights.length < 1) {
         return "";
@@ -195,6 +210,9 @@ export default class CustomerCard extends LightningElement {
             jsonData: JSON.stringify(recordInput)
           });
           refreshApex(this.wiredRecordReference);
+          // Force refetch of bookings after 5s so that all fetches and DML have had time to finish
+          // FIXME: Make booking data fetches awaitable so that we can remove this hack
+          setTimeout(() => refreshApex(this.wiredBookingsReference), 5000);
         } catch (error) {
           this.error = error;
         }
