@@ -773,7 +773,13 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     List<Case> newCases,
     List<Case> oldCases
   ) {
-    if (newCases.size() == 1) {
+    if (
+      newCases.size() == 1 &&
+      !System.isFuture() &&
+      !System.isBatch() &&
+      !System.isQueueable()
+    ) {
+      // FIXME: Make sure that the future's cannot be called again in a trigger.
       Case c = newCases[0];
       if (c.AccountId != null) {
         if (oldCases == null || (c.AccountId != oldCases[0].AccountId)) {

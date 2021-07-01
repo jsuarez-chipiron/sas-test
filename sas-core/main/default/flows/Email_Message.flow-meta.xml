@@ -734,7 +734,7 @@
                 <leftValueReference>myVariable_current.FromAddress</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>salesforce_noreply@sas.se</stringValue>
+                    <stringValue>no-reply@flysas.com</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -923,7 +923,7 @@
                 <stringValue>[EmailMessage].Parent.Owner:User.FirstName + &apos; &apos; + [EmailMessage].Parent.Owner:User.LastName</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_10_myRule_9_A1_0355794845</name>
+        <name>formula_10_myRule_9_A1_6577901134</name>
         <dataType>String</dataType>
         <expression>{!myVariable_current.Parent.Owner:User.FirstName} + &apos; &apos; + {!myVariable_current.Parent.Owner:User.LastName}</expression>
     </formulas>
@@ -934,7 +934,7 @@
                 <stringValue>IF(ISBLANK([EmailMessage].Parent.Number_of_Email_Messages_Sent__c ), 1, [EmailMessage].Parent.Number_of_Email_Messages_Sent__c +1)</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_4_myRule_3_A1_3025765070</name>
+        <name>formula_4_myRule_3_A1_9783248558</name>
         <dataType>Number</dataType>
         <expression>IF(ISBLANK({!myVariable_current.Parent.Number_of_Email_Messages_Sent__c} ), 1, {!myVariable_current.Parent.Number_of_Email_Messages_Sent__c} +1)</expression>
         <scale>18</scale>
@@ -947,7 +947,7 @@
 </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_7_myRule_6_A1_0730916204</name>
+        <name>formula_7_myRule_6_A1_7978603359</name>
         <dataType>Number</dataType>
         <expression>IF(ISBLANK({!myVariable_current.Parent.Number_of_Email_Messages_Received__c} ), 1, {!myVariable_current.Parent.Number_of_Email_Messages_Received__c}  + 1)</expression>
         <scale>18</scale>
@@ -1307,7 +1307,7 @@
             </processMetadataValues>
             <field>Number_of_Email_Messages_Sent__c</field>
             <value>
-                <elementReference>formula_4_myRule_3_A1_3025765070</elementReference>
+                <elementReference>formula_4_myRule_3_A1_9783248558</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1391,7 +1391,7 @@
             </processMetadataValues>
             <field>Number_of_Email_Messages_Received__c</field>
             <value>
-                <elementReference>formula_7_myRule_6_A1_0730916204</elementReference>
+                <elementReference>formula_7_myRule_6_A1_7978603359</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1559,7 +1559,7 @@
             </processMetadataValues>
             <field>Previous_Owner__c</field>
             <value>
-                <elementReference>formula_10_myRule_9_A1_0355794845</elementReference>
+                <elementReference>formula_10_myRule_9_A1_6577901134</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
