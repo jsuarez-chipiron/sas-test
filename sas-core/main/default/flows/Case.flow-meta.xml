@@ -779,7 +779,7 @@
                 <stringValue>[Case].FCS_ReopenedCount__c + 1</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_12_myRule_9_A1_8830725863</name>
+        <name>formula_12_myRule_9_A1_4091793556</name>
         <dataType>Number</dataType>
         <expression>{!myVariable_current.FCS_ReopenedCount__c} + 1</expression>
         <scale>18</scale>
@@ -816,7 +816,8 @@
 			 ISPICKVAL([Case].Origin, &apos;Form - Refund Customer&apos;),
 			 ISPICKVAL([Case].Origin, &apos;Form - Refund Forsvaret&apos;),
 			 ISPICKVAL([Case].Origin, &apos;Form - Refund SC Under 180 Minutes&apos;),
-			 ISPICKVAL([Case].Origin, &apos;Form - Refund Travel Agent&apos;)
+			 ISPICKVAL([Case].Origin, &apos;Form - Refund Travel Agent&apos;),
+                         ISPICKVAL([Case].Origin, &apos;Internal - New Refund Request Form&apos;)
 			 ),
 				         [Case].CreatedBy.LastName = &apos;SAS Automation Process&apos;
 	                         )           			
@@ -835,7 +836,8 @@
 			 ISPICKVAL({!myVariable_current.Origin}, &apos;Form - Refund Customer&apos;),
 			 ISPICKVAL({!myVariable_current.Origin}, &apos;Form - Refund Forsvaret&apos;),
 			 ISPICKVAL({!myVariable_current.Origin}, &apos;Form - Refund SC Under 180 Minutes&apos;),
-			 ISPICKVAL({!myVariable_current.Origin}, &apos;Form - Refund Travel Agent&apos;)
+			 ISPICKVAL({!myVariable_current.Origin}, &apos;Form - Refund Travel Agent&apos;),
+                         ISPICKVAL({!myVariable_current.Origin}, &apos;Internal - New Refund Request Form&apos;)
 			 ),
 				         {!myVariable_current.CreatedBy.LastName} = &apos;SAS Automation Process&apos;
 	                         )           			
@@ -1366,7 +1368,7 @@
             </processMetadataValues>
             <field>FCS_ReopenedCount__c</field>
             <value>
-                <elementReference>formula_12_myRule_9_A1_8830725863</elementReference>
+                <elementReference>formula_12_myRule_9_A1_4091793556</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
