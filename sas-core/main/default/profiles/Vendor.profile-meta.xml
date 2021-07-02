@@ -132,6 +132,10 @@
         <apexClass>FCS_CaseTag_ChatTranscript_Controller</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>FCS_MassRedirection</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <custom>true</custom>
    <fieldPermissions>
         <editable>false</editable>
