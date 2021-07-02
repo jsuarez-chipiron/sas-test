@@ -1484,5 +1484,9 @@
     <tabVisibilities>
         <tab>LIA_Major_Event__c</tab>
         <visibility>Hidden</visibility>
-    </tabVisibilities>        
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Refund_Request__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>            
 </Profile>
