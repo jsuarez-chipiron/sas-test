@@ -8,7 +8,8 @@ public inherited sharing class EmailProcessHelper {
     @InvocableMethod(label='Assign case to department queue')
     public static void UpdateCaseOwnerToDepartmentQueue(List<UpdateCaseArgs> args) {
 
-        List<Case> casesToUpdate = new List<Case>();
+        List<Case> lstcasesToUpdate = new List<Case>();
+        Set<Case> setCasesToUpdate = new Set<Case>(); // To avoid duplicates
 
         for (UpdateCaseArgs arg : args) {
             Case c = [SELECT Id, Department__c FROM Case WHERE Id =: arg.caseId];
@@ -19,13 +20,14 @@ public inherited sharing class EmailProcessHelper {
             
             if (q.size() == 1) {
                 c.OwnerId = q[0].Id;
-                casesToUpdate.add(c);
+                setCasesToUpdate.add(c);
             }
 
         }
 
-        if (casesToUpdate.size() > 0) {
-            update casesToUpdate;
+        if (setCasesToUpdate.size() > 0) {
+        lstcasesToUpdate.addAll(setCasesToUpdate);
+            update lstcasesToUpdate;
         }
     } 
 
