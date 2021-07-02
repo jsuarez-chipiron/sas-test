@@ -1302,6 +1302,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Refund_Request__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>standard-OmniSupervisor</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>    
