@@ -368,6 +368,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>FCS_MassRedirection</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>FCS_OmniChannelQueueBacklogControll_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
