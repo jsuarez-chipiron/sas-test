@@ -14,4 +14,10 @@
 
 <!-- 2020-02-16 Delete permission set and replace with new one using SF-licence to be able to set tab visibilities -->
 
+<types>
+        <members>AD_RolePermission.Sykes_ODE_Direct_Sales_Messaging_User_PL</members>
+         <members>AD_RolePermission.Sykes_EVG_Direct_Sales_Messaging_User_PL</members>
+          <members>AD_RolePermission.SASEmergency_Messaging_User_PL</members>
+        <name>CustomMetadata</name>
+    </types>
 </Package>
