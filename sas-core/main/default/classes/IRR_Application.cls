@@ -46,7 +46,8 @@ public class IRR_Application {
                             IRR_RecipientWhitelist__mdt.SObjectType => IRR_SEL_RecipientWhitelistSelector.class,
                             Organization.SObjectType => IRR_SEL_OrganizationSelector.class,
                             SFMC_SMSDefinition__mdt.SObjectType => IRR_SEL_SMSDefinitionsSelector.class,
-                            ContentDocumentLink.SObjectType =>IRR_SEL_ContentDocumentLinksSelector.class
+                            ContentDocumentLink.SObjectType =>IRR_SEL_ContentDocumentLinksSelector.class,
+                            IRR_AutomatedMessage__mdt.SObjectType =>IRR_SEL_AutomatedMessagesSelector.class
                     }
             );
 
