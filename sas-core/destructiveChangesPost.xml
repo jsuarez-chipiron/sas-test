@@ -18,6 +18,7 @@
 		<members>IRR_AutomatedMessage.ABZ_ARN_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ABZ_CPH_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ABZ_OSL_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.ABZ_SVG_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.AGP_ARN_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.AGP_CPH_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.AGP_GOT_TR_AUTO_1D_SMS</members>
@@ -270,6 +271,7 @@
 		<members>IRR_AutomatedMessage.FRA_CPH_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.FRA_OSL_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.GDN_ARN_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.GDN_CPH_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.GDN_OSL_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.GOT_AGP_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.GOT_ALC_TR_AUTO_1D_SMS</members>
@@ -426,6 +428,7 @@
 		<members>IRR_AutomatedMessage.OSL_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_VAA_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.OSL_POZ_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_VCE_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_VNO_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_WAW_TR_AUTO_1D_SMS</members>
@@ -527,7 +530,7 @@
 	</types>
 
     <types>
-	    <members>Test_FCS_CloseFBMessangerCaseAfter24hour</members>
+	    <members>IRR_BCH_FetchPaxInfoAutomatedMessage</members>
 		<name>ApexClass</name>
     </types>
 </Package>
