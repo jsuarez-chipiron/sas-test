@@ -98,6 +98,7 @@ Deletes the entities related to the provided case ids
         SocialPost[] spList = [SELECT Id FROM SocialPost WHERE ParentId IN :caseIds AND Persona.name NOT IN :socialAccts];
         Task[] tList = [SELECT Id FROM Task WHERE WhatId IN :caseIds];
         CaseComment[] ccList = [SELECT Id FROM CaseComment WHERE ParentId IN :caseIds];
+        CaseToBooking__c[] cbList = [Select Id FROM CaseToBooking__c WHERE Case__c IN :caseIds];
         setLinkEntityIds.addAll(caseIds);
         setLinkEntityIds.addAll(mapEmailMessages.keySet());
         ContentDocumentLink[] cdlList = [SELECT Id,ContentDocumentId,ContentDocument.LatestPublishedVersion.FirstPublishLocationId FROM ContentDocumentLink WHERE LinkedEntityId IN :setLinkEntityIds];
@@ -114,6 +115,7 @@ Deletes the entities related to the provided case ids
         delete spList;
         delete tList;
         delete ccList;
+        delete cbList;
         if(!wipeCase)
         {
             delete emList;
