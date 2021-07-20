@@ -12,9 +12,15 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
     private static final String ERROR_NO_EMAIL_TEMPLATE = 'No Email template selected';
     private static final String ERROR_NO_SMS_TEMPLATE = 'No SMS template selected';
     private static final String ERROR_NO_MESSAGE_TO_SEND = 'There is no message to send';
+    private static final String MESSAGE_STATUS_DEFAULT = 'Created';
+    public static final String SAS_COPYRIGHT_NOTICE = 'Scandinavian Airlines ©';
+
 
     @TestVisible
     private Boolean isQueued = false;
+
+    @TestVisible
+    protected List<IRR_MOD_Message> messages = new List<IRR_MOD_Message>();
 
     @TestVisible
     private IRR_MOD_ManualRequest manualRequest;
@@ -49,7 +55,7 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
         if (manualRequest.responseMessage == null) manualRequest.responseMessage = false;
         if(manualRequest.sendMessageTime!=null){
             this.isQueued = true;
-        }else{
+        } else {
             if (manualRequest.delayInfo != null && String.isNotBlank(manualRequest.delayInfo.flightId)) {
                 IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
                         new IRR_SVC_CommunicationService.FlightIdSplit(manualRequest.delayInfo.flightId);
@@ -59,7 +65,7 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
                 this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames( new Set<String> {flightIdSplit.stationDeparture, flightIdSplit.stationArrival});
                 manualRequest.delayInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
                 manualRequest.delayInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
-    
+
             }
             if (manualRequest.newInfo != null && String.isNotBlank(manualRequest.newInfo.flightId)) {
                 IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
@@ -81,7 +87,6 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
                 manualRequest.cancelInfo.arrivalCity = airportInfoMap.get(flightIdSplit.stationArrival);
                 manualRequest.cancelInfo.departureCity = airportInfoMap.get(flightIdSplit.stationDeparture);
             }
-
         }
     }
 
@@ -184,7 +189,42 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
      * @param uow Unit of Work
      */
     private void insertEventLog(fflib_ISObjectUnitOfWork uow) {
+
         IRR_EventLog__c eventLog = new IRR_EventLog__c();
+        IRR_MOD_FlowVariables flowVariables = new IRR_MOD_FlowVariables();
+
+        flowVariables.customInfo = manualRequest.customInfo;
+        for(IRR_MOD_PassengerInfo passengerInfo : manualRequest.passengerInfos) {
+
+            flowVariables.passengerInfo = passengerInfo;
+        }
+
+        String serializedVariables = JSON.serialize(flowVariables);
+        Map<String, Object> templateParams = (Map<String,Object>) JSON.deserializeUntyped(serializedVariables);
+
+        //Reason:We want to store only custom message content in the event log
+        
+            IRR_MOD_Message Message = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.Email,
+                    templateParams, manualRequest.emailTemplate, flowVariables.passengerInfo, getEventName(), null);
+            messages.add(Message);
+        
+
+        Set<String> templateNames = new Set<String>();
+        for(IRR_MOD_Message message : messages) {
+            if (!templateNames.contains(message.template)) {
+
+                templateNames.add(message.template);
+            }
+        }
+        if (templateNames.contains('irr_manual_message')) {
+
+            MSG_IRenderer renderer = IRR_Application.MessageRenderer.newInstance(templateNames);
+            for (IRR_MOD_Message message : messages) {
+                renderer.renderMessage(message);
+            }
+        }
+        // prepare event log to be inserted
+
         eventLog.IRR_ScheduleTime__c = manualRequest.sendMessageTime;
         if(manualRequest.passengerInfos != null && manualRequest.passengerInfos.size() > 0) {
             Set<String> flightIds = new Set<String>();
@@ -193,14 +233,18 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
             }
             eventLog.IRR_FlightId__c = String.Join(new List<String>(flightIds), ', ');
         }
-        String payloadStr = JSON.serialize(manualRequest);
+        for (IRR_MOD_Message message : messages) {
+            eventLog.IRR_MessageContent__c = String.isNotBlank(message.content) && message.content.startsWith('<!DOCTYPE') ?
+                    message.content.stripHtmlTags().substringBeforeLast(SAS_COPYRIGHT_NOTICE) : message.content;
+        }
+        
         fflib_SObjectUnitOfWork unitOfWork = new fflib_SObjectUnitOfWork(
                                                 new List<Schema.SObjectType>{
                                                         IRR_EventLog__c.SObjectType,
                                                         ContentVersion.SObjectType
                                                 }
          );
-
+            String payloadStr = JSON.serialize(manualRequest);
             String fileName ='EventPayload';
             unitOfWork.registerNew(eventLog);
 
