@@ -204,9 +204,9 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
 
         //Reason:We want to store only custom message content in the event log
         
-            IRR_MOD_Message Message = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.Email,
+            IRR_MOD_Message emailMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.Email,
                     templateParams, manualRequest.emailTemplate, flowVariables.passengerInfo, getEventName(), null);
-            messages.add(Message);
+            messages.add(emailMessage);
         
 
         Set<String> templateNames = new Set<String>();
