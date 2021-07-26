@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FCS_CaseType__c</fullName>
+    <complianceGroup>WipeRetain</complianceGroup>
+    <externalId>false</externalId>
+    <label>Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Department__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>EuroBonus</fullName>
+                <default>false</default>
+                <label>EuroBonus</label>
+            </value>
+            <value>
+                <fullName>Fraud</fullName>
+                <default>false</default>
+                <label>Fraud</label>
+            </value>
+            <value>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+                <label>Baggage</label>
+            </value>
+            <value>
+                <fullName>Cancellation &amp; Refunds</fullName>
+                <default>false</default>
+                <label>Cancellation &amp; Refunds</label>
+            </value>
+            <value>
+                <fullName>Changes</fullName>
+                <default>false</default>
+                <label>Changes</label>
+            </value>
+            <value>
+                <fullName>Corporate</fullName>
+                <default>false</default>
+                <label>Corporate</label>
+            </value>
+            <value>
+                <fullName>Error</fullName>
+                <default>false</default>
+                <label>Error</label>
+            </value>
+            <value>
+                <fullName>EuroBonus Partner</fullName>
+                <default>false</default>
+                <label>EuroBonus Partner</label>
+            </value>
+            <value>
+                <fullName>Feedback</fullName>
+                <default>false</default>
+                <label>Feedback</label>
+            </value>
+            <value>
+                <fullName>Irregularities</fullName>
+                <default>false</default>
+                <label>Irregularities</label>
+            </value>
+            <value>
+                <fullName>GDPR</fullName>
+                <default>false</default>
+                <label>GDPR</label>
+            </value>
+            <value>
+                <fullName>New Booking</fullName>
+                <default>false</default>
+                <label>New Booking</label>
+            </value>
+            <value>
+                <fullName>Non-SAS Products</fullName>
+                <default>false</default>
+                <label>Non-SAS Products</label>
+            </value>
+            <value>
+                <fullName>Salesforce</fullName>
+                <default>false</default>
+                <label>Salesforce</label>
+            </value>
+            <value>
+                <fullName>Special Service Request</fullName>
+                <default>false</default>
+                <label>Special Service Request</label>
+            </value>
+            <value>
+                <fullName>Travel Information</fullName>
+                <default>false</default>
+                <label>Travel Information</label>
+            </value>
+            <value>
+                <fullName>Voucher</fullName>
+                <default>false</default>
+                <label>Voucher</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <valueName>Baggage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <valueName>Cancellation &amp; Refunds</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <valueName>Irregularities</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <valueName>New Booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <valueName>Special Service Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <valueName>Travel Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <valueName>Corporate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>EuroBonus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Fraud</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -431,6 +431,16 @@
         <field>Case.FCS_CaseReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Case.FCS_CaseResolutionDetails__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.FCS_CaseResolution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.FCS_IsReopened__c</field>
@@ -449,6 +459,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.FCS_CaseTags__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+	    <field>Case.FCS_CaseType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.FCS_Case_Reason__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -630,26 +630,40 @@ public class FCS_CaseHandler extends C_TriggerHandler {
       List<String> caseTagString = newC.FCS_CaseTags__c != null
         ? newC.FCS_CaseTags__c.split(';')
         : null;
-      if (newC.FCS_CaseReason__c != null)
+      if (newC.FCS_Case_Reason__c != null)
         newTagsByKeyId.put(
           newC.Id +
-          newC.FCS_CaseReason__c +
+          newC.FCS_Case_Reason__c +
           MAIN_TAG,
           new FCS_CaseTag__c(
             FCS_CaseId__c = newC.Id,
-            FCS_CaseTag__c = newC.FCS_CaseReason__c,
+            FCS_CaseTag__c = newC.FCS_Case_Reason__c,
             FCS_Type__c = MAIN_TAG
           )
         );
-      if (newC.FCS_CaseSubReason__c != null)
+      if (newC.FCS_CaseResolution__c != null)
         newTagsByKeyId.put(
           newC.Id +
-          newC.FCS_CaseSubReason__c +
+          newC.FCS_CaseResolution__c +
           SUB_MAIN_TAG,
           new FCS_CaseTag__c(
             FCS_CaseId__c = newC.Id,
-            FCS_CaseTag__c = newC.FCS_CaseSubReason__c,
+            FCS_CaseTag__c = newC.FCS_CaseResolution__c,
             FCS_Type__c = SUB_MAIN_TAG
+          )
+        );
+      if (
+        newC.FCS_CaseResolutionDetails__c != null &&
+        newC.FCS_Case_Reason__c == 'other'
+      )
+        newTagsByKeyId.put(
+          newC.Id +
+          newC.FCS_CaseResolutionDetails__c +
+          ADDITIONAL_TAG,
+          new FCS_CaseTag__c(
+            FCS_CaseId__c = newC.Id,
+            FCS_CaseTag__c = newC.FCS_CaseResolutionDetails__c,
+            FCS_Type__c = ADDITIONAL_TAG
           )
         );
       if (caseTagString != null) {

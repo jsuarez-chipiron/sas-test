@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FCS_CaseResolution__c</fullName>
+    <complianceGroup>WipeRetain</complianceGroup>
+    <externalId>false</externalId>
+    <label>Case Resolution</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>FCS_Case_Reason__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Completed</fullName>
+                <default>false</default>
+                <label>Completed</label>
+            </value>
+            <value>
+                <fullName>According to rules</fullName>
+                <default>false</default>
+                <label>According to rules</label>
+            </value>
+            <value>
+                <fullName>Add travel pass</fullName>
+                <default>false</default>
+                <label>Add travel pass</label>
+            </value>
+            <value>
+                <fullName>Agreement related question</fullName>
+                <default>false</default>
+                <label>Agreement related question</label>
+            </value>
+            <value>
+                <fullName>App</fullName>
+                <default>false</default>
+                <label>App</label>
+            </value>
+            <value>
+                <fullName>Authorization</fullName>
+                <default>false</default>
+                <label>Authorization</label>
+            </value>
+            <value>
+                <fullName>Availability</fullName>
+                <default>false</default>
+                <label>Availability</label>
+            </value>
+            <value>
+                <fullName>Blocked IP address</fullName>
+                <default>false</default>
+                <label>Blocked IP address</label>
+            </value>
+            <value>
+                <fullName>Booking Confirmation</fullName>
+                <default>false</default>
+                <label>Booking Confirmation</label>
+            </value>
+            <value>
+                <fullName>Booking flow</fullName>
+                <default>false</default>
+                <label>Booking flow</label>
+            </value>
+            <value>
+                <fullName>Booking related</fullName>
+                <default>false</default>
+                <label>Booking related</label>
+            </value>
+            <value>
+                <fullName>Booking rules</fullName>
+                <default>false</default>
+                <label>Booking rules</label>
+            </value>
+            <value>
+                <fullName>Bug/User story created</fullName>
+                <default>false</default>
+                <label>Bug/User story created</label>
+            </value>
+            <value>
+                <fullName>CC Update</fullName>
+                <default>false</default>
+                <label>CC Update</label>
+            </value>
+            <value>
+                <fullName>Changed dates</fullName>
+                <default>false</default>
+                <label>Changed dates</label>
+            </value>
+            <value>
+                <fullName>Changed destination</fullName>
+                <default>false</default>
+                <label>Changed destination</label>
+            </value>
+            <value>
+                <fullName>Changed email</fullName>
+                <default>false</default>
+                <label>Changed email</label>
+            </value>
+            <value>
+                <fullName>Changed name</fullName>
+                <default>false</default>
+                <label>Changed name</label>
+            </value>
+            <value>
+                <fullName>Changed phone number</fullName>
+                <default>false</default>
+                <label>Changed phone number</label>
+            </value>
+            <value>
+                <fullName>Checked in baggage info provided</fullName>
+                <default>false</default>
+                <label>Checked in baggage info provided</label>
+            </value>
+            <value>
+                <fullName>Claim status</fullName>
+                <default>false</default>
+                <label>Claim status</label>
+            </value>
+            <value>
+                <fullName>Commercials</fullName>
+                <default>false</default>
+                <label>Commercials</label>
+            </value>
+            <value>
+                <fullName>Connect with EB</fullName>
+                <default>false</default>
+                <label>Connect with EB</label>
+            </value>
+            <value>
+                <fullName>Contact Update</fullName>
+                <default>false</default>
+                <label>Contact Update</label>
+            </value>
+            <value>
+                <fullName>Damaged baggage status</fullName>
+                <default>false</default>
+                <label>Damaged baggage status</label>
+            </value>
+            <value>
+                <fullName>Delayed baggage status</fullName>
+                <default>false</default>
+                <label>Delayed baggage status</label>
+            </value>
+            <value>
+                <fullName>Deviation from rules</fullName>
+                <default>false</default>
+                <label>Deviation from rules</label>
+            </value>
+            <value>
+                <fullName>Error</fullName>
+                <default>false</default>
+                <label>Error</label>
+            </value>
+            <value>
+                <fullName>Error - Inactive Customer</fullName>
+                <default>false</default>
+                <label>Error - Inactive Customer</label>
+            </value>
+            <value>
+                <fullName>Fare</fullName>
+                <default>false</default>
+                <label>Fare</label>
+            </value>
+            <value>
+                <fullName>Hand baggage info provided</fullName>
+                <default>false</default>
+                <label>Hand baggage info provided</label>
+            </value>
+            <value>
+                <fullName>How to make a claim</fullName>
+                <default>false</default>
+                <label>How to make a claim</label>
+            </value>
+            <value>
+                <fullName>Inactive profile</fullName>
+                <default>false</default>
+                <label>Inactive profile</label>
+            </value>
+            <value>
+                <fullName>Info about customer rights</fullName>
+                <default>false</default>
+                <label>Info about customer rights</label>
+            </value>
+            <value>
+                <fullName>Info about how to add</fullName>
+                <default>false</default>
+                <label>Info about how to add</label>
+            </value>
+            <value>
+                <fullName>Inform about points usage</fullName>
+                <default>false</default>
+                <label>Inform about points usage</label>
+            </value>
+            <value>
+                <fullName>Inform Process Owner/Specialist</fullName>
+                <default>false</default>
+                <label>Inform Process Owner/Specialist</label>
+            </value>
+            <value>
+                <fullName>Information</fullName>
+                <default>false</default>
+                <label>Information</label>
+            </value>
+            <value>
+                <fullName>Internet error</fullName>
+                <default>false</default>
+                <label>Internet error</label>
+            </value>
+            <value>
+                <fullName>Invalid retro</fullName>
+                <default>false</default>
+                <label>Invalid retro</label>
+            </value>
+            <value>
+                <fullName>Involuntary</fullName>
+                <default>false</default>
+                <label>Involuntary</label>
+            </value>
+            <value>
+                <fullName>Limitation/Won&apos;t fix</fullName>
+                <default>false</default>
+                <label>Limitation/Won&apos;t fix</label>
+            </value>
+            <value>
+                <fullName>Log in</fullName>
+                <default>false</default>
+                <label>Log in</label>
+            </value>
+            <value>
+                <fullName>Make name change</fullName>
+                <default>false</default>
+                <label>Make name change</label>
+            </value>
+            <value>
+                <fullName>Make name correction</fullName>
+                <default>false</default>
+                <label>Make name correction</label>
+            </value>
+            <value>
+                <fullName>Online booking</fullName>
+                <default>false</default>
+                <label>Online booking</label>
+            </value>
+            <value>
+                <fullName>Online Profile</fullName>
+                <default>false</default>
+                <label>Online Profile</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Payment</fullName>
+                <default>false</default>
+                <label>Payment</label>
+            </value>
+            <value>
+                <fullName>Points registered</fullName>
+                <default>false</default>
+                <label>Points registered</label>
+            </value>
+            <value>
+                <fullName>Price inquiry</fullName>
+                <default>false</default>
+                <label>Price inquiry</label>
+            </value>
+            <value>
+                <fullName>Provide info about name change</fullName>
+                <default>false</default>
+                <label>Provide info about name change</label>
+            </value>
+            <value>
+                <fullName>Provide info about name correction</fullName>
+                <default>false</default>
+                <label>Provide info about name correction</label>
+            </value>
+            <value>
+                <fullName>Provide point status</fullName>
+                <default>false</default>
+                <label>Provide point status</label>
+            </value>
+            <value>
+                <fullName>Provide rebooking rights</fullName>
+                <default>false</default>
+                <label>Provide rebooking rights</label>
+            </value>
+            <value>
+                <fullName>Provided info about how to change</fullName>
+                <default>false</default>
+                <label>Provided info about how to change</label>
+            </value>
+            <value>
+                <fullName>Receipt</fullName>
+                <default>false</default>
+                <label>Receipt</label>
+            </value>
+            <value>
+                <fullName>Referred to Baggage Service</fullName>
+                <default>false</default>
+                <label>Referred to Baggage Service</label>
+            </value>
+            <value>
+                <fullName>Referred to feedback form</fullName>
+                <default>false</default>
+                <label>Referred to feedback form</label>
+            </value>
+            <value>
+                <fullName>Referred to mail</fullName>
+                <default>false</default>
+                <label>Referred to mail</label>
+            </value>
+            <value>
+                <fullName>Referred to phone</fullName>
+                <default>false</default>
+                <label>Referred to phone</label>
+            </value>
+            <value>
+                <fullName>Referred to travel agent</fullName>
+                <default>false</default>
+                <label>Referred to travel agent</label>
+            </value>
+            <value>
+                <fullName>Referred to webpage</fullName>
+                <default>false</default>
+                <label>Referred to webpage</label>
+            </value>
+            <value>
+                <fullName>Reported damaged baggage</fullName>
+                <default>false</default>
+                <label>Reported damaged baggage</label>
+            </value>
+            <value>
+                <fullName>Reported delayed baggage</fullName>
+                <default>false</default>
+                <label>Reported delayed baggage</label>
+            </value>
+            <value>
+                <fullName>Reset password</fullName>
+                <default>false</default>
+                <label>Reset password</label>
+            </value>
+            <value>
+                <fullName>Resolved</fullName>
+                <default>false</default>
+                <label>Resolved</label>
+            </value>
+            <value>
+                <fullName>Route inquiry</fullName>
+                <default>false</default>
+                <label>Route inquiry</label>
+            </value>
+            <value>
+                <fullName>SAS Invoice</fullName>
+                <default>false</default>
+                <label>SAS Invoice</label>
+            </value>
+            <value>
+                <fullName>Sell/Resell</fullName>
+                <default>false</default>
+                <label>Sell/Resell</label>
+            </value>
+            <value>
+                <fullName>Solve online booking problem</fullName>
+                <default>false</default>
+                <label>Solve online booking problem</label>
+            </value>
+            <value>
+                <fullName>Statistics</fullName>
+                <default>false</default>
+                <label>Statistics</label>
+            </value>
+            <value>
+                <fullName>Strike related information</fullName>
+                <default>false</default>
+                <label>Strike related information</label>
+            </value>
+            <value>
+                <fullName>Sustainability</fullName>
+                <default>false</default>
+                <label>Sustainability</label>
+            </value>
+            <value>
+                <fullName>Ticket issued</fullName>
+                <default>false</default>
+                <label>Ticket issued</label>
+            </value>
+            <value>
+                <fullName>Ticketing</fullName>
+                <default>false</default>
+                <label>Ticketing</label>
+            </value>
+            <value>
+                <fullName>TPI OPM</fullName>
+                <default>false</default>
+                <label>TPI OPM</label>
+            </value>
+            <value>
+                <fullName>Update User Guide</fullName>
+                <default>false</default>
+                <label>Update User Guide</label>
+            </value>
+            <value>
+                <fullName>User Related</fullName>
+                <default>false</default>
+                <label>User Related</label>
+            </value>
+            <value>
+                <fullName>Wrong deb</fullName>
+                <default>false</default>
+                <label>Wrong deb</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Boozt Attack</controllingFieldValue>
+            <controllingFieldValue>Add Baggage</controllingFieldValue>
+            <controllingFieldValue>ATO Account Takeover</controllingFieldValue>
+            <controllingFieldValue>CAR</controllingFieldValue>
+            <controllingFieldValue>Coop</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
+            <controllingFieldValue>GAC Give Away Card</controllingFieldValue>
+            <controllingFieldValue>Hotel</controllingFieldValue>
+            <controllingFieldValue>Point Sharing</controllingFieldValue>
+            <controllingFieldValue>SAS Flights</controllingFieldValue>
+            <controllingFieldValue>Star Online</controllingFieldValue>
+            <valueName>Completed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Add Baggage</controllingFieldValue>
+            <controllingFieldValue>Allowance</controllingFieldValue>
+            <controllingFieldValue>Baggage Content</controllingFieldValue>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <valueName>Referred to feedback form</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Add Baggage</controllingFieldValue>
+            <controllingFieldValue>Allowance</controllingFieldValue>
+            <controllingFieldValue>Baggage Content</controllingFieldValue>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <valueName>Referred to phone</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Add Baggage</controllingFieldValue>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <valueName>Referred to travel agent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Add Baggage</controllingFieldValue>
+            <controllingFieldValue>Allowance</controllingFieldValue>
+            <controllingFieldValue>Baggage Content</controllingFieldValue>
+            <controllingFieldValue>Damaged Baggage</controllingFieldValue>
+            <controllingFieldValue>Delayed Baggage</controllingFieldValue>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <valueName>Referred to webpage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Allowance</controllingFieldValue>
+            <controllingFieldValue>Baggage Content</controllingFieldValue>
+            <valueName>Checked in baggage info provided</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Allowance</controllingFieldValue>
+            <controllingFieldValue>Baggage Content</controllingFieldValue>
+            <valueName>Hand baggage info provided</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Damaged Baggage</controllingFieldValue>
+            <controllingFieldValue>Delayed Baggage</controllingFieldValue>
+            <valueName>Damaged baggage status</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Damaged Baggage</controllingFieldValue>
+            <controllingFieldValue>Delayed Baggage</controllingFieldValue>
+            <valueName>Referred to Baggage Service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Damaged Baggage</controllingFieldValue>
+            <controllingFieldValue>Delayed Baggage</controllingFieldValue>
+            <valueName>Reported damaged baggage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <valueName>According to rules</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <valueName>Deviation from rules</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <valueName>Involuntary</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>
