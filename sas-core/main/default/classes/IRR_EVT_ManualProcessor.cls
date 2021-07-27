@@ -20,9 +20,6 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
     private Boolean isQueued = false;
 
     @TestVisible
-    protected List<IRR_MOD_Message> messages = new List<IRR_MOD_Message>();
-
-    @TestVisible
     private IRR_MOD_ManualRequest manualRequest;
 
     public String getEventName() {
@@ -53,7 +50,7 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
         if (manualRequest.sendEmailMessages == null) manualRequest.sendEmailMessages = false;
         if (manualRequest.sendSMSMessages == null) manualRequest.sendSMSMessages = false;
         if (manualRequest.responseMessage == null) manualRequest.responseMessage = false;
-        if(manualRequest.sendMessageTime!=null){
+        if (manualRequest.sendMessageTime!=null){
             this.isQueued = true;
         } else {
             if (manualRequest.delayInfo != null && String.isNotBlank(manualRequest.delayInfo.flightId)) {
@@ -172,10 +169,13 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
      * @param uow Unit of Work
      */
     public override void finalizeEvent(fflib_ISObjectUnitOfWork uow) {
+        System.debug('inside uow ==>');
         
         if(!isQueued){
+            System.debug('inside isQueued ==>');
             super.finalizeEvent(uow);
         }else{
+            System.debug('inside else ==>');
             insertEventLog(uow);
         }
     }
@@ -191,6 +191,7 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
     private void insertEventLog(fflib_ISObjectUnitOfWork uow) {
 
         IRR_EventLog__c eventLog = new IRR_EventLog__c();
+        List<IRR_MOD_Message> messages = new List<IRR_MOD_Message>();
         IRR_MOD_FlowVariables flowVariables = new IRR_MOD_FlowVariables();
 
         flowVariables.customInfo = manualRequest.customInfo;
@@ -204,9 +205,9 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
 
         //Reason:We want to store only custom message content in the event log
         
-            IRR_MOD_Message emailMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.Email,
-                    templateParams, manualRequest.emailTemplate, flowVariables.passengerInfo, getEventName(), null);
-            messages.add(emailMessage);
+        IRR_MOD_Message emailMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.Email,
+                templateParams, manualRequest.emailTemplate, flowVariables.passengerInfo, getEventName(), null);
+        messages.add(emailMessage);
         
 
         Set<String> templateNames = new Set<String>();
