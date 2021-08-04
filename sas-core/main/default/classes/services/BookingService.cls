@@ -57,11 +57,11 @@ public without sharing class BookingService {
   }
 
   /**
-   * Attempts to fetch the given booking from TEDS, and create necessary DB objects. 
+   * Attempts to fetch the given booking from TEDS, and create necessary DB objects.
    * Does nothing if one isn't found.
-   * 
+   *
    * @param bookingReference The booking to find.
-   * 
+   *
    * @throws IntegrationError If there is a problem with the integration.
    */
   @future(callout=true)
@@ -164,7 +164,8 @@ public without sharing class BookingService {
     )[0];
   }
   /**
-   * Parses booking data in IRR_MOD_TedsBooking format into DB objects and prepares them for DB insertion.
+   * Parses booking data in IRR_MOD_TedsBooking format into DB objects and prepares them for DB insertion,
+   * and upserts related flights.
    *
    * @param bookingData List of IRR_MOD_TedsBooking objects containing bookings to create.
    * @param uow Unit of work transaction in which the booking should be committed. Must be committed by caller.
@@ -175,33 +176,17 @@ public without sharing class BookingService {
     List<IRR_MOD_TedsBooking> bookingData,
     fflib_ISObjectUnitOfWork uow
   ) {
-    FlightsSelector flights = (FlightsSelector) SAS_Service_Application.Selector.newInstance(
-      Flight__c.SObjectType
-    );
     BookingsSelector bookings = (BookingsSelector) SAS_Service_Application.Selector.newInstance(
       Booking__c.SObjectType
     );
 
-    // Figure out all flights which are referenced within bookingData, and fetch all which already exist in SF DB.
-    Set<String> flightsInBookings = new Set<String>();
     Set<String> bookingIds = new Set<String>();
 
     for (IRR_MOD_TedsBooking booking : bookingData) {
-      for (IRR_MOD_TedsBooking.Trip trip : booking.trips) {
-        for (IRR_MOD_TedsBooking.SegmentTrip segmentTrip : trip.segments) {
-          flightsInBookings.add(segmentTrip.flight.id);
-        }
-      }
       bookingIds.add(booking.id);
     }
 
-    List<Flight__c> flightsFromDB = flights.selectByTEDSId(flightsInBookings);
     List<Booking__c> bookingsFromDB = bookings.selectByTEDSIdFull(bookingIds);
-
-    Map<String, Flight__c> flightsAlreadyInSF = new Map<String, Flight__c>();
-    for (Flight__c f : flightsFromDB) {
-      flightsAlreadyInSF.put(f.TEDS_Identifier__c, f);
-    }
 
     Map<String, Booking__c> bookingsAlreadyInSF = new Map<String, Booking__c>();
     for (Booking__c f : bookingsFromDB) {
@@ -285,29 +270,16 @@ public without sharing class BookingService {
                 .replace('Z', '')
             );
 
-            Flight__c flight = flightsAlreadyInSF.get(segmentTrip.flight.id);
+            Flight__c newFlight = new Flight__c(
+              Name = segmentTrip.flight.id,
+              Arrival_Airport__c = segmentTrip.flight.arrival.station,
+              Departure_Airport__c = segmentTrip.flight.departure.station,
+              Scheduled_Arrival_Time__c = arrivalDate,
+              Scheduled_Departure_Time__c = departureDate,
+              TEDS_Identifier__c = segmentTrip.flight.id
+            );
 
-            if (flight != null) {
-              flight.Arrival_Airport__c = segmentTrip.flight.arrival.station;
-              flight.Departure_Airport__c = segmentTrip.flight.departure.station;
-              flight.Scheduled_Arrival_Time__c = arrivalDate;
-              flight.Scheduled_Departure_Time__c = departureDate;
-
-              flightsProcessed.put(segmentTrip.flight.id, flight);
-              uow.registerDirty(flight);
-            } else {
-              Flight__c newFlight = new Flight__c(
-                Name = segmentTrip.flight.id,
-                Arrival_Airport__c = segmentTrip.flight.arrival.station,
-                Departure_Airport__c = segmentTrip.flight.departure.station,
-                Scheduled_Arrival_Time__c = arrivalDate,
-                Scheduled_Departure_Time__c = departureDate,
-                TEDS_Identifier__c = segmentTrip.flight.id
-              );
-
-              flightsProcessed.put(segmentTrip.flight.id, newFlight);
-              uow.registerNew(newFlight);
-            }
+            flightsProcessed.put(segmentTrip.flight.id, newFlight);
           }
 
           // Create one segment per passenger per flight in the booking.
@@ -384,7 +356,7 @@ public without sharing class BookingService {
         }
       }
     }
-
+    upsert flightsProcessed.values() TEDS_Identifier__c;
     return bookingsToReturn;
   }
 }
