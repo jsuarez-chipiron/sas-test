@@ -55,3 +55,17 @@
 .table-text-header {
   color: darkgrey;
 }
+.message-text
+{
+   color:grey;
+   font-size: 12px;
+}
+.loadbutton-less-padding{
+  padding-left: 230px;
+}
+.loadbutton-more-padding{
+  padding-top: 10px;
+}
+.message-divider-padding{
+   padding-bottom: 10px;
+}

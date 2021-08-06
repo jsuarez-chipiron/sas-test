@@ -287,6 +287,66 @@
               </lightning-accordion>
             </ul>
           </lightning-tab>
+          <lightning-tab label="Communication logs">
+            <ul class="slds-has-dividers_bottom-space">
+               <template for:each={communicationlogs} for:item="c">
+                <table key={c.Id}> 
+                  <tr>
+                    <td>
+                   <strong> {c.IRR_Channel__c} </strong> - {c.communicationName}
+                    </td>
+                  </tr>
+                  <tr>                 
+                    <td>
+                      <div class ="message-text">Message</div>                     
+                    </td>                              
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="message-divider-padding">
+                    {c.IRR_MessageContent__c}
+                    </div>
+                    </td>
+                  </tr> 
+                  <tr>
+                    <td>
+                  <div key={c.Id} class="vertical-line
+                  header-padding"></div> 
+                  </td> 
+                  </tr>             
+                </table> 
+               </template>              
+            </ul>
+             <div class="case-count-text">
+              <span
+                class="
+                  slds-text-align_left
+                  slds-text-color_weak
+                  slds-text-body_small
+                  message-text
+                "
+                >Showing {numberOfVisibleLogs} of {allLogs} CommunicationLogs</span
+              >
+            </div>
+            <div>
+              <table>             
+                <tr>
+                  <td>
+                    <div class = "loadbutton-more-padding" if:true={showMore}>
+                      <a onclick={handleLoadMoreRecords} 
+                      >Load More</a > 
+                      </div>
+                    </td>
+                    <td> 
+                      <div class = "loadbutton-less-padding" if:true={showLess}>
+                          <a onclick={handleLoadLessRecords} 
+                        >Show less</a> 
+                      </div>
+                    </td>              
+                </tr>
+              </table>
+             </div>          
+           </lightning-tab>
         </lightning-tabset>
       </div>
     </div>

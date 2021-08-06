@@ -20,7 +20,10 @@ public class IRR_SEL_CommunicationLogsSelector extends fflib_SObjectSelector
                 IRR_CommunicationLog__c.IRR_ContactKey__c,
                 IRR_CommunicationLog__c.IRR_LastResponseDate__c,
                 IRR_CommunicationLog__c.IRR_Recipient__c,
-                IRR_CommunicationLog__c.IRR_Response__c
+                IRR_CommunicationLog__c.IRR_Response__c,
+                IRR_CommunicationLog__c.IRR_MessageContent__c,
+                IRR_CommunicationLog__c.IRR_Channel__c,
+                IRR_CommunicationLog__c.IRR_FlightId__c
         };
     }
 
@@ -54,4 +57,10 @@ public class IRR_SEL_CommunicationLogsSelector extends fflib_SObjectSelector
         .setCondition('CreatedDate > :lastRetentionDate AND IRR_ContactKey__c IN :contactKeys');
         return Database.query(queryFactory.toSOQL());
     }
+    public List<IRR_CommunicationLog__c> getCommunicationMessagesbyEBAccount(Set<String> seAccIds)
+    {
+        fflib_QueryFactory queryFactory = newQueryFactory()
+        .setOrdering(IRR_CommunicationLog__c.CreatedDate, fflib_QueryFactory.SortOrder.DESCENDING);
+        return Database.query(queryFactory.toSOQL());
+    }        
 }

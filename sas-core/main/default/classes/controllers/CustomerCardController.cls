@@ -8,7 +8,6 @@ public without sharing class CustomerCardController {
   static CasesSelector cases = (CasesSelector) SAS_Service_Application.Selector.newInstance(
     Case.SObjectType
   );
-
   @AuraEnabled
   public static List<Booking__c> addBookingToCase(
     ID caseId,
@@ -55,5 +54,13 @@ public without sharing class CustomerCardController {
   @AuraEnabled(cacheable=true)
   public static List<Case> getCaseData(String accountId) {
     return cases.selectByAccountId(new Set<Id>{ accountId });
-  }
+  }      
+    @AuraEnabled(cacheable=true)
+  public static  List<IRR_CommunicationLog__c> getAllCommunicationData(String accountId)
+  {         
+             return IRR_SEL_CommunicationLogsSelector.newInstance()
+               .getCommunicationMessagesbyEBAccount(new Set<String> { accountId });
+              }    
+          
+          
 }
