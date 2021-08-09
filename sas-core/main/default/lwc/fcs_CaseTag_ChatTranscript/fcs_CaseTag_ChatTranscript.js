@@ -1,7 +1,6 @@
 import { LightningElement, api, track, wire } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import findCase from "@salesforce/apex/FCS_CaseTag_Controller.findCase";
-import findCaseTag from "@salesforce/apex/FCS_CaseTag_Controller.findCaseTag";
 export default class Fcs_CaseTag extends LightningElement {
   @api recordId;
   @track cse;
@@ -19,27 +18,19 @@ export default class Fcs_CaseTag extends LightningElement {
       try {
         this.cse = data;
         this.RecordTypeId = this.cse.RecordTypeId;
+        let caseReason = this.cse.FCS_Case_Reason__c;
+        if(caseReason) {  
+        {
+            this.caseTagged = true;
+        }
+      }
+        
       } catch (error) {
         this.cse = undefined;
         this.displayError(error);
       }
     } else if (error) {
       this.cse = undefined;
-      this.displayError(error);
-    }
-  }
-  @wire(findCaseTag, {
-    recordId: "$recordId"
-  })
-  wiredCaseTag({ error, data }) {
-    if (data) {
-      try {
-        this.caseTag = data;
-        this.caseTagged = true;
-      } catch (error) {
-        this.caseTag = undefined;
-      }
-    } else {
       this.displayError(error);
     }
   }

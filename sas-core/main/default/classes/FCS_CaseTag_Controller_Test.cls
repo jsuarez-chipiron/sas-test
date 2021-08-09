@@ -19,37 +19,6 @@ public class FCS_CaseTag_Controller_Test {
     lct.caseId = newcases[0].Id;
     insert lct;
   }
-
-  static testMethod void testCaseTag() {
-    List<Case> lstnewCases = [
-      SELECT Id, FCS_Case_Reason__c, Department__c, FCS_CaseType__c
-      FROM Case
-    ];
-    Case cse = new Case(
-      Id = lstnewCases[0].Id,
-      Department__c = 'Fraud',
-      FCS_CaseType__c = 'Fraud',
-      FCS_Case_Reason__c = 'CAR',
-      FCS_CaseResolution__c = 'Completed'
-    );
-    update cse;
-
-    LiveChatTranscript chatTrans = [
-      SELECT Id, caseId
-      FROM LiveChatTranscript
-      LIMIT 1
-    ];
-    Test.startTest();
-    FCS_CaseTag__c caseTag = FCS_CaseTag_Controller.findCaseTag(cse.Id);
-    System.AssertEquals(caseTag.FCS_CaseId__c, cse.Id);
-
-    FCS_CaseTag__c chatTransCaseTag = FCS_CaseTag_Controller.findCaseTag(
-      chatTrans.Id
-    );
-    System.AssertEquals(chatTransCaseTag.FCS_CaseId__c, chatTrans.CaseId);
-
-    Test.stopTest();
-  }
   static testMethod void testfindcase() {
     LiveChatTranscript chatTrans = [
       SELECT Id, caseId
