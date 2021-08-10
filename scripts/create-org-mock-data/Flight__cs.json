@@ -1,0 +1,103 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Flight__c",
+                "referenceId": "Flight__cRef1"
+            },
+            "Arrival_Airport__c": "DEN",
+            "Departure_Airport__c": "RAP",
+            "Scheduled_Arrival_Time__c": "2021-08-12T12:31:00.000+0000",
+            "Scheduled_Departure_Time__c": "2021-08-12T11:15:00.000+0000",
+            "TEDS_Identifier__c": "TEST1-20210812-RAP-DEN"
+        },
+        {
+            "attributes": {
+                "type": "Flight__c",
+                "referenceId": "Flight__cRef2"
+            },
+            "Arrival_Airport__c": "DEN",
+            "Departure_Airport__c": "RAP",
+            "Scheduled_Arrival_Time__c": "2021-08-12T12:31:00.000+0000",
+            "Scheduled_Departure_Time__c": "2021-08-12T11:15:00.000+0000",
+            "TEDS_Identifier__c": "TEST2-20210812-RAP-DEN"
+        },
+        {
+            "attributes": {
+                "type": "Flight__c",
+                "referenceId": "Flight__cRef3"
+            },
+            "Arrival_Airport__c": "ORD",
+            "Departure_Airport__c": "RAP",
+            "Scheduled_Arrival_Time__c": "2021-08-12T14:48:00.000+0000",
+            "Scheduled_Departure_Time__c": "2021-08-12T11:35:00.000+0000",
+            "TEDS_Identifier__c": "TEST-20210812-RAP-ORD"
+        },
+        {
+            "attributes": {
+                "type": "Flight__c",
+                "referenceId": "Flight__cRef4"
+            },
+            "Arrival_Airport__c": "FRA",
+            "Departure_Airport__c": "DEN",
+            "Scheduled_Arrival_Time__c": "2021-08-13T07:45:00.000+0000",
+            "Scheduled_Departure_Time__c": "2021-08-12T14:10:00.000+0000",
+            "TEDS_Identifier__c": "TEST-20210812-DEN-FRA"
+        },
+        {
+            "attributes": {
+                "type": "Flight__c",
+                "referenceId": "Flight__cRef5"
+            },
+            "Arrival_Airport__c": "FRA",
+            "Departure_Airport__c": "ORD",
+            "Scheduled_Arrival_Time__c": "2021-08-13T07:20:00.000+0000",
+            "Scheduled_Departure_Time__c": "2021-08-12T16:00:00.000+0000",
+            "TEDS_Identifier__c": "TEST-20210812-ORD-FRA"
+        },
+        {
+            "attributes": {
+                "type": "Flight__c",
+                "referenceId": "Flight__cRef6"
+            },
+            "Arrival_Airport__c": "OSL",
+            "Departure_Airport__c": "FRA",
+            "Scheduled_Arrival_Time__c": "2021-08-13T13:00:00.000+0000",
+            "Scheduled_Departure_Time__c": "2021-08-13T11:05:00.000+0000",
+            "TEDS_Identifier__c": "TEST-20210813-FRA-OSL"
+        },
+        {
+            "attributes": {
+                "type": "Flight__c",
+                "referenceId": "Flight__cRef7"
+            },
+            "Arrival_Airport__c": "LHR",
+            "Departure_Airport__c": "OSL",
+            "Scheduled_Arrival_Time__c": "2021-08-23T07:20:00.000+0000",
+            "Scheduled_Departure_Time__c": "2021-08-23T05:55:00.000+0000",
+            "TEDS_Identifier__c": "TEST-20210823-OSL-LHR"
+        },
+        {
+            "attributes": {
+                "type": "Flight__c",
+                "referenceId": "Flight__cRef8"
+            },
+            "Arrival_Airport__c": "ORD",
+            "Departure_Airport__c": "LHR",
+            "Scheduled_Arrival_Time__c": "2021-08-23T10:30:00.000+0000",
+            "Scheduled_Departure_Time__c": "2021-08-23T08:00:00.000+0000",
+            "TEDS_Identifier__c": "TEST-20210823-LHR-ORD"
+        },
+        {
+            "attributes": {
+                "type": "Flight__c",
+                "referenceId": "Flight__cRef9"
+            },
+            "Arrival_Airport__c": "RAP",
+            "Departure_Airport__c": "ORD",
+            "Scheduled_Arrival_Time__c": "2021-08-23T15:01:00.000+0000",
+            "Scheduled_Departure_Time__c": "2021-08-23T13:40:00.000+0000",
+            "TEDS_Identifier__c": "TEST-20210823-ORD-RAP"
+        }
+    ]
+}

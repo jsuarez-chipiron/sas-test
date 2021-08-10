@@ -1,0 +1,15 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Refund_Request__c",
+                "referenceId": "Refund_Request__cRef1"
+            },
+            "Country_of_Purchase__c": "Finland",
+            "Note__c": "Test note",
+            "PNR__c": "123456",
+            "Refund_Macro__c": "1 - REFUND TAX",
+            "Ticket_Numbers__c": "123-1234567890"
+        }
+    ]
+}

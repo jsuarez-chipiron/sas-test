@@ -1,0 +1,238 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef1"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "Q",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST5PT1",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef3"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef2"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "Q",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST5PT2",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef3"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef3"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "Q",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST10PT1",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef5"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef4"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "Q",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST10PT2",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef5"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef5"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "Q",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST13PT1",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef6"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef6"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "Q",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST13PT2",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef6"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef7"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "N",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST9PT1",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef4"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef8"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "N",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST9PT2",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef4"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef9"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "Q",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST14PT1",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef7"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef10"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "Q",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST14PT2",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef7"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef11"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "Y",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST1PT1",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef1"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef12"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "Y",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST1PT2",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef1"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef13"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "T",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST2PT1",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef2"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef14"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "T",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST2PT2",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef2"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef15"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "T",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST15PT1",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef8"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef16"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "T",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST15PT2",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef8"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef17"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "T",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST16PT1",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef9"
+        },
+        {
+            "attributes": {
+                "type": "Segment__c",
+                "referenceId": "Segment__cRef18"
+            },
+            "Baggage_Quantity__c": 0,
+            "Booking_Class__c": "T",
+            "Check_In_Status__c": "Unknown",
+            "Identifier__c": "ST16PT2",
+            "Is_Boarded__c": false,
+            "Booking__c": "@Booking__cRef1",
+            "Flight__c": "@Flight__cRef9"
+        }
+    ]
+}
