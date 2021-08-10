@@ -51,7 +51,6 @@ public class FCS_CaseHandler extends C_TriggerHandler {
    */
   public override void beforeInsert() {
     assignOwnerFromSoMe(newCaseList);
-    validateCaseTags(newCaseList);
     enrichCaseDataBasedOnOrigin(newCaseList);
     //enrichGroupCaseDataWithGroupFormData(newCaseList);
     enrichMissingPointsCaseDataWithMissingPointsFormData(newCaseList);
@@ -60,14 +59,12 @@ public class FCS_CaseHandler extends C_TriggerHandler {
   Used to call the trigger in the before update context
   */
   public override void beforeUpdate() {
-    validateCaseTags(newCaseList);
     completeMilestones(newCaseMap);
   }
   /**
    Used to call the trigger in the after insert context
    */
   public override void afterInsert() {
-    manageCaseTagRecords(newCaseList, newCaseMap);
     updateSocialPost(newCaseList);
     assignEurobonusAccountToCase(newCaseList);
     updateBookingsForNewAssociatedAccounts(newCaseList);
@@ -77,7 +74,6 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     Used to call the trigger in the after update context
     */
   public override void afterUpdate() {
-    manageCaseTagRecords(newCaseList, newCaseMap);
     updateBookingsForNewAssociatedAccounts(newCaseList, oldCaseList);
   }
 
@@ -528,161 +524,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
       update spToUpdate;
     }
   }
-
-  /**
-    Method to make sure Case Reason and Case Tags is not the same value
-    @param newCaseList The list of new version of the case i.e. the Trigger.new variable
-    */
-  private static void validateCaseTags(List<Case> newCaseList) {
-    Integer cSize = newCaseList.size();
-    for (Integer i = 0; i < cSize; i++) {
-      Case newC = newCaseList[i];
-      List<String> caseTagString = newC.FCS_CaseTags__c != null
-        ? newC.FCS_CaseTags__c.split(';')
-        : null;
-      if (caseTagString != null) {
-        for (String s : CaseTagString) {
-          if (s == newC.FCS_CaseReason__c) {
-            newC.addError(
-              'You can not provide the same additional reason (case tag) as the Case Reason'
-            );
-          }
-        }
-      }
-    }
-  }
-
-  /**
-   * Creates/updates/delete case tag records when tags (Case Reason, Case SubReason or Case Tag) is updated on case
-   * @param newCaseMap The map between the id and the new version of the case i.e. the Trigger.newMap variable
-   */
-  private static void manageCaseTagRecords(
-    List<Case> newCaseList,
-    Map<Id, Case> newCaseMap
-  ) {
-    Map<String, FCS_CaseTag__c> newTagByKeyId = createToBeCaseTagMap(
-      newCaseList
-    );
-    Map<String, FCS_CaseTag__c> oldTagByKeyId = createCurrentCaseTagMap(
-      newCaseMap
-    );
-    List<FCS_CaseTag__c> deleteCaseTags = new List<FCS_CaseTag__c>();
-    List<FCS_CaseTag__c> createCaseTags = new List<FCS_CaseTag__c>();
-
-    for (String keyId : newTagByKeyId.keySet()) {
-      if (oldTagByKeyId.containsKey(keyId))
-        oldTagByKeyId.remove(keyId);
-      else if (!oldTagByKeyId.containsKey(keyId))
-        createCaseTags.add(newTagByKeyId.get(keyId));
-    }
-    deleteCaseTags = oldTagByKeyId.values();
-    if (createCaseTags != null)
-      upsert createCaseTags;
-    if (deleteCaseTags != null)
-      delete deleteCaseTags;
-  }
-  /**
-   * Returns a map containing the current (old) case tags records that needs to be evaluate agianst the new version of the case, FCS_CaseId__c+CaseTag+Type as key
-   * @param newCaseMap The map between the id and the new version of the case i.e. the Trigger.newMap variable
-   * @return caseTagsByKeyId Map with existing case tag records (FCS_CaseTag__c) with FCS_CaseId__c+Tag+Type as key
-   */
-  public static Map<String, FCS_CaseTag__c> createCurrentCaseTagMap(
-    Map<Id, Case> newCaseMap
-  ) {
-    List<FCS_CaseTag__c> caseTagRecords = [
-      SELECT Id, FCS_CaseTag__c, FCS_Type__c, FCS_CaseId__c
-      FROM FCS_CaseTag__c
-      WHERE FCS_CaseId__c = :newCaseMap.keySet()
-    ];
-    Map<String, FCS_CaseTag__c> caseTagsByKeyId = new Map<String, FCS_CaseTag__c>();
-    if (!caseTagRecords.isEmpty()) {
-      for (FCS_CaseTag__c ct : caseTagRecords) {
-        if (
-          !caseTagsByKeyId.containsKey(
-            ct.FCS_CaseId__c +
-            ct.FCS_CaseTag__c +
-            ct.FCS_Type__c
-          )
-        )
-          caseTagsByKeyId.put(
-            ct.FCS_CaseId__c +
-            ct.FCS_CaseTag__c +
-            ct.FCS_Type__c,
-            ct
-          );
-      }
-    }
-    return caseTagsByKeyId;
-  }
-
-  /**
-   * Returns a map containg the updated version (new) of the case tags records with FCS_CaseId__c+CaseTag+Type as key
-   * @param newCaseList The list of the new version of the case i.e. the Trigger.new variable
-   * @return newTagsByKeyId Map with new case tags on Case with FCS_CaseId__c+Tag+Type as key
-   */
-  public static Map<String, FCS_CaseTag__c> createToBeCaseTagMap(
-    List<Case> newCaseList
-  ) {
-    Integer cSize = newCaseList.size();
-    Map<String, FCS_CaseTag__c> newTagsByKeyId = new Map<String, FCS_CaseTag__c>();
-    for (Integer i = 0; i < cSize; i++) {
-      Case newC = newCaseList == null ? null : newCaseList[i];
-      List<String> caseTagString = newC.FCS_CaseTags__c != null
-        ? newC.FCS_CaseTags__c.split(';')
-        : null;
-      if (newC.FCS_Case_Reason__c != null)
-        newTagsByKeyId.put(
-          newC.Id +
-          newC.FCS_Case_Reason__c +
-          MAIN_TAG,
-          new FCS_CaseTag__c(
-            FCS_CaseId__c = newC.Id,
-            FCS_CaseTag__c = newC.FCS_Case_Reason__c,
-            FCS_Type__c = MAIN_TAG
-          )
-        );
-      if (newC.FCS_CaseResolution__c != null)
-        newTagsByKeyId.put(
-          newC.Id +
-          newC.FCS_CaseResolution__c +
-          SUB_MAIN_TAG,
-          new FCS_CaseTag__c(
-            FCS_CaseId__c = newC.Id,
-            FCS_CaseTag__c = newC.FCS_CaseResolution__c,
-            FCS_Type__c = SUB_MAIN_TAG
-          )
-        );
-      if (
-        newC.FCS_CaseResolutionDetails__c != null &&
-        newC.FCS_Case_Reason__c == 'other'
-      )
-        newTagsByKeyId.put(
-          newC.Id +
-          newC.FCS_CaseResolutionDetails__c +
-          ADDITIONAL_TAG,
-          new FCS_CaseTag__c(
-            FCS_CaseId__c = newC.Id,
-            FCS_CaseTag__c = newC.FCS_CaseResolutionDetails__c,
-            FCS_Type__c = ADDITIONAL_TAG
-          )
-        );
-      if (caseTagString != null) {
-        for (String s : CaseTagString) {
-          newTagsByKeyId.put(
-            newC.Id +
-            s +
-            ADDITIONAL_TAG,
-            new FCS_CaseTag__c(
-              FCS_CaseId__c = newC.Id,
-              FCS_CaseTag__c = s,
-              FCS_Type__c = ADDITIONAL_TAG
-            )
-          );
-        }
-      }
-    }
-    return newTagsByKeyId;
-  }
+  
   /**
      * @param newCaseList The list of the new version of the case i.e. the Trigger.new variable
        assign the EuroBonus Account to Case based on the Email for Pandion customers and missing points cases

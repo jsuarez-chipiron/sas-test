@@ -1,8 +1,9 @@
 import { LightningElement, api, track, wire } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import Case_RECORDTYPE_FIELD from "@salesforce/schema/Case.RecordTypeId";
-import { getRecord } from "lightning/uiRecordApi";
-import findCaseTag from "@salesforce/apex/FCS_CaseTag_Controller.findCaseTag";
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import Case_REASON_FIELD from '@salesforce/schema/Case.FCS_Case_Reason__c';
+const fields = [Case_RECORDTYPE_FIELD, Case_REASON_FIELD];
 export default class Fcs_CaseTag extends LightningElement {
   @api recordId;
   @track recordTypeId;
@@ -13,30 +14,17 @@ export default class Fcs_CaseTag extends LightningElement {
   @track hideResolutionComment = false;
   @track reset = false;
   @wire(getRecord, {
-    recordId: "$recordId",
-    fields: [Case_RECORDTYPE_FIELD]
-  })
+    recordId: "$recordId", fields })
   getCase({ error, data }) {
     if (data) {
       var result = JSON.parse(JSON.stringify(data));
-      this.account = result;
-      this.recordTypeId = result.fields.RecordTypeId.value;
-    } else if (error) {
-      this.displayError(error);
-    }
-  }
-  @wire(findCaseTag, {
-    recordId: "$recordId"
-  })
-  wiredCaseTag({ error, data }) {
-    if (data) {
-      try {
-        this.caseTag = data;
+      this.recordTypeId = result.fields.RecordTypeId.value; 
+      let caseReason =  result.fields.FCS_Case_Reason__c.value; 
+      if(caseReason)
+      {
         this.caseTagged = true;
-      } catch (error) {
-        this.caseTag = undefined;
       }
-    } else {
+    } else if (error) {
       this.displayError(error);
     }
   }
