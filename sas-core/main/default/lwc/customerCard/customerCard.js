@@ -41,7 +41,7 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   @track showSpinner = false;
   @track noSearchResult = false;
   @track error = false;
-  @track searchValue = ""; 
+  @track searchValue = "";
   activeSectionMessage = "";
   @track showMore = false;
   @track showLess = false;
@@ -279,77 +279,84 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
       this.addCustomerToCase(this.searchValue);
     }
   }
-@wire(getAllCommunicationData, {accountId: "$accountId" })
+  @wire(getAllCommunicationData, { accountId: "$accountId" })
   wiredCommunicationLog({ error, data }) {
-     function getDateTimeToString(date) {
+    function getDateTimeToString(date) {
       var month = date.toLocaleString("default", { month: "short" });
       var day = date.getDate().toString();
       var hour = date.getHours().toString();
       var minute = date.getMinutes().toString();
       day = day.length > 1 ? day : "0" + day;
-      hour = hour.length> 1 ? hour : "0" + hour;
-      minute = minute.length> 1 ? minute : "0" + minute;
-      return day + " " + month + " " + date.getFullYear()+","+" "+hour+":"+minute+"h";
+      hour = hour.length > 1 ? hour : "0" + hour;
+      minute = minute.length > 1 ? minute : "0" + minute;
+      return (
+        day +
+        " " +
+        month +
+        " " +
+        date.getFullYear() +
+        "," +
+        " " +
+        hour +
+        ":" +
+        minute +
+        "h"
+      );
     }
     if (!error && data != undefined && data.length > 0) {
-      this.allCoomunicationLogs = data.map(function(elem){
+      this.allCoomunicationLogs = data.map(function (elem) {
         var flightnumber = "flight";
         var communicationTitle = "";
-        if (typeof elem.IRR_FlightId__c === "undefined") {        
-          let createdDate = new Date(elem.CreatedDate); 
+        if (typeof elem.IRR_FlightId__c === "undefined") {
+          let createdDate = new Date(elem.CreatedDate);
           communicationTitle = getDateTimeToString(createdDate);
-         
-        }
-        else{         
+        } else {
           flightnumber = elem.IRR_FlightId__c.substring(0, 6);
-           let createdDate = new Date(elem.CreatedDate); 
-          communicationTitle =  flightnumber + ", " + getDateTimeToString(createdDate);
+          let createdDate = new Date(elem.CreatedDate);
+          communicationTitle =
+            flightnumber + ", " + getDateTimeToString(createdDate);
         }
-       return {
-         ...elem,
-        communicationName : communicationTitle
-       };
+        return {
+          ...elem,
+          communicationName: communicationTitle
+        };
       });
-       for(var i=0;i<=9;i++)
-       {
-         this.communicationlogs.push(this.allCoomunicationLogs[i]);
-       } 
-      this.allLogs =  this.allCoomunicationLogs.length;
-      this.numberOfVisibleLogs = this.communicationlogs.length; 
-      this.showMore = this.numberOfVisibleLogs - 10 <=  this.allLogs ? true : false;
-      this.showLess = this.numberOfVisibleLogs -10 > 0 ? true : false;
+      for (var i = 0; i <= 9; i++) {
+        this.communicationlogs.push(this.allCoomunicationLogs[i]);
+      }
+      this.allLogs = this.allCoomunicationLogs.length;
+      this.numberOfVisibleLogs = this.communicationlogs.length;
+      this.showMore =
+        this.numberOfVisibleLogs - 10 <= this.allLogs ? true : false;
+      this.showLess = this.numberOfVisibleLogs - 10 > 0 ? true : false;
     } else {
       this.communicationlogs = [];
       this.allCoomunicationLogs = [];
     }
   }
-   handleLoadMoreRecords(event)
-  {
+  handleLoadMoreRecords(event) {
     let previousrecordOffSet = this.recordOffSet;
     this.recordOffSet = this.recordOffSet + 10;
-    var i=previousrecordOffSet;
-       for(i=previousrecordOffSet;i<this.recordOffSet;i++)
-       {
-         if(i<this.allCoomunicationLogs.length)  
-        {
-          this.communicationlogs.push(this.allCoomunicationLogs[i]);
-        }
-        
-       } 
-       this.numberOfVisibleLogs =  this.communicationlogs.length;
-       this.showMore = this.numberOfVisibleLogs - 10 <=  this.allLogs ? true : false;
-       this.showLess = this.numberOfVisibleLogs -10 > 0 ? true : false; 
+    var i = previousrecordOffSet;
+    for (i = previousrecordOffSet; i < this.recordOffSet; i++) {
+      if (i < this.allCoomunicationLogs.length) {
+        this.communicationlogs.push(this.allCoomunicationLogs[i]);
       }
-    handleLoadLessRecords(event)
-    {
-      let previousrecordOffSet = this.recordOffSet;
-      this.recordOffSet = this.recordOffSet - 10;
-       for(var i=previousrecordOffSet;i>this.recordOffSet;i--)
-       {
-          this.communicationlogs.pop();
-       }
-       this.numberOfVisibleLogs =  this.communicationlogs.length; 
-       this.showMore = this.numberOfVisibleLogs - 10 <=  this.allLogs  ? true : false;
-       this.showLess = this.numberOfVisibleLogs -10 > 0 ? true : false;
     }
+    this.numberOfVisibleLogs = this.communicationlogs.length;
+    this.showMore =
+      this.numberOfVisibleLogs - 10 <= this.allLogs ? true : false;
+    this.showLess = this.numberOfVisibleLogs - 10 > 0 ? true : false;
+  }
+  handleLoadLessRecords(event) {
+    let previousrecordOffSet = this.recordOffSet;
+    this.recordOffSet = this.recordOffSet - 10;
+    for (var i = previousrecordOffSet; i > this.recordOffSet; i--) {
+      this.communicationlogs.pop();
+    }
+    this.numberOfVisibleLogs = this.communicationlogs.length;
+    this.showMore =
+      this.numberOfVisibleLogs - 10 <= this.allLogs ? true : false;
+    this.showLess = this.numberOfVisibleLogs - 10 > 0 ? true : false;
+  }
 }

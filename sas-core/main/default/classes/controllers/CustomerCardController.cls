@@ -54,13 +54,12 @@ public without sharing class CustomerCardController {
   @AuraEnabled(cacheable=true)
   public static List<Case> getCaseData(String accountId) {
     return cases.selectByAccountId(new Set<Id>{ accountId });
-  }      
-    @AuraEnabled(cacheable=true)
-  public static  List<IRR_CommunicationLog__c> getAllCommunicationData(String accountId)
-  {         
-             return IRR_SEL_CommunicationLogsSelector.newInstance()
-               .getCommunicationMessagesbyEBAccount(new Set<String> { accountId });
-              }    
-          
-          
+  }
+  @AuraEnabled(cacheable=true)
+  public static List<IRR_CommunicationLog__c> getAllCommunicationData(
+    String accountId
+  ) {
+    return IRR_SEL_CommunicationLogsSelector.newInstance()
+      .getCommunicationMessagesbyEBAccount(new Set<String>{ accountId });
+  }
 }
