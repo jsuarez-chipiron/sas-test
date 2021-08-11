@@ -708,6 +708,18 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Pandion DK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Pandion NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Pandion SE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>Premium Corporate Support</valueName>
         </valueSettings>
         <valueSettings>
@@ -718,6 +730,10 @@
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>Special Sales NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>System &amp; Tariff</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
@@ -812,18 +828,6 @@
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Pai Manual</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <valueName>Pandion DK</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <valueName>Pandion NO</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <valueName>Pandion SE</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
@@ -956,10 +960,6 @@
         <valueSettings>
             <controllingFieldValue>Info Hub</controllingFieldValue>
             <valueName>SASSI Internal</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Info Hub</controllingFieldValue>
-            <valueName>System &amp; Tariff</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
