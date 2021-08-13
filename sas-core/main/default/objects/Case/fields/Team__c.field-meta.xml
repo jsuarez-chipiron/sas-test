@@ -15,7 +15,7 @@
         <controllingField>Department__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>ACE</fullName>
                 <default>false</default>
@@ -112,6 +112,11 @@
                 <label>CH</label>
             </value>
             <value>
+                <fullName>Chat</fullName>
+                <default>false</default>
+                <label>Chat</label>
+            </value>
+            <value>
                 <fullName>DE</fullName>
                 <default>false</default>
                 <label>DE</label>
@@ -165,6 +170,11 @@
                 <fullName>External Lawyers</fullName>
                 <default>false</default>
                 <label>External Lawyers</label>
+            </value>
+            <value>
+                <fullName>Facebook Messenger</fullName>
+                <default>false</default>
+                <label>Facebook Messenger</label>
             </value>
             <value>
                 <fullName>Feedback</fullName>
@@ -748,6 +758,14 @@
             <controllingFieldValue>SME</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <valueName>Scandinavia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <valueName>Chat</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <valueName>Facebook Messenger</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SoMe Support</controllingFieldValue>

@@ -13,77 +13,7 @@
         <controllingField>FCS_CaseType__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>ATO Account Takeover</fullName>
-                <default>false</default>
-                <label>ATO Account Takeover</label>
-            </value>
-            <value>
-                <fullName>CAR</fullName>
-                <default>false</default>
-                <label>CAR</label>
-            </value>
-            <value>
-                <fullName>Coop</fullName>
-                <default>false</default>
-                <label>Coop</label>
-            </value>
-            <value>
-                <fullName>EuroBonus Shop</fullName>
-                <default>false</default>
-                <label>EuroBonus Shop</label>
-            </value>
-            <value>
-                <fullName>GAC Give Away Card</fullName>
-                <default>false</default>
-                <label>GAC Give Away Card</label>
-            </value>
-            <value>
-                <fullName>Hotel</fullName>
-                <default>false</default>
-                <label>Hotel</label>
-            </value>
-            <value>
-                <fullName>Point Sharing</fullName>
-                <default>false</default>
-                <label>Point Sharing</label>
-            </value>
-            <value>
-                <fullName>SAS Flights</fullName>
-                <default>false</default>
-                <label>SAS Flights</label>
-            </value>
-            <value>
-                <fullName>Star Online</fullName>
-                <default>false</default>
-                <label>Star Online</label>
-            </value>
-            <value>
-                <fullName>Boozt Attack</fullName>
-                <default>false</default>
-                <label>Boozt Attack</label>
-            </value>
-            <value>
-                <fullName>Crime Prevention</fullName>
-                <default>false</default>
-                <label>Crime Prevention</label>
-            </value>
-            <value>
-                <fullName>EuroBonus CN</fullName>
-                <default>false</default>
-                <label>EuroBonus CN</label>
-            </value>
-            <value>
-                <fullName>other</fullName>
-                <default>false</default>
-                <label>other</label>
-            </value>
-            <value>
-                <fullName>Add Baggage</fullName>
-                <default>false</default>
-                <label>Add Baggage</label>
-            </value>
+            <sorted>true</sorted>
             <value>
                 <fullName>Access rights</fullName>
                 <default>false</default>
@@ -93,6 +23,11 @@
                 <fullName>Add Animals</fullName>
                 <default>false</default>
                 <label>Add Animals</label>
+            </value>
+            <value>
+                <fullName>Add Baggage</fullName>
+                <default>false</default>
+                <label>Add Baggage</label>
             </value>
             <value>
                 <fullName>Add Bike</fullName>
@@ -150,14 +85,14 @@
                 <label>Add Wheelchair</label>
             </value>
             <value>
-                <fullName>Agent</fullName>
-                <default>false</default>
-                <label>Agent</label>
-            </value>
-            <value>
                 <fullName>Agent Helpdesk</fullName>
                 <default>false</default>
                 <label>Agent Helpdesk</label>
+            </value>
+            <value>
+                <fullName>Agreement</fullName>
+                <default>false</default>
+                <label>Agreement</label>
             </value>
             <value>
                 <fullName>Allowance</fullName>
@@ -175,9 +110,24 @@
                 <label>Assist with check-in</label>
             </value>
             <value>
+                <fullName>ATO Account Takeover</fullName>
+                <default>false</default>
+                <label>ATO Account Takeover</label>
+            </value>
+            <value>
                 <fullName>Baggage Content</fullName>
                 <default>false</default>
                 <label>Baggage Content</label>
+            </value>
+            <value>
+                <fullName>Booking</fullName>
+                <default>false</default>
+                <label>Booking</label>
+            </value>
+            <value>
+                <fullName>Boozt Attack</fullName>
+                <default>false</default>
+                <label>Boozt Attack</label>
             </value>
             <value>
                 <fullName>Bug</fullName>
@@ -193,6 +143,11 @@
                 <fullName>Cancel Booking</fullName>
                 <default>false</default>
                 <label>Cancel Booking</label>
+            </value>
+            <value>
+                <fullName>CAR</fullName>
+                <default>false</default>
+                <label>CAR</label>
             </value>
             <value>
                 <fullName>Car Rental Info</fullName>
@@ -235,6 +190,11 @@
                 <label>Connection Info</label>
             </value>
             <value>
+                <fullName>Coop</fullName>
+                <default>false</default>
+                <label>Coop</label>
+            </value>
+            <value>
                 <fullName>Corporate</fullName>
                 <default>false</default>
                 <label>Corporate</label>
@@ -253,6 +213,11 @@
                 <fullName>Credit points</fullName>
                 <default>false</default>
                 <label>Credit points</label>
+            </value>
+            <value>
+                <fullName>Crime Prevention</fullName>
+                <default>false</default>
+                <label>Crime Prevention</label>
             </value>
             <value>
                 <fullName>CT check</fullName>
@@ -305,6 +270,11 @@
                 <label>Disconnected customer</label>
             </value>
             <value>
+                <fullName>Error Management</fullName>
+                <default>false</default>
+                <label>Error Management</label>
+            </value>
+            <value>
                 <fullName>Escalate EB Shop problems</fullName>
                 <default>false</default>
                 <label>Escalate EB Shop problems</label>
@@ -315,6 +285,16 @@
                 <label>EuroBonus</label>
             </value>
             <value>
+                <fullName>EuroBonus CN</fullName>
+                <default>false</default>
+                <label>EuroBonus CN</label>
+            </value>
+            <value>
+                <fullName>EuroBonus Shop</fullName>
+                <default>false</default>
+                <label>EuroBonus Shop</label>
+            </value>
+            <value>
                 <fullName>Extract</fullName>
                 <default>false</default>
                 <label>Extract</label>
@@ -323,6 +303,11 @@
                 <fullName>Fast Track</fullName>
                 <default>false</default>
                 <label>Fast Track</label>
+            </value>
+            <value>
+                <fullName>GAC Give Away Card</fullName>
+                <default>false</default>
+                <label>GAC Give Away Card</label>
             </value>
             <value>
                 <fullName>General Information</fullName>
@@ -350,6 +335,11 @@
                 <label>Help With Usage</label>
             </value>
             <value>
+                <fullName>Hotel</fullName>
+                <default>false</default>
+                <label>Hotel</label>
+            </value>
+            <value>
                 <fullName>Hotel Info</fullName>
                 <default>false</default>
                 <label>Hotel Info</label>
@@ -370,9 +360,24 @@
                 <label>Inform about lounges</label>
             </value>
             <value>
+                <fullName>Information Missing</fullName>
+                <default>false</default>
+                <label>Information Missing</label>
+            </value>
+            <value>
+                <fullName>Information update needed</fullName>
+                <default>false</default>
+                <label>Information update needed</label>
+            </value>
+            <value>
                 <fullName>Inquiry</fullName>
                 <default>false</default>
                 <label>Inquiry</label>
+            </value>
+            <value>
+                <fullName>Link not working</fullName>
+                <default>false</default>
+                <label>Link not working</label>
             </value>
             <value>
                 <fullName>Make Booking</fullName>
@@ -405,9 +410,29 @@
                 <label>New feature</label>
             </value>
             <value>
+                <fullName>Online Problems</fullName>
+                <default>false</default>
+                <label>Online Problems</label>
+            </value>
+            <value>
+                <fullName>Online Profile</fullName>
+                <default>false</default>
+                <label>Online Profile</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
                 <fullName>Point related question</fullName>
                 <default>false</default>
                 <label>Point related question</label>
+            </value>
+            <value>
+                <fullName>Point Sharing</fullName>
+                <default>false</default>
+                <label>Point Sharing</label>
             </value>
             <value>
                 <fullName>Process Question</fullName>
@@ -435,14 +460,14 @@
                 <label>Rebook Booking</label>
             </value>
             <value>
-                <fullName>Refund Status</fullName>
-                <default>false</default>
-                <label>Refund Status</label>
-            </value>
-            <value>
                 <fullName>Refunds</fullName>
                 <default>false</default>
                 <label>Refunds</label>
+            </value>
+            <value>
+                <fullName>Refund Status</fullName>
+                <default>false</default>
+                <label>Refund Status</label>
             </value>
             <value>
                 <fullName>Retro Registration</fullName>
@@ -465,9 +490,19 @@
                 <label>SAS Aircraft</label>
             </value>
             <value>
+                <fullName>SAS Flights</fullName>
+                <default>false</default>
+                <label>SAS Flights</label>
+            </value>
+            <value>
                 <fullName>Security</fullName>
                 <default>false</default>
                 <label>Security</label>
+            </value>
+            <value>
+                <fullName>Sell</fullName>
+                <default>false</default>
+                <label>Sell</label>
             </value>
             <value>
                 <fullName>Solve log-in problems</fullName>
@@ -490,6 +525,16 @@
                 <label>Spam</label>
             </value>
             <value>
+                <fullName>Spelling mistake</fullName>
+                <default>false</default>
+                <label>Spelling mistake</label>
+            </value>
+            <value>
+                <fullName>Star Online</fullName>
+                <default>false</default>
+                <label>Star Online</label>
+            </value>
+            <value>
                 <fullName>Status Waiting Time</fullName>
                 <default>false</default>
                 <label>Status Waiting Time</label>
@@ -507,7 +552,13 @@
             <value>
                 <fullName>Travel Pass</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Travel Pass</label>
+            </value>
+            <value>
+                <fullName>Update Profile</fullName>
+                <default>false</default>
+                <label>Update Profile</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -519,21 +570,26 @@
             <valueName>Extract</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>GDPR</controllingFieldValue>
             <controllingFieldValue>New Booking</controllingFieldValue>
             <controllingFieldValue>Non-SAS Products</controllingFieldValue>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
             <controllingFieldValue>Special Service Request</controllingFieldValue>
             <controllingFieldValue>Travel Information</controllingFieldValue>
             <controllingFieldValue>Voucher</controllingFieldValue>
+            <controllingFieldValue>Puzzle</controllingFieldValue>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>Fraud</controllingFieldValue>
             <controllingFieldValue>Baggage</controllingFieldValue>
             <controllingFieldValue>Cancellation &amp; Refunds</controllingFieldValue>
             <controllingFieldValue>Changes</controllingFieldValue>
-            <controllingFieldValue>Corporate</controllingFieldValue>
             <controllingFieldValue>Error</controllingFieldValue>
             <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
+            <controllingFieldValue>SAS for Business</controllingFieldValue>
             <controllingFieldValue>Irregularities</controllingFieldValue>
-            <valueName>other</valueName>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New Booking</controllingFieldValue>
@@ -569,6 +625,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Salesforce</controllingFieldValue>
+            <controllingFieldValue>Puzzle</controllingFieldValue>
             <valueName>Access rights</valueName>
         </valueSettings>
         <valueSettings>
@@ -577,6 +634,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Salesforce</controllingFieldValue>
+            <controllingFieldValue>Puzzle</controllingFieldValue>
             <valueName>New feature</valueName>
         </valueSettings>
         <valueSettings>
@@ -585,11 +643,12 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add Baggage</valueName>
+            <valueName>Add Animals</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add Animals</valueName>
+            <controllingFieldValue>Baggage</controllingFieldValue>
+            <valueName>Add Baggage</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Special Service Request</controllingFieldValue>
@@ -696,6 +755,38 @@
             <valueName>Status Waiting Time</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <controllingFieldValue>SAS for Business</controllingFieldValue>
+            <valueName>Agreement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <controllingFieldValue>SAS for Business</controllingFieldValue>
+            <valueName>Booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Error Management</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Online Problems</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Refunds</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <controllingFieldValue>SAS for Business</controllingFieldValue>
+            <valueName>Sell</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Update Profile</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Campaign support</valueName>
         </valueSettings>
@@ -733,11 +824,23 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Boozt Attack</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
             <valueName>CAR</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fraud</controllingFieldValue>
             <valueName>Coop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Crime Prevention</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>EuroBonus CN</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fraud</controllingFieldValue>
@@ -762,18 +865,6 @@
         <valueSettings>
             <controllingFieldValue>Fraud</controllingFieldValue>
             <valueName>Star Online</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>Boozt Attack</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>Crime Prevention</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>EuroBonus CN</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
@@ -824,14 +915,6 @@
             <controllingFieldValue>Changes</controllingFieldValue>
             <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Name correction</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Agent</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Travel Pass</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
@@ -904,11 +987,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Refunds</valueName>
+            <valueName>Sales Control</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Sales Control</valueName>
+            <controllingFieldValue>SAS for Business</controllingFieldValue>
+            <valueName>Online Profile</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Irregularities</controllingFieldValue>
@@ -921,6 +1004,22 @@
         <valueSettings>
             <controllingFieldValue>Irregularities</controllingFieldValue>
             <valueName>Rebook Booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>Information Missing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>Information update needed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>Link not working</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>Spelling mistake</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

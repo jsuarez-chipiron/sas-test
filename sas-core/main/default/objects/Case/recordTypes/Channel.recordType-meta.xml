@@ -692,10 +692,14 @@
             <default>false</default>
         </values>
     </picklistValues>
-	 <picklistValues>
+    <picklistValues>
         <picklist>FCS_CaseResolution__c</picklist>
         <values>
             <fullName>According to rules</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Activate Profile</fullName>
             <default>false</default>
         </values>
         <values>
@@ -711,15 +715,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Authorization</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Availability</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Blocked IP address</fullName>
             <default>false</default>
         </values>
         <values>
@@ -775,10 +771,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Commercials</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Completed</fullName>
             <default>false</default>
         </values>
@@ -788,6 +780,14 @@
         </values>
         <values>
             <fullName>Contact Update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Create TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Create company</fullName>
             <default>false</default>
         </values>
         <values>
@@ -807,7 +807,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Error - Inactive Customer</fullName>
+            <fullName>Extend TP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -847,10 +847,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Internet error</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Invalid retro</fullName>
             <default>false</default>
         </values>
@@ -860,10 +856,6 @@
         </values>
         <values>
             <fullName>Limitation%2FWon%27t fix</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Log in</fullName>
             <default>false</default>
         </values>
         <values>
@@ -947,6 +939,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Remove TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove company</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Reported damaged baggage</fullName>
             <default>false</default>
         </values>
@@ -959,10 +959,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Resolved</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Route inquiry</fullName>
             <default>false</default>
         </values>
@@ -971,7 +967,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sell%2FResell</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solve log in issue</fullName>
             <default>false</default>
         </values>
         <values>
@@ -980,10 +984,6 @@
         </values>
         <values>
             <fullName>Statistics</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Strike related information</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1008,6 +1008,10 @@
         </values>
         <values>
             <fullName>User Related</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WF List</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2861,7 +2865,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-	<picklistValues>
+    <picklistValues>
         <picklist>FCS_CaseType__c</picklist>
         <values>
             <fullName>Baggage</fullName>
@@ -2876,7 +2880,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Corporate</fullName>
+            <fullName>Content</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2916,6 +2920,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Puzzle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS for Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Salesforce</fullName>
             <default>false</default>
         </values>
@@ -2925,6 +2937,10 @@
         </values>
         <values>
             <fullName>Travel Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2995,11 +3011,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Agent</fullName>
+            <fullName>Agent Helpdesk</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Agent Helpdesk</fullName>
+            <fullName>Agreement</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3016,6 +3032,10 @@
         </values>
         <values>
             <fullName>Baggage Content</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3135,6 +3155,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Error Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Escalate EB Shop problems</fullName>
             <default>false</default>
         </values>
@@ -3203,7 +3227,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Information Missing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Information update needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Link not working</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3228,6 +3264,18 @@
         </values>
         <values>
             <fullName>New feature</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online Problems</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3291,6 +3339,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sell</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Solve Online Problem</fullName>
             <default>false</default>
         </values>
@@ -3304,6 +3356,10 @@
         </values>
         <values>
             <fullName>Spam</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spelling mistake</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3323,11 +3379,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Travel Pass</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>other</fullName>
+            <fullName>Update Profile</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -4080,6 +4132,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>DE</fullName>
             <default>false</default>
         </values>
@@ -4129,6 +4185,10 @@
         </values>
         <values>
             <fullName>FR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Facebook Messenger</fullName>
             <default>false</default>
         </values>
         <values>

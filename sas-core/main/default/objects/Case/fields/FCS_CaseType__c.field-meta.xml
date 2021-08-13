@@ -13,17 +13,7 @@
         <controllingField>Department__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>EuroBonus</fullName>
-                <default>false</default>
-                <label>EuroBonus</label>
-            </value>
-            <value>
-                <fullName>Fraud</fullName>
-                <default>false</default>
-                <label>Fraud</label>
-            </value>
+            <sorted>true</sorted>
             <value>
                 <fullName>Baggage</fullName>
                 <default>false</default>
@@ -40,14 +30,19 @@
                 <label>Changes</label>
             </value>
             <value>
-                <fullName>Corporate</fullName>
+                <fullName>Content</fullName>
                 <default>false</default>
-                <label>Corporate</label>
+                <label>Content</label>
             </value>
             <value>
                 <fullName>Error</fullName>
                 <default>false</default>
                 <label>Error</label>
+            </value>
+            <value>
+                <fullName>EuroBonus</fullName>
+                <default>false</default>
+                <label>EuroBonus</label>
             </value>
             <value>
                 <fullName>EuroBonus Partner</fullName>
@@ -60,14 +55,19 @@
                 <label>Feedback</label>
             </value>
             <value>
-                <fullName>Irregularities</fullName>
+                <fullName>Fraud</fullName>
                 <default>false</default>
-                <label>Irregularities</label>
+                <label>Fraud</label>
             </value>
             <value>
                 <fullName>GDPR</fullName>
                 <default>false</default>
                 <label>GDPR</label>
+            </value>
+            <value>
+                <fullName>Irregularities</fullName>
+                <default>false</default>
+                <label>Irregularities</label>
             </value>
             <value>
                 <fullName>New Booking</fullName>
@@ -80,9 +80,19 @@
                 <label>Non-SAS Products</label>
             </value>
             <value>
+                <fullName>Puzzle</fullName>
+                <default>false</default>
+                <label>Puzzle</label>
+            </value>
+            <value>
                 <fullName>Salesforce</fullName>
                 <default>false</default>
                 <label>Salesforce</label>
+            </value>
+            <value>
+                <fullName>SAS for Business</fullName>
+                <default>false</default>
+                <label>SAS for Business</label>
             </value>
             <value>
                 <fullName>Special Service Request</fullName>
@@ -95,46 +105,147 @@
                 <label>Travel Information</label>
             </value>
             <value>
+                <fullName>Travel Pass</fullName>
+                <default>false</default>
+                <label>Travel Pass</label>
+            </value>
+            <value>
                 <fullName>Voucher</fullName>
                 <default>false</default>
                 <label>Voucher</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Sales Control BOM</controllingFieldValue>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <valueName>Baggage</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <valueName>Cancellation &amp; Refunds</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <valueName>Irregularities</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <valueName>New Booking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Special Service Request</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Care</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Baggage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Cancellation &amp; Refunds</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Changes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>EuroBonus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Feedback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>GDPR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Irregularities</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>New Booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Non-SAS Products</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Travel Information</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Voucher</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>Corporate</valueName>
+            <valueName>SAS for Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <valueName>Travel Pass</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Error</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <valueName>EuroBonus</valueName>
+            <valueName>EuroBonus Partner</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fraud</controllingFieldValue>
             <valueName>Fraud</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Functional Product Support</controllingFieldValue>
+            <valueName>Puzzle</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Functional Product Support</controllingFieldValue>
+            <valueName>Salesforce</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

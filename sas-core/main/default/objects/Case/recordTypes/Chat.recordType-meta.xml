@@ -676,6 +676,333 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>FCS_CaseResolution__c</picklist>
+        <values>
+            <fullName>According to rules</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Activate Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add travel pass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agreement related question</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Availability</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking Confirmation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking flow</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking related</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking rules</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bug%2FUser story created</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC Update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Changed dates</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Changed destination</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Changed email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Changed name</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Changed phone number</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Checked in baggage info provided</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Claim status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Connect with EB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contact Update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Create TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Create company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Damaged baggage status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delayed baggage status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deviation from rules</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extend TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hand baggage info provided</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>How to make a claim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info about customer rights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info about how to add</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inform Process Owner%2FSpecialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inform about points usage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invalid retro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Involuntary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Limitation%2FWon%27t fix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Make name change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Make name correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Points registered</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Price inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Provide info about name change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Provide info about name correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Provide point status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Provide rebooking rights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Provided info about how to change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to Baggage Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to feedback form</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to travel agent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to webpage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reported damaged baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reported delayed baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reset password</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Route inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Invoice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sell%2FResell</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solve log in issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solve online booking problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Statistics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sustainability</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TPI OPM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket issued</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Update User Guide</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User Related</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WF List</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong deb</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>FCS_CaseSubReason__c</picklist>
         <values>
             <fullName>AMEX</fullName>
@@ -2502,6 +2829,524 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>FCS_CaseType__c</picklist>
+        <values>
+            <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancellation %26 Refunds</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Content</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Feedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fraud</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GDPR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Irregularities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-SAS Products</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Puzzle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS for Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special Service Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FCS_Case_Reason__c</picklist>
+        <values>
+            <fullName>ATO Account Takeover</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Access rights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add Animals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add Bike</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add Biofuel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add EB in Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add Golfbag</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add Infant in Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add Meals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add Musical Instrument</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add Seating</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add Skis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add Special Assistance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add Wheelchair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent Helpdesk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allowance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arrival info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assist with check-in</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage Content</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Boozt Attack</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bug</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT check</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Campaign support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancel Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Car Rental Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Change Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Change booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Change commitment dates</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Charter Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Check missing 20000 Status pts Amex</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Claims</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Connection Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Coop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit expired points</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit points</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Crime Prevention</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Damaged Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deduct Points</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delayed Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delete Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deletion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Departure Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital Channel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disconnected customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalate EB Shop problems</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus CN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus Shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extract</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fast Track</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GAC Give Away Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Give Away Membership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Help With Usage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Help to Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hotel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hotel Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info About Expiry Date</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inform about Airport Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inform about lounges</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Information Missing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Information update needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Link not working</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Make Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Merge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing 1000 Status pts MC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New feature</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online Problems</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Point Sharing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Point related question</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Process Question</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Process Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Provide Delay Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Provide Documents</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rebook Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund Status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refunds</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retro Registration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rules %26 Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Aircraft</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS Flights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Security</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sell</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solve Online Problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solve log-in problems</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solving Online Problem During Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spam</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spelling mistake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Star Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Status Waiting Time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Support in Document Control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Insurance Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Update Profile</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>FCS_EBLevel__c</picklist>
         <values>
             <fullName>B</fullName>
@@ -2850,6 +3695,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>DE</fullName>
             <default>false</default>
         </values>
@@ -2899,6 +3748,10 @@
         </values>
         <values>
             <fullName>FR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Facebook Messenger</fullName>
             <default>false</default>
         </values>
         <values>

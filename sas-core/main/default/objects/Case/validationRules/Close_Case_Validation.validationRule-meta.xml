@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Close_Case_Validation</fullName>
-    <active>true</active>
+    <active>false</active>
     <description>Makes sure that the user changes Tags the Case before Closing</description>
     <errorConditionFormula>AND(
     GDPR_Wiped__c = false,
@@ -10,8 +10,8 @@
         ISPICKVAL(Status, &quot;Closed&quot;)
     ),        
     OR(
-        ISPICKVAL(FCS_CaseReason__c, &quot;&quot;),
-        ISPICKVAL(Type, &quot;&quot;))
+        ISPICKVAL(FCS_Case_Reason__c, &quot;&quot;),
+        ISPICKVAL(FCS_CaseType__c, &quot;&quot;))
 )</errorConditionFormula>
     <errorMessage>Tag Case before Closing</errorMessage>
 </ValidationRule>
