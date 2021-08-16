@@ -9,7 +9,7 @@ public with sharing class IRR_CON_AutomatedCommunication {
     private static final String EVENT_TYPE = 'automatedCommunication';
 
 
-    public static List<IRR_MOD_PassengerInfo> getPassengerInfos(String arrivalStation,String departureStation,String daysBeforeDepartureDate ) {
+    public static List<IRR_MOD_PassengerInfo> getPassengerInfos(String departureStation,String arrivalStation,String daysBeforeDepartureDate ) {
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
         try {
             Date DepartureDate = System.today().addDays(integer.valueOf(daysBeforeDepartureDate));
@@ -48,12 +48,14 @@ public with sharing class IRR_CON_AutomatedCommunication {
         }
 
 
-        public static AutomatedTemplate getAutomatedTemplates( String automatedTemplateName) {
+        public static ManualTemplate getManualTemplates( String automatedTemplateName) {
             try {
+
+                //We are using same ManualCommunicationTemplate CMDT for automated communication as well
                 List<IRR_ManualCommunicationTemplate__mdt> templates = IRR_SEL_ManualTemplatesSelector.newInstance()
                                                                             .selectAllManualCommunicationTemplates();
                 
-                Set<String> automatedTemplateNames = new Set<String>();
+                Set<String> manualTemplateNames = new Set<String>();
                 IRR_ManualCommunicationTemplate__mdt mctd;
                     for (IRR_ManualCommunicationTemplate__mdt mct : templates) {
                     
@@ -62,16 +64,16 @@ public with sharing class IRR_CON_AutomatedCommunication {
                         mct.IRR_EmailTemplate__c;
                         if(mct.IRR_SMSTemplate__c==automatedTemplateName || mct.IRR_EmailTemplate__c==automatedTemplateName){
                         templateName = automatedTemplateName;
-                        automatedTemplateNames.add(templateName);
+                        manualTemplateNames.add(templateName);
                         mctd = mct;
                         break;
                     }
                 }
                 //Get Email Templates
                 Map<String, EmailTemplate> emailTemplateByNames = IRR_SEL_EmailTemplatesSelector.newInstance()
-                                                                                        .selectEmailTemplatesByName(automatedTemplateNames);
+                                                                                        .selectEmailTemplatesByName(manualTemplateNames);
                 
-                AutomatedTemplate mt = new AutomatedTemplate (mctd, emailTemplateByNames.get(automatedTemplateName));
+                ManualTemplate mt = new ManualTemplate (mctd, emailTemplateByNames.get(automatedTemplateName));
                 return mt;
             }
             catch (Exception e) {
@@ -80,7 +82,7 @@ public with sharing class IRR_CON_AutomatedCommunication {
             }
         }
     
-        public class AutomatedTemplate {
+        public class ManualTemplate {
             @AuraEnabled
             public String templateLabel;
     
@@ -106,14 +108,14 @@ public with sharing class IRR_CON_AutomatedCommunication {
             public Boolean responseTemplate;
     
     
-            public AutomatedTemplate(IRR_ManualCommunicationTemplate__mdt mct, EmailTemplate et) {
+            public ManualTemplate(IRR_ManualCommunicationTemplate__mdt mct, EmailTemplate et) {
                 templateLabel = mct.MasterLabel;
                 templateName = mct.DeveloperName;
                 emailTemplate = mct.IRR_EmailTemplate__c;
                 defaultSendEmail = String.isNotBlank(emailTemplate) && mct.IRR_DefaultSendEmail__c;
                 smsTemplate = mct.IRR_SMSTemplate__c;
                 defaultSendSMS = String.isNotBlank(smsTemplate) && mct.IRR_DefaultSendSMS__c;
-                // responseTemplate = mct.IRR_ResponseTemplate__c;
+                responseTemplate = mct.IRR_ResponseTemplate__c;
                 String templateText = String.isNotBlank(et.HtmlValue) ? et.HtmlValue : et.Body;
                 templatePreview = templateText.stripHtmlTags().replace('\n ', '\n')
                         .substringBeforeLast(IRR_SVC_CommunicationService.SAS_COPYRIGHT_NOTICE);
