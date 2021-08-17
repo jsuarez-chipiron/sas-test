@@ -163,6 +163,11 @@
                 <label>Delayed baggage status</label>
             </value>
             <value>
+                <fullName>Destinations</fullName>
+                <default>false</default>
+                <label>Destinations</label>
+            </value>
+            <value>
                 <fullName>Deviation from rules</fullName>
                 <default>false</default>
                 <label>Deviation from rules</label>
@@ -179,6 +184,11 @@
                 <label>Error - Inactive Customer</label>
             </value>
             <value>
+                <fullName>EuroBonus</fullName>
+                <default>false</default>
+                <label>EuroBonus</label>
+            </value>
+            <value>
                 <fullName>Extend TP</fullName>
                 <default>false</default>
                 <label>Extend TP</label>
@@ -187,6 +197,11 @@
                 <fullName>Fare</fullName>
                 <default>false</default>
                 <label>Fare</label>
+            </value>
+            <value>
+                <fullName>Get Started</fullName>
+                <default>false</default>
+                <label>Get Started</label>
             </value>
             <value>
                 <fullName>Hand baggage info provided</fullName>
@@ -245,6 +260,11 @@
                 <label>Involuntary</label>
             </value>
             <value>
+                <fullName>Lacking Features/Destinations/Partners</fullName>
+                <default>false</default>
+                <label>Lacking Features/Destinations/Partners</label>
+            </value>
+            <value>
                 <fullName>Limitation/Won&apos;t fix</fullName>
                 <default>false</default>
                 <label>Limitation/Won&apos;t fix</label>
@@ -294,6 +314,16 @@
                 <fullName>Price inquiry</fullName>
                 <default>false</default>
                 <label>Price inquiry</label>
+            </value>
+            <value>
+                <fullName>Product/Concept</fullName>
+                <default>false</default>
+                <label>Product/Concept</label>
+            </value>
+            <value>
+                <fullName>Product Improvement</fullName>
+                <default>false</default>
+                <label>Product Improvement</label>
             </value>
             <value>
                 <fullName>Provided info about how to change</fullName>
@@ -398,9 +428,19 @@
                 <label>Route inquiry</label>
             </value>
             <value>
+                <fullName>Sales</fullName>
+                <default>false</default>
+                <label>Sales</label>
+            </value>
+            <value>
                 <fullName>SAS Invoice</fullName>
                 <default>false</default>
                 <label>SAS Invoice</label>
+            </value>
+            <value>
+                <fullName>Segmentation</fullName>
+                <default>false</default>
+                <label>Segmentation</label>
             </value>
             <value>
                 <fullName>Sell/Resell</fullName>
@@ -434,6 +474,11 @@
                 <label>Strike related information</label>
             </value>
             <value>
+                <fullName>Support</fullName>
+                <default>false</default>
+                <label>Support</label>
+            </value>
+            <value>
                 <fullName>Sustainability</fullName>
                 <default>false</default>
                 <label>Sustainability</label>
@@ -462,6 +507,11 @@
                 <fullName>User Related</fullName>
                 <default>false</default>
                 <label>User Related</label>
+            </value>
+            <value>
+                <fullName>Wanted/Lacking features</fullName>
+                <default>false</default>
+                <label>Wanted/Lacking features</label>
             </value>
             <value>
                 <fullName>WF List</fullName>
@@ -753,6 +803,55 @@
             <valueName>Referred to webpage</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>App</controllingFieldValue>
+            <controllingFieldValue>SAS Corporate Portal</controllingFieldValue>
+            <controllingFieldValue>SAS for Business Agreement</controllingFieldValue>
+            <controllingFieldValue>Agreement</controllingFieldValue>
+            <valueName>Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>App</controllingFieldValue>
+            <controllingFieldValue>SAS Corporate Portal</controllingFieldValue>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>App</controllingFieldValue>
+            <valueName>Wanted/Lacking features</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Corporate Portal</controllingFieldValue>
+            <valueName>Get Started</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS for Business Agreement</controllingFieldValue>
+            <valueName>Lacking Features/Destinations/Partners</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS for Business Agreement</controllingFieldValue>
+            <valueName>Segmentation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Destinations</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>EuroBonus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Product/Concept</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Product Improvement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Sales</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Add Baggage</controllingFieldValue>
             <controllingFieldValue>Add Animals</controllingFieldValue>
             <controllingFieldValue>Add Bike</controllingFieldValue>
@@ -939,10 +1038,6 @@
         <valueSettings>
             <controllingFieldValue>Agreement</controllingFieldValue>
             <valueName>Extend TP</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Agreement</controllingFieldValue>
-            <valueName>Information</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agreement</controllingFieldValue>

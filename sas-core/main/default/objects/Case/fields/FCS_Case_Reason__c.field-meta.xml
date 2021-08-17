@@ -100,6 +100,11 @@
                 <label>Allowance</label>
             </value>
             <value>
+                <fullName>App</fullName>
+                <default>false</default>
+                <label>App</label>
+            </value>
+            <value>
                 <fullName>Arrival info</fullName>
                 <default>false</default>
                 <label>Arrival info</label>
@@ -360,6 +365,11 @@
                 <label>Inform about lounges</label>
             </value>
             <value>
+                <fullName>Information</fullName>
+                <default>false</default>
+                <label>Information</label>
+            </value>
+            <value>
                 <fullName>Information Missing</fullName>
                 <default>false</default>
                 <label>Information Missing</label>
@@ -490,9 +500,19 @@
                 <label>SAS Aircraft</label>
             </value>
             <value>
+                <fullName>SAS Corporate Portal</fullName>
+                <default>false</default>
+                <label>SAS Corporate Portal</label>
+            </value>
+            <value>
                 <fullName>SAS Flights</fullName>
                 <default>false</default>
                 <label>SAS Flights</label>
+            </value>
+            <value>
+                <fullName>SAS for Business Agreement</fullName>
+                <default>false</default>
+                <label>SAS for Business Agreement</label>
             </value>
             <value>
                 <fullName>Security</fullName>
@@ -552,7 +572,6 @@
             <value>
                 <fullName>Travel Pass</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Travel Pass</label>
             </value>
             <value>
@@ -571,6 +590,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>GDPR</controllingFieldValue>
+            <controllingFieldValue>SME</controllingFieldValue>
             <controllingFieldValue>New Booking</controllingFieldValue>
             <controllingFieldValue>Non-SAS Products</controllingFieldValue>
             <controllingFieldValue>Salesforce</controllingFieldValue>
@@ -590,6 +610,26 @@
             <controllingFieldValue>Irregularities</controllingFieldValue>
             <controllingFieldValue>Content</controllingFieldValue>
             <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <valueName>App</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <valueName>Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <valueName>SAS Corporate Portal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <valueName>SAS for Business Agreement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <valueName>Travel Pass</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New Booking</controllingFieldValue>

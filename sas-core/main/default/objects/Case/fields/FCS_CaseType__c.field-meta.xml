@@ -95,6 +95,11 @@
                 <label>SAS for Business</label>
             </value>
             <value>
+                <fullName>SME</fullName>
+                <default>false</default>
+                <label>SME</label>
+            </value>
+            <value>
                 <fullName>Special Service Request</fullName>
                 <default>false</default>
                 <label>Special Service Request</label>
@@ -167,6 +172,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SME</controllingFieldValue>
             <valueName>Feedback</valueName>
         </valueSettings>
         <valueSettings>
@@ -216,6 +222,10 @@
             <controllingFieldValue>Direct Sales</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Voucher</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <valueName>SME</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>

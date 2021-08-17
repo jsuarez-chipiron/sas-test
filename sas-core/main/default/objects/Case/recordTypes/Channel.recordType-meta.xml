@@ -799,6 +799,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Destinations</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Deviation from rules</fullName>
             <default>false</default>
         </values>
@@ -807,11 +811,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Extend TP</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Fare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Get Started</fullName>
             <default>false</default>
         </values>
         <values>
@@ -855,6 +867,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Lacking Features%2FDestinations%2FPartners</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Limitation%2FWon%27t fix</fullName>
             <default>false</default>
         </values>
@@ -888,6 +904,14 @@
         </values>
         <values>
             <fullName>Price inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Product Improvement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Product%2FConcept</fullName>
             <default>false</default>
         </values>
         <values>
@@ -971,6 +995,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segmentation</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sell%2FResell</fullName>
             <default>false</default>
         </values>
@@ -984,6 +1016,10 @@
         </values>
         <values>
             <fullName>Statistics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1012,6 +1048,10 @@
         </values>
         <values>
             <fullName>WF List</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wanted%2FLacking features</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2928,6 +2968,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SME</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Salesforce</fullName>
             <default>false</default>
         </values>
@@ -3020,6 +3064,10 @@
         </values>
         <values>
             <fullName>Allowance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>App</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3227,6 +3275,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Information Missing</fullName>
             <default>false</default>
         </values>
@@ -3327,7 +3379,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SAS Corporate Portal</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SAS Flights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SAS for Business Agreement</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3376,6 +3436,10 @@
         </values>
         <values>
             <fullName>Travel Insurance Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Pass</fullName>
             <default>false</default>
         </values>
         <values>
