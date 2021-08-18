@@ -53,6 +53,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     assignOwnerFromSoMe(newCaseList);
     validateCaseTags(newCaseList);
     enrichCaseDataBasedOnOrigin(newCaseList);
+    enrichCaseTagData(newCaseList);
     //enrichGroupCaseDataWithGroupFormData(newCaseList);
     enrichMissingPointsCaseDataWithMissingPointsFormData(newCaseList);
   }
@@ -62,6 +63,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
   public override void beforeUpdate() {
     validateCaseTags(newCaseList);
     completeMilestones(newCaseMap);
+    enrichCaseTagData(newCaseList);
   }
   /**
    Used to call the trigger in the after insert context
@@ -794,4 +796,14 @@ public class FCS_CaseHandler extends C_TriggerHandler {
       }
     }
   }
+   public static void enrichCaseTagData(List<Case> newCaseList)
+   {
+       for(Case cse : newCaseList)
+       {
+         if(cse.FCS_Case_Reason__c!= 'Other')
+         {
+            cse.FCS_CaseResolutionDetails__c = '';
+         }
+       }
+   }
 }

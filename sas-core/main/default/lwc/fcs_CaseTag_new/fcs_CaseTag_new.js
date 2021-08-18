@@ -5,7 +5,7 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 export default class Fcs_CaseTag_SocialPost extends LightningElement {
   @api recordId;
   @track recordTypeId;
-  @track cardTitle = "Tag a Case";
+  @track cardTitle = "Tag Case";
   @track iconName = "action:new_case";
   @track newCase = true;
   @track cse;
@@ -25,7 +25,7 @@ export default class Fcs_CaseTag_SocialPost extends LightningElement {
       if (this.cse.Id) {
         this.newCase = false;
         if (this.cse.FCS_Case_Reason__c) {
-          this.cardTitle = "Case is Tagged";
+          this.cardTitle = "Case Tagged";
           this.iconName = "action:approval";
           this.caseTagged = true;
         }
@@ -62,9 +62,7 @@ export default class Fcs_CaseTag_SocialPost extends LightningElement {
   }
   handleDataChange(event) {
     let reason = event.target.value;
-    console.log("******" + reason);
     if (reason == "Other") {
-      console.log("reason***" + reason);
       this.showResolutionComment = true;
     } else {
       this.showResolutionComment = false;
@@ -88,7 +86,7 @@ export default class Fcs_CaseTag_SocialPost extends LightningElement {
         message: "Submitted Successfully",
         variant: "success"
       });
-      this.cardTitle = "Case is Tagged";
+      this.cardTitle = "Case Tagged";
       this.iconName = "action:approval";
       this.reset = true;
       this.dispatchEvent(evt);
