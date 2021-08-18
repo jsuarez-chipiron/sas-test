@@ -1,0 +1,446 @@
+<template>
+  <lightning-card title="Retrieve Booking" if:false={bookings}>
+    <div
+      class="
+        slds-grid slds-gutters
+        slds-grid_vertical-align-end
+        slds-p-left_small
+      "
+    >
+      <div class="slds-col">
+        <lightning-input
+          type="text"
+          label="Enter PNR code"
+          value={searchValue}
+          onchange={handleSearchValueChange}
+          onkeydown={handlePressEnterKey}
+          class="search-field"
+        >
+        </lightning-input>
+      </div>
+
+      <div class="slds-col">
+        <lightning-button
+          variant="brand"
+          label="Search"
+          title="Search button"
+          onclick={handleSearchButtonClick}
+        >
+        </lightning-button>
+      </div>
+    </div>
+    <div if:true={showSpinner}>
+      <lightning-spinner
+        alternative-text="Loading"
+        size="medium"
+        variant="brand"
+      ></lightning-spinner>
+    </div>
+
+    <template if:true={error}>
+      <c-c_-error-panel errors={error}></c-c_-error-panel>
+    </template>
+
+    <div class="slds-p-around_medium searchError" if:true={noSearchResult}>
+      <lightning-icon
+        icon-name="utility:warning"
+        variant="warning"
+      ></lightning-icon>
+      <div class="slds-p-around_small">
+        <p>Could not find a matching booking</p>
+      </div>
+    </div>
+  </lightning-card>
+
+  <article class="slds-card" if:true={bookings}>
+    <div if:true={showSpinner}>
+      <lightning-spinner
+        alternative-text="Loading"
+        size="medium"
+        variant="brand"
+      ></lightning-spinner>
+    </div>
+
+    <div class="slds-card__header slds-grid">
+      <header>
+        <h2 class="slds-card__header-title slds-text-heading_small">
+          Current Case
+        </h2>
+      </header>
+    </div>
+
+    <div class="slds-card__body">
+      <div class="slds-card__body_inner">
+        <template iterator:b={bookings}>
+          <div key={b.value.bookingReference}>
+            <lightning-tabset>
+              <lightning-tab label="Flight data">
+                <div
+                  for:each={b.value.trips}
+                  for:item="trip"
+                  key={trip.type}
+                  class="slds-m-bottom_small"
+                >
+                  <div
+                    class="slds-col slds-size_1-of-1 text-bold"
+                    key={trip.type}
+                  >
+                    <span>{trip.type}</span>
+                  </div>
+                  <div
+                    for:each={trip.flights}
+                    for:item="flight"
+                    class="
+                      slds-col
+                      slds-size_1-of-1
+                      slds-grid
+                      slds-border_bottom
+                      slds-p-vertical_x-small
+                    "
+                    key={flight.flightNumber}
+                  >
+                    <div class="slds-col slds-size_2-of-12 slds-p-right_small">
+                      <span>{flight.flightNumber}</span>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12 slds-p-right_small">
+                      <lightning-formatted-date-time
+                        value={flight.scheduledDepartureTime}
+                        year="numeric"
+                        month="short"
+                        day="2-digit"
+                      ></lightning-formatted-date-time>
+                    </div>
+                    <div
+                      class="
+                        slds-col
+                        slds-size_4-of-12
+                        slds-grid slds-grid_vertical
+                        slds-p-right_small
+                      "
+                    >
+                      <div class="slds-col slds-size_4-of-12">
+                        <span>Origin&nbsp;{flight.departureAirport}</span>
+                      </div>
+                      <div class="slds-col slds-size_4-of-12">
+                        <span>{flight.departureTerminal}</span>
+                      </div>
+                      <lightning-formatted-date-time
+                        class="slds-col slds-size_4-of-12"
+                        value={flight.scheduledDepartureTime}
+                        hour="2-digit"
+                        minute="2-digit"
+                      ></lightning-formatted-date-time>
+                    </div>
+                    <div
+                      class="
+                        slds-col
+                        slds-size_4-of-12
+                        slds-grid slds-grid_vertical
+                      "
+                    >
+                      <div class="slds-col slds-size_4-of-12">
+                        <span>Destination&nbsp;{flight.arrivalAirport}</span>
+                      </div>
+                      <div class="slds-col slds-size_4-of-12">
+                        <span>{flight.arrivalTerminal}</span>
+                      </div>
+                      <lightning-formatted-date-time
+                        class="slds-col slds-size_4-of-12"
+                        value={flight.scheduledArrivalTime}
+                        hour="2-digit"
+                        minute="2-digit"
+                      ></lightning-formatted-date-time>
+                    </div>
+                  </div>
+                </div>
+                <div class="case-count-text">
+                  <span
+                    class="
+                      slds-text-align_left
+                      slds-text-color_weak
+                      slds-text-body_small
+                    "
+                    >Last update
+                    <lightning-formatted-date-time
+                      value={b.value.lastUpdated}
+                      year="numeric"
+                      month="short"
+                      day="2-digit"
+                      hour="2-digit"
+                      minute="2-digit"
+                    ></lightning-formatted-date-time>
+                    -
+                  </span>
+                  <a onclick={refreshBooking} data-id={b.value.bookingReference}
+                    >refresh</a
+                  >
+                </div>
+              </lightning-tab>
+
+              <lightning-tab label="Booking data">
+                <div class="text-bold">
+                  <span>Travellers</span>
+                  <span class="slds-float_right"
+                    >{b.value.bookingReference}</span
+                  >
+                </div>
+                <lightning-accordion
+                  onsectiontoggle={handleToggleSection}
+                  active-section-name="Booking"
+                  allow-multiple-sections-open
+                  class="slds-border_bottom"
+                >
+                  <lightning-accordion-section
+                    name="P"
+                    label={p.name}
+                    for:each={b.value.passengers}
+                    for:item="p"
+                    key={p.identifier}
+                  >
+                    <div class="slds-grid slds-wrap slds-gutters_direct">
+                      <div
+                        class="
+                          slds-col
+                          slds-size_1-of-2
+                          slds-grid slds-grid_vertical
+                        "
+                      >
+                        <span class="detail-box-label">Phone number</span>
+                        <span class="slds-border_bottom">{p.phone}</span>
+                      </div>
+                      <div
+                        class="
+                          slds-col
+                          slds-size_1-of-2
+                          slds-grid slds-grid_vertical
+                        "
+                      >
+                        <span class="detail-box-label">Email</span>
+                        <span class="slds-border_bottom">{p.email}</span>
+                      </div>
+                      <div
+                        class="
+                          slds-col
+                          slds-size_1-of-2
+                          slds-grid slds-grid_vertical
+                        "
+                      >
+                        <span class="detail-box-label">Ticket number</span>
+                        <span class="slds-border_bottom"
+                          >{p.ticketNumbers}</span
+                        >
+                      </div>
+                      <div
+                        class="
+                          slds-col
+                          slds-size_1-of-2
+                          slds-grid slds-grid_vertical
+                        "
+                      >
+                        <span class="detail-box-label">FQTV</span>
+                        <span class="slds-border_bottom"
+                          >{p.euroBonusNumber}</span
+                        >
+                      </div>
+                      <template for:each={p.ssrs} for:item="s">
+                        <div
+                          class="
+                            slds-col
+                            slds-size_1-of-2
+                            slds-grid slds-grid_vertical
+                          "
+                          key={s}
+                        >
+                          <span class="detail-box-label">SSR</span>
+                          <span class="slds-border_bottom">{p.ssrs}</span>
+                        </div>
+                      </template>
+                      <div class="slds-col slds-size_1-of-1 slds-grid">
+                        <!--  force seats and bags to the same row as both take a lot of space when there are
+                                several segments for each passenger. -->
+                        <div
+                          class="
+                            slds-col
+                            slds-size_1-of-2
+                            slds-grid slds-grid_vertical
+                            slds-m-right_small
+                          "
+                        >
+                          <span class="detail-box-label">Seats</span>
+                          <span class="slds-border_bottom">{p.seats}</span>
+                        </div>
+                        <div
+                          class="
+                            slds-col
+                            slds-size_1-of-2
+                            slds-grid slds-grid_vertical
+                          "
+                        >
+                          <span class="detail-box-label">Bags</span>
+                          <span class="slds-border_bottom">{p.bags}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </lightning-accordion-section>
+                </lightning-accordion>
+                <div for:each={b.trips} for:item="trip" key={trip.type}>
+                  <div class="slds-p-vertical_x-small">
+                    <span class="text-bold">{trip.type} </span>
+                    <span>({b.value.type})</span>
+                  </div>
+                  <div
+                    for:each={trip.flights}
+                    for:item="flight"
+                    class="
+                      slds-col
+                      slds-size_1-of-1
+                      slds-grid
+                      slds-p-vertical_x-small
+                    "
+                    key={flight.flightNumber}
+                  >
+                    <div class="slds-col slds-size_2-of-12 slds-p-right_small">
+                      <span>{flight.flightNumber}</span>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12 slds-p-right_small">
+                      <lightning-formatted-date-time
+                        value={flight.scheduledDepartureTime}
+                        year="numeric"
+                        month="short"
+                        day="2-digit"
+                      ></lightning-formatted-date-time>
+                    </div>
+                    <div
+                      class="
+                        slds-col
+                        slds-size_4-of-12
+                        slds-grid slds-grid_vertical
+                        slds-p-right_small
+                      "
+                    >
+                      <div
+                        class="slds-col slds-size_1-of-1 slds-p-bottom_xx-small"
+                      >
+                        <span>Origin&nbsp;{flight.departureAirport}</span>
+                      </div>
+                      <div
+                        class="
+                          slds-col
+                          slds-size_1-of-1
+                          slds-grid slds-grid_vertical
+                        "
+                      >
+                        <span class="detail-box-label">Service class</span>
+                        <span class="slds-border_bottom"
+                          >{flight.serviceClass}</span
+                        >
+                      </div>
+                      <!-- TODO: Enable when we have status info
+                        <div class="slds-col slds-size_1-of-1 slds-grid slds-grid_vertical">
+                          <span class="detail-box-label">Status</span>
+                          <span class="slds-border_bottom">{flight.status}</span>
+                        </div>
+                        -->
+                    </div>
+                    <div
+                      class="
+                        slds-col
+                        slds-size_4-of-12
+                        slds-grid slds-grid_vertical
+                      "
+                    >
+                      <div
+                        class="slds-col slds-size_1-of-1 slds-p-bottom_xx-small"
+                      >
+                        <span>Destination&nbsp;{flight.arrivalAirport}</span>
+                      </div>
+                      <div
+                        class="
+                          slds-col
+                          slds-size_1-of-1
+                          slds-grid slds-grid_vertical
+                        "
+                      >
+                        <span class="detail-box-label">Booking class</span>
+                        <span class="slds-border_bottom"
+                          >{flight.bookingClass}</span
+                        >
+                      </div>
+                      <div
+                        class="
+                          slds-col
+                          slds-size_1-of-1
+                          slds-grid slds-grid_vertical
+                        "
+                      >
+                        <span class="detail-box-label">Fare basis</span>
+                        <span class="slds-border_bottom"
+                          >{flight.fareBasis}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </lightning-tab>
+            </lightning-tabset>
+            <div class="bookingSeparator" if:false={b.last}>
+              <a
+                onclick={removeBookingFromCase}
+                data-id={b.value.bookingReference}
+                >Disconnect booking</a
+              >
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <div
+      if:true={displayAddAnotherBookingForm}
+      class="slds-card__body slds-p-vertical_small addAnotherBooking"
+    >
+      <div class="slds-card__body_inner">
+        <div
+          class="slds-grid slds-gutters slds-wrap slds-grid_vertical-align-end"
+        >
+          <div
+            class="
+              slds-col
+              slds-size_1-of-1
+              slds-card__header-title
+              slds-text-heading_small
+            "
+          >
+            <h3>Retrieve another booking</h3>
+          </div>
+          <div class="slds-col slds-size_8-of-12">
+            <lightning-input
+              type="text"
+              label="Enter PNR code"
+              value={searchValue}
+              onchange={handleSearchValueChange}
+              onkeydown={handlePressEnterKey}
+              class="search-field"
+            >
+            </lightning-input>
+          </div>
+          <div class="slds-col slds-size_4-of-12">
+            <lightning-button
+              variant="brand"
+              label="Search"
+              title="Search button"
+              onclick={handleSearchButtonClick}
+            >
+            </lightning-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div if:false={displayAddAnotherBookingForm} class="slds-card__footer">
+      <a onclick={flipDisplayAddAnotherBookingForm}>Add another booking</a>
+      <span> | </span>
+      <a onclick={removeBookingFromCase}>Disconnect booking</a>
+    </div>
+  </article>
+</template>

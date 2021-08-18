@@ -57,6 +57,32 @@ public without sharing class BookingService {
   }
 
   /**
+   * Removes a booking from a case. I.e. removes the CaseToBooking
+   * junction object linking the referenced case and a booking.
+   *
+   * @param caseId The case from which a booking should be removed.
+   * @param bookingReference The 6 character code of the booking.
+   *
+   */
+  public static void removeBookingFromCase(ID caseId, String bookingReference) {
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    CaseToBookingsSelector caseToBookings = (CaseToBookingsSelector) SAS_Service_Application.Selector.newInstance(
+      CaseToBooking__c.SObjectType
+    );
+
+    List<CaseToBooking__c> caseToBooking = caseToBookings.selectByCaseIdAndBookingReference(
+      caseId,
+      bookingReference
+    );
+
+    if (!caseToBooking.isEmpty()) {
+      uow.registerDeleted(caseToBooking);
+    }
+
+    uow.commitWork();
+  }
+
+  /**
    * Attempts to fetch the given booking from TEDS, and create necessary DB objects.
    * Does nothing if one isn't found.
    *
@@ -244,6 +270,14 @@ public without sharing class BookingService {
             .number_x;
         }
 
+        if (p.contact.phone.size() > 0) {
+          newPassenger.Phone__c = p.contact.phone[0].number_x;
+        }
+
+        if (p.contact.email.size() > 0) {
+          newPassenger.Email__c = p.contact.email[0].address;
+        }
+
         passengersCreated.add(newPassenger);
         uow.registerNew(newPassenger);
         uow.registerRelationship(
@@ -339,7 +373,8 @@ public without sharing class BookingService {
                 : segmentPassenger.ticket.number_x,
               Ticket_Type__c = segmentPassenger.ticket == null
                 ? ''
-                : segmentPassenger.ticket.type
+                : segmentPassenger.ticket.type,
+              Trip_Type__c = trip.type
             );
             uow.registerNew(newSegment);
             uow.registerRelationship(

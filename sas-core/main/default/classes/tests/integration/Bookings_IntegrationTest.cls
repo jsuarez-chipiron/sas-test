@@ -82,6 +82,40 @@ public with sharing class Bookings_IntegrationTest {
   }
 
   @IsTest
+  public static void itsPossibleToRemoveABookingFromCase() {
+    // Given
+    Case testCase = FCS_TestDataFactory.createCases(
+      1,
+      null,
+      null,
+      null,
+      null
+    )[0];
+
+    Test.startTest();
+    insert testCase;
+
+    // When
+    CustomerCardController.addBookingToCase(testCase.Id, bookingReferenceInDB);
+    CustomerCardController.removeBookingFromCase(
+      testCase.Id,
+      bookingReferenceInDB
+    );
+    Test.stopTest();
+
+    // Then
+    List<Booking__c> bookingsByCaseId = bookings.selectByCaseId(
+      new Set<Id>{ testCase.Id }
+    );
+
+    System.assertEquals(
+      bookingsByCaseId.size(),
+      0,
+      'Booking should not be found by case Id'
+    );
+  }
+
+  @IsTest
   public static void invalidBookingReferenceFailsGracefully() {
     // Given
     Case testCase = FCS_TestDataFactory.createCases(
