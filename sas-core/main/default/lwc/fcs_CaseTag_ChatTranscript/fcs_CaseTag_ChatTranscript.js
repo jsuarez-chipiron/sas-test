@@ -1,15 +1,11 @@
 import { LightningElement, api, track, wire } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import findCase from "@salesforce/apex/FCS_CaseTag_Controller.findCase";
+import findCase from "@salesforce/apex/FCS_CaseTag_ChatTranscript_Controller.findCase";
 export default class Fcs_CaseTag extends LightningElement {
   @api recordId;
   @track cse;
   @track error = undefined;
   @track RecordTypeId;
-  @track hideResolutionComment = false;
-  @track caseTagged = false;
-  @track caseTag;
-  @track reset = false;
   @wire(findCase, {
     recordId: "$recordId"
   })
@@ -18,13 +14,6 @@ export default class Fcs_CaseTag extends LightningElement {
       try {
         this.cse = data;
         this.RecordTypeId = this.cse.RecordTypeId;
-        let caseReason = this.cse.FCS_Case_Reason__c;
-        if(caseReason) {  
-        {
-            this.caseTagged = true;
-        }
-      }
-        
       } catch (error) {
         this.cse = undefined;
         this.displayError(error);
@@ -34,28 +23,16 @@ export default class Fcs_CaseTag extends LightningElement {
       this.displayError(error);
     }
   }
-  handleDataChange(event) {
-    this.reason = event.target.value;
-    if (this.reason == "other") {
-      this.hideResolutionComment = true;
-    } else {
-      this.hideResolutionComment = false;
-    }
-  }
   displayError(error) {
     this.error = error;
   }
   handleSuccess(event) {
-    if (!this.reset) {
-      const evt = new ShowToastEvent({
-        title: "Success",
-        message: "Submitted Successfully",
-        variant: "success"
-      });
-      this.caseTagged = true;
-      this.dispatchEvent(evt);
-    }
-    this.reset = false;
+    const evt = new ShowToastEvent({
+      title: "Success",
+      message: "Submitted Successfully",
+      variant: "success"
+    });
+    this.dispatchEvent(evt);
   }
   handleReset(event) {
     const inputFields = this.template.querySelectorAll("lightning-input-field");
@@ -63,9 +40,6 @@ export default class Fcs_CaseTag extends LightningElement {
       inputFields.forEach((field) => {
         field.reset();
       });
-      if (this.caseTagged) {
-        this.reset = true;
-      }
     }
   }
 }
