@@ -1479,7 +1479,7 @@
         <object>Case</object>
     </recordUpdates>
     <startElementReference>isChangedDecision10_myRule_9_Status</startElementReference>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>
