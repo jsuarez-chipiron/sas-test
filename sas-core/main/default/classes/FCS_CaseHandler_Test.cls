@@ -57,7 +57,9 @@ private class FCS_CaseHandler_Test {
     do {
       retry = false;
       try {
+        System.debug('before insert');
         insert newCases;
+        System.debug('After Insert');
       } catch (Exception lockerror) {
         count++;
         String lockingissue = String.valueOf(lockerror);
@@ -76,6 +78,116 @@ private class FCS_CaseHandler_Test {
       }
     } while (retry);
   }
+  /**
+    Test method for generation of case tag records from case
+    Test if case tag records is created on insert of new Case
+   */
+  @isTest
+  static void insertCaseTagRecords() {
+    createTestData();
+    List<Case> newCase = FCS_TestDataFactory.createCases(
+      1,
+      null,
+      null,
+      null,
+      null
+    );
+    newCase[0].FCS_CaseReason__c = 'TestReason 1';
+    newCase[0].FCS_CaseSubReason__c = 'TestSubReason 1';
+    newCase[0].FCS_CaseTags__c = 'TestTag1;TestTag2';
+    newCase[0].Subject = 'TestCase';
+    insert newCase;
+    Case c = [SELECT Id, Subject FROM CASE WHERE Subject = 'TestCase'];
+    System.debug('Subject****' + c.Subject);
+    List<FCS_CaseTag__c> ctList = [
+      SELECT Id, FCS_CaseTag__c, FCS_Type__c
+      FROM FCS_CaseTag__c
+      WHERE FCS_CaseId__c = :c.Id
+    ];
+    Map<String, List<FCS_CaseTag__c>> typeToTags = new Map<String, List<FCS_CaseTag__c>>();
+    for (FCS_CaseTag__c ct : ctList) {
+      if (typeToTags.containsKey(ct.FCS_Type__c)) {
+        typeToTags.get(ct.FCS_Type__c).add(ct);
+      } else {
+        List<FCS_CaseTag__c> ctsTags = new List<FCS_CaseTag__c>();
+        ctsTags.add(ct);
+        typeToTags.put(ct.FCS_Type__c, ctsTags);
+      }
+      system.debug(typeToTags);
+    }
+    System.AssertEquals(
+      'TestReason 1',
+      typeToTags.get(FCS_CaseHandler.MAIN_TAG)[0].FCS_CaseTag__c
+    );
+    System.AssertEquals(
+      'TestSubReason 1',
+      typeToTags.get(FCS_CaseHandler.SUB_MAIN_TAG)[0].FCS_CaseTag__c
+    );
+    System.AssertEquals(
+      2,
+      typeToTags.get(FCS_CaseHandler.ADDITIONAL_TAG).size()
+    );
+    System.AssertEquals(4, ctList.size());
+  }
+  /**
+       Test if case tag records is updated when a case is updated
+    */
+  @isTest
+  static void updateCaseTagRecords() {
+    createTestData();
+    Case c2 = [SELECT Id FROM CASE WHERE Subject = 'TestCase 2'];
+    c2.FCS_CaseReason__c = 'UpdatedTestReason 1';
+    c2.FCS_CaseTags__c = 'TestTag2';
+    update c2;
+    List<FCS_CaseTag__c> ctList = [
+      SELECT Id, FCS_CaseTag__c, FCS_Type__c
+      FROM FCS_CaseTag__c
+      WHERE FCS_CaseId__c = :c2.Id
+    ];
+    system.debug(ctList);
+    Map<String, List<FCS_CaseTag__c>> typeToTags = new Map<String, List<FCS_CaseTag__c>>();
+    for (FCS_CaseTag__c ct : ctList) {
+      if (typeToTags.containsKey(ct.FCS_Type__c)) {
+        typeToTags.get(ct.FCS_Type__c).add(ct);
+      } else {
+        List<FCS_CaseTag__c> ctsTags = new List<FCS_CaseTag__c>();
+        ctsTags.add(ct);
+        typeToTags.put(ct.FCS_Type__c, ctsTags);
+      }
+    }
+    System.AssertEquals(
+      'UpdatedTestReason 1',
+      typeToTags.get(FCS_CaseHandler.MAIN_TAG)[0].FCS_CaseTag__c
+    );
+    System.AssertEquals(
+      'TestSubReason 1',
+      typeToTags.get(FCS_CaseHandler.SUB_MAIN_TAG)[0].FCS_CaseTag__c
+    );
+    System.AssertEquals(1, typeToTags.get(FCS_CaseHandler.MAIN_TAG).Size());
+    System.AssertEquals(1, typeToTags.get(FCS_CaseHandler.SUB_MAIN_TAG).Size());
+    System.AssertEquals(
+      1,
+      typeToTags.get(FCS_CaseHandler.ADDITIONAL_TAG).Size()
+    );
+    System.AssertEquals(1, typeToTags.get(FCS_CaseHandler.MAIN_TAG).Size());
+    System.AssertEquals(1, typeToTags.get(FCS_CaseHandler.MAIN_TAG).Size());
+    System.AssertEquals(3, ctList.Size());
+  }
+
+  /**
+       Test if case tag records is deleted if case is deleted
+    */
+  @isTest
+  static void deleteCaseTagRecords() {
+    createTestData();
+    Case c2 = [SELECT Id FROM CASE WHERE Subject = 'TestCase 2'];
+    delete c2;
+    System.AssertEquals(
+      0,
+      [SELECT Id FROM FCS_CaseTag__c WHERE FCS_CaseId__c = :c2.Id].size()
+    );
+  }
+
   /**
         Tests that cases (used to save tagging of cases where case is created with status closed) created from social posts is assigned to the owner of the source post if owner is a user
     */
@@ -160,6 +272,60 @@ private class FCS_CaseHandler_Test {
     Database.SaveResult result = Database.insert(soMeCases[0], false);
     System.assert(result.isSuccess() == false);
     System.assert(result.getErrors().size() == 1);
+  }
+
+  /**  
+       Test method for ValidateCaseTags - method check that you can not add a case tag with the same value as the case reason
+       Test not to be able to create case with case reason and case tag with same value
+    */
+  @isTest
+  static void testValidateCaseTagsOnInsert() {
+    createTestData();
+    // Test not to be able to create case with case reason and case tag with same value
+    List<Case> newCases = FCS_TestDataFactory.createCases(
+      1,
+      null,
+      null,
+      null,
+      null
+    );
+    newCases[0].FCS_CaseReason__c = 'TestReason 1';
+    newCases[0].FCS_CaseSubReason__c = 'TestSubReason 1';
+    newCases[0].FCS_CaseTags__c = 'TestTag1;TestTag2;TestReason 1';
+    newCases[0].Subject = 'ValidateCaseTags';
+    Database.SaveResult result = Database.insert(newCases[0], false);
+    System.assert(result.isSuccess() == false);
+    System.assert(result.getErrors().size() == 1);
+    //Test that it is possible to insert with not the same case reason and case tag
+    newCases[0].FCS_CaseReason__c = 'TestReason 1';
+    newCases[0].FCS_CaseTags__c = 'TestTag2';
+    Database.SaveResult result2 = Database.insert(newCases[0], false);
+    System.assert(result2.isSuccess() == true);
+    System.assert(result2.getErrors().size() == 0);
+  }
+
+  /**
+     Test method for ValidateCaseTags - method check that you can not add a case tag with the same value as the case reason on update
+    */
+  @isTest
+  static void testValidateCaseTagsOnUpdate() {
+    createTestData();
+    Case c3 = [SELECT Id FROM CASE WHERE Subject = 'TestCase 2'];
+    c3.FCS_CaseReason__c = 'TestReason 1';
+    c3.FCS_CaseTags__c = 'CommonTestTag2;TestReason 1';
+    Database.SaveResult result3 = Database.update(c3, false);
+    System.assert(result3.isSuccess() == false);
+    System.assert(result3.getErrors().size() == 1);
+    System.AssertEquals(
+      0,
+      [SELECT Id FROM CASE WHERE FCS_CaseTags__c INCLUDES ('TestReason1')]
+        .size()
+    );
+    System.AssertEquals(
+      1,
+      [SELECT Id FROM CASE WHERE FCS_CaseTags__c INCLUDES ('CommonTestTag2')]
+        .size()
+    );
   }
 
   /**

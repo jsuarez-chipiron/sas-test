@@ -1,9 +1,6 @@
 <template>
-  <template if:true={cse}>
+  <template if:true={cse} class="slds-m-around_medium">
     <lightning-card title="Tag Case" icon-name="action:new_case">
-      <div class="case-tag-message" if:true={caseTagged}>
-        <p>Case is Tagged</p>
-      </div>
       <lightning-record-edit-form
         object-api-name="Case"
         record-id={cse.Id}
@@ -14,43 +11,37 @@
         <div class="slds-grid slds-wrap" onkeydown={handleSubmitOnKeyPress}>
           <div class="slds-col slds-size_1-of-2">
             <lightning-input-field
-              field-name="Department__c"
-              value={Department__c}
-              disabled="true"
+              field-name="Status"
+              value={Status}
             ></lightning-input-field>
           </div>
           <div class="slds-col slds-size_1-of-2">
             <lightning-input-field
-              field-name="FCS_CaseType__c"
-              value={FCS_CaseType__c}
+              field-name="Type"
+              value={Type}
               required
             ></lightning-input-field>
           </div>
           <div class="slds-col slds-size_1-of-2">
             <lightning-input-field
-              field-name="FCS_Case_Reason__c"
-              value={FCS_Case_Reason__c}
+              field-name="FCS_CaseReason__c"
+              value={FCS_CaseReason__c}
               required
-              onchange={handleDataChange}
             >
             </lightning-input-field>
           </div>
           <div class="slds-col slds-size_1-of-2">
             <lightning-input-field
-              field-name="FCS_CaseResolution__c"
-              value={FCS_CaseResolution__c}
+              field-name="FCS_CaseSubReason__c"
+              value={FCS_CaseSubReason__c}
               required
             >
             </lightning-input-field>
           </div>
-          <div
-            class="slds-col slds-size_2-of-3"
-            if:true={hideResolutionComment}
-          >
+          <div>
             <lightning-input-field
-              field-name="FCS_CaseResolutionDetails__c"
-              value={FCS_CaseResolutionDetails__c}
-              required
+              field-name="FCS_CaseTags__c"
+              value={FCS_CaseTags__c}
             >
             </lightning-input-field>
           </div>

@@ -82,7 +82,7 @@ public with sharing class FCS_MessagingSessionTriggerHandler extends C_TriggerHa
                     else {
                         OldCaseClosed = true;
                         Case cCloneCase = cse.clone(false, false, false, false);
-                        cCloneCase.RecordTypeId = C_RecordTypeHelper.CASE_INFORMATION;
+                        cCloneCase.RecordTypeId = C_RecordTypeHelper.CASE_CHAT;
                         cCloneCase.Origin = 'Facebook Messenger';
                         newCases.add(cCloneCase);
                     }
@@ -93,7 +93,7 @@ public with sharing class FCS_MessagingSessionTriggerHandler extends C_TriggerHa
                     OldCaseClosed = true;
                     newCases.add(new Case(Status = 'New',
                         Origin = 'Facebook Messenger',
-                        RecordTypeId = C_RecordTypeHelper.CASE_INFORMATION,
+                        RecordTypeId = C_RecordTypeHelper.CASE_CHAT,
                         AccountId = meuMap.get(mesgSesion.MessagingEndUserId).AccountId,
                         ContactId = meuMap.get(mesgSesion.MessagingEndUserId).ContactId
                     ));
