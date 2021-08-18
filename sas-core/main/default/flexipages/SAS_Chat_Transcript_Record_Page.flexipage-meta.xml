@@ -155,7 +155,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>fcs_CaseTag_ChatTranscript</componentName>
+                <componentName>fcs_CaseTag_new</componentName>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>
