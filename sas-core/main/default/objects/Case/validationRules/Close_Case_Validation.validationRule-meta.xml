@@ -11,7 +11,9 @@
     ),        
     OR(
         ISPICKVAL(FCS_Case_Reason__c, &quot;&quot;),
-        ISPICKVAL(FCS_CaseType__c, &quot;&quot;))
+        ISPICKVAL(FCS_CaseType__c, &quot;&quot;),
+        ISPICKVAL(FCS_CaseReason__c,&quot;&quot;)
+   )
 )</errorConditionFormula>
     <errorMessage>Tag Case before Closing</errorMessage>
 </ValidationRule>
