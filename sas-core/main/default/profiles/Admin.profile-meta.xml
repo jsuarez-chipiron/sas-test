@@ -223,6 +223,11 @@
         <field>Segment__c.Ticket_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Segment__c.Trip_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>false</editable>
         <field>AD_RoleUserDetail__mdt.Value__c</field>

@@ -4,6 +4,8 @@ global class BookingJSON implements Comparable {
   @AuraEnabled
   public Boolean isCancelled { get; set; }
   @AuraEnabled
+  public Datetime lastUpdated { get; set; }
+  @AuraEnabled
   public String type { get; set; }
 
   @AuraEnabled
@@ -19,19 +21,28 @@ global class BookingJSON implements Comparable {
     @AuraEnabled
     public String departureAirport { get; set; }
     @AuraEnabled
+    public String fareBasis { get; set; }
+    @AuraEnabled
     public String flightNumber { get; set; }
     @AuraEnabled
     public Datetime scheduledArrivalTime { get; set; }
     @AuraEnabled
     public Datetime scheduledDepartureTime { get; set; }
+    @AuraEnabled
+    public String serviceClass { get; set; }
+    @AuraEnabled
+    public String tripType { get; set; }
 
     public Flight(Segment__c s) {
       arrivalAirport = s.Flight__r.Arrival_Airport__c;
       bookingClass = s.Booking_Class__c;
       departureAirport = s.Flight__r.Departure_Airport__c;
+      fareBasis = s.Fare_Basis__c;
       flightNumber = s.Flight__r.TEDS_Identifier__c.substringBefore('-');
       scheduledArrivalTime = s.Flight__r.Scheduled_Arrival_Time__c;
       scheduledDepartureTime = s.Flight__r.Scheduled_Departure_Time__c;
+      serviceClass = s.Service_Class__c;
+      tripType = s.Trip_Type__c;
     }
 
     global Integer compareTo(Object other) {
@@ -50,6 +61,10 @@ global class BookingJSON implements Comparable {
 
   global class Passenger implements Comparable {
     @AuraEnabled
+    public List<String> bags { get; set; }
+    @AuraEnabled
+    public String email { get; set; }
+    @AuraEnabled
     public String euroBonusNumber { get; set; }
     @AuraEnabled
     public String firstName { get; set; }
@@ -58,14 +73,31 @@ global class BookingJSON implements Comparable {
     @AuraEnabled
     public String lastName { get; set; }
     @AuraEnabled
+    public String phone { get; set; }
+    @AuraEnabled
     public List<String> specialServiceRequests { get; set; }
+    @AuraEnabled
+    public List<String> seats { get; set; }
+    @AuraEnabled
+    public Set<String> ticketNumbers { get; set; }
 
-    public Passenger(Passenger__c p, List<String> SSRs) {
+    public Passenger(
+      Passenger__c p,
+      List<String> bagsList,
+      List<String> seatsList,
+      List<String> SSRs,
+      Set<String> ticketNumbersSet
+    ) {
+      bags = bagsList;
+      email = p.Email__c;
       euroBonusNumber = p.EuroBonus_Number__c;
       firstName = p.First_Name__c;
       identifier = p.Identifier__c;
       lastName = p.Last_Name__c;
+      phone = p.Phone__c;
+      seats = seatsList;
       specialServiceRequests = SSRs;
+      ticketNumbers = ticketNumbersSet;
     }
 
     global Integer compareTo(Object other) {
@@ -89,11 +121,15 @@ global class BookingJSON implements Comparable {
   public BookingJSON(Booking__c booking) {
     bookingReference = booking.Booking_Reference__c;
     isCancelled = booking.Is_Cancelled__c;
+    lastUpdated = booking.LastModifiedDate;
     type = booking.Type__c;
     List<BookingJSON.Flight> tempFlights = new List<BookingJSON.Flight>();
     List<BookingJSON.Passenger> tempPassengers = new List<BookingJSON.Passenger>();
 
+    Map<String, List<String>> bags = new Map<String, List<String>>();
     Map<String, List<String>> specialServiceRequests = new Map<String, List<String>>();
+    Map<String, List<String>> seats = new Map<String, List<String>>();
+    Map<String, Set<String>> ticketNumbers = new Map<String, Set<String>>();
 
     String firstPassengerIdHandled;
 
@@ -114,6 +150,46 @@ global class BookingJSON implements Comparable {
         specialServiceRequests.put(passengerId, existingSSRs);
       }
 
+      List<String> existingBags = bags.get(passengerId);
+      String bag =
+        (s.Baggage_Quantity__c == null
+          ? '-'
+          : s.Baggage_Quantity__c.format() + ' x 23kg') +
+        ' (' +
+        s.Flight__r.Departure_Airport__c +
+        '-' +
+        s.Flight__r.Arrival_Airport__c +
+        ')';
+      if (existingBags == null) {
+        bags.put(passengerId, new List<String>{ bag });
+      } else {
+        existingBags.add(bag);
+        bags.put(passengerId, existingBags);
+      }
+
+      List<String> existingSeats = seats.get(passengerId);
+      String seat =
+        (String.isBlank(s.Seat__c) ? '-' : s.Seat__c) +
+        ' (' +
+        s.Flight__r.Departure_Airport__c +
+        '-' +
+        s.Flight__r.Arrival_Airport__c +
+        ')';
+      if (existingSeats == null) {
+        seats.put(passengerId, new List<String>{ seat });
+      } else {
+        existingSeats.add(seat);
+        seats.put(passengerId, existingSeats);
+      }
+
+      Set<String> existingTicketNumbers = ticketNumbers.get(passengerId);
+      if (existingTicketNumbers == null) {
+        ticketNumbers.put(passengerId, new Set<String>{ s.Ticket_Number__c });
+      } else {
+        existingTicketNumbers.add(s.Ticket_Number__c);
+        ticketNumbers.put(passengerId, existingTicketNumbers);
+      }
+
       if (firstPassengerIdHandled == null) {
         firstPassengerIdHandled = passengerId;
         tempFlights.add(new BookingJSON.Flight(s));
@@ -126,7 +202,10 @@ global class BookingJSON implements Comparable {
       tempPassengers.add(
         new BookingJSON.Passenger(
           p,
-          specialServiceRequests.get(p.Identifier__c.substringAfter('PT'))
+          bags.get(p.Identifier__c.substringAfter('PT')),
+          seats.get(p.Identifier__c.substringAfter('PT')),
+          specialServiceRequests.get(p.Identifier__c.substringAfter('PT')),
+          ticketNumbers.get(p.Identifier__c.substringAfter('PT'))
         )
       );
     }

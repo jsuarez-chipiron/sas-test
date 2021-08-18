@@ -8,15 +8,34 @@ public without sharing class CustomerCardController {
   static CasesSelector cases = (CasesSelector) SAS_Service_Application.Selector.newInstance(
     Case.SObjectType
   );
-  @AuraEnabled
-  public static List<Booking__c> addBookingToCase(
-    ID caseId,
-    String bookingReference
-  ) {
-    BookingService.addBookingToCase(caseId, bookingReference);
 
-    return bookings.selectByBookingReference(bookingReference);
-    // TODO: This probably can't return anything
+  @AuraEnabled
+  public static void addBookingToCase(ID caseId, String bookingReference) {
+    BookingService.addBookingToCase(caseId, bookingReference);
+  }
+
+  @AuraEnabled(cacheable=true)
+  public static List<BookingJSON> getBookingsForCase(String caseId) {
+    List<Booking__c> bookingsToReturn = bookings.selectByCaseId(
+      new Set<Id>{ caseId }
+    );
+    List<BookingJSON> toReturn = new List<BookingJSON>();
+    for (Booking__c b : bookingsToReturn) {
+      toReturn.add(new BookingJSON(b));
+    }
+    toReturn.sort();
+
+    return toReturn;
+  }
+
+  @AuraEnabled
+  public static void refetchBookingData(String bookingReference) {
+    BookingService.fetchBookingByBookingReference(bookingReference);
+  }
+
+  @AuraEnabled
+  public static void removeBookingFromCase(ID caseId, String bookingReference) {
+    BookingService.removeBookingFromCase(caseId, bookingReference);
   }
 
   @AuraEnabled
