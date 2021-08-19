@@ -506,7 +506,26 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>fcs_CaseTag_new</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>SoMe Support</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>fcs_CaseTag</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>SoMe Support</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
