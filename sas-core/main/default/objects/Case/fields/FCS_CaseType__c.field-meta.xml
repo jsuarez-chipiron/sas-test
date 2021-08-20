@@ -228,6 +228,12 @@
             <valueName>SME</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Error</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
             <valueName>SAS for Business</valueName>
         </valueSettings>
@@ -235,11 +241,6 @@
             <controllingFieldValue>Corporate</controllingFieldValue>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
             <valueName>Travel Pass</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Error</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>

@@ -460,6 +460,11 @@
                 <label>Provide Documents</label>
             </value>
             <value>
+                <fullName>Provide program information</fullName>
+                <default>false</default>
+                <label>Provide program information</label>
+            </value>
+            <value>
                 <fullName>Rebook Booking</fullName>
                 <default>false</default>
                 <label>Rebook Booking</label>
@@ -513,6 +518,11 @@
                 <fullName>Security</fullName>
                 <default>false</default>
                 <label>Security</label>
+            </value>
+            <value>
+                <fullName>Security code sent</fullName>
+                <default>false</default>
+                <label>Security code sent</label>
             </value>
             <value>
                 <fullName>Sell</fullName>
@@ -902,6 +912,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Provide program information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Retro Registration</valueName>
         </valueSettings>
         <valueSettings>
@@ -939,6 +953,10 @@
         <valueSettings>
             <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Missing 1000 Status pts MC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
+            <valueName>Security code sent</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>

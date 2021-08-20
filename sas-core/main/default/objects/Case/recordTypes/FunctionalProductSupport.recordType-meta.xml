@@ -3082,6 +3082,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Provide program information</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rebook Booking</fullName>
             <default>false</default>
         </values>
@@ -3123,6 +3127,10 @@
         </values>
         <values>
             <fullName>Security</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Security code sent</fullName>
             <default>false</default>
         </values>
         <values>
