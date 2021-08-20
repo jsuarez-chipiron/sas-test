@@ -460,6 +460,11 @@
                 <label>Provide Documents</label>
             </value>
             <value>
+                <fullName>Provide program information</fullName>
+                <default>false</default>
+                <label>Provide program information</label>
+            </value>
+            <value>
                 <fullName>Rebook Booking</fullName>
                 <default>false</default>
                 <label>Rebook Booking</label>
@@ -904,6 +909,10 @@
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Point related question</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Provide program information</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>

@@ -107,11 +107,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>FCS_IdentifyCustomerContainer</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentName>fcs_CaseTag_new</componentName>
             </componentInstance>
         </itemInstances>
@@ -130,6 +125,11 @@
                     <value>MessagingEndUser._UpdateMessagingEndUser</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>FCS_IdentifyCustomerContainer</componentName>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
