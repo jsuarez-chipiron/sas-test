@@ -515,6 +515,11 @@
                 <label>Security</label>
             </value>
             <value>
+                <fullName>Security code sent</fullName>
+                <default>false</default>
+                <label>Security code sent</label>
+            </value>
+            <value>
                 <fullName>Sell</fullName>
                 <default>false</default>
                 <label>Sell</label>
@@ -939,6 +944,10 @@
         <valueSettings>
             <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Missing 1000 Status pts MC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
+            <valueName>Security code sent</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
