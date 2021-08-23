@@ -9,8 +9,62 @@ export default class CaseBookingDetails extends LightningElement {
   @api objectApiName;
   @api recordId;
 
+  ENTRIES_TO_DISPLAY = 3;
+
   // data fields
-  @track bookings = undefined;
+  bookings = undefined;
+
+  get visibleBookingData() {
+    // Get only the booking data which should be visible
+
+    return this.bookings
+      ? this.bookings.map((booking) => ({
+          ...booking,
+          displayDetails: {
+            ...booking.displayDetails,
+            passengersVisible: `${
+              booking.displayDetails.showAllPassengers
+                ? booking.passengers.length
+                : this.ENTRIES_TO_DISPLAY
+            } of ${booking.passengers.length}`,
+            flightsVisible: `${
+              booking.displayDetails.showAllFlights
+                ? booking.trips.reduce(
+                    (acc, curr) => acc + curr.flights.length,
+                    0
+                  )
+                : this.ENTRIES_TO_DISPLAY
+            } of ${booking.trips.reduce(
+              (acc, curr) => acc + curr.flights.length,
+              0
+            )}`
+          },
+          passengers: booking.displayDetails.showAllPassengers
+            ? booking.passengers
+            : booking.passengers.slice(
+                0,
+                Math.min(booking.passengers.length, this.ENTRIES_TO_DISPLAY)
+              ),
+
+          trips: booking.displayDetails.showAllFlights
+            ? booking.trips
+            : [
+                // If we display only some flights, display only flights from the first trip
+                {
+                  ...booking.trips[0],
+                  flights: booking.trips[0].flights.slice(
+                    0,
+                    Math.min(
+                      booking.trips[0].flights.length,
+                      this.ENTRIES_TO_DISPLAY
+                    )
+                  )
+                }
+              ]
+        }))
+      : undefined;
+  }
+
   wiredBookingsReference;
 
   // UI state
@@ -42,6 +96,10 @@ export default class CaseBookingDetails extends LightningElement {
     if (data != undefined && data.length > 0) {
       this.bookings = data.map((b) => ({
         ...b,
+        displayDetails: {
+          showAllPassengers: b.passengers.length <= this.ENTRIES_TO_DISPLAY,
+          showAllFlights: b.flights.length <= this.ENTRIES_TO_DISPLAY
+        },
         trips: Object.entries(
           b.flights
             .map((f) => ({
@@ -130,6 +188,34 @@ export default class CaseBookingDetails extends LightningElement {
       this.displayAddAnotherBookingForm = false;
       this.showSpinner = false;
     }, 6000);
+  }
+
+  handleDisplayAllFlights(event) {
+    this.bookings = this.bookings.map((booking) =>
+      booking.bookingReference === event.target.dataset.id
+        ? {
+            ...booking,
+            displayDetails: {
+              ...booking.displayDetails,
+              showAllFlights: true
+            }
+          }
+        : booking
+    );
+  }
+
+  handleDisplayAllPassengers(event) {
+    this.bookings = this.bookings.map((booking) =>
+      booking.bookingReference === event.target.dataset.id
+        ? {
+            ...booking,
+            displayDetails: {
+              ...booking.displayDetails,
+              showAllPassengers: true
+            }
+          }
+        : booking
+    );
   }
 
   flipDisplayAddAnotherBookingForm() {

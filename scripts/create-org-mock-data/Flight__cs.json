@@ -31,7 +31,7 @@
             "Departure_Airport__c": "RAP",
             "Scheduled_Arrival_Time__c": "2021-08-12T14:48:00.000+0000",
             "Scheduled_Departure_Time__c": "2021-08-12T11:35:00.000+0000",
-            "TEDS_Identifier__c": "TEST-20210812-RAP-ORD"
+            "TEDS_Identifier__c": "TEST3-20210812-RAP-ORD"
         },
         {
             "attributes": {
@@ -42,7 +42,7 @@
             "Departure_Airport__c": "DEN",
             "Scheduled_Arrival_Time__c": "2021-08-13T07:45:00.000+0000",
             "Scheduled_Departure_Time__c": "2021-08-12T14:10:00.000+0000",
-            "TEDS_Identifier__c": "TEST-20210812-DEN-FRA"
+            "TEDS_Identifier__c": "TEST4-20210812-DEN-FRA"
         },
         {
             "attributes": {
@@ -53,7 +53,7 @@
             "Departure_Airport__c": "ORD",
             "Scheduled_Arrival_Time__c": "2021-08-13T07:20:00.000+0000",
             "Scheduled_Departure_Time__c": "2021-08-12T16:00:00.000+0000",
-            "TEDS_Identifier__c": "TEST-20210812-ORD-FRA"
+            "TEDS_Identifier__c": "TEST5-20210812-ORD-FRA"
         },
         {
             "attributes": {
@@ -64,7 +64,7 @@
             "Departure_Airport__c": "FRA",
             "Scheduled_Arrival_Time__c": "2021-08-13T13:00:00.000+0000",
             "Scheduled_Departure_Time__c": "2021-08-13T11:05:00.000+0000",
-            "TEDS_Identifier__c": "TEST-20210813-FRA-OSL"
+            "TEDS_Identifier__c": "TEST6-20210813-FRA-OSL"
         },
         {
             "attributes": {
@@ -75,7 +75,7 @@
             "Departure_Airport__c": "OSL",
             "Scheduled_Arrival_Time__c": "2021-08-23T07:20:00.000+0000",
             "Scheduled_Departure_Time__c": "2021-08-23T05:55:00.000+0000",
-            "TEDS_Identifier__c": "TEST-20210823-OSL-LHR"
+            "TEDS_Identifier__c": "TEST7-20210823-OSL-LHR"
         },
         {
             "attributes": {
@@ -86,7 +86,7 @@
             "Departure_Airport__c": "LHR",
             "Scheduled_Arrival_Time__c": "2021-08-23T10:30:00.000+0000",
             "Scheduled_Departure_Time__c": "2021-08-23T08:00:00.000+0000",
-            "TEDS_Identifier__c": "TEST-20210823-LHR-ORD"
+            "TEDS_Identifier__c": "TEST8-20210823-LHR-ORD"
         },
         {
             "attributes": {
@@ -97,7 +97,7 @@
             "Departure_Airport__c": "ORD",
             "Scheduled_Arrival_Time__c": "2021-08-23T15:01:00.000+0000",
             "Scheduled_Departure_Time__c": "2021-08-23T13:40:00.000+0000",
-            "TEDS_Identifier__c": "TEST-20210823-ORD-RAP"
+            "TEDS_Identifier__c": "TEST9-20210823-ORD-RAP"
         }
     ]
 }

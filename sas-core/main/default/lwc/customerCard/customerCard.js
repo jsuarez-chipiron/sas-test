@@ -18,23 +18,19 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   @api objectApiName;
   @api recordId;
 
+  ENTRIES_TO_DISPLAY = 3;
+
   // data fields
   @track account = undefined;
   @track bookings = [];
   @track cases = [];
-  @track communicationlogs = [];
+  @track communicationLogs = [];
   wiredRecordReference;
   wiredBookingsReference;
 
   // properties calculated from data
-  @track allCases = 0;
-  @track numberOfVisibleCases = 0;
-  @track numberOfVisibleLogs = 0;
-  @track allLogs = 0;
   @track cardTitle = "";
-  @track allCoomunicationLogs = [];
   accountId = undefined;
-  recordOffSet = 10;
   caseIdForChats = undefined;
 
   // UI state
@@ -42,14 +38,61 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   @track noSearchResult = false;
   @track error = false;
   @track searchValue = "";
-  activeSectionMessage = "";
-  @track showMore = false;
-  @track showLess = false;
+  showAllBookings = false;
+  showAllCases = false;
+  showAllLogs = false;
 
-  handleToggleSection(event) {
-    this.activeSectionMessage =
-      "Open section name:  " + event.detail.openSections;
+  get bookingsCount() {
+    return `${
+      this.showAllBookings
+        ? this.bookings.length
+        : Math.min(ENTRIES_TO_DISPLAY, this.bookings.length)
+    } of ${this.bookings.length}`;
   }
+
+  get casesCount() {
+    return `${
+      this.showAllCases
+        ? this.cases.length
+        : Math.min(this.ENTRIES_TO_DISPLAY, this.cases.length)
+    } of ${this.cases.length}`;
+  }
+
+  get logsCount() {
+    return `${
+      this.showAllLogs
+        ? this.communicationLogs.length
+        : Math.min(this.ENTRIES_TO_DISPLAY, this.communicationLogs.length)
+    } of ${this.communicationLogs.length}`;
+  }
+
+  get visibleBookings() {
+    return this.showAllBookings
+      ? this.bookings
+      : this.bookings.slice(
+          0,
+          Math.min(this.ENTRIES_TO_DISPLAY, this.bookings.length)
+        );
+  }
+
+  get visibleCases() {
+    return this.showAllCases
+      ? this.cases
+      : this.cases.slice(
+          0,
+          Math.min(this.ENTRIES_TO_DISPLAY, this.cases.length)
+        );
+  }
+
+  get visibleLogs() {
+    return this.showAllLogs
+      ? this.communicationLogs
+      : this.communicationLogs.slice(
+          0,
+          Math.min(this.ENTRIES_TO_DISPLAY, this.communicationLogs.length)
+        );
+  }
+
   // Navigate to view case Page
   navigateToCaseViewPage(event) {
     this[NavigationMixin.Navigate]({
@@ -132,12 +175,11 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
             return 0;
           }
         });
-      this.numberOfVisibleCases = this.cases.length;
-      this.allCases = this.cases.length;
+      if (this.cases.length <= 3) {
+        this.showAllCases = true;
+      }
     } else {
       this.cases = [];
-      this.numberOfVisibleCases = 0;
-      this.allCases = 0;
     }
   }
 
@@ -145,11 +187,11 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   wiredBookings(value) {
     this.wiredBookingsReference = value;
     const { data, error } = value;
-    function getAirportListForBooking(elem) {
-      if (!elem || !elem.flights || elem.flights.length < 1) {
+    function getAirportListForBooking(booking) {
+      if (!booking.flights || booking.flights.length < 1) {
         return "";
       }
-      return elem.flights
+      return booking.flights
         .reduce((acc, curr) => {
           if (acc.length === 0) {
             return [curr.departureAirport, curr.arrivalAirport];
@@ -170,19 +212,21 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
       return day + " " + month + " " + date.getFullYear();
     }
     if (!error && data != undefined && data.length > 0) {
-      this.bookings = data.map(function (elem) {
-        var today = new Date();
-        var scheduleddate = new Date(elem.flights[0].scheduledDepartureTime);
+      const today = new Date();
+      this.bookings = data.map((booking) => {
+        const scheduledDate = new Date(
+          booking.flights[0].scheduledDepartureTime
+        );
         return {
-          ...elem,
-          class:
-            scheduleddate >= today
+          ...booking,
+          className:
+            scheduledDate >= today
               ? "slds-item booking-bullet future-booking-bullet"
               : "slds-item booking-bullet past-booking-bullet",
           accordionTitle: `${getDateToString(
-            elem.flights[0].scheduledDepartureTime
-          )} ${getAirportListForBooking(elem)}`,
-          passengers: elem.passengers.map((p) => ({
+            scheduledDate
+          )} ${getAirportListForBooking(booking)}`,
+          passengers: booking.passengers.map((p) => ({
             ...p,
             ssrs:
               p.specialServiceRequests && p.specialServiceRequests.length > 0
@@ -191,10 +235,34 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
           }))
         };
       });
+      if (this.bookings.length <= 3) {
+        this.showAllBookings = true;
+      }
     } else {
       this.bookings = [];
     }
   }
+
+  // TODO: Enable when we can get communication logs
+  /*@wire(getAllCommunicationData, { accountId: "$accountId" })
+  wiredCommunicationLog({ error, data }) {
+    if (!error && data != undefined && data.length > 0) {
+      this.communicationLogs = data.map((rawLog) => ({
+        ...rawLog,
+        communicationName: rawLog.IRR_FlightId__c
+          ? rawLog.IRR_FlightId__c.substring(
+              0,
+              Math.min(6, rawLog.IRR_FlightId__c.length)
+            )
+          : ""
+      }));
+      if (this.communicationLogs.length <= 3) {
+        this.showAllLogs = true;
+      }
+    } else {
+      this.communicationLogs = [];
+    }
+  }*/
 
   async addCustomerToCase(searchString) {
     this.showSpinner = true;
@@ -279,84 +347,16 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
       this.addCustomerToCase(this.searchValue);
     }
   }
-  @wire(getAllCommunicationData, { accountId: "$accountId" })
-  wiredCommunicationLog({ error, data }) {
-    function getDateTimeToString(date) {
-      var month = date.toLocaleString("default", { month: "short" });
-      var day = date.getDate().toString();
-      var hour = date.getHours().toString();
-      var minute = date.getMinutes().toString();
-      day = day.length > 1 ? day : "0" + day;
-      hour = hour.length > 1 ? hour : "0" + hour;
-      minute = minute.length > 1 ? minute : "0" + minute;
-      return (
-        day +
-        " " +
-        month +
-        " " +
-        date.getFullYear() +
-        "," +
-        " " +
-        hour +
-        ":" +
-        minute +
-        "h"
-      );
-    }
-    if (!error && data != undefined && data.length > 0) {
-      this.allCoomunicationLogs = data.map(function (elem) {
-        var flightnumber = "flight";
-        var communicationTitle = "";
-        if (typeof elem.IRR_FlightId__c === "undefined") {
-          let createdDate = new Date(elem.CreatedDate);
-          communicationTitle = getDateTimeToString(createdDate);
-        } else {
-          flightnumber = elem.IRR_FlightId__c.substring(0, 6);
-          let createdDate = new Date(elem.CreatedDate);
-          communicationTitle =
-            flightnumber + ", " + getDateTimeToString(createdDate);
-        }
-        return {
-          ...elem,
-          communicationName: communicationTitle
-        };
-      });
-      for (var i = 0; i <= 9; i++) {
-        this.communicationlogs.push(this.allCoomunicationLogs[i]);
-      }
-      this.allLogs = this.allCoomunicationLogs.length;
-      this.numberOfVisibleLogs = this.communicationlogs.length;
-      this.showMore =
-        this.numberOfVisibleLogs - 10 <= this.allLogs ? true : false;
-      this.showLess = this.numberOfVisibleLogs - 10 > 0 ? true : false;
-    } else {
-      this.communicationlogs = [];
-      this.allCoomunicationLogs = [];
-    }
+
+  handleDisplayAllBookings() {
+    this.showAllBookings = true;
   }
-  handleLoadMoreRecords(event) {
-    let previousrecordOffSet = this.recordOffSet;
-    this.recordOffSet = this.recordOffSet + 10;
-    var i = previousrecordOffSet;
-    for (i = previousrecordOffSet; i < this.recordOffSet; i++) {
-      if (i < this.allCoomunicationLogs.length) {
-        this.communicationlogs.push(this.allCoomunicationLogs[i]);
-      }
-    }
-    this.numberOfVisibleLogs = this.communicationlogs.length;
-    this.showMore =
-      this.numberOfVisibleLogs - 10 <= this.allLogs ? true : false;
-    this.showLess = this.numberOfVisibleLogs - 10 > 0 ? true : false;
+
+  handleDisplayAllCases() {
+    this.showAllCases = true;
   }
-  handleLoadLessRecords(event) {
-    let previousrecordOffSet = this.recordOffSet;
-    this.recordOffSet = this.recordOffSet - 10;
-    for (var i = previousrecordOffSet; i > this.recordOffSet; i--) {
-      this.communicationlogs.pop();
-    }
-    this.numberOfVisibleLogs = this.communicationlogs.length;
-    this.showMore =
-      this.numberOfVisibleLogs - 10 <= this.allLogs ? true : false;
-    this.showLess = this.numberOfVisibleLogs - 10 > 0 ? true : false;
+
+  handleDisplayAllLogs() {
+    this.showAllLogs = true;
   }
 }
