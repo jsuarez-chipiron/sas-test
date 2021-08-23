@@ -11,7 +11,8 @@
             "Identifier__c": "ST5PT1",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef3"
+            "Flight__c": "@Flight__cRef3",
+            "Trip_Type__c": "Outbound"
         },
         {
             "attributes": {
@@ -24,7 +25,8 @@
             "Identifier__c": "ST5PT2",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef3"
+            "Flight__c": "@Flight__cRef3",
+            "Trip_Type__c": "Outbound"
         },
         {
             "attributes": {
@@ -37,7 +39,8 @@
             "Identifier__c": "ST10PT1",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef5"
+            "Flight__c": "@Flight__cRef5",
+            "Trip_Type__c": "Outbound"
         },
         {
             "attributes": {
@@ -50,7 +53,8 @@
             "Identifier__c": "ST10PT2",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef5"
+            "Flight__c": "@Flight__cRef5",
+            "Trip_Type__c": "Outbound"
         },
         {
             "attributes": {
@@ -63,7 +67,8 @@
             "Identifier__c": "ST13PT1",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef6"
+            "Flight__c": "@Flight__cRef6",
+            "Trip_Type__c": "Inbound"
         },
         {
             "attributes": {
@@ -76,7 +81,8 @@
             "Identifier__c": "ST13PT2",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef6"
+            "Flight__c": "@Flight__cRef6",
+            "Trip_Type__c": "Inbound"
         },
         {
             "attributes": {
@@ -89,7 +95,8 @@
             "Identifier__c": "ST9PT1",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef4"
+            "Flight__c": "@Flight__cRef4",
+            "Trip_Type__c": "Outbound"
         },
         {
             "attributes": {
@@ -102,7 +109,8 @@
             "Identifier__c": "ST9PT2",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef4"
+            "Flight__c": "@Flight__cRef4",
+            "Trip_Type__c": "Outbound"
         },
         {
             "attributes": {
@@ -115,7 +123,8 @@
             "Identifier__c": "ST14PT1",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef7"
+            "Flight__c": "@Flight__cRef7",
+            "Trip_Type__c": "Inbound"
         },
         {
             "attributes": {
@@ -128,7 +137,8 @@
             "Identifier__c": "ST14PT2",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef7"
+            "Flight__c": "@Flight__cRef7",
+            "Trip_Type__c": "Inbound"
         },
         {
             "attributes": {
@@ -141,7 +151,8 @@
             "Identifier__c": "ST1PT1",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef1"
+            "Flight__c": "@Flight__cRef1",
+            "Trip_Type__c": "Outbound"
         },
         {
             "attributes": {
@@ -154,7 +165,8 @@
             "Identifier__c": "ST1PT2",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef1"
+            "Flight__c": "@Flight__cRef1",
+            "Trip_Type__c": "Outbound"
         },
         {
             "attributes": {
@@ -167,7 +179,8 @@
             "Identifier__c": "ST2PT1",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef2"
+            "Flight__c": "@Flight__cRef2",
+            "Trip_Type__c": "Outbound"
         },
         {
             "attributes": {
@@ -180,7 +193,8 @@
             "Identifier__c": "ST2PT2",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef2"
+            "Flight__c": "@Flight__cRef2",
+            "Trip_Type__c": "Outbound"
         },
         {
             "attributes": {
@@ -193,7 +207,8 @@
             "Identifier__c": "ST15PT1",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef8"
+            "Flight__c": "@Flight__cRef8",
+            "Trip_Type__c": "Inbound"
         },
         {
             "attributes": {
@@ -206,7 +221,8 @@
             "Identifier__c": "ST15PT2",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef8"
+            "Flight__c": "@Flight__cRef8",
+            "Trip_Type__c": "Inbound"
         },
         {
             "attributes": {
@@ -219,7 +235,8 @@
             "Identifier__c": "ST16PT1",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef9"
+            "Flight__c": "@Flight__cRef9",
+            "Trip_Type__c": "Inbound"
         },
         {
             "attributes": {
@@ -232,7 +249,8 @@
             "Identifier__c": "ST16PT2",
             "Is_Boarded__c": false,
             "Booking__c": "@Booking__cRef1",
-            "Flight__c": "@Flight__cRef9"
+            "Flight__c": "@Flight__cRef9",
+            "Trip_Type__c": "Inbound"
         }
     ]
 }

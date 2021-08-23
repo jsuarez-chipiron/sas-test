@@ -71,7 +71,7 @@
 
     <div class="slds-card__body">
       <div class="slds-card__body_inner">
-        <template iterator:b={bookings}>
+        <template iterator:b={visibleBookingData}>
           <div key={b.value.bookingReference}>
             <lightning-tabset>
               <lightning-tab label="Flight data">
@@ -153,6 +153,27 @@
                     </div>
                   </div>
                 </div>
+                <div>
+                  <span
+                    class="
+                      slds-text-align_left
+                      slds-text-color_weak
+                      slds-text-body_small
+                    "
+                    >Showing&nbsp;{b.value.displayDetails.flightsVisible}&nbsp;flight&nbsp;segments</span
+                  >
+                </div>
+                <div
+                  class="slds-m-vertical_small"
+                  if:false={b.value.displayDetails.showAllFlights}
+                >
+                  <a
+                    class="slds-align_absolute-center"
+                    data-id={b.value.bookingReference}
+                    onclick={handleDisplayAllFlights}
+                    >Load more flights</a
+                  >
+                </div>
                 <div class="case-count-text">
                   <span
                     class="
@@ -160,7 +181,7 @@
                       slds-text-color_weak
                       slds-text-body_small
                     "
-                    >Last update
+                    >Last update&nbsp;
                     <lightning-formatted-date-time
                       value={b.value.lastUpdated}
                       year="numeric"
@@ -169,7 +190,7 @@
                       hour="2-digit"
                       minute="2-digit"
                     ></lightning-formatted-date-time>
-                    -
+                    &nbsp;-&nbsp;
                   </span>
                   <a onclick={refreshBooking} data-id={b.value.bookingReference}
                     >refresh</a
@@ -185,8 +206,6 @@
                   >
                 </div>
                 <lightning-accordion
-                  onsectiontoggle={handleToggleSection}
-                  active-section-name="Booking"
                   allow-multiple-sections-open
                   class="slds-border_bottom"
                 >
@@ -283,7 +302,28 @@
                     </div>
                   </lightning-accordion-section>
                 </lightning-accordion>
-                <div for:each={b.trips} for:item="trip" key={trip.type}>
+                <div>
+                  <span
+                    class="
+                      slds-text-align_left
+                      slds-text-color_weak
+                      slds-text-body_small
+                    "
+                    >Showing&nbsp;{b.value.displayDetails.passengersVisible}&nbsp;travelers</span
+                  >
+                </div>
+                <div
+                  class="slds-m-vertical_small"
+                  if:false={b.value.displayDetails.showAllPassengers}
+                >
+                  <a
+                    class="slds-align_absolute-center"
+                    data-id={b.value.bookingReference}
+                    onclick={handleDisplayAllPassengers}
+                    >Load more travellers</a
+                  >
+                </div>
+                <div for:each={b.value.trips} for:item="trip" key={trip.type}>
                   <div class="slds-p-vertical_x-small">
                     <span class="text-bold">{trip.type} </span>
                     <span>({b.value.type})</span>
@@ -380,6 +420,27 @@
                       </div>
                     </div>
                   </div>
+                </div>
+                <div>
+                  <span
+                    class="
+                      slds-text-align_left
+                      slds-text-color_weak
+                      slds-text-body_small
+                    "
+                    >Showing&nbsp;{b.value.displayDetails.flightsVisible}&nbsp;flight&nbsp;segments</span
+                  >
+                </div>
+                <div
+                  class="slds-m-vertical_small"
+                  if:false={b.value.displayDetails.showAllFlights}
+                >
+                  <a
+                    class="slds-align_absolute-center"
+                    data-id={b.value.bookingReference}
+                    onclick={handleDisplayAllFlights}
+                    >Load more flights</a
+                  >
                 </div>
               </lightning-tab>
             </lightning-tabset>

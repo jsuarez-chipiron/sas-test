@@ -14,7 +14,7 @@ orgName="FCS2020Salesforce"
 dataPlan="scripts/create-org-mock-data/plan.json"
 
 echo "Creating Scratch org"
-sfdx force:org:create -f $scratchDef -a $orgName || exit 1
+sfdx force:org:create -f $scratchDef -a $orgName --setdefaultusername || exit 1
 
 echo "Creating auth providers and named credentials"
 # Auth provider requires the admin user's username so it cannot be pushed normally.
