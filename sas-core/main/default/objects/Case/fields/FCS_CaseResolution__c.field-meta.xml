@@ -663,7 +663,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Process Refund</controllingFieldValue>
-            <controllingFieldValue>Provide program information</controllingFieldValue>
             <controllingFieldValue>Provide Documents</controllingFieldValue>
             <controllingFieldValue>Refund Status</controllingFieldValue>
             <controllingFieldValue>Add Baggage</controllingFieldValue>
