@@ -199,7 +199,7 @@
     <formulas>
         <name>IssueSubject</name>
         <dataType>String</dataType>
-        <expression>&quot;[&quot; &amp; {!Severity} &amp; &quot;]&quot; &amp; LEFT({!IssueDescription}, 50)</expression>
+        <expression>&quot;[&quot; &amp; {!Severity} &amp; &quot;]&quot; &amp; &quot; &quot; &amp;  LEFT({!IssueDescription}, 50)</expression>
     </formulas>
     <interviewLabel>Contact Functional Product Support {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Contact Functional Product Support</label>
@@ -251,7 +251,7 @@
         <inputAssignments>
             <field>Origin</field>
             <value>
-                <stringValue>Email - Functional Product Support</stringValue>
+                <stringValue>Internal - Functional Product Support</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
