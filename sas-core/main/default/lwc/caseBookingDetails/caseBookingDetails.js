@@ -128,7 +128,10 @@ export default class CaseBookingDetails extends LightningElement {
           phone: p.phone || "-",
           seats: p.seats ? p.seats.join(", ") : "-",
           ssrs: p.specialServiceRequests,
-          ticketNumbers: p.ticketNumbers ? p.ticketNumbers.join(", ") : "-"
+          ticketNumbers:
+            p.ticketNumbers && p.ticketNumbers.length > 0
+              ? p.ticketNumbers.join(", ")
+              : "-"
         }))
       }));
     } else {
