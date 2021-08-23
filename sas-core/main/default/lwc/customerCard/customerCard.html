@@ -124,7 +124,7 @@
           <lightning-tab label="Bookings">
             <ul class="slds-has-dividers_bottom-space">
               <lightning-accordion active-section-name="Booking">
-                <template for:each={bookings} for:item="b">
+                <template for:each={visibleBookings} for:item="b">
                   <lightning-accordion-section
                     name="A"
                     label={b.accordionTitle}
