@@ -12,45 +12,26 @@ public without sharing class BookingService {
    */
   public static void addBookingToCase(ID caseId, String bookingReference) {
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    BookingsSelector bookings = (BookingsSelector) SAS_Service_Application.Selector.newInstance(
-      Booking__c.SObjectType
-    );
+
     TEDSIntegrationService TEDSService = (TEDSIntegrationService) SAS_Service_Application.Service.newInstance(
       TEDSIntegrationService.class
     );
 
-    List<Booking__c> bookingsFoundInSf = bookings.selectByBookingReference(
+    IRR_MOD_TedsBooking bookingData = TEDSService.fetchBookingByReference(
       bookingReference
     );
 
-    if (bookingsFoundInSf.isEmpty() /* TODO: Or timestamp > something*/) {
-      // Booking not in SF so let's check TEDS.
-      IRR_MOD_TedsBooking bookingData = TEDSService.fetchBookingByReference(
-        bookingReference
-      );
-
-      if (bookingData == null) {
-        // Not found in TEDS either. Booking reference doesn't exist in recent flight data (3 months or so).
-        // TODO: Check EDW when an integration exists.
-        return;
-      }
-
-      Booking__c newBooking = constructBookingsForDB(bookingData, uow);
-
-      CaseToBooking__c newJoin = new CaseToBooking__c(Case__c = caseId);
-      uow.registerNew(newJoin);
-      uow.registerRelationship(
-        newJoin,
-        CaseToBooking__c.Booking__c,
-        newBooking
-      );
-    } else {
-      CaseToBooking__c newJoin = new CaseToBooking__c(
-        Booking__c = bookingsFoundInSf[0].Id,
-        Case__c = caseId
-      );
-      uow.registerNew(newJoin);
+    if (bookingData == null) {
+      // Not found in TEDS either. Booking reference doesn't exist in recent flight data (3 months or so).
+      // TODO: Check EDW when an integration exists.
+      return;
     }
+
+    Booking__c newBooking = constructBookingsForDB(bookingData, uow);
+
+    CaseToBooking__c newJoin = new CaseToBooking__c(Case__c = caseId);
+    uow.registerNew(newJoin);
+    uow.registerRelationship(newJoin, CaseToBooking__c.Booking__c, newBooking);
 
     uow.commitWork();
     return;
