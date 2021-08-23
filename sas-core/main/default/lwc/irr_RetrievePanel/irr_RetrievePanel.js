@@ -28,9 +28,13 @@ export default class irr_RetrievePanel extends LightningElement {
 
     showFlightInputParams =true;
 
+    firstTime = true;
+
     connectedCallback() {
         //Initialize component with first flight
-        this.handleFlightAdd();
+        if(this.firstTime) {
+            this.handleFlightAdd();
+        }   
     }
 
     handleKeyPress(event) {
@@ -65,7 +69,12 @@ export default class irr_RetrievePanel extends LightningElement {
     handleFlightChange(event) {
         const { name, value, dataset: { flightIdx } } = event.target;
         this.flights[flightIdx][name] = event.target.type === "text" ? value.toUpperCase() : value;
-
+        var inp = this.template.querySelectorAll("lightning-input");
+        inp.forEach(function(element){
+            if(element.name=="departureDate") {
+            this.DATE_SELECTED= element.value;
+            }
+        },this);
     }
 
     handleBookingsFilter(event) {
@@ -76,8 +85,14 @@ export default class irr_RetrievePanel extends LightningElement {
     }
 
     handleFlightAdd() {
-            const flightKey = ++this.flightKeyTracker;
-            this.flights.push( { key: `flight-${flightKey}`, departureDate: DATE_TODAY } );
+        const flightKey = ++this.flightKeyTracker;
+            if(this.firstTime) {
+                 this.flights.push( { key: `flight-${flightKey}`, departureDate: DATE_TODAY } );
+            } else {
+            // Requirement : copy the previous date selected if user adds more flights
+                this.flights.push( { key: `flight-${flightKey}`, departureDate: this.DATE_SELECTED } );
+            }
+            this.firstTime = false
     }
 
     handleBookingAdd(){
@@ -89,6 +104,7 @@ export default class irr_RetrievePanel extends LightningElement {
     handleFlightRemove(event) {
         const index = parseInt(event.currentTarget.dataset.flightIdx);
         this.flights.splice(index, 1);
+        this.DATE_SELECTED = DATE_TODAY;
     }
     handleBookingsRemove(event) {
         const index = parseInt(event.currentTarget.dataset.bookingIdx);
