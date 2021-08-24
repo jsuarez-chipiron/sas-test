@@ -3,7 +3,9 @@ import addBookingToCaseApex from "@salesforce/apex/CustomerCardController.addBoo
 import getBookingsForCaseApex from "@salesforce/apex/CustomerCardController.getBookingsForCase";
 import removeBookingFromCaseApex from "@salesforce/apex/CustomerCardController.removeBookingFromCase";
 import refetchBookingDataApex from "@salesforce/apex/CustomerCardController.refetchBookingData";
+import ChatTranscript_CASEID_FIELD from "@salesforce/schema/LiveChatTranscript.CaseId";
 import { refreshApex } from "@salesforce/apex";
+import { getRecord } from "lightning/uiRecordApi";
 
 export default class CaseBookingDetails extends LightningElement {
   @api objectApiName;
@@ -13,6 +15,7 @@ export default class CaseBookingDetails extends LightningElement {
 
   // data fields
   bookings = undefined;
+  caseId = undefined;
 
   get visibleBookingData() {
     // Get only the booking data which should be visible
@@ -33,7 +36,10 @@ export default class CaseBookingDetails extends LightningElement {
                     (acc, curr) => acc + curr.flights.length,
                     0
                   )
-                : this.ENTRIES_TO_DISPLAY
+                : Math.min(
+                    this.ENTRIES_TO_DISPLAY,
+                    booking.trips[0].flights.length
+                  )
             } of ${booking.trips.reduce(
               (acc, curr) => acc + curr.flights.length,
               0
@@ -65,6 +71,7 @@ export default class CaseBookingDetails extends LightningElement {
       : undefined;
   }
 
+  wiredRecordReference;
   wiredBookingsReference;
 
   // UI state
@@ -74,7 +81,26 @@ export default class CaseBookingDetails extends LightningElement {
   @track searchValue = "";
   displayAddAnotherBookingForm = false;
 
-  @wire(getBookingsForCaseApex, { caseId: "$recordId" })
+  @wire(getRecord, {
+    recordId: "$recordId",
+    optionalFields: [
+      // Use optional fields because object type varies
+      ChatTranscript_CASEID_FIELD
+    ]
+  })
+  wiredRecord(value) {
+    this.wiredRecordReference = value;
+    const { data, error } = value;
+    if (!error && data) {
+      if (this.objectApiName === "LiveChatTranscript") {
+        this.caseId = data.fields.CaseId.value;
+      } else {
+        this.caseId = this.recordId;
+      }
+    }
+  }
+
+  @wire(getBookingsForCaseApex, { caseId: "$caseId" })
   wiredBookings(value) {
     this.wiredBookingsReference = value;
     const { data, error } = value;
@@ -143,7 +169,7 @@ export default class CaseBookingDetails extends LightningElement {
     this.showSpinner = true;
     try {
       await addBookingToCaseApex({
-        caseId: this.recordId,
+        caseId: this.caseId,
         bookingReference: searchString
       });
     } catch (error) {
@@ -158,12 +184,14 @@ export default class CaseBookingDetails extends LightningElement {
   }
 
   async removeBookingFromCase(event) {
-    console.log("event", event.target.dataset.id);
     this.showSpinner = true;
     try {
       await removeBookingFromCaseApex({
-        caseId: this.recordId,
-        bookingReference: event.target.dataset.id
+        caseId: this.caseId,
+        bookingReference:
+          event.target.dataset.id === "last"
+            ? this.bookings[this.bookings.length - 1].bookingReference
+            : event.target.dataset.id
       });
     } catch (error) {
       this.error = error;
