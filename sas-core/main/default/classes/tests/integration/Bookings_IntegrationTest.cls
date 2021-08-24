@@ -1,51 +1,13 @@
 @IsTest
 public with sharing class Bookings_IntegrationTest {
-  public static String bookingReferenceInDB = 'SF1234';
   public static String bookingReferenceOnlyInTEDS = 'TEDS12';
   public static String invalidBookingReference = 'AAAAAA';
   public static String ebNumberWithBookings = 'TEST123456';
   public static String ebNumberWithoutBookings = 'TEST654321';
 
-  public static List<Booking__c> bookingsInDB = new List<Booking__c>();
-
   public static BookingsSelector bookings = (BookingsSelector) SAS_Service_Application.Selector.newInstance(
     Booking__c.SObjectType
   );
-
-  @TestSetup
-  static void setup() {
-    bookingsInDB = TestDataFactories.createBookings(1, bookingReferenceInDB);
-  }
-
-  @IsTest
-  public static void itsPossibleToAddBookingInDBToCase() {
-    // Given
-    Case testCase = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    )[0];
-
-    Test.startTest();
-    insert testCase;
-
-    // When
-    CustomerCardController.addBookingToCase(testCase.Id, bookingReferenceInDB);
-    Test.stopTest();
-
-    // Then
-    Booking__c bookingFromDB = bookings.selectByCaseId(
-      new Set<Id>{ testCase.Id }
-    )[0];
-
-    System.assertEquals(
-      bookingReferenceInDB,
-      bookingFromDB.Booking_Reference__c,
-      'Booking should be found by case Id'
-    );
-  }
 
   @IsTest
   public static void itsPossibleToAddBookingInTEDSToCase() {
@@ -92,14 +54,19 @@ public with sharing class Bookings_IntegrationTest {
       null
     )[0];
 
-    Test.startTest();
     insert testCase;
 
+    Test.startTest();
+    Test.setMock(HttpCalloutMock.class, new TEDSBookingSingleSuccessMock());
+
     // When
-    CustomerCardController.addBookingToCase(testCase.Id, bookingReferenceInDB);
+    CustomerCardController.addBookingToCase(
+      testCase.Id,
+      bookingReferenceOnlyInTEDS
+    );
     CustomerCardController.removeBookingFromCase(
       testCase.Id,
-      bookingReferenceInDB
+      bookingReferenceOnlyInTEDS
     );
     Test.stopTest();
 
