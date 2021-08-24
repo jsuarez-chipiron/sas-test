@@ -158,12 +158,14 @@ export default class CaseBookingDetails extends LightningElement {
   }
 
   async removeBookingFromCase(event) {
-    console.log("event", event.target.dataset.id);
     this.showSpinner = true;
     try {
       await removeBookingFromCaseApex({
-        caseId: this.recordId,
-        bookingReference: event.target.dataset.id
+        caseId: this.caseId,
+        bookingReference:
+          event.target.dataset.id === "last"
+            ? this.bookings[this.bookings.length - 1].bookingReference
+            : event.target.dataset.id
       });
     } catch (error) {
       this.error = error;

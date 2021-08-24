@@ -508,7 +508,7 @@
     <div if:false={displayAddAnotherBookingForm} class="slds-card__footer">
       <a onclick={flipDisplayAddAnotherBookingForm}>Add another booking</a>
       <span> | </span>
-      <a onclick={removeBookingFromCase}>Disconnect booking</a>
+      <a data-id="last" onclick={removeBookingFromCase}>Disconnect booking</a>
     </div>
   </article>
 </template>
