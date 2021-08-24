@@ -23,20 +23,6 @@ private class FCS_EmailToCase_Test {
     }
 
     /**
-        Test creating a Case as it would be created via Email-To-Case to the STOPQ Escalation-Queue with Urgent in subject
-        @author Josephine Ding - Deloitte
-    */
-    @isTest 
-    static void setCaseUrgentTest(){ 
-        Group g  =[SELECT Id FROM Group WHERE Name = 'STOPQ Escalations' LIMIT 1];
-        Case c1 = new Case (Status='New', Origin='Email', Subject='Test subject urgent', OwnerId = g.Id);
-        Test.startTest();
-        insert c1; 
-        Test.stopTest();
-        System.assertEquals('Urgent', [SELECT Priority FROM Case WHERE Id = :c1.Id].Priority);  
-    }
-
-    /**
         Test creating a Case as it would be created via Email-To-Case to the STOPQ Escalation-Queue without Urgent in subject
         @author Philip Ossler - Deloitte
     */
