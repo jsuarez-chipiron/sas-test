@@ -12,7 +12,7 @@ global class ChangeCaseRecordTypeBatch extends SBS_ScheduledBatch {
 
   global Database.QueryLocator start(Database.BatchableContext bc) {
     return Database.getQueryLocator(
-      'Select Id, Department__c,Origin,RecordTypeId,Team__c FROM Case where Origin = :caseOrigin and RecordType.Name =:caseRecordTypes'
+      'Select Id, Department__c,Origin,RecordTypeId,Team__c FROM Case where Origin = :caseOrigin and RecordType.Name =:caseRecordTypes LIMIT 10000'
     );
   }
 
