@@ -158,6 +158,11 @@
                 <componentName>fcs_CaseTag_ChatTranscript</componentName>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>caseBookingDetails</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
