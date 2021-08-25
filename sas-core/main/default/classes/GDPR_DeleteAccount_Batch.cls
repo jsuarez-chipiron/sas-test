@@ -12,16 +12,17 @@ global with sharing class GDPR_DeleteAccount_Batch extends SBS_ScheduledBatch{
     }
 
     /**
-		Deletes the accounts if they have no cases
-		@param bc The batchable context of the batch job
-		@param sObjScope The accounts to process whether they have cases or not
-	*/
-	global override void executeScope(Database.BatchableContext bc, SObject[] sObjScope){
+        Deletes the accounts if they have no cases
+        @param bc The batchable context of the batch job
+        @param sObjScope The accounts to process whether they have cases or not
+    */
+    global override void executeScope(Database.BatchableContext bc, SObject[] sObjScope){
         Set<Id> accIds = C_Util.getIdSet(sObjScope);
         accIds.removeAll(C_Util.getIdSet([SELECT Id FROM Account WHERE Id IN :accIds AND Id IN(SELECT AccountId FROM Case WHERE AccountId IN :accIds)]));
         accIds.removeAll(C_Util.getIdSet([SELECT Id FROM Account WHERE Id IN :accIds AND Id IN(SELECT ParentId FROM SocialPersona WHERE ParentId IN :accIds)]));
         accIds.removeAll(C_Util.getIdSet([SELECT Id FROM Account WHERE Id IN :accIds AND Id IN(SELECT AccountId FROM LiveChatTranscript WHERE AccountId IN :accIds)]));
         accIds.removeAll(C_Util.getIdSet([SELECT Id FROM Account WHERE Id IN :accIds AND Id IN(SELECT AccountId FROM MessagingEndUser WHERE AccountId IN :accIds)]));
+        accIds.removeAll(C_Util.getIdSet([SELECT Id FROM Account WHERE Id IN :accIds AND Id IN(SELECT Account__c FROM Passenger__c WHERE Account__c IN :accIds)]));
         delete [SELECT Id FROM Account WHERE Id IN :accIds];
     }
 }

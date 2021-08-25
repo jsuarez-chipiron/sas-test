@@ -10,14 +10,32 @@ public without sharing class CustomerCardController {
   );
 
   @AuraEnabled
-  public static List<Booking__c> addBookingToCase(
-    ID caseId,
-    String bookingReference
-  ) {
+  public static void addBookingToCase(ID caseId, String bookingReference) {
     BookingService.addBookingToCase(caseId, bookingReference);
+  }
 
-    return bookings.selectByBookingReference(bookingReference);
-    // TODO: This probably can't return anything
+  @AuraEnabled(cacheable=true)
+  public static List<BookingJSON> getBookingsForCase(String caseId) {
+    List<Booking__c> bookingsToReturn = bookings.selectByCaseId(
+      new Set<Id>{ caseId }
+    );
+    List<BookingJSON> toReturn = new List<BookingJSON>();
+    for (Booking__c b : bookingsToReturn) {
+      toReturn.add(new BookingJSON(b));
+    }
+    toReturn.sort();
+
+    return toReturn;
+  }
+
+  @AuraEnabled
+  public static void refetchBookingData(String bookingReference) {
+    BookingService.fetchBookingByBookingReference(bookingReference);
+  }
+
+  @AuraEnabled
+  public static void removeBookingFromCase(ID caseId, String bookingReference) {
+    BookingService.removeBookingFromCase(caseId, bookingReference);
   }
 
   @AuraEnabled
@@ -55,5 +73,12 @@ public without sharing class CustomerCardController {
   @AuraEnabled(cacheable=true)
   public static List<Case> getCaseData(String accountId) {
     return cases.selectByAccountId(new Set<Id>{ accountId });
+  }
+  @AuraEnabled(cacheable=true)
+  public static List<IRR_CommunicationLog__c> getAllCommunicationData(
+    String accountId
+  ) {
+    return IRR_SEL_CommunicationLogsSelector.newInstance()
+      .getCommunicationMessagesbyEBAccount(new Set<String>{ accountId });
   }
 }

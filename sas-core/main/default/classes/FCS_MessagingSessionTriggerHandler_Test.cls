@@ -12,15 +12,15 @@ private class FCS_MessagingSessionTriggerHandler_Test {
     @TestSetup
     static void createTestData(){
         insert new MessagingChannel(
-                DeveloperName = 'FacebookChannel1',
-                MasterLabel = 'Facebook1',
-                MessagingPlatformKey = '321',
+                DeveloperName = 'FacebookChannel167',
+                MasterLabel = 'Facebook1789',
+                MessagingPlatformKey = '32167',
                 MessageType = 'Facebook'
         );
         insert new MessagingChannel(
-                DeveloperName = 'FacebookChannel2',
-                MasterLabel = 'Facebook2',
-                MessagingPlatformKey = '123',
+                DeveloperName = 'FacebookChannel278',
+                MasterLabel = 'Facebook2ty',
+                MessagingPlatformKey = '12378',
                 MessageType = 'Facebook'
         );
     }
@@ -69,7 +69,7 @@ private class FCS_MessagingSessionTriggerHandler_Test {
         System.assertEquals(2, cases.size());
         System.assertNotEquals(null, sessions[0].CaseId);
         System.assertEquals('Facebook Messenger', sessions[0].Case.Origin);
-        System.assertEquals('Information', sessions[0].Case.RecordType.DeveloperName);
+        System.assertEquals('Chat', sessions[0].Case.RecordType.DeveloperName);
     }
 
 

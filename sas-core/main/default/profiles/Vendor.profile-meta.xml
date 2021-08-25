@@ -269,6 +269,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Segment__c.Trip_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>User.FCS_Site__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -477,6 +482,16 @@
         <field>Case.FCS_CaseReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Case.FCS_CaseResolutionDetails__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.FCS_CaseResolution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.FCS_CaseSubReason__c</field>
@@ -485,6 +500,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.FCS_CaseTags__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Case.FCS_CaseType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.FCS_Case_Reason__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1320,6 +1345,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ChatterInternalUser</name>
+    </userPermissions>
+	<userPermissions>
+        <enabled>true</enabled>
+        <name>DistributeFromPersWksp</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>

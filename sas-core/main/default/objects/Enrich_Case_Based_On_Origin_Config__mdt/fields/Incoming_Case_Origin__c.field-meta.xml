@@ -11,6 +11,11 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
+                <fullName>Chat</fullName>
+                <default>false</default>
+                <label>Chat</label>
+            </value>
+            <value>
                 <fullName>Email - Agent Helpdesk International</fullName>
                 <default>false</default>
                 <label>Email - Agent Helpdesk International</label>
@@ -471,6 +476,16 @@
                 <label>Email - Ticketless Support</label>
             </value>
             <value>
+                <fullName>Facebook</fullName>
+                <default>false</default>
+                <label>Facebook</label>
+            </value>
+            <value>
+                <fullName>Facebook Messenger</fullName>
+                <default>false</default>
+                <label>Facebook Messenger</label>
+            </value>
+            <value>
                 <fullName>Form - Refund Customer</fullName>
                 <default>false</default>
                 <label>Form - Refund Customer</label>
@@ -489,6 +504,11 @@
                 <fullName>Form - Refund Travel Agent</fullName>
                 <default>false</default>
                 <label>Form - Refund Travel Agent</label>
+            </value>
+            <value>
+                <fullName>Twitter</fullName>
+                <default>false</default>
+                <label>Twitter</label>
             </value>
             <value>
                 <fullName>White Paper - Liability Claim</fullName>

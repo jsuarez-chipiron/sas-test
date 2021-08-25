@@ -124,20 +124,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>customerCard</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>lookupFieldName</name>
-                    <value>LiveChatTranscript.CaseId</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>updateQuickActionName</name>
-                    <value>Case.Case_Details_for_Chat</value>
-                </componentInstanceProperties>
-                <componentName>console:relatedRecord</componentName>
+                <componentName>fcs_CaseTag_new</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -155,7 +142,25 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>fcs_CaseTag_ChatTranscript</componentName>
+                <componentInstanceProperties>
+                    <name>lookupFieldName</name>
+                    <value>LiveChatTranscript.CaseId</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>updateQuickActionName</name>
+                    <value>Case.Case_Details_for_Chat</value>
+                </componentInstanceProperties>
+                <componentName>console:relatedRecord</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>customerCard</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>caseBookingDetails</componentName>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>

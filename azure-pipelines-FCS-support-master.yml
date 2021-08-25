@@ -109,16 +109,16 @@ steps:
 
 - script: |
     sfdx force:source:convert --rootdir ./$(PACKAGE_FOLDER) --outputdir ./package-md
+  displayName: 'Convert to metadata package'
+
+- script: |
     if [ -e ./$(PACKAGE_FOLDER)/destructiveChangesPre.xml ]; then
       cp ./$(PACKAGE_FOLDER)/destructiveChangesPre.xml ./package-md/destructiveChangesPre.xml
     fi
     if [ -e ./$(PACKAGE_FOLDER)/destructiveChangesPost.xml ]; then
       cp ./$(PACKAGE_FOLDER)/destructiveChangesPost.xml ./package-md/destructiveChangesPost.xml
     fi
-    if [ -e ./$(PACKAGE_FOLDER)/EmailTemplate.json ]; then
-      mv ./$(PACKAGE_FOLDER)/EmailTemplate.json $(Build.ArtifactStagingDirectory)/EmailTemplate.json
-    fi
-  displayName: 'Convert to metadata package'
+  displayName: 'Evaluate destructive changes'
 
 - task: ArchiveFiles@2
   inputs:

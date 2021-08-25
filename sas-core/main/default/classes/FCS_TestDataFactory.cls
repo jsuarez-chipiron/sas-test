@@ -1,5 +1,4 @@
-
- /**
+/**
  * @author Sanna Sörberg
  * @date 2019-11-27
  * @description Factory class used to generate commonly used test metadata
@@ -98,4 +97,56 @@ public class FCS_TestDataFactory {
         }
         return users;
     }
+    /**
+    * Creates Booking with minimal info
+    * @param  numBookings Number of bookings to be created
+    * @return list of bookings
+    */
+    public static Booking__c[] createBookings(Integer numBookings, String type) {
+        List<Booking__c> newBookings = new List<Booking__c>();
+        for (Integer i = 0, sz = numBookings; i < sz; i++) {
+            Booking__c sp = new Booking__c (Name = 'Test' + i, Booking_Reference__c = 'Test1' + i, TEDS_Identifier__c = 'Manual-'+i, Type__c = type);
+            newBookings.add(sp);
+        }
+        return newBookings;
+    }
+     /**
+    * Creates Flight with  info
+    * @param  arrival departure airport, arrival departure time,Teds identifier flight to be created
+    * @return flight
+    */
+    public static Flight__c createFlights(String arrival, String departure, DateTime arrivalTime, DateTime departureTime,String Identifier) {
+        
+        String flightName= 'SK174-'+arrival+'-'+departure+'-'+departureTime;
+        Flight__c fg = new Flight__c (Name = flightName,
+                                      Arrival_Airport__c = arrival, Departure_Airport__c = departure,
+                                      Scheduled_Arrival_Time__c = arrivalTime, Scheduled_Departure_Time__c =departureTime,
+                                      TEDS_Identifier__c = Identifier);
+       return fg;   
+       }  
+   /**
+    * Creates passengers with minimal info
+    * @param  numpassengers,Account and booking for passengers to be created
+    * @return list of passengers
+    */
+    public static Passenger__c[] createPassengerss(Integer numPassengers,String accountId,String bookingId) {
+        List<Passenger__c> newPassengers = new List<Passenger__c>();
+        for (Integer i = 0, sz = numPassengers; i < sz; i++) {
+            Passenger__c pg = new Passenger__c(First_Name__c = 'Test',Last_Name__c='i',Account__c=AccountId,
+                                               Booking__c=bookingId,Email__c='Test87'+i+'@sas.se',Identifier__c='abc-'+i);
+            newPassengers.add(pg);
+        }
+        return newPassengers;
+    }    
+     /**
+    * Creates passengers with minimal info
+    * @param  numpassengers,Account and booking for passengers to be created
+    * @return list of passengers
+    */
+    public static Segment__c createSegment(String bookingId, String flightId) {
+       
+            Segment__c sg = new Segment__c(Booking__c  =bookingId,Flight__c=flightId,Identifier__c='STI');           
+              return sg;
+    }                          
+       
 }

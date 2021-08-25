@@ -1,0 +1,21 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Case",
+                "referenceId": "CaseRef2"
+            },
+            "Team__c": "Gold DK",
+            "Department__c": "EuroBonus"
+        },
+        {
+            "attributes": {
+                "type": "Case",
+                "referenceId": "CaseRef3"
+            },
+            "Team__c": "BOM BSP",
+            "Department__c": "Refunds",
+            "Refund_Request__c": "@Refund_Request__cRef1"
+        }
+    ]
+}

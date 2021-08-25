@@ -3,6 +3,7 @@ import getAccountData from "@salesforce/apex/CustomerCardController.getAccountDa
 import getBookingData from "@salesforce/apex/CustomerCardController.getBookingData";
 import getCaseData from "@salesforce/apex/CustomerCardController.getCaseData";
 import Case_ACCOUNTID_FIELD from "@salesforce/schema/Case.AccountId";
+import getAllCommunicationData from "@salesforce/apex/CustomerCardController.getAllCommunicationData";
 import Case_EBNUMBER_FIELD from "@salesforce/schema/Case.FCS_EBNumber__c";
 import ChatTranscript_ACCOUNTID_FIELD from "@salesforce/schema/LiveChatTranscript.AccountId";
 import ChatTranscript_CASEID_FIELD from "@salesforce/schema/LiveChatTranscript.CaseId";
@@ -17,16 +18,17 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   @api objectApiName;
   @api recordId;
 
+  ENTRIES_TO_DISPLAY = 3;
+
   // data fields
   @track account = undefined;
   @track bookings = [];
   @track cases = [];
+  @track communicationLogs = [];
   wiredRecordReference;
   wiredBookingsReference;
 
   // properties calculated from data
-  @track allCases = 0;
-  @track numberOfVisibleCases = 0;
   @track cardTitle = "";
   accountId = undefined;
   caseIdForChats = undefined;
@@ -36,12 +38,61 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   @track noSearchResult = false;
   @track error = false;
   @track searchValue = "";
-  activeSectionMessage = "";
+  showAllBookings = false;
+  showAllCases = false;
+  showAllLogs = false;
 
-  handleToggleSection(event) {
-    this.activeSectionMessage =
-      "Open section name:  " + event.detail.openSections;
+  get bookingsCount() {
+    return `${
+      this.showAllBookings
+        ? this.bookings.length
+        : Math.min(ENTRIES_TO_DISPLAY, this.bookings.length)
+    } of ${this.bookings.length}`;
   }
+
+  get casesCount() {
+    return `${
+      this.showAllCases
+        ? this.cases.length
+        : Math.min(this.ENTRIES_TO_DISPLAY, this.cases.length)
+    } of ${this.cases.length}`;
+  }
+
+  get logsCount() {
+    return `${
+      this.showAllLogs
+        ? this.communicationLogs.length
+        : Math.min(this.ENTRIES_TO_DISPLAY, this.communicationLogs.length)
+    } of ${this.communicationLogs.length}`;
+  }
+
+  get visibleBookings() {
+    return this.showAllBookings
+      ? this.bookings
+      : this.bookings.slice(
+          0,
+          Math.min(this.ENTRIES_TO_DISPLAY, this.bookings.length)
+        );
+  }
+
+  get visibleCases() {
+    return this.showAllCases
+      ? this.cases
+      : this.cases.slice(
+          0,
+          Math.min(this.ENTRIES_TO_DISPLAY, this.cases.length)
+        );
+  }
+
+  get visibleLogs() {
+    return this.showAllLogs
+      ? this.communicationLogs
+      : this.communicationLogs.slice(
+          0,
+          Math.min(this.ENTRIES_TO_DISPLAY, this.communicationLogs.length)
+        );
+  }
+
   // Navigate to view case Page
   navigateToCaseViewPage(event) {
     this[NavigationMixin.Navigate]({
@@ -124,12 +175,11 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
             return 0;
           }
         });
-      this.numberOfVisibleCases = this.cases.length;
-      this.allCases = this.cases.length;
+      if (this.cases.length <= 3) {
+        this.showAllCases = true;
+      }
     } else {
       this.cases = [];
-      this.numberOfVisibleCases = 0;
-      this.allCases = 0;
     }
   }
 
@@ -137,11 +187,11 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   wiredBookings(value) {
     this.wiredBookingsReference = value;
     const { data, error } = value;
-    function getAirportListForBooking(elem) {
-      if (!elem || !elem.flights || elem.flights.length < 1) {
+    function getAirportListForBooking(booking) {
+      if (!booking.flights || booking.flights.length < 1) {
         return "";
       }
-      return elem.flights
+      return booking.flights
         .reduce((acc, curr) => {
           if (acc.length === 0) {
             return [curr.departureAirport, curr.arrivalAirport];
@@ -162,19 +212,21 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
       return day + " " + month + " " + date.getFullYear();
     }
     if (!error && data != undefined && data.length > 0) {
-      this.bookings = data.map(function (elem) {
-        var today = new Date();
-        var scheduleddate = new Date(elem.flights[0].scheduledDepartureTime);
+      const today = new Date();
+      this.bookings = data.map((booking) => {
+        const scheduledDate = new Date(
+          booking.flights[0].scheduledDepartureTime
+        );
         return {
-          ...elem,
-          class:
-            scheduleddate >= today
+          ...booking,
+          className:
+            scheduledDate >= today
               ? "slds-item booking-bullet future-booking-bullet"
               : "slds-item booking-bullet past-booking-bullet",
           accordionTitle: `${getDateToString(
-            elem.flights[0].scheduledDepartureTime
-          )} ${getAirportListForBooking(elem)}`,
-          passengers: elem.passengers.map((p) => ({
+            scheduledDate
+          )} ${getAirportListForBooking(booking)}`,
+          passengers: booking.passengers.map((p) => ({
             ...p,
             ssrs:
               p.specialServiceRequests && p.specialServiceRequests.length > 0
@@ -183,10 +235,34 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
           }))
         };
       });
+      if (this.bookings.length <= 3) {
+        this.showAllBookings = true;
+      }
     } else {
       this.bookings = [];
     }
   }
+
+  // TODO: Enable when we can get communication logs
+  /*@wire(getAllCommunicationData, { accountId: "$accountId" })
+  wiredCommunicationLog({ error, data }) {
+    if (!error && data != undefined && data.length > 0) {
+      this.communicationLogs = data.map((rawLog) => ({
+        ...rawLog,
+        communicationName: rawLog.IRR_FlightId__c
+          ? rawLog.IRR_FlightId__c.substring(
+              0,
+              Math.min(6, rawLog.IRR_FlightId__c.length)
+            )
+          : ""
+      }));
+      if (this.communicationLogs.length <= 3) {
+        this.showAllLogs = true;
+      }
+    } else {
+      this.communicationLogs = [];
+    }
+  }*/
 
   async addCustomerToCase(searchString) {
     this.showSpinner = true;
@@ -270,5 +346,17 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
       this.noSearchResult = false;
       this.addCustomerToCase(this.searchValue);
     }
+  }
+
+  handleDisplayAllBookings() {
+    this.showAllBookings = true;
+  }
+
+  handleDisplayAllCases() {
+    this.showAllCases = true;
+  }
+
+  handleDisplayAllLogs() {
+    this.showAllLogs = true;
   }
 }

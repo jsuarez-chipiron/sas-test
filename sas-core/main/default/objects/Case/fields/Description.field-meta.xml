@@ -4,6 +4,6 @@
     <complianceGroup>PIIExtract</complianceGroup>
     <securityClassification>Confidential</securityClassification>
     <trackFeedHistory>true</trackFeedHistory>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
 </CustomField>

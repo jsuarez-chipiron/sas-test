@@ -15,6 +15,13 @@
 <!-- 2020-02-16 Delete permission set and replace with new one using SF-licence to be able to set tab visibilities -->
 
 <types>
+        <members>AD_RolePermission.Sykes_ODE_Direct_Sales_Messaging_User_PL</members>
+         <members>AD_RolePermission.Sykes_EVG_Direct_Sales_Messaging_User_PL</members>
+          <members>AD_RolePermission.SASEmergency_Messaging_User_PL</members>
+        <name>CustomMetadata</name>
+    </types>
+
+<types>
 		<members>IRR_AutomatedMessage.ABZ_ARN_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ABZ_CPH_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ABZ_OSL_TR_AUTO_1D_SMS</members>
@@ -533,4 +540,5 @@
 	    <members>IRR_BCH_FetchPaxInfoAutomatedMessage</members>
 		<name>ApexClass</name>
     </types>
+
 </Package>

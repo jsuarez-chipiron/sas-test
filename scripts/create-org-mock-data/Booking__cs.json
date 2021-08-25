@@ -1,0 +1,14 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Booking__c",
+                "referenceId": "Booking__cRef1"
+            },
+            "Booking_Reference__c": "123456",
+            "Is_Cancelled__c": false,
+            "TEDS_Identifier__c": "123456-202103105",
+            "Type__c": "MultiCity"
+        }
+    ]
+}

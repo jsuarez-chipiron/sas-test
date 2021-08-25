@@ -3,7 +3,7 @@
     <fullName>Type</fullName>
     <complianceGroup>WipeRetain</complianceGroup>
     <trackFeedHistory>true</trackFeedHistory>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
 </CustomField>

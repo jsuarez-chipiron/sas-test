@@ -30,23 +30,25 @@ Authorize SF CLI to access the organization:
 
 Run `SFDX: Authorize a Dev Hub` Might take a few tries to get working. Something caused by the AD auth, probably.
 
-Create an empty scrath org with default settings:
+Create a scratch org by running `scripts/create-org` from terminal. After it has finished go
+to Named Credentials and edit the SAS_APIM_TEDS_FCS one. Click save and enter the authentication info:
 
-Run `SFDX: Create a default scratch org...`
+- Username: client id
+- Password: client secret
+- Additional Param 1: TEDS subscription key
+- Additional Param 2: api://SAS.TEDS.API.TEST
 
-Push the SAS source code to the scratch org:
+You can also use the sfdx commands to create the org and manually push the code if you don't want
+the integrations or mock data.
 
-Run `SFDX: Push Source to Default Scratch Org`
-
-Open the scratch org with:
-
-Run `SFDX: Open Default Org` or by clicking the window icon in the Status Bar
+`SFDX: Create a default scratch org...` to create a new scratch org to work in.
+`SFDX: Push Source to Default Scratch Org` to push current branch's code to the scratch org.
 
 ### Local development
 
 1. Create a branch from `support/master` for features and `master` for hotfixes.
-2. Run `SFDX: Create a default scratch org...` to create a new scratch org to work in.
-3. Run `SFDX: Push Source to Default Scratch Org` to push current branch's code to the scratch org.
+2. Run `scripts/create-org` in terminal to create a new scratch org to work in.
+3. Run `SFDX: Push Source to Default Scratch Org` to push updated code to the scratch org.
 4. Make the changes you need to do in the scratch org.
 5. Run `SFDX: Pull Source from Default Scratch Org`
 6. Commit, Push and PR.

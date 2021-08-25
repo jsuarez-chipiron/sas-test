@@ -1,0 +1,58 @@
+[
+    {
+        "sobject": "Flight__c",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": [
+            "Flight__cs.json"
+        ]
+    },
+    {
+        "sobject": "Booking__c",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": [
+            "Booking__cs.json"
+        ]
+    },
+    {
+        "sobject": "Segment__c",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": [
+            "Segment__cs.json"
+        ]
+    },
+    {
+        "sobject": "Passenger__c",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": [
+            "Passenger__cs.json"
+        ]
+    },
+    {
+        "sobject": "Refund_Request__c",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": [
+            "Refund_Request__cs.json"
+        ]
+    },
+    {
+        "sobject": "Case",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": [
+            "Cases.json"
+        ]
+    },
+    {
+        "sobject": "CaseToBooking__c",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": [
+            "CaseToBooking__cs.json"
+        ]
+    }
+]

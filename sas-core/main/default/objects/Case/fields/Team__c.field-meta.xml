@@ -15,7 +15,7 @@
         <controllingField>Department__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>ACE</fullName>
                 <default>false</default>
@@ -112,6 +112,11 @@
                 <label>CH</label>
             </value>
             <value>
+                <fullName>Chat</fullName>
+                <default>false</default>
+                <label>Chat</label>
+            </value>
+            <value>
                 <fullName>DE</fullName>
                 <default>false</default>
                 <label>DE</label>
@@ -165,6 +170,11 @@
                 <fullName>External Lawyers</fullName>
                 <default>false</default>
                 <label>External Lawyers</label>
+            </value>
+            <value>
+                <fullName>Facebook Messenger</fullName>
+                <default>false</default>
+                <label>Facebook Messenger</label>
             </value>
             <value>
                 <fullName>Feedback</fullName>
@@ -708,6 +718,18 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Pandion DK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Pandion NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Pandion SE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>Premium Corporate Support</valueName>
         </valueSettings>
         <valueSettings>
@@ -718,6 +740,10 @@
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <valueName>Special Sales NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>System &amp; Tariff</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
@@ -732,6 +758,14 @@
             <controllingFieldValue>SME</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <valueName>Scandinavia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <valueName>Chat</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <valueName>Facebook Messenger</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
@@ -812,18 +846,6 @@
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Pai Manual</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <valueName>Pandion DK</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <valueName>Pandion NO</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <valueName>Pandion SE</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
@@ -956,10 +978,6 @@
         <valueSettings>
             <controllingFieldValue>Info Hub</controllingFieldValue>
             <valueName>SASSI Internal</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Info Hub</controllingFieldValue>
-            <valueName>System &amp; Tariff</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

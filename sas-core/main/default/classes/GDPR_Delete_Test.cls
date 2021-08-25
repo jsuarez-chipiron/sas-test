@@ -68,6 +68,20 @@ Creates the records used to tests data deletion
         insert spList;
         spList[0].ParentId = cList[3].Id;
         update spList;
+        // booking and flight Data
+        DateTime arrivalTime = Datetime.now().adddays(2);
+        DateTime departuteTime = Datetime.now().adddays(1);
+        List<Flight__c> lstFlights= new List<Flight__c>();
+        lstFlights.add(FCS_TestDataFactory.createFlights('BNG','CHN',arrivalTime,departuteTime,'MANUAL-1'));
+        List<Booking__c> lstBookings = FCS_TestDataFactory.createBookings(1,'OneWay');
+        insert lstFlights;
+        insert lstBookings;
+        List<Passenger__c> lstPassengers= FCS_TestDataFactory.createPassengerss(1,accs[0].Id,lstBookings[0].Id);
+        insert lstPassengers;
+        Segment__c seg = FCS_TestDataFactory.createSegment(lstBookings[0].Id,lstFlights[0].Id);
+        insert seg;
+           
+        
         
     }
     /**
@@ -372,8 +386,21 @@ Tests that deletion of interactions does not run for interactions within the ret
         System.assertEquals(1,[SELECT Id FROM MessagingEndUser].size());
         System.assertEquals(1,[SELECT Id FROM SocialPost].size());
     }
-    
-    
+    /**
+    Test Delete bookings
+    */
+   @isTest static void deleteBookings(){
+        Test.startTest();
+        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
+        sg.set('DeletePeriodBooking','-2');
+        Database.executeBatch(new GDPR_DeleteBooking_Batch());
+        Test.stopTest();
+        System.assertEquals(0,[SELECT Id FROM Booking__c].size()); 
+        System.assertEquals(0,[SELECT Id FROM Passenger__c].size());
+        System.assertEquals(1,[SELECT Id FROM Flight__c].size());
+        System.assertEquals(0,[SELECT Id FROM Segment__c].size());          
+    }
+     
     
     /**
 Tests deletion of Communication Logs 

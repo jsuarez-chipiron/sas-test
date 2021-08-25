@@ -1,0 +1,12 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "CaseToBooking__c",
+                "referenceId": "CaseToBooking__cRef1"
+            },
+            "Case__c": "@CaseRef2",
+            "Booking__c": "@Booking__cRef1"
+        }
+    ]
+}

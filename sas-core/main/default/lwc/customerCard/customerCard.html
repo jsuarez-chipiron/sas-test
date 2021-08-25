@@ -89,7 +89,7 @@
         <lightning-tabset>
           <lightning-tab label="Cases">
             <ul class="slds-has-dividers_bottom-space">
-              <template for:each={cases} for:item="c">
+              <template for:each={visibleCases} for:item="c">
                 <li class={c.className} key={c.CaseNumber}>
                   <strong
                     >Case&nbsp;
@@ -110,18 +110,21 @@
                   slds-text-color_weak
                   slds-text-body_small
                 "
-                >Showing {numberOfVisibleCases} of {allCases} cases</span
+                >Showing {casesCount} cases</span
+              >
+            </div>
+            <div class="slds-m-vertical_small" if:false={showAllCases}>
+              <a
+                class="slds-align_absolute-center"
+                onclick={handleDisplayAllCases}
+                >Load more</a
               >
             </div>
           </lightning-tab>
           <lightning-tab label="Bookings">
             <ul class="slds-has-dividers_bottom-space">
-              <lightning-accordion
-                class="example-accordion"
-                onsectiontoggle={handleToggleSection}
-                active-section-name="Booking"
-              >
-                <template for:each={bookings} for:item="b">
+              <lightning-accordion active-section-name="Booking">
+                <template for:each={visibleBookings} for:item="b">
                   <lightning-accordion-section
                     name="A"
                     label={b.accordionTitle}
@@ -285,8 +288,76 @@
                   </lightning-accordion-section>
                 </template>
               </lightning-accordion>
+              <div class="slds-m-vertical_small" if:false={showAllBookings}>
+                <a
+                  class="slds-align_absolute-center"
+                  onclick={handleDisplayAllBookings}
+                  >Load more</a
+                >
+              </div>
             </ul>
           </lightning-tab>
+          <!-- TODO: Enable when we can get communication logs
+          <lightning-tab label="Communication logs">
+            <ul class="slds-has-dividers_bottom-space">
+              <template for:each={visibleLogs} for:item="c">
+                <table key={c.Id}>
+                  <tr>
+                    <td>
+                      <strong>{c.IRR_Channel__c}</strong
+                      >&nbsp;-&nbsp;{c.communicationName},&nbsp;
+                      <lightning-formatted-date-time
+                        value={c.CreatedDate}
+                        year="numeric"
+                        month="short"
+                        day="2-digit"
+                        hour="2-digit"
+                        minute="2-digit"
+                      ></lightning-formatted-date-time>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="message-text">Message</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="message-divider-padding">
+                        {c.IRR_MessageContent__c}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div
+                        key={c.Id}
+                        class="vertical-line header-padding"
+                      ></div>
+                    </td>
+                  </tr>
+                </table>
+              </template>
+            </ul>
+            <div class="case-count-text">
+              <span
+                class="
+                  slds-text-align_left
+                  slds-text-color_weak
+                  slds-text-body_small
+                  message-text
+                "
+                >Showing {logsCount} communication logs</span
+              >
+            </div>
+            <div class="slds-m-vertical_small" if:false={showAllLogs}>
+              <a
+                class="slds-align_absolute-center"
+                onclick={handleDisplayAllLogs}
+                >Load more</a
+              >
+            </div>
+          </lightning-tab>-->
         </lightning-tabset>
       </div>
     </div>

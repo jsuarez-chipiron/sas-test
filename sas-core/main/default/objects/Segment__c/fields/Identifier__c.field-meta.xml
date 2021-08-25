@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <inlineHelpText>A constant identifier to identify this segment in this booking. Smaller number also means this segment is earlier within the trip. Unique within the booking.</inlineHelpText>
     <label>Identifier</label>
-    <length>10</length>
+    <length>50</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>

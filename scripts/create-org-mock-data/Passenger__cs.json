@@ -1,0 +1,26 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Passenger__c",
+                "referenceId": "Passenger__cRef1"
+            },
+            "First_Name__c": "Test",
+            "Identifier__c": "PT1",
+            "Last_Name__c": "Testsson",
+            "Name": "Test Testsson",
+            "Booking__c": "@Booking__cRef1"
+        },
+        {
+            "attributes": {
+                "type": "Passenger__c",
+                "referenceId": "Passenger__cRef2"
+            },
+            "First_Name__c": "Test",
+            "Identifier__c": "PT2",
+            "Last_Name__c": "Testsdottir",
+            "Name": "Test Testsdottir",
+            "Booking__c": "@Booking__cRef1"
+        }
+    ]
+}

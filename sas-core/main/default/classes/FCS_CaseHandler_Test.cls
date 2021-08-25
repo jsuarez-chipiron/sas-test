@@ -477,32 +477,6 @@ private class FCS_CaseHandler_Test {
     System.assertEquals(testCaseAfterTrigger.Department__c, 'Group Sales');
     System.assertEquals(testCaseAfterTrigger.Team__c, 'AT');
   }
-
-  @IsTest
-  static void enrichCaseDataBasedOnOriginNonConfigMatchingOriginShouldLeaveBlanks() {
-    Case testCase = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    )[0];
-    testCase.Origin = 'Chat';
-
-    Test.startTest();
-    insert testCase;
-    Test.stopTest();
-
-    Case testCaseAfterTrigger = [
-      SELECT Department__c, Type
-      FROM Case
-      WHERE Id = :testCase.Id
-    ][0];
-
-    System.assert(String.isEmpty(testCaseAfterTrigger.Department__c));
-    System.assert(String.isEmpty(testCaseAfterTrigger.Type));
-  }
-
   @IsTest
   static void enrichMissingPointsCaseDataIfNrOfFltsNaNIgnore() {
     Case testCase = FCS_TestDataFactory.createCases(
