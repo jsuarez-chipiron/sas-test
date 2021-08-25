@@ -105,6 +105,18 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>SocialPostsSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>MessagingSessionsSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ChatTranscriptsSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SAS_Service_Application</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -114,6 +126,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TEDSIntegrationService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FCS_CaseTag_Controller</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
