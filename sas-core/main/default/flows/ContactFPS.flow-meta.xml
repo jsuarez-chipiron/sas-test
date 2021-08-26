@@ -8,7 +8,7 @@
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
-            <targetReference>SuccessScreen</targetReference>
+            <targetReference>UpdateOwner</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -42,7 +42,7 @@
             <assignToReference>CaseDescription</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>AccessDescFormula</elementReference>
+                <elementReference>AccessTemplate</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -65,7 +65,7 @@
             <assignToReference>CaseDescription</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>BugSummary</elementReference>
+                <elementReference>BugTemplate</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -183,20 +183,6 @@
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <formulas>
-        <name>AccessDescFormula</name>
-        <dataType>String</dataType>
-        <expression>&quot;Access needed:&quot; &amp; {!NeedAccess} &amp;
-&quot;\nfor the following people:&quot; &amp; {!Who_needs_access}</expression>
-    </formulas>
-    <formulas>
-        <name>BugSummary</name>
-        <dataType>String</dataType>
-        <expression>&quot;Level: &quot; &amp; {!Severity} &amp;
-&quot;\nIssue: &quot; &amp; {!IssueDescription} &amp;
-&quot;\nReplicate the issue: &quot; &amp; {!IssueRepro} &amp;
-&quot;\nLink where the issue occurs: &quot; &amp; {!IssueLink}</expression>
-    </formulas>
-    <formulas>
         <name>IssueSubject</name>
         <dataType>String</dataType>
         <expression>&quot;[&quot; &amp; {!Severity} &amp; &quot;]&quot; &amp; &quot; &quot; &amp;  LEFT({!IssueDescription}, 50)</expression>
@@ -252,12 +238,6 @@
             <field>Origin</field>
             <value>
                 <stringValue>Internal - Functional Product Support</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>GetFPSGroupId.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -323,6 +303,30 @@
         <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>UpdateOwner</name>
+        <label>Update Owner</label>
+        <locationX>446</locationX>
+        <locationY>1094</locationY>
+        <connector>
+            <targetReference>SuccessScreen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CreateFPSCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>GetFPSGroupId.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Enter_Issue_Information</name>
@@ -476,7 +480,7 @@
         <name>SuccessScreen</name>
         <label>SuccessScreen</label>
         <locationX>446</locationX>
-        <locationY>1094</locationY>
+        <locationY>1214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -496,6 +500,19 @@
         </connector>
     </start>
     <status>Active</status>
+    <textTemplates>
+        <name>AccessTemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>I need access to: {!NeedAccess}
+for the following people: {!Who_needs_access}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>BugTemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Issue: {!IssueDescription}
+Steps to replicate the issue: {!IssueRepro}
+Link to where issue occurs: {!IssueLink}</text>
+    </textTemplates>
     <variables>
         <name>CaseDescription</name>
         <dataType>String</dataType>
