@@ -193,13 +193,6 @@
                 <leftValueReference>DepartmentTeamList.topValue</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Liability</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>DepartmentTeamList.topValue</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
                     <stringValue>Functional Product Support</stringValue>
                 </rightValue>
             </conditions>
