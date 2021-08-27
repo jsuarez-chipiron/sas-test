@@ -34,6 +34,7 @@
 		<members>IRR_AutomatedMessage.AMS_CPH_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.AMS_OSL_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_ABZ_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.ARN_ABZ_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_AGP_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_ALC_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_AMS_TR_AUTO_1D_SMS</members>
@@ -43,6 +44,7 @@
 		<members>IRR_AutomatedMessage.ARN_BEY_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_BGO_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_BHX_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.ARN_BHX_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_BIQ_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_BLQ_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_BOS_TR_AUTO_1D_SMS</members>
@@ -56,6 +58,7 @@
 		<members>IRR_AutomatedMessage.ARN_DUB_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_DUS_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_EDI_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.ARN_EDI_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_EWR_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_FAO_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_FCO_TR_AUTO_1D_SMS</members>
@@ -72,11 +75,13 @@
 		<members>IRR_AutomatedMessage.ARN_LAX_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_LED_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_LHR_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.ARN_LHR_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_LIN_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_LIS_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_LPA_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_LUX_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_MAN_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.ARN_MAN_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_MIA_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_MLA_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ARN_MPL_TR_AUTO_1D_SMS</members>
@@ -158,6 +163,7 @@
 		<members>IRR_AutomatedMessage.CHQ_CPH_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CHQ_OSL_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_ABZ_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.CPH_ABZ_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_AGP_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_ALC_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_AMS_TR_AUTO_1D_SMS</members>
@@ -168,6 +174,7 @@
 		<members>IRR_AutomatedMessage.CPH_BEY_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_BGO_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_BHX_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.CPH_BHX_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_BLQ_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_BOS_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_BRU_TR_AUTO_1D_SMS</members>
@@ -179,6 +186,7 @@
 		<members>IRR_AutomatedMessage.CPH_DUB_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_DUS_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_EDI_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.CPH_EDI_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_EWR_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_FAO_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_FCO_TR_AUTO_1D_SMS</members>
@@ -196,11 +204,13 @@
 		<members>IRR_AutomatedMessage.CPH_LAX_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_LED_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_LHR_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.CPH_LHR_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_LIN_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_LIS_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_LPA_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_LUX_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_MAN_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.CPH_MAN_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_MIA_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_MLA_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.CPH_MPL_TR_AUTO_1D_SMS</members>
@@ -351,6 +361,7 @@
 		<members>IRR_AutomatedMessage.ORD_CPH_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ORD_OSL_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_ABZ_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.OSL_ABZ_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_AGP_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_ALC_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_AMS_TR_AUTO_1D_SMS</members>
@@ -360,6 +371,7 @@
 		<members>IRR_AutomatedMessage.OSL_BER_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_BEY_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_BHX_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.OSL_BHX_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_BIQ_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_BLL_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_BLQ_TR_AUTO_1D_SMS</members>
@@ -374,6 +386,7 @@
 		<members>IRR_AutomatedMessage.OSL_DUB_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_DUS_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_EDI_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.OSL_EDI_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_EWR_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_FAO_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_FCO_TR_AUTO_1D_SMS</members>
@@ -390,11 +403,13 @@
 		<members>IRR_AutomatedMessage.OSL_LAX_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_LED_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_LHR_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.OSL_LHR_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_LIN_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_LIS_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_LPA_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_LUX_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_MAN_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.OSL_MAN_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_MIA_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_MLA_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.OSL_MPL_TR_AUTO_1D_SMS</members>
@@ -492,6 +507,7 @@
 		<members>IRR_AutomatedMessage.STR_CPH_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.STR_OSL_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.SVG_ALC_TR_AUTO_1D_SMS</members>
+		<members>IRR_AutomatedMessage.SVG_ABZ_TR_AUTO_4D_SMS</members>
 		<members>IRR_AutomatedMessage.SVG_CPH_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.SVQ_ARN_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.SVQ_CPH_TR_AUTO_1D_SMS</members>
