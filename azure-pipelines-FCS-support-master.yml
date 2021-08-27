@@ -10,7 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  CLIURL: https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
+  CLIURL: https://developer.salesforce.com/media/salesforce-cli/sfdx/versions/7.110.0/85b006b/sfdx-v7.110.0-85b006b-linux-x64.tar.gz
   SFDX_AUTOUPDATE_DISABLE: false
   SFDX_USE_GENERIC_UNIX_KEYCHAIN: true
   SFDX_DOMAIN_RETRY: 300
