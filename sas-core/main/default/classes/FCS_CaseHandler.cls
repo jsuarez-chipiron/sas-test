@@ -814,8 +814,8 @@ public class FCS_CaseHandler extends C_TriggerHandler {
 
       if (!String.isBlank(c.Refund_PNR__c)) {
         BookingService.addBookingToCaseAsync(c.Id, c.Refund_PNR__c);
-      } else if (!String.isBlank(c.Initially_provided_PNR__c)) {
-        BookingService.addBookingToCaseAsync(c.Id, c.Initially_provided_PNR__c);
+      } else if (!String.isBlank(c.Initially_Provided_PNR__c)) {
+        BookingService.addBookingToCaseAsync(c.Id, c.Initially_Provided_PNR__c);
       }
     }
   }
