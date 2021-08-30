@@ -37,6 +37,11 @@ public without sharing class BookingService {
     return;
   }
 
+  @future(callout=true)
+  public static void addBookingToCaseAsync(ID caseId, String bookingReference) {
+    BookingService.addBookingToCase(caseId, bookingReference);
+  }
+
   /**
    * Removes a booking from a case. I.e. removes the CaseToBooking
    * junction object linking the referenced case and a booking.
@@ -272,10 +277,9 @@ public without sharing class BookingService {
       for (IRR_MOD_TedsBooking.Trip trip : booking.trips) {
         for (IRR_MOD_TedsBooking.SegmentTrip segmentTrip : trip.segments) {
           // Create flights
-          Boolean flightNotYetProcessed =
-            flightsProcessed.get(segmentTrip.flight.id) == null;
+          String flightId = segmentTrip.flight.id.trim().toUpperCase();
 
-          if (flightNotYetProcessed) {
+          if (!flightsProcessed.containsKey(flightId)) {
             Datetime arrivalDate = Datetime.valueOf(
               segmentTrip.flight.arrival.scheduledTime.local.replace('T', ' ')
                 .replace('Z', '')
@@ -291,10 +295,10 @@ public without sharing class BookingService {
               Departure_Airport__c = segmentTrip.flight.departure.station,
               Scheduled_Arrival_Time__c = arrivalDate,
               Scheduled_Departure_Time__c = departureDate,
-              TEDS_Identifier__c = segmentTrip.flight.id
+              TEDS_Identifier__c = flightId
             );
 
-            flightsProcessed.put(segmentTrip.flight.id, newFlight);
+            flightsProcessed.put(flightId, newFlight);
           }
 
           // Create one segment per passenger per flight in the booking.
