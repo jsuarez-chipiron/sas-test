@@ -249,29 +249,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>customerCard</componentName>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>EuroBonus</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Team__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>EB Vendor Support</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Sales Control BOM</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Origin}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Chat</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -430,44 +407,6 @@
                         <leftValue>{!Record.Team__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Bulk</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>FCS_IdentifyCustomerContainer</componentName>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Internal_Backoffice</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Group Sales</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Team__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Bulk</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>EuroBonus</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Sales Control BOM</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Team__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>EB Vendor Support</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
