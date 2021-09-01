@@ -1,12 +1,13 @@
 public class RefundRequestService {
   public static String createRefundForm(RefundJsonToApex form) {
     Case cse;
+    Refund_Request__c refund;
     String Notes;
     try {
       RefundJsonToApex.cls_formData refundForm = form.formData;
 
       // Refund creation
-      Refund_Request__c refund = new Refund_Request__c();
+      refund = new Refund_Request__c();
       refund.Country_of_Purchase__c = refundForm.countryOfPurchase;
       refund.PNR__c = refundForm.pnr;
       refund.Ticket_Numbers__c = refundForm.ticketNumber;
@@ -29,19 +30,20 @@ public class RefundRequestService {
         }
       }
       insert refund;
-
-      // Case Creation
-      cse = new Case();
-      cse.SuppliedEmail = refundForm.email;
-      cse.SuppliedPhone = refundForm.phone;
-      cse.Refund_Request__c = refund.Id;
-
-      insert cse;
+      /* 
+     // Case Creation
+       cse = new Case();
+     cse.SuppliedEmail = refundForm.email;
+     cse.SuppliedPhone = refundForm.phone;
+     cse.Refund_Request__c = refund.Id;
+     
+     insert cse;
+     */
     } catch (Exception e) {
       C_Log.logException(e, 'RefundRequest', null);
       return e.getMessage();
     }
 
-    return cse.Id;
+    return refund.Id;
   }
 }
