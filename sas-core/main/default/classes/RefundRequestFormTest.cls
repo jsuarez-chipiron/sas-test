@@ -22,7 +22,7 @@ private class RefundRequestFormTest {
       '    "siteUrl": "sas.se"' +
       '  }' +
       '}';
-
+    Test.setMock(HttpCalloutMock.class, new TEDSBookingSingleSuccessMock());
     Test.startTest();
     RestRequest request = new RestRequest();
     request.requestUri = '/services/apexrest/Refundform';

@@ -30,20 +30,19 @@ public class RefundRequestService {
         }
       }
       insert refund;
-      /* 
-     // Case Creation
-       cse = new Case();
-     cse.SuppliedEmail = refundForm.email;
-     cse.SuppliedPhone = refundForm.phone;
-     cse.Refund_Request__c = refund.Id;
-     
-     insert cse;
-     */
+
+      // Case Creation
+      cse = new Case();
+      cse.SuppliedEmail = refundForm.email;
+      cse.SuppliedPhone = refundForm.phone;
+      cse.Refund_Request__c = refund.Id;
+
+      insert cse;
     } catch (Exception e) {
       C_Log.logException(e, 'RefundRequest', null);
       return e.getMessage();
     }
 
-    return refund.Id;
+    return cse.Id;
   }
 }
