@@ -23,6 +23,11 @@ private class RefundRequestFormTest {
       '  }' +
       '}';
     RefundJsonToApex obj = RefundJsonToApex.parse(json);
+    RestRequest request = new RestRequest();
+    request.requestUri = '/services/apexrest/Refundform';
+    request.httpMethod = 'POST';
+    RestContext.request = request;
+
     RefundRequestForm.refundForm(obj);
   }
 }
