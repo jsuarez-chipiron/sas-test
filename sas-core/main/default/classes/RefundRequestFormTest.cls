@@ -22,12 +22,15 @@ private class RefundRequestFormTest {
       '    "siteUrl": "sas.se"' +
       '  }' +
       '}';
-    RefundJsonToApex obj = RefundJsonToApex.parse(json);
+
+    Test.startTest();
     RestRequest request = new RestRequest();
     request.requestUri = '/services/apexrest/Refundform';
     request.httpMethod = 'POST';
     RestContext.request = request;
 
+    RefundJsonToApex obj = RefundJsonToApex.parse(json);
     RefundRequestForm.refundForm(obj);
+    Test.StopTest();
   }
 }
