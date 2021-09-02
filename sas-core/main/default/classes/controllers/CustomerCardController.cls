@@ -21,7 +21,10 @@ public without sharing class CustomerCardController {
     );
     List<BookingJSON> toReturn = new List<BookingJSON>();
     for (Booking__c b : bookingsToReturn) {
-      toReturn.add(new BookingJSON(b));
+      List<Case> relatedCases = cases.selectByBookingReference(
+        new Set<String>{ b.Booking_Reference__c }
+      );
+      toReturn.add(new BookingJSON(b, relatedCases));
     }
     toReturn.sort();
 
@@ -68,6 +71,11 @@ public without sharing class CustomerCardController {
     toReturn.sort();
 
     return toReturn;
+  }
+
+  @AuraEnabled(cacheable=true)
+  public static List<Case> getCasesForBooking(String bookingReference) {
+    return cases.selectByBookingReference(new Set<String>{ bookingReference });
   }
 
   @AuraEnabled(cacheable=true)

@@ -30,6 +30,7 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
       .setCondition('AccountId in :accountIds');
     return (List<Case>) Database.query(casesQF.toSOQL());
   }
+
   public List<Case> selectByChatId(Set<Id> chatIds) {
     ChatTranscriptsSelector chatTranscripts = (ChatTranscriptsSelector) SAS_Service_Application.Selector.newInstance(
       LiveChatTranscript.SObjectType
@@ -41,6 +42,7 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
     }
     return (List<Case>) this.selectSObjectsById(caseIds);
   }
+
   public List<Case> selectBySocialPostId(Set<Id> socialPostIds) {
     SocialPostsSelector socialPosts = (SocialPostsSelector) SAS_Service_Application.Selector.newInstance(
       SocialPost.SObjectType
@@ -51,6 +53,7 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
     }
     return (List<Case>) this.selectSObjectsById(caseIds);
   }
+
   public List<Case> selectByMessagingId(Set<Id> messagingsessionsId) {
     MessagingSessionsSelector messagingSessions = (MessagingSessionsSelector) SAS_Service_Application.Selector.newInstance(
       MessagingSession.SObjectType
@@ -63,6 +66,21 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
     }
     return (List<Case>) this.selectSObjectsById(caseIds);
   }
+
+  public List<Case> selectByBookingReference(Set<String> bookingReferences) {
+    CaseToBookingsSelector caseToBookings = (CaseToBookingsSelector) SAS_Service_Application.Selector.newInstance(
+      CaseToBooking__c.SObjectType
+    );
+      Set<Id> caseIds = new Set<Id>();
+      for (
+        CaseToBooking__c ctb : caseToBookings.selectByBookingReference(bookingReferences)
+      ) {
+        caseIds.add(ctb.Case__c);
+      }
+
+      return (List<Case>) this.selectSObjectsById(caseIds);
+  }
+
   public override String getOrderBy() {
     return 'CaseNumber';
   }

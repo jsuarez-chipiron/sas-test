@@ -23,7 +23,10 @@ public with sharing class Bookings_IntegrationTest {
     insert testCase;
 
     Test.startTest();
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingSingleSuccessMock());
+    Test.setMock(
+      HttpCalloutMock.class,
+      new TEDSBookingSingleAndFlightSuccessMock()
+    );
     // When
     CustomerCardController.addBookingToCase(
       testCase.Id,
@@ -57,7 +60,10 @@ public with sharing class Bookings_IntegrationTest {
     insert testCase;
 
     Test.startTest();
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingSingleSuccessMock());
+    Test.setMock(
+      HttpCalloutMock.class,
+      new TEDSBookingSingleAndFlightSuccessMock()
+    );
 
     // When
     CustomerCardController.addBookingToCase(

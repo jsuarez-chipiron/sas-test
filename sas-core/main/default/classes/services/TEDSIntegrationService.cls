@@ -49,6 +49,22 @@ public without sharing class TEDSIntegrationService {
     return IRR_MOD_TedsBooking.parseArray(response.getBody());
   }
 
+  /** Fetches all flights from TEDS which match the provided query.
+   *
+   * @param query A map of parameter names to values.
+   * Possible keys for query:
+   * - ids: List of full TEDS identifiers for flights. Maximum of 10.
+   *
+   * @return List of the found flights, or an empty list of none were found.
+   */
+  public List<TEDSFlight> fetchFlightsByQuery(
+    Map<String, String> query
+  ) {
+    HttpResponse response = makeRequest('GET', '/teds-flight/flights', query);
+
+    return TEDSFlight.parseArray(response.getBody());
+  }
+
   public class IntegrationException extends Exception {
   }
 
@@ -60,7 +76,7 @@ public without sharing class TEDSIntegrationService {
    * @param method HTTP method to use as full caps String. See HttpRequest.setMethod for more info.
    * @param endPoint The endpoint to make the query to, without the base url included in callout.
    *
-   * @throws IntegrationException On HTTP status codes larger than 400.
+   * @throws IntegrationException On HTTP status codes larger than 400, other than 404.
    *
    * @return Response object from making the query.
    */
