@@ -62,6 +62,10 @@
                 <behavior>Readonly</behavior>
                 <field>Special_Service_Requests__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Trip_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>

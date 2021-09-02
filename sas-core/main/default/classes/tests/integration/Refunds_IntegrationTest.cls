@@ -34,7 +34,10 @@ public with sharing class Refunds_IntegrationTest {
     testCase.Refund_Request__c = refund.Id;
 
     Test.startTest();
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingSingleSuccessMock());
+    Test.setMock(
+      HttpCalloutMock.class,
+      new TEDSBookingSingleAndFlightSuccessMock()
+    );
     // When
     insert testCase;
     Test.stopTest();

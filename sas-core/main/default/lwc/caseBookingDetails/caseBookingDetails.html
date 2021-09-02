@@ -75,20 +75,21 @@
           <div key={b.value.bookingReference}>
             <lightning-tabset>
               <lightning-tab label="Flight data">
-                <div
-                  for:each={b.value.trips}
-                  for:item="trip"
-                  key={trip.type}
+                <template
+                  iterator:trip={b.value.trips}
                   class="slds-m-bottom_small"
                 >
                   <div
                     class="slds-col slds-size_1-of-1 text-bold"
-                    key={trip.type}
+                    key={trip.value.type}
                   >
-                    <span>{trip.type}</span>
+                    <span>{trip.value.type}</span>
+                    <span if:true={trip.first} class="slds-float_right"
+                      >{b.value.bookingReference}</span
+                    >
                   </div>
                   <div
-                    for:each={trip.flights}
+                    for:each={trip.value.flights}
                     for:item="flight"
                     class="
                       slds-col
@@ -99,11 +100,10 @@
                     "
                     key={flight.flightNumber}
                   >
-                    <div class="slds-col slds-size_2-of-12 slds-p-right_small">
-                      <span>{flight.flightNumber}</span>
-                    </div>
-                    <div class="slds-col slds-size_2-of-12 slds-p-right_small">
+                    <div class="slds-col slds-size_3-of-12 slds-p-right_small slds-grid slds-grid_vertical">
+                      <span class="slds-col slds-size_1-of-1"><span class={flight.bulletClassName}>&#8226;</span>{flight.flightNumber}</span>
                       <lightning-formatted-date-time
+                        class="slds-col slds-size_1-of-1"
                         value={flight.scheduledDepartureTime}
                         year="numeric"
                         month="short"
@@ -113,46 +113,67 @@
                     <div
                       class="
                         slds-col
-                        slds-size_4-of-12
+                        slds-size_3-of-12
                         slds-grid slds-grid_vertical
                         slds-p-right_small
                       "
                     >
-                      <div class="slds-col slds-size_4-of-12">
+                      <div class="slds-col slds-size_1-of-1">
                         <span>Origin&nbsp;{flight.departureAirport}</span>
                       </div>
-                      <div class="slds-col slds-size_4-of-12">
-                        <span>{flight.departureTerminal}</span>
+                      <div class="slds-col slds-size_1-of-1">
+                        <span>T{flight.departureTerminal},&nbsp;{flight.departureGate}</span>
                       </div>
-                      <lightning-formatted-date-time
-                        class="slds-col slds-size_4-of-12"
-                        value={flight.scheduledDepartureTime}
-                        hour="2-digit"
-                        minute="2-digit"
-                      ></lightning-formatted-date-time>
+                      <div class="slds-col slds-size_1-of-1">
+                        <lightning-formatted-date-time
+                          class={flight.depatureTimeClassName}
+                          value={flight.scheduledDepartureTime}
+                          hour="2-digit"
+                          minute="2-digit"
+                        ></lightning-formatted-date-time>
+                        <span if:true={flight.departureDelayed}>&nbsp;</span>
+                        <lightning-formatted-date-time
+                          if:true={flight.departureDelayed}
+                          value={flight.estimatedDepartureTime}
+                          hour="2-digit"
+                          minute="2-digit"
+                        ></lightning-formatted-date-time>
+                      </div>
                     </div>
                     <div
                       class="
                         slds-col
-                        slds-size_4-of-12
+                        slds-size_3-of-12
                         slds-grid slds-grid_vertical
                       "
                     >
-                      <div class="slds-col slds-size_4-of-12">
+                      <div class="slds-col slds-size_1-of-1">
                         <span>Destination&nbsp;{flight.arrivalAirport}</span>
                       </div>
-                      <div class="slds-col slds-size_4-of-12">
-                        <span>{flight.arrivalTerminal}</span>
+                      <div class="slds-col slds-size_1-of-1">
+                        <span>T{flight.arrivalTerminal},&nbsp;{flight.arrivalGate}</span>
                       </div>
-                      <lightning-formatted-date-time
-                        class="slds-col slds-size_4-of-12"
-                        value={flight.scheduledArrivalTime}
-                        hour="2-digit"
-                        minute="2-digit"
-                      ></lightning-formatted-date-time>
+                      <div class="slds-col slds-size_1-of-1">
+                        <lightning-formatted-date-time
+                          class={flight.arrivalTimeClassName}
+                          value={flight.scheduledArrivalTime}
+                          hour="2-digit"
+                          minute="2-digit"
+                        ></lightning-formatted-date-time>
+                        <span if:true={flight.arrivalDelayed}>&nbsp;</span>
+                        <lightning-formatted-date-time
+                          if:true={flight.arrivalDelayed}
+                          value={flight.scheduledArrivalTime}
+                          hour="2-digit"
+                          minute="2-digit"
+                        ></lightning-formatted-date-time>
+                      </div>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-grid slds-grid_vertical-reverse">
+                        <span if:true={flight.arrivalDelayed}>Delay: {flight.arrivalDelayedMinutes}</span>
                     </div>
                   </div>
-                </div>
+                </template>
                 <div>
                   <span
                     class="
@@ -448,6 +469,32 @@
                     onclick={handleDisplayAllFlights}
                     >Load more flights</a
                   >
+                </div>
+              </lightning-tab>
+
+              <lightning-tab label={b.value.caseTabTitle}>
+                <div class="text-bold">
+                  <span class="slds-float_right"
+                    >{b.value.bookingReference}</span
+                  >
+                </div>
+                <div>
+                  <ul class="slds-has-dividers_bottom-space">
+                    <template for:each={b.value.relatedCases} for:item="c">
+                      <li class={c.className} key={c.CaseNumber}>
+                        <strong
+                          >Case&nbsp;
+                          <a onclick={navigateToCaseViewPage} data-id={c.Id}
+                            >{c.CaseNumber}</a
+                          >, </strong
+                        ><lightning-formatted-date-time
+                          value={c.CreatedDate}
+                        ></lightning-formatted-date-time
+                        >, {c.StatusOrReason}
+                      </li>
+                    </template>
+                  </ul>
+                  <div if:true={b.value.noCases}>No related cases</div>
                 </div>
               </lightning-tab>
             </lightning-tabset>

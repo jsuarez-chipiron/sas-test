@@ -161,7 +161,6 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
               elem.Status === "Closed"
                 ? "slds-item case-bullet closed-case-bullet"
                 : "slds-item case-bullet open-case-bullet",
-            recordUrl: `/${elem.Id}`,
             StatusOrReason:
               elem.Status === "Closed" ? elem.FCS_CaseReason__c : elem.Status
           };
