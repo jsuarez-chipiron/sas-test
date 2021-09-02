@@ -32,9 +32,25 @@ public without sharing class BookingService {
 
     Booking__c newBooking = constructBookingsForDB(bookingData, uow);
 
-    CaseToBooking__c newJoin = new CaseToBooking__c(Case__c = caseId);
-    uow.registerNew(newJoin);
-    uow.registerRelationship(newJoin, CaseToBooking__c.Booking__c, newBooking);
+    CaseToBookingsSelector caseToBookings = (CaseToBookingsSelector) SAS_Service_Application.Selector.newInstance(
+      CaseToBooking__c.SObjectType
+    );
+
+    List<CaseToBooking__c> caseToBooking = caseToBookings.selectByCaseIdAndBookingReference(
+      caseId,
+      bookingReference
+    );
+
+    if (caseToBooking.size() == 0) {
+      // Add case to booking only if it doesn't exist yet.
+      CaseToBooking__c newJoin = new CaseToBooking__c(Case__c = caseId);
+      uow.registerNew(newJoin);
+      uow.registerRelationship(
+        newJoin,
+        CaseToBooking__c.Booking__c,
+        newBooking
+      );
+    }
 
     uow.commitWork();
     BookingService.fetchFlightsForBooking(bookingData);
