@@ -10,7 +10,6 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  CLIURL: https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable-rc/sfdx-linux-x64.tar.xz
   SFDX_AUTOUPDATE_DISABLE: false
   SFDX_USE_GENERIC_UNIX_KEYCHAIN: true
   SFDX_DOMAIN_RETRY: 300
@@ -24,11 +23,7 @@ steps:
     secureFile: 'ci_cert_new.key'
 
 - script: |
-    #mkdir $(Agent.BuildDirectory)/sfdx
-    #wget -qO- $CLIURL | tar xJ -C $(Agent.BuildDirectory)/sfdx --strip-components 1
-    #sudo $(Agent.BuildDirectory)/sfdx/install
-    #export PATH=$(Agent.BuildDirectory)/sfdx/:$PATH
-    sudo npm install sfdx-cli --global
+    sudo npm install sfdx-cli@latest-rc --global
     sfdx --version
     sfdx plugins --core
   displayName: 'Install SFDX'
