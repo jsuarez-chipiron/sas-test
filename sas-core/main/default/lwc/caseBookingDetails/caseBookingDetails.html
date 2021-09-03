@@ -171,6 +171,7 @@
                     </div>
                     <div class="slds-col slds-size_3-of-12 slds-grid slds-grid_vertical-reverse">
                         <span if:true={flight.arrivalDelayed}>Delay: {flight.arrivalDelayedMinutes}</span>
+                        <span if:true={flight.cancelled}>Cancelled</span>
                     </div>
                   </div>
                 </template>
@@ -472,7 +473,7 @@
                 </div>
               </lightning-tab>
 
-              <lightning-tab label={b.value.caseTabTitle}>
+              <lightning-tab label={b.value.displayDetails.caseTabTitle}>
                 <div class="text-bold">
                   <span class="slds-float_right"
                     >{b.value.bookingReference}</span
@@ -494,7 +495,7 @@
                       </li>
                     </template>
                   </ul>
-                  <div if:true={b.value.noCases}>No related cases</div>
+                  <div if:true={b.value.displayDetails.noCases}>No related cases</div>
                 </div>
               </lightning-tab>
             </lightning-tabset>

@@ -31,13 +31,28 @@ export default class CaseBookingDetails extends NavigationMixin(
 
           return {
             ...booking,
-            caseTabTitle: `Related cases (${caseCount})`,
-            noCases: caseCount === 0,
-            relatedCases: booking.relatedCases.filter(
-              (c) => c.Id !== this.caseId
-            ),
+            relatedCases: booking.relatedCases
+              .filter((c) => c.Id !== this.caseId)
+              .sort((first, second) => {
+                if (first.Status === "Closed" && second.Status !== "Closed") {
+                  return 1;
+                } else if (
+                  first.Status !== "Closed" &&
+                  second.Status === "Closed"
+                ) {
+                  return -1;
+                } else if (first.CreatedDate > second.CreatedDate) {
+                  return -1;
+                } else if (first.CreatedDate < second.CreatedDate) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+              }),
             displayDetails: {
               ...booking.displayDetails,
+              caseTabTitle: `Related cases (${caseCount})`,
+              noCases: caseCount === 0,
               passengersVisible: `${
                 booking.displayDetails.showAllPassengers
                   ? booking.passengers.length
@@ -145,91 +160,90 @@ export default class CaseBookingDetails extends NavigationMixin(
     };
 
     if (data != undefined && data.length > 0) {
-      console.log("data", data);
+      this.bookings = data.map((b) => ({
+        ...b,
+        displayDetails: {
+          showAllPassengers: b.passengers.length <= this.ENTRIES_TO_DISPLAY,
+          showAllFlights: b.flights.length <= this.ENTRIES_TO_DISPLAY
+        },
+        relatedCases: b.relatedCases
+          ? b.relatedCases.map((c) => ({
+              ...c,
+              className:
+                c.Status === "Closed"
+                  ? "slds-item case-bullet closed-case-bullet"
+                  : "slds-item case-bullet open-case-bullet",
+              StatusOrReason:
+                c.Status === "Closed" ? c.FCS_CaseReason__c : c.Status
+            }))
+          : [],
+        trips: Object.entries(
+          b.flights
+            .map((f) => {
+              const delayedOrCancelled =
+                f.arrivalStatus === "delayed" ||
+                f.departureStatus === "delayed" ||
+                f.departureStatus === "cancelled";
 
-      this.bookings = data.map((b) => {
-        const caseCount = b.relatedCases
-          ? b.relatedCases.filter((c) => c.Id !== "$caseId").length
-          : 0;
-
-        return {
-          ...b,
-          displayDetails: {
-            showAllPassengers: b.passengers.length <= this.ENTRIES_TO_DISPLAY,
-            showAllFlights: b.flights.length <= this.ENTRIES_TO_DISPLAY
-          },
-          relatedCases: b.relatedCases
-            ? b.relatedCases.map((c) => ({
-                ...c,
-                className:
-                  c.Status === "Closed"
-                    ? "slds-item case-bullet closed-case-bullet"
-                    : "slds-item case-bullet open-case-bullet",
-                StatusOrReason:
-                  c.Status === "Closed" ? c.FCS_CaseReason__c : c.Status
-              }))
-            : [],
-          trips: Object.entries(
-            b.flights
-              .map((f) => {
-                const arrivalDelayed =
+              return {
+                ...f,
+                arrivalDelayed: f.arrivalStatus === "delayed",
+                arrivalDelayedMinutes: minutesToHoursAndMinutes(
+                  f.arrivalDelayedMinutes
+                ),
+                arrivalTimeClassName:
                   f.arrivalStatus === "delayed" ||
-                  f.arrivalStatus === "cancelled";
-                const departureDelayed =
+                  f.arrivalStatus === "cancelled"
+                    ? "delayedTime"
+                    : "",
+                arrivalGate: f.arrivalGate || "-",
+                arrivalTerminal: f.arrivalTerminal || "-",
+                bookingClass: f.bookingClass || "-",
+                cancelled: f.departureStatus === "cancelled",
+                departureDelayed: f.departureStatus === "delayed",
+                departureDelayedMinutes: minutesToHoursAndMinutes(
+                  f.departureDelayedMinutes
+                ),
+                departureTimeClassName:
                   f.departureStatus === "delayed" ||
-                  f.departureStatus === "cancelled";
-
-                return {
-                  ...f,
-                  arrivalDelayed,
-                  arrivalDelayedMinutes: minutesToHoursAndMinutes(
-                    f.arrivalDelayedMinutes
-                  ),
-                  arrivalTimeClassName: arrivalDelayed ? "delayedTime" : "",
-                  arrivalGate: f.arrivalGate || "-",
-                  arrivalTerminal: f.arrivalTerminal || "-",
-                  bookingClass: f.bookingClass || "-",
-                  departureDelayed,
-                  departureDelayedMinutes: minutesToHoursAndMinutes(
-                    f.departureDelayedMinutes
-                  ),
-                  departureTimeClassName: departureDelayed ? "delayedTime" : "",
-                  departureGate: f.departureGate || "-",
-                  departureTerminal: f.departureTerminal || "-",
-                  fareBasis: f.fareBasis || "-",
-                  bulletClassName: departureDelayed
-                    ? "flight-bullet-delayed"
-                    : "flight-bullet-on-time",
-                  serviceClass: f.serviceClass || "-"
-                };
-              })
-              .reduce(
-                (acc, curr) => ({
-                  ...acc,
-                  [curr.tripType]: (acc[curr.tripType] || []).concat(curr)
-                }),
-                {}
-              )
-          ).map((pair) => ({ type: pair[0], flights: pair[1] })),
-          passengers: b.passengers.map((p) => ({
-            ...p,
-            bags: p.bags ? p.bags.join(", ") : "-",
-            email: p.email || "-",
-            euroBonusNumber:
-              p.euroBonusNumber && p.euroBonusNumber.length > 0
-                ? p.euroBonusNumber
-                : "-",
-            name: `${toCapitalCase(p.firstName)} ${toCapitalCase(p.lastName)}`,
-            phone: p.phone || "-",
-            seats: p.seats ? p.seats.join(", ") : "-",
-            ssrs: p.specialServiceRequests,
-            ticketNumbers:
-              p.ticketNumbers && p.ticketNumbers.length > 0
-                ? p.ticketNumbers.join(", ")
-                : "-"
-          }))
-        };
-      });
+                  f.departureStatus === "cancelled"
+                    ? "delayedTime"
+                    : "",
+                departureGate: f.departureGate || "-",
+                departureTerminal: f.departureTerminal || "-",
+                fareBasis: f.fareBasis || "-",
+                bulletClassName: delayedOrCancelled
+                  ? "flight-bullet-delayed"
+                  : "flight-bullet-on-time",
+                serviceClass: f.serviceClass || "-"
+              };
+            })
+            .reduce(
+              (acc, curr) => ({
+                ...acc,
+                [curr.tripType]: (acc[curr.tripType] || []).concat(curr)
+              }),
+              {}
+            )
+        ).map((pair) => ({ type: pair[0], flights: pair[1] })),
+        passengers: b.passengers.map((p) => ({
+          ...p,
+          bags: p.bags ? p.bags.join(", ") : "-",
+          email: p.email || "-",
+          euroBonusNumber:
+            p.euroBonusNumber && p.euroBonusNumber.length > 0
+              ? p.euroBonusNumber
+              : "-",
+          name: `${toCapitalCase(p.firstName)} ${toCapitalCase(p.lastName)}`,
+          phone: p.phone || "-",
+          seats: p.seats ? p.seats.join(", ") : "-",
+          ssrs: p.specialServiceRequests,
+          ticketNumbers:
+            p.ticketNumbers && p.ticketNumbers.length > 0
+              ? p.ticketNumbers.join(", ")
+              : "-"
+        }))
+      }));
     } else {
       this.bookings = undefined;
     }
@@ -261,7 +275,7 @@ export default class CaseBookingDetails extends NavigationMixin(
       refreshApex(this.wiredBookingsReference);
       this.displayAddAnotherBookingForm = false;
       this.showSpinner = false;
-    }, 3000);
+    }, 6000);
   }
 
   async removeBookingFromCase(event) {
@@ -282,7 +296,7 @@ export default class CaseBookingDetails extends NavigationMixin(
       refreshApex(this.wiredBookingsReference);
       this.displayAddAnotherBookingForm = false;
       this.showSpinner = false;
-    }, 3000);
+    }, 6000);
   }
 
   async refreshBooking(event) {

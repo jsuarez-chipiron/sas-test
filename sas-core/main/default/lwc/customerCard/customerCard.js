@@ -167,9 +167,9 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
         })
         .sort((first, second) => {
           if (first.Status === "Closed" && second.Status !== "Closed") {
-            return -1;
-          } else if (first.Status !== "Closed" && second.Status === "Closed") {
             return 1;
+          } else if (first.Status !== "Closed" && second.Status === "Closed") {
+            return -1;
           } else if (first.CreatedDate > second.CreatedDate) {
             return -1;
           } else if (first.CreatedDate < second.CreatedDate) {
