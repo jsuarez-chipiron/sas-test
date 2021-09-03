@@ -361,6 +361,11 @@
                 <label>Email - Refund NO General</label>
             </value>
             <value>
+                <fullName>Email - Refund OC External</fullName>
+                <default>false</default>
+                <label>Email - Refund OC External</label>
+            </value>
+            <value>
                 <fullName>Email - Refund Operating Center</fullName>
                 <default>false</default>
                 <label>Email - Refund Operating Center</label>

@@ -14,7 +14,7 @@ orgName="FCS2020Salesforce"
 dataPlan="scripts/create-org-mock-data/plan.json"
 
 echo "Creating Scratch org"
-sfdx force:org:create -f $scratchDef -a $orgName --setdefaultusername || exit 1
+sfdx force:org:create -f $scratchDef -a $orgName --setdefaultusername
 
 echo "Creating auth providers and named credentials"
 # Auth provider requires the admin user's username so it cannot be pushed normally.
@@ -43,10 +43,10 @@ cp scripts/create-org-templates/LocalAuthProvider.APIM_Auth.template.xml sas-cor
 sleep 2m
 
 echo "Pushing source"
-sfdx force:source:push -u $orgName || exit 1
+sfdx force:source:push -u $orgName
 
 echo "Pushing data"
-sfdx force:data:tree:import -u $orgName -p $dataPlan || exit 1
+sfdx force:data:tree:import -u $orgName -p $dataPlan
 
 echo "Org created successfully. Opening..."
 echo "Remember to enter authentication credentials."
