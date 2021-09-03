@@ -15,8 +15,8 @@
 <!-- 2020-02-16 Delete permission set and replace with new one using SF-licence to be able to set tab visibilities -->
 
 <types>
-	<member>FCS_IdentifyCustomerContainer</members>
-	<member>fcs_IdentifyCustomer</members>
+	<members>FCS_IdentifyCustomerContainer</members>
+	<members>fcs_IdentifyCustomer</members>
 </types>
 
 </Package>
