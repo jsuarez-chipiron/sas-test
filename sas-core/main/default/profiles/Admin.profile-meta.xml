@@ -1587,6 +1587,9 @@
         <layout>SocialPost-Social Post Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>SurveyInvitation-Survey Invitation Layout</layout>
+    </layoutAssignments>    
+    <layoutAssignments>
         <layout>User-User Layout</layout>
     </layoutAssignments>
     <objectPermissions>
