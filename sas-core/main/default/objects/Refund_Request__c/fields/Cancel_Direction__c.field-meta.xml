@@ -4,6 +4,8 @@
     <externalId>false</externalId>
     <label>Cancel Direction</label>
     <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
