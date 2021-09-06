@@ -10,6 +10,10 @@
     <criteria>
         <feedItemType>ChangeStatusPost</feedItemType>
     </criteria>
+	 <criteria>
+        <feedItemType>CreateRecordEvent</feedItemType>
+        <relatedSObjectType>Case</relatedSObjectType>
+    </criteria>
     <description>Shows Email, Chatter Post, and case updates</description>
     <label>Email Post and Status Update</label>
 </CustomFeedFilter>
