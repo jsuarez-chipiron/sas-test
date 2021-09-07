@@ -424,10 +424,16 @@
             <componentInstance>
                 <componentName>fcs_CaseTag_new</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>SoMe Support</rightValue>
+                        <operator>NE</operator>
+                        <rightValue>Refunds</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Info Hub</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -436,10 +442,16 @@
             <componentInstance>
                 <componentName>fcs_CaseTag</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>SoMe Support</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Refunds</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Info Hub</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
