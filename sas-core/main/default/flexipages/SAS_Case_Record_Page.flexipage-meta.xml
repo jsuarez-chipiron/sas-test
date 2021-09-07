@@ -424,7 +424,7 @@
             <componentInstance>
                 <componentName>fcs_CaseTag_new</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Department__c}</leftValue>
                         <operator>NE</operator>
