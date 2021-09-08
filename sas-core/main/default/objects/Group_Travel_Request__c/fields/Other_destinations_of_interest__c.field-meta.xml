@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Other_destinations_of_interest__c</fullName>
+    <fullName>Other_Destinations_Of_Interest__c</fullName>
     <externalId>false</externalId>
-    <label>Other destinations of interest</label>
+    <label>Other Destinations Of Interest</label>
     <length>32768</length>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

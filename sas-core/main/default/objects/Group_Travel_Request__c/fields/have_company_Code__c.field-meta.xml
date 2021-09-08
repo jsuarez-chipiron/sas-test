@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>have_company_Code__c</fullName>
+    <fullName>Have_Company_Code__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>have company Code</label>
+    <label>Have Company Code</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>

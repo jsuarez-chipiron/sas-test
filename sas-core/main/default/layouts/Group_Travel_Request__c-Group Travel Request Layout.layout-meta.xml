@@ -32,39 +32,39 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Different_Return_City_Airpor__c</field>
+                <field>Different_Return_City_Airport__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Departure_time__c</field>
+                <field>Departure_Time__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Departure_date__c</field>
+                <field>Departure_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Return_date__c</field>
+                <field>Return_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Return_time__c</field>
+                <field>Return_Time__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Alternate_Departure_time__c</field>
+                <field>Alternate_Departure_Time__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Alternate_Return_time__c</field>
+                <field>Alternate_Return_Time__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Propose_alternative_destinations__c</field>
+                <field>Propose_Alternative_Destinations__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Other_destinations_of_interest__c</field>
+                <field>Other_Destinations_Of_Interest__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -112,7 +112,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Visual_or_hearing_assistance__c</field>
+                <field>Visual_or_Hearing_assistance__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -120,15 +120,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Form_of_payment__c</field>
+                <field>Form_Of_Payment__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Invoice_agreement_with_SAS__c</field>
+                <field>Invoice_Agreement_With_SAS__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Comments__c</field>
+                <field>Comments_From_Customer__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -136,15 +136,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>have_company_Code__c</field>
+                <field>Have_Company_Code__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Alternate_Return_date__c</field>
+                <field>Alternate_Return_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Alternate_Departure_date__c</field>
+                <field>Alternate_Departure_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

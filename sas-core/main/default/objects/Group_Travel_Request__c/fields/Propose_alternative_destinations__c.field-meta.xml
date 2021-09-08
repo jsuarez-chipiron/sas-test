@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Propose_alternative_destinations__c</fullName>
+    <fullName>Propose_Alternative_Destinations__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Propose alternative destinations</label>
+    <label>Propose Alternative Destinations</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>

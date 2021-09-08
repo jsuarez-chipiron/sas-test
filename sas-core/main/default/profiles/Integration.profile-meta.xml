@@ -76,6 +76,18 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GroupTravelJsonToApex</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GroupTravelRequestForm</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GroupTravelService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SAS_Service_Application</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1364,7 +1376,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Group_Travel_Request__c.Comments__c</field>
+        <field>Group_Travel_Request__c.Comments_From_Customer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1384,7 +1396,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Group_Travel_Request__c.Different_Return_City_Airpor__c</field>
+        <field>Group_Travel_Request__c.Different_Return_City_Airport__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
