@@ -45,7 +45,8 @@ public class SAS_Service_Application {
       Passenger__c.SObjectType,
       Segment__c.SObjectType,
       Case.SobjectType,
-      Refund_Request__c.SobjectType
+      Refund_Request__c.SobjectType,
+      Group_Travel_Request__c.SobjectType
     }
   );
 }
