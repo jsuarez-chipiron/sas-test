@@ -779,7 +779,7 @@
                 <stringValue>[Case].FCS_ReopenedCount__c + 1</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_12_myRule_9_A1_8545761458</name>
+        <name>formula_12_myRule_9_A1_9208676049</name>
         <dataType>Number</dataType>
         <expression>{!myVariable_current.FCS_ReopenedCount__c} + 1</expression>
         <scale>18</scale>
@@ -1089,6 +1089,111 @@
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Case Resolution Details</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>FCS_CaseResolutionDetails__c</field>
+            <value>
+                <stringValue>Case closed automatically</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Case Resolution</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>GlobalConstant</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>FCS_CaseResolution__c</field>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Type</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>FCS_CaseType__c</field>
+            <value>
+                <stringValue>Travel Information</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
                     <stringValue>Picklist</stringValue>
                 </value>
             </processMetadataValues>
@@ -1116,7 +1221,7 @@
                     <stringValue>Picklist</stringValue>
                 </value>
             </processMetadataValues>
-            <field>FCS_CaseReason__c</field>
+            <field>FCS_Case_Reason__c</field>
             <value>
                 <stringValue>Other</stringValue>
             </value>
@@ -1368,7 +1473,7 @@
             </processMetadataValues>
             <field>FCS_ReopenedCount__c</field>
             <value>
-                <elementReference>formula_12_myRule_9_A1_8545761458</elementReference>
+                <elementReference>formula_12_myRule_9_A1_9208676049</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
