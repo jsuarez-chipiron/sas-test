@@ -1,41 +1,11 @@
 .case-count-text {
   margin: 5px 0 -5px 0;
 }
-.vertical-line {
-  border-top: 0.5px solid #bbb;
-}
-.case-bullet::before {
-  content: "\2022"; /* \2022 is unicode for a bullet */
-  display: inline-block;
-  font-size: 32px;
-  font-weight: bold;
-  line-height: 13px;
-  margin-right: 0.1em;
-  vertical-align: text-top;
+
+:host {
+  --sds-c-accordion-heading-font-size: 14px;
 }
 
-.open-case-bullet::before {
-  color: #2e844a;
-}
-
-.closed-case-bullet::before {
-  color: #c9c7c5;
-}
-.booking-bullet::before {
-  content: "\2022"; /* \2022 is unicode for a bullet */
-  display: inline-block;
-  font-size: 32px;
-  font-weight: bold;
-  line-height: 13px;
-  margin-right: 0.1em;
-  vertical-align: text-top;
-}
-.future-booking-bullet::before {
-  color: #2e844a;
-}
-.past-booking-bullet::before {
-  color: grey;
-}
 .slds-card__body {
   margin-bottom: 0;
 }
@@ -48,23 +18,17 @@
   padding: 5px 20px;
   text-align: right;
 }
-.header-padding {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-.table-text-header {
-  color: darkgrey;
-}
+
 .message-text {
   color: grey;
   font-size: 12px;
 }
-.loadbutton-less-padding {
-  padding-left: 230px;
-}
-.loadbutton-more-padding {
-  padding-top: 10px;
-}
+
 .message-divider-padding {
   padding-bottom: 10px;
+}
+
+.field-label {
+  font-size: 12px;
+  color: grey;
 }

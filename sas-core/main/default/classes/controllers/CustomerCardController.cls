@@ -66,7 +66,7 @@ public without sharing class CustomerCardController {
     );
     List<BookingJSON> toReturn = new List<BookingJSON>();
     for (Booking__c b : bookingsForCustomer) {
-      toReturn.add(new BookingJSON(b));
+      toReturn.add(new BookingJSON(b, new List<Case>()));
     }
     toReturn.sort();
 
