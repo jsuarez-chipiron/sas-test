@@ -2702,6 +2702,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Availability%2FInquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Baggage Content</fullName>
             <default>false</default>
         </values>
@@ -2890,10 +2894,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Inquiry</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Make Booking</fullName>
             <default>false</default>
         </values>
@@ -2903,6 +2903,10 @@
         </values>
         <values>
             <fullName>Missing 1000 Status pts MC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing points</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2955,10 +2959,6 @@
         </values>
         <values>
             <fullName>Refunds</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Retro Registration</fullName>
             <default>false</default>
         </values>
         <values>

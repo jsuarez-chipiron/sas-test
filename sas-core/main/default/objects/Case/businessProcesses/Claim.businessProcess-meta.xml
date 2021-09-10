@@ -4,15 +4,11 @@
     <description>Process for claim related cases</description>
     <isActive>true</isActive>
     <values>
-        <fullName>Awaiting Customer Response</fullName>
+        <fullName>Awaiting</fullName>
         <default>false</default>
     </values>
     <values>
         <fullName>Closed</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>Escalated</fullName>
         <default>false</default>
     </values>
     <values>
@@ -22,13 +18,5 @@
     <values>
         <fullName>New</fullName>
         <default>true</default>
-    </values>
-    <values>
-        <fullName>New Response</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>On Hold</fullName>
-        <default>false</default>
     </values>
 </BusinessProcess>
