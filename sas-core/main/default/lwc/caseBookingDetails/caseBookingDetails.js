@@ -7,6 +7,8 @@ import ChatTranscript_CASEID_FIELD from "@salesforce/schema/LiveChatTranscript.C
 import { refreshApex } from "@salesforce/apex";
 import { getRecord } from "lightning/uiRecordApi";
 import { NavigationMixin } from "lightning/navigation";
+import { formattedDateString, minutesToHoursAndMinutes } from "c/utilDate";
+import { toCapitalCase } from "c/utilString";
 
 export default class CaseBookingDetails extends NavigationMixin(
   LightningElement
@@ -31,24 +33,9 @@ export default class CaseBookingDetails extends NavigationMixin(
 
           return {
             ...booking,
-            relatedCases: booking.relatedCases
-              .filter((c) => c.Id !== this.caseId)
-              .sort((first, second) => {
-                if (first.Status === "Closed" && second.Status !== "Closed") {
-                  return 1;
-                } else if (
-                  first.Status !== "Closed" &&
-                  second.Status === "Closed"
-                ) {
-                  return -1;
-                } else if (first.CreatedDate > second.CreatedDate) {
-                  return -1;
-                } else if (first.CreatedDate < second.CreatedDate) {
-                  return 1;
-                } else {
-                  return 0;
-                }
-              }),
+            relatedCases: booking.relatedCases.filter(
+              (c) => c.Id !== this.caseId
+            ),
             displayDetails: {
               ...booking.displayDetails,
               caseTabTitle: `Related cases (${caseCount})`,
@@ -140,25 +127,6 @@ export default class CaseBookingDetails extends NavigationMixin(
       return;
     }
 
-    const toCapitalCase = (s) => {
-      if (typeof s !== "string" || s.length < 1) {
-        return s;
-      } else {
-        return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-      }
-    };
-
-    const minutesToHoursAndMinutes = (s) => {
-      if (!s) {
-        return "0h 00m";
-      } else {
-        const hours = Math.floor(s / 60);
-        const minutes = s - hours * 60;
-
-        return `${hours}h ${minutes < 10 ? "0" : ""}${minutes}m`;
-      }
-    };
-
     if (data != undefined && data.length > 0) {
       this.bookings = data.map((b) => ({
         ...b,
@@ -166,17 +134,6 @@ export default class CaseBookingDetails extends NavigationMixin(
           showAllPassengers: b.passengers.length <= this.ENTRIES_TO_DISPLAY,
           showAllFlights: b.flights.length <= this.ENTRIES_TO_DISPLAY
         },
-        relatedCases: b.relatedCases
-          ? b.relatedCases.map((c) => ({
-              ...c,
-              className:
-                c.Status === "Closed"
-                  ? "slds-item case-bullet closed-case-bullet"
-                  : "slds-item case-bullet open-case-bullet",
-              StatusOrReason:
-                c.Status === "Closed" ? c.FCS_CaseReason__c : c.Status
-            }))
-          : [],
         trips: Object.entries(
           b.flights
             .map((f) => {
@@ -211,10 +168,30 @@ export default class CaseBookingDetails extends NavigationMixin(
                     : "",
                 departureGate: f.departureGate || "-",
                 departureTerminal: f.departureTerminal || "-",
+                estimatedArrivalTimeLocal: formattedDateString(
+                  f.estimatedArrivalTimeLocal,
+                  "time"
+                ),
+                estimatedDepartureTimeLocal: formattedDateString(
+                  f.estimatedDepartureTimeLocal,
+                  "time"
+                ),
                 fareBasis: f.fareBasis || "-",
                 bulletClassName: delayedOrCancelled
                   ? "flight-bullet-delayed"
                   : "flight-bullet-on-time",
+                scheduledArrivalTimeLocal: formattedDateString(
+                  f.scheduledArrivalTimeLocal,
+                  "time"
+                ),
+                scheduledDepartureDateLocal: formattedDateString(
+                  f.scheduledArrivalTimeLocal,
+                  "date"
+                ),
+                scheduledDepartureTimeLocal: formattedDateString(
+                  f.scheduledDepartureTimeLocal,
+                  "time"
+                ),
                 serviceClass: f.serviceClass || "-"
               };
             })
@@ -228,7 +205,7 @@ export default class CaseBookingDetails extends NavigationMixin(
         ).map((pair) => ({ type: pair[0], flights: pair[1] })),
         passengers: b.passengers.map((p) => ({
           ...p,
-          bags: p.bags ? p.bags.join(", ") : "-",
+          bags: p.bags ? p.bags : ["-"],
           email: p.email || "-",
           euroBonusNumber:
             p.euroBonusNumber && p.euroBonusNumber.length > 0
@@ -236,7 +213,7 @@ export default class CaseBookingDetails extends NavigationMixin(
               : "-",
           name: `${toCapitalCase(p.firstName)} ${toCapitalCase(p.lastName)}`,
           phone: p.phone || "-",
-          seats: p.seats ? p.seats.join(", ") : "-",
+          seats: p.seats ? p.seats : ["-"],
           ssrs: p.specialServiceRequests,
           ticketNumbers:
             p.ticketNumbers && p.ticketNumbers.length > 0

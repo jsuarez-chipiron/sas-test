@@ -50,14 +50,11 @@ public without sharing class FlightService {
 
       if (!flightsProcessed.containsKey(flightId)) {
         Datetime scheduledArrivalDate = Datetime.valueOf(
-          flight.arrival.scheduledTime
-            ?.local
-            ?.replace('T', ' ')
-            .replace('Z', '')
+          flight.arrival.scheduledTime?.utc?.replace('T', ' ').replace('Z', '')
         );
         Datetime scheduledDepartureDate = Datetime.valueOf(
           flight.departure.scheduledTime
-            ?.local
+            ?.utc
             ?.replace('T', ' ')
             .replace('Z', '')
         );
@@ -65,15 +62,12 @@ public without sharing class FlightService {
         Datetime actualDepartureDate;
         if (flight.arrival.actualTime != null) {
           actualArrivalDate = Datetime.valueOf(
-            flight.arrival.actualTime?.local?.replace('T', ' ').replace('Z', '')
+            flight.arrival.actualTime?.utc?.replace('T', ' ').replace('Z', '')
           );
         }
         if (flight.departure.actualTime != null) {
           actualDepartureDate = Datetime.valueOf(
-            flight.departure.actualTime
-              ?.local
-              ?.replace('T', ' ')
-              .replace('Z', '')
+            flight.departure.actualTime?.utc?.replace('T', ' ').replace('Z', '')
           );
         }
         Datetime estimatedArrivalDate;
@@ -81,7 +75,7 @@ public without sharing class FlightService {
         if (flight.arrival.estimatedTime != null) {
           estimatedArrivalDate = Datetime.valueOf(
             flight.arrival.estimatedTime
-              ?.local
+              ?.utc
               ?.replace('T', ' ')
               .replace('Z', '')
           );
@@ -89,16 +83,50 @@ public without sharing class FlightService {
         if (flight.departure.estimatedTime != null) {
           estimatedDepartureDate = Datetime.valueOf(
             flight.departure.estimatedTime
-              ?.local
+              ?.utc
               ?.replace('T', ' ')
               .replace('Z', '')
           );
         }
 
+        String scheduledArrivalDateLocal = flight.arrival.scheduledTime
+          ?.local
+          ?.replace('Z', '');
+        String scheduledDepartureDateLocal = flight.departure.scheduledTime
+          ?.local
+          ?.replace('Z', '');
+
+        String actualArrivalDateLocal;
+        String actualDepartureDateLocal;
+        if (flight.arrival.actualTime != null) {
+          actualArrivalDateLocal = flight.arrival.actualTime
+            ?.local
+            ?.replace('Z', '');
+        }
+        if (flight.departure.actualTime != null) {
+          actualDepartureDateLocal = flight.departure.actualTime
+            ?.local
+            ?.replace('Z', '');
+        }
+        String estimatedArrivalDateLocal;
+        String estimatedDepartureDateLocal;
+        if (flight.arrival.estimatedTime != null) {
+          estimatedArrivalDateLocal = flight.arrival.estimatedTime
+            ?.local
+            ?.replace('Z', '');
+        }
+        if (flight.departure.estimatedTime != null) {
+          estimatedDepartureDateLocal = flight.departure.estimatedTime
+            ?.local
+            ?.replace('Z', '');
+        }
+
         Flight__c newFlight = new Flight__c(
           Name = flightId,
           Actual_Arrival_Time__c = actualArrivalDate,
+          Actual_Arrival_Time_Local__c = actualArrivalDateLocal,
           Actual_Departure_Time__c = actualDepartureDate,
+          Actual_Departure_Time_Local__c = actualDepartureDateLocal,
           Arrival_Airport__c = flight.arrival.station,
           Arrival_Delayed_Minutes__c = flight.arrival.delayedMinutes,
           Arrival_Gate__c = flight.arrival.gate,
@@ -110,9 +138,13 @@ public without sharing class FlightService {
           Departure_Status__c = flight.departure.status,
           Departure_Terminal__c = flight.departure.terminal?.id,
           Estimated_Arrival_Time__c = estimatedArrivalDate,
+          Estimated_Arrival_Time_Local__c = estimatedArrivalDateLocal,
           Estimated_Departure_Time__c = estimatedDepartureDate,
+          Estimated_Departure_Time_Local__c = estimatedDepartureDateLocal,
           Scheduled_Arrival_Time__c = scheduledArrivalDate,
+          Scheduled_Arrival_Time_Local__c = scheduledArrivalDateLocal,
           Scheduled_Departure_Time__c = scheduledDepartureDate,
+          Scheduled_Departure_Time_Local__c = scheduledDepartureDateLocal,
           TEDS_Identifier__c = flightId
         );
 

@@ -4,7 +4,9 @@ public inherited sharing class FlightsSelector extends fflib_SObjectSelector {
       Flight__c.Id,
       Flight__c.Name,
       Flight__c.Actual_Arrival_Time__c,
+      Flight__c.Actual_Arrival_Time_Local__c,
       Flight__c.Actual_Departure_Time__c,
+      Flight__c.Actual_Departure_Time_Local__c,
       Flight__c.Arrival_Airport__c,
       Flight__c.Arrival_Delayed_Minutes__c,
       Flight__c.Arrival_Gate__c,
@@ -16,9 +18,13 @@ public inherited sharing class FlightsSelector extends fflib_SObjectSelector {
       Flight__c.Departure_Status__c,
       Flight__c.Departure_Terminal__c,
       Flight__c.Estimated_Arrival_Time__c,
+      Flight__c.Estimated_Arrival_Time_Local__c,
       Flight__c.Estimated_Departure_Time__c,
+      Flight__c.Estimated_Departure_Time_Local__c,
       Flight__c.Scheduled_Arrival_Time__c,
+      Flight__c.Scheduled_Arrival_Time_Local__c,
       Flight__c.Scheduled_Departure_Time__c,
+      Flight__c.Scheduled_Departure_Time_Local__c,
       Flight__c.TEDS_Identifier__c
     };
   }

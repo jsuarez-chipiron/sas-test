@@ -301,20 +301,29 @@ public without sharing class BookingService {
 
           if (!flightsProcessed.containsKey(flightId)) {
             Datetime arrivalDate = Datetime.valueOf(
-              segmentTrip.flight.arrival.scheduledTime.local.replace('T', ' ')
+              segmentTrip.flight.arrival.scheduledTime.utc.replace('T', ' ')
                 .replace('Z', '')
             );
             Datetime departureDate = Datetime.valueOf(
-              segmentTrip.flight.departure.scheduledTime.local.replace('T', ' ')
+              segmentTrip.flight.departure.scheduledTime.utc.replace('T', ' ')
                 .replace('Z', '')
             );
+            String scheduledArrivalDateLocal = segmentTrip.flight.arrival.scheduledTime
+              ?.local
+              ?.replace('Z', '');
+
+            String scheduledDepartureDateLocal = segmentTrip.flight.departure.scheduledTime
+              ?.local
+              ?.replace('Z', '');
 
             Flight__c newFlight = new Flight__c(
               Name = flightId,
               Arrival_Airport__c = segmentTrip.flight.arrival.station,
               Departure_Airport__c = segmentTrip.flight.departure.station,
               Scheduled_Arrival_Time__c = arrivalDate,
+              Scheduled_Arrival_Time_Local__c = scheduledArrivalDateLocal,
               Scheduled_Departure_Time__c = departureDate,
+              Scheduled_Departure_Time_Local__c = scheduledDepartureDateLocal,
               TEDS_Identifier__c = flightId
             );
 
