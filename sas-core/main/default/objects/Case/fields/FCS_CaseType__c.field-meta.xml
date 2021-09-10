@@ -188,8 +188,18 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>EuroBonus Partner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SME</controllingFieldValue>
             <valueName>Feedback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Fraud</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
@@ -224,12 +234,26 @@
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <valueName>SAS for Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
             <controllingFieldValue>Direct Sales</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Travel Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <valueName>Travel Pass</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
@@ -242,23 +266,6 @@
         <valueSettings>
             <controllingFieldValue>SME</controllingFieldValue>
             <valueName>SME</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <valueName>SAS for Business</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <valueName>Travel Pass</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <valueName>EuroBonus Partner</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>Fraud</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Functional Product Support</controllingFieldValue>

@@ -120,6 +120,11 @@
                 <label>ATO Account Takeover</label>
             </value>
             <value>
+                <fullName>Availability/Inquiry</fullName>
+                <default>false</default>
+                <label>Availability/Inquiry</label>
+            </value>
+            <value>
                 <fullName>Baggage Content</fullName>
                 <default>false</default>
                 <label>Baggage Content</label>
@@ -380,11 +385,6 @@
                 <label>Information update needed</label>
             </value>
             <value>
-                <fullName>Inquiry</fullName>
-                <default>false</default>
-                <label>Inquiry</label>
-            </value>
-            <value>
                 <fullName>Link not working</fullName>
                 <default>false</default>
                 <label>Link not working</label>
@@ -405,6 +405,11 @@
                 <label>Missing 1000 Status pts MC</label>
             </value>
             <value>
+                <fullName>Missing points</fullName>
+                <default>false</default>
+                <label>Missing points</label>
+            </value>
+            <value>
                 <fullName>Name Change</fullName>
                 <default>false</default>
                 <label>Name Change</label>
@@ -418,6 +423,11 @@
                 <fullName>New feature</fullName>
                 <default>false</default>
                 <label>New feature</label>
+            </value>
+            <value>
+                <fullName>On-board services</fullName>
+                <default>false</default>
+                <label>On-board services</label>
             </value>
             <value>
                 <fullName>Online Problems</fullName>
@@ -478,11 +488,6 @@
                 <fullName>Refund Status</fullName>
                 <default>false</default>
                 <label>Refund Status</label>
-            </value>
-            <value>
-                <fullName>Retro Registration</fullName>
-                <default>false</default>
-                <label>Retro Registration</label>
             </value>
             <value>
                 <fullName>Rules &amp; Information</fullName>
@@ -570,6 +575,11 @@
                 <label>Support in Document Control</label>
             </value>
             <value>
+                <fullName>Ticket status</fullName>
+                <default>false</default>
+                <label>Ticket status</label>
+            </value>
+            <value>
                 <fullName>Travel Insurance Info</fullName>
                 <default>false</default>
                 <label>Travel Insurance Info</label>
@@ -632,7 +642,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New Booking</controllingFieldValue>
-            <valueName>Inquiry</valueName>
+            <valueName>Availability/Inquiry</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New Booking</controllingFieldValue>
@@ -908,15 +918,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Missing points</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Point related question</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Provide program information</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <valueName>Retro Registration</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>

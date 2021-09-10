@@ -430,6 +430,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>FCS_CaseResolution__c</field>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FCS_CaseType__c</field>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FCS_Case_Reason__c</field>
+        </inputAssignments>
+        <inputAssignments>
             <field>IsEscalated</field>
             <value>
                 <elementReference>SetEscalatedValue</elementReference>
@@ -465,9 +474,6 @@
                 <elementReference>DependentList.middleValue</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>Type</field>
-        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
@@ -492,6 +498,15 @@
             <value>
                 <elementReference>DependentList.topValue</elementReference>
             </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FCS_CaseResolution__c</field>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FCS_CaseType__c</field>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FCS_Case_Reason__c</field>
         </inputAssignments>
         <inputAssignments>
             <field>IsEscalated</field>
@@ -528,9 +543,6 @@
             <value>
                 <elementReference>DependentList.middleValue</elementReference>
             </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type</field>
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
