@@ -43,6 +43,9 @@ public class FCS_LiveChatTranscriptTriggerHandler extends C_TriggerHandler {
           if (lct.Initially_Provided_PNR__c != null) {
             c.Initially_Provided_PNR__c = lct.Initially_Provided_PNR__c.toUpperCase();
           }
+          if (lct.TURI_Chat_User_Id__c != null) {
+            c.TURI_Chat_User_Id__c = lct.TURI_Chat_User_Id__c;
+          }
           c.GDPR_Consent__c = lct.GDPR_Consent__c;
           c.Status = 'In Progress';
           c.Origin = 'Chat';
