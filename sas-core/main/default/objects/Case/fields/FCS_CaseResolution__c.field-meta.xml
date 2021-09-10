@@ -626,7 +626,7 @@
             <controllingFieldValue>Ticket status</controllingFieldValue>
             <controllingFieldValue>Rebook Booking</controllingFieldValue>
             <controllingFieldValue>Refund Status</controllingFieldValue>
-            <controllingFieldValue>Retro Registration</controllingFieldValue>
+            <controllingFieldValue>Missing points</controllingFieldValue>
             <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
             <controllingFieldValue>SAS Aircraft</controllingFieldValue>
             <controllingFieldValue>Add Musical Instrument</controllingFieldValue>
@@ -700,7 +700,7 @@
             <controllingFieldValue>Ticket status</controllingFieldValue>
             <controllingFieldValue>Rebook Booking</controllingFieldValue>
             <controllingFieldValue>Refund Status</controllingFieldValue>
-            <controllingFieldValue>Retro Registration</controllingFieldValue>
+            <controllingFieldValue>Missing points</controllingFieldValue>
             <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
             <controllingFieldValue>SAS Aircraft</controllingFieldValue>
             <controllingFieldValue>Add Musical Instrument</controllingFieldValue>
@@ -762,7 +762,7 @@
             <controllingFieldValue>Ticket status</controllingFieldValue>
             <controllingFieldValue>Rebook Booking</controllingFieldValue>
             <controllingFieldValue>Refund Status</controllingFieldValue>
-            <controllingFieldValue>Retro Registration</controllingFieldValue>
+            <controllingFieldValue>Missing points</controllingFieldValue>
             <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
             <controllingFieldValue>SAS Aircraft</controllingFieldValue>
             <controllingFieldValue>Add Musical Instrument</controllingFieldValue>
@@ -857,7 +857,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Provide program information</controllingFieldValue>
-            <controllingFieldValue>Retro Registration</controllingFieldValue>
+            <controllingFieldValue>Missing points</controllingFieldValue>
             <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
             <controllingFieldValue>Add EB in Booking</controllingFieldValue>
             <controllingFieldValue>Campaign support</controllingFieldValue>
@@ -879,11 +879,11 @@
             <valueName>Payment</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Retro Registration</controllingFieldValue>
+            <controllingFieldValue>Missing points</controllingFieldValue>
             <valueName>Invalid retro</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Retro Registration</controllingFieldValue>
+            <controllingFieldValue>Missing points</controllingFieldValue>
             <valueName>Points registered</valueName>
         </valueSettings>
         <valueSettings>
