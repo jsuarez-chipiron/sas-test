@@ -1,6 +1,5 @@
 public class RefundRequestService {
   public static String createRefundForm(RefundJsonToApex form) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     Case cse;
 
     try {
@@ -34,7 +33,7 @@ public class RefundRequestService {
         Note__c = notes
       );
 
-      uow.registerNew(refund);
+      insert refund;
 
       // Case Creation
       cse = new Case(
@@ -44,11 +43,7 @@ public class RefundRequestService {
         RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL
       );
 
-      uow.registerNew(cse);
-	  
-
-      uow.registerRelationship(cse, Case.Refund_Request__c, refund);
-      uow.commitWork();
+      insert cse;
     } catch (Exception e) {
       C_Log.logException(e, 'RefundRequest', null);
       return e.getMessage();
