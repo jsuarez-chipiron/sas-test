@@ -98,12 +98,12 @@
         </connector>
         <fields>
             <name>QuestionAskedBy</name>
-            <fieldText>&lt;p&gt;Support case opened by {!UserFullName}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Original case number: {!GetSupportCase.Parent.CaseNumber}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Support case opened by {!UserFullName}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Original case number: {!GetSupportCase.Parent.CaseNumber}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>SupportQuestion</name>
-            <fieldText>&lt;p&gt;{!GetSupportCase.Subject}&lt;/p&gt;&lt;p&gt;{!GetSupportCase.Description}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;{!GetSupportCase.Subject}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!GetSupportCase.Description}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -127,7 +127,7 @@
         <name>SupportMessageToParent</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>{!SupportReply}
-The support case has been closed. If you need further assistance, please make a comment on this post!</text>
+If you need further assistance, please make a comment on this post!</text>
     </textTemplates>
     <textTemplates>
         <name>UserFullName</name>
