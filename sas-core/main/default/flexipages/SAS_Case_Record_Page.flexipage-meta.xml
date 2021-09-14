@@ -461,7 +461,7 @@
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
+                        <operator>NE</operator>
                         <rightValue>Group Sales</rightValue>
                     </criteria>
                 </visibilityRule>

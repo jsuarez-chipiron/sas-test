@@ -124,6 +124,10 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-423363f3-b163-4160-9a00-c58e1e657418</value>
                 </componentInstanceProperties>
@@ -138,7 +142,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>active</name>
-                    <value>true</value>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>body</name>
