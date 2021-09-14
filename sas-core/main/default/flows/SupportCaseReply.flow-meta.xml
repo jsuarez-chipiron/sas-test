@@ -68,6 +68,7 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>ReplyConfirmation</name>
         <label>ReplyConfirmation</label>
@@ -97,7 +98,7 @@
         </connector>
         <fields>
             <name>QuestionAskedBy</name>
-            <fieldText>&lt;p&gt;Support case opened by &lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!GetSupportCase.CreatedBy.Name}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Original case number: {!GetSupportCase.Parent.CaseNumber}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Support case opened by {!UserFullName}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Original case number: {!GetSupportCase.Parent.CaseNumber}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -127,6 +128,11 @@
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>{!SupportReply}
 The support case has been closed. If you need further assistance, please make a comment on this post!</text>
+    </textTemplates>
+    <textTemplates>
+        <name>UserFullName</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{!GetSupportCase.CreatedBy.FirstName} {!GetSupportCase.CreatedBy.LastName}</text>
     </textTemplates>
     <variables>
         <name>recordId</name>

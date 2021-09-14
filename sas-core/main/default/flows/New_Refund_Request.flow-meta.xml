@@ -923,7 +923,7 @@
         <inputAssignments>
             <field>Description</field>
             <value>
-                <elementReference>Get_Created_Refund_Request.Note__c</elementReference>
+                <elementReference>Note</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1214,7 +1214,7 @@
             <targetReference>NewRefundRequest</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>CaseReasonToSet</name>
         <dataType>Picklist</dataType>
