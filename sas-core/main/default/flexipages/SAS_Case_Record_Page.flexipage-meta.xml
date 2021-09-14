@@ -448,7 +448,7 @@
             <componentInstance>
                 <componentName>fcs_CaseTag_new</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Department__c}</leftValue>
                         <operator>NE</operator>
@@ -458,6 +458,11 @@
                         <leftValue>{!Record.Department__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Info Hub</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Group Sales</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -466,7 +471,7 @@
             <componentInstance>
                 <componentName>fcs_CaseTag</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Department__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -476,6 +481,11 @@
                         <leftValue>{!Record.Department__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Info Hub</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Group Sales</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
