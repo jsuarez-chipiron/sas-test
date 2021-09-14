@@ -68,6 +68,7 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>ReplyConfirmation</name>
         <label>ReplyConfirmation</label>
