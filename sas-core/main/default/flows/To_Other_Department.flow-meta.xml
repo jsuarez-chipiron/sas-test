@@ -474,6 +474,9 @@
                 <elementReference>DependentList.middleValue</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
@@ -543,6 +546,9 @@
             <value>
                 <elementReference>DependentList.middleValue</elementReference>
             </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
