@@ -643,6 +643,9 @@
             <name>Result</name>
             <choiceReferences>AvailableResult</choiceReferences>
             <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_Current_Claim_Information.Result__c</elementReference>
+            </defaultValue>
             <fieldText>Result</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
@@ -651,6 +654,9 @@
             <name>Legal_Conclusion</name>
             <choiceReferences>AvailableLegalConclusion</choiceReferences>
             <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_Current_Claim_Information.Legal_Conclusion__c</elementReference>
+            </defaultValue>
             <fieldText>Legal Conclusion</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
@@ -659,6 +665,9 @@
             <name>Settlement_Reason</name>
             <choiceReferences>AvalaibleSettlementReason</choiceReferences>
             <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_Current_Claim_Information.Settlement_Reason__c</elementReference>
+            </defaultValue>
             <fieldText>Settlement Reason</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
