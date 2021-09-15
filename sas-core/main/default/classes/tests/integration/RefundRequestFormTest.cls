@@ -15,14 +15,17 @@ private class RefundRequestFormTest {
       '    "cancelAllPassengers": "No",' +
       '    "cancelDirection": "Inbound",' +
       '    "bookedTripVia": "Website",' +
-      '    "pnr":" ",' +
+      '    "pnr":"0000AA",' +
       '    "ticketNumber": "123-1234567890"' +
       '  },' +
       '  "metaData": {' +
       '    "siteUrl": "sas.se"' +
       '  }' +
       '}';
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingSingleSuccessMock());
+    Test.setMock(
+      HttpCalloutMock.class,
+      new TEDSBookingSingleAndFlightSuccessMock()
+    );
     Test.startTest();
     RestRequest request = new RestRequest();
     request.requestUri = '/services/apexrest/RefundForm';
