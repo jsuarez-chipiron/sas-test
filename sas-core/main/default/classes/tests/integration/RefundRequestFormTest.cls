@@ -15,7 +15,7 @@ private class RefundRequestFormTest {
       '    "cancelAllPassengers": "No",' +
       '    "cancelDirection": "Inbound",' +
       '    "bookedTripVia": "Website",' +
-      '    "pnr": "0000AA",' +
+      '    "pnr":" ",' +
       '    "ticketNumber": "123-1234567890"' +
       '  },' +
       '  "metaData": {' +
@@ -25,7 +25,7 @@ private class RefundRequestFormTest {
     Test.setMock(HttpCalloutMock.class, new TEDSBookingSingleSuccessMock());
     Test.startTest();
     RestRequest request = new RestRequest();
-    request.requestUri = '/services/apexrest/Refundform';
+    request.requestUri = '/services/apexrest/RefundForm';
     request.httpMethod = 'POST';
     RestContext.request = request;
     RefundJsonToApex obj = RefundJsonToApex.parse(json);
