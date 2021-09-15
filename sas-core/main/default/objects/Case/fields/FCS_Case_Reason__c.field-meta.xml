@@ -485,6 +485,11 @@
                 <label>Refunds</label>
             </value>
             <value>
+                <fullName>Refund points</fullName>
+                <default>false</default>
+                <label>Refund points</label>
+            </value>
+            <value>
                 <fullName>Refund Status</fullName>
                 <default>false</default>
                 <label>Refund Status</label>
