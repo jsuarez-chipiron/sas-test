@@ -20,6 +20,12 @@
         <closed>false</closed>
     </standardValue>
     <standardValue>
+        <fullName>Awaiting</fullName>
+        <default>false</default>
+        <label>Awaiting</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
         <fullName>Awaiting Customer Response</fullName>
         <default>false</default>
         <label>Awaiting Customer Response</label>

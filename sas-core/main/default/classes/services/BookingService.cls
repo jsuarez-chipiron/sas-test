@@ -6,6 +6,9 @@ public without sharing class BookingService {
    * Adds a booking to the case. If necessary booking or flight objects do not exist
    * in Salesforce, attempts to fetch them from TEDS and commit to SF DB.
    *
+   * Also fetches detailed flight information from the TEDS Flights API for the
+   * flights in the booking.
+   *
    * @param caseId The case to which the booking should be added.
    * @param bookingReference The 6 character code of the booking.
    *
@@ -29,12 +32,33 @@ public without sharing class BookingService {
 
     Booking__c newBooking = constructBookingsForDB(bookingData, uow);
 
-    CaseToBooking__c newJoin = new CaseToBooking__c(Case__c = caseId);
-    uow.registerNew(newJoin);
-    uow.registerRelationship(newJoin, CaseToBooking__c.Booking__c, newBooking);
+    CaseToBookingsSelector caseToBookings = (CaseToBookingsSelector) SAS_Service_Application.Selector.newInstance(
+      CaseToBooking__c.SObjectType
+    );
+
+    List<CaseToBooking__c> caseToBooking = caseToBookings.selectByCaseIdAndBookingReference(
+      caseId,
+      bookingReference
+    );
+
+    if (caseToBooking.size() == 0) {
+      // Add case to booking only if it doesn't exist yet.
+      CaseToBooking__c newJoin = new CaseToBooking__c(Case__c = caseId);
+      uow.registerNew(newJoin);
+      uow.registerRelationship(
+        newJoin,
+        CaseToBooking__c.Booking__c,
+        newBooking
+      );
+    }
 
     uow.commitWork();
-    return;
+    BookingService.fetchFlightsForBooking(bookingData);
+  }
+
+  @future(callout=true)
+  public static void addBookingToCaseAsync(ID caseId, String bookingReference) {
+    BookingService.addBookingToCase(caseId, bookingReference);
   }
 
   /**
@@ -90,6 +114,7 @@ public without sharing class BookingService {
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     Booking__c newBooking = constructBookingsForDB(bookingData, uow);
     uow.commitWork();
+    BookingService.fetchFlightsForBooking(bookingData);
   }
 
   /**
@@ -272,29 +297,37 @@ public without sharing class BookingService {
       for (IRR_MOD_TedsBooking.Trip trip : booking.trips) {
         for (IRR_MOD_TedsBooking.SegmentTrip segmentTrip : trip.segments) {
           // Create flights
-          Boolean flightNotYetProcessed =
-            flightsProcessed.get(segmentTrip.flight.id) == null;
+          String flightId = segmentTrip.flight.id.trim().toUpperCase();
 
-          if (flightNotYetProcessed) {
+          if (!flightsProcessed.containsKey(flightId)) {
             Datetime arrivalDate = Datetime.valueOf(
-              segmentTrip.flight.arrival.scheduledTime.local.replace('T', ' ')
+              segmentTrip.flight.arrival.scheduledTime.utc.replace('T', ' ')
                 .replace('Z', '')
             );
             Datetime departureDate = Datetime.valueOf(
-              segmentTrip.flight.departure.scheduledTime.local.replace('T', ' ')
+              segmentTrip.flight.departure.scheduledTime.utc.replace('T', ' ')
                 .replace('Z', '')
             );
+            String scheduledArrivalDateLocal = segmentTrip.flight.arrival.scheduledTime
+              ?.local
+              ?.replace('Z', '');
+
+            String scheduledDepartureDateLocal = segmentTrip.flight.departure.scheduledTime
+              ?.local
+              ?.replace('Z', '');
 
             Flight__c newFlight = new Flight__c(
-              Name = segmentTrip.flight.id,
+              Name = flightId,
               Arrival_Airport__c = segmentTrip.flight.arrival.station,
               Departure_Airport__c = segmentTrip.flight.departure.station,
               Scheduled_Arrival_Time__c = arrivalDate,
+              Scheduled_Arrival_Time_Local__c = scheduledArrivalDateLocal,
               Scheduled_Departure_Time__c = departureDate,
-              TEDS_Identifier__c = segmentTrip.flight.id
+              Scheduled_Departure_Time_Local__c = scheduledDepartureDateLocal,
+              TEDS_Identifier__c = flightId
             );
 
-            flightsProcessed.put(segmentTrip.flight.id, newFlight);
+            flightsProcessed.put(flightId, newFlight);
           }
 
           // Create one segment per passenger per flight in the booking.
@@ -374,5 +407,46 @@ public without sharing class BookingService {
     }
     upsert flightsProcessed.values() TEDS_Identifier__c;
     return bookingsToReturn;
+  }
+
+  private static void fetchFlightsForBooking(IRR_MOD_TedsBooking bookingData) {
+    Set<String> flightsFromBooking = new Set<String>();
+    for (IRR_MOD_TedsBooking.Trip trip : bookingData.trips) {
+      for (IRR_MOD_TedsBooking.SegmentTrip segmentTrip : trip.segments) {
+        flightsFromBooking.add(segmentTrip.flight.id.trim().toUpperCase());
+      }
+    }
+
+    Integer flightsFromBookingSize = flightsFromBooking.size();
+    Integer ITEMS_IN_BUCKET = 10;
+
+    if (flightsFromBookingSize > 0) {
+      List<List<String>> bucketedFlights = new List<List<String>>();
+
+      for (Integer i = 0; i < flightsFromBookingSize; i = i + ITEMS_IN_BUCKET) {
+        bucketedFlights.add(new List<String>());
+      }
+
+      Integer count = 0;
+
+      for (String flightIdentifier : flightsFromBooking) {
+        Integer bucket = count / ITEMS_IN_BUCKET;
+        bucketedFlights[bucket].add(flightIdentifier);
+
+        count++;
+      }
+
+      List<Fetch_Flight__e> flightEvents = new List<Fetch_Flight__e>();
+
+      for (List<String> bucket : bucketedFlights) {
+        flightEvents.add(
+          new Fetch_Flight__e(
+            Flight_Identifiers__c = String.join(new List<String>(bucket), ',')
+          )
+        );
+      }
+
+      EventBus.publish(flightEvents);
+    }
   }
 }

@@ -13,6 +13,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>macros:macroUtilityItem</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>eager</name>
                     <type>decorator</type>
@@ -55,11 +60,6 @@
                     <value>340</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>macros:macroUtilityItem</componentName>
             </componentInstance>
         </itemInstances>
         <name>utilityItems</name>

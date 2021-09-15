@@ -129,7 +129,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>FCS_IdentifyCustomerContainer</componentName>
+                <componentName>customerCard</componentName>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

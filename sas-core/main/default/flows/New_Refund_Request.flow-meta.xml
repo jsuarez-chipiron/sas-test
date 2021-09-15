@@ -921,6 +921,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>Note</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>FCS_CaseReason__c</field>
             <value>
                 <elementReference>CaseReasonToSet</elementReference>

@@ -9,13 +9,14 @@ public class SAS_Service_Application {
       Booking__c.SObjectType => BookingsSelector.class,
       Case.SObjectType => CasesSelector.class,
       CaseToBooking__c.SObjectType => CaseToBookingsSelector.class,
-      Flight__c.SObjectType => FlightsSelector.class,
-      Passenger__c.SObjectType => PassengersSelector.class,
-      Segment__c.SObjectType => SegmentsSelector.class,
       FCS_CaseTag__c.SObjectType => CaseTagsSelector.class,
+      Flight__c.SObjectType => FlightsSelector.class,
       LiveChatTranscript.SObjectType => ChatTranscriptsSelector.class,
-      SocialPost.SObjectType => SocialPostsSelector.class,
-      MessagingSession.SObjectType => MessagingSessionsSelector.class
+      MessagingSession.SObjectType => MessagingSessionsSelector.class,
+      Passenger__c.SObjectType => PassengersSelector.class,
+      Refund_Request__c.SObjectType => Refund_RequestsSelector.class,
+      Segment__c.SObjectType => SegmentsSelector.class,
+      SocialPost.SObjectType => SocialPostsSelector.class
     }
   );
 
@@ -23,7 +24,8 @@ public class SAS_Service_Application {
     SAS_Service_Application.Selector,
     new Map<SObjectType, Type>{
       Account.SObjectType => Accounts.Constructor.class,
-      Passenger__c.SObjectType => Passengers.Constructor.class
+      Passenger__c.SObjectType => Passengers.Constructor.class,
+      Refund_Request__c.SObjectType => Refund_Requests.Constructor.class
     }
   );
 
@@ -41,7 +43,10 @@ public class SAS_Service_Application {
       CaseToBooking__c.SObjectType,
       Flight__c.SObjectType,
       Passenger__c.SObjectType,
-      Segment__c.SObjectType
+      Segment__c.SObjectType,
+      Case.SobjectType,
+      Refund_Request__c.SobjectType,
+      Group_Travel_Request__c.SobjectType
     }
   );
 }

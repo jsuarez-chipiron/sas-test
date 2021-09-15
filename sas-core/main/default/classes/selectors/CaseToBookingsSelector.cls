@@ -21,6 +21,16 @@ public inherited sharing class CaseToBookingsSelector extends fflib_SObjectSelec
     );
   }
 
+  public List<CaseToBooking__c> selectByBookingReference(
+    Set<String> bookingReferences
+  ) {
+    return (List<CaseToBooking__c>) Database.query(
+      newQueryFactory()
+        .setCondition('Booking__r.Booking_Reference__c in :bookingReferences')
+        .toSOQL()
+    );
+  }
+
   public List<CaseToBooking__c> selectByCaseIdAndBookingReference(
     Id caseId,
     String bookingReference

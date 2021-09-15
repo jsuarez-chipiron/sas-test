@@ -13,6 +13,7 @@ import findCustomer from "@salesforce/apex/FCS_IdentifyCustomerController.findCu
 import updateRecordDataWithApex from "@salesforce/apex/FCS_IdentifyCustomerController.updateRecordDataWithApex";
 import { refreshApex } from "@salesforce/apex";
 import { NavigationMixin } from "lightning/navigation";
+import { formattedDateString } from "c/utilDate";
 
 export default class CustomerCard extends NavigationMixin(LightningElement) {
   @api objectApiName;
@@ -39,7 +40,6 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   @track error = false;
   @track searchValue = "";
   showAllBookings = false;
-  showAllCases = false;
   showAllLogs = false;
 
   get bookingsCount() {
@@ -48,14 +48,6 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
         ? this.bookings.length
         : Math.min(ENTRIES_TO_DISPLAY, this.bookings.length)
     } of ${this.bookings.length}`;
-  }
-
-  get casesCount() {
-    return `${
-      this.showAllCases
-        ? this.cases.length
-        : Math.min(this.ENTRIES_TO_DISPLAY, this.cases.length)
-    } of ${this.cases.length}`;
   }
 
   get logsCount() {
@@ -75,15 +67,6 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
         );
   }
 
-  get visibleCases() {
-    return this.showAllCases
-      ? this.cases
-      : this.cases.slice(
-          0,
-          Math.min(this.ENTRIES_TO_DISPLAY, this.cases.length)
-        );
-  }
-
   get visibleLogs() {
     return this.showAllLogs
       ? this.communicationLogs
@@ -91,6 +74,14 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
           0,
           Math.min(this.ENTRIES_TO_DISPLAY, this.communicationLogs.length)
         );
+  }
+
+  get noCommunicationLogs() {
+    return this.communicationLogs.length === 0;
+  }
+
+  get noBookings() {
+    return this.bookings.length === 0;
   }
 
   // Navigate to view case Page
@@ -153,31 +144,7 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   @wire(getCaseData, { accountId: "$accountId" })
   wiredCases({ error, data }) {
     if (!error && data != undefined && data.length > 0) {
-      this.cases = data
-        .map(function (elem) {
-          return {
-            ...elem,
-            className:
-              elem.Status === "Closed"
-                ? "slds-item case-bullet closed-case-bullet"
-                : "slds-item case-bullet open-case-bullet",
-            recordUrl: `/${elem.Id}`,
-            StatusOrReason:
-              elem.Status === "Closed" ? elem.FCS_CaseReason__c : elem.Status
-          };
-        })
-        .sort((first, second) => {
-          if (first.CreatedDate > second.CreatedDate) {
-            return -1;
-          } else if (first.CreatedDate < second.CreatedDate) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-      if (this.cases.length <= 3) {
-        this.showAllCases = true;
-      }
+      this.cases = data;
     } else {
       this.cases = [];
     }
@@ -204,28 +171,32 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
         }, [])
         .join("-");
     }
-    function getDateToString(dateTime) {
-      var date = new Date(dateTime);
-      var month = date.toLocaleString("default", { month: "short" });
-      var day = date.getDate().toString();
-      day = day.length > 1 ? day : "0" + day;
-      return day + " " + month + " " + date.getFullYear();
-    }
+
     if (!error && data != undefined && data.length > 0) {
-      const today = new Date();
+      const TODAY = new Date();
+
       this.bookings = data.map((booking) => {
         const scheduledDate = new Date(
           booking.flights[0].scheduledDepartureTime
         );
+
         return {
           ...booking,
           className:
-            scheduledDate >= today
+            scheduledDate >= TODAY
               ? "slds-item booking-bullet future-booking-bullet"
               : "slds-item booking-bullet past-booking-bullet",
-          accordionTitle: `${getDateToString(
-            scheduledDate
+          accordionTitle: `${formattedDateString(
+            booking.flights[0].scheduledDepartureTimeLocal,
+            "date"
           )} ${getAirportListForBooking(booking)}`,
+          flights: booking.flights.map((f) => ({
+            ...f,
+            scheduledDepartureTimeLocal: formattedDateString(
+              f.scheduledDepartureTimeLocal,
+              "date"
+            )
+          })),
           passengers: booking.passengers.map((p) => ({
             ...p,
             ssrs:
@@ -240,6 +211,7 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
       }
     } else {
       this.bookings = [];
+      this.showAllBookings = true;
     }
   }
 
@@ -261,6 +233,7 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
       }
     } else {
       this.communicationLogs = [];
+      this.showAllLogs = true;
     }
   }*/
 
@@ -350,10 +323,6 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
 
   handleDisplayAllBookings() {
     this.showAllBookings = true;
-  }
-
-  handleDisplayAllCases() {
-    this.showAllCases = true;
   }
 
   handleDisplayAllLogs() {

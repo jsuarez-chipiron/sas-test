@@ -117,6 +117,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Fees__c</field>
+            <value>
+                <elementReference>Fees</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Flight_Date__c</field>
             <value>
                 <elementReference>Flight_Date</elementReference>
@@ -126,6 +132,12 @@
             <field>Flight_Number__c</field>
             <value>
                 <elementReference>Flight_Number</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interest__c</field>
+            <value>
+                <elementReference>Interest</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -180,6 +192,12 @@
             <field>Name_of_Passenger_s__c</field>
             <value>
                 <elementReference>Name_of_Passanger_s</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Principal__c</field>
+            <value>
+                <elementReference>Principal</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -520,6 +538,73 @@
                     <name>width</name>
                     <value>
                         <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>ClaimAmounts</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Claim Amounts&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>New_Liability_Claim_Section3</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>New_Liability_Claim_Section3_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Principal</name>
+                    <dataType>Currency</dataType>
+                    <fieldText>Principal</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                    <scale>2</scale>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>New_Liability_Claim_Section3_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Interest</name>
+                    <dataType>Currency</dataType>
+                    <fieldText>Interest</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                    <scale>2</scale>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>New_Liability_Claim_Section3_Column3</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Fees</name>
+                    <dataType>Currency</dataType>
+                    <fieldText>Fees</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                    <scale>2</scale>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
                     </value>
                 </inputParameters>
                 <isRequired>false</isRequired>

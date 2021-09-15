@@ -6,8 +6,13 @@ import refetchBookingDataApex from "@salesforce/apex/CustomerCardController.refe
 import ChatTranscript_CASEID_FIELD from "@salesforce/schema/LiveChatTranscript.CaseId";
 import { refreshApex } from "@salesforce/apex";
 import { getRecord } from "lightning/uiRecordApi";
+import { NavigationMixin } from "lightning/navigation";
+import { formattedDateString, minutesToHoursAndMinutes } from "c/utilDate";
+import { toCapitalCase } from "c/utilString";
 
-export default class CaseBookingDetails extends LightningElement {
+export default class CaseBookingDetails extends NavigationMixin(
+  LightningElement
+) {
   @api objectApiName;
   @api recordId;
 
@@ -21,53 +26,64 @@ export default class CaseBookingDetails extends LightningElement {
     // Get only the booking data which should be visible
 
     return this.bookings
-      ? this.bookings.map((booking) => ({
-          ...booking,
-          displayDetails: {
-            ...booking.displayDetails,
-            passengersVisible: `${
-              booking.displayDetails.showAllPassengers
-                ? booking.passengers.length
-                : this.ENTRIES_TO_DISPLAY
-            } of ${booking.passengers.length}`,
-            flightsVisible: `${
-              booking.displayDetails.showAllFlights
-                ? booking.trips.reduce(
-                    (acc, curr) => acc + curr.flights.length,
-                    0
-                  )
-                : Math.min(
-                    this.ENTRIES_TO_DISPLAY,
-                    booking.trips[0].flights.length
-                  )
-            } of ${booking.trips.reduce(
-              (acc, curr) => acc + curr.flights.length,
-              0
-            )}`
-          },
-          passengers: booking.displayDetails.showAllPassengers
-            ? booking.passengers
-            : booking.passengers.slice(
-                0,
-                Math.min(booking.passengers.length, this.ENTRIES_TO_DISPLAY)
-              ),
+      ? this.bookings.map((booking) => {
+          const caseCount = booking.relatedCases
+            ? booking.relatedCases.filter((c) => c.Id !== this.caseId).length
+            : 0;
 
-          trips: booking.displayDetails.showAllFlights
-            ? booking.trips
-            : [
-                // If we display only some flights, display only flights from the first trip
-                {
-                  ...booking.trips[0],
-                  flights: booking.trips[0].flights.slice(
-                    0,
-                    Math.min(
-                      booking.trips[0].flights.length,
-                      this.ENTRIES_TO_DISPLAY
+          return {
+            ...booking,
+            relatedCases: booking.relatedCases.filter(
+              (c) => c.Id !== this.caseId
+            ),
+            displayDetails: {
+              ...booking.displayDetails,
+              caseTabTitle: `Related cases (${caseCount})`,
+              noCases: caseCount === 0,
+              passengersVisible: `${
+                booking.displayDetails.showAllPassengers
+                  ? booking.passengers.length
+                  : this.ENTRIES_TO_DISPLAY
+              } of ${booking.passengers.length}`,
+              flightsVisible: `${
+                booking.displayDetails.showAllFlights
+                  ? booking.trips.reduce(
+                      (acc, curr) => acc + curr.flights.length,
+                      0
                     )
-                  )
-                }
-              ]
-        }))
+                  : Math.min(
+                      this.ENTRIES_TO_DISPLAY,
+                      booking.trips[0].flights.length
+                    )
+              } of ${booking.trips.reduce(
+                (acc, curr) => acc + curr.flights.length,
+                0
+              )}`
+            },
+            passengers: booking.displayDetails.showAllPassengers
+              ? booking.passengers
+              : booking.passengers.slice(
+                  0,
+                  Math.min(booking.passengers.length, this.ENTRIES_TO_DISPLAY)
+                ),
+
+            trips: booking.displayDetails.showAllFlights
+              ? booking.trips
+              : [
+                  // If we display only some flights, display only flights from the first trip
+                  {
+                    ...booking.trips[0],
+                    flights: booking.trips[0].flights.slice(
+                      0,
+                      Math.min(
+                        booking.trips[0].flights.length,
+                        this.ENTRIES_TO_DISPLAY
+                      )
+                    )
+                  }
+                ]
+          };
+        })
       : undefined;
   }
 
@@ -111,14 +127,6 @@ export default class CaseBookingDetails extends LightningElement {
       return;
     }
 
-    const toCapitalCase = (s) => {
-      if (typeof s !== "string" || s.length < 1) {
-        return s;
-      } else {
-        return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-      }
-    };
-
     if (data != undefined && data.length > 0) {
       this.bookings = data.map((b) => ({
         ...b,
@@ -128,12 +136,65 @@ export default class CaseBookingDetails extends LightningElement {
         },
         trips: Object.entries(
           b.flights
-            .map((f) => ({
-              ...f,
-              bookingClass: f.bookingClass || "-",
-              fareBasis: f.fareBasis || "-",
-              serviceClass: f.serviceClass || "-"
-            }))
+            .map((f) => {
+              const delayedOrCancelled =
+                f.arrivalStatus === "delayed" ||
+                f.departureStatus === "delayed" ||
+                f.departureStatus === "cancelled";
+
+              return {
+                ...f,
+                arrivalDelayed: f.arrivalStatus === "delayed",
+                arrivalDelayedMinutes: minutesToHoursAndMinutes(
+                  f.arrivalDelayedMinutes
+                ),
+                arrivalTimeClassName:
+                  f.arrivalStatus === "delayed" ||
+                  f.arrivalStatus === "cancelled"
+                    ? "delayedTime"
+                    : "",
+                arrivalGate: f.arrivalGate || "-",
+                arrivalTerminal: f.arrivalTerminal || "-",
+                bookingClass: f.bookingClass || "-",
+                cancelled: f.departureStatus === "cancelled",
+                departureDelayed: f.departureStatus === "delayed",
+                departureDelayedMinutes: minutesToHoursAndMinutes(
+                  f.departureDelayedMinutes
+                ),
+                departureTimeClassName:
+                  f.departureStatus === "delayed" ||
+                  f.departureStatus === "cancelled"
+                    ? "delayedTime"
+                    : "",
+                departureGate: f.departureGate || "-",
+                departureTerminal: f.departureTerminal || "-",
+                estimatedArrivalTimeLocal: formattedDateString(
+                  f.estimatedArrivalTimeLocal,
+                  "time"
+                ),
+                estimatedDepartureTimeLocal: formattedDateString(
+                  f.estimatedDepartureTimeLocal,
+                  "time"
+                ),
+                fareBasis: f.fareBasis || "-",
+                bulletClassName: delayedOrCancelled
+                  ? "flight-bullet-delayed"
+                  : "flight-bullet-on-time",
+                scheduledArrivalTimeLocal: formattedDateString(
+                  f.scheduledArrivalTimeLocal,
+                  "time"
+                ),
+                scheduledDepartureDateLocal: formattedDateString(
+                  f.scheduledArrivalTimeLocal,
+                  "date"
+                ),
+                scheduledDepartureTimeLocal: formattedDateString(
+                  f.scheduledDepartureTimeLocal,
+                  "time"
+                ),
+                serviceClass: f.serviceClass || "-"
+              };
+            })
             .reduce(
               (acc, curr) => ({
                 ...acc,
@@ -144,7 +205,7 @@ export default class CaseBookingDetails extends LightningElement {
         ).map((pair) => ({ type: pair[0], flights: pair[1] })),
         passengers: b.passengers.map((p) => ({
           ...p,
-          bags: p.bags ? p.bags.join(", ") : "-",
+          bags: p.bags ? p.bags : ["-"],
           email: p.email || "-",
           euroBonusNumber:
             p.euroBonusNumber && p.euroBonusNumber.length > 0
@@ -152,7 +213,7 @@ export default class CaseBookingDetails extends LightningElement {
               : "-",
           name: `${toCapitalCase(p.firstName)} ${toCapitalCase(p.lastName)}`,
           phone: p.phone || "-",
-          seats: p.seats ? p.seats.join(", ") : "-",
+          seats: p.seats ? p.seats : ["-"],
           ssrs: p.specialServiceRequests,
           ticketNumbers:
             p.ticketNumbers && p.ticketNumbers.length > 0
@@ -163,6 +224,17 @@ export default class CaseBookingDetails extends LightningElement {
     } else {
       this.bookings = undefined;
     }
+  }
+
+  navigateToCaseViewPage(event) {
+    this[NavigationMixin.Navigate]({
+      type: "standard__recordPage",
+      attributes: {
+        recordId: event.target.dataset.id,
+        objectApiName: "Case",
+        actionName: "view"
+      }
+    });
   }
 
   async addBookingToCase(searchString) {
@@ -180,7 +252,7 @@ export default class CaseBookingDetails extends LightningElement {
       refreshApex(this.wiredBookingsReference);
       this.displayAddAnotherBookingForm = false;
       this.showSpinner = false;
-    }, 3000);
+    }, 6000);
   }
 
   async removeBookingFromCase(event) {
@@ -201,7 +273,7 @@ export default class CaseBookingDetails extends LightningElement {
       refreshApex(this.wiredBookingsReference);
       this.displayAddAnotherBookingForm = false;
       this.showSpinner = false;
-    }, 3000);
+    }, 6000);
   }
 
   async refreshBooking(event) {

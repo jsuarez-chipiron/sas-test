@@ -5,6 +5,8 @@
     <label>PNR</label>
     <length>6</length>
     <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

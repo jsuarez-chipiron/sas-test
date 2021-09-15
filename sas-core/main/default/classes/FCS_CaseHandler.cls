@@ -73,6 +73,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     updateSocialPost(newCaseList);
     assignEurobonusAccountToCase(newCaseList);
     updateBookingsForNewAssociatedAccounts(newCaseList);
+    createCaseToBookings(newCaseList);
   }
 
   /**
@@ -796,14 +797,26 @@ public class FCS_CaseHandler extends C_TriggerHandler {
       }
     }
   }
-   public static void enrichCaseTagData(List<Case> newCaseList)
-   {
-       for(Case cse : newCaseList)
-       {
-         if(cse.FCS_Case_Reason__c!= 'Other')
-         {
-            cse.FCS_CaseResolutionDetails__c = '';
-         }
-       }
-   }
+
+  public static void enrichCaseTagData(List<Case> newCases) {
+    for (Case cse : newCases) {
+      if (cse.FCS_Case_Reason__c != 'Other') {
+        cse.FCS_CaseResolutionDetails__c = '';
+      }
+    }
+  }
+
+  private static void createCaseToBookings(List<Case> newCases) {
+    if (newCases.size() == 1) {
+      // Fetch bookings API supports only a single booking at a time.
+      // FIXME: When possible, make this support batches.
+      Case c = newCases[0];
+
+      if (!String.isBlank(c.Refund_PNR__c)) {
+        BookingService.addBookingToCaseAsync(c.Id, c.Refund_PNR__c);
+      } else if (!String.isBlank(c.Initially_Provided_PNR__c)) {
+        BookingService.addBookingToCaseAsync(c.Id, c.Initially_Provided_PNR__c);
+      }
+    }
+  }
 }

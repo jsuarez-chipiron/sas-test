@@ -4,6 +4,8 @@
     <externalId>false</externalId>
     <label>Note</label>
     <length>32768</length>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>8</visibleLines>

@@ -12,14 +12,48 @@ global class BookingJSON implements Comparable {
   public List<Flight> flights { get; set; }
   @AuraEnabled
   public List<Passenger> passengers { get; set; }
+  @AuraEnabled
+  public List<Case> relatedCases { get; set; }
 
   global class Flight implements Comparable {
     @AuraEnabled
+    public Datetime actualArrivalTime { get; set; }
+    @AuraEnabled
+    public String actualArrivalTimeLocal { get; set; }
+    @AuraEnabled
+    public Datetime actualDepartureTime { get; set; }
+    @AuraEnabled
+    public String actualDepartureTimeLocal { get; set; }
+    @AuraEnabled
     public String arrivalAirport { get; set; }
+    @AuraEnabled
+    public Decimal arrivalDelayedMinutes { get; set; }
+    @AuraEnabled
+    public String arrivalGate { get; set; }
+    @AuraEnabled
+    public String arrivalStatus { get; set; }
+    @AuraEnabled
+    public String arrivalTerminal { get; set; }
     @AuraEnabled
     public String bookingClass { get; set; }
     @AuraEnabled
     public String departureAirport { get; set; }
+    @AuraEnabled
+    public Decimal departureDelayedMinutes { get; set; }
+    @AuraEnabled
+    public String departureGate { get; set; }
+    @AuraEnabled
+    public String departureStatus { get; set; }
+    @AuraEnabled
+    public String departureTerminal { get; set; }
+    @AuraEnabled
+    public Datetime estimatedArrivalTime { get; set; }
+    @AuraEnabled
+    public String estimatedArrivalTimeLocal { get; set; }
+    @AuraEnabled
+    public Datetime estimatedDepartureTime { get; set; }
+    @AuraEnabled
+    public String estimatedDepartureTimeLocal { get; set; }
     @AuraEnabled
     public String fareBasis { get; set; }
     @AuraEnabled
@@ -27,20 +61,42 @@ global class BookingJSON implements Comparable {
     @AuraEnabled
     public Datetime scheduledArrivalTime { get; set; }
     @AuraEnabled
+    public String scheduledArrivalTimeLocal { get; set; }
+    @AuraEnabled
     public Datetime scheduledDepartureTime { get; set; }
+    @AuraEnabled
+    public String scheduledDepartureTimeLocal { get; set; }
     @AuraEnabled
     public String serviceClass { get; set; }
     @AuraEnabled
     public String tripType { get; set; }
 
     public Flight(Segment__c s) {
+      actualArrivalTime = s.Flight__r.Actual_Arrival_Time__c;
+      actualArrivalTimeLocal = s.Flight__r.Actual_Arrival_Time_Local__c;
+      actualDepartureTime = s.Flight__r.Actual_Departure_Time__c;
+      actualDepartureTimeLocal = s.Flight__r.Actual_Departure_Time_Local__c;
       arrivalAirport = s.Flight__r.Arrival_Airport__c;
+      arrivalDelayedMinutes = s.Flight__r.Arrival_Delayed_Minutes__c;
+      arrivalGate = s.Flight__r.Arrival_Gate__c;
+      arrivalStatus = s.Flight__r.Arrival_Status__c;
+      arrivalTerminal = s.Flight__r.Arrival_Terminal__c;
       bookingClass = s.Booking_Class__c;
       departureAirport = s.Flight__r.Departure_Airport__c;
+      departureDelayedMinutes = s.Flight__r.Departure_Delayed_Minutes__c;
+      departureGate = s.Flight__r.Departure_Gate__c;
+      departureStatus = s.Flight__r.Departure_Status__c;
+      departureTerminal = s.Flight__r.Departure_Terminal__c;
+      estimatedArrivalTime = s.Flight__r.Estimated_Arrival_Time__c;
+      estimatedArrivalTimeLocal = s.Flight__r.Estimated_Arrival_Time_Local__c;
+      estimatedDepartureTime = s.Flight__r.Estimated_Departure_Time__c;
+      estimatedDepartureTimeLocal = s.Flight__r.Estimated_Departure_Time_Local__c;
       fareBasis = s.Fare_Basis__c;
       flightNumber = s.Flight__r.TEDS_Identifier__c.substringBefore('-');
       scheduledArrivalTime = s.Flight__r.Scheduled_Arrival_Time__c;
+      scheduledArrivalTimeLocal = s.Flight__r.Scheduled_Arrival_Time_Local__c;
       scheduledDepartureTime = s.Flight__r.Scheduled_Departure_Time__c;
+      scheduledDepartureTimeLocal = s.Flight__r.Scheduled_Departure_Time_Local__c;
       serviceClass = s.Service_Class__c;
       tripType = s.Trip_Type__c;
     }
@@ -102,15 +158,11 @@ global class BookingJSON implements Comparable {
 
     global Integer compareTo(Object other) {
       BookingJSON.Passenger otherPassenger = (BookingJSON.Passenger) other;
-      Integer thisOrder = Integer.valueOf(identifier.substringAfter('PT'));
-      Integer otherOrder = Integer.valueOf(
-        otherPassenger.identifier.substringAfter('PT')
-      );
 
       Integer toReturn = 0;
-      if (thisOrder > otherOrder) {
+      if (identifier > otherPassenger.identifier) {
         toReturn = 1;
-      } else if (thisOrder < otherOrder) {
+      } else if (otherPassenger.identifier < identifier) {
         toReturn = -1;
       }
 
@@ -118,10 +170,11 @@ global class BookingJSON implements Comparable {
     }
   }
 
-  public BookingJSON(Booking__c booking) {
+  public BookingJSON(Booking__c booking, List<Case> relatedCasesArg) {
     bookingReference = booking.Booking_Reference__c;
     isCancelled = booking.Is_Cancelled__c;
     lastUpdated = booking.LastModifiedDate;
+    relatedCases = relatedCasesArg;
     type = booking.Type__c;
     List<BookingJSON.Flight> tempFlights = new List<BookingJSON.Flight>();
     List<BookingJSON.Passenger> tempPassengers = new List<BookingJSON.Passenger>();
@@ -221,6 +274,9 @@ global class BookingJSON implements Comparable {
     BookingJSON otherBooking = (BookingJSON) other;
 
     Integer toReturn = 0;
+    if (flights == null || otherBooking.flights == null) {
+      return toReturn;
+    }
     if (
       flights[0].scheduledDepartureTime >
       otherBooking.flights[0].scheduledDepartureTime

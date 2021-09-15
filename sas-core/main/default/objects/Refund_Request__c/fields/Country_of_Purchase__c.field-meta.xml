@@ -5,6 +5,8 @@
     <label>Country of Purchase</label>
     <length>255</length>
     <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>
