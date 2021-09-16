@@ -32,7 +32,7 @@ steps:
   displayName: 'Convert to metadata package'
 
 - script: |
-if [ -e ./$(PACKAGE_FOLDER)/destructiveChangesPre.xml ]; then
+    if [ -e ./$(PACKAGE_FOLDER)/destructiveChangesPre.xml ]; then
       cp ./$(PACKAGE_FOLDER)/destructiveChangesPre.xml ./package-md/destructiveChangesPre.xml
     fi
     if [ -e ./$(PACKAGE_FOLDER)/destructiveChangesPost.xml ]; then
