@@ -3,13 +3,14 @@
     <actionCalls>
         <name>Retrieve_Flow_Variables</name>
         <label>Retrieve Flow Variables</label>
-        <locationX>299</locationX>
-        <locationY>50</locationY>
+        <locationX>454</locationX>
+        <locationY>118</locationY>
         <actionName>IRR_ACT_StaticInput</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Time_to_departure</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <outputParameters>
             <assignToReference>delayInfo</assignToReference>
             <name>delayInfo</name>
@@ -19,11 +20,12 @@
             <name>passengerInfo</name>
         </outputParameters>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
-        <name>Send_SMS_Message</name>
-        <label>Send SMS Message</label>
-        <locationX>300</locationX>
-        <locationY>674</locationY>
+        <name>Send_SMS_and_Email</name>
+        <label>Send SMS and Email</label>
+        <locationX>483</locationX>
+        <locationY>637</locationY>
         <assignmentItems>
             <assignToReference>sendSMSMessage</assignToReference>
             <operator>Assign</operator>
@@ -38,14 +40,28 @@
                 <stringValue>irr_delay_sms_01</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sendEmailMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>emailTemplateName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>irr_delay_email_01</stringValue>
+            </value>
+        </assignmentItems>
     </assignments>
     <decisions>
         <name>Delay_Difference</name>
         <label>Delay Difference</label>
-        <locationX>54</locationX>
-        <locationY>503</locationY>
+        <locationX>172</locationX>
+        <locationY>625</locationY>
         <defaultConnector>
-            <targetReference>Send_SMS_Message</targetReference>
+            <targetReference>Send_SMS_and_Email</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>10 minutes or more</defaultConnectorLabel>
         <rules>
@@ -64,10 +80,10 @@
     <decisions>
         <name>Delay_Difference_0</name>
         <label>Delay Difference</label>
-        <locationX>641</locationX>
-        <locationY>677</locationY>
+        <locationX>759</locationX>
+        <locationY>799</locationY>
         <defaultConnector>
-            <targetReference>Send_SMS_Message</targetReference>
+            <targetReference>Send_SMS_and_Email</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>30 minutes or more</defaultConnectorLabel>
         <rules>
@@ -86,10 +102,10 @@
     <decisions>
         <name>Delay_Difference_0_0</name>
         <label>Delay Difference</label>
-        <locationX>419</locationX>
-        <locationY>513</locationY>
+        <locationX>408</locationX>
+        <locationY>476</locationY>
         <defaultConnector>
-            <targetReference>Send_SMS_Message</targetReference>
+            <targetReference>Send_SMS_and_Email</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>1 hour or more</defaultConnectorLabel>
         <rules>
@@ -108,8 +124,8 @@
     <decisions>
         <name>Delay_Sequence</name>
         <label>Delay Sequence</label>
-        <locationX>637</locationX>
-        <locationY>374</locationY>
+        <locationX>755</locationX>
+        <locationY>496</locationY>
         <defaultConnector>
             <targetReference>Delay_Difference_0</targetReference>
         </defaultConnector>
@@ -133,8 +149,8 @@
     <decisions>
         <name>Time_to_departure</name>
         <label>Time to departure</label>
-        <locationX>291</locationX>
-        <locationY>370</locationY>
+        <locationX>409</locationX>
+        <locationY>329</locationY>
         <defaultConnector>
             <targetReference>Delay_Sequence</targetReference>
         </defaultConnector>
@@ -164,6 +180,12 @@
         </value>
     </processMetadataValues>
     <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
         <name>OriginBuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
@@ -171,7 +193,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>62</locationX>
+        <locationX>50</locationX>
         <locationY>50</locationY>
         <connector>
             <targetReference>Retrieve_Flow_Variables</targetReference>
