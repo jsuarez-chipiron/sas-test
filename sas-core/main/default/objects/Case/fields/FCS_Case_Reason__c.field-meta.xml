@@ -971,6 +971,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
+            <valueName>Refund points</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <valueName>Security code sent</valueName>
         </valueSettings>
         <valueSettings>
