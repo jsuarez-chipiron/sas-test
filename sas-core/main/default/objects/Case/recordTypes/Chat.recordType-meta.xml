@@ -3338,6 +3338,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Refund points</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Refunds</fullName>
             <default>false</default>
         </values>
