@@ -35,7 +35,7 @@ public class SpecialService {
 
       insert con;
     } catch (Exception e) {
-      C_Log.logException(e, 'RefundRequest', null);
+      C_Log.logException(e, 'SpecialServiceRequest', null);
       return e.getMessage();
     }
 
