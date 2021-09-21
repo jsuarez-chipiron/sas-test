@@ -98,48 +98,154 @@
                     label={b.accordionTitle}
                     key={b.bookingReference}
                   >
-                    <div class="slds-border_top slds-m-bottom_x-small slds-p-top_x-small"
+                    <div
+                      class="
+                        slds-border_top
+                        slds-m-bottom_x-small
+                        slds-p-top_x-small
+                      "
                     >
                       <strong>Travellers&nbsp;</strong>
-                      <strong class="slds-float_right">{b.bookingReference}{b.travelOfficeId}</strong>
+                      <strong class="slds-float_right"
+                        >{b.bookingReference}{b.travelOfficeId}</strong
+                      >
                     </div>
-                    <div class="slds-grid slds-border_bottom slds-grid_vertical slds-m-bottom_x-small">
+                    <div
+                      class="
+                        slds-grid
+                        slds-border_bottom
+                        slds-grid_vertical
+                        slds-m-bottom_x-small
+                      "
+                    >
                       <div class="slds-col slds-size_1-of-1 slds-grid">
-                        <span class="field-label slds-truncate slds-col slds-size_5-of-12">Full name</span>
-                        <span class="field-label slds-truncate slds-col slds-size_4-of-12">EuroBonus</span>
-                        <span class="field-label slds-truncate slds-col slds-size_3-of-12">SSR</span>
+                        <span
+                          class="
+                            field-label
+                            slds-truncate slds-col
+                            slds-size_5-of-12
+                          "
+                          >Full name</span
+                        >
+                        <span
+                          class="
+                            field-label
+                            slds-truncate slds-col
+                            slds-size_4-of-12
+                          "
+                          >EuroBonus</span
+                        >
+                        <span
+                          class="
+                            field-label
+                            slds-truncate slds-col
+                            slds-size_3-of-12
+                          "
+                          >SSR</span
+                        >
                       </div>
-                      <div class="slds-col slds-size_1-of-1 slds-grid slds-m-bottom_xxx-small" for:each={b.passengers} for:item="p" key={p.euroBonusNumber}>
-                        <span class="slds-col slds-size_5-of-12">{p.firstName}&nbsp;{p.lastName}</span>
-                        <span class="slds-col slds-size_4-of-12">{p.euroBonusNumber}</span>
+                      <div
+                        class="
+                          slds-col
+                          slds-size_1-of-1
+                          slds-grid
+                          slds-m-bottom_xxx-small
+                        "
+                        for:each={b.passengers}
+                        for:item="p"
+                        key={p.euroBonusNumber}
+                      >
+                        <span class="slds-col slds-size_5-of-12"
+                          >{p.firstName}&nbsp;{p.lastName}</span
+                        >
+                        <span class="slds-col slds-size_4-of-12"
+                          >{p.euroBonusNumber}</span
+                        >
                         <span class="slds-col slds-size_3-of-12">{p.ssrs}</span>
                       </div>
                     </div>
                     <div class="slds-m-vertical_x-small">
                       <strong>Flights</strong>
                     </div>
-                    <div class="slds-grid slds-border_bottom slds-grid_vertical">
+                    <div
+                      class="slds-grid slds-border_bottom slds-grid_vertical"
+                    >
                       <div class="slds-col slds-size_1-of-1 slds-grid">
-                        <span class="field-label slds-truncate slds-col slds-size_3-of-12">Flight number</span>
-                        <span class="field-label slds-truncate slds-col slds-size_3-of-12">Date</span>
-                        <span class="field-label slds-truncate slds-col slds-size_2-of-12">Bkg. class</span>
-                        <span class="field-label slds-truncate slds-col slds-size_2-of-12">O&amp;D</span>
-                        <span class="field-label slds-truncate slds-col slds-size_2-of-12">Sgmt. Status</span>
+                        <span
+                          class="
+                            field-label
+                            slds-truncate slds-col
+                            slds-size_3-of-12
+                          "
+                          >Flight number</span
+                        >
+                        <span
+                          class="
+                            field-label
+                            slds-truncate slds-col
+                            slds-size_3-of-12
+                          "
+                          >Date</span
+                        >
+                        <span
+                          class="
+                            field-label
+                            slds-truncate slds-col
+                            slds-size_2-of-12
+                          "
+                          >Bkg. class</span
+                        >
+                        <span
+                          class="
+                            field-label
+                            slds-truncate slds-col
+                            slds-size_2-of-12
+                          "
+                          >O&amp;D</span
+                        >
+                        <span
+                          class="
+                            field-label
+                            slds-truncate slds-col
+                            slds-size_2-of-12
+                          "
+                          >Sgmt. Status</span
+                        >
                       </div>
-                      <div class="slds-col slds-size_1-of-1 slds-grid slds-m-bottom_xxx-small" for:each={b.flights} for:item="f" key={f.flightNumber}>
-                        <span class="slds-col slds-size_3-of-12">{f.flightNumber}</span>
-                        <span class="slds-col slds-size_3-of-12">{f.scheduledDepartureTimeLocal}
+                      <div
+                        class="
+                          slds-col
+                          slds-size_1-of-1
+                          slds-grid
+                          slds-m-bottom_xxx-small
+                        "
+                        for:each={b.flights}
+                        for:item="f"
+                        key={f.flightNumber}
+                      >
+                        <span class="slds-col slds-size_3-of-12"
+                          >{f.flightNumber}</span
+                        >
+                        <span class="slds-col slds-size_3-of-12"
+                          >{f.scheduledDepartureTimeLocal}
                         </span>
-                        <span class="slds-col slds-size_2-of-12">{f.bookingClass}</span>
-                        <span class="slds-col slds-size_2-of-12">{f.departureAirport}-{f.arrivalAirport}</span>
-                        <span class="slds-col slds-size_2-of-12">{f.segmentStatusCode}</span>
+                        <span class="slds-col slds-size_2-of-12"
+                          >{f.bookingClass}</span
+                        >
+                        <span class="slds-col slds-size_2-of-12"
+                          >{f.departureAirport}-{f.arrivalAirport}</span
+                        >
+                        <span class="slds-col slds-size_2-of-12"
+                          >{f.segmentStatusCode}</span
+                        >
                       </div>
                     </div>
-
                   </lightning-accordion-section>
                 </template>
               </lightning-accordion>
-              <div class="slds-text-align_center" if:true={noBookings}>No related bookings</div>
+              <div class="slds-text-align_center" if:true={noBookings}>
+                No related bookings
+              </div>
               <div class="slds-m-vertical_small" if:false={showAllBookings}>
                 <a
                   class="slds-align_absolute-center"
@@ -149,67 +255,9 @@
               </div>
             </ul>
           </lightning-tab>
-          <!-- TODO: Enable when we can get communication logs
-          <lightning-tab label="Communication logs">
-            <ul class="slds-has-dividers_bottom-space">
-              <template for:each={visibleLogs} for:item="c">
-                <table key={c.Id}>
-                  <tr>
-                    <td>
-                      <strong>{c.IRR_Channel__c}</strong
-                      >&nbsp;-&nbsp;{c.communicationName},&nbsp;
-                      <lightning-formatted-date-time
-                        value={c.CreatedDate}
-                        year="numeric"
-                        month="short"
-                        day="2-digit"
-                        hour="2-digit"
-                        minute="2-digit"
-                      ></lightning-formatted-date-time>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="message-text">Message</div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="message-divider-padding">
-                        {c.IRR_MessageContent__c}
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div
-                        key={c.Id}
-                        class="vertical-line header-padding"
-                      ></div>
-                    </td>
-                  </tr>
-                </table>
-              </template>
-            </ul>
-            <div class="slds-text-align_center" if:true={noCommunicationLogs}>No related communication logs</div>
-            <div if:false={noCommunicationLogs} class="case-count-text">
-              <span
-                class="
-                  slds-text-align_left
-                  slds-text-color_weak
-                  slds-text-body_small
-                  message-text
-                "
-                >Showing {logsCount} communication logs</span
-              >
-            </div>
-            <div class="slds-m-vertical_small" if:false={showAllLogs}>
-              <a
-                class="slds-align_absolute-center"
-                onclick={handleDisplayAllLogs}
-                >Load more</a
-              >
-            </div>
+          <!-- TODO: Enable when we have communication logs 
+          <lightning-tab label={communicationLogsTabTitle}>
+            <c-communication-log communicationlogs={communicationLogs}></c-communication-log>
           </lightning-tab>-->
         </lightning-tabset>
       </div>

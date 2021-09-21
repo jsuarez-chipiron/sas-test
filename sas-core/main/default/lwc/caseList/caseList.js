@@ -18,7 +18,6 @@ export default class CaseList extends NavigationMixin(LightningElement) {
 
   @api
   set cases(value) {
-    console.log("v", value);
     if (value != undefined && value.length > 0) {
       const sortedCases = [...value].sort((first, second) => {
         if (first.Status === "Closed" && second.Status !== "Closed") {

@@ -16,6 +16,29 @@ global class BookingJSON implements Comparable {
   public List<Passenger> passengers { get; set; }
   @AuraEnabled
   public List<Case> relatedCases { get; set; }
+  @AuraEnabled
+  public List<CommunicationLog> relatedCommunicationLogs { get; set; }
+
+  global class CommunicationLog {
+    @AuraEnabled
+    public String bookingReference { get; set; }
+    @AuraEnabled
+    public String channel { get; set; }
+    @AuraEnabled
+    public Datetime createdDate { get; set; }
+    @AuraEnabled
+    public String messageContent { get; set; }
+    @AuraEnabled
+    public String flightId { get; set; }
+
+    public CommunicationLog(IRR_CommunicationLog__c l) {
+      bookingReference = l.IRR_BookingReference__c;
+      channel = l.IRR_Channel__c;
+      createdDate = l.CreatedDate;
+      messageContent = l.IRR_MessageContent__c;
+      flightId = l.IRR_FlightId__c;
+    }
+  }
 
   global class Flight implements Comparable {
     @AuraEnabled
@@ -175,7 +198,11 @@ global class BookingJSON implements Comparable {
     }
   }
 
-  public BookingJSON(Booking__c booking, List<Case> relatedCasesArg) {
+  public BookingJSON(
+    Booking__c booking,
+    List<Case> relatedCasesArg,
+    List<IRR_CommunicationLog__c> relatedCommunicationLogsArg
+  ) {
     bookingReference = booking.Booking_Reference__c;
     createdAtTravelOfficeId = booking.Created_at_Travel_Office_Id__c;
     isCancelled = booking.Is_Cancelled__c;
@@ -183,6 +210,7 @@ global class BookingJSON implements Comparable {
     relatedCases = relatedCasesArg;
     type = booking.Type__c;
     List<BookingJSON.Flight> tempFlights = new List<BookingJSON.Flight>();
+    List<BookingJSON.CommunicationLog> tempLogs = new List<BookingJSON.CommunicationLog>();
     List<BookingJSON.Passenger> tempPassengers = new List<BookingJSON.Passenger>();
 
     Map<String, List<String>> bags = new Map<String, List<String>>();
@@ -269,10 +297,15 @@ global class BookingJSON implements Comparable {
       );
     }
 
+    for (IRR_CommunicationLog__c l : relatedCommunicationLogsArg) {
+      tempLogs.add(new BookingJSON.CommunicationLog(l));
+    }
+
     tempFlights.sort();
     tempPassengers.sort();
 
     flights = tempFlights;
+    relatedCommunicationLogs = tempLogs;
     passengers = tempPassengers;
   }
 

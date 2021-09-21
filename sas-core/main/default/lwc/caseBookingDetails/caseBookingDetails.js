@@ -31,6 +31,10 @@ export default class CaseBookingDetails extends NavigationMixin(
             ? booking.relatedCases.filter((c) => c.Id !== this.caseId).length
             : 0;
 
+          const logCount = booking.relatedCommunicationLogs
+            ? booking.relatedCommunicationLogs.length
+            : 0;
+
           return {
             ...booking,
             relatedCases: booking.relatedCases.filter(
@@ -39,6 +43,7 @@ export default class CaseBookingDetails extends NavigationMixin(
             displayDetails: {
               ...booking.displayDetails,
               caseTabTitle: `Related cases (${caseCount})`,
+              communicationLogsTabTitle: `Related communication logs (${logCount})`,
               noCases: caseCount === 0,
               passengersVisible: `${
                 booking.displayDetails.showAllPassengers
