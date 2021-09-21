@@ -310,7 +310,7 @@ private class IRR_EVT_DelayProcessor_Test {
     }
 
     @IsTest
-    static void testProcessEventCloseToDeparture_Confirmed_SendSMS() {
+    static void testProcessEventCloseToDeparture_Confirmed_SendSMSEmail() {
         //Given
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.delayDifference = 10;
@@ -331,7 +331,7 @@ private class IRR_EVT_DelayProcessor_Test {
 
         //Then
         List<IRR_MOD_Message> messages = eventProcessor.messages;
-        System.assertEquals(1, messages.size());
+        System.assertEquals(2, messages.size());
         System.assertEquals('irr_delay_sms_01', messages[0].template);
         System.assertEquals('Delay', messages[0].type);
         System.assertEquals(passengerInfos[0], messages[0].passengerInfo);
@@ -363,7 +363,7 @@ private class IRR_EVT_DelayProcessor_Test {
 
         //Then
         List<IRR_MOD_Message> messages = eventProcessor.messages;
-        System.assertEquals(1, messages.size());
+        System.assertEquals(2, messages.size());
         System.assertEquals('irr_delay_sms_01', messages[0].template);
         System.assertEquals('Delay', messages[0].type);
         System.assertEquals(passengerInfos[0], messages[0].passengerInfo);
