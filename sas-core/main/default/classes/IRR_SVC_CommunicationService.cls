@@ -97,6 +97,7 @@ public class IRR_SVC_CommunicationService {
                     log.IRR_FlightId__c = message.passengerInfo.thisSegment.flightId;
                 }
                 log.IRR_BookingReference__c = message.passengerInfo.bookingReference;
+                log.IRR_EBNumber__c = message.passengerInfo.euroBonusNumber;
                 log.IRR_CodsId__c = message.passengerInfo.codsId;
                 log.IRR_RecipientName__c = message.passengerInfo.lastNameSlashFirstName;
             }

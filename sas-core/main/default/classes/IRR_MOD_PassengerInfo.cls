@@ -35,6 +35,9 @@ public class IRR_MOD_PassengerInfo {
     public String ebLevel { get; set; }
 
     @AuraEnabled
+    public String euroBonusNumber { get; set; }
+
+    @AuraEnabled
     public String otherFQTVCarrier { get; set; }
 
     @AuraEnabled
@@ -55,6 +58,11 @@ public class IRR_MOD_PassengerInfo {
     @AuraEnabled
     public IRR_MOD_SegmentInfo thisSegment { get; set; }
 
+    @AuraEnabled
+    public Boolean hasRXLine { get; set; }
+    @AuraEnabled
+    public IRR_MOD_SegmentInfo  rxType;
+    
     @AuraEnabled
     public Boolean hasNextSegment { get; set; }
     @AuraEnabled
