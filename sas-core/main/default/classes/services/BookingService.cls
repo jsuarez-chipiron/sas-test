@@ -236,6 +236,10 @@ public without sharing class BookingService {
       if (bookingToUpsert == null) {
         bookingToUpsert = new Booking__c(
           Booking_Reference__c = booking.reference,
+          Created_at_Travel_Office_Id__c = booking?.audit?.created?.officeId ==
+            null
+            ? ''
+            : booking.audit.created.officeId,
           Name = booking.id,
           TEDS_Identifier__c = booking.id,
           Type__c = booking.type,

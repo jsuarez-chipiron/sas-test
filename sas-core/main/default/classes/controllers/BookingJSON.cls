@@ -2,6 +2,8 @@ global class BookingJSON implements Comparable {
   @AuraEnabled
   public String bookingReference { get; set; }
   @AuraEnabled
+  public String createdAtTravelOfficeId { get; set; }
+  @AuraEnabled
   public Boolean isCancelled { get; set; }
   @AuraEnabled
   public Datetime lastUpdated { get; set; }
@@ -67,6 +69,8 @@ global class BookingJSON implements Comparable {
     @AuraEnabled
     public String scheduledDepartureTimeLocal { get; set; }
     @AuraEnabled
+    public String segmentStatusCode { get; set; }
+    @AuraEnabled
     public String serviceClass { get; set; }
     @AuraEnabled
     public String tripType { get; set; }
@@ -97,6 +101,7 @@ global class BookingJSON implements Comparable {
       scheduledArrivalTimeLocal = s.Flight__r.Scheduled_Arrival_Time_Local__c;
       scheduledDepartureTime = s.Flight__r.Scheduled_Departure_Time__c;
       scheduledDepartureTimeLocal = s.Flight__r.Scheduled_Departure_Time_Local__c;
+      segmentStatusCode = s.Segment_Status_Code__c;
       serviceClass = s.Service_Class__c;
       tripType = s.Trip_Type__c;
     }
@@ -172,6 +177,7 @@ global class BookingJSON implements Comparable {
 
   public BookingJSON(Booking__c booking, List<Case> relatedCasesArg) {
     bookingReference = booking.Booking_Reference__c;
+    createdAtTravelOfficeId = booking.Created_at_Travel_Office_Id__c;
     isCancelled = booking.Is_Cancelled__c;
     lastUpdated = booking.LastModifiedDate;
     relatedCases = relatedCasesArg;

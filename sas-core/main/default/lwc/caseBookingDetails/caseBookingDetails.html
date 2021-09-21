@@ -83,9 +83,9 @@
                     class="slds-col slds-size_1-of-1 text-bold"
                     key={trip.value.type}
                   >
-                    <span>{trip.value.type}</span>
+                    <span>{trip.value.type}&nbsp;</span>
                     <span if:true={trip.first} class="slds-float_right"
-                      >{b.value.bookingReference}</span
+                      >{b.value.bookingReference}{b.value.travelOfficeId}</span
                     >
                   </div>
                   <div
@@ -196,9 +196,9 @@
 
               <lightning-tab label="Booking data">
                 <div class="text-bold">
-                  <span>Travellers</span>
+                  <span>Travellers&nbsp;</span>
                   <span class="slds-float_right"
-                    >{b.value.bookingReference}</span
+                    >{b.value.bookingReference}{b.value.travelOfficeId}</span
                   >
                 </div>
                 <lightning-accordion
@@ -449,7 +449,7 @@
               <lightning-tab label={b.value.displayDetails.caseTabTitle}>
                 <div class="text-bold">
                   <span class="slds-float_right"
-                    >{b.value.bookingReference}</span
+                    >{b.value.bookingReference}{b.value.travelOfficeId}</span
                   >
                 </div>
                 <c-case-list cases={b.value.relatedCases}></c-case-list>

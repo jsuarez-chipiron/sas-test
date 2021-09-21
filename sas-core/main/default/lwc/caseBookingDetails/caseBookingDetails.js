@@ -134,6 +134,10 @@ export default class CaseBookingDetails extends NavigationMixin(
           showAllPassengers: b.passengers.length <= this.ENTRIES_TO_DISPLAY,
           showAllFlights: b.flights.length <= this.ENTRIES_TO_DISPLAY
         },
+        travelOfficeId:
+          b.createdAtTravelOfficeId && b.createdAtTravelOfficeId.length > 0
+            ? `/${b.createdAtTravelOfficeId}`
+            : "",
         trips: Object.entries(
           b.flights
             .map((f) => {

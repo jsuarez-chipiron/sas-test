@@ -1256,6 +1256,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Booking__c.Created_at_Travel_Office_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Booking__c.Is_Cancelled__c</field>
         <readable>true</readable>
     </fieldPermissions>
