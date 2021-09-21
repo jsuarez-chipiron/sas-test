@@ -196,6 +196,7 @@ export default class CaseBookingDetails extends NavigationMixin(
                   f.scheduledDepartureTimeLocal,
                   "time"
                 ),
+                segmentStatusCode: f.segmentStatusCode || "-",
                 serviceClass: f.serviceClass || "-"
               };
             })

@@ -195,7 +195,8 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
             scheduledDepartureTimeLocal: formattedDateString(
               f.scheduledDepartureTimeLocal,
               "date"
-            )
+            ),
+            segmentStatusCode: f.segmentStatusCode || "-"
           })),
           passengers: booking.passengers.map((p) => ({
             ...p,
@@ -203,7 +204,12 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
               p.specialServiceRequests && p.specialServiceRequests.length > 0
                 ? p.specialServiceRequests[0]
                 : ""
-          }))
+          })),
+          travelOfficeId:
+            booking.createdAtTravelOfficeId &&
+            booking.createdAtTravelOfficeId.length > 0
+              ? `/${booking.createdAtTravelOfficeId}`
+              : ""
         };
       });
       if (this.bookings.length <= 3) {

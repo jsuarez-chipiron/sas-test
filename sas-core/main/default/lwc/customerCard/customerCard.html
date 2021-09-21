@@ -122,15 +122,17 @@
                       <div class="slds-col slds-size_1-of-1 slds-grid">
                         <span class="field-label slds-truncate slds-col slds-size_3-of-12">Flight number</span>
                         <span class="field-label slds-truncate slds-col slds-size_3-of-12">Date</span>
-                        <span class="field-label slds-truncate slds-col slds-size_3-of-12">Bkg. class</span>
-                        <span class="field-label slds-truncate slds-col slds-size_3-of-12">O&amp;D</span>
+                        <span class="field-label slds-truncate slds-col slds-size_2-of-12">Bkg. class</span>
+                        <span class="field-label slds-truncate slds-col slds-size_2-of-12">O&amp;D</span>
+                        <span class="field-label slds-truncate slds-col slds-size_2-of-12">Sgmt. Status</span>
                       </div>
                       <div class="slds-col slds-size_1-of-1 slds-grid slds-m-bottom_xxx-small" for:each={b.flights} for:item="f" key={f.flightNumber}>
                         <span class="slds-col slds-size_3-of-12">{f.flightNumber}</span>
                         <span class="slds-col slds-size_3-of-12">{f.scheduledDepartureTimeLocal}
                         </span>
-                        <span class="slds-col slds-size_3-of-12">{f.bookingClass}</span>
-                        <span class="slds-col slds-size_3-of-12">{f.departureAirport}-{f.arrivalAirport}</span>
+                        <span class="slds-col slds-size_2-of-12">{f.bookingClass}</span>
+                        <span class="slds-col slds-size_2-of-12">{f.departureAirport}-{f.arrivalAirport}</span>
+                        <span class="slds-col slds-size_2-of-12">{f.segmentStatusCode}</span>
                       </div>
                     </div>
 

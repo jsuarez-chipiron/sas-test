@@ -384,6 +384,8 @@ public without sharing class BookingService {
               Is_Boarded__c = segmentPassenger.isBoarded,
               Name = segmentTrip.flight.id,
               Seat__c = segmentPassenger.seat,
+              Segment_Status__c = segmentTrip.status,
+              Segment_Status_Code__c = segmentTrip.statusCode,
               Service_Class__c = segmentTrip.serviceClass,
               Special_Service_Requests__c = ssrs,
               Ticket_Number__c = segmentPassenger.ticket == null
