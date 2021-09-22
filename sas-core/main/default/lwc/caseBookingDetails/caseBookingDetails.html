@@ -109,8 +109,7 @@
                         ><span class={flight.bulletClassName}>&#8226;</span
                         >{flight.flightNumber}</span
                       >
-                      <span class="slds-col slds-size_1-of-1"
-                        ><span class="flight-spacer-bullet">&#8226;</span
+                      <span class="slds-col slds-size_1-of-1 flight-date"
                         >{flight.scheduledDepartureDateLocal}</span
                       >
                     </div>
@@ -526,7 +525,7 @@
                 ></c-communication-log>
               </lightning-tab>
             </lightning-tabset>
-            <div class="bookingSeparator" if:false={b.last}>
+            <div class="booking-separator" if:false={b.last}>
               <a
                 onclick={removeBookingFromCase}
                 data-id={b.value.bookingReference}
@@ -540,7 +539,7 @@
 
     <div
       if:true={displayAddAnotherBookingForm}
-      class="slds-card__body slds-p-vertical_small addAnotherBooking"
+      class="slds-card__body slds-p-vertical_small add-another-booking"
     >
       <div class="slds-card__body_inner">
         <div

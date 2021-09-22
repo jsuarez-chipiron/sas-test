@@ -160,7 +160,7 @@ export default class CaseBookingDetails extends NavigationMixin(
                 arrivalTimeClassName:
                   f.arrivalStatus === "delayed" ||
                   f.arrivalStatus === "cancelled"
-                    ? "delayedTime"
+                    ? "delayed-time"
                     : "",
                 arrivalGate: f.arrivalGate || "-",
                 arrivalTerminal: f.arrivalTerminal || "-",
@@ -173,7 +173,7 @@ export default class CaseBookingDetails extends NavigationMixin(
                 departureTimeClassName:
                   f.departureStatus === "delayed" ||
                   f.departureStatus === "cancelled"
-                    ? "delayedTime"
+                    ? "delayed-time"
                     : "",
                 departureGate: f.departureGate || "-",
                 departureTerminal: f.departureTerminal || "-",
