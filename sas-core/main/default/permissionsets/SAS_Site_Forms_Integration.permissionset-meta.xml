@@ -20,6 +20,22 @@
         <apexClass>RefundRequestForm</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+        <classAccesses>
+        <apexClass>CaseForm</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CaseFormJSON2Apex</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+	    <classAccesses>
+        <apexClass>SpecialServiceJSON2Apex</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SpecialServiceRequestForm</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
@@ -99,6 +115,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Segment__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>    
+	 <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Special_Service_Request__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
 </PermissionSet>
