@@ -23,8 +23,12 @@
                 <field>Is_Cancelled__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>TEDS_Identifier__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Created_at_Travel_Office_Id__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

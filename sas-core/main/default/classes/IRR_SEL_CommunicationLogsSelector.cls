@@ -15,6 +15,7 @@ public class IRR_SEL_CommunicationLogsSelector extends fflib_SObjectSelector imp
     return new List<Schema.SObjectField>{
       IRR_CommunicationLog__c.Id,
       IRR_CommunicationLog__c.CreatedDate,
+      IRR_CommunicationLog__c.IRR_BookingReference__c,
       IRR_CommunicationLog__c.IRR_ContactKey__c,
       IRR_CommunicationLog__c.IRR_LastResponseDate__c,
       IRR_CommunicationLog__c.IRR_Recipient__c,
@@ -70,14 +71,27 @@ public class IRR_SEL_CommunicationLogsSelector extends fflib_SObjectSelector imp
       );
     return Database.query(queryFactory.toSOQL());
   }
-  public List<IRR_CommunicationLog__c> getCommunicationMessagesbyEBAccount(
-    Set<String> seAccIds
+
+  public List<IRR_CommunicationLog__c> getCommunicationLogsByEBAccount(
+    Set<String> euroBonusNumbers
   ) {
     fflib_QueryFactory queryFactory = newQueryFactory()
       .setOrdering(
         IRR_CommunicationLog__c.CreatedDate,
         fflib_QueryFactory.SortOrder.DESCENDING
       );
+    return Database.query(queryFactory.toSOQL());
+  }
+
+  public List<IRR_CommunicationLog__c> getCommunicationLogsByBookingReference(
+    Set<String> bookingReferences
+  ) {
+    fflib_QueryFactory queryFactory = newQueryFactory()
+      .setOrdering(
+        IRR_CommunicationLog__c.CreatedDate,
+        fflib_QueryFactory.SortOrder.DESCENDING
+      )
+      .setCondition('IRR_BookingReference__c IN :bookingReferences');
     return Database.query(queryFactory.toSOQL());
   }
 }

@@ -540,6 +540,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Booking__c.Created_at_Travel_Office_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Booking__c.Is_Cancelled__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -876,6 +881,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Segment__c.Seat__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Segment__c.Segment_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Segment__c.Segment_Status_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1436,6 +1451,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EmailMessage.Is_Counted__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_BookingReference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_Channel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_FlightId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_MessageContent__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

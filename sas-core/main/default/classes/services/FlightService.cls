@@ -25,7 +25,17 @@ public without sharing class FlightService {
     }
 
     List<Flight__c> newFlights = constructFlightsForDB(flightData);
-    upsert newFlights TEDS_Identifier__c;
+
+    // The upsert operation seems to fail due to a race condition between two threads
+    // trying to upsert the records simultaneously. One thread succeeds and the other
+    // fails with a duplicate value exception.
+    try {
+      upsert newFlights TEDS_Identifier__c;
+    } catch (DMLException e) {
+      if (e.getDmlType(0) == StatusCode.DUPLICATE_VALUE) {
+        upsert newFlights TEDS_Identifier__c;
+      }
+    }
   }
 
   /**

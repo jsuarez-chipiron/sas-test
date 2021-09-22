@@ -16,15 +16,47 @@ public without sharing class CustomerCardController {
 
   @AuraEnabled(cacheable=true)
   public static List<BookingJSON> getBookingsForCase(String caseId) {
-    List<Booking__c> bookingsToReturn = bookings.selectByCaseId(
+    List<Booking__c> bookingsFromDB = bookings.selectByCaseId(
       new Set<Id>{ caseId }
     );
     List<BookingJSON> toReturn = new List<BookingJSON>();
-    for (Booking__c b : bookingsToReturn) {
+    Map<String, List<IRR_CommunicationLog__c>> logsByBookingReference = new Map<String, List<IRR_CommunicationLog__c>>();
+    Map<String, Booking__c> bookingsByBookingReference = new Map<String, Booking__c>();
+    for (Booking__c b : bookingsFromDB) {
+      bookingsByBookingReference.put(b.Booking_Reference__c, b);
+      logsByBookingReference.put(
+        b.Booking_Reference__c,
+        new List<IRR_CommunicationLog__c>()
+      );
+    }
+
+    // Get related logs for bookings
+    List<IRR_CommunicationLog__c> logsFromDB = IRR_SEL_CommunicationLogsSelector.newInstance() // TODO: Move this to top of this class.
+      .getCommunicationLogsByBookingReference(
+        bookingsByBookingReference.keySet()
+      );
+    for (IRR_CommunicationLog__c log : logsFromDB) {
+      List<IRR_CommunicationLog__c> element = logsByBookingReference.get(
+        log.IRR_BookingReference__c
+      );
+
+      if (element == null) {
+        element = new List<IRR_CommunicationLog__c>();
+      }
+
+      element.add(log);
+      logsByBookingReference.put(log.IRR_BookingReference__c, element);
+    }
+
+    // Construct final JSON
+    for (String key : bookingsByBookingReference.keySet()) {
+      Booking__c b = bookingsByBookingReference.get(key);
       List<Case> relatedCases = cases.selectByBookingReference(
         new Set<String>{ b.Booking_Reference__c }
       );
-      toReturn.add(new BookingJSON(b, relatedCases));
+      toReturn.add(
+        new BookingJSON(b, relatedCases, logsByBookingReference.get(key))
+      );
     }
     toReturn.sort();
 
@@ -66,7 +98,13 @@ public without sharing class CustomerCardController {
     );
     List<BookingJSON> toReturn = new List<BookingJSON>();
     for (Booking__c b : bookingsForCustomer) {
-      toReturn.add(new BookingJSON(b, new List<Case>()));
+      toReturn.add(
+        new BookingJSON(
+          b,
+          new List<Case>(),
+          new List<IRR_CommunicationLog__c>()
+        )
+      );
     }
     toReturn.sort();
 
@@ -83,10 +121,17 @@ public without sharing class CustomerCardController {
     return cases.selectByAccountId(new Set<Id>{ accountId });
   }
   @AuraEnabled(cacheable=true)
-  public static List<IRR_CommunicationLog__c> getAllCommunicationData(
-    String accountId
+  public static List<BookingJSON.CommunicationLog> getAllCommunicationData(
+    String euroBonusNumber
   ) {
-    return IRR_SEL_CommunicationLogsSelector.newInstance()
-      .getCommunicationMessagesbyEBAccount(new Set<String>{ accountId });
+    List<IRR_CommunicationLog__c> logs = IRR_SEL_CommunicationLogsSelector.newInstance()
+      .getCommunicationLogsByEBAccount(new Set<String>{ euroBonusNumber });
+
+    List<BookingJSON.CommunicationLog> toReturn = new List<BookingJSON.CommunicationLog>();
+    for (IRR_CommunicationLog__c log : logs) {
+      toReturn.add(new BookingJSON.CommunicationLog(log));
+    }
+
+    return toReturn;
   }
 }

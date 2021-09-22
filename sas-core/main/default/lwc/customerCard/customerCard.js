@@ -40,7 +40,6 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   @track error = false;
   @track searchValue = "";
   showAllBookings = false;
-  showAllLogs = false;
 
   get bookingsCount() {
     return `${
@@ -48,14 +47,6 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
         ? this.bookings.length
         : Math.min(ENTRIES_TO_DISPLAY, this.bookings.length)
     } of ${this.bookings.length}`;
-  }
-
-  get logsCount() {
-    return `${
-      this.showAllLogs
-        ? this.communicationLogs.length
-        : Math.min(this.ENTRIES_TO_DISPLAY, this.communicationLogs.length)
-    } of ${this.communicationLogs.length}`;
   }
 
   get visibleBookings() {
@@ -67,21 +58,12 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
         );
   }
 
-  get visibleLogs() {
-    return this.showAllLogs
-      ? this.communicationLogs
-      : this.communicationLogs.slice(
-          0,
-          Math.min(this.ENTRIES_TO_DISPLAY, this.communicationLogs.length)
-        );
-  }
-
-  get noCommunicationLogs() {
-    return this.communicationLogs.length === 0;
-  }
-
   get noBookings() {
     return this.bookings.length === 0;
+  }
+
+  get communicationLogsTabTitle() {
+    return `Communication logs (${this.communicationLogs.length})`;
   }
 
   // Navigate to view case Page
@@ -195,7 +177,8 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
             scheduledDepartureTimeLocal: formattedDateString(
               f.scheduledDepartureTimeLocal,
               "date"
-            )
+            ),
+            segmentStatusCode: f.segmentStatusCode || "-"
           })),
           passengers: booking.passengers.map((p) => ({
             ...p,
@@ -203,7 +186,12 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
               p.specialServiceRequests && p.specialServiceRequests.length > 0
                 ? p.specialServiceRequests[0]
                 : ""
-          }))
+          })),
+          travelOfficeId:
+            booking.createdAtTravelOfficeId &&
+            booking.createdAtTravelOfficeId.length > 0
+              ? `/${booking.createdAtTravelOfficeId}`
+              : ""
         };
       });
       if (this.bookings.length <= 3) {
@@ -216,24 +204,12 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   }
 
   // TODO: Enable when we can get communication logs
-  /*@wire(getAllCommunicationData, { accountId: "$accountId" })
+  /*@wire(getAllCommunicationData, { euroBonusNumber: "613685700" })
   wiredCommunicationLog({ error, data }) {
     if (!error && data != undefined && data.length > 0) {
-      this.communicationLogs = data.map((rawLog) => ({
-        ...rawLog,
-        communicationName: rawLog.IRR_FlightId__c
-          ? rawLog.IRR_FlightId__c.substring(
-              0,
-              Math.min(6, rawLog.IRR_FlightId__c.length)
-            )
-          : ""
-      }));
-      if (this.communicationLogs.length <= 3) {
-        this.showAllLogs = true;
-      }
+      this.communicationLogs = data;
     } else {
       this.communicationLogs = [];
-      this.showAllLogs = true;
     }
   }*/
 
@@ -323,9 +299,5 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
 
   handleDisplayAllBookings() {
     this.showAllBookings = true;
-  }
-
-  handleDisplayAllLogs() {
-    this.showAllLogs = true;
   }
 }

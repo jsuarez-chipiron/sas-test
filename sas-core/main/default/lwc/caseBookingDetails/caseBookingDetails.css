@@ -15,16 +15,12 @@
   text-align: right;
 }
 
-.bookingSeparator {
+.booking-separator {
   background-color: #ecebea;
   padding: 5px 20px;
   text-align: right;
-  margin-left: -13px;
-  margin-right: -13px;
-}
-
-.text-bold {
-  font-weight: bold;
+  margin-left: -12px;
+  margin-right: -12px;
 }
 
 .detail-box-label {
@@ -32,7 +28,7 @@
   color: grey;
 }
 
-.addAnotherBooking {
+.add-another-booking {
   background-color: #ecebea;
 }
 
@@ -40,17 +36,12 @@
   --sds-c-accordion-heading-font-size: 14px;
 }
 
-.delayedTime {
+.delayed-time {
   text-decoration: line-through;
 }
 
-.flight-spacer-bullet {
-  font-size: 32px;
-  font-weight: bold;
-  line-height: 13px;
-  margin-right: 0.1em;
-  vertical-align: text-top;
-  color: white;
+.flight-date {
+  padding-left: 18px;
 }
 
 .flight-bullet-on-time {
@@ -69,22 +60,4 @@
   margin-right: 0.1em;
   vertical-align: text-top;
   color: red;
-}
-
-.case-bullet::before {
-  content: "\2022"; /* \2022 is unicode for a bullet */
-  display: inline-block;
-  font-size: 32px;
-  font-weight: bold;
-  line-height: 13px;
-  margin-right: 0.1em;
-  vertical-align: text-top;
-}
-
-.open-case-bullet::before {
-  color: #2e844a;
-}
-
-.closed-case-bullet::before {
-  color: #c9c7c5;
 }

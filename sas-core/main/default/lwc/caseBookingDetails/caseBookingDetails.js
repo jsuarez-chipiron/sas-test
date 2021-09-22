@@ -31,6 +31,10 @@ export default class CaseBookingDetails extends NavigationMixin(
             ? booking.relatedCases.filter((c) => c.Id !== this.caseId).length
             : 0;
 
+          const logCount = booking.relatedCommunicationLogs
+            ? booking.relatedCommunicationLogs.length
+            : 0;
+
           return {
             ...booking,
             relatedCases: booking.relatedCases.filter(
@@ -39,6 +43,7 @@ export default class CaseBookingDetails extends NavigationMixin(
             displayDetails: {
               ...booking.displayDetails,
               caseTabTitle: `Related cases (${caseCount})`,
+              communicationLogsTabTitle: `Related communication logs (${logCount})`,
               noCases: caseCount === 0,
               passengersVisible: `${
                 booking.displayDetails.showAllPassengers
@@ -134,6 +139,10 @@ export default class CaseBookingDetails extends NavigationMixin(
           showAllPassengers: b.passengers.length <= this.ENTRIES_TO_DISPLAY,
           showAllFlights: b.flights.length <= this.ENTRIES_TO_DISPLAY
         },
+        travelOfficeId:
+          b.createdAtTravelOfficeId && b.createdAtTravelOfficeId.length > 0
+            ? `/${b.createdAtTravelOfficeId}`
+            : "",
         trips: Object.entries(
           b.flights
             .map((f) => {
@@ -151,7 +160,7 @@ export default class CaseBookingDetails extends NavigationMixin(
                 arrivalTimeClassName:
                   f.arrivalStatus === "delayed" ||
                   f.arrivalStatus === "cancelled"
-                    ? "delayedTime"
+                    ? "delayed-time"
                     : "",
                 arrivalGate: f.arrivalGate || "-",
                 arrivalTerminal: f.arrivalTerminal || "-",
@@ -164,7 +173,7 @@ export default class CaseBookingDetails extends NavigationMixin(
                 departureTimeClassName:
                   f.departureStatus === "delayed" ||
                   f.departureStatus === "cancelled"
-                    ? "delayedTime"
+                    ? "delayed-time"
                     : "",
                 departureGate: f.departureGate || "-",
                 departureTerminal: f.departureTerminal || "-",
@@ -192,6 +201,7 @@ export default class CaseBookingDetails extends NavigationMixin(
                   f.scheduledDepartureTimeLocal,
                   "time"
                 ),
+                segmentStatusCode: f.segmentStatusCode || "-",
                 serviceClass: f.serviceClass || "-"
               };
             })

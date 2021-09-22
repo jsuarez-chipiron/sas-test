@@ -236,6 +236,10 @@ public without sharing class BookingService {
       if (bookingToUpsert == null) {
         bookingToUpsert = new Booking__c(
           Booking_Reference__c = booking.reference,
+          Created_at_Travel_Office_Id__c = booking?.audit?.created?.officeId ==
+            null
+            ? ''
+            : booking.audit.created.officeId,
           Name = booking.id,
           TEDS_Identifier__c = booking.id,
           Type__c = booking.type,
@@ -380,6 +384,8 @@ public without sharing class BookingService {
               Is_Boarded__c = segmentPassenger.isBoarded,
               Name = segmentTrip.flight.id,
               Seat__c = segmentPassenger.seat,
+              Segment_Status__c = segmentTrip.status,
+              Segment_Status_Code__c = segmentTrip.statusCode,
               Service_Class__c = segmentTrip.serviceClass,
               Special_Service_Requests__c = ssrs,
               Ticket_Number__c = segmentPassenger.ticket == null
@@ -405,7 +411,17 @@ public without sharing class BookingService {
         }
       }
     }
-    upsert flightsProcessed.values() TEDS_Identifier__c;
+
+    // The upsert operation seems to fail due to a race condition between two threads
+    // trying to upsert the records simultaneously. One thread succeeds and the other 
+    // fails with a duplicate value exception.
+    try {
+      upsert flightsProcessed.values() TEDS_Identifier__c;
+    } catch (DMLException e) {
+      if (e.getDmlType(0) == StatusCode.DUPLICATE_VALUE) {
+        upsert flightsProcessed.values() TEDS_Identifier__c;
+      }
+    }
     return bookingsToReturn;
   }
 
