@@ -527,6 +527,11 @@
         <label>Manual</label>
     </standardValue>
     <standardValue>
+        <fullName>Manual - Legal Case Diary</fullName>
+        <default>false</default>
+        <label>Manual - Legal Case Diary</label>
+    </standardValue>
+    <standardValue>
         <fullName>Phone</fullName>
         <default>false</default>
         <label>Phone</label>
