@@ -3603,6 +3603,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Manual - Legal Case Diary</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>

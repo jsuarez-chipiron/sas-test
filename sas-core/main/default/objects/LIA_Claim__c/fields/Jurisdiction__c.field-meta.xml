@@ -157,9 +157,9 @@
                 <label>Sweden</label>
             </value>
             <value>
-                <fullName>United Kingdom</fullName>
+                <fullName>United Kingdom (UK)</fullName>
                 <default>false</default>
-                <label>United Kingdom</label>
+                <label>United Kingdom (UK)</label>
             </value>
             <value>
                 <fullName>United States</fullName>
