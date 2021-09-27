@@ -410,19 +410,18 @@
             <valueName>Umeå Tingsrätt</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>United Kingdom</controllingFieldValue>
+            <controllingFieldValue> United Kingdom (UK)</controllingFieldValue>
             <valueName>CAA (UK Civil Aviation Authority)</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>United Kingdom</controllingFieldValue>
+            <controllingFieldValue>United Kingdom (UK)</controllingFieldValue>
             <valueName>County Court at Liverpool (United Kingdom)</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>United Kingdom</controllingFieldValue>
+            <controllingFieldValue>United Kingdom (UK)</controllingFieldValue>
             <valueName>County Court at Portsmouth</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>United Kingdom</controllingFieldValue>
             <controllingFieldValue>Croatia</controllingFieldValue>
             <valueName>Croatian Civil Aviation Agency (Croatia)</valueName>
         </valueSettings>
