@@ -129,6 +129,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>messagingCases</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>customerCard</componentName>
             </componentInstance>
         </itemInstances>
