@@ -273,6 +273,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>customerCard</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Info Hub</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
