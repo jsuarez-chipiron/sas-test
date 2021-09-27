@@ -116,7 +116,14 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   wiredAccount({ error, data }) {
     if (!error && data != undefined && data.length > 0) {
       this.account = data[0];
-      this.cardTitle = `${data[0].Name} (EB${data[0].FCS_EBLevel__c}${data[0].FCS_EBNumber__c})`;
+      if (
+        data[0].FCS_EBLevel__c != undefined &&
+        data[0].FCS_EBNumber__c != undefined
+      ) {
+        this.cardTitle = `${data[0].Name} (EB${data[0].FCS_EBLevel__c}${data[0].FCS_EBNumber__c})`;
+      } else {
+        this.cardTitle = data[0].Name;
+      }
     } else {
       this.account = undefined;
       this.cardTitle = "";
