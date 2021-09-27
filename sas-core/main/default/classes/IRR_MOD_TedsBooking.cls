@@ -121,6 +121,12 @@ public class IRR_MOD_TedsBooking {
         public Flight flight { get; set; }
         public String bookingClass { get; set; }
         public String serviceClass { get; set; }
+        public List<Remark> remarks { get; set; }
+    }
+
+    public class Remark {
+        public String type { get; set; }
+        public String value { get; set; }
     }
 
     public class OtherFQTV {
