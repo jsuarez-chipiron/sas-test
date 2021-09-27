@@ -51,9 +51,13 @@ export default class CaseList extends NavigationMixin(LightningElement) {
 
       if (this.closedCases.length <= this.ENTRIES_TO_DISPLAY) {
         this.showAllClosedCases = true;
+      } else {
+        this.showAllClosedCases = false;
       }
       if (this.openCases.length <= this.ENTRIES_TO_DISPLAY) {
         this.showAllOpenCases = true;
+      } else {
+        this.showAllOpenCases = false;
       }
     } else {
       this.closedCases = [];
