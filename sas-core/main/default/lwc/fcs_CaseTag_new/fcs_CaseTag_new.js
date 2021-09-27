@@ -8,6 +8,7 @@ export default class Fcs_CaseTag_SocialPost extends LightningElement {
   @track cardTitle = "Tag Case";
   @track iconName = "action:new_case";
   @track newCase = true;
+  @track error = undefined;
   @track cse;
   @track caseTagged = false;
   @track reset = false;
@@ -92,5 +93,8 @@ export default class Fcs_CaseTag_SocialPost extends LightningElement {
       this.dispatchEvent(evt);
     }
     this.reset = false;
+  }
+  displayError(error) {
+    this.error = error;
   }
 }
