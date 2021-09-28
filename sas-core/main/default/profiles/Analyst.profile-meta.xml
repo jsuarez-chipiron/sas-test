@@ -1945,6 +1945,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>LiveChatTranscript.TURI_Chat_User_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>LIA_Major_Event__c.End_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
