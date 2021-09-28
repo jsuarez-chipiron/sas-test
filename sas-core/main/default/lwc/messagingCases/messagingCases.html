@@ -1,5 +1,7 @@
 <template>
-  <lightning-card title="Related Cases">
-    <c-case-list cases={cases}></c-case-list>
-    </lightning-card>
+  <lightning-card title="Related Cases For This Messaging User">
+    <div if:true={cases}>
+      <c-case-list cases={cases}></c-case-list>
+    </div>
+  </lightning-card>
 </template>
