@@ -527,9 +527,9 @@
         <label>Manual</label>
     </standardValue>
     <standardValue>
-        <fullName>Manual - Legal Case Diary</fullName>
+        <fullName>Manual - Legal Case Diary Migration</fullName>
         <default>false</default>
-        <label>Manual - Legal Case Diary</label>
+        <label>Manual - Legal Case Diary Migration</label>
     </standardValue>
     <standardValue>
         <fullName>Phone</fullName>

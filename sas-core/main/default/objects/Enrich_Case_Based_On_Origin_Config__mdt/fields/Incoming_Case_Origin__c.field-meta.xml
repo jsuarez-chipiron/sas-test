@@ -511,11 +511,6 @@
                 <label>Form - Refund Travel Agent</label>
             </value>
             <value>
-                <fullName>Manual - Legal Case Diary</fullName>
-                <default>false</default>
-                <label>Manual - Legal Case Diary</label>
-            </value>
-            <value>
                 <fullName>Twitter</fullName>
                 <default>false</default>
                 <label>Twitter</label>
