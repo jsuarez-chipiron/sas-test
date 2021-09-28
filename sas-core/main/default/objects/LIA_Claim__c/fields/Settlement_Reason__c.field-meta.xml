@@ -12,9 +12,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Wrongly handed by agent</fullName>
+                <fullName>Wrongly handled by agent</fullName>
                 <default>false</default>
-                <label>Wrongly handed by agent</label>
+                <label>Wrongly handled by agent</label>
             </value>
             <value>
                 <fullName>Tricky/gray zone/sensitive case</fullName>
