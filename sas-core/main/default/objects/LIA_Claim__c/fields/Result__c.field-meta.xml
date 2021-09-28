@@ -47,9 +47,9 @@
                 <label>Claim handed over to other NEB</label>
             </value>
             <value>
-                <fullName>Claim rejected since not within scope of NEB</fullName>
+                <fullName>Claim rejected</fullName>
                 <default>false</default>
-                <label>Claim rejected since not within scope of NEB</label>
+                <label>Claim rejected</label>
             </value>
             <value>
                 <fullName>Default judgment</fullName>
