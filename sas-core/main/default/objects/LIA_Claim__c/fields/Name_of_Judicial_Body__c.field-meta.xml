@@ -422,8 +422,8 @@
             <valueName>County Court at Portsmouth</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Croatia</controllingFieldValue>
-            <valueName>Croatian Civil Aviation Agency (Croatia)</valueName>
+            <controllingFieldValue>Switzerland</controllingFieldValue>
+            <valueName>Federal Office of Civil Aviation (FOCA, Switzerland)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>France</controllingFieldValue>
@@ -496,6 +496,10 @@
         <valueSettings>
             <controllingFieldValue>Belgium</controllingFieldValue>
             <valueName>Service Public Fédéral Mobilté &amp; Transport (Belgium)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Croatia</controllingFieldValue>
+            <valueName>Croatian Civil Aviation Agency (Croatia)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Czech_Republic</controllingFieldValue>

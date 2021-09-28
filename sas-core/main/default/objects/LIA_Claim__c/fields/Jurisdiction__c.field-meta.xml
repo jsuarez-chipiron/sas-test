@@ -157,6 +157,11 @@
                 <label>Sweden</label>
             </value>
             <value>
+                <fullName>Switzerland</fullName>
+                <default>false</default>
+                <label>Switzerland</label>
+            </value>
+            <value>
                 <fullName>United Kingdom (UK)</fullName>
                 <default>false</default>
                 <label>United Kingdom (UK)</label>
