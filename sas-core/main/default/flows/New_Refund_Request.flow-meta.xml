@@ -318,7 +318,7 @@
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>OC General</stringValue>
+                <stringValue>OC Error Handling</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -364,7 +364,7 @@
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>OC General</stringValue>
+                <stringValue>OC Error Handling</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -394,7 +394,7 @@
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>OC General</stringValue>
+                <stringValue>OC Error Handling</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
