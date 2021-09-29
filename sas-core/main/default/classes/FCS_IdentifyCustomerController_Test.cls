@@ -412,6 +412,88 @@ private class FCS_IdentifyCustomerController_Test {
       account.FCS_LastRetrievedFromSource__c < DateTime.now().addMinutes(5)
     );
   }
+  @IsTest
+  static void shouldReturnAccountBasedOnFrequentFlyerForSASInternalUser() {
+    FCS_FrequentFlyer__x ff = new FCS_FrequentFlyer__x(
+      ExternalId = '123',
+      AddressLine1__c = 'AddressLine1',
+      City__c = 'City',
+      ZipCode__c = 'ZipCode',
+      CountryCode__c = 'Country',
+      CountyState__c = 'State',
+      BirthDate__c = String.valueOf(Date.today().addYears(-2)),
+      ConsentEmail__c = true,
+      ConsentEB__c = false,
+      ConsentSMS__c = true,
+      ConsentEB0__c = false,
+      ConsentTelemarketing__c = true,
+      EmailPersonal__c = 'email@sas.se',
+      EBLevel__c = null,
+      EBNumber__c = '321',
+      FirstName__c = 'First Name',
+      Gender__c = 'F',
+      LastName__c = 'Last Name',
+      EBMemberSinceDate__c = null,
+      Mobile__c = '0701234567',
+      Phone__c = null,
+      SubscriptionId__c = null,
+      TPAccountNumber__c = '678',
+      CompanyName__c = 'Company Name',
+      CMP__c = '123',
+      MiddleName__c = 'Middle',
+      Salutation__c = 'Salutation',
+      Title__c = 'Title'
+    );
+    Test.startTest();
+    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
+    Account account = FCS_IdentifyCustomerController.createAccountRecordBasedOnFrequentFlyers(
+      new List<FCS_FrequentFlyer__x>{ ff }
+    );
+    Test.stopTest();
+
+    System.assertNotEquals(
+      null,
+      account,
+      'Method did not return expected account'
+    );
+    System.assertEquals(
+      C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
+      account.RecordTypeId
+    );
+    System.assertEquals(ff.ExternalId, account.FCS_FrequentFlyer__c);
+    System.assertEquals(ff.AddressLine1__c, account.PersonMailingStreet);
+    System.assertEquals(ff.City__c, account.PersonMailingCity);
+    System.assertEquals(ff.ZipCode__c, account.PersonMailingPostalCode);
+    System.assertEquals(ff.CountryCode__c, account.PersonMailingCountry);
+    System.assertEquals(ff.CountyState__c, account.PersonMailingState);
+    System.assertEquals(Date.valueOf(ff.BirthDate__c), account.PersonBirthdate);
+    System.assertEquals(ff.ConsentEmail__c, account.FCS_ConsentEmail__c);
+    System.assertEquals(ff.ConsentEB__c, account.FCS_ConsentEuroBonus__c);
+    System.assertEquals(ff.ConsentEB0__c, account.FCS_ConsentSiteProfile__c);
+    System.assertEquals(ff.ConsentSMS__c, account.FCS_ConsentSMS__c);
+    System.assertEquals(
+      ff.ConsentTelemarketing__c,
+      account.FCS_ConsentTelemarketing__c
+    );
+    System.assertEquals(null, account.PersonEmail);
+    System.assertEquals(ff.EBLevel__c, account.FCS_EBLevel__c);
+    System.assertEquals(ff.EBNumber__c, account.FCS_EBNumber__c);
+    System.assertEquals(ff.FirstName__c, account.FirstName);
+    System.assertEquals(ff.Gender__c, account.FCS_Gender__c);
+    System.assertEquals(ff.LastName__c, account.LastName);
+    System.assertEquals(null, account.FCS_EBMemberSinceDate__c);
+    System.assertEquals(ff.SubscriptionId__c, account.FCS_SubscriptionId__c);
+    System.assertEquals(ff.TPAccountNumber__c, account.FCS_TPAccountNumber__c);
+    System.assertEquals(ff.CompanyName__c, account.FCS_CompanyName__c);
+    System.assertEquals(ff.CMP__c, account.FCS_CMP__c);
+    System.assertEquals(ff.Title__c, account.PersonTitle);
+    System.assertEquals(ff.Salutation__c, account.Salutation);
+    System.assertEquals(ff.MiddleName__c, account.MiddleName);
+    System.assert(
+      account.FCS_LastRetrievedFromSource__c > DateTime.now().addMinutes(-5) &&
+      account.FCS_LastRetrievedFromSource__c < DateTime.now().addMinutes(5)
+    );
+  }
 
   /**
    * Asserts that an account record is inserted based on a provided Frequent Flyer record provided to controller

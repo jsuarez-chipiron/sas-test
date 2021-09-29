@@ -110,11 +110,16 @@ public without sharing class FCS_IdentifyCustomerController {
         MiddleName = ff.MiddleName__c,
         FCS_LastRetrievedFromSource__c = Datetime.now()
       );
+      /**
+           The email with domain @sas.dk, @sas.se and @sas.no are Salesforce internal users,
+           for Salesforce internal users automatic association of the Case and EB Account is not needed, 
+           so not assigning the email address for those Salesforce Internal Users.
+         */
       if (
         ff.EmailPersonal__c != null &&
         !(ff.EmailPersonal__c.contains('@sas.dk') ||
         ff.EmailPersonal__c.contains('@sas.se') ||
-        ff.EmailPersonal__c.contains('@sas.dk'))
+        ff.EmailPersonal__c.contains('@sas.no'))
       ) {
         newAccount.PersonEmail = ff.EmailPersonal__c;
       }
