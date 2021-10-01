@@ -3,13 +3,14 @@
     <actionCalls>
         <name>Retrieve_Flow_Variables</name>
         <label>Retrieve Flow Variables</label>
-        <locationX>299</locationX>
-        <locationY>50</locationY>
+        <locationX>529</locationX>
+        <locationY>58</locationY>
         <actionName>IRR_ACT_StaticInput</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Send_SMS_and_Email</targetReference>
+            <targetReference>RX_Line</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <outputParameters>
             <assignToReference>passengerInfo</assignToReference>
             <name>passengerInfo</name>
@@ -19,11 +20,12 @@
             <name>scheduledChangeInfo</name>
         </outputParameters>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Send_SMS_and_Email</name>
         <label>Send SMS and Email</label>
-        <locationX>299</locationX>
-        <locationY>302</locationY>
+        <locationX>214</locationX>
+        <locationY>416</locationY>
         <assignmentItems>
             <assignToReference>sendEmailMessage</assignToReference>
             <operator>Assign</operator>
@@ -53,12 +55,78 @@
             </value>
         </assignmentItems>
     </assignments>
+    <assignments>
+        <description>Send SMS and Email for passenger with RX Line</description>
+        <name>Send_SMS_and_Email_for_RX_Line</name>
+        <label>Send SMS and Email for RX Line</label>
+        <locationX>739</locationX>
+        <locationY>406</locationY>
+        <assignmentItems>
+            <assignToReference>sendEmailMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>emailTemplateName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>irr_schdulechange_RX_email_01</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sendSMSMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>smsTemplateName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>irr_schdulechange_RX_sms_01</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>RX_Line</name>
+        <label>RX Line</label>
+        <locationX>484</locationX>
+        <locationY>254</locationY>
+        <defaultConnector>
+            <targetReference>Send_SMS_and_Email</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No RX remarks</defaultConnectorLabel>
+        <rules>
+            <name>Has_RX_Remarks</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>passengerInfo.hasRXLine</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_SMS_and_Email_for_RX_Line</targetReference>
+            </connector>
+            <label>Has RX Remarks</label>
+        </rules>
+    </decisions>
     <interviewLabel>IRR EVT ScheduledChangeFlow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>IRR EVT ScheduledChangeFlow</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>

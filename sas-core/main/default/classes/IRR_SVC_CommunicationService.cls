@@ -91,6 +91,7 @@ public class IRR_SVC_CommunicationService {
         }
 
         public void add(IRR_MOD_Message message) {
+            System.debug('message--->'+ message);
             IRR_CommunicationLog__c log = new IRR_CommunicationLog__c();
             if (message.passengerInfo != null) {
                 if (message.passengerInfo.thisSegment != null) {
