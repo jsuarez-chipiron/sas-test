@@ -17,7 +17,8 @@ public with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
     String caseOrigin = 'Facebook Messenger';
     List < String > lstStatus = new List < String > {
       'New',
-      'In Progress'
+      'In Progress',
+      'New Response'
     };
     String closeStatus = 'Closed';
 
@@ -61,9 +62,8 @@ public with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
       List < Case > tagCases = new List < Case > ();
       for (Case cse: lstCses) {
         if (cse.FCS_CaseReason__c == null || cse.FCS_CaseReason__c == '') {
-          cse.Type = 'Information';
-          cse.FCS_CaseReason__c = 'Error';
-          cse.FCS_CaseSubReason__c = 'Inactive customer';
+          cse.FCS_CaseType__c = 'Error';
+          cse.FCS_Case_Reason__c = 'Disconnected customer';
           tagCases.add(cse);
         }
       }
