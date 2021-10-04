@@ -522,6 +522,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Approve</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Availability</fullName>
             <default>false</default>
         </values>
@@ -746,7 +750,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Referred to Agent Helpdesk</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Referred to Baggage Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to Corporate Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to Direct Sales</fullName>
             <default>false</default>
         </values>
         <values>
@@ -767,6 +783,10 @@
         </values>
         <values>
             <fullName>Referred to webpage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reject</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2691,6 +2711,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Receive Customer Documentation</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SAS for Business</fullName>
             <default>false</default>
         </values>
@@ -2902,6 +2926,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Death Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Deduct Points</fullName>
             <default>false</default>
         </values>
@@ -3074,6 +3102,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Positive Covid Test</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Process Question</fullName>
             <default>false</default>
         </values>
@@ -3095,6 +3127,10 @@
         </values>
         <values>
             <fullName>Rebook Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Redirection not possible</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3130,7 +3166,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SC Under 180 Minutes</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sales Control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Screen dumps from customers</fullName>
             <default>false</default>
         </values>
         <values>

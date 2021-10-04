@@ -85,6 +85,11 @@
                 <label>Puzzle</label>
             </value>
             <value>
+                <fullName>Receive Customer Documentation</fullName>
+                <default>false</default>
+                <label>Receive Customer Documentation</label>
+            </value>
+            <value>
                 <fullName>Salesforce</fullName>
                 <default>false</default>
                 <label>Salesforce</label>
@@ -142,7 +147,6 @@
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Special Service Request</valueName>
@@ -153,7 +157,6 @@
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <controllingFieldValue>Care</controllingFieldValue>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Baggage</valueName>
@@ -163,7 +166,6 @@
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Cancellation &amp; Refunds</valueName>
@@ -173,7 +175,6 @@
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Changes</valueName>
@@ -182,7 +183,6 @@
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>EuroBonus</valueName>
@@ -211,7 +211,6 @@
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Irregularities</valueName>
@@ -221,7 +220,6 @@
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>New Booking</valueName>
@@ -229,10 +227,9 @@
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Non-SAS Products</valueName>
         </valueSettings>
         <valueSettings>
@@ -247,7 +244,6 @@
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Travel Information</valueName>
@@ -263,13 +259,16 @@
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Voucher</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SME</controllingFieldValue>
             <valueName>SME</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <valueName>Receive Customer Documentation</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Functional Product Support</controllingFieldValue>

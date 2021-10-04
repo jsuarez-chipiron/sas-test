@@ -240,6 +240,11 @@
                 <label>Damaged Baggage</label>
             </value>
             <value>
+                <fullName>Death Certificate</fullName>
+                <default>false</default>
+                <label>Death Certificate</label>
+            </value>
+            <value>
                 <fullName>Deduct Points</fullName>
                 <default>false</default>
                 <label>Deduct Points</label>
@@ -450,6 +455,11 @@
                 <label>Point Sharing</label>
             </value>
             <value>
+                <fullName>Positive Covid Test</fullName>
+                <default>false</default>
+                <label>Positive Covid Test</label>
+            </value>
+            <value>
                 <fullName>Process Question</fullName>
                 <default>false</default>
                 <label>Process Question</label>
@@ -480,14 +490,19 @@
                 <label>Rebook Booking</label>
             </value>
             <value>
-                <fullName>Refunds</fullName>
+                <fullName>Redirection not possible</fullName>
                 <default>false</default>
-                <label>Refunds</label>
+                <label>Redirection not possible</label>
             </value>
             <value>
                 <fullName>Refund points</fullName>
                 <default>false</default>
                 <label>Refund points</label>
+            </value>
+            <value>
+                <fullName>Refunds</fullName>
+                <default>false</default>
+                <label>Refunds</label>
             </value>
             <value>
                 <fullName>Refund Status</fullName>
@@ -523,6 +538,16 @@
                 <fullName>SAS for Business Agreement</fullName>
                 <default>false</default>
                 <label>SAS for Business Agreement</label>
+            </value>
+            <value>
+                <fullName>Screen dumps from customers</fullName>
+                <default>false</default>
+                <label>Screen dumps from customers</label>
+            </value>
+            <value>
+                <fullName>SC Under 180 Minutes</fullName>
+                <default>false</default>
+                <label>SC Under 180 Minutes</label>
             </value>
             <value>
                 <fullName>Security</fullName>
@@ -624,6 +649,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Irregularities</controllingFieldValue>
+            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
             <controllingFieldValue>New Booking</controllingFieldValue>
             <controllingFieldValue>Non-SAS Products</controllingFieldValue>
             <controllingFieldValue>Puzzle</controllingFieldValue>
@@ -644,6 +670,22 @@
             <controllingFieldValue>GDPR</controllingFieldValue>
             <controllingFieldValue>Voucher</controllingFieldValue>
             <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
+            <valueName>Death Certificate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
+            <valueName>Positive Covid Test</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
+            <valueName>Screen dumps from customers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
+            <valueName>SC Under 180 Minutes</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New Booking</controllingFieldValue>
@@ -896,6 +938,10 @@
         <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>Disconnected customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <valueName>Redirection not possible</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
