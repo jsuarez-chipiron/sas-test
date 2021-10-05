@@ -1,12 +1,12 @@
-import { LightningElement, api, wire, track } from 'lwc';
-import findCases from '@salesforce/apex/MessagingSessionController.findCases';
+import { LightningElement, api, wire, track } from "lwc";
+import findCases from "@salesforce/apex/MessagingSessionController.findCases";
 export default class MessagingCases extends LightningElement {
   @api recordId;
   @track cases = [];
   @track cse;
   @track error = undefined;
   @wire(findCases, {
-    recordId: '$recordId',
+    recordId: "$recordId"
   })
   wiredcse({ error, data }) {
     if (data) {
