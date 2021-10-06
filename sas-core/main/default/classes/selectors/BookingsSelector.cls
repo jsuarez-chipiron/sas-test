@@ -3,6 +3,7 @@ public inherited sharing class BookingsSelector extends fflib_SObjectSelector {
     return new List<Schema.SObjectField>{
       Booking__c.Id,
       Booking__c.Booking_Reference__c,
+      Booking__c.Created_at_Travel_Office_Id__c,
       Booking__c.Is_Cancelled__c,
       Booking__c.LastModifiedDate,
       Booking__c.Name,

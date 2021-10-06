@@ -357,6 +357,11 @@
         <label>Email - Refund NO General</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Refund OC Error Handling</fullName>
+        <default>false</default>
+        <label>Email - Refund OC Error Handling</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Refund OC External</fullName>
         <default>false</default>
         <label>Email - Refund OC External</label>
@@ -525,6 +530,11 @@
         <fullName>Manual</fullName>
         <default>false</default>
         <label>Manual</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Manual - Legal Case Diary Migration</fullName>
+        <default>false</default>
+        <label>Manual - Legal Case Diary Migration</label>
     </standardValue>
     <standardValue>
         <fullName>Phone</fullName>

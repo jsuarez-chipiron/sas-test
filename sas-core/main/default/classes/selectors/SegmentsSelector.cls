@@ -11,6 +11,8 @@ public inherited sharing class SegmentsSelector extends fflib_SObjectSelector {
       Segment__c.Identifier__c,
       Segment__c.Is_Boarded__c,
       Segment__c.Seat__c,
+      Segment__c.Segment_Status__c,
+      Segment__c.Segment_Status_Code__c,
       Segment__c.Service_Class__c,
       Segment__c.Special_Service_Requests__c,
       Segment__c.Ticket_Number__c,

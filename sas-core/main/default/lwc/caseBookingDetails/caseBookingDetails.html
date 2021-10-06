@@ -79,13 +79,10 @@
                   iterator:trip={b.value.trips}
                   class="slds-m-bottom_small"
                 >
-                  <div
-                    class="slds-col slds-size_1-of-1 text-bold"
-                    key={trip.value.type}
-                  >
-                    <span>{trip.value.type}</span>
-                    <span if:true={trip.first} class="slds-float_right"
-                      >{b.value.bookingReference}</span
+                  <div class="slds-col slds-size_1-of-1" key={trip.value.type}>
+                    <strong>{trip.value.type}&nbsp;</strong>
+                    <strong if:true={trip.first} class="slds-float_right"
+                      >{b.value.bookingReference}{b.value.travelOfficeId}</strong
                     >
                   </div>
                   <div
@@ -100,9 +97,21 @@
                     "
                     key={flight.flightNumber}
                   >
-                    <div class="slds-col slds-size_3-of-12 slds-p-right_small slds-grid slds-grid_vertical">
-                      <span class="slds-col slds-size_1-of-1"><span class={flight.bulletClassName}>&#8226;</span>{flight.flightNumber}</span>
-                      <span class="slds-col slds-size_1-of-1"><span class="flight-spacer-bullet">&#8226;</span>{flight.scheduledDepartureDateLocal}</span>
+                    <div
+                      class="
+                        slds-col
+                        slds-size_3-of-12
+                        slds-p-right_small
+                        slds-grid slds-grid_vertical
+                      "
+                    >
+                      <span class="slds-col slds-size_1-of-1"
+                        ><span class={flight.bulletClassName}>&#8226;</span
+                        >{flight.flightNumber}</span
+                      >
+                      <span class="slds-col slds-size_1-of-1 flight-date"
+                        >{flight.scheduledDepartureDateLocal}</span
+                      >
                     </div>
                     <div
                       class="
@@ -116,12 +125,18 @@
                         <span>Origin&nbsp;{flight.departureAirport}</span>
                       </div>
                       <div class="slds-col slds-size_1-of-1">
-                        <span>T{flight.departureTerminal},&nbsp;{flight.departureGate}</span>
+                        <span
+                          >T{flight.departureTerminal},&nbsp;{flight.departureGate}</span
+                        >
                       </div>
                       <div class="slds-col slds-size_1-of-1">
-                        <span class={flight.departureTimeClassName}>{flight.scheduledDepartureTimeLocal}</span>
+                        <span class={flight.departureTimeClassName}
+                          >{flight.scheduledDepartureTimeLocal}</span
+                        >
                         <span if:true={flight.departureDelayed}>&nbsp;</span>
-                        <span if:true={flight.departureDelayed}>{flight.estimatedDepartureTimeLocal}</span>
+                        <span if:true={flight.departureDelayed}
+                          >{flight.estimatedDepartureTimeLocal}</span
+                        >
                       </div>
                     </div>
                     <div
@@ -135,17 +150,31 @@
                         <span>Destination&nbsp;{flight.arrivalAirport}</span>
                       </div>
                       <div class="slds-col slds-size_1-of-1">
-                        <span>T{flight.arrivalTerminal},&nbsp;{flight.arrivalGate}</span>
+                        <span
+                          >T{flight.arrivalTerminal},&nbsp;{flight.arrivalGate}</span
+                        >
                       </div>
                       <div class="slds-col slds-size_1-of-1">
-                        <span class={flight.arrivalTimeClassName}>{flight.scheduledArrivalTimeLocal}</span>
+                        <span class={flight.arrivalTimeClassName}
+                          >{flight.scheduledArrivalTimeLocal}</span
+                        >
                         <span if:true={flight.arrivalDelayed}>&nbsp;</span>
-                        <span if:true={flight.arrivalDelayed}>{flight.estimatedArrivalTimeLocal}</span>
+                        <span if:true={flight.arrivalDelayed}
+                          >{flight.estimatedArrivalTimeLocal}</span
+                        >
                       </div>
                     </div>
-                    <div class="slds-col slds-size_3-of-12 slds-grid slds-grid_vertical-reverse">
-                        <span if:true={flight.arrivalDelayed}>Delay: {flight.arrivalDelayedMinutes}</span>
-                        <span if:true={flight.cancelled}>Cancelled</span>
+                    <div
+                      class="
+                        slds-col
+                        slds-size_3-of-12
+                        slds-grid slds-grid_vertical-reverse
+                      "
+                    >
+                      <span if:true={flight.arrivalDelayed}
+                        >Delay: {flight.arrivalDelayedMinutes}</span
+                      >
+                      <span if:true={flight.cancelled}>Cancelled</span>
                     </div>
                   </div>
                 </template>
@@ -195,10 +224,10 @@
               </lightning-tab>
 
               <lightning-tab label="Booking data">
-                <div class="text-bold">
-                  <span>Travellers</span>
-                  <span class="slds-float_right"
-                    >{b.value.bookingReference}</span
+                <div>
+                  <strong>Travellers&nbsp;</strong>
+                  <strong class="slds-float_right"
+                    >{b.value.bookingReference}{b.value.travelOfficeId}</strong
                   >
                 </div>
                 <lightning-accordion
@@ -275,8 +304,14 @@
                           <span class="slds-border_bottom">{p.ssrs}</span>
                         </div>
                       </template>
-                      <div class="slds-col slds-size_1-of-1 slds-grid 
-                      slds-m-bottom_x-small">
+                      <div
+                        class="
+                          slds-col
+                          slds-size_1-of-1
+                          slds-grid
+                          slds-m-bottom_x-small
+                        "
+                      >
                         <!--  force seats and bags to the same row as both take a lot of space when there are
                                 several segments for each passenger. -->
                         <div
@@ -288,8 +323,19 @@
                           "
                         >
                           <span class="detail-box-label">Seats</span>
-                          <div class="slds-border_bottom slds-grid slds-grid_vertical">
-                            <span class="slds-size_1-of-1" for:each={p.seats} for:item="seat" key={bag}>{seat}</span>
+                          <div
+                            class="
+                              slds-border_bottom
+                              slds-grid slds-grid_vertical
+                            "
+                          >
+                            <span
+                              class="slds-size_1-of-1"
+                              for:each={p.seats}
+                              for:item="seat"
+                              key={bag}
+                              >{seat}</span
+                            >
                           </div>
                         </div>
                         <div
@@ -300,16 +346,26 @@
                           "
                         >
                           <span class="detail-box-label">Bags</span>
-                          <div class="slds-border_bottom slds-grid slds-grid_vertical">
-                            <span class="slds-size_1-of-1" for:each={p.bags} for:item="bag" key={bag}>{bag}</span>
+                          <div
+                            class="
+                              slds-border_bottom
+                              slds-grid slds-grid_vertical
+                            "
+                          >
+                            <span
+                              class="slds-size_1-of-1"
+                              for:each={p.bags}
+                              for:item="bag"
+                              key={bag}
+                              >{bag}</span
+                            >
                           </div>
                         </div>
                       </div>
                     </div>
                   </lightning-accordion-section>
                 </lightning-accordion>
-                <div
-                class="slds-m-bottom_small" >
+                <div class="slds-m-bottom_small">
                   <span
                     class="
                       slds-text-align_left
@@ -332,7 +388,7 @@
                 </div>
                 <div for:each={b.value.trips} for:item="trip" key={trip.type}>
                   <div class="slds-p-vertical_x-small">
-                    <span class="text-bold">{trip.type} </span>
+                    <strong>{trip.type} </strong>
                     <span>({b.value.type})</span>
                   </div>
                   <div
@@ -377,12 +433,18 @@
                           >{flight.serviceClass}</span
                         >
                       </div>
-                      <!-- TODO: Enable when we have status info
-                        <div class="slds-col slds-size_1-of-1 slds-grid slds-grid_vertical">
-                          <span class="detail-box-label">Status</span>
-                          <span class="slds-border_bottom">{flight.status}</span>
-                        </div>
-                        -->
+                      <div
+                        class="
+                          slds-col
+                          slds-size_1-of-1
+                          slds-grid slds-grid_vertical
+                        "
+                      >
+                        <span class="detail-box-label">Status</span>
+                        <span class="slds-border_bottom"
+                          >{flight.segmentStatusCode}</span
+                        >
+                      </div>
                     </div>
                     <div
                       class="
@@ -447,15 +509,23 @@
               </lightning-tab>
 
               <lightning-tab label={b.value.displayDetails.caseTabTitle}>
-                <div class="text-bold">
-                  <span class="slds-float_right"
-                    >{b.value.bookingReference}</span
-                  >
-                </div>
+                <strong class="slds-float_right"
+                  >{b.value.bookingReference}{b.value.travelOfficeId}</strong
+                >
                 <c-case-list cases={b.value.relatedCases}></c-case-list>
               </lightning-tab>
+              <lightning-tab
+                label={b.value.displayDetails.communicationLogsTabTitle}
+              >
+                <strong class="slds-float_right"
+                  >{b.value.bookingReference}{b.value.travelOfficeId}</strong
+                >
+                <c-communication-log
+                  communicationlogs={b.value.relatedCommunicationLogs}
+                ></c-communication-log>
+              </lightning-tab>
             </lightning-tabset>
-            <div class="bookingSeparator" if:false={b.last}>
+            <div class="booking-separator" if:false={b.last}>
               <a
                 onclick={removeBookingFromCase}
                 data-id={b.value.bookingReference}
@@ -469,7 +539,7 @@
 
     <div
       if:true={displayAddAnotherBookingForm}
-      class="slds-card__body slds-p-vertical_small addAnotherBooking"
+      class="slds-card__body slds-p-vertical_small add-another-booking"
     >
       <div class="slds-card__body_inner">
         <div

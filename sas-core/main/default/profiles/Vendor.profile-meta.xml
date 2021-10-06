@@ -160,10 +160,19 @@
         <apexClass>FCS_MassRedirection</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>MessagingSessionController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses> 
     <custom>true</custom>
    <fieldPermissions>
         <editable>false</editable>
         <field>Booking__c.Booking_Reference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Booking__c.Created_at_Travel_Office_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -508,6 +517,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Segment__c.Segment_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Segment__c.Segment_Status_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Segment__c.Service_Class__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -529,6 +548,51 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Segment__c.Trip_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>Special_Service_Request__c.Brings_Own_Mobility_Device__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Special_Service_Request__c.Mobility_Device_Dimensions__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Special_Service_Request__c.Mobility_Device_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Special_Service_Request__c.Number_Of_Special_Baggage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Special_Service_Request__c.Passenger_Needing_Assistance__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Special_Service_Request__c.Type_Of_Service_Animal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Special_Service_Request__c.Type_Of_Special_Assistance__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Special_Service_Request__c.Type_Of_Special_Baggage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Special_Service_Request__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -942,8 +1006,18 @@
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Special_Service_Request__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Contact.Group_Travel_Request__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Special_Service_Request__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
@@ -1009,6 +1083,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EmailMessage.Is_Counted__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_BookingReference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_Channel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_FlightId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_MessageContent__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1383,6 +1477,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>Segment__c</object>
         <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+	<objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Special_Service_Request__c</object>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>

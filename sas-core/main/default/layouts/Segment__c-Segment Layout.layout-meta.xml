@@ -66,6 +66,10 @@
                 <behavior>Edit</behavior>
                 <field>Trip_Type__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Segment_Status_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>

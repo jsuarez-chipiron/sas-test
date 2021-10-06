@@ -143,9 +143,9 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
                 List < Case > lstCases = FCS_TestDataFactory.createCases(1, null, null, null, null);
                 lstCases[0].Origin = 'Facebook Messenger';
                 lstCases[0].status = 'New';
-                lstCases[0].FCS_CaseReason__c = 'Baggage';
-                lstCases[0].Type = 'Information';
-                lstCases[0].RecordTypeId = C_RecordTypeHelper.CASE_INFORMATION;
+                lstCases[0].FCS_CaseType__c = 'Error';
+                lstCases[0].FCS_Case_Reason__c = 'Disconnected customer';
+                lstCases[0].RecordTypeId = C_RecordTypeHelper.CASE_CHAT;
                 insert lstCases;
 
                 MessagingChannel[] messagingChannel = [SELECT Id FROM MessagingChannel];
@@ -182,9 +182,9 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
                 List < Case > lstCases = FCS_TestDataFactory.createCases(1, null, null, null, null);
                 lstCases[0].Origin = 'Facebook Messenger';
                 lstCases[0].status = 'New';
-                lstCases[0].FCS_CaseReason__c = 'Baggage';
-                lstCases[0].Type = 'Information';
-                lstCases[0].RecordTypeId = C_RecordTypeHelper.CASE_INFORMATION;
+                lstCases[0].FCS_CaseReason__c = 'Disconnected customer';
+                lstCases[0].FCS_CaseType__c = 'Error';
+                lstCases[0].RecordTypeId = C_RecordTypeHelper.CASE_CHAT;
                 insert lstCases;
 
                 MessagingChannel[] messagingChannel = [SELECT Id FROM MessagingChannel];

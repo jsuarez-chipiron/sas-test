@@ -272,16 +272,6 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>customerCard</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>caseBookingDetails</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>createQuickActionName</name>
                     <value>Create_Refund_Request</value>
@@ -414,6 +404,42 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>fcs_CaseTag_new</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Refunds</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Info Hub</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>fcs_CaseTag</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Refunds</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Info Hub</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Case.Id</value>
@@ -446,46 +472,17 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>fcs_CaseTag_new</componentName>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Refunds</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Info Hub</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Group Sales</rightValue>
-                    </criteria>
-                </visibilityRule>
+                <componentName>caseBookingDetails</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>fcs_CaseTag</componentName>
+                <componentName>customerCard</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Refunds</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
+                        <operator>NE</operator>
                         <rightValue>Info Hub</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Group Sales</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

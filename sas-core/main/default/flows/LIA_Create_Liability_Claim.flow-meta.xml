@@ -286,8 +286,8 @@
                     <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Please add the complain CARE Case Number&lt;/span&gt;&lt;/p&gt;</helpText>
                     <isRequired>true</isRequired>
                     <validationRule>
-                        <errorMessage>&lt;p&gt;CARE Case Number cannot be more than 10 characters&lt;/p&gt;</errorMessage>
-                        <formulaExpression>LEN({!CARE_Case_Number}) &lt;= 10</formulaExpression>
+                        <errorMessage>&lt;p&gt;There is limit of 50 characters for this field&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!CARE_Case_Number}) &lt;= 50</formulaExpression>
                     </validationRule>
                 </fields>
                 <fields>

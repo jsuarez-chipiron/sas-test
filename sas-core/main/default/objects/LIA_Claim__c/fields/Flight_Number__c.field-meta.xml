@@ -3,7 +3,7 @@
     <fullName>Flight_Number__c</fullName>
     <externalId>false</externalId>
     <label>Flight Number</label>
-    <length>10</length>
+    <length>50</length>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>

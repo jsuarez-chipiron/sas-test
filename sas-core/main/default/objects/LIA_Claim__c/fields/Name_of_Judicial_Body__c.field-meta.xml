@@ -410,21 +410,20 @@
             <valueName>Umeå Tingsrätt</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>United Kingdom</controllingFieldValue>
+            <controllingFieldValue>United Kingdom (UK)</controllingFieldValue>
             <valueName>CAA (UK Civil Aviation Authority)</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>United Kingdom</controllingFieldValue>
+            <controllingFieldValue>United Kingdom (UK)</controllingFieldValue>
             <valueName>County Court at Liverpool (United Kingdom)</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>United Kingdom</controllingFieldValue>
+            <controllingFieldValue>United Kingdom (UK)</controllingFieldValue>
             <valueName>County Court at Portsmouth</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>United Kingdom</controllingFieldValue>
-            <controllingFieldValue>Croatia</controllingFieldValue>
-            <valueName>Croatian Civil Aviation Agency (Croatia)</valueName>
+            <controllingFieldValue>Switzerland</controllingFieldValue>
+            <valueName>Federal Office of Civil Aviation (FOCA, Switzerland)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>France</controllingFieldValue>
@@ -499,7 +498,11 @@
             <valueName>Service Public Fédéral Mobilté &amp; Transport (Belgium)</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Czech_Republic</controllingFieldValue>
+            <controllingFieldValue>Croatia</controllingFieldValue>
+            <valueName>Croatian Civil Aviation Agency (Croatia)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Czech Republic</controllingFieldValue>
             <valueName>Úřad pro civilní letectví (Czech CAA)</valueName>
         </valueSettings>
         <valueSettings>

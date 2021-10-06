@@ -101,9 +101,14 @@
         <enabled>true</enabled>
         <name>Manual_GDPR_Delete</name>
     </customPermissions>
-     <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Booking__c.Booking_Reference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Booking__c.Created_at_Travel_Office_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -274,6 +279,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Segment__c.Seat__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Segment__c.Segment_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Segment__c.Segment_Status_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -752,6 +767,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Legal_Case_Diary_Migration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
         <editable>false</editable>
         <field>Case.Number_of_Email_Messages_Received__c</field>
         <readable>true</readable>
@@ -826,7 +846,27 @@
         <field>Case.Previous_Owner__c</field>
         <readable>true</readable>
     </fieldPermissions>
-   <fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_BookingReference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_Channel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_FlightId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_MessageContent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.CARE_Case_Number__c</field>
         <readable>true</readable>
@@ -1279,6 +1319,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LiveChatTranscript.GDPR_Consent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LiveChatTranscript.TURI_Chat_User_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
