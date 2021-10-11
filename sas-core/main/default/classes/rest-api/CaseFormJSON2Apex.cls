@@ -12,7 +12,7 @@ global class CaseFormJSON2Apex {
   global MetaData metaData;
 
   global class MetaData {
-    global String siteUrl;
+    global String market;
   }
 
   public static CaseFormJSON2Apex parse(String json) {

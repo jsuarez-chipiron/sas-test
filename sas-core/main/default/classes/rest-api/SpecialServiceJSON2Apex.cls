@@ -24,7 +24,7 @@ global class SpecialServiceJSON2Apex {
   global MetaData metaData;
 
   global class MetaData {
-    public String siteUrl;
+    public String market;
   }
 
   public static SpecialServiceJSON2Apex parse(String json) {

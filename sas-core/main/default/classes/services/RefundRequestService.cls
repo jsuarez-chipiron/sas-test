@@ -24,7 +24,7 @@ public class RefundRequestService {
       // Refund creation
       Refund_Request__c refund = new Refund_Request__c(
         Country_of_Purchase__c = refundForm.countryOfPurchase,
-        PNR__c = refundForm.pnr,
+        PNR__c = refundForm.bookingReference,
         Ticket_Numbers__c = refundForm.ticketNumber,
         Cancel_Entire_Booking__c = refundForm.cancelEntireBooking,
         cancel_All_Passengers__c = refundForm.cancelAllPassengers,
