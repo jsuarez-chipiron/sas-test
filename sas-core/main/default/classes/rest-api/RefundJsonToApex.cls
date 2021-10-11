@@ -9,12 +9,12 @@ global class RefundJsonToApex {
     public String cancelAllPassengers; //yes|no|already-cancelled
     public String cancelDirection; //inbound|outbound
     public String bookedTripVia; //website|customer-service
-    public String pnr; //0000AA
+    public String bookingReference; //0000AA
     public String ticketNumber; //123-1234567890
     public List<String> passengerNames; // passengerNames
   }
   global class cls_metaData {
-    public String siteUrl; //sas.se
+    public String market; // se-sv
   }
   public static RefundJsonToApex parse(String json) {
     return (RefundJsonToApex) System.JSON.deserialize(

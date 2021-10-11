@@ -52,7 +52,7 @@ global class GroupTravelJsonToApex {
     public Integer numberOfTravelers;
   }
   global class MetaData {
-    public String siteUrl;
+    public String market;
   }
 
   public static GroupTravelJsonToApex parse(String json) {
