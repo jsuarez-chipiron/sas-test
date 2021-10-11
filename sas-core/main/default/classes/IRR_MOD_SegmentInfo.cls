@@ -56,4 +56,7 @@ public class IRR_MOD_SegmentInfo {
 
     @AuraEnabled
     public String arrivalCity { get; set; }
+
+    @AuraEnabled
+    public String rxType { get; set; }
 }

@@ -239,11 +239,11 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      *
      * @return List of Passenger Infos
      */
-    private List<IRR_MOD_PassengerInfo> initiatePassengerInfos(List<IRR_MOD_TedsBooking> tedsBookings, 
-                                                                String flightId, 
-                                                                String departureStation, 
+    private List<IRR_MOD_PassengerInfo> initiatePassengerInfos(List<IRR_MOD_TedsBooking> tedsBookings,
+                                                                String flightId,
+                                                                String departureStation,
                                                                 String arrivalStation,
-                                                                String fromTimeUTC, 
+                                                                String fromTimeUTC,
                                                                 String toTimeUTC ){
 
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
@@ -270,7 +270,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
                             break;
                         }
                     }
-                } 
+                }
                 //Only process current and next segments when they have not been found and flightId is available
                 if ((hasFlightId || String.isNotBlank(cFlightId)) && thisSegment == null) {
                     for (Integer i = 0; i < trip.segments.size(); i++) {
@@ -295,19 +295,20 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
                 //Process Itinerary
                 List<IRR_MOD_SegmentInfo> tripSegments = new List<IRR_MOD_SegmentInfo>();
                 for (IRR_MOD_TedsBooking.SegmentTrip segment : trip.segments) {
+
                     //Discard unconfirmed segments when constructing itinerary
                     if (segment.status != IRR_SVC_TedsService.BOOKING_STATUS_CONFIRMED) continue;
                     tripSegments.add(createSegmentInfo(segment, null));
                 }
                 if (!tripSegments.isEmpty()) itinerary.add(createTripInfo(trip, tripSegments));
+
             }
 
             for (IRR_MOD_TedsBooking.Passenger passenger : booking.passengers) {
-                
               IRR_MOD_PassengerInfo passengerInfo = createPassengerInfo(booking, passenger, thisSegment,
                         nextSegment, prevSegment, itinerary);
-             //Need to show SK operated flights and only the flights within the departure and arrival time(not flown flights), 
-             //for Advanced booking filters 
+             //Need to show SK operated flights and only the flights within the departure and arrival time(not flown flights),
+             //for Advanced booking filters
                 if(!(hasDeparturesStation | hasArrivalStation)){
                     passengerInfos.add(passengerInfo);
                 }else {
@@ -317,9 +318,9 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
                     Datetime arrivalDate = Datetime.valueOfGmt(thisSegment.flight.arrival.scheduledTime.utc.replace('T', ' '));
                     if(thisSegment.flight.operatingCarrier == 'SK' && departureDate >= fromDate &&
                     arrivalDate <= toDate) passengerInfos.add(passengerInfo);
-                }     
+                }
             }
-        }        
+        }
         return passengerInfos;
     }
 
@@ -361,6 +362,14 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         segmentInfo.statusCode = tripSegment.statusCode;
         segmentInfo.bookingClass = tripSegment.bookingClass;
         segmentInfo.serviceClass = tripSegment.serviceClass;
+        if(tripsegment.remarks != null ) {
+            for( IRR_MOD_TedsBooking.Remark remark : tripsegment.remarks) {
+                if(remark.type.contains('RXDISRUPT')){
+                    segmentInfo.rxType = remark.type;
+                    break;
+                }
+            }
+        }
 
         segmentInfo.isConfirmed = segmentInfo.status == IRR_SVC_TedsService.BOOKING_STATUS_CONFIRMED;
         if (String.isNotBlank(segmentInfo.ticketNumber)) {
@@ -408,6 +417,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         if (passenger.frequentTraveler != null && passenger.frequentTraveler.euroBonus != null &&
                 !passenger.frequentTraveler.euroBonus.isEmpty()) {
             passengerInfo.ebLevel = passenger.frequentTraveler.euroBonus[0].tier;
+            passengerInfo.euroBonusNumber = passenger.frequentTraveler.euroBonus[0].number_x;
         }
 
         if (passenger.frequentTraveler != null && passenger.frequentTraveler.other != null) {
@@ -476,10 +486,21 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         }
 
         passengerInfo.hasThisSegment = passengerInfo.thisSegment != null;
+        // passengerInfo.hasRXLine = passengerInfo.thisSegment.rxType != null;
         passengerInfo.hasPhoneNumber = String.isNotBlank(passengerInfo.phoneNumber);
         passengerInfo.hasEmailAddress = String.isNotBlank(passengerInfo.emailAddress);
         passengerInfo.hasNextSegment = passengerInfo.nextSegment != null;
         passengerInfo.hasPrevSegment = passengerInfo.prevSegment != null;
+        for(IRR_MOD_TripInfo tripInfo : passengerInfo.itinerary ){
+            Boolean hasRxdisrupt = false;
+            for(IRR_MOD_SegmentInfo segment : tripInfo.segments ) {
+                passengerInfo.hasRXLine  = segment.rxType != null;
+                hasRxdisrupt = passengerInfo.hasRXLine;
+                break;
+            }
+            if(hasRxdisrupt) break;
+        }
+        
         return passengerInfo;
     }
 }

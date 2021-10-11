@@ -129,7 +129,12 @@ public class IRR_MOD_TedsBooking {
     public Flight flight { get; set; }
     public String bookingClass { get; set; }
     public String serviceClass { get; set; }
+    public List<Remark> remarks { get; set; }
   }
+  public class Remark {
+    public String type { get; set; }
+    public String value { get; set; }
+}
 
   public class OtherFQTV {
     public List<String> segmentIds { get; set; }
@@ -161,19 +166,15 @@ public class IRR_MOD_TedsBooking {
     'number' => 'number_x'
   };
 
-  public static IRR_MOD_TedsBooking parse(String json) {
-    ffhttp_JsonDeserializer jsonDeserializer = new ffhttp_JsonDeserializer(
-      IRR_MOD_TedsBooking.class,
-      replacementMap
-    );
-    return (IRR_MOD_TedsBooking) jsonDeserializer.deserialize(json);
-  }
+    public static IRR_MOD_TedsBooking parse(String json) {
+        ffhttp_JsonDeserializer jsonDeserializer = new ffhttp_JsonDeserializer(
+                IRR_MOD_TedsBooking.class, replacementMap);
+        return (IRR_MOD_TedsBooking) jsonDeserializer.deserialize(json);
+    }
 
-  public static List<IRR_MOD_TedsBooking> parseArray(String json) {
-    ffhttp_JsonDeserializer jsonDeserializer = new ffhttp_JsonDeserializer(
-      List<IRR_MOD_TedsBooking>.class,
-      replacementMap
-    );
-    return (List<IRR_MOD_TedsBooking>) jsonDeserializer.deserialize(json);
-  }
+    public static List<IRR_MOD_TedsBooking> parseArray(String json) {
+        ffhttp_JsonDeserializer jsonDeserializer = new ffhttp_JsonDeserializer(
+                List<IRR_MOD_TedsBooking>.class, replacementMap);
+        return (List<IRR_MOD_TedsBooking>) jsonDeserializer.deserialize(json);
+    }
 }
