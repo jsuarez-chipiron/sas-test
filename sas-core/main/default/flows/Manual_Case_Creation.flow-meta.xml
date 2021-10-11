@@ -314,6 +314,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>SuppliedEmail</field>
+            <value>
+                <elementReference>Recipient_email_address</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Team__c</field>
             <value>
                 <elementReference>DepartmentTeamList.middleValue</elementReference>
@@ -490,6 +496,14 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
+            <name>Recipient_email_address</name>
+            <dataType>String</dataType>
+            <fieldText>Recipient email address</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;Optional email address for the created Case.&lt;/p&gt;</helpText>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
             <name>CaseAssignment</name>
             <choiceReferences>MeChoice</choiceReferences>
             <choiceReferences>QueueChoice</choiceReferences>
@@ -497,6 +511,7 @@
             <defaultSelectedChoiceReference>MeChoice</defaultSelectedChoiceReference>
             <fieldText>Who should the case be assigned to?</fieldText>
             <fieldType>RadioButtons</fieldType>
+            <helpText>&lt;p&gt;Option to assign the owner of the case at creation.&lt;/p&gt;&lt;p&gt;Select Me to assign the case to yourself.&lt;/p&gt;&lt;p&gt;Select Queue if you&apos;re creating a case for another Department to handle.&lt;/p&gt;</helpText>
             <isRequired>true</isRequired>
         </fields>
         <fields>
