@@ -24,7 +24,7 @@ public class SpecialServiceRequestTest {
       '   \"mobilityDeviceDimensions\": \"22.0*23\"' +
       '   },' +
       '  \"metaData\": {' +
-      '    \"siteUrl\": \"sas.se\"' +
+      '    \"market\": \"se-sv\"' +
       '  }' +
       '}';
     Test.startTest();

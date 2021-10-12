@@ -15,11 +15,11 @@ private class RefundRequestFormTest {
       '    "cancelAllPassengers": "No",' +
       '    "cancelDirection": "Inbound",' +
       '    "bookedTripVia": "Website",' +
-      '    "pnr":"0000AA",' +
+      '    "bookingReference":"0000AA",' +
       '    "ticketNumber": "123-1234567890"' +
       '  },' +
       '  "metaData": {' +
-      '    "siteUrl": "sas.se"' +
+      '    "market": "se-sv"' +
       '  }' +
       '}';
     Test.setMock(
