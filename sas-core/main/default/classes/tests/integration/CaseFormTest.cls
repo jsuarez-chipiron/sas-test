@@ -1,6 +1,5 @@
 @isTest
 private class CaseFormTest {
-  @IsTest
   static testMethod void testCreateCaseForm() {
     //Create Document
     ContentVersion cv = new ContentVersion();
