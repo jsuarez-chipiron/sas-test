@@ -1,30 +1,45 @@
 public class CaseService {
   public static String createCaseForm(CaseFormJSON2Apex caseForm) {
-    Case cse;
+    ContentVersionsSelector contentVersions = (ContentVersionsSelector) SAS_Service_Application.Selector.newInstance(
+      ContentVersion.SObjectType
+    );
+
+    Case caseToInsert;
     try {
       CaseFormJSON2Apex.FormData caseFormRequest = caseForm.formData;
-      Id conDocument = [
-        SELECT ContentDocumentId
-        FROM ContentVersion
-        WHERE Id = :caseFormRequest.contentVersionId
-      ]
-      .ContentDocumentId;
+      Set<Id> contentIds = new Set<Id>();
 
-      cse = new Case(
+      for (String contentId : caseFormRequest.contentVersionIds) {
+        contentIds.add(Id.valueOf(contentId));
+      }
+
+      List<ContentVersion> contentToLink = contentVersions.selectById(
+        contentIds
+      );
+
+      caseToInsert = new Case(
         Initially_Provided_PNR__c = caseFormRequest.bookingReference
       );
-      insert cse;
 
-      //Insert ContentDocumentLink
-      ContentDocumentLink cDocLink = new ContentDocumentLink();
-      cDocLink.ContentDocumentId = conDocument; //Add ContentDocumentId
-      cDocLink.LinkedEntityId = cse.Id; //Add attachment parentId
-      insert cDocLink;
+      insert caseToInsert;
+
+      List<ContentDocumentLink> linksToCreate = new List<ContentDocumentLink>();
+
+      for (ContentVersion content : contentToLink) {
+        linksToCreate.add(
+          new ContentDocumentLink(
+            ContentDocumentId = content.ContentDocumentId,
+            LinkedEntityId = caseToInsert.Id
+          )
+        );
+      }
+
+      insert linksToCreate;
     } catch (Exception e) {
       C_Log.logException(e, 'CaseForm', null);
       return e.getMessage();
     }
 
-    return cse.Id;
+    return caseToInsert.Id;
   }
 }

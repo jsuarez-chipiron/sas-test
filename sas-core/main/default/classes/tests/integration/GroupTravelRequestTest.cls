@@ -45,7 +45,7 @@ private class GroupTravelRequestTest {
       '   \"comments\": \"teststestst\"' +
       '  },' +
       '  \"metaData\": {' +
-      '    \"siteUrl\": \"sas.se\"' +
+      '    \"market\": \"se-sv\"' +
       '  }' +
       '}';
 
