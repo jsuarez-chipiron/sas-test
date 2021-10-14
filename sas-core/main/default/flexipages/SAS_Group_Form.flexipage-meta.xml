@@ -743,6 +743,36 @@
                 <componentName>flexipage:fieldSection</componentName>
             </componentInstance>
         </itemInstances>
+        <name>Facet-fdbc6a79-f642-4f87-a350-b2ffe9503045</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-fdbc6a79-f642-4f87-a350-b2ffe9503045</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.detail</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-98ecc396-2ea9-47fe-aceb-4ca3764a4133</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-98ecc396-2ea9-47fe-aceb-4ca3764a4133</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>force:recordDetailPanelMobile</componentName>
