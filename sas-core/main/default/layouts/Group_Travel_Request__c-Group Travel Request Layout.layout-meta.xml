@@ -31,10 +31,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Number_Of_Travellers__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Number_Of_Adults__c</field>
             </layoutItems>
             <layoutItems>
@@ -144,6 +140,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Number_Of_Wheelchairs__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Number_Of_Travellers__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -266,7 +266,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000003HglR</masterLabel>
+        <masterLabel>00h0E000002K9Fb</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
