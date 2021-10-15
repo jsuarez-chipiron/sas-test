@@ -940,6 +940,11 @@
         <field>Case.GSB_Season__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Group_Outbound_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
 	<fieldPermissions>
         <editable>false</editable>
         <field>Case.Group_Travel_Request__c</field>
