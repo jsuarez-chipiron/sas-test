@@ -101,6 +101,10 @@
                 <behavior>Edit</behavior>
                 <field>Refund_Request__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Group_Outbound_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

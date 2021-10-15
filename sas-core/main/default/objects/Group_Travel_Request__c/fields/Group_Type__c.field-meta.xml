@@ -26,6 +26,26 @@
                 <default>false</default>
                 <label>Sports</label>
             </value>
+            <value>
+                <fullName>High Demand</fullName>
+                <default>false</default>
+                <label>High Demand</label>
+            </value>
+            <value>
+                <fullName>Unique</fullName>
+                <default>false</default>
+                <label>Unique</label>
+            </value>
+            <value>
+                <fullName>Adhoc</fullName>
+                <default>false</default>
+                <label>Adhoc</label>
+            </value>
+            <value>
+                <fullName>Guarantee</fullName>
+                <default>false</default>
+                <label>Guarantee</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
