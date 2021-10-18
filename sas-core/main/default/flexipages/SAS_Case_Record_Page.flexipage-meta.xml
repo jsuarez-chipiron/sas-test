@@ -321,46 +321,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>createQuickActionName</name>
-                    <value>NewCase</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>lookupFieldName</name>
-                    <value>Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>titleFieldName</name>
-                    <value>Customer details</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>updateQuickActionName</name>
-                    <value>Case.Case_page_display_customer_contact_info</value>
-                </componentInstanceProperties>
-                <componentName>console:relatedRecord</componentName>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Special_Service_Request__r.Name}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Group_Travel_Request__r.Name}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Initially_Provided_PNR__c}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Refund_Request__r.Name}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>createQuickActionName</name>
                     <value>Create_Refund_Request</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

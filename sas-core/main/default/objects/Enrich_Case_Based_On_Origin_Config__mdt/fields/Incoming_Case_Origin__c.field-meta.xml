@@ -496,6 +496,26 @@
                 <label>Facebook Messenger</label>
             </value>
             <value>
+                <fullName>Form - Death Certificate DK</fullName>
+                <default>false</default>
+                <label>Form - Death Certificate DK</label>
+            </value>
+            <value>
+                <fullName>Form - Death Certificate International</fullName>
+                <default>false</default>
+                <label>Form - Death Certificate International</label>
+            </value>
+            <value>
+                <fullName>Form - Death Certificate NO</fullName>
+                <default>false</default>
+                <label>Form - Death Certificate NO</label>
+            </value>
+            <value>
+                <fullName>Form - Death Certificate SE</fullName>
+                <default>false</default>
+                <label>Form - Death Certificate SE</label>
+            </value>
+            <value>
                 <fullName>Form - Group Travel BE</fullName>
                 <default>false</default>
                 <label>Form - Group Travel BE</label>
@@ -601,9 +621,89 @@
                 <label>Form - Refund SC Under 180 Minutes</label>
             </value>
             <value>
+                <fullName>Form - Refunds Customer DK</fullName>
+                <default>false</default>
+                <label>Form - Refunds Customer DK</label>
+            </value>
+            <value>
+                <fullName>Form - Refunds Customer International</fullName>
+                <default>false</default>
+                <label>Form - Refunds Customer International</label>
+            </value>
+            <value>
+                <fullName>Form - Refunds Customer NO</fullName>
+                <default>false</default>
+                <label>Form - Refunds Customer NO</label>
+            </value>
+            <value>
+                <fullName>Form - Refunds Customer SE</fullName>
+                <default>false</default>
+                <label>Form - Refunds Customer SE</label>
+            </value>
+            <value>
+                <fullName>Form - Refunds Travel Agent DK</fullName>
+                <default>false</default>
+                <label>Form - Refunds Travel Agent DK</label>
+            </value>
+            <value>
+                <fullName>Form - Refunds Travel Agent International</fullName>
+                <default>false</default>
+                <label>Form - Refunds Travel Agent International</label>
+            </value>
+            <value>
+                <fullName>Form - Refunds Travel Agent NO</fullName>
+                <default>false</default>
+                <label>Form - Refunds Travel Agent NO</label>
+            </value>
+            <value>
+                <fullName>Form - Refunds Travel Agent SE</fullName>
+                <default>false</default>
+                <label>Form - Refunds Travel Agent SE</label>
+            </value>
+            <value>
                 <fullName>Form - Refund Travel Agent</fullName>
                 <default>false</default>
                 <label>Form - Refund Travel Agent</label>
+            </value>
+            <value>
+                <fullName>Form - SSR DK</fullName>
+                <default>false</default>
+                <label>Form - SSR DK</label>
+            </value>
+            <value>
+                <fullName>Form - SSR International</fullName>
+                <default>false</default>
+                <label>Form - SSR International</label>
+            </value>
+            <value>
+                <fullName>Form - SSR NO</fullName>
+                <default>false</default>
+                <label>Form - SSR NO</label>
+            </value>
+            <value>
+                <fullName>Form - SSR SE</fullName>
+                <default>false</default>
+                <label>Form - SSR SE</label>
+            </value>
+            <value>
+                <fullName>Form - Visa Rejection DK</fullName>
+                <default>false</default>
+                <label>Form - Visa Rejection DK</label>
+            </value>
+            <value>
+                <fullName>Form - Visa Rejection International</fullName>
+                <default>false</default>
+                <label>Form - Visa Rejection International</label>
+            </value>
+            <value>
+                <fullName>Form - Visa Rejection NO</fullName>
+                <default>false</default>
+                <label>Form - Visa Rejection NO</label>
+            </value>
+            <value>
+                <fullName>Form - Visa Rejection SE</fullName>
+                <default>false</default>
+                <label>Form - Visa Rejection SE</label>
             </value>
             <value>
                 <fullName>Twitter</fullName>

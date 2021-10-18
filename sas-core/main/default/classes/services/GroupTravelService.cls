@@ -1,4 +1,26 @@
 public class GroupTravelService {
+  private static Map<String, String> marketToOrigin = new Map<String, String>{
+    'dk-da' => 'Form - Group Travel DK',
+    'no-no' => 'Form - Group Travel NO',
+    'se-sv' => 'Form - Group Travel SE',
+    'be-en' => 'Form - Group Travel BE',
+    'fi-en' => 'Form - Group Travel FI',
+    'fr-fr' => 'Form - Group Travel FR',
+    'de-de' => 'Form - Group Travel DE',
+    'ie-en' => 'Form - Group Travel IE',
+    'it-en' => 'Form - Group Travel IT',
+    'nl-en' => 'Form - Group Travel NL',
+    'pl-en' => 'Form - Group Travel PL',
+    'ru-ru' => 'Form - Group Travel RU',
+    'es-es' => 'Form - Group Travel ES',
+    'ch-de' => 'Form - Group Travel CH-de',
+    'ch-fr' => 'Form - Group Travel CH-fr',
+    'gb-en' => 'Form - Group Travel GB',
+    'us-en' => 'Form - Group Travel US',
+    'lu-en' => 'Form - Group Travel LU',
+    'default' => 'Form - Group Travel GB'
+  };
+
   public static String createGroupTravelForm(
     GroupTravelJsonToApex groupTravelForm
   ) {
@@ -11,27 +33,21 @@ public class GroupTravelService {
 
       insert grpTravelRequest;
 
+      String caseOrigin = marketToOrigin.get('default');
+
+      if (marketToOrigin.get(groupTravelForm.metaData.market) != null) {
+        caseOrigin = marketToOrigin.get(groupTravelForm.metaData.market);
+      }
+
       cse = new Case(
-        SuppliedEmail = travelRequest.email,
-        SuppliedPhone = travelRequest.phone,
+        Origin = caseOrigin,
         RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
-        Group_Travel_Request__c = grpTravelRequest.Id
+        Subject = 'Group Travel Request: ' + travelRequest.groupName,
+        SuppliedEmail = travelRequest.email,
+        SuppliedPhone = travelRequest.phone
       );
 
       insert cse;
-
-      Contact con = new Contact(
-        phone = travelRequest.email,
-        email = travelRequest.phone,
-        firstName = travelRequest.firstName,
-        lastName = travelRequest.lastName,
-        MailingStreet = travelRequest.street,
-        MailingCity = travelRequest.city,
-        MailingState = travelRequest.state,
-        MailingCountry = travelRequest.country,
-        MailingPostalCode = travelRequest.postalcode,
-        Group_Travel_Request__c = grpTravelRequest.Id
-      );
     } catch (Exception e) {
       C_Log.logException(e, 'GroupTravelRequest', null);
       return e.getMessage();
@@ -54,6 +70,16 @@ public class GroupTravelService {
     grpTravelRequest.Return_date__c = Date.valueOf(travelRequest.returndate);
     grpTravelRequest.Return_time__c = travelRequest.returnTime;
 
+    grpTravelRequest.Email__c = travelRequest.email;
+    grpTravelRequest.Phone__c = travelRequest.phone;
+    grpTravelRequest.First_Name__c = travelRequest.firstName;
+    grpTravelRequest.Last_Name__c = travelRequest.lastName;
+    grpTravelRequest.Address__c = travelRequest.address;
+    grpTravelRequest.C_o_Address__c = travelRequest.coAddress;
+    grpTravelRequest.City__c = travelRequest.city;
+    grpTravelRequest.Postal_Code__c = travelRequest.postalCode;
+    grpTravelRequest.Country__c = travelRequest.country;
+
     grpTravelRequest.Number_Of_Adults__c = travelRequest.numberOfAdults;
     grpTravelRequest.Number_Of_Children__c = travelRequest.numberOfChildren;
     grpTravelRequest.Number_Of_Infants__c = travelRequest.numberOfInfants;
@@ -65,7 +91,7 @@ public class GroupTravelService {
     grpTravelRequest.Group_Type__c = travelRequest.groupType;
 
     if (travelRequest.haveCompanyCode) {
-      grpTravelRequest.have_company_Code__c = travelRequest.haveCompanyCode;
+      grpTravelRequest.Have_Company_Code__c = travelRequest.haveCompanyCode;
       grpTravelRequest.Company_Code__c = travelRequest.companyCode;
     }
     if (travelRequest.alternativeDates) {

@@ -226,6 +226,51 @@
     </fieldPermissions>
 	<fieldPermissions>
         <editable>false</editable>
+        <field>Group_Travel_Request__c.Address__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>Group_Travel_Request__c.C_o_Address__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>Group_Travel_Request__c.City__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>Group_Travel_Request__c.Country__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>Group_Travel_Request__c.Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>Group_Travel_Request__c.First_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>Group_Travel_Request__c.Last_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>Group_Travel_Request__c.Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>Group_Travel_Request__c.Postal_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
         <field>Group_Travel_Request__c.Alternate_Departure_date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -924,11 +969,6 @@
         <field>Case.Refund_PNR__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Group_Travel_Request__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Refund_Country_of_Purchase__c</field>
@@ -939,11 +979,26 @@
         <field>Case.Special_Service_Request__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Special_Service_Request__c</field>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Refund_Request__c.Email__c</field>
         <readable>true</readable>
-    </fieldPermissions>	
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Refund_Request__c.Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Refund_Request__c.First_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Refund_Request__c.Last_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
         <field>Refund_Request__c.Booked_Via__c</field>
@@ -1302,6 +1357,31 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.FCS_SASPost__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Special_Service_Request__c.Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Special_Service_Request__c.Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Special_Service_Request__c.First_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Special_Service_Request__c.Last_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Special_Service_Request__c.PNR__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>

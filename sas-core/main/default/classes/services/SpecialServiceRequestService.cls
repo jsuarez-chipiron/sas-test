@@ -1,4 +1,11 @@
 public class SpecialServiceRequestService {
+  private static Map<String, String> marketToOrigin = new Map<String, String>{
+    'dk-da' => 'Form - SSR DK',
+    'no-no' => 'Form - SSR NO',
+    'se-sv' => 'Form - SSR SE',
+    'default' => 'Form - SSR International'
+  };
+
   public static String createSpecialServiceForm(
     SpecialServiceJSON2Apex specialServiceForm
   ) {
@@ -7,33 +14,31 @@ public class SpecialServiceRequestService {
     try {
       SpecialServiceJSON2Apex.FormData specialServiceRequestForm = specialServiceForm.formData;
 
-      //create Special Service Request
       Special_Service_Request__c specialServiceRequest = createSpecialServiceRequestInstance(
         specialServiceRequestForm
       );
       insert specialServiceRequest;
 
-      // create Cases
+      String caseOrigin = marketToOrigin.get('default');
+
+      if (marketToOrigin.get(specialServiceForm.metaData.market) != null) {
+        caseOrigin = marketToOrigin.get(specialServiceForm.metaData.market);
+      }
+
       cse = new Case(
+        Initially_Provided_PNR__c = specialServiceRequestForm.bookingReference,
+        Origin = caseOrigin,
+        RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
+        Subject = 'SSR, Type: ' +
+          specialServiceRequest.Type__c +
+          ', PNR: ' +
+          specialServiceRequest.PNR__c,
         SuppliedEmail = specialServiceRequestForm.email,
         SuppliedPhone = specialServiceRequestForm.phone,
-        RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
-        Special_Service_Request__c = specialServiceRequest.Id,
-        Initially_Provided_PNR__c = specialServiceRequestForm.bookingReference
-      );
-
-      insert cse;
-
-      // create contact
-      Contact con = new Contact(
-        FirstName = specialServiceRequestForm.FirstName,
-        LastName = specialServiceRequestForm.LastName,
-        Email = specialServiceRequestForm.email,
-        phone = specialServiceRequestForm.phone,
         Special_Service_Request__c = specialServiceRequest.Id
       );
 
-      insert con;
+      insert cse;
     } catch (Exception e) {
       C_Log.logException(e, 'SpecialServiceRequest', null);
       return e.getMessage();
@@ -45,8 +50,15 @@ public class SpecialServiceRequestService {
   static Special_Service_Request__c createSpecialServiceRequestInstance(
     SpecialServiceJSON2Apex.FormData formData
   ) {
-    Special_Service_Request__c specialServiceRequest = new Special_Service_Request__c();
-    specialServiceRequest.Type__c = formData.Type;
+    Special_Service_Request__c specialServiceRequest = new Special_Service_Request__c(
+      Email__c = formData.email,
+      First_Name__c = formData.firstName,
+      Last_Name__c = formData.lastName,
+      Phone__c = formData.phone,
+      PNR__c = formData.bookingReference,
+      Type__c = formData.type
+    );
+
     specialServiceRequest.Type_Of_Special_Assistance__c = formData.typeOfSpecialAssistance;
     specialServiceRequest.Passenger_Needing_Assistance__c = formData.passengerNeedingAssistance;
     if (formData.bringsOwnMobilityDevice && formData.Type == 'Mobility') {

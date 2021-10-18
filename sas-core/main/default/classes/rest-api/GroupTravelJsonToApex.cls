@@ -16,7 +16,8 @@ global class GroupTravelJsonToApex {
     public string city;
     public string country;
     public string postalCode;
-    public string state;
+    public string address;
+    public string coAddress;
     public String street;
     public String tripType;
     public String groupType;

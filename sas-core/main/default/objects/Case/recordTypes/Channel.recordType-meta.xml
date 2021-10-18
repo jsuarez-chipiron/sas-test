@@ -4100,6 +4100,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Form - Death Certificate DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Death Certificate International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Death Certificate NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Death Certificate SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Form - Group Travel BE</fullName>
             <default>false</default>
         </values>
@@ -4185,6 +4201,70 @@
         </values>
         <values>
             <fullName>Form - Refund Travel Agent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Customer DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Customer International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Customer NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Customer SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Travel Agent DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Travel Agent International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Travel Agent NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Travel Agent SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - SSR DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - SSR International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - SSR NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - SSR SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Visa Rejection DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Visa Rejection International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Visa Rejection NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Visa Rejection SE</fullName>
             <default>false</default>
         </values>
         <values>
