@@ -496,6 +496,96 @@
                 <label>Facebook Messenger</label>
             </value>
             <value>
+                <fullName>Form - Group Travel BE</fullName>
+                <default>false</default>
+                <label>Form - Group Travel BE</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel CH-de</fullName>
+                <default>false</default>
+                <label>Form - Group Travel CH-de</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel CH-fr</fullName>
+                <default>false</default>
+                <label>Form - Group Travel CH-fr</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel DE</fullName>
+                <default>false</default>
+                <label>Form - Group Travel DE</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel DK</fullName>
+                <default>false</default>
+                <label>Form - Group Travel DK</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel ES</fullName>
+                <default>false</default>
+                <label>Form - Group Travel ES</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel FI</fullName>
+                <default>false</default>
+                <label>Form - Group Travel FI</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel FR</fullName>
+                <default>false</default>
+                <label>Form - Group Travel FR</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel GB</fullName>
+                <default>false</default>
+                <label>Form - Group Travel GB</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel IE</fullName>
+                <default>false</default>
+                <label>Form - Group Travel IE</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel IT</fullName>
+                <default>false</default>
+                <label>Form - Group Travel IT</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel LU</fullName>
+                <default>false</default>
+                <label>Form - Group Travel LU</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel NL</fullName>
+                <default>false</default>
+                <label>Form - Group Travel NL</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel NO</fullName>
+                <default>false</default>
+                <label>Form - Group Travel NO</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel PL</fullName>
+                <default>false</default>
+                <label>Form - Group Travel PL</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel RU</fullName>
+                <default>false</default>
+                <label>Form - Group Travel RU</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel SE</fullName>
+                <default>false</default>
+                <label>Form - Group Travel SE</label>
+            </value>
+            <value>
+                <fullName>Form - Group Travel US</fullName>
+                <default>false</default>
+                <label>Form - Group Travel US</label>
+            </value>
+            <value>
                 <fullName>Form - Refund Customer</fullName>
                 <default>false</default>
                 <label>Form - Refund Customer</label>

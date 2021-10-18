@@ -4100,6 +4100,78 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Form - Group Travel BE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel CH-de</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel CH-fr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel DE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel ES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel FR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel GB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel IE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel LU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel NL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel PL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel RU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel US</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Form - Refund Customer</fullName>
             <default>false</default>
         </values>
