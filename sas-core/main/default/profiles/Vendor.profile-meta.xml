@@ -417,7 +417,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Group_Travel_Request__c.Number_Of_Travellers__c</field>
+        <field>Group_Travel_Request__c.Number_Of_Special_Assistance_Travellers__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1153,6 +1153,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Refund_Request__c.PNR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Refund_Request__c.Refund_Not_Claimed_Elsewhere__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

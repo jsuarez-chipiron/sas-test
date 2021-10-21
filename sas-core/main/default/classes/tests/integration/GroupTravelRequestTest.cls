@@ -1,61 +1,92 @@
-@isTest
+@IsTest
 private class GroupTravelRequestTest {
-  static testMethod void testCreateGroupTravelForm() {
-    String json =
+  @IsTest
+  public static void shouldCreateGroupTravelRequests() {
+    GroupTravelJsonToApex requestBody = GroupTravelJsonToApex.parse(
       '{ ' +
-      '  \"formData\": {' +
-      '    \"groupName\": \"Sweden\",' +
-      '    \"email\": \"example@example.com\",' +
-      '    \"phone\": \"000000000000\",' +
-      '   \"haveCompanyCode\":true,' +
-      '    \"companyCode\": \"Ind\",' +
-      '    \"firstName\": \"test\",' +
-      '    \"lastName\": \"test1\",' +
-      '   \"city\": \"Challakere\",' +
-      '    \"tripType\": \"Round Trip\",' +
-      '    \"groupType\": \"Youth\",' +
-      '    \"fromAirport\": \"Bng\",' +
-      '   \"toAirport\": \"Sth\",' +
-      '    \"differentReturnCityAirport\": \"Hyd\",' +
-      '    \"departureTime\": \"Morning\",' +
-      '    \"departureDate\": \"2021-09-21T18:25:43-05:00\",' +
-      '   \"returnTime\": \"Morning\",' +
-      '    \"returnDate\": \"2012-09-23T18:25:43-05:00\",' +
-      '   \"alternativeDates\":true,' +
-      '    \"alternateDepartureTime\": \"Midmorning\",' +
-      '   \"alternateDepartureDate\": \"2021-09-25T18:25:43-05:00\",' +
-      '   \"alternateReturnTime\": \"Midmorning\",' +
-      '   \"alternateReturnDate\": \"2021-09-26T18:25:43-05:00\",' +
-      '   \"proposeAlternativeDestinations\": false,' +
-      '   \"otherDestinationsOfInterest\": \"testtetetsstst\",' +
-      '   \"numberOfAdults\": 2,' +
-      '   \"numberOfChildren\": 1,' +
-      '   \"numberOfInfants\": 0,' +
-      '   \"travelClass\": \"SAS Plus\",' +
-      '   \"extraBags\": true,' +
-      '   \"numberOfExtraBags\": 2,' +
-      '   \"specialBaggage\": false,' +
-      '   \"numberOfSpecialBaggage\": 0,  ' +
-      '   \"specialBaggageNote\": \" \",' +
-      '   \"wheelchairs\": true,' +
-      '   \"numberOfWheelchairs\": 1, ' +
-      '   \"visualOrHearingAssistance\": true,' +
-      '   \"formOfPayment\": \" SAS Invoice\",' +
-      '   \"invoiceAgreementWithSAS\": true,' +
-      '   \"comments\": \"teststestst\"' +
+      '  "formData": {' +
+      '    "groupName": "Group Travel Group",' +
+      '    "email": "example@example.com",' +
+      '    "phone": "110000000000",' +
+      '    "haveCompanyCode":true,' +
+      '    "companyCode": "123456A",' +
+      '    "firstName": "test",' +
+      '    "lastName": "test1",' +
+      '    "city": "Test",' +
+      '    "tripType": "round-trip",' +
+      '    "groupType": "youth",' +
+      '    "fromAirport": "BNG",' +
+      '    "toAirport": "ARN",' +
+      '    "differentReturnCityAirport": "HYH",' +
+      '    "departureTime": "evening",' +
+      '    "departureDate": "2021-09-21",' +
+      '    "returnTime": "morning",' +
+      '    "returnDate": "2012-09-23",' +
+      '    "alternativeDates":true,' +
+      '    "alternateDepartureTime": "midmorning",' +
+      '    "alternateReturnTime": "any-time",' +
+      '    "alternateReturnDate": "2021-09-26",' +
+      '    "proposeAlternativeDestinations": false,' +
+      '    "otherDestinationsOfInterest": "testtetetsstst",' +
+      '    "numberOfAdults": 2,' +
+      '    "numberOfChildren": 1,' +
+      '    "numberOfInfants": 0,' +
+      '    "travelClass": "sas-plus",' +
+      '    "wheelchairs": true,' +
+      '    "numberOfWheelchairs": 1, ' +
+      '    "visualOrHearingAssistance": true,' +
+      '    "formOfPayment": "sas-invoice",' +
+      '    "invoiceAgreementWithSAS": true,' +
+      '    "comments": "teststestst"' +
       '  },' +
-      '  \"metaData\": {' +
-      '    \"market\": \"se-sv\"' +
+      '  "metaData": {' +
+      '    "market": "fr-fr"' +
       '  }' +
-      '}';
+      '}'
+    );
+
+    Test.setMock(
+      HttpCalloutMock.class,
+      new TEDSBookingSingleAndFlightSuccessMock()
+    );
 
     Test.startTest();
-    RestRequest request = new RestRequest();
-    request.requestUri = '/services/apexrest/GroupTravelForm';
-    request.httpMethod = 'POST';
-    RestContext.request = request;
-    GroupTravelJsonToApex obj = GroupTravelJsonToApex.parse(json);
-    GroupTravelRequestForm.groupTravelForm(obj);
+    GroupTravelRequestForm.createGroupTravelRequest(requestBody);
     Test.StopTest();
+
+    Group_Travel_Request__c req = [
+      SELECT Id, Departure_Date__c, Invoice_Agreement_With_SAS__c
+      FROM Group_Travel_Request__c
+      WHERE Phone__c = '110000000000'
+    ];
+    Case c = [
+      SELECT Id, Department__c, Origin
+      FROM Case
+      WHERE Group_Travel_Request__c = :req.Id
+    ];
+
+    System.assertEquals(
+      true,
+      req.Invoice_Agreement_With_SAS__c,
+      'Form data should be parsed correctly into picklists.'
+    );
+
+    System.assertEquals(
+      Date.valueOf('2021-09-21'),
+      req.Departure_Date__c,
+      'Form data should be parsed correctly into dates.'
+    );
+
+    System.assertEquals(
+      'Form - Group Travel FR',
+      c.Origin,
+      'Case Origin should be set according to market and form type.'
+    );
+
+    System.assertEquals(
+      'Group Sales',
+      c.Department__c,
+      'Case Department should be set by Case Origin to refunds.'
+    );
   }
 }

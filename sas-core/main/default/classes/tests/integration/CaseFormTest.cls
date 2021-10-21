@@ -1,46 +1,70 @@
 @isTest
 private class CaseFormTest {
-  static testMethod void testCreateCaseForm() {
-    //Create Document
-    ContentVersion cv = new ContentVersion();
-    cv.Title = 'Test Document';
-    cv.PathOnClient = 'TestDocument.pdf';
-    cv.VersionData = Blob.valueOf('Test Content');
-    cv.IsMajorVersion = true;
-    insert cv;
+  @IsTest
+  public static void shouldCreateCaseAndAttachments() {
+    // Create attachments
+    ContentVersion attachment1 = new ContentVersion();
+    attachment1.Title = 'Test Document1';
+    attachment1.PathOnClient = 'TestDocument1.txt';
+    attachment1.VersionData = Blob.valueOf('Test Content1');
+    attachment1.IsMajorVersion = true;
+    ContentVersion attachment2 = new ContentVersion();
+    attachment2.Title = 'Test Document2';
+    attachment2.PathOnClient = 'TestDocument2.txt';
+    attachment2.VersionData = Blob.valueOf('Test Content2');
+    attachment2.IsMajorVersion = true;
+    insert attachment1;
+    insert attachment2;
 
-    String json =
+    CaseFormJSON2Apex requestBody = CaseFormJSON2Apex.parse(
       '{ ' +
-      '  \"formData\": {' +
-      '    \"bookingReference\": \"123456\",' +
-      '    \"contentVersionIds\":["' +
-      cv.Id +
+      '  "formData\": {' +
+      '    "bookingReference": "95TEST",' +
+      '    "type": "visa-rejection",' +
+      '    "contentVersionIds":["' +
+      attachment1.Id +
+      '","' +
+      attachment2.Id +
       '"]' +
       '  },' +
-      '  \"metaData\": {' +
-      '    \"market\": \"se-sv\"' +
+      '  "metaData": {' +
+      '    "market": "dk-da"' +
       '  }' +
-      '}';
+      '}'
+    );
 
-    Test.startTest();
     Test.setMock(
       HttpCalloutMock.class,
       new TEDSBookingSingleAndFlightSuccessMock()
     );
-    RestRequest request = new RestRequest();
-    request.requestUri = '/services/apexrest/CaseForm';
-    request.httpMethod = 'POST';
-    RestContext.request = request;
-    CaseFormJSON2Apex obj = CaseFormJSON2Apex.parse(json);
-    string caseId = CaseForm.CaseForm(obj);
+
+    Test.startTest();
+    CaseForm.createCase(requestBody);
     Test.StopTest();
-    System.assertEquals('500', caseId.substring(0, 3));
-    Integer contentDocument = [
+
+    Case c = [
+      SELECT Id, Origin
+      FROM Case
+      WHERE Initially_Provided_PNR__c = '95TEST'
+    ];
+
+    Integer numberOfContentDocumentLinks = [
         SELECT Id, LinkedEntityId
         FROM ContentDocumentLink
-        WHERE LinkedEntityId = :caseId
+        WHERE LinkedEntityId = :c.Id
       ]
       .size();
-    System.assertEquals(1, contentDocument);
+
+    System.assertEquals(
+      'Form - Visa Rejection DK',
+      c.Origin,
+      'Case Origin should be set according to market and form type.'
+    );
+
+    System.assertEquals(
+      2,
+      numberOfContentDocumentLinks,
+      'There should exist two linked attachments to the case.'
+    );
   }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Number_Of_Travellers__c</fullName>
+    <fullName>Number_Of_Special_Assistance_Travellers__c</fullName>
     <externalId>false</externalId>
-    <label>Number Of Travellers</label>
-    <precision>18</precision>
+    <label>Number Of Special Assistance Travellers</label>
+    <precision>5</precision>
     <required>false</required>
     <scale>0</scale>
     <trackHistory>false</trackHistory>

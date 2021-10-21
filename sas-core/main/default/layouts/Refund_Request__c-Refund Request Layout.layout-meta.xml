@@ -46,6 +46,10 @@
                 <behavior>Edit</behavior>
                 <field>Last_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Refund_Not_Claimed_Elsewhere__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

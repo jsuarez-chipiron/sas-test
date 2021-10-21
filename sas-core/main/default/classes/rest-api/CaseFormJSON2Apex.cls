@@ -6,6 +6,7 @@ global class CaseFormJSON2Apex {
   global class FormData {
     global String bookingReference;
     global List<String> contentVersionIds;
+    global String type;
   }
 
   global FormData formData;

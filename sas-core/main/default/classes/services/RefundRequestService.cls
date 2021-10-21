@@ -1,65 +1,87 @@
 public without sharing class RefundRequestService {
+  // TODO: This parsing logic should be at the API layer.
   private static Map<String, String> marketToOrigin = new Map<String, String>{
-    'dk-da' => 'Form - Refunds Customer DK',
-    'no-no' => 'Form - Refunds Customer NO',
-    'se-sv' => 'Form - Refunds Customer SE',
-    'default' => 'Form - Refunds Customer International'
+    'normal-dk-da' => 'Form - Refunds Customer DK',
+    'normal-no-no' => 'Form - Refunds Customer NO',
+    'normal-se-sv' => 'Form - Refunds Customer SE',
+    'normal-default' => 'Form - Refunds Customer International',
+    'travel-agent-dk-da' => 'Form - Refunds Travel Agent DK',
+    'travel-agent-no-no' => 'Form - Refunds Travel Agent NO',
+    'travel-agent-se-sv' => 'Form - Refunds Travel Agent SE',
+    'travel-agent-default' => 'Form - Refunds Travel Agent International'
   };
 
-  public static String createRefundForm(RefundJsonToApex form) {
-    Case cse;
+  private static Map<String, String> jsonToPicklist = new Map<String, String>{
+    'sas-site' => 'Website',
+    'sas-customer-service' => 'Customer Service',
+    'yes' => 'Yes',
+    'no' => 'No',
+    'already-cancelled' => 'Already Cancelled',
+    'outbound' => 'Outbound',
+    'return' => 'Inbound'
+  };
 
-    try {
-      String notes = '';
+  public static void createRefundRequest(RefundJsonToApex form) {
+    String notes = '';
 
-      RefundJsonToApex.FormData refundForm = form.formData;
-      // Construct list of passenger in separate line
-      if (refundForm.cancelAllPassengers == 'No') {
-        for (String psgName : refundForm.passengerNames) {
-          notes += psgName + '\r\n';
-        }
+    // Construct list of passenger in separate line
+    if (form.formData.cancelAllPassengers == 'No') {
+      for (String psgName : form.formData.passengerNames) {
+        notes += psgName + '\r\n';
       }
-
-      // Refund creation
-      Refund_Request__c refund = new Refund_Request__c(
-        Booked_Via__c = refundForm.bookedTripVia, // FIXME: Parse data
-        Cancel_All_Passengers__c = refundForm.cancelAllPassengers, // FIXME: Parse data
-        Cancel_Direction__c = refundForm.cancelDirection, // FIXME: Parse data
-        Cancel_Entire_Booking__c = refundForm.cancelEntireBooking, // FIXME: Parse data
-        Country_of_Purchase__c = refundForm.countryOfPurchase, // FIXME: Parse data
-        Email__c = refundForm.email,
-        First_Name__c = refundForm.firstName,
-        Last_Name__c = refundForm.lastName,
-        Note__c = notes,
-        Phone__c = refundForm.phone,
-        PNR__c = refundForm.bookingReference,
-        Ticket_Numbers__c = refundForm.ticketNumber
-      );
-
-      insert refund;
-
-      String caseOrigin = marketToOrigin.get('default');
-
-      if (marketToOrigin.get(form.metaData.market) != null) {
-        caseOrigin = marketToOrigin.get(form.metaData.market);
-      }
-
-      // Case Creation
-      cse = new Case(
-        Subject = 'Refund Request, PNR: ' + refundForm.bookingReference,
-        SuppliedEmail = refundForm.email,
-        SuppliedPhone = refundForm.phone,
-        Refund_Request__c = refund.Id,
-        Origin = caseOrigin,
-        RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL
-      );
-
-      insert cse;
-    } catch (Exception e) {
-      C_Log.logException(e, 'RefundRequest', null);
-      return e.getMessage();
     }
 
-    return cse.Id;
+    Refund_Request__c refund = new Refund_Request__c(
+      Booked_Via__c = jsonToPicklist.get(form.formData.bookedTripVia),
+      Cancel_All_Passengers__c = jsonToPicklist.get(
+        form.formData.cancelAllPassengers
+      ),
+      Cancel_Direction__c = jsonToPicklist.get(form.formData.cancelDirection),
+      Cancel_Entire_Booking__c = jsonToPicklist.get(
+        form.formData.cancelEntireBooking
+      ),
+      Country_of_Purchase__c = form.formData.countryOfPurchase,
+      Email__c = form.formData.email,
+      First_Name__c = form.formData.firstName,
+      Last_Name__c = form.formData.lastName,
+      Note__c = notes,
+      Phone__c = form.formData.phone,
+      PNR__c = form.formData.bookingReference,
+      Refund_Not_Claimed_Elsewhere__c = form.formData.notClaimedElsewhere ==
+        null
+        ? false
+        : form.formData.notClaimedElsewhere,
+      Ticket_Numbers__c = form.formData.ticketNumber
+    );
+
+    insert refund;
+
+    Case caseToInsert = new Case(
+      Subject = 'Refund Request, PNR: ' + form.formData.bookingReference,
+      SuppliedEmail = form.formData.email,
+      SuppliedPhone = form.formData.phone,
+      Refund_Request__c = refund.Id,
+      RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL
+    );
+
+    String caseOrigin;
+    if (
+      marketToOrigin.get(form.formData.type + '-' + form.metaData.market) !=
+      null
+    ) {
+      caseOrigin = marketToOrigin.get(
+        form.formData.type +
+        '-' +
+        form.metaData.market
+      );
+    } else if (marketToOrigin.get(form.formData.type + '-default') != null) {
+      caseOrigin = marketToOrigin.get(form.formData.type + '-default');
+    }
+
+    if (caseOrigin != null) {
+      caseToInsert.Origin = caseOrigin;
+    }
+
+    insert caseToInsert;
   }
 }

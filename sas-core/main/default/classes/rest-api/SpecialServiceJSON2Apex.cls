@@ -5,19 +5,19 @@
 global class SpecialServiceJSON2Apex {
   global class FormData {
     public String bookingReference;
+    public Boolean bringsOwnMobilityDevice;
     public String email;
-    public String phone;
     public String firstName;
     public String lastName;
-    public String type;
-    public String passengerNeedingAssistance;
-    public String typeOfSpecialAssistance;
-    public String typeOfServiceAnimal;
-    public Integer numberOfSpecialBaggage;
-    public String typeOfSpecialBaggage;
-    public Boolean bringsOwnMobilityDevice;
-    public String mobilityDeviceType;
     public String mobilityDeviceDimensions;
+    public String mobilityDeviceType;
+    public Integer numberOfSpecialBaggage;
+    public String passengerNeedingAssistance;
+    public String phone;
+    public String type;
+    public String typeOfServiceAnimal;
+    public String typeOfSpecialAssistance;
+    public String typeOfSpecialBaggage;
   }
 
   global FormData formData;

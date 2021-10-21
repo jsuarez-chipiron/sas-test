@@ -446,7 +446,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Number_Of_Travellers__c</fieldItem>
+                <fieldItem>Record.Number_Of_Special_Assistance_Travellers__c</fieldItem>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Visual_or_Hearing_assistance__c}</leftValue>

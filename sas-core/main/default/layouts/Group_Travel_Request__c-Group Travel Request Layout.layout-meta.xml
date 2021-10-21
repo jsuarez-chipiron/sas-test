@@ -143,7 +143,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Number_Of_Travellers__c</field>
+                <field>Number_Of_Special_Assistance_Travellers__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
