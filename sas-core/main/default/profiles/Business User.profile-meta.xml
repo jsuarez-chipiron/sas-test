@@ -1063,7 +1063,12 @@
         <editable>false</editable>
         <field>LIA_Claim__c.Interest_Paid__c</field>
         <readable>false</readable>
-    </fieldPermissions>    
+    </fieldPermissions> 
+     <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.Has_been_sent_to_settle__c</field>
+        <readable>false</readable>
+    </fieldPermissions>            
      <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Judicial_Body__c</field>
