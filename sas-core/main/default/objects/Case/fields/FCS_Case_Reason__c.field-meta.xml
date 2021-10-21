@@ -649,15 +649,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Irregularities</controllingFieldValue>
-            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
+            <controllingFieldValue>Voucher</controllingFieldValue>
             <controllingFieldValue>New Booking</controllingFieldValue>
             <controllingFieldValue>Non-SAS Products</controllingFieldValue>
             <controllingFieldValue>Puzzle</controllingFieldValue>
+            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
             <controllingFieldValue>Salesforce</controllingFieldValue>
             <controllingFieldValue>SAS for Business</controllingFieldValue>
             <controllingFieldValue>SME</controllingFieldValue>
             <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
             <controllingFieldValue>Baggage</controllingFieldValue>
             <controllingFieldValue>Cancellation &amp; Refunds</controllingFieldValue>
             <controllingFieldValue>Changes</controllingFieldValue>
@@ -666,26 +666,30 @@
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
             <controllingFieldValue>Fraud</controllingFieldValue>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
             <controllingFieldValue>GDPR</controllingFieldValue>
-            <controllingFieldValue>Voucher</controllingFieldValue>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
             <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
-            <valueName>Death Certificate</valueName>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>Help to Request</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
-            <valueName>Positive Covid Test</valueName>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>Help With Usage</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
-            <valueName>Screen dumps from customers</valueName>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>Info About Expiry Date</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
-            <valueName>SC Under 180 Minutes</valueName>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>Solving Online Problem During Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <valueName>Status Waiting Time</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New Booking</controllingFieldValue>
@@ -728,6 +732,22 @@
             <controllingFieldValue>Puzzle</controllingFieldValue>
             <controllingFieldValue>Salesforce</controllingFieldValue>
             <valueName>New feature</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
+            <valueName>Death Certificate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
+            <valueName>Positive Covid Test</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
+            <valueName>Screen dumps from customers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
+            <valueName>SC Under 180 Minutes</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Salesforce</controllingFieldValue>
@@ -828,46 +848,6 @@
         <valueSettings>
             <controllingFieldValue>Special Service Request</controllingFieldValue>
             <valueName>Add Wheelchair</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Arrival info</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Assist with check-in</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Connection Info</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Departure Info</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Fast Track</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Inform about Airport Services</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Inform about lounges</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>SAS Aircraft</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Security</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Support in Document Control</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
@@ -1105,16 +1085,48 @@
             <valueName>Star Online</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
-            <valueName>Error Management</valueName>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Arrival info</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
-            <valueName>Online Problems</valueName>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Assist with check-in</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
-            <valueName>Update Profile</valueName>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Connection Info</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Departure Info</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Fast Track</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Inform about Airport Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Inform about lounges</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>SAS Aircraft</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Security</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Support in Document Control</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Ticket status</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>GDPR</controllingFieldValue>
@@ -1125,24 +1137,16 @@
             <valueName>Extract</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Voucher</controllingFieldValue>
-            <valueName>Help to Request</valueName>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Error Management</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Voucher</controllingFieldValue>
-            <valueName>Help With Usage</valueName>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Online Problems</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Voucher</controllingFieldValue>
-            <valueName>Info About Expiry Date</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Voucher</controllingFieldValue>
-            <valueName>Solving Online Problem During Request</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Voucher</controllingFieldValue>
-            <valueName>Status Waiting Time</valueName>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Update Profile</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

@@ -550,48 +550,141 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>Process Question</controllingFieldValue>
-            <valueName>Inform Process Owner/Specialist</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Process Question</controllingFieldValue>
-            <valueName>Update User Guide</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Process Refund</controllingFieldValue>
-            <valueName>According to rules</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Process Refund</controllingFieldValue>
-            <controllingFieldValue>Change booking</controllingFieldValue>
-            <controllingFieldValue>Change commitment dates</controllingFieldValue>
-            <controllingFieldValue>Make Booking</controllingFieldValue>
-            <controllingFieldValue>Name Change</controllingFieldValue>
-            <valueName>Deviation from rules</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Process Refund</controllingFieldValue>
-            <valueName>Involuntary</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <controllingFieldValue>Point Sharing</controllingFieldValue>
+            <controllingFieldValue>Positive Covid Test</controllingFieldValue>
+            <controllingFieldValue>Solve log-in problems</controllingFieldValue>
+            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
+            <controllingFieldValue>Solving Online Problem During Request</controllingFieldValue>
+            <controllingFieldValue>Spam</controllingFieldValue>
+            <controllingFieldValue>Spelling mistake</controllingFieldValue>
+            <controllingFieldValue>Star Online</controllingFieldValue>
             <controllingFieldValue>Status Waiting Time</controllingFieldValue>
             <controllingFieldValue>Support in Document Control</controllingFieldValue>
+            <controllingFieldValue>Provide Delay Certificate</controllingFieldValue>
             <controllingFieldValue>Ticket status</controllingFieldValue>
+            <controllingFieldValue>Provide program information</controllingFieldValue>
+            <controllingFieldValue>Rebook Booking</controllingFieldValue>
+            <controllingFieldValue>Add Musical Instrument</controllingFieldValue>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <controllingFieldValue>Add Seating</controllingFieldValue>
+            <controllingFieldValue>Refund Status</controllingFieldValue>
+            <controllingFieldValue>Add Skis</controllingFieldValue>
+            <controllingFieldValue>Add Special Assistance</controllingFieldValue>
+            <controllingFieldValue>Add Wheelchair</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Arrival info</controllingFieldValue>
             <controllingFieldValue>Travel Insurance Info</controllingFieldValue>
+            <controllingFieldValue>Access rights</controllingFieldValue>
+            <controllingFieldValue>Add Animals</controllingFieldValue>
+            <controllingFieldValue>Add Baggage</controllingFieldValue>
+            <controllingFieldValue>Add Bike</controllingFieldValue>
+            <controllingFieldValue>Add Biofuel</controllingFieldValue>
+            <controllingFieldValue>Add EB in Booking</controllingFieldValue>
+            <controllingFieldValue>Add Golfbag</controllingFieldValue>
+            <controllingFieldValue>Add Infant in Booking</controllingFieldValue>
+            <controllingFieldValue>Add Meals</controllingFieldValue>
+            <controllingFieldValue>Assist with check-in</controllingFieldValue>
+            <controllingFieldValue>ATO Account Takeover</controllingFieldValue>
+            <controllingFieldValue>Boozt Attack</controllingFieldValue>
+            <controllingFieldValue>Bug</controllingFieldValue>
+            <controllingFieldValue>Campaign support</controllingFieldValue>
+            <controllingFieldValue>Cancel Booking</controllingFieldValue>
+            <controllingFieldValue>CAR</controllingFieldValue>
+            <controllingFieldValue>Car Rental Info</controllingFieldValue>
+            <controllingFieldValue>Change commitment dates</controllingFieldValue>
+            <controllingFieldValue>Charter Info</controllingFieldValue>
+            <controllingFieldValue>Check missing 20000 Status pts Amex</controllingFieldValue>
+            <controllingFieldValue>Connection Info</controllingFieldValue>
+            <controllingFieldValue>Coop</controllingFieldValue>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <controllingFieldValue>Credit Card</controllingFieldValue>
+            <controllingFieldValue>Credit expired points</controllingFieldValue>
+            <controllingFieldValue>Credit points</controllingFieldValue>
+            <controllingFieldValue>Crime Prevention</controllingFieldValue>
+            <controllingFieldValue>CT check</controllingFieldValue>
+            <controllingFieldValue>Death Certificate</controllingFieldValue>
+            <controllingFieldValue>Deduct Points</controllingFieldValue>
+            <controllingFieldValue>Delete Profile</controllingFieldValue>
+            <controllingFieldValue>Deletion</controllingFieldValue>
+            <controllingFieldValue>Departure Info</controllingFieldValue>
+            <controllingFieldValue>Digital Channel</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>Disconnected customer</controllingFieldValue>
+            <controllingFieldValue>Escalate EB Shop problems</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>EuroBonus CN</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
+            <controllingFieldValue>Extract</controllingFieldValue>
+            <controllingFieldValue>Fast Track</controllingFieldValue>
+            <controllingFieldValue>GAC Give Away Card</controllingFieldValue>
+            <controllingFieldValue>General Information</controllingFieldValue>
+            <controllingFieldValue>Give Away Membership</controllingFieldValue>
+            <controllingFieldValue>Groups</controllingFieldValue>
+            <controllingFieldValue>Help to Request</controllingFieldValue>
+            <controllingFieldValue>Help With Usage</controllingFieldValue>
+            <controllingFieldValue>Hotel</controllingFieldValue>
+            <controllingFieldValue>Hotel Info</controllingFieldValue>
+            <controllingFieldValue>Info About Expiry Date</controllingFieldValue>
+            <controllingFieldValue>Inform about Airport Services</controllingFieldValue>
+            <controllingFieldValue>Inform about lounges</controllingFieldValue>
+            <controllingFieldValue>Information Missing</controllingFieldValue>
+            <controllingFieldValue>Information update needed</controllingFieldValue>
+            <controllingFieldValue>Link not working</controllingFieldValue>
+            <controllingFieldValue>Merge</controllingFieldValue>
+            <controllingFieldValue>Missing 1000 Status pts MC</controllingFieldValue>
+            <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
+            <controllingFieldValue>Sales Control</controllingFieldValue>
+            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
+            <controllingFieldValue>SAS Flights</controllingFieldValue>
+            <controllingFieldValue>Screen dumps from customers</controllingFieldValue>
+            <controllingFieldValue>Security</controllingFieldValue>
+            <controllingFieldValue>Security code sent</controllingFieldValue>
+            <controllingFieldValue>New feature</controllingFieldValue>
+            <controllingFieldValue>On-board services</controllingFieldValue>
+            <valueName>Completed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sell</controllingFieldValue>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sell</controllingFieldValue>
+            <controllingFieldValue>Provide Documents</controllingFieldValue>
+            <valueName>Receipt</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sell</controllingFieldValue>
+            <valueName>SAS Invoice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sell</controllingFieldValue>
+            <valueName>Sell/Resell</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sell</controllingFieldValue>
+            <valueName>Wrong deb</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Solve log-in problems</controllingFieldValue>
+            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
+            <controllingFieldValue>Solving Online Problem During Request</controllingFieldValue>
+            <controllingFieldValue>Status Waiting Time</controllingFieldValue>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <controllingFieldValue>Support in Document Control</controllingFieldValue>
+            <controllingFieldValue>Ticket status</controllingFieldValue>
             <controllingFieldValue>Provide Documents</controllingFieldValue>
             <controllingFieldValue>Provide program information</controllingFieldValue>
             <controllingFieldValue>Rebook Booking</controllingFieldValue>
-            <controllingFieldValue>Refund Status</controllingFieldValue>
-            <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
             <controllingFieldValue>Add Musical Instrument</controllingFieldValue>
             <controllingFieldValue>Add Seating</controllingFieldValue>
-            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
+            <controllingFieldValue>Refund Status</controllingFieldValue>
             <controllingFieldValue>Add Skis</controllingFieldValue>
             <controllingFieldValue>Add Special Assistance</controllingFieldValue>
             <controllingFieldValue>Add Wheelchair</controllingFieldValue>
             <controllingFieldValue>Allowance</controllingFieldValue>
             <controllingFieldValue>Arrival info</controllingFieldValue>
+            <controllingFieldValue>Travel Insurance Info</controllingFieldValue>
             <controllingFieldValue>Add Animals</controllingFieldValue>
             <controllingFieldValue>Add Baggage</controllingFieldValue>
             <controllingFieldValue>Add Bike</controllingFieldValue>
@@ -624,36 +717,49 @@
             <controllingFieldValue>Inform about Airport Services</controllingFieldValue>
             <controllingFieldValue>Inform about lounges</controllingFieldValue>
             <controllingFieldValue>Make Booking</controllingFieldValue>
+            <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
+            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
             <controllingFieldValue>Missing points</controllingFieldValue>
-            <controllingFieldValue>Security</controllingFieldValue>
-            <controllingFieldValue>Solve log-in problems</controllingFieldValue>
             <controllingFieldValue>Name Change</controllingFieldValue>
-            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
+            <controllingFieldValue>Security</controllingFieldValue>
             <controllingFieldValue>Name correction</controllingFieldValue>
-            <controllingFieldValue>Solving Online Problem During Request</controllingFieldValue>
             <controllingFieldValue>On-board services</controllingFieldValue>
             <controllingFieldValue>Point related question</controllingFieldValue>
             <valueName>Referred to feedback form</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <controllingFieldValue>Solve log-in problems</controllingFieldValue>
+            <controllingFieldValue>Provide program information</controllingFieldValue>
+            <controllingFieldValue>Add EB in Booking</controllingFieldValue>
+            <controllingFieldValue>Campaign support</controllingFieldValue>
+            <controllingFieldValue>Change Profile</controllingFieldValue>
+            <controllingFieldValue>Delete Profile</controllingFieldValue>
+            <controllingFieldValue>Escalate EB Shop problems</controllingFieldValue>
+            <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
+            <controllingFieldValue>Missing points</controllingFieldValue>
+            <controllingFieldValue>Point related question</controllingFieldValue>
+            <valueName>Referred to mail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Solve log-in problems</controllingFieldValue>
+            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
+            <controllingFieldValue>Solving Online Problem During Request</controllingFieldValue>
             <controllingFieldValue>Status Waiting Time</controllingFieldValue>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
             <controllingFieldValue>Support in Document Control</controllingFieldValue>
             <controllingFieldValue>Ticket status</controllingFieldValue>
-            <controllingFieldValue>Travel Insurance Info</controllingFieldValue>
             <controllingFieldValue>Provide Documents</controllingFieldValue>
             <controllingFieldValue>Provide program information</controllingFieldValue>
             <controllingFieldValue>Rebook Booking</controllingFieldValue>
-            <controllingFieldValue>Refund Status</controllingFieldValue>
-            <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
             <controllingFieldValue>Add Musical Instrument</controllingFieldValue>
             <controllingFieldValue>Add Seating</controllingFieldValue>
-            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
+            <controllingFieldValue>Refund Status</controllingFieldValue>
             <controllingFieldValue>Add Skis</controllingFieldValue>
             <controllingFieldValue>Add Special Assistance</controllingFieldValue>
             <controllingFieldValue>Add Wheelchair</controllingFieldValue>
             <controllingFieldValue>Allowance</controllingFieldValue>
             <controllingFieldValue>Arrival info</controllingFieldValue>
+            <controllingFieldValue>Travel Insurance Info</controllingFieldValue>
             <controllingFieldValue>Add Animals</controllingFieldValue>
             <controllingFieldValue>Add Baggage</controllingFieldValue>
             <controllingFieldValue>Add Bike</controllingFieldValue>
@@ -687,47 +793,37 @@
             <controllingFieldValue>Inform about Airport Services</controllingFieldValue>
             <controllingFieldValue>Inform about lounges</controllingFieldValue>
             <controllingFieldValue>Make Booking</controllingFieldValue>
+            <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
+            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
             <controllingFieldValue>Missing points</controllingFieldValue>
-            <controllingFieldValue>Security</controllingFieldValue>
-            <controllingFieldValue>Solve log-in problems</controllingFieldValue>
             <controllingFieldValue>Name Change</controllingFieldValue>
-            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
+            <controllingFieldValue>Security</controllingFieldValue>
             <controllingFieldValue>Name correction</controllingFieldValue>
-            <controllingFieldValue>Solving Online Problem During Request</controllingFieldValue>
             <controllingFieldValue>On-board services</controllingFieldValue>
             <controllingFieldValue>Point related question</controllingFieldValue>
             <valueName>Referred to phone</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Process Refund</controllingFieldValue>
-            <controllingFieldValue>Provide Documents</controllingFieldValue>
-            <controllingFieldValue>Refund Status</controllingFieldValue>
-            <controllingFieldValue>Add Baggage</controllingFieldValue>
-            <controllingFieldValue>Change booking</controllingFieldValue>
-            <controllingFieldValue>Name Change</controllingFieldValue>
-            <controllingFieldValue>Name correction</controllingFieldValue>
-            <valueName>Referred to travel agent</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <controllingFieldValue>Solve log-in problems</controllingFieldValue>
+            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
+            <controllingFieldValue>Solving Online Problem During Request</controllingFieldValue>
             <controllingFieldValue>Status Waiting Time</controllingFieldValue>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
             <controllingFieldValue>Support in Document Control</controllingFieldValue>
-            <controllingFieldValue>Ticket status</controllingFieldValue>
-            <controllingFieldValue>Travel Insurance Info</controllingFieldValue>
             <controllingFieldValue>Provide Delay Certificate</controllingFieldValue>
+            <controllingFieldValue>Ticket status</controllingFieldValue>
             <controllingFieldValue>Provide Documents</controllingFieldValue>
             <controllingFieldValue>Provide program information</controllingFieldValue>
             <controllingFieldValue>Rebook Booking</controllingFieldValue>
-            <controllingFieldValue>Refund Status</controllingFieldValue>
-            <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
             <controllingFieldValue>Add Musical Instrument</controllingFieldValue>
             <controllingFieldValue>Add Seating</controllingFieldValue>
-            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
+            <controllingFieldValue>Refund Status</controllingFieldValue>
             <controllingFieldValue>Add Skis</controllingFieldValue>
             <controllingFieldValue>Add Special Assistance</controllingFieldValue>
             <controllingFieldValue>Add Wheelchair</controllingFieldValue>
             <controllingFieldValue>Allowance</controllingFieldValue>
             <controllingFieldValue>Arrival info</controllingFieldValue>
+            <controllingFieldValue>Travel Insurance Info</controllingFieldValue>
             <controllingFieldValue>Add Animals</controllingFieldValue>
             <controllingFieldValue>Add Baggage</controllingFieldValue>
             <controllingFieldValue>Add Bike</controllingFieldValue>
@@ -763,162 +859,58 @@
             <controllingFieldValue>Inform about Airport Services</controllingFieldValue>
             <controllingFieldValue>Inform about lounges</controllingFieldValue>
             <controllingFieldValue>Make Booking</controllingFieldValue>
+            <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
+            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
             <controllingFieldValue>Missing points</controllingFieldValue>
-            <controllingFieldValue>Security</controllingFieldValue>
-            <controllingFieldValue>Solve log-in problems</controllingFieldValue>
             <controllingFieldValue>Name Change</controllingFieldValue>
-            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
+            <controllingFieldValue>Security</controllingFieldValue>
             <controllingFieldValue>Name correction</controllingFieldValue>
-            <controllingFieldValue>Solving Online Problem During Request</controllingFieldValue>
             <controllingFieldValue>On-board services</controllingFieldValue>
             <controllingFieldValue>Point related question</controllingFieldValue>
             <valueName>Referred to webpage</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Spelling mistake</controllingFieldValue>
-            <controllingFieldValue>Star Online</controllingFieldValue>
-            <controllingFieldValue>Status Waiting Time</controllingFieldValue>
-            <controllingFieldValue>Support in Document Control</controllingFieldValue>
-            <controllingFieldValue>Ticket status</controllingFieldValue>
-            <controllingFieldValue>Travel Insurance Info</controllingFieldValue>
-            <controllingFieldValue>Provide Delay Certificate</controllingFieldValue>
-            <controllingFieldValue>Provide program information</controllingFieldValue>
-            <controllingFieldValue>Rebook Booking</controllingFieldValue>
-            <controllingFieldValue>Refunds</controllingFieldValue>
-            <controllingFieldValue>Refund Status</controllingFieldValue>
-            <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
-            <controllingFieldValue>Add Musical Instrument</controllingFieldValue>
-            <controllingFieldValue>Sales Control</controllingFieldValue>
-            <controllingFieldValue>Add Seating</controllingFieldValue>
-            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
-            <controllingFieldValue>Add Skis</controllingFieldValue>
-            <controllingFieldValue>Add Special Assistance</controllingFieldValue>
-            <controllingFieldValue>Add Wheelchair</controllingFieldValue>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <controllingFieldValue>Arrival info</controllingFieldValue>
-            <controllingFieldValue>Death Certificate</controllingFieldValue>
-            <controllingFieldValue>Positive Covid Test</controllingFieldValue>
-            <controllingFieldValue>Access rights</controllingFieldValue>
-            <controllingFieldValue>Add Animals</controllingFieldValue>
-            <controllingFieldValue>Screen dumps from customers</controllingFieldValue>
-            <controllingFieldValue>Add Baggage</controllingFieldValue>
-            <controllingFieldValue>Add Bike</controllingFieldValue>
-            <controllingFieldValue>Add Biofuel</controllingFieldValue>
-            <controllingFieldValue>Add EB in Booking</controllingFieldValue>
-            <controllingFieldValue>Add Golfbag</controllingFieldValue>
-            <controllingFieldValue>Add Infant in Booking</controllingFieldValue>
-            <controllingFieldValue>Add Meals</controllingFieldValue>
-            <controllingFieldValue>Assist with check-in</controllingFieldValue>
-            <controllingFieldValue>ATO Account Takeover</controllingFieldValue>
-            <controllingFieldValue>Boozt Attack</controllingFieldValue>
-            <controllingFieldValue>Bug</controllingFieldValue>
-            <controllingFieldValue>Campaign support</controllingFieldValue>
-            <controllingFieldValue>Cancel Booking</controllingFieldValue>
-            <controllingFieldValue>CAR</controllingFieldValue>
-            <controllingFieldValue>Car Rental Info</controllingFieldValue>
+            <controllingFieldValue>Process Question</controllingFieldValue>
+            <valueName>Inform Process Owner/Specialist</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Question</controllingFieldValue>
+            <valueName>Update User Guide</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <valueName>According to rules</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <controllingFieldValue>Change booking</controllingFieldValue>
             <controllingFieldValue>Change commitment dates</controllingFieldValue>
-            <controllingFieldValue>Charter Info</controllingFieldValue>
-            <controllingFieldValue>Check missing 20000 Status pts Amex</controllingFieldValue>
-            <controllingFieldValue>Connection Info</controllingFieldValue>
-            <controllingFieldValue>Coop</controllingFieldValue>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <controllingFieldValue>Credit Card</controllingFieldValue>
-            <controllingFieldValue>Credit expired points</controllingFieldValue>
-            <controllingFieldValue>Credit points</controllingFieldValue>
-            <controllingFieldValue>Crime Prevention</controllingFieldValue>
-            <controllingFieldValue>CT check</controllingFieldValue>
-            <controllingFieldValue>Deduct Points</controllingFieldValue>
-            <controllingFieldValue>Delete Profile</controllingFieldValue>
-            <controllingFieldValue>Deletion</controllingFieldValue>
-            <controllingFieldValue>Departure Info</controllingFieldValue>
-            <controllingFieldValue>Digital Channel</controllingFieldValue>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
-            <controllingFieldValue>Disconnected customer</controllingFieldValue>
-            <controllingFieldValue>Escalate EB Shop problems</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>EuroBonus CN</controllingFieldValue>
-            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
-            <controllingFieldValue>Extract</controllingFieldValue>
-            <controllingFieldValue>Fast Track</controllingFieldValue>
-            <controllingFieldValue>GAC Give Away Card</controllingFieldValue>
-            <controllingFieldValue>General Information</controllingFieldValue>
-            <controllingFieldValue>Give Away Membership</controllingFieldValue>
-            <controllingFieldValue>Groups</controllingFieldValue>
-            <controllingFieldValue>Help to Request</controllingFieldValue>
-            <controllingFieldValue>Help With Usage</controllingFieldValue>
-            <controllingFieldValue>Hotel</controllingFieldValue>
-            <controllingFieldValue>Hotel Info</controllingFieldValue>
-            <controllingFieldValue>Info About Expiry Date</controllingFieldValue>
-            <controllingFieldValue>Inform about Airport Services</controllingFieldValue>
-            <controllingFieldValue>Inform about lounges</controllingFieldValue>
-            <controllingFieldValue>Information Missing</controllingFieldValue>
-            <controllingFieldValue>Information update needed</controllingFieldValue>
-            <controllingFieldValue>Link not working</controllingFieldValue>
-            <controllingFieldValue>Merge</controllingFieldValue>
-            <controllingFieldValue>Missing 1000 Status pts MC</controllingFieldValue>
-            <controllingFieldValue>SAS Flights</controllingFieldValue>
-            <controllingFieldValue>Security</controllingFieldValue>
-            <controllingFieldValue>Security code sent</controllingFieldValue>
-            <controllingFieldValue>Solve log-in problems</controllingFieldValue>
-            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
-            <controllingFieldValue>Solving Online Problem During Request</controllingFieldValue>
-            <controllingFieldValue>New feature</controllingFieldValue>
-            <controllingFieldValue>Spam</controllingFieldValue>
-            <controllingFieldValue>On-board services</controllingFieldValue>
-            <controllingFieldValue>Point Sharing</controllingFieldValue>
-            <valueName>Completed</valueName>
+            <controllingFieldValue>Make Booking</controllingFieldValue>
+            <controllingFieldValue>Name Change</controllingFieldValue>
+            <valueName>Deviation from rules</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
-            <valueName>Product Improvement</valueName>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <valueName>Involuntary</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
-            <valueName>Sales</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
-            <controllingFieldValue>App</controllingFieldValue>
-            <controllingFieldValue>SAS Corporate Portal</controllingFieldValue>
-            <valueName>Support</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Update Profile</controllingFieldValue>
-            <valueName>Add travel pass</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Update Profile</controllingFieldValue>
-            <valueName>CC Update</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Update Profile</controllingFieldValue>
-            <valueName>Connect with EB</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Update Profile</controllingFieldValue>
-            <valueName>TPI OPM</valueName>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <controllingFieldValue>Provide Documents</controllingFieldValue>
+            <controllingFieldValue>Refund Status</controllingFieldValue>
+            <controllingFieldValue>Add Baggage</controllingFieldValue>
+            <controllingFieldValue>Change booking</controllingFieldValue>
+            <controllingFieldValue>Name Change</controllingFieldValue>
+            <controllingFieldValue>Name correction</controllingFieldValue>
+            <valueName>Referred to travel agent</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Provide Documents</controllingFieldValue>
             <valueName>Booking Confirmation</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Provide Documents</controllingFieldValue>
-            <controllingFieldValue>Sell</controllingFieldValue>
-            <valueName>Receipt</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Provide program information</controllingFieldValue>
-            <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
-            <controllingFieldValue>Add EB in Booking</controllingFieldValue>
-            <controllingFieldValue>Campaign support</controllingFieldValue>
-            <controllingFieldValue>Change Profile</controllingFieldValue>
-            <controllingFieldValue>Delete Profile</controllingFieldValue>
-            <controllingFieldValue>Escalate EB Shop problems</controllingFieldValue>
-            <controllingFieldValue>Missing points</controllingFieldValue>
-            <controllingFieldValue>Solve log-in problems</controllingFieldValue>
-            <controllingFieldValue>Point related question</controllingFieldValue>
-            <valueName>Referred to mail</valueName>
+            <controllingFieldValue>Rebook Booking</controllingFieldValue>
+            <controllingFieldValue>Cancel Booking</controllingFieldValue>
+            <valueName>Info about customer rights</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Redirection not possible</controllingFieldValue>
@@ -935,16 +927,6 @@
         <valueSettings>
             <controllingFieldValue>Redirection not possible</controllingFieldValue>
             <valueName>Other</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rebook Booking</controllingFieldValue>
-            <controllingFieldValue>Cancel Booking</controllingFieldValue>
-            <valueName>Info about customer rights</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refunds</controllingFieldValue>
-            <controllingFieldValue>Sell</controllingFieldValue>
-            <valueName>Payment</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Add Musical Instrument</controllingFieldValue>
@@ -1014,15 +996,37 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>App</controllingFieldValue>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <controllingFieldValue>SAS Corporate Portal</controllingFieldValue>
+            <valueName>Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>App</controllingFieldValue>
             <valueName>Wanted/Lacking features</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
-            <valueName>Approve</valueName>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Product Improvement</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
-            <valueName>Reject</valueName>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Update Profile</controllingFieldValue>
+            <valueName>Add travel pass</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Update Profile</controllingFieldValue>
+            <valueName>CC Update</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Update Profile</controllingFieldValue>
+            <valueName>Connect with EB</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Update Profile</controllingFieldValue>
+            <valueName>TPI OPM</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Availability/Inquiry</controllingFieldValue>
@@ -1164,14 +1168,6 @@
             <valueName>Ticket issued</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Missing points</controllingFieldValue>
-            <valueName>Invalid retro</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Missing points</controllingFieldValue>
-            <valueName>Points registered</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>SAS Corporate Portal</controllingFieldValue>
             <valueName>Get Started</valueName>
         </valueSettings>
@@ -1184,16 +1180,20 @@
             <valueName>Segmentation</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Sell</controllingFieldValue>
-            <valueName>SAS Invoice</valueName>
+            <controllingFieldValue>Missing points</controllingFieldValue>
+            <valueName>Invalid retro</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Sell</controllingFieldValue>
-            <valueName>Sell/Resell</valueName>
+            <controllingFieldValue>Missing points</controllingFieldValue>
+            <valueName>Points registered</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Sell</controllingFieldValue>
-            <valueName>Wrong deb</valueName>
+            <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
+            <valueName>Approve</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
+            <valueName>Reject</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Name Change</controllingFieldValue>

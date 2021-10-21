@@ -8,7 +8,7 @@
     OR(
         ISCHANGED(IsClosed),
         ISPICKVAL(Status, &quot;Closed&quot;)
-    ),  ISPICKVAL(LIA_Claim__r.Result__c,&quot;&quot;)
+    ), OR(ISPICKVAL(LIA_Claim__r.Result__c,&quot;&quot;),ISPICKVAL(LIA_Claim__r.Result__c,&quot;Pending&quot;))
 )</errorConditionFormula>
     <errorMessage>Please pick a value for Result field in the Liability Claim</errorMessage>
 </ValidationRule>
