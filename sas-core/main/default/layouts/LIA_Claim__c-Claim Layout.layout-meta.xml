@@ -23,10 +23,6 @@
                 <behavior>Required</behavior>
                 <field>Deadline__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Liability_Claim_Comments__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

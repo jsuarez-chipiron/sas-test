@@ -3046,11 +3046,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>LIA_Claim__c.Liability_Claim_Comments__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>LIA_Claim__c.Liability_Claim_Type__c</field>
         <readable>false</readable>
     </fieldPermissions>
