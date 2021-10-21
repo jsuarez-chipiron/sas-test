@@ -3061,6 +3061,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>LIA_Claim__c.Has_been_sent_to_settle__c</field>
+        <readable>false</readable>
+    </fieldPermissions>     
+    <fieldPermissions>
+        <editable>false</editable>
         <field>LIA_Claim__c.Name_of_Judicial_Body__c</field>
         <readable>false</readable>
     </fieldPermissions>
