@@ -137,11 +137,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>LIA_Claim__c.Liability_Claim_Comments__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>LIA_Claim__c.Liability_Claim_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
