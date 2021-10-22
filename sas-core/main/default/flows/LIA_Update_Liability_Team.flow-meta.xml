@@ -150,6 +150,7 @@
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Outcome</name>
         <label>Outcome</label>
