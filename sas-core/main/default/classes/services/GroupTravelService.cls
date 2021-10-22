@@ -41,6 +41,12 @@ public class GroupTravelService {
     'sas-business' => 'SAS Business'
   };
 
+  private static Group groupSalesQueue = [
+    SELECT Id
+    FROM Group
+    WHERE Type = 'Queue' AND DeveloperName = 'Group_Sales'
+  ];
+
   public static void createGroupTravelRequest(
     GroupTravelJsonToApex groupTravelForm
   ) {
@@ -146,6 +152,7 @@ public class GroupTravelService {
     Case caseToInsert = new Case(
       Group_Travel_Request__c = grpTravelRequest.Id,
       Origin = caseOrigin,
+      OwnerId = groupSalesQueue.Id,
       RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
       Subject = 'Group Travel Request: ' + travelRequest.groupName,
       SuppliedEmail = travelRequest.email,

@@ -23,6 +23,12 @@ public class SpecialServiceRequestService {
     'wheelchair' => 'Mobility'
   };
 
+  private static Group salesControlQueue = [
+    SELECT Id
+    FROM Group
+    WHERE Type = 'Queue' AND DeveloperName = 'Sales_Control_BOM'
+  ];
+
   public static void createSpecialServiceRequest(
     SpecialServiceJSON2Apex specialServiceForm
   ) {
@@ -61,6 +67,7 @@ public class SpecialServiceRequestService {
     Case caseToInsert = new Case(
       Initially_Provided_PNR__c = specialServiceForm.formData.bookingReference,
       Origin = caseOrigin,
+      OwnerId = salesControlQueue.Id,
       RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
       Subject = 'SSR, Type: ' +
         specialServiceRequest.Type__c +

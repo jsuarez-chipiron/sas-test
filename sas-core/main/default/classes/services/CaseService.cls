@@ -11,6 +11,12 @@ public class CaseService {
     'visa-rejection-default' => 'Form - Visa Rejection International'
   };
 
+  private static Group refundsQueue = [
+    SELECT Id
+    FROM Group
+    WHERE Type = 'Queue' AND DeveloperName = 'Refunds'
+  ];
+
   public static void createCase(CaseFormJSON2Apex form) {
     ContentVersionsSelector contentVersions = (ContentVersionsSelector) SAS_Service_Application.Selector.newInstance(
       ContentVersion.SObjectType
@@ -27,10 +33,18 @@ public class CaseService {
     List<ContentVersion> contentToLink = contentVersions.selectById(contentIds);
 
     caseToInsert = new Case(
-      Initially_Provided_PNR__c = form.formData.bookingReference
+      Initially_Provided_PNR__c = form.formData.bookingReference,
+      OwnerId = refundsQueue.Id,
+      RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
+      Subject = 'Waiver request due to' +
+        (form.formData.type == 'death-certificate'
+          ? 'death in family'
+          : 'visa rejection') +
+        ', PNR: ' +
+        form.formData.bookingReference
     );
 
-    String caseOrigin;
+    String caseOrigin = marketToOrigin.get('visa-rejection-default');
     if (
       marketToOrigin.get(form.formData.type + '-' + form.metaData.market) !=
       null
@@ -44,9 +58,7 @@ public class CaseService {
       caseOrigin = marketToOrigin.get(form.formData.type + '-default');
     }
 
-    if (caseOrigin != null) {
-      caseToInsert.Origin = caseOrigin;
-    }
+    caseToInsert.Origin = caseOrigin;
 
     insert caseToInsert;
 

@@ -21,6 +21,12 @@ public without sharing class RefundRequestService {
     'return' => 'Inbound'
   };
 
+  private static Group refundsQueue = [
+    SELECT Id
+    FROM Group
+    WHERE Type = 'Queue' AND DeveloperName = 'Refunds'
+  ];
+
   public static void createRefundRequest(RefundJsonToApex form) {
     String notes = '';
 
@@ -57,6 +63,7 @@ public without sharing class RefundRequestService {
     insert refund;
 
     Case caseToInsert = new Case(
+      OwnerId = refundsQueue.Id,
       Subject = 'Refund Request, PNR: ' + form.formData.bookingReference,
       SuppliedEmail = form.formData.email,
       SuppliedPhone = form.formData.phone,

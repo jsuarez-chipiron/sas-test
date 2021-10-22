@@ -3,7 +3,6 @@
     <description>Permissions required by the SAS site forms.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>SAS Site Forms Integration User</label>
-    <license>Identity</license>
     <classAccesses>
         <apexClass>GroupTravelJsonToApex</apexClass>
         <enabled>true</enabled>
@@ -126,4 +125,16 @@
         <object>Special_Service_Request__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>Case.Channel</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Case.Internal_Backoffice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ApiEnabled</name>
+    </userPermissions>
 </PermissionSet>
