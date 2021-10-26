@@ -2011,6 +2011,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Group_Travel_Request__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities> 
+    <tabVisibilities>
         <tab>LIA_Claim__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -2025,5 +2029,9 @@
     <tabVisibilities>
         <tab>Refund_Request__c</tab>
         <visibility>DefaultOn</visibility>
-    </tabVisibilities>            
+    </tabVisibilities> 
+        <tabVisibilities>
+        <tab>Special_Service_Request__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities> 
 </Profile>
