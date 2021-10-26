@@ -50,24 +50,6 @@
                         </valueListItems>
                         <valueListItems>
                             <value>MassAccept</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Team__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Defense</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Status}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>New</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.RecordType.Name}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Claim</rightValue>
-                                </criteria>
-                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Global.NewTask</value>
