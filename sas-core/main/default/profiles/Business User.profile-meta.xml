@@ -1819,7 +1819,11 @@
         <recordType>PersonAccount.EBCustomer</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-        <tabVisibilities>
+    <tabVisibilities>
+        <tab>Group_Travel_Request__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>LIA_Claim__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -1837,6 +1841,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Refund_Request__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Special_Service_Request__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
