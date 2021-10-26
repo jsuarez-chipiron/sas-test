@@ -200,9 +200,7 @@ global with sharing class SBS_ScheduledBatchService {
                   batchCmp.Object__c,
                   (Integer) batchCmp.Retention_Period_Days__c,
                   batchCmp.Related_Case_Field__c,
-                  batchCmp.Type__c,
-                  batchCmp.Related_Sobject_Field__c,
-                  batchCmp.Related_Sobject_Name__c
+                  batchCmp.Type__c
                 )
               );
             }
@@ -216,9 +214,7 @@ global with sharing class SBS_ScheduledBatchService {
                 batchCmp.Object__c,
                 (Integer) batchCmp.Retention_Period_Days__c,
                 batchCmp.Related_Case_Field__c,
-                batchCmp.Type__c,
-                batchCmp.Related_Sobject_Field__c,
-                batchCmp.Related_Sobject_Name__c
+                batchCmp.Type__c
               )
             );
           }
@@ -226,8 +222,6 @@ global with sharing class SBS_ScheduledBatchService {
       } catch (Exception e) {
         BatchExecution be = new BatchExecution(
           batchCmp.DeveloperName,
-          null,
-          null,
           null,
           null,
           null,
@@ -381,8 +375,7 @@ global with sharing class SBS_ScheduledBatchService {
               be.retentionPeriod,
               be.caseField,
               be.caseType,
-              be.relSobjField,
-              be.relSObjName
+              be.devName
             );
             apexJobId = Database.executebatch(b, be.scopeSize);
           } catch (Exception e) {
@@ -627,9 +620,7 @@ global with sharing class SBS_ScheduledBatchService {
       String batchJobObject,
       Integer retentionPeriod,
       String caseField,
-      String caseType,
-      String relSobjField,
-      String relSObjName
+      String caseType
     ) {
       this(
         null,
@@ -639,9 +630,7 @@ global with sharing class SBS_ScheduledBatchService {
         batchJobObject,
         retentionPeriod,
         caseField,
-        caseType,
-        relSobjField,
-        relSObjName
+        caseType
       );
     }
     /**
@@ -664,9 +653,7 @@ global with sharing class SBS_ScheduledBatchService {
       String batchJobObject,
       Integer retentionPeriod,
       String caseField,
-      String caseType,
-      String relSobjField,
-      String relSObjName
+      String caseType
     ) {
       this.devName = devName;
       this.batchClass = batchClass;
@@ -677,8 +664,6 @@ global with sharing class SBS_ScheduledBatchService {
       this.retentionPeriod = retentionPeriod;
       this.caseField = caseField;
       this.casetype = caseType;
-      this.relSobjField = relSobjField;
-      this.relSObjName = relSObjName;
     }
 
     /**

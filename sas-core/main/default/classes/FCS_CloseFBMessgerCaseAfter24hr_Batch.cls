@@ -17,14 +17,14 @@ global with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
   The list of cases status which needs to considered for FB messenger cases of autoclosing
   */
   List<String> lstStatus = new List<String>{
-      'New',
-      'In Progress',
-      'New Response'
-    };
-    /**
+    'New',
+    'In Progress',
+    'New Response'
+  };
+  /**
     The Case status which is to be removed
     */
-    String closeStatus = 'Closed';
+  String closeStatus = 'Closed';
   global FCS_CloseFBMessgerCaseAfter24hr_Batch() {
   }
   /**
@@ -35,15 +35,14 @@ global with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
     Integer wipingPeriod,
     string caseField,
     string caseType,
-    string relSObjField,
-    String relSobjName
+    string batchName
   ) {
-     lastRetentionDate = DateTime.newInstance(
+    lastRetentionDate = DateTime.newInstance(
       Date.today().addDays(-wipingPeriod),
       Time.newInstance(0, 0, 0, 0)
     );
   }
-  public Database.QueryLocator start(Database.BatchableContext bc) { 
+  public Database.QueryLocator start(Database.BatchableContext bc) {
     return Database.getQueryLocator(
       'Select Id, status from Case where Origin =: caseOrigin AND Status IN:lstStatus AND Status !=: closeStatus'
     );

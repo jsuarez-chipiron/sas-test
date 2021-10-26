@@ -40,8 +40,7 @@ Initiates the batch class and extracts the date used to filter out cases for rem
     Integer wipingPeriod,
     string caseField,
     string caseType,
-    string relSObjField,
-    string relSobjName
+    String batchName
   ) {
   lastRetentionDate = DateTime.newInstance(
       Date.today()

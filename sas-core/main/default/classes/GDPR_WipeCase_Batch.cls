@@ -18,6 +18,10 @@ The fields to clear for the case
 The Case Type in which batch job executes
 */
   private string caseType;
+  /**
+  The Name of the batch in GDPR Retention policy metaData, based on which related metadata will be retrived
+  */
+  private string batchName;
 
   global GDPR_WipeCase_Batch() {
   }
@@ -30,8 +34,7 @@ Overiding of the abstract method used to set the Batch class params
     Integer retentionPeriod,
     string caseField,
     String caseType,
-    string relSObjField,
-    string relSobjName
+    String batchName
   ) {
     lastRetentionDate = DateTime.newInstance(
       Date.today().addDays(retentionPeriod),
@@ -41,6 +44,7 @@ Overiding of the abstract method used to set the Batch class params
     this.sObjectName = sot + '';
     fieldsToClear = GDPR_Util.getCaseFieldsToClear(this.sObjectName);
     this.caseType = caseType;
+    this.batchName = batchName;
   }
 
   /**
@@ -65,6 +69,6 @@ wipe the cases and any related interactions
     Database.BatchableContext bc,
     SObject[] sObjScope
   ) {
-    GDPR_WipeCaseService.wipeCases((Case[]) sObjScope, fieldsToClear);
+    GDPR_WipeCaseService.wipeCases((Case[]) sObjScope, fieldsToClear,batchName);
   }
 }

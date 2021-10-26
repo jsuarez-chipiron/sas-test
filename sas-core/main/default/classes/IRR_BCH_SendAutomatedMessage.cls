@@ -12,8 +12,7 @@ global with sharing class IRR_BCH_SendAutomatedMessage extends SBS_ScheduledBatc
     Integer wipingPeriod,
     string caseField,
     string caseType,
-    string relSObjField,
-    string relSobjName
+    string batchName
   ) {
   }
   /**

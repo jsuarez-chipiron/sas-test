@@ -12,6 +12,11 @@ The date at which cases will be removed
 The Case Type in which batch job executes
 */
   private string caseType;
+  
+  /**
+  The Name of the Batch in GDPR Retention policy , based on which related metadata will be retrived
+  */
+  private string batchName;
 
   global GDPR_DeleteCase_Batch() {
   }
@@ -23,14 +28,14 @@ Overiding of the abstract method used to set the Batch class params
     Integer retentionPeriod,
     string caseField,
     string caseType,
-    string relSObjField,
-    string relSobjName
+    String batchName
   ) {
     lastRetentionDate = DateTime.newInstance(
       Date.today().addDays(2),
       Time.newInstance(0, 0, 0, 0)
     );
     this.caseType = caseType;
+    this.batchName = batchName;
   }
   /**
 Iterates over all cases closed before the retention period
@@ -60,7 +65,7 @@ Deletes the cases and any related interactions
     for (Integer i = 0; i < sz; i++) {
       caseIds.add(sObjScope[i].Id);
     }
-    GDPR_WipeCaseService.deleteRelatedEntities(caseIds);
+    GDPR_WipeCaseService.deleteRelatedEntities(caseIds,batchName);
     delete sObjScope;
   }
 }

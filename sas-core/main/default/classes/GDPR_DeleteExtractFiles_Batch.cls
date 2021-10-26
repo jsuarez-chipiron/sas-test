@@ -13,8 +13,7 @@ global with sharing class GDPR_DeleteExtractFiles_Batch extends SBS_ScheduledBat
     Integer retentionPeriod,
     string caseField,
     string caseType,
-    string relSObjField,
-    string relSobjName
+    String batchName
   ) {
   }
     /**

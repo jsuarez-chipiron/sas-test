@@ -12,8 +12,7 @@ global with sharing class GDPR_DeleteAccount_Batch extends SBS_ScheduledBatch {
     Integer retentionPeriod,
     string caseField,
     String caseType,
-    string relSObjField,
-    string relSobjName
+    String batchName
   ) {
   }
   global Database.QueryLocator start(Database.BatchableContext bc) {

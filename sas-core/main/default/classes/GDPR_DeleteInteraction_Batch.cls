@@ -32,14 +32,27 @@ The date until which to retain the record related to specified sobject
     /**
 Overiding of the abstract method used to set the Batch class params
 */
-    global override void setVariables(String sObj, Integer wipingPeriod, string caseField,String caseType, string relSObjField, string relSobjName)
+    global override void setVariables(String sObj, Integer wipingPeriod, string caseField,String caseType, String batchName)
     {
         lastRetentionDate = DateTime.newInstance(Date.today().addDays(-wipingPeriod),Time.newInstance(0,0,0,0));
         Schema.SObjectType sot = Schema.getGlobalDescribe().get(sObj);
         this.sObjectName = sot+'';
         this.caseField = caseField!=null ? caseField+'' : null;
-        this.relSObjName = relSObjName;
-        this.relSObjField = relSObjField ;
+        GDPR_Retention_Link__mdt mdtRetenLink = [
+                                              SELECT
+                                              DeveloperName,
+                                              GDPR_Related_Channel_Object__c,
+                                              GDPR_Related_Channel_Object__r.SObject_Name__c,
+                                              GDPR_Retention_Policy__c,
+                                              Related_LookupField__c
+                                              FROM
+                                              GDPR_Retention_Link__mdt
+                                              WHERE
+                                              GDPR_Retention_Policy__r.DeveloperName =:batchName
+                                              LIMIT 1 
+                                                  ];
+        this.relSObjName = mdtRetenLink.GDPR_Related_Channel_Object__r.SObject_Name__c;
+        this.relSObjField = mdtRetenLink.Related_LookupField__c;
     }
     
     /**

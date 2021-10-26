@@ -22,8 +22,7 @@ global with sharing class GDPR_DeleteSMSResponse_Batch extends SBS_ScheduledBatc
     Integer retentionPeriod,
     string caseField,
     string caseType,
-    string relSObjField,
-    string relSobjName
+    String batchName
   ) {
     lastRetentionDate = DateTime.newInstance(
       Date.today().addDays(-retentionPeriod),

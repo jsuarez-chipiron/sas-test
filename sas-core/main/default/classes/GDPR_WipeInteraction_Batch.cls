@@ -27,7 +27,7 @@ The list of fields needs to be wiped for batch job Object
     /**
 Overiding of the abstract method used to set the Batch class params
 */
-    global override void setVariables(String SObj, Integer wipingPeriod, string caseField, string caseType, string relSObjField, string relSobjName )
+    global override void setVariables(String SObj, Integer wipingPeriod, string caseField, string caseType, String batchName)
     {
         lastRetentionDate = DateTime.newInstance(Date.today().addDays(2),Time.newInstance(0,0,0,0));
         Schema.SObjectType sot = Schema.getGlobalDescribe().get(SObj);
@@ -44,7 +44,7 @@ Iterates over all interactions to be processed
         String q = 'SELECT Id, CreatedDate';
         q+=' FROM '+sObjectName+' WHERE ';
         q = caseField!=null ? q+caseField+'=null' : q;
-        q+=' AND createddate<:lastRetentionDate';
+        q+=' AND lastModifieddate<:lastRetentionDate';
         System.debug('SoqlQuery****'+q);
         return Database.getQueryLocator(q);
     }
