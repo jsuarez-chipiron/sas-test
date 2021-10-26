@@ -469,7 +469,11 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
             IRR_MOD_TedsBooking.Segment passengerPrevSegment;
 
             for (IRR_MOD_TedsBooking.Segment segment : passenger.segments) {
-                if (segment.segmentId == tripThisSegment.id) passengerThisSegment = segment;
+                
+                if (segment.segmentId == tripThisSegment.id) {
+                    passengerThisSegment = segment;
+                    passengerInfo.hasBoarded = segment.isBoarded;
+                }
                 if (tripNextSegment != null && segment.segmentId == tripNextSegment.id) passengerNextSegment = segment;
                 if (tripPrevSegment != null && segment.segmentId == tripPrevSegment.id) passengerPrevSegment = segment;
             }
@@ -486,7 +490,6 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         }
 
         passengerInfo.hasThisSegment = passengerInfo.thisSegment != null;
-        // passengerInfo.hasRXLine = passengerInfo.thisSegment.rxType != null;
         passengerInfo.hasPhoneNumber = String.isNotBlank(passengerInfo.phoneNumber);
         passengerInfo.hasEmailAddress = String.isNotBlank(passengerInfo.emailAddress);
         passengerInfo.hasNextSegment = passengerInfo.nextSegment != null;

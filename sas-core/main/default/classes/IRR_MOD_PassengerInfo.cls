@@ -49,6 +49,9 @@ public class IRR_MOD_PassengerInfo {
     public Boolean hasEmailAddress { get; set; }
 
     @AuraEnabled
+    public Boolean hasBoarded { get; set; }
+
+    @AuraEnabled
     public String phoneNumber { get; set; }
     @AuraEnabled
     public String emailAddress { get; set; }

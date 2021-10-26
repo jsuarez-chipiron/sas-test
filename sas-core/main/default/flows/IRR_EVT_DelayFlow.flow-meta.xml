@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Retrieve_Flow_Variables</name>
         <label>Retrieve Flow Variables</label>
-        <locationX>454</locationX>
-        <locationY>118</locationY>
+        <locationX>536</locationX>
+        <locationY>206</locationY>
         <actionName>IRR_ACT_StaticInput</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -24,8 +24,8 @@
     <assignments>
         <name>Send_SMS_and_Email</name>
         <label>Send SMS and Email</label>
-        <locationX>483</locationX>
-        <locationY>637</locationY>
+        <locationX>536</locationX>
+        <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>sendSMSMessage</assignToReference>
             <operator>Assign</operator>
@@ -58,12 +58,9 @@
     <decisions>
         <name>Delay_Difference</name>
         <label>Delay Difference</label>
-        <locationX>172</locationX>
-        <locationY>625</locationY>
-        <defaultConnector>
-            <targetReference>Send_SMS_and_Email</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>10 minutes or more</defaultConnectorLabel>
+        <locationX>118</locationX>
+        <locationY>446</locationY>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
             <name>Less_than_10_minutes</name>
             <conditionLogic>and</conditionLogic>
@@ -76,16 +73,45 @@
             </conditions>
             <label>Less than 10 minutes</label>
         </rules>
+        <rules>
+            <name>More_than_15_minutes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>delayInfo.delayDifference</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>15.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>passengerInfo.hasBoarded</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>passengerInfo.hasBoarded</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_SMS_and_Email</targetReference>
+            </connector>
+            <label>More than 15 minutes</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Delay_Difference_0</name>
         <label>Delay Difference</label>
-        <locationX>759</locationX>
-        <locationY>799</locationY>
+        <locationX>1174</locationX>
+        <locationY>565</locationY>
         <defaultConnector>
             <targetReference>Send_SMS_and_Email</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>30 minutes or more</defaultConnectorLabel>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
             <name>Less_than_30_minutes</name>
             <conditionLogic>and</conditionLogic>
@@ -98,16 +124,32 @@
             </conditions>
             <label>Less than 30 minutes</label>
         </rules>
+        <rules>
+            <name>X30_minutes_or_more</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>delayInfo.delayDifference</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>30.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>passengerInfo.hasBoarded</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>30 minutes or more</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Delay_Difference_0_0</name>
         <label>Delay Difference</label>
-        <locationX>408</locationX>
-        <locationY>476</locationY>
-        <defaultConnector>
-            <targetReference>Send_SMS_and_Email</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>1 hour or more</defaultConnectorLabel>
+        <locationX>734</locationX>
+        <locationY>566</locationY>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
             <name>Less_than_1_hour</name>
             <conditionLogic>and</conditionLogic>
@@ -120,12 +162,34 @@
             </conditions>
             <label>Less than 1 hour</label>
         </rules>
+        <rules>
+            <name>More_than_1_hour</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>delayInfo.delayDifference</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>60.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>passengerInfo.hasBoarded</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_SMS_and_Email</targetReference>
+            </connector>
+            <label>More than 1 hour</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Delay_Sequence</name>
         <label>Delay Sequence</label>
-        <locationX>755</locationX>
-        <locationY>496</locationY>
+        <locationX>954</locationX>
+        <locationY>446</locationY>
         <defaultConnector>
             <targetReference>Delay_Difference_0</targetReference>
         </defaultConnector>
@@ -149,8 +213,8 @@
     <decisions>
         <name>Time_to_departure</name>
         <label>Time to departure</label>
-        <locationX>409</locationX>
-        <locationY>329</locationY>
+        <locationX>536</locationX>
+        <locationY>325</locationY>
         <defaultConnector>
             <targetReference>Delay_Sequence</targetReference>
         </defaultConnector>
@@ -193,8 +257,8 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>50</locationX>
-        <locationY>50</locationY>
+        <locationX>410</locationX>
+        <locationY>48</locationY>
         <connector>
             <targetReference>Retrieve_Flow_Variables</targetReference>
         </connector>
