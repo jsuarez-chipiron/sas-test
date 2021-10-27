@@ -10,13 +10,27 @@
 # Salesforce.
 
 scratchDef="config/project-scratch-def.json"
-orgName="FCS2020Salesforce"
+
+orgAlias="FCS2020Salesforce"
+orgDuration="7"
+
 dataPlan="scripts/create-org-mock-data/plan.json"
 
-echo "Creating Scratch org"
-sfdx force:org:create -f $scratchDef -a $orgName --setdefaultusername || exit 1
+while getopts "a:d:" opt
+do 
+  case "${opt}" in
+    a) orgAlias=${OPTARG} ;;
+    d) orgDuration=${OPTARG} ;;
+  esac
+done
 
-echo "Creating auth providers and named credentials"
+echo "This script creates a scratch org and prepares it for development."
+echo
+
+echo "[1 / 6] Creating Scratch org..."
+sfdx force:org:create -f $scratchDef -a $orgAlias -d $orgDuration --setdefaultusername || exit 1
+
+echo "[2 / 6] Creating auth providers and named credentials..."
 # Auth provider requires the admin user's username so it cannot be pushed normally.
 # The others require the auth provider before they can be pushed.
 
@@ -27,7 +41,7 @@ if [ ! -d sas-core/main/default/namedCredentials ]; then
   mkdir sas-core/main/default/namedCredentials
 fi
 
-userName=`sfdx auth:list | awk -v user="$orgName" '$1 == user {print $2}'` # Get admin user username
+userName=`sfdx auth:list | awk -v user="$orgAlias" '$1 == user {print $2}'` # Get admin user username
 # Create auth provider with username from above
 sed 's/'{userName}'/'"$userName"'/' scripts/create-org-templates/APIM_Auth.authprovider-meta-template.xml > sas-core/main/default/authproviders/APIM_Auth.authprovider-meta.xml
 
@@ -40,14 +54,16 @@ cp scripts/create-org-templates/C_GeneralSetting.APIM_TEDS_Subscription_Key.temp
 cp scripts/create-org-templates/LocalAuthProvider.APIM_Auth.template.xml sas-core/main/default/customMetadata/LocalAuthProvider.APIM_Auth.md-meta.xml
 
 # Sleep to ensure sharing rule calculation from org creation has finished before pushing sources
+echo "[3 / 6] Sleeping for 2m to ensure org creation has finished..."
+echo "Zzz..."
 sleep 2m
 
-echo "Pushing source"
-sfdx force:source:push -u $orgName || exit 1
+echo "[4 / 6] Pushing source..."
+sfdx force:source:push -u $orgAlias || exit 1
 
-echo "Pushing data"
-sfdx force:data:tree:import -u $orgName -p $dataPlan || exit 1
+echo "[5 / 6] Pushing data..."
+sfdx force:data:tree:import -u $orgAlias -p $dataPlan || exit 1
 
-echo "Org created successfully. Opening..."
-echo "Remember to enter authentication credentials."
-sfdx force:org:open --path lightning/setup/NamedCredential/home -u $orgName
+echo "[6 / 6] Org created successfully. Remember to enter authentication credentials."
+echo "Opening the org in your browser..."
+sfdx force:org:open --path lightning/setup/NamedCredential/home -u $orgAlias
