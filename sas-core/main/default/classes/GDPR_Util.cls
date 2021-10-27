@@ -48,9 +48,9 @@ Create the Sobject List to be wiped
         for(SObject obj : lstSobjects){
             
             for(String field : lstFieldsToClear){
-                obj.put(field,null);
-                obj.put('GDPR_Wiped__c',true);
+                obj.put(field,null);               
             }
+            obj.put('GDPR_Wiped__c',true);
             listSObjects.add(obj);
         }
         

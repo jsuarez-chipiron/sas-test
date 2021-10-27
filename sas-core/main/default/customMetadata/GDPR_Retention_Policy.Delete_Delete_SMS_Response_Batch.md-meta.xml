@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>Scheduled_Batch_Component__c</field>
-        <value xsi:type="xsd:string">GDPR_DeleteExtractFiles_Batch</value>
+        <value xsi:type="xsd:string">GDPR_DeleteSMSResponse_Batch</value>
     </values>
     <values>
         <field>Type__c</field>

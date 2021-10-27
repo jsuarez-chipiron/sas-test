@@ -50,11 +50,9 @@ from date used to fetch audit trail, this will be updated after batch run.
   ) {
     List<SetupAuditTrail> lstSetupAuditTrial = (List<SetupAuditTrail>) sObjScope;
     Messaging.SingleEmailMessage[] messages;
-    System.debug('lstSetupAuditTrial***' + lstSetupAuditTrial.size());
     if (!lstSetupAuditTrial.isEmpty()) {
       messages = new List<Messaging.SingleEmailMessage>();
       for (SetupAuditTrail setUpAuditTrail : lstSetupAuditTrial) {
-        System.debug('lstAdminUserEmail' + lstAdminUserEmail);
         if (
           setUpAuditTrail.Section != 'Manage Users' &&
           !setUpAuditTrail.action.Contains('Presence Configuration')

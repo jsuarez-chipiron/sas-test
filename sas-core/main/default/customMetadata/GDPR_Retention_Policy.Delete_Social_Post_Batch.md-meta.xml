@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>Scheduled_Batch_Component__c</field>
-        <value xsi:type="xsd:string">GDPR_WipeInteraction_Batch</value>
+        <value xsi:type="xsd:string">GDPR_DeleteInteraction_Batch</value>
     </values>
     <values>
         <field>Type__c</field>
