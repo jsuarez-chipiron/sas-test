@@ -979,6 +979,16 @@
         <field>Case.Special_Service_Request__c</field>
         <readable>true</readable>
     </fieldPermissions>
+     <fieldPermissions>
+        <editable>false</editable>
+        <field>CaseToBooking__c.Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CaseToBooking__c.Booking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
     <fieldPermissions>
         <editable>false</editable>
         <field>Refund_Request__c.Email__c</field>
