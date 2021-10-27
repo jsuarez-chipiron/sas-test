@@ -190,6 +190,7 @@ private class IRR_EVT_ScheduledChangeProcessor_Test {
         passengerInfos[0].phoneNumber = 'TEST_PHONE';
         passengerInfos[0].hasEmailAddress = true;
         passengerInfos[0].emailAddress = 'TEST_EMAIL';
+        passengerInfos[0].hasRXLine= false;
         IRR_EVT_ScheduledChangeProcessor eventProcessor =
                 (IRR_EVT_ScheduledChangeProcessor) new IRR_EVT_ScheduledChangeProcessor.Constructor()
                     .newInstance(scheduledChangeInfo);
@@ -202,7 +203,7 @@ private class IRR_EVT_ScheduledChangeProcessor_Test {
         List<IRR_MOD_Message> messages = eventProcessor.messages;
         System.assertEquals(2, messages.size());
         System.assertEquals('irr_schedule_change_sms_01', messages[0].template);
-        System.assertEquals('irr_schedule_change_email_01', messages[1].template);
+        System.assertEquals('irr_schedule_change_email_noRX', messages[1].template);
         System.assertEquals('Scheduled Change', messages[0].type);
         System.assertEquals('Scheduled Change', messages[1].type);
         System.assertEquals(passengerInfos[0], messages[0].passengerInfo);
