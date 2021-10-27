@@ -5,14 +5,15 @@
 global class CaseFormJSON2Apex {
   global class FormData {
     global String bookingReference;
-    global String contentVersionId;
+    global List<String> contentVersionIds;
+    global String type;
   }
 
   global FormData formData;
   global MetaData metaData;
 
   global class MetaData {
-    global String siteUrl;
+    global String market;
   }
 
   public static CaseFormJSON2Apex parse(String json) {

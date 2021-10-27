@@ -12,9 +12,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>One way</fullName>
+                <fullName>One Way</fullName>
                 <default>false</default>
-                <label>One way</label>
+                <label>One Way</label>
             </value>
             <value>
                 <fullName>Round Trip</fullName>

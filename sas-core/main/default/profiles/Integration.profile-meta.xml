@@ -1356,6 +1356,51 @@
     </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
+        <field>Group_Travel_Request__c.Address__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.C_o_Address__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.City__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Country__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.First_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Last_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Postal_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
         <field>Group_Travel_Request__c.Alternate_Departure_date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1456,7 +1501,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Group_Travel_Request__c.Number_Of_Travellers__c</field>
+        <field>Group_Travel_Request__c.Number_Of_Special_Assistance_Travellers__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1592,6 +1637,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Refund_Request__c.PNR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Refund_Request__c.Refund_Not_Claimed_Elsewhere__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2267,11 +2317,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Type</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Group_Travel_Request__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3006,11 +3051,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>LIA_Claim__c.Liability_Claim_Comments__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>LIA_Claim__c.Liability_Claim_Type__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -3024,6 +3064,11 @@
         <field>LIA_Claim__c.Monetary_Compensation__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.Has_been_sent_to_settle__c</field>
+        <readable>false</readable>
+    </fieldPermissions>     
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Name_of_Judicial_Body__c</field>
