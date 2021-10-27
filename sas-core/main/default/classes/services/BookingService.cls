@@ -233,7 +233,8 @@ public without sharing class BookingService {
 
     List<Booking__c> bookingsToReturn = new List<Booking__c>();
     List<Booking__c> bookingsToUpsert = new List<Booking__c>();
-    List<SObject> segmentsAndPassengersToInsert = new List<SObject>();
+    List<Segment__c> segmentsToInsert = new List<Segment__c>();
+    List<Passenger__c> passengersToInsert = new List<Passenger__c>();
 
     Map<String, Flight__c> flightsProcessed = new Map<String, Flight__c>();
     for (IRR_MOD_TedsBooking booking : bookingData) {
@@ -349,7 +350,7 @@ public without sharing class BookingService {
         }
 
         passengersCreated.add(newPassenger);
-        segmentsAndPassengersToInsert.add(newPassenger);
+        passengersToInsert.add(newPassenger);
       }
 
       // Loop through all segments in the trip and create segment and flight objects as necessary
@@ -392,7 +393,7 @@ public without sharing class BookingService {
                 segmentPassenger.baggage.quantity.extra
               : 0;
 
-            segmentsAndPassengersToInsert.add(
+            segmentsToInsert.add(
               new Segment__c(
                 Baggage_Quantity__c = baggage,
                 Booking__c = insertedBookingsByTEDSId.get(booking.id).Id,
@@ -426,7 +427,8 @@ public without sharing class BookingService {
       }
     }
 
-    insert segmentsAndPassengersToInsert;
+    insert passengersToInsert;
+    insert segmentsToInsert;
     return bookingsToUpsert;
   }
 
