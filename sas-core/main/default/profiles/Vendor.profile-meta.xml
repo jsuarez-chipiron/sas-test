@@ -854,8 +854,18 @@
         <editable>false</editable>
         <field>Case.LIA_External_Case_Number_Court_Reference__c</field>
         <readable>false</readable>
-   </fieldPermissions>    
- <fieldPermissions>
+   </fieldPermissions> 
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.LIA_Judicial_Body__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.LIA_Passenger_s__c</field>
+        <readable>true</readable>
+    </fieldPermissions>   
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Final_Payment_Date__c</field>
         <readable>true</readable>
