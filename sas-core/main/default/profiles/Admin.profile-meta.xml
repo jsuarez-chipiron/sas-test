@@ -745,10 +745,20 @@
         <editable>false</editable>
         <field>Case.LIA_Flight_Number__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.LIA_Judicial_Body__c</field>
+        <readable>true</readable>
+    </fieldPermissions>        
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.LIA_Jurisdiction__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.LIA_Passenger_s__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
