@@ -24,6 +24,7 @@ The field on the primary obejct which links the primary object to the parent obj
   /**
 The date until which to retain the record related to specified sobject
 */
+  @testVisible
   private DateTime lastRetentionDate;
 
   global GDPR_DeleteInteraction_Batch() {

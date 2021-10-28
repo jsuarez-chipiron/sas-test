@@ -23,8 +23,8 @@ Creates the records used to tests data deletion
     cList.addAll(
       FCS_TestDataFactory.createCases(
         1,
-        accs[1].Id,
-        accs[1].PersonContactId,
+        accs[0].Id,
+        accs[0].PersonContactId,
         C_RecordTypeHelper.CASE_SUPPORT,
         'Baggage'
       )
@@ -47,8 +47,8 @@ Creates the records used to tests data deletion
       Incoming = true,
       Subject = 'TestSubject',
       TextBody = 'TestBody',
-      ToAddress = 'test@sas.se',
-      ParentId = cList[0].Id
+      ToAddress = 'test@sas.se'
+      // ParentId = cList[0].Id
     );
     insert emailMsge;
     // create ContentVersion record
@@ -87,10 +87,8 @@ Creates the records used to tests data deletion
     LiveChatVisitor lcv = new LiveChatVisitor();
     insert lcv;
     insert new LiveChatTranscript(
-      AccountId = accs[0].Id,
       Body = 'Test',
-      CaseId = cList[1].Id,
-      Status = 'Completed',
+      Status = 'Missed',
       LiveChatVisitorId = lcv.Id
     );
     MessagingChannel mc = new MessagingChannel(
@@ -114,15 +112,17 @@ Creates the records used to tests data deletion
     );
     insert meu;
     insert new MessagingSession(
-      CaseId = cList[2].Id,
+      //CaseId = cList[2].Id,
       MessagingEndUserId = meu.Id,
       Status = 'Ended',
       MessagingChannelId = mc.Id
     );
     SocialPost[] spList = FCS_TestDataFactory.createSocialPosts(1);
+    spList[0].Content = 'test';
     insert spList;
-    spList[0].ParentId = cList[3].Id;
-    update spList;
+    //spList[0].ParentId = cList[3].Id;
+
+    //update spList;
     // booking and flight Data
     DateTime arrivalTime = Datetime.now().adddays(2);
     DateTime departuteTime = Datetime.now().adddays(1);
@@ -155,14 +155,141 @@ Creates the records used to tests data deletion
     insert seg;
   }
   /**
-Sets up mock retention fields for tests due to a Salesforce bug which occurs when running all tests and fetching field definitions
+Tests deletion of accounts (Should only occur when the account has no cases or interactions)
 */
-  static void setupMockRetentionFields() {
-    GDPR_WipeCaseService.RETAIN_ADD = new Set<String>{
-      'Type',
-      'Origin',
-      'Status',
-      'ClosedDate'
-    };
+  @isTest
+  static void deleteAccount() {
+    Test.startTest();
+    Database.executeBatch(new GDPR_DeleteAccount_Batch());
+    Test.stopTest();
+    Account[] accList = [SELECT Id, LastName FROM Account];
+    System.assertEquals(1, accList.size());
+    System.assertNotEquals('TESTACC2', accList[0].LastName);
+  }
+  /**
+Tests wiping of ChatTranscript (Should only occur when the ChatTranscript has no cases or interactions)
+*/
+  @isTest
+  static void wipeChatTranscript() {
+    GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
+    GDPR_Util.RETAIN_ADD = new Set<String>{ 'Body' };
+    gdprwipeInt.setVariables('LiveChatTranscript', 1, 'CaseId', null, null);
+    gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprwipeInt);
+    Test.stopTest();
+    LiveChatTranscript[] lctList = [SELECT Id, body FROM LiveChatTranscript];
+    System.assertEquals(null, lctList[0].body);
+  }
+  /**
+Tests wiping of EmailMessage(Should only occur when the EmailMessage has no cases or interactions)
+*/
+  @isTest
+  static void wipeEmailMessage() {
+    GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
+    GDPR_Util.RETAIN_ADD = new Set<String>{ 'TextBody' };
+    gdprwipeInt.setVariables('EmailMessage', 1, 'parentId', null, null);
+    gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprwipeInt);
+    Test.stopTest();
+    EmailMessage[] lctem = [SELECT Id, TextBody FROM EmailMessage];
+    System.assertEquals(null, lctem[0].TextBody);
+  }
+
+  /**
+Tests wiping of SocialPost(Should only occur when the SocialPost has no cases or interactions)
+*/
+  @isTest
+  static void wipeSocialPost() {
+    GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
+    GDPR_Util.RETAIN_ADD = new Set<String>{ 'Content' };
+    gdprwipeInt.setVariables('SocialPost', 1, 'parentId', null, null);
+    gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprwipeInt);
+    Test.stopTest();
+    SocialPost[] lctSp = [SELECT Id, Content FROM SocialPost];
+    System.assertEquals(null, lctSp[0].Content);
+  }
+  /**
+Tests wiping of MessagingSession(Should only occur when the MessagingSession has no cases or interactions)
+*/
+  @isTest
+  static void wipeMessagingSession() {
+    GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
+    gdprwipeInt.setVariables('MessagingSession', 1, 'caseId', null, null);
+    gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprwipeInt);
+    Test.stopTest();
+    MessagingSession[] lctMs = [SELECT Id, GDPR_Wiped__c FROM MessagingSession];
+    System.assertEquals(true, lctMs[0].GDPR_Wiped__c);
+  }
+
+  /**
+Tests deletion of LiveChatTranscript (Should only occur when the LiveChatTranscript has no cases or interactions)
+*/
+  @isTest
+  static void deleteChatTranscript() {
+    GDPR_DeleteInteraction_Batch gdprDelInt = new GDPR_DeleteInteraction_Batch();
+    gdprDelInt.setVariables('LiveChatTranscript', 1, 'CaseId', null, null);
+    gdprDelInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprDelInt);
+    Test.stopTest();
+    //LiveChatTranscript[] lctList = [SELECT Id,body from LiveChatTranscript];
+    System.assertEquals(
+      0,
+      [SELECT COUNT() FROM LiveChatTranscript WHERE CaseId != NULL]
+    );
+  }
+  /**
+Tests deletion of EmailMessage (Should only occur when the EmailMessage has no cases or interactions)
+*/
+  @isTest
+  static void deleteEmailMessage() {
+    GDPR_DeleteInteraction_Batch gdprDelInt = new GDPR_DeleteInteraction_Batch();
+    gdprDelInt.setVariables('EmailMessage', 1, 'parentId', null, null);
+    gdprDelInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprDelInt);
+    Test.stopTest();
+    System.assertEquals(
+      0,
+      [SELECT COUNT() FROM EmailMessage WHERE parentId != NULL]
+    );
+  }
+  /**
+Tests deletion of SocialPost(Should only occur when the SocialPost has no cases or interactions)
+*/
+  @isTest
+  static void deleteSocialPost() {
+    GDPR_DeleteInteraction_Batch gdprDelInt = new GDPR_DeleteInteraction_Batch();
+    gdprDelInt.setVariables('SocialPost', 1, 'parentId', null, null);
+    gdprDelInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprDelInt);
+    Test.stopTest();
+    System.assertEquals(
+      0,
+      [SELECT COUNT() FROM SocialPost WHERE parentId != NULL]
+    );
+  }
+  /**
+Tests deletion of MessagingSession(Should only occur when the MessagingSession has no cases or interactions)
+*/
+  @isTest
+  static void deleteMessagingSession() {
+    GDPR_DeleteInteraction_Batch gdprDelInt = new GDPR_DeleteInteraction_Batch();
+    gdprDelInt.setVariables('MessagingSession', 1, 'caseId', null, null);
+    gdprDelInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprDelInt);
+    Test.stopTest();
+    System.assertEquals(
+      0,
+      [SELECT COUNT() FROM MessagingSession WHERE caseId != NULL]
+    );
   }
 }

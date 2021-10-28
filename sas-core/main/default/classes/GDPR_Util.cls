@@ -4,13 +4,19 @@ Util class for all GDPR jobs
 
 public class GDPR_Util
 {
+/**
+  Additional retained fields used by test due to a Salesforce bug with testing and field definitions
+  */
+  @TestVisible
+  static Set<String> RETAIN_ADD;
+
     /**
 return the fields to be wiped for particular SObject
 @param objectname
 */
     public static String[] getCaseFieldsToClear(String sObjectName){
+        Set<String> wipeFields  = RETAIN_ADD!=null ? RETAIN_ADD : new Set<String>();
         Set<String> retainedFields = new Set<String>();
-        Set<String> wipeFields = new Set<String>();
         List<String> fieldsToClear = new List<String>();
         //TODO When issue related to retrieving multiple field definitions in on transaction os solved, remove Account filter from this query and filter in loop below
         FieldDefinition[] fdList = [SELECT QualifiedAPIName,ComplianceGroup, EntityDefinitionId FROM FieldDefinition WHERE EntityDefinitionId =:sObjectName AND ComplianceGroup!=null];
@@ -19,7 +25,7 @@ return the fields to be wiped for particular SObject
             {
                 wipeFields.add(fd.QualifiedAPIName);
             }
-        }
+        }     
         //Add fields for which compliance cannot be set
         retainedFields.add('RecordTypeId'); 
         Schema.SObjectType sobjType  = Schema.getGlobalDescribe().get(sObjectName); 
