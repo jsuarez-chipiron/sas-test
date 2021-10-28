@@ -206,6 +206,221 @@
         <field>Flight__c.Scheduled_Departure_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Address__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.C_o_Address__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.City__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Country__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.First_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Last_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Postal_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Alternate_Departure_date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Alternate_Departure_time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Alternate_Return_date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Alternate_Return_time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Alternative_Dates__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Comments_From_Customer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Company_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Departure_date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Departure_time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Different_Return_City_Airport__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Extra_Bags__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Form_of_payment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.From_Airport__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Group_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Invoice_agreement_with_SAS__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Number_Of_Adults__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Number_Of_Children__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Number_Of_Extra_Bags__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Number_Of_Infants__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Number_Of_Special_Baggage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Number_Of_Special_Assistance_Travellers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Number_Of_Wheelchairs__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Other_destinations_of_interest__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Propose_alternative_destinations__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Return_date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Return_time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Special_Baggage_Note__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Special_Baggage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.To_Airport__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Travel_Class__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Trip_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Visual_or_hearing_assistance__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.Wheelchairs__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Group_Travel_Request__c.have_company_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>false</editable>
         <field>Passenger__c.Account__c</field>
@@ -555,7 +770,22 @@
         <editable>false</editable>
         <field>Case.LIA_External_Case_Number_Court_Reference__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Special_Service_Request__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Group_Outbound_Date__c</field>
+        <readable>true</readable>
     </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Group_Travel_Request__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Final_Payment_Date__c</field>
@@ -765,12 +995,7 @@
         <editable>true</editable>
         <field>Case.Last_Received_Email_On__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.Legal_Case_Diary_Migration__c</field>
-        <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>  
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Number_of_Email_Messages_Received__c</field>
@@ -813,6 +1038,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Refund_Request__c.Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.First_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.Last_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Refund_Request__c.Country_of_Purchase__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -833,7 +1078,82 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Refund_Request__c.Refund_Not_Claimed_Elsewhere__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Refund_Request__c.Ticket_Numbers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Special_Service_Request__c.Brings_Own_Mobility_Device__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Special_Service_Request__c.Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Special_Service_Request__c.Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Special_Service_Request__c.First_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Special_Service_Request__c.Last_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Special_Service_Request__c.PNR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Special_Service_Request__c.Mobility_Device_Dimensions__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Special_Service_Request__c.Mobility_Device_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Special_Service_Request__c.Number_Of_Special_Baggage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Special_Service_Request__c.Passenger_Needing_Assistance__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Special_Service_Request__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Special_Service_Request__c.Type_Of_Service_Animal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Special_Service_Request__c.Type_Of_Special_Assistance__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Special_Service_Request__c.Type_Of_Special_Baggage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -933,6 +1253,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>LIA_Claim__c.Has_been_sent_to_settle__c</field>
+        <readable>true</readable>
+    </fieldPermissions>   
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LIA_Claim__c.Judicial_Body__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -940,12 +1265,7 @@
         <editable>true</editable>
         <field>LIA_Claim__c.Jurisdiction__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Claim__c.Liability_Claim_Comments__c</field>
-        <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions> 
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Liability_Claim_Type__c</field>
@@ -1964,6 +2284,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Group_Travel_Request__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>    
+    <tabVisibilities>
         <tab>LIA_Firm__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -1975,6 +2299,10 @@
         <tab>Refund_Request__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>          
+    <tabVisibilities>
+        <tab>Special_Service_Request__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>      
     <tabVisibilities>
         <tab>SBS_ScheduledBatchRun__c</tab>
         <visibility>Hidden</visibility>

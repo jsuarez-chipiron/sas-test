@@ -698,7 +698,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Approve</fullName>
+            <fullName>Approved</fullName>
             <default>false</default>
         </values>
         <values>
@@ -778,6 +778,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Create point sharing group</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Damaged baggage status</fullName>
             <default>false</default>
         </values>
@@ -803,6 +807,10 @@
         </values>
         <values>
             <fullName>Extend TP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extended</fullName>
             <default>false</default>
         </values>
         <values>
@@ -926,6 +934,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Redirect to agent</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Referred to Agent Helpdesk</fullName>
             <default>false</default>
         </values>
@@ -946,6 +958,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Referred to group form</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Referred to mail</fullName>
             <default>false</default>
         </values>
@@ -962,7 +978,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Reject</fullName>
+            <fullName>Refund status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected</fullName>
             <default>false</default>
         </values>
         <values>
@@ -979,6 +999,10 @@
         </values>
         <values>
             <fullName>Reported delayed baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Request refund</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1015,6 +1039,10 @@
         </values>
         <values>
             <fullName>Solve online booking problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solve payment problem</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2943,6 +2971,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Plusgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Puzzle</fullName>
             <default>false</default>
         </values>
@@ -2967,6 +2999,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ticketless</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Travel Information</fullName>
             <default>false</default>
         </values>
@@ -2981,6 +3017,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>FCS_Case_Reason__c</picklist>
+        <values>
+            <fullName>AMEX</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>ATO Account Takeover</fullName>
             <default>false</default>
@@ -3039,6 +3079,10 @@
         </values>
         <values>
             <fullName>Add Wheelchair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Add weapon</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3106,6 +3150,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Change Profile</fullName>
             <default>false</default>
         </values>
@@ -3122,11 +3170,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Check in times</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Check missing 20000 Status pts Amex</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Claims</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Close</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3139,6 +3195,10 @@
         </values>
         <values>
             <fullName>Corporate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Create profile</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3195,6 +3255,10 @@
         </values>
         <values>
             <fullName>Disconnected customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3286,11 +3350,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Lost %26 found</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Make Booking</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Merge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Merge profile</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3310,7 +3382,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>New card</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>New feature</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offer sent</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3367,6 +3447,10 @@
         </values>
         <values>
             <fullName>Redirection not possible</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3446,6 +3530,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Split booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Star Online</fullName>
             <default>false</default>
         </values>
@@ -3462,6 +3550,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Tier level</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Travel Insurance Info</fullName>
             <default>false</default>
         </values>
@@ -3471,6 +3567,10 @@
         </values>
         <values>
             <fullName>Update Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Upgrade</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3692,6 +3792,158 @@
         </values>
         <values>
             <fullName>Facebook Messenger</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Death Certificate DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Death Certificate International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Death Certificate NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Death Certificate SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel BE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel CH-de</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel CH-fr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel DE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel ES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel FR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel GB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel IE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel LU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel NL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel PL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel RU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Group Travel US</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Customer DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Customer International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Customer NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Customer SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Travel Agent DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Travel Agent International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Travel Agent NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Refunds Travel Agent SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - SSR DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - SSR International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - SSR NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - SSR SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Visa Rejection DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Visa Rejection International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Visa Rejection NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Visa Rejection SE</fullName>
             <default>false</default>
         </values>
     </picklistValues>

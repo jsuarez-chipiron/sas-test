@@ -1,66 +1,83 @@
 public class SpecialServiceRequestService {
-  public static String createSpecialServiceForm(
+  // TODO: This parsing logic should be at the API layer.
+  private static Map<String, String> marketToOrigin = new Map<String, String>{
+    'dk-da' => 'Form - SSR DK',
+    'no-no' => 'Form - SSR NO',
+    'se-sv' => 'Form - SSR SE',
+    'default' => 'Form - SSR International'
+  };
+
+  private static Map<String, String> jsonToPicklist = new Map<String, String>{
+    'baggage' => 'Special Baggage',
+    'blind' => 'Sight disability',
+    'deaf' => 'Hearing disability',
+    'service-animal' => 'Service Animal',
+    'special-assistance' => 'Special Assistance',
+    'wchr-ramp' => 'WCHR Ramp',
+    'wchs-steps' => 'WCHS Steps',
+    'wchc-carry' => 'WCHC Carry',
+    'wcbd' => 'Dry Battery Wheelchair (WCBD)',
+    'wcbw' => 'Wet Battery Wheelchair (WCBW)',
+    'wclb' => 'Lithium Battery Wheelchair (WCLB)',
+    'wcmp' => 'Manual Power Wheelchair (WCMP)',
+    'wheelchair' => 'Mobility'
+  };
+
+  private static Group salesControlQueue = [
+    SELECT Id
+    FROM Group
+    WHERE Type = 'Queue' AND DeveloperName = 'Sales_Control_BOM'
+  ];
+
+  public static void createSpecialServiceRequest(
     SpecialServiceJSON2Apex specialServiceForm
   ) {
-    Case cse;
+    Special_Service_Request__c specialServiceRequest = new Special_Service_Request__c(
+      Brings_Own_Mobility_Device__c = specialServiceForm.formData.bringsOwnMobilityDevice ==
+        null
+        ? false
+        : specialServiceForm.formData.bringsOwnMobilityDevice,
+      Email__c = specialServiceForm.formData.email,
+      First_Name__c = specialServiceForm.formData.firstName,
+      Last_Name__c = specialServiceForm.formData.lastName,
+      Mobility_Device_Dimensions__c = specialServiceForm.formData.mobilityDeviceDimensions,
+      Mobility_Device_Type__c = jsonToPicklist.get(
+        specialServiceForm.formData.mobilityDeviceType
+      ),
+      Number_Of_Special_Baggage__c = specialServiceForm.formData.numberOfSpecialBaggage,
+      Passenger_Needing_Assistance__c = specialServiceForm.formData.passengerNeedingAssistance,
+      Phone__c = specialServiceForm.formData.phone,
+      PNR__c = specialServiceForm.formData.bookingReference,
+      Type__c = jsonToPicklist.get(specialServiceForm.formData.type),
+      Type_Of_Service_Animal__c = specialServiceForm.formData.typeOfServiceAnimal,
+      Type_Of_Special_Assistance__c = jsonToPicklist.get(
+        specialServiceForm.formData.typeOfSpecialAssistance
+      ),
+      Type_Of_Special_Baggage__c = specialServiceForm.formData.typeOfSpecialBaggage
+    );
 
-    try {
-      SpecialServiceJSON2Apex.FormData specialServiceRequestForm = specialServiceForm.formData;
+    insert specialServiceRequest;
 
-      //create Special Service Request
-      Special_Service_Request__c specialServiceRequest = createSpecialServiceRequestInstance(
-        specialServiceRequestForm
-      );
-      insert specialServiceRequest;
+    String caseOrigin = marketToOrigin.get('default');
 
-      // create Cases
-      cse = new Case(
-        SuppliedEmail = specialServiceRequestForm.email,
-        SuppliedPhone = specialServiceRequestForm.phone,
-        RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
-        Special_Service_Request__c = specialServiceRequest.Id,
-        Initially_Provided_PNR__c = specialServiceRequestForm.bookingReference
-      );
-
-      insert cse;
-
-      // create contact
-      Contact con = new Contact(
-        FirstName = specialServiceRequestForm.FirstName,
-        LastName = specialServiceRequestForm.LastName,
-        Email = specialServiceRequestForm.email,
-        phone = specialServiceRequestForm.phone,
-        Special_Service_Request__c = specialServiceRequest.Id
-      );
-
-      insert con;
-    } catch (Exception e) {
-      C_Log.logException(e, 'SpecialServiceRequest', null);
-      return e.getMessage();
+    if (marketToOrigin.get(specialServiceForm.metaData.market) != null) {
+      caseOrigin = marketToOrigin.get(specialServiceForm.metaData.market);
     }
 
-    return cse.Id;
-  }
+    Case caseToInsert = new Case(
+      Initially_Provided_PNR__c = specialServiceForm.formData.bookingReference,
+      Origin = caseOrigin,
+      OwnerId = salesControlQueue.Id,
+      RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
+      Subject = 'SSR, Type: ' +
+        specialServiceRequest.Type__c +
+        ', PNR: ' +
+        specialServiceRequest.PNR__c,
+      SuppliedEmail = specialServiceForm.formData.email,
+      SuppliedPhone = specialServiceForm.formData.phone,
+      Special_Service_Request__c = specialServiceRequest.Id
+    );
 
-  static Special_Service_Request__c createSpecialServiceRequestInstance(
-    SpecialServiceJSON2Apex.FormData formData
-  ) {
-    Special_Service_Request__c specialServiceRequest = new Special_Service_Request__c();
-    specialServiceRequest.Type__c = formData.Type;
-    specialServiceRequest.Type_Of_Special_Assistance__c = formData.typeOfSpecialAssistance;
-    specialServiceRequest.Passenger_Needing_Assistance__c = formData.passengerNeedingAssistance;
-    if (formData.bringsOwnMobilityDevice && formData.Type == 'Mobility') {
-      specialServiceRequest.Brings_Own_Mobility_Device__c = formData.bringsOwnMobilityDevice;
-      specialServiceRequest.Mobility_Device_Type__c = formData.mobilityDeviceType;
-      specialServiceRequest.Mobility_Device_Dimensions__c = formData.mobilityDeviceDimensions;
-    }
-    if (formData.Type == 'Special Baggage') {
-      specialServiceRequest.Number_Of_Special_Baggage__c = formData.numberOfSpecialBaggage;
-      specialServiceRequest.Type_Of_Special_Baggage__c = formData.typeOfSpecialBaggage;
-    }
-    if (formData.Type == 'Service Animal') {
-      specialServiceRequest.Type_Of_Service_Animal__c = formData.typeOfServiceAnimal;
-    }
-    return specialServiceRequest;
+    insert caseToInsert;
   }
 }
