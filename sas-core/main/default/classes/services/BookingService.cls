@@ -14,8 +14,6 @@ public without sharing class BookingService {
    *
    */
   public static void addBookingToCase(ID caseId, String bookingReference) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-
     TEDSIntegrationService TEDSService = (TEDSIntegrationService) SAS_Service_Application.Service.newInstance(
       TEDSIntegrationService.class
     );
@@ -25,12 +23,12 @@ public without sharing class BookingService {
     );
 
     if (bookingData == null) {
-      // Not found in TEDS either. Booking reference doesn't exist in recent flight data (3 months or so).
+      // Not found in TEDS. Booking reference doesn't exist in recent flight data (3 months or so).
       // TODO: Check EDW when an integration exists.
       return;
     }
 
-    Booking__c newBooking = constructBookingsForDB(bookingData, uow);
+    Booking__c newBooking = constructBookingsForDB(bookingData);
 
     CaseToBookingsSelector caseToBookings = (CaseToBookingsSelector) SAS_Service_Application.Selector.newInstance(
       CaseToBooking__c.SObjectType
@@ -43,16 +41,13 @@ public without sharing class BookingService {
 
     if (caseToBooking.size() == 0) {
       // Add case to booking only if it doesn't exist yet.
-      CaseToBooking__c newJoin = new CaseToBooking__c(Case__c = caseId);
-      uow.registerNew(newJoin);
-      uow.registerRelationship(
-        newJoin,
-        CaseToBooking__c.Booking__c,
-        newBooking
+      CaseToBooking__c newJoin = new CaseToBooking__c(
+        Booking__c = newBooking.Id,
+        Case__c = caseId
       );
-    }
 
-    uow.commitWork();
+      insert newJoin;
+    }
     BookingService.fetchFlightsForBooking(bookingData);
   }
 
@@ -111,9 +106,7 @@ public without sharing class BookingService {
       return;
     }
 
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    Booking__c newBooking = constructBookingsForDB(bookingData, uow);
-    uow.commitWork();
+    constructBookingsForDB(bookingData);
     BookingService.fetchFlightsForBooking(bookingData);
   }
 
@@ -148,7 +141,7 @@ public without sharing class BookingService {
     }
 
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<Booking__c> newBookings = constructBookingsForDB(bookingData, uow);
+    List<Booking__c> newBookings = constructBookingsForDB(bookingData);
 
     List<Account> ebAccount = accounts.selectByEuroBonusNumber(
       new Set<String>{ euroBonusNumber }
@@ -173,40 +166,35 @@ public without sharing class BookingService {
           uow.registerDeleted(existingBooking);
         }
       }
+      uow.commitWork();
     }
-
-    uow.commitWork();
   }
 
   /**
-   * Parses booking data in IRR_MOD_TedsBooking format into DB objects and prepares them for DB insertion.
+   * Parses booking data in IRR_MOD_TedsBooking format into SF objects and inserts them into the DB.
+   * Upserts flights and bookings so there is no need to clean up old ones beforehand.
    *
    * @param bookingData A single IRR_MOD_TedsBooking object containing booking to create.
-   * @param uow Unit of work transaction in which the booking should be committed. Must be committed by caller.
    *
    * @return The created Booking__c object.
    */
   private static Booking__c constructBookingsForDB(
-    IRR_MOD_TedsBooking bookingData,
-    fflib_ISObjectUnitOfWork uow
+    IRR_MOD_TedsBooking bookingData
   ) {
     return constructBookingsForDB(
-      new List<IRR_MOD_TedsBooking>{ bookingData },
-      uow
+      new List<IRR_MOD_TedsBooking>{ bookingData }
     )[0];
   }
   /**
-   * Parses booking data in IRR_MOD_TedsBooking format into DB objects and prepares them for DB insertion,
-   * and upserts related flights.
+   * Parses booking data in IRR_MOD_TedsBooking format into SF objects and inserts them into the DB.
+   * Upserts flights and bookings so there is no need to clean up old ones beforehand.
    *
    * @param bookingData List of IRR_MOD_TedsBooking objects containing bookings to create.
-   * @param uow Unit of work transaction in which the booking should be committed. Must be committed by caller.
    *
    * @return The list of created Booking__c objects.
    */
   private static List<Booking__c> constructBookingsForDB(
-    List<IRR_MOD_TedsBooking> bookingData,
-    fflib_ISObjectUnitOfWork uow
+    List<IRR_MOD_TedsBooking> bookingData
   ) {
     BookingsSelector bookings = (BookingsSelector) SAS_Service_Application.Selector.newInstance(
       Booking__c.SObjectType
@@ -220,21 +208,38 @@ public without sharing class BookingService {
 
     List<Booking__c> bookingsFromDB = bookings.selectByTEDSIdFull(bookingIds);
 
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     Map<String, Booking__c> bookingsAlreadyInSF = new Map<String, Booking__c>();
     for (Booking__c f : bookingsFromDB) {
       bookingsAlreadyInSF.put(f.TEDS_Identifier__c, f);
+
+      for (Passenger__c existingPassenger : f.Passengers__r) {
+        uow.registerDeleted(existingPassenger);
+      }
+
+      for (Segment__c existingSegment : f.Segments__r) {
+        uow.registerDeleted(existingSegment);
+      }
+    }
+    try {
+      uow.commitWork(); // Remove old passengers and segments
+    } catch (DMLException e) {
+      if (e.getDmlType(0) == StatusCode.ENTITY_IS_DELETED) {
+        // A parallel thread may have deleted the entities. Let's just ignore.
+      } else {
+        throw e;
+      }
     }
 
     List<Booking__c> bookingsToReturn = new List<Booking__c>();
-    Map<String, Flight__c> flightsProcessed = new Map<String, Flight__c>();
+    List<Booking__c> bookingsToUpsert = new List<Booking__c>();
+    List<Segment__c> segmentsToInsert = new List<Segment__c>();
+    List<Passenger__c> passengersToInsert = new List<Passenger__c>();
 
-    // Loop through each booking and create all sub objects.
+    Map<String, Flight__c> flightsProcessed = new Map<String, Flight__c>();
     for (IRR_MOD_TedsBooking booking : bookingData) {
-      List<Passenger__c> passengersCreated = new List<Passenger__c>();
-      Booking__c bookingToUpsert = bookingsAlreadyInSF.get(booking.id);
-      Boolean isNew = true;
-      if (bookingToUpsert == null) {
-        bookingToUpsert = new Booking__c(
+      bookingsToUpsert.add(
+        new Booking__c(
           Booking_Reference__c = booking.reference,
           Created_at_Travel_Office_Id__c = booking?.audit?.created?.officeId ==
             null
@@ -244,60 +249,9 @@ public without sharing class BookingService {
           TEDS_Identifier__c = booking.id,
           Type__c = booking.type,
           Is_Cancelled__c = booking.isCancelled
-        );
-        uow.registerNew(bookingToUpsert);
-      } else {
-        isNew = false;
-        bookingToUpsert.Type__c = booking.type;
-        bookingToUpsert.Is_Cancelled__c = booking.isCancelled;
-        uow.registerDirty(bookingToUpsert);
-      }
+        )
+      );
 
-      bookingsToReturn.add(bookingToUpsert);
-
-      // Remove all existing passengers and segments for existing bookings. Reliable updating is impossible.
-      if (!isNew) {
-        for (Passenger__c existingPassenger : bookingToUpsert.Passengers__r) {
-          uow.registerDeleted(existingPassenger);
-        }
-
-        for (Segment__c existingSegment : bookingToUpsert.Segments__r) {
-          uow.registerDeleted(existingSegment);
-        }
-      }
-
-      // Create passengers
-      for (IRR_MOD_TedsBooking.Passenger p : booking.passengers) {
-        Passenger__c newPassenger = new Passenger__c(
-          Booking__c = bookingToUpsert.id,
-          First_Name__c = p.firstName,
-          Identifier__c = p.id,
-          Last_Name__c = p.lastName
-        );
-
-        if (p.frequentTraveler.euroBonus.size() > 0) {
-          newPassenger.EuroBonus_Number__c = p.frequentTraveler.euroBonus[0]
-            .number_x;
-        }
-
-        if (p.contact.phone.size() > 0) {
-          newPassenger.Phone__c = p.contact.phone[0].number_x;
-        }
-
-        if (p.contact.email.size() > 0) {
-          newPassenger.Email__c = p.contact.email[0].address;
-        }
-
-        passengersCreated.add(newPassenger);
-        uow.registerNew(newPassenger);
-        uow.registerRelationship(
-          newPassenger,
-          Passenger__c.Booking__c,
-          bookingToUpsert
-        );
-      }
-
-      // Loop through all segments in the trip and create segment and flight objects as necessary
       for (IRR_MOD_TedsBooking.Trip trip : booking.trips) {
         for (IRR_MOD_TedsBooking.SegmentTrip segmentTrip : trip.segments) {
           // Create flights
@@ -333,9 +287,77 @@ public without sharing class BookingService {
 
             flightsProcessed.put(flightId, newFlight);
           }
+        }
+      }
+    }
 
+    // Upsert bookings
+    // The upsert operation seems to fail due to a race condition between two threads
+    // trying to upsert the records simultaneously. One thread succeeds and the other
+    // fails with a duplicate value exception.
+    try {
+      upsert bookingsToUpsert TEDS_Identifier__c;
+    } catch (DMLException e) {
+      if (e.getDmlType(0) == StatusCode.DUPLICATE_VALUE) {
+        upsert bookingsToUpsert TEDS_Identifier__c;
+      }
+    }
+
+    // Upsert flights
+    // The upsert operation seems to fail due to a race condition between two threads
+    // trying to upsert the records simultaneously. One thread succeeds and the other
+    // fails with a duplicate value exception.
+    try {
+      upsert flightsProcessed.values() TEDS_Identifier__c;
+    } catch (DMLException e) {
+      if (e.getDmlType(0) == StatusCode.DUPLICATE_VALUE) {
+        upsert flightsProcessed.values() TEDS_Identifier__c;
+      }
+    }
+
+    Map<String, Booking__c> insertedBookingsByTEDSId = new Map<String, Booking__c>();
+    Map<String, Flight__c> insertedFlightsByTEDSId = new Map<String, Flight__c>();
+    for (Booking__c booking : bookingsToUpsert) {
+      insertedBookingsByTEDSId.put(booking.TEDS_Identifier__c, booking);
+    }
+    for (Flight__c flight : flightsProcessed.values()) {
+      insertedFlightsByTEDSId.put(flight.TEDS_Identifier__c, flight);
+    }
+
+    // Loop through each booking and create all sub objects.
+    for (IRR_MOD_TedsBooking booking : bookingData) {
+      List<Passenger__c> passengersCreated = new List<Passenger__c>();
+      // Create passengers
+      for (IRR_MOD_TedsBooking.Passenger p : booking.passengers) {
+        Passenger__c newPassenger = new Passenger__c(
+          Booking__c = insertedBookingsByTEDSId.get(booking.id).Id,
+          First_Name__c = p.firstName,
+          Identifier__c = p.id,
+          Last_Name__c = p.lastName
+        );
+
+        if (p.frequentTraveler.euroBonus.size() > 0) {
+          newPassenger.EuroBonus_Number__c = p.frequentTraveler.euroBonus[0]
+            .number_x;
+        }
+
+        if (p.contact.phone.size() > 0) {
+          newPassenger.Phone__c = p.contact.phone[0].number_x;
+        }
+
+        if (p.contact.email.size() > 0) {
+          newPassenger.Email__c = p.contact.email[0].address;
+        }
+
+        passengersCreated.add(newPassenger);
+        passengersToInsert.add(newPassenger);
+      }
+
+      // Loop through all segments in the trip and create segment and flight objects as necessary
+      for (IRR_MOD_TedsBooking.Trip trip : booking.trips) {
+        for (IRR_MOD_TedsBooking.SegmentTrip segmentTrip : trip.segments) {
+          String flightId = segmentTrip.flight.id.trim().toUpperCase();
           // Create one segment per passenger per flight in the booking.
-          // TODO: Let's see if this works or if we get too much data.
           for (Passenger__c p : passengersCreated) {
             IRR_MOD_TedsBooking.Passenger passengerData;
             IRR_MOD_TedsBooking.Segment segmentPassenger;
@@ -371,58 +393,43 @@ public without sharing class BookingService {
                 segmentPassenger.baggage.quantity.extra
               : 0;
 
-            Segment__c newSegment = new Segment__c(
-              Baggage_Quantity__c = baggage,
-              Booking_Class__c = segmentTrip.bookingClass,
-              Check_In_Status__c = segmentPassenger.checkin == null
-                ? 'Unknown'
-                : segmentPassenger.checkin.status,
-              Fare_Basis__c = segmentPassenger.fare == null
-                ? ''
-                : segmentPassenger.fare.basis,
-              Identifier__c = segmentTrip.id + p.Identifier__c,
-              Is_Boarded__c = segmentPassenger.isBoarded,
-              Name = segmentTrip.flight.id,
-              Seat__c = segmentPassenger.seat,
-              Segment_Status__c = segmentTrip.status,
-              Segment_Status_Code__c = segmentTrip.statusCode,
-              Service_Class__c = segmentTrip.serviceClass,
-              Special_Service_Requests__c = ssrs,
-              Ticket_Number__c = segmentPassenger.ticket == null
-                ? ''
-                : segmentPassenger.ticket.number_x,
-              Ticket_Type__c = segmentPassenger.ticket == null
-                ? ''
-                : segmentPassenger.ticket.type,
-              Trip_Type__c = trip.type
-            );
-            uow.registerNew(newSegment);
-            uow.registerRelationship(
-              newSegment,
-              Segment__c.Booking__c,
-              bookingToUpsert
-            );
-            uow.registerRelationship(
-              newSegment,
-              Segment__c.Flight__c,
-              flightsProcessed.get(segmentTrip.flight.id)
+            segmentsToInsert.add(
+              new Segment__c(
+                Baggage_Quantity__c = baggage,
+                Booking__c = insertedBookingsByTEDSId.get(booking.id).Id,
+                Booking_Class__c = segmentTrip.bookingClass,
+                Check_In_Status__c = segmentPassenger.checkin == null
+                  ? 'Unknown'
+                  : segmentPassenger.checkin.status,
+                Fare_Basis__c = segmentPassenger.fare == null
+                  ? ''
+                  : segmentPassenger.fare.basis,
+                Flight__c = insertedFlightsByTEDSId.get(flightId).Id,
+                Identifier__c = segmentTrip.id + p.Identifier__c,
+                Is_Boarded__c = segmentPassenger.isBoarded,
+                Name = segmentTrip.flight.id,
+                Seat__c = segmentPassenger.seat,
+                Segment_Status__c = segmentTrip.status,
+                Segment_Status_Code__c = segmentTrip.statusCode,
+                Service_Class__c = segmentTrip.serviceClass,
+                Special_Service_Requests__c = ssrs,
+                Ticket_Number__c = segmentPassenger.ticket == null
+                  ? ''
+                  : segmentPassenger.ticket.number_x,
+                Ticket_Type__c = segmentPassenger.ticket == null
+                  ? ''
+                  : segmentPassenger.ticket.type,
+                Trip_Type__c = trip.type
+              )
             );
           }
         }
       }
     }
 
-    // The upsert operation seems to fail due to a race condition between two threads
-    // trying to upsert the records simultaneously. One thread succeeds and the other 
-    // fails with a duplicate value exception.
-    try {
-      upsert flightsProcessed.values() TEDS_Identifier__c;
-    } catch (DMLException e) {
-      if (e.getDmlType(0) == StatusCode.DUPLICATE_VALUE) {
-        upsert flightsProcessed.values() TEDS_Identifier__c;
-      }
-    }
-    return bookingsToReturn;
+    insert passengersToInsert;
+    insert segmentsToInsert;
+    return bookingsToUpsert;
   }
 
   private static void fetchFlightsForBooking(IRR_MOD_TedsBooking bookingData) {

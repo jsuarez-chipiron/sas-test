@@ -12,9 +12,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Dry Battery Wheelchair (WCBD )</fullName>
+                <fullName>Dry Battery Wheelchair (WCBD)</fullName>
                 <default>false</default>
-                <label>Dry Battery Wheelchair (WCBD )</label>
+                <label>Dry Battery Wheelchair (WCBD)</label>
             </value>
             <value>
                 <fullName>Wet Battery Wheelchair (WCBW)</fullName>
