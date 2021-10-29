@@ -37,7 +37,7 @@
             <assignToReference>emailTemplateName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>irr_schedule_change_email_01</stringValue>
+                <stringValue>irr_schedule_change_email_noRX</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -72,7 +72,7 @@
             <assignToReference>emailTemplateName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>irr_schdulechange_RX_email_01</stringValue>
+                <stringValue>irr_schedule_change_email_RX</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -86,7 +86,7 @@
             <assignToReference>smsTemplateName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>irr_schdulechange_RX_sms_01</stringValue>
+                <stringValue>irr_schedule_change_sms_01</stringValue>
             </value>
         </assignmentItems>
     </assignments>

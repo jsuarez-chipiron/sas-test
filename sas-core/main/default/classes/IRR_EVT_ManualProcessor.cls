@@ -169,13 +169,10 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
      * @param uow Unit of Work
      */
     public override void finalizeEvent(fflib_ISObjectUnitOfWork uow) {
-        System.debug('inside uow ==>');
-        
+
         if(!isQueued){
-            System.debug('inside isQueued ==>');
             super.finalizeEvent(uow);
         }else{
-            System.debug('inside else ==>');
             insertEventLog(uow);
         }
     }
