@@ -229,6 +229,10 @@
                 <behavior>Edit</behavior>
                 <field>Invoice_Agreement_With_SAS__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Invoice_Agreement_Number__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
