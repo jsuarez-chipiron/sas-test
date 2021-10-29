@@ -17,6 +17,7 @@ public without sharing class RefundRequestService {
     'yes' => 'Yes',
     'no' => 'No',
     'already-cancelled' => 'Already Cancelled',
+    'departure' => 'Outbound',
     'outbound' => 'Outbound',
     'return' => 'Inbound'
   };
