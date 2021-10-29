@@ -1470,8 +1470,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Group_Travel_Request__c.Invoice_Agreement_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
-        <field>Group_Travel_Request__c.Invoice_agreement_with_SAS__c</field>
+        <field>Group_Travel_Request__c.Invoice_Agreement_With_SAS__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
