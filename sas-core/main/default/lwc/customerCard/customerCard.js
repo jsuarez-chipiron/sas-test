@@ -115,7 +115,11 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   @wire(getAccountData, { accountId: "$accountId" })
   wiredAccount({ error, data }) {
     if (!error && data != undefined && data.length > 0) {
-      this.account = data[0];
+      this.account = {
+        ...data[0],
+        cmpCode: data[0].FCS_CMP__c || "-",
+        tpNumber: data[0].FCS_TPAccountNumber__c || ""
+      };
       if (
         data[0].FCS_EBLevel__c != undefined &&
         data[0].FCS_EBNumber__c != undefined

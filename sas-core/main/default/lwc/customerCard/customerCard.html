@@ -259,6 +259,21 @@
           <lightning-tab label={communicationLogsTabTitle}>
             <c-communication-log communicationlogs={communicationLogs}></c-communication-log>
           </lightning-tab>-->
+          <lightning-tab label="Extra Details">
+            <h2 class="slds-m-bottom_xxx-small"><strong>Corporate account</strong></h2>
+            <div class="slds-col slds-size_1-of-1 slds-grid">
+              <div class="slds-col slds-size_1-of-2 slds-grid">
+                <div class="slds-col slds-size_1-of-1 slds-grid slds-grid_vertical slds-p-right_small">
+                  <span class="field-label">CMP</span>
+                  <span class="slds-border_bottom">{account.cmpCode}</span>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-grid slds-grid_vertical">
+                  <span class="field-label">TP Number</span>
+                  <span class="slds-border_bottom">{account.tpNumber}</span>
+                </div>
+              </div>
+            </div>
+          </lightning-tab>
         </lightning-tabset>
       </div>
     </div>
