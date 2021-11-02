@@ -7,10 +7,6 @@
         <value xsi:nil="true"/>
     </values>
     <values>
-        <field>Parent_Object__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
         <field>Related_SObject_Name__c</field>
         <value xsi:nil="true"/>
     </values>
