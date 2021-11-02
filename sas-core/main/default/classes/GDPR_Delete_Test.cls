@@ -2,452 +2,408 @@
 Unit tests for GDPR delete batches to ensure that the correct entities are deleted
 @author Peter Södergren
 */
-@isTest 
+@isTest
 private class GDPR_Delete_Test {
-    /**
+  /**
 Creates the records used to tests data deletion
 */
-    @testSetup static void setup(){
-        Account[] accs = FCS_TestDataFactory.createFrequentFlyers(2);
-        accs[0].LastName = 'TESTACC1';
-        accs[1].LastName = 'TESTACC2';
-        insert accs;
-        Case[] cList = FCS_TestDataFactory.createCases(5, accs[0].Id, accs[0].PersonContactId, C_RecordTypeHelper.CASE_SUPPORT, 'Baggage');
-        cList.addAll(FCS_TestDataFactory.createCases(1, accs[1].Id, accs[1].PersonContactId, C_RecordTypeHelper.CASE_SUPPORT, 'Baggage'));
-        List<Del_Sensitive_Data_Based_on_Case_Origin__mdt> lstDelSens= [Select Id, Case_Origin__c from Del_Sensitive_Data_Based_on_Case_Origin__mdt];
-        cList[0].origin = lstDelSens[0].Case_Origin__c;
-        cList[0].Status = 'Closed';
-        cList[1].Status = 'Closed';
-        cList[2].Status = 'Closed';
-        cList[3].Status = 'Closed';
-        cList[4].Status = 'Closed';
-        cList[5].Status = 'Open';
-        insert cList;
-        EmailMessage emailMsge =  new EmailMessage(FromAddress='test@example.com.invalid',FromName='Test',Incoming=true,Subject='TestSubject',TextBody='TestBody',ToAddress='test@sas.se',ParentId=cList[0].Id);
-        insert emailMsge;
-        // create ContentVersion record
-        ContentVersion conteVersion = new ContentVersion(
-            Title          = 'SAS Logo',
-            PathOnClient   = 'Pic.jpg',
-            VersionData    = Blob.valueOf('SAS Image'),
-            IsMajorVersion = true);
-        insert conteVersion;
-        
-        List<ContentDocument> documents = [SELECT Id, Title, LatestPublishedVersionId FROM ContentDocument LIMIT 1];
-        
-        //create ContentDocumentLink  record
-        ContentDocumentLink cdl = new ContentDocumentLink();
-        cdl.LinkedEntityId = emailMsge.Id;
-        cdl.ContentDocumentId = documents[0].Id;
-        cdl.ShareType = 'V';
-        cdl.Visibility = 'AllUsers';
-        insert cdl;
-        
-        // insert Attachement
-        Attachment obj = new Attachment();
-        obj.Body = Blob.valueOf('SAS Image');
-        obj.ParentId = emailMsge.Id;
-        obj.Name = 'Test.pdf';
-        obj.ContentType = 'application/pdf';
-        insert obj;
-        
-        cList[0].Status = 'Closed';
-        update cList;
-        LiveChatVisitor lcv = new LiveChatVisitor();
-        insert lcv;
-        insert new LiveChatTranscript(AccountId=accs[0].Id,Body='Test',CaseId=cList[1].Id,Status='Completed',LiveChatVisitorId=lcv.Id);
-        MessagingChannel mc = new MessagingChannel(DeveloperName='TESTFB123',IsActive=false,MasterLabel='TESTFB123',MessageType='Facebook',MessagingPlatformKey='TESTFB1244567');
-        User u = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
-        System.runAs(u){
-            insert mc;
-        }
-        MessagingEndUser meu = new MessagingEndUser(AccountId=accs[0].Id,ContactId=accs[0].PersonContactId,MessageType='Facebook',Name='Test',MessagingPlatformKey='TESTXYZ',MessagingChannelId=mc.Id);
-        insert meu;
-        insert new MessagingSession(CaseId=cList[2].Id,MessagingEndUserId=meu.Id,Status='Ended',MessagingChannelId=mc.Id);
-        SocialPost[] spList = FCS_TestDataFactory.createSocialPosts(1);
-        insert spList;
-        spList[0].ParentId = cList[3].Id;
-        update spList;
-        // booking and flight Data
-        DateTime arrivalTime = Datetime.now().adddays(2);
-        DateTime departuteTime = Datetime.now().adddays(1);
-        List<Flight__c> lstFlights= new List<Flight__c>();
-        lstFlights.add(FCS_TestDataFactory.createFlights('BNG','CHN',arrivalTime,departuteTime,'MANUAL-1'));
-        List<Booking__c> lstBookings = FCS_TestDataFactory.createBookings(1,'OneWay');
-        insert lstFlights;
-        insert lstBookings;
-        List<Passenger__c> lstPassengers= FCS_TestDataFactory.createPassengerss(1,accs[0].Id,lstBookings[0].Id);
-        insert lstPassengers;
-        Segment__c seg = FCS_TestDataFactory.createSegment(lstBookings[0].Id,lstFlights[0].Id);
-        insert seg;
-           
-        
-        
+  @testSetup
+  static void setup() {
+    Account[] accs = FCS_TestDataFactory.createFrequentFlyers(2);
+    accs[0].LastName = 'TESTACC1';
+    accs[1].LastName = 'TESTACC2';
+    insert accs;
+
+    Case[] cList = FCS_TestDataFactory.createCases(
+      2,
+      null,
+      null,
+      C_RecordTypeHelper.CASE_CHANNEL,
+      'Baggage'
+    );
+    cList[0].origin = 'Email - Group Sales IS';
+    cList[0].FCS_CaseType__c = 'Baggage';
+    cList[0].FCS_Case_Reason__c = 'Other';
+
+    insert cList;
+
+    List<EmailMessage> emlst = new List<EmailMessage>();
+    EmailMessage emailMsge = new EmailMessage(
+      FromAddress = 'test@example.com.invalid',
+      FromName = 'Test',
+      Incoming = true,
+      Subject = 'TestSubject',
+      TextBody = 'TestBody',
+      ToAddress = 'test@sas.se'
+    );
+    emlst.add(emailMsge);
+
+    EmailMessage emailMsge1 = new EmailMessage(
+      FromAddress = 'test@example.com.invalid',
+      FromName = 'Test',
+      Incoming = true,
+      Subject = 'TestSubject',
+      TextBody = 'TestBody',
+      ToAddress = 'test@sas.se',
+      ParentId = cList[0].Id
+    );
+
+    emlst.add(emailMsge1);
+
+    insert emlst;
+
+    List<LiveChatTranscript> lstLct = new List<LiveChatTranscript>();
+
+    LiveChatVisitor lcv = new LiveChatVisitor();
+    insert lcv;
+
+    LiveChatTranscript lct = new LiveChatTranscript(
+      Body = 'Test',
+      Status = 'Completed',
+      LiveChatVisitorId = lcv.Id
+    );
+    LiveChatTranscript lct1 = new LiveChatTranscript(
+      Body = 'Test',
+      Status = 'Completed',
+      LiveChatVisitorId = lcv.Id,
+      caseId = cList[0].Id
+    );
+    lstLct.add(lct);
+    lstLct.add(lct1);
+
+    insert lstLct;
+    List<MessagingChannel> lstMsgCh = new List<MessagingChannel>();
+
+    MessagingChannel mc = new MessagingChannel(
+      DeveloperName = 'TESTFB12356',
+      IsActive = false,
+      MasterLabel = 'TESTFB123',
+      MessageType = 'Facebook',
+      MessagingPlatformKey = 'TESTFB1244567'
+    );
+    MessagingChannel mc1 = new MessagingChannel(
+      DeveloperName = 'TESTFB123rerrt',
+      IsActive = false,
+      MasterLabel = 'TESTFB123er',
+      MessageType = 'Facebook',
+      MessagingPlatformKey = 'TESTFB124456767'
+    );
+    lstMsgCh.add(mc);
+    lstMsgCh.add(mc1);
+
+    User u = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+    System.runAs(u) {
+      insert lstMsgCh;
     }
-    /**
-Sets up mock retention fields for tests due to a Salesforce bug which occurs when running all tests and fetching field definitions
-*/
-    static void setupMockRetentionFields(){
-        GDPR_WipeCaseService.RETAIN_ADD = new Set<String>{'Type','Origin','Status','ClosedDate'};
-            }
-    /**
-Tests that account data is wiped after the retention period but left for account with open cases
-*/
-    @isTest static void deleteAccountData(){
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('WipePeriodAccount','-1');
-        sg.set('AccountDataWipeName','TestDelete');
-        Database.executeBatch(new GDPR_DeleteAccountData_Batch());
-        Test.stopTest();
-        
-        Account[] accsWiped = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,FCS_EBLevel__c FROM Account WHERE GDPR_WipedSoft__c=true];
-        System.assertEquals(1,accsWiped.size());
-        System.assertEquals('TestDelete',accsWiped[0].Name);
-        System.assertEquals(true,accsWiped[0].GDPR_WipedSoft__c);
-        System.assertEquals(false,accsWiped[0].GDPR_Wiped__c);
-        System.assertEquals(null,accsWiped[0].FCS_EBLevel__c);
-        
-        Account[] accsNotWiped = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,FCS_EBLevel__c FROM Account WHERE GDPR_WipedSoft__c=false];
-        System.assertEquals(1,accsNotWiped.size());
-        System.assertNotEquals('TestDelete',accsNotWiped[0].Name);
-        System.assertEquals(false,accsNotWiped[0].GDPR_WipedSoft__c);
-        System.assertEquals(false,accsWiped[0].GDPR_Wiped__c);
-        System.assertNotEquals(null,accsNotWiped[0].FCS_EBLevel__c);
-    }
-    
-    /**
-Tests that accounts can be wiped completely from the system
-*/
-    @isTest static void wipeAccount(){
-        setupMockRetentionFields();
-        Account acc = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,FCS_EBLevel__c FROM Account WHERE LastName='TESTACC1'];
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('WipePeriodAccount','1');
-        sg.set('AccountDataWipeName','TestDelete');
-        GDPR_DeleteComponentController.deleteRecordData(acc.Id);
-        Test.stopTest();
-        
-        acc = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,FCS_EBLevel__c FROM Account WHERE Id=:acc.Id];
-        System.assertEquals('TestDelete',acc.Name);
-        System.assertEquals(true,acc.GDPR_Wiped__c);
-        System.assertEquals(true,acc.GDPR_WipedSoft__c);
-        System.assertEquals(null,acc.FCS_EBLevel__c);
-        
-        Account[] accsNotWiped = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,FCS_EBLevel__c FROM Account WHERE GDPR_Wiped__c=false];
-        System.assertEquals(1,accsNotWiped.size());
-        System.assertNotEquals('TestDelete',accsNotWiped[0].Name);
-        System.assertNotEquals(true,accsNotWiped[0].GDPR_Wiped__c);
-        System.assertNotEquals(true,accsNotWiped[0].GDPR_WipedSoft__c);
-        System.assertNotEquals(null,accsNotWiped[0].FCS_EBLevel__c);
-        
-        Case[] cClosed = [SELECT Id,GDPR_Wiped__c FROM Case WHERE IsClosed=true];
-        System.assertEquals(5,cClosed.size());
-        System.assertEquals(true,cClosed[0].GDPR_Wiped__c);
-        System.assertEquals(true,cClosed[1].GDPR_Wiped__c);
-        System.assertEquals(true,cClosed[2].GDPR_Wiped__c);
-        System.assertEquals(true,cClosed[3].GDPR_Wiped__c);
-        System.assertEquals(true,cClosed[4].GDPR_Wiped__c);
-        
-        System.assertEquals(1,[SELECT Id FROM EmailMessage].size());
-        System.assertEquals(0,[SELECT Id FROM LiveChatTranscript].size());
-        System.assertEquals(0,[SELECT Id FROM LiveChatVisitor].size());
-        System.assertEquals(0,[SELECT Id FROM MessagingSession].size());
-        System.assertEquals(0,[SELECT Id FROM MessagingEndUser].size());
-        System.assertEquals(0,[SELECT Id FROM SocialPost].size());
-        
-        
-    }
-    
-    
-    /**
-Tests that account data is not wiped if cases are open or within the close period
-*/
-    @isTest static void retainAccountData(){
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('WipePeriodAccount','1');
-        sg.set('AccountDataWipeName','TestDelete');
-        Database.executeBatch(new GDPR_DeleteAccountData_Batch());
-        Test.stopTest();
-        
-        Account[] accsWiped = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,FCS_EBLevel__c FROM Account WHERE GDPR_WipedSoft__c=true];
-        System.assertEquals(0,accsWiped.size());
-        
-        Account[] accsNotWiped = [SELECT Id,Name,GDPR_Wiped__c,GDPR_WipedSoft__c,FCS_EBLevel__c FROM Account WHERE GDPR_WipedSoft__c=false];
-        System.assertEquals(2,accsNotWiped.size());
-        System.assertNotEquals('TestDelete',accsNotWiped[0].Name);
-        System.assertNotEquals('TestDelete',accsNotWiped[1].Name);
-        System.assertNotEquals(true,accsNotWiped[0].GDPR_Wiped__c);
-        System.assertNotEquals(true,accsNotWiped[1].GDPR_Wiped__c);
-        System.assertNotEquals(true,accsNotWiped[0].GDPR_WipedSoft__c);
-        System.assertNotEquals(true,accsNotWiped[1].GDPR_WipedSoft__c);
-        System.assertNotEquals(null,accsNotWiped[0].FCS_EBLevel__c);
-        System.assertNotEquals(null,accsNotWiped[1].FCS_EBLevel__c);
-    }
-    
-    /**
+    List<MessagingEndUser> lstMsgEndUser = new List<MessagingEndUser>();
+
+    MessagingEndUser meu = new MessagingEndUser(
+      MessageType = 'Facebook',
+      Name = 'Test',
+      MessagingPlatformKey = 'TESTXYZ',
+      MessagingChannelId = mc.Id
+    );
+
+    MessagingEndUser meu1 = new MessagingEndUser(
+      MessageType = 'Facebook',
+      Name = 'Test',
+      MessagingPlatformKey = 'TESTXYZ',
+      MessagingChannelId = mc1.Id
+    );
+
+    lstMsgEndUser.add(meu);
+    lstMsgEndUser.add(meu1);
+
+    insert lstMsgEndUser;
+
+    List<MessagingSession> lstMsg = new List<MessagingSession>();
+
+    MessagingSession session = new MessagingSession(
+      MessagingEndUserId = meu.Id,
+      Status = 'Ended',
+      MessagingChannelId = mc.Id
+    );
+
+    MessagingSession session1 = new MessagingSession(
+      CaseId = cList[0].Id,
+      MessagingEndUserId = meu1.Id,
+      Status = 'Ended',
+      MessagingChannelId = mc1.Id
+    );
+
+    lstMsg.add(session1);
+    lstMsg.add(session);
+
+    insert lstMsg;
+
+    SocialPost[] spList = FCS_TestDataFactory.createSocialPosts(2);
+    spList[1].Content = 'test';
+    spList[0].Content = 'test1';
+
+    insert spList;
+    spList[1].ParentId = cList[0].Id;
+    update spList;
+    Group_Travel_Request__c grt = new Group_Travel_Request__c(
+      Name = 'Test GRP',
+      Comments_From_Customer__c = 'Group Travel Form',
+      From_Airport__c = 'Bng'
+    );
+    insert grt;
+
+    Refund_Request__c rf = new Refund_Request__c(
+      Country_of_Purchase__c = 'Indoa',
+      Ticket_Numbers__c = 'T-123456'
+    );
+
+    insert rf;
+
+    Special_Service_Request__c ssr = new Special_Service_Request__c(
+      Name = 'Test Animal',
+      Type_Of_Service_Animal__c = 'Domestic',
+      Type_Of_Special_Baggage__c = 'Animal'
+    );
+    insert ssr;
+    //Case cs = new case(Id =cList[0].Id, Group_Travel_Request__c=grt.Id,Refund_Request__c=rf.Id,Special_Service_Request__c=ssr.Id, status='Closed');
+    Case cs = new Case(
+      Id = cList[0].Id,
+      status = 'Closed',
+      Group_Travel_Request__c = grt.Id,
+      Refund_Request__c = rf.Id,
+      Special_Service_Request__c = ssr.Id
+    );
+    update cs;
+  }
+  /**
 Tests deletion of accounts (Should only occur when the account has no cases or interactions)
 */
-    @isTest static void deleteAccount(){
-        delete [SELECT Id FROM Case];
-        Test.startTest();
-        Database.executeBatch(new GDPR_DeleteAccount_Batch());
-        Test.stopTest();
-        Account[] accList = [SELECT Id,LastName FROM Account];
-        System.assertEquals(1, accList.size());
-        System.assertNotEquals('TESTACC2', accList[0].LastName);
-    }
-    
-    /**
-Tests case deletion
+  @isTest
+  static void deleteAccount() {
+    Test.startTest();
+    Database.executeBatch(new GDPR_DeleteAccount_Batch());
+    Test.stopTest();
+    Account[] accList = [SELECT Id, LastName FROM Account];
+    System.assertEquals(0, accList.size());
+    //System.assertNotEquals('TESTACC2', accList[0].LastName);
+  }
+  /**
+Tests wiping of ChatTranscript (Should only occur when the ChatTranscript has no cases or interactions)
 */
-    @isTest static void deleteCase(){
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('DeletePeriodCase','-1');
-        Database.executeBatch(new GDPR_DeleteCase_Batch());
-        Test.stopTest();
-        
-        Case[] cOpen = [SELECT Id FROM Case WHERE IsClosed=false];
-        System.assertEquals(1,cOpen.size());
-        
-        Case[] cClosed = [SELECT Id FROM Case WHERE IsClosed=true];
-        System.assertEquals(0,cClosed.size());
-        System.assertEquals(0,[SELECT Id FROM EmailMessage].size());
-        System.assertEquals(0,[SELECT Id FROM LiveChatTranscript].size());
-        System.assertEquals(0,[SELECT Id FROM MessagingSession].size());
-        System.assertEquals(0,[SELECT Id FROM SocialPost].size());
-        System.assertEquals(0,[SELECT Id FROM ContentDocument].size());     
-    }
-    
-    /**
-Tests sensitive attachments and files deletion
+  @isTest
+  static void wipeChatTranscript() {
+    GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
+    GDPR_Util.RETAIN_ADD = new Set<String>{ 'Body' };
+    gdprwipeInt.setVariables('LiveChatTranscript', 1, 'CaseId', null, null);
+    gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprwipeInt);
+    Test.stopTest();
+    LiveChatTranscript[] lctList = [
+      SELECT Id, body
+      FROM LiveChatTranscript
+      WHERE CaseId = NULL
+    ];
+    System.assertEquals(null, lctList[0].body);
+  }
+  /**
+Tests wiping of EmailMessage(Should only occur when the EmailMessage has no cases or interactions)
 */
-    @isTest static void deleteCaseSenstiveAttachmentandFiles(){
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('DeleteSensitiveattachments','-2');
-        Database.executeBatch(new GDPR_Delete_Sensitive_Attach_Batch());
-        Test.stopTest();
-        
-        Case[] cOpen = [SELECT Id FROM Case WHERE IsClosed=false];
-        System.assertEquals(1,cOpen.size());
-        
-        Case[] cClosed = [SELECT Id FROM Case WHERE IsClosed=true];
-        System.assertEquals(5,cClosed.size());
-        System.assertEquals(1,[SELECT Id FROM EmailMessage].size());       
-        System.assertEquals(0,[SELECT Id FROM ContentDocument].size());     
-    }
-    
-    /**
-Tests that cases within the retention period are kept
+  @isTest
+  static void wipeEmailMessage() {
+    GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
+    GDPR_Util.RETAIN_ADD = new Set<String>{ 'TextBody' };
+    gdprwipeInt.setVariables('EmailMessage', 1, 'parentId', null, null);
+    gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprwipeInt);
+    Test.stopTest();
+    EmailMessage[] lctem = [
+      SELECT Id, TextBody
+      FROM EmailMessage
+      WHERE parentId = NULL
+    ];
+    System.assertEquals(null, lctem[0].TextBody);
+  }
+
+  /**
+Tests wiping of SocialPost(Should only occur when the SocialPost has no cases or interactions)
 */
-    @isTest static void retainCase(){
-        setupMockRetentionFields();
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('DeletePeriodCase','1');
-        Database.executeBatch(new GDPR_DeleteCase_Batch());
-        Test.stopTest();
-        
-        Case[] cOpen = [SELECT Id FROM Case WHERE IsClosed=false];
-        System.assertEquals(1,cOpen.size());
-        
-        Case[] cClosed = [SELECT Id FROM Case WHERE IsClosed=true];
-        System.assertEquals(5,cClosed.size());
-        System.assertEquals(1,[SELECT Id FROM EmailMessage].size());
-        System.assertEquals(1,[SELECT Id FROM LiveChatTranscript].size());
-        System.assertEquals(1,[SELECT Id FROM MessagingSession].size());
-        System.assertEquals(1,[SELECT Id FROM SocialPost].size());
-        System.assertEquals(1,[SELECT Id FROM ContentDocument].size());
-    }
-    
-    /**
-Tests case wipe
+  @isTest
+  static void wipeSocialPost() {
+    GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
+    GDPR_Util.RETAIN_ADD = new Set<String>{ 'Content' };
+    gdprwipeInt.setVariables('SocialPost', 1, 'parentId', null, null);
+    gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprwipeInt);
+    Test.stopTest();
+    SocialPost[] lctSp = [
+      SELECT Id, Content
+      FROM SocialPost
+      WHERE parentId = NULL
+    ];
+    System.assertEquals(null, lctSp[0].Content);
+  }
+  /**
+Tests wiping of MessagingSession(Should only occur when the MessagingSession has no cases or interactions)
 */
-    @isTest static void wipeCase(){
-        setupMockRetentionFields();
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('WipePeriodCase','-1');
-        Database.executeBatch(new GDPR_WipeCase_Batch());
-        Test.stopTest();
-        
-        Case[] cOpen = [SELECT Id FROM Case WHERE IsClosed=false];
-        System.assertEquals(1,cOpen.size());
-        
-        Case[] cClosed = [SELECT Id FROM Case WHERE IsClosed=true];
-        System.assertEquals(5,cClosed.size());
-        System.assertEquals(1,[SELECT Id FROM EmailMessage].size());
-        System.assertEquals(0,[SELECT Id FROM LiveChatTranscript].size());
-        System.assertEquals(0,[SELECT Id FROM MessagingSession].size());
-        System.assertEquals(0,[SELECT Id FROM SocialPost].size());
-        System.assertEquals(1,[SELECT Id FROM ContentDocument].size());
-    }
-    
-    /**
-Tests case wipe using the case id as input to wipe specific case ids
+  @isTest
+  static void wipeMessagingSession() {
+    GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
+    gdprwipeInt.setVariables('MessagingSession', 1, 'caseId', null, null);
+    gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprwipeInt);
+    Test.stopTest();
+    MessagingSession[] lctMs = [
+      SELECT Id, GDPR_Wiped__c
+      FROM MessagingSession
+      WHERE caseId = NULL
+    ];
+    System.assertEquals(true, lctMs[0].GDPR_Wiped__c);
+  }
+
+  /**
+Tests deletion of LiveChatTranscript (Should only occur when the LiveChatTranscript has no cases or interactions)
 */
-    @isTest static void wipeCaseManual(){
-        setupMockRetentionFields();
-        Test.startTest();
-        MessagingSession ms = [SELECT Id,CaseId FROM MessagingSession];
-        GDPR_DeleteComponentController.deleteRecordData(ms.CaseId);
-        Test.stopTest();
-        
-        Case[] cOpen = [SELECT Id FROM Case WHERE IsClosed=false];
-        System.assertEquals(1,cOpen.size());
-        
-        Case[] cClosed = [SELECT Id FROM Case WHERE IsClosed=true];
-        System.assertEquals(5,cClosed.size());
-        System.assertEquals(1,[SELECT Id FROM EmailMessage].size());
-        System.assertEquals(1,[SELECT Id FROM LiveChatTranscript].size());
-        System.assertEquals(0,[SELECT Id FROM MessagingSession].size());
-        System.assertEquals(1,[SELECT Id FROM SocialPost].size());
-    }
-    
-    /**
-Tests that case wipe retains cases within the retention period
+  @isTest
+  static void deleteChatTranscript() {
+    GDPR_DeleteInteraction_Batch gdprDelInt = new GDPR_DeleteInteraction_Batch();
+    gdprDelInt.setVariables('LiveChatTranscript', 1, 'CaseId', null, null);
+    gdprDelInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprDelInt);
+    Test.stopTest();
+    System.assertEquals(
+      0,
+      [SELECT COUNT() FROM LiveChatTranscript WHERE CaseId = NULL]
+    );
+  }
+  /**
+Tests deletion of EmailMessage (Should only occur when the EmailMessage has no cases or interactions)
 */
-    @isTest static void wipeCaseRetain(){
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('WipePeriodCase','1');
-        Database.executeBatch(new GDPR_WipeCase_Batch());
-        Test.stopTest();
-        
-        Case[] cOpen = [SELECT Id FROM Case WHERE IsClosed=false];
-        System.assertEquals(1,cOpen.size());
-        
-        Case[] cClosed = [SELECT Id FROM Case WHERE IsClosed=true];
-        System.assertEquals(5,cClosed.size());
-        System.assertEquals(1,[SELECT Id FROM EmailMessage].size());
-        System.assertEquals(1,[SELECT Id FROM LiveChatTranscript].size());
-        System.assertEquals(1,[SELECT Id FROM MessagingSession].size());
-        System.assertEquals(1,[SELECT Id FROM SocialPost].size());
-        System.assertEquals(1,[SELECT Id FROM ContentDocument].size());
-    }
-    
-    /**
-Tests that batches which deletes interactions deletes the interactions when outside the retention period
+  @isTest
+  static void deleteEmailMessage() {
+    GDPR_DeleteInteraction_Batch gdprDelInt = new GDPR_DeleteInteraction_Batch();
+    gdprDelInt.setVariables('EmailMessage', 1, 'parentId', null, null);
+    gdprDelInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprDelInt);
+    Test.stopTest();
+    System.assertEquals(
+      0,
+      [SELECT COUNT() FROM EmailMessage WHERE parentId = NULL]
+    );
+  }
+  /**
+Tests deletion of SocialPost(Should only occur when the SocialPost has no cases or interactions)
 */
-    @isTest static void deleteInteraction(){
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('DeletePeriodEmail','-2');
-        sg.set('DeletePeriodChat','-2');
-        sg.set('DeletePeriodMessaging','-2');
-        sg.set('DeletePeriodSocialPost','-2');
-        sg.set('DeletePeriodEmailConsent','-1');
-        sg.set('DeletePeriodChatConsent','-1');
-        sg.set('DeletePeriodMessagingConsent','-1');
-        sg.set('DeletePeriodSocialPostConsent','-1');
-        Database.executeBatch(new GDPR_DeleteEmail_Batch());
-        Database.executeBatch(new GDPR_DeleteChat_Batch());
-        Database.executeBatch(new GDPR_DeleteMessaging_Batch());
-        Database.executeBatch(new GDPR_DeleteSocialPost_Batch());
-        Test.stopTest();
-        
-        System.assertEquals(0,[SELECT Id FROM EmailMessage].size());
-        System.assertEquals(0,[SELECT Id FROM LiveChatTranscript].size());
-        System.assertEquals(0,[SELECT Id FROM LiveChatVisitor].size());
-        System.assertEquals(0,[SELECT Id FROM MessagingSession].size());
-        System.assertEquals(0,[SELECT Id FROM MessagingEndUser].size());
-        System.assertEquals(0,[SELECT Id FROM SocialPost].size());
-    }
-    
-    /**
-Tests that deletion of interactions does not run for interactions within the retention period
+  @isTest
+  static void deleteSocialPost() {
+    GDPR_DeleteInteraction_Batch gdprDelInt = new GDPR_DeleteInteraction_Batch();
+    gdprDelInt.setVariables('SocialPost', 1, 'parentId', null, null);
+    gdprDelInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprDelInt);
+    Test.stopTest();
+    System.assertEquals(
+      0,
+      [SELECT COUNT() FROM SocialPost WHERE parentId = NULL]
+    );
+  }
+  /**
+Tests deletion of MessagingSession(Should only occur when the MessagingSession has no cases or interactions)
 */
-    @isTest static void retainInteraction(){
-        
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('DeletePeriodEmail','1');
-        sg.set('DeletePeriodChat','1');
-        sg.set('DeletePeriodMessaging','1');
-        sg.set('DeletePeriodSocialPost','1');
-        sg.set('DeletePeriodEmailConsent','1');
-        sg.set('DeletePeriodChatConsent','1');
-        sg.set('DeletePeriodMessagingConsent','1');
-        sg.set('DeletePeriodSocialPostConsent','1');
-        Database.executeBatch(new GDPR_DeleteEmail_Batch());
-        Database.executeBatch(new GDPR_DeleteChat_Batch());
-        Database.executeBatch(new GDPR_DeleteMessaging_Batch());
-        Database.executeBatch(new GDPR_DeleteSocialPost_Batch());
-        Test.stopTest();
-        
-        System.assertEquals(1,[SELECT Id FROM EmailMessage].size());
-        System.assertEquals(1,[SELECT Id FROM LiveChatTranscript].size());
-        System.assertEquals(1,[SELECT Id FROM LiveChatVisitor].size());
-        System.assertEquals(1,[SELECT Id FROM MessagingSession].size());
-        System.assertEquals(1,[SELECT Id FROM MessagingEndUser].size());
-        System.assertEquals(1,[SELECT Id FROM SocialPost].size());
-    }
-    /**
-    Test Delete bookings
+  @isTest
+  static void deleteMessagingSession() {
+    GDPR_DeleteInteraction_Batch gdprDelInt = new GDPR_DeleteInteraction_Batch();
+    gdprDelInt.setVariables('MessagingSession', 1, 'caseId', null, null);
+    gdprDelInt.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprDelInt);
+    Test.stopTest();
+    System.assertEquals(
+      0,
+      [SELECT COUNT() FROM MessagingSession WHERE caseId = NULL]
+    );
+  }
+
+  /**
+    Test the Wiping of case and retalted Channel Object
     */
-   @isTest static void deleteBookings(){
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('DeletePeriodBooking','-2');
-        Database.executeBatch(new GDPR_DeleteBooking_Batch());
-        Test.stopTest();
-        System.assertEquals(0,[SELECT Id FROM Booking__c].size()); 
-        System.assertEquals(0,[SELECT Id FROM Passenger__c].size());
-        System.assertEquals(1,[SELECT Id FROM Flight__c].size());
-        System.assertEquals(0,[SELECT Id FROM Segment__c].size());          
-    }
-     
-    
-    /**
-Tests deletion of Communication Logs 
-*/
-    @isTest static void deleteCommunicationLogs(){
-        IRR_CommunicationLog__c c = new IRR_CommunicationLog__c(IRR_ContactKey__c='test@email.com');
-        insert c;
-        DateTime dtTomorrow = DateTime.now();
-        dtTomorrow = dtTomorrow.addDays(1);
-        Test.setCreatedDate(c.Id, dtTomorrow);
-        
-        IRR_CommunicationLog__c c2 = new IRR_CommunicationLog__c(IRR_ContactKey__c='test@email.com');
-        insert c2;
-        IRR_SMSResponse__c s2 = new IRR_SMSResponse__c(IRR_CommunicationLog__c = c2.Id);
-        insert s2;
-        DateTime dtLastWeek = DateTime.now();
-        dtLastWeek = dtLastWeek.addDays(-1097);
-        Test.setCreatedDate(c2.Id, dtLastWeek);
-        
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('DeletePeriodCommunucationLog','-1096');
-        Database.executeBatch(new GDPR_DeleteCommunicationLog_Batch());
-        Test.stopTest();
-        IRR_CommunicationLog__c[] comlogList = [SELECT Id, IRR_ContactKey__c, CreatedDate FROM IRR_CommunicationLog__c];
-        IRR_SMSResponse__c[] smsreponseList = [SELECT Id FROM IRR_SMSResponse__c];
-        System.assertEquals(1, comlogList.size());
-        System.assertEquals(0, smsreponseList.size());
-    }    
-    
-    /**
-Tests deletion of SMS Reponse 
-*/
-    @isTest static void deleteSMSResponse(){
-        IRR_SMSResponse__c s1 = new IRR_SMSResponse__c();
-        insert s1;
-        DateTime dtLastMonths = DateTime.now();
-        dtLastMonths = dtLastMonths.addDays(-61);
-        Test.setCreatedDate(s1.Id, dtLastMonths);
-        
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('GDPR');
-        sg.set('DeletePeriodSMSReponse','-1');
-        Database.executeBatch(new GDPR_DeleteSMSResponse_Batch());
-        Test.stopTest();
-        IRR_SMSResponse__c[] smsreponseList = [SELECT Id FROM IRR_SMSResponse__c];
-        System.assertEquals(0, smsreponseList.size());
-        
-    }    
+  @isTest
+  static void wipeCaseAndAssociatedEntites() {
+    GDPR_WipeCase_Batch gdprWipeCaseBatch = new GDPR_WipeCase_Batch();
+    GDPR_Util.RETAIN_ADD = new Set<String>{
+      'Body',
+      'Content',
+      'Comments_From_Customer__c',
+      'Ticket_Numbers__c',
+      'Type_Of_Special_Baggage__c',
+      'FCS_Case_Reason__c'
+    };
+    gdprWipeCaseBatch.setVariables(
+      'Case',
+      2,
+      null,
+      'Baggage',
+      'Wipe_Case_Batch'
+    );
+    gdprWipeCaseBatch.lastRetentionDate = dateTime.now().addDays(4);
+    Test.startTest();
+    Database.executeBatch(gdprWipeCaseBatch);
+    Test.stopTest();
+    System.assertEquals(
+      true,
+      [SELECT Id, GDPR_Wiped__c FROM Case WHERE status = 'Closed' LIMIT 1]
+      .GDPR_Wiped__c
+    );
+    System.assertEquals(
+      null,
+      [SELECT Id, FCS_Case_Reason__c FROM Case WHERE status = 'Closed' LIMIT 1]
+      .FCS_Case_Reason__c
+    );
+    System.assertEquals(
+      null,
+      [SELECT Id, Body FROM LiveChatTranscript WHERE caseId != NULL LIMIT 1]
+      .Body
+    );
+    System.assertEquals(
+      null,
+      [SELECT Id, Content FROM SocialPost WHERE ParentId != NULL LIMIT 1]
+      .Content
+    );
+    System.assertEquals(
+      true,
+      [
+        SELECT Id, GDPR_Wiped__c
+        FROM MessagingSession
+        WHERE caseId != NULL
+        LIMIT 1
+      ]
+      .GDPR_Wiped__c
+    );
+    System.assertEquals(
+      null,
+      [
+        SELECT Id, Comments_From_Customer__c
+        FROM Group_Travel_Request__c
+        LIMIT 1
+      ]
+      .Comments_From_Customer__c
+    );
+    System.assertEquals(
+      null,
+      [SELECT Id, Ticket_Numbers__c FROM Refund_Request__c LIMIT 1]
+      .Ticket_Numbers__c
+    );
+    System.assertEquals(
+      null,
+      [
+        SELECT Id, Type_Of_Special_Baggage__c
+        FROM Special_Service_Request__c
+        LIMIT 1
+      ]
+      .Type_Of_Special_Baggage__c
+    );
+  }
 }

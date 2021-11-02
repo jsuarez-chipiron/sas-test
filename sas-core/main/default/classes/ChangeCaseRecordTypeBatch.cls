@@ -1,3 +1,6 @@
+/**
+   overriding the absract method to set batch class Params
+   */
 global class ChangeCaseRecordTypeBatch extends SBS_ScheduledBatch {
   public String caseOrigin;
   public List<String> caseRecordTypes;
@@ -8,6 +11,16 @@ global class ChangeCaseRecordTypeBatch extends SBS_ScheduledBatch {
   ) {
     caseRecordTypes = cseRecordTypes;
     caseOrigin = cseOrigin;
+  }
+  global override void setVariables(
+    String Sobj,
+    Integer wipingPeriod,
+    string caseField,
+    string caseType,
+    string relSObjField,
+    String relSobjName
+  ) {
+    System.debug('wipingPeriod***8' + wipingPeriod);
   }
 
   global Database.QueryLocator start(Database.BatchableContext bc) {

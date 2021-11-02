@@ -131,35 +131,4 @@ private class C_Log_Test {
         System.assertEquals(http.remoteAddress,l.HttpRemoteAddress__c);
         System.assertEquals(http.body,l.HttpBody__c);
     }
-
-    /**
-        Tests deletion of log records using the batch to ensure that the log records are deleted.
-    */
-    @isTest static void deleteBatch(){
-        C_Log.init();
-        C_Log.log(C_Log.Severity.Info, 'TEST MESSAGE', null, 'TEST GROUP', null);
-        System.assertEquals(1,Database.countQuery('SELECT COUNT() FROM C_Log__c'));
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('Log');
-        sg.set('LogRetentionPeriod','-1');
-        Database.executeBatch(new C_LogDelete_Batch());
-        Test.stopTest();
-        System.assertEquals(0,Database.countQuery('SELECT COUNT() FROM C_Log__c'));
-    }
-
-    /**
-        Tests deletion of log records using the batch and ensrues that logs within the retention period are kept
-    */
-    @isTest static void deleteBatchRetain(){
-        C_Log.init();
-        C_Log.log(C_Log.Severity.Info, 'TEST MESSAGE', null, 'TEST GROUP', null);
-        System.assertEquals(1,Database.countQuery('SELECT COUNT() FROM C_Log__c'));
-        Test.startTest();
-        C_Settings.SettingsGroup sg = C_Settings.getSettings('Log');
-        sg.set('LogRetentionPeriod','1');
-        Database.executeBatch(new C_LogDelete_Batch());
-        Test.stopTest();
-        System.assertEquals(1,Database.countQuery('SELECT COUNT() FROM C_Log__c'));
-    }
-
 }

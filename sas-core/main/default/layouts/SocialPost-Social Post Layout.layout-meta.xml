@@ -71,6 +71,10 @@
                 <behavior>Readonly</behavior>
                 <field>Content</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>GDPR_Wiped__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
