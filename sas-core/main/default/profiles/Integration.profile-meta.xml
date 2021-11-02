@@ -468,10 +468,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>GDPR_DeleteAccountData_Batch</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>GDPR_DeleteAccount_Batch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -480,19 +476,11 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>GDPR_DeleteChat_Batch</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>GDPR_DeleteCommunicationLog_Batch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_DeleteComponentController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>GDPR_DeleteEmail_Batch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -508,15 +496,7 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>GDPR_DeleteMessaging_Batch</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>GDPR_DeleteSMSResponse_Batch</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>GDPR_DeleteSocialPost_Batch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

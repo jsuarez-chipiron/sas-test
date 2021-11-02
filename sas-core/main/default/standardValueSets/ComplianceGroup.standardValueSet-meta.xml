@@ -41,4 +41,14 @@
         <default>false</default>
         <label>WipeRetain</label>
     </standardValue>
+    <standardValue>
+        <fullName>Lookup</fullName>
+        <default>false</default>
+        <label>Lookup</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Wipe</fullName>
+        <default>false</default>
+        <label>Wipe</label>
+    </standardValue>
 </StandardValueSet>
