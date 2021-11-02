@@ -7,12 +7,13 @@ global with sharing class GDPR_DeleteCase_Batch extends SBS_ScheduledBatch {
   /**
 The date at which cases will be removed
 */
+  @testVisible
   private DateTime lastRetentionDate;
   /**
 The Case Type in which batch job executes
 */
   private string caseType;
-  
+
   /**
   The Name of the Batch in GDPR Retention policy , based on which related metadata will be retrived
   */
@@ -65,7 +66,7 @@ Deletes the cases and any related interactions
     for (Integer i = 0; i < sz; i++) {
       caseIds.add(sObjScope[i].Id);
     }
-    GDPR_WipeCaseService.deleteRelatedEntities(caseIds,batchName);
+    GDPR_WipeCaseService.deleteRelatedEntities(caseIds, batchName);
     delete sObjScope;
   }
 }

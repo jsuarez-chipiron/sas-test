@@ -406,4 +406,46 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
       .Type_Of_Special_Baggage__c
     );
   }
+  /**
+Tests deletion of MessagingSession(Should only occur when the MessagingSession has no cases or interactions)
+*/
+  @isTest
+  static void deleteCaseAndAssociatedEntities() {
+    GDPR_DeleteCase_Batch gdprDelCaseBatch = new GDPR_DeleteCase_Batch();
+    gdprDelCaseBatch.setVariables(
+      'Case',
+      1,
+      null,
+      'Baggage',
+      'Delete_Case_Batch'
+    );
+    gdprDelCaseBatch.lastRetentionDate = dateTime.now().addDays(3);
+    Test.startTest();
+    Database.executeBatch(gdprDelCaseBatch);
+    Test.stopTest();
+    System.assertEquals(
+      0,
+      [
+        SELECT COUNT()
+        FROM Case
+        WHERE status = 'Closed' AND FCS_CaseType__c = 'Baggage'
+      ]
+    );
+    System.assertEquals(
+      0,
+      [
+        SELECT COUNT()
+        FROM LiveChatTranscript
+        WHERE case.status = 'Closed' AND case.FCS_CaseType__c = 'Baggage'
+      ]
+    );
+    System.assertEquals(
+      0,
+      [
+        SELECT COUNT()
+        FROM MessagingSession
+        WHERE case.status = 'Closed' AND case.FCS_CaseType__c = 'Baggage'
+      ]
+    );
+  }
 }
