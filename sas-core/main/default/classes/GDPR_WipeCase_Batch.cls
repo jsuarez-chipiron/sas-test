@@ -9,6 +9,7 @@ The sobject name of the interaction sobject
   /**
 The date till the case and related object data needs to be retained without wiping
 */
+  @TestVisible
   private DateTime lastRetentionDate;
   /**
 The fields to clear for the case
@@ -37,7 +38,7 @@ Overiding of the abstract method used to set the Batch class params
     String batchName
   ) {
     lastRetentionDate = DateTime.newInstance(
-      Date.today().addDays(retentionPeriod),
+      Date.today().addDays(-retentionPeriod),
       Time.newInstance(0, 0, 0, 0)
     );
     Schema.SObjectType sot = Schema.getGlobalDescribe().get(obj);
@@ -53,7 +54,7 @@ Iterates over all cases closed before the retention period
 */
   global Database.QueryLocator start(Database.BatchableContext bc) {
     return Database.getQueryLocator(
-      'SELECT Id FROM Case WHERE IsClosed=true AND ClosedDate<:lastRetentionDate AND FCS_CaseType__c=:caseType'
+      'SELECT Id FROM Case WHERE IsClosed=true AND ClosedDate<:lastRetentionDate AND FCS_CaseType__c=:caseType AND GDPR_Wiped__c!=true'
     );
   }
   /**
@@ -69,6 +70,10 @@ wipe the cases and any related interactions
     Database.BatchableContext bc,
     SObject[] sObjScope
   ) {
-    GDPR_WipeCaseService.wipeCases((Case[]) sObjScope, fieldsToClear,batchName);
+    GDPR_WipeCaseService.wipeCases(
+      (Case[]) sObjScope,
+      fieldsToClear,
+      batchName
+    );
   }
 }

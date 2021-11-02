@@ -13,34 +13,21 @@ Creates the records used to tests data deletion
     accs[0].LastName = 'TESTACC1';
     accs[1].LastName = 'TESTACC2';
     insert accs;
+
     Case[] cList = FCS_TestDataFactory.createCases(
-      5,
-      accs[0].Id,
-      accs[0].PersonContactId,
-      C_RecordTypeHelper.CASE_SUPPORT,
+      2,
+      null,
+      null,
+      C_RecordTypeHelper.CASE_CHANNEL,
       'Baggage'
     );
-    cList.addAll(
-      FCS_TestDataFactory.createCases(
-        1,
-        accs[0].Id,
-        accs[0].PersonContactId,
-        C_RecordTypeHelper.CASE_SUPPORT,
-        'Baggage'
-      )
-    );
-    List<Del_Sensitive_Data_Based_on_Case_Origin__mdt> lstDelSens = [
-      SELECT Id, Case_Origin__c
-      FROM Del_Sensitive_Data_Based_on_Case_Origin__mdt
-    ];
-    cList[0].origin = lstDelSens[0].Case_Origin__c;
-    cList[0].Status = 'Closed';
-    cList[1].Status = 'Closed';
-    cList[2].Status = 'Closed';
-    cList[3].Status = 'Closed';
-    cList[4].Status = 'Closed';
-    cList[5].Status = 'Open';
+    cList[0].origin = 'Email - Group Sales IS';
+    cList[0].FCS_CaseType__c = 'Baggage';
+    cList[0].FCS_Case_Reason__c = 'Other';
+
     insert cList;
+
+    List<EmailMessage> emlst = new List<EmailMessage>();
     EmailMessage emailMsge = new EmailMessage(
       FromAddress = 'test@example.com.invalid',
       FromName = 'Test',
@@ -48,111 +35,143 @@ Creates the records used to tests data deletion
       Subject = 'TestSubject',
       TextBody = 'TestBody',
       ToAddress = 'test@sas.se'
-      // ParentId = cList[0].Id
     );
-    insert emailMsge;
-    // create ContentVersion record
-    ContentVersion conteVersion = new ContentVersion(
-      Title = 'SAS Logo',
-      PathOnClient = 'Pic.jpg',
-      VersionData = Blob.valueOf('SAS Image'),
-      IsMajorVersion = true
+    emlst.add(emailMsge);
+
+    EmailMessage emailMsge1 = new EmailMessage(
+      FromAddress = 'test@example.com.invalid',
+      FromName = 'Test',
+      Incoming = true,
+      Subject = 'TestSubject',
+      TextBody = 'TestBody',
+      ToAddress = 'test@sas.se',
+      ParentId = cList[0].Id
     );
-    insert conteVersion;
 
-    List<ContentDocument> documents = [
-      SELECT Id, Title, LatestPublishedVersionId
-      FROM ContentDocument
-      LIMIT 1
-    ];
+    emlst.add(emailMsge1);
 
-    //create ContentDocumentLink  record
-    ContentDocumentLink cdl = new ContentDocumentLink();
-    cdl.LinkedEntityId = emailMsge.Id;
-    cdl.ContentDocumentId = documents[0].Id;
-    cdl.ShareType = 'V';
-    cdl.Visibility = 'AllUsers';
-    insert cdl;
+    insert emlst;
 
-    // insert Attachement
-    Attachment obj = new Attachment();
-    obj.Body = Blob.valueOf('SAS Image');
-    obj.ParentId = emailMsge.Id;
-    obj.Name = 'Test.pdf';
-    obj.ContentType = 'application/pdf';
-    insert obj;
+    List<LiveChatTranscript> lstLct = new List<LiveChatTranscript>();
 
-    cList[0].Status = 'Closed';
-    update cList;
     LiveChatVisitor lcv = new LiveChatVisitor();
     insert lcv;
-    insert new LiveChatTranscript(
+
+    LiveChatTranscript lct = new LiveChatTranscript(
       Body = 'Test',
-      Status = 'Missed',
+      Status = 'Completed',
       LiveChatVisitorId = lcv.Id
     );
+    LiveChatTranscript lct1 = new LiveChatTranscript(
+      Body = 'Test',
+      Status = 'Completed',
+      LiveChatVisitorId = lcv.Id,
+      caseId = cList[0].Id
+    );
+    lstLct.add(lct);
+    lstLct.add(lct1);
+
+    insert lstLct;
+    List<MessagingChannel> lstMsgCh = new List<MessagingChannel>();
+
     MessagingChannel mc = new MessagingChannel(
-      DeveloperName = 'TESTFB123',
+      DeveloperName = 'TESTFB12356',
       IsActive = false,
       MasterLabel = 'TESTFB123',
       MessageType = 'Facebook',
       MessagingPlatformKey = 'TESTFB1244567'
     );
+    MessagingChannel mc1 = new MessagingChannel(
+      DeveloperName = 'TESTFB123rerrt',
+      IsActive = false,
+      MasterLabel = 'TESTFB123er',
+      MessageType = 'Facebook',
+      MessagingPlatformKey = 'TESTFB124456767'
+    );
+    lstMsgCh.add(mc);
+    lstMsgCh.add(mc1);
+
     User u = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
     System.runAs(u) {
-      insert mc;
+      insert lstMsgCh;
     }
+    List<MessagingEndUser> lstMsgEndUser = new List<MessagingEndUser>();
+
     MessagingEndUser meu = new MessagingEndUser(
-      AccountId = accs[0].Id,
-      ContactId = accs[0].PersonContactId,
       MessageType = 'Facebook',
       Name = 'Test',
       MessagingPlatformKey = 'TESTXYZ',
       MessagingChannelId = mc.Id
     );
-    insert meu;
-    insert new MessagingSession(
-      //CaseId = cList[2].Id,
+
+    MessagingEndUser meu1 = new MessagingEndUser(
+      MessageType = 'Facebook',
+      Name = 'Test',
+      MessagingPlatformKey = 'TESTXYZ',
+      MessagingChannelId = mc1.Id
+    );
+
+    lstMsgEndUser.add(meu);
+    lstMsgEndUser.add(meu1);
+
+    insert lstMsgEndUser;
+
+    List<MessagingSession> lstMsg = new List<MessagingSession>();
+
+    MessagingSession session = new MessagingSession(
       MessagingEndUserId = meu.Id,
       Status = 'Ended',
       MessagingChannelId = mc.Id
     );
-    SocialPost[] spList = FCS_TestDataFactory.createSocialPosts(1);
-    spList[0].Content = 'test';
-    insert spList;
-    //spList[0].ParentId = cList[3].Id;
 
-    //update spList;
-    // booking and flight Data
-    DateTime arrivalTime = Datetime.now().adddays(2);
-    DateTime departuteTime = Datetime.now().adddays(1);
-    List<Flight__c> lstFlights = new List<Flight__c>();
-    lstFlights.add(
-      FCS_TestDataFactory.createFlights(
-        'BNG',
-        'CHN',
-        arrivalTime,
-        departuteTime,
-        'MANUAL-1'
-      )
+    MessagingSession session1 = new MessagingSession(
+      CaseId = cList[0].Id,
+      MessagingEndUserId = meu1.Id,
+      Status = 'Ended',
+      MessagingChannelId = mc1.Id
     );
-    List<Booking__c> lstBookings = FCS_TestDataFactory.createBookings(
-      1,
-      'OneWay'
+
+    lstMsg.add(session1);
+    lstMsg.add(session);
+
+    insert lstMsg;
+
+    SocialPost[] spList = FCS_TestDataFactory.createSocialPosts(2);
+    spList[1].Content = 'test';
+    spList[0].Content = 'test1';
+
+    insert spList;
+    spList[1].ParentId = cList[0].Id;
+    update spList;
+    Group_Travel_Request__c grt = new Group_Travel_Request__c(
+      Name = 'Test GRP',
+      Comments_From_Customer__c = 'Group Travel Form',
+      From_Airport__c = 'Bng'
     );
-    insert lstFlights;
-    insert lstBookings;
-    List<Passenger__c> lstPassengers = FCS_TestDataFactory.createPassengerss(
-      1,
-      accs[0].Id,
-      lstBookings[0].Id
+    insert grt;
+
+    Refund_Request__c rf = new Refund_Request__c(
+      Country_of_Purchase__c = 'Indoa',
+      Ticket_Numbers__c = 'T-123456'
     );
-    insert lstPassengers;
-    Segment__c seg = FCS_TestDataFactory.createSegment(
-      lstBookings[0].Id,
-      lstFlights[0].Id
+
+    insert rf;
+
+    Special_Service_Request__c ssr = new Special_Service_Request__c(
+      Name = 'Test Animal',
+      Type_Of_Service_Animal__c = 'Domestic',
+      Type_Of_Special_Baggage__c = 'Animal'
     );
-    insert seg;
+    insert ssr;
+    //Case cs = new case(Id =cList[0].Id, Group_Travel_Request__c=grt.Id,Refund_Request__c=rf.Id,Special_Service_Request__c=ssr.Id, status='Closed');
+    Case cs = new Case(
+      Id = cList[0].Id,
+      status = 'Closed',
+      Group_Travel_Request__c = grt.Id,
+      Refund_Request__c = rf.Id,
+      Special_Service_Request__c = ssr.Id
+    );
+    update cs;
   }
   /**
 Tests deletion of accounts (Should only occur when the account has no cases or interactions)
@@ -163,8 +182,8 @@ Tests deletion of accounts (Should only occur when the account has no cases or i
     Database.executeBatch(new GDPR_DeleteAccount_Batch());
     Test.stopTest();
     Account[] accList = [SELECT Id, LastName FROM Account];
-    System.assertEquals(1, accList.size());
-    System.assertNotEquals('TESTACC2', accList[0].LastName);
+    System.assertEquals(0, accList.size());
+    //System.assertNotEquals('TESTACC2', accList[0].LastName);
   }
   /**
 Tests wiping of ChatTranscript (Should only occur when the ChatTranscript has no cases or interactions)
@@ -178,7 +197,11 @@ Tests wiping of ChatTranscript (Should only occur when the ChatTranscript has no
     Test.startTest();
     Database.executeBatch(gdprwipeInt);
     Test.stopTest();
-    LiveChatTranscript[] lctList = [SELECT Id, body FROM LiveChatTranscript];
+    LiveChatTranscript[] lctList = [
+      SELECT Id, body
+      FROM LiveChatTranscript
+      WHERE CaseId = NULL
+    ];
     System.assertEquals(null, lctList[0].body);
   }
   /**
@@ -193,7 +216,11 @@ Tests wiping of EmailMessage(Should only occur when the EmailMessage has no case
     Test.startTest();
     Database.executeBatch(gdprwipeInt);
     Test.stopTest();
-    EmailMessage[] lctem = [SELECT Id, TextBody FROM EmailMessage];
+    EmailMessage[] lctem = [
+      SELECT Id, TextBody
+      FROM EmailMessage
+      WHERE parentId = NULL
+    ];
     System.assertEquals(null, lctem[0].TextBody);
   }
 
@@ -209,7 +236,11 @@ Tests wiping of SocialPost(Should only occur when the SocialPost has no cases or
     Test.startTest();
     Database.executeBatch(gdprwipeInt);
     Test.stopTest();
-    SocialPost[] lctSp = [SELECT Id, Content FROM SocialPost];
+    SocialPost[] lctSp = [
+      SELECT Id, Content
+      FROM SocialPost
+      WHERE parentId = NULL
+    ];
     System.assertEquals(null, lctSp[0].Content);
   }
   /**
@@ -223,7 +254,11 @@ Tests wiping of MessagingSession(Should only occur when the MessagingSession has
     Test.startTest();
     Database.executeBatch(gdprwipeInt);
     Test.stopTest();
-    MessagingSession[] lctMs = [SELECT Id, GDPR_Wiped__c FROM MessagingSession];
+    MessagingSession[] lctMs = [
+      SELECT Id, GDPR_Wiped__c
+      FROM MessagingSession
+      WHERE caseId = NULL
+    ];
     System.assertEquals(true, lctMs[0].GDPR_Wiped__c);
   }
 
@@ -238,10 +273,9 @@ Tests deletion of LiveChatTranscript (Should only occur when the LiveChatTranscr
     Test.startTest();
     Database.executeBatch(gdprDelInt);
     Test.stopTest();
-    //LiveChatTranscript[] lctList = [SELECT Id,body from LiveChatTranscript];
     System.assertEquals(
       0,
-      [SELECT COUNT() FROM LiveChatTranscript WHERE CaseId != NULL]
+      [SELECT COUNT() FROM LiveChatTranscript WHERE CaseId = NULL]
     );
   }
   /**
@@ -257,7 +291,7 @@ Tests deletion of EmailMessage (Should only occur when the EmailMessage has no c
     Test.stopTest();
     System.assertEquals(
       0,
-      [SELECT COUNT() FROM EmailMessage WHERE parentId != NULL]
+      [SELECT COUNT() FROM EmailMessage WHERE parentId = NULL]
     );
   }
   /**
@@ -273,7 +307,7 @@ Tests deletion of SocialPost(Should only occur when the SocialPost has no cases 
     Test.stopTest();
     System.assertEquals(
       0,
-      [SELECT COUNT() FROM SocialPost WHERE parentId != NULL]
+      [SELECT COUNT() FROM SocialPost WHERE parentId = NULL]
     );
   }
   /**
@@ -289,7 +323,87 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
     Test.stopTest();
     System.assertEquals(
       0,
-      [SELECT COUNT() FROM MessagingSession WHERE caseId != NULL]
+      [SELECT COUNT() FROM MessagingSession WHERE caseId = NULL]
+    );
+  }
+
+  /**
+    Test the Wiping of case and retalted Channel Object
+    */
+  @isTest
+  static void wipeCaseAndAssociatedEntites() {
+    GDPR_WipeCase_Batch gdprWipeCaseBatch = new GDPR_WipeCase_Batch();
+    GDPR_Util.RETAIN_ADD = new Set<String>{
+      'Body',
+      'Content',
+      'Comments_From_Customer__c',
+      'Ticket_Numbers__c',
+      'Type_Of_Special_Baggage__c',
+      'FCS_Case_Reason__c'
+    };
+    gdprWipeCaseBatch.setVariables(
+      'Case',
+      2,
+      null,
+      'Baggage',
+      'Wipe_Case_Batch'
+    );
+    gdprWipeCaseBatch.lastRetentionDate = dateTime.now().addDays(4);
+    Test.startTest();
+    Database.executeBatch(gdprWipeCaseBatch);
+    Test.stopTest();
+    System.assertEquals(
+      true,
+      [SELECT Id, GDPR_Wiped__c FROM Case WHERE status = 'Closed' LIMIT 1]
+      .GDPR_Wiped__c
+    );
+    System.assertEquals(
+      null,
+      [SELECT Id, FCS_Case_Reason__c FROM Case WHERE status = 'Closed' LIMIT 1]
+      .FCS_Case_Reason__c
+    );
+    System.assertEquals(
+      null,
+      [SELECT Id, Body FROM LiveChatTranscript WHERE caseId != NULL LIMIT 1]
+      .Body
+    );
+    System.assertEquals(
+      null,
+      [SELECT Id, Content FROM SocialPost WHERE ParentId != NULL LIMIT 1]
+      .Content
+    );
+    System.assertEquals(
+      true,
+      [
+        SELECT Id, GDPR_Wiped__c
+        FROM MessagingSession
+        WHERE caseId != NULL
+        LIMIT 1
+      ]
+      .GDPR_Wiped__c
+    );
+    System.assertEquals(
+      null,
+      [
+        SELECT Id, Comments_From_Customer__c
+        FROM Group_Travel_Request__c
+        LIMIT 1
+      ]
+      .Comments_From_Customer__c
+    );
+    System.assertEquals(
+      null,
+      [SELECT Id, Ticket_Numbers__c FROM Refund_Request__c LIMIT 1]
+      .Ticket_Numbers__c
+    );
+    System.assertEquals(
+      null,
+      [
+        SELECT Id, Type_Of_Special_Baggage__c
+        FROM Special_Service_Request__c
+        LIMIT 1
+      ]
+      .Type_Of_Special_Baggage__c
     );
   }
 }
