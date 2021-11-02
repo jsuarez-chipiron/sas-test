@@ -208,10 +208,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>C_LogDelete_Batch</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>C_Log_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>

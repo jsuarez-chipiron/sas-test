@@ -44,14 +44,13 @@ global class MigrateCaseTagsBatch extends SBS_ScheduledBatch {
    /**
    overriding the absract method to set batch class Params
    */
-  global override void setVariables(
+   global override void setVariables(
     String obj,
-    Integer wipingPeriod,
+    Integer retentionPeriod,
     string caseField,
-    string caseType,
-    string relSObjField,
-    string relSobjName
-  ) {
+    String caseType,
+    String batchName
+  ){
   }
   global Database.QueryLocator start(Database.BatchableContext bc) {
     return Database.getQueryLocator(
@@ -77,7 +76,6 @@ global class MigrateCaseTagsBatch extends SBS_ScheduledBatch {
             } else {
               key = cse.FCS_CaseReason__c;
             }
-            System.debug('key***' + key);
             cse.FCS_Case_Reason__c = mapOldToNewCaseTags.get(key)
               .New_Case_Reason__c;
             cse.FCS_CaseType__c = mapOldToNewCaseTags.get(key).New_Case_Type__c;
