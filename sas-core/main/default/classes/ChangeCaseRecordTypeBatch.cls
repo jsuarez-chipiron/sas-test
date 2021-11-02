@@ -12,15 +12,13 @@ global class ChangeCaseRecordTypeBatch extends SBS_ScheduledBatch {
     caseRecordTypes = cseRecordTypes;
     caseOrigin = cseOrigin;
   }
-  global override void setVariables(
-    String Sobj,
-    Integer wipingPeriod,
+   global override void setVariables(
+    String obj,
+    Integer retentionPeriod,
     string caseField,
-    string caseType,
-    string relSObjField,
-    String relSobjName
-  ) {
-    System.debug('wipingPeriod***8' + wipingPeriod);
+    String caseType,
+    String batchName
+  ){
   }
 
   global Database.QueryLocator start(Database.BatchableContext bc) {

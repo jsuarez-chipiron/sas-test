@@ -8,14 +8,14 @@ global with sharing class IRR_BCH_ScheduledEvent extends SBS_ScheduledBatch impl
   /**
    overriding the absract method to set batch class Params
    */
-  global override void setVariables(
+   global override void setVariables(
     String obj,
-    Integer wipingPeriod,
+    Integer retentionPeriod,
     string caseField,
-    string caseType,
-    string relSObjField,
-    string relSobjName
-  ) {
+    String caseType,
+    String batchName
+  )
+  {
   }
   /**
         Iterates over all Event Logs in the queued Status for manual communication
