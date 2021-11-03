@@ -686,6 +686,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Jira created</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jira updated</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Lacking Features%2FDestinations%2FPartners</fullName>
             <default>false</default>
         </values>
@@ -699,6 +707,10 @@
         </values>
         <values>
             <fullName>Make name correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No action</fullName>
             <default>false</default>
         </values>
         <values>
@@ -875,6 +887,10 @@
         </values>
         <values>
             <fullName>Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Support from IT</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2699,6 +2715,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Digital Channel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Error</fullName>
             <default>false</default>
         </values>
@@ -2886,6 +2906,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Booking problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Boozt Attack</fullName>
             <default>false</default>
         </values>
@@ -3046,6 +3070,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EuroBonus account</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Extract</fullName>
             <default>false</default>
         </values>
@@ -3171,6 +3199,10 @@
         </values>
         <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3335,6 +3367,10 @@
         </values>
         <values>
             <fullName>Upgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong info to customer</fullName>
             <default>false</default>
         </values>
     </picklistValues>
