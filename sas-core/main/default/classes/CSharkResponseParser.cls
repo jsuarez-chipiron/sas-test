@@ -51,6 +51,10 @@ public with sharing class CSharkResponseParser {
         return dataRows;
     }
 
+    public static String parseTPAccountGetTicketlessResponse(String responseBody) {
+        return '';
+    }
+
 
     /**
      * Extracts body from XML document. This method is common for all responses from C-Shark and can
