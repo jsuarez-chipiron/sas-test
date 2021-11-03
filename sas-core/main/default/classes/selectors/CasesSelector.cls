@@ -6,6 +6,7 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
       Case.CaseNumber,
       Case.CreatedDate,
       Case.FCS_CaseReason__c,
+      Case.FCS_EBLevel__c,
       Case.FCS_EBNumber__c,
       Case.FCS_Case_Reason__c,
       case.RecordTypeId,
@@ -71,14 +72,16 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
     CaseToBookingsSelector caseToBookings = (CaseToBookingsSelector) SAS_Service_Application.Selector.newInstance(
       CaseToBooking__c.SObjectType
     );
-      Set<Id> caseIds = new Set<Id>();
-      for (
-        CaseToBooking__c ctb : caseToBookings.selectByBookingReference(bookingReferences)
-      ) {
-        caseIds.add(ctb.Case__c);
-      }
+    Set<Id> caseIds = new Set<Id>();
+    for (
+      CaseToBooking__c ctb : caseToBookings.selectByBookingReference(
+        bookingReferences
+      )
+    ) {
+      caseIds.add(ctb.Case__c);
+    }
 
-      return (List<Case>) this.selectSObjectsById(caseIds);
+    return (List<Case>) this.selectSObjectsById(caseIds);
   }
 
   public override String getOrderBy() {
