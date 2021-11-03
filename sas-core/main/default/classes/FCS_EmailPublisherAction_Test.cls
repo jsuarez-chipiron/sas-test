@@ -10,7 +10,7 @@ private class FCS_EmailPublisherAction_Test {
   static void defaultFromAddressforRedirctedCase() {
     List<From_email_based_on_Dept_and_Teams__c> CSFromEmail = new List<From_email_based_on_Dept_and_Teams__c>{
       new From_email_based_on_Dept_and_Teams__c(
-        Name = 'Group Sales ACE',
+        Name = 'Group Sales-ACE',
         From_Email__c = 'groupsalestest@sas.se'
       )
     };
