@@ -21,6 +21,8 @@ global with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
     'In Progress',
     'New Response'
   };
+  
+  
   /**
     The Case status which is to be removed
     */
@@ -32,17 +34,18 @@ global with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
   */
   global override void setVariables(
     String Sobj,
-    Integer wipingPeriod,
+    Integer retentionPeriod,
     string caseField,
     string caseType,
     string batchName
   ) {
     lastRetentionDate = DateTime.newInstance(
-      Date.today().addDays(-wipingPeriod),
+      Date.today().addDays(-retentionPeriod),
       Time.newInstance(0, 0, 0, 0)
     );
   }
   public Database.QueryLocator start(Database.BatchableContext bc) {
+    caseOrigin = 'Facebook Messenger';
     return Database.getQueryLocator(
       'Select Id, status from Case where Origin =: caseOrigin AND Status IN:lstStatus AND Status !=: closeStatus'
     );
@@ -52,6 +55,7 @@ global with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
     Database.BatchableContext bc,
     SObject[] sObjScope
   ) {
+    System.debug('lastRetentionDate***'+lastRetentionDate);
     List<Case> lstCases = (List<Case>) sObjScope;
     Set<Id> setCaseIds = new Set<Id>();
     Set<Id> setUpdateCaseIds = new Set<Id>();
