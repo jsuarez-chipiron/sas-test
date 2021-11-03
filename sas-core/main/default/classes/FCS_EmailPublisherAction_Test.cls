@@ -11,8 +11,6 @@ private class FCS_EmailPublisherAction_Test {
     List<From_email_based_on_Dept_and_Teams__c> CSFromEmail = new List<From_email_based_on_Dept_and_Teams__c>{
       new From_email_based_on_Dept_and_Teams__c(
         Name = 'Group Sales ACE',
-        Case_Department__c = 'Group Sales',
-        Case_Team__c = 'ACE',
         From_Email__c = 'groupsalestest@sas.se'
       )
     };
@@ -73,7 +71,6 @@ private class FCS_EmailPublisherAction_Test {
     CSFromEmail.add(
       new From_email_based_on_Dept_and_Teams__c(
         Name = 'Corporate Support International',
-        Case_Department__c = 'Corporate',
         From_Email__c = 'coporateinternationtest@sas.se',
         Priority__c = 1
       )
@@ -81,7 +78,6 @@ private class FCS_EmailPublisherAction_Test {
     CSFromEmail.add(
       new From_email_based_on_Dept_and_Teams__c(
         Name = 'Corporate Support Scandinavia',
-        Case_Department__c = 'Corporate',
         From_Email__c = 'coporateScandinavia@sas.se',
         Priority__c = 2
       )
