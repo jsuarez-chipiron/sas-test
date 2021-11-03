@@ -8,13 +8,9 @@ private class FCS_EmailPublisherAction_Test {
   // default address for redirected Cases
   @isTest
   static void defaultFromAddressforRedirctedCase() {
-    List<From_email_based_on_Dept_and_Teams__c> CSFromEmail = new List<From_email_based_on_Dept_and_Teams__c>{
-      new From_email_based_on_Dept_and_Teams__c(
-        Name = 'Group Sales-ACE',
-        From_Email__c = 'groupsalestest@sas.se'
-      )
-    };
-
+    From_email_based_on_Dept_and_Teams__c CSFromEmail = new From_email_based_on_Dept_and_Teams__c();
+      CSFromEmail.Name = 'Group Sales-ACE';
+      CSFromEmail.From_Email__c = 'groupsalestest@sas.se';
     insert CSFromEmail;
 
     List<Case> Cases = FCS_TestDataFactory.createCases(
@@ -58,7 +54,7 @@ private class FCS_EmailPublisherAction_Test {
     Test.stopTest();
 
     System.assertEquals(
-      CSFromEmail[0].From_Email__c,
+      CSFromEmail.From_Email__c,
       ((EmailMessage) defaultsSettings[0].getTargetSObject())
         .ValidatedFromAddress
     );
@@ -66,23 +62,9 @@ private class FCS_EmailPublisherAction_Test {
   // user to default the from address if more than email-to-case present for escalated cases
   @isTest
   static void defaultFromAddressEscalatedCase() {
-    List<From_email_based_on_Dept_and_Teams__c> CSFromEmail = new List<From_email_based_on_Dept_and_Teams__c>();
-
-    CSFromEmail.add(
-      new From_email_based_on_Dept_and_Teams__c(
-        Name = 'Corporate Support International',
-        From_Email__c = 'coporateinternationtest@sas.se',
-        Priority__c = 1
-      )
-    );
-    CSFromEmail.add(
-      new From_email_based_on_Dept_and_Teams__c(
-        Name = 'Corporate Support Scandinavia',
-        From_Email__c = 'coporateScandinavia@sas.se',
-        Priority__c = 2
-      )
-    );
-
+    From_email_based_on_Dept_and_Teams__c CSFromEmail = new From_email_based_on_Dept_and_Teams__c();
+    CSFromEmail.Name = 'Corporate-Support International';
+    CSFromEmail.From_Email__c = 'coporateinternationtest@sas.se';
     insert CSFromEmail;
 
     List<Case> Cases = FCS_TestDataFactory.createCases(
@@ -99,7 +81,7 @@ private class FCS_EmailPublisherAction_Test {
     cases[0].IsEscalated__c = true;
     cases[0].status = 'Escalated';
     cases[0].Department__c = 'Corporate';
-    cases[0].Team__c = '';
+    cases[0].Team__c = 'Support International';
     update cases;
 
     EmailMessage email = new EmailMessage();
@@ -127,7 +109,7 @@ private class FCS_EmailPublisherAction_Test {
     Test.stopTest();
 
     System.assertEquals(
-      CSFromEmail[0].From_Email__c,
+      CSFromEmail.From_Email__c,
       ((EmailMessage) defaultsSettings[0].getTargetSObject())
         .ValidatedFromAddress
     );
