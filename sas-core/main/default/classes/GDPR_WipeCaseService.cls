@@ -218,7 +218,7 @@ global with sharing class GDPR_WipeCaseService {
     FieldDefinition[] fdList = [
       SELECT QualifiedAPIName, ComplianceGroup, EntityDefinitionId
       FROM FieldDefinition
-      WHERE EntityDefinitionId = 'Case' AND ComplianceGroup = 'lookup'
+      WHERE EntityDefinitionId = 'Case' AND ComplianceGroup = 'Lookup'
     ];
     for (FieldDefinition fld : fdList) {
       Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.Case.fields.getMap();
