@@ -30,6 +30,10 @@ public class FCS_CaseHandler extends C_TriggerHandler {
   @TestVisible
   private static final String CASE_STATUS_CLOSED = 'Closed';
 
+  static CasesSelector cases = (CasesSelector) SAS_Service_Application.Selector.newInstance(
+    Case.SObjectType
+  );
+
   /**
     Trigger variables
     */
@@ -54,8 +58,8 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     validateCaseTags(newCaseList);
     enrichCaseDataBasedOnOrigin(newCaseList);
     enrichCaseTagData(newCaseList);
-    //enrichGroupCaseDataWithGroupFormData(newCaseList);
     enrichMissingPointsCaseDataWithMissingPointsFormData(newCaseList);
+    tryToAssignExistingEBAccountToCase(newCaseList);
   }
   /**
   Used to call the trigger in the before update context
@@ -71,9 +75,9 @@ public class FCS_CaseHandler extends C_TriggerHandler {
   public override void afterInsert() {
     manageCaseTagRecords(newCaseList, newCaseMap);
     updateSocialPost(newCaseList);
-    assignEurobonusAccountToCase(newCaseList);
     updateBookingsForNewAssociatedAccounts(newCaseList);
     createCaseToBookings(newCaseList);
+    tryToFetchEBAccountFromCODS(newCaseList);
   }
 
   /**
@@ -219,54 +223,6 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     Matcher emailMatcher = emailPattern.matcher(emailAddress);
 
     return emailMatcher.matches();
-  }
-  /**
-   * Reads case subject and case description fields and updates group sales case fields with data from description
-   * if some requirements are met.
-   * Run only on beforeInsert
-   */
-  private static void enrichGroupCaseDataWithGroupFormData(
-    List<Case> newCaseList
-  ) {
-    /* List caseFormKeywords and incomingEmailAddressAsVerification are Used as part of verification to check if email comes from form */
-    List<String> caseFormKeywords = new List<String>{
-      'group-trips',
-      'sports-trips',
-      'grouptrips',
-      'request-grupperejse',
-      'sportgruppereiser',
-      'gruppresor'
-    };
-    List<String> incomingEmailAddressAsVerification = new List<String>{
-      'gruppresor.se@sas.se',
-      'gruppereiser.no@sas.no',
-      'donotreply@sas.dk',
-      'uk-groupquotes@sas.dk',
-      'salesforce_uat4@sas.se'
-    };
-    for (Case c : newCaseList) {
-      for (String keyWord : caseFormKeywords) {
-        Boolean comesFromForm =
-          c.Subject != null &&
-          c.Subject.toLowercase().Contains(keyWord) &&
-          incomingEmailAddressAsVerification.contains(c.SuppliedEmail);
-        if (comesFromForm) {
-          if (c.Description != '' && c.Description.length() > 0) {
-            String data = c.Description;
-            String newSuppliedEmail = data.substringBetween('email : ', '\n');
-
-            /**
-             * validate suppliedEmail email address received from form
-             * and assign as suppliedEmail if valid
-             */
-
-            if (isEmailAddress(newSuppliedEmail)) {
-              c.SuppliedEmail = newSuppliedEmail;
-            }
-          }
-        }
-      }
-    }
   }
 
   /**
@@ -537,6 +493,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     @param newCaseList The list of new version of the case i.e. the Trigger.new variable
     */
   private static void validateCaseTags(List<Case> newCaseList) {
+    // TODO: Remove when when old case tags setup is gone.
     Integer cSize = newCaseList.size();
     for (Integer i = 0; i < cSize; i++) {
       Case newC = newCaseList[i];
@@ -563,6 +520,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     List<Case> newCaseList,
     Map<Id, Case> newCaseMap
   ) {
+    // TODO: Remove when when old case tags setup is gone.
     Map<String, FCS_CaseTag__c> newTagByKeyId = createToBeCaseTagMap(
       newCaseList
     );
@@ -592,6 +550,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
   public static Map<String, FCS_CaseTag__c> createCurrentCaseTagMap(
     Map<Id, Case> newCaseMap
   ) {
+    // TODO: Remove when when old case tags setup is gone.
     List<FCS_CaseTag__c> caseTagRecords = [
       SELECT Id, FCS_CaseTag__c, FCS_Type__c, FCS_CaseId__c
       FROM FCS_CaseTag__c
@@ -626,6 +585,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
   public static Map<String, FCS_CaseTag__c> createToBeCaseTagMap(
     List<Case> newCaseList
   ) {
+    // TODO: Remove when when old case tags setup is gone.
     Integer cSize = newCaseList.size();
     Map<String, FCS_CaseTag__c> newTagsByKeyId = new Map<String, FCS_CaseTag__c>();
     for (Integer i = 0; i < cSize; i++) {
@@ -672,95 +632,82 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     }
     return newTagsByKeyId;
   }
+
   /**
-     * @param newCaseList The list of the new version of the case i.e. the Trigger.new variable
-       assign the EuroBonus Account to Case based on the Email for Pandion customers and missing points cases
-       It search If there is any existing Account in salesforce , if not then call the Feature method , in turn call 
-       the C shark to fetch the details
-    */
-  public static void assignEurobonusAccountToCase(List<Case> newCaseList) {
-    List<String> lstEmailAddress = new List<String>();
-    List<Case> lstUpdateCases = new List<Case>();
-    List<Id> lstCaseIds = new List<Id>();
-    List<Account> lstAcc = new List<Account>();
-    List<String> caseOriginToProcess = new List<String>{
-      'Email - Pandion SE',
-      'Email - Pandion NO',
-      'Email - Pandion DK',
-      'Email - EB Missing Points'
-    };
-    for (Case cse : newCaseList) {
-      if (caseOriginToProcess.contains(cse.Origin)) {
-        if (cse.SuppliedEmail != null && cse.SuppliedEmail != '') {
-          lstEmailAddress.add(cse.SuppliedEmail);
-          lstCaseIds.add(cse.Id);
-        }
-      }
-    }
-    if (!lstEmailAddress.isEmpty()) {
-      lstAcc = [
-        SELECT Id, FCS_EBLevel__c, FCS_EBNumber__c
-        FROM Account
-        WHERE PersonEmail = :lstEmailAddress[0] AND isPersonAccount = TRUE
-      ];
-    }
-    // used to track if more than once cases created for E2C
+   * If an account with the same email address as the case's SuppliedEmail
+   * exists in Salesforce, associates the case with the account.
+   */
+  private void tryToAssignExistingEBAccountToCase(List<Case> newCaseList) {
     if (
-      !lstCaseIds.isEmpty() &&
-      !lstEmailAddress.isEmpty() &&
-      lstCaseIds.size() > 1 &&
-      lstEmailAddress.size() > 1
+      newCaseList.size() > 1 || String.isBlank(newCaseList[0].SuppliedEmail)
     ) {
-      string message = 'more than one email adddress present, so not able to get eurbonus details';
-      C_Log.log(C_Log.Severity.Info, message, null, 'Eurobonus', null);
+      // At the time of writing CODS didn't support searching with more than one key
+      // at a time so we can't reasonably support batch operations.
+      return;
     }
-    //
-    if (!lstAcc.isEmpty()) {
-      Case cse = new Case();
-      cse.FCS_EBNumber__c = lstAcc[0].FCS_EBNumber__c;
-      cse.accountId = lstAcc[0].Id;
-      cse.Id = newCaseList[0].Id;
-      cse.FCS_EBLevel__c = lstAcc[0].FCS_EBLevel__c;
-      lstUpdateCases.add(cse);
-    } else if (lstCaseIds.size() > 0) {
-      findEuroBonusAccount(lstCaseIds);
-    }
-    if (!lstUpdateCases.isEmpty()) {
-      update lstUpdateCases;
+    Case c = newCaseList[0];
+
+    List<Account> accountsFromDB = [
+      SELECT Id, FCS_EBLevel__c, FCS_EBNumber__c
+      FROM Account
+      WHERE PersonEmail = :c.SuppliedEmail AND isPersonAccount = TRUE
+    ];
+
+    if (accountsFromDB.size() == 1) {
+      assignAccountToCase(accountsFromDB[0], c);
     }
   }
+
   /**
-     get the eurobonus account from C-shark using Email
-     @param set of caseIds
-    */
-  @future(callOut=true)
-  public static void findEuroBonusAccount(List<Id> lstCseIds) {
-    Account acc;
-    List<Case> lstUpdateCases = new List<Case>();
-    List<Case> lstCases = new List<Case>();
-    lstCases = [
-      SELECT Id, FCS_EBNumber__c, FCS_EBLevel__c, SuppliedEmail, AccountId
-      FROM Case
-      WHERE Id = :lstCseIds[0] AND SuppliedEmail != NULL
-      LIMIT 1
-    ];
-    if (!lstCases.isEmpty()) {
-      acc = FCS_IdentifyCustomerController.findCustomer(
-        'EmailPersonal__c',
-        lstCases[0].SuppliedEmail
-      );
-      if (acc != null) {
-        Case cs = new Case();
-        cs.Id = lstCases[0].Id;
-        cs.FCS_EBNumber__c = acc.FCS_EBNumber__c;
-        cs.accountId = acc.Id;
-        cs.FCS_EBLevel__c = acc.FCS_EBLevel__c;
-        lstUpdateCases.add(cs);
-      }
-      if (!lstUpdateCases.isEmpty()) {
-        update lstUpdateCases;
+   * Tries to fetch a EuroBonus account for the cases from CODS if the case doesn't
+   * already have an associated account.
+   */
+  private void tryToFetchEBAccountFromCODS(List<Case> newCaseList) {
+    // TODO: We need to ignore email addresses here somehow
+    if (newCaseList.size() > 1) {
+      // At the time of writing CODS didn't support searching with more than one key
+      // at a time so we can't reasonably support batch operations.
+      return;
+    }
+    Case c = newCaseList[0];
+
+    if (c.accountId == null && !String.isBlank(c.SuppliedEmail)) {
+      findEuroBonusAccount(c.Id, c.SuppliedEmail);
+    }
+  }
+
+  /**
+   * Performs a CODS query for an EB account with the given email. If one
+   * is found, creates a corresponding account in SF and associates it with
+   * the given case.
+   * 
+   * @param caseId The case to which this account should be associated to.
+   * @param email Email to search with.
+   */
+  @future(callout=true)
+  public static void findEuroBonusAccount(Id caseId, String email) {
+    Account acc = FCS_IdentifyCustomerController.findCustomer(
+      'EmailPersonal__c',
+      email
+    );
+
+    if (acc != null) {
+      List<Case> casesFromDB = cases.selectById(new Set<Id>{ caseId });
+      if (casesFromDB.size() > 0) {
+        Case c = casesFromDB[0];
+        c.accountId = acc.Id;
+        c.FCS_EBLevel__c = acc.FCS_EBLevel__c;
+        c.FCS_EBNumber__c = acc.FCS_EBNumber__c;
+
+        update c;
       }
     }
+  }
+
+  private void assignAccountToCase(Account acc, Case c) {
+    c.accountId = acc.Id;
+    c.FCS_EBLevel__c = acc.FCS_EBLevel__c;
+    c.FCS_EBNumber__c = acc.FCS_EBNumber__c;
   }
 
   private void updateBookingsForNewAssociatedAccounts(List<Case> newCases) {
