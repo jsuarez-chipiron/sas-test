@@ -4,16 +4,10 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
          * Setting up setup objects in setup method
          */
         @TestSetup
-        static void createTestData() {
-                insert new MessagingChannel(
-                        DeveloperName = 'FacebookChannel1',
-                        MasterLabel = 'Facebook1',
-                        MessagingPlatformKey = '321',
-                        MessageType = 'Facebook'
-                );
-                insert new MessagingChannel(
-                        DeveloperName = 'FacebookChannel2',
-                        MasterLabel = 'Facebook2',
+        static void createTestData() {       
+                   insert new MessagingChannel(
+                        DeveloperName = 'FacebookChannel28',
+                        MasterLabel = 'Facebook232',
                         MessagingPlatformKey = '123',
                         MessageType = 'Facebook'
                 );
@@ -26,7 +20,7 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
                 List < Case > lstCases = FCS_TestDataFactory.createCases(1, null, null, null, null);
                 lstCases[0].Origin = 'Facebook Messenger';
                 lstCases[0].status = 'New';
-                lstCases[0].RecordTypeId = C_RecordTypeHelper.CASE_INFORMATION;
+                lstCases[0].RecordTypeId = C_RecordTypeHelper.CASE_CHAT;
                 lstCases[0].FCS_CaseReason__c = null;
                 insert lstCases;
 
@@ -50,8 +44,10 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
                 ));
 
                 insert sessions;
+                FCS_CloseFBMessgerCaseAfter24hr_Batch fcsCloseFBMessgr = new FCS_CloseFBMessgerCaseAfter24hr_Batch();
+                fcsCloseFBMessgr.setVariables('Case',1,null,null,null);
                 Test.StartTest();
-                Database.executeBatch(new FCS_CloseFBMessgerCaseAfter24hr_Batch());
+                Database.executeBatch(fcsCloseFBMessgr);
                 Test.StopTest();
                 Case cse = [Select Id, Status from Case where Id =: lstCases[0].Id];
                 System.assertEquals('Closed', cse.Status);
@@ -62,11 +58,13 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
          */
         public static testMethod void testAutoCloseCaseWithCaseTag() {
                 List < Case > lstCases = FCS_TestDataFactory.createCases(1, null, null, null, null);
+                
                 lstCases[0].Origin = 'Facebook Messenger';
                 lstCases[0].status = 'New';
-                lstCases[0].RecordTypeId = C_RecordTypeHelper.CASE_INFORMATION;
-                lstCases[0].FCS_CaseReason__c = 'Baggage';
-                lstCases[0].Type = 'Information';
+                lstCases[0].RecordTypeId = C_RecordTypeHelper.CASE_CHAT;
+                lstCases[0].Department__c = 'SoMe Support';
+                lstCases[0].FCS_CaseType__c = 'Baggage';
+                lstCases[0].FCS_Case_Reason__c = 'Allowance';
                 insert lstCases;
 
                 MessagingChannel[] messagingChannel = [SELECT Id FROM MessagingChannel];
@@ -77,7 +75,7 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
                         MessagingPlatformKey = '123'
                 );
                 insert messagingEndUser1;
-                Datetime lastRetentionDate = DateTime.newInstance(Date.today().addDays(-2), Time.newInstance(0, 0, 0, 0));
+                Datetime lastRetentionDate = DateTime.newInstance(Date.today().addDays(-3), Time.newInstance(0, 0, 0, 0));
                 MessagingSession[] sessions = new MessagingSession[] {};
                 sessions.add(new MessagingSession(
                         Origin = 'InboundInitiated',
@@ -87,10 +85,11 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
                         MessagingChannelId = messagingChannel[0].Id,
                         EndTime = lastRetentionDate
                 ));
-
                 insert sessions;
+                FCS_CloseFBMessgerCaseAfter24hr_Batch fcsCloseFBMessgr = new FCS_CloseFBMessgerCaseAfter24hr_Batch();
+                fcsCloseFBMessgr.setVariables('Case',1,null,null,null);
                 Test.StartTest();
-                Database.executeBatch(new FCS_CloseFBMessgerCaseAfter24hr_Batch());
+                Database.executeBatch(fcsCloseFBMessgr);
                 Test.StopTest();
                 Case cse = [Select Id, Status from Case where Id =: lstCases[0].Id];
                 System.assertEquals('Closed', cse.Status);
@@ -168,8 +167,10 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
                 ));
 
                 insert sessions;
+                FCS_CloseFBMessgerCaseAfter24hr_Batch fcsCloseFBMessgr = new FCS_CloseFBMessgerCaseAfter24hr_Batch();
+                fcsCloseFBMessgr.setVariables('Case',1,null,null,null);
                 Test.StartTest();
-                Database.executeBatch(new FCS_CloseFBMessgerCaseAfter24hr_Batch());
+                Database.executeBatch(fcsCloseFBMessgr);
                 Test.StopTest();
                 Case cse = [Select Id, Status from Case where Id =: lstCases[0].Id];
                 System.assertEquals('Closed', cse.Status);

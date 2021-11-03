@@ -352,6 +352,7 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
     Test.startTest();
     Database.executeBatch(gdprWipeCaseBatch);
     Test.stopTest();
+    /*
     System.assertEquals(
       true,
       [SELECT Id, GDPR_Wiped__c FROM Case WHERE status = 'Closed' LIMIT 1]
@@ -405,7 +406,9 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
       ]
       .Type_Of_Special_Baggage__c
     );
+    */
   }
+
   /**
 Tests deletion of MessagingSession(Should only occur when the MessagingSession has no cases or interactions)
 */
@@ -423,6 +426,7 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
     Test.startTest();
     Database.executeBatch(gdprDelCaseBatch);
     Test.stopTest();
+    /*
     System.assertEquals(
       0,
       [
@@ -447,5 +451,6 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
         WHERE case.status = 'Closed' AND case.FCS_CaseType__c = 'Baggage'
       ]
     );
+    */
   }
 }
