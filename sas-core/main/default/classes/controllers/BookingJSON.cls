@@ -27,16 +27,19 @@ global class BookingJSON implements Comparable {
     @AuraEnabled
     public Datetime createdDate { get; set; }
     @AuraEnabled
-    public String messageContent { get; set; }
-    @AuraEnabled
     public String flightId { get; set; }
+    @AuraEnabled
+    public String id { get; set; }
+    @AuraEnabled
+    public String messageContent { get; set; }
 
     public CommunicationLog(IRR_CommunicationLog__c l) {
       bookingReference = l.IRR_BookingReference__c;
       channel = l.IRR_Channel__c;
       createdDate = l.CreatedDate;
-      messageContent = l.IRR_MessageContent__c;
       flightId = l.IRR_FlightId__c;
+      id = l.Id;
+      messageContent = l.IRR_MessageContent__c;
     }
   }
 
