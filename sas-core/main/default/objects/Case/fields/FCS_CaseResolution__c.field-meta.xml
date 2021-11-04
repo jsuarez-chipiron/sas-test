@@ -13,11 +13,16 @@
         <controllingField>FCS_Case_Reason__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>According to rules</fullName>
                 <default>false</default>
                 <label>According to rules</label>
+            </value>
+            <value>
+                <fullName>Acquirer</fullName>
+                <default>false</default>
+                <label>Acquirer</label>
             </value>
             <value>
                 <fullName>Activate Profile</fullName>
@@ -35,6 +40,11 @@
                 <label>Agreement related question</label>
             </value>
             <value>
+                <fullName>Amadeus</fullName>
+                <default>false</default>
+                <label>Amadeus</label>
+            </value>
+            <value>
                 <fullName>App</fullName>
                 <default>false</default>
                 <label>App</label>
@@ -45,9 +55,21 @@
                 <label>Approved</label>
             </value>
             <value>
+                <fullName>Authorization</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Authorization</label>
+            </value>
+            <value>
                 <fullName>Availability</fullName>
                 <default>false</default>
                 <label>Availability</label>
+            </value>
+            <value>
+                <fullName>Blocked IP address</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Blocked IP address</label>
             </value>
             <value>
                 <fullName>Booking Confirmation</fullName>
@@ -115,6 +137,12 @@
                 <label>Claim status</label>
             </value>
             <value>
+                <fullName>Commercials</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Commercials</label>
+            </value>
+            <value>
                 <fullName>Completed</fullName>
                 <default>false</default>
                 <label>Completed</label>
@@ -128,6 +156,11 @@
                 <fullName>Contact Update</fullName>
                 <default>false</default>
                 <label>Contact Update</label>
+            </value>
+            <value>
+                <fullName>COVID19</fullName>
+                <default>false</default>
+                <label>COVID19</label>
             </value>
             <value>
                 <fullName>Create company</fullName>
@@ -168,6 +201,12 @@
                 <fullName>Error</fullName>
                 <default>false</default>
                 <label>Error</label>
+            </value>
+            <value>
+                <fullName>Error - Inactive Customer</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Error - Inactive Customer</label>
             </value>
             <value>
                 <fullName>EuroBonus</fullName>
@@ -235,6 +274,12 @@
                 <label>Inform Process Owner/Specialist</label>
             </value>
             <value>
+                <fullName>Internet error</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Internet error</label>
+            </value>
+            <value>
                 <fullName>Invalid retro</fullName>
                 <default>false</default>
                 <label>Invalid retro</label>
@@ -245,6 +290,7 @@
                 <label>Involuntary</label>
             </value>
             <value>
+<<<<<<< HEAD
                 <fullName>Jira created</fullName>
                 <default>false</default>
                 <label>Jira created</label>
@@ -253,6 +299,16 @@
                 <fullName>Jira updated</fullName>
                 <default>false</default>
                 <label>Jira updated</label>
+=======
+                <fullName>Issue New</fullName>
+                <default>false</default>
+                <label>Issue New</label>
+            </value>
+            <value>
+                <fullName>Issue new for expired</fullName>
+                <default>false</default>
+                <label>Issue new for expired</label>
+>>>>>>> Add new case tags for Refund
             </value>
             <value>
                 <fullName>Lacking Features/Destinations/Partners</fullName>
@@ -265,6 +321,12 @@
                 <label>Limitation/Won&apos;t fix</label>
             </value>
             <value>
+                <fullName>Log in</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Log in</label>
+            </value>
+            <value>
                 <fullName>Make name change</fullName>
                 <default>false</default>
                 <label>Make name change</label>
@@ -275,6 +337,21 @@
                 <label>Make name correction</label>
             </value>
             <value>
+                <fullName>MMB Refund process</fullName>
+                <default>false</default>
+                <label>MMB Refund process</label>
+            </value>
+            <value>
+                <fullName>New</fullName>
+                <default>false</default>
+                <label>New</label>
+            </value>
+            <value>
+                <fullName>No action needed</fullName>
+                <default>false</default>
+                <label>No action needed</label>
+            </value>
+            <value>
                 <fullName>Online booking</fullName>
                 <default>false</default>
                 <label>Online booking</label>
@@ -283,6 +360,11 @@
                 <fullName>Online Profile</fullName>
                 <default>false</default>
                 <label>Online Profile</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
             </value>
             <value>
                 <fullName>Payment</fullName>
@@ -313,6 +395,12 @@
                 <fullName>Provided info about how to change</fullName>
                 <default>false</default>
                 <label>Provided info about how to change</label>
+            </value>
+            <value>
+                <fullName>Provided info about name change</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Provided info about name change</label>
             </value>
             <value>
                 <fullName>Provide info about name change</fullName>
@@ -395,9 +483,19 @@
                 <label>Referred to webpage</label>
             </value>
             <value>
+                <fullName>Refund authorized</fullName>
+                <default>false</default>
+                <label>Refund authorized</label>
+            </value>
+            <value>
                 <fullName>Refund status</fullName>
                 <default>false</default>
                 <label>Refund status</label>
+            </value>
+            <value>
+                <fullName>Refund to alternative FOP</fullName>
+                <default>false</default>
+                <label>Refund to alternative FOP</label>
             </value>
             <value>
                 <fullName>Rejected</fullName>
@@ -430,14 +528,30 @@
                 <label>Request refund</label>
             </value>
             <value>
+                <fullName>Resend</fullName>
+                <default>false</default>
+                <label>Resend</label>
+            </value>
+            <value>
                 <fullName>Reset password</fullName>
                 <default>false</default>
                 <label>Reset password</label>
             </value>
             <value>
+                <fullName>Resolved</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Resolved</label>
+            </value>
+            <value>
                 <fullName>Route inquiry</fullName>
                 <default>false</default>
                 <label>Route inquiry</label>
+            </value>
+            <value>
+                <fullName>RTCREDIT</fullName>
+                <default>false</default>
+                <label>RTCREDIT</label>
             </value>
             <value>
                 <fullName>Sales</fullName>
@@ -465,6 +579,11 @@
                 <label>SK</label>
             </value>
             <value>
+                <fullName>Solve agent error</fullName>
+                <default>false</default>
+                <label>Solve agent error</label>
+            </value>
+            <value>
                 <fullName>Solve log in issue</fullName>
                 <default>false</default>
                 <label>Solve log in issue</label>
@@ -480,9 +599,25 @@
                 <label>Solve payment problem</label>
             </value>
             <value>
+                <fullName>Solve technical error</fullName>
+                <default>false</default>
+                <label>Solve technical error</label>
+            </value>
+            <value>
+                <fullName>SRS</fullName>
+                <default>false</default>
+                <label>SRS</label>
+            </value>
+            <value>
                 <fullName>Statistics</fullName>
                 <default>false</default>
                 <label>Statistics</label>
+            </value>
+            <value>
+                <fullName>Strike related information</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Strike related information</label>
             </value>
             <value>
                 <fullName>Support</fullName>
@@ -498,6 +633,11 @@
                 <fullName>Sustainability</fullName>
                 <default>false</default>
                 <label>Sustainability</label>
+            </value>
+            <value>
+                <fullName>Technical error</fullName>
+                <default>false</default>
+                <label>Technical error</label>
             </value>
             <value>
                 <fullName>Ticketing</fullName>
@@ -539,6 +679,7 @@
                 <default>false</default>
                 <label>Wrong deb</label>
             </value>
+<<<<<<< HEAD
             <value>
                 <fullName>Other</fullName>
                 <default>false</default>
@@ -603,6 +744,8 @@
                 <isActive>false</isActive>
                 <label>Strike related information</label>
             </value>
+=======
+>>>>>>> Add new case tags for Refund
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Missing 1000 Status pts MC</controllingFieldValue>
@@ -989,6 +1132,10 @@
             <controllingFieldValue>SAS for Business Agreement</controllingFieldValue>
             <controllingFieldValue>Agreement</controllingFieldValue>
             <controllingFieldValue>App</controllingFieldValue>
+<<<<<<< HEAD
+=======
+            <controllingFieldValue>Support</controllingFieldValue>
+>>>>>>> Add new case tags for Refund
             <valueName>Information</valueName>
         </valueSettings>
         <valueSettings>
@@ -1001,6 +1148,11 @@
             <controllingFieldValue>Name Change</controllingFieldValue>
             <controllingFieldValue>Change booking</controllingFieldValue>
             <controllingFieldValue>Change commitment dates</controllingFieldValue>
+<<<<<<< HEAD
+=======
+            <controllingFieldValue>Voluntary</controllingFieldValue>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+>>>>>>> Add new case tags for Refund
             <controllingFieldValue>Process Refund</controllingFieldValue>
             <controllingFieldValue>Make Booking</controllingFieldValue>
             <valueName>Deviation from rules</valueName>
@@ -1024,6 +1176,7 @@
         <valueSettings>
             <controllingFieldValue>Name correction</controllingFieldValue>
             <valueName>Make name correction</valueName>
+<<<<<<< HEAD
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Name correction</controllingFieldValue>
@@ -1058,6 +1211,44 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Online Problems</controllingFieldValue>
+=======
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Name correction</controllingFieldValue>
+            <valueName>Provide info about name correction</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
+            <controllingFieldValue>Extend</controllingFieldValue>
+            <valueName>Approved</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
+            <controllingFieldValue>Tier level</controllingFieldValue>
+            <controllingFieldValue>Extend</controllingFieldValue>
+            <valueName>Rejected</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New feature</controllingFieldValue>
+            <controllingFieldValue>Bug</controllingFieldValue>
+            <valueName>Bug/User story created</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Online Problems</controllingFieldValue>
+            <valueName>Activate Profile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Online Problems</controllingFieldValue>
+            <valueName>Online Profile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Online Problems</controllingFieldValue>
+            <controllingFieldValue>Online Profile</controllingFieldValue>
+            <valueName>Solve log in issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Online Problems</controllingFieldValue>
+>>>>>>> Add new case tags for Refund
             <controllingFieldValue>Agreement</controllingFieldValue>
             <valueName>Statistics</valueName>
         </valueSettings>
@@ -1245,6 +1436,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Change Profile</controllingFieldValue>
+            <controllingFieldValue>Email related</controllingFieldValue>
             <valueName>Changed email</valueName>
         </valueSettings>
         <valueSettings>
@@ -1260,6 +1452,7 @@
             <valueName>Provided info about how to change</valueName>
         </valueSettings>
         <valueSettings>
+<<<<<<< HEAD
             <controllingFieldValue>Booking problem</controllingFieldValue>
             <controllingFieldValue>EuroBonus account</controllingFieldValue>
             <controllingFieldValue>Wrong info to customer</controllingFieldValue>
@@ -1290,6 +1483,72 @@
             <controllingFieldValue>Payment</controllingFieldValue>
             <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
             <valueName>No action</valueName>
+=======
+            <controllingFieldValue>Voluntary</controllingFieldValue>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <valueName>According to rules</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voluntary</controllingFieldValue>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <valueName>No action needed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voluntary</controllingFieldValue>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <valueName>Refund authorized</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voluntary</controllingFieldValue>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <controllingFieldValue>AliPay</controllingFieldValue>
+            <controllingFieldValue>PayPal</controllingFieldValue>
+            <controllingFieldValue>Swish</controllingFieldValue>
+            <controllingFieldValue>UnionPay</controllingFieldValue>
+            <controllingFieldValue>WeChat</controllingFieldValue>
+            <controllingFieldValue>Klarna</controllingFieldValue>
+            <controllingFieldValue>Mutiple FOP</controllingFieldValue>
+            <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
+            <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
+            <controllingFieldValue>No money collected</controllingFieldValue>
+            <controllingFieldValue>Chargeback</controllingFieldValue>
+            <controllingFieldValue>Card errors</controllingFieldValue>
+            <valueName>Refund to alternative FOP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AliPay</controllingFieldValue>
+            <valueName>Technical error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>PayPal</controllingFieldValue>
+            <controllingFieldValue>Swish</controllingFieldValue>
+            <controllingFieldValue>UnionPay</controllingFieldValue>
+            <controllingFieldValue>WeChat</controllingFieldValue>
+            <controllingFieldValue>Klarna</controllingFieldValue>
+            <controllingFieldValue>Mutiple FOP</controllingFieldValue>
+            <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
+            <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
+            <controllingFieldValue>No money collected</controllingFieldValue>
+            <controllingFieldValue>Chargeback</controllingFieldValue>
+            <controllingFieldValue>Card errors</controllingFieldValue>
+            <valueName>Solve agent error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>PayPal</controllingFieldValue>
+            <controllingFieldValue>Swish</controllingFieldValue>
+            <controllingFieldValue>Swish Bot Output</controllingFieldValue>
+            <controllingFieldValue>UnionPay</controllingFieldValue>
+            <controllingFieldValue>WeChat</controllingFieldValue>
+            <controllingFieldValue>Klarna</controllingFieldValue>
+            <controllingFieldValue>Mutiple FOP</controllingFieldValue>
+            <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
+            <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
+            <controllingFieldValue>No money collected</controllingFieldValue>
+            <controllingFieldValue>Chargeback</controllingFieldValue>
+            <controllingFieldValue>Card errors</controllingFieldValue>
+            <valueName>Solve technical error</valueName>
+>>>>>>> Add new case tags for Refund
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Claims</controllingFieldValue>
@@ -1298,6 +1557,23 @@
         <valueSettings>
             <controllingFieldValue>Claims</controllingFieldValue>
             <valueName>How to make a claim</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>Refund status</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Email related</controllingFieldValue>
+            <valueName>Resend</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Issue</controllingFieldValue>
+            <valueName>Issue new for expired</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Issue</controllingFieldValue>
+            <valueName>New</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Damaged Baggage</controllingFieldValue>
@@ -1321,6 +1597,34 @@
             <valueName>Reported delayed baggage</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <valueName>Acquirer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <valueName>Amadeus</valueName>
+        </valueSettings>
+        <valueSettings>
+<<<<<<< HEAD
+            <controllingFieldValue>Process Question</controllingFieldValue>
+            <valueName>Inform Process Owner/Specialist</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Question</controllingFieldValue>
+            <valueName>Update User Guide</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <valueName>According to rules</valueName>
+=======
+            <controllingFieldValue>Error</controllingFieldValue>
+            <valueName>Issue New</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <valueName>SRS</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Error Management</controllingFieldValue>
             <valueName>SK</valueName>
         </valueSettings>
@@ -1335,10 +1639,7 @@
         <valueSettings>
             <controllingFieldValue>Process Question</controllingFieldValue>
             <valueName>Update User Guide</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Process Refund</controllingFieldValue>
-            <valueName>According to rules</valueName>
+>>>>>>> Add new case tags for Refund
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Process Refund</controllingFieldValue>
@@ -1362,6 +1663,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Redirection not possible</controllingFieldValue>
+<<<<<<< HEAD
             <valueName>Redirect to agent</valueName>
         </valueSettings>
         <valueSettings>
@@ -1402,6 +1704,56 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Make Booking</controllingFieldValue>
+=======
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Redirection not possible</controllingFieldValue>
+            <valueName>Redirect to agent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Redirection not possible</controllingFieldValue>
+            <valueName>Referred to Agent Helpdesk</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Redirection not possible</controllingFieldValue>
+            <valueName>Referred to Corporate Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Redirection not possible</controllingFieldValue>
+            <valueName>Referred to Direct Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>COVID19</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>MMB Refund process</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>Request refund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>RTCREDIT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Make Booking</controllingFieldValue>
+            <valueName>Referred to group form</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Make Booking</controllingFieldValue>
+            <valueName>Solve online booking problem</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Make Booking</controllingFieldValue>
+            <valueName>Solve payment problem</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Make Booking</controllingFieldValue>
+>>>>>>> Add new case tags for Refund
             <valueName>Ticket issued</valueName>
         </valueSettings>
     </valueSet>

@@ -13,7 +13,7 @@
         <controllingField>FCS_CaseType__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>Access rights</fullName>
                 <default>false</default>
@@ -100,6 +100,11 @@
                 <label>Agreement</label>
             </value>
             <value>
+                <fullName>AliPay</fullName>
+                <default>false</default>
+                <label>AliPay</label>
+            </value>
+            <value>
                 <fullName>Allowance</fullName>
                 <default>false</default>
                 <label>Allowance</label>
@@ -175,6 +180,11 @@
                 <label>CAR</label>
             </value>
             <value>
+                <fullName>Card errors</fullName>
+                <default>false</default>
+                <label>Card errors</label>
+            </value>
+            <value>
                 <fullName>Car Rental Info</fullName>
                 <default>false</default>
                 <label>Car Rental Info</label>
@@ -198,6 +208,11 @@
                 <fullName>Change Profile</fullName>
                 <default>false</default>
                 <label>Change Profile</label>
+            </value>
+            <value>
+                <fullName>Chargeback</fullName>
+                <default>false</default>
+                <label>Chargeback</label>
             </value>
             <value>
                 <fullName>Charter Info</fullName>
@@ -320,6 +335,11 @@
                 <label>Disconnected customer</label>
             </value>
             <value>
+                <fullName>Email related</fullName>
+                <default>false</default>
+                <label>Email related</label>
+            </value>
+            <value>
                 <fullName>Error</fullName>
                 <default>false</default>
                 <label>Error</label>
@@ -353,6 +373,11 @@
                 <fullName>EuroBonus Shop</fullName>
                 <default>false</default>
                 <label>EuroBonus Shop</label>
+            </value>
+            <value>
+                <fullName>Extend</fullName>
+                <default>false</default>
+                <label>Extend</label>
             </value>
             <value>
                 <fullName>Extract</fullName>
@@ -435,6 +460,31 @@
                 <label>Information update needed</label>
             </value>
             <value>
+                <fullName>Insufficient Balance Account</fullName>
+                <default>false</default>
+                <label>Insufficient Balance Account</label>
+            </value>
+            <value>
+                <fullName>Insufficient Balance Payment</fullName>
+                <default>false</default>
+                <label>Insufficient Balance Payment</label>
+            </value>
+            <value>
+                <fullName>Involuntary</fullName>
+                <default>false</default>
+                <label>Involuntary</label>
+            </value>
+            <value>
+                <fullName>Issue</fullName>
+                <default>false</default>
+                <label>Issue</label>
+            </value>
+            <value>
+                <fullName>Klarna</fullName>
+                <default>false</default>
+                <label>Klarna</label>
+            </value>
+            <value>
                 <fullName>Link not working</fullName>
                 <default>false</default>
                 <label>Link not working</label>
@@ -470,6 +520,11 @@
                 <label>Missing points</label>
             </value>
             <value>
+                <fullName>Mutiple FOP</fullName>
+                <default>false</default>
+                <label>Mutiple FOP</label>
+            </value>
+            <value>
                 <fullName>Name Change</fullName>
                 <default>false</default>
                 <label>Name Change</label>
@@ -488,6 +543,11 @@
                 <fullName>New feature</fullName>
                 <default>false</default>
                 <label>New feature</label>
+            </value>
+            <value>
+                <fullName>No money collected</fullName>
+                <default>false</default>
+                <label>No money collected</label>
             </value>
             <value>
                 <fullName>Offer sent</fullName>
@@ -510,9 +570,20 @@
                 <label>Online Profile</label>
             </value>
             <value>
+<<<<<<< HEAD
                 <fullName>Payment</fullName>
                 <default>false</default>
                 <label>Payment</label>
+=======
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>PayPal</fullName>
+                <default>false</default>
+                <label>PayPal</label>
+>>>>>>> Add new case tags for Refund
             </value>
             <value>
                 <fullName>Point related question</fullName>
@@ -680,9 +751,24 @@
                 <label>Status Waiting Time</label>
             </value>
             <value>
+                <fullName>Support</fullName>
+                <default>false</default>
+                <label>Support</label>
+            </value>
+            <value>
                 <fullName>Support in Document Control</fullName>
                 <default>false</default>
                 <label>Support in Document Control</label>
+            </value>
+            <value>
+                <fullName>Swish</fullName>
+                <default>false</default>
+                <label>Swish</label>
+            </value>
+            <value>
+                <fullName>Swish Bot Output</fullName>
+                <default>false</default>
+                <label>Swish Bot Output</label>
             </value>
             <value>
                 <fullName>Ticket status</fullName>
@@ -710,6 +796,11 @@
                 <label>Travel Pass</label>
             </value>
             <value>
+                <fullName>UnionPay</fullName>
+                <default>false</default>
+                <label>UnionPay</label>
+            </value>
+            <value>
                 <fullName>Update Profile</fullName>
                 <default>false</default>
                 <label>Update Profile</label>
@@ -720,14 +811,23 @@
                 <label>Upgrade</label>
             </value>
             <value>
+<<<<<<< HEAD
                 <fullName>Wrong info to customer</fullName>
                 <default>false</default>
                 <label>Wrong info to customer</label>
             </value>
             <value>
                 <fullName>Other</fullName>
+=======
+                <fullName>Voluntary</fullName>
+>>>>>>> Add new case tags for Refund
                 <default>false</default>
-                <label>Other</label>
+                <label>Voluntary</label>
+            </value>
+            <value>
+                <fullName>WeChat</fullName>
+                <default>false</default>
+                <label>WeChat</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -739,6 +839,7 @@
             <controllingFieldValue>Travel Pass</controllingFieldValue>
             <controllingFieldValue>SAS for Business</controllingFieldValue>
             <valueName>Booking</valueName>
+<<<<<<< HEAD
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel Pass</controllingFieldValue>
@@ -767,6 +868,22 @@
             <controllingFieldValue>Voucher</controllingFieldValue>
             <controllingFieldValue>Error</controllingFieldValue>
             <controllingFieldValue>Digital Channel</controllingFieldValue>
+=======
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Error Management</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Online Problems</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <controllingFieldValue>Voucher Handling</controllingFieldValue>
+>>>>>>> Add new case tags for Refund
             <controllingFieldValue>Irregularities</controllingFieldValue>
             <controllingFieldValue>New Booking</controllingFieldValue>
             <controllingFieldValue>Non-SAS Products</controllingFieldValue>
@@ -790,6 +907,20 @@
             <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Refunds</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <controllingFieldValue>SAS for Business</controllingFieldValue>
+            <valueName>Sell</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Update Profile</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Voucher</controllingFieldValue>
             <valueName>Help to Request</valueName>
         </valueSettings>
@@ -803,6 +934,8 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Voucher</controllingFieldValue>
+            <controllingFieldValue>Gift Card</controllingFieldValue>
+            <controllingFieldValue>Voucher Handling</controllingFieldValue>
             <valueName>Refund</valueName>
         </valueSettings>
         <valueSettings>
@@ -826,6 +959,7 @@
             <valueName>Spam</valueName>
         </valueSettings>
         <valueSettings>
+<<<<<<< HEAD
             <controllingFieldValue>Digital Channel</controllingFieldValue>
             <valueName>Booking problem</valueName>
         </valueSettings>
@@ -845,6 +979,88 @@
         <valueSettings>
             <controllingFieldValue>Digital Channel</controllingFieldValue>
             <valueName>Wrong info to customer</valueName>
+=======
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <controllingFieldValue>Gift Card</controllingFieldValue>
+            <controllingFieldValue>Plusgrade</controllingFieldValue>
+            <valueName>Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Involuntary</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Voluntary</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>AliPay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Card errors</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Chargeback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Insufficient Balance Account</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Insufficient Balance Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Klarna</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Mutiple FOP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>No money collected</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>PayPal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Swish</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Swish Bot Output</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>UnionPay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>WeChat</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher Handling</controllingFieldValue>
+            <valueName>Email related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher Handling</controllingFieldValue>
+            <valueName>Extend</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher Handling</controllingFieldValue>
+            <valueName>Issue</valueName>
+>>>>>>> Add new case tags for Refund
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Irregularities</controllingFieldValue>
@@ -898,10 +1114,6 @@
         <valueSettings>
             <controllingFieldValue>Non-SAS Products</controllingFieldValue>
             <valueName>Travel Insurance Info</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Plusgrade</controllingFieldValue>
-            <valueName>Error</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Plusgrade</controllingFieldValue>
