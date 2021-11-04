@@ -699,6 +699,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Acquirer</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Activate Profile</fullName>
             <default>false</default>
         </values>
@@ -708,6 +712,10 @@
         </values>
         <values>
             <fullName>Agreement related question</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amadeus</fullName>
             <default>false</default>
         </values>
         <values>
@@ -744,6 +752,10 @@
         </values>
         <values>
             <fullName>CC Update</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>COVID19</fullName>
             <default>false</default>
         </values>
         <values>
@@ -879,6 +891,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Issue New</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Issue new for expired</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Lacking Features%2FDestinations%2FPartners</fullName>
             <default>false</default>
         </values>
@@ -887,11 +907,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>MMB Refund process</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Make name change</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Make name correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No action needed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -947,6 +979,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>RTCREDIT</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Receipt</fullName>
             <default>false</default>
         </values>
@@ -995,7 +1031,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Refund authorized</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Refund status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund to alternative FOP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1023,6 +1067,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Resend</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Reset password</fullName>
             <default>false</default>
         </values>
@@ -1039,6 +1087,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SRS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sales</fullName>
             <default>false</default>
         </values>
@@ -1051,6 +1103,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Solve agent error</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Solve log in issue</fullName>
             <default>false</default>
         </values>
@@ -1060,6 +1116,10 @@
         </values>
         <values>
             <fullName>Solve payment problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solve technical error</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1076,6 +1136,10 @@
         </values>
         <values>
             <fullName>TPI OPM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technical error</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2976,6 +3040,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Error Handling</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EuroBonus</fullName>
             <default>false</default>
         </values>
@@ -2993,6 +3061,10 @@
         </values>
         <values>
             <fullName>GDPR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gift Card</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3017,6 +3089,10 @@
         </values>
         <values>
             <fullName>Receive Customer Documentation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund Handling</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3049,6 +3125,10 @@
         </values>
         <values>
             <fullName>Voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher Handling</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3131,6 +3211,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>AliPay</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Allowance</fullName>
             <default>false</default>
         </values>
@@ -3187,6 +3271,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Card errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Change</fullName>
             <default>false</default>
         </values>
@@ -3200,6 +3288,10 @@
         </values>
         <values>
             <fullName>Change commitment dates</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chargeback</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3295,6 +3387,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email related</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Error</fullName>
             <default>false</default>
         </values>
@@ -3316,6 +3412,10 @@
         </values>
         <values>
             <fullName>EuroBonus Shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extend</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3383,6 +3483,26 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Insufficient Balance Account</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insufficient Balance Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Involuntary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Klarna</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Link not working</fullName>
             <default>false</default>
         </values>
@@ -3411,6 +3531,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Mutiple FOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Name Change</fullName>
             <default>false</default>
         </values>
@@ -3424,6 +3548,10 @@
         </values>
         <values>
             <fullName>New feature</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No money collected</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3444,6 +3572,10 @@
         </values>
         <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PayPal</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3579,7 +3711,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Support in Document Control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Swish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Swish Bot Output</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3603,11 +3747,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>UnionPay</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Update Profile</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Upgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voluntary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WeChat</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -4460,6 +4616,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>BOM Customer Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM Error Handling</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>BOM Forms Customer</fullName>
             <default>false</default>
         </values>
@@ -4489,6 +4653,14 @@
         </values>
         <values>
             <fullName>BOM Tenured</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM Voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BOM Waivers</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4809,6 +4981,10 @@
         </values>
         <values>
             <fullName>Settlement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sitel Waivers</fullName>
             <default>false</default>
         </values>
         <values>

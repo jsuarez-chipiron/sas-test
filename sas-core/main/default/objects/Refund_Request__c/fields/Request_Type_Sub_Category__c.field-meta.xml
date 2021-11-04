@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Request_Type_Sub_Category__c</fullName>
+    <externalId>false</externalId>
+    <label>Request Type - Sub Category</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Request_Type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>USA</fullName>
+                <default>false</default>
+                <label>USA</label>
+            </value>
+            <value>
+                <fullName>China</fullName>
+                <default>false</default>
+                <label>China</label>
+            </value>
+            <value>
+                <fullName>Europe &amp; Rest of World</fullName>
+                <default>false</default>
+                <label>Europe &amp; Rest of World</label>
+            </value>
+            <value>
+                <fullName>Webform Request</fullName>
+                <default>false</default>
+                <label>Webform Request</label>
+            </value>
+            <value>
+                <fullName>Forsvaret</fullName>
+                <default>false</default>
+                <label>Forsvaret</label>
+            </value>
+            <value>
+                <fullName>24 hour</fullName>
+                <default>false</default>
+                <label>24 hour</label>
+            </value>
+            <value>
+                <fullName>SC under 180 min</fullName>
+                <default>false</default>
+                <label>SC under 180 min</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>OK in SRS</fullName>
+                <default>false</default>
+                <label>OK in SRS</label>
+            </value>
+            <value>
+                <fullName>Not in SRS</fullName>
+                <default>false</default>
+                <label>Not in SRS</label>
+            </value>
+            <value>
+                <fullName>Already sent documentation for waiver</fullName>
+                <default>false</default>
+                <label>Already sent documentation for waiver</label>
+            </value>
+            <value>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+                <label>Credit Card</label>
+            </value>
+            <value>
+                <fullName>IBP or RC</fullName>
+                <default>false</default>
+                <label>IBP or RC</label>
+            </value>
+            <value>
+                <fullName>Voucher</fullName>
+                <default>false</default>
+                <label>Voucher</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Travel Agent Tickets</controllingFieldValue>
+            <controllingFieldValue>Wrongly refunded - Past Date</controllingFieldValue>
+            <valueName>USA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Agent Tickets</controllingFieldValue>
+            <valueName>China</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Agent Tickets</controllingFieldValue>
+            <controllingFieldValue>Wrongly refunded - Past Date</controllingFieldValue>
+            <valueName>Europe &amp; Rest of World</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Agent Tickets</controllingFieldValue>
+            <controllingFieldValue>Wrongly refunded - Past Date</controllingFieldValue>
+            <valueName>Webform Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Forsvaret</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>24 hour</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>SC under 180 min</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund not received</controllingFieldValue>
+            <valueName>OK in SRS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund not received</controllingFieldValue>
+            <valueName>Not in SRS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund not received</controllingFieldValue>
+            <valueName>Already sent documentation for waiver</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reserved Amount</controllingFieldValue>
+            <valueName>Credit Card</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reserved Amount</controllingFieldValue>
+            <valueName>IBP or RC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reserved Amount</controllingFieldValue>
+            <valueName>Voucher</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>
