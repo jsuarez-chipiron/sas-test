@@ -275,11 +275,6 @@
                 <label>Make name correction</label>
             </value>
             <value>
-                <fullName>No action</fullName>
-                <default>false</default>
-                <label>No action</label>
-            </value>
-            <value>
                 <fullName>Online booking</fullName>
                 <default>false</default>
                 <label>Online booking</label>
@@ -548,6 +543,11 @@
                 <fullName>Other</fullName>
                 <default>false</default>
                 <label>Other</label>
+            </value>
+            <value>
+                <fullName>No action</fullName>
+                <default>false</default>
+                <label>No action</label>
             </value>
             <value>
                 <fullName>Authorization</fullName>
@@ -1281,7 +1281,7 @@
             <controllingFieldValue>Wrong info to customer</controllingFieldValue>
             <controllingFieldValue>Payment</controllingFieldValue>
             <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
-            <valueName>No action</valueName>
+            <valueName>Support from IT</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Booking problem</controllingFieldValue>
@@ -1289,7 +1289,7 @@
             <controllingFieldValue>Wrong info to customer</controllingFieldValue>
             <controllingFieldValue>Payment</controllingFieldValue>
             <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
-            <valueName>Support from IT</valueName>
+            <valueName>No action</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Claims</controllingFieldValue>
