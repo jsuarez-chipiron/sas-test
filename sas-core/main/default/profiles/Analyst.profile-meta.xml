@@ -1555,6 +1555,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_EBNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>IRR_CommunicationLog__c.IRR_FlightId__c</field>
         <readable>true</readable>
     </fieldPermissions>
