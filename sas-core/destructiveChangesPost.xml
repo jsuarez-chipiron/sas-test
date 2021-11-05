@@ -549,7 +549,14 @@
 	    <members>IRR_BCH_FetchPaxInfoAutomatedMessage</members>
 		<name>ApexClass</name>
     </types>
-
+    <types>
+	    <members>C_TriggerHandler.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>C_TriggerHandler_Test.cls</members>
+		<name>ApexClass</name>
+    </types>
     <types>
 	    <members>FCS_CaseHandler</members>
 		<name>ApexClass</name>
