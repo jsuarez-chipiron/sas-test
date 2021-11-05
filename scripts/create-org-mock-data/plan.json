@@ -1,5 +1,21 @@
 [
     {
+        "sobject": "Account",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": [
+            "Accounts.json"
+        ]
+    },
+    {
+        "sobject": "IRR_CommunicationLog__c",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": [
+            "IRR_CommunicationLog__cs.json"
+        ]
+    },
+    {
         "sobject": "Flight__c",
         "saveRefs": true,
         "resolveRefs": true,
