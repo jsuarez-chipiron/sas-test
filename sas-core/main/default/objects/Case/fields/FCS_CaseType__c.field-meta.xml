@@ -13,7 +13,7 @@
         <controllingField>Department__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
             <value>
                 <fullName>Baggage</fullName>
                 <default>false</default>
@@ -35,11 +35,11 @@
                 <label>Content</label>
             </value>
             <value>
-<<<<<<< HEAD
                 <fullName>Digital Channel</fullName>
                 <default>false</default>
                 <label>Digital Channel</label>
-=======
+            </value>
+            <value>
                 <fullName>Error</fullName>
                 <default>false</default>
                 <label>Error</label>
@@ -48,7 +48,6 @@
                 <fullName>Error Handling</fullName>
                 <default>false</default>
                 <label>Error Handling</label>
->>>>>>> Add new case tags for Refund
             </value>
             <value>
                 <fullName>EuroBonus</fullName>
@@ -168,13 +167,10 @@
             <controllingFieldValue>SME</controllingFieldValue>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-<<<<<<< HEAD
-=======
             <controllingFieldValue>Care</controllingFieldValue>
             <controllingFieldValue>Corporate</controllingFieldValue>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
             <controllingFieldValue>Direct Sales</controllingFieldValue>
->>>>>>> Add new case tags for Refund
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>Fraud</controllingFieldValue>
             <controllingFieldValue>Functional Product Support</controllingFieldValue>
@@ -202,7 +198,6 @@
             <controllingFieldValue>Refunds</controllingFieldValue>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Voucher</valueName>
         </valueSettings>
@@ -211,7 +206,6 @@
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Special Service Request</valueName>
@@ -319,30 +313,20 @@
             <valueName>Travel Pass</valueName>
         </valueSettings>
         <valueSettings>
-<<<<<<< HEAD
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Voucher</valueName>
         </valueSettings>
         <valueSettings>
-=======
->>>>>>> Add new case tags for Refund
             <controllingFieldValue>SME</controllingFieldValue>
             <valueName>SME</valueName>
         </valueSettings>
         <valueSettings>
-<<<<<<< HEAD
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
             <valueName>Digital Channel</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
-            <valueName>Receive Customer Documentation</valueName>
-        </valueSettings>
-        <valueSettings>
-=======
->>>>>>> Add new case tags for Refund
             <controllingFieldValue>Functional Product Support</controllingFieldValue>
             <valueName>Puzzle</valueName>
         </valueSettings>

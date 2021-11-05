@@ -13,7 +13,7 @@
         <controllingField>FCS_Case_Reason__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
             <value>
                 <fullName>According to rules</fullName>
                 <default>false</default>
@@ -55,21 +55,9 @@
                 <label>Approved</label>
             </value>
             <value>
-                <fullName>Authorization</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Authorization</label>
-            </value>
-            <value>
                 <fullName>Availability</fullName>
                 <default>false</default>
                 <label>Availability</label>
-            </value>
-            <value>
-                <fullName>Blocked IP address</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Blocked IP address</label>
             </value>
             <value>
                 <fullName>Booking Confirmation</fullName>
@@ -137,12 +125,6 @@
                 <label>Claim status</label>
             </value>
             <value>
-                <fullName>Commercials</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Commercials</label>
-            </value>
-            <value>
                 <fullName>Completed</fullName>
                 <default>false</default>
                 <label>Completed</label>
@@ -201,12 +183,6 @@
                 <fullName>Error</fullName>
                 <default>false</default>
                 <label>Error</label>
-            </value>
-            <value>
-                <fullName>Error - Inactive Customer</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Error - Inactive Customer</label>
             </value>
             <value>
                 <fullName>EuroBonus</fullName>
@@ -274,12 +250,6 @@
                 <label>Inform Process Owner/Specialist</label>
             </value>
             <value>
-                <fullName>Internet error</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Internet error</label>
-            </value>
-            <value>
                 <fullName>Invalid retro</fullName>
                 <default>false</default>
                 <label>Invalid retro</label>
@@ -290,7 +260,6 @@
                 <label>Involuntary</label>
             </value>
             <value>
-<<<<<<< HEAD
                 <fullName>Jira created</fullName>
                 <default>false</default>
                 <label>Jira created</label>
@@ -299,7 +268,8 @@
                 <fullName>Jira updated</fullName>
                 <default>false</default>
                 <label>Jira updated</label>
-=======
+            </value>
+            <value>
                 <fullName>Issue New</fullName>
                 <default>false</default>
                 <label>Issue New</label>
@@ -308,7 +278,6 @@
                 <fullName>Issue new for expired</fullName>
                 <default>false</default>
                 <label>Issue new for expired</label>
->>>>>>> Add new case tags for Refund
             </value>
             <value>
                 <fullName>Lacking Features/Destinations/Partners</fullName>
@@ -319,12 +288,6 @@
                 <fullName>Limitation/Won&apos;t fix</fullName>
                 <default>false</default>
                 <label>Limitation/Won&apos;t fix</label>
-            </value>
-            <value>
-                <fullName>Log in</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Log in</label>
             </value>
             <value>
                 <fullName>Make name change</fullName>
@@ -395,12 +358,6 @@
                 <fullName>Provided info about how to change</fullName>
                 <default>false</default>
                 <label>Provided info about how to change</label>
-            </value>
-            <value>
-                <fullName>Provided info about name change</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Provided info about name change</label>
             </value>
             <value>
                 <fullName>Provide info about name change</fullName>
@@ -538,12 +495,6 @@
                 <label>Reset password</label>
             </value>
             <value>
-                <fullName>Resolved</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Resolved</label>
-            </value>
-            <value>
                 <fullName>Route inquiry</fullName>
                 <default>false</default>
                 <label>Route inquiry</label>
@@ -614,12 +565,6 @@
                 <label>Statistics</label>
             </value>
             <value>
-                <fullName>Strike related information</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Strike related information</label>
-            </value>
-            <value>
                 <fullName>Support</fullName>
                 <default>false</default>
                 <label>Support</label>
@@ -678,12 +623,6 @@
                 <fullName>Wrong deb</fullName>
                 <default>false</default>
                 <label>Wrong deb</label>
-            </value>
-<<<<<<< HEAD
-            <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
             </value>
             <value>
                 <fullName>No action</fullName>
@@ -744,8 +683,6 @@
                 <isActive>false</isActive>
                 <label>Strike related information</label>
             </value>
-=======
->>>>>>> Add new case tags for Refund
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Missing 1000 Status pts MC</controllingFieldValue>
@@ -1132,10 +1069,7 @@
             <controllingFieldValue>SAS for Business Agreement</controllingFieldValue>
             <controllingFieldValue>Agreement</controllingFieldValue>
             <controllingFieldValue>App</controllingFieldValue>
-<<<<<<< HEAD
-=======
             <controllingFieldValue>Support</controllingFieldValue>
->>>>>>> Add new case tags for Refund
             <valueName>Information</valueName>
         </valueSettings>
         <valueSettings>
@@ -1148,11 +1082,8 @@
             <controllingFieldValue>Name Change</controllingFieldValue>
             <controllingFieldValue>Change booking</controllingFieldValue>
             <controllingFieldValue>Change commitment dates</controllingFieldValue>
-<<<<<<< HEAD
-=======
             <controllingFieldValue>Voluntary</controllingFieldValue>
             <controllingFieldValue>Involuntary</controllingFieldValue>
->>>>>>> Add new case tags for Refund
             <controllingFieldValue>Process Refund</controllingFieldValue>
             <controllingFieldValue>Make Booking</controllingFieldValue>
             <valueName>Deviation from rules</valueName>
@@ -1176,42 +1107,6 @@
         <valueSettings>
             <controllingFieldValue>Name correction</controllingFieldValue>
             <valueName>Make name correction</valueName>
-<<<<<<< HEAD
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Name correction</controllingFieldValue>
-            <valueName>Provide info about name correction</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
-            <valueName>Approved</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
-            <controllingFieldValue>Tier level</controllingFieldValue>
-            <valueName>Rejected</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>New feature</controllingFieldValue>
-            <controllingFieldValue>Bug</controllingFieldValue>
-            <valueName>Bug/User story created</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Online Problems</controllingFieldValue>
-            <valueName>Activate Profile</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Online Problems</controllingFieldValue>
-            <valueName>Online Profile</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Online Problems</controllingFieldValue>
-            <controllingFieldValue>Online Profile</controllingFieldValue>
-            <valueName>Solve log in issue</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Online Problems</controllingFieldValue>
-=======
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Name correction</controllingFieldValue>
@@ -1248,7 +1143,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Online Problems</controllingFieldValue>
->>>>>>> Add new case tags for Refund
             <controllingFieldValue>Agreement</controllingFieldValue>
             <valueName>Statistics</valueName>
         </valueSettings>
@@ -1452,7 +1346,6 @@
             <valueName>Provided info about how to change</valueName>
         </valueSettings>
         <valueSettings>
-<<<<<<< HEAD
             <controllingFieldValue>Booking problem</controllingFieldValue>
             <controllingFieldValue>EuroBonus account</controllingFieldValue>
             <controllingFieldValue>Wrong info to customer</controllingFieldValue>
@@ -1483,7 +1376,8 @@
             <controllingFieldValue>Payment</controllingFieldValue>
             <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
             <valueName>No action</valueName>
-=======
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Voluntary</controllingFieldValue>
             <controllingFieldValue>Involuntary</controllingFieldValue>
             <controllingFieldValue>Process Refund</controllingFieldValue>
@@ -1548,7 +1442,6 @@
             <controllingFieldValue>Chargeback</controllingFieldValue>
             <controllingFieldValue>Card errors</controllingFieldValue>
             <valueName>Solve technical error</valueName>
->>>>>>> Add new case tags for Refund
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Claims</controllingFieldValue>
@@ -1605,7 +1498,6 @@
             <valueName>Amadeus</valueName>
         </valueSettings>
         <valueSettings>
-<<<<<<< HEAD
             <controllingFieldValue>Process Question</controllingFieldValue>
             <valueName>Inform Process Owner/Specialist</valueName>
         </valueSettings>
@@ -1616,7 +1508,8 @@
         <valueSettings>
             <controllingFieldValue>Process Refund</controllingFieldValue>
             <valueName>According to rules</valueName>
-=======
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>Issue New</valueName>
         </valueSettings>
@@ -1629,8 +1522,8 @@
             <valueName>SK</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Error Management</controllingFieldValue>
-            <valueName>WF List</valueName>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <valueName>Amadeus</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Process Question</controllingFieldValue>
@@ -1639,7 +1532,6 @@
         <valueSettings>
             <controllingFieldValue>Process Question</controllingFieldValue>
             <valueName>Update User Guide</valueName>
->>>>>>> Add new case tags for Refund
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Process Refund</controllingFieldValue>
@@ -1654,16 +1546,19 @@
             <valueName>Destinations</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <valueName>EuroBonus</valueName>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <valueName>Issue New</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <valueName>Product/Concept</valueName>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <valueName>SRS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Management</controllingFieldValue>
+            <valueName>SK</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Redirection not possible</controllingFieldValue>
-<<<<<<< HEAD
             <valueName>Redirect to agent</valueName>
         </valueSettings>
         <valueSettings>
@@ -1704,7 +1599,86 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Make Booking</controllingFieldValue>
-=======
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Redirection not possible</controllingFieldValue>
+            <valueName>Redirect to agent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Redirection not possible</controllingFieldValue>
+            <valueName>Referred to Agent Helpdesk</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Redirection not possible</controllingFieldValue>
+            <valueName>Referred to Corporate Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Redirection not possible</controllingFieldValue>
+            <valueName>Referred to Direct Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>COVID19</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>MMB Refund process</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>Request refund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>RTCREDIT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Make Booking</controllingFieldValue>
+            <valueName>Referred to group form</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Make Booking</controllingFieldValue>
+            <valueName>Solve online booking problem</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Make Booking</controllingFieldValue>
+            <valueName>Solve payment problem</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Management</controllingFieldValue>
+            <valueName>WF List</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Question</controllingFieldValue>
+            <valueName>Inform Process Owner/Specialist</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Question</controllingFieldValue>
+            <valueName>Update User Guide</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <valueName>Involuntary</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Provide Documents</controllingFieldValue>
+            <valueName>Booking Confirmation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Destinations</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>EuroBonus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information</controllingFieldValue>
+            <valueName>Product/Concept</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Redirection not possible</controllingFieldValue>
             <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
@@ -1753,7 +1727,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Make Booking</controllingFieldValue>
->>>>>>> Add new case tags for Refund
             <valueName>Ticket issued</valueName>
         </valueSettings>
     </valueSet>

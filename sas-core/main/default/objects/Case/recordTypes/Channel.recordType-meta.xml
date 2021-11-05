@@ -891,19 +891,19 @@
             <default>false</default>
         </values>
         <values>
-<<<<<<< HEAD
             <fullName>Jira created</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Jira updated</fullName>
-=======
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Issue New</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Issue new for expired</fullName>
->>>>>>> Add new case tags for Refund
             <default>false</default>
         </values>
         <values>
@@ -927,15 +927,15 @@
             <default>false</default>
         </values>
         <values>
-<<<<<<< HEAD
             <fullName>No action</fullName>
-=======
+            <default>false</default>
+        </values>
+        <values>
             <fullName>New</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>No action needed</fullName>
->>>>>>> Add new case tags for Refund
             <default>false</default>
         </values>
         <values>
@@ -3439,11 +3439,11 @@
             <default>false</default>
         </values>
         <values>
-<<<<<<< HEAD
             <fullName>EuroBonus account</fullName>
-=======
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Extend</fullName>
->>>>>>> Add new case tags for Refund
             <default>false</default>
         </values>
         <values>
@@ -3603,11 +3603,11 @@
             <default>false</default>
         </values>
         <values>
-<<<<<<< HEAD
             <fullName>Payment</fullName>
-=======
+            <default>false</default>
+        </values>
+        <values>
             <fullName>PayPal</fullName>
->>>>>>> Add new case tags for Refund
             <default>false</default>
         </values>
         <values>
@@ -3791,15 +3791,15 @@
             <default>false</default>
         </values>
         <values>
-<<<<<<< HEAD
             <fullName>Wrong info to customer</fullName>
-=======
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Voluntary</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>WeChat</fullName>
->>>>>>> Add new case tags for Refund
             <default>false</default>
         </values>
     </picklistValues>
