@@ -273,14 +273,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>FCS_DisplayAccountDataController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>FCS_DisplayAccountDataController_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>FCS_EmailPublisherAction</apexClass>
         <enabled>false</enabled>
     </classAccesses>
