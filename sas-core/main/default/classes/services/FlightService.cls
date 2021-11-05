@@ -16,8 +16,14 @@ public without sharing class FlightService {
       TEDSIntegrationService.class
     );
 
-    Map<String, String> query = new Map<String, String>();
-    query.put('ids', flightReferences);
+    List<String> individualFlightReferences = flightReferences.split(',');
+
+    List<List<String>> query = new List<List<String>>();
+
+    for (String ref : individualFlightReferences) {
+      query.add(new List<String>{ 'ids', ref });
+    }
+
     List<TEDSFlight> flightData = TEDSService.fetchFlightsByQuery(query);
 
     if (flightData == null) {
