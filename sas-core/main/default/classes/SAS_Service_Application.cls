@@ -26,6 +26,7 @@ public class SAS_Service_Application {
     new Map<SObjectType, Type>{
       Account.SObjectType => Accounts.Constructor.class,
       Case.SObjectType => Cases.Constructor.class,
+      EmailMessage.SObjectType => EmailMessages.Constructor.class,
       Passenger__c.SObjectType => Passengers.Constructor.class,
       Refund_Request__c.SObjectType => Refund_Requests.Constructor.class
     }

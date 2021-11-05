@@ -5,7 +5,6 @@ public without sharing class Cases extends fflib_SObjectDomain {
 
   public Cases(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Case>) Records;
   }
 
@@ -36,8 +35,11 @@ public without sharing class Cases extends fflib_SObjectDomain {
     tryToFetchEBAccountFromCODS();
   }
 
-  public override void onAfterUpdate(Map<Id,SObject> existingRecords) {
-    updateBookingsForNewAssociatedAccounts(instanceRecords, (Map<Id, Case>) existingRecords);
+  public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
+    updateBookingsForNewAssociatedAccounts(
+      instanceRecords,
+      (Map<Id, Case>) existingRecords
+    );
   }
 
   public override void onBeforeInsert() {
@@ -48,12 +50,13 @@ public without sharing class Cases extends fflib_SObjectDomain {
     tryToAssignExistingEBAccountToCase();
   }
 
-  public override void onBeforeUpdate(Map<Id,SObject> existingRecords) {
+  public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
     completeMilestones();
     enrichCaseTagData();
   }
 
-  private void completeMilestones() { // how to handle maps?
+  private void completeMilestones() {
+    // how to handle maps?
     List<String> statusesThatCompleteMilestones = new List<String>{
       'Awaiting Customer Response',
       'Closed',
@@ -186,7 +189,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
     updateBookingsForNewAssociatedAccounts(instanceRecords, null);
   }
 
-    /**
+  /**
    * Fetches bookings for an account that was added to a case if only one was added.
    * (Works only for one as the current TEDS doesn't support fetching multiple ones.)
    * TODO: Batchify when we can get multiple bookings from TEDS.
@@ -204,7 +207,9 @@ public without sharing class Cases extends fflib_SObjectDomain {
       // FIXME: Make sure that the future's cannot be called again in a trigger.
       Case c = newCases[0];
       if (c.AccountId != null) {
-        if (oldCases == null || (c.AccountId != oldCases.values()[0].AccountId)) {
+        if (
+          oldCases == null || (c.AccountId != oldCases.values()[0].AccountId)
+        ) {
           AccountsSelector accounts = (AccountsSelector) SAS_Service_Application.Selector.newInstance(
             Account.SObjectType
           );
@@ -223,7 +228,8 @@ public without sharing class Cases extends fflib_SObjectDomain {
    */
   private void tryToAssignExistingEBAccountToCase() {
     if (
-      instanceRecords.size() > 1 || String.isBlank(instanceRecords[0].SuppliedEmail)
+      instanceRecords.size() > 1 ||
+      String.isBlank(instanceRecords[0].SuppliedEmail)
     ) {
       // At the time of writing CODS didn't support searching with more than one key
       // at a time so we can't reasonably support batch operations.
@@ -264,7 +270,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
    * Performs a CODS query for an EB account with the given email. If one
    * is found, creates a corresponding account in SF and associates it with
    * the given case.
-   * 
+   *
    * @param caseId The case to which this account should be associated to.
    * @param email Email to search with.
    */
@@ -295,8 +301,10 @@ public without sharing class Cases extends fflib_SObjectDomain {
   }
 
   private void removeRelatedSurveyInvitations() {
-    List<Id> caseIds = new List<Id>(new Map<Id, Case>(instanceRecords).keySet());
-    
+    List<Id> caseIds = new List<Id>(
+      new Map<Id, Case>(instanceRecords).keySet()
+    );
+
     delete [
       SELECT Id
       FROM SurveyInvitation
@@ -304,7 +312,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
     ];
   }
 
-/**
+  /**
     Method to set owner on case created from SoMe-post quick actions
     */
   private void assignOwnerFromSoMe() {
