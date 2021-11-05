@@ -558,4 +558,13 @@
 	    <members>FCS_CaseHandler_Tests</members>
 		<name>ApexClass</name>
     </types>
+
+    <types>
+	    <members>FCS_ContactHandler</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_ContactHandler_Tests</members>
+		<name>ApexClass</name>
+    </types>
 </Package>
