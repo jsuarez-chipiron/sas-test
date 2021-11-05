@@ -1,3 +1,10 @@
-trigger LiveChatTranscriptTrigger on LiveChatTranscript (before update, after update) {
-	new FCS_LiveChatTranscriptTriggerHandler().run();
+trigger LiveChatTranscriptTrigger on LiveChatTranscript(
+  after delete,
+  after insert,
+  after update,
+  before delete,
+  before insert,
+  before update
+) {
+  fflib_SObjectDomain.triggerHandler(LiveChatTranscripts.class);
 }

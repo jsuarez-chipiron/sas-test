@@ -574,4 +574,12 @@
 	    <members>FCS_EmailMessageHandler_Tests.cls</members>
 		<name>ApexClass</name>
     </types>
+    <types>
+	    <members>FCS_LiveChatTranscriptTriggerHandler.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_LiveChatTranscriptTrigger_Test.cls</members>
+		<name>ApexClass</name>
+    </types>
 </Package>
