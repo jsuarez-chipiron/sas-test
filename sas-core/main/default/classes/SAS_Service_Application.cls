@@ -28,6 +28,7 @@ public class SAS_Service_Application {
       Case.SObjectType => Cases.Constructor.class,
       EmailMessage.SObjectType => EmailMessages.Constructor.class,
       LiveChatTranscript.SObjectType => LiveChatTranscripts.Constructor.class,
+      MessagingSession.SObjectType => MessagingSessions.Constructor.class,
       Passenger__c.SObjectType => Passengers.Constructor.class,
       Refund_Request__c.SObjectType => Refund_Requests.Constructor.class
     }

@@ -1,10 +1,10 @@
 /**
  * @author Anton Norell
  * @date 2020-01-24
- * @description Test class for FCS_MessagingSessionTriggerHandler
+ * @description Test class for MessagingSessions
  */
 @IsTest
-private class FCS_MessagingSessionTriggerHandler_Test {
+private class MessagingSessions_Test {
   /**
    * Setting up setup objects in setup method
    */

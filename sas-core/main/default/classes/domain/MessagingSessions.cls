@@ -1,30 +1,35 @@
-/**
- * Created by anorell on 2020-01-24.
- */
+public with sharing class MessagingSessions extends fflib_SObjectDomain {
+  public MessagingSessions(List<SObject> records) {
+    super(records);
+    this.instanceRecords = (List<MessagingSession>) Records;
+  }
 
-public with sharing class FCS_MessagingSessionTriggerHandler extends C_TriggerHandler {
-  /**
-   * Method running before insert for object
-   */
-  public override void beforeUpdate() {
+  public class Constructor implements fflib_SObjectDomain.IConstructable {
+    public fflib_SObjectDomain construct(List<SObject> records) {
+      return new MessagingSessions(records);
+    }
+  }
+
+  private List<MessagingSession> instanceRecords;
+
+  public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
     createCasesForMessagingSessions();
   }
 
   /**
    * Used to create cases for inbound MessageSessions. Only creates a new case if a case is not supplied in insert.
    */
-  private static void createCasesForMessagingSessions() {
+  private void createCasesForMessagingSessions() {
     DateTime lastRetentionDate = DateTime.newInstance(
       Date.today().addDays(-1),
       Time.newInstance(0, 0, 0, 0)
     );
-    Integer sessionCount = Trigger.new.size();
-    MessagingSession[] sessions = (MessagingSession[]) Trigger.new;
+
     List<String> lstChannelEndUserKey = new List<String>();
-    Case[] newCases = new List<Case>{};
-    boolean OldCaseClosed = false;
+    List<Case> casesToInsert = new List<Case>();
+    Boolean oldCaseClosed = false;
     Set<Id> messagingEndUserIds = new Set<Id>();
-    for (MessagingSession s : sessions) {
+    for (MessagingSession s : instanceRecords) {
       messagingEndUserIds.add(s.MessagingEndUserId);
       lstChannelEndUserKey.add(s.ChannelEndUserFormula);
     }
@@ -65,17 +70,16 @@ public with sharing class FCS_MessagingSessionTriggerHandler extends C_TriggerHa
         LIMIT 1
       ];
     }
-    for (MessagingSession mesgSesion : sessions) {
+    for (MessagingSession session : instanceRecords) {
       if (!lstMessingSesions.isEmpty()) {
-        System.debug('inside 1');
         if (
-          mesgSesion.CaseId == null &&
-          mesgSesion.Status == 'Active' &&
-          mesgSesion.Origin == 'InboundInitiated'
+          session.CaseId == null &&
+          session.Status == 'Active' &&
+          session.Origin == 'InboundInitiated'
         ) {
           if (lstMessingSesions[0].Case.Status != 'Closed') {
-            mesgSesion.CaseId = lstMessingSesions[0].CaseId;
-            newCases.add(
+            session.CaseId = lstMessingSesions[0].CaseId;
+            casesToInsert.add(
               new Case(
                 Id = lstMessingSesions[0].CaseId,
                 Status = 'New Response'
@@ -85,51 +89,51 @@ public with sharing class FCS_MessagingSessionTriggerHandler extends C_TriggerHa
             lstMessingSesions[0].Case.Status == 'Closed' &&
             lstMessingSesions[0].EndTime > lastRetentionDate
           ) {
-            mesgSesion.CaseId = lstMessingSesions[0].CaseId;
-            newCases.add(
+            session.CaseId = lstMessingSesions[0].CaseId;
+            casesToInsert.add(
               new Case(
                 Id = lstMessingSesions[0].CaseId,
                 Status = 'New Response'
               )
             );
           } else {
-            OldCaseClosed = true;
+            oldCaseClosed = true;
             Case cCloneCase = cse.clone(false, false, false, false);
             cCloneCase.RecordTypeId = C_RecordTypeHelper.CASE_CHAT;
             cCloneCase.Origin = 'Facebook Messenger';
-            newCases.add(cCloneCase);
+            casesToInsert.add(cCloneCase);
           }
         }
       } else {
         if (
-          mesgSesion.CaseId == null &&
-          mesgSesion.Status == 'Active' &&
-          mesgSesion.Origin == 'InboundInitiated'
+          session.CaseId == null &&
+          session.Status == 'Active' &&
+          session.Origin == 'InboundInitiated'
         ) {
-          OldCaseClosed = true;
-          newCases.add(
+          oldCaseClosed = true;
+          casesToInsert.add(
             new Case(
               Status = 'New',
               Origin = 'Facebook Messenger',
               RecordTypeId = C_RecordTypeHelper.CASE_CHAT,
-              AccountId = meuMap.get(mesgSesion.MessagingEndUserId).AccountId,
-              ContactId = meuMap.get(mesgSesion.MessagingEndUserId).ContactId
+              AccountId = meuMap.get(session.MessagingEndUserId).AccountId,
+              ContactId = meuMap.get(session.MessagingEndUserId).ContactId
             )
           );
         }
       }
     }
-    if (!newCases.IsEmpty()) {
-      upsert newCases;
+    if (!casesToInsert.IsEmpty()) {
+      upsert casesToInsert;
     }
-    if (OldCaseClosed)
-      for (Integer i = 0; i < sessionCount; i++) {
+    if (oldCaseClosed)
+      for (Integer i = 0; i < instanceRecords.size(); i++) {
         if (
-          sessions[i].CaseId == null &&
-          sessions[i].Status == 'Active' &&
-          sessions[i].Origin == 'InboundInitiated'
+          instanceRecords[i].CaseId == null &&
+          instanceRecords[i].Status == 'Active' &&
+          instanceRecords[i].Origin == 'InboundInitiated'
         ) {
-          sessions[i].CaseId = newCases[i].Id;
+          instanceRecords[i].CaseId = casesToInsert[i].Id;
         }
       }
   }
