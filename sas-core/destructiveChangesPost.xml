@@ -549,4 +549,13 @@
 	    <members>IRR_BCH_FetchPaxInfoAutomatedMessage</members>
 		<name>ApexClass</name>
     </types>
+
+    <types>
+	    <members>FCS_CaseHandler</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_CaseHandler_Tests</members>
+		<name>ApexClass</name>
+    </types>
 </Package>
