@@ -1346,38 +1346,6 @@
             <valueName>Provided info about how to change</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Booking problem</controllingFieldValue>
-            <controllingFieldValue>EuroBonus account</controllingFieldValue>
-            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
-            <controllingFieldValue>Payment</controllingFieldValue>
-            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
-            <valueName>Jira created</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Booking problem</controllingFieldValue>
-            <controllingFieldValue>EuroBonus account</controllingFieldValue>
-            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
-            <controllingFieldValue>Payment</controllingFieldValue>
-            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
-            <valueName>Jira updated</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Booking problem</controllingFieldValue>
-            <controllingFieldValue>EuroBonus account</controllingFieldValue>
-            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
-            <controllingFieldValue>Payment</controllingFieldValue>
-            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
-            <valueName>Support from IT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Booking problem</controllingFieldValue>
-            <controllingFieldValue>EuroBonus account</controllingFieldValue>
-            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
-            <controllingFieldValue>Payment</controllingFieldValue>
-            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
-            <valueName>No action</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Voluntary</controllingFieldValue>
             <controllingFieldValue>Involuntary</controllingFieldValue>
             <controllingFieldValue>Process Refund</controllingFieldValue>
@@ -1412,9 +1380,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>AliPay</controllingFieldValue>
-            <valueName>Technical error</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>PayPal</controllingFieldValue>
             <controllingFieldValue>Swish</controllingFieldValue>
             <controllingFieldValue>UnionPay</controllingFieldValue>
@@ -1427,6 +1392,10 @@
             <controllingFieldValue>Chargeback</controllingFieldValue>
             <controllingFieldValue>Card errors</controllingFieldValue>
             <valueName>Solve agent error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AliPay</controllingFieldValue>
+            <valueName>Technical error</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>PayPal</controllingFieldValue>
@@ -1452,11 +1421,6 @@
             <valueName>How to make a claim</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Support</controllingFieldValue>
-            <controllingFieldValue>Refund</controllingFieldValue>
-            <valueName>Refund status</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Email related</controllingFieldValue>
             <valueName>Resend</valueName>
         </valueSettings>
@@ -1467,6 +1431,38 @@
         <valueSettings>
             <controllingFieldValue>Issue</controllingFieldValue>
             <valueName>New</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking problem</controllingFieldValue>
+            <controllingFieldValue>EuroBonus account</controllingFieldValue>
+            <controllingFieldValue>Payment</controllingFieldValue>
+            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
+            <valueName>Jira created</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking problem</controllingFieldValue>
+            <controllingFieldValue>EuroBonus account</controllingFieldValue>
+            <controllingFieldValue>Payment</controllingFieldValue>
+            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
+            <valueName>Jira updated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking problem</controllingFieldValue>
+            <controllingFieldValue>EuroBonus account</controllingFieldValue>
+            <controllingFieldValue>Payment</controllingFieldValue>
+            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
+            <valueName>Support from IT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking problem</controllingFieldValue>
+            <controllingFieldValue>EuroBonus account</controllingFieldValue>
+            <controllingFieldValue>Payment</controllingFieldValue>
+            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
+            <valueName>No action</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Damaged Baggage</controllingFieldValue>
@@ -1498,18 +1494,6 @@
             <valueName>Amadeus</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Process Question</controllingFieldValue>
-            <valueName>Inform Process Owner/Specialist</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Process Question</controllingFieldValue>
-            <valueName>Update User Guide</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Process Refund</controllingFieldValue>
-            <valueName>According to rules</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>Issue New</valueName>
         </valueSettings>
@@ -1520,130 +1504,6 @@
         <valueSettings>
             <controllingFieldValue>Error Management</controllingFieldValue>
             <valueName>SK</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error</controllingFieldValue>
-            <valueName>Amadeus</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Process Question</controllingFieldValue>
-            <valueName>Inform Process Owner/Specialist</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Process Question</controllingFieldValue>
-            <valueName>Update User Guide</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Process Refund</controllingFieldValue>
-            <valueName>Involuntary</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Provide Documents</controllingFieldValue>
-            <valueName>Booking Confirmation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Information</controllingFieldValue>
-            <valueName>Destinations</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error</controllingFieldValue>
-            <valueName>Issue New</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error</controllingFieldValue>
-            <valueName>SRS</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error Management</controllingFieldValue>
-            <valueName>SK</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Redirection not possible</controllingFieldValue>
-            <valueName>Redirect to agent</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Redirection not possible</controllingFieldValue>
-            <valueName>Referred to Agent Helpdesk</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Redirection not possible</controllingFieldValue>
-            <valueName>Referred to Corporate Support</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Redirection not possible</controllingFieldValue>
-            <valueName>Referred to Direct Sales</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Redirection not possible</controllingFieldValue>
-            <valueName>Other</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund</controllingFieldValue>
-            <valueName>Refund status</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund</controllingFieldValue>
-            <valueName>Request refund</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Make Booking</controllingFieldValue>
-            <valueName>Referred to group form</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Make Booking</controllingFieldValue>
-            <valueName>Solve online booking problem</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Make Booking</controllingFieldValue>
-            <valueName>Solve payment problem</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Make Booking</controllingFieldValue>
-            <valueName>Other</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Redirection not possible</controllingFieldValue>
-            <valueName>Redirect to agent</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Redirection not possible</controllingFieldValue>
-            <valueName>Referred to Agent Helpdesk</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Redirection not possible</controllingFieldValue>
-            <valueName>Referred to Corporate Support</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Redirection not possible</controllingFieldValue>
-            <valueName>Referred to Direct Sales</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund</controllingFieldValue>
-            <valueName>COVID19</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund</controllingFieldValue>
-            <valueName>MMB Refund process</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund</controllingFieldValue>
-            <valueName>Request refund</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund</controllingFieldValue>
-            <valueName>RTCREDIT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Make Booking</controllingFieldValue>
-            <valueName>Referred to group form</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Make Booking</controllingFieldValue>
-            <valueName>Solve online booking problem</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Make Booking</controllingFieldValue>
-            <valueName>Solve payment problem</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error Management</controllingFieldValue>
@@ -1704,6 +1564,10 @@
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>
             <valueName>MMB Refund process</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>Refund status</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>

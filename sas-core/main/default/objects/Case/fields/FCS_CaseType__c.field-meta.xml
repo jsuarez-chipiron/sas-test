@@ -196,10 +196,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <valueName>Voucher</valueName>
+            <valueName>Voucher Handling</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sales Control BOM</controllingFieldValue>
