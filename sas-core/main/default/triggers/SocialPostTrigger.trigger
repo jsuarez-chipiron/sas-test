@@ -1,7 +1,10 @@
-/**
- * Created by ssorberg on 2019-12-09.
- */
-
-trigger SocialPostTrigger on SocialPost (before insert, after insert, before update ) {
-    new FCS_SocialPostHandler().run();
+trigger SocialPostTrigger on SocialPost(
+  after delete,
+  after insert,
+  after update,
+  before delete,
+  before insert,
+  before update
+) {
+  fflib_SObjectDomain.triggerHandler(SocialPosts.class);
 }

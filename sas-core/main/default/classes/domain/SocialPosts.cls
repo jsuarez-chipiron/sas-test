@@ -1,73 +1,47 @@
-/**
- * @author Sanna Sörberg
- * @date 2019-12-20
- * @description Handler class for operations performed on social post object.
- */
+public class SocialPosts extends fflib_SObjectDomain {
+  public SocialPosts(List<SObject> records) {
+    super(records);
+    this.instanceRecords = (List<SocialPost>) Records;
+  }
 
-public class FCS_SocialPostHandler extends C_TriggerHandler {
-  /**
-    Static variable for the review status "Reviewed"
-    */
+  public class Constructor implements fflib_SObjectDomain.IConstructable {
+    public fflib_SObjectDomain construct(List<SObject> records) {
+      return new SocialPosts(records);
+    }
+  }
+
+  private List<SocialPost> instanceRecords;
+
   @TestVisible
   private static final String STATUS_REVIEWED = 'Reviewed';
-  /**
-    Static variable for the review status "Ignored"
-    */
   @TestVisible
   private static final String STATUS_IGNORE = 'Ignore';
-  /**
-    Static variable for the review status "Needed"
-    */
   @TestVisible
   private static final String STATUS_NEEDED = 'Needed';
-  /**
-    Static variable for the status "HIDDEN"
-    */
   @TestVisible
   private static final String STATUS_HIDDEN = 'HIDDEN';
-  /**
-    Trigger variables
-    */
-  private List<SocialPost> newSocialPostList;
-  private List<SocialPost> oldSocialPostList;
-  /**
-   Set variables
-   */
-  public FCS_SocialPostHandler() {
-    this.newSocialPostList = (List<SocialPost>) Trigger.new;
-    this.oldSocialPostList = (List<SocialPost>) Trigger.old;
+
+  public override void onBeforeInsert() {
+    setFieldsOnCreate();
   }
-  /**
-    Used to call the trigger in the before insert context
-    */
-  public override void beforeInsert() {
-    setFieldsOnCreate(newSocialPostList);
+
+  public override void onAfterInsert() {
+    updatePostStatusOnParent();
   }
-  /**
-    Used to call the trigger in the before insert context
-    */
-  public override void afterInsert() {
-    updatePostStatusOnParent(newSocialPostList, oldSocialPostList);
+
+  public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
+    updatePostStatus((List<SocialPost>) existingRecords.values());
   }
-  /**
-    Used to call the trigger in the before update context
-    */
-  public override void beforeUpdate() {
-    updatePostStatus(newSocialPostList, oldSocialPostList);
-  }
+
   /**
     Method to update status fields on social post when an action is taken (from User)
-    @param newSocialPost list of new version of the social post i.e. the Trigger.new variable
     @param oldSocialPost list of new version of the social post i.e. the Trigger.old variable
     */
-  private static void updatePostStatus(
-    List<SocialPost> newSocialPostList,
-    List<SocialPost> oldSocialPostList
-  ) {
-    Integer sz = newSocialPostList.size();
+  private void updatePostStatus(List<SocialPost> oldSocialPostList) {
+    Integer sz = instanceRecords.size();
     for (Integer i = 0; i < sz; i++) {
       Boolean handled;
-      SocialPost newSp = newSocialPostList[i];
+      SocialPost newSp = instanceRecords[i];
       SocialPost oldSp = oldSocialPostList[i];
       //If post is updated to hidden - the status is updated to hidden and marked as reviewed
       if (
@@ -142,14 +116,9 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
    @param newSocialPost list of new version of the social post i.e. the Trigger.new variable
    @param oldSocialPost list of old version of the social post i.e. the Trigger.old variable
    */
-  private static void updatePostStatusOnParent(
-    List<SocialPost> newSocialPostList,
-    List<SocialPost> oldSocialPostList
-  ) {
+  private void updatePostStatusOnParent() {
     Set<Id> parentIds = new Set<Id>();
-    List<SocialPost> spRecords = newSocialPostList != null
-      ? newSocialPostList
-      : oldSocialPostList;
+    List<SocialPost> spRecords = instanceRecords;
     if (spRecords != null) {
       for (SocialPost sp : spRecords) {
         if (sp.IsOutbound && sp.ReplyToId != null) {
@@ -165,14 +134,12 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
       ];
       List<SocialPost> updatedSocialPosts = new List<SocialPost>();
       for (SocialPost sp : parentPosts) {
-        if (oldSocialPostList == null) {
-          sp.FCS_PostReplied__c = true;
-          sp.ReviewedStatus = STATUS_REVIEWED;
-          sp.FCS_Done__c = true;
-          sp.FCS_ClosedDate__c = System.now();
-          updatedSocialPosts.add(sp);
-        }
-        if (newSocialPostList == null) {
+        sp.FCS_PostReplied__c = true;
+        sp.ReviewedStatus = STATUS_REVIEWED;
+        sp.FCS_Done__c = true;
+        sp.FCS_ClosedDate__c = System.now();
+        updatedSocialPosts.add(sp);
+        if (instanceRecords == null) {
           sp.FCS_PostReplied__c = false;
           if (
             !sp.FCS_PostIgnored__c &&
@@ -198,20 +165,22 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
        5. If default Social Social Inbound Social Post Handler has set ParentId it is updated to null and Review Status updated to Needed
        @param newSocialPost list of new version of the social post i.e. the Trigger.new variable
        */
-  private static void setFieldsOnCreate(List<SocialPost> newSocialPostList) {
+  private void setFieldsOnCreate() {
     List<C_GeneralSetting__mdt> socialPages = [
+      // TODO: Move out
       SELECT Value__c
       FROM C_GeneralSetting__mdt
       WHERE Group__c = 'Social Accounts'
     ];
     List<Group> soMeQueue = [
+      // TODO: Move out
       SELECT Id
       FROM Group
       WHERE Type = 'Queue' AND DeveloperName = 'SoMe_Support'
     ];
     List<Id> parentIds = new List<Id>();
     List<Id> parentIdsNext = new List<Id>();
-    for (SocialPost sp : newSocialPostList) {
+    for (SocialPost sp : instanceRecords) {
       parentIds.add(sp.ReplyToId);
       for (C_GeneralSetting__mdt socialPage : socialPages) {
         if (socialPage.Value__c == sp.Handle && !sp.IsOutbound == true) {
@@ -245,30 +214,29 @@ public class FCS_SocialPostHandler extends C_TriggerHandler {
         for (C_GeneralSetting__mdt socialPage : socialPages) {
           if (
             socialPage.Value__c == parentPostsNext[i].Handle &&
-            newSocialPostList[i].FCS_SASPostComment__c == true
+            instanceRecords[i].FCS_SASPostComment__c == true
           ) {
-            newSocialPostList[i].FCS_SASPostComment__c = true;
+            instanceRecords[i].FCS_SASPostComment__c = true;
           }
         }
-        newSocialPostList[i].FCS_ParentMessage__c = parentPostsNext[i].Content;
-        newSocialPostList[i].FCS_ParentCommentMessage__c = parentPosts[i]
-          .Content;
+        instanceRecords[i].FCS_ParentMessage__c = parentPostsNext[i].Content;
+        instanceRecords[i].FCS_ParentCommentMessage__c = parentPosts[i].Content;
         if (
-          newSocialPostList[i].FCS_ParentCommentMessage__c != null &&
-          newSocialPostList[i].FCS_ParentCommentMessage__c != ''
+          instanceRecords[i].FCS_ParentCommentMessage__c != null &&
+          instanceRecords[i].FCS_ParentCommentMessage__c != ''
         ) {
-          newSocialPostList[i].FCS_IsReply__c = true;
+          instanceRecords[i].FCS_IsReply__c = true;
         }
       } else if (parentIds[i] != null) {
         for (C_GeneralSetting__mdt socialPage : socialPages) {
           if (
             socialPage.Value__c == parentPosts[i].Handle &&
-            !newSocialPostList[i].FCS_SASPostComment__c == true
+            !instanceRecords[i].FCS_SASPostComment__c == true
           ) {
-            newSocialPostList[i].FCS_SASPostComment__c = true;
+            instanceRecords[i].FCS_SASPostComment__c = true;
           }
         }
-        newSocialPostList[i].FCS_ParentMessage__c = parentPosts[i].Content;
+        instanceRecords[i].FCS_ParentMessage__c = parentPosts[i].Content;
       }
     }
   }

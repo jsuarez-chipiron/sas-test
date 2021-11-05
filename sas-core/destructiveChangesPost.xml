@@ -598,4 +598,12 @@
 	    <members>FCS_LiveChatTranscriptTrigger_Test.cls</members>
 		<name>ApexClass</name>
     </types>
+    <types>
+	    <members>FCS_SocialPostHandler.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_SocialPostHandler_Test.cls</members>
+		<name>ApexClass</name>
+    </types>
 </Package>

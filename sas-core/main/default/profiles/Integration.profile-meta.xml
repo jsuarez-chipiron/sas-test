@@ -356,14 +356,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>FCS_MessagingSessionTriggerHandler</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>FCS_MessagingSessionTriggerHandler_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>FCS_MassRedirection</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -401,14 +393,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>FCS_SocialPostControllerTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>FCS_SocialPostHandler</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>FCS_SocialPostHandler_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

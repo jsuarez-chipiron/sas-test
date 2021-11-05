@@ -30,7 +30,8 @@ public class SAS_Service_Application {
       LiveChatTranscript.SObjectType => LiveChatTranscripts.Constructor.class,
       MessagingSession.SObjectType => MessagingSessions.Constructor.class,
       Passenger__c.SObjectType => Passengers.Constructor.class,
-      Refund_Request__c.SObjectType => Refund_Requests.Constructor.class
+      Refund_Request__c.SObjectType => Refund_Requests.Constructor.class,
+      SocialPost.SObjectType => SocialPosts.Constructor.class
     }
   );
 
