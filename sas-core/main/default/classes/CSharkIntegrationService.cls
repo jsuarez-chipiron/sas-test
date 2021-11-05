@@ -19,6 +19,7 @@ public with sharing class CSharkIntegrationService {
   }
 
   private static final String SOAP_ACTION_HEADER_BASE = 'http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1/ICSharkCustomerManagementTicketless/';
+  private static final String API_PATH = '/csharkcustmgmtticketless';
 
   /**
    * Supported parameters to base search for customer on. The format of these search types
@@ -82,20 +83,9 @@ public with sharing class CSharkIntegrationService {
       );
     }
 
-    Map<String, String> extraRequestHeaders = new Map<String, String>{
-      'Content-Type' => 'text/xml',
-      'SOAPAction' => SOAP_ACTION_HEADER_BASE +
-      String.valueOf(
-        isCustomersGet ? OperationName.CustomersGet : OperationName.CustomerGet
-      )
-    };
-
-    HttpResponse response = APIMIntegrationService.makeRequest(
-      APIMIntegrationService.HTTP_METHOD.POST,
-      '/csharkcustmgmtticketless',
-      null,
-      requestBody.toXmlString(),
-      extraRequestHeaders
+    HttpResponse response = makeRequest(
+      isCustomersGet ? OperationName.CustomersGet : OperationName.CustomerGet,
+      requestBody
     );
 
     return isCustomersGet
@@ -119,18 +109,10 @@ public with sharing class CSharkIntegrationService {
       OperationName.TPAccountGetTicketless,
       requestData
     );
-    Map<String, String> extraRequestHeaders = new Map<String, String>{
-      'Content-Type' => 'text/xml',
-      'SOAPAction' => SOAP_ACTION_HEADER_BASE +
-      String.valueOf(OperationName.TPAccountGetTicketless)
-    };
 
-    HttpResponse response = APIMIntegrationService.makeRequest(
-      APIMIntegrationService.HTTP_METHOD.POST,
-      '/csharkcustmgmtticketless',
-      null,
-      requestBody.toXmlString(),
-      extraRequestHeaders
+    HttpResponse response = makeRequest(
+      OperationName.TPAccountGetTicketless,
+      requestBody
     );
 
     return CSharkResponseParser.parseTPAccountGetTicketlessResponse(
@@ -170,5 +152,22 @@ public with sharing class CSharkIntegrationService {
     }
 
     return doc;
+  }
+
+  private static HttpResponse makeRequest(
+    OperationName operation,
+    DOM.Document requestBody
+  ) {
+    Map<String, String> extraRequestHeaders = new Map<String, String>{
+      'Content-Type' => 'text/xml',
+      'SOAPAction' => SOAP_ACTION_HEADER_BASE + String.valueOf(operation)
+    };
+
+    return APIMIntegrationService.makeRequest(
+      HttpUtils.HTTP_METHOD.POST,
+      API_PATH,
+      requestBody.toXmlString(),
+      extraRequestHeaders
+    );
   }
 }

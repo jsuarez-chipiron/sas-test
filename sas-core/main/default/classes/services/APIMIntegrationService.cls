@@ -7,63 +7,45 @@ public without sharing class APIMIntegrationService {
     : C_Settings.getSettings('APIM').get('APIM_Subscription_Key');
 
   private static final String ENDPOINT = 'callout:SAS_APIM';
+  private static final String SYSTEM_NAME = 'Salesforce';
 
   public class IntegrationException extends Exception {
   }
-
-  public enum HTTP_METHOD {
-    GET,
-    POST
-  }
-
-  /*private HttpResponse makeRequest(HTTP_METHOD method, String endPoint) {
-    return;
-  }*/
 
   /**
    * Constructs and fires a request to the APIM.
    *
    * Fills in authentication and tracing headers.
    *
+   * Any extra headers passed will overwrite existing headers with the same name.
+   *
    * @param method HTTP method to use as full caps String. See HttpRequest.setMethod for more info.
-   * @param endPoint The endpoint to make the query to, without the base url included in callout.
-   * @param queryParams Query parameters as map of name to value.
+   * @param path The endpoint with queryparams to which make the query to, without the base url included in callout.
+   * @param body Request body which will be passed directly to HttpRequest.setBody().
+   * @param extraHeaders Any additional headers which should be sent along the request as a map from name to value.
    *
    * @throws IntegrationException On HTTP status codes larger than 400.
    *
    * @return Response object from making the query.
    */
   public static HttpResponse makeRequest(
-    HTTP_METHOD method,
-    String endPoint,
-    Map<String, String> queryParams,
+    HttpUtils.HTTP_METHOD method,
+    String path,
     String body, // Caller is responsible for creating correct object type.
     Map<String, String> extraHeaders
   ) {
     HttpRequest request = new HttpRequest();
 
-    String path = endPoint;
-
-    if (queryParams != null) {
-      path += '?';
-      Boolean isFirst = true;
-      for (String param : queryParams.keySet()) {
-        if (isFirst) {
-          path += param + '=' + queryParams.get(param);
-          isFirst = false;
-        } else {
-          path += '&' + param + '=' + queryParams.get(param);
-        }
-      }
-    }
-
     request.setEndpoint(ENDPOINT + path);
     request.setMethod(String.valueOf(method));
 
-    request.setHeader('api-version', 'v2');
-    request.setHeader('sas-system-name', 'Salesforce');
+    request.setHeader('sas-system-name', SYSTEM_NAME);
     request.setHeader('sas-tracking-id', C_Util.generateUUID());
     request.setHeader('Ocp-Apim-Subscription-Key', SUBSCRIPTION_KEY);
+
+    for (String header : extraHeaders.keySet()) {
+      request.setHeader(header, extraHeaders.get(header));
+    }
 
     if (body != null) {
       request.setBody(body);
@@ -73,6 +55,16 @@ public without sharing class APIMIntegrationService {
     HttpResponse response = http.send(request);
 
     if (response.getStatusCode() >= 400 && response.getStatusCode() != 404) {
+      // Log and throw again. Typically can't be resolved.
+      String message =
+        'APIM query failed with: ' +
+        response.getStatusCode() +
+        ': ' +
+        response.getStatus();
+
+      C_Log.HttpData httpDataLog = C_Log.generateLogHttpData(request);
+      C_Log.log(C_Log.Severity.Error, message, null, 'APIM', httpDataLog);
+
       throw new IntegrationException(
         'APIM query failed with: ' +
         response.getStatusCode() +
