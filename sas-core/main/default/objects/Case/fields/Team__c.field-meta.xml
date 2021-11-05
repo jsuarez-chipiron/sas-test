@@ -57,6 +57,16 @@
                 <label>BOM BSP</label>
             </value>
             <value>
+                <fullName>BOM Customer Care</fullName>
+                <default>false</default>
+                <label>BOM Customer Care</label>
+            </value>
+            <value>
+                <fullName>BOM Error Handling</fullName>
+                <default>false</default>
+                <label>BOM Error Handling</label>
+            </value>
+            <value>
                 <fullName>BOM Forms Customer</fullName>
                 <default>false</default>
                 <label>BOM Forms Customer</label>
@@ -95,6 +105,16 @@
                 <fullName>BOM Tenured</fullName>
                 <default>false</default>
                 <label>BOM Tenured</label>
+            </value>
+            <value>
+                <fullName>BOM Voucher</fullName>
+                <default>false</default>
+                <label>BOM Voucher</label>
+            </value>
+            <value>
+                <fullName>BOM Waivers</fullName>
+                <default>false</default>
+                <label>BOM Waivers</label>
             </value>
             <value>
                 <fullName>Bulk</fullName>
@@ -475,6 +495,11 @@
                 <fullName>SGH Bag SE</fullName>
                 <default>false</default>
                 <label>SGH Bag SE</label>
+            </value>
+            <value>
+                <fullName>Sitel Waivers</fullName>
+                <default>false</default>
+                <label>Sitel Waivers</label>
             </value>
             <value>
                 <fullName>SoMe</fullName>

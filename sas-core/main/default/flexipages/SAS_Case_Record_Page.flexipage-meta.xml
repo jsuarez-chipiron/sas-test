@@ -485,12 +485,6 @@
             <componentInstance>
                 <componentName>fcs_CaseTag_new</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Refunds</rightValue>
-                    </criteria>
                     <criteria>
                         <leftValue>{!Record.Department__c}</leftValue>
                         <operator>NE</operator>
@@ -503,12 +497,6 @@
             <componentInstance>
                 <componentName>fcs_CaseTag</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Refunds</rightValue>
-                    </criteria>
                     <criteria>
                         <leftValue>{!Record.Department__c}</leftValue>
                         <operator>EQUAL</operator>
