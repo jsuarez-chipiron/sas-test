@@ -40,11 +40,6 @@
                 <label>Digital Channel</label>
             </value>
             <value>
-                <fullName>Error</fullName>
-                <default>false</default>
-                <label>Error</label>
-            </value>
-            <value>
                 <fullName>Error Handling</fullName>
                 <default>false</default>
                 <label>Error Handling</label>
@@ -159,24 +154,12 @@
                 <default>false</default>
                 <label>Voucher Handling</label>
             </value>
+            <value>
+                <fullName>Error</fullName>
+                <default>false</default>
+                <label>Error</label>
+            </value>
         </valueSetDefinition>
-        <valueSettings>
-            <controllingFieldValue>Refunds</controllingFieldValue>
-            <controllingFieldValue>Sales Control BOM</controllingFieldValue>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>SME</controllingFieldValue>
-            <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <controllingFieldValue>Care</controllingFieldValue>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <controllingFieldValue>Functional Product Support</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Error</valueName>
-        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>Error Handling</valueName>
@@ -197,6 +180,24 @@
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>Voucher Handling</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <controllingFieldValue>Sales Control BOM</controllingFieldValue>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Care</controllingFieldValue>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <controllingFieldValue>Functional Product Support</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <controllingFieldValue>Info Hub</controllingFieldValue>
+            <valueName>Error</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sales Control BOM</controllingFieldValue>
@@ -330,6 +331,10 @@
         <valueSettings>
             <controllingFieldValue>Functional Product Support</controllingFieldValue>
             <valueName>Salesforce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info Hub</controllingFieldValue>
+            <valueName>Content</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

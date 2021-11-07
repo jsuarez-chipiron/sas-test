@@ -40,6 +40,21 @@
                 <label>Agreement related question</label>
             </value>
             <value>
+                <fullName>Airlines</fullName>
+                <default>false</default>
+                <label>Airlines</label>
+            </value>
+            <value>
+                <fullName>Airport</fullName>
+                <default>false</default>
+                <label>Airport</label>
+            </value>
+            <value>
+                <fullName>Allowance</fullName>
+                <default>false</default>
+                <label>Allowance</label>
+            </value>
+            <value>
                 <fullName>Amadeus</fullName>
                 <default>false</default>
                 <label>Amadeus</label>
@@ -55,9 +70,29 @@
                 <label>Approved</label>
             </value>
             <value>
+                <fullName>Authorities</fullName>
+                <default>false</default>
+                <label>Authorities</label>
+            </value>
+            <value>
                 <fullName>Availability</fullName>
                 <default>false</default>
                 <label>Availability</label>
+            </value>
+            <value>
+                <fullName>AVIH/PETC</fullName>
+                <default>false</default>
+                <label>AVIH/PETC</label>
+            </value>
+            <value>
+                <fullName>Benefits</fullName>
+                <default>false</default>
+                <label>Benefits</label>
+            </value>
+            <value>
+                <fullName>Big/Supersale</fullName>
+                <default>false</default>
+                <label>Big/Supersale</label>
             </value>
             <value>
                 <fullName>Booking Confirmation</fullName>
@@ -83,6 +118,21 @@
                 <fullName>Bug/User story created</fullName>
                 <default>false</default>
                 <label>Bug/User story created</label>
+            </value>
+            <value>
+                <fullName>Bulk</fullName>
+                <default>false</default>
+                <label>Bulk</label>
+            </value>
+            <value>
+                <fullName>Campaigns</fullName>
+                <default>false</default>
+                <label>Campaigns</label>
+            </value>
+            <value>
+                <fullName>Cars</fullName>
+                <default>false</default>
+                <label>Cars</label>
             </value>
             <value>
                 <fullName>CC Update</fullName>
@@ -120,9 +170,19 @@
                 <label>Checked in baggage info provided</label>
             </value>
             <value>
+                <fullName>Child</fullName>
+                <default>false</default>
+                <label>Child</label>
+            </value>
+            <value>
                 <fullName>Claim status</fullName>
                 <default>false</default>
                 <label>Claim status</label>
+            </value>
+            <value>
+                <fullName>Codeshare</fullName>
+                <default>false</default>
+                <label>Codeshare</label>
             </value>
             <value>
                 <fullName>Completed</fullName>
@@ -133,6 +193,16 @@
                 <fullName>Connect with EB</fullName>
                 <default>false</default>
                 <label>Connect with EB</label>
+            </value>
+            <value>
+                <fullName>Contacts-country</fullName>
+                <default>false</default>
+                <label>Contacts-country</label>
+            </value>
+            <value>
+                <fullName>Contacts-partners</fullName>
+                <default>false</default>
+                <label>Contacts-partners</label>
             </value>
             <value>
                 <fullName>Contact Update</fullName>
@@ -180,14 +250,34 @@
                 <label>Deviation from rules</label>
             </value>
             <value>
-                <fullName>Error</fullName>
+                <fullName>Domestic</fullName>
                 <default>false</default>
-                <label>Error</label>
+                <label>Domestic</label>
+            </value>
+            <value>
+                <fullName>Duty</fullName>
+                <default>false</default>
+                <label>Duty</label>
+            </value>
+            <value>
+                <fullName>EB highlights/Error</fullName>
+                <default>false</default>
+                <label>EB highlights/Error</label>
+            </value>
+            <value>
+                <fullName>EB program</fullName>
+                <default>false</default>
+                <label>EB program</label>
             </value>
             <value>
                 <fullName>EuroBonus</fullName>
                 <default>false</default>
                 <label>EuroBonus</label>
+            </value>
+            <value>
+                <fullName>Europe</fullName>
+                <default>false</default>
+                <label>Europe</label>
             </value>
             <value>
                 <fullName>Extended</fullName>
@@ -205,6 +295,26 @@
                 <label>Fare</label>
             </value>
             <value>
+                <fullName>Fare concept</fullName>
+                <default>false</default>
+                <label>Fare concept</label>
+            </value>
+            <value>
+                <fullName>Fast track</fullName>
+                <default>false</default>
+                <label>Fast track</label>
+            </value>
+            <value>
+                <fullName>Form of payment</fullName>
+                <default>false</default>
+                <label>Form of payment</label>
+            </value>
+            <value>
+                <fullName>Fraud</fullName>
+                <default>false</default>
+                <label>Fraud</label>
+            </value>
+            <value>
                 <fullName>Get Started</fullName>
                 <default>false</default>
                 <label>Get Started</label>
@@ -215,6 +325,16 @@
                 <label>Hand baggage info provided</label>
             </value>
             <value>
+                <fullName>Handling status</fullName>
+                <default>false</default>
+                <label>Handling status</label>
+            </value>
+            <value>
+                <fullName>Hotels</fullName>
+                <default>false</default>
+                <label>Hotels</label>
+            </value>
+            <value>
                 <fullName>How to make a claim</fullName>
                 <default>false</default>
                 <label>How to make a claim</label>
@@ -223,6 +343,21 @@
                 <fullName>Inactive profile</fullName>
                 <default>false</default>
                 <label>Inactive profile</label>
+            </value>
+            <value>
+                <fullName>Incorrect receiver</fullName>
+                <default>false</default>
+                <label>Incorrect receiver</label>
+            </value>
+            <value>
+                <fullName>Infant</fullName>
+                <default>false</default>
+                <label>Infant</label>
+            </value>
+            <value>
+                <fullName>Info</fullName>
+                <default>false</default>
+                <label>Info</label>
             </value>
             <value>
                 <fullName>Info about customer rights</fullName>
@@ -250,6 +385,16 @@
                 <label>Inform Process Owner/Specialist</label>
             </value>
             <value>
+                <fullName>Informs</fullName>
+                <default>false</default>
+                <label>Informs</label>
+            </value>
+            <value>
+                <fullName>Intercont</fullName>
+                <default>false</default>
+                <label>Intercont</label>
+            </value>
+            <value>
                 <fullName>Invalid retro</fullName>
                 <default>false</default>
                 <label>Invalid retro</label>
@@ -258,16 +403,6 @@
                 <fullName>Involuntary</fullName>
                 <default>false</default>
                 <label>Involuntary</label>
-            </value>
-            <value>
-                <fullName>Jira created</fullName>
-                <default>false</default>
-                <label>Jira created</label>
-            </value>
-            <value>
-                <fullName>Jira updated</fullName>
-                <default>false</default>
-                <label>Jira updated</label>
             </value>
             <value>
                 <fullName>Issue New</fullName>
@@ -280,6 +415,21 @@
                 <label>Issue new for expired</label>
             </value>
             <value>
+                <fullName>Jira created</fullName>
+                <default>false</default>
+                <label>Jira created</label>
+            </value>
+            <value>
+                <fullName>Jira updated</fullName>
+                <default>false</default>
+                <label>Jira updated</label>
+            </value>
+            <value>
+                <fullName>Kids</fullName>
+                <default>false</default>
+                <label>Kids</label>
+            </value>
+            <value>
                 <fullName>Lacking Features/Destinations/Partners</fullName>
                 <default>false</default>
                 <label>Lacking Features/Destinations/Partners</label>
@@ -288,6 +438,11 @@
                 <fullName>Limitation/Won&apos;t fix</fullName>
                 <default>false</default>
                 <label>Limitation/Won&apos;t fix</label>
+            </value>
+            <value>
+                <fullName>Lounges</fullName>
+                <default>false</default>
+                <label>Lounges</label>
             </value>
             <value>
                 <fullName>Make name change</fullName>
@@ -300,6 +455,16 @@
                 <label>Make name correction</label>
             </value>
             <value>
+                <fullName>Meals</fullName>
+                <default>false</default>
+                <label>Meals</label>
+            </value>
+            <value>
+                <fullName>Minor</fullName>
+                <default>false</default>
+                <label>Minor</label>
+            </value>
+            <value>
                 <fullName>MMB Refund process</fullName>
                 <default>false</default>
                 <label>MMB Refund process</label>
@@ -310,9 +475,19 @@
                 <label>New</label>
             </value>
             <value>
+                <fullName>No action</fullName>
+                <default>false</default>
+                <label>No action</label>
+            </value>
+            <value>
                 <fullName>No action needed</fullName>
                 <default>false</default>
                 <label>No action needed</label>
+            </value>
+            <value>
+                <fullName>OCC Daily Report</fullName>
+                <default>false</default>
+                <label>OCC Daily Report</label>
             </value>
             <value>
                 <fullName>Online booking</fullName>
@@ -325,9 +500,9 @@
                 <label>Online Profile</label>
             </value>
             <value>
-                <fullName>Other</fullName>
+                <fullName>Other partner</fullName>
                 <default>false</default>
-                <label>Other</label>
+                <label>Other partner</label>
             </value>
             <value>
                 <fullName>Payment</fullName>
@@ -335,9 +510,19 @@
                 <label>Payment</label>
             </value>
             <value>
+                <fullName>Payment cards</fullName>
+                <default>false</default>
+                <label>Payment cards</label>
+            </value>
+            <value>
                 <fullName>Points registered</fullName>
                 <default>false</default>
                 <label>Points registered</label>
+            </value>
+            <value>
+                <fullName>Policies and agreements</fullName>
+                <default>false</default>
+                <label>Policies and agreements</label>
             </value>
             <value>
                 <fullName>Price inquiry</fullName>
@@ -445,6 +630,21 @@
                 <label>Refund authorized</label>
             </value>
             <value>
+                <fullName>Refund irregularity</fullName>
+                <default>false</default>
+                <label>Refund irregularity</label>
+            </value>
+            <value>
+                <fullName>Refund other</fullName>
+                <default>false</default>
+                <label>Refund other</label>
+            </value>
+            <value>
+                <fullName>Refund rules</fullName>
+                <default>false</default>
+                <label>Refund rules</label>
+            </value>
+            <value>
                 <fullName>Refund status</fullName>
                 <default>false</default>
                 <label>Refund status</label>
@@ -455,9 +655,19 @@
                 <label>Refund to alternative FOP</label>
             </value>
             <value>
+                <fullName>Refund travel agent</fullName>
+                <default>false</default>
+                <label>Refund travel agent</label>
+            </value>
+            <value>
                 <fullName>Rejected</fullName>
                 <default>false</default>
                 <label>Rejected</label>
+            </value>
+            <value>
+                <fullName>Releases</fullName>
+                <default>false</default>
+                <label>Releases</label>
             </value>
             <value>
                 <fullName>Remove company</fullName>
@@ -478,6 +688,11 @@
                 <fullName>Reported delayed baggage</fullName>
                 <default>false</default>
                 <label>Reported delayed baggage</label>
+            </value>
+            <value>
+                <fullName>Reprotection</fullName>
+                <default>false</default>
+                <label>Reprotection</label>
             </value>
             <value>
                 <fullName>Request refund</fullName>
@@ -505,14 +720,29 @@
                 <label>RTCREDIT</label>
             </value>
             <value>
+                <fullName>Rules and policy</fullName>
+                <default>false</default>
+                <label>Rules and policy</label>
+            </value>
+            <value>
                 <fullName>Sales</fullName>
                 <default>false</default>
                 <label>Sales</label>
             </value>
             <value>
+                <fullName>SAS Agent News/Flash</fullName>
+                <default>false</default>
+                <label>SAS Agent News/Flash</label>
+            </value>
+            <value>
                 <fullName>SAS Invoice</fullName>
                 <default>false</default>
                 <label>SAS Invoice</label>
+            </value>
+            <value>
+                <fullName>Seating</fullName>
+                <default>false</default>
+                <label>Seating</label>
             </value>
             <value>
                 <fullName>Segmentation</fullName>
@@ -560,9 +790,34 @@
                 <label>SRS</label>
             </value>
             <value>
+                <fullName>SSI author</fullName>
+                <default>false</default>
+                <label>SSI author</label>
+            </value>
+            <value>
+                <fullName>SSI login issues</fullName>
+                <default>false</default>
+                <label>SSI login issues</label>
+            </value>
+            <value>
+                <fullName>SSI public site</fullName>
+                <default>false</default>
+                <label>SSI public site</label>
+            </value>
+            <value>
                 <fullName>Statistics</fullName>
                 <default>false</default>
                 <label>Statistics</label>
+            </value>
+            <value>
+                <fullName>Strike</fullName>
+                <default>false</default>
+                <label>Strike</label>
+            </value>
+            <value>
+                <fullName>Strike related</fullName>
+                <default>false</default>
+                <label>Strike related</label>
             </value>
             <value>
                 <fullName>Support</fullName>
@@ -578,6 +833,21 @@
                 <fullName>Sustainability</fullName>
                 <default>false</default>
                 <label>Sustainability</label>
+            </value>
+            <value>
+                <fullName>SVAN</fullName>
+                <default>false</default>
+                <label>SVAN</label>
+            </value>
+            <value>
+                <fullName>System</fullName>
+                <default>false</default>
+                <label>System</label>
+            </value>
+            <value>
+                <fullName>Taxes and surcharges</fullName>
+                <default>false</default>
+                <label>Taxes and surcharges</label>
             </value>
             <value>
                 <fullName>Technical error</fullName>
@@ -600,6 +870,31 @@
                 <label>TPI OPM</label>
             </value>
             <value>
+                <fullName>Traffic</fullName>
+                <default>false</default>
+                <label>Traffic</label>
+            </value>
+            <value>
+                <fullName>Travel agents</fullName>
+                <default>false</default>
+                <label>Travel agents</label>
+            </value>
+            <value>
+                <fullName>Travel pass</fullName>
+                <default>false</default>
+                <label>Travel pass</label>
+            </value>
+            <value>
+                <fullName>TRC</fullName>
+                <default>false</default>
+                <label>TRC</label>
+            </value>
+            <value>
+                <fullName>UM</fullName>
+                <default>false</default>
+                <label>UM</label>
+            </value>
+            <value>
                 <fullName>Update User Guide</fullName>
                 <default>false</default>
                 <label>Update User Guide</label>
@@ -615,9 +910,19 @@
                 <label>Wanted/Lacking features</label>
             </value>
             <value>
+                <fullName>Weather</fullName>
+                <default>false</default>
+                <label>Weather</label>
+            </value>
+            <value>
                 <fullName>WF List</fullName>
                 <default>false</default>
                 <label>WF List</label>
+            </value>
+            <value>
+                <fullName>Voucher</fullName>
+                <default>false</default>
+                <label>Voucher</label>
             </value>
             <value>
                 <fullName>Wrong deb</fullName>
@@ -625,9 +930,24 @@
                 <label>Wrong deb</label>
             </value>
             <value>
-                <fullName>No action</fullName>
+                <fullName>Xbag</fullName>
                 <default>false</default>
-                <label>No action</label>
+                <label>Xbag</label>
+            </value>
+            <value>
+                <fullName>Youth</fullName>
+                <default>false</default>
+                <label>Youth</label>
+            </value>
+            <value>
+                <fullName>Error</fullName>
+                <default>false</default>
+                <label>Error</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
             </value>
             <value>
                 <fullName>Authorization</fullName>
@@ -1082,8 +1402,8 @@
             <controllingFieldValue>Name Change</controllingFieldValue>
             <controllingFieldValue>Change booking</controllingFieldValue>
             <controllingFieldValue>Change commitment dates</controllingFieldValue>
-            <controllingFieldValue>Voluntary</controllingFieldValue>
             <controllingFieldValue>Involuntary</controllingFieldValue>
+            <controllingFieldValue>Voluntary</controllingFieldValue>
             <controllingFieldValue>Process Refund</controllingFieldValue>
             <controllingFieldValue>Make Booking</controllingFieldValue>
             <valueName>Deviation from rules</valueName>
@@ -1273,6 +1593,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Booking</controllingFieldValue>
+            <controllingFieldValue>Reservation</controllingFieldValue>
             <valueName>Ticketing</valueName>
         </valueSettings>
         <valueSettings>
@@ -1293,6 +1614,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <controllingFieldValue>News</controllingFieldValue>
             <valueName>Sales</valueName>
         </valueSettings>
         <valueSettings>
@@ -1346,51 +1668,67 @@
             <valueName>Provided info about how to change</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Voluntary</controllingFieldValue>
-            <controllingFieldValue>Involuntary</controllingFieldValue>
-            <controllingFieldValue>Process Refund</controllingFieldValue>
-            <valueName>According to rules</valueName>
+            <controllingFieldValue>Booking problem</controllingFieldValue>
+            <controllingFieldValue>EuroBonus account</controllingFieldValue>
+            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
+            <controllingFieldValue>Payment</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
+            <valueName>Jira created</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Voluntary</controllingFieldValue>
-            <controllingFieldValue>Involuntary</controllingFieldValue>
-            <valueName>No action needed</valueName>
+            <controllingFieldValue>Booking problem</controllingFieldValue>
+            <controllingFieldValue>EuroBonus account</controllingFieldValue>
+            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
+            <controllingFieldValue>Payment</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
+            <valueName>Jira updated</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Voluntary</controllingFieldValue>
-            <controllingFieldValue>Involuntary</controllingFieldValue>
-            <valueName>Refund authorized</valueName>
+            <controllingFieldValue>Booking problem</controllingFieldValue>
+            <controllingFieldValue>EuroBonus account</controllingFieldValue>
+            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
+            <controllingFieldValue>Payment</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
+            <valueName>No action</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Voluntary</controllingFieldValue>
-            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <controllingFieldValue>Booking problem</controllingFieldValue>
+            <controllingFieldValue>EuroBonus account</controllingFieldValue>
+            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
+            <controllingFieldValue>Payment</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
+            <valueName>Support from IT</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>AliPay</controllingFieldValue>
+            <controllingFieldValue>Card errors</controllingFieldValue>
+            <controllingFieldValue>Chargeback</controllingFieldValue>
+            <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
+            <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <controllingFieldValue>Klarna</controllingFieldValue>
+            <controllingFieldValue>Mutiple FOP</controllingFieldValue>
+            <controllingFieldValue>No money collected</controllingFieldValue>
             <controllingFieldValue>PayPal</controllingFieldValue>
             <controllingFieldValue>Swish</controllingFieldValue>
             <controllingFieldValue>UnionPay</controllingFieldValue>
+            <controllingFieldValue>Voluntary</controllingFieldValue>
             <controllingFieldValue>WeChat</controllingFieldValue>
-            <controllingFieldValue>Klarna</controllingFieldValue>
-            <controllingFieldValue>Mutiple FOP</controllingFieldValue>
-            <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
-            <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
-            <controllingFieldValue>No money collected</controllingFieldValue>
-            <controllingFieldValue>Chargeback</controllingFieldValue>
-            <controllingFieldValue>Card errors</controllingFieldValue>
             <valueName>Refund to alternative FOP</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>AliPay</controllingFieldValue>
+            <controllingFieldValue>Card errors</controllingFieldValue>
+            <controllingFieldValue>Chargeback</controllingFieldValue>
+            <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
+            <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
+            <controllingFieldValue>Klarna</controllingFieldValue>
+            <controllingFieldValue>Mutiple FOP</controllingFieldValue>
+            <controllingFieldValue>No money collected</controllingFieldValue>
             <controllingFieldValue>PayPal</controllingFieldValue>
             <controllingFieldValue>Swish</controllingFieldValue>
             <controllingFieldValue>UnionPay</controllingFieldValue>
             <controllingFieldValue>WeChat</controllingFieldValue>
-            <controllingFieldValue>Klarna</controllingFieldValue>
-            <controllingFieldValue>Mutiple FOP</controllingFieldValue>
-            <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
-            <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
-            <controllingFieldValue>No money collected</controllingFieldValue>
-            <controllingFieldValue>Chargeback</controllingFieldValue>
-            <controllingFieldValue>Card errors</controllingFieldValue>
             <valueName>Solve agent error</valueName>
         </valueSettings>
         <valueSettings>
@@ -1398,19 +1736,23 @@
             <valueName>Technical error</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Card errors</controllingFieldValue>
+            <controllingFieldValue>Chargeback</controllingFieldValue>
+            <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
+            <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
+            <controllingFieldValue>Klarna</controllingFieldValue>
+            <controllingFieldValue>Mutiple FOP</controllingFieldValue>
+            <controllingFieldValue>No money collected</controllingFieldValue>
             <controllingFieldValue>PayPal</controllingFieldValue>
             <controllingFieldValue>Swish</controllingFieldValue>
             <controllingFieldValue>Swish Bot Output</controllingFieldValue>
             <controllingFieldValue>UnionPay</controllingFieldValue>
             <controllingFieldValue>WeChat</controllingFieldValue>
-            <controllingFieldValue>Klarna</controllingFieldValue>
-            <controllingFieldValue>Mutiple FOP</controllingFieldValue>
-            <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
-            <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
-            <controllingFieldValue>No money collected</controllingFieldValue>
-            <controllingFieldValue>Chargeback</controllingFieldValue>
-            <controllingFieldValue>Card errors</controllingFieldValue>
             <valueName>Solve technical error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Email related</controllingFieldValue>
+            <valueName>Resend</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Claims</controllingFieldValue>
@@ -1421,8 +1763,20 @@
             <valueName>How to make a claim</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Email related</controllingFieldValue>
-            <valueName>Resend</valueName>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <controllingFieldValue>Voluntary</controllingFieldValue>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <valueName>According to rules</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <controllingFieldValue>Voluntary</controllingFieldValue>
+            <valueName>No action needed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <controllingFieldValue>Voluntary</controllingFieldValue>
+            <valueName>Refund authorized</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Issue</controllingFieldValue>
@@ -1431,38 +1785,6 @@
         <valueSettings>
             <controllingFieldValue>Issue</controllingFieldValue>
             <valueName>New</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Booking problem</controllingFieldValue>
-            <controllingFieldValue>EuroBonus account</controllingFieldValue>
-            <controllingFieldValue>Payment</controllingFieldValue>
-            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
-            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
-            <valueName>Jira created</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Booking problem</controllingFieldValue>
-            <controllingFieldValue>EuroBonus account</controllingFieldValue>
-            <controllingFieldValue>Payment</controllingFieldValue>
-            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
-            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
-            <valueName>Jira updated</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Booking problem</controllingFieldValue>
-            <controllingFieldValue>EuroBonus account</controllingFieldValue>
-            <controllingFieldValue>Payment</controllingFieldValue>
-            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
-            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
-            <valueName>Support from IT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Booking problem</controllingFieldValue>
-            <controllingFieldValue>EuroBonus account</controllingFieldValue>
-            <controllingFieldValue>Payment</controllingFieldValue>
-            <controllingFieldValue>Wrong info to customer</controllingFieldValue>
-            <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
-            <valueName>No action</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Damaged Baggage</controllingFieldValue>
@@ -1486,11 +1808,125 @@
             <valueName>Reported delayed baggage</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Products</controllingFieldValue>
+            <valueName>Travel pass</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Products</controllingFieldValue>
+            <valueName>Voucher</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Products</controllingFieldValue>
+            <controllingFieldValue>Fares</controllingFieldValue>
+            <controllingFieldValue>System related</controllingFieldValue>
+            <controllingFieldValue>SAS.xx</controllingFieldValue>
+            <controllingFieldValue>Redirection not possible</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ancillary</controllingFieldValue>
+            <valueName>Fast track</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ancillary</controllingFieldValue>
+            <valueName>Lounges</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ancillary</controllingFieldValue>
+            <valueName>Meals</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ancillary</controllingFieldValue>
+            <valueName>Seating</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ancillary</controllingFieldValue>
+            <valueName>Xbag</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Baggage</controllingFieldValue>
+            <valueName>Allowance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Baggage</controllingFieldValue>
+            <valueName>Bulk</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Baggage</controllingFieldValue>
+            <valueName>Rules and policy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Animals</controllingFieldValue>
+            <valueName>AVIH/PETC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Animals</controllingFieldValue>
+            <valueName>SVAN</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campaigns</controllingFieldValue>
+            <valueName>Big/Supersale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campaigns</controllingFieldValue>
+            <controllingFieldValue>Fares</controllingFieldValue>
+            <valueName>Domestic</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campaigns</controllingFieldValue>
+            <controllingFieldValue>Fares</controllingFieldValue>
+            <valueName>Europe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campaigns</controllingFieldValue>
+            <controllingFieldValue>Fares</controllingFieldValue>
+            <valueName>Intercont</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campaigns</controllingFieldValue>
+            <valueName>Kids</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fares</controllingFieldValue>
+            <valueName>Fare concept</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fares</controllingFieldValue>
+            <valueName>Taxes and surcharges</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fares</controllingFieldValue>
+            <valueName>Youth</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Irregularity</controllingFieldValue>
+            <controllingFieldValue>Refund</controllingFieldValue>
+            <valueName>COVID19</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Irregularity</controllingFieldValue>
+            <valueName>Reprotection</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Irregularity</controllingFieldValue>
+            <valueName>Strike related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Irregularity</controllingFieldValue>
+            <valueName>System</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Irregularity</controllingFieldValue>
+            <controllingFieldValue>News</controllingFieldValue>
+            <valueName>Traffic</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>Acquirer</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
+            <controllingFieldValue>System related</controllingFieldValue>
             <valueName>Amadeus</valueName>
         </valueSettings>
         <valueSettings>
@@ -1508,6 +1944,166 @@
         <valueSettings>
             <controllingFieldValue>Error Management</controllingFieldValue>
             <valueName>WF List</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Airlines</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Benefits</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Campaigns</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Cars</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>EB highlights/Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>EB program</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Hotels</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Other partner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Payment cards</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reservation</controllingFieldValue>
+            <valueName>Codeshare</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reservation</controllingFieldValue>
+            <valueName>Form of payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reservation</controllingFieldValue>
+            <valueName>Refund irregularity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reservation</controllingFieldValue>
+            <valueName>Refund other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reservation</controllingFieldValue>
+            <valueName>Refund rules</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reservation</controllingFieldValue>
+            <valueName>Refund travel agent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reservation</controllingFieldValue>
+            <valueName>Travel agents</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Look here before you ask</controllingFieldValue>
+            <valueName>Fraud</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Look here before you ask</controllingFieldValue>
+            <valueName>Handling status</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Look here before you ask</controllingFieldValue>
+            <valueName>Releases</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Look here before you ask</controllingFieldValue>
+            <valueName>Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System related</controllingFieldValue>
+            <valueName>SSI author</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System related</controllingFieldValue>
+            <valueName>SSI login issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System related</controllingFieldValue>
+            <valueName>SSI public site</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Minor</controllingFieldValue>
+            <valueName>Child</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Minor</controllingFieldValue>
+            <valueName>Infant</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Minor</controllingFieldValue>
+            <valueName>UM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>News</controllingFieldValue>
+            <valueName>Informs</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS.xx</controllingFieldValue>
+            <valueName>Authorities</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS.xx</controllingFieldValue>
+            <valueName>Strike</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS.xx</controllingFieldValue>
+            <valueName>TRC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS.xx</controllingFieldValue>
+            <valueName>Weather</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No action taken</controllingFieldValue>
+            <valueName>Duty</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No action taken</controllingFieldValue>
+            <valueName>Incorrect receiver</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No action taken</controllingFieldValue>
+            <valueName>Info</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No action taken</controllingFieldValue>
+            <valueName>OCC Daily Report</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Miscellaneous</controllingFieldValue>
+            <valueName>Airport</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Miscellaneous</controllingFieldValue>
+            <valueName>Contacts-country</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Miscellaneous</controllingFieldValue>
+            <valueName>Contacts-partners</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Miscellaneous</controllingFieldValue>
+            <valueName>Policies and agreements</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Miscellaneous</controllingFieldValue>
+            <valueName>SAS Agent News/Flash</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Process Question</controllingFieldValue>
@@ -1539,10 +2135,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Redirection not possible</controllingFieldValue>
-            <valueName>Other</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Redirection not possible</controllingFieldValue>
             <valueName>Redirect to agent</valueName>
         </valueSettings>
         <valueSettings>
@@ -1556,10 +2148,6 @@
         <valueSettings>
             <controllingFieldValue>Redirection not possible</controllingFieldValue>
             <valueName>Referred to Direct Sales</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund</controllingFieldValue>
-            <valueName>COVID19</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>

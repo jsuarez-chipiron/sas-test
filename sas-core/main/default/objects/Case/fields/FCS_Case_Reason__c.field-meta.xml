@@ -115,6 +115,16 @@
                 <label>AMEX</label>
             </value>
             <value>
+                <fullName>Ancillary</fullName>
+                <default>false</default>
+                <label>Ancillary</label>
+            </value>
+            <value>
+                <fullName>Animals</fullName>
+                <default>false</default>
+                <label>Animals</label>
+            </value>
+            <value>
                 <fullName>App</fullName>
                 <default>false</default>
                 <label>App</label>
@@ -140,6 +150,11 @@
                 <label>Availability/Inquiry</label>
             </value>
             <value>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+                <label>Baggage</label>
+            </value>
+            <value>
                 <fullName>Baggage Content</fullName>
                 <default>false</default>
                 <label>Baggage Content</label>
@@ -163,6 +178,11 @@
                 <fullName>Bug</fullName>
                 <default>false</default>
                 <label>Bug</label>
+            </value>
+            <value>
+                <fullName>Campaigns</fullName>
+                <default>false</default>
+                <label>Campaigns</label>
             </value>
             <value>
                 <fullName>Campaign support</fullName>
@@ -340,11 +360,6 @@
                 <label>Email related</label>
             </value>
             <value>
-                <fullName>Error</fullName>
-                <default>false</default>
-                <label>Error</label>
-            </value>
-            <value>
                 <fullName>Error Management</fullName>
                 <default>false</default>
                 <label>Error Management</label>
@@ -383,6 +398,11 @@
                 <fullName>Extract</fullName>
                 <default>false</default>
                 <label>Extract</label>
+            </value>
+            <value>
+                <fullName>Fares</fullName>
+                <default>false</default>
+                <label>Fares</label>
             </value>
             <value>
                 <fullName>Fast Track</fullName>
@@ -475,6 +495,11 @@
                 <label>Involuntary</label>
             </value>
             <value>
+                <fullName>Irregularity</fullName>
+                <default>false</default>
+                <label>Irregularity</label>
+            </value>
+            <value>
                 <fullName>Issue</fullName>
                 <default>false</default>
                 <label>Issue</label>
@@ -488,6 +513,11 @@
                 <fullName>Link not working</fullName>
                 <default>false</default>
                 <label>Link not working</label>
+            </value>
+            <value>
+                <fullName>Look here before you ask</fullName>
+                <default>false</default>
+                <label>Look here before you ask</label>
             </value>
             <value>
                 <fullName>Lost &amp; found</fullName>
@@ -508,6 +538,16 @@
                 <fullName>Merge profile</fullName>
                 <default>false</default>
                 <label>Merge profile</label>
+            </value>
+            <value>
+                <fullName>Minor</fullName>
+                <default>false</default>
+                <label>Minor</label>
+            </value>
+            <value>
+                <fullName>Miscellaneous</fullName>
+                <default>false</default>
+                <label>Miscellaneous</label>
             </value>
             <value>
                 <fullName>Missing 1000 Status pts MC</fullName>
@@ -545,6 +585,16 @@
                 <label>New feature</label>
             </value>
             <value>
+                <fullName>News</fullName>
+                <default>false</default>
+                <label>News</label>
+            </value>
+            <value>
+                <fullName>No action taken</fullName>
+                <default>false</default>
+                <label>No action taken</label>
+            </value>
+            <value>
                 <fullName>No money collected</fullName>
                 <default>false</default>
                 <label>No money collected</label>
@@ -575,11 +625,6 @@
                 <label>Payment</label>
             </value>
             <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
-            </value>
-            <value>
                 <fullName>PayPal</fullName>
                 <default>false</default>
                 <label>PayPal</label>
@@ -608,6 +653,11 @@
                 <fullName>Process Refund</fullName>
                 <default>false</default>
                 <label>Process Refund</label>
+            </value>
+            <value>
+                <fullName>Products</fullName>
+                <default>false</default>
+                <label>Products</label>
             </value>
             <value>
                 <fullName>Provide Delay Certificate</fullName>
@@ -655,6 +705,11 @@
                 <label>Refund Status</label>
             </value>
             <value>
+                <fullName>Reservation</fullName>
+                <default>false</default>
+                <label>Reservation</label>
+            </value>
+            <value>
                 <fullName>Rules &amp; Information</fullName>
                 <default>false</default>
                 <label>Rules &amp; Information</label>
@@ -663,6 +718,11 @@
                 <fullName>Sales Control</fullName>
                 <default>false</default>
                 <label>Sales Control</label>
+            </value>
+            <value>
+                <fullName>SAS.xx</fullName>
+                <default>false</default>
+                <label>SAS.xx</label>
             </value>
             <value>
                 <fullName>SAS Aircraft</fullName>
@@ -770,6 +830,11 @@
                 <label>Swish Bot Output</label>
             </value>
             <value>
+                <fullName>System related</fullName>
+                <default>false</default>
+                <label>System related</label>
+            </value>
+            <value>
                 <fullName>Ticket status</fullName>
                 <default>false</default>
                 <label>Ticket status</label>
@@ -810,9 +875,9 @@
                 <label>Upgrade</label>
             </value>
             <value>
-                <fullName>Wrong info to customer</fullName>
+                <fullName>WeChat</fullName>
                 <default>false</default>
-                <label>Wrong info to customer</label>
+                <label>WeChat</label>
             </value>
             <value>
                 <fullName>Voluntary</fullName>
@@ -820,9 +885,19 @@
                 <label>Voluntary</label>
             </value>
             <value>
-                <fullName>WeChat</fullName>
+                <fullName>Wrong info to customer</fullName>
                 <default>false</default>
-                <label>WeChat</label>
+                <label>Wrong info to customer</label>
+            </value>
+            <value>
+                <fullName>Error</fullName>
+                <default>false</default>
+                <label>Error</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -842,6 +917,20 @@
         <valueSettings>
             <controllingFieldValue>Travel Pass</controllingFieldValue>
             <valueName>Online Problems</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Refunds</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <controllingFieldValue>SAS for Business</controllingFieldValue>
+            <valueName>Sell</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Update Profile</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel Pass</controllingFieldValue>
@@ -871,20 +960,6 @@
             <controllingFieldValue>Ticketless</controllingFieldValue>
             <controllingFieldValue>Travel Information</controllingFieldValue>
             <valueName>Other</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Refunds</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
-            <controllingFieldValue>SAS for Business</controllingFieldValue>
-            <valueName>Sell</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
-            <valueName>Update Profile</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Voucher</controllingFieldValue>
@@ -946,24 +1021,6 @@
             <valueName>Wrong info to customer</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <controllingFieldValue>Gift Card</controllingFieldValue>
-            <controllingFieldValue>Plusgrade</controllingFieldValue>
-            <valueName>Error</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <valueName>Involuntary</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <valueName>Support</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <valueName>Voluntary</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Error Handling</controllingFieldValue>
             <valueName>AliPay</valueName>
         </valueSettings>
@@ -1014,6 +1071,24 @@
         <valueSettings>
             <controllingFieldValue>Error Handling</controllingFieldValue>
             <valueName>WeChat</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gift Card</controllingFieldValue>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <controllingFieldValue>Plusgrade</controllingFieldValue>
+            <valueName>Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Involuntary</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Voluntary</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Voucher Handling</controllingFieldValue>
@@ -1268,19 +1343,68 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Content</controllingFieldValue>
-            <valueName>Information Missing</valueName>
+            <valueName>Ancillary</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Content</controllingFieldValue>
-            <valueName>Information update needed</valueName>
+            <valueName>Animals</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Content</controllingFieldValue>
-            <valueName>Link not working</valueName>
+            <valueName>Baggage</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Content</controllingFieldValue>
-            <valueName>Spelling mistake</valueName>
+            <valueName>Campaigns</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>EuroBonus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>Fares</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>Irregularity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>Look here before you ask</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>Minor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>Miscellaneous</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>News</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>No action taken</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>Products</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>Reservation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>SAS.xx</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>System related</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
@@ -1398,10 +1522,6 @@
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>Direct Sales</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>EuroBonus</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
