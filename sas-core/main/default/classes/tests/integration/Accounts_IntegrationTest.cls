@@ -56,8 +56,9 @@ public with sharing class Accounts_IntegrationTest {
       TEDSIntegrationService.class
     );
     mocks.startStubbing();
-    Map<String, String> query = new Map<String, String>();
-    query.put('euroBonusNumber', euroBonusNumber);
+    List<List<String>> query = new List<List<String>>{
+      new List<String>{ 'euroBonusNumber', euroBonusNumber }
+    };
     mocks.when(mockTEDSService.fetchBookingsByQuery(query))
       .thenReturn(
         TestDataFactories.createParsedBookingData(

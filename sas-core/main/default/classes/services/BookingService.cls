@@ -130,8 +130,9 @@ public without sharing class BookingService {
       TEDSIntegrationService.class
     );
 
-    Map<String, String> query = new Map<String, String>();
-    query.put('euroBonusNumber', euroBonusNumber);
+    List<List<String>> query = new List<List<String>>{
+      new List<String>{ 'euroBonusNumber', euroBonusNumber }
+    };
     List<IRR_MOD_TedsBooking> bookingData = TEDSService.fetchBookingsByQuery(
       query
     );
