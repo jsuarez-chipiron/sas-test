@@ -1059,6 +1059,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Merge</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Minor</fullName>
             <default>false</default>
         </values>
@@ -1340,6 +1344,10 @@
         </values>
         <values>
             <fullName>Statistics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Status</fullName>
             <default>false</default>
         </values>
         <values>
