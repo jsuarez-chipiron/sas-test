@@ -43,15 +43,10 @@ global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaults
         WHERE Id = :sendEmailDefaults.getContextId()
       ];
       EmailMessage emailMessage = (EmailMessage) sendEmailDefaults.getTargetSObject();
-      if (cse != null && (cse.IsRedirected__c || cse.IsEscalated__c || cse.Origin == 'Manual'|| cse.Origin == 'Internal - New Refund Request Form')) {
-        List<From_email_based_on_Dept_and_Teams__c> lstFromEMails = [
-          SELECT Id, From_Email__c
-          FROM From_email_based_on_Dept_and_Teams__c
-          WHERE
-            Case_Department__c = :cse.Department__c
-        ];
-        if (!lstFromEMails.isEmpty() && lstFromEMails.size() > 0) {
-          emailMessage.ValidatedFromAddress = lstFromEMails[0].From_Email__c;
+      if (cse != null && (cse.IsRedirected__c || cse.IsEscalated__c || cse.Origin == 'Manual'|| cse.Origin == 'Internal - New Refund Request Form' || cse.Origin.contains('Form - '))) {
+        String lstFromEMails = From_email_based_on_Dept_and_Teams__c.getValues(cse.Department__c + '-' + cse.Team__c).From_Email__c;
+        if (!String.isEmpty(lstFromEMails) && lstFromEMails.length() > 0) {
+          emailMessage.ValidatedFromAddress = lstFromEMails;
         } else {
            emailMessage.ValidatedFromAddress = From_email_based_on_Dept_and_Teams__c.getValues('Default From Address').From_Email__c;            
         }
