@@ -18,8 +18,12 @@ public with sharing class CSharkIntegrationService {
     TPAccountGetTicketless
   }
 
+  private static final String SUBSCRIPTION_KEY = Test.isRunningTest()
+    ? 'TESTKEY'
+    : C_Settings.getSettings('APIM').get('APIM_Subscription_Key');
+
   private static final String SOAP_ACTION_HEADER_BASE = 'http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1/ICSharkCustomerManagementTicketless/';
-  private static final String API_PATH = '/csharkcustmgmtticketless';
+  private static final String API_PATH = '/csharkservice';
 
   /**
    * Supported parameters to base search for customer on. The format of these search types
@@ -160,6 +164,7 @@ public with sharing class CSharkIntegrationService {
   ) {
     Map<String, String> extraRequestHeaders = new Map<String, String>{
       'Content-Type' => 'text/xml',
+      'Ocp-Apim-Subscription-Key' => SUBSCRIPTION_KEY,
       'SOAPAction' => SOAP_ACTION_HEADER_BASE + String.valueOf(operation)
     };
 
