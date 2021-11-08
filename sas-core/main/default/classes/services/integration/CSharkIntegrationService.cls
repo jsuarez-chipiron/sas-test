@@ -23,7 +23,7 @@ public with sharing class CSharkIntegrationService {
     : C_Settings.getSettings('APIM').get('APIM_Subscription_Key');
 
   private static final String SOAP_ACTION_HEADER_BASE = 'http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1/ICSharkCustomerManagementTicketless/';
-  private static final String API_PATH = '/csharkservice';
+  private static final String API_PATH = 'callout:SAS_APIM/csharkservice';
 
   /**
    * Supported parameters to base search for customer on. The format of these search types

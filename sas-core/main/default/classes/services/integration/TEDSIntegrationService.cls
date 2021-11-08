@@ -9,6 +9,11 @@
  *   https://sas-digital.atlassian.net/wiki/spaces/CSSolutions/pages/2342289428/Planned%2BTEDS%2BAPI
  */
 public without sharing class TEDSIntegrationService {
+  private static final String API_PATH = 'callout:SAS_APIM_TEDS_FCS';
+  private static final String SUBSCRIPTION_KEY = Test.isRunningTest()
+    ? 'TESTKEY'
+    : C_Settings.getSettings('APIM').get('APIM_TEDS_Subscription_Key');
+
   /** Fetches a single booking from TEDS based on the booking reference.
    *
    * @param bookingReference Either 6 character PNR or full booking identifier.
@@ -53,21 +58,19 @@ public without sharing class TEDSIntegrationService {
    *
    * @return List of the found flights, or an empty list of none were found.
    */
-  public List<TEDSFlight> fetchFlightsByQuery(
-    List<List<String>> query
-  ) {
+  public List<TEDSFlight> fetchFlightsByQuery(List<List<String>> query) {
     HttpResponse response = makeRequest('/teds-flight/flights', query);
 
     return TEDSFlight.parseArray(response.getBody());
   }
-  
+
   /**
    * Constructs and fires a request to the TEDS API.
    *
    * Fills in authentication and tracing headers.
    *
    * @param method HTTP method to use as full caps String. See HttpRequest.setMethod for more info.
-   * @param endPoint The endpoint to make the query to, without the base url included in callout.
+   * @param path The path to make the query to.
    * @param queryParams Query parameters as map of name to value.
    *
    * @throws IntegrationException On HTTP status codes larger than 400.
@@ -75,24 +78,23 @@ public without sharing class TEDSIntegrationService {
    * @return Response object from making the query.
    */
   private HttpResponse makeRequest(
-    String endPoint,
+    String path,
     List<List<String>> queryParams
   ) {
     HttpRequest request = new HttpRequest();
 
-    String path = endPoint;
+    String fullPath = API_PATH + path;
 
-    path += HttpUtils.constructQueryParamString(
-      queryParams
-    );
+    fullPath += HttpUtils.constructQueryParamString(queryParams);
 
     Map<String, String> extraRequestHeaders = new Map<String, String>{
-      'api-version' => 'v2'
+      'api-version' => 'v2',
+      'Ocp-Apim-Subscription-Key' => SUBSCRIPTION_KEY
     };
 
     return APIMIntegrationService.makeRequest(
       HttpUtils.HTTP_METHOD.GET,
-      path,
+      fullPath,
       null,
       extraRequestHeaders
     );

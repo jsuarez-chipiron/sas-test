@@ -2,7 +2,6 @@
  * Service for making requests to API Management (APIM).
  */
 public without sharing class APIMIntegrationService {
-  private static final String ENDPOINT = 'callout:SAS_APIM';
   private static final String SYSTEM_NAME = 'Salesforce';
 
   public class IntegrationException extends Exception {
@@ -32,7 +31,7 @@ public without sharing class APIMIntegrationService {
   ) {
     HttpRequest request = new HttpRequest();
 
-    request.setEndpoint(ENDPOINT + path);
+    request.setEndpoint(path);
     request.setMethod(String.valueOf(method));
 
     request.setHeader('sas-system-name', SYSTEM_NAME);
