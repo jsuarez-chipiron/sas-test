@@ -6,7 +6,7 @@
     <label>GDPR Related Channel Object</label>
     <referenceTo>GDPR_Related_Channel_Object__mdt</referenceTo>
     <relationshipLabel>GDPR Retention Links</relationshipLabel>
-    <relationshipName>GDPR_Retention_Links</relationshipName>
+    <relationshipName>RetentionLink</relationshipName>
     <required>false</required>
     <type>MetadataRelationship</type>
     <unique>false</unique>

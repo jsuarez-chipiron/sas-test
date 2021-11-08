@@ -3,8 +3,8 @@
     <label>SocialPost</label>
     <protected>false</protected>
     <values>
-        <field>GDPR_Retention_Policy__c</field>
-        <value xsi:nil="true"/>
+        <field>Related_Case_Lookup_Field__c</field>
+        <value xsi:type="xsd:string">ParentId</value>
     </values>
     <values>
         <field>Related_SObject_Name__c</field>

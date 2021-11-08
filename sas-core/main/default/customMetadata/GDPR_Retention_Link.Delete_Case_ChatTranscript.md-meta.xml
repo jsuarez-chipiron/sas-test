@@ -3,15 +3,15 @@
     <label>Delete Case ChatTranscript</label>
     <protected>false</protected>
     <values>
+        <field>GDPR_Related_Channel_Object_Link__c</field>
+        <value xsi:type="xsd:string">Delete_Case_Batch</value>
+    </values>
+    <values>
         <field>GDPR_Related_Channel_Object__c</field>
         <value xsi:type="xsd:string">LiveChatTranscript</value>
     </values>
     <values>
-        <field>GDPR_Retention_Policy__c</field>
-        <value xsi:type="xsd:string">Delete_Case_Batch</value>
-    </values>
-    <values>
         <field>Related_LookupField__c</field>
-        <value xsi:type="xsd:string">CaseId</value>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>

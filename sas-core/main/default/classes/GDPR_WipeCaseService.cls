@@ -5,6 +5,7 @@ all interactions connected to the case.
 @author Peter Södergren
 */
 global with sharing class GDPR_WipeCaseService {
+/*
   /*    Wipes the cases with the supplied case ids and deletes any connected interactions
   @param caseIds THe ids of the cases to wipe
   */
@@ -35,7 +36,6 @@ global with sharing class GDPR_WipeCaseService {
     String[] fieldsToClear,
     String batchName
   ) {
-    System.debug('inside a wipe method');
     Set<Id> caseIds = new Set<Id>();
     caseIds = C_Util.getIdSet(caseList);
     wipeRelatedEntities(caseIds, batchName);
@@ -80,19 +80,23 @@ global with sharing class GDPR_WipeCaseService {
         );
       }
     }
-
-    List<GDPR_Retention_Link__mdt> lstRetenMdt = [
-      SELECT
-        DeveloperName,
-        GDPR_Related_Channel_Object__c,
-        GDPR_Related_Channel_Object__r.SObject_Name__c,
-        GDPR_Related_Channel_Object__r.Related_SObject_Name__c,
-        GDPR_Related_Channel_Object__r.Related_Sobject_Lookup_Field__c,
-        GDPR_Retention_Policy__c,
-        Related_LookupField__c
-      FROM GDPR_Retention_Link__mdt
-      WHERE GDPR_Retention_Policy__r.DeveloperName = :batchName
-    ];
+   List<GDPR_Retention_Link__mdt> lstRetenMdt = [SELECT DeveloperName,
+                                                GDPR_Related_Channel_Object_Link__c,
+                                                GDPR_Related_Channel_Object__c,
+                                                GDPR_Related_Channel_Object__r.Related_Case_Lookup_Field__c,
+                                                GDPR_Related_Channel_Object__r.Related_Sobject_Lookup_Field__c,
+                                                GDPR_Related_Channel_Object__r.Related_SObject_Name__c,
+                                                GDPR_Related_Channel_Object__r.SObject_Name__c 
+                                                FROM 
+                                                GDPR_Retention_Link__mdt 
+                                                where 
+                                                GDPR_Related_Channel_Object_Link__c IN 
+                                                (SELECT 
+                                                GDPR_Related_Channel_Object__c
+                                                FROM 
+                                                GDPR_Retention_Policy__mdt WHERE 
+                                                DeveloperName =: batchName)];
+                                                
     for (GDPR_Retention_Link__mdt mdt : lstRetenMdt) {
       if (
         mdt.GDPR_Related_Channel_Object__r.Related_Sobject_Lookup_Field__c !=
@@ -101,7 +105,7 @@ global with sharing class GDPR_WipeCaseService {
         List<SObject> listSobjects = getRelatedChildRecordsForCase(
           caseIds,
           mdt.GDPR_Related_Channel_Object__r.SObject_Name__c,
-          mdt.Related_LookupField__c,
+          mdt.GDPR_Related_Channel_Object__r.Related_Case_Lookup_Field__c,
           mdt.GDPR_Related_Channel_Object__r.Related_Sobject_Lookup_Field__c
         );
         mapSobjects.put(
@@ -119,7 +123,7 @@ global with sharing class GDPR_WipeCaseService {
           (getRelatedChildRecordsForCase(
             caseIds,
             mdt.GDPR_Related_Channel_Object__r.SObject_Name__c,
-            mdt.Related_LookupField__c,
+            mdt.GDPR_Related_Channel_Object__r.Related_Case_Lookup_Field__c,
             mdt.GDPR_Related_Channel_Object__r.Related_Sobject_Lookup_Field__c
           ))
         );
@@ -178,34 +182,42 @@ global with sharing class GDPR_WipeCaseService {
     for (String SobjectName : mapSobjects.keySet()) {
       Set<Id> setSobjecIds = C_Util.getIdSet(mapSobjects.get(SobjectName));
       String q = 'Select Id From ' + SobjectName + ' Where Id IN :setSobjecIds';
-      System.debug('Query****' + q);
       lstSobjectDelete.addAll(Database.Query(q));
     }
 
     delete lstSobjectDelete;
+    
   }
   /**
   wipe the related connection to case
   @param caseIds setof CaseIds needs to wiped
   */
   global static void wipeRelatedEntities(Set<Id> caseIds, String batchName) {
+  
     // Channel Objects
+    System.debug('inside a wipe method');
     List<Sobject> lstWipeRelatedRecords = new List<Sobject>();
-    List<GDPR_Retention_Link__mdt> lstRetenMdt = [
-      SELECT
-        DeveloperName,
-        GDPR_Related_Channel_Object__c,
-        GDPR_Related_Channel_Object__r.SObject_Name__c,
-        GDPR_Retention_Policy__c,
-        Related_LookupField__c
-      FROM GDPR_Retention_Link__mdt
-      WHERE GDPR_Retention_Policy__r.DeveloperName = :batchName
-    ];
+       List<GDPR_Retention_Link__mdt> lstRetenMdt = [SELECT DeveloperName,
+                                                    GDPR_Related_Channel_Object_Link__c,
+                                                    GDPR_Related_Channel_Object__c,
+                                                    GDPR_Related_Channel_Object__r.Related_Case_Lookup_Field__c,
+                                                    GDPR_Related_Channel_Object__r.Related_Sobject_Lookup_Field__c,
+                                                    GDPR_Related_Channel_Object__r.Related_SObject_Name__c,
+                                                    GDPR_Related_Channel_Object__r.SObject_Name__c 
+                                                    FROM 
+                                                    GDPR_Retention_Link__mdt 
+                                                    where 
+                                                    GDPR_Related_Channel_Object_Link__c IN 
+                                                    (SELECT 
+                                                    GDPR_Related_Channel_Object__c
+                                                    FROM 
+                                                    GDPR_Retention_Policy__mdt WHERE 
+                                                    DeveloperName =: batchName)];
     for (GDPR_Retention_Link__mdt mdt : lstRetenMdt) {
       List<SObject> listSobjects = getRelatedChildRecordsForCase(
         caseIds,
         mdt.GDPR_Related_Channel_Object__r.SObject_Name__c,
-        mdt.Related_LookupField__c,
+        mdt.GDPR_Related_Channel_Object__r.Related_Case_Lookup_Field__c,
         null
       );
       lstWipeRelatedRecords.addAll(
@@ -284,7 +296,6 @@ global with sharing class GDPR_WipeCaseService {
     q = relSObjField != null ? q + ', ' + relSObjField : q;
     q += ' FROM ' + sot + ' WHERE ';
     q += caseField + '=:caseIds';
-
     return Database.query(q);
   }
   global static List<SObject> getRelatedParentRecordsForCase(
@@ -296,4 +307,5 @@ global with sharing class GDPR_WipeCaseService {
     q += '( SELECT ' + sot + ' FROM CASE WHERE Id IN :caseIds )';
     return Database.query(q);
   }
+  
 }

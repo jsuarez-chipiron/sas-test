@@ -1633,8 +1633,6 @@ global class SBS_ScheduledBatchService_Test {
         Related_Case_Field__c,
         Retention_Period_Days__c,
         Type__c,
-        Related_Sobject_Name__c,
-        Related_Sobject_Field__c,
         Scheduled_Batch_Component__r.Class__c,
         Scheduled_Batch_Component__r.Schedule__c,
         Scheduled_Batch_Component__r.DayOfWeek__c,
@@ -1645,7 +1643,7 @@ global class SBS_ScheduledBatchService_Test {
         Scheduled_Batch_Component__r.ScopeSize__c,
         Scheduled_Batch_Component__r.Priority__c,
         Scheduled_Batch_Component__r.Group__c
-      FROM GDPR_Retention_Policy__mdt
+        FROM GDPR_Retention_Policy__mdt
       LIMIT 1
     ];
     return mdtGR;

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Related_Sobject_Field__c</fullName>
-    <description>The field on the primary obejct which links the primary object to the parent object (Except cases)</description>
+    <fullName>Related_Case_Lookup_Field__c</fullName>
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
-    <label>Related Sobject Field</label>
-    <length>255</length>
+    <label>Related Case Lookup Field</label>
+    <length>50</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>
