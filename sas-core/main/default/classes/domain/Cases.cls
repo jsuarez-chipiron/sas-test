@@ -16,14 +16,6 @@ public without sharing class Cases extends fflib_SObjectDomain {
 
   private List<Case> instanceRecords;
 
-  /*public override void onApplyDefaults() {
-    for (Case__c Case : (List<Case__c>) Records) {
-      if (Case.Name == null) {
-        Case.Name = Case.Last_Name__c;
-      }
-    }
-  }*/
-
   public override void onAfterDelete() {
     removeRelatedSurveyInvitations();
   }
