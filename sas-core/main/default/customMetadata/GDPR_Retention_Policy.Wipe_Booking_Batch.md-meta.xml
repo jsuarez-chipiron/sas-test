@@ -3,20 +3,16 @@
     <label>Wipe  Booking Batch</label>
     <protected>false</protected>
     <values>
+        <field>GDPR_Related_Channel_Object__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Object__c</field>
         <value xsi:type="xsd:string">Booking__c</value>
     </values>
     <values>
         <field>Related_Case_Field__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
-        <field>Related_Sobject_Field__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
-        <field>Related_Sobject_Name__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Case__c</value>
     </values>
     <values>
         <field>Retention_Period_Days__c</field>

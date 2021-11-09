@@ -72,8 +72,6 @@ global with sharing class SBS_ScheduledBatchService {
             Related_Case_Field__c,
             Retention_Period_Days__c,
             Type__c,
-            Related_Sobject_Name__c,
-            Related_Sobject_Field__c,
             Scheduled_Batch_Component__r.Class__c,
             Scheduled_Batch_Component__r.Schedule__c,
             Scheduled_Batch_Component__r.DayOfWeek__c,

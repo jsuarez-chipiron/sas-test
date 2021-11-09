@@ -3,12 +3,12 @@
     <label>Delete_Case_EmailMessage</label>
     <protected>false</protected>
     <values>
-        <field>GDPR_Related_Channel_Object__c</field>
-        <value xsi:type="xsd:string">EmailMessage</value>
+        <field>GDPR_Related_Channel_Object_Link__c</field>
+        <value xsi:type="xsd:string">Delete_Case_Batch</value>
     </values>
     <values>
-        <field>GDPR_Retention_Policy__c</field>
-        <value xsi:type="xsd:string">Delete_Case_Batch</value>
+        <field>GDPR_Related_Channel_Object__c</field>
+        <value xsi:type="xsd:string">EmailMessage</value>
     </values>
     <values>
         <field>Related_LookupField__c</field>

@@ -3,20 +3,16 @@
     <label>Delete Social Post Batch</label>
     <protected>false</protected>
     <values>
+        <field>GDPR_Related_Channel_Object__c</field>
+        <value xsi:type="xsd:string">SocialPost</value>
+    </values>
+    <values>
         <field>Object__c</field>
         <value xsi:type="xsd:string">SocialPost</value>
     </values>
     <values>
         <field>Related_Case_Field__c</field>
         <value xsi:type="xsd:string">ParentId</value>
-    </values>
-    <values>
-        <field>Related_Sobject_Field__c</field>
-        <value xsi:type="xsd:string">PersonaId</value>
-    </values>
-    <values>
-        <field>Related_Sobject_Name__c</field>
-        <value xsi:type="xsd:string">SocialPersona</value>
     </values>
     <values>
         <field>Retention_Period_Days__c</field>

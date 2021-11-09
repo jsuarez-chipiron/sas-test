@@ -346,7 +346,7 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
       2,
       null,
       'Baggage',
-      'Wipe_Case_Batch'
+      'Wipe_Case_Batch_Baggage'
     );
     gdprWipeCaseBatch.lastRetentionDate = dateTime.now().addDays(4);
     Test.startTest();
@@ -417,7 +417,7 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
       1,
       null,
       'Baggage',
-      'Delete_Case_Batch'
+      'Delete_Case_Batch_Baggage'
     );
     gdprDelCaseBatch.lastRetentionDate = dateTime.now().addDays(3);
     Test.startTest();

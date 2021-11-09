@@ -48,21 +48,23 @@ Overiding of the abstract method used to set the Batch class params
     this.sObjectName = sot + '';
     this.caseField = caseField != null ? caseField + '' : null;
 
-    List<GDPR_Retention_Link__mdt> lstMdtRetenLink = [
+    List<GDPR_Retention_Policy__mdt> lstMdtRelObject = [
       SELECT
         DeveloperName,
         GDPR_Related_Channel_Object__c,
-        GDPR_Related_Channel_Object__r.SObject_Name__c,
-        GDPR_Retention_Policy__c,
-        Related_LookupField__c
-      FROM GDPR_Retention_Link__mdt
-      WHERE GDPR_Retention_Policy__r.DeveloperName = :batchName
+        GDPR_Related_Channel_Object__r.Related_SObject_Name__c,
+        GDPR_Related_Channel_Object__r.Related_Sobject_Lookup_Field__c
+      FROM GDPR_Retention_Policy__mdt
+      WHERE
+        GDPR_Related_Channel_Object__c != NULL
+        AND DeveloperName = :batchName
       LIMIT 1
     ];
-    if (!lstMdtRetenLink.isEmpty()) {
-      this.relSObjName = lstMdtRetenLink[0]
-        .GDPR_Related_Channel_Object__r.SObject_Name__c;
-      this.relSObjField = lstMdtRetenLink[0].Related_LookupField__c;
+    if (!lstMdtRelObject.isEmpty()) {
+      this.relSObjName = lstMdtRelObject[0]
+        .GDPR_Related_Channel_Object__r.Related_SObject_Name__c;
+      this.relSObjField = lstMdtRelObject[0]
+        .GDPR_Related_Channel_Object__r.Related_Sobject_Lookup_Field__c;
     }
   }
 

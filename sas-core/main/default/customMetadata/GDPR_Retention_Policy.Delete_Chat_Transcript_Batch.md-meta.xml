@@ -3,20 +3,16 @@
     <label>Delete Chat Transcript Batch</label>
     <protected>false</protected>
     <values>
+        <field>GDPR_Related_Channel_Object__c</field>
+        <value xsi:type="xsd:string">LiveChatTranscript</value>
+    </values>
+    <values>
         <field>Object__c</field>
         <value xsi:type="xsd:string">LiveChatTranscript</value>
     </values>
     <values>
         <field>Related_Case_Field__c</field>
         <value xsi:type="xsd:string">caseId</value>
-    </values>
-    <values>
-        <field>Related_Sobject_Field__c</field>
-        <value xsi:type="xsd:string">LiveChatVisitorId</value>
-    </values>
-    <values>
-        <field>Related_Sobject_Name__c</field>
-        <value xsi:type="xsd:string">LiveChatVisitor</value>
     </values>
     <values>
         <field>Retention_Period_Days__c</field>
