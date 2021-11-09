@@ -261,6 +261,11 @@
                 <label>Email - Liability Claim</label>
             </value>
             <value>
+                <fullName>Email - Liability Claim BOM</fullName>
+                <default>false</default>
+                <label>Email - Liability Claim BOM</label>
+            </value>
+            <value>
                 <fullName>Email - OC KANA Bank Payment</fullName>
                 <default>false</default>
                 <label>Email - OC KANA Bank Payment</label>
