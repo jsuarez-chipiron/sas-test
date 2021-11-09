@@ -121,6 +121,11 @@
         <field>Booking__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	 <fieldPermissions>
+        <editable>true</editable>
+        <field>Booking__c.GDPR_Wiped__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Fetch_Flight__e.Flight_Identifiers__c</field>
@@ -387,7 +392,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.GDPR_Wiped__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -687,7 +692,7 @@
         <readable>true</readable>
     </fieldPermissions>    
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.GDPR_Wiped__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -816,6 +821,11 @@
         <field>Refund_Request__c.Country_of_Purchase__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	 <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.GDPR_Wiped__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Refund_Request__c.Note__c</field>
@@ -839,6 +849,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EmailMessage.Is_Counted__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>EmailMessage.GDPR_Wiped__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1321,6 +1336,11 @@
         <field>LiveChatTranscript.GDPR_Consent__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	 <fieldPermissions>
+        <editable>true</editable>
+        <field>LiveChatTranscript.GDPR_Wiped__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>LiveChatTranscript.TURI_Chat_User_Id__c</field>
@@ -1354,6 +1374,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>MessagingSession.GDPR_Consent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	 <fieldPermissions>
+        <editable>true</editable>
+        <field>MessagingSession.GDPR_Wiped__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1514,6 +1539,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.FCS_SASPost__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	 <fieldPermissions>
+        <editable>true</editable>
+        <field>SocialPost.GDPR_Wiped__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
