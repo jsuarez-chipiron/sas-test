@@ -251,6 +251,12 @@ global with sharing class GDPR_WipeCaseService {
       }
     }
     update lstWipeRelatedRecords;
+    // Deleting of the Email Messages while wiping the case
+    List<EMailMessage> lstEmailMessage = [SELECT Id FROM EmailMessage WHERE ParentId=:caseIds];
+    if(!lstEmailMessage.isEmpty())
+    {
+      delete lstEmailMessage;
+    }
   }
 
   global static List<Sobject> getRelatedChildRecordsForChannelObject(
