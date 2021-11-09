@@ -3927,6 +3927,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Liability Claim BOM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Refund BSP General</fullName>
             <default>false</default>
         </values>

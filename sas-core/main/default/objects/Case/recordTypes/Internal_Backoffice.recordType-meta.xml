@@ -4155,6 +4155,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Liability Claim BOM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - OC KANA Bank Payment</fullName>
             <default>false</default>
         </values>
