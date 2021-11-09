@@ -971,7 +971,7 @@
             <targetReference>NewRefundRequest</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>SelectedRequestType</name>
         <dataType>String</dataType>
