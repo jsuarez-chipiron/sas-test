@@ -170,11 +170,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
-            <valueName>Receive Customer Documentation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>Refund Handling</valueName>
         </valueSettings>
         <valueSettings>
@@ -322,6 +317,10 @@
         <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
             <valueName>Digital Channel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <valueName>Receive Customer Documentation</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Functional Product Support</controllingFieldValue>

@@ -1101,6 +1101,7 @@
             <controllingFieldValue>Disconnected customer</controllingFieldValue>
             <controllingFieldValue>Upgrade</controllingFieldValue>
             <controllingFieldValue>Error</controllingFieldValue>
+            <controllingFieldValue>Refund - Gift Card</controllingFieldValue>
             <controllingFieldValue>Escalate EB Shop problems</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>EuroBonus CN</controllingFieldValue>
@@ -1502,7 +1503,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Irregularity</controllingFieldValue>
-            <controllingFieldValue>Refund</controllingFieldValue>
+            <controllingFieldValue>Refund - Voucher</controllingFieldValue>
             <valueName>COVID19</valueName>
         </valueSettings>
         <valueSettings>
@@ -1798,19 +1799,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>
-            <valueName>MMB Refund process</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund</controllingFieldValue>
             <valueName>Refund status</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>
             <valueName>Request refund</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund</controllingFieldValue>
-            <valueName>RTCREDIT</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
@@ -2065,11 +2058,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
-            <valueName>Issue New</valueName>
+            <valueName>SRS</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Error</controllingFieldValue>
-            <valueName>SRS</valueName>
+            <controllingFieldValue>Refund - Voucher</controllingFieldValue>
+            <valueName>MMB Refund process</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund - Voucher</controllingFieldValue>
+            <valueName>RTCREDIT</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error Management</controllingFieldValue>
@@ -2126,6 +2123,10 @@
         <valueSettings>
             <controllingFieldValue>Fares</controllingFieldValue>
             <valueName>Youth</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error - Gift Card</controllingFieldValue>
+            <valueName>Issue New</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Look here before you ask</controllingFieldValue>
