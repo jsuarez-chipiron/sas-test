@@ -478,7 +478,7 @@
         </rules>
         <rules>
             <name>RefundNotReceivedOCOutcome</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>SelectedRequestType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -491,6 +491,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>OK in SRS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>SelectedSubCategory</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No ticket issued - IBP or RC</stringValue>
                 </rightValue>
             </conditions>
             <connector>
