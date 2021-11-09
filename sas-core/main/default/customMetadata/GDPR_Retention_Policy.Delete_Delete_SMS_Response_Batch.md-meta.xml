@@ -11,14 +11,6 @@
         <value xsi:nil="true"/>
     </values>
     <values>
-        <field>Related_Sobject_Field__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
-        <field>Related_Sobject_Name__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
         <field>Retention_Period_Days__c</field>
         <value xsi:type="xsd:double">360.0</value>
     </values>
