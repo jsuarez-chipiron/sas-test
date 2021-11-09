@@ -69,9 +69,9 @@
                 <label>Credit Card</label>
             </value>
             <value>
-                <fullName>IBP or RC</fullName>
+                <fullName>No ticket issued - IBP or RC</fullName>
                 <default>false</default>
-                <label>IBP or RC</label>
+                <label>No ticket issued - IBP or RC</label>
             </value>
             <value>
                 <fullName>Voucher</fullName>
@@ -153,6 +153,16 @@
                 <default>false</default>
                 <label>Other</label>
             </value>
+            <value>
+                <fullName>14 day money back guarantee</fullName>
+                <default>false</default>
+                <label>14 day money back guarantee</label>
+            </value>
+            <value>
+                <fullName>Error</fullName>
+                <default>false</default>
+                <label>Error</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Travel Agent Tickets</controllingFieldValue>
@@ -174,6 +184,42 @@
             <valueName>Webform Request</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Past Date PNR</controllingFieldValue>
+            <valueName>1- Refund Tax</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Past Date PNR</controllingFieldValue>
+            <valueName>2- Refund Part</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Past Date PNR</controllingFieldValue>
+            <valueName>3- Refund Flex+Restrict</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Past Date PNR</controllingFieldValue>
+            <valueName>4- Refund 24 hrs</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Past Date PNR</controllingFieldValue>
+            <valueName>5- Refund 24/12 hrs</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Past Date PNR</controllingFieldValue>
+            <valueName>6- Refund Residual Value</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Past Date PNR</controllingFieldValue>
+            <valueName>7- Refund Flex</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Past Date PNR</controllingFieldValue>
+            <valueName>8- Refund EB</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Past Date PNR</controllingFieldValue>
+            <valueName>9- Refund IRR</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Refund not received</controllingFieldValue>
             <valueName>OK in SRS</valueName>
         </valueSettings>
@@ -186,16 +232,24 @@
             <valueName>Already sent documentation for waiver</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Refund not received</controllingFieldValue>
+            <valueName>No ticket issued - IBP or RC</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Reserved Amount</controllingFieldValue>
             <valueName>Credit Card</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Reserved Amount</controllingFieldValue>
-            <valueName>IBP or RC</valueName>
+            <valueName>Voucher</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Reserved Amount</controllingFieldValue>
-            <valueName>Voucher</valueName>
+            <controllingFieldValue>Gift Card</controllingFieldValue>
+            <valueName>14 day money back guarantee</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gift Card</controllingFieldValue>
+            <valueName>Error</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Passenger bank details</controllingFieldValue>
@@ -233,42 +287,6 @@
         <valueSettings>
             <controllingFieldValue>Other</controllingFieldValue>
             <valueName>SC under 180 min</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Past Date PNR</controllingFieldValue>
-            <valueName>1- Refund Tax</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Past Date PNR</controllingFieldValue>
-            <valueName>2- Refund Part</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Past Date PNR</controllingFieldValue>
-            <valueName>3- Refund Flex+Restrict</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Past Date PNR</controllingFieldValue>
-            <valueName>4- Refund 24 hrs</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Past Date PNR</controllingFieldValue>
-            <valueName>5- Refund 24/12 hrs</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Past Date PNR</controllingFieldValue>
-            <valueName>6- Refund Residual Value</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Past Date PNR</controllingFieldValue>
-            <valueName>7- Refund Flex</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Past Date PNR</controllingFieldValue>
-            <valueName>8- Refund EB</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Past Date PNR</controllingFieldValue>
-            <valueName>9- Refund IRR</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
