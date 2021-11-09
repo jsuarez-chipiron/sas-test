@@ -18,9 +18,14 @@
                 <label>Travel Agent Tickets</label>
             </value>
             <value>
-                <fullName>Wrongly refunded - Past Date</fullName>
+                <fullName>Wrongly refunded</fullName>
                 <default>false</default>
-                <label>Wrongly refunded - Past Date</label>
+                <label>Wrongly refunded</label>
+            </value>
+            <value>
+                <fullName>Past Date PNR</fullName>
+                <default>false</default>
+                <label>Past Date PNR</label>
             </value>
             <value>
                 <fullName>Refund not received</fullName>

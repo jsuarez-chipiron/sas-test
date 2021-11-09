@@ -20,20 +20,13 @@
     <assignments>
         <name>SetCaseFields10</name>
         <label>SetCaseFields10</label>
-        <locationX>2426</locationX>
+        <locationX>2690</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>OC Error Handling</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>CaseReasonToSet</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Refund not received</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -43,13 +36,13 @@
     <assignments>
         <name>SetCaseFields11</name>
         <label>SetCaseFields11</label>
-        <locationX>2690</locationX>
+        <locationX>2954</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>OC Waivers</stringValue>
+                <stringValue>Sitel Waivers</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -59,20 +52,13 @@
     <assignments>
         <name>SetCaseFields12</name>
         <label>SetCaseFields12</label>
-        <locationX>2954</locationX>
+        <locationX>3218</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>OC Reserved Amount</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>CaseReasonToSet</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Reserved Amount</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -82,7 +68,7 @@
     <assignments>
         <name>SetCaseFields13</name>
         <label>SetCaseFields13</label>
-        <locationX>3218</locationX>
+        <locationX>3482</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
@@ -98,7 +84,7 @@
     <assignments>
         <name>SetCaseFields14</name>
         <label>SetCaseFields14</label>
-        <locationX>3482</locationX>
+        <locationX>3746</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
@@ -114,13 +100,29 @@
     <assignments>
         <name>SetCaseFields15</name>
         <label>SetCaseFields15</label>
-        <locationX>3746</locationX>
+        <locationX>4010</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Sykes Voucher</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Refund_Request</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>SetCaseFields16</name>
+        <label>SetCaseFields16</label>
+        <locationX>2162</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>TeamToSet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>BOM General</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -232,7 +234,7 @@
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>BOM Tenured</stringValue>
+                <stringValue>BOM Error Handling</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -242,174 +244,23 @@
     <assignments>
         <name>SetCaseFields9</name>
         <label>SetCaseFields9</label>
-        <locationX>2162</locationX>
+        <locationX>2426</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>BOM General</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>CaseReasonToSet</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Refund not received</stringValue>
+                <stringValue>BOM Error Handling</stringValue>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>Create_Refund_Request</targetReference>
         </connector>
     </assignments>
-    <choices>
-        <name>AgentHelpdeskChoice</name>
-        <choiceText>Agent Helpdesk</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>AgentHelpdesk</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>ForsvaretChoice</name>
-        <choiceText>Forsvaret</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Forsvaret</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>GiftCardChoice</name>
-        <choiceText>Gift Card</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>GiftCard</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>KlarnaRefundNotReceivedChoice</name>
-        <choiceText>Klarna autorefund failed</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>KlarnaRefundNotReceived</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>OtherChoice</name>
-        <choiceText>Other</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Other</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>PassengerBankDetailsChoice</name>
-        <choiceText>Passenger bank details</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>PassengerBankDetails</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>PayPalChoice</name>
-        <choiceText>PayPal &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;refund not received&lt;/span&gt;</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>PayPal</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>RefundNotReceivedBOMChoice</name>
-        <choiceText>Refund not received - Not in SRS</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>RefundNotReceivedBOM</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>RefundNotReceivedOCChoice</name>
-        <choiceText>Refund not received - OK in SRS</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>RefundNotReceivedOC</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>ReminderChoice</name>
-        <choiceText>Reminder</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Reminder</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>ReservedAmountChoice</name>
-        <choiceText>Reserved Amount</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>ReservedAmount</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>SevenDayRefundGuarantee</name>
-        <choiceText>7 Day Refund Guarantee</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>7 day refund guarantee</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>SwishChoice</name>
-        <choiceText>SWISH refund not received</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>SWISH</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>TravelAgentWebformChoice</name>
-        <choiceText>Travel Agent Webform</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Travel Agent Webform</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>VoucherChoice</name>
-        <choiceText>Voucher</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Voucher</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>VoucherReservedAmountChoice</name>
-        <choiceText>Voucher - Reserved Amount</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>VoucherReservedAmount</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>WronglyRefundedFullChoice</name>
-        <choiceText>Wrongly refunded - Full refund</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>WronglyRefundedFull</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>WronglyRefundedPartialChoice</name>
-        <choiceText>Wrongly refunded - Partial refund</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>WronglyRefundedPartial</stringValue>
-        </value>
-    </choices>
     <decisions>
         <name>SetTeamAndCaseReason</name>
         <label>SetTeamAndCaseReason</label>
-        <locationX>2030</locationX>
+        <locationX>2162</locationX>
         <locationY>518</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -574,19 +425,34 @@
             <label>Other</label>
         </rules>
         <rules>
-            <name>WronglyRefundedPastDateOutcome</name>
+            <name>WronglyRefundedOutcome</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>SelectedRequestType</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Wrongly refunded - Past Date</stringValue>
+                    <stringValue>Wrongly refunded</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>SetCaseFields8</targetReference>
             </connector>
-            <label>Wrongly refunded - Past Date</label>
+            <label>Wrongly refunded</label>
+        </rules>
+        <rules>
+            <name>PastDatePNROutcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SelectedRequestType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Past Date PNR</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetCaseFields16</targetReference>
+            </connector>
+            <label>Past Date PNR</label>
         </rules>
         <rules>
             <name>RefundNotReceivedBOMOutcome</name>
@@ -747,7 +613,7 @@
     <recordCreates>
         <name>Create_Refund_Request</name>
         <label>Create Refund Request</label>
-        <locationX>2030</locationX>
+        <locationX>2162</locationX>
         <locationY>854</locationY>
         <connector>
             <targetReference>Get_Created_Refund_Request</targetReference>
@@ -794,7 +660,7 @@
     <recordCreates>
         <name>CreateRefundCase</name>
         <label>Create Refund Case</label>
-        <locationX>2030</locationX>
+        <locationX>2162</locationX>
         <locationY>1094</locationY>
         <connector>
             <targetReference>Success</targetReference>
@@ -809,18 +675,6 @@
             <field>Description</field>
             <value>
                 <elementReference>Note</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>FCS_CaseReason__c</field>
-            <value>
-                <elementReference>CaseReasonToSet</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>FCS_CaseSubReason__c</field>
-            <value>
-                <elementReference>CaseSubReasonToSet</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -871,19 +725,13 @@
                 <elementReference>TeamToSet</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>Type</field>
-            <value>
-                <stringValue>Refund</stringValue>
-            </value>
-        </inputAssignments>
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
         <name>Get_Created_Refund_Request</name>
         <label>Get Created Refund Request</label>
-        <locationX>2030</locationX>
+        <locationX>2162</locationX>
         <locationY>974</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -906,7 +754,7 @@
     <recordLookups>
         <name>GetRefundsQueueId</name>
         <label>Get Refunds Queue Id</label>
-        <locationX>2030</locationX>
+        <locationX>2162</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -927,7 +775,7 @@
     <recordLookups>
         <name>GetRefundsRecordType</name>
         <label>GetRefundsRecordType</label>
-        <locationX>2030</locationX>
+        <locationX>2162</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -949,7 +797,7 @@
     <screens>
         <name>NewRefundRequest</name>
         <label>New Refund Request</label>
-        <locationX>2030</locationX>
+        <locationX>2162</locationX>
         <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1103,7 +951,7 @@
     <screens>
         <name>Success</name>
         <label>Success</label>
-        <locationX>2030</locationX>
+        <locationX>2162</locationX>
         <locationY>1214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1117,27 +965,13 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>1904</locationX>
+        <locationX>2036</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>NewRefundRequest</targetReference>
         </connector>
     </start>
-    <status>Active</status>
-    <variables>
-        <name>CaseReasonToSet</name>
-        <dataType>Picklist</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>CaseSubReasonToSet</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
+    <status>Draft</status>
     <variables>
         <name>SelectedRequestType</name>
         <dataType>String</dataType>
