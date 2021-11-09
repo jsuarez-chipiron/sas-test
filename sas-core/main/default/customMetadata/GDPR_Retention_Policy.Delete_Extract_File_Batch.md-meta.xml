@@ -3,6 +3,10 @@
     <label>Delete Extract File Batch</label>
     <protected>false</protected>
     <values>
+        <field>GDPR_Related_Channel_Object__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Object__c</field>
         <value xsi:type="xsd:string">ContentVersion</value>
     </values>
@@ -12,7 +16,7 @@
     </values>
     <values>
         <field>Retention_Period_Days__c</field>
-        <value xsi:type="xsd:double">360.0</value>
+        <value xsi:type="xsd:double">0.0</value>
     </values>
     <values>
         <field>Scheduled_Batch_Component__c</field>
