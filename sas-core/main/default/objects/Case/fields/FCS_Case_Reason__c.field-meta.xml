@@ -895,11 +895,184 @@
                 <label>Error</label>
             </value>
             <value>
+                <fullName>Refund - Voucher</fullName>
+                <default>false</default>
+                <label>Refund - Voucher</label>
+            </value>
+            <value>
+                <fullName>Refund - Gift Card</fullName>
+                <default>false</default>
+                <label>Refund - Gift Card</label>
+            </value>
+            <value>
+                <fullName>Error - Gift Card</fullName>
+                <default>false</default>
+                <label>Error - Gift Card</label>
+            </value>
+            <value>
                 <fullName>Other</fullName>
                 <default>false</default>
                 <label>Other</label>
             </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <valueName>App</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <valueName>Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <valueName>SAS Corporate Portal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <valueName>SAS for Business Agreement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <valueName>Travel Pass</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <controllingFieldValue>Ticketless</controllingFieldValue>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <controllingFieldValue>Voucher Handling</controllingFieldValue>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <controllingFieldValue>GDPR</controllingFieldValue>
+            <controllingFieldValue>Irregularities</controllingFieldValue>
+            <controllingFieldValue>New Booking</controllingFieldValue>
+            <controllingFieldValue>Non-SAS Products</controllingFieldValue>
+            <controllingFieldValue>Plusgrade</controllingFieldValue>
+            <controllingFieldValue>Puzzle</controllingFieldValue>
+            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <controllingFieldValue>Baggage</controllingFieldValue>
+            <controllingFieldValue>Cancellation &amp; Refunds</controllingFieldValue>
+            <controllingFieldValue>Changes</controllingFieldValue>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <controllingFieldValue>Digital Channel</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <controllingFieldValue>SAS for Business</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <valueName>Add Animals</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <controllingFieldValue>Baggage</controllingFieldValue>
+            <valueName>Add Baggage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <valueName>Add Bike</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <valueName>Add Biofuel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <valueName>Add EB in Booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <valueName>Add Golfbag</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <valueName>Add Infant in Booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <valueName>Add Meals</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <valueName>Add Musical Instrument</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <valueName>Add Seating</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <valueName>Add Skis</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <valueName>Add Special Assistance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <valueName>Add weapon</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <valueName>Add Wheelchair</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ticketless</controllingFieldValue>
+            <valueName>Change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ticketless</controllingFieldValue>
+            <valueName>Close</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Arrival info</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Assist with check-in</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Connection Info</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Departure Info</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Fast Track</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Inform about Airport Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Inform about lounges</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>SAS Aircraft</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Security</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Support in Document Control</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <valueName>Ticket status</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel Pass</controllingFieldValue>
             <controllingFieldValue>SAS for Business</controllingFieldValue>
@@ -933,35 +1106,6 @@
             <valueName>Update Profile</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
-            <controllingFieldValue>Voucher</controllingFieldValue>
-            <controllingFieldValue>Error</controllingFieldValue>
-            <controllingFieldValue>Digital Channel</controllingFieldValue>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <controllingFieldValue>Voucher Handling</controllingFieldValue>
-            <controllingFieldValue>Irregularities</controllingFieldValue>
-            <controllingFieldValue>New Booking</controllingFieldValue>
-            <controllingFieldValue>Non-SAS Products</controllingFieldValue>
-            <controllingFieldValue>Plusgrade</controllingFieldValue>
-            <controllingFieldValue>Puzzle</controllingFieldValue>
-            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
-            <controllingFieldValue>Salesforce</controllingFieldValue>
-            <controllingFieldValue>SAS for Business</controllingFieldValue>
-            <controllingFieldValue>SME</controllingFieldValue>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <controllingFieldValue>Baggage</controllingFieldValue>
-            <controllingFieldValue>Cancellation &amp; Refunds</controllingFieldValue>
-            <controllingFieldValue>Changes</controllingFieldValue>
-            <controllingFieldValue>Content</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <controllingFieldValue>GDPR</controllingFieldValue>
-            <controllingFieldValue>Ticketless</controllingFieldValue>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Other</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Voucher</controllingFieldValue>
             <valueName>Help to Request</valueName>
         </valueSettings>
@@ -975,8 +1119,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Voucher</controllingFieldValue>
-            <controllingFieldValue>Gift Card</controllingFieldValue>
-            <controllingFieldValue>Voucher Handling</controllingFieldValue>
             <valueName>Refund</valueName>
         </valueSettings>
         <valueSettings>
@@ -986,6 +1128,22 @@
         <valueSettings>
             <controllingFieldValue>Voucher</controllingFieldValue>
             <valueName>Status Waiting Time</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher Handling</controllingFieldValue>
+            <valueName>Email related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher Handling</controllingFieldValue>
+            <valueName>Extend</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher Handling</controllingFieldValue>
+            <valueName>Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voucher Handling</controllingFieldValue>
+            <valueName>Refund - Voucher</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
@@ -1000,107 +1158,70 @@
             <valueName>Spam</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Digital Channel</controllingFieldValue>
-            <valueName>Booking problem</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Digital Channel</controllingFieldValue>
-            <valueName>EuroBonus account</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Digital Channel</controllingFieldValue>
             <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>ATO Account Takeover</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Boozt Attack</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>CAR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Coop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Crime Prevention</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>EuroBonus CN</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <controllingFieldValue>Digital Channel</controllingFieldValue>
             <valueName>EuroBonus Shop</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Digital Channel</controllingFieldValue>
-            <valueName>Payment</valueName>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>GAC Give Away Card</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Digital Channel</controllingFieldValue>
-            <valueName>Wrong info to customer</valueName>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Hotel</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>AliPay</valueName>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Point Sharing</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>Card errors</valueName>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>SAS Flights</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>Chargeback</valueName>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <valueName>Star Online</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>Insufficient Balance Account</valueName>
+            <controllingFieldValue>GDPR</controllingFieldValue>
+            <valueName>Deletion</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>Insufficient Balance Payment</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>Klarna</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>Mutiple FOP</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>No money collected</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>PayPal</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>Swish</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>Swish Bot Output</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>UnionPay</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>WeChat</valueName>
+            <controllingFieldValue>GDPR</controllingFieldValue>
+            <valueName>Extract</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Gift Card</controllingFieldValue>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <controllingFieldValue>Plusgrade</controllingFieldValue>
-            <valueName>Error</valueName>
+            <valueName>Refund - Gift Card</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <valueName>Involuntary</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <valueName>Support</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <valueName>Voluntary</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Voucher Handling</controllingFieldValue>
-            <valueName>Email related</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Voucher Handling</controllingFieldValue>
-            <valueName>Extend</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Voucher Handling</controllingFieldValue>
-            <valueName>Issue</valueName>
+            <controllingFieldValue>Gift Card</controllingFieldValue>
+            <valueName>Error - Gift Card</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Irregularities</controllingFieldValue>
@@ -1161,6 +1282,11 @@
             <valueName>Upgrade</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Plusgrade</controllingFieldValue>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Error</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Puzzle</controllingFieldValue>
             <controllingFieldValue>Salesforce</controllingFieldValue>
             <valueName>Access rights</valueName>
@@ -1184,96 +1310,20 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
             <valueName>SC Under 180 Minutes</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Salesforce</controllingFieldValue>
-            <valueName>Bug</valueName>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Involuntary</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Salesforce</controllingFieldValue>
-            <valueName>Process Question</valueName>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Support</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>SAS for Business</controllingFieldValue>
-            <valueName>Online Profile</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SME</controllingFieldValue>
-            <valueName>App</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SME</controllingFieldValue>
-            <valueName>Information</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SME</controllingFieldValue>
-            <valueName>SAS Corporate Portal</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SME</controllingFieldValue>
-            <valueName>SAS for Business Agreement</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SME</controllingFieldValue>
-            <valueName>Travel Pass</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add Animals</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <controllingFieldValue>Baggage</controllingFieldValue>
-            <valueName>Add Baggage</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add Bike</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add Biofuel</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add EB in Booking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add Golfbag</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add Infant in Booking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add Meals</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add Musical Instrument</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add Seating</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add Skis</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add Special Assistance</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add weapon</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <valueName>Add Wheelchair</valueName>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Voluntary</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
@@ -1407,6 +1457,74 @@
             <valueName>System related</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Digital Channel</controllingFieldValue>
+            <valueName>Booking problem</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Channel</controllingFieldValue>
+            <valueName>EuroBonus account</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Channel</controllingFieldValue>
+            <valueName>Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Channel</controllingFieldValue>
+            <valueName>Wrong info to customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>AliPay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Card errors</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Chargeback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Insufficient Balance Account</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Insufficient Balance Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Klarna</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Mutiple FOP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>No money collected</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>PayPal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Swish</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>Swish Bot Output</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>UnionPay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <valueName>WeChat</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>AMEX</valueName>
         </valueSettings>
@@ -1449,11 +1567,6 @@
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Point related question</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>Point Sharing</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
@@ -1532,104 +1645,16 @@
             <valueName>Sales Control</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>ATO Account Takeover</valueName>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <valueName>Bug</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>Boozt Attack</valueName>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <valueName>Process Question</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>CAR</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>Coop</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>Crime Prevention</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>EuroBonus CN</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>GAC Give Away Card</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>Hotel</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>SAS Flights</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <valueName>Star Online</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>GDPR</controllingFieldValue>
-            <valueName>Deletion</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>GDPR</controllingFieldValue>
-            <valueName>Extract</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Ticketless</controllingFieldValue>
-            <valueName>Change</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Ticketless</controllingFieldValue>
-            <valueName>Close</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Arrival info</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Assist with check-in</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Connection Info</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Departure Info</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Fast Track</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Inform about Airport Services</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Inform about lounges</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>SAS Aircraft</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Security</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Support in Document Control</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <valueName>Ticket status</valueName>
+            <controllingFieldValue>SAS for Business</controllingFieldValue>
+            <valueName>Online Profile</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

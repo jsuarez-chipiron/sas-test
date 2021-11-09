@@ -3699,6 +3699,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Error - Gift Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Error Management</fullName>
             <default>false</default>
         </values>
@@ -3964,6 +3968,14 @@
         </values>
         <values>
             <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund - Gift Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund - Voucher</fullName>
             <default>false</default>
         </values>
         <values>
