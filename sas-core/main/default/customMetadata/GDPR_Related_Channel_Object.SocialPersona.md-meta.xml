@@ -3,10 +3,6 @@
     <label>SocialPersona</label>
     <protected>false</protected>
     <values>
-        <field>GDPR_Retention_Policy__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
         <field>Related_SObject_Name__c</field>
         <value xsi:nil="true"/>
     </values>
