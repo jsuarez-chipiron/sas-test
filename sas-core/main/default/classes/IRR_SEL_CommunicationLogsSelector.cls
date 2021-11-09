@@ -79,7 +79,8 @@ public class IRR_SEL_CommunicationLogsSelector extends fflib_SObjectSelector imp
       .setOrdering(
         IRR_CommunicationLog__c.CreatedDate,
         fflib_QueryFactory.SortOrder.DESCENDING
-      );
+      )
+      .setCondition('IRR_EBNumber__c IN :euroBonusNumbers');
     return Database.query(queryFactory.toSOQL());
   }
 
