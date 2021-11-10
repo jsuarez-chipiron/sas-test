@@ -2,6 +2,7 @@ import { LightningElement, track, api, wire } from "lwc";
 import getAccountData from "@salesforce/apex/CustomerCardController.getAccountData";
 import getBookingData from "@salesforce/apex/CustomerCardController.getBookingData";
 import getCaseData from "@salesforce/apex/CustomerCardController.getCaseData";
+import getTPProductsForAccount from "@salesforce/apex/CustomerCardController.getTPProductsForAccount";
 import Case_ACCOUNTID_FIELD from "@salesforce/schema/Case.AccountId";
 import getAllCommunicationData from "@salesforce/apex/CustomerCardController.getAllCommunicationData";
 import Case_EBNUMBER_FIELD from "@salesforce/schema/Case.FCS_EBNumber__c";
@@ -25,6 +26,7 @@ export default class CustomerCard extends LightningElement {
   @track bookings = [];
   @track cases = [];
   @track communicationLogs = [];
+  @track tpProducts = [];
   wiredRecordReference;
   wiredBookingsReference;
 
@@ -107,7 +109,7 @@ export default class CustomerCard extends LightningElement {
       this.account = {
         ...data[0],
         cmpCode: data[0].FCS_CMP__c || "-",
-        tpNumber: data[0].FCS_TPAccountNumber__c || ""
+        tpNumber: data[0].FCS_TPAccountNumber__c || "-"
       };
       if (
         data[0].FCS_EBLevel__c != undefined &&
@@ -123,6 +125,16 @@ export default class CustomerCard extends LightningElement {
     } else {
       this.account = undefined;
       this.cardTitle = "";
+    }
+  }
+
+  @wire(getTPProductsForAccount, { accountId: "$accountId" })
+  wiredTPProducts({ error, data }) {
+    console.log(data);
+    if (!error && data != undefined && data.length > 0) {
+      this.tpProducts = data;
+    } else {
+      this.tpProducts = [];
     }
   }
 

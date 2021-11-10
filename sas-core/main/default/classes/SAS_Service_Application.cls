@@ -17,7 +17,8 @@ public class SAS_Service_Application {
       Passenger__c.SObjectType => PassengersSelector.class,
       Refund_Request__c.SObjectType => Refund_RequestsSelector.class,
       Segment__c.SObjectType => SegmentsSelector.class,
-      SocialPost.SObjectType => SocialPostsSelector.class
+      SocialPost.SObjectType => SocialPostsSelector.class,
+      Travel_Pass_Product__c.SObjectType => TravelPassProductsSelector.class
     }
   );
 

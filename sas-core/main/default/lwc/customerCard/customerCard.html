@@ -264,12 +264,11 @@
             <h2 class="slds-m-bottom_xxx-small">
               <strong>Corporate account</strong>
             </h2>
-            <div class="slds-col slds-size_1-of-1 slds-grid">
-              <div class="slds-col slds-size_1-of-2 slds-grid">
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
                 <div
                   class="
                     slds-col
-                    slds-size_1-of-1
+                    slds-size_1-of-2
                     slds-grid slds-grid_vertical
                     slds-p-right_small
                   "
@@ -278,12 +277,17 @@
                   <span class="slds-border_bottom">{account.cmpCode}</span>
                 </div>
                 <div
-                  class="slds-col slds-size_1-of-1 slds-grid slds-grid_vertical"
+                  class="slds-col slds-size_1-of-2 slds-grid slds-grid_vertical slds-p-right_small"
                 >
                   <span class="field-label">TP Number</span>
                   <span class="slds-border_bottom">{account.tpNumber}</span>
                 </div>
-              </div>
+                <div for:each={tpProducts} for:item="p" key={p.Id}
+                  class="slds-col slds-size_1-of-2 slds-grid slds-grid_vertical slds-p-right_small"
+                >
+                  <span class="field-label">TP Product</span>
+                  <span class="slds-border_bottom">{p.Category_Name__c}</span>
+                </div>
             </div>
           </lightning-tab>
         </lightning-tabset>

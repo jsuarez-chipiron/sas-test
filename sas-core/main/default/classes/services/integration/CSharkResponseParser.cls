@@ -11,10 +11,10 @@ public with sharing class CSharkResponseParser {
   /**
    * Namespaces for the C-Shark XML. Prefix is specified by _<prefix>.
    */
-  private static final String XMLNS_S = 'http://schemas.xmlsoap.org/soap/envelope/';
-  private static final String XMLNS_I = 'http://www.w3.org/2001/XMLSchema-instance';
-  private static final String XMLNS = 'http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1';
-  private static final String XMLNS_A = 'http://www.flysas.com/wcf/CSharkCustomerManagement/v1';
+  public static final String XMLNS_S = 'http://schemas.xmlsoap.org/soap/envelope/';
+  public static final String XMLNS_I = 'http://www.w3.org/2001/XMLSchema-instance';
+  public static final String XMLNS = 'http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1';
+  public static final String XMLNS_A = 'http://www.flysas.com/wcf/CSharkCustomerManagement/v1';
 
   /**
    * Used to parse a response for operation CustomerGet.
@@ -64,10 +64,15 @@ public with sharing class CSharkResponseParser {
     return dataRows;
   }
 
-  public static String parseTPAccountGetTicketlessResponse(
+  public static TPAccount parseTPAccountGetTicketlessResponse(
     String responseBody
   ) {
-    return '';
+    Dom.XmlNode body = getDocumentBody(responseBody);
+    Dom.XmlNode tpAccountResult = body
+      .getChildElement('TPAccountGetTicketlessResponse', XMLNS)
+      .getChildElement('TPAccountGetTicketlessResult', XMLNS);
+
+    return new TPAccount(tpAccountResult);
   }
 
   /**
@@ -234,7 +239,7 @@ public with sharing class CSharkResponseParser {
    * @param elementText Value of XML element
    * @return Map with element name as key and the value as value
    */
-  private static Map<String, Object> getNameValuePair(
+  public static Map<String, Object> getNameValuePair(
     String elementName,
     Object elementText
   ) {

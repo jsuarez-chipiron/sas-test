@@ -362,8 +362,8 @@ private class FCS_IdentifyCustomerController_Test {
       Salutation__c = 'Salutation',
       Title__c = 'Title'
     );
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
     Account account = FCS_IdentifyCustomerController.createAccountRecordBasedOnFrequentFlyers(
       new List<FCS_FrequentFlyer__x>{ ff }
     );
@@ -444,8 +444,10 @@ private class FCS_IdentifyCustomerController_Test {
       Salutation__c = 'Salutation',
       Title__c = 'Title'
     );
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
     Test.startTest();
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
     Account account = FCS_IdentifyCustomerController.createAccountRecordBasedOnFrequentFlyers(
       new List<FCS_FrequentFlyer__x>{ ff }
     );
@@ -531,8 +533,8 @@ private class FCS_IdentifyCustomerController_Test {
       Title__c = 'Title'
     );
 
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
     FCS_IdentifyCustomerController.createAccountRecordBasedOnFrequentFlyers(
       new List<FCS_FrequentFlyer__x>{ ff }
     );
