@@ -4,8 +4,8 @@
     <assignments>
         <name>SetCaseFields1</name>
         <label>SetCaseFields1</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>SetCaseFields10</name>
         <label>SetCaseFields10</label>
-        <locationX>2690</locationX>
-        <locationY>638</locationY>
+        <locationX>2954</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -36,8 +36,8 @@
     <assignments>
         <name>SetCaseFields11</name>
         <label>SetCaseFields11</label>
-        <locationX>2954</locationX>
-        <locationY>638</locationY>
+        <locationX>3218</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -52,8 +52,8 @@
     <assignments>
         <name>SetCaseFields12</name>
         <label>SetCaseFields12</label>
-        <locationX>3218</locationX>
-        <locationY>638</locationY>
+        <locationX>3482</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -68,8 +68,8 @@
     <assignments>
         <name>SetCaseFields13</name>
         <label>SetCaseFields13</label>
-        <locationX>3482</locationX>
-        <locationY>638</locationY>
+        <locationX>3746</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -84,8 +84,8 @@
     <assignments>
         <name>SetCaseFields14</name>
         <label>SetCaseFields14</label>
-        <locationX>3746</locationX>
-        <locationY>638</locationY>
+        <locationX>4010</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -100,8 +100,8 @@
     <assignments>
         <name>SetCaseFields15</name>
         <label>SetCaseFields15</label>
-        <locationX>4010</locationX>
-        <locationY>638</locationY>
+        <locationX>4274</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -116,8 +116,8 @@
     <assignments>
         <name>SetCaseFields16</name>
         <label>SetCaseFields16</label>
-        <locationX>2162</locationX>
-        <locationY>638</locationY>
+        <locationX>2426</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -132,8 +132,8 @@
     <assignments>
         <name>SetCaseFields2</name>
         <label>SetCaseFields2</label>
-        <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -148,8 +148,8 @@
     <assignments>
         <name>SetCaseFields3</name>
         <label>SetCaseFields3</label>
-        <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationX>842</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -164,8 +164,8 @@
     <assignments>
         <name>SetCaseFields4</name>
         <label>SetCaseFields4</label>
-        <locationX>842</locationX>
-        <locationY>638</locationY>
+        <locationX>1106</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -180,8 +180,8 @@
     <assignments>
         <name>SetCaseFields5</name>
         <label>SetCaseFields5</label>
-        <locationX>1106</locationX>
-        <locationY>638</locationY>
+        <locationX>1370</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -196,8 +196,8 @@
     <assignments>
         <name>SetCaseFields6</name>
         <label>SetCaseFields6</label>
-        <locationX>1370</locationX>
-        <locationY>638</locationY>
+        <locationX>1634</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -212,8 +212,8 @@
     <assignments>
         <name>SetCaseFields7</name>
         <label>SetCaseFields7</label>
-        <locationX>1634</locationX>
-        <locationY>638</locationY>
+        <locationX>1898</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -228,8 +228,8 @@
     <assignments>
         <name>SetCaseFields8</name>
         <label>SetCaseFields8</label>
-        <locationX>1898</locationX>
-        <locationY>638</locationY>
+        <locationX>2162</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -244,8 +244,8 @@
     <assignments>
         <name>SetCaseFields9</name>
         <label>SetCaseFields9</label>
-        <locationX>2426</locationX>
-        <locationY>638</locationY>
+        <locationX>2690</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -258,10 +258,49 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_if_Note_is_empty_when_type_is_Other</name>
+        <label>Check if Note is empty when type is Other</label>
+        <locationX>1238</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>GetRefundsQueueId</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>OtherTypeOutcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SelectedRequestType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Other</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>SelectedSubCategory</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Other</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Note</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue/>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Reject</targetReference>
+            </connector>
+            <label>OtherType</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>SetTeamAndCaseReason</name>
         <label>SetTeamAndCaseReason</label>
-        <locationX>2162</locationX>
-        <locationY>518</locationY>
+        <locationX>2426</locationX>
+        <locationY>638</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>TATicketsUSAOutcome</name>
@@ -620,8 +659,8 @@
     <recordCreates>
         <name>Create_Refund_Request</name>
         <label>Create Refund Request</label>
-        <locationX>2162</locationX>
-        <locationY>854</locationY>
+        <locationX>2426</locationX>
+        <locationY>974</locationY>
         <connector>
             <targetReference>Get_Created_Refund_Request</targetReference>
         </connector>
@@ -667,8 +706,8 @@
     <recordCreates>
         <name>CreateRefundCase</name>
         <label>Create Refund Case</label>
-        <locationX>2162</locationX>
-        <locationY>1094</locationY>
+        <locationX>2426</locationX>
+        <locationY>1214</locationY>
         <connector>
             <targetReference>Success</targetReference>
         </connector>
@@ -738,8 +777,8 @@
     <recordLookups>
         <name>Get_Created_Refund_Request</name>
         <label>Get Created Refund Request</label>
-        <locationX>2162</locationX>
-        <locationY>974</locationY>
+        <locationX>2426</locationX>
+        <locationY>1094</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CreateRefundCase</targetReference>
@@ -761,8 +800,8 @@
     <recordLookups>
         <name>GetRefundsQueueId</name>
         <label>Get Refunds Queue Id</label>
-        <locationX>2162</locationX>
-        <locationY>278</locationY>
+        <locationX>2426</locationX>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetRefundsRecordType</targetReference>
@@ -782,8 +821,8 @@
     <recordLookups>
         <name>GetRefundsRecordType</name>
         <label>GetRefundsRecordType</label>
-        <locationX>2162</locationX>
-        <locationY>398</locationY>
+        <locationX>2426</locationX>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>SetTeamAndCaseReason</targetReference>
@@ -804,13 +843,13 @@
     <screens>
         <name>NewRefundRequest</name>
         <label>New Refund Request</label>
-        <locationX>2162</locationX>
+        <locationX>1238</locationX>
         <locationY>158</locationY>
-        <allowBack>true</allowBack>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
         <connector>
-            <targetReference>GetRefundsQueueId</targetReference>
+            <targetReference>Check_if_Note_is_empty_when_type_is_Other</targetReference>
         </connector>
         <fields>
             <name>NewRefundRequest_Section1</name>
@@ -956,13 +995,32 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Reject</name>
+        <label>Reject</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>NewRefundRequest</targetReference>
+        </connector>
+        <fields>
+            <name>OtherRejection</name>
+            <fieldText>&lt;p&gt;Note cannot be blank when &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Request Type and Sub Category is set to &quot;Other&quot;&lt;/span&gt;.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Success</name>
         <label>Success</label>
-        <locationX>2162</locationX>
-        <locationY>1214</locationY>
-        <allowBack>true</allowBack>
+        <locationX>2426</locationX>
+        <locationY>1334</locationY>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
         <fields>
             <name>SuccessText</name>
             <fieldText>&lt;p&gt;Successfully created refund request.&lt;/p&gt;</fieldText>
@@ -972,7 +1030,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>2036</locationX>
+        <locationX>1112</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>NewRefundRequest</targetReference>
