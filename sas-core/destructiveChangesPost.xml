@@ -13,7 +13,6 @@
 -->
 
 <!-- 2020-02-16 Delete permission set and replace with new one using SF-licence to be able to set tab visibilities -->
-
 <types>
 		<members>IRR_AutomatedMessage.ABZ_ARN_TR_AUTO_1D_SMS</members>
 		<members>IRR_AutomatedMessage.ABZ_CPH_TR_AUTO_1D_SMS</members>
@@ -544,9 +543,17 @@
 		<members>IRR_AutomatedMessage.ZRH_OSL_TR_AUTO_1D_SMS</members>
 		<name>CustomMetadata</name>
 	</types>
-
     <types>
 	    <members>IRR_BCH_FetchPaxInfoAutomatedMessage</members>
+        <members>C_LogDelete_Batch</members>
+        <members>GDPR_DeleteAccountData_Batch</members>
+        <members>GDPR_DeleteAccountData_Batch</members>
+        <members>GDPR_DeleteBooking_Batch</members>
+        <members>GDPR_DeleteChat_Batch</members>
+        <members>GDPR_DeleteEmail_Batch</members>
+        <members>GDPR_DeleteMessaging_Batch</members>
+        <members>GDPR_DeleteSocialPost_Batch</members>
 		<name>ApexClass</name>
     </types>
+
 </Package>
