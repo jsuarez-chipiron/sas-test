@@ -13,10 +13,16 @@
 -->
 
 <!-- 2020-02-16 Delete permission set and replace with new one using SF-licence to be able to set tab visibilities -->
-
 <types>
-	<members>FCS_IdentifyCustomerContainer</members>
-	<members>fcs_IdentifyCustomer</members>
+	<members>C_LogDelete_Batch</members>
+	<members>GDPR_DeleteAccountData_Batch</members>
+    <members>GDPR_DeleteAccountData_Batch</members>
+    <members>GDPR_DeleteBooking_Batch</members>
+    <members>GDPR_DeleteChat_Batch</members>
+    <members>GDPR_DeleteEmail_Batch</members>
+    <members>GDPR_DeleteMessaging_Batch</members>
+    <members>GDPR_DeleteSocialPost_Batch</members>
+    <name>ApexClass</name>
 </types>
 
 </Package>
