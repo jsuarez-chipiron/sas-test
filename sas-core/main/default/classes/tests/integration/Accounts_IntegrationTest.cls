@@ -26,7 +26,7 @@ public with sharing class Accounts_IntegrationTest {
     Test.startTest();
     update existingPassenger;
 
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     // When
     Account newAccount = new Account(
       FCS_EBNumber__c = euroBonusNumber,

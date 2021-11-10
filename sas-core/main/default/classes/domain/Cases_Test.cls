@@ -211,7 +211,7 @@ private class Cases_Test {
     lstAcc[0].FCS_EBNumber__c = testEBNumber;
 
     Test.startTest();
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     insert lstAcc;
 
     Case c = new Case();
@@ -240,7 +240,7 @@ private class Cases_Test {
   @IsTest
   static void creatingACaseWithEmailShouldFetchEBData() {
     Test.startTest();
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
 
     String testEmail = 'test@example.com';
     String testEBNumber = '0123456789';

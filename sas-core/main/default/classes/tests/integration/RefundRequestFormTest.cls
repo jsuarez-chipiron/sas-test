@@ -25,10 +25,7 @@ public class RefundRequestFormTest {
       '  }' +
       '}'
     );
-    Test.setMock(
-      HttpCalloutMock.class,
-      new TEDSBookingSingleAndFlightSuccessMock()
-    );
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
 
     Test.startTest();
     RefundRequestForm.createRefundRequest(requestBody);
@@ -90,10 +87,7 @@ public class RefundRequestFormTest {
       '  }' +
       '}'
     );
-    Test.setMock(
-      HttpCalloutMock.class,
-      new TEDSBookingSingleAndFlightSuccessMock()
-    );
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
 
     Test.startTest();
     RefundRequestForm.createRefundRequest(requestBody);

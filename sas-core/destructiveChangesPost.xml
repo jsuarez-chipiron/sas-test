@@ -621,4 +621,20 @@
 	    <members>FCS_SocialPostHandler_Test.cls</members>
 		<name>ApexClass</name>
     </types>
+    <types>
+	    <members>TEDSBookingSingleSuccessMock.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>TEDSBookingQuerySuccessMock.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>TEDSBookingSingle404Mock.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>TEDSBookingQueryNFMock.cls</members>
+		<name>ApexClass</name>
+    </types>
 </Package>

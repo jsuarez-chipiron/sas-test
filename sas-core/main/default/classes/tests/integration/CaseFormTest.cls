@@ -33,10 +33,7 @@ private class CaseFormTest {
       '}'
     );
 
-    Test.setMock(
-      HttpCalloutMock.class,
-      new TEDSBookingSingleAndFlightSuccessMock()
-    );
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
 
     Test.startTest();
     CaseForm.createCase(requestBody);
