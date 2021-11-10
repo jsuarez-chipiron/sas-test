@@ -376,81 +376,64 @@ private class FCS_CaseHandler_Test {
     delete cases;
   }
 
-  /**
-        Test postive scenario of EuroBonus Account tagged to Case
-        TODO
-    */
-  @isTest
-  static void testAssignEurobonusAccountToCase() {
-    List<Account> lstAcc = FCS_TestDataFactory.createFrequentFlyers(1);
-    lstAcc[0].FCS_EBNumber__c = '123789';
-
-    Test.startTest();
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
-    insert lstAcc;
-
-    Case cse = new Case();
-    cse.Subject = 'TestEurobonusNumber';
-    cse.SuppliedEmail = lstAcc[0].PersonEmail;
-    cse.origin = 'Email - Pandion DK';
-
-    insert cse;
-
-    Test.stopTest();
-    Case cse1 = [SELECT Id, FCS_EBNumber__c FROM Case LIMIT 1];
-    System.AssertEquals('123789', cse1.FCS_EBNumber__c);
-  }
-  /**
-        Test negative scenario of EuroBonus Account tagged to Case
-        TODO
-    */
-  @isTest
-  static void testnotAssignEurobonusAccountToCase() {
-    List<Account> lstAcc = FCS_TestDataFactory.createFrequentFlyers(1);
-    lstAcc[0].FCS_EBNumber__c = '123789';
-
-    Test.startTest();
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
-    insert lstAcc;
-
-    Case cse = new Case();
-    cse.Subject = 'TestEurobonusNumber';
-    cse.SuppliedEmail = 'test5678@sas.se';
-    cse.origin = 'Email - Pandion DK';
-
-    insert cse;
-
-    Test.stopTest();
-    Case cse1 = [SELECT Id, FCS_EBNumber__c FROM Case LIMIT 1];
-    System.AssertEquals(null, cse1.FCS_EBNumber__c);
-  }
-  // used to tets more than one cases creating at time for E2C
   @IsTest
-  static void testMultplePandioncases() {
-    List<Case> lstCases = new List<Case>();
-    Case cse = new Case();
-    cse.Subject = 'TestEurobonusNumber';
-    cse.SuppliedEmail = 'test5678@sas.se';
-    cse.origin = 'Email - Pandion DK';
-    lstCases.add(cse);
-
-    Case cse1 = new Case();
-    cse1.Subject = 'TestEurobonusNumber';
-    cse1.SuppliedEmail = 'test56789@sas.se';
-    cse1.origin = 'Email - Pandion SE';
-    lstCases.add(cse1);
+  static void creatingACaseWithEmailShouldAssociateItWithAccount() {
+    List<Account> lstAcc = FCS_TestDataFactory.createFrequentFlyers(1);
+    String testEBNumber = '0123456789';
+    lstAcc[0].FCS_EBNumber__c = testEBNumber;
 
     Test.startTest();
-    insert lstCases;
-    Test.StopTest();
+    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
+    insert lstAcc;
 
-    List<C_Log__c> lstlogs = [SELECT Id, Message__c FROM C_Log__c];
+    Case c = new Case();
+    c.SuppliedEmail = lstAcc[0].PersonEmail;
 
-    System.assertEquals(
-      'more than one email adddress present, so not able to get eurbonus details',
-      lstlogs[0].Message__c
+    insert c;
+
+    Test.stopTest();
+    Case caseAfterInsert = [
+      SELECT AccountId, Id, FCS_EBNumber__c
+      FROM Case
+      WHERE Id = :c.Id
+    ];
+    System.AssertEquals(
+      testEBNumber,
+      caseAfterInsert.FCS_EBNumber__c,
+      'The created case should have the accounts EB number.'
+    );
+    System.AssertEquals(
+      lstAcc[0].Id,
+      caseAfterInsert.AccountId,
+      'The created case should be related to the account with the same email'
     );
   }
+  /* FIXME: Enable this test. The logic works, but current integration implementation doesn't allow for proper mocking.
+  @IsTest
+  static void creatingACaseWithEmailShouldFetchEBData() {
+    Test.startTest();
+    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
+
+    String testEmail = 'test@example.com';
+    String testEBNumber = '0123456789';
+
+    Case c = new Case();
+    c.SuppliedEmail = testEmail;
+
+    insert c;
+
+    Test.stopTest();
+    Case caseAfterInsert = [
+      SELECT AccountId, Id, FCS_EBNumber__c
+      FROM Case
+      WHERE Id = :c.Id
+    ];
+    System.AssertEquals(
+      testEBNumber,
+      caseAfterInsert.FCS_EBNumber__c,
+      'The created case should have the accounts EB number.'
+    );
+  }*/
 
   @IsTest
   static void enrichCaseDataBasedOnOriginConfigMatchingOriginShouldFillCorrectData() {

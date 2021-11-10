@@ -5,6 +5,7 @@
                 "type": "Case",
                 "referenceId": "CaseRef2"
             },
+            "AccountId": "@AccountRef1",
             "Team__c": "Gold DK",
             "Department__c": "EuroBonus"
         },
@@ -13,6 +14,7 @@
                 "type": "Case",
                 "referenceId": "CaseRef3"
             },
+            "AccountId": "@AccountRef1",
             "Team__c": "BOM BSP",
             "Department__c": "Refunds",
             "Refund_Request__c": "@Refund_Request__cRef1"

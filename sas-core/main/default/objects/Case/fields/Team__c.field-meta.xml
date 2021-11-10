@@ -57,6 +57,16 @@
                 <label>BOM BSP</label>
             </value>
             <value>
+                <fullName>BOM Customer Care</fullName>
+                <default>false</default>
+                <label>BOM Customer Care</label>
+            </value>
+            <value>
+                <fullName>BOM Error Handling</fullName>
+                <default>false</default>
+                <label>BOM Error Handling</label>
+            </value>
+            <value>
                 <fullName>BOM Forms Customer</fullName>
                 <default>false</default>
                 <label>BOM Forms Customer</label>
@@ -95,6 +105,16 @@
                 <fullName>BOM Tenured</fullName>
                 <default>false</default>
                 <label>BOM Tenured</label>
+            </value>
+            <value>
+                <fullName>BOM Voucher</fullName>
+                <default>false</default>
+                <label>BOM Voucher</label>
+            </value>
+            <value>
+                <fullName>BOM Waivers</fullName>
+                <default>false</default>
+                <label>BOM Waivers</label>
             </value>
             <value>
                 <fullName>Bulk</fullName>
@@ -477,6 +497,11 @@
                 <label>SGH Bag SE</label>
             </value>
             <value>
+                <fullName>Sitel Waivers</fullName>
+                <default>false</default>
+                <label>Sitel Waivers</label>
+            </value>
+            <value>
                 <fullName>SoMe</fullName>
                 <default>false</default>
                 <label>SoMe</label>
@@ -582,6 +607,14 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM Customer Care</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM Error Handling</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>BOM Forms Customer</valueName>
         </valueSettings>
         <valueSettings>
@@ -611,6 +644,14 @@
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>BOM Tenured</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM Voucher</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>BOM Waivers</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
@@ -659,6 +700,10 @@
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>OC Waivers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>Sitel Waivers</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>

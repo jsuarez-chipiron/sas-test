@@ -41,7 +41,17 @@ global class MigrateCaseTagsBatch extends SBS_ScheduledBatch {
     caseDepartment = cseDepartment;
     caseRecordType = cseRecordType;
   }
-
+   /**
+   overriding the absract method to set batch class Params
+   */
+   global override void setVariables(
+    String obj,
+    Integer retentionPeriod,
+    string caseField,
+    String caseType,
+    String batchName
+  ){
+  }
   global Database.QueryLocator start(Database.BatchableContext bc) {
     return Database.getQueryLocator(
       'Select Id,FCS_CaseReason__c,FCS_CaseSubReason__c,FCS_Case_Reason__c,FCS_CaseType__c FROM Case where Origin NOT IN : caseOrigins and Department__c!=null and Department__c=:caseDepartment and FCS_Case_Reason__c=null and FCS_CaseReason__c!=null LIMIT 10000'
@@ -66,7 +76,6 @@ global class MigrateCaseTagsBatch extends SBS_ScheduledBatch {
             } else {
               key = cse.FCS_CaseReason__c;
             }
-            System.debug('key***' + key);
             cse.FCS_Case_Reason__c = mapOldToNewCaseTags.get(key)
               .New_Case_Reason__c;
             cse.FCS_CaseType__c = mapOldToNewCaseTags.get(key).New_Case_Type__c;

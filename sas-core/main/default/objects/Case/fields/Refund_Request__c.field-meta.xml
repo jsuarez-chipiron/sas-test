@@ -11,5 +11,6 @@
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
+	<complianceGroup>Lookup</complianceGroup>
     <type>Lookup</type>
 </CustomField>

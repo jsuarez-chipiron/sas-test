@@ -12,10 +12,9 @@ import { getRecord } from "lightning/uiRecordApi";
 import findCustomer from "@salesforce/apex/FCS_IdentifyCustomerController.findCustomer";
 import updateRecordDataWithApex from "@salesforce/apex/FCS_IdentifyCustomerController.updateRecordDataWithApex";
 import { refreshApex } from "@salesforce/apex";
-import { NavigationMixin } from "lightning/navigation";
 import { formattedDateString } from "c/utilDate";
 
-export default class CustomerCard extends NavigationMixin(LightningElement) {
+export default class CustomerCard extends LightningElement {
   @api objectApiName;
   @api recordId;
 
@@ -33,6 +32,7 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   @track cardTitle = "";
   accountId = undefined;
   caseIdForChats = undefined;
+  euroBonusNumber = undefined;
 
   // UI state
   @track showSpinner = false;
@@ -66,17 +66,6 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
     return `Communication logs (${this.communicationLogs.length})`;
   }
 
-  // Navigate to view case Page
-  navigateToCaseViewPage(event) {
-    this[NavigationMixin.Navigate]({
-      type: "standard__recordPage",
-      attributes: {
-        recordId: event.target.dataset.id,
-        objectApiName: "Case",
-        actionName: "view"
-      }
-    });
-  }
   @wire(getRecord, {
     recordId: "$recordId",
     optionalFields: [
@@ -115,7 +104,11 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   @wire(getAccountData, { accountId: "$accountId" })
   wiredAccount({ error, data }) {
     if (!error && data != undefined && data.length > 0) {
-      this.account = data[0];
+      this.account = {
+        ...data[0],
+        cmpCode: data[0].FCS_CMP__c || "-",
+        tpNumber: data[0].FCS_TPAccountNumber__c || ""
+      };
       if (
         data[0].FCS_EBLevel__c != undefined &&
         data[0].FCS_EBNumber__c != undefined
@@ -123,6 +116,9 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
         this.cardTitle = `${data[0].Name} (EB${data[0].FCS_EBLevel__c}${data[0].FCS_EBNumber__c})`;
       } else {
         this.cardTitle = data[0].Name;
+      }
+      if (data[0].FCS_EBNumber__c != undefined) {
+        this.euroBonusNumber = data[0].FCS_EBNumber__c;
       }
     } else {
       this.account = undefined;
@@ -210,15 +206,16 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
     }
   }
 
-  // TODO: Enable when we can get communication logs
-  /*@wire(getAllCommunicationData, { euroBonusNumber: "613685700" })
+  @wire(getAllCommunicationData, {
+    euroBonusNumber: "$euroBonusNumber"
+  })
   wiredCommunicationLog({ error, data }) {
     if (!error && data != undefined && data.length > 0) {
       this.communicationLogs = data;
     } else {
       this.communicationLogs = [];
     }
-  }*/
+  }
 
   async addCustomerToCase(searchString) {
     this.showSpinner = true;
