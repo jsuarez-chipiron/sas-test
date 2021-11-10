@@ -171,6 +171,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel Agent Tickets</controllingFieldValue>
+            <controllingFieldValue>Wrongly refunded</controllingFieldValue>
             <valueName>China</valueName>
         </valueSettings>
         <valueSettings>
@@ -180,7 +181,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel Agent Tickets</controllingFieldValue>
-            <controllingFieldValue>Wrongly refunded</controllingFieldValue>
             <valueName>Webform Request</valueName>
         </valueSettings>
         <valueSettings>
