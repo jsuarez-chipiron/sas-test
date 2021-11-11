@@ -14,6 +14,7 @@ import findCustomer from "@salesforce/apex/FCS_IdentifyCustomerController.findCu
 import updateRecordDataWithApex from "@salesforce/apex/FCS_IdentifyCustomerController.updateRecordDataWithApex";
 import { refreshApex } from "@salesforce/apex";
 import { formattedDateString } from "c/utilDate";
+import refetchTPProducts from "@salesforce/apex/CustomerCardController.refetchTPProducts";
 
 export default class CustomerCard extends LightningElement {
   @api objectApiName;
@@ -29,12 +30,14 @@ export default class CustomerCard extends LightningElement {
   @track tpProducts = [];
   wiredRecordReference;
   wiredBookingsReference;
+  wiredTPProductsReference;
 
   // properties calculated from data
   @track cardTitle = "";
   accountId = undefined;
   caseIdForChats = undefined;
   euroBonusNumber = undefined;
+  tpProductsLastModified = "-";
 
   // UI state
   @track showSpinner = false;
@@ -129,12 +132,15 @@ export default class CustomerCard extends LightningElement {
   }
 
   @wire(getTPProductsForAccount, { accountId: "$accountId" })
-  wiredTPProducts({ error, data }) {
-    console.log(data);
+  wiredTPProducts(value) {
+    this.wiredTPProductsReference = value;
+    const { data, error } = value;
     if (!error && data != undefined && data.length > 0) {
       this.tpProducts = data;
+      this.tpProductsLastModified = data[0].LastModifiedDate;
     } else {
       this.tpProducts = [];
+      this.tpProductsLastModified = "-";
     }
   }
 
@@ -315,5 +321,21 @@ export default class CustomerCard extends LightningElement {
 
   handleDisplayAllBookings() {
     this.showAllBookings = true;
+  }
+
+  async refreshTPProducts() {
+    this.showSpinner = true;
+    try {
+      await refetchTPProducts({
+        accountId: this.accountId
+      });
+    } catch (error) {
+      this.error = error;
+    }
+    setTimeout(() => {
+      // Timeout because bookings haven't finished updating during the await
+      refreshApex(this.wiredTPProductsReference);
+      this.showSpinner = false;
+    }, 6000);
   }
 }

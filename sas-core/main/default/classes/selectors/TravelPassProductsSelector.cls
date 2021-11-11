@@ -7,6 +7,7 @@ public inherited sharing class TravelPassProductsSelector extends fflib_SObjectS
       Travel_Pass_Product__c.Category_Name__c,
       Travel_Pass_Product__c.External_Name__c,
       Travel_Pass_Product__c.Internal_Name__c,
+      Travel_Pass_Product__c.LastModifiedDate,
       Travel_Pass_Product__c.Type_Code__c,
       Travel_Pass_Product__c.Type_Name__c
     };

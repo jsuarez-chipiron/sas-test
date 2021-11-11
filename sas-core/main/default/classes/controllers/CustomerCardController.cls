@@ -72,6 +72,11 @@ public without sharing class CustomerCardController {
   }
 
   @AuraEnabled
+  public static void refetchTPProducts(String accountId) {
+    TravelPassService.refreshTravelPassAccount(Id.valueOf(accountId));
+  }
+
+  @AuraEnabled
   public static void removeBookingFromCase(ID caseId, String bookingReference) {
     BookingService.removeBookingFromCase(caseId, bookingReference);
   }

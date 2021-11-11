@@ -1,7 +1,20 @@
 public without sharing class TravelPassService {
+  static AccountsSelector accounts = (AccountsSelector) SAS_Service_Application.Selector.newInstance(
+    Account.SObjectType
+  );
   static TravelPassProductsSelector travelPassProducts = (TravelPassProductsSelector) SAS_Service_Application.Selector.newInstance(
     Travel_Pass_Product__c.SObjectType
   );
+
+  public static void refreshTravelPassAccount(Id accountId) {
+    List<Account> accs = accounts.selectById(new Set<Id>{ accountId });
+
+    if (accs == null || accs.size() == 0 || accs[0].FCS_TPAccountNumber__c == null) {
+      return;
+    }
+
+    fetchTravelPassAccount(accs[0].FCS_TPAccountNumber__c, accountId);
+  }
 
   /**
    * Fetches travel pass account information from C-Shark, creates travel pass products
