@@ -59,7 +59,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     enrichCaseDataBasedOnOrigin(newCaseList);
     enrichCaseTagData(newCaseList);
     enrichMissingPointsCaseDataWithMissingPointsFormData(newCaseList);
-    tryToAssignExistingEBAccountToCase(newCaseList);
+    // tryToAssignExistingEBAccountToCase(newCaseList);
   }
   /**
   Used to call the trigger in the before update context
@@ -77,7 +77,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
     updateSocialPost(newCaseList);
     updateBookingsForNewAssociatedAccounts(newCaseList);
     createCaseToBookings(newCaseList);
-    tryToFetchEBAccountFromCODS(newCaseList);
+    // tryToFetchEBAccountFromCODS(newCaseList);
   }
 
   /**
@@ -680,7 +680,7 @@ public class FCS_CaseHandler extends C_TriggerHandler {
    * Performs a CODS query for an EB account with the given email. If one
    * is found, creates a corresponding account in SF and associates it with
    * the given case.
-   * 
+   *
    * @param caseId The case to which this account should be associated to.
    * @param email Email to search with.
    */
