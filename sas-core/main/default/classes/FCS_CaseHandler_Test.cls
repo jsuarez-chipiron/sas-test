@@ -376,8 +376,8 @@ private class FCS_CaseHandler_Test {
     delete cases;
   }
 
-  @IsTest
-  /*static void creatingACaseWithEmailShouldAssociateItWithAccount() {
+  /*@IsTest
+  static void creatingACaseWithEmailShouldAssociateItWithAccount() {
     List<Account> lstAcc = FCS_TestDataFactory.createFrequentFlyers(1);
     String testEBNumber = '0123456789';
     lstAcc[0].FCS_EBNumber__c = testEBNumber;
