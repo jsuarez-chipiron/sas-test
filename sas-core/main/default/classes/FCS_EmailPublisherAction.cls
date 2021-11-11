@@ -43,19 +43,28 @@ global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaults
         WHERE Id = :sendEmailDefaults.getContextId()
       ];
       EmailMessage emailMessage = (EmailMessage) sendEmailDefaults.getTargetSObject();
-      if (cse != null && 
-          (cse.IsRedirected__c || 
-            cse.IsEscalated__c || 
-            cse.Origin == 'Manual'|| 
-            cse.Origin == 'Manual - Legal Case Diary Migration' || 
-            cse.Origin == 'Internal - New Refund Request Form' || 
-            cse.Origin.contains('Form - '))
+      if (
+        cse != null &&
+        (cse.IsRedirected__c ||
+        cse.IsEscalated__c ||
+        cse.Origin == 'Manual' ||
+        cse.Origin == 'Manual - Legal Case Diary Migration' ||
+        cse.Origin == 'Internal - New Refund Request Form' ||
+        cse.Origin?.contains('Form - '))
       ) {
-        String lstFromEMails = From_email_based_on_Dept_and_Teams__c.getValues(cse.Department__c + '-' + cse.Team__c)?.From_Email__c;
+        String lstFromEMails = From_email_based_on_Dept_and_Teams__c.getValues(
+            cse.Department__c +
+            '-' +
+            cse.Team__c
+          )
+          ?.From_Email__c;
         if (!String.isEmpty(lstFromEMails) && lstFromEMails != null) {
           emailMessage.ValidatedFromAddress = lstFromEMails;
         } else {
-           emailMessage.ValidatedFromAddress = From_email_based_on_Dept_and_Teams__c.getValues('Default From Address').From_Email__c;            
+          emailMessage.ValidatedFromAddress = From_email_based_on_Dept_and_Teams__c.getValues(
+              'Default From Address'
+            )
+            .From_Email__c;
         }
       }
     }
