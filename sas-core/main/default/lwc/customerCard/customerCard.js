@@ -2,6 +2,7 @@ import { LightningElement, track, api, wire } from "lwc";
 import getAccountData from "@salesforce/apex/CustomerCardController.getAccountData";
 import getBookingData from "@salesforce/apex/CustomerCardController.getBookingData";
 import getCaseData from "@salesforce/apex/CustomerCardController.getCaseData";
+import getTPProductsForAccount from "@salesforce/apex/CustomerCardController.getTPProductsForAccount";
 import Case_ACCOUNTID_FIELD from "@salesforce/schema/Case.AccountId";
 import getAllCommunicationData from "@salesforce/apex/CustomerCardController.getAllCommunicationData";
 import Case_EBNUMBER_FIELD from "@salesforce/schema/Case.FCS_EBNumber__c";
@@ -13,6 +14,7 @@ import findCustomer from "@salesforce/apex/FCS_IdentifyCustomerController.findCu
 import updateRecordDataWithApex from "@salesforce/apex/FCS_IdentifyCustomerController.updateRecordDataWithApex";
 import { refreshApex } from "@salesforce/apex";
 import { formattedDateString } from "c/utilDate";
+import refetchTPProducts from "@salesforce/apex/CustomerCardController.refetchTPProducts";
 
 export default class CustomerCard extends LightningElement {
   @api objectApiName;
@@ -25,14 +27,17 @@ export default class CustomerCard extends LightningElement {
   @track bookings = [];
   @track cases = [];
   @track communicationLogs = [];
+  @track tpProducts = [];
   wiredRecordReference;
   wiredBookingsReference;
+  wiredTPProductsReference;
 
   // properties calculated from data
   @track cardTitle = "";
   accountId = undefined;
   caseIdForChats = undefined;
   euroBonusNumber = undefined;
+  tpProductsLastModified = "-";
 
   // UI state
   @track showSpinner = false;
@@ -107,7 +112,7 @@ export default class CustomerCard extends LightningElement {
       this.account = {
         ...data[0],
         cmpCode: data[0].FCS_CMP__c || "-",
-        tpNumber: data[0].FCS_TPAccountNumber__c || ""
+        tpNumber: data[0].FCS_TPAccountNumber__c || "-"
       };
       if (
         data[0].FCS_EBLevel__c != undefined &&
@@ -123,6 +128,19 @@ export default class CustomerCard extends LightningElement {
     } else {
       this.account = undefined;
       this.cardTitle = "";
+    }
+  }
+
+  @wire(getTPProductsForAccount, { accountId: "$accountId" })
+  wiredTPProducts(value) {
+    this.wiredTPProductsReference = value;
+    const { data, error } = value;
+    if (!error && data != undefined && data.length > 0) {
+      this.tpProducts = data;
+      this.tpProductsLastModified = data[0].LastModifiedDate;
+    } else {
+      this.tpProducts = [];
+      this.tpProductsLastModified = "-";
     }
   }
 
@@ -303,5 +321,21 @@ export default class CustomerCard extends LightningElement {
 
   handleDisplayAllBookings() {
     this.showAllBookings = true;
+  }
+
+  async refreshTPProducts() {
+    this.showSpinner = true;
+    try {
+      await refetchTPProducts({
+        accountId: this.accountId
+      });
+    } catch (error) {
+      this.error = error;
+    }
+    setTimeout(() => {
+      // Timeout because bookings haven't finished updating during the await
+      refreshApex(this.wiredTPProductsReference);
+      this.showSpinner = false;
+    }, 6000);
   }
 }

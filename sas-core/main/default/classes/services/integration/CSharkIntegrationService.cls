@@ -18,8 +18,12 @@ public with sharing class CSharkIntegrationService {
     TPAccountGetTicketless
   }
 
-  private static final String SOAP_ACTION_HEADER_BASE = 'http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1/ICSharkCustomerManagementTicketless/';
-  private static final String API_PATH = '/csharkcustmgmtticketless';
+  private static final String SUBSCRIPTION_KEY = Test.isRunningTest()
+    ? 'TESTKEY'
+    : C_Settings.getSettings('APIM').get('APIM_Subscription_Key');
+
+  public static final String SOAP_ACTION_HEADER_BASE = 'http://www.flysas.com/wcf/CSharkCustomerManagementTicketless/v1/ICSharkCustomerManagementTicketless/';
+  private static final String API_PATH = 'callout:SAS_APIM/csharkservice';
 
   /**
    * Supported parameters to base search for customer on. The format of these search types
@@ -99,11 +103,12 @@ public with sharing class CSharkIntegrationService {
    *
    * @param TPAccountNumber Travel Pass account number to search with.
    * @throws APIMIntegrationError In case of an error when fetching data.
-   * @return Parsed customer data
+   * @return Parsed response as a TPAccount
    */
-  public String getTPAccount(String TPAccountNumber) {
+  public static TpAccount getTPAccount(String TPAccountNumber) {
     Map<String, String> requestData = new Map<String, String>{
-      'travelPassAccountNumber' => TPAccountNumber
+      'travelPassAccountNumber' => TPAccountNumber,
+      'optIn' => 'ProductCategoryAll' // What to include in C-Shark response. Must have a value.
     };
     DOM.Document requestBody = constructSoapRequestBody(
       OperationName.TPAccountGetTicketless,
@@ -160,6 +165,7 @@ public with sharing class CSharkIntegrationService {
   ) {
     Map<String, String> extraRequestHeaders = new Map<String, String>{
       'Content-Type' => 'text/xml',
+      'Ocp-Apim-Subscription-Key' => SUBSCRIPTION_KEY,
       'SOAPAction' => SOAP_ACTION_HEADER_BASE + String.valueOf(operation)
     };
 

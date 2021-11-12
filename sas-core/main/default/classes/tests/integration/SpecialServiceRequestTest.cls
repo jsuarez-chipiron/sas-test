@@ -20,10 +20,7 @@ public class SpecialServiceRequestTest {
       '}'
     );
 
-    Test.setMock(
-      HttpCalloutMock.class,
-      new TEDSBookingSingleAndFlightSuccessMock()
-    );
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     SpecialServiceRequestForm.createSpecialServiceRequest(requestBody);
     Test.StopTest();
@@ -76,10 +73,7 @@ public class SpecialServiceRequestTest {
       '}'
     );
 
-    Test.setMock(
-      HttpCalloutMock.class,
-      new TEDSBookingSingleAndFlightSuccessMock()
-    );
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     SpecialServiceRequestForm.createSpecialServiceRequest(requestBody);
     Test.StopTest();
@@ -122,10 +116,7 @@ public class SpecialServiceRequestTest {
       '}'
     );
 
-    Test.setMock(
-      HttpCalloutMock.class,
-      new TEDSBookingSingleAndFlightSuccessMock()
-    );
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     SpecialServiceRequestForm.createSpecialServiceRequest(requestBody);
     Test.StopTest();
@@ -171,10 +162,7 @@ public class SpecialServiceRequestTest {
       '}'
     );
 
-    Test.setMock(
-      HttpCalloutMock.class,
-      new TEDSBookingSingleAndFlightSuccessMock()
-    );
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     SpecialServiceRequestForm.createSpecialServiceRequest(requestBody);
     Test.StopTest();

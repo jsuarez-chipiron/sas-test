@@ -1,9 +1,7 @@
 @IsTest
 public with sharing class Bookings_IntegrationTest {
   public static String bookingReferenceOnlyInTEDS = 'TEDS12';
-  public static String invalidBookingReference = 'AAAAAA';
   public static String ebNumberWithBookings = 'TEST123456';
-  public static String ebNumberWithoutBookings = 'TEST654321';
 
   public static BookingsSelector bookings = (BookingsSelector) SAS_Service_Application.Selector.newInstance(
     Booking__c.SObjectType
@@ -23,10 +21,7 @@ public with sharing class Bookings_IntegrationTest {
     insert testCase;
 
     Test.startTest();
-    Test.setMock(
-      HttpCalloutMock.class,
-      new TEDSBookingSingleAndFlightSuccessMock()
-    );
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     // When
     CustomerCardController.addBookingToCase(
       testCase.Id,
@@ -60,10 +55,7 @@ public with sharing class Bookings_IntegrationTest {
     insert testCase;
 
     Test.startTest();
-    Test.setMock(
-      HttpCalloutMock.class,
-      new TEDSBookingSingleAndFlightSuccessMock()
-    );
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
 
     // When
     CustomerCardController.addBookingToCase(
@@ -101,12 +93,12 @@ public with sharing class Bookings_IntegrationTest {
 
     insert testCase;
     Test.startTest();
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingSingle404Mock());
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
 
     // When
     CustomerCardController.addBookingToCase(
       testCase.Id,
-      invalidBookingReference
+      APIMMock.INVALID_BOOKING_REFERENCE
     );
     Test.stopTest();
 
@@ -129,7 +121,7 @@ public with sharing class Bookings_IntegrationTest {
     insert testAccount;
 
     Test.startTest();
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     // When
     CustomerCardController.getBookingsForEBCustomer(ebNumberWithBookings);
     Test.stopTest();
@@ -150,14 +142,14 @@ public with sharing class Bookings_IntegrationTest {
   public static void noBookingsForEBNumberFailsGracefully() {
     // Given
     Account testAccount = FCS_TestDataFactory.createFrequentFlyers(1)[0];
-    testAccount.FCS_EBNumber__c = ebNumberWithoutBookings;
+    testAccount.FCS_EBNumber__c = APIMMock.EB_NUMBER_WITHOUT_BOOKINGS;
     insert testAccount;
 
     Test.startTest();
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingQueryNFMock());
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     // When
     List<Booking__c> bookingsFromCustomerCard = CustomerCardController.getBookingsForEBCustomer(
-      ebNumberWithoutBookings
+      APIMMock.EB_NUMBER_WITHOUT_BOOKINGS
     );
     Test.stopTest();
 
@@ -185,7 +177,7 @@ public with sharing class Bookings_IntegrationTest {
     insert testAccount;
 
     Test.startTest();
-    Test.setMock(HttpCalloutMock.class, new TEDSBookingQuerySuccessMock());
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     // When
     CustomerCardController.getBookingsForEBCustomer(ebNumberWithBookings);
     Test.setMock(

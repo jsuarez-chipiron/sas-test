@@ -163,7 +163,19 @@
     <classAccesses>
         <apexClass>MessagingSessionController</apexClass>
         <enabled>true</enabled>
-    </classAccesses> 
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TPAccount</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TravelPassProductsSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TravelPassService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <custom>true</custom>
    <fieldPermissions>
         <editable>false</editable>
@@ -668,6 +680,41 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Special_Service_Request__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Travel_Pass_Product__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Travel_Pass_Product__c.Category_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Travel_Pass_Product__c.Category_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Travel_Pass_Product__c.External_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Travel_Pass_Product__c.Internal_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Travel_Pass_Product__c.Type_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Travel_Pass_Product__c.Type_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

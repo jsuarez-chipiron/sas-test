@@ -11,10 +11,7 @@ public with sharing class FlightEvents_IntegrationTest {
   public static void publishingAFlightEventShouldFetchDataFromTEDS() {
     // Given
     Test.startTest();
-    Test.setMock(
-      HttpCalloutMock.class,
-      new TEDSBookingSingleAndFlightSuccessMock()
-    );
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
 
     List<String> flightIds = new List<String>();
     flightIds.add(flightIdFromTEDS);

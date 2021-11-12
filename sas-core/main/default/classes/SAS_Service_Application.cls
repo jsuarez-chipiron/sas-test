@@ -17,7 +17,8 @@ public class SAS_Service_Application {
       Passenger__c.SObjectType => PassengersSelector.class,
       Refund_Request__c.SObjectType => Refund_RequestsSelector.class,
       Segment__c.SObjectType => SegmentsSelector.class,
-      SocialPost.SObjectType => SocialPostsSelector.class
+      SocialPost.SObjectType => SocialPostsSelector.class,
+      Travel_Pass_Product__c.SObjectType => TravelPassProductsSelector.class
     }
   );
 
@@ -25,8 +26,13 @@ public class SAS_Service_Application {
     SAS_Service_Application.Selector,
     new Map<SObjectType, Type>{
       Account.SObjectType => Accounts.Constructor.class,
+      Case.SObjectType => Cases.Constructor.class,
+      EmailMessage.SObjectType => EmailMessages.Constructor.class,
+      LiveChatTranscript.SObjectType => LiveChatTranscripts.Constructor.class,
+      MessagingSession.SObjectType => MessagingSessions.Constructor.class,
       Passenger__c.SObjectType => Passengers.Constructor.class,
-      Refund_Request__c.SObjectType => Refund_Requests.Constructor.class
+      Refund_Request__c.SObjectType => Refund_Requests.Constructor.class,
+      SocialPost.SObjectType => SocialPosts.Constructor.class
     }
   );
 

@@ -54,9 +54,9 @@ cp scripts/create-org-templates/C_GeneralSetting.APIM_TEDS_Subscription_Key.temp
 cp scripts/create-org-templates/LocalAuthProvider.APIM_Auth.template.xml sas-core/main/default/customMetadata/LocalAuthProvider.APIM_Auth.md-meta.xml
 
 # Sleep to ensure sharing rule calculation from org creation has finished before pushing sources
-echo "[3 / 6] Sleeping for 2m to ensure org creation has finished..."
+echo "[3 / 6] Sleeping for 3m to ensure org creation has finished..."
 echo "Zzz..."
-sleep 2m
+sleep 180
 
 echo "[4 / 6] Pushing source..."
 sfdx force:source:push -u $orgAlias || exit 1

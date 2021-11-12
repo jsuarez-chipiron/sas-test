@@ -8,6 +8,9 @@ public without sharing class CustomerCardController {
   static CasesSelector cases = (CasesSelector) SAS_Service_Application.Selector.newInstance(
     Case.SObjectType
   );
+  static TravelPassProductsSelector travelPassProducts = (TravelPassProductsSelector) SAS_Service_Application.Selector.newInstance(
+    Travel_Pass_Product__c.SObjectType
+  );
 
   @AuraEnabled
   public static void addBookingToCase(ID caseId, String bookingReference) {
@@ -69,6 +72,11 @@ public without sharing class CustomerCardController {
   }
 
   @AuraEnabled
+  public static void refetchTPProducts(String accountId) {
+    TravelPassService.refreshTravelPassAccount(Id.valueOf(accountId));
+  }
+
+  @AuraEnabled
   public static void removeBookingFromCase(ID caseId, String bookingReference) {
     BookingService.removeBookingFromCase(caseId, bookingReference);
   }
@@ -114,6 +122,13 @@ public without sharing class CustomerCardController {
   @AuraEnabled(cacheable=true)
   public static List<Case> getCasesForBooking(String bookingReference) {
     return cases.selectByBookingReference(new Set<String>{ bookingReference });
+  }
+
+  @AuraEnabled(cacheable=true)
+  public static List<Travel_Pass_Product__c> getTPProductsForAccount(
+    String accountId
+  ) {
+    return travelPassProducts.selectByAccountId(new Set<Id>{ accountId });
   }
 
   @AuraEnabled(cacheable=true)

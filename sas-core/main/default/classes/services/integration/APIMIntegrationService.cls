@@ -2,11 +2,6 @@
  * Service for making requests to API Management (APIM).
  */
 public without sharing class APIMIntegrationService {
-  private static final String SUBSCRIPTION_KEY = Test.isRunningTest()
-    ? 'TESTKEY'
-    : C_Settings.getSettings('APIM').get('APIM_Subscription_Key');
-
-  private static final String ENDPOINT = 'callout:SAS_APIM';
   private static final String SYSTEM_NAME = 'Salesforce';
 
   public class IntegrationException extends Exception {
@@ -36,12 +31,11 @@ public without sharing class APIMIntegrationService {
   ) {
     HttpRequest request = new HttpRequest();
 
-    request.setEndpoint(ENDPOINT + path);
+    request.setEndpoint(path);
     request.setMethod(String.valueOf(method));
 
     request.setHeader('sas-system-name', SYSTEM_NAME);
     request.setHeader('sas-tracking-id', C_Util.generateUUID());
-    request.setHeader('Ocp-Apim-Subscription-Key', SUBSCRIPTION_KEY);
 
     for (String header : extraHeaders.keySet()) {
       request.setHeader(header, extraHeaders.get(header));
