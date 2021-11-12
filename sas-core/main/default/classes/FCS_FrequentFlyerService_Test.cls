@@ -260,4 +260,33 @@ private class FCS_FrequentFlyerService_Test {
       'An unexpected number of customer rows was returned.'
     );
   }
+
+  @IsTest
+  static void shouldReturnNoMatchWhenSeveralProfilesAreFound() {
+    StaticResourceCalloutMock mock = new StaticResourceCalloutMock();
+    mock.setStaticResource('CustomersGetResponseWithTwoCustomers');
+    mock.setStatusCode(200);
+    mock.setHeader('Content-Type', 'text/xml');
+    Test.setMock(HttpCalloutMock.class, mock);
+
+    DataSource.QueryContext queryContext = new DataSource.QueryContext();
+    queryContext.tableSelection = new DataSource.TableSelection();
+    queryContext.tableSelection.filter = C_TestUtil.generateFilter(
+      DataSource.FilterType.EQUALS,
+      'HomeE-mail',
+      'test@example.com'
+    );
+
+    Test.startTest();
+    DataSource.TableResult tableResult = FCS_FrequentFlyerService.handleQuery(
+      queryContext
+    );
+    Test.stopTest();
+
+    System.assertEquals(
+      0,
+      tableResult.rows.size(),
+      'If C-Shark response includes more than one profile we should return no matches, because we have no way of identifying the correct one.'
+    );
+  }
 }

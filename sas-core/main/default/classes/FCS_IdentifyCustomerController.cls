@@ -24,7 +24,7 @@ public without sharing class FCS_IdentifyCustomerController {
       // Several test accounts in production data have internal users' email
       // addresses as their profile email, and we don't want to surface those
       // in Salesforce.
-      return;
+      return null;
     }
     Account createdAccount;
     String query =
