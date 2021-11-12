@@ -583,7 +583,22 @@ private class FCS_IdentifyCustomerController_Test {
       catchedException,
       'Expected exception for unsupported object. Check that object is still unsupported.'
     );
-  } /*
+  }
+
+  @IsTest
+  static void findCustomerShouldNotFetchAccountForSASEmails() {
+    Account account = FCS_IdentifyCustomerController.findCustomer(
+      'EmailPersonal__c',
+      'test@sas.se'
+    );
+    System.assertEquals(
+      null,
+      account,
+      'SAS emails should not cause a fetch for an account.'
+    );
+  }
+
+  /*
     @IsTest
     static void shouldThrowExceptionDueToUnsupportedExternalObjectQuery(){
         Exception returnedException;

@@ -581,7 +581,7 @@
 		<name>ApexClass</name>
     </types>
     <types>
-	    <members>FCS_CaseHandler_Tests</members>
+	    <members>FCS_CaseHandler_Test</members>
 		<name>ApexClass</name>
     </types>
     <types>
@@ -589,7 +589,7 @@
 		<name>ApexClass</name>
     </types>
     <types>
-	    <members>FCS_ContactHandler_Tests</members>
+	    <members>FCS_ContactHandler_Test</members>
 		<name>ApexClass</name>
     </types>
     <types>
@@ -605,7 +605,7 @@
 		<name>ApexClass</name>
     </types>
     <types>
-	    <members>FCS_EmailMessageHandler_Tests.cls</members>
+	    <members>FCS_EmailMessageHandler_Test.cls</members>
 		<name>ApexClass</name>
     </types>
     <types>

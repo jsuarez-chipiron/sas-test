@@ -245,7 +245,6 @@ public without sharing class Cases extends fflib_SObjectDomain {
    * already have an associated account.
    */
   private void tryToFetchEBAccountFromCODS() {
-    // TODO: We need to ignore email addresses here somehow
     if (instanceRecords.size() > 1) {
       // At the time of writing CODS didn't support searching with more than one key
       // at a time so we can't reasonably support batch operations.
