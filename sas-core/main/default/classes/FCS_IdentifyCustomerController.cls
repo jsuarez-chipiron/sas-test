@@ -15,6 +15,17 @@ public without sharing class FCS_IdentifyCustomerController {
    */
   @AuraEnabled
   public static Account findCustomer(String searchField, String searchValue) {
+    if (
+      searchValue.contains('@sas.dk') ||
+      searchValue.contains('@sas.no') ||
+      searchValue.contains('@sas.se')
+    ) {
+      // We should not search for EB accounts for SAS internal email addresses.
+      // Several test accounts in production data have internal users' email
+      // addresses as their profile email, and we don't want to surface those
+      // in Salesforce.
+      return;
+    }
     Account createdAccount;
     String query =
       'SELECT Id, ExternalId, AddressLine1__c, AddressLine2__c, AddressLine3__c, BirthDate__c, ' +
