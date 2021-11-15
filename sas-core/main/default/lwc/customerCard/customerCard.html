@@ -300,7 +300,10 @@
                   "
                 >
                   <span class="field-label">TP Product</span>
-                  <span class="slds-border_bottom">{p.Category_Name__c}</span>
+                  <span class="slds-border_bottom">
+                    <a onclick={navigateToTPProductPage} data-id={p.Id}
+                    >{p.Category_Name__c}</a
+                  ></span>
                 </div>
               </div>
               <div class="case-count-text">
