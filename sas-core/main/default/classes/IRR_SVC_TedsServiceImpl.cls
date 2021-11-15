@@ -56,18 +56,21 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
      * @return Retrieved Airport Details
      */
     public Map<String,String> getAirportCityNames(Set<String> iataCodes) {
-        String endpointURL = AIRPORTCODE_ENDPOINT_TEMPLATE + String.join((Iterable<String>)iataCodes,',');
-        C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
-                .executeRequest(endpointURL, C_IntegrationExecutor.Method.GET, null, null);
-        if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
-            throwTedsException(responseObject);
+        if(iataCodes !==null || iataCodes.size() !== 0){
+
+            String endpointURL = AIRPORTCODE_ENDPOINT_TEMPLATE + String.join((Iterable<String>)iataCodes,',');
+            C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor
+                    .executeRequest(endpointURL, C_IntegrationExecutor.Method.GET, null, null);
+            if (responseObject.statusCode >= 300 || responseObject.statusCode<200) {
+                throwTedsException(responseObject);
+            }
+            List<IRR_MOD_AirportInfo> airportNames = IRR_MOD_AirportInfo.parseArray(responseObject.responseBody);
+            Map<String,String> airportInfoMap = new Map<String, String>();
+            for(IRR_MOD_AirportInfo apInfo : airportNames){
+                airportInfoMap.put(apInfo.id,apInfo.city);
+            }
+            return airportInfoMap;
         }
-        List<IRR_MOD_AirportInfo> airportNames = IRR_MOD_AirportInfo.parseArray(responseObject.responseBody);
-        Map<String,String> airportInfoMap = new Map<String, String>();
-        for(IRR_MOD_AirportInfo apInfo : airportNames){
-            airportInfoMap.put(apInfo.id,apInfo.city);
-        }
-        return airportInfoMap;
     }
 
     /**
