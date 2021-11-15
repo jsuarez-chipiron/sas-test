@@ -1,119 +1,96 @@
 /**
- * @author Anton Norell
- * @date 2019-11-28
- * @description Service class for logic related to external object Frequent Flyer.
+ * Service class for logic related to external object Frequent Flyer.
+ * Primarily parses Frequent Flyer queries, and routes them to
+ * CSharkIntegrationService.
  */
 public with sharing class FCS_FrequentFlyerService {
-    /**
-     * Used to handle a query for Frequent Flyer object. Extracts terms to search for in external system,
-     * filters result based on additional filters, orders rows and returns a table with the result.
-     * Returns mock data if feature is turned on.
-     * @param queryContext QueryContext object for query
-     * @return Result table for query
-     */
-    public static DataSource.TableResult handleQuery(DataSource.QueryContext queryContext){
-        validateQueryFilter(queryContext);
-        C_ExternalObjectQueryHandler queryHandler = new C_ExternalObjectQueryHandler(queryContext);
-        Map<String, Set<Object>> validApiSearchTermsAndValues = queryHandler.getApiSearchTermsAndValues(
-                CSharkIntegrationService.validApiSearchFieldNames
-        );
-        String selectedSearchTerm = getSelectedSearchTerm(validApiSearchTermsAndValues);
-        Object selectedSearchValue = getSelectedSearchValue(selectedSearchTerm, validApiSearchTermsAndValues);
+  private static final Map<String, CSharkIntegrationService.SearchType> SEARCH_FIELD_TO_C_SHARK_SEARCH_TYPE = new Map<String, CSharkIntegrationService.SearchType>{
+    'EuroBonusNumber' => CSharkIntegrationService.SearchType.EB_NUMBER,
+    'TravelPassAccountNumber' => CSharkIntegrationService.SearchType.TP_ACCOUNT,
+    'ExternalId' => CSharkIntegrationService.SearchType.CODS_ID,
+    'HomeE-mail' => CSharkIntegrationService.SearchType.EMAIL,
+    'SubscriptionID' => CSharkIntegrationService.SearchType.SUBSCRIPTION_ID,
+    'UserName' => CSharkIntegrationService.SearchType.SITE_MEMBER
+  };
 
-        List<Map<String, Object>> customerRows = getCustomerRows(getSelectedSearchType(selectedSearchTerm), selectedSearchValue);
-        List<Map<String, Object>> processedRows = queryHandler.orderRows(queryHandler.filterRows(customerRows));
-        DataSource.TableResult tableResult = Datasource.TableResult.get(queryContext.tableSelection, processedRows);
-        return tableResult;
+  /**
+   * Contains the valid fields to search for in the C-Shark API. The values correspond with the field
+   * named returned in the service and are used as database named on external objects using the service,
+   * e.g. Frequent Flyer. The values are used when translating a query to valid Search Terms for the API.
+   */
+  private static final Set<String> VALID_API_SEARCH_FIELD_NAMES = new Set<String>{
+    'EuroBonusNumber',
+    'TravelPassAccountNumber',
+    'ExternalId',
+    'HomeE-mail'
+  };
+
+  public class InvalidSearchException extends Exception {
+  }
+
+  /**
+   * Used to handle a query for Frequent Flyer object. Extracts terms to search for in external system,
+   * filters result based on additional filters, orders rows and returns a table with the result.
+   *
+   * @param queryContext QueryContext object for query
+   * @throws APIMIntegrationService.IntegrationException In case of an error when fetching data.
+   * @throws InvalidSearchException In case of invalid search queries.
+   * @return Result table for query
+   */
+  public static DataSource.TableResult handleQuery(
+    DataSource.QueryContext queryContext
+  ) {
+    if (queryContext.tableSelection.filter == null) {
+      throw new InvalidSearchException(
+        'The query must include a valid search term for the C-Shark API'
+      );
     }
 
-    /**
-     * Used to retrieve customer rows based on supplied search variables. Checks if mock
-     * data should be returned or if callout to external system should be performed.
-     * @param selectedSearchType The selected type of search
-     * @param selectedSearchValue The selected value to search for
-     * @return Customer rows retrieved either from mock data generator or external system
-     */
-    private static List<Map<String, Object>> getCustomerRows(CSharkIntegrationService.SearchType selectedSearchType, Object selectedSearchValue) {
-        List<Map<String, Object>> customerRows;
-        if (!checkIfMockData()) {
-            customerRows = CSharkIntegrationService.getCustomer(selectedSearchType, selectedSearchValue);
-        } else {
-            customerRows = CSharkIntegrationService.getMockRows(selectedSearchType, selectedSearchValue);
-        }
-        return customerRows;
+    C_ExternalObjectQueryHandler queryHandler = new C_ExternalObjectQueryHandler(
+      queryContext
+    );
+
+    Map<String, Set<Object>> validApiSearchTermsAndValues = queryHandler.getApiSearchTermsAndValues(
+      VALID_API_SEARCH_FIELD_NAMES
+    );
+
+    if (validApiSearchTermsAndValues.size() == 0) {
+      throw new InvalidSearchException(
+        'The query must include a valid search term for the C-Shark API'
+      );
     }
 
-    /**
-     * Used to extract an calculate the search type that should be used for the query, based on the provided search term.
-     * @param selectedSearchTerm Search term in string format from query.
-     * @return Search type from C-Shark service
-     */
-    private static CSharkIntegrationService.SearchType getSelectedSearchType(String selectedSearchTerm) {
-        CSharkIntegrationService.SearchType selectedSearchType = CSharkIntegrationService.getSearchTypeByFieldName(selectedSearchTerm);
-        if (selectedSearchType == null) {
-            throw new CSharkIntegrationService.CSharkIntegrationException(
-                    'The provided API search type does not match enum of valid search types.'
-            );
-        }
-        return selectedSearchType;
+    // There should be only 1 search term and value.
+    String searchTerm = new List<String>(
+      validApiSearchTermsAndValues.keySet()
+    )[0];
+    List<Object> searchValues = new List<Object>(
+      validApiSearchTermsAndValues.get(searchTerm)
+    );
+    if (searchValues.size() > 1) {
+      throw new InvalidSearchException(
+        'Only one search value per field can be included in the query for this service'
+      );
     }
 
-    /**
-     * Used to extract and calculate the search value to use, e.g. a EuroBonus number, from the query.
-     * If multiple search values are provided for a single search term, e.g. multiple EuroBonus numbers,
-     * an exception is thrown.
-     * @param searchTerm Search term, i.e. the type of value to search for
-     * @param validApiSearchTermsAndValues Set of valid search terms
-     * @return A single search value, e.g. a EuroBonus number or an email address
-     */
-    private static Object getSelectedSearchValue(String searchTerm, Map<String, Set<Object>> validApiSearchTermsAndValues) {
-        List<Object> searchValues = new List<Object>();
-        searchValues.addAll(validApiSearchTermsAndValues.get(searchTerm));
-        if (searchValues.size() > 1) {
-            throw new CSharkIntegrationService.CSharkIntegrationException(
-                    'Only one search value per field ' + searchTerm + ' can be included in the query for this service'
-            );
-        }
-        return searchValues[0];
-    }
+    Object searchValue = searchValues[0];
 
-    /**
-     * Used to validate that the incoming query has a valid filter.
-     * @param queryContext QueryContext object from query
-     */
-    private static void validateQueryFilter(DataSource.QueryContext queryContext) {
-        if (queryContext.tableSelection.filter == null) {
-            throw new CSharkIntegrationService.CSharkIntegrationException('The query must include a valid search term for the C-Shark API');
-        }
-    }
+    CSharkIntegrationService.SearchType searchType = SEARCH_FIELD_TO_C_SHARK_SEARCH_TYPE.get(
+      searchTerm
+    );
 
-    /**
-     * Used to extract and calculate the search term to use. As search terms should
-     * be ordered by priority, the first term in the set is selected.
-     * @param searchTerms List of search terms from query
-     * @return The selected search term to use
-     */
-    private static String getSelectedSearchTerm(Map<String, Set<Object>> validApiSearchTermsAndValues){
-        if (validApiSearchTermsAndValues.size() == 0) {
-            throw new CSharkIntegrationService.CSharkIntegrationException(
-                    'The query must include a valid search term for the C-Shark API'
-            );
-        }
-        List<String> searchTermsList = new List<String>();
-        searchTermsList.addAll(validApiSearchTermsAndValues.keySet());
-        return searchTermsList[0];
-    }
+    List<Map<String, Object>> customerRowsFromCShark = CSharkIntegrationService.getCustomer(
+      searchType,
+      String.valueOf(searchValue)
+    );
 
-    /**
-     * Checks if Feature Switch for using mock data is active in org
-     * @return True or false for if switch for mock data is active or not
-     */
-    private static Boolean checkIfMockData() {
-        Boolean mockData = false;
-        //If feature switch for mock data is enabled, return mock data. Otherwise, evaluate request.
-        if ([SELECT Id, Active__c FROM Feature_Switch__mdt WHERE DeveloperName = 'Mock_Frequent_Flyer_Data'].Active__c) {
-            mockData = true;
-        }
-        return mockData;
-    }
+    List<Map<String, Object>> processedCustomerRows = queryHandler.orderRows(
+      queryHandler.filterRows(customerRowsFromCShark)
+    );
+    DataSource.TableResult tableResult = Datasource.TableResult.get(
+      queryContext.tableSelection,
+      processedCustomerRows
+    );
+    return tableResult;
+  }
 }

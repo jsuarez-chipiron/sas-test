@@ -1,6 +1,6 @@
 /**
     Abstract class for scheduled batches which defines the require functionailty for scheduled batches
-    Subclasses of this class can be run in isolation bu tthe abstract class provides methods
+    Subclasses of this class can be run in isolation but the abstract class provides methods
     to register a set of subsequent classes which are processed on batch finish @see SecheduledBatchService
 
     Note:
@@ -40,6 +40,18 @@ global abstract class SBS_ScheduledBatch implements Database.Batchable<sObject> 
     global void setUseTransactionControl(Boolean useTransactionControl){
         this.useTransactionControl = useTransactionControl;
     }
+    /**
+    Required abstract method used to set the parameters for batch classes.
+    @Sobj The Specific Object name in which batch class to be executed.
+    @retentionPeriod The number of days untill which data needs to be retained.
+    @caseField API name of the lookfield between case and related SObject,
+      This is null if there is no relation between case and related Sobject.
+    @caseType Since the GDPR retention is different for different caseTypes, this paramter refers to CaseType of the Case.
+              Usually this is having value only for Case related batch classes.
+    @relSObjField This refers to child Object lookup for the Batch Class Object.
+    @relSobjName This is the Child Object name of the related Batch class Object
+    */
+     global abstract void setVariables(String Sobj, Integer retentionPeriod, string caseField, string caseType, string batchName);          
 
     /**
         Required execute method which processes the scope of records in the batch
@@ -47,7 +59,7 @@ global abstract class SBS_ScheduledBatch implements Database.Batchable<sObject> 
         @param sObjScope The scope of records to process
     */
     global abstract void executeScope(Database.BatchableContext bc, SObject[] sObjScope);
-
+    
     /**
         Method for each execution which calls the extending class's execute method
         @param bc The batchable context of the batch job

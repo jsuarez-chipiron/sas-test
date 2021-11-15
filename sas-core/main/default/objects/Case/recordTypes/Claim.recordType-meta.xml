@@ -3547,6 +3547,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Liability Claim BOM</fullName>
+            <default>false</default>
+        </values>        
+        <values>
             <fullName>Email - Olympic DK</fullName>
             <default>false</default>
         </values>
