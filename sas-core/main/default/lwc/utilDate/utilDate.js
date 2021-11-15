@@ -14,6 +14,7 @@ const formattedDateString = (stringToFormat, dateOrTime) => {
     return "";
   }
 
+  // Parsing date manually just in case.
   const [datePart, timePart] = stringToFormat.split("T");
   if (!datePart || !timePart) {
     return "";
@@ -23,7 +24,7 @@ const formattedDateString = (stringToFormat, dateOrTime) => {
 
   const date = new Date(
     dateParts[0],
-    dateParts[1],
+    Number(dateParts[1]) - 1, // Date constructor months start from 0 = Jan
     dateParts[2],
     timeParts[0],
     timeParts[1],

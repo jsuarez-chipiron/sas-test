@@ -67,7 +67,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -81,8 +81,8 @@
         <description>Creates the liability claim with the information capture in the screen</description>
         <name>Create_Liability_Claim</name>
         <label>Create Liability Claim</label>
-        <locationX>315</locationX>
-        <locationY>319</locationY>
+        <locationX>176</locationX>
+        <locationY>518</locationY>
         <connector>
             <targetReference>Update_Case_With_Liability_Claim</targetReference>
         </connector>
@@ -191,7 +191,13 @@
         <inputAssignments>
             <field>Name_of_Passenger_s__c</field>
             <value>
-                <elementReference>Name_of_Passanger_s</elementReference>
+                <elementReference>Name_of_Passenger_s</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Liability_Queue_Id.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -210,11 +216,33 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
+        <description>Gets the Liability Queue Id</description>
+        <name>Get_Liability_Queue_Id</name>
+        <label>Get Liability Queue Id</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Liability_Claim</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Liability</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <description>Get case information</description>
         <name>GetCaseInfo</name>
         <label>GetCaseInfo</label>
-        <locationX>175</locationX>
-        <locationY>185</locationY>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>New_Liability_Claim</targetReference>
@@ -234,8 +262,8 @@
     <recordUpdates>
         <name>Update_Case_With_Liability_Claim</name>
         <label>Update Case With Liability Claim</label>
-        <locationX>450</locationX>
-        <locationY>319</locationY>
+        <locationX>176</locationX>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Outcome</targetReference>
         </connector>
@@ -259,13 +287,13 @@
         <description>Create a new Liability Claim</description>
         <name>New_Liability_Claim</name>
         <label>New Liability Claim</label>
-        <locationX>174</locationX>
-        <locationY>321</locationY>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Create_Liability_Claim</targetReference>
+            <targetReference>Get_Liability_Queue_Id</targetReference>
         </connector>
         <fields>
             <name>GeneralInfo</name>
@@ -359,8 +387,8 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Name_of_Passanger_s</name>
-            <fieldText>Name of Passanger(s)</fieldText>
+            <name>Name_of_Passenger_s</name>
+            <fieldText>Name of Passenger(s)</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>true</isRequired>
             <visibilityRule>
@@ -643,8 +671,8 @@
     <screens>
         <name>Outcome</name>
         <label>Outcome</label>
-        <locationX>588</locationX>
-        <locationY>319</locationY>
+        <locationX>176</locationX>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -658,7 +686,7 @@
     </screens>
     <start>
         <locationX>50</locationX>
-        <locationY>50</locationY>
+        <locationY>0</locationY>
         <connector>
             <targetReference>GetCaseInfo</targetReference>
         </connector>

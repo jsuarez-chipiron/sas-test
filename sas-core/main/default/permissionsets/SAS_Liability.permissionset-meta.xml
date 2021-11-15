@@ -102,6 +102,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>LIA_Claim__c.Has_been_sent_to_settle__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LIA_Claim__c.Interest_Paid__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -133,11 +138,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Legal_Conclusion__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Claim__c.Liability_Claim_Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

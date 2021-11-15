@@ -13,7 +13,7 @@
         <controllingField>Department__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
             <value>
                 <fullName>Baggage</fullName>
                 <default>false</default>
@@ -33,11 +33,6 @@
                 <fullName>Content</fullName>
                 <default>false</default>
                 <label>Content</label>
-            </value>
-            <value>
-                <fullName>Error</fullName>
-                <default>false</default>
-                <label>Error</label>
             </value>
             <value>
                 <fullName>EuroBonus</fullName>
@@ -80,6 +75,11 @@
                 <label>Non-SAS Products</label>
             </value>
             <value>
+                <fullName>Plusgrade</fullName>
+                <default>false</default>
+                <label>Plusgrade</label>
+            </value>
+            <value>
                 <fullName>Puzzle</fullName>
                 <default>false</default>
                 <label>Puzzle</label>
@@ -110,6 +110,11 @@
                 <label>Special Service Request</label>
             </value>
             <value>
+                <fullName>Ticketless</fullName>
+                <default>false</default>
+                <label>Ticketless</label>
+            </value>
+            <value>
                 <fullName>Travel Information</fullName>
                 <default>false</default>
                 <label>Travel Information</label>
@@ -124,7 +129,22 @@
                 <default>false</default>
                 <label>Voucher</label>
             </value>
+            <value>
+                <fullName>Error</fullName>
+                <default>false</default>
+                <label>Error</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Sales Control BOM</controllingFieldValue>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Special Service Request</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sales Control BOM</controllingFieldValue>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
@@ -140,16 +160,6 @@
             <controllingFieldValue>Functional Product Support</controllingFieldValue>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Error</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Control BOM</controllingFieldValue>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Special Service Request</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
@@ -234,10 +244,18 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Plusgrade</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Corporate</controllingFieldValue>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
             <valueName>SAS for Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <valueName>Ticketless</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>

@@ -1,41 +1,70 @@
 @isTest
 private class CaseFormTest {
-  static testMethod void testCreateCaseForm() {
-  //Create Document
-        ContentVersion cv = new ContentVersion();
-        cv.Title = 'Test Document';
-        cv.PathOnClient = 'TestDocument.pdf';
-        cv.VersionData = Blob.valueOf('Test Content');
-        cv.IsMajorVersion = true;
-        Insert cv;
-        
-    String json =
-      '{ ' +
-      '  \"formData\": {' +
-      '    \"bookingReference\": \"123456\",' +
-      '    \"contentVersionId\":"'+cv.Id+'"'+
-      '  },' +
-      '  \"metaData\": {' +
-      '    \"siteUrl\": \"sas.se\"' +
-      '  }' +
-      '}';
-       
+  @IsTest
+  public static void shouldCreateCaseAndAttachments() {
+    // Create attachments
+    ContentVersion attachment1 = new ContentVersion();
+    attachment1.Title = 'Test Document1';
+    attachment1.PathOnClient = 'TestDocument1.txt';
+    attachment1.VersionData = Blob.valueOf('Test Content1');
+    attachment1.IsMajorVersion = true;
+    ContentVersion attachment2 = new ContentVersion();
+    attachment2.Title = 'Test Document2';
+    attachment2.PathOnClient = 'TestDocument2.txt';
+    attachment2.VersionData = Blob.valueOf('Test Content2');
+    attachment2.IsMajorVersion = true;
+    insert attachment1;
+    insert attachment2;
 
-    Test.startTest();
+    CaseFormJSON2Apex requestBody = CaseFormJSON2Apex.parse(
+      '{ ' +
+      '  "formData\": {' +
+      '    "bookingReference": "95TEST",' +
+      '    "type": "visa-rejection",' +
+      '    "contentVersionIds":["' +
+      attachment1.Id +
+      '","' +
+      attachment2.Id +
+      '"]' +
+      '  },' +
+      '  "metaData": {' +
+      '    "market": "dk-da"' +
+      '  }' +
+      '}'
+    );
+
     Test.setMock(
       HttpCalloutMock.class,
       new TEDSBookingSingleAndFlightSuccessMock()
     );
-    RestRequest request = new RestRequest();
-    request.requestUri = '/services/apexrest/CaseForm';
-    request.httpMethod = 'POST';
-    RestContext.request = request;
-    CaseFormJSON2Apex obj = CaseFormJSON2Apex.parse(json);
-    string caseId = CaseForm.CaseForm(obj);
-    Test.StopTest();
-   System.assertEquals('500', caseId.substring(0, 3));
-   Integer contentDocument = [SELECT Id,LinkedEntityId FROM ContentDocumentLink where LinkedEntityId=:caseId ].size();
-    System.assertEquals(1,contentDocument);
 
+    Test.startTest();
+    CaseForm.createCase(requestBody);
+    Test.StopTest();
+
+    Case c = [
+      SELECT Id, Origin
+      FROM Case
+      WHERE Initially_Provided_PNR__c = '95TEST'
+    ];
+
+    Integer numberOfContentDocumentLinks = [
+        SELECT Id, LinkedEntityId
+        FROM ContentDocumentLink
+        WHERE LinkedEntityId = :c.Id
+      ]
+      .size();
+
+    System.assertEquals(
+      'Form - Visa Rejection DK',
+      c.Origin,
+      'Case Origin should be set according to market and form type.'
+    );
+
+    System.assertEquals(
+      2,
+      numberOfContentDocumentLinks,
+      'There should exist two linked attachments to the case.'
+    );
   }
 }
