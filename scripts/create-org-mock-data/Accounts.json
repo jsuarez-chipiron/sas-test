@@ -1,0 +1,13 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Account",
+                "referenceId": "AccountRef1"
+            },
+            "Name": "Test Testsson",
+            "FCS_EBLevel__c": "G",
+            "FCS_EBNumber__c": "012345678"
+        }
+    ]
+}

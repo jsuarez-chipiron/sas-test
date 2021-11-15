@@ -29,6 +29,7 @@ global class GroupTravelJsonToApex {
     public String groupType;
     public Boolean haveCompanyCode;
     public Boolean invoiceAgreementWithSAS;
+    public String invoiceAgreementNumber;
     public String lastName;
     public Integer numberOfAdults;
     public Integer numberOfChildren;

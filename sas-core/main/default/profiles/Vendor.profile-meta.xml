@@ -387,7 +387,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Group_Travel_Request__c.Invoice_agreement_with_SAS__c</field>
+        <field>Group_Travel_Request__c.Invoice_Agreement_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Group_Travel_Request__c.Invoice_Agreement_With_SAS__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -854,8 +859,18 @@
         <editable>false</editable>
         <field>Case.LIA_External_Case_Number_Court_Reference__c</field>
         <readable>false</readable>
-   </fieldPermissions>    
- <fieldPermissions>
+   </fieldPermissions> 
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.LIA_Judicial_Body__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.LIA_Passenger_s__c</field>
+        <readable>true</readable>
+    </fieldPermissions>   
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Final_Payment_Date__c</field>
         <readable>true</readable>
@@ -1142,6 +1157,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Refund_Request_Sub_type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Refund_Request_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>false</editable>
         <field>CaseToBooking__c.Case__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1175,6 +1200,16 @@
         <field>Refund_Request__c.Refund_Macro__c</field>
         <readable>true</readable>
     </fieldPermissions>
+        <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.Request_Type_Sub_Category__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Refund_Request__c.Request_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Refund_Request__c.Ticket_Numbers__c</field>
@@ -1193,6 +1228,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>IRR_CommunicationLog__c.IRR_Channel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IRR_CommunicationLog__c.IRR_EBNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

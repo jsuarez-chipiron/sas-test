@@ -5,11 +5,13 @@
                 "type": "Passenger__c",
                 "referenceId": "Passenger__cRef1"
             },
+            "Account__c": "@AccountRef1",
             "First_Name__c": "Test",
             "Identifier__c": "PT1",
             "Last_Name__c": "Testsson",
             "Name": "Test Testsson",
-            "Booking__c": "@Booking__cRef1"
+            "Booking__c": "@Booking__cRef1",
+            "EuroBonus_Number__c": "012345678"
         },
         {
             "attributes": {

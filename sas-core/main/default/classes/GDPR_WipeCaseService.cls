@@ -1,145 +1,317 @@
 /**
-Service class providing the functionality to wipe a case
+Service class providing the functionality to wipe and Delete the case
 I.e. remove fields except the fields to retain and delete
 all interactions connected to the case.
 @author Peter Södergren
 */
 global with sharing class GDPR_WipeCaseService {
-    /**
-Additional retained fields used by test due to a Salesforce bug with testing and field definitions
-*/
-    @TestVisible static Set<String> RETAIN_ADD;
-    /**
-Retrieves the case fields to clear based where the fields 
-stored in the general setting group CWRF are removed
-@return The list fo fields which should be wiped from the case
-*/
-    global static String[] getCaseFieldsToClear(){
-        Set<String> retainedFields = RETAIN_ADD!=null ? RETAIN_ADD : new Set<String>();
-        //TODO When issue related to retrieving multiple field definitions in on transaction os solved, remove Account filter from this query and filter in loop below
-        FieldDefinition[] fdList = [SELECT QualifiedAPIName,ComplianceGroup, EntityDefinitionId FROM FieldDefinition WHERE (EntityDefinitionId ='Account' OR EntityDefinitionId ='Case') AND ComplianceGroup!=null];
-        for(FieldDefinition fd : fdList){
-            if(fd.EntityDefinitionId == 'Case' && fd.ComplianceGroup.split(';').contains('WipeRetain'))retainedFields.add(fd.QualifiedAPIName);
-        }
-        //Add fields for which compliance cannot be set
-        retainedFields.add('RecordTypeId');
-        
-        List<String> fieldsToClear = new List<String>();
-        Map<String,Schema.SObjectField> fMap = Case.getSObjectType().getDescribe().fields.getMap();
-        for(String k : fMap.keySet()){
-            Schema.SObjectField f = fMap.get(k);
-            if(!retainedFields.contains(f+'')){
-                Schema.DescribeFieldResult dfr = f.getDescribe();
-                if(dfr.isNillable() && dfr.getType()!=Schema.DisplayType.ADDRESS && dfr.isUpdateable())fieldsToClear.add(k);
-            }
-        }
-        return fieldsToClear;
+/*
+  /*    Wipes the cases with the supplied case ids and deletes any connected interactions
+  @param caseIds THe ids of the cases to wipe
+  */
+  global static void wipeCases(Id[] caseIds) {
+    Integer sz = caseIds.size();
+    Case[] caseList = new List<Case>(sz);
+    for (Integer i = 0; i < sz; i++) {
+      caseList[i] = new Case(Id = caseIds[i]);
     }
-    /**
-Wipes the cases with the supplied case ids and deletes any connected interactions
-@param caseIds THe ids of the cases to wipe
-*/
-    global static void wipeCases(Id[] caseIds){
-        Integer sz = caseIds.size();
-        Case[] caseList = new Case[sz];
-        for(Integer i=0;i<sz;i++){
-            caseList[i] = new Case(Id=caseIds[i]);
-        }
-        wipeCases(caseList);
-    }
-    
-    /**
-Wipes the provided cases and deletes any connected interactions
-@param caseList The list of cases to wipe
-*/
-    global static void wipeCases(Case[] caseList){
-        wipeCases(caseList,getCaseFieldsToClear());
-    }
-    
-    /**
-Wipes the provided cases and deletes any connected interactions
-with a custom set of connected fields.
-@param caseList The list of cases to wipe
-@param fieldsToClear The fields to clear on the case record
-*/
-    global static void wipeCases(Case[] caseList,String[] fieldsToClear){
-        Integer sz = caseList.size();
-        Integer fSz = fieldsToClear.size();
-        Set<Id> caseIds = new Set<Id>();
-        boolean wipeCase = true;
-        for(Integer i=0;i<sz;i++){
-            Case c = caseList[i];
-            caseIds.add(c.Id);
-            for(Integer j=0;j<fSz;j++){
-                c.put(fieldsToClear[j],null);
-            }
-            c.GDPR_Wiped__c = true;
-        }
-        deleteRelatedEntities(caseIds,wipeCase);
-        update caseList;
-    }
-    
-    /**
-Deletes the entities related to the provided case ids
-@param caseIds The case ids for which to delete the related entities
-@param wipecase used to recognize whether we are wiping the cases or deleting the cases.
+    wipeCases(caseList);
+  }
 
-*/
-    global static void deleteRelatedEntities(Set<Id> caseIds, boolean wipeCase){
-        List<String> socialAccts = new List<String>(); // lst to store social accounts
-        Set<Id> setLinkEntityIds = new set<Id>(); // set to capture the related case and messagesession Ids;
-        Set<Id> setContDocumentIds = new Set<Id>(); // set to remove the duplicates
-        socialAccts.add(C_Settings.getSettings('Social Accounts').get('ManagedFacebookPage'));
-        socialAccts.add(C_Settings.getSettings('Social Accounts').get('ManagedTwitterPage'));   
-        LiveChatTranscript[] lctList = [SELECT Id,LiveChatVisitorId FROM LiveChatTranscript WHERE CaseId IN :caseIds];
-        MessagingSession[] msList = [SELECT Id,MessagingEndUserId FROM MessagingSession WHERE CaseId IN :caseIds];
-        Map<ID, EmailMessage> mapEmailMessages = new Map<ID, EmailMessage>([SELECT Id FROM EmailMessage WHERE ParentId IN :caseIds]);
-        EmailMessage[] emList = mapEmailMessages.values();
-        SocialPost[] spList = [SELECT Id FROM SocialPost WHERE ParentId IN :caseIds AND Persona.name NOT IN :socialAccts];
-        Task[] tList = [SELECT Id FROM Task WHERE WhatId IN :caseIds];
-        CaseComment[] ccList = [SELECT Id FROM CaseComment WHERE ParentId IN :caseIds];
-        CaseToBooking__c[] cbList = [Select Id FROM CaseToBooking__c WHERE Case__c IN :caseIds];
-        setLinkEntityIds.addAll(caseIds);
-        setLinkEntityIds.addAll(mapEmailMessages.keySet());
-        ContentDocumentLink[] cdlList = [SELECT Id,ContentDocumentId,ContentDocument.LatestPublishedVersion.FirstPublishLocationId FROM ContentDocumentLink WHERE LinkedEntityId IN :setLinkEntityIds];
-        List<ContentDocument> cdDelList = new List<ContentDocument>();
-        for(ContentDocumentLink cdl:cdlList){
-            if(cdl.ContentDocument.LatestPublishedVersion.FirstPublishLocationId!=null && !setContDocumentIds.contains(cdl.ContentDocument.LatestPublishedVersion.FirstPublishLocationId ))
-            {
-                cdDelList.add(new ContentDocument(Id=cdl.ContentDocumentId));
-                setContDocumentIds.add(cdl.ContentDocument.LatestPublishedVersion.FirstPublishLocationId);
-            }
-        }
-        delete lctList;    
-        delete msList;
-        delete spList;
-        delete tList;
-        delete ccList;
-        delete cbList;
-        if(!wipeCase)
-        {
-            delete emList;
-            delete cdDelList;
-        }
-        
-        Set<Id> lcvIds = new Set<Id>();
-        for(Integer i=0,lctSz=lctList.size();i<lctSz;i++){
-            LiveChatTranscript lct = lctList[i];
-            if(lct.LiveChatVisitorId!=null)lcvIds.add(lct.LiveChatVisitorId);
-        }
-        if(!lcvIds.isEmpty()){
-            LiveChatVisitor[] lcvList = [SELECT Id FROM LiveChatVisitor WHERE Id IN :lcvIds AND Id NOT IN (SELECT LiveChatVisitorId FROM LiveChatTranscript WHERE LiveChatVisitorId IN :lcvIds)];   
-            delete lcvList;
-        }
-        
-        Set<Id> meuIds = new Set<Id>();
-        for(Integer i=0,msSz=msList.size();i<msSz;i++){
-            MessagingSession ms = msList[i];
-            if(ms.MessagingEndUserId!=null)meuIds.add(ms.MessagingEndUserId);
-        }
-        if(!meuIds.isEmpty()){
-            MessagingEndUser[] meuList = [SELECT Id FROM MessagingEndUser WHERE Id IN :meuIds AND Id NOT IN (SELECT MessagingEndUserId FROM MessagingSession WHERE MessagingEndUserId IN :meuIds)];   
-            delete meuList;
-        }
+  /**
+  Wipes the provided cases and deletes any connected interactions
+  @param caseList The list of cases to wipe
+  */
+  global static void wipeCases(Case[] caseList) {
+    wipeCases(caseList, GDPR_Util.getCaseFieldsToClear('Case'), null);
+  }
+  /**
+  Wipes the provided cases and wipe any connected interactions
+  with a custom set of connected fields.
+  @param caseList The list of cases to wipe
+  @param fieldsToClear The fields to clear on the case record
+  */
+  global static void wipeCases(
+    Case[] caseList,
+    String[] fieldsToClear,
+    String batchName
+  ) {
+    Set<Id> caseIds = new Set<Id>();
+    caseIds = C_Util.getIdSet(caseList);
+    wipeRelatedEntities(caseIds, batchName);
+    List<Sobject> lstCaseSobject = GDPR_Util.createSobjectFieldsToClear(
+      caseList,
+      'Case'
+    );
+    update lstCaseSobject;
+  }
+
+  /**
+  Deletes the entities related to the provided case ids
+  @param caseIds The case ids for which to delete the related entities
+  @param wipecase used to recognize whether we are wiping the cases or deleting the cases.
+  
+  */
+  global static void deleteRelatedEntities(Set<Id> caseIds, String batchName) {
+    List<String> socialAccts = new List<String>(); // lst to store social accounts
+    Set<Id> setLinkEntityIds = new Set<Id>(); // set to capture the related case and messagesession Ids;
+    Set<Id> setContDocumentIds = new Set<Id>(); // set to remove the duplicates
+    List<Sobject> lstSobjectDelete = new List<SObject>();
+    Map<String, List<Sobject>> mapSobjects = new Map<String, List<Sobject>>(); // map used to store the Object name and List of Sobject
+    // form Object
+    FieldDefinition[] fdList = [
+      SELECT QualifiedAPIName, ComplianceGroup, EntityDefinitionId
+      FROM FieldDefinition
+      WHERE EntityDefinitionId = 'Case' AND ComplianceGroup = 'lookup'
+    ];
+
+    for (FieldDefinition fld : fdList) {
+      Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.Case.fields.getMap();
+      Schema.DescribeFieldResult f = fieldMap.get(fld.QualifiedAPIName)
+        .getDescribe();
+      for (Schema.SObjectType reference : f.getReferenceTo()) {
+        mapSobjects.put(
+          reference.getDescribe().getName(),
+          (getRelatedParentRecordsForCase(
+            caseIds,
+            reference.getDescribe().getName(),
+            fld.QualifiedAPIName
+          ))
+        );
+      }
     }
+   List<GDPR_Retention_Link__mdt> lstRetenMdt = [SELECT DeveloperName,
+                                                GDPR_Related_Channel_Object_Link__c,
+                                                GDPR_Related_Channel_Object__c,
+                                                GDPR_Related_Channel_Object__r.Related_Case_Lookup_Field__c,
+                                                GDPR_Related_Channel_Object__r.Related_Sobject_Lookup_Field__c,
+                                                GDPR_Related_Channel_Object__r.Related_SObject_Name__c,
+                                                GDPR_Related_Channel_Object__r.SObject_Name__c 
+                                                FROM 
+                                                GDPR_Retention_Link__mdt 
+                                                where 
+                                                GDPR_Related_Channel_Object_Link__c IN 
+                                                (SELECT 
+                                                GDPR_Related_Channel_Object__c
+                                                FROM 
+                                                GDPR_Retention_Policy__mdt WHERE 
+                                                DeveloperName =: batchName)];
+                                                
+    for (GDPR_Retention_Link__mdt mdt : lstRetenMdt) {
+      if (
+        mdt.GDPR_Related_Channel_Object__r.Related_Sobject_Lookup_Field__c !=
+        null
+      ) {
+        List<SObject> listSobjects = getRelatedChildRecordsForCase(
+          caseIds,
+          mdt.GDPR_Related_Channel_Object__r.SObject_Name__c,
+          mdt.GDPR_Related_Channel_Object__r.Related_Case_Lookup_Field__c,
+          mdt.GDPR_Related_Channel_Object__r.Related_Sobject_Lookup_Field__c
+        );
+        mapSobjects.put(
+          mdt.GDPR_Related_Channel_Object__r.SObject_Name__c,
+          (getRelatedChildRecordsForChannelObject(
+            listSobjects,
+            mdt.GDPR_Related_Channel_Object__r.SObject_Name__c,
+            mdt.GDPR_Related_Channel_Object__r.Related_SObject_Name__c,
+            mdt.GDPR_Related_Channel_Object__r.Related_Sobject_Lookup_Field__c
+          ))
+        );
+      } else {
+        mapSobjects.put(
+          mdt.GDPR_Related_Channel_Object__r.SObject_Name__c,
+          (getRelatedChildRecordsForCase(
+            caseIds,
+            mdt.GDPR_Related_Channel_Object__r.SObject_Name__c,
+            mdt.GDPR_Related_Channel_Object__r.Related_Case_Lookup_Field__c,
+            mdt.GDPR_Related_Channel_Object__r.Related_Sobject_Lookup_Field__c
+          ))
+        );
+      }
+    }
+
+    socialAccts.add(
+      C_Settings.getSettings('Social Accounts').get('ManagedFacebookPage')
+    );
+    socialAccts.add(
+      C_Settings.getSettings('Social Accounts').get('ManagedTwitterPage')
+    );
+
+    SocialPost[] spList = [
+      SELECT Id
+      FROM SocialPost
+      WHERE ParentId IN :caseIds AND Persona.name NOT IN :socialAccts
+    ];
+    mapSobjects.put('SocialPost', lstSobjectDelete);
+
+    Map<ID, EmailMessage> mapEmailMessages = new Map<ID, EmailMessage>(
+      [SELECT Id FROM EmailMessage WHERE ParentId IN :caseIds]
+    );
+    EmailMessage[] emList = mapEmailMessages.values();
+
+    mapSobjects.put('EmailMessage', emList);
+
+    setLinkEntityIds.addAll(caseIds);
+    setLinkEntityIds.addAll(mapEmailMessages.keySet());
+    ContentDocumentLink[] cdlList = [
+      SELECT
+        Id,
+        ContentDocumentId,
+        ContentDocument.LatestPublishedVersion.FirstPublishLocationId
+      FROM ContentDocumentLink
+      WHERE LinkedEntityId IN :setLinkEntityIds
+    ];
+    List<ContentDocument> cdDelList = new List<ContentDocument>();
+    for (ContentDocumentLink cdl : cdlList) {
+      if (
+        cdl.ContentDocument.LatestPublishedVersion.FirstPublishLocationId !=
+        null &&
+        !setContDocumentIds.contains(
+          cdl.ContentDocument.LatestPublishedVersion.FirstPublishLocationId
+        )
+      ) {
+        cdDelList.add(new ContentDocument(Id = cdl.ContentDocumentId));
+        setContDocumentIds.add(
+          cdl.ContentDocument.LatestPublishedVersion.FirstPublishLocationId
+        );
+      }
+    }
+
+    mapSobjects.put('ContentDocument', cdDelList);
+
+    for (String SobjectName : mapSobjects.keySet()) {
+      Set<Id> setSobjecIds = C_Util.getIdSet(mapSobjects.get(SobjectName));
+      String q = 'Select Id From ' + SobjectName + ' Where Id IN :setSobjecIds';
+      lstSobjectDelete.addAll(Database.Query(q));
+    }
+
+    delete lstSobjectDelete;
+    
+  }
+  /**
+  wipe the related connection to case
+  @param caseIds setof CaseIds needs to wiped
+  */
+  global static void wipeRelatedEntities(Set<Id> caseIds, String batchName) {
+  
+    // Channel Objects
+    System.debug('inside a wipe method');
+    List<Sobject> lstWipeRelatedRecords = new List<Sobject>();
+       List<GDPR_Retention_Link__mdt> lstRetenMdt = [SELECT DeveloperName,
+                                                    GDPR_Related_Channel_Object_Link__c,
+                                                    GDPR_Related_Channel_Object__c,
+                                                    GDPR_Related_Channel_Object__r.Related_Case_Lookup_Field__c,
+                                                    GDPR_Related_Channel_Object__r.Related_Sobject_Lookup_Field__c,
+                                                    GDPR_Related_Channel_Object__r.Related_SObject_Name__c,
+                                                    GDPR_Related_Channel_Object__r.SObject_Name__c 
+                                                    FROM 
+                                                    GDPR_Retention_Link__mdt 
+                                                    where 
+                                                    GDPR_Related_Channel_Object_Link__c IN 
+                                                    (SELECT 
+                                                    GDPR_Related_Channel_Object__c
+                                                    FROM 
+                                                    GDPR_Retention_Policy__mdt WHERE 
+                                                    DeveloperName =: batchName)];
+    for (GDPR_Retention_Link__mdt mdt : lstRetenMdt) {
+      List<SObject> listSobjects = getRelatedChildRecordsForCase(
+        caseIds,
+        mdt.GDPR_Related_Channel_Object__r.SObject_Name__c,
+        mdt.GDPR_Related_Channel_Object__r.Related_Case_Lookup_Field__c,
+        null
+      );
+      lstWipeRelatedRecords.addAll(
+        GDPR_Util.createSobjectFieldsToClear(
+          listSobjects,
+          mdt.GDPR_Related_Channel_Object__r.SObject_Name__c
+        )
+      );
+    }
+    FieldDefinition[] fdList = [
+      SELECT QualifiedAPIName, ComplianceGroup, EntityDefinitionId
+      FROM FieldDefinition
+      WHERE EntityDefinitionId = 'Case' AND ComplianceGroup = 'Lookup'
+    ];
+    for (FieldDefinition fld : fdList) {
+      Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.Case.fields.getMap();
+      Schema.DescribeFieldResult f = fieldMap.get(fld.QualifiedAPIName)
+        .getDescribe();
+      for (Schema.SObjectType reference : f.getReferenceTo()) {
+        List<SObject> listSobjects = getRelatedParentRecordsForCase(
+          caseIds,
+          reference.getDescribe().getName(),
+          fld.QualifiedAPIName
+        );
+        lstWipeRelatedRecords.addAll(
+          GDPR_Util.createSobjectFieldsToClear(
+            listSobjects,
+            reference.getDescribe().getName()
+          )
+        );
+      }
+    }
+    update lstWipeRelatedRecords;
+    // Deleting of the Email Messages while wiping the case
+    List<EMailMessage> lstEmailMessage = [SELECT Id FROM EmailMessage WHERE ParentId=:caseIds];
+    if(!lstEmailMessage.isEmpty())
+    {
+      delete lstEmailMessage;
+    }
+  }
+
+  global static List<Sobject> getRelatedChildRecordsForChannelObject(
+    List<Sobject> sObjScope,
+    String sObjectName,
+    String relSObjName,
+    String relSObjField
+  ) {
+    Set<Id> relIds = new Set<Id>();
+    for (SObject sObj : sObjScope) {
+      if (relSObjField != null) {
+        Id relId = (Id) sObj.get(relSObjField);
+        if (relId != null)
+          relIds.add(relId);
+      }
+    }
+    delete sObjScope;
+    return Database.query(
+      'SELECT Id FROM ' +
+      relSObjName +
+      ' WHERE Id IN :relIds AND Id NOT IN (SELECT ' +
+      relSObjField +
+      ' FROM ' +
+      sObjectName +
+      ' WHERE ' +
+      relSObjField +
+      ' IN :relIds)'
+    );
+  }
+  /**
+  Set the Related records of the case for wiping
+  @params caseIds, set of case caseIds
+  @params sot The Sobject related to Case
+  @params caseField the fields which related the case and related Object
+  */
+  global static List<Sobject> getRelatedChildRecordsForCase(
+    Set<Id> caseIds,
+    String sot,
+    String caseField,
+    String relSObjField
+  ) {
+    String q = 'SELECT Id, CreatedDate';
+    q = relSObjField != null ? q + ', ' + relSObjField : q;
+    q += ' FROM ' + sot + ' WHERE ';
+    q += caseField + '=:caseIds';
+    return Database.query(q);
+  }
+  global static List<SObject> getRelatedParentRecordsForCase(
+    Set<Id> caseIds,
+    String sot,
+    String caseField
+  ) {
+    String q = 'SELECT Id, CreatedDate FROM ' + sot + ' WHERE Id IN ';
+    q += '( SELECT ' + sot + ' FROM CASE WHERE Id IN :caseIds )';
+    return Database.query(q);
+  }
+  
 }

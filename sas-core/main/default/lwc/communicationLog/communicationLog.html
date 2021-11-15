@@ -11,7 +11,11 @@
             class="slds-border_bottom slds-p-bottom_x-small slds-m-top_xx-small"
             key={index}
           >
-            <strong>{log.channel}</strong>&nbsp;-&nbsp;{log.flightNumber},&nbsp;
+            <strong>
+              <a onclick={navigateToLogPage} data-id={log.id}
+                >{log.channel}</a
+              > </strong
+            >&nbsp;-&nbsp;{log.flightNumber},&nbsp;
             <lightning-formatted-date-time
               value={log.createdDate}
               year="numeric"

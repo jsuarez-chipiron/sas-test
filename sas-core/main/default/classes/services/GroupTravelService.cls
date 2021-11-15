@@ -88,7 +88,8 @@ public class GroupTravelService {
       Have_Company_Code__c = travelRequest.haveCompanyCode == null
         ? false
         : travelRequest.haveCompanyCode,
-      Invoice_agreement_with_SAS__c = travelRequest.invoiceAgreementWithSAS,
+      Invoice_Agreement_With_SAS__c = travelRequest.invoiceAgreementWithSAS,
+      Invoice_Agreement_Number__c = travelRequest.invoiceAgreementNumber,
       Last_Name__c = travelRequest.lastName,
       Name = travelRequest.groupName,
       Number_Of_Adults__c = travelRequest.numberOfAdults == null
