@@ -647,6 +647,11 @@
                 <fieldItem>Record.Invoice_Agreement_With_SAS__c</fieldItem>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Invoice_Agreement_Number__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-92ec3a3d-f8c7-4d7a-9846-fa35fa043f19</name>
         <type>Facet</type>
     </flexiPageRegions>

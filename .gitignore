@@ -40,5 +40,6 @@ sas-core/main/default/namedCredentials
 sas-core/main/default/authproviders
 sas-core/main/default/lwc/jsconfig.json
 
+sas-core/main/default/customMetadata/C_GeneralSetting.APIM_Subscription_Key.md-meta.xml
 sas-core/main/default/customMetadata/C_GeneralSetting.APIM_TEDS_Subscription_Key.md-meta.xml
 sas-core/main/default/customMetadata/LocalAuthProvider.APIM_Auth.md-meta.xml

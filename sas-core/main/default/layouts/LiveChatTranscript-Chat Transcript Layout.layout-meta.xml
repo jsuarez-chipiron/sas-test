@@ -34,6 +34,10 @@
                 <behavior>Edit</behavior>
                 <field>Initially_Provided_PNR__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>GDPR_Wiped__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

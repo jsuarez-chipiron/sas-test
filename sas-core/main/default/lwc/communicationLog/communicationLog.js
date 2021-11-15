@@ -18,7 +18,6 @@ export default class CommunicationLog extends NavigationMixin(
 
   @api
   set communicationlogs(value) {
-    console.log("v", value);
     if (value != undefined && value.length > 0) {
       this.logs = value.map((log) => ({
         ...log,
@@ -57,5 +56,16 @@ export default class CommunicationLog extends NavigationMixin(
 
   handleDisplayAllLogs() {
     this.showAllLogs = true;
+  }
+
+  navigateToLogPage(event) {
+    this[NavigationMixin.Navigate]({
+      type: "standard__recordPage",
+      attributes: {
+        recordId: event.target.dataset.id,
+        objectApiName: "IRR_CommunicationLog__c",
+        actionName: "view"
+      }
+    });
   }
 }
