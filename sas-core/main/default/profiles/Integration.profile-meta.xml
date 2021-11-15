@@ -2130,6 +2130,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.LIA_Name_of_Judicial_Body__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.LIA_PNR__c</field>
         <readable>false</readable>
     </fieldPermissions>
