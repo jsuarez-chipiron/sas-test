@@ -47,6 +47,11 @@
         <label>Email - CS Feedback</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - CS Vendor</fullName>
+        <default>false</default>
+        <label>Email - CS Vendor</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Digital Channel Support Internal</fullName>
         <default>false</default>
         <label>Email - Digital Channel Support Internal</label>

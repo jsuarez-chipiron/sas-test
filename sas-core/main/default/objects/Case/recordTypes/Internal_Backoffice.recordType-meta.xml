@@ -12,6 +12,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CS Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Corporate</fullName>
             <default>false</default>
         </values>
@@ -1027,6 +1031,10 @@
         </values>
         <values>
             <fullName>Policies and agreements</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Positive Covid Test</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4087,6 +4095,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - CS Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Corporate Support Backoffice</fullName>
             <default>false</default>
         </values>
@@ -4436,6 +4448,10 @@
         </values>
         <values>
             <fullName>Internal - Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manual</fullName>
             <default>false</default>
         </values>
         <values>
