@@ -15,8 +15,9 @@ import updateRecordDataWithApex from "@salesforce/apex/FCS_IdentifyCustomerContr
 import { refreshApex } from "@salesforce/apex";
 import { formattedDateString } from "c/utilDate";
 import refetchTPProducts from "@salesforce/apex/CustomerCardController.refetchTPProducts";
+import { NavigationMixin } from "lightning/navigation";
 
-export default class CustomerCard extends LightningElement {
+export default class CustomerCard extends NavigationMixin(LightningElement) {
   @api objectApiName;
   @api recordId;
 
@@ -321,6 +322,17 @@ export default class CustomerCard extends LightningElement {
 
   handleDisplayAllBookings() {
     this.showAllBookings = true;
+  }
+
+  navigateToTPProductPage(event) {
+    this[NavigationMixin.Navigate]({
+      type: "standard__recordPage",
+      attributes: {
+        recordId: event.target.dataset.id,
+        objectApiName: "Travel_Pass_Product__c",
+        actionName: "view"
+      }
+    });
   }
 
   async refreshTPProducts() {

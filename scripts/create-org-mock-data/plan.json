@@ -70,5 +70,13 @@
         "files": [
             "CaseToBooking__cs.json"
         ]
+    },
+    {
+        "sobject": "Travel_Pass_Product__c",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": [
+            "TravelPassProduct__cs.json"
+        ]
     }
 ]
