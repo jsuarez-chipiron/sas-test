@@ -32,7 +32,7 @@ Overiding of the abstract method used to set the Batch class params
     String batchName
   ) {
     lastRetentionDate = DateTime.newInstance(
-      Date.today().addDays(2),
+      Date.today().addDays(-retentionPeriod),
       Time.newInstance(0, 0, 0, 0)
     );
     this.caseType = caseType;

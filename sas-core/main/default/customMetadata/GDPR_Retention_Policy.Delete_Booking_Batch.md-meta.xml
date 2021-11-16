@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Related_Case_Field__c</field>
-        <value xsi:type="xsd:string">Case__c</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Retention_Period_Days__c</field>
