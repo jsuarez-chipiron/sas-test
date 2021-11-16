@@ -66,6 +66,7 @@ Deletes the cases and any related interactions
     for (Integer i = 0; i < sz; i++) {
       caseIds.add(sObjScope[i].Id);
     }
+    System.debug('hi');
     GDPR_WipeCaseService.deleteRelatedEntities(caseIds, batchName);
     delete sObjScope;
   }
