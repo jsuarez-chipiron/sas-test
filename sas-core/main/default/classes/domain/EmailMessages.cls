@@ -1,6 +1,7 @@
 public without sharing class EmailMessages extends fflib_SObjectDomain {
   public EmailMessages(List<SObject> records) {
     super(records);
+    Configuration.disableTriggerCRUDSecurity();
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
