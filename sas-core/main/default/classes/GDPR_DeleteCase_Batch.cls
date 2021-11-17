@@ -32,7 +32,7 @@ Overiding of the abstract method used to set the Batch class params
     String batchName
   ) {
     lastRetentionDate = DateTime.newInstance(
-      Date.today().addDays(2),
+      Date.today().addDays(-retentionPeriod),
       Time.newInstance(0, 0, 0, 0)
     );
     this.caseType = caseType;
@@ -66,6 +66,7 @@ Deletes the cases and any related interactions
     for (Integer i = 0; i < sz; i++) {
       caseIds.add(sObjScope[i].Id);
     }
+    
     GDPR_WipeCaseService.deleteRelatedEntities(caseIds, batchName);
     delete sObjScope;
   }
