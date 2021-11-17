@@ -37,6 +37,11 @@
                 <label>Backoffice</label>
             </value>
             <value>
+                <fullName>Backoffice Sitel</fullName>
+                <default>false</default>
+                <label>Backoffice Sitel</label>
+            </value>
+            <value>
                 <fullName>Bank Payment</fullName>
                 <default>false</default>
                 <label>Bank Payment</label>
@@ -850,6 +855,10 @@
         <valueSettings>
             <controllingFieldValue>Direct Sales</controllingFieldValue>
             <valueName>Backoffice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Backoffice Sitel</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>

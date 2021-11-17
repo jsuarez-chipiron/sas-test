@@ -4559,6 +4559,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Backoffice Sitel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bank Payment</fullName>
             <default>false</default>
         </values>
