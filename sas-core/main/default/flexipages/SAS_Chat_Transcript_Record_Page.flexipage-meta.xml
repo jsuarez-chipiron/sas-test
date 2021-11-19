@@ -115,6 +115,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>fcs_CaseTag_new</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>forceKnowledge:articleSearchDesktop</componentName>
             </componentInstance>
         </itemInstances>
@@ -124,7 +129,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>fcs_CaseTag_new</componentName>
+                <componentName>fcs_CaseTag</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>

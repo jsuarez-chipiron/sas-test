@@ -107,7 +107,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>fcs_CaseTag_new</componentName>
+                <componentName>fcs_CaseTag</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>

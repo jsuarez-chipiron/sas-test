@@ -1,47 +1,130 @@
 <template>
-  <div class="slds-m-around_medium">
-    <lightning-card title="Tag Case" icon-name="action:new_case">
+  <lightning-card title={cardTitle} icon-name={iconName}>
+   <div> 
+  <button class="slds-button slds-button_icon slds-button_icon-border  slds-float_right" title="Refresh" onclick={refresh}>
+      <svg class="slds-button__icon" aria-hidden="true">
+          <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.28.0#refresh"></use>
+      </svg>
+  </button>
+  </div>
+    <div if:true={newCase}>
       <lightning-record-edit-form
         object-api-name="Case"
-        record-id={recordId}
         record-type-id={recordTypeId}
+      >
+        <lightning-messages></lightning-messages>
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field
+              field-name="Department__c"
+              class="department"
+              value={department}
+              disabled="true"
+            ></lightning-input-field>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field
+              field-name="FCS_CaseType__c"
+              required
+              class="type"
+            ></lightning-input-field>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field
+              class="reason"
+              field-name="FCS_Case_Reason__c"
+              required
+            >
+            </lightning-input-field>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field
+              field-name="FCS_CaseResolution__c"
+              required
+              class="resolution"
+            >
+            </lightning-input-field>
+          </div>
+          <div class="slds-col slds-size_3-of-3">
+            <lightning-input-field
+              field-name="FCS_CaseResolutionDetails__c"
+              required
+              class="resolutionDetails"
+              if:true={showResolutionComment}
+            >
+            </lightning-input-field>
+          </div>
+        </div>
+        <div class="slds-button-group-row slds-align_absolute-center">
+          <div class="slds-button-group-item">
+            <lightning-button
+              label="Save"
+              onclick={createRecord}
+            ></lightning-button>
+          </div>
+        </div>
+      </lightning-record-edit-form>
+    </div>
+    <div if:false={newCase}>
+      <lightning-record-edit-form
+        object-api-name="Case"
+        record-type-id={recordTypeId}
+        record-id={cse.Id}
         onsuccess={handleSuccess}
       >
         <lightning-messages></lightning-messages>
-        <div class="slds-grid slds-wrap" onkeydown={handleSubmitOnKeyPress}>
+        <div class="slds-grid slds-wrap">
           <div class="slds-col slds-size_1-of-2">
             <lightning-input-field
               field-name="Status"
-              value={Status}
+              class="Status"
+              value={cse.Status}
             ></lightning-input-field>
           </div>
           <div class="slds-col slds-size_1-of-2">
             <lightning-input-field
-              field-name="Type"
-              value={Type}
-              required
+              field-name="Department__c"
+              class="department"
+              value={cse.Department__c}
+              disabled="true"
             ></lightning-input-field>
           </div>
           <div class="slds-col slds-size_1-of-2">
             <lightning-input-field
-              field-name="FCS_CaseReason__c"
-              value={FCS_CaseReason__c}
+              field-name="FCS_CaseType__c"
               required
+              class="type"
+              value={cse.FCS_CaseType__c}
+            ></lightning-input-field>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            <lightning-input-field
+              class="reason"
+              field-name="FCS_Case_Reason__c"
+              required
+              value={cse.FCS_Case_Reason__c}
+              onchange={handleDataChange}
             >
             </lightning-input-field>
           </div>
           <div class="slds-col slds-size_1-of-2">
             <lightning-input-field
-              field-name="FCS_CaseSubReason__c"
-              value={FCS_CaseSubReason__c}
+              field-name="FCS_CaseResolution__c"
               required
+              class="resolution"
+              value={cse.FCS_CaseResolution__c}
             >
             </lightning-input-field>
           </div>
-          <div>
+          <div
+            class="slds-col slds-size_3-of-3"
+            if:true={showResolutionComment}
+          >
             <lightning-input-field
-              field-name="FCS_CaseTags__c"
-              value={FCS_CaseTags__c}
+              field-name="FCS_CaseResolutionDetails__c"
+              required
+              class="resolutionDetails"
+              value={cse.FCS_CaseResolutionDetails__c}
             >
             </lightning-input-field>
           </div>
@@ -64,13 +147,9 @@
             >
               Save
             </button>
-          </div>
+          </div>        
         </div>
       </lightning-record-edit-form>
-    </lightning-card>
-  </div>
-  <!--Custom child component to render errors in search-->
-  <template if:true={error}>
-    <c-c_-error-panel errors={error}></c-c_-error-panel>
-  </template>
+    </div>
+  </lightning-card>
 </template>
