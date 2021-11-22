@@ -31,7 +31,7 @@ public without sharing class CLMIntegrationService {
    *
    * @return CLMAddPointsResponse The parsed CLM response on status codes less than 400.
    */
-  public CLMAddPointsResponse addPointsToUser(
+  public CLMAddPointsResponse addPointsToCustomer(
     String euroBonusNumber,
     Integer pointsToAdd,
     String ADUserEmail,
@@ -55,7 +55,7 @@ public without sharing class CLMIntegrationService {
       'AD-User' => ADUserEmail
     };
 
-    String requestBody = constructAddPointsBody(
+    String requestBody = constructUpdatePointsBody(
       euroBonusNumber,
       pointsToAdd,
       reasonForPoints,
@@ -79,7 +79,70 @@ public without sharing class CLMIntegrationService {
     return CLMAddPointsResponse.parse(response.getBody());
   }
 
-  private String constructAddPointsBody(
+  /** Attempts to withdraw a number of Extra points from a EuroBonus customer using CLM APIs.
+   *
+   * @param euroBonusNumber EuroBonus number of the customer from whom points should be withdrawn.
+   * @param pointsToWithdraw Number of points to withdraw from the customer.
+   * @param ADUserEmail Email address of the user performing the action. Stored in CLM for reference.
+   * @param transactionId Unique transaction ID of this points transaction.  Stored in CLM for reference.
+   * @param claimId ID of the claim this is related to. Optional.  Stored in CLM for reference.
+   * @param reasonForPoints Free text reason for this points transaction. Optional.
+   * @param bookingReference A booking reference this points transaction is related to. Optional.
+   * @param ticketNumber A ticket number this points transaction is related to. Optional.
+   *
+   * @throws IntegrationError on failures.
+   *
+   * @return CLMWithdrawPointsResponse The parsed CLM response on status codes less than 400.
+   */
+  public CLMWithdrawPointsResponse withdrawPointsFromCustomer(
+    String euroBonusNumber,
+    Integer pointsToWithdraw,
+    String ADUserEmail,
+    String transactionId,
+    String claimId,
+    String reasonForPoints,
+    String bookingReference,
+    String ticketNumber
+  ) {
+    if (String.isBlank(ADUserEmail)) {
+      C_Log.log(
+        C_Log.Severity.Error,
+        'Attempted to query CLM without AD User',
+        null,
+        'CLMIntegration',
+        null
+      );
+      throw new IntegrationException('AD User email cannot be empty.');
+    }
+    Map<String, String> extraRequestHeaders = new Map<String, String>{
+      'AD-User' => ADUserEmail
+    };
+
+    String requestBody = constructUpdatePointsBody(
+      euroBonusNumber,
+      pointsToWithdraw,
+      reasonForPoints,
+      transactionId,
+      bookingReference,
+      ticketNumber,
+      claimId
+    );
+
+    HttpResponse response = makeRequest(
+      HttpUtils.HTTP_METHOD.POST,
+      '/clm/callcenter/withdrawPoints',
+      requestBody,
+      null
+    );
+
+    if (response.getStatusCode() == 404) {
+      return null;
+    }
+
+    return CLMWithdrawPointsResponse.parse(response.getBody());
+  }
+
+  private String constructUpdatePointsBody(
     String euroBonusNumber,
     Integer pointsToAdd,
     String reasonForPoints,
