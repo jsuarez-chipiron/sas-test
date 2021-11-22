@@ -14,7 +14,7 @@ public without sharing class APIMIntegrationService {
    *
    * Any extra headers passed will overwrite existing headers with the same name.
    *
-   * @param method HTTP method to use as full caps String. See HttpRequest.setMethod for more info.
+   * @param method HTTP method to use. See HttpRequest.setMethod for more info.
    * @param path The endpoint with queryparams to which make the query to, without the base url included in callout.
    * @param body Request body which will be passed directly to HttpRequest.setBody().
    * @param extraHeaders Any additional headers which should be sent along the request as a map from name to value.

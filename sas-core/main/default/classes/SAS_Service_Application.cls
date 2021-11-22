@@ -39,6 +39,8 @@ public class SAS_Service_Application {
   public static final fflib_Application.ServiceFactory Service = new fflib_Application.ServiceFactory(
     new Map<Type, Type>{
       BookingService.class => BookingService.class,
+      CLMIntegrationService.class => CLMIntegrationService.class,
+      LoyaltyService.class => LoyaltyService.class,
       TEDSIntegrationService.class => TEDSIntegrationService.class
     }
   );
