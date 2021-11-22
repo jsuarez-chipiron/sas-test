@@ -149,14 +149,19 @@
                 <label>Bank details for refund</label>
             </value>
             <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
-            </value>
-            <value>
                 <fullName>14 day money back guarantee</fullName>
                 <default>false</default>
                 <label>14 day money back guarantee</label>
+            </value>
+            <value>
+                <fullName>Duplicate</fullName>
+                <default>false</default>
+                <label>Duplicate</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
             </value>
             <value>
                 <fullName>Error</fullName>
@@ -234,6 +239,10 @@
         <valueSettings>
             <controllingFieldValue>Refund not received</controllingFieldValue>
             <valueName>No ticket issued - IBP or RC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund not received</controllingFieldValue>
+            <valueName>Duplicate</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Reserved Amount</controllingFieldValue>
