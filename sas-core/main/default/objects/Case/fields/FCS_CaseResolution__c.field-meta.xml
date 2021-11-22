@@ -960,6 +960,11 @@
                 <label>Other</label>
             </value>
             <value>
+                <fullName>Positive Covid Test</fullName>
+                <default>false</default>
+                <label>Positive Covid Test</label>
+            </value>
+            <value>
                 <fullName>Authorization</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -1544,6 +1549,10 @@
             <valueName>New</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Issue</controllingFieldValue>
+            <valueName>Positive Covid Test</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Agreement</controllingFieldValue>
             <valueName>Agreement related question</valueName>
         </valueSettings>
@@ -2069,6 +2078,10 @@
             <valueName>RTCREDIT</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Error - Gift Card</controllingFieldValue>
+            <valueName>Issue New</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Error Management</controllingFieldValue>
             <valueName>SK</valueName>
         </valueSettings>
@@ -2123,10 +2136,6 @@
         <valueSettings>
             <controllingFieldValue>Fares</controllingFieldValue>
             <valueName>Youth</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error - Gift Card</controllingFieldValue>
-            <valueName>Issue New</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Look here before you ask</controllingFieldValue>
