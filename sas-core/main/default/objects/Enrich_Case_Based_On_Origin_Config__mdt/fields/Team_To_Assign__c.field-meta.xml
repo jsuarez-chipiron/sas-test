@@ -16,6 +16,11 @@
                 <label>ACE</label>
             </value>
             <value>
+                <fullName>ADM</fullName>
+                <default>false</default>
+                <label>ADM</label>
+            </value>
+            <value>
                 <fullName>Admin</fullName>
                 <default>false</default>
                 <label>Admin</label>

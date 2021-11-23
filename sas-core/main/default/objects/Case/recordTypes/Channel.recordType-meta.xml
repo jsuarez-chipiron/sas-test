@@ -4472,6 +4472,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Group Sales ADM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Group Sales AT</fullName>
             <default>false</default>
         </values>
@@ -4985,6 +4989,10 @@
         <picklist>Team__c</picklist>
         <values>
             <fullName>ACE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ADM</fullName>
             <default>false</default>
         </values>
         <values>
