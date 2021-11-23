@@ -194,7 +194,7 @@ export default class CaseBookingDetails extends NavigationMixin(
                   "time"
                 ),
                 scheduledDepartureDateLocal: formattedDateString(
-                  f.scheduledArrivalTimeLocal,
+                  f.scheduledDepartureTimeLocal,
                   "date"
                 ),
                 scheduledDepartureTimeLocal: formattedDateString(
