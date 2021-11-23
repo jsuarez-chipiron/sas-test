@@ -102,10 +102,6 @@
         <apexClass>FCS_OmniChannelQueueBacklogController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <classAccesses>
-        <apexClass>FCS_CaseTag_ChatTranscript_Controller</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
 	<classAccesses>
         <apexClass>FCS_MassRedirection</apexClass>
         <enabled>true</enabled>
