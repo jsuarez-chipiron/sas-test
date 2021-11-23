@@ -470,16 +470,6 @@
                 <label>Information</label>
             </value>
             <value>
-                <fullName>Information Missing</fullName>
-                <default>false</default>
-                <label>Information Missing</label>
-            </value>
-            <value>
-                <fullName>Information update needed</fullName>
-                <default>false</default>
-                <label>Information update needed</label>
-            </value>
-            <value>
                 <fullName>Insufficient Balance Account</fullName>
                 <default>false</default>
                 <label>Insufficient Balance Account</label>
@@ -508,11 +498,6 @@
                 <fullName>Klarna</fullName>
                 <default>false</default>
                 <label>Klarna</label>
-            </value>
-            <value>
-                <fullName>Link not working</fullName>
-                <default>false</default>
-                <label>Link not working</label>
             </value>
             <value>
                 <fullName>Look here before you ask</fullName>
@@ -790,11 +775,6 @@
                 <label>Spam</label>
             </value>
             <value>
-                <fullName>Spelling mistake</fullName>
-                <default>false</default>
-                <label>Spelling mistake</label>
-            </value>
-            <value>
                 <fullName>Split booking</fullName>
                 <default>false</default>
                 <label>Split booking</label>
@@ -913,6 +893,40 @@
                 <fullName>Other</fullName>
                 <default>false</default>
                 <label>Other</label>
+            </value>
+            <value>
+                <fullName>Waiver</fullName>
+                <default>false</default>
+                <label>Waiver</label>
+            </value>
+            <value>
+                <fullName>Reserved amount</fullName>
+                <default>false</default>
+                <label>Reserved amount</label>
+            </value>
+            <value>
+                <fullName>Information Missing</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Information Missing</label>
+            </value>
+            <value>
+                <fullName>Information update needed</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Information update needed</label>
+            </value>
+            <value>
+                <fullName>Link not working</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Link not working</label>
+            </value>
+            <value>
+                <fullName>Spelling mistake</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Spelling mistake</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -1156,6 +1170,15 @@
         <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>Spam</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <valueName>Waiver</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Reserved amount</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fraud</controllingFieldValue>

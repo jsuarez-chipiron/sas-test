@@ -965,6 +965,11 @@
                 <label>Positive Covid Test</label>
             </value>
             <value>
+                <fullName>Cancel reservation</fullName>
+                <default>false</default>
+                <label>Cancel reservation</label>
+            </value>
+            <value>
                 <fullName>Authorization</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -1026,9 +1031,7 @@
             <controllingFieldValue>New feature</controllingFieldValue>
             <controllingFieldValue>Inform about lounges</controllingFieldValue>
             <controllingFieldValue>Offer sent</controllingFieldValue>
-            <controllingFieldValue>Information Missing</controllingFieldValue>
             <controllingFieldValue>On-board services</controllingFieldValue>
-            <controllingFieldValue>Information update needed</controllingFieldValue>
             <controllingFieldValue>Add Musical Instrument</controllingFieldValue>
             <controllingFieldValue>Add Seating</controllingFieldValue>
             <controllingFieldValue>Add Skis</controllingFieldValue>
@@ -1079,7 +1082,6 @@
             <controllingFieldValue>Solve Online Problem</controllingFieldValue>
             <controllingFieldValue>Solving Online Problem During Request</controllingFieldValue>
             <controllingFieldValue>Spam</controllingFieldValue>
-            <controllingFieldValue>Spelling mistake</controllingFieldValue>
             <controllingFieldValue>Split booking</controllingFieldValue>
             <controllingFieldValue>Star Online</controllingFieldValue>
             <controllingFieldValue>Status Waiting Time</controllingFieldValue>
@@ -1113,7 +1115,7 @@
             <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
             <controllingFieldValue>Extract</controllingFieldValue>
             <controllingFieldValue>Fast Track</controllingFieldValue>
-            <controllingFieldValue>Link not working</controllingFieldValue>
+            <controllingFieldValue>Reserved amount</controllingFieldValue>
             <controllingFieldValue>Lost &amp; found</controllingFieldValue>
             <controllingFieldValue>Merge</controllingFieldValue>
             <controllingFieldValue>Merge profile</controllingFieldValue>
@@ -1873,6 +1875,10 @@
             <valueName>Online booking</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Booking</controllingFieldValue>
+            <valueName>Cancel reservation</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Bug</controllingFieldValue>
             <valueName>Limitation/Won&apos;t fix</valueName>
         </valueSettings>
@@ -1934,12 +1940,14 @@
         <valueSettings>
             <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
             <controllingFieldValue>Extend</controllingFieldValue>
+            <controllingFieldValue>Waiver</controllingFieldValue>
             <valueName>Approved</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
             <controllingFieldValue>Tier level</controllingFieldValue>
             <controllingFieldValue>Extend</controllingFieldValue>
+            <controllingFieldValue>Waiver</controllingFieldValue>
             <valueName>Rejected</valueName>
         </valueSettings>
         <valueSettings>
