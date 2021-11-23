@@ -9,7 +9,7 @@ private class FCS_EmailPublisherAction_Test {
   @isTest
   static void defaultFromAddressforRedirctedCase() {
     From_email_based_on_Dept_and_Teams__c CSFromEmail = new From_email_based_on_Dept_and_Teams__c();
-    CSFromEmail.Name = 'Group Sales-ACE';
+    CSFromEmail.Name = 'Group-ACE';
     CSFromEmail.From_Email__c = 'groupsalestest@sas.se';
     insert CSFromEmail;
 
