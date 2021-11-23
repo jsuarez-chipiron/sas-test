@@ -1,6 +1,7 @@
-public with sharing class MessagingSessions extends fflib_SObjectDomain {
+public without sharing class MessagingSessions extends fflib_SObjectDomain {
   public MessagingSessions(List<SObject> records) {
     super(records);
+    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<MessagingSession>) Records;
   }
 
