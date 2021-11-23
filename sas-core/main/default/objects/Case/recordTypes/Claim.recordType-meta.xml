@@ -2975,18 +2975,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Information Missing</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Information update needed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Link not working</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Make Booking</fullName>
             <default>false</default>
         </values>
@@ -3116,10 +3104,6 @@
         </values>
         <values>
             <fullName>Spam</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spelling mistake</fullName>
             <default>false</default>
         </values>
         <values>
