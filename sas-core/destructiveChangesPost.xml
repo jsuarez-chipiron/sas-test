@@ -590,6 +590,8 @@
     </types>
     <types>
 	    <members>FCS_ContactHandler_Test</members>
+		<members>FCS_CaseTag_ChatTranscript_Controller</members>
+		<members>FCS_CaseTag_ChatTrascript_Conler_Test</members>
 		<name>ApexClass</name>
     </types>
     <types>
