@@ -799,6 +799,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cancel reservation</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cars</fullName>
             <default>false</default>
         </values>
@@ -3799,14 +3803,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Information Missing</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Information update needed</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Insufficient Balance Account</fullName>
             <default>false</default>
         </values>
@@ -3828,10 +3824,6 @@
         </values>
         <values>
             <fullName>Klarna</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Link not working</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4003,6 +3995,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Reserved amount</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rules %26 Information</fullName>
             <default>false</default>
         </values>
@@ -4064,10 +4060,6 @@
         </values>
         <values>
             <fullName>Spam</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spelling mistake</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4136,6 +4128,10 @@
         </values>
         <values>
             <fullName>Voluntary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiver</fullName>
             <default>false</default>
         </values>
         <values>
