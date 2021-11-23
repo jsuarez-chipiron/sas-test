@@ -9,16 +9,15 @@ private class FCS_EmailPublisherAction_Test {
   @isTest
   static void defaultFromAddressforRedirctedCase() {
     From_email_based_on_Dept_and_Teams__c CSFromEmail = new From_email_based_on_Dept_and_Teams__c();
-      CSFromEmail.Name = 'Group Sales-ACE';
-      CSFromEmail.From_Email__c = 'groupsalestest@sas.se';
+    CSFromEmail.Name = 'Group Sales-ACE';
+    CSFromEmail.From_Email__c = 'groupsalestest@sas.se';
     insert CSFromEmail;
 
     List<Case> Cases = FCS_TestDataFactory.createCases(
       1,
       null,
       null,
-      C_RecordTypeHelper.CASE_CHANNEL,
-      null
+      C_RecordTypeHelper.CASE_CHANNEL
     );
     cases[0].origin = 'Email - EuroBonus Name Change';
     insert Cases;
@@ -71,8 +70,7 @@ private class FCS_EmailPublisherAction_Test {
       1,
       null,
       null,
-      C_RecordTypeHelper.CASE_CHANNEL,
-      null
+      C_RecordTypeHelper.CASE_CHANNEL
     );
     cases[0].origin = 'Email - Pandion DK';
     insert Cases;

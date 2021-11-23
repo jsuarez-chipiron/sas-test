@@ -11,9 +11,11 @@ private class Cases_Test {
       FROM PermissionSet
       WHERE Name = 'SocialMediaUser'
     ];
+
     Profile vendorProfile = [SELECT Id FROM Profile WHERE Name = 'Vendor'];
     List<User> users = FCS_TestDataFactory.createUsers(4);
     insert users;
+
     PermissionSetAssignment[] assignments = new List<PermissionSetAssignment>{};
     Integer i = 0;
     for (User u : users) {
@@ -37,20 +39,12 @@ private class Cases_Test {
     boolean retry;
     List<SocialPost> socialPosts = FCS_TestDataFactory.createSocialPosts(4);
     insert socialPosts;
-    List<Case> newCases = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    );
+    List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null);
     newCases[0].Subject = 'TestCase 2';
     do {
       retry = false;
       try {
-        System.debug('before insert');
         insert newCases;
-        System.debug('After Insert');
       } catch (Exception lockerror) {
         count++;
         String lockingissue = String.valueOf(lockerror);
@@ -58,7 +52,6 @@ private class Cases_Test {
           lockingissue.contains('UNABLE_TO_LOCK_ROW') &&
           count <= maxRetriesInDML
         ) {
-          System.debug('lockingissue' + lockingissue);
           retry = true;
         } else if (
           (!lockingissue.contains('UNABLE_TO_LOCK_ROW')) ||
@@ -86,26 +79,34 @@ private class Cases_Test {
       socialPosts[i].OwnerId = users[i].Id;
     }
     update socialPosts;
+
     Case infoTag = new Case(
       Status = 'Closed',
       Origin = 'Facebook',
       SourceId = socialPosts[0].Id,
-      RecordTypeId = C_RecordTypeHelper.CASE_INFORMATION,
-      FCS_CaseReason__c = 'Information'
+      RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
+      Department__c = 'SoMe Support',
+      FCS_CaseType__c = 'Baggage',
+      FCS_Case_Reason__c = 'Allowance'
     );
+
     Case supportTag = new Case(
       Status = 'Closed',
       Origin = 'Twitter',
       SourceId = socialPosts[1].Id,
-      RecordTypeId = C_RecordTypeHelper.CASE_FEEDBACK,
-      FCS_CaseReason__c = 'Feedback'
+      RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
+      Department__c = 'SoMe Support',
+      FCS_CaseType__c = 'Changes',
+      FCS_Case_Reason__c = 'Name Change'
     );
     Case feedbackTag = new Case(
       Status = 'Closed',
       Origin = 'Twitter',
       SourceId = socialPosts[2].Id,
-      RecordTypeId = C_RecordTypeHelper.CASE_SUPPORT,
-      FCS_CaseReason__c = 'Support'
+      RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
+      Department__c = 'SoMe Support',
+      FCS_CaseType__c = 'Changes',
+      FCS_Case_Reason__c = 'Name Change'
     );
     List<Case> soMeCases = new List<Case>();
     soMeCases.add(infoTag);
@@ -147,7 +148,7 @@ private class Cases_Test {
       Status = 'Closed',
       Origin = 'Facebook',
       SourceId = socialPosts[0].Id,
-      RecordTypeId = C_RecordTypeHelper.CASE_INFORMATION
+      RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL
     );
     List<Case> soMeCases = new List<Case>();
     soMeCases.add(infoTag);
@@ -171,19 +172,14 @@ private class Cases_Test {
     for (Integer i = 0, sz = socialPosts.size(); i < sz; i++) {
       socialPosts[i].OwnerId = users[i].Id;
     }
-    List<Case> newCase = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    );
-    newCase[0].FCS_CaseReason__c = 'TestReason 12';
-    newCase[0].FCS_CaseSubReason__c = 'TestSubReason 12';
-    newCase[0].FCS_CaseTags__c = 'TestTag12;TestTag22';
+    List<Case> newCase = FCS_TestDataFactory.createCases(1, null, null, null);
+    newCase[0].FCS_CaseType__c = 'Changes';
+    newCase[0].FCS_Case_Reason__c = 'Name Change';
     newCase[0].Subject = 'TestCase12';
     newCase[0].Status = CASE_STATUS_NEW;
     newCase[0].SourceId = socialPosts[0].Id;
+    newCase[0].Department__c = 'SoMe Support';
+    newCase[0].RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL;
     insert newCase;
     System.AssertEquals(
       true,
@@ -198,7 +194,7 @@ private class Cases_Test {
 
   @IsTest
   static void shouldDeleteRelatedSurveyInvitationsOnDelete() {
-    Case[] cases = FCS_TestDataFactory.createCases(2, null, null, null, null);
+    Case[] cases = FCS_TestDataFactory.createCases(2, null, null, null);
     insert cases;
 
     delete cases;
@@ -265,13 +261,7 @@ private class Cases_Test {
 
   @IsTest
   static void enrichCaseDataBasedOnOriginConfigMatchingOriginShouldFillCorrectData() {
-    Case testCase = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    )[0];
+    Case testCase = FCS_TestDataFactory.createCases(1, null, null, null)[0];
     testCase.Origin = 'Email - Group Sales AT';
 
     Test.startTest();
@@ -290,13 +280,7 @@ private class Cases_Test {
   }
   @IsTest
   static void enrichMissingPointsCaseDataIfNrOfFltsNaNIgnore() {
-    Case testCase = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    )[0];
+    Case testCase = FCS_TestDataFactory.createCases(1, null, null, null)[0];
     testCase.Subject = 'flight retro';
     testCase.SuppliedEmail = 'noreply@flysas.com';
     testCase.Description = 'number-of-flights: notanumber\n';
@@ -335,13 +319,7 @@ private class Cases_Test {
 
   @IsTest
   static void enrichMissingPointsCaseDataPopulateNrOfFieldsAccordingToNrOfFlights() {
-    Case testCase = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    )[0];
+    Case testCase = FCS_TestDataFactory.createCases(1, null, null, null)[0];
     testCase.Subject = 'flight retro';
     testCase.SuppliedEmail = 'noreply@flysas.com';
     testCase.Description =

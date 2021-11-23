@@ -21,8 +21,7 @@ global with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
     'In Progress',
     'New Response'
   };
-  
-  
+
   /**
     The Case status which is to be removed
     */
@@ -55,7 +54,7 @@ global with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
     Database.BatchableContext bc,
     SObject[] sObjScope
   ) {
-    System.debug('lastRetentionDate***'+lastRetentionDate);
+    System.debug('lastRetentionDate***' + lastRetentionDate);
     List<Case> lstCases = (List<Case>) sObjScope;
     Set<Id> setCaseIds = new Set<Id>();
     Set<Id> setUpdateCaseIds = new Set<Id>();
@@ -105,28 +104,25 @@ global with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
     }
     if (setUpdateCaseIds.size() > 0) {
       List<Case> lstCses = [
-        SELECT Id, Type, FCS_CaseReason__c
+        SELECT Id, Type, FCS_Case_Reason__c
         FROM Case
         WHERE Id IN :setUpdateCaseIds
       ];
       List<Case> tagCases = new List<Case>();
       for (Case cse : lstCses) {
-        if (cse.FCS_CaseReason__c == null || cse.FCS_CaseReason__c == '') {
+        if (cse.FCS_Case_Reason__c == null || cse.FCS_Case_Reason__c == '') {
           cse.FCS_CaseType__c = 'Error';
           cse.FCS_Case_Reason__c = 'Disconnected customer';
+          cse.Status = 'Closed';
+          tagCases.add(cse);
+        } else {
+          cse.status = 'Closed';
           tagCases.add(cse);
         }
       }
       if (!tagCases.isEmpty()) {
         update tagCases;
       }
-      for (Id cseId : setUpdateCaseIds) {
-        lstUpdatecases.add(new case(Id = cseId, Status = 'Closed'));
-      }
-    }
-
-    if (!lstUpdatecases.isEmpty()) {
-      update lstUpdatecases;
     }
   }
   public override void finishOverridable(Database.BatchableContext bc) {

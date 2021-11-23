@@ -11,7 +11,7 @@ private class EmailMessages_Test {
    */
   @IsTest
   static void shouldTruncateIncomingEmail() {
-    Case[] c = FCS_TestDataFactory.createCases(1, null, null, null, null);
+    Case[] c = FCS_TestDataFactory.createCases(1, null, null, null);
     insert c;
 
     insert new EmailMessage(
@@ -39,7 +39,7 @@ private class EmailMessages_Test {
    */
   @IsTest
   static void shouldRemoveTruncationMessageFromOutgoingEmail() {
-    Case[] c = FCS_TestDataFactory.createCases(1, null, null, null, null);
+    Case[] c = FCS_TestDataFactory.createCases(1, null, null, null);
     insert c;
 
     insert new EmailMessage(

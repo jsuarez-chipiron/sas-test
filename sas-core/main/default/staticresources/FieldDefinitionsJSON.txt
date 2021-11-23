@@ -170,11 +170,11 @@
       "type":"FieldDefinition",
       "url":"/services/data/v47.0/sobjects/FieldDefinition/Case.00N3O000000hmAX"
     },
-    "QualifiedApiName":"FCS_CaseReason__c",
+    "QualifiedApiName":"FCS_Case_Reason__c",
     "ComplianceGroup":"PIIExtract",
     "EntityDefinitionId":"Case",
     "Id":"000000000000000AAA",
-    "DurableId":"Case.00N3O000000hmAX"
+    "DurableId":"Case.00N3O000004UYXb"
   },
   {
     "attributes":{

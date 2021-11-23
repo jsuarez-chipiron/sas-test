@@ -9,7 +9,6 @@ public class SAS_Service_Application {
       Booking__c.SObjectType => BookingsSelector.class,
       Case.SObjectType => CasesSelector.class,
       CaseToBooking__c.SObjectType => CaseToBookingsSelector.class,
-      FCS_CaseTag__c.SObjectType => CaseTagsSelector.class,
       ContentVersion.SObjectType => ContentVersionsSelector.class,
       Flight__c.SObjectType => FlightsSelector.class,
       LiveChatTranscript.SObjectType => ChatTranscriptsSelector.class,

@@ -10,13 +10,7 @@ private class MigrateCaseTagsBatchTest {
     customsetting.Name = 'test12';
 
     insert customsetting;
-    List<Case> newCases = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    );
+    List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null);
     newCases[0].Origin = 'Email - Corporate Support Scandinavia';
     newCases[0].RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL;
     newCases[0].Department__c = 'Corporate';

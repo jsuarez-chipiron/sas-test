@@ -18,8 +18,7 @@ Creates the records used to tests data deletion
       2,
       null,
       null,
-      C_RecordTypeHelper.CASE_CHANNEL,
-      'Baggage'
+      C_RecordTypeHelper.CASE_CHANNEL
     );
     cList[0].origin = 'Email - Group Sales IS';
     cList[0].FCS_CaseType__c = 'Baggage';
