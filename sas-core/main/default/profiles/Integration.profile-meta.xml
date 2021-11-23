@@ -288,14 +288,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>FCS_CaseTag_ChatTranscript_Controller</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>FCS_CaseTag_ChatTrascript_Conler_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>FCS_CloseFBMessgerCaseAfter24hr_Batch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
