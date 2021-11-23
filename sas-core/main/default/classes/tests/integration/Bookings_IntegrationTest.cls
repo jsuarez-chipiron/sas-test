@@ -10,13 +10,7 @@ public with sharing class Bookings_IntegrationTest {
   @IsTest
   public static void itsPossibleToAddBookingInTEDSToCase() {
     // Given
-    Case testCase = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    )[0];
+    Case testCase = FCS_TestDataFactory.createCases(1, null, null, null)[0];
 
     insert testCase;
 
@@ -44,13 +38,7 @@ public with sharing class Bookings_IntegrationTest {
   @IsTest
   public static void itsPossibleToRemoveABookingFromCase() {
     // Given
-    Case testCase = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    )[0];
+    Case testCase = FCS_TestDataFactory.createCases(1, null, null, null)[0];
 
     insert testCase;
 
@@ -83,13 +71,7 @@ public with sharing class Bookings_IntegrationTest {
   @IsTest
   public static void invalidBookingReferenceFailsGracefully() {
     // Given
-    Case testCase = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    )[0];
+    Case testCase = FCS_TestDataFactory.createCases(1, null, null, null)[0];
 
     insert testCase;
     Test.startTest();

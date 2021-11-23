@@ -6,13 +6,7 @@
 public class FCS_MassRedirection_Test {
   @IsTest
   static void testMassRedirection() {
-    List<Case> newCases = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    );
+    List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null);
     insert newCases;
 
     List<Id> lseCaseIds = new List<Id>();

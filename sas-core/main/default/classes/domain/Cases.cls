@@ -310,25 +310,13 @@ public without sharing class Cases extends fflib_SObjectDomain {
     Set<Id> socialPostIds = new Set<Id>();
     List<Case> caseInScope = new List<Case>();
     for (Case c : instanceRecords) {
-      Boolean infoTag =
+      Boolean channelTag =
         (c.Origin == 'Facebook' || c.Origin == 'Twitter') &&
         (c.SourceId != null &&
         c.SourceId.getSOBjectType() == SocialPost.SObjectType &&
         c.Status == 'Closed' &&
-        c.RecordTypeId == C_RecordTypeHelper.CASE_INFORMATION);
-      Boolean supportTag =
-        (c.Origin == 'Facebook' || c.Origin == 'Twitter') &&
-        (c.SourceId != null &&
-        c.SourceId.getSOBjectType() == SocialPost.SObjectType &&
-        c.Status == 'Closed' &&
-        c.RecordTypeId == C_RecordTypeHelper.CASE_SUPPORT);
-      Boolean feedbackTag =
-        (c.Origin == 'Facebook' || c.Origin == 'Twitter') &&
-        (c.SourceId != null &&
-        c.SourceId.getSOBjectType() == SocialPost.SObjectType &&
-        c.Status == 'Closed' &&
-        c.RecordTypeId == C_RecordTypeHelper.CASE_FEEDBACK);
-      if ((infoTag || supportTag || feedbackTag)) {
+        c.RecordTypeId == C_RecordTypeHelper.CASE_CHANNEL);
+      if (channelTag) {
         socialPostIds.add(c.SourceId);
         caseInScope.add(c);
       }

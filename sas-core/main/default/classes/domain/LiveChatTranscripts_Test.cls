@@ -45,13 +45,7 @@ public with sharing class LiveChatTranscripts_Test {
    */
   @IsTest
   static void testLiveChatMissed() {
-    List<Case> lstcases = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    );
+    List<Case> lstcases = FCS_TestDataFactory.createCases(1, null, null, null);
     insert lstcases;
     LiveChatVisitor lcv = new LiveChatVisitor();
     insert lcv;

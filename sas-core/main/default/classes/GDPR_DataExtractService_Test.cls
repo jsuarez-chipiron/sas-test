@@ -26,7 +26,7 @@ private class GDPR_DataExtractService_Test {
                             'Generated incorrect Account query based on provided field definition'
         );
         System.assertEquals(
-                        'SELECT Status, AccountId, Description, FCS_CaseReason__c, (SELECT MessageDate, FromName, ToAddress, ' +
+                        'SELECT Status, AccountId, Description, FCS_Case_Reason__c, (SELECT MessageDate, FromName, ToAddress, ' +
                         'HtmlBody, TextBody, Subject, FromAddress FROM EmailMessages) FROM Case ' +
                         'WHERE AccountId IN (\'' + acc.Id + '\')',
                         queries[1], 'Generated incorrect Case query based on provided field definition'

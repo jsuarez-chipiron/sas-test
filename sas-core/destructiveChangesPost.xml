@@ -656,4 +656,9 @@
 	    <members>TEDSBookingQueryNFMock.cls</members>
 		<name>ApexClass</name>
     </types>
+	 <types>
+	    <members>fcs_CaseTag_ChatTranscript</members>
+		 <members>fcs_CaseTag_new</members>
+		<name>LightningComponentBundle</name>
+    </types>
 </Package>

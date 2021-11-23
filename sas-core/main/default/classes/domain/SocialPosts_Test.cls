@@ -13,17 +13,12 @@ Test method for generation of test data used in more than one method
   static void createTestData() {
     List<SocialPost> socialPosts = FCS_TestDataFactory.createSocialPosts(4);
     insert socialPosts;
-    List<Case> newCases = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    );
-    newCases[0].FCS_CaseReason__c = 'TestReason 1';
+    List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null);
     newCases[0].Subject = 'TestCase 2';
-    newCases[0].FCS_CaseSubReason__c = 'TestSubReason 1';
-    newCases[0].FCS_CaseTags__c = 'CommonTestTag1;CommonTestTag2';
+    newCases[0].RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL;
+    newCases[0].Department__c = 'SoMe Support';
+    newCases[0].FCS_CaseType__c = 'Baggage';
+    newCases[0].FCS_Case_Reason__c = 'Allowance';
     insert newCases;
   }
 
@@ -207,19 +202,14 @@ Test method for generation of test data used in more than one method
     for (Integer i = 0, sz = socialPosts.size(); i < sz; i++) {
       socialPosts[i].OwnerId = users[i].Id;
     }
-    List<Case> newCase = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null,
-      null
-    );
-    newCase[0].FCS_CaseReason__c = 'TestReason 12';
-    newCase[0].FCS_CaseSubReason__c = 'TestSubReason 12';
-    newCase[0].FCS_CaseTags__c = 'TestTag12;TestTag22';
+    List<Case> newCase = FCS_TestDataFactory.createCases(1, null, null, null);
     newCase[0].Subject = 'TestCase12';
     newCase[0].Status = 'New';
     newCase[0].SourceId = socialPosts[0].Id;
+    newCase[0].Department__c = 'SoMe Support';
+    newCase[0].FCS_CaseType__c = 'Baggage';
+    newCase[0].FCS_Case_Reason__c = 'Allowance';
+    newCase[0].RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL;
     insert newCase;
     System.AssertEquals(
       true,

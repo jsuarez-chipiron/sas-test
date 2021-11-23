@@ -57,8 +57,8 @@ public with sharing class MessagingSessions extends fflib_SObjectDomain {
     if (!lstMessingSesions.isEmpty()) {
       cse = [
         SELECT
-          FCS_CaseReason__c,
-          FCS_CaseSubReason__c,
+          FCS_Case_Reason__c,
+          FCS_CaseType__c,
           RecordTypeId,
           Type,
           Subject,

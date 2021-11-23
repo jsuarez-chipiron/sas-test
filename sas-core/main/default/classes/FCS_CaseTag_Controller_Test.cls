@@ -16,7 +16,6 @@ public class FCS_CaseTag_Controller_Test {
       1,
       null,
       null,
-      null,
       null
     );
     newCases[0].Subject = 'TestCase 2';
@@ -43,7 +42,6 @@ public class FCS_CaseTag_Controller_Test {
       1,
       null,
       null,
-      null,
       null
     );
     newCases[0].Subject = 'TestCase 2';
@@ -60,7 +58,6 @@ public class FCS_CaseTag_Controller_Test {
   static testMethod void testFindCaseUsingMessagingId() {
     List<Case> newCases = FCS_TestDataFactory.createCases(
       1,
-      null,
       null,
       null,
       null

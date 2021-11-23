@@ -2,7 +2,7 @@
 private class FCS_CaseTag_ChatTrascript_Conler_Test {    
     @TestSetup static void testDataSetUP()
 {
-    List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null, null);    
+    List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null);    
     newCases[0].Subject = 'TestCase 2';
     insert newCases;
     LiveChatVisitor lcv = new LiveChatVisitor();
