@@ -16,7 +16,7 @@ public inherited sharing class CaseToBookingsSelector extends fflib_SObjectSelec
   }
 
   public List<CaseToBooking__c> selectByCaseId(Set<Id> caseIds) {
-    if(caseIds.contains(null)) {
+    if (caseIds.contains(null)) {
       return new List<CaseToBooking__c>();
     }  
     return (List<CaseToBooking__c>) Database.query(
