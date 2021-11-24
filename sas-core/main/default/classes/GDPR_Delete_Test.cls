@@ -471,4 +471,28 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
       ]
     );
   }
+  public static testMethod void testSpamSocialPost()
+  {
+     Set<Id> setSpIds;
+    Social_Post_Spam_Hash_Tags__c custSett = new Social_Post_Spam_Hash_Tags__c();
+    custSett.Spam_Hash_Tag__c = '#BoycottEthiopianAirlines';
+    custSett.Name = 'Twitter_BoycottEthiopianAirlines';
+    insert custSett;
+    
+    SocialPost[] spList = FCS_TestDataFactory.createSocialPosts(2);
+    spList[1].Content = 'test#BoycottEthiopianAirlinestestgsvc';
+    spList[1].ReviewedStatus = 'Needed';
+    spList[0].Content = 'test1';
+    spList[0].ReviewedStatus = 'Needed';
+
+    insert spList;
+     Test.startTest();     
+     database.executeBatch(new Delete_SpamSocialPost_Batch());
+     Test.stopTest();
+     System.assertEquals(0,[
+        SELECT COUNT()
+        FROM SocialPost
+        WHERE id =: spList[1].Id
+      ]); 
+  }
 }
