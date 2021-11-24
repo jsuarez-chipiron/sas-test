@@ -112,6 +112,9 @@ public class GroupTravelService {
         null
         ? 0
         : travelRequest.numberOfSpecialBaggage,
+      Number_Of_Youths__c = travelRequest.numberOfYouths == null
+        ? 0
+        : travelRequest.numberOfYouths,
       Number_Of_Wheelchairs__c = travelRequest.numberOfWheelchairs == null
         ? 0
         : travelRequest.numberOfWheelchairs,

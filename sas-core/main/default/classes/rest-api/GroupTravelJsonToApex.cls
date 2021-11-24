@@ -37,6 +37,7 @@ global class GroupTravelJsonToApex {
     public Integer numberOfInfants;
     public Integer numberOfSpecialBaggage;
     public Integer numberOfSpecialAssistanceTravelers;
+    public Integer numberOfYouths;
     public Integer numberOfWheelchairs;
     public String otherDestinationsOfInterest;
     public String phone;
