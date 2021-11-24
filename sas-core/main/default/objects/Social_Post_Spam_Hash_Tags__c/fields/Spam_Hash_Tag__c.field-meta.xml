@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Social_Post_Tag__c</fullName>
+    <fullName>Spam_Hash_Tag__c</fullName>
+    <description>Name of the Spam Hash tags for example : #BoycottEthiopianAirlines</description>
     <externalId>false</externalId>
-    <label>Social Post Tag</label>
+    <label>Spam Hash Tag</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

@@ -474,8 +474,8 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
   public static testMethod void testSpamSocialPost()
   {
      Set<Id> setSpIds;
-    Spam_Social_Post__c custSett = new Spam_Social_Post__c();
-    custSett.Social_Post_Tag__c = '#BoycottEthiopianAirlines';
+    Social_Post_Spam_Hash_Tags__c custSett = new Social_Post_Spam_Hash_Tags__c();
+    custSett.Spam_Hash_Tag__c = '#BoycottEthiopianAirlines';
     custSett.Name = 'Twitter_BoycottEthiopianAirlines';
     insert custSett;
     
