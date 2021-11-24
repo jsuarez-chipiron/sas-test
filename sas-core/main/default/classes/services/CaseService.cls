@@ -36,7 +36,7 @@ public class CaseService {
       Initially_Provided_PNR__c = form.formData.bookingReference,
       OwnerId = refundsQueue.Id,
       RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
-      Subject = 'Waiver request due to' +
+      Subject = 'Waiver request due to ' +
         (form.formData.type == 'death-certificate'
           ? 'death in family'
           : 'visa rejection') +
