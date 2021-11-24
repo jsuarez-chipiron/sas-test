@@ -427,6 +427,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Group_Travel_Request__c.Number_Of_Youths__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Group_Travel_Request__c.Number_Of_Wheelchairs__c</field>
         <readable>true</readable>
     </fieldPermissions>
