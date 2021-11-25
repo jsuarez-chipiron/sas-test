@@ -66,7 +66,9 @@ public class GroupTravelService {
       Alternate_Return_time__c = jsonToPicklist.get(
         travelRequest.alternateReturnTime
       ),
-      Alternative_Dates__c = travelRequest.alternativeDates,
+      Alternative_Dates__c = travelRequest.alternativeDates == null
+        ? false
+        : travelRequest.alternativeDates,
       City__c = travelRequest.city,
       C_o_Address__c = travelRequest.coAddress,
       Comments_From_Customer__c = travelRequest.comments,
@@ -88,7 +90,10 @@ public class GroupTravelService {
       Have_Company_Code__c = travelRequest.haveCompanyCode == null
         ? false
         : travelRequest.haveCompanyCode,
-      Invoice_Agreement_With_SAS__c = travelRequest.invoiceAgreementWithSAS,
+      Invoice_Agreement_With_SAS__c = travelRequest.invoiceAgreementWithSAS ==
+        null
+        ? false
+        : travelRequest.invoiceAgreementWithSAS,
       Invoice_Agreement_Number__c = travelRequest.invoiceAgreementNumber,
       Last_Name__c = travelRequest.lastName,
       Name = travelRequest.groupName,
