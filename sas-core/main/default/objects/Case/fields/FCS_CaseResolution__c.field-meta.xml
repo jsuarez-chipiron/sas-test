@@ -130,6 +130,11 @@
                 <label>Campaigns</label>
             </value>
             <value>
+                <fullName>Cancel reservation</fullName>
+                <default>false</default>
+                <label>Cancel reservation</label>
+            </value>
+            <value>
                 <fullName>Cars</fullName>
                 <default>false</default>
                 <label>Cars</label>
@@ -268,6 +273,11 @@
                 <fullName>EB program</fullName>
                 <default>false</default>
                 <label>EB program</label>
+            </value>
+            <value>
+                <fullName>Error</fullName>
+                <default>false</default>
+                <label>Error</label>
             </value>
             <value>
                 <fullName>EuroBonus</fullName>
@@ -528,6 +538,11 @@
                 <fullName>Policies and agreements</fullName>
                 <default>false</default>
                 <label>Policies and agreements</label>
+            </value>
+            <value>
+                <fullName>Positive Covid Test</fullName>
+                <default>false</default>
+                <label>Positive Covid Test</label>
             </value>
             <value>
                 <fullName>Price inquiry</fullName>
@@ -950,24 +965,9 @@
                 <label>Youth</label>
             </value>
             <value>
-                <fullName>Error</fullName>
-                <default>false</default>
-                <label>Error</label>
-            </value>
-            <value>
                 <fullName>Other</fullName>
                 <default>false</default>
                 <label>Other</label>
-            </value>
-            <value>
-                <fullName>Positive Covid Test</fullName>
-                <default>false</default>
-                <label>Positive Covid Test</label>
-            </value>
-            <value>
-                <fullName>Cancel reservation</fullName>
-                <default>false</default>
-                <label>Cancel reservation</label>
             </value>
             <value>
                 <fullName>Authorization</fullName>
@@ -1868,15 +1868,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Booking</controllingFieldValue>
+            <valueName>Cancel reservation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking</controllingFieldValue>
             <valueName>Fare</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Booking</controllingFieldValue>
             <valueName>Online booking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Booking</controllingFieldValue>
-            <valueName>Cancel reservation</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Bug</controllingFieldValue>
@@ -2147,6 +2147,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Look here before you ask</controllingFieldValue>
+            <valueName>Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Look here before you ask</controllingFieldValue>
             <valueName>Fraud</valueName>
         </valueSettings>
         <valueSettings>
@@ -2156,10 +2160,6 @@
         <valueSettings>
             <controllingFieldValue>Look here before you ask</controllingFieldValue>
             <valueName>Releases</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Look here before you ask</controllingFieldValue>
-            <valueName>Error</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Make Booking</controllingFieldValue>

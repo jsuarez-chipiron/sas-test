@@ -360,6 +360,11 @@
                 <label>Email related</label>
             </value>
             <value>
+                <fullName>Error - Gift Card</fullName>
+                <default>false</default>
+                <label>Error - Gift Card</label>
+            </value>
+            <value>
                 <fullName>Error Management</fullName>
                 <default>false</default>
                 <label>Error Management</label>
@@ -675,6 +680,11 @@
                 <label>Refund</label>
             </value>
             <value>
+                <fullName>Refund - Gift Card</fullName>
+                <default>false</default>
+                <label>Refund - Gift Card</label>
+            </value>
+            <value>
                 <fullName>Refund points</fullName>
                 <default>false</default>
                 <label>Refund points</label>
@@ -690,9 +700,19 @@
                 <label>Refund Status</label>
             </value>
             <value>
+                <fullName>Refund - Voucher</fullName>
+                <default>false</default>
+                <label>Refund - Voucher</label>
+            </value>
+            <value>
                 <fullName>Reservation</fullName>
                 <default>false</default>
                 <label>Reservation</label>
+            </value>
+            <value>
+                <fullName>Reserved amount</fullName>
+                <default>false</default>
+                <label>Reserved amount</label>
             </value>
             <value>
                 <fullName>Rules &amp; Information</fullName>
@@ -855,6 +875,11 @@
                 <label>Upgrade</label>
             </value>
             <value>
+                <fullName>Waiver</fullName>
+                <default>false</default>
+                <label>Waiver</label>
+            </value>
+            <value>
                 <fullName>WeChat</fullName>
                 <default>false</default>
                 <label>WeChat</label>
@@ -875,34 +900,9 @@
                 <label>Error</label>
             </value>
             <value>
-                <fullName>Refund - Voucher</fullName>
-                <default>false</default>
-                <label>Refund - Voucher</label>
-            </value>
-            <value>
-                <fullName>Refund - Gift Card</fullName>
-                <default>false</default>
-                <label>Refund - Gift Card</label>
-            </value>
-            <value>
-                <fullName>Error - Gift Card</fullName>
-                <default>false</default>
-                <label>Error - Gift Card</label>
-            </value>
-            <value>
                 <fullName>Other</fullName>
                 <default>false</default>
                 <label>Other</label>
-            </value>
-            <value>
-                <fullName>Waiver</fullName>
-                <default>false</default>
-                <label>Waiver</label>
-            </value>
-            <value>
-                <fullName>Reserved amount</fullName>
-                <default>false</default>
-                <label>Reserved amount</label>
             </value>
             <value>
                 <fullName>Information Missing</fullName>
@@ -1160,6 +1160,11 @@
             <valueName>Refund - Voucher</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Voucher Handling</controllingFieldValue>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Reserved amount</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>Disconnected customer</valueName>
         </valueSettings>
@@ -1170,15 +1175,6 @@
         <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>Spam</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error</controllingFieldValue>
-            <valueName>Waiver</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Error</controllingFieldValue>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <valueName>Reserved amount</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fraud</controllingFieldValue>
@@ -1240,11 +1236,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Gift Card</controllingFieldValue>
-            <valueName>Refund - Gift Card</valueName>
+            <valueName>Error - Gift Card</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Gift Card</controllingFieldValue>
-            <valueName>Error - Gift Card</valueName>
+            <valueName>Refund - Gift Card</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Irregularities</controllingFieldValue>
@@ -1343,6 +1339,10 @@
         <valueSettings>
             <controllingFieldValue>Refund Handling</controllingFieldValue>
             <valueName>Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Waiver</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund Handling</controllingFieldValue>
