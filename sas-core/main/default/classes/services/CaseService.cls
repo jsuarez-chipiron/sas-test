@@ -1,4 +1,4 @@
-public class CaseService {
+public without sharing class CaseService {
   // TODO: This parsing logic should be at the API layer.
   private static Map<String, String> marketToOrigin = new Map<String, String>{
     'death-certificate-dk-da' => 'Form - Death Certificate DK',
