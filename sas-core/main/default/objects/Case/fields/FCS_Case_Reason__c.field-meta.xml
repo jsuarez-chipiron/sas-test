@@ -550,9 +550,9 @@
                 <label>Missing points</label>
             </value>
             <value>
-                <fullName>Mutiple FOP</fullName>
+                <fullName>Multiple FOP</fullName>
                 <default>false</default>
-                <label>Mutiple FOP</label>
+                <label>Multiple FOP</label>
             </value>
             <value>
                 <fullName>Name Change</fullName>
@@ -1521,7 +1521,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>Mutiple FOP</valueName>
+            <valueName>Multiple FOP</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error Handling</controllingFieldValue>
