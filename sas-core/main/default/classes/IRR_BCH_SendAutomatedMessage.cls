@@ -54,8 +54,8 @@ global with sharing class IRR_BCH_SendAutomatedMessage extends SBS_ScheduledBatc
         );
         IRR_MOD_AutomatedRequest automatedRequest = new IRR_MOD_AutomatedRequest();
         automatedRequest.passengerInfos = PaxInfo;
-        automatedRequest.sendSMSMessages = true;
-        automatedRequest.sendEmailMessages = false;
+        automatedRequest.sendSMSMessages = message.IRR_Template_Name__c.contains('sms')?true:false;
+        automatedRequest.sendEmailMessages = message.IRR_Template_Name__c.contains('email')?true:false;
         automatedRequest.emailTemplate = mp.emailTemplate;
         automatedRequest.smsTemplate = mp.smsTemplate;
         IRR_CON_AutomatedCommunication.sendAutomatedCommunication(
