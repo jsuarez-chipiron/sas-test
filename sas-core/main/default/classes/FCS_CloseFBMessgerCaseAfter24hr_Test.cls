@@ -50,7 +50,7 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
 
     insert sessions;
     FCS_CloseFBMessgerCaseAfter24hr_Batch fcsCloseFBMessgr = new FCS_CloseFBMessgerCaseAfter24hr_Batch();
-    fcsCloseFBMessgr.setVariables('Case', 1, null, null, null);
+    fcsCloseFBMessgr.setVariables('Case', 1, null, null, null,null);
     Test.StartTest();
     Database.executeBatch(fcsCloseFBMessgr);
     Test.StopTest();
@@ -96,7 +96,7 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
     );
     insert sessions;
     FCS_CloseFBMessgerCaseAfter24hr_Batch fcsCloseFBMessgr = new FCS_CloseFBMessgerCaseAfter24hr_Batch();
-    fcsCloseFBMessgr.setVariables('Case', 1, null, null, null);
+    fcsCloseFBMessgr.setVariables('Case', 1, null, null, null,null);
     Test.StartTest();
     Database.executeBatch(fcsCloseFBMessgr);
     Test.StopTest();
@@ -187,7 +187,7 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
 
     insert sessions;
     FCS_CloseFBMessgerCaseAfter24hr_Batch fcsCloseFBMessgr = new FCS_CloseFBMessgerCaseAfter24hr_Batch();
-    fcsCloseFBMessgr.setVariables('Case', 1, null, null, null);
+    fcsCloseFBMessgr.setVariables('Case', 1, null, null, null,null);
     Test.StartTest();
     Database.executeBatch(fcsCloseFBMessgr);
     Test.StopTest();

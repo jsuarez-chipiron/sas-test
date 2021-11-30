@@ -36,7 +36,8 @@ from date used to fetch audit trail, this will be updated after batch run.
     Integer wipingPeriod,
     string caseField,
     string caseType,
-    string batchName
+    string batchName,
+    String scheduledBatchRunComponentId
   ) {
   }
   global Database.QueryLocator start(Database.BatchableContext bc) {
