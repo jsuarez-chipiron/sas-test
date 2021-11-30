@@ -4,16 +4,29 @@ Batch calss to delete spammed Social Post.
 */
 
 global class Delete_SpamSocialPost_Batch extends SBS_ScheduledBatch
-{
+{ /**
+  List to Store Spam hash tags
+*/
     List<String> lstSpamTags = new List<String>();
+    /**
+    The ScheduleBatchRunComponent record id for this particualr batch
+    used to update the record with totalNumberOfRecords Deleted
+    */
+    String scheduledBatchRunComponentId;
+    /**
+    Used to count the totalnumber of records deleted.
+    */
+    Integer totalNumberOfRecordsDeleted = 0;
+    
     global override void setVariables(
         String sObj,
         Integer retentionPeriod,
         string caseField,
         String caseType,
-        String batchName
+        String batchName,
+        String scheduledBatchRunComponentId
     ) {
-     
+     this.scheduledBatchRunComponentId = scheduledBatchRunComponentId;
     }
     
     global Delete_SpamSocialPost_Batch()
@@ -55,7 +68,23 @@ Deletes the interactions which should be deleted according to the retention logi
                 } 
             }
         }
+        totalNumberOfRecordsDeleted = totalNumberOfRecordsDeleted + lstDelSocialPosts.size();
         delete lstDelSocialPosts;
         
     }
+    global override void finishOverridable(
+    Database.BatchableContext bc
+  )
+  {
+    if(scheduledBatchRunComponentId!=null)
+    {
+    SBS_ScheduledBatchRunComponent__c sbrc = new SBS_ScheduledBatchRunComponent__c(
+              Id = scheduledBatchRunComponentId,
+              Total_Number_Of_Records_Processed__c = String.valueOf(totalNumberOfRecordsDeleted)
+            );
+            update sbrc;
+      }      
+  }
+  
+  
 }

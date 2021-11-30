@@ -49,7 +49,8 @@ global class MigrateCaseTagsBatch extends SBS_ScheduledBatch {
     Integer retentionPeriod,
     string caseField,
     String caseType,
-    String batchName
+    String batchName,
+	String scheduledBatchRunComponentId
   ){
   }
   global Database.QueryLocator start(Database.BatchableContext bc) {

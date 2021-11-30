@@ -17,7 +17,8 @@ global class ChangeCaseRecordTypeBatch extends SBS_ScheduledBatch {
     Integer retentionPeriod,
     string caseField,
     String caseType,
-    String batchName
+    String batchName,
+	String scheduledBatchRunComponentId
   ){
   }
 
