@@ -116,6 +116,11 @@
                 <label>Chat</label>
             </value>
             <value>
+                <fullName>CS Vendor</fullName>
+                <default>false</default>
+                <label>CS Vendor</label>
+            </value>
+            <value>
                 <fullName>DE</fullName>
                 <default>false</default>
                 <label>DE</label>

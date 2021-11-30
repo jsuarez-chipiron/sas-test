@@ -650,6 +650,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Already refunded</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Amadeus</fullName>
             <default>false</default>
         </values>
@@ -758,6 +762,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Competence</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Completed</fullName>
             <default>false</default>
         </values>
@@ -795,6 +803,10 @@
         </values>
         <values>
             <fullName>Delayed baggage status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deposit Refund</fullName>
             <default>false</default>
         </values>
         <values>
@@ -874,6 +886,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Handling time</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Hotels</fullName>
             <default>false</default>
         </values>
@@ -950,6 +966,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Job well done</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Kids</fullName>
             <default>false</default>
         </values>
@@ -994,11 +1014,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>No IRR%2F24Hrs in booking%2C EMD is non refundable</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>No action</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>No action needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not eligible</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1019,6 +1047,10 @@
         </values>
         <values>
             <fullName>Other partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Part of journey cancellation</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1086,6 +1118,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Refer to Customer Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Referred to Agent Helpdesk</fullName>
             <default>false</default>
         </values>
@@ -1099,6 +1135,10 @@
         </values>
         <values>
             <fullName>Referred to Direct Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to TA%2C ticket already refunded via BSP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1318,7 +1358,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ticket Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket already refunded</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ticket issued</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket used</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1342,6 +1394,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Unclear webform%2C SMS sent</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Update User Guide</fullName>
             <default>false</default>
         </values>
@@ -1351,6 +1407,10 @@
         </values>
         <values>
             <fullName>Voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher cancellation</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3510,6 +3570,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Customer Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Damaged Baggage</fullName>
             <default>false</default>
         </values>
@@ -3574,6 +3638,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EuroBonus Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EuroBonus account</fullName>
             <default>false</default>
         </values>
@@ -3603,6 +3671,14 @@
         </values>
         <values>
             <fullName>Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Groups Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HQ</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3783,6 +3859,10 @@
         </values>
         <values>
             <fullName>Refunds</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4584,6 +4664,10 @@
         </values>
         <values>
             <fullName>CH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS Vendor</fullName>
             <default>false</default>
         </values>
         <values>
