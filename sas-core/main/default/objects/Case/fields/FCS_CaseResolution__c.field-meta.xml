@@ -685,9 +685,9 @@
                 <label>Referred to webpage</label>
             </value>
             <value>
-                <fullName>Refer to Customer Care</fullName>
+                <fullName>Referred to Customer Care</fullName>
                 <default>false</default>
-                <label>Refer to Customer Care</label>
+                <label>Referred to Customer Care</label>
             </value>
             <value>
                 <fullName>Refund authorized</fullName>
@@ -1936,7 +1936,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Redirection not possible</controllingFieldValue>
-            <valueName>Refer to Customer Care</valueName>
+            <valueName>Referred to Customer Care</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>

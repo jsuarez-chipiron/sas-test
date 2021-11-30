@@ -962,10 +962,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Refer to Customer Care</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Referred to Agent Helpdesk</fullName>
             <default>false</default>
         </values>
@@ -975,6 +971,10 @@
         </values>
         <values>
             <fullName>Referred to Corporate Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to Customer Care</fullName>
             <default>false</default>
         </values>
         <values>
