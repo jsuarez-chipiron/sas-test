@@ -373,7 +373,8 @@ global with sharing class SBS_ScheduledBatchService {
               be.retentionPeriod,
               be.caseField,
               be.caseType,
-              be.devName
+              be.devName,
+			  be.scheduledBatchRunComponentId
             );
             apexJobId = Database.executebatch(b, be.scopeSize);
           } catch (Exception e) {

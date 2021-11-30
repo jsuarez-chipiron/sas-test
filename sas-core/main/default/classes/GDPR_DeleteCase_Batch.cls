@@ -18,6 +18,15 @@ The Case Type in which batch job executes
   The Name of the Batch in GDPR Retention policy , based on which related metadata will be retrived
   */
   private string batchName;
+  /**
+   Map to store the objectName and totdal number of records deleted for each batch
+  */
+  Map<String, Integer> mapSobjectToTalNumberOfRecordsDeleted = new Map<String, Integer>();
+  /**
+    The ScheduleBatchRunComponent record id for this particualr batch
+    used to update the record with totalNumberOfRecords Deleted
+    */
+  String scheduledBatchRunComponentId;
 
   global GDPR_DeleteCase_Batch() {
   }
@@ -29,7 +38,8 @@ Overiding of the abstract method used to set the Batch class params
     Integer retentionPeriod,
     string caseField,
     string caseType,
-    String batchName
+    String batchName,
+    String scheduledBatchRunComponentId
   ) {
     lastRetentionDate = DateTime.newInstance(
       Date.today().addDays(-retentionPeriod),
@@ -66,7 +76,56 @@ Deletes the cases and any related interactions
     for (Integer i = 0; i < sz; i++) {
       caseIds.add(sObjScope[i].Id);
     }
-    GDPR_WipeCaseService.deleteRelatedEntities(caseIds, batchName);
+    Map<String, Integer> mapSobjecNumberOfDeletedRecords = GDPR_WipeCaseService.deleteRelatedEntities(
+      caseIds,
+      batchName
+    );
+
+    for (String sObjName : mapSobjecNumberOfDeletedRecords.keySet()) {
+      if (mapSobjectToTalNumberOfRecordsDeleted.containsKey(sObjName)) {
+        Integer DeletedRecords =
+          mapSobjectToTalNumberOfRecordsDeleted.get(sObjName) +
+          mapSobjecNumberOfDeletedRecords.get(sObjName);
+        mapSobjectToTalNumberOfRecordsDeleted.put(sObjName, DeletedRecords);
+      } else {
+        mapSobjectToTalNumberOfRecordsDeleted.put(
+          sObjName,
+          mapSobjecNumberOfDeletedRecords.get(sObjName)
+        );
+      }
+    }
+
     delete sObjScope;
+  }
+
+  global override void finishOverridable(Database.BatchableContext bc) {
+    String TotalSobjectAndRecordsDeleted;
+    for (String SObjectName : mapSobjectToTalNumberOfRecordsDeleted.keySet()) {
+      if (TotalSobjectAndRecordsDeleted != null) {
+        TotalSobjectAndRecordsDeleted =
+          SObjectName +
+          ':' +
+          String.valueOf(
+            mapSobjectToTalNumberOfRecordsDeleted.get(SObjectName)
+          );
+      } else {
+        TotalSobjectAndRecordsDeleted =
+          TotalSobjectAndRecordsDeleted +
+          ', ' +
+          SObjectName +
+          ':' +
+          String.valueOf(
+            mapSobjectToTalNumberOfRecordsDeleted.get(SObjectName)
+          );
+      }
+    }
+    if (scheduledBatchRunComponentId != null) {
+      SBS_ScheduledBatchRunComponent__c sbrc = new SBS_ScheduledBatchRunComponent__c(
+        Id = scheduledBatchRunComponentId,
+        Total_Number_Of_Records_Processed__c = TotalSobjectAndRecordsDeleted
+      );
+
+      update sbrc;
+    }
   }
 }

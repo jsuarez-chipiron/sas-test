@@ -26,6 +26,19 @@ global class GDPR_DeleteInteraction_Batch extends SBS_ScheduledBatch {
   */
   @testVisible
   private DateTime lastRetentionDate;
+  /**
+    The ScheduleBatchRunComponent record id for this particualr batch
+    used to update the record with totalNumberOfRecords Deleted
+    */
+  String scheduledBatchRunComponentId;
+  /**
+    Used to count the totalnumber of records deleted.
+    */
+  Integer totalNumberOfRecordsDeleted = 0;
+  /**
+   Used to Count the totalnumber of related records deleted
+   */
+  Integer totalNumberOfRelatedRecordsDeleted = 0;
 
   global GDPR_DeleteInteraction_Batch() {
   }
@@ -38,7 +51,8 @@ global class GDPR_DeleteInteraction_Batch extends SBS_ScheduledBatch {
     Integer retentionPeriod,
     string caseField,
     String caseType,
-    String batchName
+    String batchName,
+    String scheduledBatchRunComponentId
   ) {
     lastRetentionDate = DateTime.newInstance(
       Date.today().addDays(-retentionPeriod),
@@ -99,6 +113,8 @@ global class GDPR_DeleteInteraction_Batch extends SBS_ScheduledBatch {
           relIds.add(relId);
       }
     }
+    totalNumberOfRecordsDeleted =
+      totalNumberOfRecordsDeleted + sObjScope.size();
     delete sObjScope;
 
     if (!relIds.isEmpty()) {
@@ -113,7 +129,24 @@ global class GDPR_DeleteInteraction_Batch extends SBS_ScheduledBatch {
         relSObjField +
         ' IN :relIds)'
       );
+      totalNumberOfRelatedRecordsDeleted =
+        totalNumberOfRelatedRecordsDeleted + relRecs.size();
       delete relRecs;
+    }
+  }
+  global override void finishOverridable(Database.BatchableContext bc) {
+    if (scheduledBatchRunComponentId != null) {
+      SBS_ScheduledBatchRunComponent__c sbrc = new SBS_ScheduledBatchRunComponent__c(
+        Id = scheduledBatchRunComponentId,
+        Total_Number_Of_Records_Processed__c = sObjectName +
+          ':' +
+          String.valueOf(totalNumberOfRecordsDeleted) +
+          ', ' +
+          relSObjName +
+          ':' +
+          String.valueOf(totalNumberOfRelatedRecordsDeleted)
+      );
+      update sbrc;
     }
   }
 }

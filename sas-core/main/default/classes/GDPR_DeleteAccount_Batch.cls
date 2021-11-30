@@ -7,13 +7,25 @@ global with sharing class GDPR_DeleteAccount_Batch extends SBS_ScheduledBatch {
         Iterates over all person accounts
         @param bc The batch context
     */
+  /**
+    The ScheduleBatchRunComponent record id for this particualr batch
+    used to update the record with totalNumberOfRecords Deleted
+    */
+  String scheduledBatchRunComponentId;
+  /**
+    Used to count the totalnumber of records deleted.
+    */
+  Integer totalNumberOfRecordsDeleted = 0;
+
   global override void setVariables(
     String obj,
     Integer retentionPeriod,
     string caseField,
     String caseType,
-    String batchName
+    String batchName,
+    String scheduledBatchRunComponentId
   ) {
+    this.scheduledBatchRunComponentId = scheduledBatchRunComponentId;
   }
   global Database.QueryLocator start(Database.BatchableContext bc) {
     return Database.getQueryLocator(
@@ -102,6 +114,17 @@ global with sharing class GDPR_DeleteAccount_Batch extends SBS_ScheduledBatch {
         ]
       )
     );
+    totalNumberOfRecordsDeleted = +accIds.size();
     delete [SELECT Id FROM Account WHERE Id IN :accIds];
+  }
+  global override void finishOverridable(Database.BatchableContext bc) {
+    if (scheduledBatchRunComponentId != null) {
+      SBS_ScheduledBatchRunComponent__c sbrc = new SBS_ScheduledBatchRunComponent__c(
+        Id = scheduledBatchRunComponentId,
+        Total_Number_Of_Records_Processed__c = 'Account:' +
+          String.valueOf(totalNumberOfRecordsDeleted)
+      );
+      update sbrc;
+    }
   }
 }

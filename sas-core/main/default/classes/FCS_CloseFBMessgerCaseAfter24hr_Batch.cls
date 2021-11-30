@@ -36,7 +36,8 @@ global with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
     Integer retentionPeriod,
     string caseField,
     string caseType,
-    string batchName
+    string batchName,
+	String scheduledBatchRunComponentId
   ) {
     lastRetentionDate = DateTime.newInstance(
       Date.today().addDays(-retentionPeriod),
