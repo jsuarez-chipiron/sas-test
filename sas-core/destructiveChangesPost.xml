@@ -556,6 +556,10 @@
 		<members>C_GeneralSetting.Log_LogRetentionPeriod</members>
 		<name>CustomMetadata</name>
 	</types>
+	<types>
+		<members>ContactTrigger</members>
+		<name>ApexTrigger</name>
+	</types>
     <types>
 	    <members>IRR_BCH_FetchPaxInfoAutomatedMessage</members>
         <members>C_LogDelete_Batch</members>
