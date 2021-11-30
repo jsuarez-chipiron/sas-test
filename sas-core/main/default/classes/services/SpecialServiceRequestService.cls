@@ -32,6 +32,20 @@ public class SpecialServiceRequestService {
   public static void createSpecialServiceRequest(
     SpecialServiceJSON2Apex specialServiceForm
   ) {
+    if (specialServiceForm.formData.type == 'wheelchair') {
+      Mobility_Device_Dimensions__c =
+        'Width: ' +
+        mobilityDeviceWidth +
+        ' cm, Height: ' +
+        mobilityDeviceHeight +
+        ' cm, Depth: ' +
+        mobilityDeviceDepth +
+        ' cm, Weight: ' +
+        mobilityDeviceWeight +
+        ' kg.';
+    } else {
+      Mobility_Device_Dimensions__c = '';
+    }
     Special_Service_Request__c specialServiceRequest = new Special_Service_Request__c(
       Brings_Own_Mobility_Device__c = specialServiceForm.formData.bringsOwnMobilityDevice ==
         null
@@ -53,7 +67,7 @@ public class SpecialServiceRequestService {
       Type_Of_Special_Assistance__c = jsonToPicklist.get(
         specialServiceForm.formData.typeOfSpecialAssistance
       ),
-      Type_Of_Special_Baggage__c = specialServiceForm.formData.typeOfSpecialBaggage
+      Type_Of_Special_Baggage__c = specialServiceForm.formData.specialBaggageNote
     );
 
     insert specialServiceRequest;
