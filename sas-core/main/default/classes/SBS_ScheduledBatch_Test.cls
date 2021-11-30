@@ -50,7 +50,8 @@ global class SBS_ScheduledBatch_Test extends SBS_ScheduledBatch {
     Integer wipingPeriod,
     string caseField,
     string caseType,
-    string batchName
+    string batchName,
+    String scheduledBatchRunComponentId
   ) {
   }
   /**
