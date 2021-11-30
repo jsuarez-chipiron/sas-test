@@ -147,6 +147,11 @@
                 <label>Chat</label>
             </value>
             <value>
+                <fullName>CS Vendor</fullName>
+                <default>false</default>
+                <label>CS Vendor</label>
+            </value>
+            <value>
                 <fullName>DE</fullName>
                 <default>false</default>
                 <label>DE</label>
@@ -593,6 +598,14 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Info Hub</controllingFieldValue>
+            <valueName>Sales Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info Hub</controllingFieldValue>
+            <valueName>SASSI Internal</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Liability</controllingFieldValue>
             <valueName>Admin</valueName>
         </valueSettings>
@@ -770,7 +783,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>CS Vendor</controllingFieldValue>
             <valueName>Feedback</valueName>
         </valueSettings>
         <valueSettings>
@@ -862,6 +874,10 @@
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
             <valueName>Support Scandinavia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CS Vendor</controllingFieldValue>
+            <valueName>CS Vendor</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
@@ -1042,14 +1058,6 @@
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>US</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Info Hub</controllingFieldValue>
-            <valueName>Sales Information</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Info Hub</controllingFieldValue>
-            <valueName>SASSI Internal</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

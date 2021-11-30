@@ -305,6 +305,11 @@
                 <label>CT check</label>
             </value>
             <value>
+                <fullName>Customer Care</fullName>
+                <default>false</default>
+                <label>Customer Care</label>
+            </value>
+            <value>
                 <fullName>Damaged Baggage</fullName>
                 <default>false</default>
                 <label>Damaged Baggage</label>
@@ -395,6 +400,11 @@
                 <label>EuroBonus Shop</label>
             </value>
             <value>
+                <fullName>EuroBonus Support</fullName>
+                <default>false</default>
+                <label>EuroBonus Support</label>
+            </value>
+            <value>
                 <fullName>Extend</fullName>
                 <default>false</default>
                 <label>Extend</label>
@@ -435,6 +445,11 @@
                 <label>Groups</label>
             </value>
             <value>
+                <fullName>Groups Refund</fullName>
+                <default>false</default>
+                <label>Groups Refund</label>
+            </value>
+            <value>
                 <fullName>Help to Request</fullName>
                 <default>false</default>
                 <label>Help to Request</label>
@@ -453,6 +468,11 @@
                 <fullName>Hotel Info</fullName>
                 <default>false</default>
                 <label>Hotel Info</label>
+            </value>
+            <value>
+                <fullName>HQ</fullName>
+                <default>false</default>
+                <label>HQ</label>
             </value>
             <value>
                 <fullName>Info About Expiry Date</fullName>
@@ -703,6 +723,11 @@
                 <fullName>Refund - Voucher</fullName>
                 <default>false</default>
                 <label>Refund - Voucher</label>
+            </value>
+            <value>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+                <label>Rejected</label>
             </value>
             <value>
                 <fullName>Reservation</fullName>
@@ -974,6 +999,7 @@
             <controllingFieldValue>Digital Channel</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Salesforce</controllingFieldValue>
             <controllingFieldValue>SAS for Business</controllingFieldValue>
             <valueName>Other</valueName>
@@ -1248,7 +1274,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Irregularities</controllingFieldValue>
-            <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>Claims</valueName>
         </valueSettings>
         <valueSettings>
@@ -1329,12 +1354,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
             <valueName>SC Under 180 Minutes</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Groups Refund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
             <valueName>Involuntary</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Rejected</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund Handling</controllingFieldValue>
@@ -1432,7 +1464,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Content</controllingFieldValue>
-            <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>EuroBonus</valueName>
         </valueSettings>
         <valueSettings>
@@ -1653,6 +1684,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Customer Care</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>Digital Channel</valueName>
         </valueSettings>
         <valueSettings>
@@ -1661,7 +1696,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>EuroBonus Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>HQ</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
