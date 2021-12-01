@@ -22,6 +22,11 @@
                 <label>ACE</label>
             </value>
             <value>
+                <fullName>ADM</fullName>
+                <default>false</default>
+                <label>ADM</label>
+            </value>
+            <value>
                 <fullName>Admin</fullName>
                 <default>false</default>
                 <label>Admin</label>
@@ -35,6 +40,11 @@
                 <fullName>Backoffice</fullName>
                 <default>false</default>
                 <label>Backoffice</label>
+            </value>
+            <value>
+                <fullName>Backoffice Sitel</fullName>
+                <default>false</default>
+                <label>Backoffice Sitel</label>
             </value>
             <value>
                 <fullName>Bank Payment</fullName>
@@ -135,6 +145,11 @@
                 <fullName>Chat</fullName>
                 <default>false</default>
                 <label>Chat</label>
+            </value>
+            <value>
+                <fullName>CS Vendor</fullName>
+                <default>false</default>
+                <label>CS Vendor</label>
             </value>
             <value>
                 <fullName>DE</fullName>
@@ -497,6 +512,11 @@
                 <label>SGH Bag SE</label>
             </value>
             <value>
+                <fullName>Sitel General</fullName>
+                <default>false</default>
+                <label>Sitel General</label>
+            </value>
+            <value>
                 <fullName>Sitel Waivers</fullName>
                 <default>false</default>
                 <label>Sitel Waivers</label>
@@ -577,6 +597,14 @@
                 <label>US</label>
             </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Info Hub</controllingFieldValue>
+            <valueName>Sales Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info Hub</controllingFieldValue>
+            <valueName>SASSI Internal</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Liability</controllingFieldValue>
             <valueName>Admin</valueName>
@@ -700,6 +728,10 @@
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>OC Waivers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>Sitel General</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
@@ -844,12 +876,20 @@
             <valueName>Support Scandinavia</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>CS Vendor</controllingFieldValue>
+            <valueName>CS Vendor</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
             <valueName>Internal</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Direct Sales</controllingFieldValue>
             <valueName>Backoffice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Backoffice Sitel</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
@@ -910,6 +950,10 @@
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>ACE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>ADM</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
@@ -1014,14 +1058,6 @@
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>US</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Info Hub</controllingFieldValue>
-            <valueName>Sales Information</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Info Hub</controllingFieldValue>
-            <valueName>SASSI Internal</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

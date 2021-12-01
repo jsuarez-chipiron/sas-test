@@ -55,6 +55,11 @@
                 <label>Allowance</label>
             </value>
             <value>
+                <fullName>Already refunded</fullName>
+                <default>false</default>
+                <label>Already refunded</label>
+            </value>
+            <value>
                 <fullName>Amadeus</fullName>
                 <default>false</default>
                 <label>Amadeus</label>
@@ -130,6 +135,11 @@
                 <label>Campaigns</label>
             </value>
             <value>
+                <fullName>Cancel reservation</fullName>
+                <default>false</default>
+                <label>Cancel reservation</label>
+            </value>
+            <value>
                 <fullName>Cars</fullName>
                 <default>false</default>
                 <label>Cars</label>
@@ -185,6 +195,11 @@
                 <label>Codeshare</label>
             </value>
             <value>
+                <fullName>Competence</fullName>
+                <default>false</default>
+                <label>Competence</label>
+            </value>
+            <value>
                 <fullName>Completed</fullName>
                 <default>false</default>
                 <label>Completed</label>
@@ -238,6 +253,11 @@
                 <fullName>Delayed baggage status</fullName>
                 <default>false</default>
                 <label>Delayed baggage status</label>
+            </value>
+            <value>
+                <fullName>Deposit Refund</fullName>
+                <default>false</default>
+                <label>Deposit Refund</label>
             </value>
             <value>
                 <fullName>Destinations</fullName>
@@ -328,6 +348,11 @@
                 <fullName>Handling status</fullName>
                 <default>false</default>
                 <label>Handling status</label>
+            </value>
+            <value>
+                <fullName>Handling time</fullName>
+                <default>false</default>
+                <label>Handling time</label>
             </value>
             <value>
                 <fullName>Hotels</fullName>
@@ -425,6 +450,11 @@
                 <label>Jira updated</label>
             </value>
             <value>
+                <fullName>Job well done</fullName>
+                <default>false</default>
+                <label>Job well done</label>
+            </value>
+            <value>
                 <fullName>Kids</fullName>
                 <default>false</default>
                 <label>Kids</label>
@@ -490,6 +520,16 @@
                 <label>No action needed</label>
             </value>
             <value>
+                <fullName>No IRR/24Hrs in booking, EMD is non refundable</fullName>
+                <default>false</default>
+                <label>No IRR/24Hrs in booking, EMD is non refundable</label>
+            </value>
+            <value>
+                <fullName>Not eligible</fullName>
+                <default>false</default>
+                <label>Not eligible</label>
+            </value>
+            <value>
                 <fullName>OCC Daily Report</fullName>
                 <default>false</default>
                 <label>OCC Daily Report</label>
@@ -510,6 +550,11 @@
                 <label>Other partner</label>
             </value>
             <value>
+                <fullName>Part of journey cancellation</fullName>
+                <default>false</default>
+                <label>Part of journey cancellation</label>
+            </value>
+            <value>
                 <fullName>Payment</fullName>
                 <default>false</default>
                 <label>Payment</label>
@@ -528,6 +573,11 @@
                 <fullName>Policies and agreements</fullName>
                 <default>false</default>
                 <label>Policies and agreements</label>
+            </value>
+            <value>
+                <fullName>Positive Covid Test</fullName>
+                <default>false</default>
+                <label>Positive Covid Test</label>
             </value>
             <value>
                 <fullName>Price inquiry</fullName>
@@ -620,6 +670,11 @@
                 <label>Referred to phone</label>
             </value>
             <value>
+                <fullName>Referred to TA, ticket already refunded via BSP</fullName>
+                <default>false</default>
+                <label>Referred to TA, ticket already refunded via BSP</label>
+            </value>
+            <value>
                 <fullName>Referred to travel agent</fullName>
                 <default>false</default>
                 <label>Referred to travel agent</label>
@@ -628,6 +683,11 @@
                 <fullName>Referred to webpage</fullName>
                 <default>false</default>
                 <label>Referred to webpage</label>
+            </value>
+            <value>
+                <fullName>Referred to Customer Care</fullName>
+                <default>false</default>
+                <label>Referred to Customer Care</label>
             </value>
             <value>
                 <fullName>Refund authorized</fullName>
@@ -865,6 +925,11 @@
                 <label>Technical error</label>
             </value>
             <value>
+                <fullName>Ticket already refunded</fullName>
+                <default>false</default>
+                <label>Ticket already refunded</label>
+            </value>
+            <value>
                 <fullName>Ticketing</fullName>
                 <default>false</default>
                 <label>Ticketing</label>
@@ -873,6 +938,16 @@
                 <fullName>Ticket issued</fullName>
                 <default>false</default>
                 <label>Ticket issued</label>
+            </value>
+            <value>
+                <fullName>Ticket Refund</fullName>
+                <default>false</default>
+                <label>Ticket Refund</label>
+            </value>
+            <value>
+                <fullName>Ticket used</fullName>
+                <default>false</default>
+                <label>Ticket used</label>
             </value>
             <value>
                 <fullName>TPI OPM</fullName>
@@ -905,6 +980,11 @@
                 <label>UM</label>
             </value>
             <value>
+                <fullName>Unclear webform, SMS sent</fullName>
+                <default>false</default>
+                <label>Unclear webform, SMS sent</label>
+            </value>
+            <value>
                 <fullName>Update User Guide</fullName>
                 <default>false</default>
                 <label>Update User Guide</label>
@@ -933,6 +1013,11 @@
                 <fullName>Voucher</fullName>
                 <default>false</default>
                 <label>Voucher</label>
+            </value>
+            <value>
+                <fullName>Voucher cancellation</fullName>
+                <default>false</default>
+                <label>Voucher cancellation</label>
             </value>
             <value>
                 <fullName>Wrong deb</fullName>
@@ -1021,9 +1106,7 @@
             <controllingFieldValue>New feature</controllingFieldValue>
             <controllingFieldValue>Inform about lounges</controllingFieldValue>
             <controllingFieldValue>Offer sent</controllingFieldValue>
-            <controllingFieldValue>Information Missing</controllingFieldValue>
             <controllingFieldValue>On-board services</controllingFieldValue>
-            <controllingFieldValue>Information update needed</controllingFieldValue>
             <controllingFieldValue>Add Musical Instrument</controllingFieldValue>
             <controllingFieldValue>Add Seating</controllingFieldValue>
             <controllingFieldValue>Add Skis</controllingFieldValue>
@@ -1074,7 +1157,6 @@
             <controllingFieldValue>Solve Online Problem</controllingFieldValue>
             <controllingFieldValue>Solving Online Problem During Request</controllingFieldValue>
             <controllingFieldValue>Spam</controllingFieldValue>
-            <controllingFieldValue>Spelling mistake</controllingFieldValue>
             <controllingFieldValue>Split booking</controllingFieldValue>
             <controllingFieldValue>Star Online</controllingFieldValue>
             <controllingFieldValue>Status Waiting Time</controllingFieldValue>
@@ -1108,7 +1190,10 @@
             <controllingFieldValue>EuroBonus Shop</controllingFieldValue>
             <controllingFieldValue>Extract</controllingFieldValue>
             <controllingFieldValue>Fast Track</controllingFieldValue>
-            <controllingFieldValue>Link not working</controllingFieldValue>
+            <controllingFieldValue>Reserved amount</controllingFieldValue>
+            <controllingFieldValue>HQ</controllingFieldValue>
+            <controllingFieldValue>Customer Care</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Support</controllingFieldValue>
             <controllingFieldValue>Lost &amp; found</controllingFieldValue>
             <controllingFieldValue>Merge</controllingFieldValue>
             <controllingFieldValue>Merge profile</controllingFieldValue>
@@ -1356,7 +1441,7 @@
             <valueName>Referred to webpage</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Mutiple FOP</controllingFieldValue>
+            <controllingFieldValue>Multiple FOP</controllingFieldValue>
             <controllingFieldValue>No money collected</controllingFieldValue>
             <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
             <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
@@ -1373,7 +1458,7 @@
             <valueName>Refund to alternative FOP</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Mutiple FOP</controllingFieldValue>
+            <controllingFieldValue>Multiple FOP</controllingFieldValue>
             <controllingFieldValue>No money collected</controllingFieldValue>
             <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
             <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
@@ -1388,7 +1473,7 @@
             <valueName>Solve agent error</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Mutiple FOP</controllingFieldValue>
+            <controllingFieldValue>Multiple FOP</controllingFieldValue>
             <controllingFieldValue>No money collected</controllingFieldValue>
             <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
             <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
@@ -1499,6 +1584,11 @@
         <valueSettings>
             <controllingFieldValue>Involuntary</controllingFieldValue>
             <controllingFieldValue>Voluntary</controllingFieldValue>
+            <valueName>Part of journey cancellation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <controllingFieldValue>Voluntary</controllingFieldValue>
             <valueName>Refund authorized</valueName>
         </valueSettings>
         <valueSettings>
@@ -1542,6 +1632,53 @@
         <valueSettings>
             <controllingFieldValue>Issue</controllingFieldValue>
             <valueName>New</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Issue</controllingFieldValue>
+            <valueName>Not eligible</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Issue</controllingFieldValue>
+            <valueName>Positive Covid Test</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <controllingFieldValue>Sales Control</controllingFieldValue>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <controllingFieldValue>Digital Channel</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>HQ</controllingFieldValue>
+            <controllingFieldValue>Customer Care</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Support</controllingFieldValue>
+            <controllingFieldValue>Groups</controllingFieldValue>
+            <valueName>Competence</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <controllingFieldValue>Sales Control</controllingFieldValue>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <controllingFieldValue>Digital Channel</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>HQ</controllingFieldValue>
+            <controllingFieldValue>Customer Care</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Support</controllingFieldValue>
+            <controllingFieldValue>Groups</controllingFieldValue>
+            <valueName>Handling time</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <controllingFieldValue>Sales Control</controllingFieldValue>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <controllingFieldValue>Digital Channel</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>HQ</controllingFieldValue>
+            <controllingFieldValue>Customer Care</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Support</controllingFieldValue>
+            <controllingFieldValue>Groups</controllingFieldValue>
+            <valueName>Job well done</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agreement</controllingFieldValue>
@@ -1798,6 +1935,10 @@
             <valueName>Referred to Direct Sales</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Redirection not possible</controllingFieldValue>
+            <valueName>Referred to Customer Care</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Refund</controllingFieldValue>
             <valueName>Refund status</valueName>
         </valueSettings>
@@ -1854,6 +1995,10 @@
         <valueSettings>
             <controllingFieldValue>Booking</controllingFieldValue>
             <valueName>Booking related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking</controllingFieldValue>
+            <valueName>Cancel reservation</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Booking</controllingFieldValue>
@@ -1925,12 +2070,14 @@
         <valueSettings>
             <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
             <controllingFieldValue>Extend</controllingFieldValue>
+            <controllingFieldValue>Waiver</controllingFieldValue>
             <valueName>Approved</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
             <controllingFieldValue>Tier level</controllingFieldValue>
             <controllingFieldValue>Extend</controllingFieldValue>
+            <controllingFieldValue>Waiver</controllingFieldValue>
             <valueName>Rejected</valueName>
         </valueSettings>
         <valueSettings>
@@ -1961,6 +2108,10 @@
         <valueSettings>
             <controllingFieldValue>Change Profile</controllingFieldValue>
             <valueName>Provided info about how to change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Chargeback</controllingFieldValue>
+            <valueName>Voucher cancellation</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Claims</controllingFieldValue>
@@ -2062,11 +2213,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund - Voucher</controllingFieldValue>
+            <valueName>Already refunded</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund - Voucher</controllingFieldValue>
             <valueName>MMB Refund process</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund - Voucher</controllingFieldValue>
             <valueName>RTCREDIT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Error - Gift Card</controllingFieldValue>
+            <valueName>Issue New</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error Management</controllingFieldValue>
@@ -2125,8 +2284,32 @@
             <valueName>Youth</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Error - Gift Card</controllingFieldValue>
-            <valueName>Issue New</valueName>
+            <controllingFieldValue>Groups Refund</controllingFieldValue>
+            <valueName>Deposit Refund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Groups Refund</controllingFieldValue>
+            <valueName>Ticket Refund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rejected</controllingFieldValue>
+            <valueName>No IRR/24Hrs in booking, EMD is non refundable</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rejected</controllingFieldValue>
+            <valueName>Referred to TA, ticket already refunded via BSP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rejected</controllingFieldValue>
+            <valueName>Ticket already refunded</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rejected</controllingFieldValue>
+            <valueName>Ticket used</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rejected</controllingFieldValue>
+            <valueName>Unclear webform, SMS sent</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Look here before you ask</controllingFieldValue>

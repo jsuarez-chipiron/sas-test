@@ -87,6 +87,22 @@ public with sharing class FCS_FrequentFlyerService {
     List<Map<String, Object>> processedCustomerRows = queryHandler.orderRows(
       queryHandler.filterRows(customerRowsFromCShark)
     );
+
+    if (processedCustomerRows.size() > 1) {
+      // We are currently always expecting to get a single result from C-Shark
+      // when querying for customer profiles. However, querying with an email
+      // address may return several accounts as there are some situations
+      // where there are several customer profiles with the same email address.
+      // 
+      // We have no way for automatically figuring out which account is the
+      // one we are looking for, so we simply don't want to return anything.
+
+      return DataSource.TableResult.get(
+        queryContext.tableSelection,
+        new List<Map<String, Object>>()
+      );
+    }
+
     DataSource.TableResult tableResult = Datasource.TableResult.get(
       queryContext.tableSelection,
       processedCustomerRows

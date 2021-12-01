@@ -13,6 +13,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CS Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Care</fullName>
             <default>false</default>
         </values>
@@ -731,6 +735,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Already refunded</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Amadeus</fullName>
             <default>false</default>
         </values>
@@ -795,6 +803,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cancel reservation</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cars</fullName>
             <default>false</default>
         </values>
@@ -835,6 +847,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Competence</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Completed</fullName>
             <default>false</default>
         </values>
@@ -872,6 +888,10 @@
         </values>
         <values>
             <fullName>Delayed baggage status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deposit Refund</fullName>
             <default>false</default>
         </values>
         <values>
@@ -951,6 +971,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Handling time</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Hotels</fullName>
             <default>false</default>
         </values>
@@ -1027,6 +1051,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Job well done</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Kids</fullName>
             <default>false</default>
         </values>
@@ -1071,11 +1099,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>No IRR%2F24Hrs in booking%2C EMD is non refundable</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>No action</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>No action needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not eligible</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1099,6 +1135,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Part of journey cancellation</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Payment</fullName>
             <default>false</default>
         </values>
@@ -1112,6 +1152,10 @@
         </values>
         <values>
             <fullName>Policies and agreements</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Positive Covid Test</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1171,7 +1215,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Referred to Customer Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Referred to Direct Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to TA%2C ticket already refunded via BSP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1391,7 +1443,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ticket Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket already refunded</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ticket issued</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket used</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1415,6 +1479,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Unclear webform%2C SMS sent</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Update User Guide</fullName>
             <default>false</default>
         </values>
@@ -1424,6 +1492,10 @@
         </values>
         <values>
             <fullName>Voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher cancellation</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3651,6 +3723,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Customer Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Damaged Baggage</fullName>
             <default>false</default>
         </values>
@@ -3723,6 +3799,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EuroBonus Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EuroBonus account</fullName>
             <default>false</default>
         </values>
@@ -3759,6 +3839,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Groups Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Help With Usage</fullName>
             <default>false</default>
         </values>
@@ -3791,14 +3879,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Information Missing</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Information update needed</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Insufficient Balance Account</fullName>
             <default>false</default>
         </values>
@@ -3820,10 +3900,6 @@
         </values>
         <values>
             <fullName>Klarna</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Link not working</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3863,7 +3939,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Mutiple FOP</fullName>
+            <fullName>Multiple FOP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3991,7 +4067,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rejected</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Reservation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reserved amount</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4056,10 +4140,6 @@
         </values>
         <values>
             <fullName>Spam</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spelling mistake</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4128,6 +4208,10 @@
         </values>
         <values>
             <fullName>Voluntary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiver</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4376,6 +4460,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - CS Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Corporate Support Backoffice</fullName>
             <default>false</default>
         </values>
@@ -4461,6 +4549,10 @@
         </values>
         <values>
             <fullName>Email - Group Sales ACE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales ADM</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4908,6 +5000,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Manual</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>
@@ -4973,6 +5069,10 @@
         <picklist>Team__c</picklist>
         <values>
             <fullName>ACE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ADM</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5044,6 +5144,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Backoffice Sitel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bank Payment</fullName>
             <default>false</default>
         </values>
@@ -5061,6 +5165,10 @@
         </values>
         <values>
             <fullName>CH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS Vendor</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5357,6 +5465,10 @@
         </values>
         <values>
             <fullName>Settlement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sitel General</fullName>
             <default>false</default>
         </values>
         <values>

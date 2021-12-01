@@ -244,6 +244,36 @@ public with sharing class CSharkIntegrationService_Test {
     System.assertNotEquals(null, returnedException);
   }
 
+  @IsTest
+  static void shouldReturnTPAccountDetails() {
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    Test.startTest();
+    TPAccount parsedTPAccount = CSharkIntegrationService.getTPAccount(
+      '927229609'
+    );
+    Test.stopTest();
+
+    TPAccount.Product tpcProduct;
+
+    for (TPAccount.Product product : parsedTPAccount.products) {
+      if (product.typeCode == 'TPC') {
+        tpcProduct = product;
+      }
+    }
+
+    System.assertEquals(
+      '544300056',
+      parsedTPAccount.euroBonusNumber,
+      'Account data should be parsed correctly.'
+    );
+    System.assertEquals(
+      'Travel Pass Corporate',
+      tpcProduct.typeName,
+      'Products should be parsed correctly.'
+    );
+  }
+
   /**
    * Asserts that the the CustomerGet body generation method uses the correct search engagement type value
    * bases on tha classes' search type enum list. If this method fails, check the order of the enums

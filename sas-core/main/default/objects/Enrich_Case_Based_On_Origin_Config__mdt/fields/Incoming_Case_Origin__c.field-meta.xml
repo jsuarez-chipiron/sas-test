@@ -51,6 +51,11 @@
                 <label>Email - CS Feedback</label>
             </value>
             <value>
+                <fullName>Email - CS Vendor</fullName>
+                <default>false</default>
+                <label>Email - CS Vendor</label>
+            </value>
+            <value>
                 <fullName>Email - Digital Channel Support Internal</fullName>
                 <default>false</default>
                 <label>Email - Digital Channel Support Internal</label>
@@ -144,6 +149,11 @@
                 <fullName>Email - Group Sales ACE</fullName>
                 <default>false</default>
                 <label>Email - Group Sales ACE</label>
+            </value>
+            <value>
+                <fullName>Email - Group Sales ADM</fullName>
+                <default>false</default>
+                <label>Email - Group Sales ADM</label>
             </value>
             <value>
                 <fullName>Email - Group Sales AT</fullName>

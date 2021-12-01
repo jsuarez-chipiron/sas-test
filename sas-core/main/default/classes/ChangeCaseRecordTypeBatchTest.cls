@@ -2,13 +2,7 @@
 private class ChangeCaseRecordTypeBatchTest {
   @TestSetup
   static void createTestData() {
-    List<Case> newCases = FCS_TestDataFactory.createCases(
-      2,
-      null,
-      null,
-      null,
-      null
-    );
+    List<Case> newCases = FCS_TestDataFactory.createCases(2, null, null, null);
     newCases[0].Origin = 'Chat';
     newCases[0].RecordTypeId = C_RecordTypeHelper.CASE_Chat;
     newCases[1].Origin = 'Facebook';

@@ -53,7 +53,7 @@ global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaults
         cse.Origin?.contains('Form - '))
       ) {
         String lstFromEMails = From_email_based_on_Dept_and_Teams__c.getValues(
-            cse.Department__c +
+            cse.Department__c.substringBefore(' ') +
             '-' +
             cse.Team__c
           )
@@ -64,7 +64,7 @@ global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaults
           emailMessage.ValidatedFromAddress = From_email_based_on_Dept_and_Teams__c.getValues(
               'Default From Address'
             )
-            .From_Email__c;
+            ?.From_Email__c;
         }
       }
     }

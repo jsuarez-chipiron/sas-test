@@ -16,6 +16,11 @@
                 <label>ACE</label>
             </value>
             <value>
+                <fullName>ADM</fullName>
+                <default>false</default>
+                <label>ADM</label>
+            </value>
+            <value>
                 <fullName>Admin</fullName>
                 <default>false</default>
                 <label>Admin</label>
@@ -109,6 +114,11 @@
                 <fullName>Chat</fullName>
                 <default>false</default>
                 <label>Chat</label>
+            </value>
+            <value>
+                <fullName>CS Vendor</fullName>
+                <default>false</default>
+                <label>CS Vendor</label>
             </value>
             <value>
                 <fullName>DE</fullName>

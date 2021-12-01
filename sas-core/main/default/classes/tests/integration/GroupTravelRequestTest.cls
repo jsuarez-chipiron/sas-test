@@ -45,10 +45,7 @@ private class GroupTravelRequestTest {
       '}'
     );
 
-    Test.setMock(
-      HttpCalloutMock.class,
-      new TEDSBookingSingleAndFlightSuccessMock()
-    );
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
 
     Test.startTest();
     GroupTravelRequestForm.createGroupTravelRequest(requestBody);

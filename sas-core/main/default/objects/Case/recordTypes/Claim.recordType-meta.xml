@@ -3,6 +3,7 @@
     <fullName>Claim</fullName>
     <active>true</active>
     <businessProcess>Claim</businessProcess>
+    <compactLayoutAssignment>SAS_Claim_Case_Compact_Layout</compactLayoutAssignment>    
     <description>Use for claim related cases</description>
     <label>Claim</label>
     <picklistValues>
@@ -2974,18 +2975,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Information Missing</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Information update needed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Link not working</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Make Booking</fullName>
             <default>false</default>
         </values>
@@ -3115,10 +3104,6 @@
         </values>
         <values>
             <fullName>Spam</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spelling mistake</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3694,6 +3679,10 @@
             <fullName>Backoffice</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Backoffice Sitel</fullName>
+            <default>false</default>
+        </values>        
         <values>
             <fullName>Benelux</fullName>
             <default>false</default>

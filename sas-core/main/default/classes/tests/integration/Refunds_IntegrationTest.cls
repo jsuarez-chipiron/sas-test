@@ -27,17 +27,13 @@ public with sharing class Refunds_IntegrationTest {
       1,
       null,
       null,
-      null,
       null
     )[0];
 
     testCase.Refund_Request__c = refund.Id;
 
     Test.startTest();
-    Test.setMock(
-      HttpCalloutMock.class,
-      new TEDSBookingSingleAndFlightSuccessMock()
-    );
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     // When
     insert testCase;
     Test.stopTest();

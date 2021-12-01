@@ -556,6 +556,10 @@
 		<members>C_GeneralSetting.Log_LogRetentionPeriod</members>
 		<name>CustomMetadata</name>
 	</types>
+	<types>
+		<members>ContactTrigger</members>
+		<name>ApexTrigger</name>
+	</types>
     <types>
 	    <members>IRR_BCH_FetchPaxInfoAutomatedMessage</members>
         <members>C_LogDelete_Batch</members>
@@ -567,5 +571,101 @@
         <members>GDPR_DeleteMessaging_Batch</members>
         <members>GDPR_DeleteSocialPost_Batch</members>
 		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>C_TriggerHandler.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>C_TriggerHandler_Test.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_CaseHandler</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_CaseHandler_Test</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_ContactHandler</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_ContactHandler_Test</members>
+		<members>FCS_CaseTag_ChatTranscript_Controller</members>
+		<members>FCS_CaseTag_ChatTrascript_Conler_Test</members>
+		<members>CaseTagsSelector</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_DisplayAccountDataController.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_DisplayAccountDataController_Test.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_EmailMessageHandler.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_EmailMessageHandler_Test.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_LiveChatTranscriptTriggerHandler.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_LiveChatTranscriptTrigger_Test.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_MessagingSessionTriggerHandler.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_MessagingSessionTriggerHandler_Test.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_LiveChatTranscriptTriggerHandler.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_LiveChatTranscriptTrigger_Test.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_SocialPostHandler.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>FCS_SocialPostHandler_Test.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>TEDSBookingSingleSuccessMock.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>TEDSBookingQuerySuccessMock.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>TEDSBookingSingle404Mock.cls</members>
+		<name>ApexClass</name>
+    </types>
+    <types>
+	    <members>TEDSBookingQueryNFMock.cls</members>
+		<name>ApexClass</name>
+    </types>
+	 <types>
+	    <members>fcs_CaseTag_ChatTranscript</members>
+		 <members>fcs_CaseTag_new</members>
+		<name>LightningComponentBundle</name>
     </types>
 </Package>

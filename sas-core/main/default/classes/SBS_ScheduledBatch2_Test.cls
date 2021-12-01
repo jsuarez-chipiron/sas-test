@@ -12,7 +12,8 @@ global class SBS_ScheduledBatch2_Test extends SBS_ScheduledBatch {
     Integer wipingPeriod,
     string caseField,
     string caseType,
-    string batchName
+    string batchName,
+    string scheduledBatchRunComponentId
   ) {
   }
   global Database.QueryLocator start(Database.BatchableContext bc) {

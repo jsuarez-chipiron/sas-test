@@ -1,0 +1,32 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Travel_Pass_Product__c",
+                "referenceId": "Travel_Pass_Product__cRef1"
+            },
+            "Account__c": "@AccountRef1",
+            "Category_Code__c": "PAYF",
+            "Category_Name__c": "Pay-As-You-Fly",
+            "External_Name__c": "Worldwide",
+            "Internal_Name__c": "Worldwide",
+            "Name": "Worldwide",
+            "Type_Code__c": "TPC",
+            "Type_Name__c": "Travel Pass Corporate"
+        },
+        {
+            "attributes": {
+                "type": "Travel_Pass_Product__c",
+                "referenceId": "Travel_Pass_Product__cRef2"
+            },
+            "Account__c": "@AccountRef1",
+            "Category_Code__c": "CLIP",
+            "Category_Name__c": "Punches",
+            "External_Name__c": "Clip card OSL-ARN for individual or multiple users",
+            "Internal_Name__c": "Clip card OSL-ARN for individual or multiple users",
+            "Name": "Clip card OSL-ARN for individual or multiple users",
+            "Type_Code__c": "TMP",
+            "Type_Name__c": "Travel Pass Multiple Punch"
+        }
+    ]
+}

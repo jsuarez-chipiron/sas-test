@@ -23,7 +23,8 @@ global with sharing class GDPR_DeleteCommunicationLog_Batch extends SBS_Schedule
     Integer retentionPeriod,
     string caseField,
     string caseType,
-    String batchName
+    String batchName,
+	String scheduledBatchRunComponentId
   ) {
   lastRetentionDate = DateTime.newInstance(
       Date.today()

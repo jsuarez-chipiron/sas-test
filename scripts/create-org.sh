@@ -48,15 +48,18 @@ sed 's/'{userName}'/'"$userName"'/' scripts/create-org-templates/APIM_Auth.authp
 # Copy named credentials
 cp scripts/create-org-templates/SAS_APIM_Auth.namedCredential-meta-template.xml sas-core/main/default/namedCredentials/SAS_APIM_Auth.namedCredential-meta.xml
 cp scripts/create-org-templates/SAS_APIM_TEDS_FCS.namedCredential-meta-template.xml sas-core/main/default/namedCredentials/SAS_APIM_TEDS_FCS.namedCredential-meta.xml
+cp scripts/create-org-templates/CLM_APIM.namedCredential-meta-template.xml sas-core/main/default/namedCredentials/CLM_APIM.namedCredential-meta.xml
 
 cp scripts/create-org-templates/C_GeneralSetting.APIM_TEDS_Subscription_Key.template.xml sas-core/main/default/customMetadata/C_GeneralSetting.APIM_TEDS_Subscription_Key.md-meta.xml
+cp scripts/create-org-templates/C_GeneralSetting.APIM_Subscription_Key.template.xml sas-core/main/default/customMetadata/C_GeneralSetting.APIM_Subscription_Key.md-meta.xml
+cp scripts/create-org-templates/C_GeneralSetting.CLM_APIM_Subscription_Key.template.xml sas-core/main/default/customMetadata/C_GeneralSetting.CLM_APIM_Subscription_Key.md-meta.xml
 
 cp scripts/create-org-templates/LocalAuthProvider.APIM_Auth.template.xml sas-core/main/default/customMetadata/LocalAuthProvider.APIM_Auth.md-meta.xml
 
 # Sleep to ensure sharing rule calculation from org creation has finished before pushing sources
-echo "[3 / 6] Sleeping for 2m to ensure org creation has finished..."
+echo "[3 / 6] Sleeping for 3m to ensure org creation has finished..."
 echo "Zzz..."
-sleep 2m
+sleep 180
 
 echo "[4 / 6] Pushing source..."
 sfdx force:source:push -u $orgAlias || exit 1

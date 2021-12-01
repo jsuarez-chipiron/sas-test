@@ -117,6 +117,37 @@ should test a single class or another similar unit, and mock all complex depende
 test end-to-end functionality, starting e.g. from LWC controllers. Integration tests should still mock external
 service dependencies, such as the TEDS integration, but should do all internal SF actions, such as DB reads and inserts.
 
+We have a generic mock for APIM, APIMMock, available in the `tests/mocks` folder. To handle tests which call DML functions and/or make callouts the following structure works pretty well:
+
+```
+@IsTest
+public static void insertingAnAccountShouldFetchTPProducts() {
+  // Do prep work here.
+
+  // Set the mock. After his point all callouts are mocked.
+  Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+  // Test block. All DML operations and callouts within are collected and executed sequentially
+  // at the Test.stopTest(); line.
+  Test.startTest();
+
+  Account newAccount = new Account(
+    FirstName = 'Test',
+    LastName = 'Account'
+  );
+  insert newAccount;
+  Test.stopTest();
+
+  // Perform asserts after the Test.stopTest() line.
+  System.assert(
+    bookingsFromDB.size() > 0,
+    'There should be a new booking related to the account'
+  );
+}
+```
+
+See [Performing DML Operations and Mock Callouts](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_classes_restful_http_testing_dml.htm) and [Testing HTTP Callouts by Implementing the HttpCalloutMock Interface](https://developer.salesforce.com/docs/atlas.en-us.234.0.apexcode.meta/apexcode/apex_classes_restful_http_testing_httpcalloutmock.htm) in Salesforce docs for more details.
+
 When in a hurry, focus on creating a small number of quality integration tests which cover a sufficient number of execution paths.
 Unit tests are nice to have, but are less useful. They are great in ensuring no regressions happen around discovered bugs, or complex
 business logic, but otherwise maintenace burden is often pretty high.

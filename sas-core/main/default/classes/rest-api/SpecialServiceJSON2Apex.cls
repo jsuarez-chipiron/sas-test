@@ -9,7 +9,10 @@ global class SpecialServiceJSON2Apex {
     public String email;
     public String firstName;
     public String lastName;
-    public String mobilityDeviceDimensions;
+    public String mobilityDeviceDepth;
+    public String mobilityDeviceHeight;
+    public String mobilityDeviceWidth;
+    public String mobilityDeviceWeight;
     public String mobilityDeviceType;
     public Integer numberOfSpecialBaggage;
     public String passengerNeedingAssistance;
@@ -17,7 +20,7 @@ global class SpecialServiceJSON2Apex {
     public String type;
     public String typeOfServiceAnimal;
     public String typeOfSpecialAssistance;
-    public String typeOfSpecialBaggage;
+    public String specialBaggageNote;
   }
 
   global FormData formData;

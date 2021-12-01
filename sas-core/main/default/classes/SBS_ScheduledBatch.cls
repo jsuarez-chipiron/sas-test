@@ -51,7 +51,7 @@ global abstract class SBS_ScheduledBatch implements Database.Batchable<sObject> 
     @relSObjField This refers to child Object lookup for the Batch Class Object.
     @relSobjName This is the Child Object name of the related Batch class Object
     */
-     global abstract void setVariables(String Sobj, Integer retentionPeriod, string caseField, string caseType, string batchName);          
+     global abstract void setVariables(String Sobj, Integer retentionPeriod, string caseField, string caseType, string batchName,String scheduleBatchCompId);          
 
     /**
         Required execute method which processes the scope of records in the batch

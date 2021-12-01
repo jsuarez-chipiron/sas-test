@@ -4,16 +4,12 @@
     <active>true</active>
     <description>Makes sure that the user changes Tags the Case before Closing</description>
     <errorConditionFormula>AND(
-    GDPR_Wiped__c = false,
-    OR(
-        ISCHANGED(IsClosed),
-        ISPICKVAL(Status, &quot;Closed&quot;)
-    ),        
-    OR(
-         AND(AND(ISPICKVAL(FCS_Case_Reason__c, &quot;&quot;),
-                ISPICKVAL(FCS_CaseType__c, &quot;&quot;)),
-              AND(ISPICKVAL(FCS_CaseReason__c,&quot;&quot;),ISPICKVAL(Type,&quot;&quot;)))
-     )
+OR(
+ISCHANGED(IsClosed),
+ISPICKVAL(Status, &quot;Closed&quot;)
+),
+ISPICKVAL(FCS_Case_Reason__c, &quot;&quot;),
+ISPICKVAL(FCS_CaseType__c, &quot;&quot;)
 )</errorConditionFormula>
     <errorMessage>Tag Case before Closing</errorMessage>
 </ValidationRule>

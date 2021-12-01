@@ -9,7 +9,6 @@ public class SAS_Service_Application {
       Booking__c.SObjectType => BookingsSelector.class,
       Case.SObjectType => CasesSelector.class,
       CaseToBooking__c.SObjectType => CaseToBookingsSelector.class,
-      FCS_CaseTag__c.SObjectType => CaseTagsSelector.class,
       ContentVersion.SObjectType => ContentVersionsSelector.class,
       Flight__c.SObjectType => FlightsSelector.class,
       LiveChatTranscript.SObjectType => ChatTranscriptsSelector.class,
@@ -17,7 +16,8 @@ public class SAS_Service_Application {
       Passenger__c.SObjectType => PassengersSelector.class,
       Refund_Request__c.SObjectType => Refund_RequestsSelector.class,
       Segment__c.SObjectType => SegmentsSelector.class,
-      SocialPost.SObjectType => SocialPostsSelector.class
+      SocialPost.SObjectType => SocialPostsSelector.class,
+      Travel_Pass_Product__c.SObjectType => TravelPassProductsSelector.class
     }
   );
 
@@ -25,14 +25,21 @@ public class SAS_Service_Application {
     SAS_Service_Application.Selector,
     new Map<SObjectType, Type>{
       Account.SObjectType => Accounts.Constructor.class,
+      Case.SObjectType => Cases.Constructor.class,
+      EmailMessage.SObjectType => EmailMessages.Constructor.class,
+      LiveChatTranscript.SObjectType => LiveChatTranscripts.Constructor.class,
+      MessagingSession.SObjectType => MessagingSessions.Constructor.class,
       Passenger__c.SObjectType => Passengers.Constructor.class,
-      Refund_Request__c.SObjectType => Refund_Requests.Constructor.class
+      Refund_Request__c.SObjectType => Refund_Requests.Constructor.class,
+      SocialPost.SObjectType => SocialPosts.Constructor.class
     }
   );
 
   public static final fflib_Application.ServiceFactory Service = new fflib_Application.ServiceFactory(
     new Map<Type, Type>{
       BookingService.class => BookingService.class,
+      CLMIntegrationService.class => CLMIntegrationService.class,
+      LoyaltyService.class => LoyaltyService.class,
       TEDSIntegrationService.class => TEDSIntegrationService.class
     }
   );

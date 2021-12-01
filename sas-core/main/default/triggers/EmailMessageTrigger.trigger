@@ -1,3 +1,10 @@
-trigger EmailMessageTrigger on EmailMessage (before insert, before update, before delete, after insert, after update, after delete, after undelete) {
-    new FCS_EmailMessageHandler().run();
+trigger EmailMessageTrigger on EmailMessage(
+  after delete,
+  after insert,
+  after update,
+  before delete,
+  before insert,
+  before update
+) {
+  fflib_SObjectDomain.triggerHandler(EmailMessages.class);
 }

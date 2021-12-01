@@ -13,7 +13,8 @@ global with sharing class IRR_BCH_ScheduledEvent extends SBS_ScheduledBatch impl
     Integer retentionPeriod,
     string caseField,
     String caseType,
-    String batchName
+    String batchName,
+	String scheduledBatchRunComponentId
   )
   {
   }

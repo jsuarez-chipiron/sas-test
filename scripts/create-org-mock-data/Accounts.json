@@ -6,8 +6,10 @@
                 "referenceId": "AccountRef1"
             },
             "Name": "Test Testsson",
+            "FCS_CMP__c": "0123456",
             "FCS_EBLevel__c": "G",
-            "FCS_EBNumber__c": "012345678"
+            "FCS_EBNumber__c": "012345678",
+            "FCS_TPAccountNumber__c": "9876543210"
         }
     ]
 }

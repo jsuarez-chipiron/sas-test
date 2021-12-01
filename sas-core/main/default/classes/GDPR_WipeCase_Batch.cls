@@ -23,6 +23,15 @@ The Case Type in which batch job executes
   The Name of the batch in GDPR Retention policy metaData, based on which related metadata will be retrived
   */
   private string batchName;
+  /**
+   Map to store the objectName and totdal number of records deleted for each batch
+  */
+  Map<String, Integer> mapSobjectToTalNumberOfRecordsWiped = new Map<String, Integer>();
+  /**
+    The ScheduleBatchRunComponent record id for this particualr batch
+    used to update the record with totalNumberOfRecords Deleted
+    */
+  String scheduledBatchRunComponentId;
 
   global GDPR_WipeCase_Batch() {
   }
@@ -35,7 +44,8 @@ Overiding of the abstract method used to set the Batch class params
     Integer retentionPeriod,
     string caseField,
     String caseType,
-    String batchName
+    String batchName,
+    String scheduledBatchRunComponentId
   ) {
     lastRetentionDate = DateTime.newInstance(
       Date.today().addDays(-retentionPeriod),
@@ -46,6 +56,7 @@ Overiding of the abstract method used to set the Batch class params
     fieldsToClear = GDPR_Util.getCaseFieldsToClear(this.sObjectName);
     this.caseType = caseType;
     this.batchName = batchName;
+    this.scheduledBatchRunComponentId = scheduledBatchRunComponentId;
   }
 
   /**
@@ -70,10 +81,49 @@ wipe the cases and any related interactions
     Database.BatchableContext bc,
     SObject[] sObjScope
   ) {
-    GDPR_WipeCaseService.wipeCases(
+    Map<String, Integer> mapSobjecNumberOfWipedRecords = GDPR_WipeCaseService.wipeCases(
       (Case[]) sObjScope,
       fieldsToClear,
       batchName
     );
+    for (String sObjName : mapSobjecNumberOfWipedRecords.keySet()) {
+      if (mapSobjectToTalNumberOfRecordsWiped.containsKey(sObjName)) {
+        Integer DeletedRecords =
+          mapSobjectToTalNumberOfRecordsWiped.get(sObjName) +
+          mapSobjectToTalNumberOfRecordsWiped.get(sObjName);
+        mapSobjectToTalNumberOfRecordsWiped.put(sObjName, DeletedRecords);
+      } else {
+        mapSobjectToTalNumberOfRecordsWiped.put(
+          sObjName,
+          mapSobjecNumberOfWipedRecords.get(sObjName)
+        );
+      }
+    }
+  }
+  global override void finishOverridable(Database.BatchableContext bc) {
+    String TotalSobjectAndRecordsWiped;
+    for (String SObjectName : mapSobjectToTalNumberOfRecordsWiped.keySet()) {
+      if (TotalSobjectAndRecordsWiped != null) {
+        TotalSobjectAndRecordsWiped =
+          SObjectName +
+          ':' +
+          String.valueOf(mapSobjectToTalNumberOfRecordsWiped.get(SObjectName));
+      } else {
+        TotalSobjectAndRecordsWiped =
+          TotalSobjectAndRecordsWiped +
+          ', ' +
+          SObjectName +
+          ':' +
+          String.valueOf(mapSobjectToTalNumberOfRecordsWiped.get(SObjectName));
+      }
+    }
+    if (scheduledBatchRunComponentId != null) {
+      SBS_ScheduledBatchRunComponent__c sbrc = new SBS_ScheduledBatchRunComponent__c(
+        Id = scheduledBatchRunComponentId,
+        Total_Number_Of_Records_Processed__c = TotalSobjectAndRecordsWiped
+      );
+
+      update sbrc;
+    }
   }
 }

@@ -153,17 +153,25 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>FCS_CaseTag_ChatTranscript_Controller</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>FCS_MassRedirection</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>MessagingSessionController</apexClass>
         <enabled>true</enabled>
-    </classAccesses> 
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TPAccount</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TravelPassProductsSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TravelPassService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <custom>true</custom>
    <fieldPermissions>
         <editable>false</editable>
@@ -677,6 +685,41 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Travel_Pass_Product__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Travel_Pass_Product__c.Category_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Travel_Pass_Product__c.Category_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Travel_Pass_Product__c.External_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Travel_Pass_Product__c.Internal_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Travel_Pass_Product__c.Type_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Travel_Pass_Product__c.Type_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>User.FCS_Site__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -868,6 +911,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.LIA_Judicial_Body__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.LIA_Name_of_Judicial_Body__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1205,7 +1253,7 @@
         <field>Refund_Request__c.Refund_Macro__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Refund_Request__c.Request_Type_Sub_Category__c</field>
         <readable>true</readable>
@@ -1746,10 +1794,10 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>false</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>LiveChatTranscript</object>
         <viewAllRecords>false</viewAllRecords>
@@ -1776,7 +1824,7 @@
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
-        <allowRead>false</allowRead>
+        <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>LiveChatVisitor</object>
         <viewAllRecords>false</viewAllRecords>

@@ -2,11 +2,6 @@
  * Service for making requests to API Management (APIM).
  */
 public without sharing class APIMIntegrationService {
-  private static final String SUBSCRIPTION_KEY = Test.isRunningTest()
-    ? 'TESTKEY'
-    : C_Settings.getSettings('APIM').get('APIM_Subscription_Key');
-
-  private static final String ENDPOINT = 'callout:SAS_APIM';
   private static final String SYSTEM_NAME = 'Salesforce';
 
   public class IntegrationException extends Exception {
@@ -19,7 +14,7 @@ public without sharing class APIMIntegrationService {
    *
    * Any extra headers passed will overwrite existing headers with the same name.
    *
-   * @param method HTTP method to use as full caps String. See HttpRequest.setMethod for more info.
+   * @param method HTTP method to use. See HttpRequest.setMethod for more info.
    * @param path The endpoint with queryparams to which make the query to, without the base url included in callout.
    * @param body Request body which will be passed directly to HttpRequest.setBody().
    * @param extraHeaders Any additional headers which should be sent along the request as a map from name to value.
@@ -36,12 +31,11 @@ public without sharing class APIMIntegrationService {
   ) {
     HttpRequest request = new HttpRequest();
 
-    request.setEndpoint(ENDPOINT + path);
+    request.setEndpoint(path);
     request.setMethod(String.valueOf(method));
 
     request.setHeader('sas-system-name', SYSTEM_NAME);
     request.setHeader('sas-tracking-id', C_Util.generateUUID());
-    request.setHeader('Ocp-Apim-Subscription-Key', SUBSCRIPTION_KEY);
 
     for (String header : extraHeaders.keySet()) {
       request.setHeader(header, extraHeaders.get(header));

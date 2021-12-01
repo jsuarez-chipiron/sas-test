@@ -18,8 +18,7 @@ Creates the records used to tests data deletion
       2,
       null,
       null,
-      C_RecordTypeHelper.CASE_CHANNEL,
-      'Baggage'
+      C_RecordTypeHelper.CASE_CHANNEL
     );
     cList[0].origin = 'Email - Group Sales IS';
     cList[0].FCS_CaseType__c = 'Baggage';
@@ -192,7 +191,7 @@ Tests wiping of ChatTranscript (Should only occur when the ChatTranscript has no
   static void wipeChatTranscript() {
     GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
     GDPR_Util.RETAIN_ADD = new Set<String>{ 'Body' };
-    gdprwipeInt.setVariables('LiveChatTranscript', 1, 'CaseId', null, null);
+    gdprwipeInt.setVariables('LiveChatTranscript', 1, 'CaseId', null, null,null);
     gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
     Test.startTest();
     Database.executeBatch(gdprwipeInt);
@@ -211,7 +210,7 @@ Tests wiping of EmailMessage(Should only occur when the EmailMessage has no case
   static void wipeEmailMessage() {
     GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
     GDPR_Util.RETAIN_ADD = new Set<String>{ 'TextBody' };
-    gdprwipeInt.setVariables('EmailMessage', 1, 'parentId', null, null);
+    gdprwipeInt.setVariables('EmailMessage', 1, 'parentId', null, null,null);
     gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
     Test.startTest();
     Database.executeBatch(gdprwipeInt);
@@ -231,7 +230,7 @@ Tests wiping of SocialPost(Should only occur when the SocialPost has no cases or
   static void wipeSocialPost() {
     GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
     GDPR_Util.RETAIN_ADD = new Set<String>{ 'Content' };
-    gdprwipeInt.setVariables('SocialPost', 1, 'parentId', null, null);
+    gdprwipeInt.setVariables('SocialPost', 1, 'parentId', null, null,null);
     gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
     Test.startTest();
     Database.executeBatch(gdprwipeInt);
@@ -249,7 +248,7 @@ Tests wiping of MessagingSession(Should only occur when the MessagingSession has
   @isTest
   static void wipeMessagingSession() {
     GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
-    gdprwipeInt.setVariables('MessagingSession', 1, 'caseId', null, null);
+    gdprwipeInt.setVariables('MessagingSession', 1, 'caseId', null, null,null);
     gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
     Test.startTest();
     Database.executeBatch(gdprwipeInt);
@@ -273,7 +272,8 @@ Tests deletion of LiveChatTranscript (Should only occur when the LiveChatTranscr
       1,
       'CaseId',
       null,
-      'Delete_Chat_Transcript_Batch'
+      'Delete_Chat_Transcript_Batch',
+      null
     );
     gdprDelInt.lastRetentionDate = dateTime.now().addDays(3);
     Test.startTest();
@@ -295,7 +295,8 @@ Tests deletion of EmailMessage (Should only occur when the EmailMessage has no c
       1,
       'parentId',
       null,
-      'Delete_Email_Message_Batch'
+      'Delete_Email_Message_Batch',
+      null
     );
     gdprDelInt.lastRetentionDate = dateTime.now().addDays(3);
     Test.startTest();
@@ -317,7 +318,8 @@ Tests deletion of SocialPost(Should only occur when the SocialPost has no cases 
       1,
       'parentId',
       null,
-      'Delete_Social_Post_Batch'
+      'Delete_Social_Post_Batch',
+      null
     );
     gdprDelInt.lastRetentionDate = dateTime.now().addDays(3);
     Test.startTest();
@@ -339,7 +341,8 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
       1,
       'caseId',
       null,
-      'Delete_Messaging_Session_Batch'
+      'Delete_Messaging_Session_Batch',
+      null
     );
     gdprDelInt.lastRetentionDate = dateTime.now().addDays(3);
     Test.startTest();
@@ -370,7 +373,8 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
       2,
       null,
       'Baggage',
-      'Wipe_Case_Batch_Baggage'
+      'Wipe_Case_Batch_Baggage',
+      null
     );
     gdprWipeCaseBatch.lastRetentionDate = dateTime.now().addDays(4);
     Test.startTest();
@@ -441,7 +445,8 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
       1,
       null,
       'Baggage',
-      'Delete_Case_Batch_Baggage'
+      'Delete_Case_Batch_Baggage',
+      null
     );
     gdprDelCaseBatch.lastRetentionDate = dateTime.now().addDays(3);
     Test.startTest();
@@ -471,5 +476,29 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
         WHERE case.status = 'Closed' AND case.FCS_CaseType__c = 'Baggage'
       ]
     );
+  }
+  public static testMethod void testSpamSocialPost()
+  {
+     Set<Id> setSpIds;
+    Social_Post_Spam_Hash_Tags__c custSett = new Social_Post_Spam_Hash_Tags__c();
+    custSett.Spam_Hash_Tag__c = '#BoycottEthiopianAirlines';
+    custSett.Name = 'Twitter_BoycottEthiopianAirlines';
+    insert custSett;
+    
+    SocialPost[] spList = FCS_TestDataFactory.createSocialPosts(2);
+    spList[1].Content = 'test#BoycottEthiopianAirlinestestgsvc';
+    spList[1].ReviewedStatus = 'Needed';
+    spList[0].Content = 'test1';
+    spList[0].ReviewedStatus = 'Needed';
+
+    insert spList;
+     Test.startTest();     
+     database.executeBatch(new Delete_SpamSocialPost_Batch());
+     Test.stopTest();
+     System.assertEquals(0,[
+        SELECT COUNT()
+        FROM SocialPost
+        WHERE id =: spList[1].Id
+      ]); 
   }
 }

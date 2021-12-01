@@ -42,7 +42,8 @@ const formattedDateString = (stringToFormat, dateOrTime) => {
   } else if (dateOrTime === "time") {
     formatOptions = {
       hour: "2-digit",
-      minute: "2-digit"
+      minute: "2-digit",
+      hour12: false
     };
   } else {
     formatOptions = {
@@ -50,7 +51,8 @@ const formattedDateString = (stringToFormat, dateOrTime) => {
       month: "short",
       day: "2-digit",
       hour: "2-digit",
-      minute: "2-digit"
+      minute: "2-digit",
+      hour12: false
     };
   }
 

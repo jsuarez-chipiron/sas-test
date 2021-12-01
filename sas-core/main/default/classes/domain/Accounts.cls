@@ -15,6 +15,7 @@ public without sharing class Accounts extends fflib_SObjectDomain {
 
     if (Records.size() == 1) {
       fetchBookingsFromTEDS();
+      fetchTravelPassAccount();
     }
   }
 
@@ -66,6 +67,23 @@ public without sharing class Accounts extends fflib_SObjectDomain {
     ) {
       // Guard against nesting futures. FIXME: update logic so that this isn't needed
       BookingService.fetchBookingsByEBNumber(acc.FCS_EBNumber__c);
+    }
+  }
+
+  private void fetchTravelPassAccount() {
+    Account acc = (Account) Records[0];
+    if (
+      acc.FCS_TPAccountNumber__c != null &&
+      acc.FCS_CMP__c != null &&
+      !System.isFuture() &&
+      !System.isBatch() &&
+      !System.isQueueable()
+    ) {
+      // Guard against nesting futures. FIXME: update logic so that this isn't needed
+      TravelPassService.fetchTravelPassAccount(
+        acc.FCS_TPAccountNumber__c,
+        acc.Id
+      );
     }
   }
 }

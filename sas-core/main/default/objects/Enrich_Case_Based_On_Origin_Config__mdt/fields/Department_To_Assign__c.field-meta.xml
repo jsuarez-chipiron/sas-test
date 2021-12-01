@@ -26,6 +26,11 @@
                 <label>Corporate</label>
             </value>
             <value>
+                <fullName>CS Vendor</fullName>
+                <default>false</default>
+                <label>CS Vendor</label>
+            </value>
+            <value>
                 <fullName>Digital Channel Support</fullName>
                 <default>false</default>
                 <label>Digital Channel Support</label>

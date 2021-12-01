@@ -161,23 +161,32 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Info Hub</controllingFieldValue>
+            <valueName>Content</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
             <valueName>Error Handling</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
             <valueName>Gift Card</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
             <valueName>Refund Handling</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
             <valueName>Voucher Handling</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
             <controllingFieldValue>Sales Control BOM</controllingFieldValue>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SME</controllingFieldValue>
@@ -242,6 +251,7 @@
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SME</controllingFieldValue>
+            <controllingFieldValue>CS Vendor</controllingFieldValue>
             <valueName>Feedback</valueName>
         </valueSettings>
         <valueSettings>
@@ -329,10 +339,6 @@
         <valueSettings>
             <controllingFieldValue>Functional Product Support</controllingFieldValue>
             <valueName>Salesforce</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Info Hub</controllingFieldValue>
-            <valueName>Content</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

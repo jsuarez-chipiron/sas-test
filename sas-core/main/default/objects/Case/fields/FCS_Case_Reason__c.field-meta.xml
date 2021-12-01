@@ -305,6 +305,11 @@
                 <label>CT check</label>
             </value>
             <value>
+                <fullName>Customer Care</fullName>
+                <default>false</default>
+                <label>Customer Care</label>
+            </value>
+            <value>
                 <fullName>Damaged Baggage</fullName>
                 <default>false</default>
                 <label>Damaged Baggage</label>
@@ -360,6 +365,11 @@
                 <label>Email related</label>
             </value>
             <value>
+                <fullName>Error - Gift Card</fullName>
+                <default>false</default>
+                <label>Error - Gift Card</label>
+            </value>
+            <value>
                 <fullName>Error Management</fullName>
                 <default>false</default>
                 <label>Error Management</label>
@@ -388,6 +398,11 @@
                 <fullName>EuroBonus Shop</fullName>
                 <default>false</default>
                 <label>EuroBonus Shop</label>
+            </value>
+            <value>
+                <fullName>EuroBonus Support</fullName>
+                <default>false</default>
+                <label>EuroBonus Support</label>
             </value>
             <value>
                 <fullName>Extend</fullName>
@@ -430,6 +445,11 @@
                 <label>Groups</label>
             </value>
             <value>
+                <fullName>Groups Refund</fullName>
+                <default>false</default>
+                <label>Groups Refund</label>
+            </value>
+            <value>
                 <fullName>Help to Request</fullName>
                 <default>false</default>
                 <label>Help to Request</label>
@@ -450,6 +470,11 @@
                 <label>Hotel Info</label>
             </value>
             <value>
+                <fullName>HQ</fullName>
+                <default>false</default>
+                <label>HQ</label>
+            </value>
+            <value>
                 <fullName>Info About Expiry Date</fullName>
                 <default>false</default>
                 <label>Info About Expiry Date</label>
@@ -468,16 +493,6 @@
                 <fullName>Information</fullName>
                 <default>false</default>
                 <label>Information</label>
-            </value>
-            <value>
-                <fullName>Information Missing</fullName>
-                <default>false</default>
-                <label>Information Missing</label>
-            </value>
-            <value>
-                <fullName>Information update needed</fullName>
-                <default>false</default>
-                <label>Information update needed</label>
             </value>
             <value>
                 <fullName>Insufficient Balance Account</fullName>
@@ -508,11 +523,6 @@
                 <fullName>Klarna</fullName>
                 <default>false</default>
                 <label>Klarna</label>
-            </value>
-            <value>
-                <fullName>Link not working</fullName>
-                <default>false</default>
-                <label>Link not working</label>
             </value>
             <value>
                 <fullName>Look here before you ask</fullName>
@@ -560,9 +570,9 @@
                 <label>Missing points</label>
             </value>
             <value>
-                <fullName>Mutiple FOP</fullName>
+                <fullName>Multiple FOP</fullName>
                 <default>false</default>
-                <label>Mutiple FOP</label>
+                <label>Multiple FOP</label>
             </value>
             <value>
                 <fullName>Name Change</fullName>
@@ -690,6 +700,11 @@
                 <label>Refund</label>
             </value>
             <value>
+                <fullName>Refund - Gift Card</fullName>
+                <default>false</default>
+                <label>Refund - Gift Card</label>
+            </value>
+            <value>
                 <fullName>Refund points</fullName>
                 <default>false</default>
                 <label>Refund points</label>
@@ -705,9 +720,24 @@
                 <label>Refund Status</label>
             </value>
             <value>
+                <fullName>Refund - Voucher</fullName>
+                <default>false</default>
+                <label>Refund - Voucher</label>
+            </value>
+            <value>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+                <label>Rejected</label>
+            </value>
+            <value>
                 <fullName>Reservation</fullName>
                 <default>false</default>
                 <label>Reservation</label>
+            </value>
+            <value>
+                <fullName>Reserved amount</fullName>
+                <default>false</default>
+                <label>Reserved amount</label>
             </value>
             <value>
                 <fullName>Rules &amp; Information</fullName>
@@ -790,11 +820,6 @@
                 <label>Spam</label>
             </value>
             <value>
-                <fullName>Spelling mistake</fullName>
-                <default>false</default>
-                <label>Spelling mistake</label>
-            </value>
-            <value>
                 <fullName>Split booking</fullName>
                 <default>false</default>
                 <label>Split booking</label>
@@ -875,6 +900,11 @@
                 <label>Upgrade</label>
             </value>
             <value>
+                <fullName>Waiver</fullName>
+                <default>false</default>
+                <label>Waiver</label>
+            </value>
+            <value>
                 <fullName>WeChat</fullName>
                 <default>false</default>
                 <label>WeChat</label>
@@ -895,24 +925,33 @@
                 <label>Error</label>
             </value>
             <value>
-                <fullName>Refund - Voucher</fullName>
-                <default>false</default>
-                <label>Refund - Voucher</label>
-            </value>
-            <value>
-                <fullName>Refund - Gift Card</fullName>
-                <default>false</default>
-                <label>Refund - Gift Card</label>
-            </value>
-            <value>
-                <fullName>Error - Gift Card</fullName>
-                <default>false</default>
-                <label>Error - Gift Card</label>
-            </value>
-            <value>
                 <fullName>Other</fullName>
                 <default>false</default>
                 <label>Other</label>
+            </value>
+            <value>
+                <fullName>Information Missing</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Information Missing</label>
+            </value>
+            <value>
+                <fullName>Information update needed</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Information update needed</label>
+            </value>
+            <value>
+                <fullName>Link not working</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Link not working</label>
+            </value>
+            <value>
+                <fullName>Spelling mistake</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Spelling mistake</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -960,6 +999,7 @@
             <controllingFieldValue>Digital Channel</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
             <controllingFieldValue>Salesforce</controllingFieldValue>
             <controllingFieldValue>SAS for Business</controllingFieldValue>
             <valueName>Other</valueName>
@@ -1146,6 +1186,11 @@
             <valueName>Refund - Voucher</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Voucher Handling</controllingFieldValue>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Reserved amount</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>Disconnected customer</valueName>
         </valueSettings>
@@ -1217,11 +1262,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Gift Card</controllingFieldValue>
-            <valueName>Refund - Gift Card</valueName>
+            <valueName>Error - Gift Card</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Gift Card</controllingFieldValue>
-            <valueName>Error - Gift Card</valueName>
+            <valueName>Refund - Gift Card</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Irregularities</controllingFieldValue>
@@ -1229,7 +1274,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Irregularities</controllingFieldValue>
-            <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>Claims</valueName>
         </valueSettings>
         <valueSettings>
@@ -1310,8 +1354,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
             <valueName>SC Under 180 Minutes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Groups Refund</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund Handling</controllingFieldValue>
@@ -1319,7 +1366,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Rejected</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
             <valueName>Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Waiver</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund Handling</controllingFieldValue>
@@ -1409,7 +1464,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Content</controllingFieldValue>
-            <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>EuroBonus</valueName>
         </valueSettings>
         <valueSettings>
@@ -1498,7 +1552,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error Handling</controllingFieldValue>
-            <valueName>Mutiple FOP</valueName>
+            <valueName>Multiple FOP</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error Handling</controllingFieldValue>
@@ -1630,6 +1684,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Customer Care</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>Digital Channel</valueName>
         </valueSettings>
         <valueSettings>
@@ -1638,7 +1696,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>EuroBonus Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>HQ</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
