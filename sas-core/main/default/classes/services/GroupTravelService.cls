@@ -168,6 +168,12 @@ public class GroupTravelService {
       SuppliedPhone = travelRequest.phone
     );
 
-    insert caseToInsert;
+    // Auto-response emails are not triggered by default for cases created
+    // through Apex. Setting the triggerAutoResponseEmail header forces
+    // them to be sent.
+    Database.DMLOptions DMLOptions = new Database.DMLOptions();
+    DMLOptions.EmailHeader.triggerAutoResponseEmail = true;
+
+    database.insert(caseToInsert, DMLOptions);
   }
 }
