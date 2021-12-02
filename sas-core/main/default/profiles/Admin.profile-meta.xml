@@ -2108,6 +2108,11 @@
         <field>SBS_ScheduledBatchRun__c.TimeSegment__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>SBS_ScheduledBatchRun__c.Total_Number_Of_Records_Processed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.FCS_AnswerTime__c</field>
