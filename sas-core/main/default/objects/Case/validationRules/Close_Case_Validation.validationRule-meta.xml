@@ -9,7 +9,8 @@ ISCHANGED(IsClosed),
 ISPICKVAL(Status, &quot;Closed&quot;)
 ),
 ISPICKVAL(FCS_Case_Reason__c, &quot;&quot;),
-ISPICKVAL(FCS_CaseType__c, &quot;&quot;)
+ISPICKVAL(FCS_CaseType__c, &quot;&quot;),
+NOT($User.LastName = &apos;SAS Automation Process&apos;) 
 )</errorConditionFormula>
     <errorMessage>Tag Case before Closing</errorMessage>
 </ValidationRule>
