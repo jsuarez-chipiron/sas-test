@@ -2084,7 +2084,12 @@
         <editable>false</editable>
         <field>Case.IsRedirected__c</field>
         <readable>false</readable>
-    </fieldPermissions>  
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Last_Email_From_Address__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.LIA_CARE_Case_Number__c</field>
