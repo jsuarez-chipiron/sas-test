@@ -59,10 +59,7 @@ global class APIMMock implements HttpCalloutMock {
             .replace('{euroBonusNumber}', euroBonusNumber)
         );
       }
-    } else if (
-      endpoint.contains('csharkservice') ||
-      endpoint.contains('csharkcustmgmtticketless')
-    ) {
+    } else if (endpoint.contains('csharkservice')) {
       if (
         req.getHeader('SOAPAction') ==
         CSharkIntegrationService.SOAP_ACTION_HEADER_BASE +
