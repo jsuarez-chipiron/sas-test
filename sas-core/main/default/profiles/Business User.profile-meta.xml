@@ -262,6 +262,11 @@
         <field>Group_Travel_Request__c.First_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Group_Travel_Request__c.Full_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
 	<fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Last_Name__c</field>
@@ -937,6 +942,11 @@
         <field>Case.GSB_Season__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Group_Destination__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Group_Outbound_Date__c</field>
@@ -1659,7 +1669,10 @@
     </layoutAssignments>  
     <layoutAssignments>
         <layout>Macro-Macro Layout</layout>
-    </layoutAssignments>  
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>MessagingSession-Messaging Session Layout</layout>
+    </layoutAssignments>      
     <layoutAssignments>
         <layout>PersonAccount-B2C - Anonymous Customer</layout>
         <recordType>PersonAccount.AnonymousCustomer</recordType>
