@@ -440,9 +440,9 @@
                 <label>Give Away Membership</label>
             </value>
             <value>
-                <fullName>Groups</fullName>
+                <fullName>Group Sales</fullName>
                 <default>false</default>
-                <label>Groups</label>
+                <label>Group Sales</label>
             </value>
             <value>
                 <fullName>Groups Refund</fullName>
@@ -1701,7 +1701,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Groups</valueName>
+            <valueName>Group Sales</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>

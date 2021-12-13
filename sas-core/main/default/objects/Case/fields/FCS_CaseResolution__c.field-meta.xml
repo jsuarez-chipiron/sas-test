@@ -1201,7 +1201,7 @@
             <controllingFieldValue>General Information</controllingFieldValue>
             <controllingFieldValue>Missing 1000 Status pts MC</controllingFieldValue>
             <controllingFieldValue>Give Away Membership</controllingFieldValue>
-            <controllingFieldValue>Groups</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
             <controllingFieldValue>Help to Request</controllingFieldValue>
             <controllingFieldValue>Help With Usage</controllingFieldValue>
             <controllingFieldValue>Hotel</controllingFieldValue>
@@ -1651,7 +1651,7 @@
             <controllingFieldValue>HQ</controllingFieldValue>
             <controllingFieldValue>Customer Care</controllingFieldValue>
             <controllingFieldValue>EuroBonus Support</controllingFieldValue>
-            <controllingFieldValue>Groups</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Competence</valueName>
         </valueSettings>
         <valueSettings>
@@ -1664,7 +1664,7 @@
             <controllingFieldValue>HQ</controllingFieldValue>
             <controllingFieldValue>Customer Care</controllingFieldValue>
             <controllingFieldValue>EuroBonus Support</controllingFieldValue>
-            <controllingFieldValue>Groups</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Handling time</valueName>
         </valueSettings>
         <valueSettings>
@@ -1677,7 +1677,7 @@
             <controllingFieldValue>HQ</controllingFieldValue>
             <controllingFieldValue>Customer Care</controllingFieldValue>
             <controllingFieldValue>EuroBonus Support</controllingFieldValue>
-            <controllingFieldValue>Groups</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Job well done</valueName>
         </valueSettings>
         <valueSettings>
