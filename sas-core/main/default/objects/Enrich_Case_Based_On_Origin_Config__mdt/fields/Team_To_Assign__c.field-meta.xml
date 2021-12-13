@@ -476,6 +476,11 @@
                 <label>SGH Bag SE</label>
             </value>
             <value>
+                <fullName>Sitel Waivers</fullName>
+                <default>false</default>
+                <label>Sitel Waivers</label>
+            </value>
+            <value>
                 <fullName>SoMe</fullName>
                 <default>false</default>
                 <label>SoMe</label>
