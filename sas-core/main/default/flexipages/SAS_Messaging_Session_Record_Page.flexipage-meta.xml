@@ -95,11 +95,6 @@
                 <componentName>flexipage:tabset</componentName>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>forceKnowledge:articleSearchDesktop</componentName>
-            </componentInstance>
-        </itemInstances>
         <mode>Replace</mode>
         <name>main</name>
         <type>Region</type>
