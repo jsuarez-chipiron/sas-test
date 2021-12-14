@@ -270,6 +270,11 @@
                 <label>Deviation from rules</label>
             </value>
             <value>
+                <fullName>Deviation from rules, authorization in booking</fullName>
+                <default>false</default>
+                <label>Deviation from rules, authorization in booking</label>
+            </value>
+            <value>
                 <fullName>Domestic</fullName>
                 <default>false</default>
                 <label>Domestic</label>
@@ -530,11 +535,6 @@
                 <label>No action</label>
             </value>
             <value>
-                <fullName>No action needed</fullName>
-                <default>false</default>
-                <label>No action needed</label>
-            </value>
-            <value>
                 <fullName>No IRR/24Hrs in booking, EMD is non refundable</fullName>
                 <default>false</default>
                 <label>No IRR/24Hrs in booking, EMD is non refundable</label>
@@ -710,9 +710,14 @@
                 <label>Referred to webpage</label>
             </value>
             <value>
-                <fullName>Refund authorized</fullName>
+                <fullName>Refund correction</fullName>
                 <default>false</default>
-                <label>Refund authorized</label>
+                <label>Refund correction</label>
+            </value>
+            <value>
+                <fullName>Refund correction of ATC online</fullName>
+                <default>false</default>
+                <label>Refund correction of ATC online</label>
             </value>
             <value>
                 <fullName>Refund irregularity</fullName>
@@ -823,6 +828,11 @@
                 <fullName>SAS Invoice</fullName>
                 <default>false</default>
                 <label>SAS Invoice</label>
+            </value>
+            <value>
+                <fullName>Schedule change or cancelled flight</fullName>
+                <default>false</default>
+                <label>Schedule change or cancelled flight</label>
             </value>
             <value>
                 <fullName>Seating</fullName>
@@ -1101,10 +1111,22 @@
                 <label>Log in</label>
             </value>
             <value>
+                <fullName>No action needed</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>No action needed</label>
+            </value>
+            <value>
                 <fullName>Provided info about name change</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Provided info about name change</label>
+            </value>
+            <value>
+                <fullName>Refund authorized</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Refund authorized</label>
             </value>
             <value>
                 <fullName>Resolved</fullName>
@@ -1120,10 +1142,18 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Groups Refund</controllingFieldValue>
+            <valueName>Deposit Refund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Groups Refund</controllingFieldValue>
+            <valueName>Ticket Refund</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Help to Request</controllingFieldValue>
-            <controllingFieldValue>Help With Usage</controllingFieldValue>
             <controllingFieldValue>Missing 1000 Status pts MC</controllingFieldValue>
             <controllingFieldValue>New card</controllingFieldValue>
+            <controllingFieldValue>Help With Usage</controllingFieldValue>
             <controllingFieldValue>New feature</controllingFieldValue>
             <controllingFieldValue>Hotel</controllingFieldValue>
             <controllingFieldValue>Hotel Info</controllingFieldValue>
@@ -1139,17 +1169,17 @@
             <controllingFieldValue>Add Wheelchair</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <controllingFieldValue>Offer sent</controllingFieldValue>
-            <controllingFieldValue>On-board services</controllingFieldValue>
             <controllingFieldValue>Access rights</controllingFieldValue>
+            <controllingFieldValue>On-board services</controllingFieldValue>
             <controllingFieldValue>Add Animals</controllingFieldValue>
             <controllingFieldValue>Add Baggage</controllingFieldValue>
             <controllingFieldValue>Add Bike</controllingFieldValue>
             <controllingFieldValue>Add Biofuel</controllingFieldValue>
             <controllingFieldValue>Add EB in Booking</controllingFieldValue>
-            <controllingFieldValue>Point Sharing</controllingFieldValue>
             <controllingFieldValue>Add Golfbag</controllingFieldValue>
-            <controllingFieldValue>Positive Covid Test</controllingFieldValue>
+            <controllingFieldValue>Point Sharing</controllingFieldValue>
             <controllingFieldValue>Add Infant in Booking</controllingFieldValue>
+            <controllingFieldValue>Positive Covid Test</controllingFieldValue>
             <controllingFieldValue>Add Meals</controllingFieldValue>
             <controllingFieldValue>AMEX</controllingFieldValue>
             <controllingFieldValue>Arrival info</controllingFieldValue>
@@ -1170,19 +1200,18 @@
             <controllingFieldValue>Reserved amount</controllingFieldValue>
             <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
             <controllingFieldValue>Sales Control</controllingFieldValue>
-            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
             <controllingFieldValue>Change</controllingFieldValue>
             <controllingFieldValue>Change commitment dates</controllingFieldValue>
             <controllingFieldValue>Charter Info</controllingFieldValue>
             <controllingFieldValue>Check in times</controllingFieldValue>
             <controllingFieldValue>Check missing 20000 Status pts Amex</controllingFieldValue>
             <controllingFieldValue>Close</controllingFieldValue>
+            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
             <controllingFieldValue>SAS Flights</controllingFieldValue>
             <controllingFieldValue>Screen dumps from customers</controllingFieldValue>
             <controllingFieldValue>Security</controllingFieldValue>
             <controllingFieldValue>Security code sent</controllingFieldValue>
             <controllingFieldValue>Solve log-in problems</controllingFieldValue>
-            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
             <controllingFieldValue>Connection Info</controllingFieldValue>
             <controllingFieldValue>Coop</controllingFieldValue>
             <controllingFieldValue>Corporate</controllingFieldValue>
@@ -1193,6 +1222,7 @@
             <controllingFieldValue>Crime Prevention</controllingFieldValue>
             <controllingFieldValue>CT check</controllingFieldValue>
             <controllingFieldValue>Customer Care</controllingFieldValue>
+            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
             <controllingFieldValue>Solving Online Problem During Request</controllingFieldValue>
             <controllingFieldValue>Spam</controllingFieldValue>
             <controllingFieldValue>Split booking</controllingFieldValue>
@@ -1218,8 +1248,8 @@
             <controllingFieldValue>EuroBonus Support</controllingFieldValue>
             <controllingFieldValue>Error</controllingFieldValue>
             <controllingFieldValue>Lost &amp; found</controllingFieldValue>
-            <controllingFieldValue>Merge</controllingFieldValue>
             <controllingFieldValue>Extract</controllingFieldValue>
+            <controllingFieldValue>Merge</controllingFieldValue>
             <controllingFieldValue>Merge profile</controllingFieldValue>
             <controllingFieldValue>Fast Track</controllingFieldValue>
             <controllingFieldValue>GAC Give Away Card</controllingFieldValue>
@@ -1230,11 +1260,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Help to Request</controllingFieldValue>
-            <controllingFieldValue>Help With Usage</controllingFieldValue>
             <controllingFieldValue>Missing points</controllingFieldValue>
             <controllingFieldValue>Name Change</controllingFieldValue>
             <controllingFieldValue>Name correction</controllingFieldValue>
             <controllingFieldValue>New card</controllingFieldValue>
+            <controllingFieldValue>Help With Usage</controllingFieldValue>
             <controllingFieldValue>Hotel Info</controllingFieldValue>
             <controllingFieldValue>Info About Expiry Date</controllingFieldValue>
             <controllingFieldValue>Inform about Airport Services</controllingFieldValue>
@@ -1251,8 +1281,8 @@
             <controllingFieldValue>Add Baggage</controllingFieldValue>
             <controllingFieldValue>Add Bike</controllingFieldValue>
             <controllingFieldValue>Add Biofuel</controllingFieldValue>
-            <controllingFieldValue>Point related question</controllingFieldValue>
             <controllingFieldValue>Add EB in Booking</controllingFieldValue>
+            <controllingFieldValue>Point related question</controllingFieldValue>
             <controllingFieldValue>Add Golfbag</controllingFieldValue>
             <controllingFieldValue>Add Infant in Booking</controllingFieldValue>
             <controllingFieldValue>Add Meals</controllingFieldValue>
@@ -1271,18 +1301,18 @@
             <controllingFieldValue>Car Rental Info</controllingFieldValue>
             <controllingFieldValue>Refund Status</controllingFieldValue>
             <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
-            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
             <controllingFieldValue>Change booking</controllingFieldValue>
             <controllingFieldValue>Change commitment dates</controllingFieldValue>
             <controllingFieldValue>Change Profile</controllingFieldValue>
             <controllingFieldValue>Charter Info</controllingFieldValue>
             <controllingFieldValue>Check in times</controllingFieldValue>
+            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
             <controllingFieldValue>Security</controllingFieldValue>
             <controllingFieldValue>Solve log-in problems</controllingFieldValue>
-            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
             <controllingFieldValue>Connection Info</controllingFieldValue>
             <controllingFieldValue>Create profile</controllingFieldValue>
             <controllingFieldValue>Credit Card</controllingFieldValue>
+            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
             <controllingFieldValue>Solving Online Problem During Request</controllingFieldValue>
             <controllingFieldValue>Split booking</controllingFieldValue>
             <controllingFieldValue>Status Waiting Time</controllingFieldValue>
@@ -1303,11 +1333,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Help to Request</controllingFieldValue>
-            <controllingFieldValue>Help With Usage</controllingFieldValue>
             <controllingFieldValue>Missing points</controllingFieldValue>
             <controllingFieldValue>Name Change</controllingFieldValue>
             <controllingFieldValue>Name correction</controllingFieldValue>
             <controllingFieldValue>New card</controllingFieldValue>
+            <controllingFieldValue>Help With Usage</controllingFieldValue>
             <controllingFieldValue>Hotel Info</controllingFieldValue>
             <controllingFieldValue>Info About Expiry Date</controllingFieldValue>
             <controllingFieldValue>Inform about Airport Services</controllingFieldValue>
@@ -1321,14 +1351,14 @@
             <controllingFieldValue>Agreement</controllingFieldValue>
             <controllingFieldValue>Allowance</controllingFieldValue>
             <controllingFieldValue>On-board services</controllingFieldValue>
-            <controllingFieldValue>Online Problems</controllingFieldValue>
             <controllingFieldValue>Add Animals</controllingFieldValue>
-            <controllingFieldValue>Online Profile</controllingFieldValue>
+            <controllingFieldValue>Online Problems</controllingFieldValue>
             <controllingFieldValue>Add Baggage</controllingFieldValue>
+            <controllingFieldValue>Online Profile</controllingFieldValue>
             <controllingFieldValue>Add Bike</controllingFieldValue>
             <controllingFieldValue>Add Biofuel</controllingFieldValue>
-            <controllingFieldValue>Point related question</controllingFieldValue>
             <controllingFieldValue>Add EB in Booking</controllingFieldValue>
+            <controllingFieldValue>Point related question</controllingFieldValue>
             <controllingFieldValue>Add Golfbag</controllingFieldValue>
             <controllingFieldValue>Add Infant in Booking</controllingFieldValue>
             <controllingFieldValue>Add Meals</controllingFieldValue>
@@ -1349,20 +1379,20 @@
             <controllingFieldValue>Refunds</controllingFieldValue>
             <controllingFieldValue>Refund Status</controllingFieldValue>
             <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
-            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
             <controllingFieldValue>Change booking</controllingFieldValue>
             <controllingFieldValue>Change commitment dates</controllingFieldValue>
             <controllingFieldValue>Change Profile</controllingFieldValue>
             <controllingFieldValue>Charter Info</controllingFieldValue>
             <controllingFieldValue>Check in times</controllingFieldValue>
             <controllingFieldValue>Claims</controllingFieldValue>
+            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
             <controllingFieldValue>Security</controllingFieldValue>
             <controllingFieldValue>Sell</controllingFieldValue>
             <controllingFieldValue>Solve log-in problems</controllingFieldValue>
-            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
             <controllingFieldValue>Connection Info</controllingFieldValue>
             <controllingFieldValue>Create profile</controllingFieldValue>
             <controllingFieldValue>Credit Card</controllingFieldValue>
+            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
             <controllingFieldValue>Solving Online Problem During Request</controllingFieldValue>
             <controllingFieldValue>Split booking</controllingFieldValue>
             <controllingFieldValue>Status Waiting Time</controllingFieldValue>
@@ -1385,11 +1415,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Help to Request</controllingFieldValue>
-            <controllingFieldValue>Help With Usage</controllingFieldValue>
             <controllingFieldValue>Missing points</controllingFieldValue>
             <controllingFieldValue>Name Change</controllingFieldValue>
             <controllingFieldValue>Name correction</controllingFieldValue>
             <controllingFieldValue>New card</controllingFieldValue>
+            <controllingFieldValue>Help With Usage</controllingFieldValue>
             <controllingFieldValue>Hotel Info</controllingFieldValue>
             <controllingFieldValue>Info About Expiry Date</controllingFieldValue>
             <controllingFieldValue>Inform about Airport Services</controllingFieldValue>
@@ -1406,8 +1436,8 @@
             <controllingFieldValue>Add Baggage</controllingFieldValue>
             <controllingFieldValue>Add Bike</controllingFieldValue>
             <controllingFieldValue>Add Biofuel</controllingFieldValue>
-            <controllingFieldValue>Point related question</controllingFieldValue>
             <controllingFieldValue>Add EB in Booking</controllingFieldValue>
+            <controllingFieldValue>Point related question</controllingFieldValue>
             <controllingFieldValue>Add Golfbag</controllingFieldValue>
             <controllingFieldValue>Add Infant in Booking</controllingFieldValue>
             <controllingFieldValue>Add Meals</controllingFieldValue>
@@ -1427,19 +1457,19 @@
             <controllingFieldValue>Car Rental Info</controllingFieldValue>
             <controllingFieldValue>Refund Status</controllingFieldValue>
             <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
-            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
             <controllingFieldValue>Change booking</controllingFieldValue>
             <controllingFieldValue>Change commitment dates</controllingFieldValue>
             <controllingFieldValue>Change Profile</controllingFieldValue>
             <controllingFieldValue>Charter Info</controllingFieldValue>
             <controllingFieldValue>Check in times</controllingFieldValue>
             <controllingFieldValue>Claims</controllingFieldValue>
+            <controllingFieldValue>SAS Aircraft</controllingFieldValue>
             <controllingFieldValue>Security</controllingFieldValue>
             <controllingFieldValue>Solve log-in problems</controllingFieldValue>
-            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
             <controllingFieldValue>Connection Info</controllingFieldValue>
             <controllingFieldValue>Create profile</controllingFieldValue>
             <controllingFieldValue>Credit Card</controllingFieldValue>
+            <controllingFieldValue>Solve Online Problem</controllingFieldValue>
             <controllingFieldValue>Solving Online Problem During Request</controllingFieldValue>
             <controllingFieldValue>Split booking</controllingFieldValue>
             <controllingFieldValue>Status Waiting Time</controllingFieldValue>
@@ -1461,6 +1491,26 @@
             <valueName>Referred to webpage</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Miscellaneous</controllingFieldValue>
+            <valueName>Airport</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Miscellaneous</controllingFieldValue>
+            <valueName>Contacts-country</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Miscellaneous</controllingFieldValue>
+            <valueName>Contacts-partners</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Miscellaneous</controllingFieldValue>
+            <valueName>Policies and agreements</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Miscellaneous</controllingFieldValue>
+            <valueName>SAS Agent News/Flash</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Missing points</controllingFieldValue>
             <valueName>Invalid retro</valueName>
         </valueSettings>
@@ -1470,8 +1520,8 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Missing points</controllingFieldValue>
-            <controllingFieldValue>Point related question</controllingFieldValue>
             <controllingFieldValue>Add EB in Booking</controllingFieldValue>
+            <controllingFieldValue>Point related question</controllingFieldValue>
             <controllingFieldValue>Provide program information</controllingFieldValue>
             <controllingFieldValue>Campaign support</controllingFieldValue>
             <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
@@ -1483,11 +1533,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Multiple FOP</controllingFieldValue>
-            <controllingFieldValue>No money collected</controllingFieldValue>
             <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
             <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
-            <controllingFieldValue>Involuntary</controllingFieldValue>
             <controllingFieldValue>AliPay</controllingFieldValue>
+            <controllingFieldValue>No money collected</controllingFieldValue>
             <controllingFieldValue>PayPal</controllingFieldValue>
             <controllingFieldValue>Card errors</controllingFieldValue>
             <controllingFieldValue>Chargeback</controllingFieldValue>
@@ -1495,15 +1544,16 @@
             <controllingFieldValue>UnionPay</controllingFieldValue>
             <controllingFieldValue>WeChat</controllingFieldValue>
             <controllingFieldValue>Voluntary</controllingFieldValue>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
             <controllingFieldValue>Klarna</controllingFieldValue>
             <valueName>Refund to alternative FOP</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Multiple FOP</controllingFieldValue>
-            <controllingFieldValue>No money collected</controllingFieldValue>
             <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
             <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
             <controllingFieldValue>AliPay</controllingFieldValue>
+            <controllingFieldValue>No money collected</controllingFieldValue>
             <controllingFieldValue>PayPal</controllingFieldValue>
             <controllingFieldValue>Card errors</controllingFieldValue>
             <controllingFieldValue>Chargeback</controllingFieldValue>
@@ -1515,9 +1565,9 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Multiple FOP</controllingFieldValue>
-            <controllingFieldValue>No money collected</controllingFieldValue>
             <controllingFieldValue>Insufficient Balance Account</controllingFieldValue>
             <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
+            <controllingFieldValue>No money collected</controllingFieldValue>
             <controllingFieldValue>PayPal</controllingFieldValue>
             <controllingFieldValue>Card errors</controllingFieldValue>
             <controllingFieldValue>Chargeback</controllingFieldValue>
@@ -1530,11 +1580,9 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Name Change</controllingFieldValue>
-            <controllingFieldValue>Involuntary</controllingFieldValue>
             <controllingFieldValue>Process Refund</controllingFieldValue>
             <controllingFieldValue>Change booking</controllingFieldValue>
             <controllingFieldValue>Change commitment dates</controllingFieldValue>
-            <controllingFieldValue>Voluntary</controllingFieldValue>
             <controllingFieldValue>Make Booking</controllingFieldValue>
             <valueName>Deviation from rules</valueName>
         </valueSettings>
@@ -1668,27 +1716,6 @@
             <valueName>Info about how to add</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Involuntary</controllingFieldValue>
-            <controllingFieldValue>Process Refund</controllingFieldValue>
-            <controllingFieldValue>Voluntary</controllingFieldValue>
-            <valueName>According to rules</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Involuntary</controllingFieldValue>
-            <controllingFieldValue>Voluntary</controllingFieldValue>
-            <valueName>No action needed</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Involuntary</controllingFieldValue>
-            <controllingFieldValue>Voluntary</controllingFieldValue>
-            <valueName>Part of journey cancellation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Involuntary</controllingFieldValue>
-            <controllingFieldValue>Voluntary</controllingFieldValue>
-            <valueName>Refund authorized</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Agreement</controllingFieldValue>
             <valueName>Agreement related question</valueName>
         </valueSettings>
@@ -1805,14 +1832,6 @@
             <valueName>Create point sharing group</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Process Question</controllingFieldValue>
-            <valueName>Inform Process Owner/Specialist</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Process Question</controllingFieldValue>
-            <valueName>Update User Guide</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Ancillary</controllingFieldValue>
             <valueName>Fast track</valueName>
         </valueSettings>
@@ -1878,6 +1897,19 @@
         <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
             <valueName>Rules and policy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Question</controllingFieldValue>
+            <valueName>Inform Process Owner/Specialist</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Question</controllingFieldValue>
+            <valueName>Update User Guide</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Refund</controllingFieldValue>
+            <controllingFieldValue>Voluntary</controllingFieldValue>
+            <valueName>According to rules</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Process Refund</controllingFieldValue>
@@ -2008,6 +2040,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refund - Voucher</controllingFieldValue>
+            <controllingFieldValue>Voluntary</controllingFieldValue>
             <valueName>Already refunded</valueName>
         </valueSettings>
         <valueSettings>
@@ -2142,15 +2175,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
-            <controllingFieldValue>Waiver</controllingFieldValue>
             <controllingFieldValue>Extend</controllingFieldValue>
+            <controllingFieldValue>Waiver</controllingFieldValue>
             <valueName>Approved</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SC Under 180 Minutes</controllingFieldValue>
             <controllingFieldValue>Tier level</controllingFieldValue>
-            <controllingFieldValue>Waiver</controllingFieldValue>
             <controllingFieldValue>Extend</controllingFieldValue>
+            <controllingFieldValue>Waiver</controllingFieldValue>
             <valueName>Rejected</valueName>
         </valueSettings>
         <valueSettings>
@@ -2166,25 +2199,16 @@
             <valueName>Wrong deb</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>SSI Migration</controllingFieldValue>
+            <valueName>Info updated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SSI Migration</controllingFieldValue>
+            <valueName>Questions</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Support</controllingFieldValue>
             <valueName>Status</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System related</controllingFieldValue>
-            <controllingFieldValue>Error</controllingFieldValue>
-            <valueName>Amadeus</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System related</controllingFieldValue>
-            <valueName>SSI author</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System related</controllingFieldValue>
-            <valueName>SSI login issues</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>System related</controllingFieldValue>
-            <valueName>SSI public site</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Damaged Baggage</controllingFieldValue>
@@ -2206,6 +2230,23 @@
         <valueSettings>
             <controllingFieldValue>Delayed Baggage</controllingFieldValue>
             <valueName>Reported delayed baggage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System related</controllingFieldValue>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <valueName>Amadeus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System related</controllingFieldValue>
+            <valueName>SSI author</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System related</controllingFieldValue>
+            <valueName>SSI login issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System related</controllingFieldValue>
+            <valueName>SSI public site</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Tier level</controllingFieldValue>
@@ -2284,12 +2325,34 @@
             <valueName>Payment cards</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Voluntary</controllingFieldValue>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <valueName>Part of journey cancellation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voluntary</controllingFieldValue>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <valueName>Refund correction</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>Acquirer</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>SRS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <valueName>Deviation from rules, authorization in booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <valueName>Refund correction of ATC online</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Involuntary</controllingFieldValue>
+            <valueName>Schedule change or cancelled flight</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Irregularity</controllingFieldValue>
@@ -2302,14 +2365,6 @@
         <valueSettings>
             <controllingFieldValue>Irregularity</controllingFieldValue>
             <valueName>System</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Groups</controllingFieldValue>
-            <valueName>External</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Groups</controllingFieldValue>
-            <valueName>Internal</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Issue</controllingFieldValue>
@@ -2326,14 +2381,6 @@
         <valueSettings>
             <controllingFieldValue>Issue</controllingFieldValue>
             <valueName>Positive Covid Test</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SSI Migration</controllingFieldValue>
-            <valueName>Info updated</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SSI Migration</controllingFieldValue>
-            <valueName>Questions</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Look here before you ask</controllingFieldValue>
@@ -2392,32 +2439,12 @@
             <valueName>UM</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Miscellaneous</controllingFieldValue>
-            <valueName>Airport</valueName>
+            <controllingFieldValue>Groups</controllingFieldValue>
+            <valueName>External</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Miscellaneous</controllingFieldValue>
-            <valueName>Contacts-country</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Miscellaneous</controllingFieldValue>
-            <valueName>Contacts-partners</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Miscellaneous</controllingFieldValue>
-            <valueName>Policies and agreements</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Miscellaneous</controllingFieldValue>
-            <valueName>SAS Agent News/Flash</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Groups Refund</controllingFieldValue>
-            <valueName>Deposit Refund</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Groups Refund</controllingFieldValue>
-            <valueName>Ticket Refund</valueName>
+            <controllingFieldValue>Groups</controllingFieldValue>
+            <valueName>Internal</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

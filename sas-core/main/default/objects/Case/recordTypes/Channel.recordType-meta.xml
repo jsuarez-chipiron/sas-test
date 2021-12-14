@@ -903,6 +903,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Deviation from rules%2C authorization in booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Domestic</fullName>
             <default>false</default>
         </values>
@@ -1119,10 +1123,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>No action needed</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Not eligible</fullName>
             <default>false</default>
         </values>
@@ -1267,7 +1267,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Refund authorized</fullName>
+            <fullName>Refund correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund correction of ATC online</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1376,6 +1380,10 @@
         </values>
         <values>
             <fullName>Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule change or cancelled flight</fullName>
             <default>false</default>
         </values>
         <values>
