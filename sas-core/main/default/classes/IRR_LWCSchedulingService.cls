@@ -37,8 +37,8 @@ public with sharing class IRR_LWCSchedulingService {
    @AuraEnabled
    public static Boolean scheduleJob(String cronString, String cronJobName){
      try {
-      SBS_ScheduledBatch scheduleAutomatedEvent = new IRR_BCH_SendAutomatedMessage ();
-       System.schedule(cronJobName, cronString, new IRR_BCH_SendAutomatedMessage ());
+      SBS_ScheduledBatch scheduleAutomatedEvent = new IRR_BCH_SendAutomatedMessage (false);
+       System.schedule(cronJobName, cronString, new IRR_BCH_SendAutomatedMessage (false));
        return true;
      } catch (Exception e) {
        System.debug(e.getMessage());
