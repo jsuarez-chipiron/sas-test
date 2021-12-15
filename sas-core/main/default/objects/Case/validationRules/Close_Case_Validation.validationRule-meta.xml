@@ -11,7 +11,10 @@ ISPICKVAL(Status, &quot;Closed&quot;)
 OR(
 ISBLANK(TEXT(FCS_Case_Reason__c)),
 ISBLANK(TEXT(FCS_CaseType__c)),
-ISBLANK(TEXT(FCS_CaseResolution__c))
+AND(
+ISBLANK(TEXT(FCS_CaseResolution__c)),
+ISBLANK(FCS_CaseResolutionDetails__c)
+)
 ),
 NOT($User.LastName = &apos;SAS Automation Process&apos;),
 NOT(RecordType.Name = &apos;Claim&apos;)

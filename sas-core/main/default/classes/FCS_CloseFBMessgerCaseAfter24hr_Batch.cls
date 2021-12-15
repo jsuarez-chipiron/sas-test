@@ -37,7 +37,7 @@ global with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
     string caseField,
     string caseType,
     string batchName,
-	String scheduledBatchRunComponentId
+    String scheduledBatchRunComponentId
   ) {
     lastRetentionDate = DateTime.newInstance(
       Date.today().addDays(-retentionPeriod),
@@ -114,6 +114,7 @@ global with sharing class FCS_CloseFBMessgerCaseAfter24hr_Batch extends SBS_Sche
         if (cse.FCS_Case_Reason__c == null || cse.FCS_Case_Reason__c == '') {
           cse.FCS_CaseType__c = 'Error';
           cse.FCS_Case_Reason__c = 'Disconnected customer';
+          cse.FCS_CaseResolution__c = 'Completed';
           cse.Status = 'Closed';
           tagCases.add(cse);
         } else {

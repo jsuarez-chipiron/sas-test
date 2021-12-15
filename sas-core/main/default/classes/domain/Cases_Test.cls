@@ -87,7 +87,8 @@ private class Cases_Test {
       RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
       Department__c = 'SoMe Support',
       FCS_CaseType__c = 'Baggage',
-      FCS_Case_Reason__c = 'Allowance'
+      FCS_Case_Reason__c = 'Allowance',
+      FCS_CaseResolution__c = 'Referred to phone'
     );
 
     Case supportTag = new Case(
@@ -97,7 +98,8 @@ private class Cases_Test {
       RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
       Department__c = 'SoMe Support',
       FCS_CaseType__c = 'Changes',
-      FCS_Case_Reason__c = 'Name Change'
+      FCS_Case_Reason__c = 'Name Change',
+      FCS_CaseResolution__c = 'Referred to phone'
     );
     Case feedbackTag = new Case(
       Status = 'Closed',
@@ -106,7 +108,8 @@ private class Cases_Test {
       RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
       Department__c = 'SoMe Support',
       FCS_CaseType__c = 'Changes',
-      FCS_Case_Reason__c = 'Name Change'
+      FCS_Case_Reason__c = 'Name Change',
+      FCS_CaseResolution__c = 'Referred to phone'
     );
     List<Case> soMeCases = new List<Case>();
     soMeCases.add(infoTag);
