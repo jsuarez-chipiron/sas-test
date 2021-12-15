@@ -20,6 +20,6 @@
     </values>
     <values>
         <field>Team_To_Assign__c</field>
-        <value xsi:type="xsd:string">OC Waivers</value>
+        <value xsi:type="xsd:string">Sitel Waivers</value>
     </values>
 </CustomMetadata>
