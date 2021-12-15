@@ -50,7 +50,7 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
 
     insert sessions;
     FCS_CloseFBMessgerCaseAfter24hr_Batch fcsCloseFBMessgr = new FCS_CloseFBMessgerCaseAfter24hr_Batch();
-    fcsCloseFBMessgr.setVariables('Case', 1, null, null, null,null);
+    fcsCloseFBMessgr.setVariables('Case', 1, null, null, null, null);
     Test.StartTest();
     Database.executeBatch(fcsCloseFBMessgr);
     Test.StopTest();
@@ -69,6 +69,7 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
     lstCases[0].Department__c = 'SoMe Support';
     lstCases[0].FCS_CaseType__c = 'Baggage';
     lstCases[0].FCS_Case_Reason__c = 'Allowance';
+    lstCases[0].FCS_CaseResolution__c = 'Referred to phone';
     insert lstCases;
 
     MessagingChannel[] messagingChannel = [SELECT Id FROM MessagingChannel];
@@ -96,7 +97,7 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
     );
     insert sessions;
     FCS_CloseFBMessgerCaseAfter24hr_Batch fcsCloseFBMessgr = new FCS_CloseFBMessgerCaseAfter24hr_Batch();
-    fcsCloseFBMessgr.setVariables('Case', 1, null, null, null,null);
+    fcsCloseFBMessgr.setVariables('Case', 1, null, null, null, null);
     Test.StartTest();
     Database.executeBatch(fcsCloseFBMessgr);
     Test.StopTest();
@@ -158,6 +159,7 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
     lstCases[0].status = 'New';
     lstCases[0].FCS_CaseType__c = 'Error';
     lstCases[0].FCS_Case_Reason__c = 'Disconnected customer';
+    lstCases[0].FCS_CaseResolution__c = 'Completed';
     lstCases[0].RecordTypeId = C_RecordTypeHelper.CASE_CHAT;
     insert lstCases;
 
@@ -187,7 +189,7 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
 
     insert sessions;
     FCS_CloseFBMessgerCaseAfter24hr_Batch fcsCloseFBMessgr = new FCS_CloseFBMessgerCaseAfter24hr_Batch();
-    fcsCloseFBMessgr.setVariables('Case', 1, null, null, null,null);
+    fcsCloseFBMessgr.setVariables('Case', 1, null, null, null, null);
     Test.StartTest();
     Database.executeBatch(fcsCloseFBMessgr);
     Test.StopTest();
@@ -203,6 +205,7 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
     lstCases[0].status = 'New';
     lstCases[0].FCS_Case_Reason__c = 'Disconnected customer';
     lstCases[0].FCS_CaseType__c = 'Error';
+    lstCases[0].FCS_CaseResolution__c = 'Completed';
     lstCases[0].RecordTypeId = C_RecordTypeHelper.CASE_CHAT;
     insert lstCases;
 
