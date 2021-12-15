@@ -172,8 +172,13 @@
     </platformActionList>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>Refund_PNR__c</fields>
         <fields>CASES.STATUS</fields>
+        <fields>Refund_PNR__c</fields>
+        <fields>OWNER_NAME</fields>
+        <fields>Team__c</fields>
+        <fields>FCS_CaseType__c</fields>
+        <fields>FCS_Case_Reason__c</fields>
+        <fields>FCS_CaseResolution__c</fields>
         <relatedList>Case.Refund_Request__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -185,7 +190,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1x000002m9SF</masterLabel>
+        <masterLabel>00h3N00000211G4</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

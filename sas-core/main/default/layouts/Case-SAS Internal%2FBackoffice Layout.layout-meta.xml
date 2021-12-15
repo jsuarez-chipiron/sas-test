@@ -105,6 +105,10 @@
                 <field>Previous_Owner__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ParentId</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IsRedirected__c</field>
             </layoutItems>
@@ -154,23 +158,23 @@
                 <behavior>Edit</behavior>
                 <field>Priority</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ParentId</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Type</field>
+                <field>FCS_CaseType__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>FCS_CaseReason__c</field>
+                <field>FCS_Case_Reason__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>FCS_CaseSubReason__c</field>
+                <field>FCS_CaseResolution__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FCS_CaseResolutionDetails__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -335,8 +339,12 @@
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.SUBJECT</fields>
-        <fields>CASES.PRIORITY</fields>
+        <fields>Department__c</fields>
+        <fields>Team__c</fields>
+        <fields>FCS_CaseType__c</fields>
         <fields>CASES.STATUS</fields>
+        <fields>FCS_Case_Reason__c</fields>
+        <fields>FCS_CaseResolution__c</fields>
         <fields>OWNER_NAME</fields>
         <relatedList>RelatedChildCaseList</relatedList>
     </relatedLists>
@@ -354,7 +362,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7a000001LkUH</masterLabel>
+        <masterLabel>00h3N00000211GJ</masterLabel>
         <sizeX>3</sizeX>
         <sizeY>4</sizeY>
         <summaryLayoutItems>
