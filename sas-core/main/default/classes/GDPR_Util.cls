@@ -26,7 +26,7 @@ return the fields to be wiped for particular SObject
       WHERE EntityDefinitionId = :sObjectName AND ComplianceGroup != NULL
     ];
     for (FieldDefinition fd : fdList) {
-      if (fd.ComplianceGroup.split(';').equals('Wipe')) {
+      if (fd.ComplianceGroup.split(';').contains('Wipe')) {
         wipeFields.add(fd.QualifiedAPIName);
       }
     }
