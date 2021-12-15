@@ -5,6 +5,7 @@
     <description>Ensures that refund cases have a refund request</description>
     <errorConditionFormula>AND(ISPICKVAL(Department__c, &quot;Refunds&quot;), 
 ISBLANK( Refund_Request__c ),  
-ISPICKVAL( Status , &quot;Closed&quot;))</errorConditionFormula>
+ISPICKVAL( Status , &quot;Closed&quot;),
+NOT($User.LastName = &apos;SAS Automation Process&apos;))</errorConditionFormula>
     <errorMessage>Please create a refund request in order to close the refund case</errorMessage>
 </ValidationRule>
