@@ -316,7 +316,7 @@
         <inputAssignments>
             <field>SuppliedEmail</field>
             <value>
-                <elementReference>Recipient_email_address</elementReference>
+                <elementReference>EmailAddress.value</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -496,12 +496,30 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Recipient_email_address</name>
-            <dataType>String</dataType>
-            <fieldText>Recipient email address</fieldText>
-            <fieldType>InputField</fieldType>
-            <helpText>&lt;p&gt;Optional email address for the created Case.&lt;/p&gt;</helpText>
-            <isRequired>false</isRequired>
+            <name>EmailAddress</name>
+            <extensionName>flowruntime:email</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Recipient email address</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>disabled</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>readonly</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>CaseAssignment</name>
@@ -578,6 +596,14 @@
             <name>RecordTypeOutput</name>
         </outputAssignments>
     </subflows>
+    <variables>
+        <description>Saves the email to add it to the case</description>
+        <name>RecipientEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>RecordTypeSubflow</name>
         <dataType>String</dataType>

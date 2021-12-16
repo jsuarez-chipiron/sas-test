@@ -445,6 +445,11 @@
                 <label>Groups</label>
             </value>
             <value>
+                <fullName>Group Sales</fullName>
+                <default>false</default>
+                <label>Group Sales</label>
+            </value>
+            <value>
                 <fullName>Groups Refund</fullName>
                 <default>false</default>
                 <label>Groups Refund</label>
@@ -823,6 +828,11 @@
                 <fullName>Split booking</fullName>
                 <default>false</default>
                 <label>Split booking</label>
+            </value>
+            <value>
+                <fullName>SSI Migration</fullName>
+                <default>false</default>
+                <label>SSI Migration</label>
             </value>
             <value>
                 <fullName>Star Online</fullName>
@@ -1473,6 +1483,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>Groups</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
             <valueName>Irregularity</valueName>
         </valueSettings>
         <valueSettings>
@@ -1506,6 +1520,10 @@
         <valueSettings>
             <controllingFieldValue>Content</controllingFieldValue>
             <valueName>SAS.xx</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <valueName>SSI Migration</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Content</controllingFieldValue>
@@ -1701,7 +1719,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Groups</valueName>
+            <valueName>Group Sales</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>

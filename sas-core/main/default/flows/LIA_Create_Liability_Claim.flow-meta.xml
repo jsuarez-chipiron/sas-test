@@ -314,8 +314,8 @@
                     <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Please add the complain CARE Case Number&lt;/span&gt;&lt;/p&gt;</helpText>
                     <isRequired>true</isRequired>
                     <validationRule>
-                        <errorMessage>&lt;p&gt;There is limit of 50 characters for this field&lt;/p&gt;</errorMessage>
-                        <formulaExpression>LEN({!CARE_Case_Number}) &lt;= 50</formulaExpression>
+                        <errorMessage>&lt;p&gt;There is limit of 100 characters for this field&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!CARE_Case_Number}) &lt;= 100</formulaExpression>
                     </validationRule>
                 </fields>
                 <fields>
@@ -367,6 +367,10 @@
                     <fieldType>InputField</fieldType>
                     <helpText>&lt;p&gt;Please add the flight number related to the PNR&lt;/p&gt;</helpText>
                     <isRequired>true</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;There is limit of 50 characters for this field&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!Flight_Number}) &lt;= 50</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>Flight_Date</name>
@@ -391,6 +395,10 @@
             <fieldText>Name of Passenger(s)</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;There is limit of 250 characters for this field&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>LEN({!Name_of_Passenger_s}) &lt;= 250</formulaExpression>
+            </validationRule>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -430,6 +438,10 @@
                     <fieldText>External Case Number/Court Reference</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;There is limit of 100 characters for this field&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!External_Case_Number_Court_Reference}) &lt;= 100</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>Jurisdiction</name>

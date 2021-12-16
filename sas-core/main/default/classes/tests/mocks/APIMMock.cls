@@ -59,10 +59,7 @@ global class APIMMock implements HttpCalloutMock {
             .replace('{euroBonusNumber}', euroBonusNumber)
         );
       }
-    } else if (
-      endpoint.contains('csharkservice') ||
-      endpoint.contains('csharkcustmgmtticketless')
-    ) {
+    } else if (endpoint.contains('csharkservice')) {
       if (
         req.getHeader('SOAPAction') ==
         CSharkIntegrationService.SOAP_ACTION_HEADER_BASE +
@@ -75,6 +72,9 @@ global class APIMMock implements HttpCalloutMock {
       } else {
         res.setStatusCode(404);
       }
+    } else if (endpoint.contains('voucher')) {
+      res.setHeader('Content-Type', 'application/json');
+      res.setBody('{"link":"test.sas.se", "caseId": "12345678"}');
     } else {
       res.setStatusCode(404);
     }

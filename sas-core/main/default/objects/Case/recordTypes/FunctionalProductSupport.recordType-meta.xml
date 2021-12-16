@@ -690,6 +690,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Deviation from rules%2C authorization in booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Domestic</fullName>
             <default>false</default>
         </values>
@@ -723,6 +727,10 @@
         </values>
         <values>
             <fullName>Extended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>External</fullName>
             <default>false</default>
         </values>
         <values>
@@ -794,6 +802,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Info updated</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inform Process Owner%2FSpecialist</fullName>
             <default>false</default>
         </values>
@@ -811,6 +823,10 @@
         </values>
         <values>
             <fullName>Intercont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal</fullName>
             <default>false</default>
         </values>
         <values>
@@ -954,6 +970,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Questions</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Receipt</fullName>
             <default>false</default>
         </values>
@@ -1007,6 +1027,14 @@
         </values>
         <values>
             <fullName>Referred to webpage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund correction of ATC online</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1103,6 +1131,10 @@
         </values>
         <values>
             <fullName>Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule change or cancelled flight</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3446,6 +3478,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Group Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Groups</fullName>
             <default>false</default>
         </values>
@@ -3675,6 +3711,10 @@
         </values>
         <values>
             <fullName>SC Under 180 Minutes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SSI Migration</fullName>
             <default>false</default>
         </values>
         <values>

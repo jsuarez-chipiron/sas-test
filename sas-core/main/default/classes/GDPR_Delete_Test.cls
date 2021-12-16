@@ -15,14 +15,16 @@ Creates the records used to tests data deletion
     insert accs;
 
     Case[] cList = FCS_TestDataFactory.createCases(
-      2,
+      1,
       null,
       null,
       C_RecordTypeHelper.CASE_CHANNEL
     );
     cList[0].origin = 'Email - Group Sales IS';
     cList[0].FCS_CaseType__c = 'Baggage';
-    cList[0].FCS_Case_Reason__c = 'Other';
+    cList[0].FCS_Case_Reason__c = 'Transfer';
+    cList[0].FCS_CaseResolution__c = 'Completed';
+    cList[0].SuppliedPhone = '12345678';
 
     insert cList;
 
@@ -191,7 +193,14 @@ Tests wiping of ChatTranscript (Should only occur when the ChatTranscript has no
   static void wipeChatTranscript() {
     GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
     GDPR_Util.RETAIN_ADD = new Set<String>{ 'Body' };
-    gdprwipeInt.setVariables('LiveChatTranscript', 1, 'CaseId', null, null,null);
+    gdprwipeInt.setVariables(
+      'LiveChatTranscript',
+      1,
+      'CaseId',
+      null,
+      null,
+      null
+    );
     gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
     Test.startTest();
     Database.executeBatch(gdprwipeInt);
@@ -210,7 +219,7 @@ Tests wiping of EmailMessage(Should only occur when the EmailMessage has no case
   static void wipeEmailMessage() {
     GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
     GDPR_Util.RETAIN_ADD = new Set<String>{ 'TextBody' };
-    gdprwipeInt.setVariables('EmailMessage', 1, 'parentId', null, null,null);
+    gdprwipeInt.setVariables('EmailMessage', 1, 'parentId', null, null, null);
     gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
     Test.startTest();
     Database.executeBatch(gdprwipeInt);
@@ -230,7 +239,7 @@ Tests wiping of SocialPost(Should only occur when the SocialPost has no cases or
   static void wipeSocialPost() {
     GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
     GDPR_Util.RETAIN_ADD = new Set<String>{ 'Content' };
-    gdprwipeInt.setVariables('SocialPost', 1, 'parentId', null, null,null);
+    gdprwipeInt.setVariables('SocialPost', 1, 'parentId', null, null, null);
     gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
     Test.startTest();
     Database.executeBatch(gdprwipeInt);
@@ -248,7 +257,7 @@ Tests wiping of MessagingSession(Should only occur when the MessagingSession has
   @isTest
   static void wipeMessagingSession() {
     GDPR_WipeInteraction_Batch gdprwipeInt = new GDPR_WipeInteraction_Batch();
-    gdprwipeInt.setVariables('MessagingSession', 1, 'caseId', null, null,null);
+    gdprwipeInt.setVariables('MessagingSession', 1, 'caseId', null, null, null);
     gdprwipeInt.lastRetentionDate = dateTime.now().addDays(3);
     Test.startTest();
     Database.executeBatch(gdprwipeInt);
@@ -366,7 +375,7 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
       'Comments_From_Customer__c',
       'Ticket_Numbers__c',
       'Type_Of_Special_Baggage__c',
-      'FCS_Case_Reason__c'
+      'SuppliedPhone'
     };
     gdprWipeCaseBatch.setVariables(
       'Case',
@@ -387,8 +396,8 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
     );
     System.assertEquals(
       null,
-      [SELECT Id, FCS_Case_Reason__c FROM Case WHERE status = 'Closed' LIMIT 1]
-      .FCS_Case_Reason__c
+      [SELECT Id, SuppliedPhone FROM Case WHERE status = 'Closed' LIMIT 1]
+      .SuppliedPhone
     );
     System.assertEquals(
       null,
@@ -477,14 +486,13 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
       ]
     );
   }
-  public static testMethod void testSpamSocialPost()
-  {
-     Set<Id> setSpIds;
+  public static testMethod void testSpamSocialPost() {
+    Set<Id> setSpIds;
     Social_Post_Spam_Hash_Tags__c custSett = new Social_Post_Spam_Hash_Tags__c();
     custSett.Spam_Hash_Tag__c = '#BoycottEthiopianAirlines';
     custSett.Name = 'Twitter_BoycottEthiopianAirlines';
     insert custSett;
-    
+
     SocialPost[] spList = FCS_TestDataFactory.createSocialPosts(2);
     spList[1].Content = 'test#BoycottEthiopianAirlinestestgsvc';
     spList[1].ReviewedStatus = 'Needed';
@@ -492,13 +500,12 @@ Tests deletion of MessagingSession(Should only occur when the MessagingSession h
     spList[0].ReviewedStatus = 'Needed';
 
     insert spList;
-     Test.startTest();     
-     database.executeBatch(new Delete_SpamSocialPost_Batch());
-     Test.stopTest();
-     System.assertEquals(0,[
-        SELECT COUNT()
-        FROM SocialPost
-        WHERE id =: spList[1].Id
-      ]); 
+    Test.startTest();
+    database.executeBatch(new Delete_SpamSocialPost_Batch());
+    Test.stopTest();
+    System.assertEquals(
+      0,
+      [SELECT COUNT() FROM SocialPost WHERE id = :spList[1].Id]
+    );
   }
 }

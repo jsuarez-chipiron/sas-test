@@ -6,7 +6,7 @@
     <fields>LIA_Claim__c</fields>
     <fields>LIA_Jurisdiction__c</fields>
     <fields>Team__c</fields>
-    <fields>Status</fields>
     <fields>OwnerId</fields>
+    <fields>ParentId</fields>
     <label>SAS Claim Case Compact Layout</label>
 </CompactLayout>

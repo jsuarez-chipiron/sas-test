@@ -40,7 +40,8 @@ public class SAS_Service_Application {
       BookingService.class => BookingService.class,
       CLMIntegrationService.class => CLMIntegrationService.class,
       LoyaltyService.class => LoyaltyService.class,
-      TEDSIntegrationService.class => TEDSIntegrationService.class
+      TEDSIntegrationService.class => TEDSIntegrationService.class,
+      VoucherIntegrationService.class => VoucherIntegrationService.class
     }
   );
 

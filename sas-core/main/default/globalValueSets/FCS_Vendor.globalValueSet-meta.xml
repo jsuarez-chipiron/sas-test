@@ -20,6 +20,11 @@
         <default>false</default>
         <label>Student Consulting</label>
     </customValue>
+    <customValue>
+        <fullName>Majorel</fullName>
+        <default>false</default>
+        <label>Majorel</label>
+    </customValue>
     <description>The vendor of the user or record owner (that is a user)</description>
     <masterLabel>FCS Vendor</masterLabel>
     <sorted>true</sorted>

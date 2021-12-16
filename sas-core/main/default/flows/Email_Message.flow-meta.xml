@@ -156,7 +156,7 @@
             </value>
         </inputParameters>
     </actionCalls>
-    <apiVersion>51.0</apiVersion>
+    <apiVersion>53.0</apiVersion>
     <assignments>
         <name>myAssignment_myRule_12_A2</name>
         <label>myAssignment_myRule_12_A2</label>
@@ -923,7 +923,7 @@
                 <stringValue>[EmailMessage].Parent.Owner:User.FirstName + &apos; &apos; + [EmailMessage].Parent.Owner:User.LastName</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_10_myRule_9_A1_6577901134</name>
+        <name>formula_10_myRule_9_A1_9367327672</name>
         <dataType>String</dataType>
         <expression>{!myVariable_current.Parent.Owner:User.FirstName} + &apos; &apos; + {!myVariable_current.Parent.Owner:User.LastName}</expression>
     </formulas>
@@ -934,7 +934,7 @@
                 <stringValue>IF(ISBLANK([EmailMessage].Parent.Number_of_Email_Messages_Sent__c ), 1, [EmailMessage].Parent.Number_of_Email_Messages_Sent__c +1)</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_4_myRule_3_A1_9783248558</name>
+        <name>formula_4_myRule_3_A1_1178716352</name>
         <dataType>Number</dataType>
         <expression>IF(ISBLANK({!myVariable_current.Parent.Number_of_Email_Messages_Sent__c} ), 1, {!myVariable_current.Parent.Number_of_Email_Messages_Sent__c} +1)</expression>
         <scale>18</scale>
@@ -947,7 +947,7 @@
 </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_7_myRule_6_A1_7978603359</name>
+        <name>formula_7_myRule_6_A1_8023764938</name>
         <dataType>Number</dataType>
         <expression>IF(ISBLANK({!myVariable_current.Parent.Number_of_Email_Messages_Received__c} ), 1, {!myVariable_current.Parent.Number_of_Email_Messages_Received__c}  + 1)</expression>
         <scale>18</scale>
@@ -1307,7 +1307,7 @@
             </processMetadataValues>
             <field>Number_of_Email_Messages_Sent__c</field>
             <value>
-                <elementReference>formula_4_myRule_3_A1_9783248558</elementReference>
+                <elementReference>formula_4_myRule_3_A1_1178716352</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1391,7 +1391,7 @@
             </processMetadataValues>
             <field>Number_of_Email_Messages_Received__c</field>
             <value>
-                <elementReference>formula_7_myRule_6_A1_7978603359</elementReference>
+                <elementReference>formula_7_myRule_6_A1_8023764938</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1426,7 +1426,7 @@
         <locationX>600</locationX>
         <locationY>300</locationY>
         <connector>
-            <targetReference>myDecision8</targetReference>
+            <targetReference>myRule_6_A3</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1476,6 +1476,90 @@
             <field>Last_Received_Email_On__c</field>
             <value>
                 <elementReference>myVariable_current.MessageDate</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[EmailMessage].Case ID</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
+        <name>myRule_6_A3</name>
+        <label>Update parent last received from address</label>
+        <locationX>600</locationX>
+        <locationY>400</locationY>
+        <connector>
+            <targetReference>myDecision8</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.ParentId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Last Email From Address</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Last_Email_From_Address__c</field>
+            <value>
+                <elementReference>myVariable_current.FromAddress</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1559,7 +1643,7 @@
             </processMetadataValues>
             <field>Previous_Owner__c</field>
             <value>
-                <elementReference>formula_10_myRule_9_A1_6577901134</elementReference>
+                <elementReference>formula_10_myRule_9_A1_9367327672</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1601,7 +1685,7 @@
         <object>Case</object>
     </recordUpdates>
     <startElementReference>myDecision</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>myCollection_myRule_12_A2recipientIds</name>
         <dataType>String</dataType>
