@@ -1685,7 +1685,7 @@
         <object>Case</object>
     </recordUpdates>
     <startElementReference>myDecision</startElementReference>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>myCollection_myRule_12_A2recipientIds</name>
         <dataType>String</dataType>
