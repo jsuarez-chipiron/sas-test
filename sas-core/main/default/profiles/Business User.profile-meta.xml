@@ -1644,6 +1644,12 @@
         <layout>CaseClose-Close Case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Customer_Claim__c-Customer Claim Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Customer__c-Customer Layout</layout>
+    </layoutAssignments>    
+    <layoutAssignments>
         <layout>LIA_Claim__c-Claim Layout</layout>
     </layoutAssignments>    
     <layoutAssignments>
@@ -1656,6 +1662,9 @@
     <layoutAssignments>
         <layout>FCS_CaseTag__c-Case Reason Layout</layout>
     </layoutAssignments>
+   <layoutAssignments>
+        <layout>Insurance_Detail__c-Insurance Detail Layout</layout>
+    </layoutAssignments>      
     <layoutAssignments>
         <layout>Knowledge__kav-SAS SSI Layout</layout>
     </layoutAssignments>
@@ -1686,6 +1695,24 @@
         <layout>PersonAccount-B2C - EB Customer</layout>
         <recordType>PersonAccount.EBCustomer</recordType>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>Settlement_Item__c-Settlement Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Settlement__c-EuroBonus Points Settlement</layout>
+        <recordType>Settlement__c.EB_points</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Settlement__c-Monetary Settlement</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Settlement__c-Monetary Settlement</layout>
+        <recordType>Settlement__c.Monetary</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Settlement__c-Voucher Settlement</layout>
+        <recordType>Settlement__c.Voucher</recordType>
+    </layoutAssignments>    
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>

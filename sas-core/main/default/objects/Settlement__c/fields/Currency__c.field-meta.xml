@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Currency__c</fullName>
+    <description>Currency of the Settlement</description>
+    <externalId>false</externalId>
+    <label>Currency</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Swedish Krona (SEK)</fullName>
+                <default>false</default>
+                <label>Swedish Krona (SEK)</label>
+            </value>
+            <value>
+                <fullName>US Dollar (USD)</fullName>
+                <default>false</default>
+                <label>US Dollar (USD)</label>
+            </value>
+            <value>
+                <fullName>Euro (EUR)</fullName>
+                <default>false</default>
+                <label>Euro (EUR)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

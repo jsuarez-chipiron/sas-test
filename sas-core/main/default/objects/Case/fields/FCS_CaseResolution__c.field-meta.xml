@@ -1151,6 +1151,9 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Help to Request</controllingFieldValue>
+            <controllingFieldValue>Customer Feedback</controllingFieldValue>
+            <controllingFieldValue>EU261</controllingFieldValue>
+            <controllingFieldValue>Denied Boarding</controllingFieldValue>
             <controllingFieldValue>Missing 1000 Status pts MC</controllingFieldValue>
             <controllingFieldValue>New card</controllingFieldValue>
             <controllingFieldValue>Help With Usage</controllingFieldValue>

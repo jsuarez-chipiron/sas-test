@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customObject>true</customObject>
+    <description>Customer claim is a single record of a customer claiming compensation, ticket refund or reimbursements of costs filed with SAS.</description>
+    <motif>Custom18: Form</motif>
+</CustomTab>

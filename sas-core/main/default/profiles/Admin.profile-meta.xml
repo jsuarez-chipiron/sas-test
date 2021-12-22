@@ -2405,6 +2405,12 @@
         <recordType>Case.Support</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Customer_Claim__c-Customer Claim Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Customer__c-Customer Layout</layout>
+    </layoutAssignments>    
+    <layoutAssignments>
         <layout>LIA_Claim__c-Claim Layout</layout>
     </layoutAssignments>    
     <layoutAssignments>
@@ -2426,6 +2432,9 @@
     <layoutAssignments>
         <layout>GDPRExtractObjectSetting__mdt-GDPR Extract Object Setting Layout</layout>
     </layoutAssignments>
+   <layoutAssignments>
+        <layout>Insurance_Detail__c-Insurance Detail Layout</layout>
+    </layoutAssignments>     
     <layoutAssignments>
         <layout>Knowledge__kav-SAS SSI Layout</layout>
     </layoutAssignments>
@@ -2468,6 +2477,24 @@
     <layoutAssignments>
         <layout>SBS_ScheduledBatchRun__c-Scheduled Batch Run Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>Settlement_Item__c-Settlement Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Settlement__c-EuroBonus Points Settlement</layout>
+        <recordType>Settlement__c.EB_points</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Settlement__c-Monetary Settlement</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Settlement__c-Monetary Settlement</layout>
+        <recordType>Settlement__c.Monetary</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Settlement__c-Voucher Settlement</layout>
+        <recordType>Settlement__c.Voucher</recordType>
+    </layoutAssignments>    
     <layoutAssignments>
         <layout>SocialPersona-Social Persona Layout</layout>
     </layoutAssignments>

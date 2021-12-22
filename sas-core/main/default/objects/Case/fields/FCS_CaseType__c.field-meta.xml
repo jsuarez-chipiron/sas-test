@@ -159,6 +159,11 @@
                 <default>false</default>
                 <label>Error</label>
             </value>
+            <value>
+                <fullName>Customer Claim Placeholder</fullName>
+                <default>false</default>
+                <label>Customer Claim Placeholder</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Info Hub</controllingFieldValue>
@@ -191,6 +196,7 @@
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SME</controllingFieldValue>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <controllingFieldValue>Care</controllingFieldValue>
             <controllingFieldValue>Corporate</controllingFieldValue>
@@ -323,6 +329,10 @@
         <valueSettings>
             <controllingFieldValue>SME</controllingFieldValue>
             <valueName>SME</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <valueName>Customer Claim Placeholder</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>

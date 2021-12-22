@@ -105,6 +105,11 @@
                 <default>false</default>
                 <label>SoMe Support</label>
             </value>
+            <value>
+                <fullName>Customer Claim</fullName>
+                <default>false</default>
+                <label>Customer Claim</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
