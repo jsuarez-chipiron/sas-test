@@ -1,5 +1,5 @@
 /**
-    Batch class which ensures that all automated messages are processed
+    Batch class which ensures that all automated messages and messages to No Hand baggage Passengers are processed
     
     @author Chetan Singh
 */
@@ -15,49 +15,78 @@ global with sharing class IRR_BCH_SendAutomatedMessage extends SBS_ScheduledBatc
     string batchName
   ) {
   }
+  public Boolean automatedmessageSSR ;
+
+  public IRR_BCH_SendAutomatedMessage (Boolean automatedmessageSSR){
+
+    this.automatedmessageSSR = automatedmessageSSR;
+
+  }
+  
   /**
         Iterates over all Automatedmessage metadata for Automated communication
         @param bc The batch context
     */
 
   global Database.QueryLocator start(Database.BatchableContext bc) {
-    // string query =  'SELECT IRR_Departure_Country__c,IRR_Arrival_Country__c,IRR_Duration__c,IRR_Template_Name__c FROM IRR_AutomatedMessage__mdt ';
-    this.setUseTransactionControl(false);
-    // return Database.getQueryLocator(query);
-    return IRR_SEL_AutomatedMessagesSelector.newInstance()
-      .selectAutomatedMessages();
-  }
 
+    this.setUseTransactionControl(false);
+
+    if(automatedmessageSSR) {
+
+      return IRR_SEL_AutomatedNoHandBagSelector.newInstance().selectAutomatedNoHandBagMessages();
+
+    } else {
+
+      return IRR_SEL_AutomatedMessagesSelector.newInstance().selectAutomatedMessages();
+    }
+
+  }
   /**
         Processes the Automatedmessage custom metadata and prepares the Automatedrequest payload
         @param bc The batchable context of the batch job
         @param sObjScope The Automatedmessage custom metadata to process
     */
-  global override void executeScope(
-    Database.BatchableContext bc,
-    SObject[] sObjScope
-  ) {
-    for (
-      IRR_AutomatedMessage__mdt message : (List<IRR_AutomatedMessage__mdt>) sObjScope
-    ) {
-      if (
-        message.IRR_Duration__c != null &&
-        message.IRR_Departure_Country__c != null
-      ) {
+  global override void executeScope( Database.BatchableContext bc, SObject[] sObjScope ) {
+
+    for ( SObject message : sObjScope ) {
+
+      if ( message.get('IRR_Duration__c') != null && message.get('IRR_Departure_Country__c') != null ) {
+
         List<IRR_MOD_PassengerInfo> PaxInfo = IRR_CON_AutomatedCommunication.getPassengerInfos(
-          message.IRR_Departure_Country__c,
-          message.IRR_Arrival_Country__c,
-          message.IRR_Duration__c
+          (String)message.get('IRR_Departure_Country__c'),
+          (String)message.get('IRR_Arrival_Country__c'),
+          (String)message.get('IRR_Duration__c')
         );
+        // Why: Send automated messages to passengers(who are not premium EB customers) without handbaggage
+        List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
+
+          for(IRR_MOD_PassengerInfo passengerInfo : PaxInfo) {
+
+            if ((passengerInfo.SSR.contains('LGHT') && !passengerInfo.SSR.contains('CABB')) &&
+            (passengerInfo.ebLevel == null || passengerInfo.ebLevel.contains('EBS') || passengerInfo.ebLevel.contains('EBB'))) {
+                passengerInfos.add(passengerInfo);
+            }
+
+        }
+
+        String templateName = (String)message.get('IRR_Template_Name__c');
         IRR_CON_AutomatedCommunication.ManualTemplate mp = IRR_CON_AutomatedCommunication.getManualTemplates(
-          message.IRR_Template_Name__c
+          (String)message.get('IRR_Template_Name__c')
         );
+
+        //Why: segregation for generic automated messages and messages to passengers with no hand baggage
         IRR_MOD_AutomatedRequest automatedRequest = new IRR_MOD_AutomatedRequest();
-        automatedRequest.passengerInfos = PaxInfo;
-        automatedRequest.sendSMSMessages = message.IRR_Template_Name__c.contains('sms')?true:false;
-        automatedRequest.sendEmailMessages = message.IRR_Template_Name__c.contains('email')?true:false;
-        automatedRequest.emailTemplate = mp.emailTemplate;
-        automatedRequest.smsTemplate = mp.smsTemplate;
+        if(automatedmessageSSR) {
+          automatedRequest.passengerInfos = passengerInfos;
+        } else {
+          automatedRequest.passengerInfos = PaxInfo;
+        }
+        
+        automatedRequest.sendSMSMessages = templateName.contains('sms')?true:false;
+        automatedRequest.sendEmailMessages = templateName.contains('email')?true:false;
+        automatedRequest.emailTemplate = templateName.contains('email')?templateName:null;
+        automatedRequest.smsTemplate = templateName.contains('sms')?templateName:null;
         IRR_CON_AutomatedCommunication.sendAutomatedCommunication(
           automatedRequest
         );
@@ -69,7 +98,7 @@ global with sharing class IRR_BCH_SendAutomatedMessage extends SBS_ScheduledBatc
   }
 
   global void execute(SchedulableContext ctx) {
-    SBS_ScheduledBatch processAutomated = new IRR_BCH_SendAutomatedMessage();
+    SBS_ScheduledBatch processAutomated = new IRR_BCH_SendAutomatedMessage(automatedmessageSSR);
     ID batchprocessid = Database.executeBatch(processAutomated, 1);
   }
 }
