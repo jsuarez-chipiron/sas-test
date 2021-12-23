@@ -15,6 +15,27 @@
         <value>SoMe</value>
     </labels>
     <labels>
+        <fullName>communicationMethod</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>communicationMethod</shortDescription>
+        <value>ED</value>
+    </labels>
+    <labels>
+        <fullName>documentId</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>documentId</shortDescription>
+        <value>PYO</value>
+    </labels>
+    <labels>
+        <fullName>documentStandard</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>documentStandard</shortDescription>
+        <value>EDIFACT</value>
+    </labels>
+    <labels>
         <fullName>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -96,5 +117,19 @@
         <protected>true</protected>
         <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
         <value>You do not have permission to update {0}</value>
+    </labels>
+    <labels>
+        <fullName>testFlag</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>testFlag</shortDescription>
+        <value>P</value>
+    </labels>
+    <labels>
+        <fullName>transactionHandlingCode</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>transactionHandlingCode</shortDescription>
+        <value>D</value>
     </labels>
 </CustomLabels>
