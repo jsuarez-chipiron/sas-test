@@ -26,6 +26,7 @@ public class CreateTextFileController {
       PrePayMul.InvoiceFlexFields iff = pp.incFleFields;
 
       if (ctr != null) {
+        System.debug('inside Control');
         if (j == 0) {
           cr = constructField(
             getGeneriConstFieldValue(
@@ -753,7 +754,7 @@ public class CreateTextFileController {
   }
 
   public Integer getFieldLength(String fieldName) {
-    PrePayFieldsCharLength__mdt prePayField = PrePayFieldsCharLength__mdt.getInstance(
+    TextFileFieldsCharLength__mdt prePayField = TextFileFieldsCharLength__mdt.getInstance(
       fieldName
     );
     return prePayField.FieldLength__c.intValue();
