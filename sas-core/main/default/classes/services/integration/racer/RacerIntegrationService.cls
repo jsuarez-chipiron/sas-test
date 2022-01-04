@@ -17,6 +17,10 @@ public without sharing class RacerIntegrationService {
     FILE_TYPE.ACCOUNTING => 'postaccountingfile'
   };
 
+  static ContentVersionsSelector contentVersions = (ContentVersionsSelector) SAS_Service_Application.Selector.newInstance(
+    Settlement__c.SObjectType
+  );
+
   public class IntegrationException extends Exception {
   }
 
@@ -29,73 +33,71 @@ public without sharing class RacerIntegrationService {
    * See Confluence for more details.
    *
    * @param fileType Whether this is an accounting or a payment file. See FILE_TYPE. Cannot be null.
-   * @param fileName Name of the file to be sent. Should include file extension. Cannot be null.
-   * @param fileContent Base64 encoded string of file contents to be sent. Cannot be null.
+   * @param fileId Name of the file to be sent. Should include file extension. Cannot be null.
    *
    * @return The parsed response data on success.
    *
    * @throws IntegrationException On any issues.
    */
-  public String sendFile(
-    FILE_TYPE fileType,
-    String fileName,
-    String fileContent
-  ) {
-    if (fileType == null || fileName == null || fileContent == null) {
+  public String sendFile(FILE_TYPE fileType, Id fileId) {
+    if (fileType == null || fileId == null) {
       throw new IntegrationException(
         'RacerIntegrationService.sendFile# arguments cannot be null.'
       );
     }
 
-    HttpResponse response = makeRequest(
-      HttpUtils.HTTP_METHOD.POST,
-      FILE_TYPE_TO_ENDPOINT.get(fileType),
-      fileContent,
-      new Map<String, String>{ 'Filename' => fileName }
+    List<ContentVersion> files = contentVersions.selectById(
+      new Set<Id>{ fileId }
     );
+
+    if (files.size() != 1) {
+      throw new IntegrationException(
+        'RacerIntegrationService.sendFile# no file found for given id.'
+      );
+    }
+
+    // HTTP logic inlined to minimise heap allocations caused by potentially
+    // very large files.
+
+    HttpRequest request = new HttpRequest();
+
+    request.setEndpoint(API_PATH + FILE_TYPE_TO_ENDPOINT.get(fileType));
+    request.setMethod(String.valueOf(HttpUtils.HTTP_METHOD.POST));
+
+    request.setHeader('sas-system-name', 'Salesforce');
+    request.setHeader('sas-tracking-id', C_Util.generateUUID());
+    request.setHeader('Ocp-Apim-Subscription-Key', SUBSCRIPTION_KEY);
+    request.setHeader('api-version', '1');
+    request.setHeader('Filename', files[0].PathOnClient);
+
+    request.setBodyAsBlob(files[0].VersionData);
+
+    Http http = new Http();
+    HttpResponse response = http.send(request);
+
+    if (response.getStatusCode() >= 400 && response.getStatusCode() != 404) {
+      // Log and throw again. Typically can't be resolved.
+      String message =
+        'APIM query failed with: ' +
+        response.getStatusCode() +
+        ': ' +
+        response.getStatus();
+
+      C_Log.HttpData httpDataLog = C_Log.generateLogHttpData(request);
+      C_Log.log(C_Log.Severity.Error, message, null, 'APIM', httpDataLog);
+
+      throw new IntegrationException(
+        'APIM query failed with: ' +
+        response.getStatusCode() +
+        ': ' +
+        response.getStatus()
+      );
+    }
 
     if (response.getStatusCode() == 404) {
       return null;
     }
 
     return response.getBody();
-  }
-
-  /**
-   * Constructs and fires the request.
-   *
-   * Fills in authentication and tracing headers.
-   *
-   * @param method HTTP method to use as full caps String. See HttpRequest.setMethod for more info.
-   * @param path The path to make the query to.
-   * @param queryParams Query parameters as map of name to value.
-   * @param extraHeaders Any additional headers which should be sent along the request as a map from name to value.
-   *
-   * @throws IntegrationException On HTTP status codes larger than 400.
-   *
-   * @return Response object from making the query.
-   */
-  private static HttpResponse makeRequest(
-    HttpUtils.HTTP_METHOD method,
-    String path,
-    String body,
-    Map<String, String> extraHeaders
-  ) {
-    HttpRequest request = new HttpRequest();
-
-    String fullPath = API_PATH + path;
-
-    Map<String, String> extraRequestHeaders = new Map<String, String>{
-      'Accept' => 'application/json',
-      'api-version' => '1',
-      'Ocp-Apim-Subscription-Key' => SUBSCRIPTION_KEY
-    };
-
-    return APIMIntegrationService.makeRequest(
-      method,
-      fullPath,
-      body,
-      extraRequestHeaders
-    );
   }
 }
