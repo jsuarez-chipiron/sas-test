@@ -63,15 +63,15 @@
     <picklistValues>
         <picklist>Currency__c</picklist>
         <values>
-            <fullName>Euro %28EUR%29</fullName>
+            <fullName>EUR</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Swedish Krona %28SEK%29</fullName>
+            <fullName>SEK</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>US Dollar %28USD%29</fullName>
+            <fullName>USD</fullName>
             <default>false</default>
         </values>
     </picklistValues>

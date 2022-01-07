@@ -9,23 +9,22 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Swedish Krona (SEK)</fullName>
+                <fullName>SEK</fullName>
                 <default>false</default>
-                <label>Swedish Krona (SEK)</label>
+                <label>SEK</label>
             </value>
             <value>
-                <fullName>US Dollar (USD)</fullName>
+                <fullName>USD</fullName>
                 <default>false</default>
-                <label>US Dollar (USD)</label>
+                <label>USD</label>
             </value>
             <value>
-                <fullName>Euro (EUR)</fullName>
+                <fullName>EUR</fullName>
                 <default>false</default>
-                <label>Euro (EUR)</label>
+                <label>EUR</label>
             </value>
         </valueSetDefinition>
     </valueSet>
