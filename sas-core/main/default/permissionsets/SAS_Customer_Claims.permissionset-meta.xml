@@ -4,7 +4,7 @@
         <application>SAS_Customer_Claims</application>
         <visible>true</visible>
     </applicationVisibilities>
-    <description>App that gives access to customer claims functionalities</description>
+    <description>App that gives access to customer claims functionality</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>Customer__c.Email__c</field>
@@ -82,11 +82,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>LIA_Claim__c.CARE_Case_Number__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>LIA_Claim__c.Can_be_contacted_by_phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -151,34 +146,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Deadline__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.EuroBonus_Number__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Eurobonus_Points_Compensation__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.External_Case_Number_Court_Reference__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Fees_Paid__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Fees__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -191,31 +161,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Has_been_sent_to_settle__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Interest_Paid__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Interest__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Judicial_Body__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Jurisdiction__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.LIA_Firm__c</field>
         <readable>true</readable>
@@ -226,11 +171,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Legal_Conclusion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Liability_Claim_Type__c</field>
         <readable>true</readable>
@@ -239,16 +179,6 @@
         <editable>false</editable>
         <field>LIA_Claim__c.Liability_PNR__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Monetary_Compensation__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Name_of_Judicial_Body__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -277,11 +207,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>LIA_Claim__c.Principal__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>LIA_Claim__c.Purchase_Price__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -296,29 +221,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Result__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Settlement_Reason__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Ticket_Number__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Total_Claim_Amount__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Total_Paid_Amount__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -329,11 +234,6 @@
         <editable>true</editable>
         <field>LIA_Claim__c.Type_of_Customer__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Voucher_Compensation__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -488,11 +388,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Settlement__c.Currency__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Settlement__c.Customer_Claim__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

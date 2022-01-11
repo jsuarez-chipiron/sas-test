@@ -145,16 +145,6 @@
         <relatedList>Customer__c.Customer_Claim__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>MassChangeOwner</excludeButtons>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>RECORDTYPE</fields>
-        <fields>Payee_Name__c</fields>
-        <fields>Settlement_Status__c</fields>
-        <fields>Accounting_Status__c</fields>
-        <relatedList>Settlement__c.Customer_Claim__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <relatedList>Case.Customer_Claim__c</relatedList>
