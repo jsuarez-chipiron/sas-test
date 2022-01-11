@@ -15,10 +15,6 @@
                 <behavior>Edit</behavior>
                 <field>Claim__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Customer_Claim__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
