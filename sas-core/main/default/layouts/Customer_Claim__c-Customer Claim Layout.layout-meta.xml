@@ -76,10 +76,6 @@
                 <behavior>Edit</behavior>
                 <field>Postal_Code__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Country__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
@@ -93,10 +89,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Bank_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Bank_Country__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
