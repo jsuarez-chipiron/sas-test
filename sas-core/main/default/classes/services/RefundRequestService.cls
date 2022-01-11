@@ -63,9 +63,17 @@ public without sharing class RefundRequestService {
 
     insert refund;
 
+    String refundType = form.formData.type == 'normal'
+      ? 'Customer'
+      : 'Travel Agent';
     Case caseToInsert = new Case(
       OwnerId = refundsQueue.Id,
-      Subject = 'Refund Request, PNR: ' + form.formData.bookingReference,
+      Subject = 'Refund ' +
+        refundType +
+        ' Webform ' +
+        form.metaData.market.replace('-', ' ').toUpperCase() +
+        ', PNR: ' +
+        form.formData.bookingReference,
       SuppliedEmail = form.formData.email,
       SuppliedPhone = form.formData.phone,
       Refund_Request__c = refund.Id,

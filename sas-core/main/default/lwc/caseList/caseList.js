@@ -38,7 +38,7 @@ export default class CaseList extends NavigationMixin(LightningElement) {
         .map((c) => ({
           ...c,
           className: "slds-item case-bullet closed-case-bullet",
-          StatusOrReason: c.FCS_CaseReason__c
+          StatusOrReason: c.FCS_Case_Reason__c
         }));
 
       this.openCases = sortedCases
@@ -46,7 +46,10 @@ export default class CaseList extends NavigationMixin(LightningElement) {
         .map((c) => ({
           ...c,
           className: "slds-item case-bullet open-case-bullet",
-          StatusOrReason: c.Status
+          StatusOrReason:
+            c.FCS_Case_Reason__c != null
+              ? c.Status + ", " + c.FCS_Case_Reason__c
+              : c.Status
         }));
 
       if (this.closedCases.length <= this.ENTRIES_TO_DISPLAY) {
