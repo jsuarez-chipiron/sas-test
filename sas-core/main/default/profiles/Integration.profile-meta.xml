@@ -3603,8 +3603,13 @@
         <layout>IRR_SMSResponse__c-SMS Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>LIA_Claim__c-Claim Layout</layout>
+        <layout>LIA_Claim__c-Customer Claim Layout</layout>
+        <recordType>LIA_Claim__c.CustomerClaim</recordType>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>LIA_Claim__c-Liability Claim Layout</layout>
+        <recordType>LIA_Claim__c.LiabilityClaim</recordType>
+    </layoutAssignments>    
     <layoutAssignments>
         <layout>LIA_Firm__c-Legal Firm Layout</layout>
     </layoutAssignments>

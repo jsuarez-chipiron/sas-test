@@ -265,7 +265,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>updateQuickActionName</name>
-                    <value>LIA_Claim__c.Update_Claim</value>
+                    <value>LIA_Claim__c.Liability_claim_details</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
                 <visibilityRule>

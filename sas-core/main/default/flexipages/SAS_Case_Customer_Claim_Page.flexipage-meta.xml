@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Case page for cases related to liability claims</description>
+    <description>Case page for customer claims</description>
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
@@ -255,7 +255,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>lookupFieldName</name>
-                    <value>Case.Customer_Claim__c</value>
+                    <value>Case.LIA_Claim__c.LIA_Major_Event__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>titleFieldName</name>
@@ -263,7 +263,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>updateQuickActionName</name>
-                    <value>Customer_Claim__c.Customer_claim_details</value>
+                    <value>LIA_Major_Event__c.Update_Major_Event</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
             </componentInstance>
@@ -272,7 +272,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>lookupFieldName</name>
-                    <value>Case.Customer_Claim__c.Legal_Firm__c</value>
+                    <value>Case.LIA_Claim__c.LIA_Firm__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>titleFieldName</name>
@@ -306,7 +306,7 @@
                 <componentName>flowruntime:interview</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Customer_Claim__r.Name}</leftValue>
+                        <leftValue>{!Record.LIA_Claim__r.Name}</leftValue>
                         <operator>EQUAL</operator>
                     </criteria>
                 </visibilityRule>
@@ -316,7 +316,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>lookupFieldName</name>
-                    <value>Case.Customer_Claim__c</value>
+                    <value>Case.LIA_Claim__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>titleFieldName</name>
@@ -324,12 +324,12 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>updateQuickActionName</name>
-                    <value>Customer_Claim__c.Customer_claim_details</value>
+                    <value>LIA_Claim__c.Customer_claim_details</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Customer_Claim__r.Name}</leftValue>
+                        <leftValue>{!Record.LIA_Claim__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -405,7 +405,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>parentFieldApiName</name>
-                    <value>Case.Customer_Claim__c</value>
+                    <value>Case.LIA_Claim__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>

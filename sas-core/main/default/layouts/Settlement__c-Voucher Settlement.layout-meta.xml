@@ -13,7 +13,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Liability_Claim__c</field>
+                <field>Claim__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

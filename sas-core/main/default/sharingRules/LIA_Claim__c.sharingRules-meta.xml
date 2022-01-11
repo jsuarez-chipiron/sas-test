@@ -9,21 +9,22 @@
             <group>Liability</group>
         </sharedTo>
         <criteriaItems>
-            <field>Name</field>
-            <operation>notEqual</operation>
-            <value/>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>LiabilityClaim</value>
         </criteriaItems>
     </sharingCriteriaRules>
-    <sharingOwnerRules>
-        <fullName>Claims_share_with_Liability_Group</fullName>
+    <sharingCriteriaRules>
+        <fullName>Share_Customer_Claims_with_Customer_Claim_public_group</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>Shares all the claims with all the users in Liability public group</description>
-        <label>Claims share with Liability Group</label>
+        <label>Share Customer Claims with Customer Claim public group</label>
         <sharedTo>
-            <group>Liability</group>
+            <group>Customer_Claim</group>
         </sharedTo>
-        <sharedFrom>
-            <group>Liability</group>
-        </sharedFrom>
-    </sharingOwnerRules>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>CustomerClaim</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
 </SharingRules>

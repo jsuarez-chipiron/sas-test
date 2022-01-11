@@ -31,7 +31,7 @@
         <displayField>Name</displayField>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Customer_Claim__c</field>
+            <field>Claim__c</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>recordId</elementReference>
@@ -43,12 +43,28 @@
         <valueField>Name</valueField>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
+        <name>BankCountryOptions</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Bank_Country__c</picklistField>
+        <picklistObject>Settlement__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
         <name>CostAccountOptions</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>Cost_Account__c</picklistField>
         <picklistObject>Settlement_Item__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>CountryOptions</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Country__c</picklistField>
+        <picklistObject>Settlement__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>CurrencyOptions</name>
@@ -58,6 +74,16 @@
         <picklistField>Currency__c</picklistField>
         <picklistObject>Settlement__c</picklistObject>
     </dynamicChoiceSets>
+    <formulas>
+        <name>SettlementItemCurrecy</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!GetSettlementInformation.Currency__c})</expression>
+    </formulas>
+    <formulas>
+        <name>TodayDate</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
     <interviewLabel>CARE Create Settlement {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CARE Create Settlement</label>
     <processMetadataValues>
@@ -85,7 +111,7 @@
         <locationX>176</locationX>
         <locationY>518</locationY>
         <connector>
-            <targetReference>Create_Settlement_Item</targetReference>
+            <targetReference>GetSettlementInformation</targetReference>
         </connector>
         <inputAssignments>
             <field>Address_line_1__c</field>
@@ -112,6 +138,18 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Bank_Account_Number__c</field>
+            <value>
+                <elementReference>IBAN</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Bank_Country__c</field>
+            <value>
+                <elementReference>Bank_Country</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Bank_Name__c</field>
             <value>
                 <elementReference>Bank_Name</elementReference>
@@ -124,21 +162,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Claim__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Currency__c</field>
             <value>
                 <elementReference>Currency</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Customer_Claim__c</field>
+            <field>Date_of_Exchange_Calculation__c</field>
             <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>IBAN__c</field>
-            <value>
-                <elementReference>IBAN</elementReference>
+                <elementReference>TodayDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -172,20 +210,26 @@
         <name>Create_Settlement_Item</name>
         <label>Create Settlement Item</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Outcome</targetReference>
         </connector>
         <inputAssignments>
             <field>Amount__c</field>
             <value>
-                <elementReference>SettlementItemAmount</elementReference>
+                <elementReference>Settlement_Item_Amount</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Cost_Account__c</field>
             <value>
                 <elementReference>Cost_Account</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Currency__c</field>
+            <value>
+                <elementReference>SettlementItemCurrecy</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -221,7 +265,7 @@
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Customer_Claim__c</object>
+        <object>LIA_Claim__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -243,6 +287,27 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetSettlementInformation</name>
+        <label>GetSettlementInformation</label>
+        <locationX>176</locationX>
+        <locationY>638</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Settlement_Item</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Create_Settlement</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Settlement__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
@@ -336,6 +401,9 @@
                 <fields>
                     <name>Address_Line_1</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>Get_Customer_Claim.Address_line_1__c</elementReference>
+                    </defaultValue>
                     <fieldText>Address Line 1</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -343,6 +411,9 @@
                 <fields>
                     <name>Address_Line_2</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>Get_Customer_Claim.Address_line_2__c</elementReference>
+                    </defaultValue>
                     <fieldText>Address Line 2</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -368,15 +439,22 @@
                 <fields>
                     <name>City</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>Get_Customer_Claim.City__c</elementReference>
+                    </defaultValue>
                     <fieldText>City</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
                     <name>Country</name>
+                    <choiceReferences>CountryOptions</choiceReferences>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>Get_Customer_Claim.Country__c</elementReference>
+                    </defaultValue>
                     <fieldText>Country</fieldText>
-                    <fieldType>InputField</fieldType>
+                    <fieldType>DropdownBox</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -403,6 +481,9 @@
                 <fields>
                     <name>Bank_Name</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>Get_Customer_Claim.Bank_Name__c</elementReference>
+                    </defaultValue>
                     <fieldText>Bank Name</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -410,6 +491,9 @@
                 <fields>
                     <name>IBAN</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>Get_Customer_Claim.Bank_Account_Number__c</elementReference>
+                    </defaultValue>
                     <fieldText>IBAN</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -428,15 +512,19 @@
                 <fields>
                     <name>BIC_Swift</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>Get_Customer_Claim.BIC_Swift__c</elementReference>
+                    </defaultValue>
                     <fieldText>BIC/Swift</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
                     <name>Bank_Country</name>
+                    <choiceReferences>BankCountryOptions</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>Bank Country</fieldText>
-                    <fieldType>InputField</fieldType>
+                    <fieldType>DropdownBox</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -469,9 +557,12 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>SettlementItemAmount</name>
-                    <dataType>Currency</dataType>
-                    <fieldText>SettlementItemAmount</fieldText>
+                    <name>Settlement_Item_Amount</name>
+                    <dataType>Number</dataType>
+                    <defaultValue>
+                        <elementReference>Amount</elementReference>
+                    </defaultValue>
+                    <fieldText>Settlement Item Amount</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
@@ -500,7 +591,7 @@
         <name>Outcome</name>
         <label>Outcome</label>
         <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
