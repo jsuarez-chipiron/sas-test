@@ -67,7 +67,6 @@
         <profile>Admin</profile>
     </profileActionOverrides>
     <tabs>standard-Case</tabs>
-    <tabs>Customer_Claim__c</tabs>
     <tabs>Settlement__c</tabs>
     <tabs>LIA_Major_Event__c</tabs>
     <tabs>LIA_Firm__c</tabs>
