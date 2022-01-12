@@ -57,11 +57,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Customer_Claim__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.Department__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -513,11 +508,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Type</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Customer__c.Customer_Claim__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

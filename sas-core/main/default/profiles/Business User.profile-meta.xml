@@ -1644,9 +1644,6 @@
         <layout>CaseClose-Close Case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Customer_Claim__c-Customer Claim Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Customer__c-Customer Layout</layout>
     </layoutAssignments>    
     <layoutAssignments>

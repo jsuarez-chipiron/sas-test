@@ -3555,9 +3555,6 @@
         <layout>Enrich_Case_Based_On_Origin_Config__mdt-Enrich Case Based On Origin Config Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Customer_Claim__c-Customer Claim Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Customer__c-Customer Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
