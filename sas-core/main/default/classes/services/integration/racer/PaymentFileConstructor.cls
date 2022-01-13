@@ -36,20 +36,6 @@ public class PaymentFileConstructor {
 
   private static final String TODAYS_DATE = Datetime.now().format('yyyyMMdd');
 
-  private static final Map<String, Map<String, String>> FILE_SPECIFIC_FIELDS = new Map<String, Map<String, String>>{
-    'controlRecord' => new Map<String, String>{
-      'transactionDate' => TODAYS_DATE,
-      'runId' => '1234' // ??? TODO: FIX ME
-    },
-    'accountData' => new Map<String, String>{ 'paymentDate' => TODAYS_DATE },
-    'paymentData' => new Map<String, String>(),
-    'supplierData' => new Map<String, String>(),
-    'bankData' => new Map<String, String>(),
-    'supplierSiteData' => new Map<String, String>(),
-    'invoiceData' => new Map<String, String>{ 'invoiceDate' => TODAYS_DATE },
-    'invoiceFlexfields' => new Map<String, String>()
-  };
-
   public enum PaymentCurrency {
     SEK,
     DKK,
@@ -65,17 +51,12 @@ public class PaymentFileConstructor {
    * @param paymentEntries List of PaymentEntries created from Settlements to include in this file.
    * @param fileCurrency The currency of this file as PaymentCurrency.
    *
-   *
    * @return Id of the created a file.
    */
   public static Id create(
     List<PaymentEntry> paymentEntries,
     PaymentCurrency fileCurrency
   ) {
-    Map<String, Map<String, String>> currencySetting = fetchCurrencySettings(
-      fileCurrency
-    );
-
     if (
       fileCurrency == null ||
       paymentEntries == null ||
@@ -86,13 +67,14 @@ public class PaymentFileConstructor {
       );
     }
 
+    Settlement_Bank_Setting__mdt bankSettings = Settlement_Bank_Setting__mdt.getAll()
+      .get(fileCurrency.name());
+
     String fileContents = '';
 
     // Each settlement in a file has a unique batch reference. The starting
     // number for the batch reference depends on the file's currency.
-    Integer batchReference = Integer.valueOf(
-      currencySetting.get('controlRecord').get('ref1Batch')
-    );
+    Integer batchReference = Integer.valueOf(bankSettings.ref1Batch__c);
 
     for (PaymentEntry entry : paymentEntries) {
       Map<String, Map<String, String>> mergedRecord = new Map<String, Map<String, String>>();
@@ -101,8 +83,6 @@ public class PaymentFileConstructor {
         mergedRecord.put(key, entry.data.get(key));
         mergedRecord.get(key)
           .putAll(PaymentEntry.CONSTANT_FIELDS_BY_RECORD.get(key));
-        mergedRecord.get(key).putAll(FILE_SPECIFIC_FIELDS.get(key));
-        mergedRecord.get(key).putAll(currencySetting.get(key));
       }
 
       for (String recordName : PaymentEntry.RECORDS_IN_ORDER) {
@@ -113,17 +93,18 @@ public class PaymentFileConstructor {
         ) {
           String textToAdd = '';
 
-          if (
-            fieldName == 'ref1Batch' ||
-            fieldName == 'documentCode' ||
-            fieldName == 'checkNumber'
-          ) {
-            // All these fields should contain just the batch reference.
-            textToAdd = String.valueOf(batchReference);
-          } else {
-            textToAdd += mergedRecord.get(recordName).get(fieldName) != null
-              ? mergedRecord.get(recordName).get(fieldName)
-              : '';
+          switch on fieldName {
+            when 'ref1Batch', 'documentCode', 'checkNumber' {
+              textToAdd = String.valueOf(batchReference);
+            }
+            when 'runId' {
+              textToAdd = '1234'; // TODO: What to do here?
+            }
+            when else {
+              textToAdd += mergedRecord.get(recordName).get(fieldName) != null
+                ? mergedRecord.get(recordName).get(fieldName)
+                : '';
+            }
           }
 
           // Pad field to full field length.
@@ -138,17 +119,10 @@ public class PaymentFileConstructor {
       batchReference++;
     }
 
-    Settlement_Currency_Setting__mdt currencySettingMDT = Settlement_Currency_Setting__mdt.getall()
-      .get(fileCurrency.name());
-
-    String bank = currencySettingMDT.Bank__c != null
-      ? currencySettingMDT.Bank__c
-      : 'SEB';
-
     String fileName =
       'SF' +
       '_' +
-      bank +
+      bankSettings.Bank__c +
       '_' +
       fileCurrency.name() +
       '_' +
@@ -163,54 +137,5 @@ public class PaymentFileConstructor {
     insert paymentFile;
 
     return paymentFile.Id;
-  }
-
-  /**
-   * Fetches currency specific fields from custom metadata and populates
-   * them into a map with same format as PaymentEntries.
-   *
-   * @param fileCurrency The currency for which settings should be fetched.
-   *
-   * @return A map of records with filled currency specific fields.
-   */
-  private static Map<String, Map<String, String>> fetchCurrencySettings(
-    PaymentCurrency fileCurrency
-  ) {
-    Settlement_Currency_Setting__mdt currencySettingMDT = Settlement_Currency_Setting__mdt.getall()
-      .get(fileCurrency.name());
-
-    Map<String, Map<String, String>> currencySettings = new Map<String, Map<String, String>>{
-      'controlRecord' => new Map<String, String>(),
-      'accountData' => new Map<String, String>{
-        'EDIPaymentMethod' => currencySettingMDT.EDIPaymentMethod__c,
-        'bankAccountNumber' => currencySettingMDT.bankAccountNumber__c,
-        'bankEDIIDNumber' => currencySettingMDT.bankEDIIDNumber__c,
-        'accountHolderName' => currencySettingMDT.accountHolderName__c,
-        'EFTRequester' => currencySettingMDT.EFTRequester__c
-      },
-      'paymentData' => new Map<String, String>(),
-      'supplierData' => new Map<String, String>(),
-      'bankData' => new Map<String, String>{
-        'bankSiteCode' => currencySettingMDT.bankSiteCode__c,
-        'addressLine1' => currencySettingMDT.addressLine1__c,
-        'city' => currencySettingMDT.city__c,
-        'postalCode' => currencySettingMDT.postalCode__c,
-        'country' => currencySettingMDT.country__c
-      },
-      'supplierSiteData' => new Map<String, String>(),
-      'invoiceData' => new Map<String, String>(),
-      'invoiceFlexfields' => new Map<String, String>()
-    };
-
-    for (Map<String, String> record : currencySettings.values()) {
-      record.put(
-        'tradingPartnerCode',
-        currencySettingMDT.tradingPartnerCode__c
-      );
-      record.put('translatorCode', currencySettingMDT.translatorCode__c);
-      record.put('ref1Batch', currencySettingMDT.ref1Batch__c);
-    }
-
-    return currencySettings;
   }
 }

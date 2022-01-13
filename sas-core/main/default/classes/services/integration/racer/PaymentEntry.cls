@@ -486,23 +486,6 @@ public class PaymentEntry {
     }
   };
 
-  /*public static final Map<String, Map<String, String>> CURRENCY_DEPENDENT_FIELDS = new Map<String, Map<String, String>>{
-    'SEK' => new Map<String, String>{
-      'tradingPartnerCode' => 'SEB SE1',
-      'translatorCode' => 'SEB SE1',
-      'EDIPaymentMethod' => 'SAME DAY CL',
-      'bankAccountNumber' => '55847529', // sas bank account number. These need to be named better
-      'bankSiteCode' => '10272',
-      'bankEDIIDNumber' => 'ESSESESS', // sas swift account number. These need to be named better
-      'accountHolderName' => 'SAS CARE SEK', // sas account holder name. These need to be named better
-      'EFTRequester' => '9020017720', // sas org. number. These need to be named better
-      'addressLine1' => 'Norrmalmstorg 8', // sas banking address. These need to be named better
-      'city' => 'Stockholm', // sas banking address. These need to be named better
-      'postalCode' => '11000', // sas banking address. These need to be named better
-      'country' => 'SE' // sas banking address. These need to be named better
-    }
-  };*/
-
   // Defines the order record lines should be in the payment file.
   public static final List<String> RECORDS_IN_ORDER = new List<String>{
     'controlRecord',
@@ -518,56 +501,82 @@ public class PaymentEntry {
   public Map<String, Map<String, String>> data;
   public String paymentCurrency;
 
+  private static final String TODAYS_DATE = Datetime.now().format('yyyyMMdd');
+
   // Constructor for individual payment records. These include only fields which are specific to this one settlement.
   // This means that no currency specific or fully constant fields are set by this point.
   // There's so much duplicate data so we're doing this to avoid blowing up the heap limit.
   public PaymentEntry(Settlement__c s) {
-    String amount = String.valueOf(s.Amount__c); // TODO: Ensure that we get decimal points, not commas, out of here.
+    Settlement_Currency_Setting__mdt currencySettings = Settlement_Currency_Setting__mdt.getAll()
+      .get(s.Currency__c);
+
+    Settlement_Bank_Setting__mdt bankSettings = Settlement_Bank_Setting__mdt.getInstance(
+      currencySettings.Settlement_Bank_Setting__c
+    );
+
+    Settlement_Country_Setting__mdt countrySettings = Settlement_Country_Setting__mdt.getAll()
+      .get(s.Country__c);
+
+    String amount = String.valueOf(s.Amount__c);
 
     this.paymentCurrency = s.Currency__c;
 
-    Map<String, String> accountData = new Map<String, String>();
-    accountData.put('checkAmount', amount);
-    accountData.put('currencyCode', s.Currency__c);
-    accountData.put('vendorBankAccountNumber', s.IBAN__c);
+    Map<String, Map<String, String>> fullPaymentRecord = new Map<String, Map<String, String>>{
+      'controlRecord' => new Map<String, String>{
+        'transactionDate' => TODAYS_DATE
+      },
+      'accountData' => new Map<String, String>{
+        'checkAmount' => amount,
+        'currencyCode' => s.Currency__c,
+        'vendorBankAccountNumber' => s.IBAN__c,
+        'EDIPaymentMethod' => countrySettings.Payment_Type__c,
+        'bankAccountNumber' => currencySettings.bankAccountNumber__c,
+        'bankEDIIDNumber' => bankSettings.bankEDIIDNumber__c,
+        'accountHolderName' => bankSettings.accountHolderName__c,
+        'EFTRequester' => bankSettings.EFT_Requester__c,
+        'paymentDate' => TODAYS_DATE
+      },
+      'paymentData' => new Map<String, String>{
+        'checkrunName' => s.Currency__c.substring(0, 2) + s.Name,
+        'selectedCheckId' => s.Name,
+        'supplierBankBranchNumber' => s.BIC_Swift__c
+      },
+      'supplierData' => new Map<String, String>(),
+      'bankData' => new Map<String, String>{
+        'bankSiteCode' => bankSettings.bankSiteCode__c,
+        'addressLine1' => bankSettings.addressLine1__c,
+        'city' => bankSettings.city__c,
+        'postalCode' => bankSettings.postalCode__c,
+        'country' => bankSettings.country__c
+      },
+      'supplierSiteData' => new Map<String, String>{
+        'vendorSiteCode' => s.Name,
+        'vendorName' => s.Payee_Name__c,
+        'addressLine1' => s.Address_line_1__c,
+        'addressLine2' => s.Address_line_2__c,
+        'city' => s.City__c,
+        'postalCode' => s.Postal_Code__c,
+        'country' => s.Country__c
+      },
+      'invoiceData' => new Map<String, String>{
+        'ref2Invoice' => 'SF REF ' + s.Name,
+        'checkrunName' => s.Name,
+        'invoiceNumber' => s.Name,
+        'paymentAmount' => amount,
+        'invoiceAmount' => amount,
+        'invoiceDate' => TODAYS_DATE
+      },
+      'invoiceFlexfields' => new Map<String, String>{
+        'ref2Invoice' => 'SF REF ' + s.Name,
+        'attribute1' => 'derp' // TODO: This needs to be still figured out.
+      }
+    };
 
-    Map<String, String> paymentData = new Map<String, String>();
-    paymentData.put('checkrunName', s.Currency__c.substring(0, 2) + s.Name);
-    paymentData.put('selectedCheckId', s.Name);
-    paymentData.put('supplierBankBranchNumber', s.BIC_Swift__c);
+    for (Map<String, String> record : fullPaymentRecord.values()) {
+      record.put('tradingPartnerCode', bankSettings.tradingPartnerCode__c);
+      record.put('translatorCode', bankSettings.translatorCode__c);
+    }
 
-    Map<String, String> supplierSiteData = new Map<String, String>();
-    supplierSiteData.put('vendorSiteCode', s.Name);
-    supplierSiteData.put('vendorName', s.Payee_Name__c);
-    supplierSiteData.put('addressLine1', s.Address_line_1__c);
-    supplierSiteData.put('addressLine2', s.Address_line_2__c);
-    supplierSiteData.put('city', s.City__c);
-    supplierSiteData.put('postalCode', s.Postal_Code__c);
-    supplierSiteData.put('country', s.Country__c);
-
-    Map<String, String> invoiceData = new Map<String, String>();
-    invoiceData.put('ref2Invoice', 'SF REF ' + s.Name);
-    invoiceData.put('checkrunName', s.Name);
-    invoiceData.put('invoiceNumber', s.Name);
-    invoiceData.put('paymentAmount', amount);
-    invoiceData.put('invoiceAmount', amount);
-
-    Map<String, String> invoiceFlexfields = new Map<String, String>();
-    invoiceFlexfields.put('ref2Invoice', 'SF REF ' + s.Name);
-    invoiceFlexfields.put('attribute1', 'derp'); // TODO: This needs to be still figured out.
-
-    // accountData.put('',);
-
-    Map<String, Map<String, String>> tempMap = new Map<String, Map<String, String>>();
-    tempMap.put('controlRecord', new Map<String, String>());
-    tempMap.put('accountData', accountData);
-    tempMap.put('paymentData', paymentData);
-    tempMap.put('supplierData', new Map<String, String>());
-    tempMap.put('bankData', new Map<String, String>());
-    tempMap.put('supplierSiteData', supplierSiteData);
-    tempMap.put('invoiceData', invoiceData);
-    tempMap.put('invoiceFlexfields', invoiceFlexfields);
-
-    this.data = tempMap;
+    this.data = fullPaymentRecord;
   }
 }

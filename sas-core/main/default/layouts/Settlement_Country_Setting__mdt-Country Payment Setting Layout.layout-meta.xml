@@ -15,16 +15,24 @@
                 <field>DeveloperName</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Currency__c</field>
+                <behavior>Required</behavior>
+                <field>Country_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Country_Short_Code__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Settlement_Bank_Setting__c</field>
+                <field>Payment_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>bankAccountNumber__c</field>
+                <field>Default_Currency__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Available_Currencies__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
