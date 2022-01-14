@@ -84,6 +84,7 @@ public without sharing class FCS_IdentifyCustomerController {
     List<FCS_FrequentFlyer__x> frequentFlyers
   ) {
     List<Account> accounts = new List<Account>();
+    // TODO: Add checks here.
     for (FCS_FrequentFlyer__x ff : frequentFlyers) {
       Account newAccount = new Account(
         RecordTypeId = C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
@@ -94,9 +95,6 @@ public without sharing class FCS_IdentifyCustomerController {
         PersonMailingPostalCode = ff.ZipCode__c,
         PersonMailingCountry = ff.CountryCode__c,
         PersonMailingState = ff.CountyState__c,
-        PersonBirthdate = ff.BirthDate__c != null
-          ? Date.valueOf(ff.BirthDate__c)
-          : null,
         FCS_ConsentEmail__c = ff.ConsentEmail__c,
         FCS_ConsentEuroBonus__c = ff.ConsentEB__c,
         FCS_ConsentSMS__c = ff.ConsentSMS__c,
@@ -121,12 +119,48 @@ public without sharing class FCS_IdentifyCustomerController {
         MiddleName = ff.MiddleName__c,
         FCS_LastRetrievedFromSource__c = Datetime.now()
       );
-      /**
+      if (ff.BirthDate__c != null) {
+        // Date accepts values which aren't accepted by SF DB so we need a check.
+        // Principal difference is that DB accepts only dates between years
+        // 1700 and 4000.
+        Date birthDate = Date.valueOf(ff.BirthDate__c);
+        Integer year = birthDate.year();
+        if (year > 1700 && year < 4000) {
+          newAccount.PersonBirthdate = birthDate;
+        } else {
+          C_Log.log(
+            C_Log.Severity.Warning,
+            'Invalid birthdate: ' +
+            ff.BirthDate__c +
+            '. For EB user: ' +
+            'ff.EBNumber__c',
+            null,
+            'CODS-data',
+            null
+          );
+        }
+      }
+
+      if (
+        ff.EmailPersonal__c != null &&
+        !StringUtils.isEmailAddress(ff.EmailPersonal__c)
+      ) {
+        C_Log.log(
+          C_Log.Severity.Warning,
+          'Invalid email address: ' +
+          ff.EmailPersonal__c +
+          '. For EB user: ' +
+          'ff.EBNumber__c',
+          null,
+          'CODS-data',
+          null
+        );
+      } else if (
+        /**
            The email with domain @sas.dk, @sas.se and @sas.no are Salesforce internal users,
            for Salesforce internal users automatic association of the Case and EB Account is not needed, 
            so not assigning the email address for those Salesforce Internal Users.
          */
-      if (
         ff.EmailPersonal__c != null &&
         !(ff.EmailPersonal__c.contains('@sas.dk') ||
         ff.EmailPersonal__c.contains('@sas.se') ||
