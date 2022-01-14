@@ -56,10 +56,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Company_Code__c</fieldItem>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Have_Company_Code__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Group_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Sports</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
