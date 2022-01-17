@@ -141,6 +141,12 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>Initially_Provided_PNR__c</field>
+            <value>
+                <elementReference>PNR</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Refund_Request__c</field>
             <value>
                 <elementReference>Create_Refund_Request</elementReference>
