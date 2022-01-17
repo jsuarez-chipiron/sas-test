@@ -723,6 +723,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Initially_Provided_PNR__c</field>
+            <value>
+                <elementReference>Get_Created_Refund_Request.PNR__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Origin</field>
             <value>
                 <stringValue>Internal - New Refund Request Form</stringValue>
