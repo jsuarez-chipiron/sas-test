@@ -47,7 +47,8 @@ public class IRR_Application {
                             Organization.SObjectType => IRR_SEL_OrganizationSelector.class,
                             SFMC_SMSDefinition__mdt.SObjectType => IRR_SEL_SMSDefinitionsSelector.class,
                             ContentDocumentLink.SObjectType =>IRR_SEL_ContentDocumentLinksSelector.class,
-                            IRR_AutomatedMessage__mdt.SObjectType =>IRR_SEL_AutomatedMessagesSelector.class
+                            IRR_AutomatedMessage__mdt.SObjectType =>IRR_SEL_AutomatedMessagesSelector.class,
+                            IRR_AutomatedNoHandBag__mdt.SObjectType =>IRR_SEL_AutomatedNoHandBagSelector.class
                     }
             );
 
