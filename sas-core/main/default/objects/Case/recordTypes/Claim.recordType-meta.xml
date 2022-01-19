@@ -2,8 +2,8 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Claim</fullName>
     <active>true</active>
-    <businessProcess>Claim</businessProcess>
-    <compactLayoutAssignment>SAS_Claim_Case_Compact_Layout</compactLayoutAssignment>    
+    <businessProcess>Liability</businessProcess>
+    <compactLayoutAssignment>SAS_Claim_Case_Compact_Layout</compactLayoutAssignment>
     <description>Use for claim related cases</description>
     <label>Claim</label>
     <picklistValues>
@@ -3534,7 +3534,7 @@
         <values>
             <fullName>Email - Liability Claim BOM</fullName>
             <default>false</default>
-        </values>        
+        </values>
         <values>
             <fullName>Email - Olympic DK</fullName>
             <default>false</default>
@@ -3682,7 +3682,7 @@
         <values>
             <fullName>Backoffice Sitel</fullName>
             <default>false</default>
-        </values>        
+        </values>
         <values>
             <fullName>Benelux</fullName>
             <default>false</default>

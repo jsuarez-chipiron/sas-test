@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CustomerClaim</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>Customer_Claim_Compact_Layout</compactLayoutAssignment>
+    <description>Record type to differentiate the customer claims</description>
+    <label>CustomerClaim</label>
+    <picklistValues>
+        <picklist>Bank_Country__c</picklist>
+        <values>
+            <fullName>Denmark</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finland</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Norway</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sweden</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>United States</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Country__c</picklist>
+        <values>
+            <fullName>Denmark</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finland</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Norway</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sweden</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>United States</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Currency__c</picklist>
+        <values>
+            <fullName>EUR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SEK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Customer_Claim_Category__c</picklist>
+        <values>
+            <fullName>Airport Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Booking%2FRefund and Sales Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EU261 Compensation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight disruptions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inflight %2F Onboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Passenger irregularities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ö**Claim Agency**Ö</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Customer_Reason_for_EU261_Claim__c</picklist>
+        <values>
+            <fullName>Cancelled flight</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delayed flight</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missed connecting flight</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Judicial_Body__c</picklist>
+        <values>
+            <fullName>ADR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bailiff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>European Court Case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NEB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>National Court Case</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Jurisdiction__c</picklist>
+        <values>
+            <fullName>Austria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Belgium</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bulgaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Croatia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cyprus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Czech Republic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Denmark</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Estonia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>France</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Germany</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Greece</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hungary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iceland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ireland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Italy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Latvia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lithuania</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Luxembourg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Malta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Netherlands</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Norway</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Poland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Portugal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Romania</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Slovakia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Slovenia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spain</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sweden</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switzerland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>United Kingdom %28UK%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>United States</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Legal_Conclusion__c</picklist>
+        <values>
+            <fullName>Additional reasonable measures not taken</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Claim firm not eligible to represent pax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Claim submitted too late</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extraordinary circumstances and additional reasonable measures proven</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extraordinary circumstances not proven</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pax entitled to compensation%2Frefund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pax not entitled to refund</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Liability_Claim_Type__c</picklist>
+        <values>
+            <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Care costs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Damages</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Downgrading%2FDenied boarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EU261 Fixed Compensation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PRM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personal injury</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel extras</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unruly passenger</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Name_of_Judicial_Body__c</picklist>
+        <values>
+            <fullName>Agencia Estatal de Seguridad Aerea %28AESA%2C Spain%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allmänna reklamationsnämnden %28Sweden%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amstgericht %28Court%2C Germany%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Athens Court</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attunda tingsrätt %28Sweden%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autoridade Nacional da Aviação Civil %28ANAC%2C Portugal%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bezirksgericht für Handelssachen Wien %28Germany%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bezirksgericht in Handelssachen Wien %28Austria%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bundesministerium für Verkehr%2C Innovation und Technologie %28BMVIT%2C Austria%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Byretten Aalborg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Byretten Kolding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Byretten København</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Byretten Randers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAA %28UK Civil Aviation Authority%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Castlebar Court Office %28Ireland%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Center for Klageløsning %28Denmark%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Civilinés Aviacijos Administracia %28Lithuania%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commission for Aviation Regulation %28CAR%2C Ireland%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consumer Right Protection Center %28Latvia%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>County Court at Cardiff %28Wales%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>County Court at Liverpool %28United Kingdom%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>County Court at Portsmouth</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Croatian Civil Aviation Agency %28Croatia%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>De Inspectie Leefomgeving en Transport  %28ILT%2C Netherlands%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direction générale de l%27aviation civile %28DGAC%2C France%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>District Court of Netherland %28Netherland%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ente Nazionale per l%27Aviazione Civile %28ENAC%2C Italy%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Federal Office of Civil Aviation %28FOCA%2C Switzerland%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Forliksrådet i Norge %28Norway%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>German Luftfahrt-Bundesamt %28LBA%2C Germany%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Giudice de Pace %28Italy%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Göteborgs tingsrätt %28Sweden%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Harju Maakohtu Tallin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hellenic Republic Ministry of Infrastructure and Transport Civil Aciation Authority%2FHCAA %28Greece%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Helsingborgs tingsrätt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Juzgado de lo Mercantil %28Spain%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kalmar tingsrätt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Konsument Europa %28ECC%2C Sweden%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kronofogdemyndigheten %28Sweden%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kuluttajariitalautakunta %28KRIL%2C Finland%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Luleå tingsrätt %28Sweden%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organisme national de contrôle luxembourgeois National Enforcement Body %28NEB%29 Luxembourg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Polish Court</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Polish NEB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pärnu Maakohtu %28Estonia%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Samgöngustofa %28Icelandic Trasnport Authority%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Public Fédéral Mobilté %26 Transport %28Belgium%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solna tingsrätt %28Sweden%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stockholms tingsrätt %28Sweden%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Svea Hovrätt %28Sweden%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SÖP %28NEB%2C Germany%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Södertörns tingsrätt %28Sweden%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tarbijakaitseamet %28Estonia%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>To be added to Salesforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Traficom %28Finland%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trafikstyrelsen %28Denmark%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transportklagenemnda %28Norway%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tribunal d%E2%80%99Instance %28France%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Umeå Tingsrätt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Úřad pro civilní letectví %28Czech CAA%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason_for_Delay_Cancellation__c</picklist>
+        <values>
+            <fullName>AIRS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ARPT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>COMM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>COVID19</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CREW</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DAMA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EQUI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INDU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OPER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PERF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>POSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ROTA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TECH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WEAT</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Result__c</picklist>
+        <values>
+            <fullName>Claim handed over to other NEB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Claim recalled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Claim rejected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Default judgment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Negative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Positive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Settlement</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Settlement_Reason__c</picklist>
+        <values>
+            <fullName>Incomplete data for investigation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lack of evidence</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lack of time to handle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low amount%2Fhigh legal cost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>No case submitted from Pax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No response from passenger %E2%80%93 went to NEB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pax entitled to compensation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tricky%2Fgray zone%2Fsensitive case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrongly handled by agent</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Total_delay_to_final_destination__c</picklist>
+        <values>
+            <fullName>0-2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2-3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3-4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4%2B</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Never arrived</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type_of_Customer__c</picklist>
+        <values>
+            <fullName>Corporate customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other representative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Private customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel agency</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

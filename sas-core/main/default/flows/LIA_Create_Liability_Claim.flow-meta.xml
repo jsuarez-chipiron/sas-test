@@ -82,7 +82,7 @@
         <name>Create_Liability_Claim</name>
         <label>Create Liability Claim</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Update_Case_With_Liability_Claim</targetReference>
         </connector>
@@ -212,9 +212,36 @@
                 <elementReference>Reason_For_Delay_Cancellation</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_Claim_Record_Type_Id.Id</elementReference>
+            </value>
+        </inputAssignments>
         <object>LIA_Claim__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordLookups>
+        <name>Get_Claim_Record_Type_Id</name>
+        <label>Get Claim Record Type Id</label>
+        <locationX>176</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Liability_Claim</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>LiabilityClaim</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <description>Gets the Liability Queue Id</description>
         <name>Get_Liability_Queue_Id</name>
@@ -223,7 +250,7 @@
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Liability_Claim</targetReference>
+            <targetReference>Get_Claim_Record_Type_Id</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -263,7 +290,7 @@
         <name>Update_Case_With_Liability_Claim</name>
         <label>Update Case With Liability Claim</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Outcome</targetReference>
         </connector>
@@ -684,7 +711,7 @@
         <name>Outcome</name>
         <label>Outcome</label>
         <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

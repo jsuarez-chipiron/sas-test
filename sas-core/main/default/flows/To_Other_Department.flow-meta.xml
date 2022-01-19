@@ -190,6 +190,13 @@
                     <stringValue>Liability</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>DependentList.topValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Claim</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Department_not_available</targetReference>
             </connector>

@@ -940,6 +940,21 @@
                 <label>Other</label>
             </value>
             <value>
+                <fullName>Customer Feedback</fullName>
+                <default>false</default>
+                <label>Customer Feedback</label>
+            </value>
+            <value>
+                <fullName>EU261</fullName>
+                <default>false</default>
+                <label>EU261</label>
+            </value>
+            <value>
+                <fullName>Denied Boarding</fullName>
+                <default>false</default>
+                <label>Denied Boarding</label>
+            </value>
+            <value>
                 <fullName>Information Missing</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -993,6 +1008,7 @@
             <controllingFieldValue>Voucher</controllingFieldValue>
             <controllingFieldValue>Voucher Handling</controllingFieldValue>
             <controllingFieldValue>Error</controllingFieldValue>
+            <controllingFieldValue>Customer Claim Placeholder</controllingFieldValue>
             <controllingFieldValue>Fraud</controllingFieldValue>
             <controllingFieldValue>GDPR</controllingFieldValue>
             <controllingFieldValue>Irregularities</controllingFieldValue>
@@ -1212,6 +1228,18 @@
         <valueSettings>
             <controllingFieldValue>Error</controllingFieldValue>
             <valueName>Spam</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim Placeholder</controllingFieldValue>
+            <valueName>Customer Feedback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim Placeholder</controllingFieldValue>
+            <valueName>EU261</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim Placeholder</controllingFieldValue>
+            <valueName>Denied Boarding</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fraud</controllingFieldValue>

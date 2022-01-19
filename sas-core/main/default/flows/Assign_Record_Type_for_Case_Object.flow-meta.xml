@@ -20,7 +20,8 @@
         <dataType>String</dataType>
         <expression>IF( OR({!Department} = &quot;Info Hub&quot;, {!Team} = &quot;Feedback&quot;, {!Team} = &quot;EB Vendor Support&quot;, {!Team} = &quot;Ticketless Support&quot;, {!Team} = &quot;Fraud Investigation&quot;), &quot;Internal/Backoffice&quot;, 
 IF( {!Department} = &quot;Functional Product Support&quot;, &quot;Functional Product Support&quot;, 
-IF( {!Department} = &quot;Liability&quot;, &quot;Claim&quot;, &quot;Channel&quot;)))</expression>
+IF( {!Department} = &quot;Liability&quot;, &quot;Claim&quot;,
+IF( {!Department} = &quot;Customer Claim&quot;, &quot;Customer Claim&quot;,  &quot;Channel&quot;))))</expression>
     </formulas>
     <interviewLabel>Assign Record Type for Case Object {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Assign Record Type for Case Object</label>

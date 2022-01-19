@@ -991,6 +991,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Immediate correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inactive profile</fullName>
             <default>false</default>
         </values>
@@ -1076,6 +1080,10 @@
         </values>
         <values>
             <fullName>Lacking Features%2FDestinations%2FPartners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Learning</fullName>
             <default>false</default>
         </values>
         <values>

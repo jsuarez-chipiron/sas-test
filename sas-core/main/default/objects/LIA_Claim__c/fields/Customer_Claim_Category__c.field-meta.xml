@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Claim_Category__c</fullName>
+    <externalId>false</externalId>
+    <label>Customer Claim Category</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+                <label>Baggage</label>
+            </value>
+            <value>
+                <fullName>Airport Services</fullName>
+                <default>false</default>
+                <label>Airport Services</label>
+            </value>
+            <value>
+                <fullName>Booking/Refund and Sales Services</fullName>
+                <default>false</default>
+                <label>Booking/Refund and Sales Services</label>
+            </value>
+            <value>
+                <fullName>EuroBonus</fullName>
+                <default>false</default>
+                <label>EuroBonus</label>
+            </value>
+            <value>
+                <fullName>Flight disruptions</fullName>
+                <default>false</default>
+                <label>Flight disruptions</label>
+            </value>
+            <value>
+                <fullName>Inflight / Onboard</fullName>
+                <default>false</default>
+                <label>Inflight / Onboard</label>
+            </value>
+            <value>
+                <fullName>Ö**Claim Agency**Ö</fullName>
+                <default>false</default>
+                <label>Ö**Claim Agency**Ö</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Passenger irregularities</fullName>
+                <default>false</default>
+                <label>Passenger irregularities</label>
+            </value>
+            <value>
+                <fullName>EU261 Compensation</fullName>
+                <default>false</default>
+                <label>EU261 Compensation</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

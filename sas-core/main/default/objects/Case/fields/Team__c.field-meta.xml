@@ -137,6 +137,11 @@
                 <label>Businesstravel STO</label>
             </value>
             <value>
+                <fullName>Care Claim</fullName>
+                <default>false</default>
+                <label>Care Claim</label>
+            </value>
+            <value>
                 <fullName>CH</fullName>
                 <default>false</default>
                 <label>CH</label>
@@ -846,6 +851,10 @@
         <valueSettings>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <valueName>SoMe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <valueName>Care Claim</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
