@@ -2,7 +2,9 @@ public inherited sharing class ContentVersionsSelector extends fflib_SObjectSele
   public List<Schema.SObjectField> getSObjectFieldList() {
     return new List<Schema.SObjectField>{
       ContentVersion.Id,
-      ContentVersion.ContentDocumentId
+      ContentVersion.ContentDocumentId,
+      ContentVersion.PathOnClient,
+      ContentVersion.Title
     };
   }
 
@@ -10,7 +12,29 @@ public inherited sharing class ContentVersionsSelector extends fflib_SObjectSele
     return ContentVersion.SObjectType;
   }
 
+  public static ContentVersionsSelector newInstance() {
+    return (ContentVersionsSelector) SAS_Service_Application.Selector.newInstance(
+      ContentVersion.SObjectType
+    );
+  }
+
   public List<ContentVersion> selectById(Set<Id> ids) {
     return (List<ContentVersion>) selectSObjectsById(ids);
+  }
+
+  /**
+   * If withVersionData is true, returns also VersionData for the ContentVersions.
+   */
+  public List<ContentVersion> selectById(Set<Id> ids, Boolean withVersionData) {
+    if (withVersionData) {
+      return (List<ContentVersion>) Database.query(
+        newQueryFactory()
+          .setCondition('Id in :ids')
+          .selectField(ContentVersion.VersionData)
+          .toSOQL()
+      );
+    } else {
+      return selectById(ids);
+    }
   }
 }

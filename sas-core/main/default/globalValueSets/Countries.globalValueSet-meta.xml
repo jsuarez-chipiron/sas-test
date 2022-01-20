@@ -25,6 +25,26 @@
         <default>false</default>
         <label>Norway</label>
     </customValue>
+    <customValue>
+        <fullName>Egypt</fullName>
+        <default>false</default>
+        <label>Egypt</label>
+    </customValue>
+    <customValue>
+        <fullName>Poland</fullName>
+        <default>false</default>
+        <label>Poland</label>
+    </customValue>
+    <customValue>
+        <fullName>Australia</fullName>
+        <default>false</default>
+        <label>Australia</label>
+    </customValue>
+    <customValue>
+        <fullName>Mexico</fullName>
+        <default>false</default>
+        <label>Mexico</label>
+    </customValue>
     <masterLabel>Countries</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
