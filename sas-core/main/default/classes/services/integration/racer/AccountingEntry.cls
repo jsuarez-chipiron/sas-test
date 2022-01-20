@@ -29,7 +29,6 @@ public class AccountingEntry {
   public static final Map<String, String> CONSTANT_FIELDS_FOR_DEBITS = new Map<String, String>{
     'RecordIdentifier' => 'RAC',
     'AUN' => '01',
-    'VerificationNumber' => '12345', // TODO: FIGURE OUT THIS
     'DebitOrCredit' => 'C',
     'CompanyCode' => 'SK',
     'Period' => TODAYS_PERIOD,
@@ -38,9 +37,8 @@ public class AccountingEntry {
   };
 
   public static final Map<String, String> CONSTANT_FIELDS_FOR_CREDITS = new Map<String, String>{
-    'RecordIdentifier' => 'RAC', //RAT
+    'RecordIdentifier' => 'RAC',
     'AUN' => '01',
-    'VerificationNumber' => '12345', // TODO: FIGURE OUT THIS
     'ReconciliationReference' => 'CARE2111',
     'DebitOrCredit' => 'D',
     'Description' => 'Balance post for debits',
@@ -75,15 +73,12 @@ public class AccountingEntry {
   public Map<String, String> data;
   public Integer amount;
 
-  public AccountingEntry(
-    Settlement_Item__c settlementItem,
-    Settlement__c settlement
-  ) {
+  public AccountingEntry(Settlement_Item__c settlementItem) {
     Integer amountInCents = (settlementItem.Amount__c * 100).intValue();
     amount = amountInCents;
     this.data = new Map<String, String>{
       'ConversionDate' => (Datetime.newInstanceGmt(
-          settlement.Date_of_Exchange_Calculation__c,
+          settlementItem.Settlement__r.Date_of_Exchange_Calculation__c,
           Time.newInstance(0, 0, 0, 0)
         ))
         .format('yyyyMMdd'),
@@ -94,7 +89,7 @@ public class AccountingEntry {
       'Counterpart' => '',
       'Misc1' => '',
       'Misc2' => '',
-      'Currency' => settlement.Currency__c,
+      'Currency' => settlementItem.Currency__c,
       'DebitOrCredit' => 'C',
       'Amount' => String.valueOf(amountInCents),
       'Description' => ''

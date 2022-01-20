@@ -20,8 +20,9 @@
  * We have also four sources for the different fields in the records:
  * 1. The settlement itself
  * 2. Constant values defined in the PaymentEntry class.
- * 3. Currency specific values defined in Settlement_Currency_Setting__mdt records.
- * 4. Counters and dates specified for a given file in this class.
+ * 3. Currency and country specific values defined in Settlement_Currency_Setting__mdt,
+ *    Settlement_Bank_Setting__mdt and Settlement_Country_Setting__mdt records.
+ * 4. Batch counters coming from Racer_Integration_Counter__c
  *
  * A given field should never appear in more than one source, so we simply
  * merge all of the fields together to create a full data source for a given
@@ -30,7 +31,7 @@
  * The full list of all fields and their lengths in columns are given in
  * the PaymentEntry class.
  */
-public class PaymentFileConstructor {
+public class PaymentFileBuilder {
   public class CreateFileException extends Exception {
   }
 
@@ -50,20 +51,18 @@ public class PaymentFileConstructor {
    *
    * @param paymentEntries List of PaymentEntries created from Settlements to include in this file.
    * @param fileCurrency The currency of this file as PaymentCurrency.
+   * @param runId A unique runId for this file from Racer_Integration_Counter__c
    *
    * @return Id of the created a file.
    */
   public static Id create(
     List<PaymentEntry> paymentEntries,
-    PaymentCurrency fileCurrency
+    PaymentCurrency fileCurrency,
+    Decimal runId
   ) {
-    if (
-      fileCurrency == null ||
-      paymentEntries == null ||
-      paymentEntries.isEmpty()
-    ) {
+    if (fileCurrency == null || paymentEntries == null) {
       throw new CreateFileException(
-        'PaymentFileConstructor.create# Missing parameters'
+        'PaymentFileBuilder.create# Missing parameters'
       );
     }
 
@@ -98,7 +97,7 @@ public class PaymentFileConstructor {
               textToAdd = String.valueOf(batchReference);
             }
             when 'runId' {
-              textToAdd = '1234'; // TODO: What to do here?
+              textToAdd = String.valueOf(runId);
             }
             when else {
               textToAdd += mergedRecord.get(recordName).get(fieldName) != null
@@ -126,7 +125,8 @@ public class PaymentFileConstructor {
       '_' +
       fileCurrency.name() +
       '_' +
-      TODAYS_DATE; // TODO: This isn't the same as the files we have.
+      TODAYS_DATE +
+      String.valueOf(runId); // TODO: This isn't the same as the files we have.
 
     ContentVersion paymentFile = new ContentVersion(
       ContentLocation = 'S',

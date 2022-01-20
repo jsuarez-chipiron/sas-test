@@ -75,6 +75,8 @@ global class APIMMock implements HttpCalloutMock {
     } else if (endpoint.contains('voucher')) {
       res.setHeader('Content-Type', 'application/json');
       res.setBody('{"link":"test.sas.se", "caseId": "12345678"}');
+    } else if (endpoint.contains('customercare')) {
+      res.setStatusCode(200);
     } else {
       res.setStatusCode(404);
     }

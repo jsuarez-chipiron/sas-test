@@ -18,7 +18,7 @@ public without sharing class RacerIntegrationService {
   };
 
   static ContentVersionsSelector contentVersions = (ContentVersionsSelector) SAS_Service_Application.Selector.newInstance(
-    Settlement__c.SObjectType
+    ContentVersion.SObjectType
   );
 
   public class IntegrationException extends Exception {
@@ -39,7 +39,7 @@ public without sharing class RacerIntegrationService {
    *
    * @throws IntegrationException On any issues.
    */
-  public String sendFile(FILE_TYPE fileType, Id fileId) {
+  public static String sendFile(FILE_TYPE fileType, Id fileId) {
     if (fileType == null || fileId == null) {
       throw new IntegrationException(
         'RacerIntegrationService.sendFile# arguments cannot be null.'
@@ -47,13 +47,20 @@ public without sharing class RacerIntegrationService {
     }
 
     List<ContentVersion> files = contentVersions.selectById(
-      new Set<Id>{ fileId }
+      new Set<Id>{ fileId },
+      true
     );
 
     if (files.size() != 1) {
       throw new IntegrationException(
         'RacerIntegrationService.sendFile# no file found for given id.'
       );
+    }
+
+    String fileName = files[0].PathOnClient;
+    if (fileType == FILE_TYPE.ACCOUNTING) {
+      // Remove .txt part which shouldn't be there for accounting files, but is required for SF to correctly store the file.
+      fileName = fileName.removeEnd('.txt');
     }
 
     // HTTP logic inlined to minimise heap allocations caused by potentially
@@ -67,10 +74,11 @@ public without sharing class RacerIntegrationService {
     request.setHeader('sas-system-name', 'Salesforce');
     request.setHeader('sas-tracking-id', C_Util.generateUUID());
     request.setHeader('Ocp-Apim-Subscription-Key', SUBSCRIPTION_KEY);
-    request.setHeader('api-version', '1');
-    request.setHeader('Filename', files[0].PathOnClient);
+    request.setHeader('api-version', 'v1');
+    request.setHeader('Content-Type', ' ');
+    request.setHeader('Filename', fileName);
 
-    request.setBodyAsBlob(files[0].VersionData);
+    request.setBody(EncodingUtil.base64Encode(files[0].VersionData));
 
     Http http = new Http();
     HttpResponse response = http.send(request);

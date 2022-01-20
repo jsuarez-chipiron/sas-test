@@ -7,7 +7,9 @@
  */
 
 public class PaymentEntry {
-  // Defines the field lengths in columns for all fields in all records.
+  // Defines the full field lengths in columns for all fields in all records.
+  // If field contents are less than this, they're right padded to this length.
+  // Field contents must not be longer than this.
   public static final Map<String, Map<String, Integer>> FIELD_LENGTHS = new Map<String, Map<String, Integer>>{
     'controlRecord' => new Map<String, Integer>{
       'tradingPartnerCode' => 25,
@@ -486,7 +488,7 @@ public class PaymentEntry {
     }
   };
 
-  // Defines the order record lines should be in the payment file.
+  // Defines the order that the record lines should be in in the payment file.
   public static final List<String> RECORDS_IN_ORDER = new List<String>{
     'controlRecord',
     'accountData',
@@ -503,9 +505,6 @@ public class PaymentEntry {
 
   private static final String TODAYS_DATE = Datetime.now().format('yyyyMMdd');
 
-  // Constructor for individual payment records. These include only fields which are specific to this one settlement.
-  // This means that no currency specific or fully constant fields are set by this point.
-  // There's so much duplicate data so we're doing this to avoid blowing up the heap limit.
   public PaymentEntry(Settlement__c s) {
     Settlement_Currency_Setting__mdt currencySettings = Settlement_Currency_Setting__mdt.getAll()
       .get(s.Currency__c);
@@ -538,6 +537,10 @@ public class PaymentEntry {
       },
       'paymentData' => new Map<String, String>{
         'checkrunName' => s.Currency__c.substring(0, 2) + s.Name,
+        'EDIRemittanceInstruction' => currencySettings.EDIRemittanceInstruction__c ==
+          null
+          ? ''
+          : currencySettings.EDIRemittanceInstruction__c,
         'selectedCheckId' => s.Name,
         'supplierBankBranchNumber' => s.BIC_Swift__c
       },
@@ -552,8 +555,12 @@ public class PaymentEntry {
       'supplierSiteData' => new Map<String, String>{
         'vendorSiteCode' => s.Name,
         'vendorName' => s.Payee_Name__c,
-        'addressLine1' => s.Address_line_1__c,
-        'addressLine2' => s.Address_line_2__c,
+        'addressLine1' => s.Address_line_1__c == null
+          ? null
+          : s.Address_line_1__c,
+        'addressLine2' => s.Address_line_2__c == null
+          ? null
+          : s.Address_line_2__c,
         'city' => s.City__c,
         'postalCode' => s.Postal_Code__c,
         'country' => s.Country__c
@@ -568,7 +575,7 @@ public class PaymentEntry {
       },
       'invoiceFlexfields' => new Map<String, String>{
         'ref2Invoice' => 'SF REF ' + s.Name,
-        'attribute1' => 'derp' // TODO: This needs to be still figured out.
+        'attribute1' => s.Payee_reference__c == null ? '' : s.Payee_reference__c
       }
     };
 

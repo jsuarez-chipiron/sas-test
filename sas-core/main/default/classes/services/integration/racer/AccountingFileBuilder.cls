@@ -5,22 +5,26 @@
  *
  * See Confluence for more details.
  */
-public class AccountingFileConstructor {
-  private static final String VERIFICATION_NUMBER = '123';
-
+public class AccountingFileBuilder {
   public class CreateFileException extends Exception {
+  }
+
+  public enum PaymentCurrency {
+    SEK,
+    DKK,
+    NOK,
+    OTH
   }
 
   public static Id create(
     List<AccountingEntry> accountingEntries,
-    String fileCurrency
+    PaymentCurrency fileCurrency,
+    Decimal verificationNumber
   ) {
-    if (
-      fileCurrency == null ||
-      accountingEntries == null ||
-      accountingEntries.isEmpty()
-    ) {
-      throw new CreateFileException('AccountingFileConstructor.create# Missing parameters');
+    if (fileCurrency == null || accountingEntries == null) {
+      throw new CreateFileException(
+        'AccountingFileBuilder.create# Missing parameters'
+      );
     }
 
     String fileContents = '';
@@ -39,6 +43,9 @@ public class AccountingFileConstructor {
           );
 
           sumOfEntries += entry.amount;
+        } else if (field == 'VerificationNumber') {
+          fileContents += String.valueOf(verificationNumber)
+            .rightPad(AccountingEntry.FIELD_LENGTHS.get(field));
         } else {
           // Check if this is a constant field.
           String fieldContents = AccountingEntry.CONSTANT_FIELDS_FOR_DEBITS.get(
@@ -71,6 +78,9 @@ public class AccountingFileConstructor {
             AccountingEntry.FIELD_LENGTHS.get(field),
             '0'
           );
+        } else if (field == 'VerificationNumber') {
+          fileContents += String.valueOf(verificationNumber)
+            .rightPad(AccountingEntry.FIELD_LENGTHS.get(field));
         } else {
           String fieldContents = AccountingEntry.CONSTANT_FIELDS_FOR_CREDITS.get(
             field
@@ -88,11 +98,18 @@ public class AccountingFileConstructor {
       fileContents += '\n';
     }
 
-    fileContents += createTotalLine(sumOfEntries);
+    fileContents += createTotalLine(sumOfEntries, verificationNumber);
 
     String dayOfYear = String.valueOf(Date.today().dayOfYear());
-    // Format is a5{AUN}{dayOfYear}{RunningCoun}
-    String fileName = 'a501' + dayOfYear + '0'; // TODO: This isn't the same as the files we have.
+    String todaysDate = Datetime.now().format('yyyyMMdd');
+    // Format is a5{AUN}{dayOfYear}{RunningCount}
+    String fileName =
+      'a501' +
+      dayOfYear +
+      '0' +
+      todaysDate +
+      '.sf' +
+      fileCurrency.name().toLowerCase(); // TODO: This isn't the same as the files we have.
 
     ContentVersion accountingFile = new ContentVersion(
       ContentLocation = 'S',
@@ -106,13 +123,18 @@ public class AccountingFileConstructor {
     return accountingFile.Id;
   }
 
-  private static String createTotalLine(Integer sumOfEntries) {
+  private static String createTotalLine(
+    Integer sumOfEntries,
+    Decimal verificationNumber
+  ) {
     String totalLine = 'RAT01';
-    totalLine += VERIFICATION_NUMBER.rightPad(60);
+    totalLine += String.valueOf(verificationNumber).rightPad(60);
     totalLine += String.valueOf(sumOfEntries).leftPad(17, '0');
     totalLine += ''.rightPad(AccountingEntry.FIELD_LENGTHS.get('Description'));
     totalLine += AccountingEntry.CONSTANT_FIELDS_FOR_DEBITS.get('CompanyCode')
       .rightPad(AccountingEntry.FIELD_LENGTHS.get('CompanyCode'));
+    totalLine += AccountingEntry.CONSTANT_FIELDS_FOR_DEBITS.get('Period')
+      .rightPad(AccountingEntry.FIELD_LENGTHS.get('Period'));
     totalLine += AccountingEntry.CONSTANT_FIELDS_FOR_DEBITS.get('FeederName')
       .rightPad(AccountingEntry.FIELD_LENGTHS.get('FeederName'));
     totalLine += AccountingEntry.CONSTANT_FIELDS_FOR_DEBITS.get(

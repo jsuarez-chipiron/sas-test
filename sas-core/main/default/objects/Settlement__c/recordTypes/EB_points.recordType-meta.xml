@@ -17,7 +17,15 @@
     <picklistValues>
         <picklist>Bank_Country__c</picklist>
         <values>
+            <fullName>Australia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Denmark</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Egypt</fullName>
             <default>false</default>
         </values>
         <values>
@@ -25,7 +33,15 @@
             <default>true</default>
         </values>
         <values>
+            <fullName>Mexico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Norway</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Poland</fullName>
             <default>false</default>
         </values>
         <values>
@@ -40,7 +56,15 @@
     <picklistValues>
         <picklist>Country__c</picklist>
         <values>
+            <fullName>Australia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Denmark</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Egypt</fullName>
             <default>false</default>
         </values>
         <values>
@@ -48,7 +72,15 @@
             <default>true</default>
         </values>
         <values>
+            <fullName>Mexico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Norway</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Poland</fullName>
             <default>false</default>
         </values>
         <values>
