@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Approve_Settlement</fullName>
+        <field>Settlement_Status__c</field>
+        <literalValue>Sent to Racer</literalValue>
+        <name>Approve Settlement</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Automatic_Approval</fullName>
+        <field>Settlement_Status__c</field>
+        <literalValue>Waiting for transfer</literalValue>
+        <name>Automatic Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>EuroBonus_Settlement_Approved</fullName>
+        <field>Settlement_Status__c</field>
+        <literalValue>Waiting for transfer</literalValue>
+        <name>EuroBonus Settlement Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>EuroBonus_Settlement_Rejected</fullName>
+        <field>Settlement_Status__c</field>
+        <literalValue>Denied</literalValue>
+        <name>EuroBonus Settlement Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Reject_Settlement</fullName>
+        <field>Settlement_Status__c</field>
+        <literalValue>Denied</literalValue>
+        <name>Reject Settlement</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Waiting_for_Approval</fullName>
+        <field>Settlement_Status__c</field>
+        <literalValue>Waiting for approval</literalValue>
+        <name>Waiting for Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>
