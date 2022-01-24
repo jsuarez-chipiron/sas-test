@@ -76,15 +76,19 @@
     </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Case</tabs>
+    <tabs>LIA_Claim__c</tabs>
     <tabs>Settlement__c</tabs>
     <tabs>LIA_Major_Event__c</tabs>
     <tabs>LIA_Firm__c</tabs>
     <tabs>standard-report</tabs>
-    <tabs>standard-Dashboard</tabs>
     <tabs>standard-ProcessInstanceWorkitem</tabs>
+    <tabs>standard-Dashboard</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SAS_Customer_Claims_UtilityBar</utilityBar>
     <workspaceConfig>
+        <mappings>
+            <tab>LIA_Claim__c</tab>
+        </mappings>
         <mappings>
             <tab>LIA_Firm__c</tab>
         </mappings>
