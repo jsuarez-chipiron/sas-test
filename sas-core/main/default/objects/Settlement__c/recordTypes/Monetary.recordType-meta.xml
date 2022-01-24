@@ -95,11 +95,51 @@
     <picklistValues>
         <picklist>Currency__c</picklist>
         <values>
+            <fullName>AUD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CHF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CZK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DKK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EUR</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>GPB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>JPY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NZD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PLN</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SEK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGD</fullName>
             <default>false</default>
         </values>
         <values>
