@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Minimise_flow_screen</name>
+        <label>Minimise flow screen</label>
+        <locationX>2294</locationX>
+        <locationY>1334</locationY>
+        <actionName>c:MinimizeUtilityItem</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+    </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
         <name>SetCaseFields1</name>
@@ -1022,6 +1031,9 @@
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Minimise_flow_screen</targetReference>
+        </connector>
         <fields>
             <name>SuccessText</name>
             <fieldText>&lt;p&gt;Successfully created refund request.&lt;/p&gt;</fieldText>

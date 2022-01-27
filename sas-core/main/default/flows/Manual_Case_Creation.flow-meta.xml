@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
+        <name>Minimize_flow_screen</name>
+        <label>Minimize flow screen</label>
+        <locationX>578</locationX>
+        <locationY>1574</locationY>
+        <actionName>c:MinimizeUtilityItem</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+    </actionCalls>
+    <actionCalls>
         <name>Notify_User_of_created_Case</name>
         <label>Notify User of created Case</label>
         <locationX>578</locationX>
@@ -401,6 +410,9 @@
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Minimize_flow_screen</targetReference>
+        </connector>
         <fields>
             <name>Outcome</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Case&lt;/span&gt;&lt;span style=&quot;font-size: 16px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt; &lt;/span&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;has been created to {!GetCaseNumber.Department__c}.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Click the notification in the top right corner to view the case!&lt;/span&gt;&lt;/p&gt;</fieldText>
