@@ -20,6 +20,9 @@
     "accountSettings":{
       "enableRelateContactToMultipleAccounts":true
     },
+    "apexSettings": {
+      "enableApexApprovalLockUnlock": true
+    },
     "caseSettings": {
       "emailToCase":{
         "enableEmailToCase": true,
