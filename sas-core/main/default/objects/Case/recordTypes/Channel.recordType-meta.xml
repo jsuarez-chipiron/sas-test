@@ -13,7 +13,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CS Vendor</fullName>
+            <fullName>Vendor Management</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4500,7 +4500,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - CS Vendor</fullName>
+            <fullName>Email - Vendor Management</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5208,7 +5208,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CS Vendor</fullName>
+            <fullName>Vendor Management</fullName>
             <default>false</default>
         </values>
         <values>
