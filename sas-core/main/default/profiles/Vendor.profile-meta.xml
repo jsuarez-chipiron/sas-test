@@ -1573,6 +1573,9 @@
         <recordType>Account.Partner</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Approval_Request__c-Approval Request Layout</layout>
+    </layoutAssignments>    
+    <layoutAssignments>
         <layout>Case-SAS Claim Layout</layout>
         <recordType>Case.Claim</recordType>
     </layoutAssignments>    

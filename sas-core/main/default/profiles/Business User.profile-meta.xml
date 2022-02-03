@@ -1607,6 +1607,9 @@
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Approval_Request__c-Approval Request Layout</layout>
+    </layoutAssignments>    
+    <layoutAssignments>
         <layout>C_GeneralSetting__mdt-General Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>

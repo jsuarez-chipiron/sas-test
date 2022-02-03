@@ -27,6 +27,11 @@
                 <label>Denied</label>
             </value>
             <value>
+                <fullName>Waiting for control</fullName>
+                <default>false</default>
+                <label>Waiting for control</label>
+            </value>
+            <value>
                 <fullName>Waiting for transfer</fullName>
                 <default>false</default>
                 <label>Waiting for transfer</label>
