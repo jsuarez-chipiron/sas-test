@@ -679,6 +679,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Email__c</field>
+            <value>
+                <elementReference>CustomerEmail.value</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Note__c</field>
             <value>
                 <elementReference>Note</elementReference>
@@ -688,6 +694,12 @@
             <field>PNR__c</field>
             <value>
                 <elementReference>PNR</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phone__c</field>
+            <value>
+                <elementReference>CustomerPhoneNumber</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
