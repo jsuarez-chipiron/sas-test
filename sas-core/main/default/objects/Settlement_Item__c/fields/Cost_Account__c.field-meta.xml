@@ -12,14 +12,54 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>6727</fullName>
+                <fullName>6733</fullName>
                 <default>false</default>
-                <label>6727</label>
+                <label>6733 - Goodwill Compensation</label>
             </value>
             <value>
-                <fullName>6741- Liability - Baggage Damage</fullName>
+                <fullName>6741</fullName>
                 <default>false</default>
-                <label>6741- Liability - Baggage Damage</label>
+                <label>6741 - Liability - Baggage Damaged</label>
+            </value>
+            <value>
+                <fullName>6742</fullName>
+                <default>false</default>
+                <label>6742 - Liability - Baggage Delayed/missing/lost</label>
+            </value>
+            <value>
+                <fullName>6743</fullName>
+                <default>false</default>
+                <label>6743 - Liability - Baggage Pilfered</label>
+            </value>
+            <value>
+                <fullName>6738</fullName>
+                <default>false</default>
+                <label>6738 - Liability - Care (Meal, Hotel, Transportation)</label>
+            </value>
+            <value>
+                <fullName>6721</fullName>
+                <default>false</default>
+                <label>6721 - Liability - Denied Boarding Compensation</label>
+            </value>
+            <value>
+                <fullName>6722</fullName>
+                <default>false</default>
+                <label>6722 - Liability - Downgrading Compensation</label>
+            </value>
+            <value>
+                <fullName>6727</fullName>
+                <default>false</default>
+                <label>6727 - Liability - EU 261 Compensation</label>
+            </value>
+            <value>
+                <fullName>6735</fullName>
+                <default>false</default>
+                <label>6735 - Liability - Other</label>
+            </value>
+            <value>
+                <fullName>6737</fullName>
+                <default>false</default>
+                <label>6737 - Refund of tickets and ancillary</label>
             </value>
         </valueSetDefinition>
     </valueSet>
