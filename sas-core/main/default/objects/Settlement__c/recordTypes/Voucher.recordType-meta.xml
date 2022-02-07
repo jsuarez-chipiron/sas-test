@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Voucher</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Settlement_Compact_Layout</compactLayoutAssignment>
     <label>Voucher</label>
     <picklistValues>
         <picklist>Accounting_Status__c</picklist>
