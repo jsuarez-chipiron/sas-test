@@ -371,11 +371,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Settlement__c.Automatic_approval__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Settlement__c.BIC_Swift__c</field>
         <readable>true</readable>
