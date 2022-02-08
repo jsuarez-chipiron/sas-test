@@ -34,6 +34,10 @@
                 <behavior>Edit</behavior>
                 <field>Control_verified__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Voucher_Email__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

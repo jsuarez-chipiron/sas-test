@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Unlock_Settlement</name>
         <label>Unlock Settlement</label>
-        <locationX>842</locationX>
+        <locationX>314</locationX>
         <locationY>758</locationY>
         <actionName>UnlockRecords</actionName>
         <actionType>apex</actionType>
@@ -17,46 +17,9 @@
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <decisions>
-        <name>Does_it_need_control</name>
-        <label>Does it need control?</label>
-        <locationX>314</locationX>
-        <locationY>758</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Control_Needed</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>controlNeeded</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Control_Queue_Id</targetReference>
-            </connector>
-            <label>Control Needed</label>
-        </rules>
-        <rules>
-            <name>No_Control_Needed</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>controlNeeded</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Approve_Settlement</targetReference>
-            </connector>
-            <label>No Control Needed</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Request_result</name>
         <label>Request result</label>
-        <locationX>842</locationX>
+        <locationX>446</locationX>
         <locationY>398</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -70,7 +33,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Control_Evaluation</targetReference>
+                <targetReference>Control_Process</targetReference>
             </connector>
             <label>Approved</label>
         </rules>
@@ -126,11 +89,6 @@
         <dataType>String</dataType>
         <expression>IF({!Approval_Status} = &quot;Approved&quot; , &quot;Waiting for Transfer&quot;, &quot;Denied&quot;)</expression>
     </formulas>
-    <formulas>
-        <name>todayDate</name>
-        <dataType>Date</dataType>
-        <expression>Today()</expression>
-    </formulas>
     <interviewLabel>CLAIM Manual Approval {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CLAIM Manual Approval</label>
     <processMetadataValues>
@@ -153,44 +111,9 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Approve_request</name>
-        <label>Approve request</label>
-        <locationX>314</locationX>
-        <locationY>638</locationY>
-        <connector>
-            <targetReference>Does_it_need_control</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>$User.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Settlement__c</field>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status__c</field>
-            <value>
-                <stringValue>Approved</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type__c</field>
-            <value>
-                <stringValue>Manual Approval</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Approval_Request__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
         <name>Completely_reject_request</name>
         <label>Completely reject request</label>
-        <locationX>1106</locationX>
+        <locationX>578</locationX>
         <locationY>518</locationY>
         <connector>
             <targetReference>Completely_reject_settlement</targetReference>
@@ -237,7 +160,7 @@
     <recordCreates>
         <name>Reject_request</name>
         <label>Reject request</label>
-        <locationX>842</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <connector>
             <targetReference>Reject_settlement</targetReference>
@@ -284,7 +207,7 @@
     <recordLookups>
         <name>Get_Settlement_Information</name>
         <label>Get Settlement Information</label>
-        <locationX>842</locationX>
+        <locationX>446</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -303,75 +226,9 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Approve_Settlement</name>
-        <label>Approve Settlement</label>
-        <locationX>314</locationX>
-        <locationY>878</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Approver__c</field>
-            <value>
-                <elementReference>$User.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Date_of_Last_Approval_Date__c</field>
-            <value>
-                <elementReference>todayDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Settlement_Status__c</field>
-            <value>
-                <stringValue>Waiting for transfer</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Settlement__c</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Assign_Settlement_to_Control_Queue</name>
-        <label>Assign Settlement to Control Queue</label>
-        <locationX>50</locationX>
-        <locationY>998</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Needs_Control__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>controlQueueId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Settlement_Status__c</field>
-            <value>
-                <stringValue>Waiting for control</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Settlement__c</object>
-    </recordUpdates>
-    <recordUpdates>
         <name>Completely_reject_settlement</name>
         <label>Completely reject settlement</label>
-        <locationX>1106</locationX>
+        <locationX>578</locationX>
         <locationY>638</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -398,7 +255,7 @@
     <recordUpdates>
         <name>Reject_settlement</name>
         <label>Reject settlement</label>
-        <locationX>842</locationX>
+        <locationX>314</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Unlock_Settlement</targetReference>
@@ -429,7 +286,7 @@
     <screens>
         <name>Approval_Request</name>
         <label>Approval Request</label>
-        <locationX>842</locationX>
+        <locationX>446</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -501,7 +358,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>716</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Settlement_Information</targetReference>
@@ -509,44 +366,17 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>Control_Evaluation</name>
-        <label>Control Evaluation</label>
-        <locationX>314</locationX>
+        <name>Control_Process</name>
+        <label>Control Process</label>
+        <locationX>50</locationX>
         <locationY>518</locationY>
-        <connector>
-            <targetReference>Approve_request</targetReference>
-        </connector>
-        <flowName>CLAIM_Control</flowName>
+        <flowName>CLAIM_Control_Process</flowName>
         <inputAssignments>
             <name>recordId</name>
             <value>
                 <elementReference>recordId</elementReference>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>controlNeeded</assignToReference>
-            <name>ControlNeeded</name>
-        </outputAssignments>
-    </subflows>
-    <subflows>
-        <name>Get_Control_Queue_Id</name>
-        <label>Get Control Queue Id</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
-        <connector>
-            <targetReference>Assign_Settlement_to_Control_Queue</targetReference>
-        </connector>
-        <flowName>Retrieve_Queue_Id</flowName>
-        <inputAssignments>
-            <name>QueueName</name>
-            <value>
-                <stringValue>Control</stringValue>
-            </value>
-        </inputAssignments>
-        <outputAssignments>
-            <assignToReference>controlQueueId</assignToReference>
-            <name>QueueId</name>
-        </outputAssignments>
     </subflows>
     <variables>
         <name>controlNeeded</name>

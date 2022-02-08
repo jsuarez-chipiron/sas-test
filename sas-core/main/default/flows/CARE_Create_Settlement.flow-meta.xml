@@ -215,6 +215,12 @@
                 <stringValue>In progress</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Voucher_Email__c</field>
+            <value>
+                <elementReference>voucherEmail.value</elementReference>
+            </value>
+        </inputAssignments>
         <object>Settlement__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
@@ -409,69 +415,15 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Create_a_Settlement_Section2</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Create_a_Settlement_Section2_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>EuroBonus_Number</name>
-                    <dataType>Number</dataType>
-                    <fieldText>EuroBonus Number</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                    <scale>0</scale>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Create_a_Settlement_Section2_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>EuroBonus_Points</name>
-                    <dataType>Number</dataType>
-                    <fieldText>EuroBonus Points</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;Amount of points to be debit to the customer&lt;/p&gt;</helpText>
-                    <isRequired>false</isRequired>
-                    <scale>0</scale>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Settlement_Type</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>EB_Points</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>AddresInformation</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Address Information&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Create_a_Settlement_Section3</name>
+            <name>Create_a_Settlement_Section2</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>Create_a_Settlement_Section3_Column1</name>
+                <name>Create_a_Settlement_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Payee_Name</name>
@@ -510,7 +462,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>Create_a_Settlement_Section3_Column2</name>
+                <name>Create_a_Settlement_Section2_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Postal_Code</name>
@@ -551,9 +503,63 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>BankDetails</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Bank Details&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>Payment_Details</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Payment Details&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Create_a_Settlement_Section3</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Create_a_Settlement_Section3_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>EuroBonus_Number</name>
+                    <dataType>Number</dataType>
+                    <fieldText>EuroBonus Number</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Create_a_Settlement_Section3_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>EuroBonus_Points</name>
+                    <dataType>Number</dataType>
+                    <fieldText>EuroBonus Points</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;Amount of points to be debit to the customer&lt;/p&gt;</helpText>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Settlement_Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>EB_Points</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Create_a_Settlement_Section4</name>
@@ -626,6 +632,24 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <elementReference>Monetary</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>voucherEmail</name>
+            <extensionName>flowruntime:email</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Settlement_Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Voucher</elementReference>
                     </rightValue>
                 </conditions>
             </visibilityRule>
