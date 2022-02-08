@@ -12,10 +12,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Vendor Management</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Corporate</fullName>
             <default>false</default>
         </values>
@@ -61,6 +57,10 @@
         </values>
         <values>
             <fullName>SAS Operating Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Management</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -634,6 +634,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Agent did not contact AH first</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Agreement related question</fullName>
             <default>false</default>
         </values>
@@ -655,6 +659,10 @@
         </values>
         <values>
             <fullName>Amadeus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Answer from AH not accepted</fullName>
             <default>false</default>
         </values>
         <values>
@@ -822,6 +830,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Deviation to be found on SSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Domestic</fullName>
             <default>false</default>
         </values>
@@ -839,6 +851,10 @@
         </values>
         <values>
             <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation was correct</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1291,6 +1307,10 @@
         </values>
         <values>
             <fullName>SSI login issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SSI not checked by KAM</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3754,6 +3774,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>KAM DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KAM INT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KAM NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KAM SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Look here before you ask</fullName>
             <default>false</default>
         </values>
@@ -4211,10 +4247,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Email - Vendor Management</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Email - Corporate Support Backoffice</fullName>
             <default>false</default>
         </values>
@@ -4388,6 +4420,10 @@
         </values>
         <values>
             <fullName>Email - Ticketless Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Vendor Management</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4707,10 +4743,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Vendor Management</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>DE</fullName>
             <default>false</default>
         </values>
@@ -5012,6 +5044,10 @@
         </values>
         <values>
             <fullName>US</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Management</fullName>
             <default>false</default>
         </values>
     </picklistValues>
