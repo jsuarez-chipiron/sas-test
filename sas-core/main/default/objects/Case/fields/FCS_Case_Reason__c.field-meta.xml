@@ -525,6 +525,26 @@
                 <label>Issue</label>
             </value>
             <value>
+                <fullName>KAM DK</fullName>
+                <default>false</default>
+                <label>KAM DK</label>
+            </value>
+            <value>
+                <fullName>KAM NO</fullName>
+                <default>false</default>
+                <label>KAM NO</label>
+            </value>
+            <value>
+                <fullName>KAM SE</fullName>
+                <default>false</default>
+                <label>KAM SE</label>
+            </value>
+            <value>
+                <fullName>KAM INT</fullName>
+                <default>false</default>
+                <label>KAM INT</label>
+            </value>
+            <value>
                 <fullName>Klarna</fullName>
                 <default>false</default>
                 <label>Klarna</label>
@@ -1752,6 +1772,22 @@
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>HQ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>KAM DK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>KAM NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>KAM SE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>KAM INT</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>

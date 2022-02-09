@@ -35,6 +35,11 @@
                 <label>Add travel pass</label>
             </value>
             <value>
+                <fullName>Agent did not contact AH first</fullName>
+                <default>false</default>
+                <label>Agent did not contact AH first</label>
+            </value>
+            <value>
                 <fullName>Agreement related question</fullName>
                 <default>false</default>
                 <label>Agreement related question</label>
@@ -63,6 +68,11 @@
                 <fullName>Amadeus</fullName>
                 <default>false</default>
                 <label>Amadeus</label>
+            </value>
+            <value>
+                <fullName>Answer from AH not accepted</fullName>
+                <default>false</default>
+                <label>Answer from AH not accepted</label>
             </value>
             <value>
                 <fullName>App</fullName>
@@ -275,6 +285,11 @@
                 <label>Deviation from rules, authorization in booking</label>
             </value>
             <value>
+                <fullName>Deviation to be found on SSI</fullName>
+                <default>false</default>
+                <label>Deviation to be found on SSI</label>
+            </value>
+            <value>
                 <fullName>Domestic</fullName>
                 <default>false</default>
                 <label>Domestic</label>
@@ -298,6 +313,11 @@
                 <fullName>EuroBonus</fullName>
                 <default>false</default>
                 <label>EuroBonus</label>
+            </value>
+            <value>
+                <fullName>Escalation was correct</fullName>
+                <default>false</default>
+                <label>Escalation was correct</label>
             </value>
             <value>
                 <fullName>Europe</fullName>
@@ -905,6 +925,11 @@
                 <label>SSI login issues</label>
             </value>
             <value>
+                <fullName>SSI not checked by KAM</fullName>
+                <default>false</default>
+                <label>SSI not checked by KAM</label>
+            </value>
+            <value>
                 <fullName>SSI public site</fullName>
                 <default>false</default>
                 <label>SSI public site</label>
@@ -1209,6 +1234,7 @@
             <controllingFieldValue>Cancel Booking</controllingFieldValue>
             <controllingFieldValue>CAR</controllingFieldValue>
             <controllingFieldValue>Car Rental Info</controllingFieldValue>
+            <controllingFieldValue>Refund points</controllingFieldValue>
             <controllingFieldValue>Refund Status</controllingFieldValue>
             <controllingFieldValue>Reserved amount</controllingFieldValue>
             <controllingFieldValue>Rules &amp; Information</controllingFieldValue>
@@ -1498,6 +1524,41 @@
             <controllingFieldValue>Fast Track</controllingFieldValue>
             <controllingFieldValue>Give Away Membership</controllingFieldValue>
             <valueName>Referred to webpage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KAM DK</controllingFieldValue>
+            <controllingFieldValue>KAM NO</controllingFieldValue>
+            <controllingFieldValue>KAM SE</controllingFieldValue>
+            <controllingFieldValue>KAM INT</controllingFieldValue>
+            <valueName>Agent did not contact AH first</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KAM DK</controllingFieldValue>
+            <controllingFieldValue>KAM NO</controllingFieldValue>
+            <controllingFieldValue>KAM SE</controllingFieldValue>
+            <controllingFieldValue>KAM INT</controllingFieldValue>
+            <valueName>Answer from AH not accepted</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KAM DK</controllingFieldValue>
+            <controllingFieldValue>KAM NO</controllingFieldValue>
+            <controllingFieldValue>KAM SE</controllingFieldValue>
+            <controllingFieldValue>KAM INT</controllingFieldValue>
+            <valueName>Deviation to be found on SSI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KAM DK</controllingFieldValue>
+            <controllingFieldValue>KAM NO</controllingFieldValue>
+            <controllingFieldValue>KAM SE</controllingFieldValue>
+            <controllingFieldValue>KAM INT</controllingFieldValue>
+            <valueName>Escalation was correct</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>KAM DK</controllingFieldValue>
+            <controllingFieldValue>KAM NO</controllingFieldValue>
+            <controllingFieldValue>KAM SE</controllingFieldValue>
+            <controllingFieldValue>KAM INT</controllingFieldValue>
+            <valueName>SSI not checked by KAM</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Miscellaneous</controllingFieldValue>

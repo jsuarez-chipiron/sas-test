@@ -152,9 +152,9 @@
                 <label>Chat</label>
             </value>
             <value>
-                <fullName>CS Vendor</fullName>
+                <fullName>Vendor Management</fullName>
                 <default>false</default>
-                <label>CS Vendor</label>
+                <label>Vendor Management</label>
             </value>
             <value>
                 <fullName>DE</fullName>
@@ -885,8 +885,8 @@
             <valueName>Support Scandinavia</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>CS Vendor</controllingFieldValue>
-            <valueName>CS Vendor</valueName>
+            <controllingFieldValue>Vendor Management</controllingFieldValue>
+            <valueName>Vendor Management</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>

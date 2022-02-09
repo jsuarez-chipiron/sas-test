@@ -434,10 +434,16 @@
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Department__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Refunds</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Department__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Vendor Management</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

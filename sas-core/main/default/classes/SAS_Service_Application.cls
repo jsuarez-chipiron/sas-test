@@ -14,8 +14,11 @@ public class SAS_Service_Application {
       LiveChatTranscript.SObjectType => ChatTranscriptsSelector.class,
       MessagingSession.SObjectType => MessagingSessionsSelector.class,
       Passenger__c.SObjectType => PassengersSelector.class,
+      Racer_Integration_Counter__c.SObjectType => RacerIntegrationCountersSelector.class,
       Refund_Request__c.SObjectType => Refund_RequestsSelector.class,
       Segment__c.SObjectType => SegmentsSelector.class,
+      Settlement__c.SObjectType => SettlementsSelector.class,
+      Settlement_Item__c.SObjectType => SettlementItemsSelector.class,
       SocialPost.SObjectType => SocialPostsSelector.class,
       Travel_Pass_Product__c.SObjectType => TravelPassProductsSelector.class
     }
@@ -25,12 +28,15 @@ public class SAS_Service_Application {
     SAS_Service_Application.Selector,
     new Map<SObjectType, Type>{
       Account.SObjectType => Accounts.Constructor.class,
+      ContentVersion.SObjectType => ContentVersions.Constructor.class,
       Case.SObjectType => Cases.Constructor.class,
       EmailMessage.SObjectType => EmailMessages.Constructor.class,
       LiveChatTranscript.SObjectType => LiveChatTranscripts.Constructor.class,
       MessagingSession.SObjectType => MessagingSessions.Constructor.class,
       Passenger__c.SObjectType => Passengers.Constructor.class,
       Refund_Request__c.SObjectType => Refund_Requests.Constructor.class,
+      Settlement__c.SObjectType => Settlements.Constructor.class,
+      Settlement_Item__c.SObjectType => SettlementItems.Constructor.class,
       SocialPost.SObjectType => SocialPosts.Constructor.class
     }
   );
@@ -57,7 +63,10 @@ public class SAS_Service_Application {
       Segment__c.SObjectType,
       Case.SobjectType,
       Refund_Request__c.SobjectType,
-      Group_Travel_Request__c.SobjectType
+      Group_Travel_Request__c.SobjectType,
+      Racer_Integration_Counter__c.SObjectType,
+      Settlement__c.SObjectType,
+      Settlement_Item__c.SObjectType
     }
   );
 }

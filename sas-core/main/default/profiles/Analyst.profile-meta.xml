@@ -2642,7 +2642,10 @@
 	<layoutAssignments>
         <layout>Account-B2B - Partner</layout>
         <recordType>Account.Partner</recordType>
-    </layoutAssignments>	
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Approval_Request__c-Approval Request Layout</layout>
+    </layoutAssignments> 	
     <layoutAssignments>
         <layout>C_GeneralSetting__mdt-General Setting Layout</layout>
     </layoutAssignments>

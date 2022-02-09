@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <name>CS Vendor</name>
+    <name>Approvers</name>
     <queueMembers>
         <publicGroups>
-            <publicGroup>CS_Vendor</publicGroup>
+            <publicGroup>Approvers</publicGroup>
         </publicGroups>
     </queueMembers>
+    <queueRoutingConfig>Settlements</queueRoutingConfig>
     <queueSobject>
-        <sobjectType>Case</sobjectType>
+        <sobjectType>Settlement__c</sobjectType>
     </queueSobject>
 </Queue>
