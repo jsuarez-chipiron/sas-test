@@ -77,6 +77,13 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>controlReason</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>controlReasonText</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>NoControl</name>
@@ -302,6 +309,11 @@
         </rules>
     </decisions>
     <formulas>
+        <name>controlReasonDetail</name>
+        <dataType>String</dataType>
+        <expression> IF({!Get_Settlement_Record_Type.Name} = &quot;Monetary&quot;, &quot;Bank account number&quot;, IF({!Get_Settlement_Record_Type.Name} = &quot;Voucher&quot;, &quot;Voucher Email&quot;, &quot;EB number&quot;))</expression>
+    </formulas>
+    <formulas>
         <name>last12months</name>
         <dataType>Date</dataType>
         <expression>ADDMONTHS(TODAY(), -12)</expression>
@@ -345,17 +357,17 @@
             </value>
         </filters>
         <filters>
-            <field>EuroBonus_Number__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Settlement_Information.EuroBonus_Number__c</elementReference>
-            </value>
-        </filters>
-        <filters>
             <field>CreatedDate</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>last12months</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>EuroBonus_Number__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Settlement_Information.EuroBonus_Number__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -486,7 +498,7 @@
     <textTemplates>
         <name>controlReasonText</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>This {!Get_Settlement_Record_Type.Name} settlement was flagged because IF({!Get_Settlement_Record_Type.Name} = &quot;Monetary&quot;, &quot;IBAN&quot;, IF({!Get_Settlement_Record_Type.Name} = &quot;Voucher&quot;, &quot;Voucher Email&quot;, &quot;EB number&quot;))) occurred {!numberOfSettlements} of times within the last 12 months.</text>
+        <text>This {!Get_Settlement_Record_Type.Name} settlement was flagged because {!controlReasonDetail} occurred {!numberOfSettlements} times within the last 12 months.</text>
     </textTemplates>
     <variables>
         <name>ControlNeeded</name>
@@ -503,16 +515,6 @@
         <isOutput>true</isOutput>
         <value>
             <elementReference>controlReasonText</elementReference>
-        </value>
-    </variables>
-    <variables>
-        <name>FlaggedBankAccount</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
-        <value>
-            <stringValue>FI123456789</stringValue>
         </value>
     </variables>
     <variables>

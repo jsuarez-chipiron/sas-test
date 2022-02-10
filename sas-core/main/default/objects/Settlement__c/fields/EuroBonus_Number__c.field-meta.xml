@@ -3,11 +3,10 @@
     <fullName>EuroBonus_Number__c</fullName>
     <externalId>false</externalId>
     <label>EuroBonus Number</label>
-    <precision>18</precision>
+    <length>10</length>
     <required>false</required>
-    <scale>0</scale>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>
