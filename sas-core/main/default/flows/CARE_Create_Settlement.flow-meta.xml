@@ -515,11 +515,10 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>EuroBonus_Number</name>
-                    <dataType>Number</dataType>
+                    <dataType>String</dataType>
                     <fieldText>EuroBonus Number</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>
