@@ -328,6 +328,7 @@
         <object>Settlement__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Create_a_Settlement</name>
         <label>Create a Settlement</label>
