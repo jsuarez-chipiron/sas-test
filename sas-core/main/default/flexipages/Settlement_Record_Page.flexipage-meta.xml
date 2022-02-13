@@ -9,10 +9,16 @@
                         <valueListItems>
                             <value>Settlement__c.Submit_Settlement_for_Approval</value>
                             <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Settlement_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>In progress</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Settlement_Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Denied</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
