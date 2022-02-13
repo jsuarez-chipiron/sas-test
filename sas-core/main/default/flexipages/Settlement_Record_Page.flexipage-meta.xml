@@ -7,22 +7,33 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>Settlement__c.Recall_approval_request</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!Record.Settlement_Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Waiting for approval</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Settlement__c.Submit_Settlement_for_Approval</value>
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!Record.Settlement_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>In progress</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Settlement__c.Recall_settlement</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Settlement_Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Waiting for approval</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Settlement_Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Waiting for transfer</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Settlement_Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Waiting for control</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
