@@ -146,15 +146,22 @@
                 <stringValue>Waiting for transfer</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Control_verified__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>Settlement__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <textTemplates>
         <name>notificationText</name>
-        <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Settlement {!$Record.Name} has been approved and it is waiting for transfer&lt;/p&gt;</text>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Settlement {!$Record.Name} has been approved and it is waiting for transfer</text>
     </textTemplates>
     <variables>
         <description>Ids of the users that will be notified</description>
