@@ -4,9 +4,12 @@
         <name>Unlock_Settlement</name>
         <label>Unlock Settlement</label>
         <locationX>314</locationX>
-        <locationY>758</locationY>
-        <actionName>LockRecords</actionName>
+        <locationY>638</locationY>
+        <actionName>UnlockRecords</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Reject_request</targetReference>
+        </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>recordIds</name>
@@ -19,8 +22,8 @@
     <decisions>
         <name>Request_Result</name>
         <label>Request Result</label>
-        <locationX>446</locationX>
-        <locationY>398</locationY>
+        <locationX>402</locationX>
+        <locationY>518</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Approved</name>
@@ -48,24 +51,61 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Reject_request</targetReference>
+                <targetReference>Unlock_Settlement</targetReference>
             </connector>
             <label>Rejected</label>
         </rules>
         <rules>
-            <name>Completely_rejected</name>
+            <name>Stopped</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Approval_Status</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Completely rejected</stringValue>
+                    <stringValue>Stopped</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Completely_reject_request</targetReference>
+                <targetReference>Reject_request</targetReference>
             </connector>
-            <label>Completely rejected</label>
+            <label>Stopped</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Who_is_reviewing_the_settlement</name>
+        <label>Who is reviewing the settlement?</label>
+        <locationX>842</locationX>
+        <locationY>278</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Control_User</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$User.Username</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Settlement_Information.Owner:User.Username</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Approval_Request</targetReference>
+            </connector>
+            <label>Control User</label>
+        </rules>
+        <rules>
+            <name>Other_user</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$User.Username</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Settlement_Information.Owner:User.Username</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Waiting</targetReference>
+            </connector>
+            <label>Other user</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
@@ -114,10 +154,16 @@
         <name>Approverequest</name>
         <label>Approve request</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Update_Settlement_Status</targetReference>
         </connector>
+        <inputAssignments>
+            <field>Control_Reason__c</field>
+            <value>
+                <elementReference>Get_Settlement_Information.Control_Reason__c</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>OwnerId</field>
             <value>
@@ -146,61 +192,20 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
-        <name>Completely_reject_request</name>
-        <label>Completely reject request</label>
-        <locationX>578</locationX>
-        <locationY>518</locationY>
-        <connector>
-            <targetReference>Completely_reject_settlement</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>$User.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Rejection_Comment__c</field>
-            <value>
-                <elementReference>Rejection_Comments</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Rejection_Reason__c</field>
-            <value>
-                <elementReference>Rejection_Reason</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Settlement__c</field>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status__c</field>
-            <value>
-                <stringValue>Completely rejected</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type__c</field>
-            <value>
-                <stringValue>Control</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Approval_Request__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
         <name>Reject_request</name>
         <label>Reject request</label>
-        <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationX>402</locationX>
+        <locationY>1094</locationY>
         <connector>
             <targetReference>Reject_settlement</targetReference>
         </connector>
         <inputAssignments>
+            <field>Control_Reason__c</field>
+            <value>
+                <elementReference>Get_Settlement_Information.Control_Reason__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>OwnerId</field>
             <value>
                 <elementReference>$User.Id</elementReference>
@@ -227,7 +232,7 @@
         <inputAssignments>
             <field>Status__c</field>
             <value>
-                <stringValue>Rejected</stringValue>
+                <elementReference>Approval_Status</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -242,11 +247,11 @@
     <recordLookups>
         <name>Get_Settlement_Information</name>
         <label>Get Settlement Information</label>
-        <locationX>446</locationX>
+        <locationX>842</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Approval_Request</targetReference>
+            <targetReference>Who_is_reviewing_the_settlement</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -261,40 +266,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Completely_reject_settlement</name>
-        <label>Completely reject settlement</label>
-        <locationX>578</locationX>
-        <locationY>638</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Needs_Control__c</field>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Settlement_Status__c</field>
-            <value>
-                <stringValue>Denied</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Settlement__c</object>
-    </recordUpdates>
-    <recordUpdates>
         <name>Reject_settlement</name>
         <label>Reject settlement</label>
-        <locationX>314</locationX>
-        <locationY>638</locationY>
-        <connector>
-            <targetReference>Unlock_Settlement</targetReference>
-        </connector>
+        <locationX>402</locationX>
+        <locationY>1214</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -303,12 +278,6 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
-        <inputAssignments>
-            <field>Needs_Control__c</field>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </inputAssignments>
         <inputAssignments>
             <field>Settlement_Status__c</field>
             <value>
@@ -321,7 +290,7 @@
         <name>Update_Settlement_Status</name>
         <label>Update Settlement Status</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -331,9 +300,21 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>Control_Reason__c</field>
+            <value>
+                <stringValue/>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Control_verified__c</field>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Settlement_Information.Submitter__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -348,14 +329,19 @@
     <screens>
         <name>Approval_Request</name>
         <label>Approval Request</label>
-        <locationX>446</locationX>
-        <locationY>278</locationY>
+        <locationX>402</locationX>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
             <targetReference>Request_Result</targetReference>
         </connector>
+        <fields>
+            <name>ControlReason</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Control Reason(s) :&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;{!Get_Settlement_Information.Control_Reason__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>Approval_Status</name>
             <choiceReferences>AvailableStatus</choiceReferences>
@@ -384,7 +370,7 @@
                     <leftValueReference>Approval_Status</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Completely rejected</stringValue>
+                        <stringValue>Stopped</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -416,8 +402,24 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>Waiting</name>
+        <label>Waiting</label>
+        <locationX>1018</locationX>
+        <locationY>398</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>WaitingMessage</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Control verification is ongoing&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>320</locationX>
+        <locationX>716</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Settlement_Information</targetReference>

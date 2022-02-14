@@ -33,7 +33,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Approve_Settlement</targetReference>
+                <targetReference>Get_submitter_Id</targetReference>
             </connector>
             <label>No Control Needed</label>
         </rules>
@@ -93,17 +93,63 @@
         <inputAssignments>
             <field>Type__c</field>
             <value>
-                <stringValue>Manual Approval</stringValue>
+                <stringValue>Approval</stringValue>
             </value>
         </inputAssignments>
         <object>Approval_Request__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordLookups>
+        <name>Get_approver_id</name>
+        <label>Get approver id</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Settlement_to_Control_Queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Create_Approval_Request</elementReference>
+            </value>
+        </filters>
+        <object>Approval_Request__c</object>
+        <outputAssignments>
+            <assignToReference>approverId</assignToReference>
+            <field>OwnerId</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_submitter_Id</name>
+        <label>Get submitter Id</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Approve_Settlement</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>Settlement__c</object>
+        <outputAssignments>
+            <assignToReference>submitterId</assignToReference>
+            <field>Submitter__c</field>
+        </outputAssignments>
+    </recordLookups>
     <recordUpdates>
         <name>Approve_Settlement</name>
         <label>Approve Settlement</label>
         <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -125,6 +171,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>submitterId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Settlement_Status__c</field>
             <value>
                 <stringValue>Waiting for transfer</stringValue>
@@ -136,7 +188,7 @@
         <name>Assign_Settlement_to_Control_Queue</name>
         <label>Assign Settlement to Control Queue</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -145,6 +197,18 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Approver__c</field>
+            <value>
+                <elementReference>approverId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Control_Reason__c</field>
+            <value>
+                <elementReference>controlReasons</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Needs_Control__c</field>
             <value>
@@ -173,7 +237,7 @@
             <targetReference>Control_Evaluation</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Control_Evaluation</name>
         <label>Control Evaluation</label>
@@ -191,7 +255,11 @@
         </inputAssignments>
         <outputAssignments>
             <assignToReference>controlNeeded</assignToReference>
-            <name>ControlNeeded</name>
+            <name>controlNeeded</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>controlReasons</assignToReference>
+            <name>controlReasons</name>
         </outputAssignments>
     </subflows>
     <subflows>
@@ -200,7 +268,7 @@
         <locationX>50</locationX>
         <locationY>518</locationY>
         <connector>
-            <targetReference>Assign_Settlement_to_Control_Queue</targetReference>
+            <targetReference>Get_approver_id</targetReference>
         </connector>
         <flowName>Retrieve_Queue_Id</flowName>
         <inputAssignments>
@@ -214,6 +282,13 @@
             <name>QueueId</name>
         </outputAssignments>
     </subflows>
+    <variables>
+        <name>approverId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>controlNeeded</name>
         <dataType>Boolean</dataType>
@@ -229,10 +304,24 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>controlReasons</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>submitterId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
