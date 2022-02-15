@@ -3,6 +3,10 @@ public without sharing class SettlementService {
   private static SettlementsSelector settlementsSel = SettlementsSelector.newInstance();
   private static SettlementItemsSelector settlementItemsSel = SettlementItemsSelector.newInstance();
   private static RacerIntegrationCountersSelector racerIntegrationCounters = RacerIntegrationCountersSelector.newInstance();
+  private static CLMIntegrationService IntegrationService = CLMIntegrationService.newInstance();
+
+  public class SettlementsException extends Exception {
+  }
 
   /**
    * Create a batch file from all settlements waiting for transfer to Racer
@@ -159,5 +163,66 @@ public without sharing class SettlementService {
       RacerIntegrationService.FILE_TYPE.PAYMENT,
       fileId
     );
+  }
+
+  @future(callout=true)
+  public static void sendEuroBonusPoints(Id settlementId) {
+    Settlement__c settlement = settlementsSel.selectByIdWithClaimFields(
+      new Set<Id>{ settlementId }
+    )[0];
+    if (settlement.Settlement_Status__c != 'Waiting for transfer') {
+      throw new SettlementsException(
+        'Settlement should be waiting for transfer.'
+      );
+    }
+    // TODO: We should check that we have all necessary data.
+
+    Settlements s = Settlements.newInstance(
+      new List<Settlement__c>{ settlement }
+    );
+
+    try {
+      CLMIntegrationService.AddPointsResponse resp = IntegrationService.addPointsToCustomer(
+        settlement.EuroBonus_Number__c,
+        settlement.EuroBonus_Points__c.intValue(),
+        settlement.Submitter__r.Email,
+        settlement.Name,
+        settlement.Claim__r.Name,
+        'Claim', // TODO: Should we add something more detailed in here? Request.reasonForPoints
+        settlement.Claim__r.Liability_PNR__c,
+        '' // TODO: Add ticketNumber
+      );
+      if (resp.isSuccess) {
+        // Points added
+        Settlements.newInstance(new List<Settlement__c>{ settlement })
+          .markAsDone(resp.successResponse.clmTransactionId);
+      } else {
+        // Domain failure, e.g. invalid EB number.
+        Settlements.newInstance(new List<Settlement__c>{ settlement })
+          .markAsFailed(resp.failureResponse.message);
+      }
+    } catch (Exception e) {
+      // Service failure, e.g. something 5xx.
+      Settlements.newInstance(new List<Settlement__c>{ settlement })
+        .markAsFailed(e.getMessage());
+
+      C_Log.log(
+        C_Log.Severity.Error,
+        'SettlementService.sendEuroBonusPoints# Failed to send points for settlement: ' +
+        settlement.Name,
+        null,
+        'CLM',
+        null
+      );
+    }
+  }
+
+  @future(callout=true)
+  public static void createAndSendVoucher(Id settlementId) {
+    Settlement__c settlement = settlementsSel.selectById(
+      new Set<Id>{ settlementId }
+    )[0];
+    // TODO: Figure out error handling.
+    // VoucherService.createVoucher(settlement);
   }
 }

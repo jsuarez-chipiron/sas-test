@@ -3,12 +3,25 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   public Settlements(List<SObject> records) {
     super(records);
+    this.instanceRecords = (List<Settlement__c>) Records;
   }
+
+  private List<Settlement__c> instanceRecords;
+  public static final Id VOUCHER_RECORD_TYPE_ID = Schema.SObjectType.Settlement__c.getRecordTypeInfosByName()
+    .get('Voucher')
+    .getRecordTypeId();
+  public static final Id EUROBONUS_POINTS_RECORD_TYPE_ID = Schema.SObjectType.Settlement__c.getRecordTypeInfosByName()
+    .get('EB points')
+    .getRecordTypeId();
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
       return new Settlements(records);
     }
+  }
+
+  public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
+    processPayableVoucherAndEuroBonusSettlements();
   }
 
   public static Settlements newInstance(List<Settlement__c> sObjectList) {
@@ -69,7 +82,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         C_Log.Severity.Error,
         'Settlements rejected by bank with error: ' + errorMessage,
         null,
-        'RACER',
+        'Settlements',
         null
       );
     }
@@ -101,7 +114,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         C_Log.Severity.Error,
         'Settlements rejected by Racer: ' + errorMessage,
         null,
-        'RACER',
+        'Settlements',
         null
       );
     }
@@ -126,8 +139,57 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       C_Log.Severity.Error,
       'Rejected by bank with error: ' + errorMessage,
       null,
-      'RACER',
+      'Settlements',
       null
     );
+  }
+
+  public void markAsDone(String reference) {
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    markAsDone(reference, uow);
+    uow.commitWork();
+  }
+
+  public void markAsDone(String reference, fflib_ISObjectUnitOfWork uow) {
+    for (Settlement__c s : (List<Settlement__c>) Records) {
+      s.Settlement_Status__c = 'Done';
+      s.External_Reference__c = reference;
+      uow.registerDirty(s);
+    }
+  }
+
+  public void markAsFailed(String errorMessage) {
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    markAsFailed(errorMessage, uow);
+    uow.commitWork();
+  }
+
+  public void markAsFailed(String errorMessage, fflib_ISObjectUnitOfWork uow) {
+    for (Settlement__c s : (List<Settlement__c>) Records) {
+      s.Settlement_Status__c = 'Failed';
+      s.Error_Message__c = errorMessage;
+      uow.registerDirty(s);
+    }
+    C_Log.log(
+      C_Log.Severity.Error,
+      'Settlement denied: ' + errorMessage,
+      null,
+      'Settlements',
+      null
+    );
+  }
+
+  private void processPayableVoucherAndEuroBonusSettlements() {
+    for (Settlement__c settlement : instanceRecords) {
+      if (settlement.Settlement_Status__c == 'Waiting for transfer') {
+        if (settlement.RecordTypeId == EUROBONUS_POINTS_RECORD_TYPE_ID) {
+          // future eb request
+          SettlementService.sendEuroBonusPoints(settlement.Id);
+        } else if (settlement.RecordTypeId == VOUCHER_RECORD_TYPE_ID) {
+          // future voucher request
+          SettlementService.createAndSendVoucher(settlement.Id);
+        }
+      }
+    }
   }
 }
