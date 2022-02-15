@@ -71,12 +71,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>LIA_Claim__c.Address_line_1__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>LIA_Claim__c.Address_line_2__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -98,6 +98,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Bank_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.CARE_Case_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -163,6 +168,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Date_of_Receipt__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.Deadline__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

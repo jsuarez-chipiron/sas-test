@@ -51,6 +51,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GetRandomNumber</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LockRecords</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>Passengers</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -86,6 +94,10 @@
         <apexClass>TEDSIntegrationService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>UnlockRecords</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>    
     <classAccesses>
         <apexClass>FCS_CaseTag_Controller</apexClass>
         <enabled>true</enabled>

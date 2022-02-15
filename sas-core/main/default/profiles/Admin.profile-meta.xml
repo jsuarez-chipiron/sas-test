@@ -69,6 +69,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GetRandomNumber</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LockRecords</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>Passengers</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -104,6 +112,10 @@
         <apexClass>TravelPassService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>UnlockRecords</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>    
     <custom>false</custom>
     <customPermissions>
         <enabled>true</enabled>
