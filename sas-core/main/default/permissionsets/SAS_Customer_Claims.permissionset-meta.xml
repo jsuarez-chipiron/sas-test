@@ -4,7 +4,7 @@
         <application>SAS_Customer_Claims</application>
         <visible>true</visible>
     </applicationVisibilities>
-    <description>App that gives access to customer claims functionality</description>
+    <description>Permission set provides access to Customer Claim functionality</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Approval_Request__c.Rejection_Comment__c</field>
@@ -356,7 +356,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Settlement__c.Accounting_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -416,6 +416,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Settlement__c.Control_verified__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Settlement__c.Country__c</field>
         <readable>true</readable>
@@ -437,11 +442,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Settlement__c.Date_of_Exchange_Calculation__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Settlement__c.Date_of_Last_Approval_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -453,11 +453,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Settlement__c.EuroBonus_Points__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Settlement__c.Exchange_Rate_SEK_to_currency__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -486,12 +481,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Settlement__c.Settlement_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Settlement__c.Settlement_amount_in_SEK__c</field>
         <readable>true</readable>
     </fieldPermissions>

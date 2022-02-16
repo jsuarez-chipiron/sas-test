@@ -4,8 +4,8 @@
     <fields>Name</fields>
     <fields>RecordTypeId</fields>
     <fields>Claim__c</fields>
-    <fields>OwnerId</fields>
     <fields>Submitter__c</fields>
     <fields>Approver__c</fields>
+    <fields>OwnerId</fields>
     <label>Settlement Compact Layout</label>
 </CompactLayout>

@@ -33,7 +33,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Settlement_to_Transfer</targetReference>
+                <targetReference>Approve_Settlement</targetReference>
             </connector>
             <label>No Manual Control Needed</label>
         </rules>
@@ -89,25 +89,6 @@
         </inputAssignments>
         <inputReference>$Record</inputReference>
     </recordUpdates>
-    <recordUpdates>
-        <name>Update_Settlement_to_Transfer</name>
-        <label>Update Settlement to Transfer</label>
-        <locationX>314</locationX>
-        <locationY>575</locationY>
-        <inputAssignments>
-            <field>Control_verified__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Settlement_Status__c</field>
-            <value>
-                <stringValue>Waiting for transfer</stringValue>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <runInMode>DefaultMode</runInMode>
     <start>
         <locationX>188</locationX>
@@ -128,7 +109,20 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
+    <subflows>
+        <name>Approve_Settlement</name>
+        <label>Approve Settlement</label>
+        <locationX>314</locationX>
+        <locationY>575</locationY>
+        <flowName>CLAIM_Settlement_Approved</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>Control_Evaluation</name>
         <label>Control Evaluation</label>

@@ -153,6 +153,9 @@
         <label>Update settlement to control</label>
         <locationX>314</locationX>
         <locationY>935</locationY>
+        <connector>
+            <targetReference>Control_Process</targetReference>
+        </connector>
         <inputAssignments>
             <field>Approver__c</field>
             <value>
@@ -187,6 +190,19 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Control_Process</name>
+        <label>Control Process</label>
+        <locationX>314</locationX>
+        <locationY>1055</locationY>
+        <flowName>CLAIM_Control_Process</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>Evaluate_settlement_for_manual_approval</name>
         <label>Evaluate settlement for manual approval</label>
