@@ -1156,9 +1156,9 @@
         <label>Western Sahara</label>
     </customValue>
     <customValue>
-        <fullName>Viet Nam</fullName>
+        <fullName>Vietnam</fullName>
         <default>false</default>
-        <label>Viet Nam</label>
+        <label>Vietnam</label>
     </customValue>
     <customValue>
         <fullName>Virgin Islands (British)</fullName>
@@ -1184,6 +1184,11 @@
         <fullName>Zimbabwe</fullName>
         <default>false</default>
         <label>Zimbabwe</label>
+    </customValue>
+    <customValue>
+        <fullName>Finland</fullName>
+        <default>false</default>
+        <label>Finland</label>
     </customValue>
     <masterLabel>Countries</masterLabel>
     <sorted>true</sorted>
