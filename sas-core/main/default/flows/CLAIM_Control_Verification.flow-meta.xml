@@ -156,7 +156,7 @@
         <locationX>50</locationX>
         <locationY>638</locationY>
         <connector>
-            <targetReference>Update_Settlement_Status</targetReference>
+            <targetReference>Approve_Settlement</targetReference>
         </connector>
         <inputAssignments>
             <field>Control_Reason__c</field>
@@ -197,7 +197,7 @@
         <locationX>402</locationX>
         <locationY>1094</locationY>
         <connector>
-            <targetReference>Reject_settlement</targetReference>
+            <targetReference>Deny_Settlement</targetReference>
         </connector>
         <inputAssignments>
             <field>Control_Reason__c</field>
@@ -265,66 +265,6 @@
         <object>Settlement__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <name>Reject_settlement</name>
-        <label>Reject settlement</label>
-        <locationX>402</locationX>
-        <locationY>1214</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Settlement_Status__c</field>
-            <value>
-                <stringValue>Denied</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Settlement__c</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Settlement_Status</name>
-        <label>Update Settlement Status</label>
-        <locationX>50</locationX>
-        <locationY>758</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Control_Reason__c</field>
-            <value>
-                <stringValue/>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Control_verified__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>Get_Settlement_Information.Submitter__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Settlement_Status__c</field>
-            <value>
-                <stringValue>Waiting for transfer</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Settlement__c</object>
-    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Approval_Request</name>
@@ -394,7 +334,7 @@
                     <leftValueReference>Approval_Status</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rejected Completely</stringValue>
+                        <stringValue>Stopped</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -426,6 +366,32 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Approve_Settlement</name>
+        <label>Approve Settlement</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <flowName>CLAIM_Settlement_Approved</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Deny_Settlement</name>
+        <label>Deny Settlement</label>
+        <locationX>402</locationX>
+        <locationY>1214</locationY>
+        <flowName>CLAIM_Settlement_Denied</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>Approval</name>
         <dataType>SObject</dataType>

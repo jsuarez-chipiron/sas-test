@@ -184,9 +184,9 @@
         <name>Reject_request</name>
         <label>Reject request</label>
         <locationX>402</locationX>
-        <locationY>1094</locationY>
+        <locationY>1214</locationY>
         <connector>
-            <targetReference>Reject_settlement</targetReference>
+            <targetReference>Deny_Settlement</targetReference>
         </connector>
         <inputAssignments>
             <field>OwnerId</field>
@@ -249,31 +249,13 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Reject_settlement</name>
-        <label>Reject settlement</label>
-        <locationX>402</locationX>
-        <locationY>1214</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Settlement_Status__c</field>
-            <value>
-                <stringValue>Denied</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Settlement__c</object>
-    </recordUpdates>
-    <recordUpdates>
         <name>Update_Settlement_to_Control_and_save_approver_s_name</name>
         <label>Update Settlement to Control and save approver&apos;s name</label>
         <locationX>50</locationX>
         <locationY>758</locationY>
+        <connector>
+            <targetReference>Control_Process</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -363,7 +345,7 @@
                     <leftValueReference>Approval_Status</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Completely rejected</stringValue>
+                        <stringValue>Stopped</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -395,6 +377,32 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Control_Process</name>
+        <label>Control Process</label>
+        <locationX>50</locationX>
+        <locationY>878</locationY>
+        <flowName>CLAIM_Control_Process</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Deny_Settlement</name>
+        <label>Deny Settlement</label>
+        <locationX>402</locationX>
+        <locationY>1334</locationY>
+        <flowName>CLAIM_Settlement_Denied</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
