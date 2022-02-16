@@ -290,6 +290,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Finland</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>France</fullName>
             <default>false</default>
         </values>
@@ -934,7 +938,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Viet Nam</fullName>
+            <fullName>Vietnam</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1241,6 +1245,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Finland</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>France</fullName>
             <default>false</default>
         </values>
@@ -1885,7 +1893,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Viet Nam</fullName>
+            <fullName>Vietnam</fullName>
             <default>false</default>
         </values>
         <values>
