@@ -409,4 +409,150 @@ public with sharing class Settlements_IntegrationTest {
       'Run Id should be incremented after file creation.'
     );
   }
+
+  @IsTest
+  public static void ebSettlementsShouldBeProcessedImmediatelyWhenWaitingForTransfer() {
+    // Given
+    User settlementSubmitter = FCS_TestDataFactory.createUsers(1)[0];
+    insert settlementSubmitter;
+
+    LIA_Claim__c claim = new LIA_Claim__c(Liability_PNR__c = '0000AA');
+    insert claim;
+
+    Settlement__c settlement = new Settlement__c(
+      Claim__c = claim.Id,
+      EuroBonus_Number__c = '000000000',
+      EuroBonus_Points__c = 3000,
+      Payee_Name__c = 'Test Testsson',
+      Postal_Code__c = '00000',
+      RecordTypeId = Settlements.EUROBONUS_POINTS_RECORD_TYPE_ID,
+      Settlement_Status__c = 'In progress',
+      Submitter__c = settlementSubmitter.Id
+    );
+
+    insert settlement;
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    // When
+    settlement.Settlement_Status__c = 'Waiting for transfer';
+    Test.startTest();
+    update settlement;
+    Test.stopTest();
+
+    // Then
+    Settlement__c settlementAfterProcessing = [
+      SELECT Id, Settlement_Status__c, External_Reference__c
+      FROM Settlement__c
+      WHERE Id = :settlement.Id
+    ];
+
+    System.assertEquals(
+      'Done',
+      settlementAfterProcessing.Settlement_Status__c,
+      'Settlement should be marked as done after successfully adding points.'
+    );
+    System.assertEquals(
+      APIMMock.CLM_TRANSACTION_ID,
+      settlementAfterProcessing.External_Reference__c,
+      'Settlement should external reference set based on response.'
+    );
+  }
+
+  @IsTest
+  public static void ebSettlementProcessingShouldHandleDomainFailuresProperly() {
+    // Given
+    User settlementSubmitter = FCS_TestDataFactory.createUsers(1)[0];
+    insert settlementSubmitter;
+
+    LIA_Claim__c claim = new LIA_Claim__c(Liability_PNR__c = '0000AA');
+    insert claim;
+
+    Settlement__c settlement = new Settlement__c(
+      Claim__c = claim.Id,
+      EuroBonus_Number__c = APIMMock.EB_NUMBER_NOT_IN_CLM,
+      EuroBonus_Points__c = 3000,
+      Payee_Name__c = 'Test Testsson',
+      Postal_Code__c = '00000',
+      RecordTypeId = Settlements.EUROBONUS_POINTS_RECORD_TYPE_ID,
+      Settlement_Status__c = 'In progress',
+      Submitter__c = settlementSubmitter.Id
+    );
+
+    insert settlement;
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    // When
+    settlement.Settlement_Status__c = 'Waiting for transfer';
+    Test.startTest();
+    update settlement;
+    Test.stopTest();
+
+    // Then
+    Settlement__c settlementAfterProcessing = [
+      SELECT Id, Settlement_Status__c, Error_Message__c, External_Reference__c
+      FROM Settlement__c
+      WHERE Id = :settlement.Id
+    ];
+
+    System.assertEquals(
+      'Failed',
+      settlementAfterProcessing.Settlement_Status__c,
+      'Settlement should be marked as denied after failing to add points.'
+    );
+    System.assertEquals(
+      'Customer does not exist.',
+      settlementAfterProcessing.Error_Message__c,
+      'Settlement should have error detail set to response error.'
+    );
+  }
+
+  @IsTest
+  public static void ebSettlementProcessingShouldHandleServiceFailuresProperly() {
+    // Given
+    User settlementSubmitter = FCS_TestDataFactory.createUsers(1)[0];
+    insert settlementSubmitter;
+
+    LIA_Claim__c claim = new LIA_Claim__c(Liability_PNR__c = '0000AA');
+    insert claim;
+
+    Settlement__c settlement = new Settlement__c(
+      Claim__c = claim.Id,
+      EuroBonus_Number__c = APIMMock.EB_NUMBER_RETURN_500,
+      EuroBonus_Points__c = 3000,
+      Payee_Name__c = 'Test Testsson',
+      Postal_Code__c = '00000',
+      RecordTypeId = Settlements.EUROBONUS_POINTS_RECORD_TYPE_ID,
+      Settlement_Status__c = 'In progress',
+      Submitter__c = settlementSubmitter.Id
+    );
+
+    insert settlement;
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    // When
+    settlement.Settlement_Status__c = 'Waiting for transfer';
+    Test.startTest();
+    update settlement;
+    Test.stopTest();
+
+    // Then
+    Settlement__c settlementAfterProcessing = [
+      SELECT Id, Settlement_Status__c, Error_Message__c, External_Reference__c
+      FROM Settlement__c
+      WHERE Id = :settlement.Id
+    ];
+
+    System.assertEquals(
+      'Failed',
+      settlementAfterProcessing.Settlement_Status__c,
+      'Settlement should be marked as denied after failing to add points.'
+    );
+    System.assert(
+      settlementAfterProcessing.Error_Message__c.contains('500'),
+      'Settlement should have error detail set to contain 500 error code.'
+    );
+  }
 }

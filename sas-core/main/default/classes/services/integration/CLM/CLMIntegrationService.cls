@@ -2,7 +2,7 @@
  * Service for making requests to Comarch Loyalty Management (CLM) through the Loyalty APIM.
  */
 public without sharing class CLMIntegrationService {
-  private static final String PARTNER_ID = 'REST';
+  private static final String PARTNER_ID = 'SKSFSC'; // Salesforce Service Cloud
   private static final String API_PATH = 'callout:CLM_APIM';
   private static final String SUBSCRIPTION_KEY = Test.isRunningTest()
     ? 'TESTKEY'
@@ -11,6 +11,28 @@ public without sharing class CLMIntegrationService {
   public enum POINTS_TYPE {
     BASIC,
     EXTRA
+  }
+
+  public static CLMIntegrationService newInstance() {
+    return (CLMIntegrationService) SAS_Service_Application.Service.newInstance(
+      CLMIntegrationService.class
+    );
+  }
+
+  public class AddPointsResponse {
+    public Boolean isSuccess;
+    public CLMAddPointsResponse successResponse;
+    public CLMFailureResponse failureResponse;
+
+    AddPointsResponse(CLMAddPointsResponse rawSuccessResponse) {
+      this.isSuccess = true;
+      this.successResponse = rawSuccessResponse;
+    }
+
+    AddPointsResponse(CLMFailureResponse rawFailureResponse) {
+      this.isSuccess = false;
+      this.failureResponse = rawFailureResponse;
+    }
   }
 
   public class IntegrationException extends Exception {
@@ -31,7 +53,7 @@ public without sharing class CLMIntegrationService {
    *
    * @return CLMAddPointsResponse The parsed CLM response on status codes less than 400.
    */
-  public CLMAddPointsResponse addPointsToCustomer(
+  public AddPointsResponse addPointsToCustomer(
     String euroBonusNumber,
     Integer pointsToAdd,
     String ADUserEmail,
@@ -76,7 +98,16 @@ public without sharing class CLMIntegrationService {
       return null;
     }
 
-    return CLMAddPointsResponse.parse(response.getBody());
+    if (response.getStatusCode() >= 400) {
+      // Transaction failure
+      return new AddPointsResponse(
+        CLMFailureResponse.parse(response.getBody())
+      );
+    }
+
+    return new AddPointsResponse(
+      CLMAddPointsResponse.parse(response.getBody())
+    );
   }
 
   /** Attempts to withdraw a number of Extra points from a EuroBonus customer using CLM APIs.
@@ -219,7 +250,7 @@ public without sharing class CLMIntegrationService {
     Http http = new Http();
     HttpResponse response = http.send(request);
 
-    if (response.getStatusCode() >= 400 && response.getStatusCode() != 404) {
+    if (response.getStatusCode() >= 500) {
       // Log and throw again. Typically can't be resolved.
       String message =
         'CLMIntegration query failed with: ' +

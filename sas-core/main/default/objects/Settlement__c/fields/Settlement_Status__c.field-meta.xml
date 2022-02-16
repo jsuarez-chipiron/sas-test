@@ -72,6 +72,11 @@
                 <label>L2 errors by Bank</label>
             </value>
             <value>
+                <fullName>Failed</fullName>
+                <default>false</default>
+                <label>Failed</label>
+            </value>
+            <value>
                 <fullName>Done</fullName>
                 <default>false</default>
                 <label>Done</label>

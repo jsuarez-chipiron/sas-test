@@ -9,11 +9,14 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
       Settlement__c.City__c,
       Settlement__c.Country__c,
       Settlement__c.Currency__c,
+      Settlement__c.EuroBonus_Number__c,
+      Settlement__c.EuroBonus_Points__c,
       Settlement__c.IBAN__c,
       Settlement__c.Name,
       Settlement__c.Payee_Name__c,
       Settlement__c.Payee_reference__c,
-      Settlement__c.Postal_Code__c
+      Settlement__c.Postal_Code__c,
+      Settlement__c.Settlement_Status__c
     };
   }
 
@@ -31,11 +34,22 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
     return (List<Settlement__c>) selectSObjectsById(ids);
   }
 
-  String statusToTake = 'Waiting for transfer';
+  public List<Settlement__c> selectByIdWithClaimFields(Set<Id> ids) {
+    return (List<Settlement__c>) Database.query(
+      newQueryFactory()
+        .setCondition('Id IN :ids')
+        .selectField('Claim__r.Name')
+        .selectField('Claim__r.Liability_PNR__c')
+        .selectField('Submitter__r.Email')
+        .toSOQL()
+    );
+  }
 
   public List<Settlement__c> selectWaitingForTransferByCurrency(
     List<String> currencies
   ) {
+    String statusToTake = 'Waiting for transfer';
+
     return (List<Settlement__c>) Database.query(
       newQueryFactory()
         .setCondition(

@@ -5,7 +5,7 @@ public without sharing class LoyaltyService {
 
   // TODO: Comments when scope is clear.
   @future(callout=true)
-  public static void addPointsToCustomer(
+  public static void addPointsToCustomer( // FIXME: These shouldn't be callable without an existing settlement!
     String euroBonusNumber,
     Integer pointsToAdd,
     String transactionId,
@@ -17,7 +17,7 @@ public without sharing class LoyaltyService {
     // TODO: Save what happened as some record in Salesforce.
     // TODO: Pass correct incoming data into the
     // TODO: Consider where the logic of figuring out trnId etc. belongs to. Probably to here.
-    String userEmail = System.UserInfo.getUserEmail();
+    /*String userEmail = System.UserInfo.getUserEmail();
 
     CLMAddPointsResponse resp = IntegrationService.addPointsToCustomer(
       euroBonusNumber,
@@ -28,12 +28,12 @@ public without sharing class LoyaltyService {
       reasonForPoints,
       bookingReference,
       ticketNumber
-    );
+    );*/
   }
 
   // TODO: Comments when scope is clear.
   @future(callout=true)
-  public static void withdrawPointsFromCustomer(
+  public static void withdrawPointsFromCustomer( // FIXME: These shouldn't be callable without an existing settlement!
     String euroBonusNumber,
     Integer pointsToWithdraw,
     String transactionId,
@@ -45,7 +45,7 @@ public without sharing class LoyaltyService {
     // TODO: Save what happened as some record in Salesforce.
     // TODO: Pass correct incoming data into the
     // TODO: Consider where the logic of figuring out trnId etc. belongs to. Probably to here.
-    String userEmail = System.UserInfo.getUserEmail();
+    /*String userEmail = System.UserInfo.getUserEmail();
 
     CLMWithdrawPointsResponse resp = IntegrationService.withdrawPointsFromCustomer(
       euroBonusNumber,
@@ -58,6 +58,6 @@ public without sharing class LoyaltyService {
       ticketNumber
     );
 
-    System.debug(resp);
+    System.debug(resp);*/
   }
 }
