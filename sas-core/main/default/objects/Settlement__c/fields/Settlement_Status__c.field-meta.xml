@@ -27,6 +27,11 @@
                 <label>Denied</label>
             </value>
             <value>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+                <label>Blocked</label>
+            </value>
+            <value>
                 <fullName>Waiting for control</fullName>
                 <default>false</default>
                 <label>Waiting for control</label>
@@ -40,11 +45,6 @@
                 <fullName>Sent to Racer</fullName>
                 <default>false</default>
                 <label>Sent to Racer</label>
-            </value>
-            <value>
-                <fullName>Accepted by Racer</fullName>
-                <default>false</default>
-                <label>Accepted by Racer</label>
             </value>
             <value>
                 <fullName>Rejected by Racer</fullName>
@@ -62,16 +62,6 @@
                 <label>Rejected by bank</label>
             </value>
             <value>
-                <fullName>Accepted by Bank/Done</fullName>
-                <default>false</default>
-                <label>Accepted by Bank/Done</label>
-            </value>
-            <value>
-                <fullName>L2 errors by Bank</fullName>
-                <default>false</default>
-                <label>L2 errors by Bank</label>
-            </value>
-            <value>
                 <fullName>Failed</fullName>
                 <default>false</default>
                 <label>Failed</label>
@@ -80,6 +70,24 @@
                 <fullName>Done</fullName>
                 <default>false</default>
                 <label>Done</label>
+            </value>
+            <value>
+                <fullName>Accepted by Bank/Done</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Accepted by Bank/Done</label>
+            </value>
+            <value>
+                <fullName>Accepted by Racer</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Accepted by Racer</label>
+            </value>
+            <value>
+                <fullName>L2 errors by Bank</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>L2 errors by Bank</label>
             </value>
         </valueSetDefinition>
     </valueSet>

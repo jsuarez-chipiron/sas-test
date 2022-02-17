@@ -927,11 +927,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Settlement__c.Date_of_Last_Approval_Date__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Settlement__c.EuroBonus_Number__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -962,22 +957,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Settlement__c.Reopen_Date__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Settlement__c.Settlement_Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Settlement__c.Settlement_amount_in_SEK__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Settlement__c.Stop_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

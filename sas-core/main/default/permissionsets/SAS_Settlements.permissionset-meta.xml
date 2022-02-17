@@ -38,13 +38,13 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Settlement__c.EuroBonus_Number__c</field>
-        <readable>false</readable>
+        <field>Settlement__c.Needs_Control__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Settlement__c.Needs_Control__c</field>
-        <readable>true</readable>
+        <field>Settlement__c.Settlement_Status__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>SAS Settlements</label>
