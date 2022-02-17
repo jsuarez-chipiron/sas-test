@@ -4,6 +4,7 @@ public without sharing class SettlementService {
   private static SettlementItemsSelector settlementItemsSel = SettlementItemsSelector.newInstance();
   private static RacerIntegrationCountersSelector racerIntegrationCounters = RacerIntegrationCountersSelector.newInstance();
   private static CLMIntegrationService IntegrationService = CLMIntegrationService.newInstance();
+  private static VoucherIntegrationService VouchersService = VoucherIntegrationService.newInstance();
 
   public class SettlementsException extends Exception {
   }
@@ -44,7 +45,7 @@ public without sharing class SettlementService {
         'SettlementService.createPaymentFile# No settlements found for: ' +
         fileCurrency.name(),
         null,
-        'RACER',
+        'Settlements',
         null
       );
       return;
@@ -120,7 +121,7 @@ public without sharing class SettlementService {
         'SettlementService.createAccountingFile# No settlement items found for: ' +
         fileCurrency.name(),
         null,
-        'RACER',
+        'Settlements',
         null
       );
       return;
@@ -165,21 +166,26 @@ public without sharing class SettlementService {
     );
   }
 
+  /**
+   * Tries to process the given settlement as a EuroBonus points payment and
+   * add the points to the user's account by calling out to CLM. Marks the
+   * settlements as either done or failed depending on the results of the
+   * operation.
+   */
   @future(callout=true)
   public static void sendEuroBonusPoints(Id settlementId) {
+    // TODO: Should this be in the domain class?
     Settlement__c settlement = settlementsSel.selectByIdWithClaimFields(
       new Set<Id>{ settlementId }
     )[0];
-    if (settlement.Settlement_Status__c != 'Waiting for transfer') {
+    if (
+      settlement.Settlement_Status__c != Settlements.STATUS_WAITING_FOR_TRANSFER
+    ) {
       throw new SettlementsException(
         'Settlement should be waiting for transfer.'
       );
     }
     // TODO: We should check that we have all necessary data.
-
-    Settlements s = Settlements.newInstance(
-      new List<Settlement__c>{ settlement }
-    );
 
     try {
       CLMIntegrationService.AddPointsResponse resp = IntegrationService.addPointsToCustomer(
@@ -211,18 +217,66 @@ public without sharing class SettlementService {
         'SettlementService.sendEuroBonusPoints# Failed to send points for settlement: ' +
         settlement.Name,
         null,
-        'CLM',
+        'Settlements',
         null
       );
     }
   }
 
+  /**
+   * Tries to process the given settlement as a voucher payment and create
+   * and send a voucher for the customer. Marks the settlements as either
+   * done or failed depending on the results of the operation.
+   */
   @future(callout=true)
   public static void createAndSendVoucher(Id settlementId) {
-    Settlement__c settlement = settlementsSel.selectById(
+    // TODO: Should this be in the domain class?
+    Settlement__c settlement = settlementsSel.selectByIdWithClaimFields(
       new Set<Id>{ settlementId }
     )[0];
-    // TODO: Figure out error handling.
-    // VoucherService.createVoucher(settlement);
+    if (
+      settlement.Settlement_Status__c != Settlements.STATUS_WAITING_FOR_TRANSFER
+    ) {
+      throw new SettlementsException(
+        'Settlement should be waiting for transfer.'
+      );
+    }
+    // TODO: We should check that we have all necessary data.
+
+    VoucherCreateRequest voucherToCreate = new VoucherCreateRequest(
+      VoucherIntegrationService.VoucherType.COMP,
+      VoucherIntegrationService.VoucherSubType.CARE,
+      settlement.Currency__c,
+      settlement.Amount__c.intValue(),
+      settlement.Payee_Name__c, //firstName, TODO: Separate out
+      settlement.Payee_Name__c, //lastName, TODO: Separate out
+      settlement.Voucher_Email__c,
+      settlement.Claim__r.Case__r.CaseNumber,
+      settlement.Address_line_1__c,
+      settlement.Postal_Code__c,
+      settlement.City__c,
+      settlement.Country__c
+    );
+
+    try {
+      VoucherCreateResponse resp = VouchersService.createVoucher(
+        voucherToCreate
+      );
+      // Voucher created successfully.
+      Settlements.newInstance(new List<Settlement__c>{ settlement })
+        .markAsDone('');
+    } catch (Exception e) {
+      Settlements.newInstance(new List<Settlement__c>{ settlement })
+        .markAsFailed(e.getMessage());
+
+      C_Log.log(
+        C_Log.Severity.Error,
+        'SettlementService.createAndSendVoucher# Failed to create and send voucher for settlement: ' +
+        settlement.Name,
+        null,
+        'Settlements',
+        null
+      );
+    }
   }
 }

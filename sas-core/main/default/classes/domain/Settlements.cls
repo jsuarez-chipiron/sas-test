@@ -7,6 +7,19 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   }
 
   private List<Settlement__c> instanceRecords;
+
+  public static final String STATUS_IN_PROGRESS = 'In progress';
+  public static final String STATUS_WAITING_FOR_APPROVAL = 'Waiting for approval';
+  public static final String STATUS_WAITING_FOR_CONTROL = 'Waiting for control';
+  public static final String STATUS_DENIED = 'Denied';
+  public static final String STATUS_WAITING_FOR_TRANSFER = 'Waiting for transfer';
+  public static final String STATUS_SENT_TO_RACER = 'Sent to Racer';
+  public static final String STATUS_REJECTED_BY_RACER = 'Rejected by Racer';
+  public static final String STATUS_SENT_TO_BANK = 'Sent to bank';
+  public static final String STATUS_REJECTED_BY_BANK = 'Rejected by bank';
+  public static final String STATUS_DONE = 'Done';
+  public static final String STATUS_FAILED = 'Failed';
+
   public static final Id VOUCHER_RECORD_TYPE_ID = Schema.SObjectType.Settlement__c.getRecordTypeInfosByName()
     .get('Voucher')
     .getRecordTypeId();
@@ -42,7 +55,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   ) {
     for (Settlement__c s : (List<Settlement__c>) Records) {
       s.Payment_File_Name__c = paymentFilename;
-      s.Settlement_Status__c = 'Sent to Racer';
+      s.Settlement_Status__c = STATUS_SENT_TO_RACER;
       uow.registerDirty(s);
     }
   }
@@ -62,7 +75,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       Set<Id> acceptedSettlementIds = new Set<Id>();
 
       for (Settlement__c s : (List<Settlement__c>) Records) {
-        s.Settlement_Status__c = 'Accepted by Bank/Done';
+        s.Settlement_Status__c = STATUS_DONE;
         uow.registerDirty(s);
         acceptedSettlementIds.add(s.Id);
       }
@@ -74,7 +87,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         .markAsReadyForTransfer(uow);
     } else {
       for (Settlement__c s : (List<Settlement__c>) Records) {
-        s.Settlement_Status__c = 'Rejected by Bank';
+        s.Settlement_Status__c = STATUS_REJECTED_BY_BANK;
         s.Error_Message__c = errorMessage;
         uow.registerDirty(s);
       }
@@ -101,12 +114,12 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   ) {
     if (racerStatus == 'PROCESSED') {
       for (Settlement__c s : (List<Settlement__c>) Records) {
-        s.Settlement_Status__c = 'Accepted by Racer';
+        s.Settlement_Status__c = STATUS_SENT_TO_BANK;
         uow.registerDirty(s);
       }
     } else {
       for (Settlement__c s : (List<Settlement__c>) Records) {
-        s.Settlement_Status__c = 'Rejected by Racer';
+        s.Settlement_Status__c = STATUS_REJECTED_BY_RACER;
         s.Error_Message__c = errorMessage;
         uow.registerDirty(s);
       }
@@ -131,7 +144,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     fflib_ISObjectUnitOfWork uow
   ) {
     for (Settlement__c s : (List<Settlement__c>) Records) {
-      s.Settlement_Status__c = 'L2 errors by Bank';
+      s.Settlement_Status__c = STATUS_FAILED;
       s.Error_Message__c = errorMessage;
       uow.registerDirty(s);
     }
@@ -152,7 +165,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   public void markAsDone(String reference, fflib_ISObjectUnitOfWork uow) {
     for (Settlement__c s : (List<Settlement__c>) Records) {
-      s.Settlement_Status__c = 'Done';
+      s.Settlement_Status__c = STATUS_DONE;
       s.External_Reference__c = reference;
       uow.registerDirty(s);
     }
@@ -166,7 +179,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   public void markAsFailed(String errorMessage, fflib_ISObjectUnitOfWork uow) {
     for (Settlement__c s : (List<Settlement__c>) Records) {
-      s.Settlement_Status__c = 'Failed';
+      s.Settlement_Status__c = STATUS_FAILED;
       s.Error_Message__c = errorMessage;
       uow.registerDirty(s);
     }
@@ -181,7 +194,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   private void processPayableVoucherAndEuroBonusSettlements() {
     for (Settlement__c settlement : instanceRecords) {
-      if (settlement.Settlement_Status__c == 'Waiting for transfer') {
+      if (settlement.Settlement_Status__c == STATUS_WAITING_FOR_TRANSFER) {
         if (settlement.RecordTypeId == EUROBONUS_POINTS_RECORD_TYPE_ID) {
           // future eb request
           SettlementService.sendEuroBonusPoints(settlement.Id);

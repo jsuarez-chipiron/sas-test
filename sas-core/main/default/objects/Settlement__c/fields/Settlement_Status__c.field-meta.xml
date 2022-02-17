@@ -52,14 +52,14 @@
                 <label>Rejected by Racer</label>
             </value>
             <value>
-                <fullName>Sent to Bank</fullName>
+                <fullName>Sent to bank</fullName>
                 <default>false</default>
-                <label>Sent to Bank</label>
+                <label>Sent to bank</label>
             </value>
             <value>
-                <fullName>Rejected by Bank</fullName>
+                <fullName>Rejected by bank</fullName>
                 <default>false</default>
-                <label>Rejected by Bank</label>
+                <label>Rejected by bank</label>
             </value>
             <value>
                 <fullName>Accepted by Bank/Done</fullName>

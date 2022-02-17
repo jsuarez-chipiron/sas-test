@@ -5,6 +5,7 @@ global class APIMMock implements HttpCalloutMock {
   public static final String CLM_TRANSACTION_ID = '0000000001';
   public static final String EB_NUMBER_NOT_IN_CLM = '987654321';
   public static final String EB_NUMBER_RETURN_500 = 'ERREBNUM';
+  public static final String VOUCHER_INVALID_EMAIL = 'invalidemail@invalidemail.invalidemail';
 
   global HttpResponse respond(HttpRequest req) {
     String endpoint = req.getEndpoint();
@@ -76,8 +77,12 @@ global class APIMMock implements HttpCalloutMock {
         res.setStatusCode(404);
       }
     } else if (endpoint.contains('voucher')) {
-      res.setHeader('Content-Type', 'application/json');
-      res.setBody('{"link":"test.sas.se", "caseId": "12345678"}');
+      if (req.getBody().contains(VOUCHER_INVALID_EMAIL)) {
+        res.setStatusCode(400);
+      } else {
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody('{"link":"test.sas.se", "caseId": "12345678"}');
+      }
     } else if (endpoint.contains('customercare')) {
       res.setStatusCode(200);
     } else if (endpoint.contains('/clm/callcenter/addPoints')) {
