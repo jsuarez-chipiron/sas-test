@@ -48,12 +48,10 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
   public List<Settlement__c> selectWaitingForTransferByCurrency(
     List<String> currencies
   ) {
-    String statusToTake = 'Waiting for transfer';
-
     return (List<Settlement__c>) Database.query(
       newQueryFactory()
         .setCondition(
-          'Settlement_Status__c =:statusToTake AND Currency__c in :currencies'
+          'Settlement_Status__c =:Settlements.STATUS_WAITING_FOR_TRANSFER AND Currency__c in :currencies'
         )
         .toSOQL()
     );
