@@ -237,6 +237,8 @@ public without sharing class CLMIntegrationService {
     request.setHeader('Content-Type', 'application/json');
     request.setHeader('CLMbase64', ''); // Empty for test. Set for Prod.
 
+    request.setTimeout(120000); // In milliseconds. CLM is sometimes slow.
+
     if (extraHeaders != null) {
       for (String header : extraHeaders.keySet()) {
         request.setHeader(header, extraHeaders.get(header));
