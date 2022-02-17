@@ -7,6 +7,41 @@ public without sharing class VoucherIntegrationService {
     ? 'TESTKEY'
     : C_Settings.getSettings('APIM').get('APIM_Voucher_Subscription_Key');
 
+  public static VoucherIntegrationService newInstance() {
+    return (VoucherIntegrationService) SAS_Service_Application.Service.newInstance(
+      VoucherIntegrationService.class
+    );
+  }
+
+  public enum VoucherType {
+    GIFTCARD,
+    COMP
+  }
+
+  public enum VoucherSubType {
+    EU261,
+    CARE,
+    GOODWILL,
+    DAMAGEBAG,
+    DELAYEDBAG,
+    PILFBAG,
+    VDBCOMP,
+    IDBCOMP,
+    VDGCOMP,
+    IDGCOMP,
+    GRNDTRNS,
+    SLBKSEAT,
+    COVID19,
+    RTCREDIT,
+    NRTBONUS,
+    EBPAAMEX
+  }
+
+  public enum VoucherCurrency {
+    SEK,
+    EUR
+  }
+
   /** Attempts to create a voucher with the given information.
    *
    * @param voucherToCreate Details for the voucher.
@@ -19,7 +54,7 @@ public without sharing class VoucherIntegrationService {
     HttpResponse response = makeRequest(
       HttpUtils.HTTP_METHOD.POST,
       '',
-      JSON.serialize(voucherToCreate)
+      JSON.serialize(voucherToCreate).replace('voucherCurrency', 'currency')
     );
 
     if (response.getStatusCode() == 404) {

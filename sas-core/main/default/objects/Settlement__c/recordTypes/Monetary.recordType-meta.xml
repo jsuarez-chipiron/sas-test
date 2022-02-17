@@ -1999,7 +1999,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Rejected by Bank</fullName>
+            <fullName>Rejected by bank</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2007,7 +2007,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Sent to Bank</fullName>
+            <fullName>Sent to bank</fullName>
             <default>false</default>
         </values>
         <values>
