@@ -1,7 +1,6 @@
 public class AccountingEntry {
   private static final String TODAYS_DATE = Datetime.now().format('yyyyMMdd');
   private static final String TODAYS_PERIOD = Datetime.now().format('yyMM');
-  private static final String COST_CENTER = '90801';
 
   // Defines the field lengths in columns for all fields in all records.
   public static final Map<String, Integer> FIELD_LENGTHS = new Map<String, Integer>{
@@ -29,6 +28,7 @@ public class AccountingEntry {
   public static final Map<String, String> CONSTANT_FIELDS_FOR_DEBITS = new Map<String, String>{
     'RecordIdentifier' => 'RAC',
     'AUN' => '01',
+    'CostCenter' => '90801',
     'DebitOrCredit' => 'C',
     'CompanyCode' => 'SK',
     'Period' => TODAYS_PERIOD,
@@ -46,6 +46,13 @@ public class AccountingEntry {
     'Period' => TODAYS_PERIOD,
     'FeederName' => 'SF',
     'DeliveryNumber' => '01'
+  };
+
+  public static final Map<String, String> CREDIT_COST_CENTERS_BY_CURRENCY = new Map<String, String>{
+    'DKK' => '90802',
+    'NOK' => '69851',
+    'SEK' => '90801',
+    'OTH' => '90890'
   };
 
   public static final List<String> FIELDS_IN_ORDER = new List<String>{
@@ -83,7 +90,6 @@ public class AccountingEntry {
         ))
         .format('yyyyMMdd'),
       'NaturalAccount' => settlementItem.Cost_Account__c,
-      'CostCenter' => COST_CENTER,
       'ReconciliationReference' => settlementItem.Name,
       'Product' => '',
       'Counterpart' => '',

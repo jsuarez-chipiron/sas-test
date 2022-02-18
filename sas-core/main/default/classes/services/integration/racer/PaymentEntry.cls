@@ -377,7 +377,7 @@ public class PaymentEntry {
       'recordLayout' => 'CT',
       'recordLayoutQualifier' => 'CTL',
       'communicationMethod' => 'ED',
-      'testFlag' => 'T', // TODO: Figure out this test flag setup.
+      'testFlag' => (C_Util.isSandbox() || Test.isRunningTest()) ? 'T' : 'P',
       'documentId' => 'PYO',
       'documentType' => '',
       'documentPurposeCode' => '',
