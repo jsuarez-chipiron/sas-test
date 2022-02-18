@@ -176,10 +176,16 @@
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Settlement_Status__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Denied</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Settlement_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Blocked</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

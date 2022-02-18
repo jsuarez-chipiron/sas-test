@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
-        <name>Unlock_Settlement</name>
+        <name>Unlock_Settlement_0</name>
         <label>Unlock Settlement</label>
-        <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationX>578</locationX>
+        <locationY>998</locationY>
         <actionName>UnlockRecords</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Reject_request</targetReference>
+            <targetReference>Deny_Settlement_0_0</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -20,11 +20,51 @@
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <decisions>
-        <name>Request_Result</name>
-        <label>Request Result</label>
-        <locationX>402</locationX>
-        <locationY>518</locationY>
+        <name>Denied_or_Blocked</name>
+        <label>Denied or Blocked?</label>
+        <locationX>578</locationX>
+        <locationY>878</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Blocked</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Approval_Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Blocked</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Block_Settlement</targetReference>
+            </connector>
+            <label>Blocked</label>
+        </rules>
+        <rules>
+            <name>Rejected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Approval_Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Unlock_Settlement_0</targetReference>
+            </connector>
+            <label>Rejected</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_it_approved</name>
+        <label>Is it approved?</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>Block_rejected_request</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Blocked/Rejected</defaultConnectorLabel>
         <rules>
             <name>Approved</name>
             <conditionLogic>and</conditionLogic>
@@ -39,36 +79,6 @@
                 <targetReference>Approverequest</targetReference>
             </connector>
             <label>Approved</label>
-        </rules>
-        <rules>
-            <name>Rejected</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Approval_Status</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Rejected</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Unlock_Settlement</targetReference>
-            </connector>
-            <label>Rejected</label>
-        </rules>
-        <rules>
-            <name>Stopped</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Approval_Status</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Stopped</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Reject_request</targetReference>
-            </connector>
-            <label>Stopped</label>
         </rules>
     </decisions>
     <decisions>
@@ -154,7 +164,7 @@
         <name>Approverequest</name>
         <label>Approve request</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Approve_Settlement</targetReference>
         </connector>
@@ -192,12 +202,12 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
-        <name>Reject_request</name>
-        <label>Reject request</label>
-        <locationX>402</locationX>
-        <locationY>1094</locationY>
+        <name>Block_rejected_request</name>
+        <label>Block/rejected request</label>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
         <connector>
-            <targetReference>Deny_Settlement</targetReference>
+            <targetReference>Denied_or_Blocked</targetReference>
         </connector>
         <inputAssignments>
             <field>Control_Reason__c</field>
@@ -265,17 +275,41 @@
         <object>Settlement__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_control_verified_in_settlement</name>
+        <label>Update control verified in settlement</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Is_it_approved</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Control_verified__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Settlement__c</object>
+    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Approval_Request</name>
         <label>Approval Request</label>
-        <locationX>402</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Request_Result</targetReference>
+            <targetReference>Update_control_verified_in_settlement</targetReference>
         </connector>
         <fields>
             <name>ControlReason</name>
@@ -310,7 +344,7 @@
                     <leftValueReference>Approval_Status</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Stopped</stringValue>
+                        <stringValue>Blocked</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -334,7 +368,7 @@
                     <leftValueReference>Approval_Status</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Stopped</stringValue>
+                        <stringValue>Blocked</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -345,7 +379,7 @@
     <screens>
         <name>Waiting</name>
         <label>Waiting</label>
-        <locationX>1018</locationX>
+        <locationX>1106</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -370,7 +404,7 @@
         <name>Approve_Settlement</name>
         <label>Approve Settlement</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <flowName>CLAIM_Settlement_Approved</flowName>
         <inputAssignments>
             <name>recordId</name>
@@ -380,10 +414,23 @@
         </inputAssignments>
     </subflows>
     <subflows>
-        <name>Deny_Settlement</name>
+        <name>Block_Settlement</name>
+        <label>Block Settlement</label>
+        <locationX>314</locationX>
+        <locationY>998</locationY>
+        <flowName>CLAIM_Settlement_Blocked</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Deny_Settlement_0_0</name>
         <label>Deny Settlement</label>
-        <locationX>402</locationX>
-        <locationY>1214</locationY>
+        <locationX>578</locationX>
+        <locationY>1118</locationY>
         <flowName>CLAIM_Settlement_Denied</flowName>
         <inputAssignments>
             <name>recordId</name>
