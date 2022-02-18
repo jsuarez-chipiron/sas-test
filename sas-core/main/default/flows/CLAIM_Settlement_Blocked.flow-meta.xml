@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Notify_user_about_settlement_approval</name>
-        <label>Notify user about settlement approval</label>
+        <name>Notify_user_about_settlement_blocked</name>
+        <label>Notify user about settlement blocked</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
-        <connector>
-            <targetReference>Assign_settlement_to_submitter</targetReference>
-        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>customNotifTypeId</name>
             <value>
-                <elementReference>Get_Settlement_Notification_Update_Id.Id</elementReference>
+                <elementReference>Get_Settlement_Update_Notification_Id.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -26,7 +23,7 @@
         <inputParameters>
             <name>title</name>
             <value>
-                <stringValue>Settlement Approved</stringValue>
+                <stringValue>Settlement Blocked</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -38,16 +35,16 @@
         <inputParameters>
             <name>targetId</name>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>Get_Settlement_Information.Id</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
-    <apiVersion>54.0</apiVersion>
+    <apiVersion>52.0</apiVersion>
     <assignments>
         <name>Set_Users_to_notify</name>
         <label>Set Users to notify</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>usersToNotify</assignToReference>
             <operator>Add</operator>
@@ -56,16 +53,11 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Settlement_Notification_Update_Id</targetReference>
+            <targetReference>Get_Settlement_Update_Notification_Id</targetReference>
         </connector>
     </assignments>
-    <formulas>
-        <name>todayDate</name>
-        <dataType>Date</dataType>
-        <expression>Today()</expression>
-    </formulas>
-    <interviewLabel>CLAIM Settlement Approved {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>CLAIM Settlement Approved</label>
+    <interviewLabel>CLAIM Settlement Blocked {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CLAIM Settlement Blocked</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -92,7 +84,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Users_to_notify</targetReference>
+            <targetReference>Update_settlement_and_assign_it_to_the_submitter</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -107,13 +99,13 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Settlement_Notification_Update_Id</name>
-        <label>Get Settlement Notification Update Id</label>
+        <name>Get_Settlement_Update_Notification_Id</name>
+        <label>Get Settlement Update Notification Id</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Notify_user_about_settlement_approval</targetReference>
+            <targetReference>Notify_user_about_settlement_blocked</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -128,10 +120,13 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Assign_settlement_to_submitter</name>
-        <label>Assign settlement to submitter</label>
+        <name>Update_settlement_and_assign_it_to_the_submitter</name>
+        <label>Update settlement and assign it to the submitter</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>278</locationY>
+        <connector>
+            <targetReference>Set_Users_to_notify</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -147,9 +142,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Control_verified__c</field>
+            <field>Needs_Control__c</field>
             <value>
-                <booleanValue>true</booleanValue>
+                <booleanValue>false</booleanValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -161,7 +156,7 @@
         <inputAssignments>
             <field>Settlement_Status__c</field>
             <value>
-                <stringValue>Waiting for transfer</stringValue>
+                <stringValue>Blocked</stringValue>
             </value>
         </inputAssignments>
         <object>Settlement__c</object>
@@ -178,7 +173,7 @@
     <textTemplates>
         <name>notificationText</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Settlement {!Get_Settlement_Information.Name} has been approved and it is waiting for transfer</text>
+        <text>Settlement {!Get_Settlement_Information.Name} has been blocked, please verify.</text>
     </textTemplates>
     <variables>
         <name>recordId</name>
@@ -188,7 +183,6 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Ids of the users that will be notified</description>
         <name>usersToNotify</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>

@@ -4,7 +4,7 @@
         <name>Unlock_Settlement</name>
         <label>Unlock Settlement</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <actionName>UnlockRecords</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -20,13 +20,52 @@
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <decisions>
+        <name>Can_settlement_be_recalled</name>
+        <label>Can settlement be recalled?</label>
+        <locationX>512</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Recall_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes1</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Settlement_Information.Settlement_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for approval</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Settlement_Information.Settlement_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for control</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Settlement_Information.Settlement_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for transfer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Recall_Approval_Request</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_settlement_recalled</name>
         <label>Is settlement recalled ?</label>
         <locationX>270</locationX>
-        <locationY>278</locationY>
+        <locationY>518</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes</name>
+            <name>True</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>RecallApproval.value</leftValueReference>
@@ -36,12 +75,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_submitter_id</targetReference>
+                <targetReference>Unlock_Settlement</targetReference>
             </connector>
-            <label>Yes</label>
+            <label>True</label>
         </rules>
         <rules>
-            <name>No</name>
+            <name>false</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>RecallApproval.value</leftValueReference>
@@ -53,7 +92,7 @@
             <connector>
                 <targetReference>Recall_decision</targetReference>
             </connector>
-            <label>No</label>
+            <label>False</label>
         </rules>
     </decisions>
     <description>To recall a settlement that is waiting for approval or waiting for transfer</description>
@@ -84,13 +123,13 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_submitter_id</name>
-        <label>Get submitter id</label>
-        <locationX>50</locationX>
-        <locationY>398</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <name>Get_Settlement_Information</name>
+        <label>Get Settlement Information</label>
+        <locationX>512</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Unlock_Settlement</targetReference>
+            <targetReference>Can_settlement_be_recalled</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -100,17 +139,15 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Settlement__c</object>
-        <outputAssignments>
-            <assignToReference>submitterId</assignToReference>
-            <field>Submitter__c</field>
-        </outputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
         <name>Update_Settlement_Status</name>
         <label>Update Settlement Status</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Recall_decision</targetReference>
         </connector>
@@ -123,12 +160,6 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Control_verified__c</field>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Needs_Control__c</field>
             <value>
                 <booleanValue>false</booleanValue>
@@ -137,7 +168,7 @@
         <inputAssignments>
             <field>OwnerId</field>
             <value>
-                <elementReference>submitterId</elementReference>
+                <elementReference>$User.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -153,7 +184,7 @@
         <name>Recall_Approval_Request</name>
         <label>Recall Approval Request</label>
         <locationX>270</locationX>
-        <locationY>158</locationY>
+        <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -199,7 +230,7 @@
         <name>Recall_decision</name>
         <label>Recall decision</label>
         <locationX>270</locationX>
-        <locationY>854</locationY>
+        <locationY>974</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -211,11 +242,27 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>Recall_Error</name>
+        <label>Recall Error</label>
+        <locationX>754</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>DisplayError</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Settlement {!Get_Settlement_Information.Name} cannot be recalled. Please, refresh page to see the settlement&apos;s latest status&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>144</locationX>
+        <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Recall_Approval_Request</targetReference>
+            <targetReference>Get_Settlement_Information</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -224,13 +271,6 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>submitterId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
