@@ -1955,6 +1955,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Failed</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In progress</fullName>
             <default>false</default>
         </values>
