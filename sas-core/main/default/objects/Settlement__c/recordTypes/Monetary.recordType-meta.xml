@@ -1983,11 +1983,7 @@
     <picklistValues>
         <picklist>Settlement_Status__c</picklist>
         <values>
-            <fullName>Accepted by Bank%2FDone</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Accepted by Racer</fullName>
+            <fullName>Blocked</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1999,15 +1995,11 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Failed</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In progress</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>L2 errors by Bank</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rejected by bank</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2015,11 +2007,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Sent to bank</fullName>
+            <fullName>Rejected by bank</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Sent to Racer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sent to bank</fullName>
             <default>false</default>
         </values>
         <values>
