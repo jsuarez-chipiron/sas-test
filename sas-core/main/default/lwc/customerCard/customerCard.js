@@ -279,6 +279,7 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
       const recordInput = {
         recordId: this.recordId,
         accountId: null,
+        personContactId: null,
         euroBonusNumber: null,
         codsId: null,
         caseId:

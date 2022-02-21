@@ -356,7 +356,8 @@ public without sharing class FCS_IdentifyCustomerController {
           AccountId = accountId,
           FCS_TPAccountNumber__c = tpAccountNumber,
           FCS_CODSId__c = codsId,
-          FCS_EBNumber__c = euroBonusNumber
+          FCS_EBNumber__c = euroBonusNumber,
+          ContactId = personContactId
         );
       } else if (recordId.getSobjectType() == LiveChatTranscript.SObjectType) {
         returnRecord = new LiveChatTranscript(
