@@ -165,6 +165,12 @@
                 <elementReference>Get_Record_Type_Id.Id</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Settlement_Status__c</field>
+            <value>
+                <stringValue>In progress</stringValue>
+            </value>
+        </inputAssignments>
         <object>Settlement__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
@@ -254,6 +260,12 @@
                 <elementReference>Get_Record_Type_Id.Id</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Settlement_Status__c</field>
+            <value>
+                <stringValue>In progress</stringValue>
+            </value>
+        </inputAssignments>
         <object>Settlement__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
@@ -317,6 +329,12 @@
             <field>RecordTypeId</field>
             <value>
                 <elementReference>Get_Record_Type_Id.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Settlement_Status__c</field>
+            <value>
+                <stringValue>In progress</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
