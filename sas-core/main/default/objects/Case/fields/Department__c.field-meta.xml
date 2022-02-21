@@ -96,11 +96,6 @@
                 <label>SAS Operating Center</label>
             </value>
             <value>
-                <fullName>SME</fullName>
-                <default>false</default>
-                <label>SME</label>
-            </value>
-            <value>
                 <fullName>SoMe Support</fullName>
                 <default>false</default>
                 <label>SoMe Support</label>
@@ -109,6 +104,12 @@
                 <fullName>Customer Claim</fullName>
                 <default>false</default>
                 <label>Customer Claim</label>
+            </value>
+            <value>
+                <fullName>SME</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>SME</label>
             </value>
         </valueSetDefinition>
     </valueSet>
