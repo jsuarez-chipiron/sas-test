@@ -2034,7 +2034,7 @@
     <picklistValues>
         <picklist>Voucher_Type__c</picklist>
         <values>
-            <fullName>Compensation</fullName>
+            <fullName>6738 - Care voucher</fullName>
             <default>false</default>
         </values>
     </picklistValues>
