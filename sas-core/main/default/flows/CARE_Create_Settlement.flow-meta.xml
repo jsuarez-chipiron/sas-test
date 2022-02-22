@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>53.0</apiVersion>
     <choices>
         <name>EB_Points</name>
@@ -77,6 +77,14 @@
             <label>Voucher Settlement</label>
         </rules>
     </decisions>
+    <dynamicChoiceSets>
+        <name>voucherTypes</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Voucher_Type__c</picklistField>
+        <picklistObject>Settlement__c</picklistObject>
+    </dynamicChoiceSets>
     <formulas>
         <name>TodayDate</name>
         <dataType>Date</dataType>
@@ -343,6 +351,12 @@
                 <elementReference>Get_Customer_Claim.Contact_Email__c</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Voucher_Type__c</field>
+            <value>
+                <elementReference>Voucher_Type</elementReference>
+            </value>
+        </inputAssignments>
         <object>Settlement__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
@@ -409,6 +423,24 @@
             <fieldText>Select Settlement Type</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Voucher_Type</name>
+            <choiceReferences>voucherTypes</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Voucher Type</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Select_Settlement_Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voucher</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
