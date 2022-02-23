@@ -47,7 +47,6 @@ public class SAS_Service_Application {
     new Map<Type, Type>{
       BookingService.class => BookingService.class,
       CLMIntegrationService.class => CLMIntegrationService.class,
-      LoyaltyService.class => LoyaltyService.class,
       SettlementService.class => SettlementService.class,
       TEDSIntegrationService.class => TEDSIntegrationService.class,
       VoucherIntegrationService.class => VoucherIntegrationService.class
