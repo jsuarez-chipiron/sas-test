@@ -43,6 +43,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>ExchangeRates</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ExchangeRatesSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>FlightsSelector</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -157,6 +165,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Booking__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Exchange_Rate__c.From_Currency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Exchange_Rate__c.To_Currency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Exchange_Rate__c.Rate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Exchange_Rate__c.Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1596,6 +1624,9 @@
         <layout>CaseToBooking__c-CaseToBooking Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Exchange_Rate__c-Exchange Rate Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Flight__c-Flight Layout</layout>
     </layoutAssignments>
 	 <layoutAssignments>
@@ -1746,6 +1777,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>CaseToBooking__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Exchange_Rate__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -2016,6 +2056,10 @@
         <recordType>PersonAccount.EBCustomer</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabVisibilities>
+        <tab>Exchange_Rate__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
     <tabVisibilities>
         <tab>Group_Travel_Request__c</tab>
         <visibility>DefaultOn</visibility>

@@ -2031,11 +2031,4 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
-        <picklist>Voucher_Type__c</picklist>
-        <values>
-            <fullName>6738 - Care voucher</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
 </RecordType>

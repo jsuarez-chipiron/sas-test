@@ -9,6 +9,8 @@ public without sharing class SettlementItems extends fflib_SObjectDomain {
     }
   }
 
+  public static final String STATUS_DRAFT = 'Draft';
+
   public static SettlementItems newInstance(
     List<Settlement_Item__c> sObjectList
   ) {

@@ -16,8 +16,10 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
       Settlement__c.Payee_Name__c,
       Settlement__c.Payee_reference__c,
       Settlement__c.Postal_Code__c,
+      Settlement__c.RecordTypeId,
       Settlement__c.Settlement_Status__c,
-      Settlement__c.Voucher_Email__c
+      Settlement__c.Voucher_Email__c,
+      Settlement__c.Voucher_Type__c
     };
   }
 
@@ -45,6 +47,14 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
         .selectField('Submitter__r.Email')
         .toSOQL()
     );
+  }
+
+  public List<Settlement__c> selectByIdWithSettlementItems(Set<Id> ids) {
+    fflib_QueryFactory query = newQueryFactory().setCondition('Id IN :ids');
+    fflib_QueryFactory settlementItems = new SettlementItemsSelector()
+      .addQueryFactorySubselect(query);
+
+    return (List<Settlement__c>) Database.query(query.toSOQL());
   }
 
   public List<Settlement__c> selectWaitingForTransferByCurrency(
