@@ -12,21 +12,6 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>6738 - Care voucher</fullName>
-                <default>false</default>
-                <label>6738 - Care voucher</label>
-            </value>
-            <value>
-                <fullName>6741 - Damage baggage voucher</fullName>
-                <default>false</default>
-                <label>6741 - Damage baggage voucher</label>
-            </value>
-            <value>
-                <fullName>6742 - Delayed baggage voucher</fullName>
-                <default>false</default>
-                <label>6742 - Delayed baggage voucher</label>
-            </value>
-            <value>
                 <fullName>6721 - Denied boarding involuntary voucher</fullName>
                 <default>false</default>
                 <label>6721 - Denied boarding involuntary voucher</label>
@@ -57,14 +42,24 @@
                 <label>6733 - Goodwill voucher</label>
             </value>
             <value>
-                <fullName>6743 - Pilfered baggage voucher</fullName>
-                <default>false</default>
-                <label>6743 - Pilfered baggage voucher</label>
-            </value>
-            <value>
                 <fullName>6738 - Care voucher</fullName>
                 <default>false</default>
                 <label>6738 - Care voucher</label>
+            </value>
+            <value>
+                <fullName>6741 - Damage baggage voucher</fullName>
+                <default>false</default>
+                <label>6741 - Damage baggage voucher</label>
+            </value>
+            <value>
+                <fullName>6742 - Delayed baggage voucher</fullName>
+                <default>false</default>
+                <label>6742 - Delayed baggage voucher</label>
+            </value>
+            <value>
+                <fullName>6743 - Pilfered baggage voucher</fullName>
+                <default>false</default>
+                <label>6743 - Pilfered baggage voucher</label>
             </value>
         </valueSetDefinition>
     </valueSet>
