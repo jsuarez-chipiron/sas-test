@@ -2017,5 +2017,9 @@
             <fullName>6743 - Pilfered baggage voucher</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>6738 - Care voucher</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
 </RecordType>

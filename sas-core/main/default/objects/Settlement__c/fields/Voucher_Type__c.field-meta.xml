@@ -61,6 +61,11 @@
                 <default>false</default>
                 <label>6743 - Pilfered baggage voucher</label>
             </value>
+            <value>
+                <fullName>6738 - Care voucher</fullName>
+                <default>false</default>
+                <label>6738 - Care voucher</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -245,7 +245,9 @@ public without sharing class SettlementService {
 
     VoucherCreateRequest voucherToCreate = new VoucherCreateRequest(
       VoucherIntegrationService.VoucherType.COMP,
-      VoucherIntegrationService.VoucherSubType.CARE,
+      Settlements.VOUCHER_TYPE_STRING_TO_VOUCHER_SUBTYPE.get(
+        settlement.Voucher_Type__c
+      ),
       settlement.Currency__c,
       settlement.Amount__c.intValue(),
       settlement.Payee_Name__c, //firstName, TODO: Separate out
@@ -278,5 +280,16 @@ public without sharing class SettlementService {
         null
       );
     }
+  }
+
+  public static Boolean addItemsToSettlement(
+    Id settlementId,
+    List<Settlement_Item__c> itemsToAdd
+  ) {
+    Settlement__c settlement = settlementsSel.selectById(
+      new Set<Id>{ settlementId }
+    )[0];
+    return Settlements.newInstance(new List<Settlement__c>{ settlement })
+      .updateSettlementItems(itemsToAdd);
   }
 }

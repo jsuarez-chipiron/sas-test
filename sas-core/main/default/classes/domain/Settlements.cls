@@ -8,6 +8,32 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   private List<Settlement__c> instanceRecords;
 
+  private static final Map<String, String> voucherTypeToCostAccount = new Map<String, String>{
+    '6721 - Denied boarding involuntary voucher' => '6721',
+    '6721 - Denied boarding voluntary voucher' => '6721',
+    '6722 - Downgrading involuntary voucher' => '6722',
+    '6722 - Downgrading voluntary voucher' => '6722',
+    '6727 - EU261 voucher' => '6727',
+    '6738 - Care voucher' => '6738',
+    '6741 - Damaged baggage voucher' => '6741',
+    '6742 - Delayed baggage voucher' => '6742',
+    '6733 - Goodwill voucher' => '6733',
+    '6743 - Pilfered baggage voucher' => '6743'
+  };
+
+  public static final Map<String, VoucherIntegrationService.VoucherSubType> VOUCHER_TYPE_STRING_TO_VOUCHER_SUBTYPE = new Map<String, VoucherIntegrationService.VoucherSubType>{
+    '6721 - Denied boarding involuntary voucher' => VoucherIntegrationService.VoucherSubType.IDBCOMP,
+    '6721 - Denied boarding voluntary voucher' => VoucherIntegrationService.VoucherSubType.VDBCOMP,
+    '6722 - Downgrading involuntary voucher' => VoucherIntegrationService.VoucherSubType.IDGCOMP,
+    '6722 - Downgrading voluntary voucher' => VoucherIntegrationService.VoucherSubType.VDGCOMP,
+    '6727 - EU261 voucher' => VoucherIntegrationService.VoucherSubType.EU261,
+    '6738 - Care voucher' => VoucherIntegrationService.VoucherSubType.CARE,
+    '6741 - Damaged baggage voucher' => VoucherIntegrationService.VoucherSubType.DAMAGEBAG,
+    '6742 - Delayed baggage voucher' => VoucherIntegrationService.VoucherSubType.DELAYEDBAG,
+    '6733 - Goodwill voucher' => VoucherIntegrationService.VoucherSubType.GOODWILL,
+    '6743 - Pilfered baggage voucher' => VoucherIntegrationService.VoucherSubType.PILFBAG
+  };
+
   public static final String STATUS_IN_PROGRESS = 'In progress';
   public static final String STATUS_WAITING_FOR_APPROVAL = 'Waiting for approval';
   public static final String STATUS_WAITING_FOR_CONTROL = 'Waiting for control';
@@ -26,6 +52,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   public static final Id EUROBONUS_POINTS_RECORD_TYPE_ID = Schema.SObjectType.Settlement__c.getRecordTypeInfosByName()
     .get('EB points')
     .getRecordTypeId();
+
+  private static ExchangeRatesSelector exchangeRatesSel = ExchangeRatesSelector.newInstance();
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
@@ -192,14 +220,89 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     );
   }
 
+  /**
+   * Updates the list of settlement items for this settlement. Upserts the
+   * given items and removes all settlement items not list in the given
+   * items.
+   *
+   * Also updates the settlement total and currency conversion calculations.
+   *
+   * @param itemsToUpsert Full list of settlement items this settlement should have the operation.
+   */
+  public Boolean updateSettlementItems(List<Settlement_Item__c> itemsToUpsert) {
+    if (instanceRecords.size() > 1) {
+      return false;
+    }
+    Settlement__c settlement = instanceRecords[0];
+
+    // TODO: Verify that settlement can be updated. (Not locked and status is good to go, maybe?)
+    // TODO: Do we need to check locked status also here? Probably yes.
+    Boolean canBeModified =
+      settlement.Settlement_Status__c == STATUS_IN_PROGRESS;
+    if (canBeModified) {
+      fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+
+      List<Settlement_Item__c> existingItems = settlementItemsSel.selectBySettlementIds(
+        new Set<Id>{ settlement.Id }
+      );
+
+      for (Settlement_Item__c existingItem : existingItems) {
+        Boolean found = false;
+        for (Settlement_Item__c newItem : itemsToUpsert) {
+          if (newItem.Id == existingItem.Id) {
+            found = true;
+          }
+        }
+        if (!found) {
+          uow.registerDeleted(existingItem);
+        }
+      }
+
+      Decimal settlementTotal = 0;
+      for (Settlement_Item__c item : itemsToUpsert) {
+        item.Cost_Center__c = '90801';
+        item.Currency__c = settlement.Currency__c;
+        item.Status__c = SettlementItems.STATUS_DRAFT;
+        item.Settlement__c = settlement.Id;
+
+        if (settlement.RecordTypeId == VOUCHER_RECORD_TYPE_ID) {
+          // Voucher cost accounts can be set automatically based on voucher type.
+          item.Cost_Account__c = voucherTypeToCostAccount.get(
+            settlement.Voucher_Type__c
+          );
+        }
+
+        settlementTotal += item.Amount__c;
+      }
+      uow.registerUpsert(itemsToUpsert);
+
+      Exchange_Rate__c exchangeRateToSEK = exchangeRatesSel.selectByCurrency(
+        settlement.Currency__c,
+        'SEK'
+      )[0];
+
+      if (settlement.RecordTypeId == EUROBONUS_POINTS_RECORD_TYPE_ID) {
+        settlement.EuroBonus_Points__c = settlementTotal;
+      } else {
+        settlement.Amount__c = settlementTotal;
+        settlement.Settlement_amount_in_SEK__c =
+          settlementTotal * exchangeRateToSEK.Rate__c;
+      }
+      settlement.Date_of_Exchange_Calculation__c = exchangeRateToSEK.Date__c;
+      uow.registerDirty(settlement);
+      uow.commitWork();
+      return true;
+    }
+
+    return false;
+  }
+
   private void processPayableVoucherAndEuroBonusSettlements() {
     for (Settlement__c settlement : instanceRecords) {
       if (settlement.Settlement_Status__c == STATUS_WAITING_FOR_TRANSFER) {
         if (settlement.RecordTypeId == EUROBONUS_POINTS_RECORD_TYPE_ID) {
-          // future eb request
           SettlementService.sendEuroBonusPoints(settlement.Id);
         } else if (settlement.RecordTypeId == VOUCHER_RECORD_TYPE_ID) {
-          // future voucher request
           SettlementService.createAndSendVoucher(settlement.Id);
         }
       }
