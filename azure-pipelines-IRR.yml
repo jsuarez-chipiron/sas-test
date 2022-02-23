@@ -20,7 +20,7 @@ steps:
   name: ci_cert
   displayName: 'Download Certificate'
   inputs:
-    secureFile: 'ci_cert_new.key'
+    secureFile: 'ci_cert_uat.key'
 
 - script: |
     sudo npm install sfdx-cli@7.119.3 --global
