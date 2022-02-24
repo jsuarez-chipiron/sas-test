@@ -453,6 +453,16 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>customerCard</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>caseBookingDetails</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>gdpr_GDPRDelete</componentName>
                 <visibilityRule>
                     <criteria>
