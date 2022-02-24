@@ -8,4 +8,7 @@ public class APIMMockResponses {
   public static final String CLM_ADD_POINTS_SUCCESS_BODY = '{"clmTransactionId": "{clmTransactionId}","ebNumber": "000000000","partnerTrnUid": "1234-123123","pointsAdded": "4000 EXTRA","transactionStatus": "operation completed succesfully"}';
 
   public static final String CLM_ADD_POINTS_FAILURE_BODY = '{"error": "ERROR_CODE","message": "Customer does not exist.","path": "/b2b/trnprocessor/identifiers/no=987654321/sales","requestToken": "0000000000000000","status": 409,"timestamp": "2022-02-15T11:19:35.151Z"}';
+
+  public static final String CARE_CLAIM_FOUND = '{"claimsfound": true}';
+  public static final String CARE_CLAIM_NOT_FOUND = '{"claimsfound": false}';
 }

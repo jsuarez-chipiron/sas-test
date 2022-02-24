@@ -6,6 +6,8 @@ global class APIMMock implements HttpCalloutMock {
   public static final String EB_NUMBER_NOT_IN_CLM = '987654321';
   public static final String EB_NUMBER_RETURN_500 = 'ERREBNUM';
   public static final String VOUCHER_INVALID_EMAIL = 'invalidemail@invalidemail.invalidemail';
+  public static final String PNR_FOR_WHICH_CLAIMS_EXIST = '987654';
+  public static final String PNR_FOR_WHICH_CLAIMS_DO_NOT_EXIST = '000000';
 
   global HttpResponse respond(HttpRequest req) {
     String endpoint = req.getEndpoint();
@@ -82,6 +84,14 @@ global class APIMMock implements HttpCalloutMock {
       } else {
         res.setHeader('Content-Type', 'application/json');
         res.setBody('{"link":"test.sas.se", "caseId": "12345678"}');
+      }
+    } else if (endpoint.contains('claims/claims')) {
+      if (endpoint.contains(PNR_FOR_WHICH_CLAIMS_EXIST)) {
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody(APIMMockResponses.CARE_CLAIM_FOUND);
+      } else {
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody(APIMMockResponses.CARE_CLAIM_NOT_FOUND);
       }
     } else if (endpoint.contains('customercare')) {
       res.setStatusCode(200);

@@ -132,6 +132,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>LIA_Claim__c.Claims_Exist_In_CARE_For_PNR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>LIA_Claim__c.Concerns_a_person_with_reduced_mobility__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -198,6 +203,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Flight_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.Last_Checked_Claims_From_CARE__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
