@@ -458,7 +458,7 @@ public class PaymentEntry {
       'vendorSiteCodeExt' => '',
       'addressLine3' => '',
       'addressLine4' => '',
-      'countryExt' => '',
+      'country' => '',
       'state' => '',
       'stateExt' => '',
       'province' => '',
@@ -514,7 +514,7 @@ public class PaymentEntry {
     );
 
     Settlement_Country_Setting__mdt countrySettings = Settlement_Country_Setting__mdt.getAll()
-      .get(s.Country__c);
+      .get(s.Country__c.replace(' ', '_'));
 
     String amount = String.valueOf(s.Amount__c);
 
@@ -527,7 +527,7 @@ public class PaymentEntry {
       'accountData' => new Map<String, String>{
         'checkAmount' => amount,
         'currencyCode' => s.Currency__c,
-        'vendorBankAccountNumber' => s.IBAN__c,
+        'vendorBankAccountNumber' => s.Bank_Account_Number__c,
         'EDIPaymentMethod' => countrySettings.Payment_Type__c,
         'bankAccountNumber' => currencySettings.bankAccountNumber__c,
         'bankEDIIDNumber' => bankSettings.bankEDIIDNumber__c,
@@ -563,7 +563,7 @@ public class PaymentEntry {
           : s.Address_line_2__c,
         'city' => s.City__c,
         'postalCode' => s.Postal_Code__c,
-        'country' => s.Country__c
+        'countryExt' => countrySettings.Country_Short_Code__c
       },
       'invoiceData' => new Map<String, String>{
         'ref2Invoice' => 'SF REF ' + s.Name,
