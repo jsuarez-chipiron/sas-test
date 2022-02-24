@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>accountHolderName__c</field>
-        <value xsi:type="xsd:string">SAS CARE NOK</value>
+        <value xsi:type="xsd:string">SAS SF NOK</value>
     </values>
     <values>
         <field>addressLine1__c</field>

@@ -17,7 +17,7 @@ public with sharing class Settlements_IntegrationTest {
       Country__c = 'Sweden',
       Currency__c = 'NOK',
       Date_of_Exchange_Calculation__c = Date.today(),
-      IBAN__c = 'SE0000000000000',
+      Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00100',
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
@@ -31,7 +31,7 @@ public with sharing class Settlements_IntegrationTest {
       Country__c = 'Sweden',
       Currency__c = 'NOK',
       Date_of_Exchange_Calculation__c = Date.today(),
-      IBAN__c = 'SE0000000000000',
+      Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00100',
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
@@ -232,7 +232,7 @@ public with sharing class Settlements_IntegrationTest {
       Country__c = 'Sweden',
       Currency__c = 'SEK',
       Date_of_Exchange_Calculation__c = Date.today(),
-      IBAN__c = 'SE0000000000000',
+      Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00000',
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
@@ -246,7 +246,7 @@ public with sharing class Settlements_IntegrationTest {
       Country__c = 'Sweden',
       Currency__c = 'SEK',
       Date_of_Exchange_Calculation__c = Date.today(),
-      IBAN__c = 'SE0000000000000',
+      Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00000',
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
@@ -260,7 +260,7 @@ public with sharing class Settlements_IntegrationTest {
       Country__c = 'Sweden',
       Currency__c = 'SEK',
       Date_of_Exchange_Calculation__c = Date.today(),
-      IBAN__c = 'SE0000000000000',
+      Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00000',
       Settlement_Status__c = Settlements.STATUS_IN_PROGRESS
@@ -274,7 +274,7 @@ public with sharing class Settlements_IntegrationTest {
       Country__c = 'Sweden',
       Currency__c = 'NOK',
       Date_of_Exchange_Calculation__c = Date.today(),
-      IBAN__c = 'SE0000000000000',
+      Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00100',
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
