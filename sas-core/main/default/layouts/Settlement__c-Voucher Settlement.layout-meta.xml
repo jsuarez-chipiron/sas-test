@@ -147,7 +147,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Needs_Control__c</field>
+                <field>Manual_Control__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

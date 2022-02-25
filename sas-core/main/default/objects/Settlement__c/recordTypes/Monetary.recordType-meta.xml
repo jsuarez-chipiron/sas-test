@@ -1987,6 +1987,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Controlled</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Denied</fullName>
             <default>false</default>
         </values>

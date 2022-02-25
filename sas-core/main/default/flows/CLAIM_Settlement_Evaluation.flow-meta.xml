@@ -4,7 +4,7 @@
         <name>Random_Number_Check</name>
         <label>Random Number Check</label>
         <locationX>754</locationX>
-        <locationY>278</locationY>
+        <locationY>158</locationY>
         <actionName>GetRandomNumber</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -32,8 +32,8 @@
     <assignments>
         <name>AutomaticApproval</name>
         <label>AutomaticApproval</label>
-        <locationX>1018</locationX>
-        <locationY>638</locationY>
+        <locationX>1458</locationX>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -41,12 +41,15 @@
                 <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Set_Settlement_Status_to_Approved</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>ManualApproval</name>
         <label>ManualApproval</label>
         <locationX>754</locationX>
-        <locationY>1106</locationY>
+        <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -59,7 +62,7 @@
         <name>Amount_in_SEK</name>
         <label>Amount in SEK</label>
         <locationX>710</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
@@ -68,7 +71,7 @@
             <name>More_than_10000</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Settlement_Info.Settlement_amount_in_SEK__c</leftValueReference>
+                <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
                     <numberValue>10000.0</numberValue>
@@ -83,15 +86,15 @@
             <name>Between_1000_and_10000</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Settlement_Info.Settlement_amount_in_SEK__c</leftValueReference>
-                <operator>GreaterThan</operator>
+                <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <numberValue>1000.0</numberValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Settlement_Info.Settlement_amount_in_SEK__c</leftValueReference>
-                <operator>LessThan</operator>
+                <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <numberValue>10000.0</numberValue>
                 </rightValue>
@@ -106,7 +109,7 @@
         <name>EB_points_amount</name>
         <label>EB points amount</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
@@ -115,7 +118,7 @@
             <name>More_than_60000_user_limit</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Settlement_Info.EuroBonus_Points__c</leftValueReference>
+                <leftValueReference>incomingRecord.EuroBonus_Points__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
                     <numberValue>60000.0</numberValue>
@@ -131,7 +134,7 @@
         <name>Random_Check_Monetary</name>
         <label>Random Check Monetary</label>
         <locationX>710</locationX>
-        <locationY>638</locationY>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>ManualApproval</targetReference>
         </defaultConnector>
@@ -156,7 +159,7 @@
         <name>Settlement_Type</name>
         <label>Settlement Type</label>
         <locationX>754</locationX>
-        <locationY>398</locationY>
+        <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Direct_to_Manual_Approval</name>
@@ -177,7 +180,7 @@
             <name>EB_Points</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>SettlementType</leftValueReference>
+                <leftValueReference>incomingRecord.RecordType.Name</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>EB Points</stringValue>
@@ -192,7 +195,7 @@
             <name>Monetary</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>SettlementType</leftValueReference>
+                <leftValueReference>incomingRecord.RecordType.Name</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Monetary</stringValue>
@@ -207,7 +210,7 @@
             <name>Voucher</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>SettlementType</leftValueReference>
+                <leftValueReference>incomingRecord.RecordType.Name</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Voucher</stringValue>
@@ -223,7 +226,7 @@
         <name>Voucher_amount_in_SEK</name>
         <label>Voucher amount in SEK</label>
         <locationX>1370</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
@@ -232,7 +235,7 @@
             <name>More_than_15000</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Settlement_Info.Settlement_amount_in_SEK__c</leftValueReference>
+                <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
                     <numberValue>15000.0</numberValue>
@@ -265,35 +268,79 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>Get_Settlement_Info</name>
-        <label>Get Settlement Info</label>
-        <locationX>754</locationX>
-        <locationY>158</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+    <recordCreates>
+        <name>Create_Approval_Request</name>
+        <label>Create Approval Request</label>
+        <locationX>1458</locationX>
+        <locationY>758</locationY>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Settlement__c</field>
+            <value>
+                <elementReference>incomingRecord.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Approved</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <stringValue>Approval</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Approval_Request__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordUpdates>
+        <name>Set_Settlement_Status_to_Approved</name>
+        <label>Set Settlement Status to Approved</label>
+        <locationX>1458</locationX>
+        <locationY>638</locationY>
         <connector>
-            <targetReference>Random_Number_Check</targetReference>
+            <targetReference>Create_Approval_Request</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>incomingRecord.Id</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <inputAssignments>
+            <field>Settlement_Status__c</field>
+            <value>
+                <stringValue>Waiting for control</stringValue>
+            </value>
+        </inputAssignments>
         <object>Settlement__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
+    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
         <locationX>628</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Settlement_Info</targetReference>
+            <targetReference>Random_Number_Check</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <variables>
+        <name>incomingRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Settlement__c</objectType>
+    </variables>
     <variables>
         <name>NeedsManuallyApproval</name>
         <dataType>Boolean</dataType>
@@ -308,19 +355,5 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>0</scale>
-    </variables>
-    <variables>
-        <name>recordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>SettlementType</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
     </variables>
 </Flow>

@@ -17,11 +17,6 @@
                 <label>In progress</label>
             </value>
             <value>
-                <fullName>Waiting for approval</fullName>
-                <default>false</default>
-                <label>Waiting for approval</label>
-            </value>
-            <value>
                 <fullName>Denied</fullName>
                 <default>false</default>
                 <label>Denied</label>
@@ -32,9 +27,19 @@
                 <label>Blocked</label>
             </value>
             <value>
+                <fullName>Waiting for approval</fullName>
+                <default>false</default>
+                <label>Waiting for approval</label>
+            </value>
+            <value>
                 <fullName>Waiting for control</fullName>
                 <default>false</default>
                 <label>Waiting for control</label>
+            </value>
+            <value>
+                <fullName>Controlled</fullName>
+                <default>false</default>
+                <label>Controlled</label>
             </value>
             <value>
                 <fullName>Waiting for transfer</fullName>

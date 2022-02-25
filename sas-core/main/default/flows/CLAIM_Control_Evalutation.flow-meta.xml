@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>53.0</apiVersion>
+    <apiVersion>52.0</apiVersion>
     <assignments>
         <name>Count_related_Settlements</name>
         <label>Count related Settlements</label>
         <locationX>776</locationX>
-        <locationY>1190</locationY>
+        <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>numberOfSettlements</assignToReference>
             <operator>AssignCount</operator>
@@ -21,7 +21,7 @@
         <name>EB_points_high_amount</name>
         <label>EB points high amount</label>
         <locationX>930</locationX>
-        <locationY>758</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>highAmountFlag</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>Monetary_high_amount</name>
         <label>Monetary high amount</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>highAmountFlag</assignToReference>
             <operator>Assign</operator>
@@ -53,7 +53,7 @@
         <name>NeedsControl</name>
         <label>NeedsControl</label>
         <locationX>644</locationX>
-        <locationY>1430</locationY>
+        <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>controlNeeded</assignToReference>
             <operator>Assign</operator>
@@ -68,12 +68,15 @@
                 <elementReference>controlReasonOutputMessage</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Update_Control_Reason</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>NoControl</name>
         <label>NoControl</label>
         <locationX>908</locationX>
-        <locationY>1430</locationY>
+        <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>controlNeeded</assignToReference>
             <operator>Assign</operator>
@@ -88,12 +91,15 @@
                 <stringValue/>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Update_Status</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Store_in_related_Settlements</name>
         <label>Store in related Settlements</label>
         <locationX>182</locationX>
-        <locationY>974</locationY>
+        <locationY>734</locationY>
         <assignmentItems>
             <assignToReference>relatedSettlements</assignToReference>
             <operator>Add</operator>
@@ -109,7 +115,7 @@
         <name>Store_in_related_Settlements_0</name>
         <label>Store in related Settlements</label>
         <locationX>622</locationX>
-        <locationY>974</locationY>
+        <locationY>734</locationY>
         <assignmentItems>
             <assignToReference>relatedSettlements</assignToReference>
             <operator>Add</operator>
@@ -125,7 +131,7 @@
         <name>Store_in_related_Settlements_0_0</name>
         <label>Store in related Settlements</label>
         <locationX>1062</locationX>
-        <locationY>974</locationY>
+        <locationY>734</locationY>
         <assignmentItems>
             <assignToReference>relatedSettlements</assignToReference>
             <operator>Add</operator>
@@ -141,7 +147,7 @@
         <name>Voucher_high_amount</name>
         <label>Voucher high amount</label>
         <locationX>490</locationX>
-        <locationY>758</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>highAmountFlag</assignToReference>
             <operator>Assign</operator>
@@ -157,7 +163,7 @@
         <name>Check_High_Settlement_Amount_EB</name>
         <label>Check High Settlement Amount - EB</label>
         <locationX>1062</locationX>
-        <locationY>638</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Store_in_related_Settlements_0_0</targetReference>
         </defaultConnector>
@@ -166,7 +172,7 @@
             <name>Is_high_amount</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Settlement_Information.EuroBonus_Points__c</leftValueReference>
+                <leftValueReference>incomingRecord.EuroBonus_Points__c</leftValueReference>
                 <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
                     <numberValue>500000.0</numberValue>
@@ -182,7 +188,7 @@
         <name>Check_High_Settlement_Amount_Monetary</name>
         <label>Check High Settlement Amount - Monetary</label>
         <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Store_in_related_Settlements</targetReference>
         </defaultConnector>
@@ -191,7 +197,7 @@
             <name>Is_high_amount_0_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Settlement_Information.Settlement_amount_in_SEK__c</leftValueReference>
+                <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
                     <numberValue>200000.0</numberValue>
@@ -207,7 +213,7 @@
         <name>Check_High_Settlement_Amount_Voucher</name>
         <label>Check High Settlement Amount - Voucher</label>
         <locationX>622</locationX>
-        <locationY>638</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Store_in_related_Settlements_0</targetReference>
         </defaultConnector>
@@ -216,7 +222,7 @@
             <name>Is_high_amount_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Settlement_Information.Settlement_amount_in_SEK__c</leftValueReference>
+                <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
                     <numberValue>200000.0</numberValue>
@@ -232,7 +238,7 @@
         <name>Check_Settlement_Type</name>
         <label>Check Settlement Type</label>
         <locationX>776</locationX>
-        <locationY>398</locationY>
+        <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Count_related_Settlements</targetReference>
         </defaultConnector>
@@ -241,7 +247,7 @@
             <name>Monetary</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Settlement_Record_Type.Name</leftValueReference>
+                <leftValueReference>incomingRecord.RecordType.Name</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Monetary</stringValue>
@@ -256,7 +262,7 @@
             <name>Voucher</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Settlement_Record_Type.Name</leftValueReference>
+                <leftValueReference>incomingRecord.RecordType.Name</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Voucher</stringValue>
@@ -271,7 +277,7 @@
             <name>EB_Points</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Settlement_Record_Type.Name</leftValueReference>
+                <leftValueReference>incomingRecord.RecordType.Name</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>EB points</stringValue>
@@ -287,7 +293,7 @@
         <name>Should_Settlement_be_flagged</name>
         <label>Should Settlement be flagged?</label>
         <locationX>776</locationX>
-        <locationY>1310</locationY>
+        <locationY>1070</locationY>
         <defaultConnector>
             <targetReference>NoControl</targetReference>
         </defaultConnector>
@@ -318,7 +324,7 @@
     <formulas>
         <name>controlReasonDetail</name>
         <dataType>String</dataType>
-        <expression> IF({!Get_Settlement_Record_Type.Name} = &quot;Monetary&quot;, &quot;Bank account number&quot;, IF({!Get_Settlement_Record_Type.Name} = &quot;Voucher&quot;, &quot;Voucher Email&quot;, &quot;EB number&quot;))</expression>
+        <expression> IF({!incomingRecord.RecordType.Name} = &quot;Monetary&quot;, &quot;Bank account number&quot;, IF({!incomingRecord.RecordType.Name} = &quot;Voucher&quot;, &quot;Voucher Email&quot;, &quot;EB number&quot;))</expression>
     </formulas>
     <formulas>
         <name>highAmountMessage</name>
@@ -335,8 +341,8 @@
         <dataType>String</dataType>
         <expression>IF({!numberOfSettlements} &gt;= 3 , {!controlReasonMessage} , &quot;&quot;)</expression>
     </formulas>
-    <interviewLabel>CLAIM Control {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>CLAIM Control</label>
+    <interviewLabel>CLAIM Control Evalutation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CLAIM Control Evalutation</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -360,7 +366,7 @@
         <name>Get_Other_Settlements_EB</name>
         <label>Get Other Settlements - EB Points</label>
         <locationX>1062</locationX>
-        <locationY>518</locationY>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_High_Settlement_Amount_EB</targetReference>
@@ -370,7 +376,7 @@
             <field>Id</field>
             <operator>NotEqualTo</operator>
             <value>
-                <elementReference>Get_Settlement_Information.Id</elementReference>
+                <elementReference>incomingRecord.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -384,7 +390,14 @@
             <field>EuroBonus_Number__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Settlement_Information.EuroBonus_Number__c</elementReference>
+                <elementReference>incomingRecord.EuroBonus_Number__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Settlement_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Done</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -395,7 +408,7 @@
         <name>Get_Other_Settlements_IBAN</name>
         <label>Get Other Settlements - IBAN</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_High_Settlement_Amount_Monetary</targetReference>
@@ -405,14 +418,14 @@
             <field>Id</field>
             <operator>NotEqualTo</operator>
             <value>
-                <elementReference>Get_Settlement_Information.Id</elementReference>
+                <elementReference>incomingRecord.Id</elementReference>
             </value>
         </filters>
         <filters>
             <field>Bank_Account_Number__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Settlement_Information.Bank_Account_Number__c</elementReference>
+                <elementReference>incomingRecord.Bank_Account_Number__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -420,6 +433,13 @@
             <operator>GreaterThanOrEqualTo</operator>
             <value>
                 <elementReference>last12months</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Settlement_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Done</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -430,7 +450,7 @@
         <name>Get_Other_Settlements_Voucher</name>
         <label>Get Other Settlements - Voucher</label>
         <locationX>622</locationX>
-        <locationY>518</locationY>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_High_Settlement_Amount_Voucher</targetReference>
@@ -440,14 +460,14 @@
             <field>Id</field>
             <operator>NotEqualTo</operator>
             <value>
-                <elementReference>Get_Settlement_Information.Id</elementReference>
+                <elementReference>incomingRecord.Id</elementReference>
             </value>
         </filters>
         <filters>
             <field>Voucher_Email__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Settlement_Information.Voucher_Email__c</elementReference>
+                <elementReference>incomingRecord.Voucher_Email__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -457,65 +477,84 @@
                 <elementReference>last12months</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>Settlement_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Done</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Settlement__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>Get_Settlement_Information</name>
-        <label>Get Settlement Information</label>
-        <locationX>776</locationX>
-        <locationY>158</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Settlement_Record_Type</targetReference>
-        </connector>
+    <recordUpdates>
+        <name>Update_Control_Reason</name>
+        <label>Update Control Reason</label>
+        <locationX>644</locationX>
+        <locationY>1310</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>incomingRecord.Id</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <inputAssignments>
+            <field>Control_Reason__c</field>
+            <value>
+                <elementReference>controlReasonOutputMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Manual_Control__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
         <object>Settlement__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Settlement_Record_Type</name>
-        <label>Get Settlement Record Type</label>
-        <locationX>776</locationX>
-        <locationY>278</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Check_Settlement_Type</targetReference>
-        </connector>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Status</name>
+        <label>Update Status</label>
+        <locationX>908</locationX>
+        <locationY>1310</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Settlement_Information.RecordTypeId</elementReference>
+                <elementReference>incomingRecord.Id</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
+        <inputAssignments>
+            <field>Control_verified__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Settlement_Status__c</field>
+            <value>
+                <stringValue>Controlled</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Settlement__c</object>
+    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
         <locationX>650</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Settlement_Information</targetReference>
+            <targetReference>Check_Settlement_Type</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <textTemplates>
         <name>controlReasonMessage</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>This {!Get_Settlement_Record_Type.Name} settlement was flagged because {!controlReasonDetail} occurred {!numberOfSettlements} times within the last 12 months.</text>
+        <text>This {!incomingRecord.RecordType.Name} settlement was flagged because {!controlReasonDetail} occurred {!numberOfSettlements} times within the last 12 months.</text>
     </textTemplates>
     <textTemplates>
         <name>controlReasonOutputMessage</name>
@@ -545,19 +584,20 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>incomingRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Settlement__c</objectType>
+    </variables>
+    <variables>
         <name>numberOfSettlements</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>0</scale>
-    </variables>
-    <variables>
-        <name>recordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>relatedSettlements</name>

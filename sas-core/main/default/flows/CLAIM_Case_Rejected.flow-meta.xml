@@ -4,14 +4,17 @@
         <name>Notify_user_about_settlement_rejection</name>
         <label>Notify user about settlement rejection</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>518</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>Assign_Case_to_submitter</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>customNotifTypeId</name>
             <value>
-                <elementReference>Get_Settlement_Update_Notification_Id.Id</elementReference>
+                <elementReference>Get_Settlement_Notification_Update_Id.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -23,7 +26,7 @@
         <inputParameters>
             <name>title</name>
             <value>
-                <stringValue>Settlement Rejected</stringValue>
+                <stringValue>Case Rejected</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -35,7 +38,7 @@
         <inputParameters>
             <name>targetId</name>
             <value>
-                <elementReference>Get_Settlement_Information.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
@@ -44,20 +47,25 @@
         <name>Set_Users_to_notify</name>
         <label>Set Users to notify</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>usersToNotify</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Get_Settlement_Information.Submitter__c</elementReference>
+                <elementReference>Get_Case_Information.Approval_Submitter__r.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Settlement_Update_Notification_Id</targetReference>
+            <targetReference>Get_Settlement_Notification_Update_Id</targetReference>
         </connector>
     </assignments>
-    <interviewLabel>CLAIM Settlement Denied {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>CLAIM Settlement Denied</label>
+    <formulas>
+        <name>todayDate</name>
+        <dataType>Date</dataType>
+        <expression>Today()</expression>
+    </formulas>
+    <interviewLabel>CLAIM Case Rejected {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CLAIM Case Rejected</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -78,13 +86,13 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_Settlement_Information</name>
-        <label>Get Settlement Information</label>
+        <name>Get_Case_Information</name>
+        <label>Get Case Information</label>
         <locationX>176</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Update_Settlement_and_Assigned_to_Submitter</targetReference>
+            <targetReference>Set_Users_to_notify</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -95,14 +103,14 @@
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Settlement__c</object>
+        <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Settlement_Update_Notification_Id</name>
-        <label>Get Settlement Update Notification Id</label>
+        <name>Get_Settlement_Notification_Update_Id</name>
+        <label>Get Settlement Notification Update Id</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Notify_user_about_settlement_rejection</targetReference>
@@ -120,13 +128,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Update_Settlement_and_Assigned_to_Submitter</name>
-        <label>Update Settlement and Assigned to Submitter</label>
+        <name>Assign_Case_to_submitter</name>
+        <label>Assign Case to submitter</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
-        <connector>
-            <targetReference>Set_Users_to_notify</targetReference>
-        </connector>
+        <locationY>638</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -136,44 +141,32 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Control_Reason__c</field>
-            <value>
-                <stringValue/>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Needs_Control__c</field>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>OwnerId</field>
             <value>
-                <elementReference>Get_Settlement_Information.Submitter__c</elementReference>
+                <elementReference>Get_Case_Information.Approval_Submitter__r.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Settlement_Status__c</field>
+            <field>Status</field>
             <value>
-                <stringValue>Denied</stringValue>
+                <stringValue>In Progress</stringValue>
             </value>
         </inputAssignments>
-        <object>Settlement__c</object>
+        <object>Case</object>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Settlement_Information</targetReference>
+            <targetReference>Get_Case_Information</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <textTemplates>
         <name>notificationText</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Settlement {!Get_Settlement_Information.Name} has been rejected, please verify.</text>
+        <text>Case {!Get_Case_Information.CaseNumber} contains a Settlement that has been rejected by the system. Please check the rejection reason on the specific Settlement.</text>
     </textTemplates>
     <variables>
         <name>recordId</name>
@@ -183,6 +176,7 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <description>Ids of the users that will be notified</description>
         <name>usersToNotify</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>

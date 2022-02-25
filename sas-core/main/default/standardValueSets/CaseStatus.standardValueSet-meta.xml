@@ -55,4 +55,22 @@
         <label>Merged</label>
         <closed>true</closed>
     </standardValue>
+    <standardValue>
+        <fullName>Waiting for Approval</fullName>
+        <default>false</default>
+        <label>Waiting for Approval</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Waiting for Control</fullName>
+        <default>false</default>
+        <label>Waiting for Control</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Waiting for Transfer</fullName>
+        <default>false</default>
+        <label>Waiting for Transfer</label>
+        <closed>false</closed>
+    </standardValue>
 </StandardValueSet>

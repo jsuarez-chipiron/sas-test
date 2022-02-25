@@ -47,6 +47,11 @@
                 <label>Other errors</label>
             </value>
             <value>
+                <fullName>Blocked by User</fullName>
+                <default>false</default>
+                <label>Blocked by User</label>
+            </value>
+            <value>
                 <fullName>Fraud identified</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

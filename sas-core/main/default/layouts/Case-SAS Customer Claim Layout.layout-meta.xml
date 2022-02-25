@@ -89,6 +89,10 @@
                 <behavior>Edit</behavior>
                 <field>Last_Received_Email_On__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Approval_Submitter__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

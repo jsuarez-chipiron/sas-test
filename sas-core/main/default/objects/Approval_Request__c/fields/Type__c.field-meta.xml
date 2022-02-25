@@ -21,6 +21,11 @@
                 <default>false</default>
                 <label>Control</label>
             </value>
+            <value>
+                <fullName>Block</fullName>
+                <default>false</default>
+                <label>Block</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

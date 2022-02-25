@@ -4,11 +4,11 @@
         <name>Unlock_Settlement_0_0</name>
         <label>Unlock Settlement</label>
         <locationX>314</locationX>
-        <locationY>878</locationY>
+        <locationY>1358</locationY>
         <actionName>UnlockRecords</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Deny_Settlement_0_0</targetReference>
+            <targetReference>Send_Case_Rejection_Notification</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -23,7 +23,7 @@
         <name>Denied_or_Blocked</name>
         <label>Denied or Blocked?</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>1118</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Rejected</name>
@@ -36,7 +36,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Unlock_Settlement_0_0</targetReference>
+                <targetReference>Update_Settlement_Status_Denied</targetReference>
             </connector>
             <label>Rejected</label>
         </rules>
@@ -51,7 +51,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Block_Settlement</targetReference>
+                <targetReference>Update_Settlement_Status_Blocked</targetReference>
             </connector>
             <label>Blocked</label>
         </rules>
@@ -60,7 +60,7 @@
         <name>Is_it_approved</name>
         <label>Is it approved?</label>
         <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Reject_request_0</targetReference>
         </defaultConnector>
@@ -82,10 +82,106 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_Settlement_blocked</name>
+        <label>Is Settlement blocked</label>
+        <locationX>1194</locationX>
+        <locationY>998</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Settlement_is_blocked</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_updated_Settlement_Information.Settlement_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Blocked</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Have_all_Settlements_for_this_Claim_been_approved</targetReference>
+            </connector>
+            <label>Settlement is blocked</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Settlement_has_the_correct_status</name>
+        <label>Settlement has the correct status</label>
+        <locationX>930</locationX>
+        <locationY>758</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Valid_Status</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_updated_Settlement_Information.Settlement_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for approval</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_it_approved</targetReference>
+            </connector>
+            <label>Valid Status</label>
+        </rules>
+        <rules>
+            <name>Invalid_Status</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_updated_Settlement_Information.Settlement_Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for approval</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>invalidStatusScreen</targetReference>
+            </connector>
+            <label>Invalid Status</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Should_Case_go_to_Control</name>
+        <label>Should Case go to Control</label>
+        <locationX>930</locationX>
+        <locationY>2126</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>numberOfUnapprovedSettlements</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Status</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>numberOfUnapprovedSettlements</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Who_is_reviewing_settlement</name>
         <label>Who is reviewing settlement?</label>
-        <locationX>842</locationX>
-        <locationY>278</locationY>
+        <locationX>1370</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Message</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Approver</name>
@@ -94,28 +190,13 @@
                 <leftValueReference>$User.Username</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Get_Settlement_Information.Owner:User.Username</elementReference>
+                    <elementReference>Get_Case_related_to_Settlement.Owner:User.Username</elementReference>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Approval_Request</targetReference>
             </connector>
             <label>Approver</label>
-        </rules>
-        <rules>
-            <name>Other_users</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$User.Username</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>Get_Settlement_Information.Owner:User.Username</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Message</targetReference>
-            </connector>
-            <label>Other users</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
@@ -159,7 +240,7 @@
         <name>Approve_Approval_Request</name>
         <label>Approve Approval Request</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Update_Settlement_to_Control_and_save_approver_s_name</targetReference>
         </connector>
@@ -194,7 +275,7 @@
         <name>Reject_request_0</name>
         <label>Reject request</label>
         <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Denied_or_Blocked</targetReference>
         </connector>
@@ -238,13 +319,55 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
-        <name>Get_Settlement_Information</name>
-        <label>Get Settlement Information</label>
-        <locationX>842</locationX>
-        <locationY>158</locationY>
+        <name>Get_Case_related_to_Settlement</name>
+        <label>Get Case related to Settlement</label>
+        <locationX>1370</locationX>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Who_is_reviewing_settlement</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>LIA_Claim__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Settlement_Information.Claim__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Settlement_Information</name>
+        <label>Get Settlement Information</label>
+        <locationX>1370</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Case_related_to_Settlement</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Settlement__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_updated_Settlement_Information</name>
+        <label>Get updated Settlement Information</label>
+        <locationX>930</locationX>
+        <locationY>638</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Settlement_has_the_correct_status</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -259,12 +382,84 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>Update_Case_Status</name>
+        <label>Update Case Status</label>
+        <locationX>666</locationX>
+        <locationY>2246</locationY>
+        <connector>
+            <targetReference>Send_Case_to_Control</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case_related_to_Settlement.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Waiting for Control</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Settlement_Status_Blocked</name>
+        <label>Update Settlement Status - Blocked</label>
+        <locationX>578</locationX>
+        <locationY>1238</locationY>
+        <connector>
+            <targetReference>Send_Case_Rejection_Notification</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Settlement_Information.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Settlement_Status__c</field>
+            <value>
+                <stringValue>Blocked</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Settlement__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Settlement_Status_Denied</name>
+        <label>Update Settlement Status - Denied</label>
+        <locationX>314</locationX>
+        <locationY>1238</locationY>
+        <connector>
+            <targetReference>Unlock_Settlement_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Settlement_Information.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Settlement_Status__c</field>
+            <value>
+                <stringValue>In progress</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Settlement__c</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_Settlement_to_Control_and_save_approver_s_name</name>
         <label>Update Settlement to Control and save approver&apos;s name</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>1118</locationY>
         <connector>
-            <targetReference>Control_Process</targetReference>
+            <targetReference>Have_all_Settlements_for_this_Claim_been_approved</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -292,13 +487,13 @@
     <screens>
         <name>Approval_Request</name>
         <label>Approval Request</label>
-        <locationX>314</locationX>
-        <locationY>398</locationY>
+        <locationX>930</locationX>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Is_it_approved</targetReference>
+            <targetReference>Get_updated_Settlement_Information</targetReference>
         </connector>
         <fields>
             <name>Approval_Status</name>
@@ -364,10 +559,29 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>invalidStatusScreen</name>
+        <label>Invalid Status</label>
+        <locationX>1194</locationX>
+        <locationY>878</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Is_Settlement_blocked</targetReference>
+        </connector>
+        <fields>
+            <name>newSettlementInformation</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Settlement has been updated since loading the page. Please refresh the page to see the latest changes!&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Message</name>
         <label>Message</label>
-        <locationX>1106</locationX>
-        <locationY>398</locationY>
+        <locationX>1810</locationX>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -380,7 +594,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>716</locationX>
+        <locationX>1244</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Settlement_Information</targetReference>
@@ -388,44 +602,66 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>Block_Settlement</name>
-        <label>Block Settlement</label>
+        <name>Have_all_Settlements_for_this_Claim_been_approved</name>
+        <label>Have all Settlements for this Claim been approved</label>
+        <locationX>930</locationX>
+        <locationY>2006</locationY>
+        <connector>
+            <targetReference>Should_Case_go_to_Control</targetReference>
+        </connector>
+        <flowName>UTIL_Count_Number_of_Settlements_for_Status</flowName>
+        <inputAssignments>
+            <name>claimId</name>
+            <value>
+                <elementReference>Get_Settlement_Information.Claim__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>statusToCheck</name>
+            <value>
+                <stringValue>Waiting for approval</stringValue>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>numberOfUnapprovedSettlements</assignToReference>
+            <name>numberOfSettlementsInStatus</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Send_Case_Rejection_Notification</name>
+        <label>Send Case Rejection Notification</label>
         <locationX>578</locationX>
-        <locationY>878</locationY>
-        <flowName>CLAIM_Settlement_Blocked</flowName>
+        <locationY>1574</locationY>
+        <flowName>CLAIM_Case_Rejected</flowName>
         <inputAssignments>
             <name>recordId</name>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>Get_Case_related_to_Settlement.Id</elementReference>
             </value>
         </inputAssignments>
     </subflows>
     <subflows>
-        <name>Control_Process</name>
-        <label>Control Process</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
-        <flowName>CLAIM_Control_Process</flowName>
+        <name>Send_Case_to_Control</name>
+        <label>Send Case to Control</label>
+        <locationX>666</locationX>
+        <locationY>2366</locationY>
+        <flowName>CLAIM_Case_Control_Handler</flowName>
         <inputAssignments>
-            <name>recordId</name>
+            <name>incomingCaseRecord</name>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>Get_Case_related_to_Settlement</elementReference>
             </value>
         </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
-    <subflows>
-        <name>Deny_Settlement_0_0</name>
-        <label>Deny Settlement</label>
-        <locationX>314</locationX>
-        <locationY>998</locationY>
-        <flowName>CLAIM_Settlement_Denied</flowName>
-        <inputAssignments>
-            <name>recordId</name>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
+    <variables>
+        <name>numberOfUnapprovedSettlements</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

@@ -4,11 +4,11 @@
         <name>Notify_user_about_settlement_approval</name>
         <label>Notify user about settlement approval</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <connector>
-            <targetReference>Assign_settlement_to_submitter</targetReference>
+            <targetReference>Assign_Case_to_submitter</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -26,7 +26,7 @@
         <inputParameters>
             <name>title</name>
             <value>
-                <stringValue>Settlement Approved</stringValue>
+                <stringValue>Case Approved</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -47,12 +47,12 @@
         <name>Set_Users_to_notify</name>
         <label>Set Users to notify</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>usersToNotify</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Get_Settlement_Information.Submitter__c</elementReference>
+                <elementReference>Get_Case_Information.Approval_Submitter__r.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -65,7 +65,7 @@
         <expression>Today()</expression>
     </formulas>
     <interviewLabel>CLAIM Settlement Approved {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>CLAIM Settlement Approved</label>
+    <label>CLAIM Case Approved</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -86,13 +86,13 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_Settlement_Information</name>
-        <label>Get Settlement Information</label>
+        <name>Get_Case_Information</name>
+        <label>Get Case Information</label>
         <locationX>176</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Users_to_notify</targetReference>
+            <targetReference>Update_Settlements</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -103,14 +103,14 @@
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Settlement__c</object>
+        <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <name>Get_Settlement_Notification_Update_Id</name>
         <label>Get Settlement Notification Update Id</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Notify_user_about_settlement_approval</targetReference>
@@ -128,10 +128,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Assign_settlement_to_submitter</name>
-        <label>Assign settlement to submitter</label>
+        <name>Assign_Case_to_submitter</name>
+        <label>Assign Case to submitter</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -141,23 +141,42 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Control_Reason__c</field>
-            <value>
-                <stringValue/>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Control_verified__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>OwnerId</field>
             <value>
-                <elementReference>Get_Settlement_Information.Submitter__c</elementReference>
+                <elementReference>Get_Case_Information.Approval_Submitter__r.Id</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Waiting for Transfer</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Settlements</name>
+        <label>Update Settlements</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <connector>
+            <targetReference>Set_Users_to_notify</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Claim__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case_Information.LIA_Claim__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Settlement_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Controlled</stringValue>
+            </value>
+        </filters>
         <inputAssignments>
             <field>Settlement_Status__c</field>
             <value>
@@ -171,14 +190,14 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Settlement_Information</targetReference>
+            <targetReference>Get_Case_Information</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <textTemplates>
         <name>notificationText</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Settlement {!Get_Settlement_Information.Name} has been approved and it is waiting for transfer</text>
+        <text>Case {!Get_Case_Information.CaseNumber} has been approved and it is waiting for transfer</text>
     </textTemplates>
     <variables>
         <name>recordId</name>

@@ -160,7 +160,7 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Needs_Control__c</field>
+            <field>Manual_Control__c</field>
             <value>
                 <booleanValue>false</booleanValue>
             </value>

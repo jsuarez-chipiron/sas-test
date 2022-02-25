@@ -288,8 +288,9 @@
         <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
         <fields>Settlement_Status__c</fields>
-        <fields>CREATED_DATE</fields>
         <fields>Payee_Name__c</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>LAST_UPDATE</fields>
         <relatedList>Settlement__c.Claim__c</relatedList>
         <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
@@ -319,7 +320,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h5E000001VNyh</masterLabel>
+        <masterLabel>00h1X000003qI1N</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

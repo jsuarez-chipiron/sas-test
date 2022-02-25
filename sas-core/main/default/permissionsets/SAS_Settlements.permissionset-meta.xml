@@ -38,7 +38,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Settlement__c.Needs_Control__c</field>
+        <field>Settlement__c.Manual_Control__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

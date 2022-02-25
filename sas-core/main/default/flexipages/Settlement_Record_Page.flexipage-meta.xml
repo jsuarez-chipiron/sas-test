@@ -7,23 +7,7 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>Settlement__c.Submit_Settlement_for_Approval</value>
-                            <visibilityRule>
-                                <booleanFilter>1 OR 2</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Settlement_Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>In progress</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Settlement_Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Denied</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Settlement__c.Recall_settlement</value>
+                            <value>Settlement__c.Block_Settlement</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR 2 OR 3</booleanFilter>
                                 <criteria>
@@ -34,12 +18,12 @@
                                 <criteria>
                                     <leftValue>{!Record.Settlement_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Waiting for transfer</rightValue>
+                                    <rightValue>Waiting for control</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Settlement_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Waiting for control</rightValue>
+                                    <rightValue>Waiting for transfer</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -256,7 +240,7 @@
                         <rightValue>Waiting for control</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Needs_Control__c}</leftValue>
+                        <leftValue>{!Record.Manual_Control__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
