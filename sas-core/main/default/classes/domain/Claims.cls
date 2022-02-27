@@ -22,6 +22,8 @@ public without sharing class Claims extends fflib_SObjectDomain {
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
     checkIfExistsInCARE((Map<Id, LIA_Claim__c>) existingRecords);
+    updateParentCaseBookings((Map<Id, LIA_Claim__c>) existingRecords);
+    // TODO: We should also update EB accounts correctly. Requires fixing of the entire EB accounts fetching flow.
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
@@ -56,6 +58,26 @@ public without sharing class Claims extends fflib_SObjectDomain {
     for (LIA_Claim__c claim : instanceRecords) {
       if (claim.Liability_PNR__c == null) {
         claim.Claims_Exist_In_CARE_For_PNR__c = false;
+      }
+    }
+  }
+
+  private void updateParentCaseBookings(Map<Id, LIA_Claim__c> existingRecords) {
+    if (instanceRecords.size() == 1) {
+      LIA_Claim__c claim = instanceRecords[0];
+      // TODO: Fix this when we can support several bookings at once
+      if (
+        claim.Liability_PNR__c != null &&
+        existingRecords.get(claim.Id).Liability_PNR__c != claim.Liability_PNR__c
+      ) {
+        BookingService.removeBookingFromCase(
+          claim.Case__c,
+          existingRecords.get(claim.Id).Liability_PNR__c
+        );
+        BookingService.addBookingToCaseAsync(
+          claim.Case__c,
+          claim.Liability_PNR__c
+        );
       }
     }
   }
