@@ -85,7 +85,7 @@ global class APIMMock implements HttpCalloutMock {
         res.setHeader('Content-Type', 'application/json');
         res.setBody('{"link":"test.sas.se", "caseId": "12345678"}');
       }
-    } else if (endpoint.contains('claims/claims')) {
+    } else if (endpoint.contains('claim/claim')) {
       if (endpoint.contains(PNR_FOR_WHICH_CLAIMS_EXIST)) {
         res.setHeader('Content-Type', 'application/json');
         res.setBody(APIMMockResponses.CARE_CLAIM_FOUND);
