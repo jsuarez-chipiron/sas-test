@@ -2,7 +2,7 @@
  * Service for making requests to the voucher API.
  */
 public without sharing class ClaimsIntegrationService {
-  private static final String API_PATH = 'callout:SAS_APIM/claims/';
+  private static final String API_PATH = 'callout:SAS_APIM/claim/';
   private static final String SUBSCRIPTION_KEY = Test.isRunningTest()
     ? 'TESTKEY'
     : C_Settings.getSettings('APIM').get('APIM_Subscription_Key');
@@ -25,8 +25,8 @@ public without sharing class ClaimsIntegrationService {
   ) {
     HttpResponse response = makeRequest(
       HttpUtils.HTTP_METHOD.GET,
-      'claims' +
-      '?pnr' +
+      'claim' +
+      '?pnr=' +
       bookingReference
     );
 
