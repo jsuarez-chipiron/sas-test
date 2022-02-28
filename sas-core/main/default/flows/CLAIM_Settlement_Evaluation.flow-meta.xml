@@ -332,7 +332,7 @@
             <targetReference>Random_Number_Check</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>incomingRecord</name>
         <dataType>SObject</dataType>
