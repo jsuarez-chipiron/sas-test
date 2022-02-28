@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Notify_Parent_Case_Owner</name>
+        <label>Notify Parent Case Owner</label>
+        <locationX>50</locationX>
+        <locationY>998</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>ReplyConfirmation</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <elementReference>Get_Custom_Notification_Id.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <elementReference>notificationMessage</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Reply from support case</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>usersToNotify</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <elementReference>GetSupportCase.Parent.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>PostOnParent</name>
         <label>PostOnParent</label>
-        <locationX>176</locationX>
+        <locationX>270</locationX>
         <locationY>398</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
-            <targetReference>ReplyConfirmation</targetReference>
+            <targetReference>Update_Parent_Case_to_New_Response</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -26,6 +68,59 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>52.0</apiVersion>
+    <assignments>
+        <name>Set_Users_to_Notify</name>
+        <label>Set Users to Notify</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>usersToNotify</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>GetSupportCase.Parent.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Custom_Notification_Id</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Who_is_the_owner_of_the_parent_case</name>
+        <label>Who is the owner of the parent case?</label>
+        <locationX>270</locationX>
+        <locationY>638</locationY>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
+        <rules>
+            <name>User</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetSupportCase.Parent.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>005</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Users_to_Notify</targetReference>
+            </connector>
+            <label>User</label>
+        </rules>
+        <rules>
+            <name>Queue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetSupportCase.Parent.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>00G</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ReplyConfirmation</targetReference>
+            </connector>
+            <label>Queue</label>
+        </rules>
+    </decisions>
     <interviewLabel>Support Case Reply {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Reply to Support Case</label>
     <processMetadataValues>
@@ -48,9 +143,30 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>Get_Custom_Notification_Id</name>
+        <label>Get Custom Notification Id</label>
+        <locationX>50</locationX>
+        <locationY>878</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Notify_Parent_Case_Owner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NewResponse</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CustomNotificationType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetSupportCase</name>
         <label>GetSupportCase</label>
-        <locationX>176</locationX>
+        <locationX>270</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -68,12 +184,36 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Parent_Case_to_New_Response</name>
+        <label>Update Parent Case to New Response</label>
+        <locationX>270</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Who_is_the_owner_of_the_parent_case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetSupportCase.ParentId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>New Response</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>ReplyConfirmation</name>
         <label>ReplyConfirmation</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>270</locationX>
+        <locationY>1214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -88,7 +228,7 @@
     <screens>
         <name>Support_Case_Reply</name>
         <label>Support Case Reply</label>
-        <locationX>176</locationX>
+        <locationX>270</locationX>
         <locationY>278</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -116,13 +256,18 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>144</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetSupportCase</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <textTemplates>
+        <name>notificationMessage</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Case {!GetSupportCase.Parent.CaseNumber} has an update from support case {!GetSupportCase.CaseNumber}. Please, check chatter feed in case {!GetSupportCase.Parent.CaseNumber}</text>
+    </textTemplates>
     <textTemplates>
         <name>SupportMessageToParent</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
@@ -138,6 +283,13 @@ If you need further assistance, please make a comment on this post!</text>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>usersToNotify</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
