@@ -694,6 +694,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Refund_Request__c.Created_Date_in_UTC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Refund_Request__c.GDPR_Wiped__c</field>
         <readable>true</readable>

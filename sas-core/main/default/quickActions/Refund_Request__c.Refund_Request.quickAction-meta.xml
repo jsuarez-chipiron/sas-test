@@ -82,6 +82,11 @@
                 <field>Phone__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Created_Date_in_UTC__c</field>
+                <uiBehavior>Readonly</uiBehavior>
+            </quickActionLayoutItems>
         </quickActionLayoutColumns>
     </quickActionLayout>
     <type>Update</type>
