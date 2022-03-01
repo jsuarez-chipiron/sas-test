@@ -36,6 +36,16 @@
                         <valueListItems>
                             <value>MassAccept</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Case.Duplicate_Check</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Department__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Refunds</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

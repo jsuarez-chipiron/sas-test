@@ -8,7 +8,7 @@
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
-            <targetReference>Success</targetReference>
+            <targetReference>Mark_potential_duplicates</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -308,7 +308,7 @@
         <name>Success</name>
         <label>Success</label>
         <locationX>176</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -328,6 +328,22 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Mark_potential_duplicates</name>
+        <label>Mark potential duplicates</label>
+        <locationX>176</locationX>
+        <locationY>998</locationY>
+        <connector>
+            <targetReference>Success</targetReference>
+        </connector>
+        <flowName>UTIL_Duplicate_Check_Refund</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>Get_Current_Case_Information.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <textTemplates>
         <name>RefundRequestInfo</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>

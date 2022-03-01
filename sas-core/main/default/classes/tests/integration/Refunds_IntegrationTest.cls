@@ -23,14 +23,10 @@ public with sharing class Refunds_IntegrationTest {
 
     insert refund;
 
-    Case testCase = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null
-    )[0];
+    Case testCase = FCS_TestDataFactory.createCases(1, null, null, null)[0];
 
     testCase.Refund_Request__c = refund.Id;
+    testCase.Initially_Provided_PNR__c = bookingReferenceOnlyInTEDS;
 
     Test.startTest();
     Test.setMock(HttpCalloutMock.class, new APIMMock());

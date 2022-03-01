@@ -26,6 +26,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
     updateBookingsForNewAssociatedAccounts();
     updateSocialPost();
     tryToFetchEBAccountFromCODS();
+    refundDuplicateCheck();
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
@@ -170,9 +171,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
       // FIXME: When possible, make this support batches.
       Case c = instanceRecords[0];
 
-      if (!String.isBlank(c.Refund_PNR__c)) {
-        BookingService.addBookingToCaseAsync(c.Id, c.Refund_PNR__c);
-      } else if (!String.isBlank(c.Initially_Provided_PNR__c)) {
+      if (!String.isBlank(c.Initially_Provided_PNR__c)) {
         BookingService.addBookingToCaseAsync(c.Id, c.Initially_Provided_PNR__c);
       }
     }
@@ -544,6 +543,23 @@ public without sharing class Cases extends fflib_SObjectDomain {
           }
         }
       }
+    }
+  }
+
+  private void refundDuplicateCheck() {
+    if (instanceRecords.size() > 1) {
+      return;
+    }
+    Case c = instanceRecords[0];
+    if (c.Department__c == 'Refunds' && c.Refund_Request__c != null) {
+      Map<String, Object> inputs = new Map<String, Object>();
+      inputs.put('recordId', c.Id);
+      inputs.put('isManualCheck', false);
+
+      Flow.Interview.UTIL_Duplicate_Check_Refund duplicateFlow = new Flow.Interview.UTIL_Duplicate_Check_Refund(
+        inputs
+      );
+      duplicateFlow.start();
     }
   }
 
