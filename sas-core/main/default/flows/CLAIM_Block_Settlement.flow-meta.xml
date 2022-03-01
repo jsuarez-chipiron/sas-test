@@ -62,6 +62,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Settlement__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Status__c</field>
             <value>
                 <stringValue>Blocked</stringValue>
