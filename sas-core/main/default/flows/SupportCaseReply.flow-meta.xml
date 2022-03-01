@@ -262,7 +262,7 @@
             <targetReference>GetSupportCase</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <textTemplates>
         <name>notificationMessage</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
