@@ -446,6 +446,18 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>Control_Reason__c</field>
+            <value>
+                <stringValue/>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Control_verified__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Settlement_Status__c</field>
             <value>
                 <stringValue>Controlled</stringValue>
