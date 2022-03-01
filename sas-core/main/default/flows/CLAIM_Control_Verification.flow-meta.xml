@@ -482,6 +482,12 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>Control_Reason__c</field>
+            <value>
+                <stringValue/>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Settlement_Status__c</field>
             <value>
                 <stringValue>Blocked</stringValue>
@@ -505,6 +511,12 @@
                 <elementReference>Get_Settlement_Information.Id</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Control_Reason__c</field>
+            <value>
+                <stringValue/>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Settlement_Status__c</field>
             <value>
