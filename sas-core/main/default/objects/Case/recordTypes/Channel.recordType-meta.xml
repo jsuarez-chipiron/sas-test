@@ -76,10 +76,6 @@
             <fullName>Vendor Management</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Vendor Management</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
