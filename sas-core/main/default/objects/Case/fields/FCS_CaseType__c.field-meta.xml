@@ -194,7 +194,6 @@
             <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
             <controllingFieldValue>Sales Control BOM</controllingFieldValue>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>SME</controllingFieldValue>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Customer Claim</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
@@ -256,7 +255,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>SME</controllingFieldValue>
             <controllingFieldValue>Vendor Management</controllingFieldValue>
             <valueName>Feedback</valueName>
         </valueSettings>
@@ -325,10 +323,6 @@
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Voucher</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SME</controllingFieldValue>
-            <valueName>SME</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Customer Claim</controllingFieldValue>

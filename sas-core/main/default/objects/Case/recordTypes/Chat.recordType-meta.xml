@@ -60,10 +60,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SME</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Sales Control BOM</fullName>
             <default>false</default>
         </values>
@@ -4567,10 +4563,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Vendor Management</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Chat</fullName>
             <default>false</default>
         </values>
@@ -4751,18 +4743,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Olympic DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Olympic NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Olympic SE</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>PL</fullName>
             <default>false</default>
         </values>
@@ -4864,6 +4844,10 @@
         </values>
         <values>
             <fullName>US</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Management</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -17,14 +17,29 @@
                 <label>In progress</label>
             </value>
             <value>
+                <fullName>Denied</fullName>
+                <default>false</default>
+                <label>Denied</label>
+            </value>
+            <value>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+                <label>Blocked</label>
+            </value>
+            <value>
                 <fullName>Waiting for approval</fullName>
                 <default>false</default>
                 <label>Waiting for approval</label>
             </value>
             <value>
-                <fullName>Denied</fullName>
+                <fullName>Waiting for control</fullName>
                 <default>false</default>
-                <label>Denied</label>
+                <label>Waiting for control</label>
+            </value>
+            <value>
+                <fullName>Controlled</fullName>
+                <default>false</default>
+                <label>Controlled</label>
             </value>
             <value>
                 <fullName>Waiting for control</fullName>
@@ -42,34 +57,24 @@
                 <label>Sent to Racer</label>
             </value>
             <value>
-                <fullName>Accepted by Racer</fullName>
-                <default>false</default>
-                <label>Accepted by Racer</label>
-            </value>
-            <value>
                 <fullName>Rejected by Racer</fullName>
                 <default>false</default>
                 <label>Rejected by Racer</label>
             </value>
             <value>
-                <fullName>Sent to Bank</fullName>
+                <fullName>Sent to bank</fullName>
                 <default>false</default>
-                <label>Sent to Bank</label>
+                <label>Sent to bank</label>
             </value>
             <value>
-                <fullName>Rejected by Bank</fullName>
+                <fullName>Rejected by bank</fullName>
                 <default>false</default>
-                <label>Rejected by Bank</label>
+                <label>Rejected by bank</label>
             </value>
             <value>
-                <fullName>Accepted by Bank/Done</fullName>
+                <fullName>Failed</fullName>
                 <default>false</default>
-                <label>Accepted by Bank/Done</label>
-            </value>
-            <value>
-                <fullName>L2 errors by Bank</fullName>
-                <default>false</default>
-                <label>L2 errors by Bank</label>
+                <label>Failed</label>
             </value>
             <value>
                 <fullName>Done</fullName>

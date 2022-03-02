@@ -152,11 +152,6 @@
                 <label>Chat</label>
             </value>
             <value>
-                <fullName>Vendor Management</fullName>
-                <default>false</default>
-                <label>Vendor Management</label>
-            </value>
-            <value>
                 <fullName>DE</fullName>
                 <default>false</default>
                 <label>DE</label>
@@ -409,16 +404,19 @@
             <value>
                 <fullName>Olympic DK</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Olympic DK</label>
             </value>
             <value>
                 <fullName>Olympic NO</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Olympic NO</label>
             </value>
             <value>
                 <fullName>Olympic SE</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Olympic SE</label>
             </value>
             <value>
@@ -600,6 +598,11 @@
                 <fullName>US</fullName>
                 <default>false</default>
                 <label>US</label>
+            </value>
+            <value>
+                <fullName>Vendor Management</fullName>
+                <default>false</default>
+                <label>Vendor Management</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -831,16 +834,6 @@
             <valueName>Ticketless Support</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>SME</controllingFieldValue>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <valueName>International</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SME</controllingFieldValue>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <valueName>Scandinavia</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <valueName>Chat</valueName>
         </valueSettings>
@@ -858,7 +851,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <valueName>International</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <valueName>SAS Poland</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <valueName>Scandinavia</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Care</controllingFieldValue>
@@ -1035,18 +1036,6 @@
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>NO</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Olympic DK</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Olympic NO</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Olympic SE</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Group Sales</controllingFieldValue>

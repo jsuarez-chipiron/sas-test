@@ -65,15 +65,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SME</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Sales Control BOM</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>SoMe Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor Management</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5445,18 +5445,6 @@
         </values>
         <values>
             <fullName>OC Waivers</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Olympic DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Olympic NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Olympic SE</fullName>
             <default>false</default>
         </values>
         <values>

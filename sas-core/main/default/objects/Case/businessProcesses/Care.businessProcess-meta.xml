@@ -35,4 +35,16 @@
         <fullName>On Hold</fullName>
         <default>false</default>
     </values>
+    <values>
+        <fullName>Waiting for Approval</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Waiting for Control</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Waiting for Transfer</fullName>
+        <default>false</default>
+    </values>
 </BusinessProcess>

@@ -81,6 +81,10 @@ public class AccountingFileBuilder {
         } else if (field == 'VerificationNumber') {
           fileContents += String.valueOf(verificationNumber)
             .rightPad(AccountingEntry.FIELD_LENGTHS.get(field));
+        } else if (field == 'CostCenter') {
+          AccountingEntry.CREDIT_COST_CENTERS_BY_CURRENCY.get(
+            fileCurrency.name()
+          );
         } else {
           String fieldContents = AccountingEntry.CONSTANT_FIELDS_FOR_CREDITS.get(
             field

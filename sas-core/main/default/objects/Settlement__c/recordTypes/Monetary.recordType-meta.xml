@@ -290,6 +290,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Finland</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>France</fullName>
             <default>false</default>
         </values>
@@ -934,7 +938,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Viet Nam</fullName>
+            <fullName>Vietnam</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1241,6 +1245,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Finland</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>France</fullName>
             <default>false</default>
         </values>
@@ -1885,7 +1893,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Viet Nam</fullName>
+            <fullName>Vietnam</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1975,11 +1983,11 @@
     <picklistValues>
         <picklist>Settlement_Status__c</picklist>
         <values>
-            <fullName>Accepted by Bank%2FDone</fullName>
+            <fullName>Blocked</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Accepted by Racer</fullName>
+            <fullName>Controlled</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1991,15 +1999,11 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Failed</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In progress</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>L2 errors by Bank</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rejected by Bank</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2007,11 +2011,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Sent to Bank</fullName>
+            <fullName>Rejected by bank</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Sent to Racer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sent to bank</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2024,13 +2032,6 @@
         </values>
         <values>
             <fullName>Waiting for transfer</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Voucher_Type__c</picklist>
-        <values>
-            <fullName>Compensation</fullName>
             <default>false</default>
         </values>
     </picklistValues>

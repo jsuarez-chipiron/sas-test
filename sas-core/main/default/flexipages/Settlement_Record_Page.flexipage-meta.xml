@@ -7,22 +7,23 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>Settlement__c.Recall_approval_request</value>
+                            <value>Settlement__c.Block_Settlement</value>
                             <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Settlement_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Waiting for approval</rightValue>
                                 </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Settlement__c.Submit_Settlement_for_Approval</value>
-                            <visibilityRule>
                                 <criteria>
                                     <leftValue>{!Record.Settlement_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>In progress</rightValue>
+                                    <rightValue>Waiting for control</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Settlement_Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Waiting for transfer</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -159,10 +160,16 @@
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Settlement_Status__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Denied</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Settlement_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Blocked</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -174,6 +181,11 @@
                     <value>maintabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>settlementCalculator</componentName>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -228,7 +240,7 @@
                         <rightValue>Waiting for control</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Needs_Control__c}</leftValue>
+                        <leftValue>{!Record.Manual_Control__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>

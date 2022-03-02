@@ -25,60 +25,66 @@
             <stringValue>Voucher</stringValue>
         </value>
     </choices>
+    <decisions>
+        <name>Settlement_Type</name>
+        <label>Settlement Type</label>
+        <locationX>446</locationX>
+        <locationY>518</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>EB_Points_Settlement</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Select_Settlement_Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>EB Points</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_EB_Points_Settlement</targetReference>
+            </connector>
+            <label>EB Points Settlement</label>
+        </rules>
+        <rules>
+            <name>Monetary_Settlement</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Select_Settlement_Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Monetary</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Monetary_Settlement</targetReference>
+            </connector>
+            <label>Monetary  Settlement</label>
+        </rules>
+        <rules>
+            <name>Voucher_Settlement</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Select_Settlement_Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Voucher</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Voucher_Settlement</targetReference>
+            </connector>
+            <label>Voucher Settlement</label>
+        </rules>
+    </decisions>
     <dynamicChoiceSets>
-        <name>AvaliableCustomers</name>
-        <dataType>String</dataType>
-        <displayField>Name</displayField>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Claim__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <object>Customer__c</object>
-        <sortField>Name</sortField>
-        <sortOrder>Asc</sortOrder>
-        <valueField>Name</valueField>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>BankCountryOptions</name>
+        <name>voucherTypes</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
-        <picklistField>Bank_Country__c</picklistField>
+        <picklistField>Voucher_Type__c</picklistField>
         <picklistObject>Settlement__c</picklistObject>
     </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>CostAccountOptions</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>Cost_Account__c</picklistField>
-        <picklistObject>Settlement_Item__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>CountryOptions</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>Country__c</picklistField>
-        <picklistObject>Settlement__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>CurrencyOptions</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>Currency__c</picklistField>
-        <picklistObject>Settlement__c</picklistObject>
-    </dynamicChoiceSets>
-    <formulas>
-        <name>SettlementItemCurrecy</name>
-        <dataType>String</dataType>
-        <expression>TEXT({!GetSettlementInformation.Currency__c})</expression>
-    </formulas>
     <formulas>
         <name>TodayDate</name>
         <dataType>Date</dataType>
@@ -106,59 +112,29 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Create_Settlement</name>
-        <label>Create Settlement</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <name>Create_EB_Points_Settlement</name>
+        <label>Create EB Points Settlement</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
         <connector>
-            <targetReference>GetSettlementInformation</targetReference>
+            <targetReference>Outcome</targetReference>
         </connector>
         <inputAssignments>
             <field>Address_line_1__c</field>
             <value>
-                <elementReference>Address_Line_1</elementReference>
+                <elementReference>Get_Customer_Claim.Address_line_1__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Address_line_2__c</field>
             <value>
-                <elementReference>Address_Line_2</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Amount__c</field>
-            <value>
-                <elementReference>Amount</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>BIC_Swift__c</field>
-            <value>
-                <elementReference>BIC_Swift</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Bank_Account_Number__c</field>
-            <value>
-                <elementReference>IBAN</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Bank_Country__c</field>
-            <value>
-                <elementReference>Bank_Country</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Bank_Name__c</field>
-            <value>
-                <elementReference>Bank_Name</elementReference>
+                <elementReference>Get_Customer_Claim.Address_line_2__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>City__c</field>
             <value>
-                <elementReference>City</elementReference>
+                <elementReference>Get_Customer_Claim.City__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -168,39 +144,193 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Currency__c</field>
+            <field>Country__c</field>
             <value>
-                <elementReference>Currency</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Date_of_Exchange_Calculation__c</field>
-            <value>
-                <elementReference>TodayDate</elementReference>
+                <elementReference>Get_Customer_Claim.Country__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>EuroBonus_Number__c</field>
             <value>
-                <elementReference>EuroBonus_Number</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>EuroBonus_Points__c</field>
-            <value>
-                <elementReference>EuroBonus_Points</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>Get_Customer_Claim.OwnerId</elementReference>
+                <elementReference>Get_Customer_Claim.EuroBonus_Number__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Payee_Name__c</field>
             <value>
-                <elementReference>Payee_Name</elementReference>
+                <elementReference>Get_Customer_Claim.Contact_Full_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Postal_Code__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Postal_Code__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_Record_Type_Id.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Settlement_Status__c</field>
+            <value>
+                <stringValue>In progress</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Settlement__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Monetary_Settlement</name>
+        <label>Create Monetary Settlement</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Outcome</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Address_line_1__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Address_line_1__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Address_line_2__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Address_line_2__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BIC_Swift__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.BIC_Swift__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Bank_Account_Number__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Bank_Account_Number__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Bank_Country__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Bank_Country__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Bank_Name__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Bank_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>City__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.City__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Claim__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Country__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Country__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Currency__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Currency__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Payee_Name__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Contact_Full_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Postal_Code__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Postal_Code__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_Record_Type_Id.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Settlement_Status__c</field>
+            <value>
+                <stringValue>In progress</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Settlement__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Voucher_Settlement</name>
+        <label>Create Voucher Settlement</label>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Outcome</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Address_line_1__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Address_line_1__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Address_line_2__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Address_line_2__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>City__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.City__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Claim__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Country__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Country__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Currency__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Currency__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Payee_Name__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Contact_Full_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Postal_Code__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Postal_Code__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -218,57 +348,22 @@
         <inputAssignments>
             <field>Voucher_Email__c</field>
             <value>
-                <elementReference>voucherEmail.value</elementReference>
+                <elementReference>Get_Customer_Claim.Contact_Email__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Voucher_Type__c</field>
+            <value>
+                <elementReference>Voucher_Type</elementReference>
             </value>
         </inputAssignments>
         <object>Settlement__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
-    <recordCreates>
-        <name>Create_Settlement_Item</name>
-        <label>Create Settlement Item</label>
-        <locationX>176</locationX>
-        <locationY>758</locationY>
-        <connector>
-            <targetReference>Outcome</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Amount__c</field>
-            <value>
-                <elementReference>Settlement_Item_Amount</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Cost_Account__c</field>
-            <value>
-                <elementReference>Cost_Account</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Currency__c</field>
-            <value>
-                <elementReference>SettlementItemCurrecy</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Customer_Name__c</field>
-            <value>
-                <elementReference>Payee_Name</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Settlement__c</field>
-            <value>
-                <elementReference>Create_Settlement</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Settlement_Item__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordLookups>
         <name>Get_Customer_Claim</name>
         <label>Get Customer Claim Information</label>
-        <locationX>176</locationX>
+        <locationX>446</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -289,49 +384,29 @@
     <recordLookups>
         <name>Get_Record_Type_Id</name>
         <label>Get Record Type Id</label>
-        <locationX>176</locationX>
+        <locationX>446</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Settlement</targetReference>
+            <targetReference>Settlement_Type</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Settlement_Type</elementReference>
+                <elementReference>Select_Settlement_Type</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>GetSettlementInformation</name>
-        <label>GetSettlementInformation</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Create_Settlement_Item</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Create_Settlement</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Settlement__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Create_a_Settlement</name>
         <label>Create a Settlement</label>
-        <locationX>176</locationX>
+        <locationX>446</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -340,366 +415,32 @@
             <targetReference>Get_Record_Type_Id</targetReference>
         </connector>
         <fields>
-            <name>Settlement_Information</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Settlement Information&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Settlement_Type</name>
+            <name>Select_Settlement_Type</name>
             <choiceReferences>Monetary</choiceReferences>
             <choiceReferences>EB_Points</choiceReferences>
             <choiceReferences>Voucher</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Settlement Type</fieldText>
+            <fieldText>Select Settlement Type</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Create_a_Settlement_Section1</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Create_a_Settlement_Section1_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Amount</name>
-                    <dataType>Number</dataType>
-                    <fieldText>Amount</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                    <scale>0</scale>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Create_a_Settlement_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Currency</name>
-                    <choiceReferences>CurrencyOptions</choiceReferences>
-                    <dataType>String</dataType>
-                    <fieldText>Currency</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>Settlement_Type</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Monetary</elementReference>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Settlement_Type</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Voucher</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>AddresInformation</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Address Information&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Create_a_Settlement_Section2</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Create_a_Settlement_Section2_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Payee_Name</name>
-                    <choiceReferences>AvaliableCustomers</choiceReferences>
-                    <dataType>String</dataType>
-                    <fieldText>Payee Name</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>true</isRequired>
-                </fields>
-                <fields>
-                    <name>Address_Line_1</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>Get_Customer_Claim.Address_line_1__c</elementReference>
-                    </defaultValue>
-                    <fieldText>Address Line 1</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Address_Line_2</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>Get_Customer_Claim.Address_line_2__c</elementReference>
-                    </defaultValue>
-                    <fieldText>Address Line 2</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Create_a_Settlement_Section2_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Postal_Code</name>
-                    <dataType>String</dataType>
-                    <fieldText>Postal Code</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>City</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>Get_Customer_Claim.City__c</elementReference>
-                    </defaultValue>
-                    <fieldText>City</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Country</name>
-                    <choiceReferences>CountryOptions</choiceReferences>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>Get_Customer_Claim.Country__c</elementReference>
-                    </defaultValue>
-                    <fieldText>Country</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
-            <name>Payment_Details</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Payment Details&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Create_a_Settlement_Section3</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Create_a_Settlement_Section3_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>EuroBonus_Number</name>
-                    <dataType>Number</dataType>
-                    <fieldText>EuroBonus Number</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                    <scale>0</scale>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Create_a_Settlement_Section3_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>EuroBonus_Points</name>
-                    <dataType>Number</dataType>
-                    <fieldText>EuroBonus Points</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;Amount of points to be debit to the customer&lt;/p&gt;</helpText>
-                    <isRequired>false</isRequired>
-                    <scale>0</scale>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
+            <name>Voucher_Type</name>
+            <choiceReferences>voucherTypes</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Voucher Type</fieldText>
+            <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Settlement_Type</leftValueReference>
+                    <leftValueReference>Select_Settlement_Type</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <elementReference>EB_Points</elementReference>
+                        <stringValue>Voucher</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
-        </fields>
-        <fields>
-            <name>Create_a_Settlement_Section4</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Create_a_Settlement_Section4_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Bank_Name</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>Get_Customer_Claim.Bank_Name__c</elementReference>
-                    </defaultValue>
-                    <fieldText>Bank Name</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>IBAN</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>Get_Customer_Claim.Bank_Account_Number__c</elementReference>
-                    </defaultValue>
-                    <fieldText>IBAN</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Create_a_Settlement_Section4_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>BIC_Swift</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>Get_Customer_Claim.BIC_Swift__c</elementReference>
-                    </defaultValue>
-                    <fieldText>BIC/Swift</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Bank_Country</name>
-                    <choiceReferences>BankCountryOptions</choiceReferences>
-                    <dataType>String</dataType>
-                    <fieldText>Bank Country</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Settlement_Type</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Monetary</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>voucherEmail</name>
-            <extensionName>flowruntime:email</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Settlement_Type</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Voucher</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Settlement_Item</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Settlement Item&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Create_a_Settlement_Section5</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Create_a_Settlement_Section5_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Cost_Account</name>
-                    <choiceReferences>CostAccountOptions</choiceReferences>
-                    <dataType>String</dataType>
-                    <fieldText>Cost Account</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Settlement_Item_Amount</name>
-                    <dataType>Number</dataType>
-                    <defaultValue>
-                        <elementReference>Amount</elementReference>
-                    </defaultValue>
-                    <fieldText>Settlement Item Amount</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                    <scale>0</scale>
-                </fields>
-                <fields>
-                    <name>Comments</name>
-                    <dataType>String</dataType>
-                    <fieldText>Comments</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>12</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -707,21 +448,21 @@
     <screens>
         <name>Outcome</name>
         <label>Outcome</label>
-        <locationX>176</locationX>
-        <locationY>878</locationY>
+        <locationX>446</locationX>
+        <locationY>854</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>Success</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Done&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>SeltlementCreation</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;Settlement has been created.&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt; Please, open the settlement from the settlement related list&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Customer_Claim</targetReference>

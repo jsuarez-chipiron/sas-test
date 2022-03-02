@@ -54,6 +54,11 @@
                 <label>Bezirksgericht in Handelssachen Wien (Austria)</label>
             </value>
             <value>
+                <fullName>Bucks County Magisterial Court</fullName>
+                <default>false</default>
+                <label>Bucks County Magisterial Court</label>
+            </value>
+            <value>
                 <fullName>Bundesministerium für Verkehr, Innovation und Technologie (BMVIT, Austria)</fullName>
                 <default>false</default>
                 <label>Bundesministerium für Verkehr, Innovation und Technologie (BMVIT, Austria)</label>
@@ -249,6 +254,11 @@
                 <label>Service Public Fédéral Mobilté &amp; Transport (Belgium)</label>
             </value>
             <value>
+                <fullName>Small claims court</fullName>
+                <default>false</default>
+                <label>Small claims court</label>
+            </value>
+            <value>
                 <fullName>Solna tingsrätt (Sweden)</fullName>
                 <default>false</default>
                 <label>Solna tingsrätt (Sweden)</label>
@@ -410,6 +420,10 @@
             <valueName>Umeå Tingsrätt</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Switzerland</controllingFieldValue>
+            <valueName>Federal Office of Civil Aviation (FOCA, Switzerland)</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>United Kingdom (UK)</controllingFieldValue>
             <valueName>CAA (UK Civil Aviation Authority)</valueName>
         </valueSettings>
@@ -422,16 +436,20 @@
             <valueName>County Court at Portsmouth</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Switzerland</controllingFieldValue>
-            <valueName>Federal Office of Civil Aviation (FOCA, Switzerland)</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>France</controllingFieldValue>
             <valueName>Direction générale de l&apos;aviation civile (DGAC, France)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>France</controllingFieldValue>
             <valueName>Tribunal d’Instance (France)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>United States</controllingFieldValue>
+            <valueName>Bucks County Magisterial Court</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>United States</controllingFieldValue>
+            <valueName>Small claims court</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Germany</controllingFieldValue>

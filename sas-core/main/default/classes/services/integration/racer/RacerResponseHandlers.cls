@@ -29,106 +29,123 @@ public class RacerResponseHandlers {
   @future
   public static Void handle(List<Id> contentVersionIds) {
     List<ContentVersion> cvs = contentVersionsSel.selectById(
-      new Set<Id>(contentVersionIds)
+      new Set<Id>(contentVersionIds),
+      true
     );
 
     for (ContentVersion cv : cvs) {
-      String fileContents = cv.VersionData.toString();
-      List<String> dataFields = fileContents.split('|');
-
       if (cv.Title.startsWith('CARE_PAYMUL_')) {
-        processPaymulStatusReport(dataFields);
+        processPaymulStatusReport(cv);
       } else if (cv.Title.startsWith('CARE_PAINL1_')) {
-        processL1StatusReport(dataFields);
+        processL1StatusReport(cv);
       } else if (cv.Title.startsWith('CARE_PAINL2_')) {
         processL2StatusReport(cv);
       } else if (cv.Title.startsWith('CARE_RACERGL_')) {
-        processAccountingStatusReport(dataFields);
+        processAccountingStatusReport(cv);
       }
     }
   }
 
-  private static Void processPaymulStatusReport(List<String> dataFields) {
-    /**
-     * dataFields contents by index:
-     *  0 - processed date
-     *  1 - file name
-     *  2 - document type
-     *  3 - payment count
-     *  4 - document status: PROCESSED | FAILED
-     *  5 - error detail
-     *  6 - racer document id
-     */
-
-    String paymentFileName = dataFields[1];
-    String documentStatus = dataFields[4];
-    String errorDetail = dataFields[5];
-
-    List<Settlement__c> correspondingSettlements = settlementsSel.selectByPaymentFileName(
-      paymentFileName
-    );
-
-    Settlements.newInstance(correspondingSettlements)
-      .markAsReceivedByRacer(documentStatus, errorDetail);
-  }
-
-  private static Void processL1StatusReport(List<String> dataFields) {
-    /**
-     * dataFields contents by index:
-     *  0 - L1 received date
-     *  1 - related file name
-     *  2 - document type
-     *  3 - payment count
-     *  4 - document status: ACCEPTED | REJECTED
-     *  5 - error detail
-     *  6 - racer document id
-     */
-
-    String paymentFileName = dataFields[1];
-    String documentStatus = dataFields[4];
-    String errorDetail = dataFields[4];
-
-    List<Settlement__c> correspondingSettlements = settlementsSel.selectByPaymentFileName(
-      paymentFileName
-    );
-
-    Settlements.newInstance(correspondingSettlements)
-      .markAsReceivedByBank(documentStatus, errorDetail);
-  }
-
-  private static Void processL2StatusReport(ContentVersion cv) {
-    /**
-     * dataFields contents by index:
-     *  0 - L2 received date
-     *  1 - related file name
-     *  2 - document type
-     *  3 - payment instruction id
-     *  4 - payment number
-     *  5 - debtor account number
-     *  6 - account holder name
-     *  7 - payment method
-     *  8 - payment status
-     *  9 - payment status code
-     *  10 - payment status info
-     *  11 - amount
-     *  12 - currency
-     *  13 - payment date
-     *  14 - paid to
-     *  15 - trx status
-     *  16 - trx code
-     *  17 - trx info
-     */
-
+  private static Void processPaymulStatusReport(ContentVersion cv) {
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
 
     String fileContents = cv.VersionData.toString();
     List<String> lines = fileContents.split('\n');
 
     for (String line : lines) {
-      List<String> dataFields = line.split('|');
+      List<String> dataFields = line.split('[|]');
+      /**
+       * dataFields contents by index:
+       *  0 - processed date
+       *  1 - file name
+       *  2 - document type
+       *  3 - payment count
+       *  4 - document status: PROCESSED | FAILED
+       *  5 - error detail
+       *  6 - racer document id
+       */
+
       String paymentFileName = dataFields[1];
       String documentStatus = dataFields[4];
-      String errorDetail = dataFields[17]; // TODO: What info we actually need from here.
+      String errorDetail = dataFields[5];
+
+      List<Settlement__c> correspondingSettlements = settlementsSel.selectByPaymentFileName(
+        paymentFileName
+      );
+
+      Settlements.newInstance(correspondingSettlements)
+        .markAsReceivedByRacer(documentStatus, errorDetail, uow);
+    }
+    uow.commitWork();
+  }
+
+  private static Void processL1StatusReport(ContentVersion cv) {
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+
+    String fileContents = cv.VersionData.toString();
+    List<String> lines = fileContents.split('\n');
+
+    for (String line : lines) {
+      List<String> dataFields = line.split('[|]');
+      /**
+       * dataFields contents by index:
+       *  0 - L1 received date
+       *  1 - related file name
+       *  2 - document type
+       *  3 - payment count
+       *  4 - document status: ACCEPTED | REJECTED
+       *  5 - error detail
+       *  6 - racer document id
+       */
+
+      String paymentFileName = dataFields[1];
+      String documentStatus = dataFields[4];
+      String errorDetail = dataFields[5];
+
+      List<Settlement__c> correspondingSettlements = settlementsSel.selectByPaymentFileName(
+        paymentFileName
+      );
+
+      Settlements.newInstance(correspondingSettlements)
+        .markAsReceivedByBank(documentStatus, errorDetail, uow);
+    }
+    uow.commitWork();
+  }
+
+  private static Void processL2StatusReport(ContentVersion cv) {
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+
+    String fileContents = cv.VersionData.toString();
+    List<String> lines = fileContents.split('\n');
+
+    for (String line : lines) {
+      List<String> dataFields = line.split('[|]');
+      /**
+       * dataFields contents by index:
+       *  0 - L2 received date
+       *  1 - related file name
+       *  2 - document type
+       *  3 - payment instruction id
+       *  4 - payment number
+       *  5 - payment reference number
+       *  6 - debtor account number
+       *  7 - account holder name
+       *  8 - payment method
+       *  9 - payment status
+       *  10 - payment status code
+       *  11 - payment status info
+       *  12 - amount
+       *  13 - currency
+       *  14 - payment date
+       *  15 - paid to
+       *  16 - trx status
+       *  17 - trx code
+       *  18 - trx info
+       */
+
+      String paymentFileName = dataFields[1];
+      String documentStatus = dataFields[4];
+      String errorDetail = dataFields[18];
 
       // There should never be more than a few lines so having this within the loop should be fine.
       List<Settlement__c> correspondingSettlements = settlementsSel.selectByPaymentFileName(
@@ -141,7 +158,10 @@ public class RacerResponseHandlers {
     uow.commitWork();
   }
 
-  private static Void processAccountingStatusReport(List<String> dataFields) {
+  private static Void processAccountingStatusReport(ContentVersion cv) {
+    String fileContents = cv.VersionData.toString();
+    // There should be only a single line.
+    List<String> dataFields = fileContents.split('[|]');
     /**
      * dataFields contents by index:
      *  0 - processed date
@@ -152,6 +172,7 @@ public class RacerResponseHandlers {
      *  5 - error detail
      *  6 - document verification number
      */
+
     String accountingFileName = dataFields[1];
     String documentStatus = dataFields[4];
     String errorDetail = dataFields[5];

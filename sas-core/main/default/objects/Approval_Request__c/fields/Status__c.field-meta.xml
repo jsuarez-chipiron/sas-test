@@ -22,9 +22,9 @@
                 <label>Rejected</label>
             </value>
             <value>
-                <fullName>Completely rejected</fullName>
+                <fullName>Blocked</fullName>
                 <default>false</default>
-                <label>Completely rejected</label>
+                <label>Blocked</label>
             </value>
         </valueSetDefinition>
     </valueSet>

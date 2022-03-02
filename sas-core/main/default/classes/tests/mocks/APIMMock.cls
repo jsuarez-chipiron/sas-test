@@ -2,6 +2,12 @@
 global class APIMMock implements HttpCalloutMock {
   public static final String INVALID_BOOKING_REFERENCE = 'AAAAAA';
   public static final String EB_NUMBER_WITHOUT_BOOKINGS = 'TEST654321';
+  public static final String CLM_TRANSACTION_ID = '0000000001';
+  public static final String EB_NUMBER_NOT_IN_CLM = '987654321';
+  public static final String EB_NUMBER_RETURN_500 = 'ERREBNUM';
+  public static final String VOUCHER_INVALID_EMAIL = 'invalidemail@invalidemail.invalidemail';
+  public static final String PNR_FOR_WHICH_CLAIMS_EXIST = '987654';
+  public static final String PNR_FOR_WHICH_CLAIMS_DO_NOT_EXIST = '000000';
 
   global HttpResponse respond(HttpRequest req) {
     String endpoint = req.getEndpoint();
@@ -73,10 +79,38 @@ global class APIMMock implements HttpCalloutMock {
         res.setStatusCode(404);
       }
     } else if (endpoint.contains('voucher')) {
-      res.setHeader('Content-Type', 'application/json');
-      res.setBody('{"link":"test.sas.se", "caseId": "12345678"}');
+      if (req.getBody().contains(VOUCHER_INVALID_EMAIL)) {
+        res.setStatusCode(400);
+      } else {
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody('{"link":"test.sas.se", "caseId": "12345678"}');
+      }
+    } else if (endpoint.contains('claim/claim')) {
+      if (endpoint.contains(PNR_FOR_WHICH_CLAIMS_EXIST)) {
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody(APIMMockResponses.CARE_CLAIM_FOUND);
+      } else {
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody(APIMMockResponses.CARE_CLAIM_NOT_FOUND);
+      }
     } else if (endpoint.contains('customercare')) {
       res.setStatusCode(200);
+    } else if (endpoint.contains('/clm/callcenter/addPoints')) {
+      if (req.getBody().contains(EB_NUMBER_NOT_IN_CLM)) {
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody(APIMMockResponses.CLM_ADD_POINTS_FAILURE_BODY);
+        res.setStatusCode(400);
+      } else if (req.getBody().contains(EB_NUMBER_RETURN_500)) {
+        res.setStatusCode(500);
+      } else {
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody(
+          APIMMockResponses.CLM_ADD_POINTS_SUCCESS_BODY.replace(
+            '{clmTransactionId}',
+            CLM_TRANSACTION_ID
+          )
+        );
+      }
     } else {
       res.setStatusCode(404);
     }

@@ -290,6 +290,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Finland</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>France</fullName>
             <default>false</default>
         </values>
@@ -934,7 +938,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Viet Nam</fullName>
+            <fullName>Vietnam</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1241,6 +1245,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Finland</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>France</fullName>
             <default>false</default>
         </values>
@@ -1885,7 +1893,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Viet Nam</fullName>
+            <fullName>Vietnam</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1935,11 +1943,23 @@
     <picklistValues>
         <picklist>Settlement_Status__c</picklist>
         <values>
+            <fullName>Blocked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Controlled</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Denied</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Done</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Failed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1962,7 +1982,43 @@
     <picklistValues>
         <picklist>Voucher_Type__c</picklist>
         <values>
-            <fullName>Compensation</fullName>
+            <fullName>6721 - Denied boarding involuntary voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6721 - Denied boarding voluntary voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6722 - Downgrading involuntary voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6722 - Downgrading voluntary voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6727 - EU261 voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6733 - Goodwill voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6738 - Care voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6741 - Damage baggage voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6742 - Delayed baggage voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6743 - Pilfered baggage voucher</fullName>
             <default>false</default>
         </values>
     </picklistValues>

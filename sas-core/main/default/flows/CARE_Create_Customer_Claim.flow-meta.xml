@@ -169,6 +169,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Concerns_a_person_with_reduced_mobility__c</field>
             <value>
                 <elementReference>Concerns_a_person_with_reduced_mobility</elementReference>

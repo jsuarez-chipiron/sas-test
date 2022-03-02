@@ -279,6 +279,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Finland</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>France</fullName>
             <default>false</default>
         </values>
@@ -923,7 +927,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Viet Nam</fullName>
+            <fullName>Vietnam</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1230,6 +1234,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Finland</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>France</fullName>
             <default>false</default>
         </values>
@@ -1874,7 +1882,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Viet Nam</fullName>
+            <fullName>Vietnam</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2274,6 +2282,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bucks County Magisterial Court</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bundesministerium für Verkehr%2C Innovation und Technologie %28BMVIT%2C Austria%29</fullName>
             <default>false</default>
         </values>
@@ -2431,6 +2443,10 @@
         </values>
         <values>
             <fullName>Service Public Fédéral Mobilté %26 Transport %28Belgium%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Small claims court</fullName>
             <default>false</default>
         </values>
         <values>

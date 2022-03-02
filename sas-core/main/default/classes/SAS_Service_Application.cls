@@ -10,7 +10,9 @@ public class SAS_Service_Application {
       Case.SObjectType => CasesSelector.class,
       CaseToBooking__c.SObjectType => CaseToBookingsSelector.class,
       ContentVersion.SObjectType => ContentVersionsSelector.class,
+      Exchange_Rate__c.SObjectType => ExchangeRatesSelector.class,
       Flight__c.SObjectType => FlightsSelector.class,
+      LIA_Claim__c.SObjectType => ClaimsSelector.class,
       LiveChatTranscript.SObjectType => ChatTranscriptsSelector.class,
       MessagingSession.SObjectType => MessagingSessionsSelector.class,
       Passenger__c.SObjectType => PassengersSelector.class,
@@ -31,6 +33,8 @@ public class SAS_Service_Application {
       ContentVersion.SObjectType => ContentVersions.Constructor.class,
       Case.SObjectType => Cases.Constructor.class,
       EmailMessage.SObjectType => EmailMessages.Constructor.class,
+      Exchange_Rate__c.SObjectType => ExchangeRates.Constructor.class,
+      LIA_Claim__c.SObjectType => Claims.Constructor.class,
       LiveChatTranscript.SObjectType => LiveChatTranscripts.Constructor.class,
       MessagingSession.SObjectType => MessagingSessions.Constructor.class,
       Passenger__c.SObjectType => Passengers.Constructor.class,
@@ -44,8 +48,9 @@ public class SAS_Service_Application {
   public static final fflib_Application.ServiceFactory Service = new fflib_Application.ServiceFactory(
     new Map<Type, Type>{
       BookingService.class => BookingService.class,
+      ClaimsIntegrationService.class => ClaimsIntegrationService.class,
       CLMIntegrationService.class => CLMIntegrationService.class,
-      LoyaltyService.class => LoyaltyService.class,
+      SettlementService.class => SettlementService.class,
       TEDSIntegrationService.class => TEDSIntegrationService.class,
       VoucherIntegrationService.class => VoucherIntegrationService.class
     }
@@ -58,7 +63,9 @@ public class SAS_Service_Application {
       CaseToBooking__c.SObjectType,
       ContentDocumentLink.SObjectType,
       ContentVersion.SObjectType,
+      Exchange_Rate__c.SObjectType,
       Flight__c.SObjectType,
+      LIA_Claim__c.SObjectType,
       Passenger__c.SObjectType,
       Segment__c.SObjectType,
       Case.SobjectType,

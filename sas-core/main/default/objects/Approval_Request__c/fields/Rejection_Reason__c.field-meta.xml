@@ -12,14 +12,56 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Wrong Compensation</fullName>
+                <fullName>Incorrect cost accounts</fullName>
                 <default>false</default>
-                <label>Wrong Compensation</label>
+                <label>Incorrect cost accounts</label>
+            </value>
+            <value>
+                <fullName>Incorrect monetary/EuroBonus points amounts</fullName>
+                <default>false</default>
+                <label>Incorrect monetary/EuroBonus points amounts</label>
+            </value>
+            <value>
+                <fullName>No follow up/Inadequate  follow up</fullName>
+                <default>false</default>
+                <label>No follow up/Inadequate  follow up</label>
+            </value>
+            <value>
+                <fullName>Not entitled for compensation</fullName>
+                <default>false</default>
+                <label>Not entitled for compensation</label>
+            </value>
+            <value>
+                <fullName>Payment made in another claim</fullName>
+                <default>false</default>
+                <label>Payment made in another claim</label>
+            </value>
+            <value>
+                <fullName>Settlement not split between passengers</fullName>
+                <default>false</default>
+                <label>Settlement not split between passengers</label>
+            </value>
+            <value>
+                <fullName>Other errors</fullName>
+                <default>false</default>
+                <label>Other errors</label>
+            </value>
+            <value>
+                <fullName>Blocked by User</fullName>
+                <default>false</default>
+                <label>Blocked by User</label>
             </value>
             <value>
                 <fullName>Fraud identified</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Fraud identified</label>
+            </value>
+            <value>
+                <fullName>Wrong Compensation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Wrong Compensation</label>
             </value>
         </valueSetDefinition>
     </valueSet>

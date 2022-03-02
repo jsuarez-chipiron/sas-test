@@ -18,10 +18,11 @@ public without sharing class ContentVersions extends fflib_SObjectDomain {
 
   public override void onAfterInsert() {
     handleRacerFiles();
+    handleCurrencyFiles();
   }
 
   private void handleRacerFiles() {
-    List<Id> racerFileIds;
+    List<Id> racerFileIds = new List<Id>();
 
     for (ContentVersion cv : (List<ContentVersion>) Records) {
       if (RacerResponseHandlers.isARacerFile(cv.Title)) {
@@ -30,5 +31,17 @@ public without sharing class ContentVersions extends fflib_SObjectDomain {
     }
 
     RacerResponseHandlers.handle(racerFileIds);
+  }
+
+  private void handleCurrencyFiles() {
+    List<Id> currencyFileIds = new List<Id>();
+
+    for (ContentVersion cv : (List<ContentVersion>) Records) {
+      if (cv.Title.startsWith(ExchangeRates.CURRENCY_FILE_NAME)) {
+        currencyFileIds.add(cv.Id);
+      }
+    }
+
+    ExchangeRates.handleCurrencyFiles(currencyFileIds);
   }
 }

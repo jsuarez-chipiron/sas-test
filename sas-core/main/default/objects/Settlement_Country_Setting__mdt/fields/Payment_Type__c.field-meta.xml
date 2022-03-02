@@ -31,6 +31,11 @@
                 <label>DIRECT CREDIT ADV</label>
             </value>
             <value>
+                <fullName>NORDEA US DOM EDI</fullName>
+                <default>false</default>
+                <label>NORDEA US DOM EDI</label>
+            </value>
+            <value>
                 <fullName>SEB PLN PAYMENTS TO PL</fullName>
                 <default>false</default>
                 <label>SEB PLN PAYMENTS TO PL</label>

@@ -48,10 +48,6 @@
             <fullName>Refunds</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>SME</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
@@ -3805,18 +3801,6 @@
         </values>
         <values>
             <fullName>Name Change</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Olympic DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Olympic NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Olympic SE</fullName>
             <default>false</default>
         </values>
         <values>

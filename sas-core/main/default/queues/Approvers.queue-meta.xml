@@ -7,8 +7,8 @@
             <publicGroup>Approvers</publicGroup>
         </publicGroups>
     </queueMembers>
-    <queueRoutingConfig>Settlements</queueRoutingConfig>
+    <queueRoutingConfig>Customer_Claim_Routing</queueRoutingConfig>
     <queueSobject>
-        <sobjectType>Settlement__c</sobjectType>
+        <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

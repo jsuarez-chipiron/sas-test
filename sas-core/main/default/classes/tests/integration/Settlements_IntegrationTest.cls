@@ -17,10 +17,10 @@ public with sharing class Settlements_IntegrationTest {
       Country__c = 'Sweden',
       Currency__c = 'NOK',
       Date_of_Exchange_Calculation__c = Date.today(),
-      IBAN__c = 'SE0000000000000',
+      Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00100',
-      Settlement_Status__c = 'Waiting for transfer'
+      Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
     Settlement__c settlement2 = new Settlement__c(
       Address_line_1__c = 'Frösundaviks allé 1',
@@ -31,10 +31,10 @@ public with sharing class Settlements_IntegrationTest {
       Country__c = 'Sweden',
       Currency__c = 'NOK',
       Date_of_Exchange_Calculation__c = Date.today(),
-      IBAN__c = 'SE0000000000000',
+      Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00100',
-      Settlement_Status__c = 'Waiting for transfer'
+      Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
 
     insert new List<SObject>{ counter, settlement1, settlement2 };
@@ -232,10 +232,10 @@ public with sharing class Settlements_IntegrationTest {
       Country__c = 'Sweden',
       Currency__c = 'SEK',
       Date_of_Exchange_Calculation__c = Date.today(),
-      IBAN__c = 'SE0000000000000',
+      Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00000',
-      Settlement_Status__c = 'Waiting for transfer'
+      Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
     Settlement__c sekToInclude2 = new Settlement__c(
       Address_line_1__c = 'Frösundaviks allé 1',
@@ -246,10 +246,10 @@ public with sharing class Settlements_IntegrationTest {
       Country__c = 'Sweden',
       Currency__c = 'SEK',
       Date_of_Exchange_Calculation__c = Date.today(),
-      IBAN__c = 'SE0000000000000',
+      Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00000',
-      Settlement_Status__c = 'Waiting for transfer'
+      Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
     Settlement__c sekNotToInclude = new Settlement__c(
       Address_line_1__c = 'Frösundaviks allé 1',
@@ -260,10 +260,10 @@ public with sharing class Settlements_IntegrationTest {
       Country__c = 'Sweden',
       Currency__c = 'SEK',
       Date_of_Exchange_Calculation__c = Date.today(),
-      IBAN__c = 'SE0000000000000',
+      Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00000',
-      Settlement_Status__c = 'In progress'
+      Settlement_Status__c = Settlements.STATUS_IN_PROGRESS
     );
     Settlement__c nokSettlement = new Settlement__c(
       Address_line_1__c = 'Frösundaviks allé 1',
@@ -274,10 +274,10 @@ public with sharing class Settlements_IntegrationTest {
       Country__c = 'Sweden',
       Currency__c = 'NOK',
       Date_of_Exchange_Calculation__c = Date.today(),
-      IBAN__c = 'SE0000000000000',
+      Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00100',
-      Settlement_Status__c = 'Waiting for transfer'
+      Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
 
     insert new List<SObject>{
@@ -316,7 +316,7 @@ public with sharing class Settlements_IntegrationTest {
     ];
 
     System.assertEquals(
-      'Waiting for transfer',
+      Settlements.STATUS_WAITING_FOR_TRANSFER,
       nokSettlementAfterwards.Settlement_Status__c,
       'A settlement in different currency should not have been modified.'
     );
@@ -325,7 +325,7 @@ public with sharing class Settlements_IntegrationTest {
       'A settlement in different currency should not have been modified.'
     );
     System.assertEquals(
-      'In progress',
+      Settlements.STATUS_IN_PROGRESS,
       sekNotToIncludeAfterwards.Settlement_Status__c,
       'A settlement in same currency but not waiting for transfer should not have been modified.'
     );
@@ -335,12 +335,12 @@ public with sharing class Settlements_IntegrationTest {
     );
 
     System.assertEquals(
-      'Sent to Racer',
+      Settlements.STATUS_SENT_TO_RACER,
       sekToInclude1Afterwards.Settlement_Status__c,
       'Status of settlements in given currency should be set to Sent to Racer.'
     );
     System.assertEquals(
-      'Sent to Racer',
+      Settlements.STATUS_SENT_TO_RACER,
       sekToInclude2Afterwards.Settlement_Status__c,
       'Status of settlements in given currency should be set to Sent to Racer.'
     );
@@ -407,6 +407,262 @@ public with sharing class Settlements_IntegrationTest {
       1001,
       counterAfterwards.Payment_Run_Id__c,
       'Run Id should be incremented after file creation.'
+    );
+  }
+
+  @IsTest
+  public static void ebSettlementsShouldBeProcessedImmediatelyWhenWaitingForTransfer() {
+    // Given
+    User settlementSubmitter = FCS_TestDataFactory.createUsers(1)[0];
+    insert settlementSubmitter;
+
+    LIA_Claim__c claim = new LIA_Claim__c(Liability_PNR__c = '0000AA');
+    insert claim;
+
+    Settlement__c settlement = new Settlement__c(
+      Claim__c = claim.Id,
+      EuroBonus_Number__c = '000000000',
+      EuroBonus_Points__c = 3000,
+      Payee_Name__c = 'Test Testsson',
+      Postal_Code__c = '00000',
+      RecordTypeId = Settlements.EUROBONUS_POINTS_RECORD_TYPE_ID,
+      Settlement_Status__c = Settlements.STATUS_IN_PROGRESS,
+      Submitter__c = settlementSubmitter.Id
+    );
+
+    insert settlement;
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    // When
+    settlement.Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER;
+    Test.startTest();
+    update settlement;
+    Test.stopTest();
+
+    // Then
+    Settlement__c settlementAfterProcessing = [
+      SELECT Id, Settlement_Status__c, External_Reference__c
+      FROM Settlement__c
+      WHERE Id = :settlement.Id
+    ];
+
+    System.assertEquals(
+      Settlements.STATUS_DONE,
+      settlementAfterProcessing.Settlement_Status__c,
+      'Settlement should be marked as done after successfully adding points.'
+    );
+    System.assertEquals(
+      APIMMock.CLM_TRANSACTION_ID,
+      settlementAfterProcessing.External_Reference__c,
+      'Settlement should external reference set based on response.'
+    );
+  }
+
+  @IsTest
+  public static void ebSettlementProcessingShouldHandleDomainFailuresProperly() {
+    // Given
+    User settlementSubmitter = FCS_TestDataFactory.createUsers(1)[0];
+    insert settlementSubmitter;
+
+    LIA_Claim__c claim = new LIA_Claim__c(Liability_PNR__c = '0000AA');
+    insert claim;
+
+    Settlement__c settlement = new Settlement__c(
+      Claim__c = claim.Id,
+      EuroBonus_Number__c = APIMMock.EB_NUMBER_NOT_IN_CLM,
+      EuroBonus_Points__c = 3000,
+      Payee_Name__c = 'Test Testsson',
+      Postal_Code__c = '00000',
+      RecordTypeId = Settlements.EUROBONUS_POINTS_RECORD_TYPE_ID,
+      Settlement_Status__c = Settlements.STATUS_IN_PROGRESS,
+      Submitter__c = settlementSubmitter.Id
+    );
+
+    insert settlement;
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    // When
+    settlement.Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER;
+    Test.startTest();
+    update settlement;
+    Test.stopTest();
+
+    // Then
+    Settlement__c settlementAfterProcessing = [
+      SELECT Id, Settlement_Status__c, Error_Message__c, External_Reference__c
+      FROM Settlement__c
+      WHERE Id = :settlement.Id
+    ];
+
+    System.assertEquals(
+      Settlements.STATUS_FAILED,
+      settlementAfterProcessing.Settlement_Status__c,
+      'Settlement should be marked as denied after failing to add points.'
+    );
+    System.assertEquals(
+      'Customer does not exist.',
+      settlementAfterProcessing.Error_Message__c,
+      'Settlement should have error detail set to response error.'
+    );
+  }
+
+  @IsTest
+  public static void ebSettlementProcessingShouldHandleServiceFailuresProperly() {
+    // Given
+    User settlementSubmitter = FCS_TestDataFactory.createUsers(1)[0];
+    insert settlementSubmitter;
+
+    LIA_Claim__c claim = new LIA_Claim__c(Liability_PNR__c = '0000AA');
+    insert claim;
+
+    Settlement__c settlement = new Settlement__c(
+      Claim__c = claim.Id,
+      EuroBonus_Number__c = APIMMock.EB_NUMBER_RETURN_500,
+      EuroBonus_Points__c = 3000,
+      Payee_Name__c = 'Test Testsson',
+      Postal_Code__c = '00000',
+      RecordTypeId = Settlements.EUROBONUS_POINTS_RECORD_TYPE_ID,
+      Settlement_Status__c = Settlements.STATUS_IN_PROGRESS,
+      Submitter__c = settlementSubmitter.Id
+    );
+
+    insert settlement;
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    // When
+    settlement.Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER;
+    Test.startTest();
+    update settlement;
+    Test.stopTest();
+
+    // Then
+    Settlement__c settlementAfterProcessing = [
+      SELECT Id, Settlement_Status__c, Error_Message__c, External_Reference__c
+      FROM Settlement__c
+      WHERE Id = :settlement.Id
+    ];
+
+    System.assertEquals(
+      Settlements.STATUS_FAILED,
+      settlementAfterProcessing.Settlement_Status__c,
+      'Settlement should be marked as failed after failing to add points.'
+    );
+    System.assert(
+      settlementAfterProcessing.Error_Message__c.contains('500'),
+      'Settlement should have error detail set to contain 500 error code.'
+    );
+  }
+
+  @IsTest
+  public static void voucherSettlementsShouldBeProcessedImmediatelyWhenWaitingForTransfer() {
+    // Given
+    User settlementSubmitter = FCS_TestDataFactory.createUsers(1)[0];
+    insert settlementSubmitter;
+
+    Case c = new Case();
+    insert c;
+
+    LIA_Claim__c claim = new LIA_Claim__c(
+      Liability_PNR__c = '0000AA',
+      Case__c = c.Id
+    );
+    insert claim;
+
+    Settlement__c settlement = new Settlement__c(
+      Amount__c = 1,
+      Address_line_1__c = 'TestAddress',
+      Claim__c = claim.Id,
+      City__c = 'Test City',
+      Country__c = 'Sweden',
+      Payee_Name__c = 'Test Testsson',
+      Postal_Code__c = '00000',
+      RecordTypeId = Settlements.VOUCHER_RECORD_TYPE_ID,
+      Settlement_Status__c = Settlements.STATUS_IN_PROGRESS,
+      Submitter__c = settlementSubmitter.Id,
+      Voucher_Email__c = 'test@example.com'
+    );
+
+    insert settlement;
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    // When
+    settlement.Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER;
+    Test.startTest();
+    update settlement;
+    Test.stopTest();
+
+    // Then
+    Settlement__c settlementAfterProcessing = [
+      SELECT Id, Settlement_Status__c, External_Reference__c
+      FROM Settlement__c
+      WHERE Id = :settlement.Id
+    ];
+
+    System.assertEquals(
+      Settlements.STATUS_DONE,
+      settlementAfterProcessing.Settlement_Status__c,
+      'Settlement should be marked as done after successfully creating a voucher.'
+    );
+  }
+
+  @IsTest
+  public static void voucherSettlementProcessingShouldHandleServiceFailuresProperly() {
+    // Given
+    User settlementSubmitter = FCS_TestDataFactory.createUsers(1)[0];
+    insert settlementSubmitter;
+
+    Case c = new Case();
+    insert c;
+
+    LIA_Claim__c claim = new LIA_Claim__c(
+      Liability_PNR__c = '0000AA',
+      Case__c = c.Id
+    );
+    insert claim;
+
+    Settlement__c settlement = new Settlement__c(
+      Amount__c = 1,
+      Address_line_1__c = 'TestAddress',
+      Claim__c = claim.Id,
+      City__c = 'Test City',
+      Country__c = 'Sweden',
+      Payee_Name__c = 'Test Testsson',
+      Postal_Code__c = '00000',
+      RecordTypeId = Settlements.VOUCHER_RECORD_TYPE_ID,
+      Settlement_Status__c = Settlements.STATUS_IN_PROGRESS,
+      Submitter__c = settlementSubmitter.Id,
+      Voucher_Email__c = APIMMock.VOUCHER_INVALID_EMAIL
+    );
+
+    insert settlement;
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    // When
+    settlement.Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER;
+    Test.startTest();
+    update settlement;
+    Test.stopTest();
+
+    // Then
+    Settlement__c settlementAfterProcessing = [
+      SELECT Id, Settlement_Status__c, Error_Message__c, External_Reference__c
+      FROM Settlement__c
+      WHERE Id = :settlement.Id
+    ];
+
+    System.assertEquals(
+      Settlements.STATUS_FAILED,
+      settlementAfterProcessing.Settlement_Status__c,
+      'Settlement should be marked as failed after failing to create a voucher.'
+    );
+    System.assert(
+      settlementAfterProcessing.Error_Message__c.contains('400'),
+      'Settlement should have error detail set to contain 400 error code as returned from API.'
     );
   }
 }

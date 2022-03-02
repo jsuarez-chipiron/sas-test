@@ -14,10 +14,33 @@
                             <value>FeedItem.ContentPost</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>ChangeOwnerOne</value>
+                            <value>Edit</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Edit</value>
+                            <value>Case.Submit_Case_to_Approval</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>In Progress</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Case.Recall_Case</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Waiting for Approval</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Waiting for Control</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CaseHierarchy</value>
@@ -49,9 +72,6 @@
                             <value>PrintableView</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>MergeCase</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>MassAccept</value>
                         </valueListItems>
                         <valueListItems>
@@ -71,6 +91,9 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Global.NewTask</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>MergeCase</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -105,7 +128,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>variant</name>
-                    <value>linear</value>
+                    <value>non-linear</value>
                 </componentInstanceProperties>
                 <componentName>runtime_sales_pathassistant:pathAssistant</componentName>
             </componentInstance>
@@ -337,72 +360,6 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>customerCard</componentName>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>EuroBonus</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Team__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>EB Vendor Support</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Sales Control BOM</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Origin}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Chat</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Liability</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>caseBookingDetails</componentName>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>EuroBonus</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Team__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>EB Vendor Support</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Sales Control BOM</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Origin}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Chat</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Liability</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Case.LIA_Claim__c</value>
@@ -449,6 +406,16 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>customerCard</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>caseBookingDetails</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>

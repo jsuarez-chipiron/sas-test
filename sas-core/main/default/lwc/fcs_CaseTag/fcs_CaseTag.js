@@ -3,6 +3,7 @@ import findCase from "@salesforce/apex/FCS_CaseTag_Controller.findCase";
 import createCaseRecord from "@salesforce/apex/FCS_CaseTag_Controller.createCaseRecord";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { refreshApex } from "@salesforce/apex";
+import { getPicklistValues } from "lightning/uiObjectInfoApi";
 export default class Fcs_CaseTag_SocialPost extends LightningElement {
   @api recordId;
   @track recordTypeId;
@@ -16,7 +17,7 @@ export default class Fcs_CaseTag_SocialPost extends LightningElement {
   @track showResolutionComment = false;
   @track wiredCaseList = [];
   @track makeRequired;
-
+  @track caseType;
   department;
   @wire(findCase, {
     recordId: "$recordId"
@@ -27,6 +28,7 @@ export default class Fcs_CaseTag_SocialPost extends LightningElement {
       this.cse = result.data;
       this.department = this.cse.Department__c;
       this.recordTypeId = this.cse.RecordTypeId;
+      this.caseType = this.cse.FCS_CaseType__c;
       this.makeRequired = this.department == "SoMe Support";
       if (this.cse.Id) {
         this.newCase = false;
@@ -69,6 +71,8 @@ export default class Fcs_CaseTag_SocialPost extends LightningElement {
   }
   handleDataChange(event) {
     let reason = event.target.value;
+    //Store selected Case Type to prevent double rendering when there's only a single Case Type
+    this.caseType = this.template.querySelector(".type").value;
     if (reason == "Other") {
       this.showResolutionComment = true;
     } else {
