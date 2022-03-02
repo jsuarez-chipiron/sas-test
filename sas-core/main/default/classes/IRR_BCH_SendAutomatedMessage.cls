@@ -70,6 +70,17 @@ global with sharing class IRR_BCH_SendAutomatedMessage extends SBS_ScheduledBatc
             }
 
         }
+        // ISSUE 21397 :this is to introduce some delay into Batch job 
+        for (integer i=0; i<25;i++) {
+          Http h = new Http();
+        HttpRequest queryReq = new HttpRequest();
+        queryReq.setEndpoint(URL.getSalesforceBaseUrl().toExternalForm() + '/services/data/v43.0/limits/');
+        queryReq.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
+        queryReq.setHeader('Content-Type', 'application/json');
+        queryReq.setMethod('GET');
+        HttpResponse queryRes = h.send(queryReq);
+
+        }
 
         String templateName = (String)message.get('IRR_Template_Name__c');
         IRR_CON_AutomatedCommunication.ManualTemplate mp = IRR_CON_AutomatedCommunication.getManualTemplates(
