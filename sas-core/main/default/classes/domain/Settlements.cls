@@ -220,6 +220,9 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     );
   }
 
+  public class UpdateSettlementException extends Exception {
+  }
+
   /**
    * Updates the list of settlement items for this settlement. Upserts the
    * given items and removes all settlement items not list in the given
@@ -234,6 +237,15 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       return false;
     }
     Settlement__c settlement = instanceRecords[0];
+
+    if (
+      settlement.RecordTypeId != EUROBONUS_POINTS_RECORD_TYPE_ID &&
+      settlement.Currency__c == null
+    ) {
+      throw new UpdateSettlementException(
+        'Set currency before trying to update settlement items.'
+      );
+    }
 
     // TODO: Verify that settlement can be updated. (Not locked and status is good to go, maybe?)
     // TODO: Do we need to check locked status also here? Probably yes.
@@ -276,20 +288,28 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       }
       uow.registerUpsert(itemsToUpsert);
 
-      Exchange_Rate__c exchangeRateToSEK = exchangeRatesSel.selectByCurrency(
-        settlement.Currency__c,
-        'SEK'
-      )[0];
-
       if (settlement.RecordTypeId == EUROBONUS_POINTS_RECORD_TYPE_ID) {
         settlement.EuroBonus_Points__c = settlementTotal;
       } else {
         settlement.Amount__c = settlementTotal;
-        settlement.Settlement_amount_in_SEK__c =
-          settlementTotal *
-          (settlement.Currency__c == 'SEK' ? 1 : exchangeRateToSEK.Rate__c);
+        if (settlement.Currency__c == 'SEK') {
+          settlement.Settlement_amount_in_SEK__c = settlementTotal;
+          settlement.Date_of_Exchange_Calculation__c = Date.today();
+        } else {
+          List<Exchange_Rate__c> exchangeRateToSEK = exchangeRatesSel.selectByCurrency(
+            settlement.Currency__c,
+            'SEK'
+          );
+
+          if (exchangeRateToSEK.size() != 0) {
+            // There should always be exactly one, but just in case we lose exchange rate data, let's check.
+            settlement.Settlement_amount_in_SEK__c =
+              settlementTotal * exchangeRateToSEK[0].Rate__c;
+            settlement.Date_of_Exchange_Calculation__c = exchangeRateToSEK[0]
+              .Date__c;
+          }
+        }
       }
-      settlement.Date_of_Exchange_Calculation__c = exchangeRateToSEK.Date__c;
       uow.registerDirty(settlement);
       uow.commitWork();
       return true;
