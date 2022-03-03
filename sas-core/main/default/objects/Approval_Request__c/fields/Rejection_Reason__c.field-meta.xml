@@ -47,21 +47,9 @@
                 <label>Other errors</label>
             </value>
             <value>
-                <fullName>Blocked by User</fullName>
+                <fullName>Blocked by user</fullName>
                 <default>false</default>
-                <label>Blocked by User</label>
-            </value>
-            <value>
-                <fullName>Fraud identified</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Fraud identified</label>
-            </value>
-            <value>
-                <fullName>Wrong Compensation</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Wrong Compensation</label>
+                <label>Blocked by user</label>
             </value>
         </valueSetDefinition>
     </valueSet>
