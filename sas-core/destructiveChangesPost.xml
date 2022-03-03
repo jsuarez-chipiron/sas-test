@@ -12,10 +12,11 @@
     the block can be removed from this document.
 -->
 
-<!-- 2020-02-16 Delete permission set and replace with new one using SF-licence to be able to set tab visibilities -->
     <types>
         <members>CLMIntegrationServiceTest.cls</members>
         <members>Voucher_IntegrationTest.cls</members>
+        <members>LoyaltyService.cls</members>
+        <members>VoucherService.cls</members>
 		<name>ApexClass</name>
     </types>
 </Package>
