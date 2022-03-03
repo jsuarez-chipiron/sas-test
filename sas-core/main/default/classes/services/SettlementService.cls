@@ -195,8 +195,8 @@ public without sharing class SettlementService {
         settlement.Name,
         settlement.Claim__r.Name,
         'Claim', // TODO: Should we add something more detailed in here? Request.reasonForPoints
-        settlement.Claim__r.Liability_PNR__c,
-        '' // TODO: Add ticketNumber
+        settlement.Claim__r.Liability_PNR__c == null ? '' : settlement.Claim__r.Liability_PNR__c,
+        '' // TODO: Add ticketNumber if we have it.
       );
       if (resp.isSuccess) {
         // Points added

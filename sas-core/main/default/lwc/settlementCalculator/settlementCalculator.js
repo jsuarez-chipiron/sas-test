@@ -241,9 +241,12 @@ export default class SettlementCalculator extends LightningElement {
       this.showSpinner = false;
       this.error = undefined;
     } catch (error) {
-      console.log("error", error);
-      this.error = "An error happened";
-      //TODO: Improved error handling
+      if (error.body && error.body.message) {
+        this.error = error.body.message;
+      } else {
+        this.error = "An error happened";
+      }
+      this.showSpinner = false;
     }
   }
 }
