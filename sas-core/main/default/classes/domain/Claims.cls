@@ -37,9 +37,11 @@ public without sharing class Claims extends fflib_SObjectDomain {
           existingRecords.get(claim.Id).Liability_PNR__c !=
           claim.Liability_PNR__c;
         if (shouldCheckEDW) {
-          ClaimService.checkIfClaimsExistInCARE(
-            claim.Id,
-            claim.Liability_PNR__c
+          EventBus.publish(
+            new Fetch_CARE_Data__e(
+              Claim_Id__c = claim.Id,
+              Booking_Reference__c = claim.Liability_PNR__c
+            )
           );
         }
       }
@@ -49,7 +51,12 @@ public without sharing class Claims extends fflib_SObjectDomain {
   private void checkIfExistsInCARE() {
     for (LIA_Claim__c claim : instanceRecords) {
       if (claim.Liability_PNR__c != null) {
-        ClaimService.checkIfClaimsExistInCARE(claim.Id, claim.Liability_PNR__c);
+        EventBus.publish(
+          new Fetch_CARE_Data__e(
+            Claim_Id__c = claim.Id,
+            Booking_Reference__c = claim.Liability_PNR__c
+          )
+        );
       }
     }
   }
