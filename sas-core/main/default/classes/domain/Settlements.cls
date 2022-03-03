@@ -286,7 +286,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       } else {
         settlement.Amount__c = settlementTotal;
         settlement.Settlement_amount_in_SEK__c =
-          settlementTotal * exchangeRateToSEK.Rate__c;
+          settlementTotal *
+          (settlement.Currency__c == 'SEK' ? 1 : exchangeRateToSEK.Rate__c);
       }
       settlement.Date_of_Exchange_Calculation__c = exchangeRateToSEK.Date__c;
       uow.registerDirty(settlement);

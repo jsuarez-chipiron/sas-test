@@ -42,8 +42,7 @@ public inherited sharing class ExchangeRatesSelector extends fflib_SObjectSelect
   ) {
     return (List<Exchange_Rate__c>) Database.query(
       newQueryFactory()
-        .setCondition('From_Currency__c = :fromCurrency')
-        .setCondition('To_Currency__c = :toCurrency')
+        .setCondition('From_Currency__c = :fromCurrency AND To_Currency__c = :toCurrency')
         .toSOQL()
     );
   }
