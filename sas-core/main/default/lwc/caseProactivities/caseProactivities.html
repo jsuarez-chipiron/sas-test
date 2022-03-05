@@ -7,10 +7,11 @@
         variant="brand"
       ></lightning-spinner>
     </div>
-    <div class="slds-p-horizontal_medium">
-      <p if:false={proactivitiesFound}>No matching proactivities.</p>
+    <div if:false={proactivitiesFound} class="slds-p-horizontal_medium">
+      <p>No matching proactivities.</p>
+    </div>
+    <div if:true={proactivitiesFound} class="table slds-scrollable_y">
       <lightning-datatable
-        if:true={proactivitiesFound}
         hide-checkbox-column
         key-field="idx"
         data={rows}
