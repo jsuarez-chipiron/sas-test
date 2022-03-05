@@ -314,6 +314,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>caseProactivities</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>lookupFieldName</name>
                     <value>Case.LIA_Claim__c</value>
