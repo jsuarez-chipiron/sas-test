@@ -39,7 +39,7 @@ public without sharing class CaseService {
         // flightDate field
         // flightNumber field
         OwnerId = feedbackQueue.Id,
-        RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
+        RecordTypeId = Cases.CLAIMS_RECORD_TYPE_ID,
         Subject = 'Feedback: ' +
           form.formData.feedbackCategory +
           ', ' +

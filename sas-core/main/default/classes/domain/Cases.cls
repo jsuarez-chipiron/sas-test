@@ -17,6 +17,10 @@ public without sharing class Cases extends fflib_SObjectDomain {
 
   private List<Case> instanceRecords;
 
+  public static final Id CLAIMS_RECORD_TYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByName()
+  .get('Customer Claim')
+  .getRecordTypeId();
+
   public override void onAfterDelete() {
     removeRelatedSurveyInvitations();
   }
