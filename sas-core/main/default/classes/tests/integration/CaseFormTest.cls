@@ -64,4 +64,225 @@ private class CaseFormTest {
       'There should exist two linked attachments to the case.'
     );
   }
+
+  @IsTest
+  public static void shouldCreateFeedbackCasesWithAllFields() {
+    CaseFormJSON2Apex requestBody = CaseFormJSON2Apex.parse(
+      '{ ' +
+      '  "formData\": {' +
+      '    "type": "feedback",' +
+      '    "comment": "comment field",' +
+      '    "email": "test@example.com",' +
+      '    "firstName": "Test",' +
+      '    "lastName": "Testsson",' +
+      '    "feedbackCategory": "category",' +
+      '    "feedbackType": "type",' +
+      '    "flightDate": "2022-03-02",' +
+      '    "flightNumber": "SK1234",' +
+      '    "bookingReference": "TEST12"' +
+      '  },' +
+      '  "metaData": {' +
+      '    "market": "en-us"' +
+      '  }' +
+      '}'
+    );
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    Test.startTest();
+    String response = CaseForm.createCase(requestBody);
+    Test.StopTest();
+    Case c = [SELECT Id, Origin FROM Case WHERE CaseNumber = :response];
+    // TODO: Check all fields correctly when it's possible.
+    System.assertNotEquals(
+      null,
+      c,
+      'Should have found a case with the case number returned from create case.'
+    );
+    System.assertEquals(
+      'Form - Feedback International',
+      c.Origin,
+      'Origin should be set correctly for unknown origins.'
+    );
+  }
+
+  @IsTest
+  public static void shouldCreateFeedbackCasesWithMinimalFields() {
+    CaseFormJSON2Apex requestBody = CaseFormJSON2Apex.parse(
+      '{ ' +
+      '  "formData\": {' +
+      '    "type": "feedback",' +
+      '    "comment": "",' +
+      '    "email": "test@example.com",' +
+      '    "feedbackCategory": "category",' +
+      '    "feedbackType": "type"' +
+      '  },' +
+      '  "metaData": {' +
+      '    "market": "dk-da"' +
+      '  }' +
+      '}'
+    );
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    Test.startTest();
+    String response = CaseForm.createCase(requestBody);
+    Test.StopTest();
+    Case c = [SELECT Id, Origin FROM Case WHERE CaseNumber = :response];
+    // TODO: Check all fields correctly when it's possible.
+    System.assertNotEquals(
+      null,
+      c,
+      'Should have found a case with the case number returned from create case.'
+    );
+    System.assertEquals(
+      'Form - Feedback DK',
+      c.Origin,
+      'Origin should be set correctly for Denmark.'
+    );
+  }
+
+  @IsTest
+  public static void shouldCreateClaimCasesWithAllFields() {
+    CaseFormJSON2Apex requestBody = CaseFormJSON2Apex.parse(
+      '{ ' +
+      '  "formData\": {' +
+      '    "type": "claim",' +
+      '    "comment": "comment field",' +
+      '    "email": "test@example.com",' +
+      '    "firstName": "Test",' +
+      '    "lastName": "Testsson",' +
+      '    "feedbackCategory": "category",' +
+      '    "feedbackType": "type",' +
+      '    "flightDate": "2022-03-02",' +
+      '    "flightNumber": "SK1234",' +
+      '    "bookingReference": "TEST12"' +
+      '  },' +
+      '  "metaData": {' +
+      '    "market": "dk-da"' +
+      '  }' +
+      '}'
+    );
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    Test.startTest();
+    String response = CaseForm.createCase(requestBody);
+    Test.StopTest();
+    Case c = [SELECT Id, Origin FROM Case WHERE CaseNumber = :response];
+    // TODO: Check all fields correctly when it's possible.
+    LIA_Claim__c cl = [SELECT Id FROM LIA_Claim__c WHERE Case__c = :c.Id];
+    System.assertNotEquals(
+      null,
+      c,
+      'Should have found a case with the case number returned from create case.'
+    );
+    System.assertEquals(
+      'Form - Claims DK',
+      c.Origin,
+      'Origin should be set correctly for Denmark.'
+    );
+    System.assertNotEquals(
+      null,
+      cl,
+      'Should have found a claim linked to the case.'
+    );
+  }
+
+  @IsTest
+  public static void shouldCreateClaimCasesWithMinimalFields() {
+    CaseFormJSON2Apex requestBody = CaseFormJSON2Apex.parse(
+      '{ ' +
+      '  "formData\": {' +
+      '    "type": "claim",' +
+      '    "email": "test@example.com",' +
+      '    "firstName": "Test",' +
+      '    "lastName": "Testsson",' +
+      '    "phone": "000000000",' +
+      '    "address": "Frösundavik\'s allé 1",' +
+      '    "postalCode": "000000",' +
+      '    "city": "Stockholm",' +
+      '    "country": "Sweden",' +
+      '    "contactType": "private",' +
+      '    "claimCategory": "category",' +
+      '    "claimType": "type",' +
+      '    "preferredCompensationMethod": "voucher",' +
+      '    "bookingReference": "TEST12"' +
+      '  },' +
+      '  "metaData": {' +
+      '    "market": "dk-da"' +
+      '  }' +
+      '}'
+    );
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    Test.startTest();
+    String response = CaseForm.createCase(requestBody);
+    Test.StopTest();
+    Case c = [SELECT Id, Origin FROM Case WHERE CaseNumber = :response];
+    // TODO: Check all fields correctly when it's possible.
+    LIA_Claim__c cl = [SELECT Id FROM LIA_Claim__c WHERE Case__c = :c.Id];
+    System.assertNotEquals(
+      null,
+      c,
+      'Should have found a case with the case number returned from create case.'
+    );
+    System.assertEquals(
+      'Form - Claims DK',
+      c.Origin,
+      'Origin should be set correctly for Denmark.'
+    );
+    System.assertNotEquals(
+      null,
+      cl,
+      'Should have found a claim linked to the case.'
+    );
+  }
+
+  @IsTest
+  public static void shouldCreateEBClaimCases() {
+    CaseFormJSON2Apex requestBody = CaseFormJSON2Apex.parse(
+      '{ ' +
+      '  "formData\": {' +
+      '    "type": "claim",' +
+      '    "email": "test@example.com",' +
+      '    "firstName": "Test",' +
+      '    "lastName": "Testsson",' +
+      '    "phone": "000000000",' +
+      '    "contactType": "type",' +
+      '    "flightDate": "2022-03-02",' +
+      '    "flightNumber": "SK1234",' +
+      '    "bookingReference": "TEST12"' +
+      '  },' +
+      '  "metaData": {' +
+      '    "market": "dk-da"' +
+      '  }' +
+      '}'
+    );
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    Test.startTest();
+    String response = CaseForm.createCase(requestBody);
+    Test.StopTest();
+    Case c = [SELECT Id, Origin FROM Case WHERE CaseNumber = :response];
+    // TODO: Check all fields correctly when it's possible.
+    LIA_Claim__c cl = [SELECT Id FROM LIA_Claim__c WHERE Case__c = :c.Id];
+    System.assertNotEquals(
+      null,
+      c,
+      'Should have found a case with the case number returned from create case.'
+    );
+    System.assertEquals(
+      'Form - Claims DK',
+      c.Origin,
+      'Origin should be set correctly for Denmark.'
+    );
+    System.assertNotEquals(
+      null,
+      cl,
+      'Should have found a claim linked to the case.'
+    );
+  }
 }

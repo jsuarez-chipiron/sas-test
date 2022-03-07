@@ -1,0 +1,21 @@
+<template>
+  <lightning-card title="Proactivities">
+    <div if:true={showSpinner}>
+      <lightning-spinner
+        alternative-text="Loading"
+        size="medium"
+        variant="brand"
+      ></lightning-spinner>
+    </div>
+    <div class="slds-p-horizontal_medium">
+      <p if:false={proactivitiesFound}>No matching proactivities.</p>
+      <lightning-datatable
+        if:true={proactivitiesFound}
+        hide-checkbox-column
+        key-field="idx"
+        data={rows}
+        columns={columns}
+      ></lightning-datatable>
+    </div>
+  </lightning-card>
+</template>

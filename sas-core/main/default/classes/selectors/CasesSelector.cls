@@ -8,9 +8,9 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
       Case.FCS_EBLevel__c,
       Case.FCS_EBNumber__c,
       Case.FCS_Case_Reason__c,
-      case.RecordTypeId,
+      Case.RecordTypeId,
       Case.Status,
-      case.Department__c,
+      Case.Department__c,
       Case.FCS_CaseType__c,
       Case.FCS_CaseResolution__c,
       Case.FCS_CaseResolutionDetails__c
@@ -21,8 +21,41 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
     return Case.SObjectType;
   }
 
+  public static CasesSelector newInstance() {
+    return (CasesSelector) SAS_Service_Application.Selector.newInstance(
+      Case.SObjectType
+    );
+  }
+
+  private static ClaimsSelector claims = ClaimsSelector.newInstance();
+
   public List<Case> selectById(Set<Id> ids) {
     return (List<Case>) selectSObjectsById(ids);
+  }
+
+  public List<Case> selectByIdWithClaim(Set<Id> ids) {
+    fflib_QueryFactory caseQF = newQueryFactory().setCondition('Id in :ids');
+    fflib_QueryFactory claimsQF = new ClaimsSelector()
+      .addQueryFactorySubselect(caseQF);
+
+    return (List<Case>) Database.query(caseQF.toSOQL());
+  }
+
+  public List<Case> selectByProactivityId(Id proactivityId) {
+    List<LIA_Claim__c> claimsByProactivity = claims.selectByProactivityId(
+      proactivityId
+    );
+
+    if (claimsByProactivity.size() == 0) {
+      return new List<Case>();
+    }
+
+    Set<Id> casesToFind = new Set<Id>();
+    for (LIA_Claim__c claim : claimsByProactivity) {
+      casesToFind.add(claim.Case__c);
+    }
+
+    return selectById(casesToFind);
   }
 
   public List<Case> selectByAccountId(Set<Id> accountIds) {
