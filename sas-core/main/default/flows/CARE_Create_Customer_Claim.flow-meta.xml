@@ -110,6 +110,18 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>First_Name__c</field>
+            <value>
+                <elementReference>FullCustomerName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Last_Name__c</field>
+            <value>
+                <elementReference>FullCustomerName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Name</field>
             <value>
                 <elementReference>FullCustomerName</elementReference>

@@ -322,6 +322,18 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Payee_First_Name__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Contact_First_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Payee_Last_Name__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Contact_Last_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Payee_Name__c</field>
             <value>
                 <elementReference>Get_Customer_Claim.Contact_Full_Name__c</elementReference>
@@ -430,7 +442,7 @@
             <dataType>String</dataType>
             <fieldText>Voucher Type</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <isRequired>false</isRequired>
+            <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>

@@ -252,8 +252,8 @@ public without sharing class SettlementService {
       ),
       settlement.Currency__c,
       settlement.Amount__c.intValue(),
-      settlement.Payee_Name__c, //firstName, TODO: Separate out
-      settlement.Payee_Name__c, //lastName, TODO: Separate out
+      settlement.Payee_First_Name__c,
+      settlement.Payee_Last_Name__c,
       settlement.Voucher_Email__c,
       settlement.Claim__r.Case__r.CaseNumber,
       settlement.Address_line_1__c,
