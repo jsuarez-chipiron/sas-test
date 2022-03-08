@@ -511,6 +511,26 @@
                 <label>Facebook Messenger</label>
             </value>
             <value>
+                <fullName>Form - Claims DK</fullName>
+                <default>false</default>
+                <label>Form - Claims DK</label>
+            </value>
+            <value>
+                <fullName>Form - Claims NO</fullName>
+                <default>false</default>
+                <label>Form - Claims NO</label>
+            </value>
+            <value>
+                <fullName>Form - Claims SE</fullName>
+                <default>false</default>
+                <label>Form - Claims SE</label>
+            </value>
+            <value>
+                <fullName>Form - Claims International</fullName>
+                <default>false</default>
+                <label>Form - Claims International</label>
+            </value>
+            <value>
                 <fullName>Form - Death Certificate DK</fullName>
                 <default>false</default>
                 <label>Form - Death Certificate DK</label>
@@ -529,6 +549,26 @@
                 <fullName>Form - Death Certificate SE</fullName>
                 <default>false</default>
                 <label>Form - Death Certificate SE</label>
+            </value>
+            <value>
+                <fullName>Form - Feedback DK</fullName>
+                <default>false</default>
+                <label>Form - Feedback DK</label>
+            </value>
+            <value>
+                <fullName>Form - Feedback NO</fullName>
+                <default>false</default>
+                <label>Form - Feedback NO</label>
+            </value>
+            <value>
+                <fullName>Form - Feedback SE</fullName>
+                <default>false</default>
+                <label>Form - Feedback SE</label>
+            </value>
+            <value>
+                <fullName>Form - Feedback International</fullName>
+                <default>false</default>
+                <label>Form - Feedback International</label>
             </value>
             <value>
                 <fullName>Form - Group Travel BE</fullName>

@@ -16,14 +16,14 @@ public without sharing class ClaimService {
 
   public static String createClaim(CaseFormJSON2Apex form) {
     Case caseToCreate = new Case(
-      Initially_Provided_PNR__c = form.formData.euroBonusNumber,
+      Initially_Provided_PNR__c = form.formData.bookingReference,
       FCS_EBNumber__c = form.formData.euroBonusNumber,
       OwnerId = claimsQueue.Id,
       Origin = marketToOrigin.get(form.metaData.market) == null
         ? marketToOrigin.get('default')
         : marketToOrigin.get(form.metaData.market),
       SuppliedEmail = form.formData.email,
-      RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL, // TODO: Get correct record type.
+      RecordTypeId = Cases.CLAIMS_RECORD_TYPE_ID,
       Subject = 'Customer claim' // TODO: What subject?
     );
 

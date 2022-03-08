@@ -92,7 +92,11 @@ private class CaseFormTest {
     Test.startTest();
     String response = CaseForm.createCase(requestBody);
     Test.StopTest();
-    Case c = [SELECT Id, Origin FROM Case WHERE CaseNumber = :response];
+    Case c = [
+      SELECT Id, Origin, Department__c
+      FROM Case
+      WHERE CaseNumber = :response
+    ];
     // TODO: Check all fields correctly when it's possible.
     System.assertNotEquals(
       null,
@@ -103,6 +107,11 @@ private class CaseFormTest {
       'Form - Feedback International',
       c.Origin,
       'Origin should be set correctly for unknown origins.'
+    );
+    System.assertEquals(
+      'Customer Claim',
+      c.Department__c,
+      'Department should be set correctly for unknown origins.'
     );
   }
 
@@ -169,7 +178,11 @@ private class CaseFormTest {
     Test.startTest();
     String response = CaseForm.createCase(requestBody);
     Test.StopTest();
-    Case c = [SELECT Id, Origin FROM Case WHERE CaseNumber = :response];
+    Case c = [
+      SELECT Id, Origin, Department__c
+      FROM Case
+      WHERE CaseNumber = :response
+    ];
     // TODO: Check all fields correctly when it's possible.
     LIA_Claim__c cl = [SELECT Id FROM LIA_Claim__c WHERE Case__c = :c.Id];
     System.assertNotEquals(
@@ -181,6 +194,11 @@ private class CaseFormTest {
       'Form - Claims DK',
       c.Origin,
       'Origin should be set correctly for Denmark.'
+    );
+    System.assertEquals(
+      'Customer Claim',
+      c.Department__c,
+      'Department should be set correctly for Denmark.'
     );
     System.assertNotEquals(
       null,
