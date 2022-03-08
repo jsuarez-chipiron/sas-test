@@ -140,7 +140,7 @@ export default class SettlementCalculator extends LightningElement {
 
   @wire(getCustomers, { settlementId: "$recordId" })
   getCustomers({ error, data }) {
-    const customersFound = !error && data != undefined && data.length === 1;
+    const customersFound = !error && data != undefined && data.length >= 1;
     if (customersFound) {
       this.customerOptions = data.map((x) => ({
         label: x.Name,
