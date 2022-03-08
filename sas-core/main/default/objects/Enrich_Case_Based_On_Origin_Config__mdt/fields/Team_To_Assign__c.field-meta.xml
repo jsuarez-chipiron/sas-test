@@ -116,6 +116,11 @@
                 <label>Chat</label>
             </value>
             <value>
+                <fullName>Care Claim</fullName>
+                <default>false</default>
+                <label>Care Claim</label>
+            </value>
+            <value>
                 <fullName>Vendor Management</fullName>
                 <default>false</default>
                 <label>Vendor Management</label>
