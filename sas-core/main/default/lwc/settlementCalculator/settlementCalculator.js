@@ -94,7 +94,8 @@ export default class SettlementCalculator extends LightningElement {
   wiredSettlement({ error, data }) {
     if (!error && data) {
       this.cannotBeUpdated =
-        data.fields.Settlement_Status__c.value !== "In progress";
+        data.fields.Settlement_Status__c.value !== "In progress" &&
+        data.fields.Settlement_Status__c.value !== "Denied";
       this.type = {
         isEuroBonusPoints: data.recordTypeInfo.name === "EB points",
         isMonetary: data.recordTypeInfo.name === "Monetary",

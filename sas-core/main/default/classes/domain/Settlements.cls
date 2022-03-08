@@ -250,7 +250,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     // TODO: Verify that settlement can be updated. (Not locked and status is good to go, maybe?)
     // TODO: Do we need to check locked status also here? Probably yes.
     Boolean canBeModified =
-      settlement.Settlement_Status__c == STATUS_IN_PROGRESS;
+      settlement.Settlement_Status__c == STATUS_IN_PROGRESS ||
+      settlement.Settlement_Status__c == STATUS_DENIED;
     if (canBeModified) {
       fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
 

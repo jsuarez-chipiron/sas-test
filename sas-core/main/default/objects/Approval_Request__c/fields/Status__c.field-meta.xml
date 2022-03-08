@@ -26,6 +26,11 @@
                 <default>false</default>
                 <label>Blocked</label>
             </value>
+            <value>
+                <fullName>Verified</fullName>
+                <default>false</default>
+                <label>Verified</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

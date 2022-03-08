@@ -30,7 +30,7 @@
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Case_Information.Status</leftValueReference>
                 <operator>EqualTo</operator>
@@ -43,6 +43,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Waiting for Control</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Information.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>00G</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -111,6 +118,24 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordDeletes>
+        <name>Remove_Pending_Service_Routing</name>
+        <label>Remove Pending Service Routing</label>
+        <locationX>50</locationX>
+        <locationY>1334</locationY>
+        <connector>
+            <targetReference>RecalledCase</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>WorkItemId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>PendingServiceRouting</object>
+    </recordDeletes>
     <recordLookups>
         <name>Get_Case_Information</name>
         <label>Get Case Information</label>
@@ -222,7 +247,7 @@
         <locationX>50</locationX>
         <locationY>1214</locationY>
         <connector>
-            <targetReference>RecalledCase</targetReference>
+            <targetReference>Remove_Pending_Service_Routing</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -329,7 +354,7 @@
         <name>RecalledCase</name>
         <label>RecalledCase</label>
         <locationX>50</locationX>
-        <locationY>1334</locationY>
+        <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -348,7 +373,7 @@
             <targetReference>Get_Case_Information</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

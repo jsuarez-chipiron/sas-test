@@ -5,7 +5,7 @@
         <name>Case_can_be_submitted_for_Approval</name>
         <label>Case can be submitted for Approval</label>
         <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>errorScreen</targetReference>
         </defaultConnector>
@@ -18,6 +18,20 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>In Progress</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>numberOfSettlementsNeedingApproval</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>numberOfInvalidSettlements</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -54,7 +68,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Case_can_be_submitted_for_Approval</targetReference>
+            <targetReference>Case_has_Settlements_to_approve</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -72,7 +86,7 @@
         <name>Update_Case_Status</name>
         <label>Update Case Status</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Update_Settlements_for_this_Case</targetReference>
         </connector>
@@ -102,7 +116,7 @@
         <name>Update_Settlements_for_this_Case</name>
         <label>Update Settlements for this Case</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Send_Case_to_Approval</targetReference>
         </connector>
@@ -140,7 +154,7 @@
         <name>errorScreen</name>
         <label>Error Screen</label>
         <locationX>314</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -156,7 +170,7 @@
         <name>submitScreen</name>
         <label>Submit Screen</label>
         <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -180,10 +194,50 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>Case_has_Settlements_to_approve</name>
+        <label>Case has Settlements to approve</label>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
+        <connector>
+            <targetReference>Case_can_be_submitted_for_Approval</targetReference>
+        </connector>
+        <flowName>UTIL_Count_Number_of_Settlements_for_Status</flowName>
+        <inputAssignments>
+            <name>claimId</name>
+            <value>
+                <elementReference>Get_Case_Information.LIA_Claim__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>shouldValidateSettlements</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>statusToCheck</name>
+            <value>
+                <stringValue>In progress</stringValue>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>invalidSettlements</assignToReference>
+            <name>invalidSettlements</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>numberOfInvalidSettlements</assignToReference>
+            <name>numberOfInvalidSettlements</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>numberOfSettlementsNeedingApproval</assignToReference>
+            <name>numberOfSettlementsInStatus</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>Send_Case_to_Approval</name>
         <label>Send Case to Approval</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <flowName>CLAIM_Case_Approval_Handler</flowName>
         <inputAssignments>
             <name>incomingCaseRecord</name>
@@ -193,6 +247,29 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>invalidSettlements</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>numberOfInvalidSettlements</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>numberOfSettlementsNeedingApproval</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

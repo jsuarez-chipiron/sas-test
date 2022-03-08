@@ -112,19 +112,13 @@
         <inputAssignments>
             <field>First_Name__c</field>
             <value>
-                <elementReference>FullCustomerName</elementReference>
+                <elementReference>CustomerName.firstName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Last_Name__c</field>
             <value>
-                <elementReference>FullCustomerName</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Name</field>
-            <value>
-                <elementReference>FullCustomerName</elementReference>
+                <elementReference>CustomerName.lastName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -279,7 +273,7 @@
         <inputAssignments>
             <field>PIR__c</field>
             <value>
-                <elementReference>PNR</elementReference>
+                <elementReference>PIR</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -388,6 +382,18 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>FCS_EBNumber__c</field>
+            <value>
+                <elementReference>EuroBonus_Number</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Initially_Provided_PNR__c</field>
+            <value>
+                <elementReference>PNR</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>LIA_Claim__c</field>
             <value>

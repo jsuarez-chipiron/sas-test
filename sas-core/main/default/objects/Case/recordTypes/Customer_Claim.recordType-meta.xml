@@ -3,7 +3,7 @@
     <fullName>Customer_Claim</fullName>
     <active>true</active>
     <businessProcess>Care</businessProcess>
-    <compactLayoutAssignment>SAS_Claim_Case_Compact_Layout</compactLayoutAssignment>
+    <compactLayoutAssignment>SAS_Customer_Claim_Layout</compactLayoutAssignment>
     <description>Used for Customer Claim related cases</description>
     <label>Customer Claim</label>
     <picklistValues>
