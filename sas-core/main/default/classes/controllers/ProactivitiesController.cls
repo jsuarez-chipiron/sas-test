@@ -88,6 +88,13 @@ public without sharing class ProactivitiesController {
         reason += reasonIsBlank ? 'PIR' : ', PIR';
         reasonIsBlank = false;
       }
+      if (
+        proactivity.Claim_Firm__c != null &&
+        proactivity.Claim_Firm__c == claim.Claim_Firm__c
+      ) {
+        reason += reasonIsBlank ? 'Firm' : ', Firm';
+        reasonIsBlank = false;
+      }
       this.matchingReasons = reason;
     }
   }

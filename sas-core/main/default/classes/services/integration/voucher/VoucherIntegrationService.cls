@@ -25,12 +25,12 @@ public without sharing class VoucherIntegrationService {
     DAMAGEBAG,
     DELAYEDBAG,
     PILFBAG,
-    VDBCOMP,
-    IDBCOMP,
-    VDGCOMP,
-    IDGCOMP,
-    GRNDTRNS,
-    SLBKSEAT,
+    VDBCOMP, // voluntary denied boarding
+    IDBCOMP, // involuntary denied boarding
+    VDGCOMP, // voluntary downgrading comp
+    IDGCOMP, // involuntary downgrading comp
+    GRNDTRNS, // ground transport
+    SLBKSEAT, // sell back seat
     COVID19,
     RTCREDIT,
     NRTBONUS,
