@@ -92,6 +92,9 @@ public class VoucherCreateRequest {
    * @param s String to sanitize
    */
   private static String sanitizeStringForVoucherAPI(String s) {
+    if (s == null) {
+      return '';
+    }
     String toReturn = s.replaceAll('ä', 'ae')
       .replaceAll('Ä', 'AE')
       .replaceAll('ö', 'oe')
