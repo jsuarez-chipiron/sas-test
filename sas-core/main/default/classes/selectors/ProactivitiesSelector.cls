@@ -8,6 +8,7 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
       Proactivity__c.Email__c,
       Proactivity__c.EuroBonus_Number__c,
       Proactivity__c.Flight_Id__c,
+      Proactivity__c.Claim_Firm__c,
       Proactivity__c.Note__c,
       Proactivity__c.Passenger_Name__c,
       Proactivity__c.Phone_Number__c,
@@ -55,6 +56,7 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
     String bookingReference = claim.Liability_PNR__c;
     String email = claim.Contact_Email__c;
     String euroBonusNumber = claim.EuroBonus_Number__c;
+    Id firm = claim.Claim_Firm__c;
     String phoneNumber = claim.Phone_Number__c;
     String pirNumber = claim.PIR__c;
 
@@ -89,6 +91,14 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
         whereQuery += 'EuroBonus_Number__c = :euroBonusNumber';
       } else {
         whereQuery += ' OR EuroBonus_Number__c = :euroBonusNumber';
+      }
+    }
+
+    if (firm != null) {
+      if (String.isBlank(whereQuery)) {
+        whereQuery += 'Claim_Firm__c = :firm';
+      } else {
+        whereQuery += ' OR Claim_Firm__c = :firm';
       }
     }
 
