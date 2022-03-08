@@ -50,7 +50,9 @@ global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaults
         cse.Origin == 'Manual' ||
         cse.Origin == 'Manual - Legal Case Diary Migration' ||
         cse.Origin == 'Internal - New Refund Request Form' ||
-        cse.Origin?.contains('Form - '))
+        cse.Origin?.contains('Form - ') &&
+        (cse.Department__c != null &&
+        cse.Team__c != null))
       ) {
         String lstFromEMails = From_email_based_on_Dept_and_Teams__c.getValues(
             cse.Department__c.substringBefore(' ') +
