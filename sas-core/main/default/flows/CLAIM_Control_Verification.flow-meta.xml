@@ -85,7 +85,7 @@
                 <leftValueReference>Control_Status</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Approved</stringValue>
+                    <stringValue>Verified</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -623,6 +623,9 @@
             <choiceReferences>verifiedChoice</choiceReferences>
             <choiceReferences>rejectedChoice</choiceReferences>
             <dataType>String</dataType>
+            <defaultValue>
+                <stringValue/>
+            </defaultValue>
             <fieldText>Control Status</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>

@@ -4,7 +4,7 @@
     <assignments>
         <name>Calculate_Number_of_Settlements</name>
         <label>Calculate Number of Settlements</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>numberOfSettlementsInStatus</assignToReference>
@@ -226,13 +226,6 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Validate_each_Settlement.Payee_Name__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>Validate_each_Settlement.Currency__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
@@ -241,6 +234,20 @@
             </conditions>
             <conditions>
                 <leftValueReference>Validate_each_Settlement.Amount__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.Payee_First_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.Payee_Last_Name__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -310,7 +317,7 @@
     <decisions>
         <name>Validate_Settlements</name>
         <label>Validate Settlements?</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -376,7 +383,7 @@
     <recordLookups>
         <name>Get_Settlements_for_this_Claim</name>
         <label>Get Settlements for this Claim</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -403,7 +410,7 @@
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Settlements_for_this_Claim</targetReference>
