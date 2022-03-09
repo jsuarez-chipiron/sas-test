@@ -116,14 +116,14 @@
                 <label>Chat</label>
             </value>
             <value>
-                <fullName>Care Claim</fullName>
+                <fullName>Claims</fullName>
                 <default>false</default>
-                <label>Care Claim</label>
+                <label>Claims</label>
             </value>
             <value>
-                <fullName>Vendor Management</fullName>
+                <fullName>Customer Feedback</fullName>
                 <default>false</default>
-                <label>Vendor Management</label>
+                <label>Customer Feedback</label>
             </value>
             <value>
                 <fullName>DE</fullName>
@@ -284,6 +284,11 @@
                 <fullName>KANA US</fullName>
                 <default>false</default>
                 <label>KANA US</label>
+            </value>
+            <value>
+                <fullName>Language</fullName>
+                <default>false</default>
+                <label>Language</label>
             </value>
             <value>
                 <fullName>LT</fullName>
@@ -559,6 +564,11 @@
                 <fullName>US</fullName>
                 <default>false</default>
                 <label>US</label>
+            </value>
+            <value>
+                <fullName>Vendor Management</fullName>
+                <default>false</default>
+                <label>Vendor Management</label>
             </value>
         </valueSetDefinition>
     </valueSet>
