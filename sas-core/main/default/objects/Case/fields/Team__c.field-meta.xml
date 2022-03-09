@@ -137,11 +137,6 @@
                 <label>Businesstravel STO</label>
             </value>
             <value>
-                <fullName>Care Claim</fullName>
-                <default>false</default>
-                <label>Care Claim</label>
-            </value>
-            <value>
                 <fullName>CH</fullName>
                 <default>false</default>
                 <label>CH</label>
@@ -150,6 +145,16 @@
                 <fullName>Chat</fullName>
                 <default>false</default>
                 <label>Chat</label>
+            </value>
+            <value>
+                <fullName>Claims</fullName>
+                <default>false</default>
+                <label>Claims</label>
+            </value>
+            <value>
+                <fullName>Customer Feedback</fullName>
+                <default>false</default>
+                <label>Customer Feedback</label>
             </value>
             <value>
                 <fullName>DE</fullName>
@@ -315,6 +320,11 @@
                 <fullName>KANA US</fullName>
                 <default>false</default>
                 <label>KANA US</label>
+            </value>
+            <value>
+                <fullName>Language</fullName>
+                <default>false</default>
+                <label>Language</label>
             </value>
             <value>
                 <fullName>LT</fullName>
@@ -847,7 +857,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Customer Claim</controllingFieldValue>
-            <valueName>Care Claim</valueName>
+            <valueName>Claims</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <valueName>Customer Feedback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <valueName>Language</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>

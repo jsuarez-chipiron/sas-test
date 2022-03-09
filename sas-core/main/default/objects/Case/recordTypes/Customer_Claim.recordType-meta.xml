@@ -3348,6 +3348,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Customer Claim</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Digital Channel Support Internal</fullName>
             <default>false</default>
         </values>
@@ -3644,7 +3648,15 @@
     <picklistValues>
         <picklist>Team__c</picklist>
         <values>
-            <fullName>Care Claim</fullName>
+            <fullName>Claims</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Feedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Language</fullName>
             <default>false</default>
         </values>
     </picklistValues>
