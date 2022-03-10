@@ -29,8 +29,6 @@ export default class CaseProactivities extends NavigationMixin(
 
   @wire(getCasesForProactivity, { proactivityId: "$recordId" })
   wiredCases({ error, data }) {
-    console.log("Cdata", data);
-    console.log("Cerror", error);
     if (error) {
       this.showSpinner = false;
       this.error = error;

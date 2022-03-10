@@ -152,4 +152,107 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       newQueryFactory().setCondition(whereQuery).toSOQL()
     );
   }
+
+  public List<LIA_Claim__c> selectSimilarClaimsByCaseId(Id caseId) {
+    List<LIA_Claim__c> claims = selectByCaseIdWithCustomers(
+      new Set<Id>{ caseId }
+    );
+    if (claims == null || claims.size() == 0) {
+      return new List<LIA_Claim__c>();
+    }
+
+    LIA_Claim__c claim = claims[0];
+
+    String bankAccountNumber = claim.Bank_Account_Number__c;
+    String bookingReference = claim.Liability_PNR__c;
+    String email = claim.Contact_Email__c;
+    String euroBonusNumber = claim.EuroBonus_Number__c;
+    Date flightDate = claim.Flight_Date__c;
+    String flightNumber = claim.Flight_Number__c;
+    //String passengerName = claim.Passenger_Name__c; // TODO: What should this be?
+    String phoneNumber = claim.Phone_Number__c;
+    String pirNumber = claim.PIR__c;
+
+    String whereQuery = '';
+
+    if (!String.isBlank(bankAccountNumber)) {
+      if (String.isBlank(whereQuery)) {
+        whereQuery += 'Bank_Account_Number__c = :bankAccountNumber';
+      } else {
+        whereQuery += ' OR Bank_Account_Number__c = :bankAccountNumber';
+      }
+    }
+
+    if (!String.isBlank(bookingReference)) {
+      if (String.isBlank(whereQuery)) {
+        whereQuery += 'Liability_PNR__c = :bookingReference';
+      } else {
+        whereQuery += ' OR Liability_PNR__c = :bookingReference';
+      }
+    }
+
+    if (
+      !String.isBlank(email) && claim.Type_of_Customer__c == 'Private customer'
+    ) {
+      // Email should be checked only for private customers.
+      if (String.isBlank(whereQuery)) {
+        whereQuery += 'Contact_Email__c = :email';
+      } else {
+        whereQuery += ' OR Contact_Email__c = :email';
+      }
+    }
+
+    if (!String.isBlank(euroBonusNumber)) {
+      if (String.isBlank(whereQuery)) {
+        whereQuery += 'EuroBonus_Number__c = :euroBonusNumber';
+      } else {
+        whereQuery += ' OR EuroBonus_Number__c = :euroBonusNumber';
+      }
+    }
+
+    if (!String.isBlank(flightNumber) && flightDate != null) {
+      if (String.isBlank(whereQuery)) {
+        whereQuery += '(Flight_Number__c = :flightNumber AND Flight_Date__c = :flightDate)';
+      } else {
+        whereQuery += ' OR (Flight_Number__c = :flightNumber AND Flight_Date__c = :flightDate)';
+      }
+    }
+
+    /*if (!String.isBlank(passengerName)) {
+      List<Customer__c> matchingCustomers = customers.selectByName(
+        new Set<String>{ passengerName }
+      );
+      if (matchingCustomers.size() > 0) {
+        Set<Id> claimIdsFromCustomers = new Set<Id>();
+        for (Customer__c c : matchingCustomers) {
+          claimIdsFromCustomers.add(c.Claim__c);
+        }
+        if (String.isBlank(whereQuery)) {
+          whereQuery += 'Id IN :claimIdsFromCustomers';
+        } else {
+          whereQuery += ' OR Id IN :claimIdsFromCustomers';
+        }
+      }
+    }*/
+
+    if (!String.isBlank(phoneNumber)) {
+      if (String.isBlank(whereQuery)) {
+        whereQuery += 'Phone_Number__c = :phoneNumber';
+      } else {
+        whereQuery += ' OR Phone_Number__c = :phoneNumber';
+      }
+    }
+
+    if (!String.isBlank(pirNumber)) {
+      if (String.isBlank(whereQuery)) {
+        whereQuery += 'PIR__c = :pirNumber';
+      } else {
+        whereQuery += ' OR PIR__c = :pirNumber';
+      }
+    }
+
+    return (List<LIA_Claim__c>) Database.query(
+      newQueryFactory().setCondition(whereQuery).toSOQL()
+    );
+  }
 }

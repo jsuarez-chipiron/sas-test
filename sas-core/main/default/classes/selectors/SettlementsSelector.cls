@@ -39,6 +39,12 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
     return (List<Settlement__c>) selectSObjectsById(ids);
   }
 
+  public List<Settlement__c> selectByClaimId(Set<Id> claimIds) {
+    return (List<Settlement__c>) Database.query(
+      newQueryFactory().setCondition('Claim__c IN :claimIds').toSOQL()
+    );
+  }
+
   public List<Settlement__c> selectByIdWithClaimFields(Set<Id> ids) {
     return (List<Settlement__c>) Database.query(
       newQueryFactory()
@@ -63,10 +69,11 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
     List<String> currencies
   ) {
     String statusToTake = Settlements.STATUS_WAITING_FOR_TRANSFER;
+    Id recordTypeIdToTake = Settlements.MONETARY_RECORD_TYPE_ID;
     return (List<Settlement__c>) Database.query(
       newQueryFactory()
         .setCondition(
-          'Settlement_Status__c =:statusToTake AND Currency__c in :currencies'
+          'Settlement_Status__c =:statusToTake AND Currency__c in :currencies AND RecordTypeId = :recordTypeIdToTake'
         )
         .toSOQL()
     );
