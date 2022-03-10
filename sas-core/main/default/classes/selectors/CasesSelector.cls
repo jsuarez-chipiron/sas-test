@@ -34,7 +34,9 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
   }
 
   public List<Case> selectByIdWithClaim(Set<Id> ids) {
-    fflib_QueryFactory caseQF = newQueryFactory().setCondition('Id in :ids');
+    fflib_QueryFactory caseQF = newQueryFactory()
+      .setCondition('Id in :ids')
+      .selectField('Owner.Name');
     fflib_QueryFactory claimsQF = new ClaimsSelector()
       .addQueryFactorySubselect(caseQF);
 
@@ -114,6 +116,22 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
     }
 
     return (List<Case>) this.selectSObjectsById(caseIds);
+  }
+
+  public List<Case> selectSimilarCasesById(Id caseId) {
+    List<LIA_Claim__c> similarClaims = claims.selectSimilarClaimsByCaseId(
+      caseId
+    );
+    if (similarClaims == null || similarClaims.size() == 0) {
+      return new List<Case>();
+    }
+
+    Set<Id> caseIds = new Set<Id>();
+    for (LIA_Claim__c claim : similarClaims) {
+      caseIds.add(claim.Case__c);
+    }
+
+    return selectByIdWithClaim(caseIds);
   }
 
   public override String getOrderBy() {
