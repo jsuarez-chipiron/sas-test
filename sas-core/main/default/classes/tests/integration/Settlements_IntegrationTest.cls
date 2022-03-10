@@ -20,6 +20,7 @@ public with sharing class Settlements_IntegrationTest {
       Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00100',
+      RecordTypeId = Settlements.MONETARY_RECORD_TYPE_ID,
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
     Settlement__c settlement2 = new Settlement__c(
@@ -34,6 +35,7 @@ public with sharing class Settlements_IntegrationTest {
       Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00100',
+      RecordTypeId = Settlements.MONETARY_RECORD_TYPE_ID,
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
 
@@ -235,6 +237,7 @@ public with sharing class Settlements_IntegrationTest {
       Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00000',
+      RecordTypeId = Settlements.MONETARY_RECORD_TYPE_ID,
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
     Settlement__c sekToInclude2 = new Settlement__c(
@@ -249,6 +252,7 @@ public with sharing class Settlements_IntegrationTest {
       Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00000',
+      RecordTypeId = Settlements.MONETARY_RECORD_TYPE_ID,
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
     Settlement__c sekNotToInclude = new Settlement__c(
@@ -263,6 +267,7 @@ public with sharing class Settlements_IntegrationTest {
       Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00000',
+      RecordTypeId = Settlements.MONETARY_RECORD_TYPE_ID,
       Settlement_Status__c = Settlements.STATUS_IN_PROGRESS
     );
     Settlement__c nokSettlement = new Settlement__c(
@@ -277,6 +282,7 @@ public with sharing class Settlements_IntegrationTest {
       Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00100',
+      RecordTypeId = Settlements.MONETARY_RECORD_TYPE_ID,
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
 
