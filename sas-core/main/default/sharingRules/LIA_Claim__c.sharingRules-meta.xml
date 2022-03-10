@@ -13,18 +13,34 @@
             <operation>equals</operation>
             <value>LiabilityClaim</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>Share_Customer_Claims_with_Customer_Claim_public_group</fullName>
+        <fullName>Sharing_Claims_to_SAS</fullName>
         <accessLevel>Edit</accessLevel>
-        <label>Share Customer Claims with Customer Claim public group</label>
+        <label>Sharing Claims to SAS</label>
         <sharedTo>
-            <group>Customer_Claim</group>
+            <roleAndSubordinatesInternal>SAS</roleAndSubordinatesInternal>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
             <value>CustomerClaim</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Sharing_Claims_to_Vendors</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Sharing Claims to Vendors</label>
+        <sharedTo>
+            <group>All_Vendors</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>CustomerClaim</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
 </SharingRules>
