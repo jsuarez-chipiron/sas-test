@@ -39,7 +39,7 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>SAS_Claim_Record_Page</content>
+        <content>SAS_Liability_Claim_Record_Page</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -98,6 +98,15 @@
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
         <pageOrSobjectType>SocialPost</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Settlement_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Settlement__c</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -289,6 +298,24 @@
         <recordType>PersonAccount.EBCustomer</recordType>
         <type>Flexipage</type>
         <profile>Business User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SAS_Liability_Claim_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LIA_Claim__c</pageOrSobjectType>
+        <recordType>LIA_Claim__c.LiabilityClaim</recordType>
+        <type>Flexipage</type>
+        <profile>Business User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SAS_Liability_Claim_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LIA_Claim__c</pageOrSobjectType>
+        <recordType>LIA_Claim__c.LiabilityClaim</recordType>
+        <type>Flexipage</type>
+        <profile>Vendor</profile>
     </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Account</tabs>
