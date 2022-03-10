@@ -20,7 +20,7 @@
         <accessLevel>Edit</accessLevel>
         <label>Sharing Claim Cases to SAS</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>SAS</roleAndSubordinatesInternal>
+            <role>SAS</role>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>
