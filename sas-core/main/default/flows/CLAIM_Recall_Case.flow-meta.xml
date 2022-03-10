@@ -118,24 +118,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordDeletes>
-        <name>Remove_Pending_Service_Routing</name>
-        <label>Remove Pending Service Routing</label>
-        <locationX>50</locationX>
-        <locationY>1334</locationY>
-        <connector>
-            <targetReference>RecalledCase</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>WorkItemId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <object>PendingServiceRouting</object>
-    </recordDeletes>
     <recordLookups>
         <name>Get_Case_Information</name>
         <label>Get Case Information</label>
@@ -247,7 +229,7 @@
         <locationX>50</locationX>
         <locationY>1214</locationY>
         <connector>
-            <targetReference>Remove_Pending_Service_Routing</targetReference>
+            <targetReference>RecalledCase</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -354,7 +336,7 @@
         <name>RecalledCase</name>
         <label>RecalledCase</label>
         <locationX>50</locationX>
-        <locationY>1454</locationY>
+        <locationY>1334</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
