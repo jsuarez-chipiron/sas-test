@@ -46,6 +46,9 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   public static final String STATUS_DONE = 'Done';
   public static final String STATUS_FAILED = 'Failed';
 
+  public static final Id MONETARY_RECORD_TYPE_ID = Schema.SObjectType.Settlement__c.getRecordTypeInfosByName()
+    .get('Monetary')
+    .getRecordTypeId();
   public static final Id VOUCHER_RECORD_TYPE_ID = Schema.SObjectType.Settlement__c.getRecordTypeInfosByName()
     .get('Voucher')
     .getRecordTypeId();
