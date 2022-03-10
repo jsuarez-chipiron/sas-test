@@ -18,8 +18,8 @@ public without sharing class Cases extends fflib_SObjectDomain {
   private List<Case> instanceRecords;
 
   public static final Id CLAIMS_RECORD_TYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByName()
-  .get('Customer Claim')
-  .getRecordTypeId();
+    .get('Customer Claim')
+    .getRecordTypeId();
 
   public override void onAfterDelete() {
     removeRelatedSurveyInvitations();
@@ -38,6 +38,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
       instanceRecords,
       (Map<Id, Case>) existingRecords
     );
+    lockClaimsAfterMerge((Map<Id, Case>) existingRecords);
   }
 
   public override void onBeforeInsert() {
@@ -178,6 +179,41 @@ public without sharing class Cases extends fflib_SObjectDomain {
       if (!String.isBlank(c.Initially_Provided_PNR__c)) {
         BookingService.addBookingToCaseAsync(c.Id, c.Initially_Provided_PNR__c);
       }
+    }
+  }
+
+  class CaseException extends Exception {
+  }
+
+  /**
+   * Locks the related claims for merged cases.
+   *
+   * Throws an error when trying to merge cases which have a claim with an
+   * existing settlement.
+   */
+  private void lockClaimsAfterMerge(Map<Id, Case> oldCases) {
+    Set<Id> claimsToLock = new Set<Id>();
+    for (Case c : instanceRecords) {
+      Boolean isNewlyMergedWithClaim =
+        c.Status == 'Merged' &&
+        c.LIA_Claim__c != null &&
+        oldCases.get(c.Id).Status != 'Merged';
+      if (isNewlyMergedWithClaim) {
+        // Queries inside a loop, but we shouldn't be merging a lot at a time, anyway.
+        List<Settlement__c> settlementsForClaim = SettlementsSelector.newInstance()
+          .selectByClaimId(new Set<Id>{ c.LIA_Claim__c });
+
+        if (settlementsForClaim != null && settlementsForClaim.size() > 0) {
+          throw new CaseException(
+            'Cannot merge cases with existing settlements.'
+          );
+        }
+
+        claimsToLock.add(c.LIA_Claim__c);
+      }
+    }
+    if (claimsToLock.size() > 0) {
+      Approval.lock(new List<Id>(claimsToLock));
     }
   }
 
