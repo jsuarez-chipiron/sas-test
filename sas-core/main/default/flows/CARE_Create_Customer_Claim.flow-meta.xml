@@ -169,12 +169,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Can_be_contacted_by_phone__c</field>
-            <value>
-                <elementReference>It_is_okay_to_contact_customer_by_phone_about_this</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Case__c</field>
             <value>
                 <elementReference>recordId</elementReference>
@@ -226,12 +220,6 @@
             <field>Customer_Reason_for_EU261_Claim__c</field>
             <value>
                 <elementReference>Reason_for_EU261_Claim</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Customer_agrees_on_the_terms_and_conditi__c</field>
-            <value>
-                <elementReference>Customer_agrees_to_the_terms_and_conditions</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -663,13 +651,6 @@
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
-                <fields>
-                    <name>It_is_okay_to_contact_customer_by_phone_about_this</name>
-                    <dataType>Boolean</dataType>
-                    <fieldText>It is okay to contact customer by phone about this</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>true</isRequired>
-                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
@@ -951,13 +932,6 @@
                     </rightValue>
                 </conditions>
             </visibilityRule>
-        </fields>
-        <fields>
-            <name>Customer_agrees_to_the_terms_and_conditions</name>
-            <dataType>Boolean</dataType>
-            <fieldText>Customer agrees to the terms and conditions</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>Major_Event</name>

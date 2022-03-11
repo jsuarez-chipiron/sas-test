@@ -184,7 +184,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Customer_Name__c</fields>
-        <fields>Category__c</fields>
         <fields>Amount__c</fields>
         <fields>Cost_Account__c</fields>
         <relatedList>Settlement_Item__c.Settlement__c</relatedList>

@@ -78,10 +78,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Can_be_contacted_by_phone__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Phone_Number__c</field>
             </layoutItems>
         </layoutColumns>

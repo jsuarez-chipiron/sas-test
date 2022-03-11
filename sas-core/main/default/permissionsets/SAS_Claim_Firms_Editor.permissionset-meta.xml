@@ -63,11 +63,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>LIA_Claim__c.Can_be_contacted_by_phone__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>LIA_Claim__c.Case__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -134,11 +129,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Customer_Reason_for_EU261_Claim__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Customer_agrees_on_the_terms_and_conditi__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
