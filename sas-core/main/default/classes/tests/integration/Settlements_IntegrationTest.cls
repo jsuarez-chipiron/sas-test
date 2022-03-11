@@ -122,7 +122,7 @@ public with sharing class Settlements_IntegrationTest {
 
     String expectedFileTitle =
       'a501' +
-      String.valueOf(Date.today().dayOfYear()) +
+      String.valueOf(Date.today().dayOfYear()).leftPad(3, '0') +
       '0' +
       Datetime.now().format('yyyyMMdd') +
       '.sfsek';
