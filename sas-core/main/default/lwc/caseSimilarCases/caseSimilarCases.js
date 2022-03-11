@@ -79,6 +79,14 @@ export default class CaseSimilarCases extends NavigationMixin(
   // Sorts cases first on number of matches and secondarily on matching field names for a grouped sort.
   sortCasesBySimilarity(first, second) {
     const subSort = (a, b) => {
+      if (
+        a.matchingFields == undefined ||
+        a.matchingFields[0] == undefined ||
+        b.matchingFields == undefined ||
+        b.matchingFields[0] == undefined
+      ) {
+        return 0;
+      }
       if (a.matchingFields[0][0] < b.matchingFields[0][0]) {
         return 1;
       } else if (a.matchingFields[0][0] > b.matchingFields[0][0]) {
@@ -109,7 +117,6 @@ export default class CaseSimilarCases extends NavigationMixin(
   @wire(getSimilarCasesForCase, { caseId: "$recordId" })
   wiredCases({ error, data }) {
     if (error) {
-      console.log(error.body.message);
       this.showSpinner = false;
       this.error = error;
       this.similarCasesFound = false;
