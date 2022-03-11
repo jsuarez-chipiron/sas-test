@@ -6,22 +6,40 @@ export default class CaseProactivities extends NavigationMixin(
   LightningElement
 ) {
   @api recordId;
+
   columns = [
-    { label: "Note", fieldName: "note" },
-    { label: "Match on", fieldName: "matchingReasons", initialWidth: 120 },
     {
-      label: "Details",
+      label: "Note",
       fieldName: "url",
       type: "url",
-      typeAttributes: { label: "link" },
-      initialWidth: 60
-    }
+      typeAttributes: {
+        label: {
+          fieldName: "note"
+        }
+      }
+    },
+    { label: "Match on", fieldName: "matchingReasons", initialWidth: 120 }
   ];
 
   rows = [];
   showSpinner = true;
   error = undefined;
   proactivitiesFound = false;
+
+  sortProactivitiesByMatches(first, second) {
+    // Sort first by string length as that is a good enough proxy for quality of match.
+    if (first.matchingReasons.length < second.matchingReasons.length) {
+      return 1;
+    } else if (first.matchingReasons.length > second.matchingReasons.length) {
+      return -1;
+    } else {
+      // If the length is same, sort alphabetically.
+      return [first.matchingReasons, second.matchingReasons].sort()[0] ===
+        first.matchingReasons
+        ? 1
+        : -1;
+    }
+  }
 
   @wire(getProactivitiesForCase, { caseId: "$recordId" })
   wiredProactivities({ error, data }) {
@@ -34,14 +52,14 @@ export default class CaseProactivities extends NavigationMixin(
       this.showSpinner = false;
       this.proactivitiesFound = false;
     } else {
-      this.rows = data.map((proactivity, idx) => {
-        return {
-          idx,
+      this.rows = data
+        .map((proactivity) => ({
           id: proactivity.id,
           note: proactivity.note,
           matchingReasons: proactivity.matchingReasons
-        };
-      });
+        }))
+        .sort(this.sortProactivitiesByMatches)
+        .map((proactivity, idx) => ({ ...proactivity, idx }));
 
       this.rows.forEach((row, idx) =>
         this[NavigationMixin.GenerateUrl]({
