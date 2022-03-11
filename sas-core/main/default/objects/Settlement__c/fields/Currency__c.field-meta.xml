@@ -27,6 +27,11 @@
                 <label>CHF</label>
             </value>
             <value>
+                <fullName>CNY</fullName>
+                <default>false</default>
+                <label>CNY</label>
+            </value>
+            <value>
                 <fullName>CZK</fullName>
                 <default>false</default>
                 <label>CZK</label>
@@ -42,9 +47,14 @@
                 <label>EUR</label>
             </value>
             <value>
-                <fullName>GPB</fullName>
+                <fullName>GBP</fullName>
                 <default>false</default>
-                <label>GPB</label>
+                <label>GBP</label>
+            </value>
+            <value>
+                <fullName>HKD</fullName>
+                <default>false</default>
+                <label>HKD</label>
             </value>
             <value>
                 <fullName>JPY</fullName>
@@ -60,6 +70,11 @@
                 <fullName>PLN</fullName>
                 <default>false</default>
                 <label>PLN</label>
+            </value>
+            <value>
+                <fullName>RUB</fullName>
+                <default>false</default>
+                <label>RUB</label>
             </value>
             <value>
                 <fullName>SEK</fullName>

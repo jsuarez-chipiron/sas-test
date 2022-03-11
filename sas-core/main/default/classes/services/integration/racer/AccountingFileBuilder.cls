@@ -104,7 +104,8 @@ public class AccountingFileBuilder {
 
     fileContents += createTotalLine(sumOfEntries, verificationNumber);
 
-    String dayOfYear = String.valueOf(Date.today().dayOfYear());
+    String dayOfYear = String.valueOf(Date.today().dayOfYear()).leftPad(3, '0');
+
     String todaysDate = Datetime.now().format('yyyyMMdd');
     // Format is a5{AUN}{dayOfYear}{RunningCount}
     String fileName =
