@@ -76,19 +76,19 @@ export default class CaseSimilarCases extends NavigationMixin(
     return `Similar Cases (${this.rows.length})`;
   }
 
-  // Sorts cases first on number of matches and secondarily on matching field names for grouped sort.
-  caseSortingFunction(first, second) {
-    const subSort = (firstSub, secondSub) => {
-      if (first.matchingFields[0][0] < second.matchingFields[0][0]) {
+  // Sorts cases first on number of matches and secondarily on matching field names for a grouped sort.
+  sortCasesBySimilarity(first, second) {
+    const subSort = (a, b) => {
+      if (a.matchingFields[0][0] < b.matchingFields[0][0]) {
         return 1;
-      } else if (first.matchingFields[0][0] > second.matchingFields[0][0]) {
+      } else if (a.matchingFields[0][0] > b.matchingFields[0][0]) {
         return -1;
-      } else if (firstSub.matchingFields.length > 1) {
+      } else if (a.matchingFields.length > 1 && b.matchingFields.length > 1) {
         subSort(
-          { ...firstSub, matchingFields: firstSub.matchingFields.slice(1) },
+          { ...a, matchingFields: a.matchingFields.slice(1) },
           {
-            ...secondSub,
-            matchingFields: secondSub.matchingFields.slice(1)
+            ...b,
+            matchingFields: b.matchingFields.slice(1)
           }
         );
       } else {
@@ -180,7 +180,7 @@ export default class CaseSimilarCases extends NavigationMixin(
           matchingFields: getMatchingFields(parsedCase)
         }));
 
-      this.rows = [...casesWithDisplayDetails.sort(this.caseSortingFunction)];
+      this.rows = [...casesWithDisplayDetails.sort(this.sortCasesBySimilarity)];
 
       this.rows.forEach((row, idx) =>
         this[NavigationMixin.GenerateUrl]({
