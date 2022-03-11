@@ -6,6 +6,7 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
       Settlement__c.Address_line_2__c,
       Settlement__c.Amount__c,
       Settlement__c.Bank_Account_Number__c,
+      Settlement__c.Bank_Country__c,
       Settlement__c.BIC_Swift__c,
       Settlement__c.City__c,
       Settlement__c.Country__c,
