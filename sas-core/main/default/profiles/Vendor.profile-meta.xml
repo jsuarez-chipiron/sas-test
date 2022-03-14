@@ -1079,7 +1079,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.LIA_Claim__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1357,6 +1357,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Team__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
         <editable>false</editable>
         <field>Refund_Request__c.Email__c</field>
         <readable>true</readable>
@@ -1509,12 +1514,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Address_line_1__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Address_line_2__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1554,7 +1559,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.City__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1599,7 +1604,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Country__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1684,7 +1689,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Postal_Code__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1864,7 +1869,11 @@
     <layoutAssignments>
         <layout>Case-SAS Claim Layout</layout>
         <recordType>Case.Claim</recordType>
-    </layoutAssignments>    
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-SAS Customer Claim Layout</layout>
+        <recordType>Case.Customer_Claim</recordType>
+    </layoutAssignments>  
     <layoutAssignments>
         <layout>Case-SAS Feedback Layout</layout>
         <recordType>Case.Feedback</recordType>

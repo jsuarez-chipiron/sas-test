@@ -2642,7 +2642,11 @@
     <layoutAssignments>
         <layout>Case-SAS Claim Layout</layout>
         <recordType>Case.Claim</recordType>
-    </layoutAssignments>    
+    </layoutAssignments> 
+    <layoutAssignments>
+        <layout>Case-SAS Customer Claim Layout</layout>
+        <recordType>Case.Customer_Claim</recordType>
+    </layoutAssignments>         
     <layoutAssignments>
         <layout>Case-SAS Feedback Layout</layout>
         <recordType>Case.Feedback</recordType>
