@@ -175,6 +175,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>City__c</field>
+            <value>
+                <elementReference>City</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Concerns_a_person_with_reduced_mobility__c</field>
             <value>
                 <elementReference>Concerns_a_person_with_reduced_mobility</elementReference>
