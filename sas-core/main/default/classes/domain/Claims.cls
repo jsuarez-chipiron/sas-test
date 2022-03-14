@@ -11,6 +11,9 @@ public without sharing class Claims extends fflib_SObjectDomain {
   }
 
   private List<LIA_Claim__c> instanceRecords;
+  public static final Id CLAIMS_RECORD_TYPE_ID = Schema.SObjectType.LIA_Claim__c.getRecordTypeInfosByName()
+    .get('CustomerClaim')
+    .getRecordTypeId();
 
   public static Claims newInstance(List<LIA_Claim__c> sObjectList) {
     return (Claims) SAS_Service_Application.Domain.newInstance(sObjectList);
@@ -18,6 +21,7 @@ public without sharing class Claims extends fflib_SObjectDomain {
 
   public override void onAfterInsert() {
     checkIfExistsInCARE();
+    assignToQueueUsingFlow();
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
@@ -28,6 +32,23 @@ public without sharing class Claims extends fflib_SObjectDomain {
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
     clearClaimInCareField();
+  }
+
+  private void assignToQueueUsingFlow() {
+    //Assign one Claim at a time
+    if (instanceRecords.size() > 1) {
+      return;
+    }
+    LIA_Claim__c lc = instanceRecords[0];
+    if (lc.RecordTypeId == CLAIMS_RECORD_TYPE_ID) {
+      Map<String, Object> inputs = new Map<String, Object>();
+      inputs.put('recordId', lc.Id);
+
+      Flow.Interview.CLAIM_Route_Case_to_Queue claimRoutingFlow = new Flow.Interview.CLAIM_Route_Case_to_Queue(
+        inputs
+      );
+      claimRoutingFlow.start();
+    }
   }
 
   private void checkIfExistsInCARE(Map<Id, LIA_Claim__c> existingRecords) {

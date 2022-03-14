@@ -126,6 +126,8 @@ public without sharing class ClaimService {
       FROM Case
       WHERE Id = :caseToCreate.Id
     ];
+    insertedCase.LIA_Claim__c = claimToCreate.Id;
+    update insertedCase;
 
     return insertedCase.CaseNumber;
   }

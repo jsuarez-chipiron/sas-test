@@ -262,6 +262,7 @@
             <tab>Approval_Request__c</tab>
         </mappings>
         <mappings>
+            <fieldName>Case__c</fieldName>
             <tab>LIA_Claim__c</tab>
         </mappings>
         <mappings>
@@ -271,6 +272,7 @@
             <tab>LIA_Major_Event__c</tab>
         </mappings>
         <mappings>
+            <fieldName>Claim__c</fieldName>
             <tab>Settlement__c</tab>
         </mappings>
         <mappings>
