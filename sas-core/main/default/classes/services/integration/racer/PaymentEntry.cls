@@ -513,12 +513,18 @@ public class PaymentEntry {
       currencySettings.Settlement_Bank_Setting__c
     );
 
-    Settlement_Country_Setting__mdt bankCountrySettings = Settlement_Country_Setting__mdt.getAll()
-      .get(s.Bank_Country__c.replace(' ', '_')); // TODO: Fix mapping between these and the country list from global value sets
+    Settlement_Country_Setting__mdt bankCountrySettings = [
+      SELECT Payment_Type__c
+      FROM Settlement_Country_Setting__mdt
+      WHERE Country_Name__c = :s.Bank_Country__c
+    ][0];
 
     // Country short code in payments is dependent on contact's country.
-    Settlement_Country_Setting__mdt contactCountrySettings = Settlement_Country_Setting__mdt.getAll()
-      .get(s.Country__c.replace(' ', '_')); // TODO: Fix mapping between these and the country list from global value sets
+    Settlement_Country_Setting__mdt contactCountrySettings = [
+      SELECT Country_Short_Code__c
+      FROM Settlement_Country_Setting__mdt
+      WHERE Country_Name__c = :s.Country__c
+    ][0];
 
     String paymentMethod = null;
 
