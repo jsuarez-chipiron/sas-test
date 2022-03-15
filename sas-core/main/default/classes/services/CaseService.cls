@@ -15,6 +15,10 @@ public without sharing class CaseService {
     'feedback-default' => 'Form - Feedback International'
   };
 
+  private static Map<String, String> jsonToPicklist = new Map<String, String>{
+    'other' => 'Other'
+  };
+
   private static Group refundsQueue = [
     SELECT Id
     FROM Group
@@ -31,13 +35,16 @@ public without sharing class CaseService {
     if (form.formData.type == 'feedback') {
       Case caseToInsert = new Case(
         Initially_Provided_PNR__c = form.formData.bookingReference,
-        // comment field
+        Description = form.formData.comment,
         SuppliedEmail = form.formData.email,
-        // Name field
-        // feedbackCategory field
-        // feedbackType field
-        // flightDate field
-        // flightNumber field
+        Feedback_Category__c = jsonToPicklist.get(
+          form.formData.feedbackCategory
+        ),
+        Feedback_Type__c = jsonToPicklist.get(form.formData.feedbackType),
+        Flight_Date__c = form.formdata.flightDate == null
+          ? null
+          : Date.valueOf(form.formdata.flightDate),
+        Flight_Number__c = form.formdata.flightNumber,
         OwnerId = feedbackQueue.Id,
         RecordTypeId = Cases.CLAIMS_RECORD_TYPE_ID,
         Subject = 'Feedback: ' +
@@ -45,6 +52,22 @@ public without sharing class CaseService {
           ', ' +
           form.formData.feedbackType
       );
+
+      String suppliedName;
+      if (form.formData.firstName != null) {
+        suppliedName = form.formData.firstName;
+      }
+      if (form.formData.lastName != null) {
+        if (suppliedName != null) {
+          suppliedName += ' ' + form.formData.lastName;
+        } else {
+          suppliedName = form.formData.lastName;
+        }
+      }
+
+      if (suppliedName != null) {
+        caseToInsert.SuppliedName = suppliedName;
+      }
 
       String caseOrigin = marketToOrigin.get('feedback-default');
       if (
