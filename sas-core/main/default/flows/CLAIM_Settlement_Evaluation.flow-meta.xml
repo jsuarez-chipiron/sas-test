@@ -33,7 +33,7 @@
         <name>AutomaticApproval</name>
         <label>AutomaticApproval</label>
         <locationX>1458</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -49,7 +49,7 @@
         <name>ManualApproval</name>
         <label>ManualApproval</label>
         <locationX>754</locationX>
-        <locationY>1190</locationY>
+        <locationY>1310</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -228,7 +228,7 @@
         <locationX>1370</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>AutomaticApproval</targetReference>
+            <targetReference>Get_SAS_AP_User</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>15000 or less</defaultConnectorLabel>
         <rules>
@@ -247,6 +247,11 @@
             <label>More than 15000</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>runningUser</name>
+        <dataType>String</dataType>
+        <expression>IF({!Get_SAS_AP_User.Id} &lt;&gt; NULL, {!Get_SAS_AP_User.Id}, {!$User.Id})</expression>
+    </formulas>
     <interviewLabel>CLAIM {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CLAIM Settlement Evaluation</label>
     <processMetadataValues>
@@ -272,11 +277,11 @@
         <name>Create_Approval_Request</name>
         <label>Create Approval Request</label>
         <locationX>1458</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <inputAssignments>
             <field>OwnerId</field>
             <value>
-                <elementReference>$User.Id</elementReference>
+                <elementReference>runningUser</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -300,11 +305,32 @@
         <object>Approval_Request__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordLookups>
+        <name>Get_SAS_AP_User</name>
+        <label>Get SAS AP User</label>
+        <locationX>1458</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AutomaticApproval</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Alias</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>SASAP</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Set_Settlement_Status_to_Approved</name>
         <label>Set Settlement Status to Approved</label>
         <locationX>1458</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Create_Approval_Request</targetReference>
         </connector>

@@ -15,6 +15,7 @@ public with sharing class Claims_IntegrationTest {
     // When
     Test.startTest();
     insert new List<LIA_Claim__c>{ claim1, claim2 };
+    Test.getEventBus().deliver();
     Test.stopTest();
 
     // Then
@@ -73,6 +74,7 @@ public with sharing class Claims_IntegrationTest {
     claim1.Liability_PNR__c = null;
     claim2.Liability_PNR__c = APIMMock.PNR_FOR_WHICH_CLAIMS_EXIST;
     update new List<LIA_Claim__c>{ claim1, claim2 };
+    Test.getEventBus().deliver();
     Test.stopTest();
 
     // Then

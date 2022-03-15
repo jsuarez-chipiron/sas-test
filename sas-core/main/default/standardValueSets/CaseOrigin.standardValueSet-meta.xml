@@ -47,9 +47,14 @@
         <label>Email - CS Feedback</label>
     </standardValue>
     <standardValue>
-        <fullName>Email - Vendor Management</fullName>
+        <fullName>Email - Customer Claim</fullName>
         <default>false</default>
-        <label>Email - Vendor Management</label>
+        <label>Email - Customer Claim</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Customer Claim Firms</fullName>
+        <default>false</default>
+        <label>Email - Customer Claim Firms</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Digital Channel Support Internal</fullName>
@@ -497,6 +502,11 @@
         <label>Email - Ticketless Support</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Vendor Management</fullName>
+        <default>false</default>
+        <label>Email - Vendor Management</label>
+    </standardValue>
+    <standardValue>
         <fullName>Facebook</fullName>
         <default>false</default>
         <label>Facebook</label>
@@ -505,6 +515,26 @@
         <fullName>Facebook Messenger</fullName>
         <default>false</default>
         <label>Facebook Messenger</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Claims DK</fullName>
+        <default>false</default>
+        <label>Form - Claims DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Claims International</fullName>
+        <default>false</default>
+        <label>Form - Claims International</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Claims NO</fullName>
+        <default>false</default>
+        <label>Form - Claims NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Claims SE</fullName>
+        <default>false</default>
+        <label>Form - Claims SE</label>
     </standardValue>
     <standardValue>
         <fullName>Form - Death Certificate DK</fullName>
@@ -525,6 +555,26 @@
         <fullName>Form - Death Certificate SE</fullName>
         <default>false</default>
         <label>Form - Death Certificate SE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Feedback DK</fullName>
+        <default>false</default>
+        <label>Form - Feedback DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Feedback International</fullName>
+        <default>false</default>
+        <label>Form - Feedback International</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Feedback NO</fullName>
+        <default>false</default>
+        <label>Form - Feedback NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Feedback SE</fullName>
+        <default>false</default>
+        <label>Form - Feedback SE</label>
     </standardValue>
     <standardValue>
         <fullName>Form - Group Travel BE</fullName>

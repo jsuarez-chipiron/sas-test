@@ -110,9 +110,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Name</field>
+            <field>First_Name__c</field>
             <value>
-                <elementReference>FullCustomerName</elementReference>
+                <elementReference>CustomerName.firstName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Last_Name__c</field>
+            <value>
+                <elementReference>CustomerName.lastName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -163,15 +169,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Can_be_contacted_by_phone__c</field>
-            <value>
-                <elementReference>It_is_okay_to_contact_customer_by_phone_about_this</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Case__c</field>
             <value>
                 <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>City__c</field>
+            <value>
+                <elementReference>City</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -223,12 +229,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Customer_agrees_on_the_terms_and_conditi__c</field>
-            <value>
-                <elementReference>Customer_agrees_to_the_terms_and_conditions</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>EuroBonus_Number__c</field>
             <value>
                 <elementReference>EuroBonus_Number</elementReference>
@@ -267,7 +267,7 @@
         <inputAssignments>
             <field>PIR__c</field>
             <value>
-                <elementReference>PNR</elementReference>
+                <elementReference>PIR</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -376,6 +376,18 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>FCS_EBNumber__c</field>
+            <value>
+                <elementReference>EuroBonus_Number</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Initially_Provided_PNR__c</field>
+            <value>
+                <elementReference>PNR</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>LIA_Claim__c</field>
             <value>
@@ -644,13 +656,6 @@
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
-                <fields>
-                    <name>It_is_okay_to_contact_customer_by_phone_about_this</name>
-                    <dataType>Boolean</dataType>
-                    <fieldText>It is okay to contact customer by phone about this</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -933,13 +938,6 @@
                     </rightValue>
                 </conditions>
             </visibilityRule>
-        </fields>
-        <fields>
-            <name>Customer_agrees_to_the_terms_and_conditions</name>
-            <dataType>Boolean</dataType>
-            <fieldText>Customer agrees to the terms and conditions</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>Major_Event</name>

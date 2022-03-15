@@ -513,8 +513,22 @@ public class PaymentEntry {
       currencySettings.Settlement_Bank_Setting__c
     );
 
-    Settlement_Country_Setting__mdt countrySettings = Settlement_Country_Setting__mdt.getAll()
-      .get(s.Country__c.replace(' ', '_'));
+    Settlement_Country_Setting__mdt bankCountrySettings = Settlement_Country_Setting__mdt.getAll()
+      .get(s.Bank_Country__c.replace(' ', '_')); // TODO: Fix mapping between these and the country list from global value sets
+
+    // Country short code in payments is dependent on contact's country.
+    Settlement_Country_Setting__mdt contactCountrySettings = Settlement_Country_Setting__mdt.getAll()
+      .get(s.Country__c.replace(' ', '_')); // TODO: Fix mapping between these and the country list from global value sets
+
+    String paymentMethod = null;
+
+    // Payment details are dependent on bank country
+    // USD to outside of US is the one case we're not handling correctly in the custom metadatas.
+    if (s.Currency__c == 'USD' && s.Bank_Country__c != 'United States') {
+      paymentMethod = 'NORDEA CROSS BORDER EDI';
+    } else {
+      paymentMethod = bankCountrySettings.Payment_Type__c;
+    }
 
     String amount = String.valueOf(s.Amount__c);
 
@@ -528,7 +542,7 @@ public class PaymentEntry {
         'checkAmount' => amount,
         'currencyCode' => s.Currency__c,
         'vendorBankAccountNumber' => s.Bank_Account_Number__c,
-        'EDIPaymentMethod' => countrySettings.Payment_Type__c,
+        'EDIPaymentMethod' => paymentMethod,
         'bankAccountNumber' => currencySettings.bankAccountNumber__c,
         'bankEDIIDNumber' => bankSettings.bankEDIIDNumber__c,
         'accountHolderName' => bankSettings.accountHolderName__c,
@@ -563,7 +577,7 @@ public class PaymentEntry {
           : s.Address_line_2__c,
         'city' => s.City__c,
         'postalCode' => s.Postal_Code__c,
-        'countryExt' => countrySettings.Country_Short_Code__c
+        'countryExt' => contactCountrySettings.Country_Short_Code__c
       },
       'invoiceData' => new Map<String, String>{
         'ref2Invoice' => 'SF REF ' + s.Name,

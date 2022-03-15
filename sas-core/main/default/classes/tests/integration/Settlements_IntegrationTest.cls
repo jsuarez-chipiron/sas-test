@@ -12,6 +12,7 @@ public with sharing class Settlements_IntegrationTest {
       Address_line_1__c = 'Frösundaviks allé 1',
       Address_line_2__c = 'Line 2',
       Amount__c = 600,
+      Bank_Country__c = 'Sweden',
       BIC_Swift__c = 'TESTBIC',
       City__c = 'Stockholm',
       Country__c = 'Sweden',
@@ -20,12 +21,14 @@ public with sharing class Settlements_IntegrationTest {
       Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00100',
+      RecordTypeId = Settlements.MONETARY_RECORD_TYPE_ID,
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
     Settlement__c settlement2 = new Settlement__c(
       Address_line_1__c = 'Frösundaviks allé 1',
       Address_line_2__c = 'Line 2',
       Amount__c = 600,
+      Bank_Country__c = 'Sweden',
       BIC_Swift__c = 'TESTBIC',
       City__c = 'Stockholm',
       Country__c = 'Sweden',
@@ -34,6 +37,7 @@ public with sharing class Settlements_IntegrationTest {
       Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00100',
+      RecordTypeId = Settlements.MONETARY_RECORD_TYPE_ID,
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
 
@@ -118,7 +122,7 @@ public with sharing class Settlements_IntegrationTest {
 
     String expectedFileTitle =
       'a501' +
-      String.valueOf(Date.today().dayOfYear()) +
+      String.valueOf(Date.today().dayOfYear()).leftPad(3, '0') +
       '0' +
       Datetime.now().format('yyyyMMdd') +
       '.sfsek';
@@ -227,6 +231,7 @@ public with sharing class Settlements_IntegrationTest {
       Address_line_1__c = 'Frösundaviks allé 1',
       Address_line_2__c = 'Line 2',
       Amount__c = 400,
+      Bank_Country__c = 'Sweden',
       BIC_Swift__c = 'SBANFIHH',
       City__c = 'Stockholm',
       Country__c = 'Sweden',
@@ -235,12 +240,14 @@ public with sharing class Settlements_IntegrationTest {
       Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00000',
+      RecordTypeId = Settlements.MONETARY_RECORD_TYPE_ID,
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
     Settlement__c sekToInclude2 = new Settlement__c(
       Address_line_1__c = 'Frösundaviks allé 1',
       Address_line_2__c = 'Line 2',
       Amount__c = 500,
+      Bank_Country__c = 'Sweden',
       BIC_Swift__c = 'TESTBIC',
       City__c = 'Stockholm',
       Country__c = 'Sweden',
@@ -249,12 +256,14 @@ public with sharing class Settlements_IntegrationTest {
       Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00000',
+      RecordTypeId = Settlements.MONETARY_RECORD_TYPE_ID,
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
     Settlement__c sekNotToInclude = new Settlement__c(
       Address_line_1__c = 'Frösundaviks allé 1',
       Address_line_2__c = 'Line 2',
       Amount__c = 500,
+      Bank_Country__c = 'Sweden',
       BIC_Swift__c = 'TESTBIC',
       City__c = 'Stockholm',
       Country__c = 'Sweden',
@@ -263,12 +272,14 @@ public with sharing class Settlements_IntegrationTest {
       Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00000',
+      RecordTypeId = Settlements.MONETARY_RECORD_TYPE_ID,
       Settlement_Status__c = Settlements.STATUS_IN_PROGRESS
     );
     Settlement__c nokSettlement = new Settlement__c(
       Address_line_1__c = 'Frösundaviks allé 1',
       Address_line_2__c = 'Line 2',
       Amount__c = 600,
+      Bank_Country__c = 'Norway',
       BIC_Swift__c = 'TESTBIC',
       City__c = 'Stockholm',
       Country__c = 'Sweden',
@@ -277,6 +288,7 @@ public with sharing class Settlements_IntegrationTest {
       Bank_Account_Number__c = 'SE0000000000000',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00100',
+      RecordTypeId = Settlements.MONETARY_RECORD_TYPE_ID,
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
 

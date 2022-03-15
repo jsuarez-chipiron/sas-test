@@ -13,19 +13,35 @@
             <operation>notEqual</operation>
             <value>Feedback,Fraud Investigation</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>Sharing_Customer_Claim_Cases</fullName>
+        <fullName>Sharing_Claim_Cases_to_SAS</fullName>
         <accessLevel>Edit</accessLevel>
-        <label>Sharing Customer Claim Cases</label>
+        <label>Sharing Claim Cases to SAS</label>
         <sharedTo>
-            <group>Customer_Claim</group>
+            <role>SAS</role>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
             <value>Customer Claim</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Sharing_Claim_Cases_to_Vendors</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Sharing Claim Cases to Vendors</label>
+        <sharedTo>
+            <group>All_Vendors</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Customer Claim</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>Sharing_cases_with_SAS_people</fullName>
@@ -40,6 +56,7 @@
             <operation>notEqual</operation>
             <value>00000000</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>Liability_Cases_to_Liability_team</fullName>

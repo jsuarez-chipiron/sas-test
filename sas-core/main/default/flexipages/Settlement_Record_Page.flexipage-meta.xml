@@ -9,21 +9,16 @@
                         <valueListItems>
                             <value>Settlement__c.Block_Settlement</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Settlement_Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Waiting for approval</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Settlement_Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Waiting for control</rightValue>
-                                </criteria>
+                                <booleanFilter>1 OR 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Settlement_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Waiting for transfer</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Settlement_Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>In progress</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

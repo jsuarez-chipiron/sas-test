@@ -1,8 +1,10 @@
 import { LightningElement, wire, api } from "lwc";
-import { getRecordNotifyChange } from "lightning/uiRecordApi";
+import { getRecord, getRecordNotifyChange } from "lightning/uiRecordApi";
 import { getObjectInfo, getPicklistValues } from "lightning/uiObjectInfoApi";
 import SETTLEMENT_ITEM_OBJECT from "@salesforce/schema/Settlement_Item__c";
 import SETTLEMENT_OBJECT from "@salesforce/schema/Settlement__c";
+import SETTLEMENT_CURRENCY_FIELD from "@salesforce/schema/Settlement__c.Currency__c";
+import SETTLEMENT_STATUS_FIELD from "@salesforce/schema/Settlement__c.Settlement_Status__c";
 import COST_ACCOUNT_FIELD from "@salesforce/schema/Settlement_Item__c.Cost_Account__c";
 
 import addSettlementsItemsToSettlement from "@salesforce/apex/SettlementsController.addSettlementsItemsToSettlement";
@@ -39,10 +41,16 @@ export default class SettlementCalculator extends LightningElement {
     return {
       primaryAmount: total,
       primaryCurrency: this.settlementCurrency,
-      secondaryAmount: this.settlementCurrency === 'USD' ? total * this.exchangeRates.eur : total * this.exchangeRates.usd,
-      secondaryCurrency: this.settlementCurrency === 'USD' ? 'EUR' : 'USD',
-      tertiaryAmount: this.settlementCurrency === 'SEK' ? total * this.exchangeRates.eur : total * this.exchangeRates.sek,
-      tertiaryCurrency: this.settlementCurrency === 'SEK' ? 'EUR' : 'SEK',
+      secondaryAmount:
+        this.settlementCurrency === "USD"
+          ? total * this.exchangeRates.eur
+          : total * this.exchangeRates.usd,
+      secondaryCurrency: this.settlementCurrency === "USD" ? "EUR" : "USD",
+      tertiaryAmount:
+        this.settlementCurrency === "SEK"
+          ? total * this.exchangeRates.eur
+          : total * this.exchangeRates.sek,
+      tertiaryCurrency: this.settlementCurrency === "SEK" ? "EUR" : "SEK",
       points: total
     };
   }
@@ -56,7 +64,7 @@ export default class SettlementCalculator extends LightningElement {
   @wire(getObjectInfo, { objectApiName: SETTLEMENT_ITEM_OBJECT })
   wiredObjectInfo({ data }) {
     if (data) {
-      console.log('objectInfo', data)
+      console.log("objectInfo", data);
       this.settlementItemRecordTypeId = data.defaultRecordTypeId;
     }
   }
@@ -64,7 +72,7 @@ export default class SettlementCalculator extends LightningElement {
   @wire(getObjectInfo, { objectApiName: SETTLEMENT_OBJECT })
   wiredSettlementObjectInfo({ data }) {
     if (data) {
-      console.log('objectInfoSettlement', data)
+      console.log("objectInfoSettlement", data);
       this.settlementRecordTypeInfos = data.recordTypeInfos;
     }
   }
@@ -79,31 +87,36 @@ export default class SettlementCalculator extends LightningElement {
     }
   }
 
-  @wire(getSettlement, { settlementId: "$recordId" })
+  @wire(getRecord, {
+    recordId: "$recordId",
+    fields: [SETTLEMENT_CURRENCY_FIELD, SETTLEMENT_STATUS_FIELD]
+  })
   wiredSettlement({ error, data }) {
-    console.log('settlementData', data)
-    const settlementFound = !error && data != undefined && data.length === 1;
-    if (settlementFound) {
-      const settlement = data[0];
-      const notEuroBonus = true;
-      if (notEuroBonus) {
-        this.settlementCurrency = settlement.Currency__c;
+    if (!error && data) {
+      this.cannotBeUpdated =
+        data.fields.Settlement_Status__c.value !== "In progress" &&
+        data.fields.Settlement_Status__c.value !== "Denied";
+      this.type = {
+        isEuroBonusPoints: data.recordTypeInfo.name === "EB points",
+        isMonetary: data.recordTypeInfo.name === "Monetary",
+        isVoucher: data.recordTypeInfo.name === "Voucher"
+      };
+
+      if (!this.type.isEuroBonusPoints) {
+        this.settlementCurrency = data.fields.Currency__c.value;
       } else {
         this.settlementCurrency = "Points";
       }
+    }
+  }
 
-      if (settlement.Settlement_Status__c !== "In progress") {
-        this.cannotBeUpdated = true;
-      }
-
-      this.type = {
-        isEuroBonusPoints: this.settlementRecordTypeInfos[settlement.RecordTypeId].name === 'EB points',
-        isMonetary: this.settlementRecordTypeInfos[settlement.RecordTypeId].name === 'Monetary',
-        isVoucher: this.settlementRecordTypeInfos[settlement.RecordTypeId].name === 'Voucher'
-      }
-
-      console.log('type', this.type)
-
+  @wire(getSettlement, { settlementId: "$recordId" })
+  wiredSettlementWithItems({ error, data }) {
+    // Only used to get settlement items.
+    // TODO: Move to a cleaner approach with getRecord, or something.
+    const settlementFound = !error && data != undefined && data.length === 1;
+    if (settlementFound) {
+      const settlement = data[0];
       const hasSettlementItems =
         settlement.Settlement_Items__r != undefined &&
         settlement.Settlement_Items__r.length > 0;
@@ -118,7 +131,6 @@ export default class SettlementCalculator extends LightningElement {
             comment: settlementItem.Comments__c
           })
         );
-        console.log("getSettlement", this.rows);
       }
     } else {
       this.rows = [
@@ -129,7 +141,7 @@ export default class SettlementCalculator extends LightningElement {
 
   @wire(getCustomers, { settlementId: "$recordId" })
   getCustomers({ error, data }) {
-    const customersFound = !error && data != undefined && data.length === 1;
+    const customersFound = !error && data != undefined && data.length >= 1;
     if (customersFound) {
       this.customerOptions = data.map((x) => ({
         label: x.Name,
@@ -143,10 +155,16 @@ export default class SettlementCalculator extends LightningElement {
     const ratesFound = !error && data != undefined && data.length > 0;
     if (ratesFound) {
       this.exchangeRates = {
-        eur: data.find(a => a.To_Currency__c === 'EUR') ?  data.find(a => a.To_Currency__c === 'EUR').Rate__c : 0,
-        usd: data.find(a => a.To_Currency__c === 'USD') ?  data.find(a => a.To_Currency__c === 'USD').Rate__c : 0,
-        sek: data.find(a => a.To_Currency__c === 'SEK') ?  data.find(a => a.To_Currency__c === 'SEK').Rate__c : 0
-      }
+        eur: data.find((a) => a.To_Currency__c === "EUR")
+          ? data.find((a) => a.To_Currency__c === "EUR").Rate__c
+          : 0,
+        usd: data.find((a) => a.To_Currency__c === "USD")
+          ? data.find((a) => a.To_Currency__c === "USD").Rate__c
+          : 0,
+        sek: data.find((a) => a.To_Currency__c === "SEK")
+          ? data.find((a) => a.To_Currency__c === "SEK").Rate__c
+          : 0
+      };
     }
   }
 
@@ -241,9 +259,12 @@ export default class SettlementCalculator extends LightningElement {
       this.showSpinner = false;
       this.error = undefined;
     } catch (error) {
-      console.log("error", error);
-      this.error = "An error happened";
-      //TODO: Improved error handling
+      if (error.body && error.body.message) {
+        this.error = error.body.message;
+      } else {
+        this.error = "An error happened";
+      }
+      this.showSpinner = false;
     }
   }
 }

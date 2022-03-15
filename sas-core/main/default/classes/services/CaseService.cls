@@ -8,7 +8,11 @@ public without sharing class CaseService {
     'visa-rejection-dk-da' => 'Form - Visa Rejection DK',
     'visa-rejection-no-no' => 'Form - Visa Rejection NO',
     'visa-rejection-se-sv' => 'Form - Visa Rejection SE',
-    'visa-rejection-default' => 'Form - Visa Rejection International'
+    'visa-rejection-default' => 'Form - Visa Rejection International',
+    'feedback-dk-da' => 'Form - Feedback DK',
+    'feedback-no-no' => 'Form - Feedback NO',
+    'feedback-se-sv' => 'Form - Feedback SE',
+    'feedback-default' => 'Form - Feedback International'
   };
 
   private static Group refundsQueue = [
@@ -17,62 +21,115 @@ public without sharing class CaseService {
     WHERE Type = 'Queue' AND DeveloperName = 'Refunds'
   ];
 
-  public static void createCase(CaseFormJSON2Apex form) {
-    ContentVersionsSelector contentVersions = (ContentVersionsSelector) SAS_Service_Application.Selector.newInstance(
-      ContentVersion.SObjectType
-    );
+  private static Group feedbackQueue = [
+    SELECT Id
+    FROM Group
+    WHERE Type = 'Queue' AND DeveloperName = 'Feedback'
+  ];
 
-    Case caseToInsert;
-
-    Set<Id> contentIds = new Set<Id>();
-
-    for (String contentId : form.formData.contentVersionIds) {
-      contentIds.add(Id.valueOf(contentId));
-    }
-
-    List<ContentVersion> contentToLink = contentVersions.selectById(contentIds);
-
-    caseToInsert = new Case(
-      Initially_Provided_PNR__c = form.formData.bookingReference,
-      OwnerId = refundsQueue.Id,
-      RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
-      Subject = 'Waiver request due to ' +
-        (form.formData.type == 'death-certificate'
-          ? 'death in family'
-          : 'visa rejection') +
-        ', PNR: ' +
-        form.formData.bookingReference
-    );
-
-    String caseOrigin = marketToOrigin.get('visa-rejection-default');
-    if (
-      marketToOrigin.get(form.formData.type + '-' + form.metaData.market) !=
-      null
-    ) {
-      caseOrigin = marketToOrigin.get(
-        form.formData.type +
-        '-' +
-        form.metaData.market
+  public static String createCase(CaseFormJSON2Apex form) {
+    if (form.formData.type == 'feedback') {
+      Case caseToInsert = new Case(
+        Initially_Provided_PNR__c = form.formData.bookingReference,
+        // comment field
+        SuppliedEmail = form.formData.email,
+        // Name field
+        // feedbackCategory field
+        // feedbackType field
+        // flightDate field
+        // flightNumber field
+        OwnerId = feedbackQueue.Id,
+        RecordTypeId = Cases.CLAIMS_RECORD_TYPE_ID,
+        Subject = 'Feedback: ' +
+          form.formData.feedbackCategory +
+          ', ' +
+          form.formData.feedbackType
       );
-    } else if (marketToOrigin.get(form.formData.type + '-default') != null) {
-      caseOrigin = marketToOrigin.get(form.formData.type + '-default');
-    }
 
-    caseToInsert.Origin = caseOrigin;
+      String caseOrigin = marketToOrigin.get('feedback-default');
+      if (
+        marketToOrigin.get(form.formData.type + '-' + form.metaData.market) !=
+        null
+      ) {
+        caseOrigin = marketToOrigin.get(
+          form.formData.type +
+          '-' +
+          form.metaData.market
+        );
+      }
 
-    insert caseToInsert;
+      caseToInsert.Origin = caseOrigin;
 
-    List<ContentDocumentLink> linksToCreate = new List<ContentDocumentLink>();
+      insert caseToInsert;
 
-    for (ContentVersion content : contentToLink) {
-      linksToCreate.add(
-        new ContentDocumentLink(
-          ContentDocumentId = content.ContentDocumentId,
-          LinkedEntityId = caseToInsert.Id
-        )
+      Case insertedCase = [
+        SELECT CaseNumber
+        FROM Case
+        WHERE Id = :caseToInsert.Id
+      ];
+
+      return insertedCase.CaseNumber;
+    } else {
+      ContentVersionsSelector contentVersions = (ContentVersionsSelector) SAS_Service_Application.Selector.newInstance(
+        ContentVersion.SObjectType
       );
-    }
 
-    insert linksToCreate;
+      Case caseToInsert;
+
+      Set<Id> contentIds = new Set<Id>();
+
+      for (String contentId : form.formData.contentVersionIds) {
+        contentIds.add(Id.valueOf(contentId));
+      }
+
+      List<ContentVersion> contentToLink = contentVersions.selectById(
+        contentIds
+      );
+
+      caseToInsert = new Case(
+        Initially_Provided_PNR__c = form.formData.bookingReference,
+        OwnerId = refundsQueue.Id,
+        RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
+        Subject = 'Waiver request due to ' +
+          (form.formData.type == 'death-certificate'
+            ? 'death in family'
+            : 'visa rejection') +
+          ', PNR: ' +
+          form.formData.bookingReference
+      );
+
+      String caseOrigin = marketToOrigin.get('visa-rejection-default');
+      if (
+        marketToOrigin.get(form.formData.type + '-' + form.metaData.market) !=
+        null
+      ) {
+        caseOrigin = marketToOrigin.get(
+          form.formData.type +
+          '-' +
+          form.metaData.market
+        );
+      } else if (marketToOrigin.get(form.formData.type + '-default') != null) {
+        caseOrigin = marketToOrigin.get(form.formData.type + '-default');
+      }
+
+      caseToInsert.Origin = caseOrigin;
+
+      insert caseToInsert;
+
+      List<ContentDocumentLink> linksToCreate = new List<ContentDocumentLink>();
+
+      for (ContentVersion content : contentToLink) {
+        linksToCreate.add(
+          new ContentDocumentLink(
+            ContentDocumentId = content.ContentDocumentId,
+            LinkedEntityId = caseToInsert.Id
+          )
+        );
+      }
+
+      insert linksToCreate;
+
+      return caseToInsert.CaseNumber;
+    }
   }
 }

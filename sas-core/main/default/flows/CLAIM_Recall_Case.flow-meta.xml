@@ -30,7 +30,7 @@
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Case_Information.Status</leftValueReference>
                 <operator>EqualTo</operator>
@@ -43,6 +43,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Waiting for Control</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Information.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>00G</stringValue>
                 </rightValue>
             </conditions>
             <connector>

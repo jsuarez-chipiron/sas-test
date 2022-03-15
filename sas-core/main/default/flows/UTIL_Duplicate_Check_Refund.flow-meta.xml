@@ -1,58 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Post_Chatter_on_Duplicate</name>
-        <label>Post Chatter on Duplicate</label>
-        <locationX>138</locationX>
-        <locationY>1574</locationY>
-        <actionName>chatterPost</actionName>
-        <actionType>chatterPost</actionType>
-        <connector>
-            <targetReference>Post_Comment_on_Duplicates</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>text</name>
-            <value>
-                <elementReference>commentOnDuplicates</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>subjectNameOrId</name>
-            <value>
-                <elementReference>Get_duplicate_Case.Id</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
-    <actionCalls>
-        <name>Post_on_new_Case</name>
-        <label>Post on new Case</label>
-        <locationX>50</locationX>
-        <locationY>1982</locationY>
-        <actionName>chatterPost</actionName>
-        <actionType>chatterPost</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>text</name>
-            <value>
-                <elementReference>commentOnNewCase</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>subjectNameOrId</name>
-            <value>
-                <elementReference>Get_connected_case.Id</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>52.0</apiVersion>
     <assignments>
         <name>Add_duplicate_Case_Number_to_Collection</name>
         <label>Add duplicate Case Number to Collection</label>
         <locationX>490</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>relatedOpenCaseNumbers</assignToReference>
             <operator>Add</operator>
@@ -68,7 +21,7 @@
         <name>Add_duplicate_Case_Number_to_Collection_0</name>
         <label>Add duplicate Case Number to Collection</label>
         <locationX>226</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>relatedClosedCaseNumbers</assignToReference>
             <operator>Add</operator>
@@ -84,7 +37,7 @@
         <name>Get_number_of_duplicates</name>
         <label>Get number of duplicates</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>numberOfDuplicates</assignToReference>
             <operator>AssignCount</operator>
@@ -100,7 +53,7 @@
         <name>Duplicate_Case_Status</name>
         <label>Duplicate Case Status</label>
         <locationX>358</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Add_duplicate_Case_Number_to_Collection</targetReference>
         </defaultConnector>
@@ -132,7 +85,7 @@
         <name>If_Duplicates_exist</name>
         <label>If Duplicates exist</label>
         <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -154,7 +107,7 @@
         <name>If_record_was_found</name>
         <label>If record was found</label>
         <locationX>600</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>Post_Comment_on_Duplicates</targetReference>
         </defaultConnector>
@@ -179,7 +132,7 @@
         <name>Only_post_on_duplicates_for_new_cases</name>
         <label>Only post on duplicates for new cases</label>
         <locationX>358</locationX>
-        <locationY>1454</locationY>
+        <locationY>1574</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>New_Case</name>
@@ -192,7 +145,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Post_Chatter_on_Duplicate</targetReference>
+                <targetReference>Create_Feed_Post_on_Duplicate</targetReference>
             </connector>
             <label>New Case</label>
         </rules>
@@ -212,20 +165,25 @@
             <label>Manual Check</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>runningUser</name>
+        <dataType>String</dataType>
+        <expression>IF({!Get_SAS_AP.Id} &lt;&gt; NULL, {!Get_SAS_AP.Id} , {!$User.Id})</expression>
+    </formulas>
     <interviewLabel>UTIL Duplicate Check - Refund {!$Flow.CurrentDateTime}</interviewLabel>
     <label>UTIL Duplicate Check - Refund</label>
     <loops>
         <name>Post_Comment_on_Duplicates</name>
         <label>Post Comment on Duplicates</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <collectionReference>Get_Potential_Duplicates</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Get_duplicate_Case</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Post_on_new_Case</targetReference>
+            <targetReference>Create_Feed_Post_on_New_Case</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -247,11 +205,78 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_Feed_Post_on_Duplicate</name>
+        <label>Create Feed Post on Duplicate</label>
+        <locationX>138</locationX>
+        <locationY>1694</locationY>
+        <connector>
+            <targetReference>Post_Comment_on_Duplicates</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Body</field>
+            <value>
+                <elementReference>commentOnDuplicates</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CreatedById</field>
+            <value>
+                <elementReference>runningUser</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>Get_duplicate_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>TextPost</stringValue>
+            </value>
+        </inputAssignments>
+        <object>FeedItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Feed_Post_on_New_Case</name>
+        <label>Create Feed Post on New Case</label>
+        <locationX>50</locationX>
+        <locationY>2102</locationY>
+        <inputAssignments>
+            <field>Body</field>
+            <value>
+                <elementReference>commentOnNewCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CreatedById</field>
+            <value>
+                <elementReference>runningUser</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>Get_connected_case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>TextPost</stringValue>
+            </value>
+        </inputAssignments>
+        <object>FeedItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>Get_connected_case</name>
         <label>Get connected case</label>
         <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Refund_Request</targetReference>
@@ -272,7 +297,7 @@
         <name>Get_duplicate_Case</name>
         <label>Get duplicate Case</label>
         <locationX>600</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>If_record_was_found</targetReference>
@@ -300,7 +325,7 @@
         <name>Get_Potential_Duplicates</name>
         <label>Get Potential Duplicates</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_number_of_duplicates</targetReference>
@@ -328,7 +353,7 @@
         <name>Get_Refund_Request</name>
         <label>Get Refund Request</label>
         <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Potential_Duplicates</targetReference>
@@ -345,12 +370,33 @@
         <object>Refund_Request__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_SAS_AP</name>
+        <label>Get SAS AP</label>
+        <locationX>182</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_connected_case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Alias</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>SASAP</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_connected_case</targetReference>
+            <targetReference>Get_SAS_AP</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -373,6 +419,9 @@ Related Closed Cases: {!relatedClosedCaseNumbers}</text>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>numberOfDuplicates</name>

@@ -561,11 +561,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Can_be_contacted_by_phone__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Case__c</field>
         <readable>true</readable>
@@ -593,11 +588,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Customer_Reason_for_EU261_Claim__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Customer_agrees_on_the_terms_and_conditi__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -912,16 +902,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Settlement__c.Date_Time_sent_to_Accounting__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Settlement__c.Date_Time_sent_to_Racer__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Settlement__c.Date_of_Exchange_Calculation__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -938,11 +918,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Settlement__c.Exchange_Rate_SEK_to_currency__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Settlement__c.Message__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

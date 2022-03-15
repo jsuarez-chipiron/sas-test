@@ -373,4 +373,55 @@ private class Cases_Test {
       null
     );
   }
+
+  @IsTest
+  static void mergingACaseShouldLockRelatedClaim() {
+    Case c = new Case(Status = 'New');
+    LIA_Claim__c cl = new LIA_Claim__c();
+    insert new List<SObject>{ c, cl };
+    c.LIA_Claim__c = cl.Id;
+    cl.Case__c = c.Id;
+    update new List<SObject>{ c, cl };
+
+    Test.startTest();
+    c.Status = 'Merged';
+    update c;
+    Test.stopTest();
+
+    Case caseAfterUpdate = [SELECT Status FROM Case WHERE Id = :c.Id];
+
+    System.assertEquals(
+      'Merged',
+      caseAfterUpdate.Status,
+      'The case should have been merged.'
+    );
+
+    System.assert(Approval.isLocked(cl), 'The related claim should be locked.');
+  }
+
+  @IsTest
+  static void mergingACaseWithSettlementsShouldThrowAnError() {
+    Case c = new Case(Status = 'New');
+    LIA_Claim__c cl = new LIA_Claim__c();
+    insert new List<SObject>{ c, cl };
+    c.LIA_Claim__c = cl.Id;
+    cl.Case__c = c.Id;
+    Settlement__c s = new Settlement__c(Claim__c = cl.Id);
+    upsert new List<SObject>{ c, cl, s };
+
+    DmlException exceptionThrown;
+
+    try {
+      c.Status = 'Merged';
+      update c;
+    } catch (DmlException dmx) {
+      exceptionThrown = dmx;
+    }
+
+    System.assertNotEquals(
+      null,
+      exceptionThrown,
+      'Should have thrown an exception.'
+    );
+  }
 }

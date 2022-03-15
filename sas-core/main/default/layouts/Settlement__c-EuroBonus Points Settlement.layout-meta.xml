@@ -32,10 +32,6 @@
                 <behavior>Readonly</behavior>
                 <field>Settlement_Status__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Accounting_Status__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -46,13 +42,13 @@
         <label>EuroBonus Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>EuroBonus_Number__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>EuroBonus_Points__c</field>
             </layoutItems>
         </layoutColumns>
@@ -115,6 +111,14 @@
                 <behavior>Edit</behavior>
                 <field>RecordTypeId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Error_Message__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>External_Reference__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -164,7 +168,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Customer_Name__c</fields>
-        <fields>Category__c</fields>
         <fields>Amount__c</fields>
         <fields>Cost_Account__c</fields>
         <relatedList>Settlement_Item__c.Settlement__c</relatedList>
@@ -190,7 +193,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h5E000001VNyz</masterLabel>
+        <masterLabel>00h3O0000015GLL</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

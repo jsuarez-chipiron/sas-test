@@ -17,7 +17,8 @@ ISBLANK(FCS_CaseResolutionDetails__c)
 )
 ),
 NOT($User.LastName = &apos;SAS Automation Process&apos;),
-NOT(RecordType.Name = &apos;Claim&apos;)
+NOT(RecordType.Name = &apos;Claim&apos;),
+NOT(RecordType.Name = &apos;Customer Claim&apos;)
 )</errorConditionFormula>
     <errorMessage>Tag Case before Closing</errorMessage>
 </ValidationRule>

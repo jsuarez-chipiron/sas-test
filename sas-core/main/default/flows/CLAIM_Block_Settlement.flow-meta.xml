@@ -4,8 +4,8 @@
     <decisions>
         <name>Block_Settlement</name>
         <label>Block Settlement</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationX>446</locationX>
+        <locationY>518</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -21,6 +21,38 @@
                 <targetReference>Update_Settlement</targetReference>
             </connector>
             <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Can_Settlement_be_blocked</name>
+        <label>Can Settlement be blocked?</label>
+        <locationX>248</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Should_Settlement_be_blocked</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Invalid_Settlement_Status</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Settlement.Settlement_Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>In progress</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Settlement.Settlement_Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for transfer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Unable_to_Block_Settlement</targetReference>
+            </connector>
+            <label>Invalid Settlement Status</label>
         </rules>
     </decisions>
     <interviewLabel>CLAIM Block Settlement {!$Flow.CurrentDateTime}</interviewLabel>
@@ -47,8 +79,8 @@
     <recordCreates>
         <name>Create_Approval_Request</name>
         <label>Create Approval Request</label>
-        <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
         <inputAssignments>
             <field>Rejection_Comment__c</field>
             <value>
@@ -82,11 +114,32 @@
         <object>Approval_Request__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordLookups>
+        <name>Get_Settlement</name>
+        <label>Get Settlement</label>
+        <locationX>248</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Can_Settlement_be_blocked</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Settlement__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Update_Settlement</name>
         <label>Update Settlement</label>
-        <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Create_Approval_Request</targetReference>
         </connector>
@@ -116,8 +169,8 @@
     <screens>
         <name>Should_Settlement_be_blocked</name>
         <label>Should Settlement be blocked?</label>
-        <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationX>446</locationX>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -170,11 +223,27 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>Unable_to_Block_Settlement</name>
+        <label>Unable to Block Settlement</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>cannotBlock</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;This Settlement cannot be blocked&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Should_Settlement_be_blocked</targetReference>
+            <targetReference>Get_Settlement</targetReference>
         </connector>
     </start>
     <status>Active</status>

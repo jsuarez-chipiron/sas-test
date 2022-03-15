@@ -308,6 +308,11 @@
                 <componentName>console:relatedRecord</componentName>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>caseSimilarCases</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -333,6 +338,11 @@
                         <operator>EQUAL</operator>
                     </criteria>
                 </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>caseProactivities</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>

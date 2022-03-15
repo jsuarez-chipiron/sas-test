@@ -82,7 +82,7 @@ public class AccountingFileBuilder {
           fileContents += String.valueOf(verificationNumber)
             .rightPad(AccountingEntry.FIELD_LENGTHS.get(field));
         } else if (field == 'CostCenter') {
-          AccountingEntry.CREDIT_COST_CENTERS_BY_CURRENCY.get(
+          fileContents += AccountingEntry.CREDIT_COST_CENTERS_BY_CURRENCY.get(
             fileCurrency.name()
           );
         } else {
@@ -104,7 +104,8 @@ public class AccountingFileBuilder {
 
     fileContents += createTotalLine(sumOfEntries, verificationNumber);
 
-    String dayOfYear = String.valueOf(Date.today().dayOfYear());
+    String dayOfYear = String.valueOf(Date.today().dayOfYear()).leftPad(3, '0');
+
     String todaysDate = Datetime.now().format('yyyyMMdd');
     // Format is a5{AUN}{dayOfYear}{RunningCount}
     String fileName =

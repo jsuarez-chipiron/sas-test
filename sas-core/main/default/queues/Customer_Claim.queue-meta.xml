@@ -7,7 +7,6 @@
             <publicGroup>Customer_Claim</publicGroup>
         </publicGroups>
     </queueMembers>
-    <queueRoutingConfig>Customer_Claim_Routing</queueRoutingConfig>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -72,10 +72,10 @@ public without sharing class RacerIntegrationService {
     request.setMethod(String.valueOf(HttpUtils.HTTP_METHOD.POST));
 
     request.setHeader('sas-system-name', 'Salesforce');
-    request.setHeader('sas-tracking-id', C_Util.generateUUID());
+    request.setHeader('Sas-Tracking-Id', C_Util.generateUUID());
     request.setHeader('Ocp-Apim-Subscription-Key', SUBSCRIPTION_KEY);
     request.setHeader('api-version', 'v1');
-    request.setHeader('Content-Type', ' ');
+    request.setHeader('Content-Type', 'application/xml');
     request.setHeader('Filename', fileName);
 
     request.setBody(EncodingUtil.base64Encode(files[0].VersionData));

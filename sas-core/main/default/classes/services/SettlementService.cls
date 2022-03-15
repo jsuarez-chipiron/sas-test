@@ -153,13 +153,13 @@ public without sharing class SettlementService {
     uow.commitWork();
   }
 
-  private static void sendAccountingFile(Id fileId) {
+  public static void sendAccountingFile(Id fileId) {
     RacerIntegrationService.sendFile(
       RacerIntegrationService.FILE_TYPE.ACCOUNTING,
       fileId
     );
   }
-  private static void sendPaymentFile(Id fileId) {
+  public static void sendPaymentFile(Id fileId) {
     RacerIntegrationService.sendFile(
       RacerIntegrationService.FILE_TYPE.PAYMENT,
       fileId
@@ -195,8 +195,10 @@ public without sharing class SettlementService {
         settlement.Name,
         settlement.Claim__r.Name,
         'Claim', // TODO: Should we add something more detailed in here? Request.reasonForPoints
-        settlement.Claim__r.Liability_PNR__c,
-        '' // TODO: Add ticketNumber
+        settlement.Claim__r.Liability_PNR__c == null
+          ? ''
+          : settlement.Claim__r.Liability_PNR__c,
+        '' // TODO: Add ticketNumber if we have it.
       );
       if (resp.isSuccess) {
         // Points added
@@ -250,8 +252,8 @@ public without sharing class SettlementService {
       ),
       settlement.Currency__c,
       settlement.Amount__c.intValue(),
-      settlement.Payee_Name__c, //firstName, TODO: Separate out
-      settlement.Payee_Name__c, //lastName, TODO: Separate out
+      settlement.Payee_First_Name__c,
+      settlement.Payee_Last_Name__c,
       settlement.Voucher_Email__c,
       settlement.Claim__r.Case__r.CaseNumber,
       settlement.Address_line_1__c,

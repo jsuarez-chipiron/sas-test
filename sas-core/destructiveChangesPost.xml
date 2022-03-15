@@ -13,10 +13,10 @@
 -->
 
     <types>
-        <members>CLMIntegrationServiceTest.cls</members>
-        <members>Voucher_IntegrationTest.cls</members>
-        <members>LoyaltyService.cls</members>
-        <members>VoucherService.cls</members>
+        <members>CLMIntegrationServiceTest</members>
+        <members>Voucher_IntegrationTest</members>
+        <members>LoyaltyService</members>
+        <members>VoucherService</members>
 		<name>ApexClass</name>
     </types>
 </Package>
