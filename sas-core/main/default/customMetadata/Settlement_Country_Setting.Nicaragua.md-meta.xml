@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Country_Short_Code__c</field>
-        <value xsi:type="xsd:string">Nicaragua</value>
+        <value xsi:type="xsd:string">NI</value>
     </values>
     <values>
         <field>Default_Currency__c</field>
