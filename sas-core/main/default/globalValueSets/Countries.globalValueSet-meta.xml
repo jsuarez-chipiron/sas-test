@@ -766,6 +766,11 @@
         <label>Norway</label>
     </customValue>
     <customValue>
+        <fullName>Not Applicable</fullName>
+        <default>false</default>
+        <label>Not Applicable</label>
+    </customValue>
+    <customValue>
         <fullName>Oman</fullName>
         <default>false</default>
         <label>Oman</label>

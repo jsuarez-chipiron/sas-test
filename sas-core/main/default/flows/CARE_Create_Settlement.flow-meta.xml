@@ -298,6 +298,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Bank_Country__c</field>
+            <value>
+                <stringValue>Not Applicable</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>City__c</field>
             <value>
                 <elementReference>Get_Customer_Claim.City__c</elementReference>
