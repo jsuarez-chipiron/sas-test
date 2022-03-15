@@ -277,6 +277,16 @@
         <enabled>true</enabled>
         <name>Manual_GDPR_Delete</name>
     </customPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Racer_Integration_Counter__c.Accounting_Verification_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Racer_Integration_Counter__c.Payment_Run_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
         <fieldPermissions>
         <editable>false</editable>
         <field>Approval_Request__c.Control_Reason__c</field>
@@ -1010,6 +1020,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Additional_PNRs__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Feedback_Category__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Feedback_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Flight_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Flight_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -9,15 +9,29 @@ public class RacerResponseHandlers {
   private static SettlementsSelector settlementsSel = SettlementsSelector.newInstance();
   private static SettlementItemsSelector settlementItemsSel = SettlementItemsSelector.newInstance();
 
+  private static final Id INTEGRATION_USER_ID = [
+      SELECT Id
+      FROM User
+      WHERE Email = 'seip@sas.se'
+    ]
+    .size() > 0
+    ? [SELECT Id FROM User WHERE Email = 'seip@sas.se'][0].Id
+    : null;
+
   /**
    * Returns true if the file appears to be a file from RACER based on the
    * filename.
    */
-  public static Boolean isARacerFile(String fileName) {
-    return fileName.startsWith('CARE_PAYMUL_') ||
+  public static Boolean isARacerFile(String fileName, Id fileOwnerId) {
+    // A simple solution for ensuring that accidentally similarly named files are disregarded.
+    Boolean isRunningTestOrFileOwnerIsIntegrationUser =
+      (C_Util.isSandbox() || Test.isRunningTest()) ||
+      (fileOwnerId == INTEGRATION_USER_ID);
+    return isRunningTestOrFileOwnerIsIntegrationUser &&
+      (fileName.startsWith('CARE_PAYMUL_') ||
       fileName.startsWith('CARE_PAINL1_') ||
       fileName.startsWith('CARE_PAINL2_') ||
-      fileName.startsWith('CARE_RACERGL_');
+      fileName.startsWith('CARE_RACERGL_'));
   }
 
   /**

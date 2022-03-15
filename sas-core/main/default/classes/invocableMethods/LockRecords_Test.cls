@@ -60,4 +60,25 @@ private class LockRecords_Test {
     );
   }
 
+  @IsTest
+  static void shouldLockAListOfSettlementsAndOtherRecords() {
+    Case c = new Case(Subject = 'C1');
+    Settlement__c s = new Settlement__c();
+    List<SObject> recordsToLock = new List<SObject> {c,s}; 
+    insert recordsToLock;
+
+    LockRecords.LockRecord(new List<String> {c.Id,s.Id});
+    
+    System.assertEquals(
+      true,
+      Approval.isLocked(c),
+      'It should successfully lock the case record.'
+      );
+    System.assertEquals(
+      true,
+      Approval.isLocked(s),
+      'It should successfully lock the settlement record.'
+      );  
+  }
+
 }

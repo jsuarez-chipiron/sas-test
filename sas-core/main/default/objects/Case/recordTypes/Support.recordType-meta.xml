@@ -1497,6 +1497,20 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Feedback_Category__c</picklist>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Feedback_Type__c</picklist>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>GSB_Flight_Length__c</picklist>
         <values>
             <fullName>Long Haul</fullName>
