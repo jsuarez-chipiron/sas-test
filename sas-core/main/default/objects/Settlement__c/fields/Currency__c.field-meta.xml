@@ -104,7 +104,7 @@
             <controllingFieldValue>Western Sahara</controllingFieldValue>
             <controllingFieldValue>Kuwait</controllingFieldValue>
             <controllingFieldValue>Vietnam</controllingFieldValue>
-            <controllingFieldValue>Kyrgyz Republic</controllingFieldValue>
+            <controllingFieldValue>Kyrgyzstan</controllingFieldValue>
             <controllingFieldValue>Virgin Islands (British)</controllingFieldValue>
             <controllingFieldValue>Latvia</controllingFieldValue>
             <controllingFieldValue>Virgin Islands (U.S.)</controllingFieldValue>
@@ -114,7 +114,7 @@
             <controllingFieldValue>Zambia</controllingFieldValue>
             <controllingFieldValue>Liberia</controllingFieldValue>
             <controllingFieldValue>Zimbabwe</controllingFieldValue>
-            <controllingFieldValue>Libyan Arab Jamahiriya</controllingFieldValue>
+            <controllingFieldValue>Libya</controllingFieldValue>
             <controllingFieldValue>Finland</controllingFieldValue>
             <controllingFieldValue>Liechtenstein</controllingFieldValue>
             <controllingFieldValue>Not Applicable</controllingFieldValue>
@@ -201,11 +201,10 @@
             <controllingFieldValue>Oman</controllingFieldValue>
             <controllingFieldValue>Pakistan</controllingFieldValue>
             <controllingFieldValue>Palau</controllingFieldValue>
-            <controllingFieldValue>Palestinian Territory, Occupied</controllingFieldValue>
+            <controllingFieldValue>Palestine</controllingFieldValue>
             <controllingFieldValue>Panama</controllingFieldValue>
             <controllingFieldValue>Papua New Guinea</controllingFieldValue>
             <controllingFieldValue>Cyprus</controllingFieldValue>
-            <controllingFieldValue>Democratic People&apos;s Republic of Korea</controllingFieldValue>
             <controllingFieldValue>Djibouti</controllingFieldValue>
             <controllingFieldValue>Dominica</controllingFieldValue>
             <controllingFieldValue>Dominican Republic</controllingFieldValue>
@@ -213,12 +212,11 @@
             <controllingFieldValue>Ecuador</controllingFieldValue>
             <controllingFieldValue>Egypt</controllingFieldValue>
             <controllingFieldValue>Paraguay</controllingFieldValue>
-            <controllingFieldValue>People&apos;s Democratic Republic of Lao</controllingFieldValue>
+            <controllingFieldValue>Laos</controllingFieldValue>
             <controllingFieldValue>Peru</controllingFieldValue>
             <controllingFieldValue>Philippines</controllingFieldValue>
             <controllingFieldValue>Pitcairn</controllingFieldValue>
             <controllingFieldValue>Portugal</controllingFieldValue>
-            <controllingFieldValue>Principality of Andorra</controllingFieldValue>
             <controllingFieldValue>Puerto Rico</controllingFieldValue>
             <controllingFieldValue>Qatar</controllingFieldValue>
             <controllingFieldValue>El Salvador</controllingFieldValue>
@@ -228,15 +226,15 @@
             <controllingFieldValue>Ethiopia</controllingFieldValue>
             <controllingFieldValue>Falkland Islands</controllingFieldValue>
             <controllingFieldValue>Faroe Islands</controllingFieldValue>
-            <controllingFieldValue>Federated States of Micronesia</controllingFieldValue>
+            <controllingFieldValue>Micronesia</controllingFieldValue>
             <controllingFieldValue>Fiji</controllingFieldValue>
             <controllingFieldValue>France</controllingFieldValue>
-            <controllingFieldValue>Republic of Korea</controllingFieldValue>
-            <controllingFieldValue>Republic of Madagascar</controllingFieldValue>
-            <controllingFieldValue>Republic of Moldova</controllingFieldValue>
+            <controllingFieldValue>South Korea</controllingFieldValue>
+            <controllingFieldValue>Madagascar</controllingFieldValue>
+            <controllingFieldValue>Moldova</controllingFieldValue>
             <controllingFieldValue>Reunion</controllingFieldValue>
             <controllingFieldValue>Romania</controllingFieldValue>
-            <controllingFieldValue>Russian Federation</controllingFieldValue>
+            <controllingFieldValue>Russia</controllingFieldValue>
             <controllingFieldValue>Rwanda</controllingFieldValue>
             <controllingFieldValue>Saint Kitts and Nevis</controllingFieldValue>
             <controllingFieldValue>Saint Lucia</controllingFieldValue>
@@ -280,7 +278,7 @@
             <controllingFieldValue>St. Helena</controllingFieldValue>
             <controllingFieldValue>St. Pierre and Miquelon</controllingFieldValue>
             <controllingFieldValue>Sudan</controllingFieldValue>
-            <controllingFieldValue>Holy See (Vatican City State)</controllingFieldValue>
+            <controllingFieldValue>Vatican City</controllingFieldValue>
             <controllingFieldValue>Honduras</controllingFieldValue>
             <controllingFieldValue>Hungary</controllingFieldValue>
             <controllingFieldValue>Iceland</controllingFieldValue>
@@ -288,16 +286,16 @@
             <controllingFieldValue>Indonesia</controllingFieldValue>
             <controllingFieldValue>Iraq</controllingFieldValue>
             <controllingFieldValue>Ireland</controllingFieldValue>
-            <controllingFieldValue>Isle of man</controllingFieldValue>
+            <controllingFieldValue>Isle of Man</controllingFieldValue>
             <controllingFieldValue>Suriname</controllingFieldValue>
             <controllingFieldValue>Svalbard and Jan Mayen Islands</controllingFieldValue>
             <controllingFieldValue>Swaziland</controllingFieldValue>
-            <controllingFieldValue>Syrian Arab Republic</controllingFieldValue>
-            <controllingFieldValue>Taiwan, Province of China</controllingFieldValue>
+            <controllingFieldValue>Syria</controllingFieldValue>
+            <controllingFieldValue>Taiwan</controllingFieldValue>
             <controllingFieldValue>Tajikistan</controllingFieldValue>
             <controllingFieldValue>Thailand</controllingFieldValue>
             <controllingFieldValue>The Democratic Republic of the Congo</controllingFieldValue>
-            <controllingFieldValue>The Former Yugoslav Republic of Macedonia</controllingFieldValue>
+            <controllingFieldValue>North Macedonia</controllingFieldValue>
             <controllingFieldValue>Togo</controllingFieldValue>
             <controllingFieldValue>Tokelau</controllingFieldValue>
             <controllingFieldValue>Tonga</controllingFieldValue>
@@ -313,7 +311,7 @@
             <controllingFieldValue>Italy</controllingFieldValue>
             <controllingFieldValue>United Arab Emirates</controllingFieldValue>
             <controllingFieldValue>Jamaica</controllingFieldValue>
-            <controllingFieldValue>United Republic of Tanzania</controllingFieldValue>
+            <controllingFieldValue>Tanzania</controllingFieldValue>
             <controllingFieldValue>Jersey</controllingFieldValue>
             <controllingFieldValue>Jordan</controllingFieldValue>
             <controllingFieldValue>Uruguay</controllingFieldValue>
@@ -321,7 +319,7 @@
             <controllingFieldValue>Uzbekistan</controllingFieldValue>
             <controllingFieldValue>Kenya</controllingFieldValue>
             <controllingFieldValue>Wallis and Futuna Islands</controllingFieldValue>
-            <controllingFieldValue>Kingdom of Cambodia</controllingFieldValue>
+            <controllingFieldValue>Cambodia</controllingFieldValue>
             <controllingFieldValue>Vanuatu</controllingFieldValue>
             <controllingFieldValue>Kiribati</controllingFieldValue>
             <valueName>EUR</valueName>
@@ -332,7 +330,7 @@
             <controllingFieldValue>Western Sahara</controllingFieldValue>
             <controllingFieldValue>Kuwait</controllingFieldValue>
             <controllingFieldValue>Vietnam</controllingFieldValue>
-            <controllingFieldValue>Kyrgyz Republic</controllingFieldValue>
+            <controllingFieldValue>Kyrgyzstan</controllingFieldValue>
             <controllingFieldValue>Virgin Islands (British)</controllingFieldValue>
             <controllingFieldValue>Virgin Islands (U.S.)</controllingFieldValue>
             <controllingFieldValue>Lebanon</controllingFieldValue>
@@ -341,7 +339,7 @@
             <controllingFieldValue>Zambia</controllingFieldValue>
             <controllingFieldValue>Liberia</controllingFieldValue>
             <controllingFieldValue>Zimbabwe</controllingFieldValue>
-            <controllingFieldValue>Libyan Arab Jamahiriya</controllingFieldValue>
+            <controllingFieldValue>Libya</controllingFieldValue>
             <controllingFieldValue>Not Applicable</controllingFieldValue>
             <controllingFieldValue>Azerbaijan</controllingFieldValue>
             <controllingFieldValue>Bahamas</controllingFieldValue>
@@ -417,10 +415,9 @@
             <controllingFieldValue>Oman</controllingFieldValue>
             <controllingFieldValue>Pakistan</controllingFieldValue>
             <controllingFieldValue>Palau</controllingFieldValue>
-            <controllingFieldValue>Palestinian Territory, Occupied</controllingFieldValue>
+            <controllingFieldValue>Palestine</controllingFieldValue>
             <controllingFieldValue>Panama</controllingFieldValue>
             <controllingFieldValue>Papua New Guinea</controllingFieldValue>
-            <controllingFieldValue>Democratic People&apos;s Republic of Korea</controllingFieldValue>
             <controllingFieldValue>Djibouti</controllingFieldValue>
             <controllingFieldValue>Dominica</controllingFieldValue>
             <controllingFieldValue>Dominican Republic</controllingFieldValue>
@@ -428,11 +425,10 @@
             <controllingFieldValue>Ecuador</controllingFieldValue>
             <controllingFieldValue>Egypt</controllingFieldValue>
             <controllingFieldValue>Paraguay</controllingFieldValue>
-            <controllingFieldValue>People&apos;s Democratic Republic of Lao</controllingFieldValue>
+            <controllingFieldValue>Laos</controllingFieldValue>
             <controllingFieldValue>Peru</controllingFieldValue>
             <controllingFieldValue>Philippines</controllingFieldValue>
             <controllingFieldValue>Pitcairn</controllingFieldValue>
-            <controllingFieldValue>Principality of Andorra</controllingFieldValue>
             <controllingFieldValue>Puerto Rico</controllingFieldValue>
             <controllingFieldValue>Qatar</controllingFieldValue>
             <controllingFieldValue>El Salvador</controllingFieldValue>
@@ -441,13 +437,13 @@
             <controllingFieldValue>Ethiopia</controllingFieldValue>
             <controllingFieldValue>Falkland Islands</controllingFieldValue>
             <controllingFieldValue>Faroe Islands</controllingFieldValue>
-            <controllingFieldValue>Federated States of Micronesia</controllingFieldValue>
+            <controllingFieldValue>Micronesia</controllingFieldValue>
             <controllingFieldValue>Fiji</controllingFieldValue>
-            <controllingFieldValue>Republic of Korea</controllingFieldValue>
-            <controllingFieldValue>Republic of Madagascar</controllingFieldValue>
-            <controllingFieldValue>Republic of Moldova</controllingFieldValue>
+            <controllingFieldValue>South Korea</controllingFieldValue>
+            <controllingFieldValue>Madagascar</controllingFieldValue>
+            <controllingFieldValue>Moldova</controllingFieldValue>
             <controllingFieldValue>Reunion</controllingFieldValue>
-            <controllingFieldValue>Russian Federation</controllingFieldValue>
+            <controllingFieldValue>Russia</controllingFieldValue>
             <controllingFieldValue>Rwanda</controllingFieldValue>
             <controllingFieldValue>Saint Kitts and Nevis</controllingFieldValue>
             <controllingFieldValue>Saint Lucia</controllingFieldValue>
@@ -486,21 +482,21 @@
             <controllingFieldValue>St. Helena</controllingFieldValue>
             <controllingFieldValue>St. Pierre and Miquelon</controllingFieldValue>
             <controllingFieldValue>Sudan</controllingFieldValue>
-            <controllingFieldValue>Holy See (Vatican City State)</controllingFieldValue>
+            <controllingFieldValue>Vatican City</controllingFieldValue>
             <controllingFieldValue>Honduras</controllingFieldValue>
             <controllingFieldValue>India</controllingFieldValue>
             <controllingFieldValue>Indonesia</controllingFieldValue>
             <controllingFieldValue>Iraq</controllingFieldValue>
-            <controllingFieldValue>Isle of man</controllingFieldValue>
+            <controllingFieldValue>Isle of Man</controllingFieldValue>
             <controllingFieldValue>Suriname</controllingFieldValue>
             <controllingFieldValue>Svalbard and Jan Mayen Islands</controllingFieldValue>
             <controllingFieldValue>Swaziland</controllingFieldValue>
-            <controllingFieldValue>Syrian Arab Republic</controllingFieldValue>
-            <controllingFieldValue>Taiwan, Province of China</controllingFieldValue>
+            <controllingFieldValue>Syria</controllingFieldValue>
+            <controllingFieldValue>Taiwan</controllingFieldValue>
             <controllingFieldValue>Tajikistan</controllingFieldValue>
             <controllingFieldValue>Thailand</controllingFieldValue>
             <controllingFieldValue>The Democratic Republic of the Congo</controllingFieldValue>
-            <controllingFieldValue>The Former Yugoslav Republic of Macedonia</controllingFieldValue>
+            <controllingFieldValue>North Macedonia</controllingFieldValue>
             <controllingFieldValue>Togo</controllingFieldValue>
             <controllingFieldValue>Tokelau</controllingFieldValue>
             <controllingFieldValue>Tonga</controllingFieldValue>
@@ -516,7 +512,7 @@
             <controllingFieldValue>United Arab Emirates</controllingFieldValue>
             <controllingFieldValue>Jamaica</controllingFieldValue>
             <controllingFieldValue>United Kingdom</controllingFieldValue>
-            <controllingFieldValue>United Republic of Tanzania</controllingFieldValue>
+            <controllingFieldValue>Tanzania</controllingFieldValue>
             <controllingFieldValue>Jersey</controllingFieldValue>
             <controllingFieldValue>Jordan</controllingFieldValue>
             <controllingFieldValue>Uruguay</controllingFieldValue>
@@ -524,7 +520,7 @@
             <controllingFieldValue>Uzbekistan</controllingFieldValue>
             <controllingFieldValue>Kenya</controllingFieldValue>
             <controllingFieldValue>Wallis and Futuna Islands</controllingFieldValue>
-            <controllingFieldValue>Kingdom of Cambodia</controllingFieldValue>
+            <controllingFieldValue>Cambodia</controllingFieldValue>
             <controllingFieldValue>Vanuatu</controllingFieldValue>
             <controllingFieldValue>Kiribati</controllingFieldValue>
             <valueName>GBP</valueName>
@@ -535,7 +531,7 @@
             <controllingFieldValue>Western Sahara</controllingFieldValue>
             <controllingFieldValue>Kuwait</controllingFieldValue>
             <controllingFieldValue>Vietnam</controllingFieldValue>
-            <controllingFieldValue>Kyrgyz Republic</controllingFieldValue>
+            <controllingFieldValue>Kyrgyzstan</controllingFieldValue>
             <controllingFieldValue>Virgin Islands (British)</controllingFieldValue>
             <controllingFieldValue>Virgin Islands (U.S.)</controllingFieldValue>
             <controllingFieldValue>Lebanon</controllingFieldValue>
@@ -544,7 +540,7 @@
             <controllingFieldValue>Zambia</controllingFieldValue>
             <controllingFieldValue>Liberia</controllingFieldValue>
             <controllingFieldValue>Zimbabwe</controllingFieldValue>
-            <controllingFieldValue>Libyan Arab Jamahiriya</controllingFieldValue>
+            <controllingFieldValue>Libya</controllingFieldValue>
             <controllingFieldValue>Not Applicable</controllingFieldValue>
             <controllingFieldValue>Azerbaijan</controllingFieldValue>
             <controllingFieldValue>Bahamas</controllingFieldValue>
@@ -620,10 +616,9 @@
             <controllingFieldValue>Oman</controllingFieldValue>
             <controllingFieldValue>Pakistan</controllingFieldValue>
             <controllingFieldValue>Palau</controllingFieldValue>
-            <controllingFieldValue>Palestinian Territory, Occupied</controllingFieldValue>
+            <controllingFieldValue>Palestine</controllingFieldValue>
             <controllingFieldValue>Panama</controllingFieldValue>
             <controllingFieldValue>Papua New Guinea</controllingFieldValue>
-            <controllingFieldValue>Democratic People&apos;s Republic of Korea</controllingFieldValue>
             <controllingFieldValue>Djibouti</controllingFieldValue>
             <controllingFieldValue>Dominica</controllingFieldValue>
             <controllingFieldValue>Dominican Republic</controllingFieldValue>
@@ -631,11 +626,10 @@
             <controllingFieldValue>Ecuador</controllingFieldValue>
             <controllingFieldValue>Egypt</controllingFieldValue>
             <controllingFieldValue>Paraguay</controllingFieldValue>
-            <controllingFieldValue>People&apos;s Democratic Republic of Lao</controllingFieldValue>
+            <controllingFieldValue>Laos</controllingFieldValue>
             <controllingFieldValue>Peru</controllingFieldValue>
             <controllingFieldValue>Philippines</controllingFieldValue>
             <controllingFieldValue>Pitcairn</controllingFieldValue>
-            <controllingFieldValue>Principality of Andorra</controllingFieldValue>
             <controllingFieldValue>Puerto Rico</controllingFieldValue>
             <controllingFieldValue>Qatar</controllingFieldValue>
             <controllingFieldValue>El Salvador</controllingFieldValue>
@@ -644,13 +638,13 @@
             <controllingFieldValue>Ethiopia</controllingFieldValue>
             <controllingFieldValue>Falkland Islands</controllingFieldValue>
             <controllingFieldValue>Faroe Islands</controllingFieldValue>
-            <controllingFieldValue>Federated States of Micronesia</controllingFieldValue>
+            <controllingFieldValue>Micronesia</controllingFieldValue>
             <controllingFieldValue>Fiji</controllingFieldValue>
-            <controllingFieldValue>Republic of Korea</controllingFieldValue>
-            <controllingFieldValue>Republic of Madagascar</controllingFieldValue>
-            <controllingFieldValue>Republic of Moldova</controllingFieldValue>
+            <controllingFieldValue>South Korea</controllingFieldValue>
+            <controllingFieldValue>Madagascar</controllingFieldValue>
+            <controllingFieldValue>Moldova</controllingFieldValue>
             <controllingFieldValue>Reunion</controllingFieldValue>
-            <controllingFieldValue>Russian Federation</controllingFieldValue>
+            <controllingFieldValue>Russia</controllingFieldValue>
             <controllingFieldValue>Rwanda</controllingFieldValue>
             <controllingFieldValue>Saint Kitts and Nevis</controllingFieldValue>
             <controllingFieldValue>Saint Lucia</controllingFieldValue>
@@ -689,21 +683,21 @@
             <controllingFieldValue>St. Helena</controllingFieldValue>
             <controllingFieldValue>St. Pierre and Miquelon</controllingFieldValue>
             <controllingFieldValue>Sudan</controllingFieldValue>
-            <controllingFieldValue>Holy See (Vatican City State)</controllingFieldValue>
+            <controllingFieldValue>Vatican City</controllingFieldValue>
             <controllingFieldValue>Honduras</controllingFieldValue>
             <controllingFieldValue>India</controllingFieldValue>
             <controllingFieldValue>Indonesia</controllingFieldValue>
             <controllingFieldValue>Iraq</controllingFieldValue>
-            <controllingFieldValue>Isle of man</controllingFieldValue>
+            <controllingFieldValue>Isle of Man</controllingFieldValue>
             <controllingFieldValue>Suriname</controllingFieldValue>
             <controllingFieldValue>Svalbard and Jan Mayen Islands</controllingFieldValue>
             <controllingFieldValue>Swaziland</controllingFieldValue>
-            <controllingFieldValue>Syrian Arab Republic</controllingFieldValue>
-            <controllingFieldValue>Taiwan, Province of China</controllingFieldValue>
+            <controllingFieldValue>Syria</controllingFieldValue>
+            <controllingFieldValue>Taiwan</controllingFieldValue>
             <controllingFieldValue>Tajikistan</controllingFieldValue>
             <controllingFieldValue>Thailand</controllingFieldValue>
             <controllingFieldValue>The Democratic Republic of the Congo</controllingFieldValue>
-            <controllingFieldValue>The Former Yugoslav Republic of Macedonia</controllingFieldValue>
+            <controllingFieldValue>North Macedonia</controllingFieldValue>
             <controllingFieldValue>Togo</controllingFieldValue>
             <controllingFieldValue>Tokelau</controllingFieldValue>
             <controllingFieldValue>Tonga</controllingFieldValue>
@@ -718,7 +712,7 @@
             <controllingFieldValue>Ukraine</controllingFieldValue>
             <controllingFieldValue>United Arab Emirates</controllingFieldValue>
             <controllingFieldValue>Jamaica</controllingFieldValue>
-            <controllingFieldValue>United Republic of Tanzania</controllingFieldValue>
+            <controllingFieldValue>Tanzania</controllingFieldValue>
             <controllingFieldValue>Jersey</controllingFieldValue>
             <controllingFieldValue>United States</controllingFieldValue>
             <controllingFieldValue>Jordan</controllingFieldValue>
@@ -727,7 +721,7 @@
             <controllingFieldValue>Uzbekistan</controllingFieldValue>
             <controllingFieldValue>Kenya</controllingFieldValue>
             <controllingFieldValue>Wallis and Futuna Islands</controllingFieldValue>
-            <controllingFieldValue>Kingdom of Cambodia</controllingFieldValue>
+            <controllingFieldValue>Cambodia</controllingFieldValue>
             <controllingFieldValue>Vanuatu</controllingFieldValue>
             <controllingFieldValue>Kiribati</controllingFieldValue>
             <valueName>USD</valueName>
@@ -778,7 +772,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Not Applicable</controllingFieldValue>
-            <controllingFieldValue>Russian Federation</controllingFieldValue>
+            <controllingFieldValue>Russia</controllingFieldValue>
             <valueName>RUB</valueName>
         </valueSettings>
         <valueSettings>

@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Country_Short_Code__c</field>
-        <value xsi:type="xsd:string">Er</value>
+        <value xsi:type="xsd:string">ER</value>
     </values>
     <values>
         <field>Default_Currency__c</field>

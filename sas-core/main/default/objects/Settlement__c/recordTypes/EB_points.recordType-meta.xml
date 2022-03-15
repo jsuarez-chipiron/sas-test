@@ -222,10 +222,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Democratic People%27s Republic of Korea</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Denmark</fullName>
             <default>false</default>
         </values>
@@ -282,7 +278,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Federated States of Micronesia</fullName>
+            <fullName>Micronesia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -378,7 +374,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Holy See %28Vatican City State%29</fullName>
+            <fullName>Vatican City</fullName>
             <default>false</default>
         </values>
         <values>
@@ -414,7 +410,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Isle of man</fullName>
+            <fullName>Isle of Man</fullName>
             <default>false</default>
         </values>
         <values>
@@ -450,7 +446,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Kingdom of Cambodia</fullName>
+            <fullName>Cambodia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -466,7 +462,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Kyrgyz Republic</fullName>
+            <fullName>Kyrgyzstan</fullName>
             <default>false</default>
         </values>
         <values>
@@ -486,7 +482,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Libyan Arab Jamahiriya</fullName>
+            <fullName>Libya</fullName>
             <default>false</default>
         </values>
         <values>
@@ -646,7 +642,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Palestinian Territory%2C Occupied</fullName>
+            <fullName>Palestine</fullName>
             <default>false</default>
         </values>
         <values>
@@ -662,7 +658,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>People%27s Democratic Republic of Lao</fullName>
+            <fullName>Laos</fullName>
             <default>false</default>
         </values>
         <values>
@@ -686,10 +682,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Principality of Andorra</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Puerto Rico</fullName>
             <default>false</default>
         </values>
@@ -698,15 +690,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Republic of Korea</fullName>
+            <fullName>South Korea</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Republic of Madagascar</fullName>
+            <fullName>Madagascar</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Republic of Moldova</fullName>
+            <fullName>Moldova</fullName>
             <default>false</default>
         </values>
         <values>
@@ -718,7 +710,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Russian Federation</fullName>
+            <fullName>Russia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -838,11 +830,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Syrian Arab Republic</fullName>
+            <fullName>Syria</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Taiwan%2C Province of China</fullName>
+            <fullName>Taiwan</fullName>
             <default>false</default>
         </values>
         <values>
@@ -858,7 +850,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>The Former Yugoslav Republic of Macedonia</fullName>
+            <fullName>North Macedonia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -914,7 +906,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>United Republic of Tanzania</fullName>
+            <fullName>Tanzania</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1177,10 +1169,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Democratic People%27s Republic of Korea</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Denmark</fullName>
             <default>false</default>
         </values>
@@ -1237,7 +1225,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Federated States of Micronesia</fullName>
+            <fullName>Micronesia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1333,7 +1321,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Holy See %28Vatican City State%29</fullName>
+            <fullName>Vatican City</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1369,7 +1357,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Isle of man</fullName>
+            <fullName>Isle of Man</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1405,7 +1393,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Kingdom of Cambodia</fullName>
+            <fullName>Cambodia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1421,7 +1409,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Kyrgyz Republic</fullName>
+            <fullName>Kyrgyzstan</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1441,7 +1429,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Libyan Arab Jamahiriya</fullName>
+            <fullName>Libya</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1601,7 +1589,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Palestinian Territory%2C Occupied</fullName>
+            <fullName>Palestine</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1617,7 +1605,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>People%27s Democratic Republic of Lao</fullName>
+            <fullName>Laos</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1641,10 +1629,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Principality of Andorra</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Puerto Rico</fullName>
             <default>false</default>
         </values>
@@ -1653,15 +1637,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Republic of Korea</fullName>
+            <fullName>South Korea</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Republic of Madagascar</fullName>
+            <fullName>Madagascar</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Republic of Moldova</fullName>
+            <fullName>Moldova</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1673,7 +1657,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Russian Federation</fullName>
+            <fullName>Russia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1793,11 +1777,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Syrian Arab Republic</fullName>
+            <fullName>Syria</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Taiwan%2C Province of China</fullName>
+            <fullName>Taiwan</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1813,7 +1797,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>The Former Yugoslav Republic of Macedonia</fullName>
+            <fullName>North Macedonia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1869,7 +1853,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>United Republic of Tanzania</fullName>
+            <fullName>Tanzania</fullName>
             <default>false</default>
         </values>
         <values>
