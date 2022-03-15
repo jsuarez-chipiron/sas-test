@@ -25,7 +25,7 @@ public without sharing class ContentVersions extends fflib_SObjectDomain {
     List<Id> racerFileIds = new List<Id>();
 
     for (ContentVersion cv : (List<ContentVersion>) Records) {
-      if (RacerResponseHandlers.isARacerFile(cv.Title)) {
+      if (RacerResponseHandlers.isARacerFile(cv.Title, cv.OwnerId)) {
         racerFileIds.add(cv.Id);
       }
     }

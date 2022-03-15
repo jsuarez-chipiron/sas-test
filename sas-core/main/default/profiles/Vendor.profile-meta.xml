@@ -1063,7 +1063,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Flight__Number</field>
+        <field>Case.Flight_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

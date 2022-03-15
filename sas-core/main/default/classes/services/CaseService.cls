@@ -41,9 +41,9 @@ public without sharing class CaseService {
           form.formData.feedbackCategory
         ),
         Feedback_Type__c = jsonToPicklist.get(form.formData.feedbackType),
-        Flight_Date__c = form.formdata.flightDate == null
+        Flight_Date__c = form.formdata.departureDate == null
           ? null
-          : Date.valueOf(form.formdata.flightDate),
+          : Date.valueOf(form.formdata.departureDate),
         Flight_Number__c = form.formdata.flightNumber,
         OwnerId = feedbackQueue.Id,
         RecordTypeId = Cases.CLAIMS_RECORD_TYPE_ID,
