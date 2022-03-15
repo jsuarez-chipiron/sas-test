@@ -31,14 +31,24 @@
         <label>EUR</label>
     </customValue>
     <customValue>
-        <fullName>GPB</fullName>
+        <fullName>GBP</fullName>
         <default>false</default>
-        <label>GPB</label>
+        <label>GBP</label>
+    </customValue>
+    <customValue>
+        <fullName>HKD</fullName>
+        <default>false</default>
+        <label>HKD</label>
     </customValue>
     <customValue>
         <fullName>JPY</fullName>
         <default>false</default>
         <label>JPY</label>
+    </customValue>
+    <customValue>
+        <fullName>NOK</fullName>
+        <default>false</default>
+        <label>NOK</label>
     </customValue>
     <customValue>
         <fullName>NZD</fullName>

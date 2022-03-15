@@ -13,7 +13,7 @@ public without sharing class SettlementService {
    * Create a batch file from all settlements waiting for transfer to Racer
    * for the given currency.
    */
-  public static void createPaymentFile(
+  public static Id createPaymentFile(
     PaymentFileBuilder.PaymentCurrency fileCurrency
   ) {
     List<String> currencies;
@@ -48,7 +48,7 @@ public without sharing class SettlementService {
         'Settlements',
         null
       );
-      return;
+      return null;
     }
 
     List<PaymentEntry> paymentEntries = new List<PaymentEntry>();
@@ -77,13 +77,14 @@ public without sharing class SettlementService {
     counter.Payment_Run_Id__c += 1;
     uow.registerDirty(counter);
     uow.commitWork();
+    return textFileHandle;
   }
 
   /**
    * Creates a batch file for all settlement items waiting to be sent to
    * Racer for the given currency.
    */
-  public static void createAccountingFile(
+  public static Id createAccountingFile(
     AccountingFileBuilder.PaymentCurrency fileCurrency
   ) {
     Racer_Integration_Counter__c counter = racerIntegrationCounters.selectByCurrency(
@@ -124,7 +125,7 @@ public without sharing class SettlementService {
         'Settlements',
         null
       );
-      return;
+      return null;
     }
 
     List<AccountingEntry> accountingEntries = new List<AccountingEntry>();
@@ -151,6 +152,8 @@ public without sharing class SettlementService {
     counter.Accounting_Verification_Number__c += 1;
     uow.registerDirty(counter);
     uow.commitWork();
+
+    return textFileHandle;
   }
 
   public static void sendAccountingFile(Id fileId) {

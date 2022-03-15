@@ -256,11 +256,6 @@
         <label>Czech Republic</label>
     </customValue>
     <customValue>
-        <fullName>Democratic People&apos;s Republic of Korea</fullName>
-        <default>false</default>
-        <label>Democratic People&apos;s Republic of Korea</label>
-    </customValue>
-    <customValue>
         <fullName>Denmark</fullName>
         <default>false</default>
         <label>Denmark</label>
@@ -331,14 +326,19 @@
         <label>Faroe Islands</label>
     </customValue>
     <customValue>
-        <fullName>Federated States of Micronesia</fullName>
+        <fullName>Micronesia</fullName>
         <default>false</default>
-        <label>Federated States of Micronesia</label>
+        <label>Micronesia</label>
     </customValue>
     <customValue>
         <fullName>Fiji</fullName>
         <default>false</default>
         <label>Fiji</label>
+    </customValue>
+    <customValue>
+        <fullName>Finland</fullName>
+        <default>false</default>
+        <label>Finland</label>
     </customValue>
     <customValue>
         <fullName>France</fullName>
@@ -446,9 +446,9 @@
         <label>Heard and Mc Donald Islands</label>
     </customValue>
     <customValue>
-        <fullName>Holy See (Vatican City State)</fullName>
+        <fullName>Vatican City</fullName>
         <default>false</default>
-        <label>Holy See (Vatican City State)</label>
+        <label>Vatican City</label>
     </customValue>
     <customValue>
         <fullName>Honduras</fullName>
@@ -486,14 +486,19 @@
         <label>Iraq</label>
     </customValue>
     <customValue>
+        <fullName>Iran</fullName>
+        <default>false</default>
+        <label>Iran</label>
+    </customValue>
+    <customValue>
         <fullName>Ireland</fullName>
         <default>false</default>
         <label>Ireland</label>
     </customValue>
     <customValue>
-        <fullName>Isle of man</fullName>
+        <fullName>Isle of Man</fullName>
         <default>false</default>
-        <label>Isle of man</label>
+        <label>Isle of Man</label>
     </customValue>
     <customValue>
         <fullName>Israel</fullName>
@@ -536,9 +541,9 @@
         <label>Kenya</label>
     </customValue>
     <customValue>
-        <fullName>Kingdom of Cambodia</fullName>
+        <fullName>Cambodia</fullName>
         <default>false</default>
-        <label>Kingdom of Cambodia</label>
+        <label>Cambodia</label>
     </customValue>
     <customValue>
         <fullName>Kiribati</fullName>
@@ -556,9 +561,14 @@
         <label>Kuwait</label>
     </customValue>
     <customValue>
-        <fullName>Kyrgyz Republic</fullName>
+        <fullName>Kyrgyzstan</fullName>
         <default>false</default>
-        <label>Kyrgyz Republic</label>
+        <label>Kyrgyzstan</label>
+    </customValue>
+    <customValue>
+        <fullName>Laos</fullName>
+        <default>false</default>
+        <label>Laos</label>
     </customValue>
     <customValue>
         <fullName>Latvia</fullName>
@@ -581,9 +591,9 @@
         <label>Liberia</label>
     </customValue>
     <customValue>
-        <fullName>Libyan Arab Jamahiriya</fullName>
+        <fullName>Libya</fullName>
         <default>false</default>
-        <label>Libyan Arab Jamahiriya</label>
+        <label>Libya</label>
     </customValue>
     <customValue>
         <fullName>Liechtenstein</fullName>
@@ -756,6 +766,11 @@
         <label>Norfolk Island</label>
     </customValue>
     <customValue>
+        <fullName>North Macedonia</fullName>
+        <default>false</default>
+        <label>North Macedonia</label>
+    </customValue>
+    <customValue>
         <fullName>Northern Mariana Islands</fullName>
         <default>false</default>
         <label>Northern Mariana Islands</label>
@@ -764,6 +779,11 @@
         <fullName>Norway</fullName>
         <default>false</default>
         <label>Norway</label>
+    </customValue>
+    <customValue>
+        <fullName>Not Applicable</fullName>
+        <default>false</default>
+        <label>Not Applicable</label>
     </customValue>
     <customValue>
         <fullName>Oman</fullName>
@@ -781,9 +801,9 @@
         <label>Palau</label>
     </customValue>
     <customValue>
-        <fullName>Palestinian Territory, Occupied</fullName>
+        <fullName>Palestine</fullName>
         <default>false</default>
-        <label>Palestinian Territory, Occupied</label>
+        <label>Palestine</label>
     </customValue>
     <customValue>
         <fullName>Panama</fullName>
@@ -799,11 +819,6 @@
         <fullName>Paraguay</fullName>
         <default>false</default>
         <label>Paraguay</label>
-    </customValue>
-    <customValue>
-        <fullName>People&apos;s Democratic Republic of Lao</fullName>
-        <default>false</default>
-        <label>People&apos;s Democratic Republic of Lao</label>
     </customValue>
     <customValue>
         <fullName>Peru</fullName>
@@ -831,11 +846,6 @@
         <label>Portugal</label>
     </customValue>
     <customValue>
-        <fullName>Principality of Andorra</fullName>
-        <default>false</default>
-        <label>Principality of Andorra</label>
-    </customValue>
-    <customValue>
         <fullName>Puerto Rico</fullName>
         <default>false</default>
         <label>Puerto Rico</label>
@@ -846,19 +856,19 @@
         <label>Qatar</label>
     </customValue>
     <customValue>
-        <fullName>Republic of Korea</fullName>
+        <fullName>South Korea</fullName>
         <default>false</default>
-        <label>Republic of Korea</label>
+        <label>South Korea</label>
     </customValue>
     <customValue>
-        <fullName>Republic of Madagascar</fullName>
+        <fullName>Madagascar</fullName>
         <default>false</default>
-        <label>Republic of Madagascar</label>
+        <label>Madagascar</label>
     </customValue>
     <customValue>
-        <fullName>Republic of Moldova</fullName>
+        <fullName>Moldova</fullName>
         <default>false</default>
-        <label>Republic of Moldova</label>
+        <label>Moldova</label>
     </customValue>
     <customValue>
         <fullName>Reunion</fullName>
@@ -871,9 +881,9 @@
         <label>Romania</label>
     </customValue>
     <customValue>
-        <fullName>Russian Federation</fullName>
+        <fullName>Russia</fullName>
         <default>false</default>
-        <label>Russian Federation</label>
+        <label>Russia</label>
     </customValue>
     <customValue>
         <fullName>Rwanda</fullName>
@@ -1021,14 +1031,14 @@
         <label>Switzerland</label>
     </customValue>
     <customValue>
-        <fullName>Syrian Arab Republic</fullName>
+        <fullName>Syria</fullName>
         <default>false</default>
-        <label>Syrian Arab Republic</label>
+        <label>Syria</label>
     </customValue>
     <customValue>
-        <fullName>Taiwan, Province of China</fullName>
+        <fullName> Taiwan</fullName>
         <default>false</default>
-        <label>Taiwan, Province of China</label>
+        <label>Taiwan</label>
     </customValue>
     <customValue>
         <fullName>Tajikistan</fullName>
@@ -1044,11 +1054,6 @@
         <fullName>The Democratic Republic of the Congo</fullName>
         <default>false</default>
         <label>The Democratic Republic of the Congo</label>
-    </customValue>
-    <customValue>
-        <fullName>The Former Yugoslav Republic of Macedonia</fullName>
-        <default>false</default>
-        <label>The Former Yugoslav Republic of Macedonia</label>
     </customValue>
     <customValue>
         <fullName>Togo</fullName>
@@ -1116,9 +1121,9 @@
         <label>United Kingdom</label>
     </customValue>
     <customValue>
-        <fullName>United Republic of Tanzania</fullName>
+        <fullName>Tanzania</fullName>
         <default>false</default>
-        <label>United Republic of Tanzania</label>
+        <label>Tanzania</label>
     </customValue>
     <customValue>
         <fullName>United States</fullName>
@@ -1184,11 +1189,6 @@
         <fullName>Zimbabwe</fullName>
         <default>false</default>
         <label>Zimbabwe</label>
-    </customValue>
-    <customValue>
-        <fullName>Finland</fullName>
-        <default>false</default>
-        <label>Finland</label>
     </customValue>
     <masterLabel>Countries</masterLabel>
     <sorted>true</sorted>
