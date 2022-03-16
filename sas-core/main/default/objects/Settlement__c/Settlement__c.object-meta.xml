@@ -163,7 +163,15 @@
     </nameField>
     <pluralLabel>Settlements</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
-    <searchLayouts/>
+    <searchLayouts>
+        <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Settlement_Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Claim__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Payee_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Bank_Account_Number__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Voucher_Email__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EuroBonus_Number__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
