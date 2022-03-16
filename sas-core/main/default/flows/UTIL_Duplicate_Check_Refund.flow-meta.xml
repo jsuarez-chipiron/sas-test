@@ -4,7 +4,7 @@
     <assignments>
         <name>Add_duplicate_Case_Number_to_Collection</name>
         <label>Add duplicate Case Number to Collection</label>
-        <locationX>490</locationX>
+        <locationX>1122</locationX>
         <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>relatedOpenCaseNumbers</assignToReference>
@@ -20,7 +20,7 @@
     <assignments>
         <name>Add_duplicate_Case_Number_to_Collection_0</name>
         <label>Add duplicate Case Number to Collection</label>
-        <locationX>226</locationX>
+        <locationX>858</locationX>
         <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>relatedClosedCaseNumbers</assignToReference>
@@ -36,7 +36,7 @@
     <assignments>
         <name>Get_number_of_duplicates</name>
         <label>Get number of duplicates</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>numberOfDuplicates</assignToReference>
@@ -52,7 +52,7 @@
     <decisions>
         <name>Duplicate_Case_Status</name>
         <label>Duplicate Case Status</label>
-        <locationX>358</locationX>
+        <locationX>990</locationX>
         <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Add_duplicate_Case_Number_to_Collection</targetReference>
@@ -84,9 +84,49 @@
     <decisions>
         <name>If_Duplicates_exist</name>
         <label>If Duplicates exist</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>758</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Bad_PNRs</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Refund_Request.PNR__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>------</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Refund_Request.PNR__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ABCDEF</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Refund_Request.PNR__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NO PNR</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Refund_Request.PNR__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NOPNR1</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Refund_Request.PNR__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>XXXXXX</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Bad PNRs</label>
+        </rules>
         <rules>
             <name>Yes</name>
             <conditionLogic>and</conditionLogic>
@@ -95,6 +135,13 @@
                 <operator>GreaterThan</operator>
                 <rightValue>
                     <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>numberOfDuplicates</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>50.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -106,7 +153,7 @@
     <decisions>
         <name>If_record_was_found</name>
         <label>If record was found</label>
-        <locationX>600</locationX>
+        <locationX>1232</locationX>
         <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>Post_Comment_on_Duplicates</targetReference>
@@ -131,7 +178,7 @@
     <decisions>
         <name>Only_post_on_duplicates_for_new_cases</name>
         <label>Only post on duplicates for new cases</label>
-        <locationX>358</locationX>
+        <locationX>990</locationX>
         <locationY>1574</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -175,7 +222,7 @@
     <loops>
         <name>Post_Comment_on_Duplicates</name>
         <label>Post Comment on Duplicates</label>
-        <locationX>50</locationX>
+        <locationX>682</locationX>
         <locationY>878</locationY>
         <collectionReference>Get_Potential_Duplicates</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -208,7 +255,7 @@
     <recordCreates>
         <name>Create_Feed_Post_on_Duplicate</name>
         <label>Create Feed Post on Duplicate</label>
-        <locationX>138</locationX>
+        <locationX>770</locationX>
         <locationY>1694</locationY>
         <connector>
             <targetReference>Post_Comment_on_Duplicates</targetReference>
@@ -243,7 +290,7 @@
     <recordCreates>
         <name>Create_Feed_Post_on_New_Case</name>
         <label>Create Feed Post on New Case</label>
-        <locationX>50</locationX>
+        <locationX>682</locationX>
         <locationY>2102</locationY>
         <inputAssignments>
             <field>Body</field>
@@ -275,7 +322,7 @@
     <recordLookups>
         <name>Get_connected_case</name>
         <label>Get connected case</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -296,7 +343,7 @@
     <recordLookups>
         <name>Get_duplicate_Case</name>
         <label>Get duplicate Case</label>
-        <locationX>600</locationX>
+        <locationX>1232</locationX>
         <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -324,7 +371,7 @@
     <recordLookups>
         <name>Get_Potential_Duplicates</name>
         <label>Get Potential Duplicates</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -352,7 +399,7 @@
     <recordLookups>
         <name>Get_Refund_Request</name>
         <label>Get Refund Request</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -373,7 +420,7 @@
     <recordLookups>
         <name>Get_SAS_AP</name>
         <label>Get SAS AP</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -393,7 +440,7 @@
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_SAS_AP</targetReference>
