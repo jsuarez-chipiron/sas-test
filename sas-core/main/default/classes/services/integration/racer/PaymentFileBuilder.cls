@@ -35,6 +35,25 @@ public class PaymentFileBuilder {
   public class CreateFileException extends Exception {
   }
 
+  private static final Id RACER_FILES_CONTENT_WORKSPACE_ID = [
+        SELECT Id
+        FROM ContentWorkspace
+        WHERE Name = 'Racer Files'
+      ]
+      .isEmpty()
+    ? null
+    : [SELECT Id FROM ContentWorkspace WHERE Name = 'Racer Files'][0].Id;
+
+  private static final Id PAYMENT_FOLDER_ID = [
+        SELECT Id
+        FROM ContentFolder
+        WHERE Name = 'racer-outgoing-payment'
+      ]
+      .isEmpty()
+    ? null
+    : [SELECT Id FROM ContentFolder WHERE Name = 'racer-outgoing-payment'][0]
+      .Id;
+
   private static final String TODAYS_DATE = Datetime.now().format('yyyyMMdd');
 
   public enum PaymentCurrency {
@@ -135,6 +154,23 @@ public class PaymentFileBuilder {
       VersionData = Blob.valueOf(fileContents)
     );
     insert paymentFile;
+
+    // Insert generated file to a folder visible to admins
+    ContentVersion paymentFileAfterInsert = [
+      SELECT ContentDocumentId
+      FROM ContentVersion
+      WHERE Id = :paymentFile.Id
+    ];
+
+    ContentVersions file = new ContentVersions(
+      new List<ContentVersion>{ paymentFileAfterInsert }
+    );
+    if (RACER_FILES_CONTENT_WORKSPACE_ID != null) {
+      file.moveToWorkspace(RACER_FILES_CONTENT_WORKSPACE_ID);
+    }
+    if (PAYMENT_FOLDER_ID != null) {
+      file.moveToFolder(PAYMENT_FOLDER_ID);
+    }
 
     return paymentFile.Id;
   }
