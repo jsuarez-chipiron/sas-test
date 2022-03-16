@@ -40,6 +40,11 @@
         <default>false</default>
         <label>Refunds</label>
     </customValue>
+    <customValue>
+        <fullName>Customer Care</fullName>
+        <default>false</default>
+        <label>Customer Care</label>
+    </customValue>
     <description>The virtual organization of the user or record owner</description>
     <masterLabel>FCS Virtual Organization</masterLabel>
     <sorted>true</sorted>
