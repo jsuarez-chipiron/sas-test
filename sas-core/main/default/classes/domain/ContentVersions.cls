@@ -2,6 +2,7 @@ public without sharing class ContentVersions extends fflib_SObjectDomain {
   public ContentVersions(List<SObject> records) {
     super(records);
     Configuration.disableTriggerCRUDSecurity();
+    this.instanceRecords = (List<ContentVersion>) Records;
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
@@ -9,6 +10,8 @@ public without sharing class ContentVersions extends fflib_SObjectDomain {
       return new ContentVersions(records);
     }
   }
+
+  private List<ContentVersion> instanceRecords;
 
   public static ContentVersions newInstance(List<ContentVersion> sObjectList) {
     return (ContentVersions) SAS_Service_Application.Domain.newInstance(
@@ -21,10 +24,67 @@ public without sharing class ContentVersions extends fflib_SObjectDomain {
     handleCurrencyFiles();
   }
 
+  /**
+   * Moves the records to the ContentFolder with the given Id.
+   *
+   * ContentDocuments are linked to folders through a ContentFolderMember
+   * record.
+   */
+  public void moveToFolder(Id folderToMoveTo) {
+    List<ContentFolderMember> toUpdate = new List<ContentFolderMember>();
+
+    Set<Id> recordIds = new Set<Id>();
+
+    for (ContentVersion cv : instanceRecords) {
+      recordIds.add(cv.ContentDocumentId);
+    }
+
+    List<ContentFolderMember> existingFolderMemberships = [
+      SELECT Id, ParentContentFolderId
+      FROM ContentFolderMember
+      WHERE ChildRecordId IN :recordIds
+    ];
+
+    for (ContentFolderMember cfm : existingFolderMemberships) {
+      cfm.ParentContentFolderId = folderToMoveTo;
+      toUpdate.add(cfm);
+    }
+
+    if (!toUpdate.isEmpty()) {
+      update toUpdate;
+    }
+  }
+
+  /**
+   * Moves the records to the ContentWorkspace with the given Id.
+   *
+   * ContentDocuments are linked to workspaces through a ContentDocumentLink
+   * record.
+   */
+  public void moveToWorkspace(Id workspaceToMoveTo) {
+    List<ContentDocumentLink> toInsert = new List<ContentDocumentLink>();
+
+    for (ContentVersion cv : instanceRecords) {
+      if (cv.ContentDocumentId != null) {
+        toInsert.add(
+          new ContentDocumentLink(
+            ContentDocumentId = cv.ContentDocumentId,
+            LinkedEntityId = workspaceToMoveTo,
+            Visibility = 'AllUsers'
+          )
+        );
+      }
+    }
+
+    if (!toInsert.isEmpty()) {
+      insert toInsert;
+    }
+  }
+
   private void handleRacerFiles() {
     List<Id> racerFileIds = new List<Id>();
 
-    for (ContentVersion cv : (List<ContentVersion>) Records) {
+    for (ContentVersion cv : instanceRecords) {
       if (RacerResponseHandlers.isARacerFile(cv.Title, cv.OwnerId)) {
         racerFileIds.add(cv.Id);
       }
