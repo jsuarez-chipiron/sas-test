@@ -7,6 +7,9 @@ public without sharing class CLMIntegrationService {
   private static final String SUBSCRIPTION_KEY = Test.isRunningTest()
     ? 'TESTKEY'
     : C_Settings.getSettings('CLM').get('CLM_APIM_Subscription_Key');
+  private static final String CLM_KEY = Test.isRunningTest()
+    ? 'TESTKEY'
+    : C_Settings.getSettings('CLM').get('CLM_Key');
 
   public enum POINTS_TYPE {
     BASIC,
@@ -235,7 +238,7 @@ public without sharing class CLMIntegrationService {
 
     request.setHeader('Ocp-Apim-Subscription-Key', SUBSCRIPTION_KEY);
     request.setHeader('Content-Type', 'application/json');
-    request.setHeader('CLMbase64', ''); // Empty for test. Set for Prod.
+    request.setHeader('CLMbase64', CLM_KEY);
 
     request.setTimeout(120000); // In milliseconds. CLM is sometimes slow.
 
