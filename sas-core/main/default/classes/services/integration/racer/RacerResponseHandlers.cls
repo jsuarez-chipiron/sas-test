@@ -9,15 +9,35 @@ public class RacerResponseHandlers {
   private static SettlementsSelector settlementsSel = SettlementsSelector.newInstance();
   private static SettlementItemsSelector settlementItemsSel = SettlementItemsSelector.newInstance();
 
+  private static final Id INTEGRATION_USER_ID = [
+      SELECT Id
+      FROM User
+      WHERE Email = 'seip@sas.se'
+    ]
+    .size() > 0
+    ? [SELECT Id FROM User WHERE Email = 'seip@sas.se'][0].Id
+    : null;
+
+  private static final String RACER_FILES_CONTENT_WORKSPACE_NAME = 'Racer Files';
+  private static final String PAYMUL_FOLDER_NAME = 'racer-incoming-paymul';
+  private static final String L1_FOLDER_NAME = 'racer-incoming-l1';
+  private static final String L2_FOLDER_NAME = 'racer-incoming-l2';
+  private static final String GL_FOLDER_NAME = 'racer-incoming-gl';
+
   /**
    * Returns true if the file appears to be a file from RACER based on the
    * filename.
    */
-  public static Boolean isARacerFile(String fileName) {
-    return fileName.startsWith('CARE_PAYMUL_') ||
+  public static Boolean isARacerFile(String fileName, Id fileOwnerId) {
+    // A simple solution for ensuring that accidentally similarly named files are disregarded.
+    Boolean isRunningTestOrFileOwnerIsIntegrationUser =
+      (C_Util.isSandbox() || Test.isRunningTest()) ||
+      (fileOwnerId == INTEGRATION_USER_ID);
+    return isRunningTestOrFileOwnerIsIntegrationUser &&
+      (fileName.startsWith('CARE_PAYMUL_') ||
       fileName.startsWith('CARE_PAINL1_') ||
       fileName.startsWith('CARE_PAINL2_') ||
-      fileName.startsWith('CARE_RACERGL_');
+      fileName.startsWith('CARE_RACERGL_'));
   }
 
   /**
@@ -77,6 +97,7 @@ public class RacerResponseHandlers {
         .markAsReceivedByRacer(documentStatus, errorDetail, uow);
     }
     uow.commitWork();
+    moveToFolder(cv, PAYMUL_FOLDER_NAME);
   }
 
   private static Void processL1StatusReport(ContentVersion cv) {
@@ -110,6 +131,7 @@ public class RacerResponseHandlers {
         .markAsReceivedByBank(documentStatus, errorDetail, uow);
     }
     uow.commitWork();
+    moveToFolder(cv, L1_FOLDER_NAME);
   }
 
   private static Void processL2StatusReport(ContentVersion cv) {
@@ -156,6 +178,7 @@ public class RacerResponseHandlers {
     }
 
     uow.commitWork();
+    moveToFolder(cv, L2_FOLDER_NAME);
   }
 
   private static Void processAccountingStatusReport(ContentVersion cv) {
@@ -182,5 +205,35 @@ public class RacerResponseHandlers {
     );
     SettlementItems.newInstance(correspondingSettlementItems)
       .markAsReceivedByRacer(documentStatus, errorDetail);
+    moveToFolder(cv, GL_FOLDER_NAME);
+  }
+
+  /**
+   * Moves the given file to the folder with the given name.
+   *
+   * Used to make the files visible to admins after creation.
+   */
+  private static void moveToFolder(ContentVersion cv, String folderName) {
+    List<ContentWorkspace> workspace = [
+      SELECT Id
+      FROM ContentWorkspace
+      WHERE Name = :RACER_FILES_CONTENT_WORKSPACE_NAME
+    ];
+
+    List<ContentFolder> folder = [
+      SELECT Id
+      FROM ContentFolder
+      WHERE Name = :folderName
+    ];
+
+    ContentVersions file = ContentVersions.newInstance(
+      new List<ContentVersion>{ cv }
+    );
+    if (!workspace.isEmpty()) {
+      file.moveToWorkspace(workspace[0].Id);
+    }
+    if (!folder.isEmpty()) {
+      file.moveToFolder(folder[0].Id);
+    }
   }
 }

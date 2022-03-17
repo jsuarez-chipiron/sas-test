@@ -84,7 +84,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     String paymentFilename,
     fflib_ISObjectUnitOfWork uow
   ) {
-    for (Settlement__c s : (List<Settlement__c>) Records) {
+    for (Settlement__c s : instanceRecords) {
       s.Payment_File_Name__c = paymentFilename;
       s.Settlement_Status__c = STATUS_SENT_TO_RACER;
       uow.registerDirty(s);
@@ -105,7 +105,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     if (bankStatus == 'ACCEPTED') {
       Set<Id> acceptedSettlementIds = new Set<Id>();
 
-      for (Settlement__c s : (List<Settlement__c>) Records) {
+      for (Settlement__c s : instanceRecords) {
         s.Settlement_Status__c = STATUS_DONE;
         uow.registerDirty(s);
         acceptedSettlementIds.add(s.Id);
@@ -117,7 +117,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       SettlementItems.newInstance(correspondingSettlements)
         .markAsReadyForTransfer(uow);
     } else {
-      for (Settlement__c s : (List<Settlement__c>) Records) {
+      for (Settlement__c s : instanceRecords) {
         s.Settlement_Status__c = STATUS_REJECTED_BY_BANK;
         s.Error_Message__c = errorMessage;
         uow.registerDirty(s);
@@ -144,12 +144,12 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     fflib_ISObjectUnitOfWork uow
   ) {
     if (racerStatus == 'PROCESSED') {
-      for (Settlement__c s : (List<Settlement__c>) Records) {
+      for (Settlement__c s : instanceRecords) {
         s.Settlement_Status__c = STATUS_SENT_TO_BANK;
         uow.registerDirty(s);
       }
     } else {
-      for (Settlement__c s : (List<Settlement__c>) Records) {
+      for (Settlement__c s : instanceRecords) {
         s.Settlement_Status__c = STATUS_REJECTED_BY_RACER;
         s.Error_Message__c = errorMessage;
         uow.registerDirty(s);
@@ -174,7 +174,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     String errorMessage,
     fflib_ISObjectUnitOfWork uow
   ) {
-    for (Settlement__c s : (List<Settlement__c>) Records) {
+    for (Settlement__c s : instanceRecords) {
       s.Settlement_Status__c = STATUS_FAILED;
       s.Error_Message__c = errorMessage;
       uow.registerDirty(s);
@@ -195,7 +195,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   }
 
   public void markAsDone(String reference, fflib_ISObjectUnitOfWork uow) {
-    for (Settlement__c s : (List<Settlement__c>) Records) {
+    for (Settlement__c s : instanceRecords) {
       s.Settlement_Status__c = STATUS_DONE;
       s.External_Reference__c = reference;
       uow.registerDirty(s);
@@ -209,7 +209,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   }
 
   public void markAsFailed(String errorMessage, fflib_ISObjectUnitOfWork uow) {
-    for (Settlement__c s : (List<Settlement__c>) Records) {
+    for (Settlement__c s : instanceRecords) {
       s.Settlement_Status__c = STATUS_FAILED;
       s.Error_Message__c = errorMessage;
       uow.registerDirty(s);
@@ -221,6 +221,32 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       'Settlements',
       null
     );
+  }
+
+  /**
+   * Locks a list of settlements.
+   *
+   * Locks also all settlement items related to this settlement.
+   */
+  public void lock() {
+    List<Settlement_Item__c> settlementItemsForInstanceRecords = settlementItemsSel.selectBySettlementIds(
+      (new Map<Id, Settlement__c>(instanceRecords)).keySet()
+    );
+    Approval.lock(instanceRecords);
+    Approval.lock(settlementItemsForInstanceRecords);
+  }
+
+  /**
+   * Unlocks a list of settlements.
+   *
+   * Unlocks also all settlement items related to this settlement.
+   */
+  public void unlock() {
+    List<Settlement_Item__c> settlementItemsForInstanceRecords = settlementItemsSel.selectBySettlementIds(
+      (new Map<Id, Settlement__c>(instanceRecords)).keySet()
+    );
+    Approval.unlock(instanceRecords);
+    Approval.unlock(settlementItemsForInstanceRecords);
   }
 
   public class UpdateSettlementException extends Exception {

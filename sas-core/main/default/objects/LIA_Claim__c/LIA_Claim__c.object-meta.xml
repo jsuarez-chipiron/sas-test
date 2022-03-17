@@ -162,7 +162,16 @@
     </nameField>
     <pluralLabel>Claims</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
-    <searchLayouts/>
+    <searchLayouts>
+        <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Case__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact_Full_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact_Email__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EuroBonus_Number__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Liability_PNR__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Flight_Number__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Bank_Account_Number__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

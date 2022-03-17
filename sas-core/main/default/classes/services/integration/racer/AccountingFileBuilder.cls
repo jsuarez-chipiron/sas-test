@@ -9,6 +9,25 @@ public class AccountingFileBuilder {
   public class CreateFileException extends Exception {
   }
 
+  private static final Id RACER_FILES_CONTENT_WORKSPACE_ID = [
+        SELECT Id
+        FROM ContentWorkspace
+        WHERE Name = 'Racer Files'
+      ]
+      .isEmpty()
+    ? null
+    : [SELECT Id FROM ContentWorkspace WHERE Name = 'Racer Files'][0].Id;
+
+  private static final Id ACCOUNTING_FOLDER_ID = [
+        SELECT Id
+        FROM ContentFolder
+        WHERE Name = 'racer-outgoing-accounting'
+      ]
+      .isEmpty()
+    ? null
+    : [SELECT Id FROM ContentFolder WHERE Name = 'racer-outgoing-accounting'][0]
+      .Id;
+
   public enum PaymentCurrency {
     SEK,
     DKK,
@@ -114,7 +133,7 @@ public class AccountingFileBuilder {
       '0' +
       todaysDate +
       '.sf' +
-      fileCurrency.name().toLowerCase(); // TODO: This isn't the same as the files we have.
+      fileCurrency.name().toLowerCase();
 
     ContentVersion accountingFile = new ContentVersion(
       ContentLocation = 'S',
@@ -124,6 +143,23 @@ public class AccountingFileBuilder {
     );
 
     insert accountingFile;
+
+    // Insert generated file to a folder visible to admins
+    ContentVersion accountingFileAfterInsert = [
+      SELECT ContentDocumentId
+      FROM ContentVersion
+      WHERE Id = :accountingFile.Id
+    ];
+
+    ContentVersions file = new ContentVersions(
+      new List<ContentVersion>{ accountingFileAfterInsert }
+    );
+    if (RACER_FILES_CONTENT_WORKSPACE_ID != null) {
+      file.moveToWorkspace(RACER_FILES_CONTENT_WORKSPACE_ID);
+    }
+    if (ACCOUNTING_FOLDER_ID != null) {
+      file.moveToFolder(ACCOUNTING_FOLDER_ID);
+    }
 
     return accountingFile.Id;
   }

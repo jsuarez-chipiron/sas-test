@@ -74,7 +74,7 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
     return (List<Settlement__c>) Database.query(
       newQueryFactory()
         .setCondition(
-          'Settlement_Status__c =:statusToTake AND Currency__c in :currencies AND RecordTypeId = :recordTypeIdToTake'
+          'Settlement_Status__c =:statusToTake AND Currency__c in :currencies AND Control_verified__c = true AND RecordTypeId = :recordTypeIdToTake'
         )
         .toSOQL()
     );
