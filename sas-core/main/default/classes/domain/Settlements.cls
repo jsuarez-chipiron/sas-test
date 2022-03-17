@@ -1,12 +1,51 @@
 public without sharing class Settlements extends fflib_SObjectDomain {
   private static SettlementItemsSelector settlementItemsSel = SettlementItemsSelector.newInstance();
+  private static ExchangeRatesSelector exchangeRatesSel = ExchangeRatesSelector.newInstance();
 
   public Settlements(List<SObject> records) {
     super(records);
+    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Settlement__c>) Records;
   }
 
+  public class Constructor implements fflib_SObjectDomain.IConstructable {
+    public fflib_SObjectDomain construct(List<SObject> records) {
+      return new Settlements(records);
+    }
+  }
+
+  public static Settlements newInstance(List<Settlement__c> sObjectList) {
+    return (Settlements) SAS_Service_Application.Domain.newInstance(
+      sObjectList
+    );
+  }
+
   private List<Settlement__c> instanceRecords;
+
+  public enum RecordType {
+    EBPoints,
+    Monetary,
+    Voucher
+  }
+
+  public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
+    RecordType.EBPoints => 'EB points',
+    RecordType.Monetary => 'Monetary',
+    RecordType.Voucher => 'Voucher'
+  };
+
+  private static Map<RecordType, Id> recordTypeToId = new Map<RecordType, String>();
+
+  public static Id getRecordTypeId(RecordType rt) {
+    Id rtId = recordTypeToId.get(rt);
+    if (rtId == null) {
+      rtId = Schema.SObjectType.Settlement__c.getRecordTypeInfosByName()
+        .get(recordTypeToDeveloperName.get(rt))
+        .getRecordTypeId();
+      recordTypeToId.put(rt, rtId);
+    }
+    return rtId;
+  }
 
   private static final Map<String, String> voucherTypeToCostAccount = new Map<String, String>{
     '6721 - Denied boarding involuntary voucher' => '6721',
@@ -46,32 +85,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   public static final String STATUS_DONE = 'Done';
   public static final String STATUS_FAILED = 'Failed';
 
-  public static final Id MONETARY_RECORD_TYPE_ID = Schema.SObjectType.Settlement__c.getRecordTypeInfosByName()
-    .get('Monetary')
-    .getRecordTypeId();
-  public static final Id VOUCHER_RECORD_TYPE_ID = Schema.SObjectType.Settlement__c.getRecordTypeInfosByName()
-    .get('Voucher')
-    .getRecordTypeId();
-  public static final Id EUROBONUS_POINTS_RECORD_TYPE_ID = Schema.SObjectType.Settlement__c.getRecordTypeInfosByName()
-    .get('EB points')
-    .getRecordTypeId();
-
-  private static ExchangeRatesSelector exchangeRatesSel = ExchangeRatesSelector.newInstance();
-
-  public class Constructor implements fflib_SObjectDomain.IConstructable {
-    public fflib_SObjectDomain construct(List<SObject> records) {
-      return new Settlements(records);
-    }
-  }
-
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
     processPayableVoucherAndEuroBonusSettlements();
-  }
-
-  public static Settlements newInstance(List<Settlement__c> sObjectList) {
-    return (Settlements) SAS_Service_Application.Domain.newInstance(
-      sObjectList
-    );
   }
 
   public void markAsSentToRacer(String paymentFilename) {
@@ -268,7 +283,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     Settlement__c settlement = instanceRecords[0];
 
     if (
-      settlement.RecordTypeId != EUROBONUS_POINTS_RECORD_TYPE_ID &&
+      settlement.RecordTypeId != getRecordTypeId(Settlements.RecordType.EBPoints) &&
       settlement.Currency__c == null
     ) {
       throw new UpdateSettlementException(
@@ -307,7 +322,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         item.Status__c = SettlementItems.STATUS_DRAFT;
         item.Settlement__c = settlement.Id;
 
-        if (settlement.RecordTypeId == VOUCHER_RECORD_TYPE_ID) {
+        if (settlement.RecordTypeId == getRecordTypeId(Settlements.RecordType.Voucher)) {
           // Voucher cost accounts can be set automatically based on voucher type.
           item.Cost_Account__c = voucherTypeToCostAccount.get(
             settlement.Voucher_Type__c
@@ -318,7 +333,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       }
       uow.registerUpsert(itemsToUpsert);
 
-      if (settlement.RecordTypeId == EUROBONUS_POINTS_RECORD_TYPE_ID) {
+      if (settlement.RecordTypeId == getRecordTypeId(Settlements.RecordType.EBPoints)) {
         settlement.EuroBonus_Points__c = settlementTotal;
       } else {
         settlement.Amount__c = settlementTotal;
@@ -351,9 +366,9 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   private void processPayableVoucherAndEuroBonusSettlements() {
     for (Settlement__c settlement : instanceRecords) {
       if (settlement.Settlement_Status__c == STATUS_WAITING_FOR_TRANSFER) {
-        if (settlement.RecordTypeId == EUROBONUS_POINTS_RECORD_TYPE_ID) {
+        if (settlement.RecordTypeId == getRecordTypeId(Settlements.RecordType.EBPoints)) {
           SettlementService.sendEuroBonusPoints(settlement.Id);
-        } else if (settlement.RecordTypeId == VOUCHER_RECORD_TYPE_ID) {
+        } else if (settlement.RecordTypeId == getRecordTypeId(Settlements.RecordType.Voucher)) {
           SettlementService.createAndSendVoucher(settlement.Id);
         }
       }

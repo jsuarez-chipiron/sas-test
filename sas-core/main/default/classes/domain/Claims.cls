@@ -1,6 +1,7 @@
 public without sharing class Claims extends fflib_SObjectDomain {
   public Claims(List<SObject> records) {
     super(records);
+    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<LIA_Claim__c>) Records;
   }
 
@@ -10,13 +11,31 @@ public without sharing class Claims extends fflib_SObjectDomain {
     }
   }
 
-  private List<LIA_Claim__c> instanceRecords;
-  public static final Id CLAIMS_RECORD_TYPE_ID = Schema.SObjectType.LIA_Claim__c.getRecordTypeInfosByName()
-    .get('CustomerClaim')
-    .getRecordTypeId();
-
   public static Claims newInstance(List<LIA_Claim__c> sObjectList) {
     return (Claims) SAS_Service_Application.Domain.newInstance(sObjectList);
+  }
+
+  private List<LIA_Claim__c> instanceRecords;
+
+  public enum RecordType {
+    CustomerClaim
+  }
+
+  public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
+    RecordType.CustomerClaim => 'CustomerClaim'
+  };
+
+  private static Map<RecordType, Id> recordTypeToId = new Map<RecordType, String>();
+
+  public static Id getRecordTypeId(RecordType rt) {
+    Id rtId = recordTypeToId.get(rt);
+    if (rtId == null) {
+      rtId = Schema.SObjectType.LIA_Claim__c.getRecordTypeInfosByName()
+        .get(recordTypeToDeveloperName.get(rt))
+        .getRecordTypeId();
+      recordTypeToId.put(rt, rtId);
+    }
+    return rtId;
   }
 
   public override void onAfterInsert() {
@@ -30,8 +49,13 @@ public without sharing class Claims extends fflib_SObjectDomain {
     // TODO: We should also update EB accounts correctly. Requires fixing of the entire EB accounts fetching flow.
   }
 
+  public override void onBeforeInsert() {
+    capitalisePNR();
+  }
+
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
     clearClaimInCareField();
+    capitalisePNR();
   }
 
   private void assignToQueueUsingFlow() {
@@ -40,7 +64,7 @@ public without sharing class Claims extends fflib_SObjectDomain {
       return;
     }
     LIA_Claim__c lc = instanceRecords[0];
-    if (lc.RecordTypeId == CLAIMS_RECORD_TYPE_ID) {
+    if (lc.RecordTypeId == getRecordTypeId(RecordType.CustomerClaim)) {
       Map<String, Object> inputs = new Map<String, Object>();
       inputs.put('recordId', lc.Id);
 
@@ -106,6 +130,14 @@ public without sharing class Claims extends fflib_SObjectDomain {
           claim.Case__c,
           claim.Liability_PNR__c
         );
+      }
+    }
+  }
+
+  private void capitalisePNR() {
+    for (LIA_Claim__c claim : instanceRecords) {
+      if (claim.Liability_PNR__c != null) {
+        claim.Liability_PNR__c = claim.Liability_PNR__c.toUpperCase();
       }
     }
   }

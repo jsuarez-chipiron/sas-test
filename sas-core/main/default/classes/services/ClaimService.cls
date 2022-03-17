@@ -6,7 +6,12 @@ public without sharing class ClaimService {
     'se-sv' => 'Form - Claims SE',
     'default' => 'Form - Claims International'
   };
-  private static ClaimsSelector claims = ClaimsSelector.newInstance();
+
+  private static Map<String, String> jsonToPicklist = new Map<String, String>{
+    'other' => 'Other'
+  };
+
+  private static ClaimsSelector claimsSel = ClaimsSelector.newInstance();
 
   private static Group claimsQueue = [
     SELECT Id
@@ -23,7 +28,7 @@ public without sharing class ClaimService {
         ? marketToOrigin.get('default')
         : marketToOrigin.get(form.metaData.market),
       SuppliedEmail = form.formData.email,
-      RecordTypeId = Cases.CLAIMS_RECORD_TYPE_ID,
+      RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
       Subject = 'Customer claim' // TODO: What subject?
     );
 
@@ -74,6 +79,7 @@ public without sharing class ClaimService {
       Phone_Number__c = form.formData.phone, // TODO: Check how to handle this without failing.
       Postal_Code__c = form.formData.postalCode,
       PIR__c = form.formData.passengerIrregularityReportNumber,
+      RecordTypeId = Claims.getRecordTypeId(Claims.RecordType.CustomerClaim),
       Total_delay_to_final_destination__c = form.formData.delayLength == null
         ? null
         : form.formData.delayLength,
@@ -117,6 +123,8 @@ public without sharing class ClaimService {
       }
     }
 
+    // TODO: Insert content links to both invidual objects and to claim.
+
     if (objectsToCreate.size() > 0) {
       insert objectsToCreate;
     }
@@ -139,7 +147,7 @@ public without sharing class ClaimService {
   ) {
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
 
-    LIA_Claim__c claim = claims.selectById(new Set<Id>{ claimId })[0];
+    LIA_Claim__c claim = claimsSel.selectById(new Set<Id>{ claimId })[0];
     claim.Claims_Exist_In_CARE_For_PNR__c = ClaimsIntegrationService.checkIfClaimsExistForBookingReference(
       bookingReference
     );
