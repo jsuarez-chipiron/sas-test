@@ -93,6 +93,10 @@
                 <behavior>Edit</behavior>
                 <field>Approval_Submitter__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IsApproved__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
