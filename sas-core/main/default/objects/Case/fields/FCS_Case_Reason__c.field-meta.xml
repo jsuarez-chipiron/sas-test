@@ -260,6 +260,16 @@
                 <label>Close</label>
             </value>
             <value>
+                <fullName>Complaint</fullName>
+                <default>false</default>
+                <label>Complaint</label>
+            </value>
+            <value>
+                <fullName>Compliment</fullName>
+                <default>false</default>
+                <label>Compliment</label>
+            </value>
+            <value>
                 <fullName>Connection Info</fullName>
                 <default>false</default>
                 <label>Connection Info</label>
@@ -530,6 +540,11 @@
                 <label>KAM DK</label>
             </value>
             <value>
+                <fullName>KAM INT</fullName>
+                <default>false</default>
+                <label>KAM INT</label>
+            </value>
+            <value>
                 <fullName>KAM NO</fullName>
                 <default>false</default>
                 <label>KAM NO</label>
@@ -538,11 +553,6 @@
                 <fullName>KAM SE</fullName>
                 <default>false</default>
                 <label>KAM SE</label>
-            </value>
-            <value>
-                <fullName>KAM INT</fullName>
-                <default>false</default>
-                <label>KAM INT</label>
             </value>
             <value>
                 <fullName>Klarna</fullName>
@@ -865,6 +875,11 @@
                 <label>Status Waiting Time</label>
             </value>
             <value>
+                <fullName>Suggestion</fullName>
+                <default>false</default>
+                <label>Suggestion</label>
+            </value>
+            <value>
                 <fullName>Support</fullName>
                 <default>false</default>
                 <label>Support</label>
@@ -962,17 +977,20 @@
             <value>
                 <fullName>Customer Feedback</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Customer Feedback</label>
-            </value>
-            <value>
-                <fullName>EU261</fullName>
-                <default>false</default>
-                <label>EU261</label>
             </value>
             <value>
                 <fullName>Denied Boarding</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Denied Boarding</label>
+            </value>
+            <value>
+                <fullName>EU261</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>EU261</label>
             </value>
             <value>
                 <fullName>Information Missing</fullName>
@@ -1028,7 +1046,7 @@
             <controllingFieldValue>Voucher</controllingFieldValue>
             <controllingFieldValue>Voucher Handling</controllingFieldValue>
             <controllingFieldValue>Error</controllingFieldValue>
-            <controllingFieldValue>Customer Claim Placeholder</controllingFieldValue>
+            <controllingFieldValue>Customer Feedback</controllingFieldValue>
             <controllingFieldValue>Fraud</controllingFieldValue>
             <controllingFieldValue>GDPR</controllingFieldValue>
             <controllingFieldValue>Irregularities</controllingFieldValue>
@@ -1250,16 +1268,16 @@
             <valueName>Spam</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Customer Claim Placeholder</controllingFieldValue>
-            <valueName>Customer Feedback</valueName>
+            <controllingFieldValue>Customer Feedback</controllingFieldValue>
+            <valueName>Complaint</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Customer Claim Placeholder</controllingFieldValue>
-            <valueName>EU261</valueName>
+            <controllingFieldValue>Customer Feedback</controllingFieldValue>
+            <valueName>Compliment</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Customer Claim Placeholder</controllingFieldValue>
-            <valueName>Denied Boarding</valueName>
+            <controllingFieldValue>Customer Feedback</controllingFieldValue>
+            <valueName>Suggestion</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fraud</controllingFieldValue>
@@ -1779,15 +1797,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>KAM INT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>KAM NO</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>KAM SE</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>KAM INT</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Feedback</controllingFieldValue>

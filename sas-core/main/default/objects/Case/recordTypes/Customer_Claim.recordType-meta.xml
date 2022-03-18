@@ -2576,7 +2576,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Customer Claim Placeholder</fullName>
+            <fullName>Customer Feedback</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2799,6 +2799,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Complaint</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compliment</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Connection Info</fullName>
             <default>false</default>
         </values>
@@ -2827,10 +2835,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Customer Feedback</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Damaged Baggage</fullName>
             <default>false</default>
         </values>
@@ -2851,10 +2855,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Denied Boarding</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Departure Info</fullName>
             <default>false</default>
         </values>
@@ -2868,10 +2868,6 @@
         </values>
         <values>
             <fullName>Disconnected customer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EU261</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3088,6 +3084,10 @@
         </values>
         <values>
             <fullName>Status Waiting Time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Suggestion</fullName>
             <default>false</default>
         </values>
         <values>
