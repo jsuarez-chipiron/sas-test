@@ -3,19 +3,19 @@ global class CaseFormJSON2Apex {
   global MetaData metaData;
 
   global class FormData {
-    global String type; // claim, feedback, death-certificate, visa-rejection, (delay-certificate-request TODO: Should this be completely separate?)
+    global String type; // claim, feedback, death-certificate, visa-rejection
 
     global String bookingReference;
     global String euroBonusNumber;
 
     global String comment; // free text field
 
-    global String feedbackCategory; // list of options
-    global String feedbackType; // list of options
+    global String feedbackCategory;
+    global String feedbackType;
 
-    global List<String> contentVersionIds; // random attachments to here.
+    global List<String> contentVersionIds;
 
-    global String contactType; // private,corporate,travel-agency,other, etc.
+    global String contactType; // private, corporate, travel-agency, other
     global String companyName;
     global String companyCode;
     global String firstName;
@@ -27,16 +27,12 @@ global class CaseFormJSON2Apex {
     global String city;
     global String country;
     global String referenceNumber;
-    global String legalCaseNumber;
-
-    global String powerOfAttorneyFileId; // TODO: This could be added to overall attachments.
-
     global String claimCategory; // baggage, flight-disruption, missing-services, in-flight-disruption, airport-disruption, booking, medical
     global String claimType; // baggage-delayed, baggage-damaged, flight-cancellation, flight-delay, missed-connection, denied-boarding, downgrading, WIFI, missing-food, extra-baggage, prepaid-seat, lounge, cabin-environment, food-poisoning, in-flight-service, airport-assistance, document-control, gate-issues, booking-errors, complaint-about-refund, personal-injury, regression, other
     global String delayLength; // 0-2, 2-3, 3-4, 4+, never-arrived
     global Boolean unaccompaniedMinor;
     global Boolean personWithReducedMobility;
-    global String compensationCardId;
+    global String compensationCardId; // Not being used yet.
 
     global String departureDate; // 2022-02-20
     global String flightNumber; // SK1234
@@ -52,16 +48,16 @@ global class CaseFormJSON2Apex {
     global String bankName;
     global String bankBic;
 
-    global String preferredCurrency;
+    global String preferredCurrency; // SEK, USD, EUR...
     global String preferredCompensationMethod; // eurobonus, monetary, voucher
     global String preferredReimbursementMethod; // eurobonus, monetary, voucher
 
-    global String passengerIrregularityReportNumber;
-    global String baggageType;
-    global Integer baggagePurchasePrice;
-    global Integer baggagePurchaseYear;
-    global Integer totalClaimValue;
-    global Integer claimAmount;
+    global String passengerIrregularityReportNumber; 
+    global String baggageType; // Not being used yet.
+    global Decimal baggagePurchasePrice; // Not being used yet.
+    global Decimal baggagePurchaseYear; // Not being used yet.
+    global Decimal totalClaimValue; // Not being used yet.
+    global Decimal claimAmount; // Not being used yet.
   }
 
   global class MetaData {
@@ -71,20 +67,19 @@ global class CaseFormJSON2Apex {
   global class Flight {
     global String departureDate; // 2022-02-20
     global String flightNumber; // SK1234
-    global String boardingPassFileId;
-    global String ticketNumber;
+    global List<String> boardingPassFileId; // TODO: Should we call this contentVersionIds?
   }
 
   global class Traveler {
-    global String firstName;
-    global String lastName;
+    global String firstName; 
+    global String lastName; 
   }
 
   global class Expense {
     global String expenseType;
     global String expenseCurrency;
-    global Integer amount;
-    global String receiptFileId;
+    global Decimal amount; 
+    global List<String> receiptFileId; // TODO: Should we call this contentVersionIds?
   }
 
   public static CaseFormJSON2Apex parse(String json) {
