@@ -28,7 +28,7 @@ public without sharing class CaseService {
   private static Group feedbackQueue = [
     SELECT Id
     FROM Group
-    WHERE Type = 'Queue' AND DeveloperName = 'Customer_Feedback'
+    WHERE Type = 'Queue' AND DeveloperName = 'Customer_Claim'
   ];
 
   public static String createCase(CaseFormJSON2Apex form) {

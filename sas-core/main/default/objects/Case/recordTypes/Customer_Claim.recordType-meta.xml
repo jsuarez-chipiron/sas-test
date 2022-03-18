@@ -3152,14 +3152,126 @@
     <picklistValues>
         <picklist>Feedback_Category__c</picklist>
         <values>
+            <fullName>At the airport</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>During flight</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight disruption</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel extras</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Feedback_Type__c</picklist>
         <values>
+            <fullName>Baggage damaged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage delayed%2Flost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cabin environment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Denied boarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Downgrading</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extra baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight cancellation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Foodborne illness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gate issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In-flight meal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In-flight service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lounge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missed connection</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prepaid seat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regression</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special assistance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel document control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WiFi</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3671,6 +3783,10 @@
         </values>
         <values>
             <fullName>Language</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supervisors</fullName>
             <default>false</default>
         </values>
     </picklistValues>
