@@ -1,12 +1,12 @@
 @RestResource(urlMapping='/CaseForm/*')
 global with sharing class CaseForm {
   @HttpPost
-  global static String createCase(CaseFormJSON2Apex form) {
+  global static CaseFormResponse createCase(CaseFormJSON2Apex form) {
     try {
       if (form.formData.type == 'claim') {
-        return ClaimService.createClaim(form);
+        return new CaseFormResponse(ClaimService.createClaim(form));
       } else {
-        return CaseService.createCase(form);
+        return new CaseFormResponse(CaseService.createCase(form));
       }
     } catch (Exception e) {
       C_Log.logException(e, 'CaseFormAPI', null);

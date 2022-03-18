@@ -8,7 +8,22 @@ public without sharing class ClaimService {
   };
 
   private static Map<String, String> jsonToPicklist = new Map<String, String>{
-    'other' => 'Other'
+    '0-2' => '0-2',
+    '2-3' => '2-3',
+    '3-4' => '3-4',
+    '4+' => '4+',
+    'accommodation' => 'Accommodation',
+    'corporate' => 'Corporate customer',
+    'eurobonus' => 'EuroBonus Points',
+    'food' => 'Food',
+    'monetary' => 'Monetary',
+    'never-arrived' => 'Never arrived',
+    'other' => 'Other representative',
+    'phone-calls' => 'Phone calls',
+    'private' => 'Private customer',
+    'transportation' => 'Transportation',
+    'travel-agency' => 'Travel agency',
+    'voucher' => 'Voucher'
   };
 
   private static ClaimsSelector claimsSel = ClaimsSelector.newInstance();
@@ -22,6 +37,7 @@ public without sharing class ClaimService {
   public static String createClaim(CaseFormJSON2Apex form) {
     Case caseToCreate = new Case(
       Initially_Provided_PNR__c = form.formData.bookingReference,
+      Description = form.formData.comment,
       FCS_EBNumber__c = form.formData.euroBonusNumber,
       OwnerId = claimsQueue.Id,
       Origin = marketToOrigin.get(form.metaData.market) == null
@@ -29,7 +45,7 @@ public without sharing class ClaimService {
         : marketToOrigin.get(form.metaData.market),
       SuppliedEmail = form.formData.email,
       RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
-      Subject = 'Customer claim' // TODO: What subject?
+      Subject = 'Claim, PNR: ' + form.formData.bookingReference
     );
 
     // Auto-response emails are not triggered by default for cases created
@@ -44,13 +60,13 @@ public without sharing class ClaimService {
       Address_line_1__c = form.formData.address,
       Bank_Account_Number__c = form.formData.bankAccountNumber,
       Bank_Account_Holder_Name__c = form.formData.bankAccountHolderName,
-      Bank_Country__c = form.formData.bankCountry == null
-        ? null
-        : form.formData.bankCountry,
       Bank_Name__c = form.formData.bankName,
       BIC_Swift__c = form.formData.bankBic,
       Case__c = caseToCreate.Id,
       City__c = form.formData.city,
+      Comment__c = form.formData.comment,
+      Company_Code__c = form.formData.companyCode,
+      Company_Name__c = form.formData.companyName,
       Concerns_a_person_with_reduced_mobility__c = form.formData.personWithReducedMobility ==
         null
         ? false
@@ -62,13 +78,13 @@ public without sharing class ClaimService {
       Contact_Email__c = form.formData.email,
       Contact_First_Name__c = form.formData.firstName,
       Contact_Last_Name__c = form.formData.lastName,
-      Country__c = form.formData.country == null ? null : form.formData.country,
       Currency__c = form.formData.preferredCurrency == null
         ? null
-        : form.formData.preferredCurrency,
-      Customer_Claim_Category__c = 'Flight disruptions' /* form.formData.claimCategory == null
-        ? null
-        : form.formData.claimCategory,*/,
+        : form.formData.preferredCurrency.toUppercase(),
+      Customer_Claim_Category__c = jsonToPicklist.get(
+        form.formData.claimCategory
+      ),
+      Customer_s_Reference__c = form.formData.referenceNumber,
       EuroBonus_Number__c = form.formData.euroBonusNumber,
       Flight_Date__c = form.formData.departureDate == null
         ? null
@@ -76,25 +92,62 @@ public without sharing class ClaimService {
       Flight_Number__c = form.formData.flightNumber,
       Ticket_Number__c = form.formData.ticketNumber,
       Liability_PNR__c = form.formData.bookingReference,
-      Phone_Number__c = form.formData.phone, // TODO: Check how to handle this without failing.
+      Phone_Number__c = form.formData.phone,
       Postal_Code__c = form.formData.postalCode,
       PIR__c = form.formData.passengerIrregularityReportNumber,
+      Preferred_Compensation_Method__c = jsonToPicklist.get(
+        form.formData.preferredCompensationMethod
+      ),
+      Preferred_Reimbursement_Method__c = jsonToPicklist.get(
+        form.formData.preferredReimbursementMethod
+      ),
       RecordTypeId = Claims.getRecordTypeId(Claims.RecordType.CustomerClaim),
-      Total_delay_to_final_destination__c = form.formData.delayLength == null
-        ? null
-        : form.formData.delayLength,
-      Type_of_Customer__c = 'Private customer' // TODO: Fix me.
+      Total_delay_to_final_destination__c = jsonToPicklist.get(
+        form.formData.delayLength
+      ),
+      Type_of_Customer__c = jsonToPicklist.get(form.formData.contactType)
     );
+
+    if (form.formData.country != null) {
+      claimToCreate.Country__c = [
+        SELECT Country_Name__c
+        FROM Settlement_Country_Setting__mdt
+        WHERE Country_Short_Code__c = :form.formData.country
+      ]
+      .Country_Name__c;
+    }
+
+    if (form.formData.bankCountry != null) {
+      claimToCreate.Bank_Country__c = [
+        SELECT Country_Name__c
+        FROM Settlement_Country_Setting__mdt
+        WHERE Country_Short_Code__c = :form.formData.bankCountry
+      ]
+      .Country_Name__c;
+    }
+
     insert claimToCreate;
 
+    ContentVersionsSelector contentVersions = ContentVersionsSelector.newInstance();
+
+    Set<Id> contentIds = new Set<Id>();
+
+    if (form.formData.contentVersionIds != null) {
+      for (String contentId : form.formData.contentVersionIds) {
+        contentIds.add(Id.valueOf(contentId));
+      }
+    }
     List<SObject> objectsToCreate = new List<SObject>();
+    List<Claim_Expense__c> expenses = new List<Claim_Expense__c>();
+    List<Claim_Rebooked_Flight__c> rebookedFlights = new List<Claim_Rebooked_Flight__c>();
+    Map<Id, SObject> fileIdsToObjects = new Map<Id, SObject>();
 
     if (form.formData.travelers != null) {
       for (CaseFormJSON2Apex.Traveler t : form.formData.travelers) {
         Customer__c customerToCreate = new Customer__c(
           Claim__c = claimToCreate.Id,
-          First_Name__c = t.firstName,
-          Last_Name__c = t.lastName
+          First_Name__c = t.firstName == null ? ' ' : t.firstName,
+          Last_Name__c = t.lastName == null ? ' ' : t.lastName
         );
         objectsToCreate.add(customerToCreate);
       }
@@ -104,11 +157,20 @@ public without sharing class ClaimService {
       for (CaseFormJSON2Apex.Expense e : form.formData.expenses) {
         Claim_Expense__c expenseToCreate = new Claim_Expense__c(
           Claim__c = claimToCreate.Id,
-          Amount__c = e.amount,
-          Currency__c = e.expenseCurrency,
-          Type__c = e.expenseType
+          Amount__c = e.amount == null ? 0 : e.amount,
+          Currency__c = e.expenseCurrency == null
+            ? null
+            : e.expenseCurrency.toUpperCase(),
+          Type__c = jsonToPicklist.get(e.expenseType)
         );
         objectsToCreate.add(expenseToCreate);
+
+        if (e.receiptFileId != null) {
+          for (String contentId : e.receiptFileId) {
+            fileIdsToObjects.put(contentId, expenseToCreate);
+            contentIds.add(Id.valueOf(contentId));
+          }
+        }
       }
     }
 
@@ -120,13 +182,42 @@ public without sharing class ClaimService {
           Flight_Number__c = f.flightNumber
         );
         objectsToCreate.add(flightToCreate);
+
+        if (f.boardingPassFileId != null) {
+          for (String contentId : f.boardingPassFileId) {
+            fileIdsToObjects.put(contentId, flightToCreate);
+            contentIds.add(Id.valueOf(contentId));
+          }
+        }
       }
     }
 
-    // TODO: Insert content links to both invidual objects and to claim.
-
     if (objectsToCreate.size() > 0) {
       insert objectsToCreate;
+    }
+
+    List<ContentDocumentLink> linksToCreate = new List<ContentDocumentLink>();
+
+    List<ContentVersion> contentToLink = contentVersions.selectById(contentIds);
+    for (ContentVersion content : contentToLink) {
+      linksToCreate.add(
+        new ContentDocumentLink(
+          ContentDocumentId = content.ContentDocumentId,
+          LinkedEntityId = claimToCreate.Id
+        )
+      );
+      if (fileIdsToObjects.get(content.Id) != null) {
+        linksToCreate.add(
+          new ContentDocumentLink(
+            ContentDocumentId = content.ContentDocumentId,
+            LinkedEntityId = fileIdsToObjects.get(content.Id).Id
+          )
+        );
+      }
+    }
+
+    if (linksToCreate.size() > 0) {
+      insert linksToCreate;
     }
 
     Case insertedCase = [
