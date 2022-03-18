@@ -1,8 +1,4 @@
 public without sharing class Cases extends fflib_SObjectDomain {
-  static CasesSelector cases = (CasesSelector) SAS_Service_Application.Selector.newInstance(
-    Case.SObjectType
-  );
-
   public Cases(List<SObject> records) {
     super(records);
     Configuration.disableTriggerCRUDSecurity();
@@ -15,11 +11,34 @@ public without sharing class Cases extends fflib_SObjectDomain {
     }
   }
 
+  public static Cases newInstance(List<Case> sObjectList) {
+    return (Cases) SAS_Service_Application.Domain.newInstance(sObjectList);
+  }
+
   private List<Case> instanceRecords;
 
-  public static final Id CLAIMS_RECORD_TYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByName()
-    .get('Customer Claim')
-    .getRecordTypeId();
+  public enum RecordType {
+    Channel,
+    CustomerClaim
+  }
+
+  public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
+    RecordType.Channel => 'Channel',
+    RecordType.CustomerClaim => 'Customer Claim'
+  };
+
+  private static Map<RecordType, Id> recordTypeToId = new Map<RecordType, String>();
+
+  public static Id getRecordTypeId(RecordType rt) {
+    Id rtId = recordTypeToId.get(rt);
+    if (rtId == null) {
+      rtId = Schema.SObjectType.Case.getRecordTypeInfosByName()
+        .get(recordTypeToDeveloperName.get(rt))
+        .getRecordTypeId();
+      recordTypeToId.put(rt, rtId);
+    }
+    return rtId;
+  }
 
   public override void onAfterDelete() {
     removeRelatedSurveyInvitations();
@@ -313,7 +332,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
     );
 
     if (acc != null) {
-      List<Case> casesFromDB = cases.selectById(new Set<Id>{ caseId });
+      List<Case> casesFromDB = CasesSelector.newInstance().selectById(new Set<Id>{ caseId });
       if (casesFromDB.size() > 0) {
         Case c = casesFromDB[0];
         c.accountId = acc.Id;
@@ -355,7 +374,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
         (c.SourceId != null &&
         c.SourceId.getSOBjectType() == SocialPost.SObjectType &&
         c.Status == 'Closed' &&
-        c.RecordTypeId == C_RecordTypeHelper.CASE_CHANNEL);
+        c.RecordTypeId == getRecordTypeId(RecordType.Channel));
       if (channelTag) {
         socialPostIds.add(c.SourceId);
         caseInScope.add(c);

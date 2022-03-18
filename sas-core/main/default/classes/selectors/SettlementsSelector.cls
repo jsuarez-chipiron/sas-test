@@ -70,7 +70,9 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
     List<String> currencies
   ) {
     String statusToTake = Settlements.STATUS_WAITING_FOR_TRANSFER;
-    Id recordTypeIdToTake = Settlements.MONETARY_RECORD_TYPE_ID;
+    Id recordTypeIdToTake = Settlements.getRecordTypeId(
+      Settlements.RecordType.Monetary
+    );
     return (List<Settlement__c>) Database.query(
       newQueryFactory()
         .setCondition(

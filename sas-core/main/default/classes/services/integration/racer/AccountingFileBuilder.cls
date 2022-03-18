@@ -151,7 +151,7 @@ public class AccountingFileBuilder {
       WHERE Id = :accountingFile.Id
     ];
 
-    ContentVersions file = new ContentVersions(
+    ContentVersions file = ContentVersions.newInstance(
       new List<ContentVersion>{ accountingFileAfterInsert }
     );
     if (RACER_FILES_CONTENT_WORKSPACE_ID != null) {

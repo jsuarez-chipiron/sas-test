@@ -46,7 +46,7 @@ public without sharing class CaseService {
           : Date.valueOf(form.formdata.departureDate),
         Flight_Number__c = form.formdata.flightNumber,
         OwnerId = feedbackQueue.Id,
-        RecordTypeId = Cases.CLAIMS_RECORD_TYPE_ID,
+        RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
         Subject = 'Feedback: ' +
           form.formData.feedbackCategory +
           ', ' +
@@ -112,7 +112,7 @@ public without sharing class CaseService {
       caseToInsert = new Case(
         Initially_Provided_PNR__c = form.formData.bookingReference,
         OwnerId = refundsQueue.Id,
-        RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
+        RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.Channel),
         Subject = 'Waiver request due to ' +
           (form.formData.type == 'death-certificate'
             ? 'death in family'
