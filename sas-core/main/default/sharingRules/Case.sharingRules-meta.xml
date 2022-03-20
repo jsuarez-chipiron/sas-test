@@ -11,7 +11,7 @@
         <criteriaItems>
             <field>Team__c</field>
             <operation>notEqual</operation>
-            <value>Feedback,Fraud Investigation</value>
+            <value>Feedback,Fraud Investigation,Supervisors</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>

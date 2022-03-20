@@ -342,10 +342,41 @@
             <componentInstance>
                 <componentName>fcs_CaseTag</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.Team__c}</leftValue>
+                        <leftValue>{!Record.Feedback_Category__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Customer Feedback</rightValue>
+                        <rightValue>Baggage</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Feedback_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>At the airport</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Feedback_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Booking</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Feedback_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>During flight</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Feedback_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Flight disruption</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Feedback_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Travel extras</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Feedback_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Other</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
