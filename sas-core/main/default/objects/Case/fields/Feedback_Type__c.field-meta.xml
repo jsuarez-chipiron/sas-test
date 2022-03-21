@@ -142,23 +142,23 @@
             <valueName>Baggage delayed/lost</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Flight disruption</controllingFieldValue>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
             <valueName>Denied boarding</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Flight disruption</controllingFieldValue>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
             <valueName>Downgrading</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Flight disruption</controllingFieldValue>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
             <valueName>Flight cancellation</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Flight disruption</controllingFieldValue>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
             <valueName>Flight delay</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Flight disruption</controllingFieldValue>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
             <valueName>Missed connection</valueName>
         </valueSettings>
         <valueSettings>
