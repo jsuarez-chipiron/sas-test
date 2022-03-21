@@ -119,7 +119,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Claims - Flight Disruption</stringValue>
+                <stringValue>Claims - Flight Disruptions</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

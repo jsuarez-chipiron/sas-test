@@ -4,8 +4,8 @@
         <description>Posts the internal comments to the chatter feed on the case</description>
         <name>CaseChatterFeed</name>
         <label>CaseChatterFeed</label>
-        <locationX>138</locationX>
-        <locationY>1118</locationY>
+        <locationX>270</locationX>
+        <locationY>1454</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
@@ -30,8 +30,8 @@
         <description>Since we can get maximum 100 records in flow due to governor limits, so using apex</description>
         <name>Get_Caes_from_Apex</name>
         <label>Get Caes from Apex</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationX>182</locationX>
+        <locationY>974</locationY>
         <actionName>FCS_MassRedirection</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -53,8 +53,8 @@
     <assignments>
         <name>Add_Case_to_new_List</name>
         <label>Add Case to new List</label>
-        <locationX>138</locationX>
-        <locationY>998</locationY>
+        <locationX>270</locationX>
+        <locationY>1334</locationY>
         <assignmentItems>
             <assignToReference>CasesToUpdate</assignToReference>
             <operator>Add</operator>
@@ -69,8 +69,8 @@
     <assignments>
         <name>Assign_Case_Values</name>
         <label>Assign Case Values</label>
-        <locationX>138</locationX>
-        <locationY>878</locationY>
+        <locationX>270</locationX>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>Loop_through_selected_Cases.Department__c</assignToReference>
             <operator>Assign</operator>
@@ -110,11 +110,68 @@
             <targetReference>Add_Case_to_new_List</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assign_Customer_Claims_Sensitive_queue</name>
+        <label>Assign Customer Claims Sensitive queue</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>queueName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Customer Claims Sensitive</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CaseRecordType</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_regular_queue</name>
+        <label>Assign regular queue</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>queueName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DepartmentTeamList.topValue</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CaseRecordType</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Are_cases_for_only_customer_claim_supervisors</name>
+        <label>Are cases for only customer claim supervisors?</label>
+        <locationX>182</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Assign_regular_queue</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No, regular cases</defaultConnectorLabel>
+        <rules>
+            <name>Yes_sensitive_cases_for_supervisors</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DepartmentTeamList.middleValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Supervisors</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Customer_Claims_Sensitive_queue</targetReference>
+            </connector>
+            <label>Yes, sensitive cases for supervisors</label>
+        </rules>
+    </decisions>
     <decisions>
         <description>Verify that cases have been selected</description>
         <name>Verify_Selected_Records</name>
         <label>Verify Selected Records</label>
-        <locationX>182</locationX>
+        <locationX>380</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -128,7 +185,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>CaseRecordType</targetReference>
+                <targetReference>Are_cases_for_only_customer_claim_supervisors</targetReference>
             </connector>
             <label>SelectedRecords</label>
         </rules>
@@ -139,8 +196,8 @@
     <loops>
         <name>Loop_through_selected_Cases</name>
         <label>Loop through selected Cases</label>
-        <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationX>182</locationX>
+        <locationY>1094</locationY>
         <collectionReference>lstCasesfromapex</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -172,8 +229,8 @@
     <recordLookups>
         <name>GetDepartmentQueueId</name>
         <label>GetDepartmentQueueId</label>
-        <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationX>182</locationX>
+        <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Caes_from_Apex</targetReference>
@@ -183,7 +240,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>DepartmentTeamList.topValue</elementReference>
+                <elementReference>queueName</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -193,8 +250,8 @@
     <recordUpdates>
         <name>Update_selected_Cases</name>
         <label>Update selected Cases</label>
-        <locationX>50</locationX>
-        <locationY>1334</locationY>
+        <locationX>182</locationX>
+        <locationY>1670</locationY>
         <connector>
             <targetReference>Success_Confirmation</targetReference>
         </connector>
@@ -205,7 +262,7 @@
         <description>To redirect multiple cases</description>
         <name>Mass_Redirection</name>
         <label>Mass Redirection</label>
-        <locationX>182</locationX>
+        <locationX>380</locationX>
         <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -293,8 +350,8 @@
     <screens>
         <name>Success_Confirmation</name>
         <label>Success Confirmation</label>
-        <locationX>50</locationX>
-        <locationY>1454</locationY>
+        <locationX>182</locationX>
+        <locationY>1790</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -307,7 +364,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Mass_Redirection</targetReference>
@@ -317,8 +374,8 @@
     <subflows>
         <name>CaseRecordType</name>
         <label>CaseRecordType</label>
-        <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationX>182</locationX>
+        <locationY>734</locationY>
         <connector>
             <targetReference>GetDepartmentQueueId</targetReference>
         </connector>
@@ -366,6 +423,13 @@
     </variables>
     <variables>
         <name>NewRecordType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>queueName</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

@@ -4,8 +4,8 @@
         <description>Posts the internal comments to the chatter feed on the case</description>
         <name>CaseChatterFeed</name>
         <label>CaseChatterFeed</label>
-        <locationX>1634</locationX>
-        <locationY>1118</locationY>
+        <locationX>1238</locationX>
+        <locationY>1454</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
@@ -30,8 +30,8 @@
         <description>Escalation Reason to chatter</description>
         <name>Posting_Escalation_Reason_to_Chatter</name>
         <label>Posting Escalation Reason to Chatter</label>
-        <locationX>1370</locationX>
-        <locationY>1118</locationY>
+        <locationX>974</locationX>
+        <locationY>1454</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
@@ -53,6 +53,38 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>49.0</apiVersion>
+    <assignments>
+        <name>Assign_Customer_Claims_Sensitive_Queue</name>
+        <label>Assign Customer Claims Sensitive Queue</label>
+        <locationX>1106</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>queueName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Customer Claims Sensitive</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetDepartmentQueueId</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_department_name_as_queue_name</name>
+        <label>Assign department name as queue name</label>
+        <locationX>1370</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>queueName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DependentList.topValue</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetDepartmentQueueId</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <description>Escalation</description>
         <name>Escalation</name>
@@ -99,31 +131,6 @@
         </value>
     </choices>
     <decisions>
-        <name>Is_case_closed</name>
-        <label>Is case closed?</label>
-        <locationX>347</locationX>
-        <locationY>278</locationY>
-        <defaultConnector>
-            <targetReference>Is_refund_case_with_refund_request_recod</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>To other department</defaultConnectorLabel>
-        <rules>
-            <name>Closed_Case</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>GetCurrentCaseInformation.Status</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Closed</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Closed_Case_Error</targetReference>
-            </connector>
-            <label>Closed Case</label>
-        </rules>
-    </decisions>
-    <decisions>
         <description>Validates refund cases have a refund request record with a PNR before redirecting, creating a support case or escalating the case</description>
         <name>Is_refund_case_with_refund_request_recod</name>
         <label>Is refund case with refund request recod?</label>
@@ -157,13 +164,52 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_status_valid</name>
+        <label>Is status valid?</label>
+        <locationX>347</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Is_refund_case_with_refund_request_recod</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>To other department</defaultConnectorLabel>
+        <rules>
+            <name>Invalid_statuses_for_to_other_department_process</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Approval</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Control</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Closed_Case_Error</targetReference>
+            </connector>
+            <label>Invalid statuses  for to other department process</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Validating that the department and team is validated for redirection, support and escalations cases</description>
         <name>Is_the_department_validated</name>
         <label>Is the department validated?</label>
         <locationX>974</locationX>
         <locationY>638</locationY>
         <defaultConnector>
-            <targetReference>GetDepartmentQueueId</targetReference>
+            <targetReference>Assign_department_name_as_queue_name</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -190,13 +236,6 @@
                     <stringValue>Liability</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>DependentList.topValue</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Customer Claim</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Department_not_available</targetReference>
             </connector>
@@ -217,12 +256,27 @@
             </connector>
             <label>Functional Product Support</label>
         </rules>
+        <rules>
+            <name>Sensitive_Cases</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DependentList.middleValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Supervisors</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Customer_Claims_Sensitive_Queue</targetReference>
+            </connector>
+            <label>Sensitive Cases</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Redirection_Support_Or_Escalation</name>
         <label>Redirection Support Or Escalation</label>
-        <locationX>1370</locationX>
-        <locationY>998</locationY>
+        <locationX>974</locationX>
+        <locationY>1334</locationY>
         <defaultConnector>
             <targetReference>CaseChatterFeed</targetReference>
         </defaultConnector>
@@ -278,12 +332,6 @@
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <formulas>
-        <description>Based on the Department and team, the formula shows the defined case type.</description>
-        <name>CaseType</name>
-        <dataType>String</dataType>
-        <expression>IF({!DependentList.middleValue} = &quot;Sales Information&quot; ,  &quot;Sales Information&quot;,  IF({!DependentList.middleValue} = &quot;SASSI Internal&quot;,&quot;SASSI Internal&quot;, IF({!DependentList.middleValue} = &quot;System &amp; Tariff&quot;, &quot; &quot;, IF({!DependentList.topValue} = &quot;Functional Product Support&quot;, &quot;Functional Product Support&quot;, &quot;Channel&quot;))))</expression>
-    </formulas>
-    <formulas>
         <name>InputPriority</name>
         <dataType>String</dataType>
         <expression>IF({!Priority} = &quot;Medium&quot;, &quot;Medium&quot;, &quot;High&quot;)</expression>
@@ -329,8 +377,8 @@
         <description>Creates  a support case based on the information capture in the To Other Department Screen</description>
         <name>Create_Support_Case</name>
         <label>Create Support Case</label>
-        <locationX>1106</locationX>
-        <locationY>1118</locationY>
+        <locationX>710</locationX>
+        <locationY>1454</locationY>
         <connector>
             <targetReference>UpdateCurrentCaseInformation</targetReference>
         </connector>
@@ -411,7 +459,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_case_closed</targetReference>
+            <targetReference>Is_status_valid</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -428,8 +476,8 @@
     <recordLookups>
         <name>GetDepartmentQueueId</name>
         <label>GetDepartmentQueueId</label>
-        <locationX>1370</locationX>
-        <locationY>758</locationY>
+        <locationX>974</locationX>
+        <locationY>1094</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Case_Record_Type</targetReference>
@@ -439,7 +487,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>DependentList.topValue</elementReference>
+                <elementReference>queueName</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -450,8 +498,8 @@
         <description>Escalates the case another department</description>
         <name>EscalateCurrentCase</name>
         <label>EscalateCurrentCase</label>
-        <locationX>1370</locationX>
-        <locationY>1238</locationY>
+        <locationX>974</locationX>
+        <locationY>1574</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
         </connector>
@@ -523,8 +571,8 @@
         <description>Update the current case to be directed to the right skill</description>
         <name>Redirect_Case</name>
         <label>Redirect Case</label>
-        <locationX>1634</locationX>
-        <locationY>1238</locationY>
+        <locationX>1238</locationX>
+        <locationY>1574</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
         </connector>
@@ -595,8 +643,8 @@
     <recordUpdates>
         <name>UpdateCurrentCaseInformation</name>
         <label>UpdateCurrentCaseInformation</label>
-        <locationX>1106</locationX>
-        <locationY>1238</locationY>
+        <locationX>710</locationX>
+        <locationY>1574</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
         </connector>
@@ -633,7 +681,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Closed_Case_Error_Screen</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;﻿Closed Cases cannot be redirected or escalated to other department.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;﻿Cases in &quot;{!GetCurrentCaseInformation.Status}&quot; status cannot be redirected or escalated to other department.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -674,8 +722,8 @@
     <screens>
         <name>Redirection_Submission</name>
         <label>Redirection Submission</label>
-        <locationX>1370</locationX>
-        <locationY>1454</locationY>
+        <locationX>974</locationX>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -872,8 +920,8 @@
         <description>Gets the care record type based on the Department and Team</description>
         <name>Get_Case_Record_Type</name>
         <label>Get Case Record Type</label>
-        <locationX>1370</locationX>
-        <locationY>878</locationY>
+        <locationX>974</locationX>
+        <locationY>1214</locationY>
         <connector>
             <targetReference>Redirection_Support_Or_Escalation</targetReference>
         </connector>
@@ -902,6 +950,14 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Queue name that needs to be assigned</description>
+        <name>queueName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <description>The ID of the record from where the flow was triggered</description>

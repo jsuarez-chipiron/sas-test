@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Notify_Parent_Case_Owner</name>
         <label>Notify Parent Case Owner</label>
-        <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationX>314</locationX>
+        <locationY>1118</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <connector>
@@ -45,12 +45,12 @@
     <actionCalls>
         <name>PostOnParent</name>
         <label>PostOnParent</label>
-        <locationX>270</locationX>
+        <locationX>292</locationX>
         <locationY>398</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
-            <targetReference>Update_Parent_Case_to_New_Response</targetReference>
+            <targetReference>Is_the_case_in_approval_or_control_process</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -69,10 +69,26 @@
     </actionCalls>
     <apiVersion>52.0</apiVersion>
     <assignments>
+        <name>Assign_to_notify_the_submitter</name>
+        <label>Assign to notify the submitter</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>usersToNotify</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>GetSupportCase.Parent.Approval_Submitter__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Custom_Notification_Id</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Users_to_Notify</name>
         <label>Set Users to Notify</label>
-        <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationX>314</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>usersToNotify</assignToReference>
             <operator>Add</operator>
@@ -85,10 +101,42 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Is_the_case_in_approval_or_control_process</name>
+        <label>Is the case in approval or control process?</label>
+        <locationX>292</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>Update_Parent_Case_to_New_Response</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>GetSupportCase.Parent.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Approval</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetSupportCase.Parent.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Control</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_to_notify_the_submitter</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Who_is_the_owner_of_the_parent_case</name>
         <label>Who is the owner of the parent case?</label>
-        <locationX>270</locationX>
-        <locationY>638</locationY>
+        <locationX>534</locationX>
+        <locationY>758</locationY>
         <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
             <name>User</name>
@@ -145,8 +193,8 @@
     <recordLookups>
         <name>Get_Custom_Notification_Id</name>
         <label>Get Custom Notification Id</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationX>314</locationX>
+        <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Notify_Parent_Case_Owner</targetReference>
@@ -166,7 +214,7 @@
     <recordLookups>
         <name>GetSupportCase</name>
         <label>GetSupportCase</label>
-        <locationX>270</locationX>
+        <locationX>292</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -187,8 +235,8 @@
     <recordUpdates>
         <name>Update_Parent_Case_to_New_Response</name>
         <label>Update Parent Case to New Response</label>
-        <locationX>270</locationX>
-        <locationY>518</locationY>
+        <locationX>534</locationX>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Who_is_the_owner_of_the_parent_case</targetReference>
         </connector>
@@ -212,8 +260,8 @@
     <screens>
         <name>ReplyConfirmation</name>
         <label>ReplyConfirmation</label>
-        <locationX>270</locationX>
-        <locationY>1214</locationY>
+        <locationX>534</locationX>
+        <locationY>1334</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -228,7 +276,7 @@
     <screens>
         <name>Support_Case_Reply</name>
         <label>Support Case Reply</label>
-        <locationX>270</locationX>
+        <locationX>292</locationX>
         <locationY>278</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -256,7 +304,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>144</locationX>
+        <locationX>166</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetSupportCase</targetReference>

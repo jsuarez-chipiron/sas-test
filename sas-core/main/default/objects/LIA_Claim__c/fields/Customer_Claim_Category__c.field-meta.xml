@@ -17,49 +17,82 @@
                 <label>Baggage</label>
             </value>
             <value>
-                <fullName>Airport Services</fullName>
-                <default>false</default>
-                <label>Airport Services</label>
-            </value>
-            <value>
-                <fullName>Booking/Refund and Sales Services</fullName>
-                <default>false</default>
-                <label>Booking/Refund and Sales Services</label>
-            </value>
-            <value>
-                <fullName>EuroBonus</fullName>
-                <default>false</default>
-                <label>EuroBonus</label>
-            </value>
-            <value>
                 <fullName>Flight disruptions</fullName>
                 <default>false</default>
                 <label>Flight disruptions</label>
             </value>
             <value>
-                <fullName>Inflight / Onboard</fullName>
+                <fullName>Travel extras bought not rendered</fullName>
                 <default>false</default>
-                <label>Inflight / Onboard</label>
+                <label>Travel extras bought not rendered</label>
             </value>
             <value>
-                <fullName>Ö**Claim Agency**Ö</fullName>
+                <fullName>Problems during flight</fullName>
                 <default>false</default>
-                <label>Ö**Claim Agency**Ö</label>
+                <label>Problems during flight</label>
+            </value>
+            <value>
+                <fullName>Problems at the airport</fullName>
+                <default>false</default>
+                <label>Problems at the airport</label>
+            </value>
+            <value>
+                <fullName>Problems with my booking</fullName>
+                <default>false</default>
+                <label>Problems with my booking</label>
+            </value>
+            <value>
+                <fullName>Accident &amp; injury</fullName>
+                <default>false</default>
+                <label>Accident &amp; injury</label>
+            </value>
+            <value>
+                <fullName>Airport Services</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Airport Services</label>
+            </value>
+            <value>
+                <fullName>Booking/Refund and Sales Services</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Booking/Refund and Sales Services</label>
+            </value>
+            <value>
+                <fullName>EU261 Compensation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>EU261 Compensation</label>
+            </value>
+            <value>
+                <fullName>EuroBonus</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>EuroBonus</label>
+            </value>
+            <value>
+                <fullName>Inflight / Onboard</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Inflight / Onboard</label>
             </value>
             <value>
                 <fullName>Other</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Other</label>
             </value>
             <value>
                 <fullName>Passenger irregularities</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Passenger irregularities</label>
             </value>
             <value>
-                <fullName>EU261 Compensation</fullName>
+                <fullName>Ö**Claim Agency**Ö</fullName>
                 <default>false</default>
-                <label>EU261 Compensation</label>
+                <isActive>false</isActive>
+                <label>Ö**Claim Agency**Ö</label>
             </value>
         </valueSetDefinition>
     </valueSet>

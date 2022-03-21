@@ -2,14 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>53.0</apiVersion>
     <dynamicChoiceSets>
-        <name>BankCountryOptions</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>Bank_Country__c</picklistField>
-        <picklistObject>LIA_Claim__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
         <name>Country</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
@@ -18,15 +10,7 @@
         <picklistObject>LIA_Claim__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
-        <name>CurrencyOptions</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>Currency__c</picklistField>
-        <picklistObject>LIA_Claim__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>CustomerClaimTypeOptions</name>
+        <name>customerClaimCategories</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
@@ -34,11 +18,11 @@
         <picklistObject>LIA_Claim__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
-        <name>CustomerReasonForEU261ClaimOptions</name>
+        <name>customerClaimTypes</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
-        <picklistField>Customer_Reason_for_EU261_Claim__c</picklistField>
+        <picklistField>Customer_Claim_Type__c</picklistField>
         <picklistObject>LIA_Claim__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -159,7 +143,7 @@
         <inputAssignments>
             <field>Bank_Country__c</field>
             <value>
-                <elementReference>Bank_Country</elementReference>
+                <elementReference>BankCountryCurrency.topValue</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -199,9 +183,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Contact_First_Name__c</field>
+            <value>
+                <elementReference>CustomerName.firstName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Contact_Full_Name__c</field>
             <value>
                 <elementReference>FullCustomerName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contact_Last_Name__c</field>
+            <value>
+                <elementReference>CustomerName.lastName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -213,19 +209,19 @@
         <inputAssignments>
             <field>Currency__c</field>
             <value>
-                <elementReference>BankCurrency</elementReference>
+                <elementReference>BankCountryCurrency.middleValue</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Customer_Claim_Category__c</field>
             <value>
-                <elementReference>Customer_Claim_Type</elementReference>
+                <elementReference>CustomerClaimCategoryType.topValue</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Customer_Reason_for_EU261_Claim__c</field>
+            <field>Customer_Claim_Type__c</field>
             <value>
-                <elementReference>Reason_for_EU261_Claim</elementReference>
+                <elementReference>CustomerClaimCategoryType.middleValue</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -304,12 +300,6 @@
             <field>Ticket_Number__c</field>
             <value>
                 <elementReference>Ticket_Number</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Total_delay_to_final_destination__c</field>
-            <value>
-                <elementReference>Total_delay_to_destination</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -432,86 +422,48 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Customer_Care_Creation_Section1</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Customer_Care_Creation_Section1_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Customer_Claim_Type</name>
-                    <choiceReferences>CustomerClaimTypeOptions</choiceReferences>
-                    <dataType>String</dataType>
-                    <fieldText>Customer Claim Type</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>true</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Customer_Care_Creation_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Reason_for_EU261_Claim</name>
-                    <choiceReferences>CustomerReasonForEU261ClaimOptions</choiceReferences>
-                    <dataType>String</dataType>
-                    <fieldText>Reason for  EU261 Claim</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>Customer_Claim_Type</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <stringValue>EU261 Compensation</stringValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Customer_Care_Creation_Section1_Column3</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Total_delay_to_destination</name>
-                    <choiceReferences>TotalDelayToDestinationOptions</choiceReferences>
-                    <dataType>String</dataType>
-                    <fieldText>Total delay to destination</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>Customer_Claim_Type</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <stringValue>EU261 Compensation</stringValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
+            <name>CustomerClaimCategoryType</name>
+            <extensionName>flowruntime:dependentPicklists</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>dependencyWrapperApiName</name>
+                <value>
+                    <stringValue>LIA_Claim__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>topPicklistApiName</name>
+                <value>
+                    <stringValue>Customer_Claim_Category__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>middlePicklistApiName</name>
+                <value>
+                    <stringValue>Customer_Claim_Type__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>topLabel</name>
+                <value>
+                    <stringValue>Category</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>topRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>middleLabel</name>
+                <value>
+                    <stringValue>Type</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>ContactDetails</name>
@@ -563,10 +515,10 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Customer_Care_Creation_Section2</name>
+            <name>Customer_Care_Creation_Section1</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>Customer_Care_Creation_Section2_Column1</name>
+                <name>Customer_Care_Creation_Section1_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Concerns_an_unaccompanied_minor</name>
@@ -584,7 +536,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>Customer_Care_Creation_Section2_Column2</name>
+                <name>Customer_Care_Creation_Section1_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Concerns_a_person_with_reduced_mobility</name>
@@ -604,10 +556,10 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Customer_Care_Creation_Section3</name>
+            <name>Customer_Care_Creation_Section2</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>Customer_Care_Creation_Section3_Column1</name>
+                <name>Customer_Care_Creation_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>CustomerName</name>
@@ -640,7 +592,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>Customer_Care_Creation_Section3_Column2</name>
+                <name>Customer_Care_Creation_Section2_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>EuroBonus_Number</name>
@@ -668,10 +620,10 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Customer_Care_Creation_Section4</name>
+            <name>Customer_Care_Creation_Section3</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>Customer_Care_Creation_Section4_Column1</name>
+                <name>Customer_Care_Creation_Section3_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Street_Address</name>
@@ -696,7 +648,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>Customer_Care_Creation_Section4_Column2</name>
+                <name>Customer_Care_Creation_Section3_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Postal_Code</name>
@@ -729,10 +681,10 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Customer_Care_Creation_Section5</name>
+            <name>Customer_Care_Creation_Section4</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>Customer_Care_Creation_Section5_Column1</name>
+                <name>Customer_Care_Creation_Section4_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>PNR</name>
@@ -757,7 +709,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>Customer_Care_Creation_Section5_Column2</name>
+                <name>Customer_Care_Creation_Section4_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Ticket_Number</name>
@@ -789,23 +741,71 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Customer_Care_Creation_Section6</name>
+            <name>Customer_Care_Creation_Section5</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>Customer_Care_Creation_Section6_Column1</name>
+                <name>Customer_Care_Creation_Section5_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Bank_Country</name>
-                    <choiceReferences>BankCountryOptions</choiceReferences>
-                    <dataType>String</dataType>
-                    <fieldText>Bank Country</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
+                    <name>BankCountryCurrency</name>
+                    <extensionName>flowruntime:dependentPicklists</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>dependencyWrapperApiName</name>
+                        <value>
+                            <stringValue>LIA_Claim__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>topPicklistApiName</name>
+                        <value>
+                            <stringValue>Bank_Country__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>middlePicklistApiName</name>
+                        <value>
+                            <stringValue>Currency__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>topLabel</name>
+                        <value>
+                            <stringValue>Bank Country</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>middleLabel</name>
+                        <value>
+                            <stringValue>Currency</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
                 <fields>
                     <name>Bank_Name</name>
                     <dataType>String</dataType>
                     <fieldText>Bank Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Customer_Care_Creation_Section5_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>BIC_SWIFT</name>
+                    <dataType>String</dataType>
+                    <fieldText>BIC/SWIFT</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -824,54 +824,18 @@
                 </inputParameters>
                 <isRequired>false</isRequired>
             </fields>
-            <fields>
-                <name>Customer_Care_Creation_Section6_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>BankCurrency</name>
-                    <choiceReferences>CurrencyOptions</choiceReferences>
-                    <dataType>String</dataType>
-                    <fieldText>Currency</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>BIC_SWIFT</name>
-                    <dataType>String</dataType>
-                    <fieldText>BIC/SWIFT</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
             <isRequired>false</isRequired>
         </fields>
         <fields>
             <name>BaggageInfo</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Baggage Information&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Customer_Claim_Type</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Baggage</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
-            <name>Customer_Care_Creation_Section7</name>
+            <name>Customer_Care_Creation_Section6</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>Customer_Care_Creation_Section7_Column1</name>
+                <name>Customer_Care_Creation_Section6_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Purchase_price</name>
@@ -890,7 +854,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>Customer_Care_Creation_Section7_Column2</name>
+                <name>Customer_Care_Creation_Section6_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>PIR</name>
@@ -908,7 +872,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>Customer_Care_Creation_Section7_Column3</name>
+                <name>Customer_Care_Creation_Section6_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Purchase_Year</name>
@@ -928,16 +892,6 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Customer_Claim_Type</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Baggage</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Major_Event</name>

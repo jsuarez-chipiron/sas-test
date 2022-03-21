@@ -35,6 +35,11 @@
                 <label>Content</label>
             </value>
             <value>
+                <fullName>Customer Feedback</fullName>
+                <default>false</default>
+                <label>Customer Feedback</label>
+            </value>
+            <value>
                 <fullName>Digital Channel</fullName>
                 <default>false</default>
                 <label>Digital Channel</label>
@@ -158,11 +163,6 @@
                 <fullName>Error</fullName>
                 <default>false</default>
                 <label>Error</label>
-            </value>
-            <value>
-                <fullName>Customer Claim Placeholder</fullName>
-                <default>false</default>
-                <label>Customer Claim Placeholder</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -326,7 +326,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Customer Claim</controllingFieldValue>
-            <valueName>Customer Claim Placeholder</valueName>
+            <valueName>Customer Feedback</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>

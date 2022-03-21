@@ -560,6 +560,11 @@
                 <label>STOPY</label>
             </value>
             <value>
+                <fullName>Supervisors</fullName>
+                <default>false</default>
+                <label>Supervisors</label>
+            </value>
+            <value>
                 <fullName>Support Backoffice</fullName>
                 <default>false</default>
                 <label>Support Backoffice</label>
@@ -866,6 +871,10 @@
         <valueSettings>
             <controllingFieldValue>Customer Claim</controllingFieldValue>
             <valueName>Language</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <valueName>Supervisors</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
