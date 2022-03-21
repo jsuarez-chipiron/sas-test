@@ -366,7 +366,7 @@
                     <criteria>
                         <leftValue>{!Record.Feedback_Category__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Flight disruption</rightValue>
+                        <rightValue>Flight disruptions</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Feedback_Category__c}</leftValue>
