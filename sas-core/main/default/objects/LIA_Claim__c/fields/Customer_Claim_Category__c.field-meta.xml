@@ -17,9 +17,9 @@
                 <label>Baggage</label>
             </value>
             <value>
-                <fullName>Flight disruption</fullName>
+                <fullName>Flight disruptions</fullName>
                 <default>false</default>
-                <label>Flight disruption</label>
+                <label>Flight disruptions</label>
             </value>
             <value>
                 <fullName>Travel extras bought not rendered</fullName>
