@@ -283,7 +283,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     Settlement__c settlement = instanceRecords[0];
 
     if (
-      settlement.RecordTypeId != getRecordTypeId(Settlements.RecordType.EBPoints) &&
+      settlement.RecordTypeId !=
+      getRecordTypeId(Settlements.RecordType.EBPoints) &&
       settlement.Currency__c == null
     ) {
       throw new UpdateSettlementException(
@@ -322,7 +323,10 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         item.Status__c = SettlementItems.STATUS_DRAFT;
         item.Settlement__c = settlement.Id;
 
-        if (settlement.RecordTypeId == getRecordTypeId(Settlements.RecordType.Voucher)) {
+        if (
+          settlement.RecordTypeId ==
+          getRecordTypeId(Settlements.RecordType.Voucher)
+        ) {
           // Voucher cost accounts can be set automatically based on voucher type.
           item.Cost_Account__c = voucherTypeToCostAccount.get(
             settlement.Voucher_Type__c
@@ -333,7 +337,10 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       }
       uow.registerUpsert(itemsToUpsert);
 
-      if (settlement.RecordTypeId == getRecordTypeId(Settlements.RecordType.EBPoints)) {
+      if (
+        settlement.RecordTypeId ==
+        getRecordTypeId(Settlements.RecordType.EBPoints)
+      ) {
         settlement.EuroBonus_Points__c = settlementTotal;
       } else {
         settlement.Amount__c = settlementTotal;
@@ -366,9 +373,15 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   private void processPayableVoucherAndEuroBonusSettlements() {
     for (Settlement__c settlement : instanceRecords) {
       if (settlement.Settlement_Status__c == STATUS_WAITING_FOR_TRANSFER) {
-        if (settlement.RecordTypeId == getRecordTypeId(Settlements.RecordType.EBPoints)) {
+        if (
+          settlement.RecordTypeId ==
+          getRecordTypeId(Settlements.RecordType.EBPoints)
+        ) {
           SettlementService.sendEuroBonusPoints(settlement.Id);
-        } else if (settlement.RecordTypeId == getRecordTypeId(Settlements.RecordType.Voucher)) {
+        } else if (
+          settlement.RecordTypeId ==
+          getRecordTypeId(Settlements.RecordType.Voucher)
+        ) {
           SettlementService.createAndSendVoucher(settlement.Id);
         }
       }

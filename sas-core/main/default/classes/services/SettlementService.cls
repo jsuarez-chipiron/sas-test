@@ -72,7 +72,7 @@ public without sharing class SettlementService {
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
 
     Settlements.newInstance(settlementsToSend) // TODO: Think about if this should be moved to the sending functions.
-      .markAsSentToRacer(paymentFile.Title, uow);
+      .markAsSentToRacer(paymentFile.PathOnClient, uow);
 
     counter.Payment_Run_Id__c += 1;
     uow.registerDirty(counter);

@@ -376,7 +376,8 @@ public with sharing class Settlements_IntegrationTest {
     String expectedFileTitle =
       'SF_SEB_SEK_' +
       Datetime.now().format('yyyyMMdd') +
-      counter.Payment_Run_Id__c;
+      counter.Payment_Run_Id__c +
+      '.txt';
 
     System.assertEquals(
       expectedFileTitle,
@@ -392,7 +393,7 @@ public with sharing class Settlements_IntegrationTest {
     ContentVersion createdFile = [
       SELECT Id, Title, VersionData
       FROM ContentVersion
-      WHERE Title = :expectedFileTitle
+      WHERE PathOnClient = :expectedFileTitle
     ];
 
     String comparisonText = [

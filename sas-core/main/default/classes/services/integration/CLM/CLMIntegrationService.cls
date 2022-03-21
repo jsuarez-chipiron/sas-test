@@ -94,7 +94,7 @@ public without sharing class CLMIntegrationService {
       HttpUtils.HTTP_METHOD.POST,
       '/clm/callcenter/addPoints',
       requestBody,
-      null
+      extraRequestHeaders
     );
 
     if (response.getStatusCode() == 404) {
