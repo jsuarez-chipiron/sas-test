@@ -67,8 +67,8 @@ public class RacerResponseHandlersTest {
     // When
     ContentVersion cv = new ContentVersion(
       ContentLocation = 'S',
-      PathOnClient = 'CARE_PAINL1_TEST.txt',
-      Title = 'CARE_PAINL1_TEST',
+      PathOnClient = 'SF_PAINL1_TEST.txt',
+      Title = 'SF_PAINL1_TEST',
       VersionData = Blob.valueOf(L1FileContents)
     );
     Test.startTest();
@@ -176,8 +176,8 @@ public class RacerResponseHandlersTest {
     // When
     ContentVersion cv = new ContentVersion(
       ContentLocation = 'S',
-      PathOnClient = 'CARE_PAINL1_TEST.txt',
-      Title = 'CARE_PAINL1_TEST',
+      PathOnClient = 'SF_PAINL1_TEST.txt',
+      Title = 'SF_PAINL1_TEST',
       VersionData = Blob.valueOf(L1FileContents)
     );
     Test.startTest();
@@ -290,8 +290,8 @@ public class RacerResponseHandlersTest {
     // When
     ContentVersion cv = new ContentVersion(
       ContentLocation = 'S',
-      PathOnClient = 'CARE_PAINL2_TEST.txt',
-      Title = 'CARE_PAINL2_TEST',
+      PathOnClient = 'SF_PAINL2_TEST.txt',
+      Title = 'SF_PAINL2_TEST',
       VersionData = Blob.valueOf(L2FileContents)
     );
     Test.startTest();
@@ -414,8 +414,8 @@ public class RacerResponseHandlersTest {
     // When
     ContentVersion cv = new ContentVersion(
       ContentLocation = 'S',
-      PathOnClient = 'CARE_PAYMUL_TEST.txt',
-      Title = 'CARE_PAYMUL_TEST',
+      PathOnClient = 'SF_PAYMUL_TEST.txt',
+      Title = 'SF_PAYMUL_TEST',
       VersionData = Blob.valueOf(PaymulFileContents)
     );
     Test.startTest();
@@ -523,8 +523,8 @@ public class RacerResponseHandlersTest {
     // When
     ContentVersion cv = new ContentVersion(
       ContentLocation = 'S',
-      PathOnClient = 'CARE_PAYMUL_TEST.txt',
-      Title = 'CARE_PAYMUL_TEST',
+      PathOnClient = 'SF_PAYMUL_TEST.txt',
+      Title = 'SF_PAYMUL_TEST',
       VersionData = Blob.valueOf(PaymulFileContents)
     );
     Test.startTest();
@@ -630,8 +630,8 @@ public class RacerResponseHandlersTest {
     // When
     ContentVersion cv = new ContentVersion(
       ContentLocation = 'S',
-      PathOnClient = 'CARE_RACERGL_TEST.txt',
-      Title = 'CARE_RACERGL_TEST',
+      PathOnClient = 'SF_RACERGL_TEST.txt',
+      Title = 'SF_RACERGL_TEST',
       VersionData = Blob.valueOf(GLFileContents)
     );
     Test.startTest();
@@ -783,8 +783,8 @@ public class RacerResponseHandlersTest {
     // When
     ContentVersion cv = new ContentVersion(
       ContentLocation = 'S',
-      PathOnClient = 'CARE_PAINL1_TEST.txt',
-      Title = 'CARE_PAINL1_TEST',
+      PathOnClient = 'SF_PAINL1_TEST.txt',
+      Title = 'SF_PAINL1_TEST',
       VersionData = Blob.valueOf(L1FileContents)
     );
     Test.startTest();
