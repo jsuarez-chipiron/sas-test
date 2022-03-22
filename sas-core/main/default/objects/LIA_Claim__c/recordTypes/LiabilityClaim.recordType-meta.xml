@@ -1986,6 +1986,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CEDR</fullName>
+            <default>false</default>
+        </values>        
+        <values>
             <fullName>European Court Case</fullName>
             <default>false</default>
         </values>
@@ -2341,6 +2345,10 @@
             <fullName>District Court of Netherland %28Netherland%29</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>DOT</fullName>
+            <default>false</default>
+        </values>        
         <values>
             <fullName>Ente Nazionale per l%27Aviazione Civile %28ENAC%2C Italy%29</fullName>
             <default>false</default>
