@@ -244,6 +244,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>caseProactivities</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
                     <value>ADVGRID</value>

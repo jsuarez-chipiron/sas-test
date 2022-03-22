@@ -52,6 +52,7 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
         .setCondition('Id IN :ids')
         .selectField('Claim__r.Liability_PNR__c')
         .selectField('Claim__r.Name')
+        .selectField('Claim__r.Case__c')
         .selectField('Claim__r.Case__r.CaseNumber')
         .selectField('Submitter__r.Email')
         .toSOQL()

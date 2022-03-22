@@ -1,11 +1,12 @@
 import { LightningElement, wire, api } from "lwc";
 import { NavigationMixin } from "lightning/navigation";
-import getProactivitiesForCase from "@salesforce/apex/ProactivitiesController.getProactivitiesForCase";
+import getProactivitiesForRecord from "@salesforce/apex/ProactivitiesController.getProactivitiesForRecord";
 
 export default class CaseProactivities extends NavigationMixin(
   LightningElement
 ) {
   @api recordId;
+  @api objectApiName;
 
   columns = [
     {
@@ -41,7 +42,7 @@ export default class CaseProactivities extends NavigationMixin(
     }
   }
 
-  @wire(getProactivitiesForCase, { caseId: "$recordId" })
+  @wire(getProactivitiesForRecord, { recordId: "$recordId", objectApiName: "$objectApiName" })
   wiredProactivities({ error, data }) {
     if (error) {
       this.showSpinner = false;

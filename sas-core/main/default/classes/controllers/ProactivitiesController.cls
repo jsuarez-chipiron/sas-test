@@ -2,6 +2,7 @@ public without sharing class ProactivitiesController {
   private static ProactivitiesSelector proactivities = ProactivitiesSelector.newInstance();
   private static CasesSelector cases = CasesSelector.newInstance();
   private static ClaimsSelector claims = ClaimsSelector.newInstance();
+  private static SettlementsSelector settlements = SettlementsSelector.newInstance();
 
   public class Proactivity {
     @AuraEnabled
@@ -100,9 +101,17 @@ public without sharing class ProactivitiesController {
   }
 
   @AuraEnabled(cacheable=true)
-  public static List<Proactivity> getProactivitiesForCase(String caseId) {
-    List<Proactivity> proactivitiesWithMatchingReason = new List<Proactivity>();
+  public static List<Proactivity> getProactivitiesForRecord(
+    String recordId,
+    String objectApiName // Case or Settlement__c
+  ) {
+    String caseId = recordId;
+    if (objectApiName == 'Settlement__c') {
+      caseId = settlements.selectByIdWithClaimFields(new Set<Id>{ recordId })[0]
+        .Claim__r.Case__c;
+    }
 
+    List<Proactivity> proactivitiesWithMatchingReason = new List<Proactivity>();
     List<Proactivity__c> proactivitiesFound = proactivities.selectByCaseId(
       caseId
     );
