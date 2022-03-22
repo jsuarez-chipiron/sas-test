@@ -64,7 +64,6 @@ export default class SettlementCalculator extends LightningElement {
   @wire(getObjectInfo, { objectApiName: SETTLEMENT_ITEM_OBJECT })
   wiredObjectInfo({ data }) {
     if (data) {
-      console.log("objectInfo", data);
       this.settlementItemRecordTypeId = data.defaultRecordTypeId;
     }
   }
@@ -72,7 +71,6 @@ export default class SettlementCalculator extends LightningElement {
   @wire(getObjectInfo, { objectApiName: SETTLEMENT_OBJECT })
   wiredSettlementObjectInfo({ data }) {
     if (data) {
-      console.log("objectInfoSettlement", data);
       this.settlementRecordTypeInfos = data.recordTypeInfos;
     }
   }
@@ -229,7 +227,6 @@ export default class SettlementCalculator extends LightningElement {
     this.dirty = true;
   }
   async handleSave() {
-    console.log("handleSave", this.rows);
     const areAllFieldsValid = [
       ...this.template.querySelectorAll("lightning-input"),
       ...this.template.querySelectorAll("lightning-combobox")
