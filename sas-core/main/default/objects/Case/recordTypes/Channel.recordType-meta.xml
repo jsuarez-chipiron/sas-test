@@ -4091,6 +4091,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Prolonged expired points due to IRR</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Provide Delay Certificate</fullName>
             <default>false</default>
         </values>
@@ -4212,6 +4216,10 @@
         </values>
         <values>
             <fullName>Spam</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special award</fullName>
             <default>false</default>
         </values>
         <values>
