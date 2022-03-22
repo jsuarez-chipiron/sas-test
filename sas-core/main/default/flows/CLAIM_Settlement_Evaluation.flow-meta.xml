@@ -32,8 +32,8 @@
     <assignments>
         <name>AutomaticApproval</name>
         <label>AutomaticApproval</label>
-        <locationX>1458</locationX>
-        <locationY>638</locationY>
+        <locationX>138</locationX>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -49,7 +49,7 @@
         <name>ManualApproval</name>
         <label>ManualApproval</label>
         <locationX>754</locationX>
-        <locationY>1310</locationY>
+        <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -276,8 +276,8 @@
     <recordCreates>
         <name>Create_Approval_Request</name>
         <label>Create Approval Request</label>
-        <locationX>1458</locationX>
-        <locationY>878</locationY>
+        <locationX>138</locationX>
+        <locationY>758</locationY>
         <inputAssignments>
             <field>OwnerId</field>
             <value>
@@ -329,8 +329,8 @@
     <recordUpdates>
         <name>Set_Settlement_Status_to_Approved</name>
         <label>Set Settlement Status to Approved</label>
-        <locationX>1458</locationX>
-        <locationY>758</locationY>
+        <locationX>138</locationX>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Create_Approval_Request</targetReference>
         </connector>
@@ -342,6 +342,12 @@
                 <elementReference>incomingRecord.Id</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Approver__c</field>
+            <value>
+                <elementReference>runningUser</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Settlement_Status__c</field>
             <value>
