@@ -22,6 +22,11 @@
                 <label>Bailiff</label>
             </value>
             <value>
+                <fullName>CEDR</fullName>
+                <default>false</default>
+                <label>CEDR</label>
+            </value>            
+            <value>
                 <fullName>European Court Case</fullName>
                 <default>false</default>
                 <label>European Court Case</label>
