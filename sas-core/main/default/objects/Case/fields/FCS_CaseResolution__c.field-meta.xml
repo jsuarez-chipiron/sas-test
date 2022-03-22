@@ -215,6 +215,21 @@
                 <label>Completed</label>
             </value>
             <value>
+                <fullName>Completed Agent Pay</fullName>
+                <default>false</default>
+                <label>Completed Agent Pay</label>
+            </value>
+            <value>
+                <fullName>Completed Award Agent Pay</fullName>
+                <default>false</default>
+                <label>Completed Award Agent Pay</label>
+            </value>
+            <value>
+                <fullName>Completed Revenue Agent Pay</fullName>
+                <default>false</default>
+                <label>Completed Revenue Agent Pay</label>
+            </value>
+            <value>
                 <fullName>Connect with EB</fullName>
                 <default>false</default>
                 <label>Connect with EB</label>
@@ -310,14 +325,14 @@
                 <label>EB program</label>
             </value>
             <value>
-                <fullName>EuroBonus</fullName>
-                <default>false</default>
-                <label>EuroBonus</label>
-            </value>
-            <value>
                 <fullName>Escalation was correct</fullName>
                 <default>false</default>
                 <label>Escalation was correct</label>
+            </value>
+            <value>
+                <fullName>EuroBonus</fullName>
+                <default>false</default>
+                <label>EuroBonus</label>
             </value>
             <value>
                 <fullName>Europe</fullName>
@@ -1537,6 +1552,14 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Make Booking</controllingFieldValue>
+            <valueName>Completed Award Agent Pay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Make Booking</controllingFieldValue>
+            <valueName>Completed Revenue Agent Pay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Make Booking</controllingFieldValue>
             <controllingFieldValue>Name Change</controllingFieldValue>
             <controllingFieldValue>Process Refund</controllingFieldValue>
             <controllingFieldValue>Change booking</controllingFieldValue>
@@ -1658,6 +1681,22 @@
             <controllingFieldValue>Insufficient Balance Payment</controllingFieldValue>
             <controllingFieldValue>Klarna</controllingFieldValue>
             <valueName>Solve technical error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Add Musical Instrument</controllingFieldValue>
+            <controllingFieldValue>Add Seating</controllingFieldValue>
+            <controllingFieldValue>Add Skis</controllingFieldValue>
+            <controllingFieldValue>Add Special Assistance</controllingFieldValue>
+            <controllingFieldValue>Add weapon</controllingFieldValue>
+            <controllingFieldValue>Name Change</controllingFieldValue>
+            <controllingFieldValue>Add Animals</controllingFieldValue>
+            <controllingFieldValue>Add Baggage</controllingFieldValue>
+            <controllingFieldValue>Add Bike</controllingFieldValue>
+            <controllingFieldValue>Add Golfbag</controllingFieldValue>
+            <controllingFieldValue>Add Infant in Booking</controllingFieldValue>
+            <controllingFieldValue>Add Meals</controllingFieldValue>
+            <controllingFieldValue>Change booking</controllingFieldValue>
+            <valueName>Completed Agent Pay</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Add Musical Instrument</controllingFieldValue>

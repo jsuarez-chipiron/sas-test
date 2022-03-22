@@ -818,6 +818,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Completed Agent Pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed Award Agent Pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed Revenue Agent Pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Connect with EB</fullName>
             <default>false</default>
         </values>
