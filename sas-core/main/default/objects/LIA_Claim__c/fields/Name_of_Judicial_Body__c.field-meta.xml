@@ -94,6 +94,11 @@
                 <label>Castlebar Court Office (Ireland)</label>
             </value>
             <value>
+                <fullName>CEDR</fullName>
+                <default>false</default>
+                <label>CEDR</label>
+            </value>
+            <value>
                 <fullName>Center for Klageløsning (Denmark)</fullName>
                 <default>false</default>
                 <label>Center for Klageløsning (Denmark)</label>
@@ -152,7 +157,7 @@
                 <fullName>DOT</fullName>
                 <default>false</default>
                 <label>DOT</label>
-            </value>            
+            </value>
             <value>
                 <fullName>Ente Nazionale per l&apos;Aviazione Civile (ENAC, Italy)</fullName>
                 <default>false</default>
@@ -232,6 +237,11 @@
                 <fullName>Organisme national de contrôle luxembourgeois National Enforcement Body (NEB) Luxembourg</fullName>
                 <default>false</default>
                 <label>Organisme national de contrôle luxembourgeois National Enforcement Body (NEB) Luxembourg</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
             </value>
             <value>
                 <fullName>Polish Court</fullName>
@@ -322,11 +332,6 @@
                 <fullName>Úřad pro civilní letectví (Czech CAA)</fullName>
                 <default>false</default>
                 <label>Úřad pro civilní letectví (Czech CAA)</label>
-            </value>
-            <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
             </value>
             <value>
                 <fullName>To be added to Salesforce</fullName>
@@ -434,6 +439,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>United Kingdom (UK)</controllingFieldValue>
+            <valueName>CEDR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>United Kingdom (UK)</controllingFieldValue>
             <valueName>County Court at Liverpool (United Kingdom)</valueName>
         </valueSettings>
         <valueSettings>
@@ -455,7 +464,7 @@
         <valueSettings>
             <controllingFieldValue>United States</controllingFieldValue>
             <valueName>DOT</valueName>
-        </valueSettings>        
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>United States</controllingFieldValue>
             <valueName>Small claims court</valueName>

@@ -1961,6 +1961,101 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Customer_Claim_Type__c</picklist>
+        <values>
+            <fullName>Baggage damaged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage delayed%2Flost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cabin environment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complaint about a refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Denied boarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Downgrading</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extra baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight cancellation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Foodborne illness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gate issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In-flight meal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In-flight service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lounge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missed connection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personal injury</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prepaid seat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regression</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special assistance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel document control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WiFi</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Customer_Reason_for_EU261_Claim__c</picklist>
         <values>
             <fullName>Cancelled flight</fullName>
@@ -1985,10 +2080,6 @@
             <fullName>Bailiff</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>CEDR</fullName>
-            <default>false</default>
-        </values>        
         <values>
             <fullName>European Court Case</fullName>
             <default>false</default>
@@ -2298,6 +2389,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CEDR</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Castlebar Court Office %28Ireland%29</fullName>
             <default>false</default>
         </values>
@@ -2334,6 +2429,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>DOT</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>De Inspectie Leefomgeving en Transport  %28ILT%2C Netherlands%29</fullName>
             <default>false</default>
         </values>
@@ -2345,10 +2444,6 @@
             <fullName>District Court of Netherland %28Netherland%29</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>DOT</fullName>
-            <default>false</default>
-        </values>        
         <values>
             <fullName>Ente Nazionale per l%27Aviazione Civile %28ENAC%2C Italy%29</fullName>
             <default>false</default>
