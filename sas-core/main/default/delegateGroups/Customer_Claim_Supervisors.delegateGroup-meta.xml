@@ -8,4 +8,7 @@
     <groups>Customer Claims Sensitive</groups>
     <label>Customer Claim Supervisors</label>
     <loginAccess>false</loginAccess>
+    <roles>Sutherland</roles>
+    <roles>Sykes</roles>
+    <roles>SAS</roles>
 </DelegateGroup>
