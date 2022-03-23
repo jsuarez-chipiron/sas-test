@@ -1,6 +1,8 @@
 public without sharing class SettlementItems extends fflib_SObjectDomain {
   public SettlementItems(List<SObject> records) {
     super(records);
+    Configuration.disableTriggerCRUDSecurity();
+    this.instanceRecords = (List<Settlement_Item__c>) Records;
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
@@ -9,8 +11,6 @@ public without sharing class SettlementItems extends fflib_SObjectDomain {
     }
   }
 
-  public static final String STATUS_DRAFT = 'Draft';
-
   public static SettlementItems newInstance(
     List<Settlement_Item__c> sObjectList
   ) {
@@ -18,6 +18,15 @@ public without sharing class SettlementItems extends fflib_SObjectDomain {
       sObjectList
     );
   }
+
+  private List<Settlement_Item__c> instanceRecords;
+
+  public static final String STATUS_DRAFT = 'Draft';
+  public static final String STATUS_PENDING_L1_CONFIRMATION = 'Pending L1 confirmation';
+  public static final String STATUS_WAITING_FOR_TRANSFER = 'Waiting for transfer';
+  public static final String STATUS_SENT_TO_RACER = 'Sent to Racer';
+  public static final String STATUS_REJECTED_BY_RACER = 'Rejected by Racer';
+  public static final String STATUS_DONE = 'Done';
 
   public void markAsReceivedByRacer(
     String accountingStatus,
@@ -34,13 +43,13 @@ public without sharing class SettlementItems extends fflib_SObjectDomain {
     fflib_ISObjectUnitOfWork uow
   ) {
     if (accountingStatus == 'PROCESSED') {
-      for (Settlement_Item__c s : (List<Settlement_Item__c>) Records) {
-        s.Status__c = 'Done';
+      for (Settlement_Item__c s : instanceRecords) {
+        s.Status__c = STATUS_DONE;
         uow.registerDirty(s);
       }
     } else {
-      for (Settlement_Item__c s : (List<Settlement_Item__c>) Records) {
-        s.Status__c = 'Rejected by Racer';
+      for (Settlement_Item__c s : instanceRecords) {
+        s.Status__c = STATUS_REJECTED_BY_RACER;
         s.Error_Message__c = errorMessage;
         uow.registerDirty(s);
       }
@@ -61,8 +70,8 @@ public without sharing class SettlementItems extends fflib_SObjectDomain {
   }
 
   public void markAsReadyForTransfer(fflib_ISObjectUnitOfWork uow) {
-    for (Settlement_Item__c s : (List<Settlement_Item__c>) Records) {
-      s.Status__c = 'Waiting for transfer';
+    for (Settlement_Item__c s : instanceRecords) {
+      s.Status__c = STATUS_WAITING_FOR_TRANSFER;
       uow.registerDirty(s);
     }
   }
@@ -77,9 +86,9 @@ public without sharing class SettlementItems extends fflib_SObjectDomain {
     String accountingFilename,
     fflib_ISObjectUnitOfWork uow
   ) {
-    for (Settlement_Item__c s : (List<Settlement_Item__c>) Records) {
+    for (Settlement_Item__c s : instanceRecords) {
       s.Accounting_File_Name__c = accountingFilename;
-      s.Status__c = 'Sent to Racer';
+      s.Status__c = STATUS_SENT_TO_RACER;
       uow.registerDirty(s);
     }
   }

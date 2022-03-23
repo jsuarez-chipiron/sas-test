@@ -132,6 +132,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cambodia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cameroon</fullName>
             <default>false</default>
         </values>
@@ -268,10 +272,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Micronesia</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Fiji</fullName>
             <default>false</default>
         </values>
@@ -364,10 +364,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Vatican City</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Honduras</fullName>
             <default>false</default>
         </values>
@@ -436,10 +432,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambodia</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Kiribati</fullName>
             <default>false</default>
         </values>
@@ -453,6 +445,10 @@
         </values>
         <values>
             <fullName>Kyrgyzstan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Laos</fullName>
             <default>false</default>
         </values>
         <values>
@@ -489,6 +485,10 @@
         </values>
         <values>
             <fullName>Macau</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Madagascar</fullName>
             <default>false</default>
         </values>
         <values>
@@ -533,6 +533,14 @@
         </values>
         <values>
             <fullName>Mexico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Micronesia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moldova</fullName>
             <default>false</default>
         </values>
         <values>
@@ -612,6 +620,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>North Macedonia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Northern Mariana Islands</fullName>
             <default>false</default>
         </values>
@@ -648,10 +660,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Laos</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Peru</fullName>
             <default>false</default>
         </values>
@@ -677,18 +685,6 @@
         </values>
         <values>
             <fullName>Qatar</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>South Korea</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Madagascar</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Moldova</fullName>
             <default>false</default>
         </values>
         <values>
@@ -780,6 +776,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>South Korea</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Spain</fullName>
             <default>false</default>
         </values>
@@ -832,15 +832,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Tanzania</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Thailand</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>The Democratic Republic of the Congo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>North Macedonia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -896,10 +896,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Tanzania</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>United States</fullName>
             <default>false</default>
         </values>
@@ -913,6 +909,10 @@
         </values>
         <values>
             <fullName>Vanuatu</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vatican City</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1079,6 +1079,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cambodia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cameroon</fullName>
             <default>false</default>
         </values>
@@ -1215,10 +1219,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Micronesia</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Fiji</fullName>
             <default>false</default>
         </values>
@@ -1311,10 +1311,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Vatican City</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Honduras</fullName>
             <default>false</default>
         </values>
@@ -1383,10 +1379,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambodia</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Kiribati</fullName>
             <default>false</default>
         </values>
@@ -1400,6 +1392,10 @@
         </values>
         <values>
             <fullName>Kyrgyzstan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Laos</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1436,6 +1432,10 @@
         </values>
         <values>
             <fullName>Macau</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Madagascar</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1480,6 +1480,14 @@
         </values>
         <values>
             <fullName>Mexico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Micronesia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moldova</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1559,6 +1567,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>North Macedonia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Northern Mariana Islands</fullName>
             <default>false</default>
         </values>
@@ -1595,10 +1607,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Laos</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Peru</fullName>
             <default>false</default>
         </values>
@@ -1624,18 +1632,6 @@
         </values>
         <values>
             <fullName>Qatar</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>South Korea</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Madagascar</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Moldova</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1727,6 +1723,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>South Korea</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Spain</fullName>
             <default>false</default>
         </values>
@@ -1779,15 +1779,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Tanzania</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Thailand</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>The Democratic Republic of the Congo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>North Macedonia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1843,10 +1843,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Tanzania</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>United States</fullName>
             <default>false</default>
         </values>
@@ -1860,6 +1856,10 @@
         </values>
         <values>
             <fullName>Vanuatu</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vatican City</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1965,7 +1965,7 @@
     <picklistValues>
         <picklist>Customer_Claim_Category__c</picklist>
         <values>
-            <fullName>Airport Services</fullName>
+            <fullName>Accident %26 injury</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1973,23 +1973,90 @@
             <default>true</default>
         </values>
         <values>
-            <fullName>Booking%2FRefund and Sales Services</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EU261 Compensation</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EuroBonus</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Flight disruptions</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Inflight %2F Onboard</fullName>
+            <fullName>Problems at the airport</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problems during flight</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problems with my booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel extras bought not rendered</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Customer_Claim_Type__c</picklist>
+        <values>
+            <fullName>Baggage damaged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage delayed%2Flost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cabin environment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complaint about a refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Denied boarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Downgrading</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extra baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight cancellation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Foodborne illness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gate issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In-flight meal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In-flight service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lounge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missed connection</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1997,11 +2064,27 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Passenger irregularities</fullName>
+            <fullName>Personal injury</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Ö**Claim Agency**Ö</fullName>
+            <fullName>Prepaid seat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regression</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special assistance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel document control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WiFi</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2520,6 +2603,36 @@
         </values>
         <values>
             <fullName>Úřad pro civilní letectví %28Czech CAA%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Preferred_Compensation_Method__c</picklist>
+        <values>
+            <fullName>EuroBonus Points</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monetary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Preferred_Reimbursement_Method__c</picklist>
+        <values>
+            <fullName>EuroBonus Points</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monetary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher</fullName>
             <default>false</default>
         </values>
     </picklistValues>

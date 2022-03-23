@@ -52,6 +52,7 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
         .setCondition('Id IN :ids')
         .selectField('Claim__r.Liability_PNR__c')
         .selectField('Claim__r.Name')
+        .selectField('Claim__r.Case__c')
         .selectField('Claim__r.Case__r.CaseNumber')
         .selectField('Submitter__r.Email')
         .toSOQL()
@@ -70,7 +71,9 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
     List<String> currencies
   ) {
     String statusToTake = Settlements.STATUS_WAITING_FOR_TRANSFER;
-    Id recordTypeIdToTake = Settlements.MONETARY_RECORD_TYPE_ID;
+    Id recordTypeIdToTake = Settlements.getRecordTypeId(
+      Settlements.RecordType.Monetary
+    );
     return (List<Settlement__c>) Database.query(
       newQueryFactory()
         .setCondition(

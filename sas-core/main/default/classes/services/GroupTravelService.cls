@@ -162,7 +162,7 @@ public class GroupTravelService {
       Group_Travel_Request__c = grpTravelRequest.Id,
       Origin = caseOrigin,
       OwnerId = groupSalesQueue.Id,
-      RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
+      RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.Channel),
       Subject = 'Group Travel Request: ' + travelRequest.groupName,
       SuppliedEmail = travelRequest.email,
       SuppliedPhone = travelRequest.phone

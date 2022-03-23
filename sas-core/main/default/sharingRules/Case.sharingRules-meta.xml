@@ -11,37 +11,9 @@
         <criteriaItems>
             <field>Team__c</field>
             <operation>notEqual</operation>
-            <value>Feedback,Fraud Investigation</value>
+            <value>Feedback,Fraud Investigation,Supervisors</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>Sharing_Claim_Cases_to_SAS</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Sharing Claim Cases to SAS</label>
-        <sharedTo>
-            <role>SAS</role>
-        </sharedTo>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Customer Claim</value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>Sharing_Claim_Cases_to_Vendors</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Sharing Claim Cases to Vendors</label>
-        <sharedTo>
-            <group>All_Vendors</group>
-        </sharedTo>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Customer Claim</value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>Sharing_cases_with_SAS_people</fullName>

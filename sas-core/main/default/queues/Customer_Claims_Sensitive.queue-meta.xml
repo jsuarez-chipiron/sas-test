@@ -4,7 +4,7 @@
     <name>Customer Claims Sensitive</name>
     <queueMembers>
         <publicGroups>
-            <publicGroup>Customer_Claim</publicGroup>
+            <publicGroup>Customer_Claims_Sensitive</publicGroup>
         </publicGroups>
     </queueMembers>
     <queueSobject>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disallow_manual_set_Waiting_for_transfer</fullName>
+    <active>true</active>
+    <description>Prevent users from setting the case status to Waiting for transfer manually</description>
+    <errorConditionFormula>AND(
+IsApproved__c = False,
+ISPICKVAL(Status, &apos;Waiting for Transfer&apos;)
+)</errorConditionFormula>
+    <errorMessage>You cannot set the case to this status manually</errorMessage>
+</ValidationRule>

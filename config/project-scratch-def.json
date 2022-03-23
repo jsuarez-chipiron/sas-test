@@ -1,7 +1,7 @@
 {
   "orgName": "SAS",
   "edition": "Developer",
-  "language" : "en_US",
+  "language": "en_US",
   "features": [
     "Communities",
     "ContactsToMultipleAccounts",
@@ -17,21 +17,22 @@
     "SocialCustomerService"
   ],
   "settings": {
-    "accountSettings":{
-      "enableRelateContactToMultipleAccounts":true
+    "accountSettings": {
+      "enableRelateContactToMultipleAccounts": true
     },
     "apexSettings": {
       "enableApexApprovalLockUnlock": true
     },
     "caseSettings": {
-      "emailToCase":{
+      "emailToCase": {
         "enableEmailToCase": true,
         "enableOnDemandEmailToCase": true,
         "enableThreadIDInBody": true,
         "enableThreadIDInSubject": true
       },
       "enableCaseFeed": true,
-      "enableCollapseEmailThread": true
+      "enableCollapseEmailThread": true,
+      "enableDraftEmails": true
     },
     "chatterSettings": {
       "enableChatter": true
@@ -39,17 +40,17 @@
     "communitiesSettings": {
       "enableNetworksEnabled": true
     },
-    "emailAdministrationSettings":{
+    "emailAdministrationSettings": {
       "enableEnhancedEmailEnabled": true
     },
-    "emailTemplateSettings":{
+    "emailTemplateSettings": {
       "enableTemplateEnhancedFolderPref": true
     },
-    "enhancedNotesSettings":{
+    "enhancedNotesSettings": {
       "enableEnhancedNotes": true,
       "enableTasksOnEnhancedNotes": true
     },
-    "entitlementSettings":{
+    "entitlementSettings": {
       "enableEntitlements": true,
       "enableEntitlementVersioning": true,
       "enableMilestoneFeedItem": true,
@@ -60,12 +61,12 @@
       "entitlementLookupLimitedToSameContact": false,
       "ignoreMilestoneBusinessHours": true
     },
-    "knowledgeSettings":{
-      "cases":{
-        "enableArticleCreation":false,
-        "enableArticlePublicSharingSites":false,
-        "enableCaseDataCategoryMapping":true,
-        "useProfileForPDFCreation":false
+    "knowledgeSettings": {
+      "cases": {
+        "enableArticleCreation": false,
+        "enableArticlePublicSharingSites": false,
+        "enableCaseDataCategoryMapping": true,
+        "useProfileForPDFCreation": false
       },
       "defaultLanguage": "en_US",
       "enableExternalMediaContent": true,
@@ -88,8 +89,8 @@
       "enableQuickTextEnabled": true
     },
     "macroSettings": {
-      "enableAdvancedSearch":true,
-      "macrosInFolders":true
+      "enableAdvancedSearch": true,
+      "macrosInFolders": true
     },
     "nameSettings": {
       "enableMiddleName": true,
@@ -101,26 +102,26 @@
     "liveMessageSettings": {
       "enableLiveMessage": true
     },
-    "pathAssistantSettings":{
+    "pathAssistantSettings": {
       "pathAssistantEnabled": true
     },
-    "socialCustomerServiceSettings":{
-      "caseSubjectOption":"SocialPostContent",
-      "enableSocialApprovals":false,
-      "enableSocialCaseAssignmentRules":true,
-      "enableSocialCustomerService":true,
-      "enableSocialPersonaHistoryTracking":true,
-      "enableSocialPostHistoryTracking":true,
-      "enableSocialReceiveParentPost":true
+    "socialCustomerServiceSettings": {
+      "caseSubjectOption": "SocialPostContent",
+      "enableSocialApprovals": false,
+      "enableSocialCaseAssignmentRules": true,
+      "enableSocialCustomerService": true,
+      "enableSocialPersonaHistoryTracking": true,
+      "enableSocialPostHistoryTracking": true,
+      "enableSocialReceiveParentPost": true
     },
-    "surveySettings":{
-      "enableSurvey":true,
-      "enableSurveyOwnerCanManageResponse":false
+    "surveySettings": {
+      "enableSurvey": true,
+      "enableSurveyOwnerCanManageResponse": false
     },
-    "userManagementSettings":{
-      "enableEnhancedPermsetMgmt":true,
-      "enableEnhancedProfileMgmt":true,
-      "enableNewProfileUI":true
+    "userManagementSettings": {
+      "enableEnhancedPermsetMgmt": true,
+      "enableEnhancedProfileMgmt": true,
+      "enableNewProfileUI": true
     }
   },
   "objectSettings": {
@@ -132,7 +133,7 @@
     },
     "contact": {
       "sharingModel": "private"
-      },
+    },
     "contract": {
       "sharingModel": "private"
     },

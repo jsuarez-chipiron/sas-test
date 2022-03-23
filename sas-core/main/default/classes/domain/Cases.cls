@@ -1,8 +1,4 @@
 public without sharing class Cases extends fflib_SObjectDomain {
-  static CasesSelector cases = (CasesSelector) SAS_Service_Application.Selector.newInstance(
-    Case.SObjectType
-  );
-
   public Cases(List<SObject> records) {
     super(records);
     Configuration.disableTriggerCRUDSecurity();
@@ -15,11 +11,40 @@ public without sharing class Cases extends fflib_SObjectDomain {
     }
   }
 
+  public static Cases newInstance(List<Case> sObjectList) {
+    return (Cases) SAS_Service_Application.Domain.newInstance(sObjectList);
+  }
+
   private List<Case> instanceRecords;
 
-  public static final Id CLAIMS_RECORD_TYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByName()
-    .get('Customer Claim')
-    .getRecordTypeId();
+  public static final String STATUS_IN_PROGRESS = 'In Progress';
+  public static final String STATUS_WAITING_FOR_APPROVAL = 'Waiting for Approval';
+  public static final String STATUS_WAITING_FOR_CONTROL = 'Waiting for Control';
+  public static final String STATUS_WAITING_FOR_TRANSFER = 'Waiting for Transfer';
+  public static final String STATUS_CLOSED = 'Closed';
+
+  public enum RecordType {
+    Channel,
+    CustomerClaim
+  }
+
+  public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
+    RecordType.Channel => 'Channel',
+    RecordType.CustomerClaim => 'Customer Claim'
+  };
+
+  private static Map<RecordType, Id> recordTypeToId = new Map<RecordType, String>();
+
+  public static Id getRecordTypeId(RecordType rt) {
+    Id rtId = recordTypeToId.get(rt);
+    if (rtId == null) {
+      rtId = Schema.SObjectType.Case.getRecordTypeInfosByName()
+        .get(recordTypeToDeveloperName.get(rt))
+        .getRecordTypeId();
+      recordTypeToId.put(rt, rtId);
+    }
+    return rtId;
+  }
 
   public override void onAfterDelete() {
     removeRelatedSurveyInvitations();
@@ -39,6 +64,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
       (Map<Id, Case>) existingRecords
     );
     lockClaimsAfterMerge((Map<Id, Case>) existingRecords);
+    closeClaimCaseAfterApproval();
   }
 
   public override void onBeforeInsert() {
@@ -313,7 +339,8 @@ public without sharing class Cases extends fflib_SObjectDomain {
     );
 
     if (acc != null) {
-      List<Case> casesFromDB = cases.selectById(new Set<Id>{ caseId });
+      List<Case> casesFromDB = CasesSelector.newInstance()
+        .selectById(new Set<Id>{ caseId });
       if (casesFromDB.size() > 0) {
         Case c = casesFromDB[0];
         c.accountId = acc.Id;
@@ -355,7 +382,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
         (c.SourceId != null &&
         c.SourceId.getSOBjectType() == SocialPost.SObjectType &&
         c.Status == 'Closed' &&
-        c.RecordTypeId == C_RecordTypeHelper.CASE_CHANNEL);
+        c.RecordTypeId == getRecordTypeId(RecordType.Channel));
       if (channelTag) {
         socialPostIds.add(c.SourceId);
         caseInScope.add(c);
@@ -586,6 +613,9 @@ public without sharing class Cases extends fflib_SObjectDomain {
     }
   }
 
+  /**
+   * Run Duplicate Check Flow for Refund cases
+   */
   private void refundDuplicateCheck() {
     if (instanceRecords.size() > 1) {
       return;
@@ -600,6 +630,91 @@ public without sharing class Cases extends fflib_SObjectDomain {
         inputs
       );
       duplicateFlow.start();
+    }
+  }
+
+  /**
+   * Sends the draft email connected to a Customer Claim Case once
+   * the case has been approved then closes the case and notifies
+   * the user
+   */
+  private void closeClaimCaseAfterApproval() {
+    if (instanceRecords.size() > 1) {
+      return;
+    }
+
+    Case c = instanceRecords[0];
+    if (
+      c.RecordTypeId == getRecordTypeId(RecordType.CustomerClaim) &&
+      c.Status == STATUS_WAITING_FOR_TRANSFER
+    ) {
+      //Check if there are Settlements for this cases
+      List<Settlement__c> settlementsForClaim = SettlementsSelector.newInstance()
+        .selectByClaimId(new Set<Id>{ c.LIA_Claim__c });
+      if (settlementsForClaim.size() < 1) {
+        return;
+      }
+
+      //Get Email Draft for this case
+      List<EmailMessage> draftEmailForCase = EmailMessagesSelector.newInstance()
+        .selectByParentIdAndStatus(
+          new Set<Id>{ c.Id },
+          new Set<Id>{ c.OwnerId },
+          EmailMessages.STATUS_DRAFT
+        );
+
+      //Only send email if not test
+      if (draftEmailForCase.size() == 1) {
+        Boolean sendSuccess = false;
+        String errorMsg = '';
+        try {
+          List<Messaging.SendEmailResult> results = Messaging.sendEmailMessage(
+            new List<ID>{ draftEmailForCase[0].Id }
+          );
+          if (results.size() != 1) {
+            return;
+          }
+          sendSuccess = results[0].isSuccess();
+          if (!sendSuccess) {
+            errorMsg = results[0].getErrors()[0].getMessage();
+          }
+        } catch (Exception e) {
+          sendSuccess = false;
+          errorMsg = e.getMessage();
+        }
+
+        fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+        List<Case> caseToUpdate = CasesSelector.newInstance()
+          .selectById(new Set<Id>{ c.Id });
+        caseToUpdate[0].Status = sendSuccess
+          ? STATUS_CLOSED
+          : STATUS_IN_PROGRESS;
+        caseToUpdate[0].IsApproved__c = false;
+        uow.registerDirty(caseToUpdate[0]);
+        uow.commitWork();
+
+        String notificationTitle = sendSuccess
+          ? 'Case closed'
+          : 'Case could not be closed';
+        String notificationBody = sendSuccess
+          ? 'Case ' +
+            c.CaseNumber +
+            ' was closed and email was sent to the customer'
+          : 'The draft email could not be sent to the customer. Please review the email and send it manually instead\n' +
+            errorMsg;
+
+        CustomNotificationType notificationType = [
+          SELECT Id, DeveloperName
+          FROM CustomNotificationType
+          WHERE DeveloperName = 'SettlementUpdate'
+        ];
+        Messaging.CustomNotification notification = new Messaging.CustomNotification();
+        notification.setNotificationTypeId(notificationType.Id);
+        notification.setTargetId(c.Id);
+        notification.setTitle(notificationTitle);
+        notification.setBody(notificationBody);
+        notification.send(new Set<String>{ c.OwnerId });
+      }
     }
   }
 

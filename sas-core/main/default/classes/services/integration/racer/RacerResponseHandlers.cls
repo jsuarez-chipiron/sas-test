@@ -34,10 +34,10 @@ public class RacerResponseHandlers {
       (C_Util.isSandbox() || Test.isRunningTest()) ||
       (fileOwnerId == INTEGRATION_USER_ID);
     return isRunningTestOrFileOwnerIsIntegrationUser &&
-      (fileName.startsWith('CARE_PAYMUL_') ||
-      fileName.startsWith('CARE_PAINL1_') ||
-      fileName.startsWith('CARE_PAINL2_') ||
-      fileName.startsWith('CARE_RACERGL_'));
+      (fileName.startsWith('SF_PAYMUL_') ||
+      fileName.startsWith('SF_PAINL1_') ||
+      fileName.startsWith('SF_PAINL2_') ||
+      fileName.startsWith('SF_RACERGL_'));
   }
 
   /**
@@ -54,13 +54,13 @@ public class RacerResponseHandlers {
     );
 
     for (ContentVersion cv : cvs) {
-      if (cv.Title.startsWith('CARE_PAYMUL_')) {
+      if (cv.Title.startsWith('SF_PAYMUL_')) {
         processPaymulStatusReport(cv);
-      } else if (cv.Title.startsWith('CARE_PAINL1_')) {
+      } else if (cv.Title.startsWith('SF_PAINL1_')) {
         processL1StatusReport(cv);
-      } else if (cv.Title.startsWith('CARE_PAINL2_')) {
+      } else if (cv.Title.startsWith('SF_PAINL2_')) {
         processL2StatusReport(cv);
-      } else if (cv.Title.startsWith('CARE_RACERGL_')) {
+      } else if (cv.Title.startsWith('SF_RACERGL_')) {
         processAccountingStatusReport(cv);
       }
     }

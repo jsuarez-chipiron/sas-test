@@ -260,6 +260,16 @@
                 <label>Close</label>
             </value>
             <value>
+                <fullName>Complaint</fullName>
+                <default>false</default>
+                <label>Complaint</label>
+            </value>
+            <value>
+                <fullName>Compliment</fullName>
+                <default>false</default>
+                <label>Compliment</label>
+            </value>
+            <value>
                 <fullName>Connection Info</fullName>
                 <default>false</default>
                 <label>Connection Info</label>
@@ -530,6 +540,11 @@
                 <label>KAM DK</label>
             </value>
             <value>
+                <fullName>KAM INT</fullName>
+                <default>false</default>
+                <label>KAM INT</label>
+            </value>
+            <value>
                 <fullName>KAM NO</fullName>
                 <default>false</default>
                 <label>KAM NO</label>
@@ -538,11 +553,6 @@
                 <fullName>KAM SE</fullName>
                 <default>false</default>
                 <label>KAM SE</label>
-            </value>
-            <value>
-                <fullName>KAM INT</fullName>
-                <default>false</default>
-                <label>KAM INT</label>
             </value>
             <value>
                 <fullName>Klarna</fullName>
@@ -695,6 +705,11 @@
                 <label>Products</label>
             </value>
             <value>
+                <fullName>Prolonged expired points due to IRR</fullName>
+                <default>false</default>
+                <label>Prolonged expired points due to IRR</label>
+            </value>
+            <value>
                 <fullName>Provide Delay Certificate</fullName>
                 <default>false</default>
                 <label>Provide Delay Certificate</label>
@@ -845,6 +860,11 @@
                 <label>Spam</label>
             </value>
             <value>
+                <fullName>Special award</fullName>
+                <default>false</default>
+                <label>Special award</label>
+            </value>
+            <value>
                 <fullName>Split booking</fullName>
                 <default>false</default>
                 <label>Split booking</label>
@@ -863,6 +883,11 @@
                 <fullName>Status Waiting Time</fullName>
                 <default>false</default>
                 <label>Status Waiting Time</label>
+            </value>
+            <value>
+                <fullName>Suggestion</fullName>
+                <default>false</default>
+                <label>Suggestion</label>
             </value>
             <value>
                 <fullName>Support</fullName>
@@ -962,17 +987,20 @@
             <value>
                 <fullName>Customer Feedback</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Customer Feedback</label>
-            </value>
-            <value>
-                <fullName>EU261</fullName>
-                <default>false</default>
-                <label>EU261</label>
             </value>
             <value>
                 <fullName>Denied Boarding</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Denied Boarding</label>
+            </value>
+            <value>
+                <fullName>EU261</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>EU261</label>
             </value>
             <value>
                 <fullName>Information Missing</fullName>
@@ -1000,6 +1028,57 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>SAS for Business</controllingFieldValue>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Agreement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS for Business</controllingFieldValue>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS for Business</controllingFieldValue>
+            <valueName>Online Profile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS for Business</controllingFieldValue>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <valueName>Sell</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SAS for Business</controllingFieldValue>
+            <controllingFieldValue>SME</controllingFieldValue>
+            <controllingFieldValue>Special Service Request</controllingFieldValue>
+            <controllingFieldValue>Ticketless</controllingFieldValue>
+            <controllingFieldValue>Travel Information</controllingFieldValue>
+            <controllingFieldValue>Travel Pass</controllingFieldValue>
+            <controllingFieldValue>Voucher</controllingFieldValue>
+            <controllingFieldValue>Voucher Handling</controllingFieldValue>
+            <controllingFieldValue>Error</controllingFieldValue>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <controllingFieldValue>GDPR</controllingFieldValue>
+            <controllingFieldValue>Irregularities</controllingFieldValue>
+            <controllingFieldValue>New Booking</controllingFieldValue>
+            <controllingFieldValue>Non-SAS Products</controllingFieldValue>
+            <controllingFieldValue>Plusgrade</controllingFieldValue>
+            <controllingFieldValue>Puzzle</controllingFieldValue>
+            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
+            <controllingFieldValue>Baggage</controllingFieldValue>
+            <controllingFieldValue>Cancellation &amp; Refunds</controllingFieldValue>
+            <controllingFieldValue>Changes</controllingFieldValue>
+            <controllingFieldValue>Content</controllingFieldValue>
+            <controllingFieldValue>Customer Feedback</controllingFieldValue>
+            <controllingFieldValue>Digital Channel</controllingFieldValue>
+            <controllingFieldValue>Error Handling</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>SME</controllingFieldValue>
             <valueName>App</valueName>
         </valueSettings>
@@ -1018,38 +1097,6 @@
         <valueSettings>
             <controllingFieldValue>SME</controllingFieldValue>
             <valueName>Travel Pass</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SME</controllingFieldValue>
-            <controllingFieldValue>Special Service Request</controllingFieldValue>
-            <controllingFieldValue>Ticketless</controllingFieldValue>
-            <controllingFieldValue>Travel Information</controllingFieldValue>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
-            <controllingFieldValue>Voucher</controllingFieldValue>
-            <controllingFieldValue>Voucher Handling</controllingFieldValue>
-            <controllingFieldValue>Error</controllingFieldValue>
-            <controllingFieldValue>Customer Claim Placeholder</controllingFieldValue>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <controllingFieldValue>GDPR</controllingFieldValue>
-            <controllingFieldValue>Irregularities</controllingFieldValue>
-            <controllingFieldValue>New Booking</controllingFieldValue>
-            <controllingFieldValue>Non-SAS Products</controllingFieldValue>
-            <controllingFieldValue>Plusgrade</controllingFieldValue>
-            <controllingFieldValue>Puzzle</controllingFieldValue>
-            <controllingFieldValue>Receive Customer Documentation</controllingFieldValue>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <controllingFieldValue>Baggage</controllingFieldValue>
-            <controllingFieldValue>Cancellation &amp; Refunds</controllingFieldValue>
-            <controllingFieldValue>Changes</controllingFieldValue>
-            <controllingFieldValue>Content</controllingFieldValue>
-            <controllingFieldValue>Digital Channel</controllingFieldValue>
-            <controllingFieldValue>Error Handling</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>EuroBonus Partner</controllingFieldValue>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <controllingFieldValue>Salesforce</controllingFieldValue>
-            <controllingFieldValue>SAS for Business</controllingFieldValue>
-            <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Special Service Request</controllingFieldValue>
@@ -1162,16 +1209,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel Pass</controllingFieldValue>
-            <controllingFieldValue>SAS for Business</controllingFieldValue>
-            <valueName>Agreement</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
-            <controllingFieldValue>SAS for Business</controllingFieldValue>
-            <valueName>Booking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
             <valueName>Error Management</valueName>
         </valueSettings>
         <valueSettings>
@@ -1182,11 +1219,6 @@
             <controllingFieldValue>Travel Pass</controllingFieldValue>
             <controllingFieldValue>Feedback</controllingFieldValue>
             <valueName>Refunds</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Travel Pass</controllingFieldValue>
-            <controllingFieldValue>SAS for Business</controllingFieldValue>
-            <valueName>Sell</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel Pass</controllingFieldValue>
@@ -1250,16 +1282,56 @@
             <valueName>Spam</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Customer Claim Placeholder</controllingFieldValue>
-            <valueName>Customer Feedback</valueName>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Agent Helpdesk</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Customer Claim Placeholder</controllingFieldValue>
-            <valueName>EU261</valueName>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Corporate</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Customer Claim Placeholder</controllingFieldValue>
-            <valueName>Denied Boarding</valueName>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Customer Care</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Digital Channel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Direct Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>EuroBonus Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Group Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>HQ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>KAM DK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>KAM INT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>KAM NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>KAM SE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feedback</controllingFieldValue>
+            <valueName>Sales Control</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fraud</controllingFieldValue>
@@ -1416,30 +1488,6 @@
             <valueName>SC Under 180 Minutes</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <valueName>Groups Refund</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <valueName>Involuntary</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <valueName>Rejected</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <valueName>Support</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <valueName>Waiver</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refund Handling</controllingFieldValue>
-            <valueName>Voluntary</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
             <valueName>Allowance</valueName>
         </valueSettings>
@@ -1578,6 +1626,18 @@
             <valueName>System related</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Customer Feedback</controllingFieldValue>
+            <valueName>Complaint</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Feedback</controllingFieldValue>
+            <valueName>Compliment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Feedback</controllingFieldValue>
+            <valueName>Suggestion</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Digital Channel</controllingFieldValue>
             <valueName>Booking problem</valueName>
         </valueSettings>
@@ -1691,11 +1751,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Prolonged expired points due to IRR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Provide program information</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Solve log-in problems</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>Special award</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
@@ -1742,56 +1810,28 @@
             <valueName>Security code sent</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Agent Helpdesk</valueName>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Groups Refund</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Corporate</valueName>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Involuntary</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Customer Care</valueName>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Rejected</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Digital Channel</valueName>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Support</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Direct Sales</valueName>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Waiver</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>EuroBonus Support</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Group Sales</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>HQ</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>KAM DK</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>KAM NO</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>KAM SE</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>KAM INT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feedback</controllingFieldValue>
-            <valueName>Sales Control</valueName>
+            <controllingFieldValue>Refund Handling</controllingFieldValue>
+            <valueName>Voluntary</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Salesforce</controllingFieldValue>
@@ -1800,10 +1840,6 @@
         <valueSettings>
             <controllingFieldValue>Salesforce</controllingFieldValue>
             <valueName>Process Question</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SAS for Business</controllingFieldValue>
-            <valueName>Online Profile</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

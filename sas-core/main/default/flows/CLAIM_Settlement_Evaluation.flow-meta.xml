@@ -32,8 +32,8 @@
     <assignments>
         <name>AutomaticApproval</name>
         <label>AutomaticApproval</label>
-        <locationX>1458</locationX>
-        <locationY>638</locationY>
+        <locationX>138</locationX>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -49,7 +49,7 @@
         <name>ManualApproval</name>
         <label>ManualApproval</label>
         <locationX>754</locationX>
-        <locationY>1310</locationY>
+        <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -68,41 +68,41 @@
         </defaultConnector>
         <defaultConnectorLabel>1000 or less</defaultConnectorLabel>
         <rules>
-            <name>More_than_10000</name>
+            <name>More_than_2700</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <numberValue>10000.0</numberValue>
+                    <numberValue>2700.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>ManualApproval</targetReference>
             </connector>
-            <label>More than 10000</label>
+            <label>More than 2700</label>
         </rules>
         <rules>
-            <name>Between_1000_and_10000</name>
+            <name>Between_1000_and_2700</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
                     <numberValue>1000.0</numberValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <numberValue>10000.0</numberValue>
+                    <numberValue>2700.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Random_Check_Monetary</targetReference>
             </connector>
-            <label>Between 1000 and 10000</label>
+            <label>Between 1000 and 2700</label>
         </rules>
     </decisions>
     <decisions>
@@ -113,21 +113,21 @@
         <defaultConnector>
             <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>60000 or less</defaultConnectorLabel>
+        <defaultConnectorLabel>20000 or less</defaultConnectorLabel>
         <rules>
-            <name>More_than_60000_user_limit</name>
+            <name>More_than_20000</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>incomingRecord.EuroBonus_Points__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <numberValue>60000.0</numberValue>
+                    <numberValue>20000.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>ManualApproval</targetReference>
             </connector>
-            <label>More than 60000 or user limit</label>
+            <label>More than 20000</label>
         </rules>
     </decisions>
     <decisions>
@@ -230,21 +230,21 @@
         <defaultConnector>
             <targetReference>Get_SAS_AP_User</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>15000 or less</defaultConnectorLabel>
+        <defaultConnectorLabel>2700 or less</defaultConnectorLabel>
         <rules>
-            <name>More_than_15000</name>
+            <name>More_than_2700_voucher</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <numberValue>15000.0</numberValue>
+                    <numberValue>2700.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>ManualApproval</targetReference>
             </connector>
-            <label>More than 15000</label>
+            <label>More than 2700</label>
         </rules>
     </decisions>
     <formulas>
@@ -276,8 +276,8 @@
     <recordCreates>
         <name>Create_Approval_Request</name>
         <label>Create Approval Request</label>
-        <locationX>1458</locationX>
-        <locationY>878</locationY>
+        <locationX>138</locationX>
+        <locationY>758</locationY>
         <inputAssignments>
             <field>OwnerId</field>
             <value>
@@ -329,8 +329,8 @@
     <recordUpdates>
         <name>Set_Settlement_Status_to_Approved</name>
         <label>Set Settlement Status to Approved</label>
-        <locationX>1458</locationX>
-        <locationY>758</locationY>
+        <locationX>138</locationX>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Create_Approval_Request</targetReference>
         </connector>
@@ -342,6 +342,12 @@
                 <elementReference>incomingRecord.Id</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Approver__c</field>
+            <value>
+                <elementReference>runningUser</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Settlement_Status__c</field>
             <value>

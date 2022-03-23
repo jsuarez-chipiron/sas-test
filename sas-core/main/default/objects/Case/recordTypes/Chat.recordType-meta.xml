@@ -818,6 +818,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Completed Agent Pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed Award Agent Pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed Revenue Agent Pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Connect with EB</fullName>
             <default>false</default>
         </values>
@@ -3882,6 +3894,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Prolonged expired points due to IRR</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Provide Delay Certificate</fullName>
             <default>false</default>
         </values>
@@ -3995,6 +4011,10 @@
         </values>
         <values>
             <fullName>Spam</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special award</fullName>
             <default>false</default>
         </values>
         <values>

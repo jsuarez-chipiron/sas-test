@@ -424,4 +424,41 @@ private class Cases_Test {
       'Should have thrown an exception.'
     );
   }
+  @IsTest
+  static void claimCaseShouldBeClosedAfterEmailWasSent() {
+    Case c = new Case(
+      Status = Cases.STATUS_WAITING_FOR_CONTROL,
+      RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
+      IsApproved__c = true
+    );
+    LIA_Claim__c cl = new LIA_Claim__c();
+    insert new List<SObject>{ c, cl };
+    c.LIA_Claim__c = cl.Id;
+    cl.Case__c = c.Id;
+    Settlement__c s = new Settlement__c(
+      Claim__c = cl.Id,
+      Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
+    );
+    EmailMessage e = new EmailMessage(
+      Subject = 'Test',
+      TextBody = 'This is a test email',
+      ToAddress = 'testtest@sas.se',
+      FromAddress = 'fromtesttest@sas.se',
+      Status = EmailMessages.STATUS_DRAFT,
+      ParentId = c.Id
+    );
+    upsert new List<SObject>{ c, cl, s, e };
+    Test.startTest();
+    c.Status = Cases.STATUS_WAITING_FOR_TRANSFER;
+    update c;
+    Test.stopTest();
+    Case caseAfterUpdate = [SELECT Status FROM Case WHERE Id = :c.Id];
+    EmailMessage emailAfterUpdate = [
+      SELECT Status
+      FROM EmailMessage
+      WHERE Id = :e.Id
+    ];
+    System.assertEquals(Cases.STATUS_CLOSED, caseAfterUpdate.Status);
+    System.assertEquals(EmailMessages.STATUS_SENT, emailAfterUpdate.Status);
+  }
 }

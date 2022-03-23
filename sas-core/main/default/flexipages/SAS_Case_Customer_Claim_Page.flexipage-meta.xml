@@ -272,6 +272,13 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Customer Feedback</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -289,6 +296,13 @@
                     <value>LIA_Major_Event__c.Update_Major_Event</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Customer Feedback</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -306,6 +320,13 @@
                     <value>LIA_Firm__c.Update_Legal_Firm</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Customer Feedback</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -317,6 +338,49 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>fcs_CaseTag</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Feedback_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Baggage</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Feedback_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>At the airport</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Feedback_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Booking</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Feedback_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>During flight</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Feedback_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Flight disruptions</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Feedback_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Travel extras</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Feedback_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Other</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -343,6 +407,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>caseProactivities</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Customer Feedback</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -391,6 +462,13 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Customer Feedback</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -416,16 +494,37 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Customer Feedback</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>customerCard</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Customer Feedback</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>caseBookingDetails</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Customer Feedback</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

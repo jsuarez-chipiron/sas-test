@@ -77,7 +77,7 @@ public without sharing class RefundRequestService {
       SuppliedEmail = form.formData.email,
       SuppliedPhone = form.formData.phone,
       Refund_Request__c = refund.Id,
-      RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
+      RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.Channel),
       Initially_Provided_PNR__c = form.formData.bookingReference
     );
 

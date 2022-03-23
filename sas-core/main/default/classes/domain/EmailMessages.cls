@@ -4,6 +4,13 @@ public without sharing class EmailMessages extends fflib_SObjectDomain {
     Configuration.disableTriggerCRUDSecurity();
   }
 
+  public static final String STATUS_NEW = '0';
+  public static final String STATUS_READ = '1';
+  public static final String STATUS_REPLIED = '2';
+  public static final String STATUS_SENT = '3';
+  public static final String STATUS_FORWARDED = '4';
+  public static final String STATUS_DRAFT = '5';
+
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
       return new EmailMessages(records);

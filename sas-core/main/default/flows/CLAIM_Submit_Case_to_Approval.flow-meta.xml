@@ -4,9 +4,54 @@
     <decisions>
         <name>Case_can_be_submitted_for_Approval</name>
         <label>Case can be submitted for Approval</label>
-        <locationX>446</locationX>
-        <locationY>398</locationY>
+        <locationX>578</locationX>
+        <locationY>518</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No_email_draft_exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Email_Draft_for_this_Case</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>errorScreen_0_0_0</targetReference>
+            </connector>
+            <label>No email draft exists</label>
+        </rules>
+        <rules>
+            <name>Invalid_Settlements_exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>numberOfInvalidSettlements</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>errorScreen_0_0</targetReference>
+            </connector>
+            <label>Invalid Settlements exist</label>
+        </rules>
+        <rules>
+            <name>No_Settlements_to_approve</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>numberOfSettlementsNeedingApproval</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>errorScreen_0</targetReference>
+            </connector>
+            <label>No Settlements to approve</label>
+        </rules>
         <rules>
             <name>Yes</name>
             <conditionLogic>and</conditionLogic>
@@ -36,36 +81,6 @@
             </connector>
             <label>Yes</label>
         </rules>
-        <rules>
-            <name>No_Settlements_to_approve</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>numberOfSettlementsNeedingApproval</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>0.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>errorScreen_0</targetReference>
-            </connector>
-            <label>No Settlements to approve</label>
-        </rules>
-        <rules>
-            <name>Invalid_Settlements_exist</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>numberOfInvalidSettlements</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <numberValue>0.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>errorScreen_0_0</targetReference>
-            </connector>
-            <label>Invalid Settlements exist</label>
-        </rules>
     </decisions>
     <interviewLabel>CLAIM Submit Case to Approval {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CLAIM Submit Case to Approval</label>
@@ -91,11 +106,11 @@
     <recordLookups>
         <name>Get_Case_Information</name>
         <label>Get Case Information</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Case_has_Settlements_to_approve</targetReference>
+            <targetReference>Get_Email_Draft_for_this_Case</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -109,11 +124,39 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Email_Draft_for_this_Case</name>
+        <label>Get Email Draft for this Case</label>
+        <locationX>578</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Case_has_Settlements_to_approve</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>5</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>EmailMessage</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Update_Case_Status</name>
         <label>Update Case Status</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationX>842</locationX>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Update_Settlements_for_this_Case</targetReference>
         </connector>
@@ -142,8 +185,8 @@
     <recordUpdates>
         <name>Update_Settlements_for_this_Case</name>
         <label>Update Settlements for this Case</label>
-        <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationX>842</locationX>
+        <locationY>878</locationY>
         <connector>
             <targetReference>Send_Case_to_Approval</targetReference>
         </connector>
@@ -180,8 +223,8 @@
     <screens>
         <name>errorScreen_0</name>
         <label>Error Screen</label>
-        <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -196,8 +239,8 @@
     <screens>
         <name>errorScreen_0_0</name>
         <label>Error Screen</label>
-        <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -210,10 +253,26 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>errorScreen_0_0_0</name>
+        <label>Error Screen</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>errorMessageInvalidSettlements_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;This case could not be submitted for approval as there is no associated draft email.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Please draft an email and submit this case again.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>submitScreen</name>
         <label>Submit Screen</label>
-        <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationX>842</locationX>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -229,7 +288,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>320</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case_Information</targetReference>
@@ -239,8 +298,8 @@
     <subflows>
         <name>Case_has_Settlements_to_approve</name>
         <label>Case has Settlements to approve</label>
-        <locationX>446</locationX>
-        <locationY>278</locationY>
+        <locationX>578</locationX>
+        <locationY>398</locationY>
         <connector>
             <targetReference>Case_can_be_submitted_for_Approval</targetReference>
         </connector>
@@ -283,8 +342,8 @@
     <subflows>
         <name>Send_Case_to_Approval</name>
         <label>Send Case to Approval</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationX>842</locationX>
+        <locationY>998</locationY>
         <flowName>CLAIM_Case_Approval_Handler</flowName>
         <inputAssignments>
             <name>incomingCaseRecord</name>

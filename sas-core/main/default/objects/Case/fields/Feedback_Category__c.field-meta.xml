@@ -13,6 +13,36 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>At the airport</fullName>
+                <default>false</default>
+                <label>At the airport</label>
+            </value>
+            <value>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+                <label>Baggage</label>
+            </value>
+            <value>
+                <fullName>Booking</fullName>
+                <default>false</default>
+                <label>Booking</label>
+            </value>
+            <value>
+                <fullName>During flight</fullName>
+                <default>false</default>
+                <label>During flight</label>
+            </value>
+            <value>
+                <fullName>Flight disruptions</fullName>
+                <default>false</default>
+                <label>Flight disruptions</label>
+            </value>
+            <value>
+                <fullName>Travel extras</fullName>
+                <default>false</default>
+                <label>Travel extras</label>
+            </value>
+            <value>
                 <fullName>Other</fullName>
                 <default>false</default>
                 <label>Other</label>

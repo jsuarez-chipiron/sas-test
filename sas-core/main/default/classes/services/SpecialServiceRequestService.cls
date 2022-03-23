@@ -81,7 +81,7 @@ public class SpecialServiceRequestService {
       Initially_Provided_PNR__c = specialServiceForm.formData.bookingReference,
       Origin = caseOrigin,
       OwnerId = salesControlQueue.Id,
-      RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL,
+      RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.Channel),
       Subject = 'SSR, Type: ' +
         specialServiceRequest.Type__c +
         ', PNR: ' +
