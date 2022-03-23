@@ -171,16 +171,16 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>settlementCalculator</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>maintabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>settlementCalculator</componentName>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
