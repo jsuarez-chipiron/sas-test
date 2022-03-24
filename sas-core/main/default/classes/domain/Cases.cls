@@ -665,33 +665,46 @@ public without sharing class Cases extends fflib_SObjectDomain {
 
       //Only send email if not test
       if (draftEmailForCase.size() == 1) {
+        EmailMessage existingDraftEmail = draftEmailForCase[0];
         Boolean sendSuccess = false;
         String errorMsg = '';
-        try {
-          List<Messaging.SendEmailResult> results = Messaging.sendEmailMessage(
-            new List<ID>{ draftEmailForCase[0].Id }
-          );
-          if (results.size() != 1) {
-            return;
-          }
-          sendSuccess = results[0].isSuccess();
-          if (!sendSuccess) {
-            errorMsg = results[0].getErrors()[0].getMessage();
-          }
-        } catch (Exception e) {
-          sendSuccess = false;
-          errorMsg = e.getMessage();
-        }
-
-        fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
         List<Case> caseToUpdate = CasesSelector.newInstance()
           .selectById(new Set<Id>{ c.Id });
-        caseToUpdate[0].Status = sendSuccess
-          ? STATUS_CLOSED
-          : STATUS_IN_PROGRESS;
-        caseToUpdate[0].IsApproved__c = false;
-        uow.registerDirty(caseToUpdate[0]);
-        uow.commitWork();
+        try {
+          fflib_ISObjectUnitOfWork uowTry = SAS_Service_Application.UnitOfWork.newInstance();
+          Messaging.SingleEmailMessage emailToSend = new Messaging.SingleEmailMessage();
+          emailToSend.setSenderDisplayName(existingDraftEmail.FromAddress);
+          emailToSend.setToAddresses(existingDraftEmail.ToAddress.split(';'));
+          emailToSend.setReplyTo(existingDraftEmail.FromAddress);
+          if (existingDraftEmail.CcAddress != null) {
+            emailToSend.setCcAddresses(existingDraftEmail.CcAddress.split(';'));
+          }
+          if (existingDraftEmail.BccAddress != null) {
+            emailToSend.setBccAddresses(
+              existingDraftEmail.BccAddress.split(';')
+            );
+          }
+          emailToSend.setSubject(existingDraftEmail.Subject);
+          emailToSend.setHtmlBody(existingDraftEmail.HtmlBody);
+          emailToSend.setPlainTextBody(existingDraftEmail.TextBody);
+          emailToSend.setSaveAsActivity(true);
+          emailToSend.setWhatId(c.Id);
+          uowTry.registerEmail(emailToSend);
+          uowTry.registerDeleted(existingDraftEmail);
+          caseToUpdate[0].Status = STATUS_CLOSED;
+          caseToUpdate[0].IsApproved__c = false;
+          uowTry.registerDirty(caseToUpdate[0]);
+          uowTry.commitWork();
+          sendSuccess = true;
+        } catch (Exception exc) {
+          fflib_ISObjectUnitOfWork uowCatch = SAS_Service_Application.UnitOfWork.newInstance();
+          caseToUpdate[0].Status = STATUS_IN_PROGRESS;
+          caseToUpdate[0].IsApproved__c = false;
+          uowCatch.registerDirty(caseToUpdate[0]);
+          uowCatch.commitWork();
+          sendSuccess = false;
+          errorMsg = exc.getMessage();
+        }
 
         String notificationTitle = sendSuccess
           ? 'Case closed'

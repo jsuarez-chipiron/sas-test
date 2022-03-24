@@ -453,12 +453,6 @@ private class Cases_Test {
     update c;
     Test.stopTest();
     Case caseAfterUpdate = [SELECT Status FROM Case WHERE Id = :c.Id];
-    EmailMessage emailAfterUpdate = [
-      SELECT Status
-      FROM EmailMessage
-      WHERE Id = :e.Id
-    ];
     System.assertEquals(Cases.STATUS_CLOSED, caseAfterUpdate.Status);
-    System.assertEquals(EmailMessages.STATUS_SENT, emailAfterUpdate.Status);
   }
 }

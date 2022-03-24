@@ -199,7 +199,7 @@ private class CaseFormTest {
       '{ ' +
       '  "formData": {' +
       '    "type": "claim",' +
-      '    "claimCategory": "flight-disruption",' +
+      '    "claimCategory": "flight-disruptions",' +
       '    "claimType": "flight-delay",' +
       //
       '    "contactType": "private",' +

@@ -15,7 +15,7 @@ global class CaseFormJSON2Apex {
 
     global List<String> contentVersionIds;
 
-    global String contactType; // private, corporate, travel-agency, other
+    global String contactType; // private, corporate, travel-agency, other-representative
     global String companyName;
     global String companyCode;
     global String firstName;
@@ -76,7 +76,7 @@ global class CaseFormJSON2Apex {
   }
 
   global class Expense {
-    global String expenseType;
+    global String expenseType; // food, transportation, phone-calls, accommodation
     global String expenseCurrency;
     global Decimal amount; 
     global List<String> receiptFileId; // TODO: Should we call this contentVersionIds?

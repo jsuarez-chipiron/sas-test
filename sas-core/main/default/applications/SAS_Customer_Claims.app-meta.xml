@@ -21,24 +21,6 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>SAS_Customer_Claim_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>LIA_Claim__c</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>SAS_Customer_Claim_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>LIA_Claim__c</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>SAS_Case_Record_Page</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
@@ -53,6 +35,24 @@
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
         <pageOrSobjectType>Case</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>SAS_Customer_Claim_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>LIA_Claim__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>SAS_Customer_Claim_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>LIA_Claim__c</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -155,7 +155,7 @@
         <recordType>Case.Claim</recordType>
         <type>Flexipage</type>
         <profile>Business User</profile>
-    </profileActionOverrides>    
+    </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>SAS_Case_Claim_Page</content>
@@ -173,7 +173,7 @@
         <recordType>Case.Claim</recordType>
         <type>Flexipage</type>
         <profile>Vendor</profile>
-    </profileActionOverrides>     
+    </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>SAS_Case_Claim_Page</content>
@@ -181,8 +181,8 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Claim</recordType>
         <type>Flexipage</type>
-        <profile>Admin</profile>   
-    </profileActionOverrides>   
+        <profile>Admin</profile>
+    </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>SAS_Case_Claim_Page</content>
@@ -190,8 +190,8 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Claim</recordType>
         <type>Flexipage</type>
-        <profile>Admin</profile>   
-    </profileActionOverrides>                 
+        <profile>Admin</profile>
+    </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>SAS_Case_Customer_Claim_Page</content>
@@ -249,15 +249,6 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>SAS_Liability_Claim_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>LIA_Claim__c</pageOrSobjectType>
-        <recordType>LIA_Claim__c.LiabilityClaim</recordType>
-        <type>Flexipage</type>
-        <profile>Business User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>SAS_Liability_Claim_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>LIA_Claim__c</pageOrSobjectType>
         <recordType>LIA_Claim__c.LiabilityClaim</recordType>
@@ -299,31 +290,38 @@
         <recordType>LIA_Claim__c.LiabilityClaim</recordType>
         <type>Flexipage</type>
         <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SAS_Liability_Claim_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LIA_Claim__c</pageOrSobjectType>
+        <recordType>LIA_Claim__c.LiabilityClaim</recordType>
+        <type>Flexipage</type>
+        <profile>Business User</profile>
     </profileActionOverrides>
     <tabs>standard-Case</tabs>
     <tabs>LIA_Claim__c</tabs>
     <tabs>Settlement__c</tabs>
+    <tabs>Claim_Firm__c</tabs>
+    <tabs>Proactivity__c</tabs>
     <tabs>LIA_Major_Event__c</tabs>
-    <tabs>LIA_Firm__c</tabs>
     <tabs>standard-report</tabs>
-    <tabs>Approval_Request__c</tabs>
-    <tabs>standard-Dashboard</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SAS_Customer_Claims_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
-            <fieldName>Settlement__c</fieldName>
-            <tab>Approval_Request__c</tab>
+            <tab>Claim_Firm__c</tab>
         </mappings>
         <mappings>
             <fieldName>Case__c</fieldName>
             <tab>LIA_Claim__c</tab>
         </mappings>
         <mappings>
-            <tab>LIA_Firm__c</tab>
+            <tab>LIA_Major_Event__c</tab>
         </mappings>
         <mappings>
-            <tab>LIA_Major_Event__c</tab>
+            <tab>Proactivity__c</tab>
         </mappings>
         <mappings>
             <fieldName>Claim__c</fieldName>
@@ -331,9 +329,6 @@
         </mappings>
         <mappings>
             <tab>standard-Case</tab>
-        </mappings>
-        <mappings>
-            <tab>standard-Dashboard</tab>
         </mappings>
         <mappings>
             <tab>standard-report</tab>
