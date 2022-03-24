@@ -228,12 +228,12 @@ public class RacerResponseHandlersTest {
     String L2FileContents =
       '01/01/2022 01:00:00|' +
       paymentFileName1 +
-      '|SEB_L2|ID000/ID000|1114|SAS REF ID000|0000|SAS CRD SE|DK BANK TRANSFER|RJCT|NARR|ErrorOnAllCounterParties|5968|DKK|22-JAN-01|Name Name|RJCT|AC03|' +
+      '|SEB_L2|ID000/ID000|1114|000000000000|SAS SF OTH|DK BANK TRANSFER|RJCT|NARR|ErrorOnAllCounterParties|5968|DKK|22-JAN-01|Name Name|RJCT|AC03|' +
       error1 +
       '\n' +
       '01/01/2022 01:00:00|' +
       paymentFileName2 +
-      '|SEB_L2|ID000/ID000|1114|SAS REF ID000|0000|SAS CRD SE|DK BANK TRANSFER|RJCT|NARR|ErrorOnAllCounterParties|5968|DKK|22-JAN-01|Name Name|RJCT|AC03|' +
+      '|SEB_L2|ID000/ID000|1114|000000000000|SAS SF OTH|DK BANK TRANSFER|RJCT|NARR|ErrorOnAllCounterParties|5968|DKK|22-JAN-01|Name Name|RJCT|AC03|' +
       error2;
     Settlement__c relevantSettlement1 = new Settlement__c(
       Address_line_1__c = 'Frösundaviks allé 1',

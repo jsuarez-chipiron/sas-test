@@ -167,7 +167,7 @@ public class RacerResponseHandlers {
 
       String paymentFileName = dataFields[1];
       String documentStatus = dataFields[4];
-      String errorDetail = dataFields[18];
+      String errorDetail = dataFields[17];
 
       // There should never be more than a few lines so having this within the loop should be fine.
       List<Settlement__c> correspondingSettlements = settlementsSel.selectByPaymentFileName(

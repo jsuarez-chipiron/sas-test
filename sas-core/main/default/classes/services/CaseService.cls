@@ -16,7 +16,35 @@ public without sharing class CaseService {
   };
 
   private static Map<String, String> jsonToPicklist = new Map<String, String>{
-    'other' => 'Other'
+    'at-the-airport' => 'At the airport',
+    'baggage' => 'Baggage',
+    'baggage-damaged' => 'Baggage damaged',
+    'baggage-delayed' => 'Baggage delayed/lost',
+    'booking' => 'Booking',
+    'booking-error' => 'Booking error',
+    'cabin-environment' => 'Cabin environment',
+    'denied-boarding' => 'Denied boarding',
+    'downgrading' => 'Downgrading',
+    'during-flight' => 'During flight',
+    'extra-baggage' => 'Extra baggage',
+    'flight-cancellation' => 'Flight cancellation',
+    'flight-delay' => 'Flight delay',
+    'flight-disruptions' => 'Flight disruptions',
+    'foodborne-illness' => 'Foodborne illness',
+    'gate-issues' => 'Gate issues',
+    'general' => 'General',
+    'in-flight-meal' => 'In-flight meal',
+    'in-flight-service' => 'In-flight service',
+    'lounge' => 'Lounge',
+    'missed-connection' => 'Missed connection',
+    'other' => 'Other',
+    'prepaid-seat' => 'Prepaid seat',
+    'refund' => 'Refund',
+    'regression' => 'Regression',
+    'special-assistance' => 'Special assistance',
+    'travel-document-control' => 'Travel document control',
+    'travel-extras' => 'Travel extras',
+    'wifi' => 'WiFi'
   };
 
   private static Group refundsQueue = [
