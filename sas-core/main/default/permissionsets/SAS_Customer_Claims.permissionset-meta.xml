@@ -52,13 +52,13 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Feedback_Category__c</field>
-        <readable>false</readable>
+        <field>Case.Customer_Claim_Category__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Feedback_Type__c</field>
-        <readable>false</readable>
+        <field>Case.Customer_Claim_Type__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -69,11 +69,6 @@
         <editable>false</editable>
         <field>Case.LIA_PNR__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.Team__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
