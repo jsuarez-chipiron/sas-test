@@ -3,7 +3,14 @@ public inherited sharing class EmailMessagesSelector extends fflib_SObjectSelect
     return new List<Schema.SObjectField>{
       EmailMessage.Id,
       EmailMessage.ParentId,
-      EmailMessage.Status
+      EmailMessage.Status,
+      EmailMessage.ToAddress,
+      EmailMessage.FromAddress,
+      EmailMessage.CcAddress,
+      EmailMessage.BccAddress,
+      EmailMessage.Subject,
+      EmailMessage.HtmlBody,
+      EmailMessage.TextBody
     };
   }
 
