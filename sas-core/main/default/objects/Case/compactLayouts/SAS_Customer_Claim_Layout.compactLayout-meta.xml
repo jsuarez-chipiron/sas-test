@@ -5,5 +5,7 @@
     <fields>Status</fields>
     <fields>OwnerId</fields>
     <fields>Approval_Submitter__c</fields>
+    <fields>Customer_Claim_Category__c</fields>
+    <fields>Customer_Claim_Type__c</fields>
     <label>SAS Customer Claim Layout</label>
 </CompactLayout>
