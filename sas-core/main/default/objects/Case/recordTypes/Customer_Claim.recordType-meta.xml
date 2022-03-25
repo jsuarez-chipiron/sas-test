@@ -3152,7 +3152,7 @@
     <picklistValues>
         <picklist>Feedback_Category__c</picklist>
         <values>
-            <fullName>At the airport</fullName>
+            <fullName>Airport experience</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3164,11 +3164,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>During flight</fullName>
+            <fullName>Flight disruptions</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Flight disruptions</fullName>
+            <fullName>Flight experience</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3219,10 +3219,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Foodborne illness</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gate issues</fullName>
             <default>false</default>
         </values>
@@ -3240,6 +3236,10 @@
         </values>
         <values>
             <fullName>Lounge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meals%2FDrinks</fullName>
             <default>false</default>
         </values>
         <values>

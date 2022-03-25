@@ -78,19 +78,14 @@
                 <label>Lounge</label>
             </value>
             <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
-            </value>
-            <value>
                 <fullName>Cabin environment</fullName>
                 <default>false</default>
                 <label>Cabin environment</label>
             </value>
             <value>
-                <fullName>Foodborne illness</fullName>
+                <fullName>Meals/Drinks</fullName>
                 <default>false</default>
-                <label>Foodborne illness</label>
+                <label>Meals/Drinks</label>
             </value>
             <value>
                 <fullName>In-flight service</fullName>
@@ -127,7 +122,44 @@
                 <default>false</default>
                 <label>Personal injury</label>
             </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Baggage</controllingFieldValue>
+            <valueName>Baggage delayed/lost</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Baggage</controllingFieldValue>
+            <valueName>Baggage damaged</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Baggage</controllingFieldValue>
+            <valueName>Regression</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Flight cancellation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Flight delay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Missed connection</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Denied boarding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Downgrading</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel extras bought not rendered</controllingFieldValue>
             <valueName>WiFi</valueName>
@@ -150,79 +182,47 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel extras bought not rendered</controllingFieldValue>
-            <controllingFieldValue>Problems during flight</controllingFieldValue>
-            <controllingFieldValue>Problems at the airport</controllingFieldValue>
-            <controllingFieldValue>Problems with my booking</controllingFieldValue>
+            <controllingFieldValue>Flight experience</controllingFieldValue>
+            <controllingFieldValue>Airport experience</controllingFieldValue>
+            <controllingFieldValue>Booking</controllingFieldValue>
             <controllingFieldValue>Accident &amp; injury</controllingFieldValue>
             <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Baggage</controllingFieldValue>
-            <valueName>Baggage delayed/lost</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Baggage</controllingFieldValue>
-            <valueName>Baggage damaged</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Baggage</controllingFieldValue>
-            <valueName>Regression</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Problems during flight</controllingFieldValue>
+            <controllingFieldValue>Flight experience</controllingFieldValue>
             <valueName>Cabin environment</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Problems during flight</controllingFieldValue>
-            <valueName>Foodborne illness</valueName>
+            <controllingFieldValue>Flight experience</controllingFieldValue>
+            <valueName>Meals/Drinks</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Problems during flight</controllingFieldValue>
+            <controllingFieldValue>Flight experience</controllingFieldValue>
             <valueName>In-flight service</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Problems at the airport</controllingFieldValue>
+            <controllingFieldValue>Airport experience</controllingFieldValue>
             <valueName>Special assistance</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Problems at the airport</controllingFieldValue>
+            <controllingFieldValue>Airport experience</controllingFieldValue>
             <valueName>Travel document control</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Problems at the airport</controllingFieldValue>
+            <controllingFieldValue>Airport experience</controllingFieldValue>
             <valueName>Gate issues</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Problems with my booking</controllingFieldValue>
+            <controllingFieldValue>Booking</controllingFieldValue>
             <valueName>Booking error</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Problems with my booking</controllingFieldValue>
+            <controllingFieldValue>Booking</controllingFieldValue>
             <valueName>Complaint about a refund</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Accident &amp; injury</controllingFieldValue>
             <valueName>Personal injury</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Flight cancellation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Flight delay</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Missed connection</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Denied boarding</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Downgrading</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
