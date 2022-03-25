@@ -10,47 +10,26 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Baggage</fullName>
-                <default>false</default>
-                <label>Baggage</label>
-            </value>
-            <value>
-                <fullName>Flight disruptions</fullName>
-                <default>false</default>
-                <label>Flight disruptions</label>
-            </value>
-            <value>
-                <fullName>Travel extras bought not rendered</fullName>
-                <default>false</default>
-                <label>Travel extras bought not rendered</label>
-            </value>
-            <value>
-                <fullName>Problems during flight</fullName>
-                <default>false</default>
-                <label>Problems during flight</label>
-            </value>
-            <value>
-                <fullName>Problems at the airport</fullName>
-                <default>false</default>
-                <label>Problems at the airport</label>
-            </value>
-            <value>
-                <fullName>Problems with my booking</fullName>
-                <default>false</default>
-                <label>Problems with my booking</label>
-            </value>
+            <sorted>true</sorted>
             <value>
                 <fullName>Accident &amp; injury</fullName>
                 <default>false</default>
                 <label>Accident &amp; injury</label>
             </value>
             <value>
-                <fullName>Airport Services</fullName>
+                <fullName>Airport experience</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Airport Services</label>
+                <label>Airport experience</label>
+            </value>
+            <value>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+                <label>Baggage</label>
+            </value>
+            <value>
+                <fullName>Booking</fullName>
+                <default>false</default>
+                <label>Booking</label>
             </value>
             <value>
                 <fullName>Booking/Refund and Sales Services</fullName>
@@ -71,10 +50,26 @@
                 <label>EuroBonus</label>
             </value>
             <value>
+                <fullName>Flight disruptions</fullName>
+                <default>false</default>
+                <label>Flight disruptions</label>
+            </value>
+            <value>
+                <fullName>Flight experience</fullName>
+                <default>false</default>
+                <label>Flight experience</label>
+            </value>
+            <value>
                 <fullName>Inflight / Onboard</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Inflight / Onboard</label>
+            </value>
+            <value>
+                <fullName>Ö**Claim Agency**Ö</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ö**Claim Agency**Ö</label>
             </value>
             <value>
                 <fullName>Other</fullName>
@@ -89,10 +84,9 @@
                 <label>Passenger irregularities</label>
             </value>
             <value>
-                <fullName>Ö**Claim Agency**Ö</fullName>
+                <fullName>Travel extras bought not rendered</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Ö**Claim Agency**Ö</label>
+                <label>Travel extras bought not rendered</label>
             </value>
         </valueSetDefinition>
     </valueSet>

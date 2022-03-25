@@ -59,9 +59,9 @@
                 <label>Flight delay</label>
             </value>
             <value>
-                <fullName>Foodborne illness</fullName>
+                <fullName>Meals/Drinks</fullName>
                 <default>false</default>
-                <label>Foodborne illness</label>
+                <label>Meals/Drinks</label>
             </value>
             <value>
                 <fullName>Gate issues</fullName>
@@ -130,8 +130,23 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>Other</controllingFieldValue>
-            <valueName>General</valueName>
+            <controllingFieldValue>Airport experience</controllingFieldValue>
+            <valueName>Gate issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Airport experience</controllingFieldValue>
+            <valueName>Special assistance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Airport experience</controllingFieldValue>
+            <valueName>Travel document control</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Airport experience</controllingFieldValue>
+            <controllingFieldValue>Booking</controllingFieldValue>
+            <controllingFieldValue>Flight experience</controllingFieldValue>
+            <controllingFieldValue>Travel extras</controllingFieldValue>
+            <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
@@ -140,6 +155,26 @@
         <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
             <valueName>Baggage delayed/lost</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking</controllingFieldValue>
+            <valueName>Booking error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking</controllingFieldValue>
+            <valueName>Refund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight experience</controllingFieldValue>
+            <valueName>Cabin environment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight experience</controllingFieldValue>
+            <valueName>Meals/Drinks</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight experience</controllingFieldValue>
+            <valueName>In-flight service</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Flight disruptions</controllingFieldValue>
@@ -182,43 +217,8 @@
             <valueName>WiFi</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Travel extras</controllingFieldValue>
-            <controllingFieldValue>During flight</controllingFieldValue>
-            <controllingFieldValue>At the airport</controllingFieldValue>
-            <controllingFieldValue>Booking</controllingFieldValue>
-            <valueName>Other</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>During flight</controllingFieldValue>
-            <valueName>Cabin environment</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>During flight</controllingFieldValue>
-            <valueName>Foodborne illness</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>During flight</controllingFieldValue>
-            <valueName>In-flight service</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>At the airport</controllingFieldValue>
-            <valueName>Gate issues</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>At the airport</controllingFieldValue>
-            <valueName>Special assistance</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>At the airport</controllingFieldValue>
-            <valueName>Travel document control</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Booking</controllingFieldValue>
-            <valueName>Booking error</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Booking</controllingFieldValue>
-            <valueName>Refund</valueName>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>General</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

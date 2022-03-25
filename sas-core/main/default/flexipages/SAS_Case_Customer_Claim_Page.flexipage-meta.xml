@@ -272,13 +272,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Team__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Customer Feedback</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -294,30 +287,6 @@
                 <componentInstanceProperties>
                     <name>updateQuickActionName</name>
                     <value>LIA_Major_Event__c.Update_Major_Event</value>
-                </componentInstanceProperties>
-                <componentName>console:relatedRecord</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Team__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Customer Feedback</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>lookupFieldName</name>
-                    <value>Case.LIA_Claim__c.LIA_Firm__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>titleFieldName</name>
-                    <value>Legal Firm Details</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>updateQuickActionName</name>
-                    <value>LIA_Firm__c.Update_Legal_Firm</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
                 <visibilityRule>
@@ -351,7 +320,7 @@
                     <criteria>
                         <leftValue>{!Record.Feedback_Category__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>At the airport</rightValue>
+                        <rightValue>Airport experience</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Feedback_Category__c}</leftValue>
@@ -361,7 +330,7 @@
                     <criteria>
                         <leftValue>{!Record.Feedback_Category__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>During flight</rightValue>
+                        <rightValue>Flight experience</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Feedback_Category__c}</leftValue>
@@ -506,25 +475,11 @@
         <itemInstances>
             <componentInstance>
                 <componentName>customerCard</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Team__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Customer Feedback</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>caseBookingDetails</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Team__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Customer Feedback</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

@@ -2003,10 +2003,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Foodborne illness</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gate issues</fullName>
             <default>false</default>
         </values>
@@ -2020,6 +2016,10 @@
         </values>
         <values>
             <fullName>Lounge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meals%2FDrinks</fullName>
             <default>false</default>
         </values>
         <values>
