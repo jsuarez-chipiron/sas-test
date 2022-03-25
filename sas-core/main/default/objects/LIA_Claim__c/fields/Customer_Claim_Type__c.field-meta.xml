@@ -13,34 +13,29 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Baggage delayed/lost</fullName>
-                <default>false</default>
-                <label>Baggage delayed/lost</label>
-            </value>
-            <value>
                 <fullName>Baggage damaged</fullName>
                 <default>false</default>
                 <label>Baggage damaged</label>
             </value>
             <value>
-                <fullName>Regression</fullName>
+                <fullName>Baggage delayed/lost</fullName>
                 <default>false</default>
-                <label>Regression</label>
+                <label>Baggage delayed/lost</label>
             </value>
             <value>
-                <fullName>Flight cancellation</fullName>
+                <fullName>Booking error</fullName>
                 <default>false</default>
-                <label>Flight cancellation</label>
+                <label>Booking error</label>
             </value>
             <value>
-                <fullName>Flight delay</fullName>
+                <fullName>Cabin environment</fullName>
                 <default>false</default>
-                <label>Flight delay</label>
+                <label>Cabin environment</label>
             </value>
             <value>
-                <fullName>Missed connection</fullName>
+                <fullName>Complaint about a refund</fullName>
                 <default>false</default>
-                <label>Missed connection</label>
+                <label>Complaint about a refund</label>
             </value>
             <value>
                 <fullName>Denied boarding</fullName>
@@ -53,9 +48,24 @@
                 <label>Downgrading</label>
             </value>
             <value>
-                <fullName>WiFi</fullName>
+                <fullName>Extra baggage</fullName>
                 <default>false</default>
-                <label>WiFi</label>
+                <label>Extra baggage</label>
+            </value>
+            <value>
+                <fullName>Flight cancellation</fullName>
+                <default>false</default>
+                <label>Flight cancellation</label>
+            </value>
+            <value>
+                <fullName>Flight delay</fullName>
+                <default>false</default>
+                <label>Flight delay</label>
+            </value>
+            <value>
+                <fullName>Gate issues</fullName>
+                <default>false</default>
+                <label>Gate issues</label>
             </value>
             <value>
                 <fullName>In-flight meal</fullName>
@@ -63,14 +73,9 @@
                 <label>In-flight meal</label>
             </value>
             <value>
-                <fullName>Extra baggage</fullName>
+                <fullName>In-flight service</fullName>
                 <default>false</default>
-                <label>Extra baggage</label>
-            </value>
-            <value>
-                <fullName>Prepaid seat</fullName>
-                <default>false</default>
-                <label>Prepaid seat</label>
+                <label>In-flight service</label>
             </value>
             <value>
                 <fullName>Lounge</fullName>
@@ -78,19 +83,29 @@
                 <label>Lounge</label>
             </value>
             <value>
-                <fullName>Cabin environment</fullName>
-                <default>false</default>
-                <label>Cabin environment</label>
-            </value>
-            <value>
                 <fullName>Meals/Drinks</fullName>
                 <default>false</default>
                 <label>Meals/Drinks</label>
             </value>
             <value>
-                <fullName>In-flight service</fullName>
+                <fullName>Missed connection</fullName>
                 <default>false</default>
-                <label>In-flight service</label>
+                <label>Missed connection</label>
+            </value>
+            <value>
+                <fullName>Personal injury</fullName>
+                <default>false</default>
+                <label>Personal injury</label>
+            </value>
+            <value>
+                <fullName>Prepaid seat</fullName>
+                <default>false</default>
+                <label>Prepaid seat</label>
+            </value>
+            <value>
+                <fullName>Regression</fullName>
+                <default>false</default>
+                <label>Regression</label>
             </value>
             <value>
                 <fullName>Special assistance</fullName>
@@ -103,24 +118,9 @@
                 <label>Travel document control</label>
             </value>
             <value>
-                <fullName>Gate issues</fullName>
+                <fullName>WiFi</fullName>
                 <default>false</default>
-                <label>Gate issues</label>
-            </value>
-            <value>
-                <fullName>Booking error</fullName>
-                <default>false</default>
-                <label>Booking error</label>
-            </value>
-            <value>
-                <fullName>Complaint about a refund</fullName>
-                <default>false</default>
-                <label>Complaint about a refund</label>
-            </value>
-            <value>
-                <fullName>Personal injury</fullName>
-                <default>false</default>
-                <label>Personal injury</label>
+                <label>WiFi</label>
             </value>
             <value>
                 <fullName>Other</fullName>
@@ -130,15 +130,23 @@
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
-            <valueName>Baggage delayed/lost</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Baggage</controllingFieldValue>
             <valueName>Baggage damaged</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
+            <valueName>Baggage delayed/lost</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Baggage</controllingFieldValue>
             <valueName>Regression</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Denied boarding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Downgrading</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Flight disruptions</controllingFieldValue>
@@ -153,16 +161,8 @@
             <valueName>Missed connection</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Denied boarding</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Downgrading</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Travel extras bought not rendered</controllingFieldValue>
-            <valueName>WiFi</valueName>
+            <valueName>Extra baggage</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel extras bought not rendered</controllingFieldValue>
@@ -170,7 +170,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel extras bought not rendered</controllingFieldValue>
-            <valueName>Extra baggage</valueName>
+            <valueName>Lounge</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel extras bought not rendered</controllingFieldValue>
@@ -178,7 +178,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel extras bought not rendered</controllingFieldValue>
-            <valueName>Lounge</valueName>
+            <valueName>WiFi</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Travel extras bought not rendered</controllingFieldValue>
@@ -194,11 +194,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Flight experience</controllingFieldValue>
-            <valueName>Meals/Drinks</valueName>
+            <valueName>In-flight service</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Flight experience</controllingFieldValue>
-            <valueName>In-flight service</valueName>
+            <valueName>Meals/Drinks</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Airport experience</controllingFieldValue>
+            <valueName>Gate issues</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Airport experience</controllingFieldValue>
@@ -207,10 +211,6 @@
         <valueSettings>
             <controllingFieldValue>Airport experience</controllingFieldValue>
             <valueName>Travel document control</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Airport experience</controllingFieldValue>
-            <valueName>Gate issues</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Booking</controllingFieldValue>

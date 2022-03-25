@@ -1,13 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Change_team_customer_feedback_to_claims_0</name>
+        <label>Change team customer feedback to claims</label>
+        <locationX>50</locationX>
+        <locationY>1214</locationY>
+        <assignmentItems>
+            <assignToReference>teamToAssign</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Claims</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case_with_Customer_Claim_Information</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Leave_current_team</name>
+        <label>Leave current team</label>
+        <locationX>314</locationX>
+        <locationY>1214</locationY>
+        <assignmentItems>
+            <assignToReference>teamToAssign</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Current_Case_Information_0.Team__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case_with_Customer_Claim_Information</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Is_claim_created_from_a_customer_feedback_case</name>
+        <label>Is claim created from a customer feedback case?</label>
+        <locationX>182</locationX>
+        <locationY>1094</locationY>
+        <defaultConnector>
+            <targetReference>Leave_current_team</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No team update</defaultConnectorLabel>
+        <rules>
+            <name>Yes_update_team</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Current_Case_Information_0.Team__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Feedback</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Change_team_customer_feedback_to_claims_0</targetReference>
+            </connector>
+            <label>Yes, update team</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>What_is_the_type_of_customer</name>
         <label>What is the type of customer?</label>
         <locationX>182</locationX>
         <locationY>758</locationY>
         <defaultConnector>
-            <targetReference>Update_Case_with_Customer_Claim_Information</targetReference>
+            <targetReference>Is_claim_created_from_a_customer_feedback_case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Other reprensentative</defaultConnectorLabel>
         <rules>
@@ -112,7 +169,7 @@
         <locationX>50</locationX>
         <locationY>878</locationY>
         <connector>
-            <targetReference>Update_Case_with_Customer_Claim_Information</targetReference>
+            <targetReference>Is_claim_created_from_a_customer_feedback_case</targetReference>
         </connector>
         <inputAssignments>
             <field>Claim__c</field>
@@ -408,7 +465,7 @@
         <name>Update_Case_with_Customer_Claim_Information</name>
         <label>Update Case with Customer Claim Information</label>
         <locationX>182</locationX>
-        <locationY>1094</locationY>
+        <locationY>1430</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -451,6 +508,12 @@
             <field>SuppliedPhone</field>
             <value>
                 <elementReference>Phone.value</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Team__c</field>
+            <value>
+                <elementReference>teamToAssign</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1089,6 +1152,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>teamToAssign</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

@@ -10,26 +10,11 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
-                <fullName>Baggage</fullName>
+                <fullName>Accident &amp; injury</fullName>
                 <default>false</default>
-                <label>Baggage</label>
-            </value>
-            <value>
-                <fullName>Flight disruptions</fullName>
-                <default>false</default>
-                <label>Flight disruptions</label>
-            </value>
-            <value>
-                <fullName>Travel extras bought not rendered</fullName>
-                <default>false</default>
-                <label>Travel extras bought not rendered</label>
-            </value>
-            <value>
-                <fullName>Flight experience</fullName>
-                <default>false</default>
-                <label>Flight experience</label>
+                <label>Accident &amp; injury</label>
             </value>
             <value>
                 <fullName>Airport experience</fullName>
@@ -37,14 +22,71 @@
                 <label>Airport experience</label>
             </value>
             <value>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+                <label>Baggage</label>
+            </value>
+            <value>
                 <fullName>Booking</fullName>
                 <default>false</default>
                 <label>Booking</label>
             </value>
             <value>
-                <fullName>Accident &amp; injury</fullName>
+                <fullName>Booking/Refund and Sales Services</fullName>
                 <default>false</default>
-                <label>Accident &amp; injury</label>
+                <isActive>false</isActive>
+                <label>Booking/Refund and Sales Services</label>
+            </value>
+            <value>
+                <fullName>EU261 Compensation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>EU261 Compensation</label>
+            </value>
+            <value>
+                <fullName>EuroBonus</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>EuroBonus</label>
+            </value>
+            <value>
+                <fullName>Flight disruptions</fullName>
+                <default>false</default>
+                <label>Flight disruptions</label>
+            </value>
+            <value>
+                <fullName>Flight experience</fullName>
+                <default>false</default>
+                <label>Flight experience</label>
+            </value>
+            <value>
+                <fullName>Inflight / Onboard</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Inflight / Onboard</label>
+            </value>
+            <value>
+                <fullName>Ö**Claim Agency**Ö</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ö**Claim Agency**Ö</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Passenger irregularities</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Passenger irregularities</label>
+            </value>
+            <value>
+                <fullName>Travel extras bought not rendered</fullName>
+                <default>false</default>
+                <label>Travel extras bought not rendered</label>
             </value>
         </valueSetDefinition>
     </valueSet>
