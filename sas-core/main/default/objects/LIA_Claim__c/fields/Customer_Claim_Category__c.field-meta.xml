@@ -32,24 +32,6 @@
                 <label>Booking</label>
             </value>
             <value>
-                <fullName>Booking/Refund and Sales Services</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Booking/Refund and Sales Services</label>
-            </value>
-            <value>
-                <fullName>EU261 Compensation</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>EU261 Compensation</label>
-            </value>
-            <value>
-                <fullName>EuroBonus</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>EuroBonus</label>
-            </value>
-            <value>
                 <fullName>Flight disruptions</fullName>
                 <default>false</default>
                 <label>Flight disruptions</label>
@@ -58,18 +40,6 @@
                 <fullName>Flight experience</fullName>
                 <default>false</default>
                 <label>Flight experience</label>
-            </value>
-            <value>
-                <fullName>Inflight / Onboard</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Inflight / Onboard</label>
-            </value>
-            <value>
-                <fullName>Ö**Claim Agency**Ö</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Ö**Claim Agency**Ö</label>
             </value>
             <value>
                 <fullName>Other</fullName>
