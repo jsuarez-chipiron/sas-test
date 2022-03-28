@@ -16,7 +16,7 @@ public without sharing class CaseService {
   };
 
   private static Map<String, String> jsonToPicklist = new Map<String, String>{
-    'at-the-airport' => 'At the airport',
+    'airport-experience' => 'Airport experience',
     'baggage' => 'Baggage',
     'baggage-damaged' => 'Baggage damaged',
     'baggage-delayed' => 'Baggage delayed/lost',
@@ -25,17 +25,17 @@ public without sharing class CaseService {
     'cabin-environment' => 'Cabin environment',
     'denied-boarding' => 'Denied boarding',
     'downgrading' => 'Downgrading',
-    'during-flight' => 'During flight',
     'extra-baggage' => 'Extra baggage',
     'flight-cancellation' => 'Flight cancellation',
     'flight-delay' => 'Flight delay',
     'flight-disruptions' => 'Flight disruptions',
-    'foodborne-illness' => 'Foodborne illness',
+    'flight-experience' => 'Flight experience',
     'gate-issues' => 'Gate issues',
     'general' => 'General',
     'in-flight-meal' => 'In-flight meal',
     'in-flight-service' => 'In-flight service',
     'lounge' => 'Lounge',
+    'meals-drinks' => 'Meals/Drinks',
     'missed-connection' => 'Missed connection',
     'other' => 'Other',
     'prepaid-seat' => 'Prepaid seat',
