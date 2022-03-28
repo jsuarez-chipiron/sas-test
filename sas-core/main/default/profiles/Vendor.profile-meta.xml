@@ -2351,6 +2351,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Customer_Claim_Category__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Customer_Claim_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>          
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.Form_of_Payment_Details__c</field>
         <readable>true</readable>

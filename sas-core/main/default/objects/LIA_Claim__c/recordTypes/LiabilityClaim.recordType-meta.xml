@@ -2003,10 +2003,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Foodborne illness</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gate issues</fullName>
             <default>false</default>
         </values>
@@ -2020,6 +2016,10 @@
         </values>
         <values>
             <fullName>Lounge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meals%2FDrinks</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2790,19 +2790,19 @@
     <picklistValues>
         <picklist>Type_of_Customer__c</picklist>
         <values>
-            <fullName>Corporate customer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other representative</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Private customer</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Travel agency</fullName>
+            <fullName>Claim firm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other representative</fullName>
             <default>false</default>
         </values>
     </picklistValues>

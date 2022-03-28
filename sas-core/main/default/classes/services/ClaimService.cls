@@ -14,11 +14,14 @@ public without sharing class ClaimService {
     '4+' => '4+',
     'accident-and-injury' => 'Accident &amp; injury',
     'accommodation' => 'Accommodation',
+    'airport-experience' => 'Airport experience',
     'baggage-damaged' => 'Baggage damaged',
     'baggage-delayed' => 'Baggage delayed/lost',
     'baggage' => 'Baggage',
+    'booking' => 'Booking',
     'booking-error' => 'Booking error',
     'cabin-environment' => 'Cabin environment',
+    'claims-management-company' => 'Claim firm',
     'complaint-about-refund' => 'Complaint about a refund',
     'corporate' => 'Corporate customer',
     'denied-boarding' => 'Denied boarding',
@@ -28,12 +31,14 @@ public without sharing class ClaimService {
     'flight-cancellation' => 'Flight cancellation',
     'flight-delay' => 'Flight delay',
     'flight-disruptions' => 'Flight disruptions',
+    'flight-experience' => 'Flight experience',
     'food' => 'Food',
-    'foodborne-illness' => 'Foodborne illness',
     'gate-issues' => 'Gate issues',
+    'insurance-company' => 'Insurance company',
     'in-flight-meal' => 'In-flight meal',
     'in-flight-service' => 'In-flight service',
     'lounge' => 'Lounge',
+    'meals-drinks' => 'Meals/Drinks',
     'missed-connection' => 'Missed connection',
     'monetary' => 'Monetary',
     'never-arrived' => 'Never arrived',
@@ -43,9 +48,6 @@ public without sharing class ClaimService {
     'phone-calls' => 'Phone calls',
     'prepaid-seat' => 'Prepaid seat',
     'private' => 'Private customer',
-    'problems-at-the-airport' => 'Problems at the airport',
-    'problems-during-flight' => 'Problems during flight',
-    'problems-with-my-booking' => 'Problems with my booking',
     'regression' => 'Regression',
     'special-assistance' => 'Special assistance',
     'transportation' => 'Transportation',
@@ -86,9 +88,14 @@ public without sharing class ClaimService {
 
     database.insert(caseToCreate, DMLOptions);
 
+    Case insertedCase = [
+      SELECT CaseNumber
+      FROM Case
+      WHERE Id = :caseToCreate.Id
+    ];
+
     LIA_Claim__c claimToCreate = new LIA_Claim__c(
       Address_line_1__c = form.formData.address,
-      Bank_Account_Number__c = form.formData.bankAccountNumber,
       Bank_Account_Holder_Name__c = form.formData.bankAccountHolderName,
       Bank_Name__c = form.formData.bankName,
       BIC_Swift__c = form.formData.bankBic,
@@ -121,6 +128,7 @@ public without sharing class ClaimService {
         ? null
         : Date.valueOf(form.formData.departureDate),
       Flight_Number__c = form.formData.flightNumber,
+      Name = insertedCase.CaseNumber,
       Ticket_Number__c = form.formData.ticketNumber,
       Liability_PNR__c = form.formData.bookingReference,
       Phone_Number__c = form.formData.phone,
@@ -155,6 +163,22 @@ public without sharing class ClaimService {
         WHERE Country_Short_Code__c = :form.formData.bankCountry
       ]
       .Country_Name__c;
+    }
+
+    if (form.formData.bankAccountNumber != null) {
+      if (form.formData.bankRoutingNumber != null) {
+        // US bank account numbers should be sent to Racer as {accountNumber}ABA{routingNumber}
+        // Other countries have only an account number.
+        claimToCreate.Bank_Account_Number__c =
+          form.formData.bankAccountNumber.replace(' ', '') +
+          'ABA' +
+          form.formData.bankRoutingNumber.replace(' ', '');
+      } else {
+        claimToCreate.Bank_Account_Number__c = form.formData.bankAccountNumber.replace(
+          ' ',
+          ''
+        );
+      }
     }
 
     insert claimToCreate;
@@ -251,11 +275,6 @@ public without sharing class ClaimService {
       insert linksToCreate;
     }
 
-    Case insertedCase = [
-      SELECT CaseNumber
-      FROM Case
-      WHERE Id = :caseToCreate.Id
-    ];
     insertedCase.LIA_Claim__c = claimToCreate.Id;
     update insertedCase;
 

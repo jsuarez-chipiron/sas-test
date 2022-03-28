@@ -13,9 +13,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>At the airport</fullName>
+                <fullName>Airport experience</fullName>
                 <default>false</default>
-                <label>At the airport</label>
+                <label>Airport experience</label>
             </value>
             <value>
                 <fullName>Baggage</fullName>
@@ -28,9 +28,9 @@
                 <label>Booking</label>
             </value>
             <value>
-                <fullName>During flight</fullName>
+                <fullName>Flight experience</fullName>
                 <default>false</default>
-                <label>During flight</label>
+                <label>Flight experience</label>
             </value>
             <value>
                 <fullName>Flight disruptions</fullName>

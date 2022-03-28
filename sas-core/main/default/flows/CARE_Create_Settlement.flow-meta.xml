@@ -253,7 +253,13 @@
         <inputAssignments>
             <field>Payee_Name__c</field>
             <value>
-                <elementReference>Get_Customer_Claim.Contact_Full_Name__c</elementReference>
+                <elementReference>Get_Customer_Claim.Bank_Account_Holder_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Payee_reference__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Customer_s_Reference__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
