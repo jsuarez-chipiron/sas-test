@@ -54,10 +54,17 @@
     </platformActionList>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>BIC_Swift__c</fields>
+        <fields>Bank_Name__c</fields>
+        <fields>Country__c</fields>
         <relatedList>Bank_Account_Info__c.Claim_Firm__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Case__c</fields>
+        <fields>Contact_First_Name__c</fields>
+        <fields>Customer_Claim_Category__c</fields>
+        <fields>Customer_Claim_Type__c</fields>
         <relatedList>LIA_Claim__c.Claim_Firm__c</relatedList>
     </relatedLists>
     <relatedLists>
