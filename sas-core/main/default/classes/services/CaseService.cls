@@ -180,7 +180,13 @@ public without sharing class CaseService {
 
       insert linksToCreate;
 
-      return caseToInsert.CaseNumber;
+      Case insertedCase = [
+        SELECT CaseNumber
+        FROM Case
+        WHERE Id = :caseToInsert.Id
+      ];
+
+      return insertedCase.CaseNumber;
     }
   }
 }

@@ -121,18 +121,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Email__c</field>
-            <value>
-                <elementReference>Email.value</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>EuroBonus_Number__c</field>
-            <value>
-                <elementReference>EuroBonus_Number</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>First_Name__c</field>
             <value>
                 <elementReference>First_Name</elementReference>
@@ -142,12 +130,6 @@
             <field>Last_Name__c</field>
             <value>
                 <elementReference>Last_Name</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Phone_Number__c</field>
-            <value>
-                <elementReference>Phone.value</elementReference>
             </value>
         </inputAssignments>
         <object>Customer__c</object>

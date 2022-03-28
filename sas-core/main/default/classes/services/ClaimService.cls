@@ -86,9 +86,14 @@ public without sharing class ClaimService {
 
     database.insert(caseToCreate, DMLOptions);
 
+    Case insertedCase = [
+      SELECT CaseNumber
+      FROM Case
+      WHERE Id = :caseToCreate.Id
+    ];
+
     LIA_Claim__c claimToCreate = new LIA_Claim__c(
       Address_line_1__c = form.formData.address,
-      Bank_Account_Number__c = form.formData.bankAccountNumber,
       Bank_Account_Holder_Name__c = form.formData.bankAccountHolderName,
       Bank_Name__c = form.formData.bankName,
       BIC_Swift__c = form.formData.bankBic,
@@ -121,6 +126,7 @@ public without sharing class ClaimService {
         ? null
         : Date.valueOf(form.formData.departureDate),
       Flight_Number__c = form.formData.flightNumber,
+      Name = insertedCase.CaseNumber,
       Ticket_Number__c = form.formData.ticketNumber,
       Liability_PNR__c = form.formData.bookingReference,
       Phone_Number__c = form.formData.phone,
@@ -155,6 +161,22 @@ public without sharing class ClaimService {
         WHERE Country_Short_Code__c = :form.formData.bankCountry
       ]
       .Country_Name__c;
+    }
+
+    if (form.formData.bankAccountNumber != null) {
+      if (form.formData.bankRoutingNumber != null) {
+        // US bank account numbers should be sent to Racer as {accountNumber}ABA{routingNumber}
+        // Other countries have only an account number.
+        claimToCreate.Bank_Account_Number__c =
+          form.formData.bankAccountNumber.replace(' ', '') +
+          'ABA' +
+          form.formData.bankRoutingNumber.replace(' ', '');
+      } else {
+        claimToCreate.Bank_Account_Number__c = form.formData.bankAccountNumber.replace(
+          ' ',
+          ''
+        );
+      }
     }
 
     insert claimToCreate;
@@ -251,11 +273,6 @@ public without sharing class ClaimService {
       insert linksToCreate;
     }
 
-    Case insertedCase = [
-      SELECT CaseNumber
-      FROM Case
-      WHERE Id = :caseToCreate.Id
-    ];
     insertedCase.LIA_Claim__c = claimToCreate.Id;
     update insertedCase;
 

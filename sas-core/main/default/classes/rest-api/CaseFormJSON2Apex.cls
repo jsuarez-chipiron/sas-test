@@ -47,12 +47,13 @@ global class CaseFormJSON2Apex {
     global String bankCountry;
     global String bankName;
     global String bankBic;
+    global String bankRoutingNumber;
 
     global String preferredCurrency; // SEK, USD, EUR...
     global String preferredCompensationMethod; // eurobonus, monetary, voucher
     global String preferredReimbursementMethod; // eurobonus, monetary, voucher
 
-    global String passengerIrregularityReportNumber; 
+    global String passengerIrregularityReportNumber;
     global String baggageType; // Not being used yet.
     global Decimal baggagePurchasePrice; // Not being used yet.
     global Decimal baggagePurchaseYear; // Not being used yet.
@@ -71,14 +72,14 @@ global class CaseFormJSON2Apex {
   }
 
   global class Traveler {
-    global String firstName; 
-    global String lastName; 
+    global String firstName;
+    global String lastName;
   }
 
   global class Expense {
     global String expenseType; // food, transportation, phone-calls, accommodation
     global String expenseCurrency;
-    global Decimal amount; 
+    global Decimal amount;
     global List<String> receiptFileId; // TODO: Should we call this contentVersionIds?
   }
 
