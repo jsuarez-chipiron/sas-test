@@ -17,14 +17,14 @@
                 <label>Private customer</label>
             </value>
             <value>
-                <fullName>Corporate customer</fullName>
+                <fullName>Claim firm</fullName>
                 <default>false</default>
-                <label>Corporate customer</label>
+                <label>Claim firm</label>
             </value>
             <value>
-                <fullName>Travel agency</fullName>
+                <fullName>Insurance company</fullName>
                 <default>false</default>
-                <label>Travel agency</label>
+                <label>Insurance company</label>
             </value>
             <value>
                 <fullName>Other representative</fullName>
