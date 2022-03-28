@@ -78,6 +78,7 @@
         <logoVersion>1</logoVersion>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
     </brand>
+    <description>App for handling customer claims related cases</description>
     <formFactors>Small</formFactors>
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
@@ -306,6 +307,7 @@
     <tabs>Claim_Firm__c</tabs>
     <tabs>Proactivity__c</tabs>
     <tabs>LIA_Major_Event__c</tabs>
+    <tabs>standard-Dashboard</tabs>
     <tabs>standard-report</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SAS_Customer_Claims_UtilityBar</utilityBar>
@@ -329,6 +331,9 @@
         </mappings>
         <mappings>
             <tab>standard-Case</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-Dashboard</tab>
         </mappings>
         <mappings>
             <tab>standard-report</tab>
