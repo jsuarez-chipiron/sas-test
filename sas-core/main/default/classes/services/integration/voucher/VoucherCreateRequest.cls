@@ -8,6 +8,7 @@ public class VoucherCreateRequest {
   public String voucherCurrency; // See VoucherService.VoucherCurrency enum Internal representation as string to make JSON serialization straightforward.
   // real field name is currency, but that is reserved in Salesforce so we're replacing it when building the final JSON.
   public String caseId;
+  public String pnr;
   public PersonalDetails personalDetails;
   public VoucherCustomizations voucherCustomizations;
 
@@ -62,12 +63,17 @@ public class VoucherCreateRequest {
     String addressLine,
     String postalCode,
     String cityName,
-    String countryName
+    String countryName,
+    String pnr
   ) {
     this.type = String.valueOf(type);
     this.subType = String.valueOf(subType);
     this.voucherCurrency = voucherCurrency;
     this.caseId = accessCode;
+
+    if (pnr != null) {
+      this.pnr = pnr;
+    }
 
     personalDetails = new PersonalDetails(
       firstName,

@@ -273,7 +273,10 @@ public without sharing class SettlementService {
       settlement.Address_line_1__c,
       settlement.Postal_Code__c,
       settlement.City__c,
-      settlement.Country__c
+      settlement.Country__c,
+      settlement.Claim__r.Liability_PNR__c != null
+        ? settlement.Claim__r.Liability_PNR__c
+        : null
     );
 
     try {
