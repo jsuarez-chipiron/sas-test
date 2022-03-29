@@ -4,8 +4,8 @@
         <description>Posts the internal comments to the chatter feed on the case</description>
         <name>CaseChatterFeed</name>
         <label>CaseChatterFeed</label>
-        <locationX>1238</locationX>
-        <locationY>1454</locationY>
+        <locationX>1634</locationX>
+        <locationY>1238</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
@@ -30,8 +30,8 @@
         <description>Escalation Reason to chatter</description>
         <name>Posting_Escalation_Reason_to_Chatter</name>
         <label>Posting Escalation Reason to Chatter</label>
-        <locationX>974</locationX>
-        <locationY>1454</locationY>
+        <locationX>1370</locationX>
+        <locationY>1238</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
@@ -53,22 +53,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>49.0</apiVersion>
-    <assignments>
-        <name>Assign_Customer_Claims_Sensitive_Queue</name>
-        <label>Assign Customer Claims Sensitive Queue</label>
-        <locationX>1106</locationX>
-        <locationY>758</locationY>
-        <assignmentItems>
-            <assignToReference>queueName</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Customer Claims Sensitive</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>GetDepartmentQueueId</targetReference>
-        </connector>
-    </assignments>
     <assignments>
         <name>Assign_department_name_as_queue_name</name>
         <label>Assign department name as queue name</label>
@@ -214,7 +198,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Department_not_available_for_redirection_support_and_escalation</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>1 OR 2 OR 3 OR (4 AND 5)</conditionLogic>
             <conditions>
                 <leftValueReference>DependentList.topValue</leftValueReference>
                 <operator>EqualTo</operator>
@@ -234,6 +218,20 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Liability</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>DependentList.topValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Claim</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>DependentList.middleValue</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Supervisors</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -256,27 +254,12 @@
             </connector>
             <label>Functional Product Support</label>
         </rules>
-        <rules>
-            <name>Sensitive_Cases</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>DependentList.middleValue</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Supervisors</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_Customer_Claims_Sensitive_Queue</targetReference>
-            </connector>
-            <label>Sensitive Cases</label>
-        </rules>
     </decisions>
     <decisions>
         <name>Redirection_Support_Or_Escalation</name>
         <label>Redirection Support Or Escalation</label>
-        <locationX>974</locationX>
-        <locationY>1334</locationY>
+        <locationX>1370</locationX>
+        <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>CaseChatterFeed</targetReference>
         </defaultConnector>
@@ -377,8 +360,8 @@
         <description>Creates  a support case based on the information capture in the To Other Department Screen</description>
         <name>Create_Support_Case</name>
         <label>Create Support Case</label>
-        <locationX>710</locationX>
-        <locationY>1454</locationY>
+        <locationX>1106</locationX>
+        <locationY>1238</locationY>
         <connector>
             <targetReference>UpdateCurrentCaseInformation</targetReference>
         </connector>
@@ -476,8 +459,8 @@
     <recordLookups>
         <name>GetDepartmentQueueId</name>
         <label>GetDepartmentQueueId</label>
-        <locationX>974</locationX>
-        <locationY>1094</locationY>
+        <locationX>1370</locationX>
+        <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Case_Record_Type</targetReference>
@@ -498,8 +481,8 @@
         <description>Escalates the case another department</description>
         <name>EscalateCurrentCase</name>
         <label>EscalateCurrentCase</label>
-        <locationX>974</locationX>
-        <locationY>1574</locationY>
+        <locationX>1370</locationX>
+        <locationY>1358</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
         </connector>
@@ -571,8 +554,8 @@
         <description>Update the current case to be directed to the right skill</description>
         <name>Redirect_Case</name>
         <label>Redirect Case</label>
-        <locationX>1238</locationX>
-        <locationY>1574</locationY>
+        <locationX>1634</locationX>
+        <locationY>1358</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
         </connector>
@@ -643,8 +626,8 @@
     <recordUpdates>
         <name>UpdateCurrentCaseInformation</name>
         <label>UpdateCurrentCaseInformation</label>
-        <locationX>710</locationX>
-        <locationY>1574</locationY>
+        <locationX>1106</locationX>
+        <locationY>1358</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
         </connector>
@@ -722,8 +705,8 @@
     <screens>
         <name>Redirection_Submission</name>
         <label>Redirection Submission</label>
-        <locationX>974</locationX>
-        <locationY>1790</locationY>
+        <locationX>1370</locationX>
+        <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -920,8 +903,8 @@
         <description>Gets the care record type based on the Department and Team</description>
         <name>Get_Case_Record_Type</name>
         <label>Get Case Record Type</label>
-        <locationX>974</locationX>
-        <locationY>1214</locationY>
+        <locationX>1370</locationX>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Redirection_Support_Or_Escalation</targetReference>
         </connector>
