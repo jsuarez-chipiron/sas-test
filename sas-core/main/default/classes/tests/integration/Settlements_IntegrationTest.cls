@@ -463,6 +463,13 @@ public with sharing class Settlements_IntegrationTest {
 
     insert settlement;
 
+    Settlement_Item__c settlementItem = new Settlement_Item__c(
+      Status__c = 'Draft',
+      Settlement__c = settlement.Id
+    );
+
+    insert settlementItem;
+
     Test.setMock(HttpCalloutMock.class, new APIMMock());
 
     // When
@@ -478,6 +485,12 @@ public with sharing class Settlements_IntegrationTest {
       WHERE Id = :settlement.Id
     ];
 
+    List<Settlement_Item__c> settlementItemsAfterProcessing = [
+      SELECT Status__c
+      FROM Settlement_Item__c
+      WHERE Settlement__c = :settlement.Id
+    ];
+
     System.assertEquals(
       Settlements.STATUS_DONE,
       settlementAfterProcessing.Settlement_Status__c,
@@ -487,6 +500,12 @@ public with sharing class Settlements_IntegrationTest {
       APIMMock.CLM_TRANSACTION_ID,
       settlementAfterProcessing.External_Reference__c,
       'Settlement should external reference set based on response.'
+    );
+
+    System.assertEquals(
+      Settlements.STATUS_DONE,
+      settlementItemsAfterProcessing[0].Status__c,
+      'Settlement Item should be marked as done after successfully creating a voucher.'
     );
   }
 
@@ -624,6 +643,13 @@ public with sharing class Settlements_IntegrationTest {
 
     insert settlement;
 
+    Settlement_Item__c settlementItem = new Settlement_Item__c(
+      Status__c = 'Draft',
+      Settlement__c = settlement.Id
+    );
+
+    insert settlementItem;
+
     Test.setMock(HttpCalloutMock.class, new APIMMock());
 
     // When
@@ -639,10 +665,22 @@ public with sharing class Settlements_IntegrationTest {
       WHERE Id = :settlement.Id
     ];
 
+    List<Settlement_Item__c> settlementItemsAfterProcessing = [
+      SELECT Status__c
+      FROM Settlement_Item__c
+      WHERE Settlement__c = :settlement.Id
+    ];
+
     System.assertEquals(
       Settlements.STATUS_DONE,
       settlementAfterProcessing.Settlement_Status__c,
       'Settlement should be marked as done after successfully creating a voucher.'
+    );
+
+    System.assertEquals(
+      Settlements.STATUS_DONE,
+      settlementItemsAfterProcessing[0].Status__c,
+      'Settlement Item should be marked as done after successfully creating a voucher.'
     );
   }
 

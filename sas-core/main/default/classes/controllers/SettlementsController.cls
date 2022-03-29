@@ -27,6 +27,11 @@ public without sharing class SettlementsController {
   }
 
   @AuraEnabled(cacheable=true)
+  public static List<Exchange_Rate__c> getAllExchangeRates() {
+    return exchangeRates.selectAll();
+  }
+
+  @AuraEnabled(cacheable=true)
   public static List<Customer__c> getPassengers(String settlementId) {
     // TODO: Create proper selector for me.
     Settlement__c s = [

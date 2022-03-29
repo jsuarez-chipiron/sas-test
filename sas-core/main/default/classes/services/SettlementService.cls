@@ -205,8 +205,19 @@ public without sharing class SettlementService {
       );
       if (resp.isSuccess) {
         // Points added
+        fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+
         Settlements.newInstance(new List<Settlement__c>{ settlement })
-          .markAsDone(resp.successResponse.clmTransactionId);
+          .markAsDone(resp.successResponse.clmTransactionId, uow);
+
+        SettlementItems.newInstance(
+            settlementItemsSel.selectBySettlementIds(
+              new Set<Id>{ settlement.Id }
+            )
+          )
+          .markAsDone(uow);
+
+        uow.commitWork();
       } else {
         // Domain failure, e.g. invalid EB number.
         Settlements.newInstance(new List<Settlement__c>{ settlement })
@@ -262,7 +273,10 @@ public without sharing class SettlementService {
       settlement.Address_line_1__c,
       settlement.Postal_Code__c,
       settlement.City__c,
-      settlement.Country__c
+      settlement.Country__c,
+      settlement.Claim__r.Liability_PNR__c != null
+        ? settlement.Claim__r.Liability_PNR__c
+        : null
     );
 
     try {
@@ -270,8 +284,17 @@ public without sharing class SettlementService {
         voucherToCreate
       );
       // Voucher created successfully.
+      fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+
       Settlements.newInstance(new List<Settlement__c>{ settlement })
-        .markAsDone('');
+        .markAsDone('', uow);
+
+      SettlementItems.newInstance(
+          settlementItemsSel.selectBySettlementIds(new Set<Id>{ settlement.Id })
+        )
+        .markAsDone(uow);
+
+      uow.commitWork();
     } catch (Exception e) {
       Settlements.newInstance(new List<Settlement__c>{ settlement })
         .markAsFailed(e.getMessage());

@@ -2,6 +2,14 @@ import { LightningElement, wire, api } from "lwc";
 import { NavigationMixin } from "lightning/navigation";
 import getProactivitiesForRecord from "@salesforce/apex/ProactivitiesController.getProactivitiesForRecord";
 
+/**
+ * A component which displays a list of proactivities for the given record.
+ * 
+ * Currently can be added to Case and Settlement record pages. If these should
+ * be visible elsewhere, ProactivitiesController needs to be extended to be 
+ * able to fetch proactivities for new object types. See implementation of
+ * ProactivitiesController.getProactivitiesForRecord.
+ */
 export default class CaseProactivities extends NavigationMixin(
   LightningElement
 ) {
