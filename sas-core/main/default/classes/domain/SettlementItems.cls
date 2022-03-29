@@ -37,6 +37,19 @@ public without sharing class SettlementItems extends fflib_SObjectDomain {
     uow.commitWork();
   }
 
+  public void markAsDone() {
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    markAsDone(uow);
+    uow.commitWork();
+  }
+
+  public void markAsDone(fflib_ISObjectUnitOfWork uow) {
+    for (Settlement_Item__c s : instanceRecords) {
+      s.Status__c = STATUS_DONE;
+      uow.registerDirty(s);
+    }
+  }
+
   public void markAsReceivedByRacer(
     String accountingStatus,
     String errorMessage,
