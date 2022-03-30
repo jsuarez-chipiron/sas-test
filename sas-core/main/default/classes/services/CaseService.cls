@@ -69,7 +69,7 @@ public without sharing class CaseService {
           form.formData.feedbackCategory
         ),
         Feedback_Type__c = jsonToPicklist.get(form.formData.feedbackType),
-        Flight_Date__c = form.formdata.departureDate == null
+        Flight_Date__c = String.isBlank(form.formdata.departureDate)
           ? null
           : Date.valueOf(form.formdata.departureDate),
         Flight_Number__c = form.formdata.flightNumber,
@@ -82,10 +82,10 @@ public without sharing class CaseService {
       );
 
       String suppliedName;
-      if (form.formData.firstName != null) {
+      if (!String.isBlank(form.formData.firstName)) {
         suppliedName = form.formData.firstName;
       }
-      if (form.formData.lastName != null) {
+      if (!String.isBlank(form.formData.lastName)) {
         if (suppliedName != null) {
           suppliedName += ' ' + form.formData.lastName;
         } else {
@@ -93,7 +93,7 @@ public without sharing class CaseService {
         }
       }
 
-      if (suppliedName != null) {
+      if (!String.isBlank(suppliedName)) {
         caseToInsert.SuppliedName = suppliedName;
       }
 

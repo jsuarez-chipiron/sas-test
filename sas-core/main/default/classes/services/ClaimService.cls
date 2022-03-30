@@ -12,7 +12,7 @@ public without sharing class ClaimService {
     '2-3' => '2-3',
     '3-4' => '3-4',
     '4+' => '4+',
-    'accident-and-injury' => 'Accident &amp; injury',
+    'accident-and-injury' => 'Accident & injury',
     'accommodation' => 'Accommodation',
     'airport-experience' => 'Airport experience',
     'baggage-damaged' => 'Baggage damaged',
@@ -115,7 +115,7 @@ public without sharing class ClaimService {
       Contact_Email__c = form.formData.email,
       Contact_First_Name__c = form.formData.firstName,
       Contact_Last_Name__c = form.formData.lastName,
-      Currency__c = form.formData.preferredCurrency == null
+      Currency__c = String.isBlank(form.formData.preferredCurrency)
         ? null
         : form.formData.preferredCurrency.toUppercase(),
       Customer_Claim_Category__c = jsonToPicklist.get(
@@ -124,7 +124,7 @@ public without sharing class ClaimService {
       Customer_Claim_Type__c = jsonToPicklist.get(form.formData.claimType),
       Customer_s_Reference__c = form.formData.referenceNumber,
       EuroBonus_Number__c = form.formData.euroBonusNumber,
-      Flight_Date__c = form.formData.departureDate == null
+      Flight_Date__c = String.isBlank(form.formData.departureDate)
         ? null
         : Date.valueOf(form.formData.departureDate),
       Flight_Number__c = form.formData.flightNumber,
@@ -147,7 +147,7 @@ public without sharing class ClaimService {
       Type_of_Customer__c = jsonToPicklist.get(form.formData.contactType)
     );
 
-    if (form.formData.country != null) {
+    if (!String.isBlank(form.formData.country)) {
       claimToCreate.Country__c = [
         SELECT Country_Name__c
         FROM Settlement_Country_Setting__mdt
@@ -156,7 +156,7 @@ public without sharing class ClaimService {
       .Country_Name__c;
     }
 
-    if (form.formData.bankCountry != null) {
+    if (!String.isBlank(form.formData.bankCountry)) {
       claimToCreate.Bank_Country__c = [
         SELECT Country_Name__c
         FROM Settlement_Country_Setting__mdt
@@ -165,8 +165,8 @@ public without sharing class ClaimService {
       .Country_Name__c;
     }
 
-    if (form.formData.bankAccountNumber != null) {
-      if (form.formData.bankRoutingNumber != null) {
+    if (!String.isBlank(form.formData.bankAccountNumber)) {
+      if (!String.isBlank(form.formData.bankRoutingNumber)) {
         // US bank account numbers should be sent to Racer as {accountNumber}ABA{routingNumber}
         // Other countries have only an account number.
         claimToCreate.Bank_Account_Number__c =
