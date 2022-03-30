@@ -49,43 +49,29 @@
                             <value>Delete</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.Accept_as_Decision_Maker</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Team__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Defense</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Status}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>New</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.LIA_Claim__r.Name}</leftValue>
-                                    <operator>NE</operator>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>PrintableView</value>
                         </valueListItems>
                         <valueListItems>
                             <value>MassAccept</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.LIA_Update_Liability_Team</value>
+                            <value>Case.Update_Team</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.Team__c}</leftValue>
+                                    <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Admin</rightValue>
+                                    <rightValue>New</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.LIA_Claim__r.Name}</leftValue>
-                                    <operator>NE</operator>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>In Progress</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>New Response</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

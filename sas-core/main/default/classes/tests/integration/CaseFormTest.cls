@@ -495,8 +495,8 @@ private class CaseFormTest {
       '    "city": "Stockholm",' +
       '    "country": "SE",' +
       '    "contactType": "private",' +
-      '    "claimCategory": "category",' +
-      '    "claimType": "type",' +
+      '    "claimCategory": "accident-and-injury",' +
+      '    "claimType": "other",' +
       '    "preferredCompensationMethod": "voucher",' +
       '    "bookingReference": "TEST12"' +
       '  },' +

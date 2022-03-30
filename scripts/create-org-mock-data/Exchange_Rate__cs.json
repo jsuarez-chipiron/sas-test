@@ -1,0 +1,64 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Exchange_Rate__c",
+                "referenceId": "Exchange_Rate__cRef1"
+            },
+            "Date__c": "2022-03-29",
+            "From_Currency__c": "SEK",
+            "To_Currency__c": "EUR",
+            "Rate__c": 0.09
+        },
+        {
+            "attributes": {
+                "type": "Exchange_Rate__c",
+                "referenceId": "Exchange_Rate__cRef1"
+            },
+            "Date__c": "2022-03-29",
+            "From_Currency__c": "SEK",
+            "To_Currency__c": "USD",
+            "Rate__c": 0.10
+        },
+        {
+            "attributes": {
+                "type": "Exchange_Rate__c",
+                "referenceId": "Exchange_Rate__cRef1"
+            },
+            "Date__c": "2022-03-29",
+            "From_Currency__c": "EUR",
+            "To_Currency__c": "SEK",
+            "Rate__c": 10.33
+        },
+        {
+            "attributes": {
+                "type": "Exchange_Rate__c",
+                "referenceId": "Exchange_Rate__cRef1"
+            },
+            "Date__c": "2022-03-29",
+            "From_Currency__c": "EUR",
+            "To_Currency__c": "USD",
+            "Rate__c": 1.09
+        },
+        {
+            "attributes": {
+                "type": "Exchange_Rate__c",
+                "referenceId": "Exchange_Rate__cRef1"
+            },
+            "Date__c": "2022-03-29",
+            "From_Currency__c": "USD",
+            "To_Currency__c": "EUR",
+            "Rate__c": 0.91
+        },
+        {
+            "attributes": {
+                "type": "Exchange_Rate__c",
+                "referenceId": "Exchange_Rate__cRef1"
+            },
+            "Date__c": "2022-03-29",
+            "From_Currency__c": "USD",
+            "To_Currency__c": "SEK",
+            "Rate__c": 9.41
+        }
+    ]
+}
