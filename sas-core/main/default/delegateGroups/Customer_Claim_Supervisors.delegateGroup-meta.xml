@@ -5,7 +5,6 @@
     <groups>Claims - Flight Disruptions</groups>
     <groups>Claims - Other</groups>
     <groups>Control</groups>
-    <groups>Customer Claims Sensitive</groups>
     <label>Customer Claim Supervisors</label>
     <loginAccess>false</loginAccess>
     <roles>Sutherland</roles>
