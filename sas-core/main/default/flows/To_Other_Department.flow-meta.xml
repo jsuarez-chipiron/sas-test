@@ -198,7 +198,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Department_not_available_for_redirection_support_and_escalation</name>
-            <conditionLogic>1 OR 2 OR 3 OR (4 AND 5)</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>DependentList.topValue</leftValueReference>
                 <operator>EqualTo</operator>
@@ -225,13 +225,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Customer Claim</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>DependentList.middleValue</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Supervisors</stringValue>
                 </rightValue>
             </conditions>
             <connector>
