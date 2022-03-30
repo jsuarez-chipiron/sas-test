@@ -220,16 +220,6 @@
                 <label>Completed Agent Pay</label>
             </value>
             <value>
-                <fullName>Completed Award Agent Pay</fullName>
-                <default>false</default>
-                <label>Completed Award Agent Pay</label>
-            </value>
-            <value>
-                <fullName>Completed Revenue Agent Pay</fullName>
-                <default>false</default>
-                <label>Completed Revenue Agent Pay</label>
-            </value>
-            <value>
                 <fullName>Connect with EB</fullName>
                 <default>false</default>
                 <label>Connect with EB</label>
@@ -1552,14 +1542,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Make Booking</controllingFieldValue>
-            <valueName>Completed Award Agent Pay</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Make Booking</controllingFieldValue>
-            <valueName>Completed Revenue Agent Pay</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Make Booking</controllingFieldValue>
             <controllingFieldValue>Name Change</controllingFieldValue>
             <controllingFieldValue>Process Refund</controllingFieldValue>
             <controllingFieldValue>Change booking</controllingFieldValue>
@@ -1696,6 +1678,7 @@
             <controllingFieldValue>Add Infant in Booking</controllingFieldValue>
             <controllingFieldValue>Add Meals</controllingFieldValue>
             <controllingFieldValue>Change booking</controllingFieldValue>
+            <controllingFieldValue>Make Booking</controllingFieldValue>            
             <valueName>Completed Agent Pay</valueName>
         </valueSettings>
         <valueSettings>
