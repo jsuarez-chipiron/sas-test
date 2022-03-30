@@ -42,14 +42,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_Settlement_Status_to_Approved</targetReference>
+            <targetReference>Get_SAS_AP_User</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>ManualApproval</name>
         <label>ManualApproval</label>
         <locationX>754</locationX>
-        <locationY>1190</locationY>
+        <locationY>1310</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -228,7 +228,7 @@
         <locationX>1370</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Get_SAS_AP_User</targetReference>
+            <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>2700 or less</defaultConnectorLabel>
         <rules>
@@ -277,7 +277,7 @@
         <name>Create_Approval_Request</name>
         <label>Create Approval Request</label>
         <locationX>138</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <inputAssignments>
             <field>OwnerId</field>
             <value>
@@ -308,11 +308,11 @@
     <recordLookups>
         <name>Get_SAS_AP_User</name>
         <label>Get SAS AP User</label>
-        <locationX>1458</locationX>
-        <locationY>518</locationY>
+        <locationX>138</locationX>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AutomaticApproval</targetReference>
+            <targetReference>Set_Settlement_Status_to_Approved</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -330,7 +330,7 @@
         <name>Set_Settlement_Status_to_Approved</name>
         <label>Set Settlement Status to Approved</label>
         <locationX>138</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Create_Approval_Request</targetReference>
         </connector>
