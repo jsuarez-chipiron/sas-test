@@ -68,7 +68,7 @@
         </defaultConnector>
         <defaultConnectorLabel>Other reprensentative</defaultConnectorLabel>
         <rules>
-            <name>Private_or_corporate_or_travel_agency</name>
+            <name>Private_customer</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Type_of_Customer</leftValueReference>
@@ -77,24 +77,10 @@
                     <stringValue>Private customer</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>Type_of_Customer</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Corporate customer</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Type_of_Customer</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Travel agency</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Create_Customer</targetReference>
             </connector>
-            <label>Private or corporate or travel agency</label>
+            <label>Private customer</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
