@@ -3,12 +3,17 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>notes:utilityBarNoteList</componentName>
+                <componentName>runtime_service_omnichannel:omniWidget</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>console:history</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>notes:utilityBarNoteList</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
