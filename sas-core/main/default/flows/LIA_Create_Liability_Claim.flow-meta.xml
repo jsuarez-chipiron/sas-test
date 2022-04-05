@@ -377,6 +377,12 @@
                 <elementReference>Get_Claim_Record_Type_Id.Id</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Type_of_Customer__c</field>
+            <value>
+                <elementReference>Type_of_Customer</elementReference>
+            </value>
+        </inputAssignments>
         <object>LIA_Claim__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
