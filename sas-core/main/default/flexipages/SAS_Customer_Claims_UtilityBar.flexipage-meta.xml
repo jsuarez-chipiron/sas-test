@@ -3,6 +3,26 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>runtime_service_omnichannel:omniWidget</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>console:history</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>notes:utilityBarNoteList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>macros:macroUtilityItem</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>eager</name>
                     <type>decorator</type>
@@ -50,22 +70,48 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>runtime_service_omnichannel:omniWidget</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>notes:utilityBarNoteList</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>macros:macroUtilityItem</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>console:history</componentName>
+                <componentInstanceProperties>
+                    <name>eager</name>
+                    <type>decorator</type>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>flowArguments</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>flowLayout</name>
+                    <value>oneColumn</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>flowName</name>
+                    <value>ContactFPS</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>height</name>
+                    <type>decorator</type>
+                    <value>480</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>icon</name>
+                    <type>decorator</type>
+                    <value>question</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <type>decorator</type>
+                    <value>Functional Product Support</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>scrollable</name>
+                    <type>decorator</type>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>width</name>
+                    <type>decorator</type>
+                    <value>340</value>
+                </componentInstanceProperties>
+                <componentName>flowruntime:interview</componentName>
             </componentInstance>
         </itemInstances>
         <name>utilityItems</name>

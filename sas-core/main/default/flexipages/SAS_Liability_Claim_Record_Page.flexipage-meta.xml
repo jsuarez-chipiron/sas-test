@@ -52,6 +52,22 @@
                         <valueListItems>
                             <value>PrintableView</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>LIA_Claim__c.Create_Settlement</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Has_been_sent_to_settle__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.Team__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Settlement</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

@@ -5,7 +5,7 @@
         <name>Case_can_be_submitted_for_Approval</name>
         <label>Case can be submitted for Approval</label>
         <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationY>1190</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>No_email_draft_exists</name>
@@ -15,6 +15,13 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Information.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CustomerClaim</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -82,6 +89,94 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Customer_Claim_Or_Liability_Claim</name>
+        <label>Customer Claim Or Liability Claim?</label>
+        <locationX>578</locationX>
+        <locationY>278</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Customer_Claim</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Information.Department__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Claim</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Email_Draft_for_this_Case</targetReference>
+            </connector>
+            <label>Customer Claim</label>
+        </rules>
+        <rules>
+            <name>Liability_Claim</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Information.Department__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Liability</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Claim_Information</targetReference>
+            </connector>
+            <label>Liability Claim</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_the_claim_result_valid</name>
+        <label>Is the claim result valid?</label>
+        <locationX>578</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>InvalidResult</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Invalid</defaultConnectorLabel>
+        <rules>
+            <name>Valid</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Claim_Information.Result__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Negative</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Claim_Information.Result__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Partly</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Claim_Information.Result__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Settlement</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Claim_Information.Result__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Default judgment</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_has_Settlements_to_approve</targetReference>
+            </connector>
+            <label>Valid</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>resultText</name>
+        <dataType>String</dataType>
+        <expression>IF(ISPICKVAL({!Get_Claim_Information.Result__c}, &quot;&quot;), &quot;blank&quot;, TEXT({!Get_Claim_Information.Result__c}) )</expression>
+    </formulas>
     <interviewLabel>CLAIM Submit Case to Approval {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CLAIM Submit Case to Approval</label>
     <processMetadataValues>
@@ -110,7 +205,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Email_Draft_for_this_Case</targetReference>
+            <targetReference>Customer_Claim_Or_Liability_Claim</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -125,10 +220,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Claim_Information</name>
+        <label>Get Claim Information</label>
+        <locationX>578</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_the_claim_result_valid</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case_Information.LIA_Claim__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>LIA_Claim__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Email_Draft_for_this_Case</name>
         <label>Get Email Draft for this Case</label>
-        <locationX>578</locationX>
-        <locationY>278</locationY>
+        <locationX>226</locationX>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_has_Settlements_to_approve</targetReference>
@@ -156,7 +272,7 @@
         <name>Update_Case_Status</name>
         <label>Update Case Status</label>
         <locationX>842</locationX>
-        <locationY>758</locationY>
+        <locationY>1430</locationY>
         <connector>
             <targetReference>Update_Settlements_for_this_Case</targetReference>
         </connector>
@@ -186,7 +302,7 @@
         <name>Update_Settlements_for_this_Case</name>
         <label>Update Settlements for this Case</label>
         <locationX>842</locationX>
-        <locationY>878</locationY>
+        <locationY>1550</locationY>
         <connector>
             <targetReference>Send_Case_to_Approval</targetReference>
         </connector>
@@ -224,7 +340,7 @@
         <name>errorScreen_0</name>
         <label>Error Screen</label>
         <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationY>1310</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -240,7 +356,7 @@
         <name>errorScreen_0_0</name>
         <label>Error Screen</label>
         <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationY>1310</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -256,7 +372,7 @@
         <name>errorScreen_0_0_0</name>
         <label>Error Screen</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>1310</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -269,10 +385,26 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>InvalidResult</name>
+        <label>InvalidResult</label>
+        <locationX>666</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>InvalidMessage</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Liability Claim {!Get_Claim_Information.Name}&apos;s result is &quot;{!resultText}&quot; . This result is not a valid for submitting a case to approval.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>submitScreen</name>
         <label>Submit Screen</label>
         <locationX>842</locationX>
-        <locationY>638</locationY>
+        <locationY>1310</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -299,7 +431,7 @@
         <name>Case_has_Settlements_to_approve</name>
         <label>Case has Settlements to approve</label>
         <locationX>578</locationX>
-        <locationY>398</locationY>
+        <locationY>1070</locationY>
         <connector>
             <targetReference>Case_can_be_submitted_for_Approval</targetReference>
         </connector>
@@ -343,7 +475,7 @@
         <name>Send_Case_to_Approval</name>
         <label>Send Case to Approval</label>
         <locationX>842</locationX>
-        <locationY>998</locationY>
+        <locationY>1670</locationY>
         <flowName>CLAIM_Case_Approval_Handler</flowName>
         <inputAssignments>
             <name>incomingCaseRecord</name>
