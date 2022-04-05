@@ -38,19 +38,29 @@ export default class SettlementCalculator extends LightningElement {
 
   get totals() {
     const total = this.rows.reduce((prev, curr) => prev + curr.amount, 0);
+    const currenciesToShow = [
+      { currency: this.settlementCurrency, amount: total }
+    ];
+    if (this.settlementCurrency !== "EUR") {
+      currenciesToShow.push({
+        currency: "EUR",
+        amount: total * this.exchangeRates.eur
+      });
+    }
+    if (this.settlementCurrency !== "SEK") {
+      currenciesToShow.push({
+        currency: "SEK",
+        amount: total * this.exchangeRates.sek
+      });
+    }
+    if (this.settlementCurrency !== "USD") {
+      currenciesToShow.push({
+        currency: "USD",
+        amount: total * this.exchangeRates.usd
+      });
+    }
     return {
-      primaryAmount: total,
-      primaryCurrency: this.settlementCurrency,
-      secondaryAmount:
-        this.settlementCurrency === "USD"
-          ? total * this.exchangeRates.eur
-          : total * this.exchangeRates.usd,
-      secondaryCurrency: this.settlementCurrency === "USD" ? "EUR" : "USD",
-      tertiaryAmount:
-        this.settlementCurrency === "SEK"
-          ? total * this.exchangeRates.eur
-          : total * this.exchangeRates.sek,
-      tertiaryCurrency: this.settlementCurrency === "SEK" ? "EUR" : "SEK",
+      currencies: currenciesToShow,
       points: total
     };
   }
