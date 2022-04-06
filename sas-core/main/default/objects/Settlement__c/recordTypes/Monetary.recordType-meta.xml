@@ -1924,6 +1924,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CNY</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CZK</fullName>
             <default>false</default>
         </values>
@@ -1940,7 +1944,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HKD</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>JPY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NOK</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1949,6 +1961,10 @@
         </values>
         <values>
             <fullName>PLN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RUB</fullName>
             <default>false</default>
         </values>
         <values>

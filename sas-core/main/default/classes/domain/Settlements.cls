@@ -23,12 +23,14 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   private List<Settlement__c> instanceRecords;
 
   public enum RecordType {
+    Cheque,
     EBPoints,
     Monetary,
     Voucher
   }
 
   public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
+    RecordType.Cheque => 'Cheque',
     RecordType.EBPoints => 'EB points',
     RecordType.Monetary => 'Monetary',
     RecordType.Voucher => 'Voucher'

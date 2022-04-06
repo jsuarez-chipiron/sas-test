@@ -528,9 +528,17 @@ public class PaymentEntry {
 
     String paymentMethod = null;
 
+    Boolean isChequeSettlement =
+      Settlements.getRecordTypeId(Settlements.RecordType.Cheque) ==
+      s.RecordTypeId;
+
     // Payment details are dependent on bank country
-    // USD to outside of US is the one case we're not handling correctly in the custom metadatas.
-    if (s.Currency__c == 'USD' && s.Bank_Country__c != 'United States') {
+    // USD to outside of US is the one case we're not handling correctly in the custom metadata.
+    // Cheque payments also have a specific payment type. This is only supported for US domestic
+    // cheque payments.
+    if (isChequeSettlement) {
+      paymentMethod = 'NORDEA US DOM CHEQUE';
+    } else if (s.Currency__c == 'USD' && s.Bank_Country__c != 'United States') {
       paymentMethod = 'NORDEA CROSS BORDER EDI';
     } else {
       paymentMethod = bankCountrySettings.Payment_Type__c;
@@ -547,7 +555,9 @@ public class PaymentEntry {
       'accountData' => new Map<String, String>{
         'checkAmount' => amount,
         'currencyCode' => s.Currency__c,
-        'vendorBankAccountNumber' => s.Bank_Account_Number__c,
+        'vendorBankAccountNumber' => isChequeSettlement
+          ? ''
+          : s.Bank_Account_Number__c,
         'EDIPaymentMethod' => paymentMethod,
         'bankAccountNumber' => currencySettings.bankAccountNumber__c,
         'bankEDIIDNumber' => bankSettings.bankEDIIDNumber__c,
@@ -562,7 +572,7 @@ public class PaymentEntry {
           ? ''
           : currencySettings.EDIRemittanceInstruction__c,
         'selectedCheckId' => s.Name,
-        'supplierBankBranchNumber' => s.BIC_Swift__c
+        'supplierBankBranchNumber' => isChequeSettlement ? '' : s.BIC_Swift__c
       },
       'supplierData' => new Map<String, String>(),
       'bankData' => new Map<String, String>{

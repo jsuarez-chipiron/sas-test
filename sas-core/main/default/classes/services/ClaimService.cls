@@ -67,10 +67,20 @@ public without sharing class ClaimService {
   ];
 
   public static String createClaim(CaseFormJSON2Apex form) {
+    String ebNumber;
+
+    try {
+      ebNumber = Accounts.parseIntoEuroBonusNumber(
+        form.formData.euroBonusNumber
+      );
+    } catch (Exception e) {
+      // Failed to parse, we can ignore this and leave the EB number as blank.
+    }
+
     Case caseToCreate = new Case(
       Initially_Provided_PNR__c = form.formData.bookingReference,
       Description = form.formData.comment,
-      FCS_EBNumber__c = form.formData.euroBonusNumber,
+      FCS_EBNumber__c = ebNumber,
       OwnerId = claimsQueue.Id,
       Origin = marketToOrigin.get(form.metaData.market) == null
         ? marketToOrigin.get('default')
@@ -123,7 +133,7 @@ public without sharing class ClaimService {
       ),
       Customer_Claim_Type__c = jsonToPicklist.get(form.formData.claimType),
       Customer_s_Reference__c = form.formData.referenceNumber,
-      EuroBonus_Number__c = form.formData.euroBonusNumber,
+      EuroBonus_Number__c = ebNumber,
       Flight_Date__c = String.isBlank(form.formData.departureDate)
         ? null
         : Date.valueOf(form.formData.departureDate),
@@ -189,7 +199,9 @@ public without sharing class ClaimService {
 
     if (form.formData.contentVersionIds != null) {
       for (String contentId : form.formData.contentVersionIds) {
-        contentIds.add(Id.valueOf(contentId));
+        if (!String.isBlank(contentId)) {
+          contentIds.add(Id.valueOf(contentId));
+        }
       }
     }
     List<SObject> objectsToCreate = new List<SObject>();
@@ -222,8 +234,10 @@ public without sharing class ClaimService {
 
         if (e.receiptFileId != null) {
           for (String contentId : e.receiptFileId) {
-            fileIdsToObjects.put(contentId, expenseToCreate);
-            contentIds.add(Id.valueOf(contentId));
+            if (!String.isBlank(contentId)) {
+              fileIdsToObjects.put(contentId, expenseToCreate);
+              contentIds.add(Id.valueOf(contentId));
+            }
           }
         }
       }
@@ -240,8 +254,10 @@ public without sharing class ClaimService {
 
         if (f.boardingPassFileId != null) {
           for (String contentId : f.boardingPassFileId) {
-            fileIdsToObjects.put(contentId, flightToCreate);
-            contentIds.add(Id.valueOf(contentId));
+            if (!String.isBlank(contentId)) {
+              fileIdsToObjects.put(contentId, flightToCreate);
+              contentIds.add(Id.valueOf(contentId));
+            }
           }
         }
       }
