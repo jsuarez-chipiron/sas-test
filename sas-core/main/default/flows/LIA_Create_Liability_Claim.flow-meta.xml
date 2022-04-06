@@ -222,6 +222,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Company_Name__c</field>
+            <value>
+                <elementReference>Company_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Contact_Email__c</field>
             <value>
                 <elementReference>Email.value</elementReference>
@@ -475,6 +481,7 @@
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <description>Create a new Liability Claim</description>
         <name>New_Liability_Claim</name>
@@ -905,6 +912,30 @@
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <fields>
+                    <name>Company_Name</name>
+                    <dataType>String</dataType>
+                    <fieldText>Company Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>or</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Type_of_Customer</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Other representative</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Type_of_Customer</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Insurance company</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
