@@ -20,7 +20,7 @@
     <assignments>
         <name>Increase_invalid_Settlement_count</name>
         <label>Increase invalid Settlement count</label>
-        <locationX>314</locationX>
+        <locationX>754</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>numberOfInvalidSettlements</assignToReference>
@@ -50,7 +50,7 @@
     <assignments>
         <name>Increase_invalid_Settlement_count_0</name>
         <label>Increase invalid Settlement count</label>
-        <locationX>754</locationX>
+        <locationX>1194</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>numberOfInvalidSettlements</assignToReference>
@@ -80,7 +80,7 @@
     <assignments>
         <name>Increase_invalid_Settlement_count_0_0</name>
         <label>Increase invalid Settlement count</label>
-        <locationX>1194</locationX>
+        <locationX>1634</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>numberOfInvalidSettlements</assignToReference>
@@ -107,10 +107,107 @@
             <targetReference>Validate_each_Settlement</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Increase_invalid_Settlement_count_0_0_0</name>
+        <label>Increase invalid Settlement count</label>
+        <locationX>314</locationX>
+        <locationY>878</locationY>
+        <assignmentItems>
+            <assignToReference>numberOfInvalidSettlements</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>invalidSettlements</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Validate_each_Settlement.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>invalidSettlementInformation</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Validate_each_Settlement.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Validate_each_Settlement</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Settlement_is_valid_Cheque</name>
+        <label>Settlement is valid - Cheque</label>
+        <locationX>226</locationX>
+        <locationY>758</locationY>
+        <defaultConnector>
+            <targetReference>Increase_invalid_Settlement_count_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Valid_Cheque</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.Payee_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.Currency__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.Bank_Country__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.Address_line_1__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.City__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.Postal_Code__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.Country__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Validate_each_Settlement</targetReference>
+            </connector>
+            <label>Valid - Cheque</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Settlement_is_valid_EB_Points</name>
         <label>Settlement is valid - EB Points</label>
-        <locationX>1106</locationX>
+        <locationX>1546</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Increase_invalid_Settlement_count_0_0</targetReference>
@@ -142,7 +239,7 @@
     <decisions>
         <name>Settlement_is_valid_Monetary</name>
         <label>Settlement is valid - Monetary</label>
-        <locationX>226</locationX>
+        <locationX>666</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Increase_invalid_Settlement_count</targetReference>
@@ -230,7 +327,7 @@
     <decisions>
         <name>Settlement_is_valid_Voucher</name>
         <label>Settlement is valid - Voucher</label>
-        <locationX>666</locationX>
+        <locationX>1106</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Increase_invalid_Settlement_count_0</targetReference>
@@ -283,12 +380,27 @@
     <decisions>
         <name>Settlement_Type</name>
         <label>Settlement Type</label>
-        <locationX>842</locationX>
+        <locationX>1062</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Validate_each_Settlement</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Cheque</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cheque</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Settlement_is_valid_Cheque</targetReference>
+            </connector>
+            <label>Cheque</label>
+        </rules>
         <rules>
             <name>Monetary</name>
             <conditionLogic>and</conditionLogic>

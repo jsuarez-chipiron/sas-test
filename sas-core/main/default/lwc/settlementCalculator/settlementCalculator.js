@@ -96,7 +96,7 @@ export default class SettlementCalculator extends LightningElement {
         data.fields.Settlement_Status__c.value !== "Denied";
       this.type = {
         isEuroBonusPoints: data.recordTypeInfo.name === "EB points",
-        isMonetary: data.recordTypeInfo.name === "Monetary",
+        isMonetary: data.recordTypeInfo.name === "Monetary" || data.recordTypeInfo.name === "Cheque",
         isVoucher: data.recordTypeInfo.name === "Voucher"
       };
 

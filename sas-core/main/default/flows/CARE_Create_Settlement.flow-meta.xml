@@ -2,6 +2,14 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>53.0</apiVersion>
     <choices>
+        <name>Cheque</name>
+        <choiceText>Cheque</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Cheque</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>EB_Points</name>
         <choiceText>EB Points</choiceText>
         <dataType>String</dataType>
@@ -28,9 +36,24 @@
     <decisions>
         <name>Settlement_Type</name>
         <label>Settlement Type</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>518</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Cheque_Settlement</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Select_Settlement_Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cheque</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Cheque_Settlement</targetReference>
+            </connector>
+            <label>Cheque Settlement</label>
+        </rules>
         <rules>
             <name>EB_Points_Settlement</name>
             <conditionLogic>and</conditionLogic>
@@ -112,9 +135,98 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
+        <name>Create_Cheque_Settlement</name>
+        <label>Create Cheque Settlement</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Outcome</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Address_line_1__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Address_line_1__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Address_line_2__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Address_line_2__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Bank_Country__c</field>
+            <value>
+                <stringValue>United States</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>City__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.City__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Claim__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Company__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Company_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Country__c</field>
+            <value>
+                <stringValue>United States</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Currency__c</field>
+            <value>
+                <stringValue>USD</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>EuroBonus_Number__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.EuroBonus_Number__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Payee_Name__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Bank_Account_Holder_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Payee_reference__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Customer_s_Reference__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Postal_Code__c</field>
+            <value>
+                <elementReference>Get_Customer_Claim.Postal_Code__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_Record_Type_Id.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Settlement__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
         <name>Create_EB_Points_Settlement</name>
         <label>Create EB Points Settlement</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Outcome</targetReference>
@@ -185,7 +297,7 @@
     <recordCreates>
         <name>Create_Monetary_Settlement</name>
         <label>Create Monetary Settlement</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Outcome</targetReference>
@@ -286,7 +398,7 @@
     <recordCreates>
         <name>Create_Voucher_Settlement</name>
         <label>Create Voucher Settlement</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Outcome</targetReference>
@@ -387,7 +499,7 @@
     <recordLookups>
         <name>Get_Customer_Claim</name>
         <label>Get Customer Claim Information</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -408,7 +520,7 @@
     <recordLookups>
         <name>Get_Record_Type_Id</name>
         <label>Get Record Type Id</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -430,7 +542,7 @@
     <screens>
         <name>Create_a_Settlement</name>
         <label>Create a Settlement</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -443,6 +555,7 @@
             <choiceReferences>Monetary</choiceReferences>
             <choiceReferences>EB_Points</choiceReferences>
             <choiceReferences>Voucher</choiceReferences>
+            <choiceReferences>Cheque</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Select Settlement Type</fieldText>
             <fieldType>DropdownBox</fieldType>
@@ -472,7 +585,7 @@
     <screens>
         <name>Outcome</name>
         <label>Outcome</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>854</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -486,7 +599,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>320</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Customer_Claim</targetReference>
