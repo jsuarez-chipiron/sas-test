@@ -597,7 +597,7 @@
                     <leftValueReference>Type_of_Customer</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Other representative</stringValue>
+                        <stringValue>Claim firm</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -614,7 +614,7 @@
                     <leftValueReference>Type_of_Customer</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Other representative</stringValue>
+                        <stringValue>Claim firm</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -726,14 +726,14 @@
                             <leftValueReference>Type_of_Customer</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
-                                <stringValue>Corporate customer</stringValue>
+                                <stringValue>Other representative</stringValue>
                             </rightValue>
                         </conditions>
                         <conditions>
                             <leftValueReference>Type_of_Customer</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
-                                <stringValue>Travel agency</stringValue>
+                                <stringValue>Insurance company</stringValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -750,7 +750,14 @@
                             <leftValueReference>Type_of_Customer</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
-                                <stringValue>Corporate customer</stringValue>
+                                <stringValue>Insurance company</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Type_of_Customer</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Other representative</stringValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
