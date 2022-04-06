@@ -130,7 +130,9 @@ public without sharing class CaseService {
       Set<Id> contentIds = new Set<Id>();
 
       for (String contentId : form.formData.contentVersionIds) {
-        contentIds.add(Id.valueOf(contentId));
+        if (!String.isBlank(contentId)) {
+          contentIds.add(Id.valueOf(contentId));
+        }
       }
 
       List<ContentVersion> contentToLink = contentVersions.selectById(

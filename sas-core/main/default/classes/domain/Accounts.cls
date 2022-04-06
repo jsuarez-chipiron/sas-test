@@ -31,6 +31,41 @@ public without sharing class Accounts extends fflib_SObjectDomain {
     }
   }
 
+  /**
+   * Given a string, attempts to parse it into a valid EuroBonus number.
+   * Drops all whitespace, and picks the first consecutive string of numbers
+   * from the input.
+   *
+   * Valid EuroBonus numbers are 9 digits with no whitespace.
+   *
+   * @param potentialEBNumber A string to try and parse into a valid EuroBonus number.
+   *
+   * @throws IncorrectEBNumberException If the given string isn't a valid EuroBonus number.
+   */
+  public static String parseIntoEuroBonusNumber(String potentialEBNumber) {
+    String toReturn;
+    if (!String.isBlank(potentialEBNumber)) {
+      String ebNumberWithoutWhitespace = potentialEBNumber.replace(' ', '');
+      Pattern onlyNumbersPattern = Pattern.compile('([0-9]+)');
+      Matcher matcher = onlyNumbersPattern.matcher(ebNumberWithoutWhitespace);
+      try {
+        Boolean matches = matcher.find();
+        toReturn = matcher.group();
+      } catch (Exception e) {
+        throw new IncorrectEBNumberException();
+      }
+    }
+
+    if (String.isBlank(toReturn) || toReturn.length() != 9) {
+      throw new IncorrectEBNumberException();
+    }
+
+    return toReturn;
+  }
+
+  public class IncorrectEBNumberException extends Exception {
+  }
+
   private void fetchBookingsFromTEDS() {
     Account acc = (Account) Records[0];
     if (
