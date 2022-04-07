@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Random_Number_Check</name>
         <label>Random Number Check</label>
-        <locationX>754</locationX>
+        <locationX>666</locationX>
         <locationY>158</locationY>
         <actionName>GetRandomNumber</actionName>
         <actionType>apex</actionType>
@@ -32,8 +32,8 @@
     <assignments>
         <name>AutomaticApproval</name>
         <label>AutomaticApproval</label>
-        <locationX>138</locationX>
-        <locationY>518</locationY>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -48,8 +48,8 @@
     <assignments>
         <name>ManualApproval</name>
         <label>ManualApproval</label>
-        <locationX>754</locationX>
-        <locationY>1310</locationY>
+        <locationX>666</locationX>
+        <locationY>1526</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -158,7 +158,7 @@
     <decisions>
         <name>Settlement_Type</name>
         <label>Settlement Type</label>
-        <locationX>754</locationX>
+        <locationX>666</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -175,6 +175,21 @@
                 <targetReference>ManualApproval</targetReference>
             </connector>
             <label>Direct to Manual Approval</label>
+        </rules>
+        <rules>
+            <name>Cheque</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>incomingRecord.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cheque</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ManualApproval</targetReference>
+            </connector>
+            <label>Cheque</label>
         </rules>
         <rules>
             <name>EB_Points</name>
@@ -276,8 +291,8 @@
     <recordCreates>
         <name>Create_Approval_Request</name>
         <label>Create Approval Request</label>
-        <locationX>138</locationX>
-        <locationY>878</locationY>
+        <locationX>578</locationX>
+        <locationY>998</locationY>
         <inputAssignments>
             <field>OwnerId</field>
             <value>
@@ -308,8 +323,8 @@
     <recordLookups>
         <name>Get_SAS_AP_User</name>
         <label>Get SAS AP User</label>
-        <locationX>138</locationX>
-        <locationY>638</locationY>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_Settlement_Status_to_Approved</targetReference>
@@ -329,8 +344,8 @@
     <recordUpdates>
         <name>Set_Settlement_Status_to_Approved</name>
         <label>Set Settlement Status to Approved</label>
-        <locationX>138</locationX>
-        <locationY>758</locationY>
+        <locationX>578</locationX>
+        <locationY>878</locationY>
         <connector>
             <targetReference>Create_Approval_Request</targetReference>
         </connector>
@@ -358,7 +373,7 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>628</locationX>
+        <locationX>540</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Random_Number_Check</targetReference>
