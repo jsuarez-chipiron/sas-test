@@ -53,6 +53,9 @@
                             <value>PrintableView</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>LIA_Claim__c.Create_Customer</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>LIA_Claim__c.Create_Settlement</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
