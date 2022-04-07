@@ -223,18 +223,6 @@ public class RacerResponseHandlersTest {
     // Given
     String paymentFileName1 = 'TestPaymentFile1.txt';
     String paymentFileName2 = 'TestPaymentFile2.txt';
-    String error1 = 'ERR1';
-    String error2 = 'ERR2';
-    String L2FileContents =
-      '01/01/2022 01:00:00|' +
-      paymentFileName1 +
-      '|SEB_L2|ID000/ID000|1114|000000000000|SAS SF OTH|DK BANK TRANSFER|RJCT|NARR|ErrorOnAllCounterParties|5968|DKK|22-JAN-01|Name Name|RJCT|AC03|' +
-      error1 +
-      '\n' +
-      '01/01/2022 01:00:00|' +
-      paymentFileName2 +
-      '|SEB_L2|ID000/ID000|1114|000000000000|SAS SF OTH|DK BANK TRANSFER|RJCT|NARR|ErrorOnAllCounterParties|5968|DKK|22-JAN-01|Name Name|RJCT|AC03|' +
-      error2;
     Settlement__c relevantSettlement1 = new Settlement__c(
       Address_line_1__c = 'Frösundaviks allé 1',
       Address_line_2__c = 'Line 2',
@@ -265,7 +253,7 @@ public class RacerResponseHandlersTest {
       Settlement_Status__c = Settlements.STATUS_DONE,
       Payment_File_Name__c = paymentFileName2
     );
-    Settlement__c irrelevantSettlement = new Settlement__c(
+    Settlement__c irrelevantSettlement1 = new Settlement__c(
       Address_line_1__c = 'Frösundaviks allé 1',
       Address_line_2__c = 'Line 2',
       Amount__c = 600,
@@ -280,12 +268,70 @@ public class RacerResponseHandlersTest {
       Settlement_Status__c = Settlements.STATUS_DONE,
       Payment_File_Name__c = 'DifferentFileName.txt'
     );
+    Settlement__c irrelevantSettlement2 = new Settlement__c(
+      Address_line_1__c = 'Frösundaviks allé 1',
+      Address_line_2__c = 'Line 2',
+      Amount__c = 600,
+      BIC_Swift__c = 'TESTBIC',
+      City__c = 'Stockholm',
+      Country__c = 'Sweden',
+      Currency__c = 'NOK',
+      Date_of_Exchange_Calculation__c = Date.today(),
+      Bank_Account_Number__c = 'SE0000000000000',
+      Payee_Name__c = 'Test Testsson',
+      Postal_Code__c = '00100',
+      Settlement_Status__c = Settlements.STATUS_DONE,
+      Payment_File_Name__c = paymentFileName1
+    );
 
     insert new List<SObject>{
       relevantSettlement1,
       relevantSettlement2,
-      irrelevantSettlement
+      irrelevantSettlement1,
+      irrelevantSettlement2
     };
+
+    Settlement_Item__c itemPending = new Settlement_Item__c(
+      Settlement__c = relevantSettlement1.Id,
+      Status__c = SettlementItems.STATUS_PENDING_L1_CONFIRMATION
+    );
+
+    Settlement_Item__c itemAlreadySentToRacer = new Settlement_Item__c(
+      Settlement__c = relevantSettlement1.Id,
+      Status__c = SettlementItems.STATUS_SENT_TO_RACER
+    );
+
+    insert new List<SObject>{ itemPending, itemAlreadySentToRacer };
+
+    String s1Name = [
+      SELECT NAME
+      FROM Settlement__c
+      WHERE Id = :relevantSettlement1.Id
+    ]
+    .Name;
+    String s2Name = [
+      SELECT NAME
+      FROM Settlement__c
+      WHERE Id = :relevantSettlement2.Id
+    ]
+    .Name;
+
+    String error1 = 'ERR1';
+    String error2 = 'ERR2';
+    String L2FileContents =
+      '01/01/2022 01:00:00|' +
+      paymentFileName1 +
+      '|SEB_L2|ID000/OTH' +
+      s1Name +
+      '|1114|000000000000|SAS SF OTH|DK BANK TRANSFER|RJCT|NARR|ErrorOnAllCounterParties|5968|DKK|22-JAN-01|Name Name|RJCT|AC03|' +
+      error1 +
+      '\n' +
+      '01/01/2022 01:00:00|' +
+      paymentFileName2 +
+      '|SEB_L2|ID000/SE' +
+      s2Name +
+      '|1114|000000000000|SAS SF OTH|DK BANK TRANSFER|RJCT|NARR|ErrorOnAllCounterParties|5968|DKK|22-JAN-01|Name Name|RJCT|AC03|' +
+      error2;
 
     // When
     ContentVersion cv = new ContentVersion(
@@ -309,10 +355,25 @@ public class RacerResponseHandlersTest {
       FROM Settlement__c
       WHERE Id = :relevantSettlement2.Id
     ];
-    Settlement__c irrelevantSettlementAfterwards = [
+    Settlement__c irrelevantSettlement1Afterwards = [
       SELECT Id, Error_Message__c, Settlement_Status__c
       FROM Settlement__c
-      WHERE Id = :irrelevantSettlement.Id
+      WHERE Id = :irrelevantSettlement1.Id
+    ];
+    Settlement__c irrelevantSettlement2Afterwards = [
+      SELECT Id, Error_Message__c, Settlement_Status__c
+      FROM Settlement__c
+      WHERE Id = :irrelevantSettlement2.Id
+    ];
+    Settlement_Item__c pendingItemAfterwards = [
+      SELECT Id, Status__c
+      FROM Settlement_Item__c
+      WHERE Id = :itemPending.Id
+    ];
+    Settlement_Item__c sentToRacerItemAfterwards = [
+      SELECT Id, Status__c
+      FROM Settlement_Item__c
+      WHERE Id = :itemAlreadySentToRacer.Id
     ];
 
     System.assertEquals(
@@ -327,8 +388,13 @@ public class RacerResponseHandlersTest {
     );
     System.assertEquals(
       Settlements.STATUS_DONE,
-      irrelevantSettlementAfterwards.Settlement_Status__c,
-      'Settlement 3 should not be modified'
+      irrelevantSettlement1Afterwards.Settlement_Status__c,
+      'Settlement within a different payment should not be modified'
+    );
+    System.assertEquals(
+      Settlements.STATUS_DONE,
+      irrelevantSettlement2Afterwards.Settlement_Status__c,
+      'Settlement within same payment file, but without errors, should not be modified'
     );
     System.assertEquals(
       error1,
@@ -342,8 +408,23 @@ public class RacerResponseHandlersTest {
     );
     System.assertEquals(
       null,
-      irrelevantSettlementAfterwards.Error_Message__c,
+      irrelevantSettlement1Afterwards.Error_Message__c,
       'Settlement 3 should have no error message.'
+    );
+    System.assertEquals(
+      null,
+      irrelevantSettlement2Afterwards.Error_Message__c,
+      'Settlement 4 should have no error message.'
+    );
+    System.assertEquals(
+      SettlementItems.STATUS_SETTLEMENT_FAILED,
+      pendingItemAfterwards.Status__c,
+      'Draft item status should be updated to Settlement failed.'
+    );
+    System.assertEquals(
+      SettlementItems.STATUS_SENT_TO_RACER,
+      sentToRacerItemAfterwards.Status__c,
+      'Draft item status should be updated to Settlement failed.'
     );
   }
 

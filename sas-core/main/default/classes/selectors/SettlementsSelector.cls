@@ -40,6 +40,12 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
     return (List<Settlement__c>) selectSObjectsById(ids);
   }
 
+  public List<Settlement__c> selectByName(Set<String> names) {
+    return (List<Settlement__c>) Database.query(
+      newQueryFactory().setCondition('Name IN :names').toSOQL()
+    );
+  }
+
   public List<Settlement__c> selectByClaimId(Set<Id> claimIds) {
     return (List<Settlement__c>) Database.query(
       newQueryFactory().setCondition('Claim__c IN :claimIds').toSOQL()

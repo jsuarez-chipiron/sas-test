@@ -121,7 +121,7 @@ public without sharing class ClaimService {
       Concerns_an_unaccompanied_minor__c = form.formData.unaccompaniedMinor ==
         null
         ? false
-        : form.formData.personWithReducedMobility,
+        : form.formData.unaccompaniedMinor,
       Contact_Email__c = form.formData.email,
       Contact_First_Name__c = form.formData.firstName,
       Contact_Last_Name__c = form.formData.lastName,

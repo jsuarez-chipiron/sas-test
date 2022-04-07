@@ -133,7 +133,7 @@ public without sharing class FCS_IdentifyCustomerController {
             'Invalid birthdate: ' +
             ff.BirthDate__c +
             '. For EB user: ' +
-            'ff.EBNumber__c',
+            ff.EBNumber__c,
             null,
             'CODS-data',
             null
@@ -150,7 +150,7 @@ public without sharing class FCS_IdentifyCustomerController {
           'Invalid email address: ' +
           ff.EmailPersonal__c +
           '. For EB user: ' +
-          'ff.EBNumber__c',
+          ff.EBNumber__c,
           null,
           'CODS-data',
           null

@@ -66,6 +66,10 @@ public class RacerResponseHandlers {
     }
   }
 
+  /**
+   * Paymul status report is a confirmation file from Racer that the they have
+   * received and processed the payment file correctly.
+   */
   private static Void processPaymulStatusReport(ContentVersion cv) {
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
 
@@ -100,6 +104,10 @@ public class RacerResponseHandlers {
     moveToFolder(cv, PAYMUL_FOLDER_NAME);
   }
 
+  /**
+   * L1 status report is a confirmation file from banks that the payment file
+   * has been received and processed successfully by them.
+   */
   private static Void processL1StatusReport(ContentVersion cv) {
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
 
@@ -134,11 +142,19 @@ public class RacerResponseHandlers {
     moveToFolder(cv, L1_FOLDER_NAME);
   }
 
+  /**
+   * L2 status report includes information about payment which have failed due
+   * to user error. This could be, e.g., an invalid bank number given by
+   * customer to us.
+   */
   private static Void processL2StatusReport(ContentVersion cv) {
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
 
     String fileContents = cv.VersionData.toString();
     List<String> lines = fileContents.split('\n');
+
+    Set<String> failedSettlementNames = new Set<String>();
+    Map<String, String> settlementNamesToErrorMessages = new Map<String, String>();
 
     for (String line : lines) {
       List<String> dataFields = line.split('[|]');
@@ -165,22 +181,52 @@ public class RacerResponseHandlers {
        *  18 - trx info
        */
 
-      String paymentFileName = dataFields[1];
+      String paymentInstructionId = dataFields[3].trim();
       String documentStatus = dataFields[4];
       String errorDetail = dataFields[17];
 
-      // There should never be more than a few lines so having this within the loop should be fine.
-      List<Settlement__c> correspondingSettlements = settlementsSel.selectByPaymentFileName(
-        paymentFileName // TODO: How do we actually find the correct one?
-      );
-      Settlements.newInstance(correspondingSettlements)
-        .markAsFailedPayment(errorDetail, uow);
+      // Payment instruction id is of format {racerId}/{twoLetterCountryCode}{settlementName}
+      // We can find the corresponding settlement from Salesforce with the last part.
+
+      String settlementIdentifier = paymentInstructionId.split('/')[1];
+
+      Pattern onlyNumbersPattern = Pattern.compile('([0-9]+)');
+      Matcher matcher = onlyNumbersPattern.matcher(settlementIdentifier);
+
+      Boolean matches = matcher.find();
+      String settlementName = matcher.group();
+
+      failedSettlementNames.add(settlementName);
+      settlementNamesToErrorMessages.put(settlementName, errorDetail);
     }
+
+
+    List<Settlement__c> failedSettlements = settlementsSel.selectByName(
+      failedSettlementNames
+    );
+
+
+    Map<Id, String> settlementIdsToErrorMessages = new Map<Id, String>();
+
+    for (Settlement__c s : failedSettlements) {
+      settlementIdsToErrorMessages.put(
+        s.Id,
+        settlementNamesToErrorMessages.get(s.Name)
+      );
+    }
+
+    Settlements.newInstance(failedSettlements)
+      .markAsFailedPayment(settlementIdsToErrorMessages, uow);
 
     uow.commitWork();
     moveToFolder(cv, L2_FOLDER_NAME);
   }
 
+  /**
+   * The accounting status report is a confirmation file from the Racer team
+   * that the accounting application has successfully received and processed
+   * the accounting files.
+   */
   private static Void processAccountingStatusReport(ContentVersion cv) {
     String fileContents = cv.VersionData.toString();
     // There should be only a single line.

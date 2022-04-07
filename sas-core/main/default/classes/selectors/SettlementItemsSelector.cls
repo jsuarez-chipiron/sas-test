@@ -11,7 +11,8 @@ public inherited sharing class SettlementItemsSelector extends fflib_SObjectSele
       Settlement_Item__c.Customer_Name__c,
       Settlement_Item__c.Deductible_Insurance_Amount__c,
       Settlement_Item__c.Name,
-      Settlement_Item__c.Settlement__c
+      Settlement_Item__c.Settlement__c,
+      Settlement_Item__c.Status__c
     };
   }
 

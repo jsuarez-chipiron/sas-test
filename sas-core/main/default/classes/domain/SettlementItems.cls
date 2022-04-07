@@ -22,6 +22,7 @@ public without sharing class SettlementItems extends fflib_SObjectDomain {
   private List<Settlement_Item__c> instanceRecords;
 
   public static final String STATUS_DRAFT = 'Draft';
+  public static final String STATUS_SETTLEMENT_FAILED = 'Settlement failed';
   public static final String STATUS_PENDING_L1_CONFIRMATION = 'Pending L1 confirmation';
   public static final String STATUS_WAITING_FOR_TRANSFER = 'Waiting for transfer';
   public static final String STATUS_SENT_TO_RACER = 'Sent to Racer';
@@ -46,6 +47,19 @@ public without sharing class SettlementItems extends fflib_SObjectDomain {
   public void markAsDone(fflib_ISObjectUnitOfWork uow) {
     for (Settlement_Item__c s : instanceRecords) {
       s.Status__c = STATUS_DONE;
+      uow.registerDirty(s);
+    }
+  }
+
+  public void markAsPendingL1Confirmation() {
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    markAsPendingL1Confirmation(uow);
+    uow.commitWork();
+  }
+
+  public void markAsPendingL1Confirmation(fflib_ISObjectUnitOfWork uow) {
+    for (Settlement_Item__c s : instanceRecords) {
+      s.Status__c = STATUS_PENDING_L1_CONFIRMATION;
       uow.registerDirty(s);
     }
   }
@@ -103,6 +117,30 @@ public without sharing class SettlementItems extends fflib_SObjectDomain {
       s.Accounting_File_Name__c = accountingFilename;
       s.Status__c = STATUS_SENT_TO_RACER;
       uow.registerDirty(s);
+    }
+  }
+
+  public void markAsSettlementFailed() {
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    markAsSettlementFailed(uow);
+    uow.commitWork();
+  }
+
+  /**
+   * Marks the given list of settlement items as failed when the parent
+   * settlement has failed. Only settlement items which have status 'Draft' or
+   * 'Pending L1 confirmation' can be marked as failed, as other items in other
+   * statuses have already been sent to accounting.
+   */
+  public void markAsSettlementFailed(fflib_ISObjectUnitOfWork uow) {
+    for (Settlement_Item__c s : instanceRecords) {
+      if (
+        s.Status__c == STATUS_DRAFT ||
+        s.Status__c == STATUS_PENDING_L1_CONFIRMATION
+      ) {
+        s.Status__c = STATUS_SETTLEMENT_FAILED;
+        uow.registerDirty(s);
+      }
     }
   }
 }
