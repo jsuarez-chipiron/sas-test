@@ -304,8 +304,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   /**
    * Updates the list of settlement items for this settlement. Upserts the
-   * given items and removes all settlement items not list in the given
-   * items.
+   * given items and removes all settlement items related to the settlement,
+   * but not included in the given items.
    *
    * Also updates the settlement total and currency conversion calculations.
    *
