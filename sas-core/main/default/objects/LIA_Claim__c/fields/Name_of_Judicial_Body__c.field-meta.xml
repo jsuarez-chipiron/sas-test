@@ -44,6 +44,11 @@
                 <label>Autoridade Nacional da Aviação Civil (ANAC, Portugal)</label>
             </value>
             <value>
+                <fullName>Better Business Bureau (BBB)</fullName>
+                <default>false</default>
+                <label>Better Business Bureau (BBB)</label>
+            </value>            
+            <value>
                 <fullName>Bezirksgericht für Handelssachen Wien (Germany)</fullName>
                 <default>false</default>
                 <label>Bezirksgericht für Handelssachen Wien (Germany)</label>
@@ -457,6 +462,10 @@
             <controllingFieldValue>France</controllingFieldValue>
             <valueName>Tribunal d’Instance (France)</valueName>
         </valueSettings>
+            <valueSettings>
+            <controllingFieldValue>United States</controllingFieldValue>
+            <valueName>Better Business Bureau (BBB)</valueName>
+        </valueSettings>    
         <valueSettings>
             <controllingFieldValue>United States</controllingFieldValue>
             <valueName>Bucks County Magisterial Court</valueName>
