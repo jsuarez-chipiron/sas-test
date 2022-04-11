@@ -705,6 +705,10 @@
                     <fieldText>EuroBonus Number</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Only numbers are necessary.&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!EuroBonus_Number}) = 10</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>Phone</name>
@@ -1121,7 +1125,7 @@
             <targetReference>Customer_Claim_Message</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
