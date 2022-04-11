@@ -636,21 +636,29 @@
     </profileActionOverrides>
     <tabs>standard-Case</tabs>
     <tabs>LIA_Claim__c</tabs>
+    <tabs>Settlement__c</tabs>
+    <tabs>Proactivity__c</tabs>
+    <tabs>Claim_Firm__c</tabs>
     <tabs>LIA_Major_Event__c</tabs>
-    <tabs>LIA_Firm__c</tabs>
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SAS_Liability_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
+            <tab>Claim_Firm__c</tab>
+        </mappings>
+        <mappings>
             <tab>LIA_Claim__c</tab>
         </mappings>
         <mappings>
-            <tab>LIA_Firm__c</tab>
+            <tab>LIA_Major_Event__c</tab>
         </mappings>
         <mappings>
-            <tab>LIA_Major_Event__c</tab>
+            <tab>Proactivity__c</tab>
+        </mappings>
+        <mappings>
+            <tab>Settlement__c</tab>
         </mappings>
         <mappings>
             <tab>standard-Case</tab>
