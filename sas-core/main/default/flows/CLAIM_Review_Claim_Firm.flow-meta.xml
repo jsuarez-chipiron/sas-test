@@ -144,6 +144,7 @@
         </inputAssignments>
         <object>Claim_Firm__c</object>
     </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Claim_Firm_Review</name>
         <label>Claim Firm Review</label>
