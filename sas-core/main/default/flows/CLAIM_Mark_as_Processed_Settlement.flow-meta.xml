@@ -92,6 +92,7 @@
         </inputAssignments>
         <object>Settlement__c</object>
     </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Error</name>
         <label>Error</label>
