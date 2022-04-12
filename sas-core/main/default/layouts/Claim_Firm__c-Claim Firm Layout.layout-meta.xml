@@ -70,7 +70,7 @@
     </platformActionList>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>BIC_Swift__c</fields>
+        <fields>Active__c</fields>
         <fields>Bank_Name__c</fields>
         <fields>Country__c</fields>
         <relatedList>Bank_Account_Info__c.Claim_Firm__c</relatedList>
