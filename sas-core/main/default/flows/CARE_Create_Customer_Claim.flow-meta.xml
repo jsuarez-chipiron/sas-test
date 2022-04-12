@@ -706,8 +706,8 @@
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                     <validationRule>
-                        <errorMessage>&lt;p&gt;Only numbers are necessary.&lt;/p&gt;</errorMessage>
-                        <formulaExpression>LEN({!EuroBonus_Number}) = 10</formulaExpression>
+                        <errorMessage>&lt;p&gt;There are 9 numbers in a EuroBonus Number&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!EuroBonus_Number}) = 9</formulaExpression>
                     </validationRule>
                 </fields>
                 <fields>
