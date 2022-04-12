@@ -691,7 +691,14 @@ public without sharing class Cases extends fflib_SObjectDomain {
         try {
           fflib_ISObjectUnitOfWork uowTry = SAS_Service_Application.UnitOfWork.newInstance();
           Messaging.SingleEmailMessage emailToSend = new Messaging.SingleEmailMessage();
-          emailToSend.setSenderDisplayName(existingDraftEmail.FromAddress);
+          //Set From Address No-Reply address if it exists, else send email using the running user.
+          List<OrgWideEmailAddress> owa = OrgWideEmailAddressesSelector.newInstance()
+            .selectPrimary();
+          if (owa.size() == 1) {
+            emailToSend.setOrgWideEmailAddressId(owa[0].Id);
+          } else {
+            emailToSend.setSenderDisplayName(existingDraftEmail.FromAddress);
+          }
           emailToSend.setToAddresses(existingDraftEmail.ToAddress.split(';'));
           emailToSend.setReplyTo(existingDraftEmail.FromAddress);
           if (existingDraftEmail.CcAddress != null) {
@@ -702,7 +709,11 @@ public without sharing class Cases extends fflib_SObjectDomain {
               existingDraftEmail.BccAddress.split(';')
             );
           }
-          emailToSend.setSubject(existingDraftEmail.Subject);
+          // Add Thread ID if case was created manually.
+          String newSubject = c.Origin == 'Manual'
+            ? existingDraftEmail.Subject + ' ' + getThreadId(c.Id)
+            : existingDraftEmail.Subject;
+          emailToSend.setSubject(newSubject);
           emailToSend.setHtmlBody(existingDraftEmail.HtmlBody);
           emailToSend.setPlainTextBody(existingDraftEmail.TextBody);
           emailToSend.setSaveAsActivity(true);
@@ -747,6 +758,16 @@ public without sharing class Cases extends fflib_SObjectDomain {
         notification.send(new Set<String>{ c.OwnerId });
       }
     }
+  }
+
+  private static String getThreadId(String caseId) {
+    return 'ref:_' +
+      UserInfo.getOrganizationId().left(5) +
+      UserInfo.getOrganizationId().mid(11, 4) +
+      '._' +
+      caseId.left(5) +
+      caseId.mid(10, 5) +
+      ':ref';
   }
 
   /**
