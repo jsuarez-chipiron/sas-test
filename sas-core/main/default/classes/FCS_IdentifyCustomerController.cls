@@ -191,6 +191,7 @@ public without sharing class FCS_IdentifyCustomerController {
           SELECT
             Id,
             FCS_EBNumber__c,
+            FCS_EBLevel__c,
             FCS_TPAccountNumber__c,
             AccountId,
             Account.FCS_FrequentFlyer__c,
@@ -252,6 +253,8 @@ public without sharing class FCS_IdentifyCustomerController {
     @AuraEnabled
     public String euroBonusNumber { get; private set; }
     @AuraEnabled
+    public String euroBonusLevel { get; private set; }
+    @AuraEnabled
     public String tpAccountNumber { get; private set; }
     @AuraEnabled
     public String codsId { get; private set; }
@@ -273,6 +276,7 @@ public without sharing class FCS_IdentifyCustomerController {
       accountId = cse.AccountId;
       personContactId = cse.Account.PersonContactId;
       euroBonusNumber = cse.FCS_EBNumber__c;
+      euroBonusLevel = cse.FCS_EBLevel__c;
       tpAccountNumber = cse.FCS_TPAccountNumber__c;
       codsId = cse.Account.FCS_FrequentFlyer__c;
       caseId = cse.Id;
@@ -357,6 +361,7 @@ public without sharing class FCS_IdentifyCustomerController {
           FCS_TPAccountNumber__c = tpAccountNumber,
           FCS_CODSId__c = codsId,
           FCS_EBNumber__c = euroBonusNumber,
+          FCS_EBLevel__c = euroBonusLevel,
           ContactId = personContactId
         );
       } else if (recordId.getSobjectType() == LiveChatTranscript.SObjectType) {

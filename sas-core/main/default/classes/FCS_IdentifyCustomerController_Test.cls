@@ -38,6 +38,7 @@ private class FCS_IdentifyCustomerController_Test {
     Case originalCase = new Case(
       AccountId = acc.Id,
       FCS_EBNumber__c = '123',
+      FCS_EBLevel__c = 'S',
       FCS_TPAccountNumber__c = '321'
     );
     insert originalCase;
