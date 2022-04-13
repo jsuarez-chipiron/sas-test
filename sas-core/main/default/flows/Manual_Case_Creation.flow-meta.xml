@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
-        <name>Minimize_flow_screen</name>
+        <name>Minimize_flow_screen_0_0</name>
         <label>Minimize flow screen</label>
         <locationX>578</locationX>
-        <locationY>1574</locationY>
+        <locationY>1790</locationY>
         <actionName>c:MinimizeUtilityItem</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+    </actionCalls>
+    <actionCalls>
+        <name>Navigate_to_created_case</name>
+        <label>Navigate to created case</label>
+        <locationX>314</locationX>
+        <locationY>1574</locationY>
+        <actionName>c:NavigateToRecord</actionName>
+        <actionType>component</actionType>
+        <connector>
+            <targetReference>Minimize_flow_screen_0_0</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>destinationName</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>destinationRecordId</name>
+            <value>
+                <elementReference>CreatedCaseId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <name>Notify_User_of_created_Case</name>
@@ -17,7 +42,7 @@
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <connector>
-            <targetReference>Case_Creation_Confirmation</targetReference>
+            <targetReference>Assign_Owner_0</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -47,7 +72,7 @@
         <inputParameters>
             <name>targetId</name>
             <value>
-                <elementReference>CreateManualCase</elementReference>
+                <elementReference>CreatedCaseId</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
@@ -173,6 +198,46 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Assign_Owner_0</name>
+        <label>Assign Owner</label>
+        <locationX>578</locationX>
+        <locationY>1454</locationY>
+        <defaultConnector>
+            <targetReference>Minimize_flow_screen_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>MeOutcome_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CaseAssignment</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>MeChoice</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Navigate_to_created_case</targetReference>
+            </connector>
+            <label>MeChoice</label>
+        </rules>
+        <rules>
+            <name>QueueOutcome_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CaseAssignment</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>QueueChoice</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Creation_Confirmation_0</targetReference>
+            </connector>
+            <label>QueueChoice</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_department_valid_for_case_creation</name>
         <label>Is department valid for case creation?</label>
         <locationX>314</locationX>
@@ -234,11 +299,6 @@
         <picklistField>Team__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
-    <formulas>
-        <name>CreatedCaseLink</name>
-        <dataType>String</dataType>
-        <expression>HYPERLINK(&quot;/&quot; &amp; {!CreateManualCase}, {!GetCaseNumber.CaseNumber}, &quot;_self&quot;)</expression>
-    </formulas>
     <interviewLabel>Manual Case Creation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Create New Case</label>
     <processMetadataValues>
@@ -265,6 +325,7 @@
         <label>CreateManualCase</label>
         <locationX>578</locationX>
         <locationY>974</locationY>
+        <assignRecordIdToReference>CreatedCaseId</assignRecordIdToReference>
         <connector>
             <targetReference>GetCaseNumber</targetReference>
         </connector>
@@ -335,7 +396,6 @@
             </value>
         </inputAssignments>
         <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
         <name>GetCaseNumber</name>
@@ -351,7 +411,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>CreateManualCase</elementReference>
+                <elementReference>CreatedCaseId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -403,18 +463,18 @@
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
-        <name>Case_Creation_Confirmation</name>
+        <name>Case_Creation_Confirmation_0</name>
         <label>Case Creation Confirmation</label>
         <locationX>578</locationX>
-        <locationY>1454</locationY>
+        <locationY>1574</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Minimize_flow_screen</targetReference>
+            <targetReference>Minimize_flow_screen_0_0</targetReference>
         </connector>
         <fields>
-            <name>Outcome</name>
+            <name>Outcome_0</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Case&lt;/span&gt;&lt;span style=&quot;font-size: 16px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt; &lt;/span&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;has been created to {!GetCaseNumber.Department__c}.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Click the notification in the top right corner to view the case!&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
@@ -608,6 +668,13 @@
             <name>RecordTypeOutput</name>
         </outputAssignments>
     </subflows>
+    <variables>
+        <name>CreatedCaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <description>Saves the email to add it to the case</description>
         <name>RecipientEmail</name>

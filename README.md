@@ -17,6 +17,7 @@ other helpful extensions and tools, but these will get you started.
 1. [Salesforce CLI](https://developer.salesforce.com/tools/sfdxcli)
 2. [VS Code](https://code.visualstudio.com)
 3. [Salesforce Extension Pack for VS Code](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode)
+4. [SFDMU plugin](https://help.sfdmu.com/plugin-basics/basic-usage/installation)
 
 #### In Azure DevOps
 
