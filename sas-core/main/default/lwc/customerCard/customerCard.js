@@ -249,6 +249,7 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
             recordId: this.recordId,
             accountId: account.Id,
             euroBonusNumber: account.FCS_EBNumber__c,
+            euroBonusLevel: account.FCS_EBLevel__c,
             caseId:
               this.objectApiName === "LiveChatTranscript"
                 ? this.caseIdForChats
@@ -281,6 +282,7 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
         accountId: null,
         personContactId: null,
         euroBonusNumber: null,
+        euroBonusLevel: null,
         codsId: null,
         caseId:
           this.objectApiName === "LiveChatTranscript"

@@ -204,6 +204,34 @@ private class Cases_Test {
   }
 
   @IsTest
+  static void creatingACaseWithEuroBonusNumberShouldAssociateItWithAccount() {
+    List<Account> lstAcc = FCS_TestDataFactory.createFrequentFlyers(1);
+    String testEBNumber = '0123456789';
+    lstAcc[0].FCS_EBNumber__c = testEBNumber;
+
+    Test.startTest();
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    insert lstAcc;
+
+    Case c = new Case();
+    c.FCS_EBNumber__c = lstAcc[0].FCS_EBNumber__c;
+
+    insert c;
+
+    Test.stopTest();
+    Case caseAfterInsert = [
+      SELECT AccountId, Id, FCS_EBNumber__c
+      FROM Case
+      WHERE Id = :c.Id
+    ];
+    System.AssertEquals(
+      lstAcc[0].Id,
+      caseAfterInsert.AccountId,
+      'The created case should be related to the account with the same email'
+    );
+  }
+
+  @IsTest
   static void creatingACaseWithEmailShouldAssociateItWithAccount() {
     List<Account> lstAcc = FCS_TestDataFactory.createFrequentFlyers(1);
     String testEBNumber = '0123456789';

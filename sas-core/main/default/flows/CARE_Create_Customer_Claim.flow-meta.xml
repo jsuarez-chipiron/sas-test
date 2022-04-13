@@ -68,7 +68,7 @@
         </defaultConnector>
         <defaultConnectorLabel>Other reprensentative</defaultConnectorLabel>
         <rules>
-            <name>Private_or_corporate_or_travel_agency</name>
+            <name>Private_customer</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Type_of_Customer</leftValueReference>
@@ -77,24 +77,10 @@
                     <stringValue>Private customer</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>Type_of_Customer</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Corporate customer</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Type_of_Customer</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Travel agency</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Create_Customer</targetReference>
             </connector>
-            <label>Private or corporate or travel agency</label>
+            <label>Private customer</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
@@ -611,7 +597,7 @@
                     <leftValueReference>Type_of_Customer</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Other representative</stringValue>
+                        <stringValue>Claim firm</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -628,7 +614,7 @@
                     <leftValueReference>Type_of_Customer</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Other representative</stringValue>
+                        <stringValue>Claim firm</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -719,6 +705,10 @@
                     <fieldText>EuroBonus Number</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;There are 9 numbers in a EuroBonus Number&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!EuroBonus_Number}) = 9</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>Phone</name>
@@ -740,14 +730,14 @@
                             <leftValueReference>Type_of_Customer</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
-                                <stringValue>Corporate customer</stringValue>
+                                <stringValue>Other representative</stringValue>
                             </rightValue>
                         </conditions>
                         <conditions>
                             <leftValueReference>Type_of_Customer</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
-                                <stringValue>Travel agency</stringValue>
+                                <stringValue>Insurance company</stringValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -764,7 +754,14 @@
                             <leftValueReference>Type_of_Customer</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
-                                <stringValue>Corporate customer</stringValue>
+                                <stringValue>Insurance company</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Type_of_Customer</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Other representative</stringValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>

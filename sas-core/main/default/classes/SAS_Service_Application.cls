@@ -17,6 +17,7 @@ public class SAS_Service_Application {
       LIA_Claim__c.SObjectType => ClaimsSelector.class,
       LiveChatTranscript.SObjectType => ChatTranscriptsSelector.class,
       MessagingSession.SObjectType => MessagingSessionsSelector.class,
+      OrgWideEmailAddress.SObjectType => OrgWideEmailAddressesSelector.class,
       Passenger__c.SObjectType => PassengersSelector.class,
       Proactivity__c.SObjectType => ProactivitiesSelector.class,
       Racer_Integration_Counter__c.SObjectType => RacerIntegrationCountersSelector.class,

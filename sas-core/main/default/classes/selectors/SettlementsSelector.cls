@@ -40,6 +40,12 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
     return (List<Settlement__c>) selectSObjectsById(ids);
   }
 
+  public List<Settlement__c> selectByName(Set<String> names) {
+    return (List<Settlement__c>) Database.query(
+      newQueryFactory().setCondition('Name IN :names').toSOQL()
+    );
+  }
+
   public List<Settlement__c> selectByClaimId(Set<Id> claimIds) {
     return (List<Settlement__c>) Database.query(
       newQueryFactory().setCondition('Claim__c IN :claimIds').toSOQL()
@@ -71,13 +77,19 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
     List<String> currencies
   ) {
     String statusToTake = Settlements.STATUS_WAITING_FOR_TRANSFER;
-    Id recordTypeIdToTake = Settlements.getRecordTypeId(
-      Settlements.RecordType.Monetary
+    Set<Id> recordTypeIdsToTake = new Set<Id>();
+
+    recordTypeIdsToTake.add(
+      Settlements.getRecordTypeId(Settlements.RecordType.Cheque)
     );
+    recordTypeIdsToTake.add(
+      Settlements.getRecordTypeId(Settlements.RecordType.Monetary)
+    );
+
     return (List<Settlement__c>) Database.query(
       newQueryFactory()
         .setCondition(
-          'Settlement_Status__c =:statusToTake AND Currency__c in :currencies AND Control_verified__c = true AND RecordTypeId = :recordTypeIdToTake'
+          'Settlement_Status__c =:statusToTake AND Currency__c in :currencies AND Control_verified__c = true AND RecordTypeId IN :recordTypeIdsToTake'
         )
         .toSOQL()
     );

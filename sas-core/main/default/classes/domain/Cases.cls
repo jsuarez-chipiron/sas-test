@@ -281,27 +281,28 @@ public without sharing class Cases extends fflib_SObjectDomain {
   }
 
   /**
-   * If an account with the same email address as the case's SuppliedEmail
-   * exists in Salesforce, associates the case with the account.
+   * Prefer to search by EuroBonus number for cases where this can be entered directly such as Turi or Forms on sas.xx.
+   * Search by email address for cases where EuroBonus number is unavailable such as Email-To-Case.
+   * If the account exists in Salesforce, associate the case with the account.
    */
   private void tryToAssignExistingEBAccountToCase() {
     if (
       instanceRecords.size() > 1 ||
-      String.isBlank(instanceRecords[0].SuppliedEmail)
+      (String.isBlank(instanceRecords[0].SuppliedEmail) &&
+      String.isBlank(instanceRecords[0].FCS_EBNumber__c))
     ) {
       // At the time of writing CODS didn't support searching with more than one key
       // at a time so we can't reasonably support batch operations.
       return;
     }
     Case c = instanceRecords[0];
+    AccountsSelector accs = AccountsSelector.newInstance();
 
-    List<Account> accountsFromDB = [
-      SELECT Id, FCS_EBLevel__c, FCS_EBNumber__c
-      FROM Account
-      WHERE PersonEmail = :c.SuppliedEmail AND isPersonAccount = TRUE
-    ];
+    List<Account> accountsFromDB = !String.isBlank(c.FCS_EBNumber__c)
+      ? accs.selectByEuroBonusNumber(new Set<String>{ c.FCS_EBNumber__c })
+      : accs.selectByEmail(new Set<String>{ c.SuppliedEmail });
 
-    if (accountsFromDB.size() == 1) {
+    if (accountsFromDB?.size() == 1) {
       assignAccountToCase(accountsFromDB[0], c);
     }
   }
@@ -309,17 +310,30 @@ public without sharing class Cases extends fflib_SObjectDomain {
   /**
    * Tries to fetch a EuroBonus account for the cases from CODS if the case doesn't
    * already have an associated account.
+   *
+   * Prefer to search by EuroBonus number for cases where this can be entered directly such as Turi or Forms on sas.xx.
+   * Search by email address for cases where EuroBonus number is unavailable such as Email-To-Case.
    */
   private void tryToFetchEBAccountFromCODS() {
-    if (instanceRecords.size() > 1) {
+    if (
+      instanceRecords.size() > 1 ||
+      (String.isBlank(instanceRecords[0].SuppliedEmail) &&
+      String.isBlank(instanceRecords[0].FCS_EBNumber__c))
+    ) {
       // At the time of writing CODS didn't support searching with more than one key
       // at a time so we can't reasonably support batch operations.
       return;
     }
     Case c = instanceRecords[0];
 
-    if (c.accountId == null && !String.isBlank(c.SuppliedEmail)) {
-      findEuroBonusAccount(c.Id, c.SuppliedEmail);
+    if (c.accountId == null) {
+      String searchField = !String.isBlank(c.FCS_EBNumber__c)
+        ? 'FCS_EBNumber__c'
+        : 'EmailPersonal__c';
+      String searchValue = !String.isBlank(c.FCS_EBNumber__c)
+        ? c.FCS_EBNumber__c
+        : c.SuppliedEmail;
+      findEuroBonusAccount(c.Id, searchField, searchValue);
     }
   }
 
@@ -332,10 +346,14 @@ public without sharing class Cases extends fflib_SObjectDomain {
    * @param email Email to search with.
    */
   @future(callout=true)
-  public static void findEuroBonusAccount(Id caseId, String email) {
+  public static void findEuroBonusAccount(
+    Id caseId,
+    String searchField,
+    String searchValue
+  ) {
     Account acc = FCS_IdentifyCustomerController.findCustomer(
-      'EmailPersonal__c',
-      email
+      searchField,
+      searchValue
     );
 
     if (acc != null) {
@@ -673,7 +691,14 @@ public without sharing class Cases extends fflib_SObjectDomain {
         try {
           fflib_ISObjectUnitOfWork uowTry = SAS_Service_Application.UnitOfWork.newInstance();
           Messaging.SingleEmailMessage emailToSend = new Messaging.SingleEmailMessage();
-          emailToSend.setSenderDisplayName(existingDraftEmail.FromAddress);
+          //Set From Address No-Reply address if it exists, else send email using the running user.
+          List<OrgWideEmailAddress> owa = OrgWideEmailAddressesSelector.newInstance()
+            .selectPrimary();
+          if (owa.size() == 1) {
+            emailToSend.setOrgWideEmailAddressId(owa[0].Id);
+          } else {
+            emailToSend.setSenderDisplayName(existingDraftEmail.FromAddress);
+          }
           emailToSend.setToAddresses(existingDraftEmail.ToAddress.split(';'));
           emailToSend.setReplyTo(existingDraftEmail.FromAddress);
           if (existingDraftEmail.CcAddress != null) {
@@ -684,7 +709,11 @@ public without sharing class Cases extends fflib_SObjectDomain {
               existingDraftEmail.BccAddress.split(';')
             );
           }
-          emailToSend.setSubject(existingDraftEmail.Subject);
+          // Add Thread ID if case was created manually.
+          String newSubject = c.Origin == 'Manual'
+            ? existingDraftEmail.Subject + ' ' + getThreadId(c.Id)
+            : existingDraftEmail.Subject;
+          emailToSend.setSubject(newSubject);
           emailToSend.setHtmlBody(existingDraftEmail.HtmlBody);
           emailToSend.setPlainTextBody(existingDraftEmail.TextBody);
           emailToSend.setSaveAsActivity(true);
@@ -729,6 +758,16 @@ public without sharing class Cases extends fflib_SObjectDomain {
         notification.send(new Set<String>{ c.OwnerId });
       }
     }
+  }
+
+  private static String getThreadId(String caseId) {
+    return 'ref:_' +
+      UserInfo.getOrganizationId().left(5) +
+      UserInfo.getOrganizationId().mid(11, 4) +
+      '._' +
+      caseId.left(5) +
+      caseId.mid(10, 5) +
+      ':ref';
   }
 
   /**

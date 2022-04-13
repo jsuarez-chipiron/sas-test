@@ -4,7 +4,7 @@
     <description>Beneficiary of the settlement</description>
     <externalId>false</externalId>
     <label>Payee Name</label>
-    <length>50</length>
+    <length>60</length>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>

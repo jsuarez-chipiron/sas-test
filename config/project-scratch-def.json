@@ -97,7 +97,8 @@
       "enableNameSuffix": true
     },
     "omniChannelSettings": {
-      "enableOmniChannel": true
+      "enableOmniChannel": true,
+      "enableOmniSecondaryRoutingPriority": true
     },
     "liveMessageSettings": {
       "enableLiveMessage": true

@@ -23,12 +23,14 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   private List<Settlement__c> instanceRecords;
 
   public enum RecordType {
+    Cheque,
     EBPoints,
     Monetary,
     Voucher
   }
 
   public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
+    RecordType.Cheque => 'Cheque',
     RecordType.EBPoints => 'EB points',
     RecordType.Monetary => 'Monetary',
     RecordType.Voucher => 'Voucher'
@@ -99,11 +101,20 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     String paymentFilename,
     fflib_ISObjectUnitOfWork uow
   ) {
+    Set<Id> settlementIds = new Set<Id>();
     for (Settlement__c s : instanceRecords) {
       s.Payment_File_Name__c = paymentFilename;
       s.Settlement_Status__c = STATUS_SENT_TO_RACER;
       uow.registerDirty(s);
+      settlementIds.add(s.Id);
     }
+
+    List<Settlement_Item__c> correspondingSettlements = settlementItemsSel.selectBySettlementIds(
+      settlementIds
+    );
+
+    SettlementItems.newInstance(correspondingSettlements)
+      .markAsPendingL1Confirmation(uow);
   }
 
   public void markAsReceivedByBank(String bankStatus, String errorMessage) {
@@ -179,28 +190,52 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     }
   }
 
-  public void markAsFailedPayment(String errorMessage) {
+  public void markAsFailedPayment(
+    Map<Id, String> settlementIdsToErrorMessages
+  ) {
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    markAsFailedPayment(errorMessage, uow);
+    markAsFailedPayment(settlementIdsToErrorMessages, uow);
     uow.commitWork();
   }
 
+  /**
+   * Marks the given settlements as failed due to an L2 failure.
+   *
+   * If a settlement fails at L2 level, it should not be reprocessed. Instead a
+   * new settlement needs to be created.
+   *
+   * Settlement items should be changed to "Settlement failed" status if they
+   * are still in Draft status.
+   *
+   * Expected to be used when we receive an L2 file from Racer.
+   */
   public void markAsFailedPayment(
-    String errorMessage,
+    Map<Id, String> settlementIdsToErrorMessages,
     fflib_ISObjectUnitOfWork uow
   ) {
     for (Settlement__c s : instanceRecords) {
       s.Settlement_Status__c = STATUS_FAILED;
-      s.Error_Message__c = errorMessage;
+      s.Error_Message__c = settlementIdsToErrorMessages.get(s.Id);
       uow.registerDirty(s);
+
+      C_Log.log(
+        C_Log.Severity.Warning,
+        'Settlement ' +
+        s.Name +
+        ' was rejected by bank with error: ' +
+        settlementIdsToErrorMessages.get(s.Id),
+        null,
+        'Settlements',
+        null
+      );
     }
-    C_Log.log(
-      C_Log.Severity.Error,
-      'Rejected by bank with error: ' + errorMessage,
-      null,
-      'Settlements',
-      null
+
+    List<Settlement_Item__c> correspondingSettlementItems = settlementItemsSel.selectBySettlementIds(
+      settlementIdsToErrorMessages.keySet()
     );
+
+    SettlementItems.newInstance(correspondingSettlementItems)
+      .markAsSettlementFailed(uow);
   }
 
   public void markAsDone(String reference) {
@@ -269,8 +304,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   /**
    * Updates the list of settlement items for this settlement. Upserts the
-   * given items and removes all settlement items not list in the given
-   * items.
+   * given items and removes all settlement items related to the settlement,
+   * but not included in the given items.
    *
    * Also updates the settlement total and currency conversion calculations.
    *

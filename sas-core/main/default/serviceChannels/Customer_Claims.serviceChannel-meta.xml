@@ -3,4 +3,13 @@
     <doesMinimizeWidgetOnAccept>false</doesMinimizeWidgetOnAccept>
     <label>Customer Claims</label>
     <relatedEntityType>Case</relatedEntityType>
+    <secondaryRoutingPriorityField>Priority</secondaryRoutingPriorityField>
+    <serviceChannelFieldPriorities>
+        <priority>1</priority>
+        <value>High</value>
+    </serviceChannelFieldPriorities>
+    <serviceChannelFieldPriorities>
+        <priority>2</priority>
+        <value>Medium</value>
+    </serviceChannelFieldPriorities>
 </ServiceChannel>

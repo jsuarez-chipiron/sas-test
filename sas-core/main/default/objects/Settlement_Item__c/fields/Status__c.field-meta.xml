@@ -41,6 +41,11 @@
                 <default>false</default>
                 <label>Done</label>
             </value>
+            <value>
+                <fullName>Settlement failed</fullName>
+                <default>false</default>
+                <label>Settlement failed</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

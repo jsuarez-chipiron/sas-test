@@ -7,12 +7,19 @@ public inherited sharing class AccountsSelector extends fflib_SObjectSelector {
       Account.FCS_EBLevel__c,
       Account.FCS_EBNumber__c,
       Account.FCS_TPAccountNumber__c,
-      Account.IsPersonAccount
+      Account.IsPersonAccount,
+      Account.PersonEmail
     };
   }
 
   public Schema.SObjectType getSObjectType() {
     return Account.SObjectType;
+  }
+
+  public static AccountsSelector newInstance() {
+    return (AccountsSelector) SAS_Service_Application.Selector.newInstance(
+      Account.SObjectType
+    );
   }
 
   public List<Account> selectById(Set<Id> ids) {
@@ -24,6 +31,12 @@ public inherited sharing class AccountsSelector extends fflib_SObjectSelector {
       newQueryFactory()
         .setCondition('FCS_EBNumber__c in :euroBonusNumbers')
         .toSOQL()
+    );
+  }
+
+  public List<Account> selectByEmail(Set<String> emails) {
+    return (List<Account>) Database.query(
+      newQueryFactory().setCondition('PersonEmail in :emails').toSOQL()
     );
   }
 

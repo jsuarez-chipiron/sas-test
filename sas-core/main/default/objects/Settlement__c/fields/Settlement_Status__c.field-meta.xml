@@ -72,6 +72,11 @@
                 <label>Failed</label>
             </value>
             <value>
+                <fullName>Failed - Processed</fullName>
+                <default>false</default>
+                <label>Failed - Processed</label>
+            </value>
+            <value>
                 <fullName>Done</fullName>
                 <default>false</default>
                 <label>Done</label>

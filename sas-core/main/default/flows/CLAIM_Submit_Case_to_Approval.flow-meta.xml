@@ -2,10 +2,35 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>51.0</apiVersion>
     <decisions>
+        <name>Are_all_Settlements_valid</name>
+        <label>Are all Settlements valid?</label>
+        <locationX>710</locationX>
+        <locationY>1550</locationY>
+        <defaultConnector>
+            <targetReference>errorScreenInvalidSettlements</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ValidSettlements</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>numberOfInvalidSettlements</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>submitScreen</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Case_can_be_submitted_for_Approval</name>
         <label>Case can be submitted for Approval</label>
         <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationY>1190</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>No_email_draft_exists</name>
@@ -17,25 +42,17 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>errorScreen_0_0_0</targetReference>
-            </connector>
-            <label>No email draft exists</label>
-        </rules>
-        <rules>
-            <name>Invalid_Settlements_exist</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>numberOfInvalidSettlements</leftValueReference>
-                <operator>GreaterThan</operator>
+                <leftValueReference>Get_Case_Information.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <numberValue>0.0</numberValue>
+                    <stringValue>Customer_Claim</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>errorScreen_0_0</targetReference>
+                <targetReference>errorScreenEmail</targetReference>
             </connector>
-            <label>Invalid Settlements exist</label>
+            <label>No email draft exists</label>
         </rules>
         <rules>
             <name>No_Settlements_to_approve</name>
@@ -48,7 +65,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>errorScreen_0</targetReference>
+                <targetReference>errorScreenNoSettlements</targetReference>
             </connector>
             <label>No Settlements to approve</label>
         </rules>
@@ -69,19 +86,100 @@
                     <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>numberOfInvalidSettlements</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>0.0</numberValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>submitScreen</targetReference>
+                <targetReference>Get_Settlements_for_this_Case</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Customer_Claim_Or_Liability_Claim</name>
+        <label>Customer Claim Or Liability Claim?</label>
+        <locationX>578</locationX>
+        <locationY>278</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Customer_Claim</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Information.Department__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Claim</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Email_Draft_for_this_Case</targetReference>
+            </connector>
+            <label>Customer Claim</label>
+        </rules>
+        <rules>
+            <name>Liability_Claim</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Information.Department__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Liability</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Claim_Information</targetReference>
+            </connector>
+            <label>Liability Claim</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_the_claim_result_valid</name>
+        <label>Is the claim result valid?</label>
+        <locationX>578</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>InvalidResult</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Invalid</defaultConnectorLabel>
+        <rules>
+            <name>Valid</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Claim_Information.Result__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Negative</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Claim_Information.Result__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Partly</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Claim_Information.Result__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Settlement</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Claim_Information.Result__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Default judgment</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_has_Settlements_to_approve</targetReference>
+            </connector>
+            <label>Valid</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>resultText</name>
+        <dataType>String</dataType>
+        <expression>IF(ISPICKVAL({!Get_Claim_Information.Result__c}, &quot;&quot;), &quot;blank&quot;, TEXT({!Get_Claim_Information.Result__c}) )</expression>
+    </formulas>
     <interviewLabel>CLAIM Submit Case to Approval {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CLAIM Submit Case to Approval</label>
     <processMetadataValues>
@@ -110,7 +208,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Email_Draft_for_this_Case</targetReference>
+            <targetReference>Customer_Claim_Or_Liability_Claim</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -125,10 +223,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Claim_Information</name>
+        <label>Get Claim Information</label>
+        <locationX>578</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_the_claim_result_valid</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case_Information.LIA_Claim__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>LIA_Claim__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Email_Draft_for_this_Case</name>
         <label>Get Email Draft for this Case</label>
-        <locationX>578</locationX>
-        <locationY>278</locationY>
+        <locationX>226</locationX>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_has_Settlements_to_approve</targetReference>
@@ -152,11 +271,39 @@
         <object>EmailMessage</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Settlements_for_this_Case</name>
+        <label>Get Settlements for this Case</label>
+        <locationX>710</locationX>
+        <locationY>1310</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Validate_Settlements</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Claim__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case_Information.LIA_Claim__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Settlement_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>In progress</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Settlement__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Update_Case_Status</name>
         <label>Update Case Status</label>
-        <locationX>842</locationX>
-        <locationY>758</locationY>
+        <locationX>578</locationX>
+        <locationY>1790</locationY>
         <connector>
             <targetReference>Update_Settlements_for_this_Case</targetReference>
         </connector>
@@ -185,8 +332,8 @@
     <recordUpdates>
         <name>Update_Settlements_for_this_Case</name>
         <label>Update Settlements for this Case</label>
-        <locationX>842</locationX>
-        <locationY>878</locationY>
+        <locationX>578</locationX>
+        <locationY>1910</locationY>
         <connector>
             <targetReference>Send_Case_to_Approval</targetReference>
         </connector>
@@ -221,13 +368,45 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
-        <name>errorScreen_0</name>
+        <name>errorScreenEmail</name>
         <label>Error Screen</label>
-        <locationX>578</locationX>
-        <locationY>638</locationY>
-        <allowBack>true</allowBack>
+        <locationX>50</locationX>
+        <locationY>1310</locationY>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>errorMessageNoDraftEmail</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;This case could not be submitted for approval as there is no associated draft email.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Please draft an email and submit this case again.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>errorScreenInvalidSettlements</name>
+        <label>Error Screen</label>
+        <locationX>842</locationX>
+        <locationY>1670</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>errorMessageInvalidSettlements</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;This case could not be submitted for approval as {!numberOfInvalidSettlements} settlement(s) is missing required information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Settlements missing information: {!invalidSettlements}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Please review all the settlements and submit this case again.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>errorScreenNoSettlements</name>
+        <label>Error Screen</label>
+        <locationX>314</locationX>
+        <locationY>1310</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
         <fields>
             <name>errorMessageNoSettlements</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;This case could not be submitted to Approval as it does not contain any settlements that need approval.&lt;/span&gt;&lt;/p&gt;</fieldText>
@@ -237,32 +416,16 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>errorScreen_0_0</name>
-        <label>Error Screen</label>
-        <locationX>314</locationX>
+        <name>InvalidResult</name>
+        <label>InvalidResult</label>
+        <locationX>666</locationX>
         <locationY>638</locationY>
-        <allowBack>true</allowBack>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
         <fields>
-            <name>errorMessageInvalidSettlements</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;This case could not be submitted for approval as {!numberOfInvalidSettlements} settlement(s) is missing required information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Settlements missing information: {!invalidSettlementsInformation}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Please review all the settlements and submit this case again.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>errorScreen_0_0_0</name>
-        <label>Error Screen</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>errorMessageInvalidSettlements_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;This case could not be submitted for approval as there is no associated draft email.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Please draft an email and submit this case again.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>InvalidMessage</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Liability Claim {!Get_Claim_Information.Name}&apos;s result is &quot;{!resultText}&quot; . This result is not a valid for submitting a case to approval.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -271,11 +434,11 @@
     <screens>
         <name>submitScreen</name>
         <label>Submit Screen</label>
-        <locationX>842</locationX>
-        <locationY>638</locationY>
-        <allowBack>true</allowBack>
+        <locationX>578</locationX>
+        <locationY>1670</locationY>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
         <connector>
             <targetReference>Update_Case_Status</targetReference>
         </connector>
@@ -299,7 +462,7 @@
         <name>Case_has_Settlements_to_approve</name>
         <label>Case has Settlements to approve</label>
         <locationX>578</locationX>
-        <locationY>398</locationY>
+        <locationY>1070</locationY>
         <connector>
             <targetReference>Case_can_be_submitted_for_Approval</targetReference>
         </connector>
@@ -311,29 +474,11 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>shouldValidateSettlements</name>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <name>statusToCheck</name>
             <value>
                 <stringValue>In progress</stringValue>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>invalidSettlementsInformation</assignToReference>
-            <name>invalidSettlementInformation</name>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>invalidSettlements</assignToReference>
-            <name>invalidSettlements</name>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>numberOfInvalidSettlements</assignToReference>
-            <name>numberOfInvalidSettlements</name>
-        </outputAssignments>
         <outputAssignments>
             <assignToReference>numberOfSettlementsNeedingApproval</assignToReference>
             <name>numberOfSettlementsInStatus</name>
@@ -342,8 +487,8 @@
     <subflows>
         <name>Send_Case_to_Approval</name>
         <label>Send Case to Approval</label>
-        <locationX>842</locationX>
-        <locationY>998</locationY>
+        <locationX>578</locationX>
+        <locationY>2030</locationY>
         <flowName>CLAIM_Case_Approval_Handler</flowName>
         <inputAssignments>
             <name>incomingCaseRecord</name>
@@ -353,15 +498,32 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <subflows>
+        <name>Validate_Settlements</name>
+        <label>Validate Settlements</label>
+        <locationX>710</locationX>
+        <locationY>1430</locationY>
+        <connector>
+            <targetReference>Are_all_Settlements_valid</targetReference>
+        </connector>
+        <flowName>UTIL_Validate_Settlements</flowName>
+        <inputAssignments>
+            <name>settlementsToValidate</name>
+            <value>
+                <elementReference>Get_Settlements_for_this_Case</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>invalidSettlements</assignToReference>
+            <name>invalidSettlements</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>numberOfInvalidSettlements</assignToReference>
+            <name>numberOfInvalidSettlements</name>
+        </outputAssignments>
+    </subflows>
     <variables>
         <name>invalidSettlements</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>invalidSettlementsInformation</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
