@@ -2846,11 +2846,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>LIA_Claim__c.LIA_Firm__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>LIA_Claim__c.LIA_Major_Event__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -2953,41 +2948,6 @@
         <editable>true</editable>
         <field>Knowledge__kav.FCS_Type__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-     <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Bank_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>     
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.BIC__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Comments_About_Firm__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Country__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.IBAN__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Phone__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -3320,9 +3280,6 @@
     <layoutAssignments>
         <layout>Knowledge__kav-SAS SSI Layout</layout>
         <recordType>Knowledge__kav.SSI</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>LIA_Firm__c-Legal Firm Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>LiveChatTranscript-Chat Transcript Layout</layout>
@@ -3704,10 +3661,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>FCS_CaseTag__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>LIA_Firm__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
