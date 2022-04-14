@@ -1526,11 +1526,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>LIA_Claim__c.LIA_Firm__c</field>
-        <readable>false</readable>
-    </fieldPermissions> 
-    <fieldPermissions>
-        <editable>false</editable>
         <field>LIA_Claim__c.LIA_Major_Event__c</field>
         <readable>false</readable>
     </fieldPermissions>       
@@ -1869,41 +1864,6 @@
         <field>Knowledge__kav.FCS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
-     <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Bank_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>            
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.BIC__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Comments_About_Firm__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Country__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.IBAN__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Phone__c</field>
-        <readable>false</readable>
-    </fieldPermissions>    
     <fieldPermissions>
         <editable>true</editable>
         <field>LiveChatTranscript.FCS_CODSId__c</field>
@@ -2657,9 +2617,6 @@
         <recordType>Knowledge__kav.SSI</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>LIA_Firm__c-Legal Firm Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>LiveChatTranscript-Chat Transcript Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -2824,15 +2781,6 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>LIA_Claim__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-	<objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>LIA_Firm__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
 	<objectPermissions>
@@ -3068,10 +3016,6 @@
         <tab>Group_Travel_Request__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities> 
-    <tabVisibilities>
-        <tab>LIA_Firm__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
     <tabVisibilities>
         <tab>LIA_Major_Event__c</tab>
         <visibility>Hidden</visibility>

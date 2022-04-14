@@ -3040,11 +3040,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>LIA_Claim__c.LIA_Firm__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>LIA_Claim__c.LIA_Major_Event__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -3121,41 +3116,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Voucher_Compensation__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.BIC__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Bank_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Comments_About_Firm__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Country__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.IBAN__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Phone__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3641,9 +3601,6 @@
         <recordType>LIA_Claim__c.LiabilityClaim</recordType>
     </layoutAssignments>    
     <layoutAssignments>
-        <layout>LIA_Firm__c-Legal Firm Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>LIA_Major_Event__c-Major Event Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -3820,15 +3777,6 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>LIA_Firm__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>Refund_Request__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
@@ -3978,10 +3926,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>LIA_Claim__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>LIA_Firm__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
