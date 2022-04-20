@@ -21,6 +21,7 @@ public inherited sharing class FlightsSelector extends fflib_SObjectSelector {
       Flight__c.Estimated_Arrival_Time_Local__c,
       Flight__c.Estimated_Departure_Time__c,
       Flight__c.Estimated_Departure_Time_Local__c,
+      Flight__c.Operating_Carrier__c,
       Flight__c.Scheduled_Arrival_Time__c,
       Flight__c.Scheduled_Arrival_Time_Local__c,
       Flight__c.Scheduled_Departure_Time__c,
@@ -33,6 +34,12 @@ public inherited sharing class FlightsSelector extends fflib_SObjectSelector {
     return Flight__c.SObjectType;
   }
 
+  public static FlightsSelector newInstance() {
+    return (FlightsSelector) SAS_Service_Application.Selector.newInstance(
+      Flight__c.SObjectType
+    );
+  }
+
   public List<Flight__c> selectById(Set<Id> ids) {
     return (List<Flight__c>) selectSObjectsById(ids);
   }
@@ -41,6 +48,28 @@ public inherited sharing class FlightsSelector extends fflib_SObjectSelector {
     return (List<Flight__c>) Database.query(
       newQueryFactory().setCondition('TEDS_Identifier__c = :flightIds').toSOQL()
     );
+  }
+
+  /**
+   * Selects all flights linked to the given bookings through segments.
+   */
+  public List<Flight__c> selectByBookingIds(Set<Id> bookingIds) {
+    List<Booking__c> bookings = BookingsSelector.newInstance()
+      .selectByIdFull(bookingIds);
+
+    if (bookings == null || bookings.size() == 0) {
+      return new List<Flight__c>();
+    }
+
+    Set<Id> flightIds = new Set<Id>();
+
+    for (Booking__c booking : bookings) {
+      for (Segment__c segment : booking.Segments__r) {
+        flightIds.add(segment.Flight__c);
+      }
+    }
+
+    return selectById(flightIds);
   }
 
   public override String getOrderBy() {

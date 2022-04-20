@@ -13,7 +13,7 @@
         <controllingField>Department__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>Baggage</fullName>
                 <default>false</default>
@@ -43,6 +43,11 @@
                 <fullName>Digital Channel</fullName>
                 <default>false</default>
                 <label>Digital Channel</label>
+            </value>
+            <value>
+                <fullName>Error</fullName>
+                <default>false</default>
+                <label>Error</label>
             </value>
             <value>
                 <fullName>Error Handling</fullName>
@@ -98,6 +103,11 @@
                 <fullName>Plusgrade</fullName>
                 <default>false</default>
                 <label>Plusgrade</label>
+            </value>
+            <value>
+                <fullName>Proration</fullName>
+                <default>false</default>
+                <label>Proration</label>
             </value>
             <value>
                 <fullName>Puzzle</fullName>
@@ -159,15 +169,28 @@
                 <default>false</default>
                 <label>Voucher Handling</label>
             </value>
-            <value>
-                <fullName>Error</fullName>
-                <default>false</default>
-                <label>Error</label>
-            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Info Hub</controllingFieldValue>
             <valueName>Content</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
+            <controllingFieldValue>Sales Control BOM</controllingFieldValue>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Care</controllingFieldValue>
+            <controllingFieldValue>Corporate</controllingFieldValue>
+            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
+            <controllingFieldValue>Direct Sales</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Fraud</controllingFieldValue>
+            <controllingFieldValue>Functional Product Support</controllingFieldValue>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Error</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
@@ -188,24 +211,6 @@
             <controllingFieldValue>Refunds</controllingFieldValue>
             <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
             <valueName>Voucher Handling</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Refunds</controllingFieldValue>
-            <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
-            <controllingFieldValue>Sales Control BOM</controllingFieldValue>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>Customer Claim</controllingFieldValue>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <controllingFieldValue>Care</controllingFieldValue>
-            <controllingFieldValue>Corporate</controllingFieldValue>
-            <controllingFieldValue>Digital Channel Support</controllingFieldValue>
-            <controllingFieldValue>Direct Sales</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>Fraud</controllingFieldValue>
-            <controllingFieldValue>Functional Product Support</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Error</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sales Control BOM</controllingFieldValue>
@@ -327,6 +332,10 @@
         <valueSettings>
             <controllingFieldValue>Customer Claim</controllingFieldValue>
             <valueName>Customer Feedback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <valueName>Proration</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>

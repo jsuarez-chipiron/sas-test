@@ -16,6 +16,12 @@ public inherited sharing class BookingsSelector extends fflib_SObjectSelector {
     return Booking__c.SObjectType;
   }
 
+  public static BookingsSelector newInstance() {
+    return (BookingsSelector) SAS_Service_Application.Selector.newInstance(
+      Booking__c.SObjectType
+    );
+  }
+
   public List<Booking__c> selectById(Set<Id> ids) {
     return (List<Booking__c>) selectSObjectsById(ids);
   }
