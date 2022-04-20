@@ -40,7 +40,7 @@
             <assignToReference>invalidSettlements</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Validate_each_Settlement.Id</elementReference>
+                <elementReference>Validate_each_Settlement.Name</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -63,7 +63,7 @@
             <assignToReference>invalidSettlements</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Validate_each_Settlement.Id</elementReference>
+                <elementReference>Validate_each_Settlement.Name</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -154,6 +154,20 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.Amount__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.Amount__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Validate_each_Settlement</targetReference>
             </connector>
@@ -186,6 +200,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.EuroBonus_Points__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Validate_each_Settlement</targetReference>
             </connector>
@@ -203,7 +224,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Valid_Monetary</name>
-            <conditionLogic>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND ((7 AND 8 AND 9 AND 10 AND 11) OR 12)</conditionLogic>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND ((7 AND 8 AND 9 AND 10 AND 11) OR 12) AND 13 AND 14</conditionLogic>
             <conditions>
                 <leftValueReference>Validate_each_Settlement.Bank_Account_Number__c</leftValueReference>
                 <operator>IsNull</operator>
@@ -288,6 +309,20 @@
                     <stringValue>Private customer</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.Amount__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.Amount__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Validate_each_Settlement</targetReference>
             </connector>
@@ -339,6 +374,13 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Validate_each_Settlement.Amount__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
