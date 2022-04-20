@@ -325,6 +325,30 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>lookupFieldName</name>
+                    <value>Case.ParentId</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>titleFieldName</name>
+                    <value>Claim Case</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>updateQuickActionName</name>
+                    <value>Case.Case_Details_for_Chat</value>
+                </componentInstanceProperties>
+                <componentName>console:relatedRecord</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Proration</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>lookupFieldName</name>
                     <value>Case.Special_Service_Request__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
