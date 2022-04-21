@@ -7,7 +7,7 @@
         <choiceText>--None--</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue/>
+            <stringValue></stringValue>
         </value>
     </choices>
     <decisions>
@@ -870,14 +870,14 @@
                     <dataType>String</dataType>
                     <fieldText>First Name</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                 </fields>
                 <fields>
                     <name>Last_Name</name>
                     <dataType>String</dataType>
                     <fieldText>Last Name</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                 </fields>
                 <fields>
                     <name>Email</name>
@@ -991,7 +991,7 @@
                     <dataType>String</dataType>
                     <fieldText>Country</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1014,6 +1014,13 @@
             <fields>
                 <name>New_Liability_Claim_Section6_Column1</name>
                 <fieldType>Region</fieldType>
+                <fields>
+                    <name>Bank_Account_Holder_Name</name>
+                    <dataType>String</dataType>
+                    <fieldText>Bank Account Holder Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
                 <fields>
                     <name>Bank_Name</name>
                     <dataType>String</dataType>
@@ -1084,13 +1091,6 @@
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
-                <fields>
-                    <name>Bank_Account_Holder_Name</name>
-                    <dataType>String</dataType>
-                    <fieldText>Bank Account Holder Name</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
@@ -1127,7 +1127,7 @@
             <targetReference>GetCaseInfo</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <description>Case Id when the flow is called from</description>
         <name>recordId</name>
