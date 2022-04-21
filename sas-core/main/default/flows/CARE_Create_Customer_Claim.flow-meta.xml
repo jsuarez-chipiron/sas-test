@@ -199,6 +199,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Bank_Account_Holder_Name__c</field>
+            <value>
+                <elementReference>Bank_Account_Holder_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Bank_Account_Number__c</field>
             <value>
                 <elementReference>Bank_Account_Number</elementReference>
@@ -357,7 +363,7 @@
         <inputAssignments>
             <field>Purchase_Price__c</field>
             <value>
-                <elementReference>Purchase_price</elementReference>
+                <elementReference>Purchase_Price</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -904,6 +910,13 @@
                 <name>Customer_Care_Creation_Section5_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
+                    <name>Bank_Account_Holder_Name</name>
+                    <dataType>String</dataType>
+                    <fieldText>Bank Account Holder Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
                     <name>Bank_Name</name>
                     <dataType>String</dataType>
                     <fieldText>Bank Name</fieldText>
@@ -1023,9 +1036,9 @@
                 <name>Customer_Care_Creation_Section6_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Purchase_price</name>
+                    <name>Purchase_Price</name>
                     <dataType>Number</dataType>
-                    <fieldText>Purchase price</fieldText>
+                    <fieldText>Purchase Price</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
@@ -1125,7 +1138,7 @@
             <targetReference>Customer_Claim_Message</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
