@@ -465,6 +465,11 @@
                 <label>Premium Corporate Support</label>
             </value>
             <value>
+                <fullName>Proration</fullName>
+                <default>false</default>
+                <label>Proration</label>
+            </value>
+            <value>
                 <fullName>RU</fullName>
                 <default>false</default>
                 <label>RU</label>
@@ -866,6 +871,10 @@
         <valueSettings>
             <controllingFieldValue>Customer Claim</controllingFieldValue>
             <valueName>Language</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <valueName>Proration</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>

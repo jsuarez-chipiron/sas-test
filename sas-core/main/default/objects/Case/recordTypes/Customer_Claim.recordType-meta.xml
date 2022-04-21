@@ -2616,6 +2616,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Proration</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Puzzle</fullName>
             <default>false</default>
         </values>
@@ -3783,6 +3787,10 @@
         </values>
         <values>
             <fullName>Language</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proration</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -245,10 +245,16 @@
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Origin}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Internal - Support</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Proration</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -311,6 +317,30 @@
                         <leftValue>{!Record.Department__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Refunds</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>lookupFieldName</name>
+                    <value>Case.ParentId</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>titleFieldName</name>
+                    <value>Claim Case</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>updateQuickActionName</name>
+                    <value>Case.Case_Details_for_Chat</value>
+                </componentInstanceProperties>
+                <componentName>console:relatedRecord</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Proration</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -584,21 +614,41 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Proration</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>caseBookingDetails</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Proration</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>customerCard</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Department__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Info Hub</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Team__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Proration</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

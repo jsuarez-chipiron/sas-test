@@ -157,6 +157,7 @@ public without sharing class FlightService {
           Estimated_Arrival_Time_Local__c = estimatedArrivalDateLocal,
           Estimated_Departure_Time__c = estimatedDepartureDate,
           Estimated_Departure_Time_Local__c = estimatedDepartureDateLocal,
+          Operating_Carrier__c = flight.carrier, // The carrier field from TEDS should always contain the operating carrier
           Scheduled_Arrival_Time__c = scheduledArrivalDate,
           Scheduled_Arrival_Time_Local__c = scheduledArrivalDateLocal,
           Scheduled_Departure_Time__c = scheduledDepartureDate,

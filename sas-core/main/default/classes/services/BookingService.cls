@@ -279,6 +279,7 @@ public without sharing class BookingService {
               Name = flightId,
               Arrival_Airport__c = segmentTrip.flight.arrival.station,
               Departure_Airport__c = segmentTrip.flight.departure.station,
+              Operating_Carrier__c = segmentTrip.flight.operatingCarrier,
               Scheduled_Arrival_Time__c = arrivalDate,
               Scheduled_Arrival_Time_Local__c = scheduledArrivalDateLocal,
               Scheduled_Departure_Time__c = departureDate,

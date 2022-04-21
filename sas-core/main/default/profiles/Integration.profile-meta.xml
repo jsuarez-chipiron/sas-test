@@ -1270,6 +1270,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Flight__c.Operating_Carrier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Flight__c.Scheduled_Arrival_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>

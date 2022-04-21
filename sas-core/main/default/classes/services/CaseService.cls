@@ -191,4 +191,43 @@ public without sharing class CaseService {
       return insertedCase.CaseNumber;
     }
   }
+
+  /**
+   * Creates a support case for the given case.
+   *
+   * @param department To which department the case should be created to.
+   * @param team To which team within the department the case should be created to.
+   * @param caseToCreate The case object which is to be created. No fields need to be set by default.
+   * @param parentCaseId Id of the case for which this support case is created.
+   * @param uow Unit of work instance with which the case should be created.
+   */
+  public static void createSupportCase(
+    String department,
+    String team,
+    Case caseToCreate,
+    Id parentCaseId,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    caseToCreate.Department__c = department;
+    caseToCreate.Team__c = team;
+    caseToCreate.Origin = 'Internal - Support';
+    caseToCreate.ParentId = parentCaseId;
+    caseToCreate.OwnerId = GroupsSelector.newInstance()
+        .selectQueuesByDepartment(new Set<String>{ department })[0]
+      .Id;
+    if (caseToCreate.RecordTypeId == null) {
+      // If no record type is set, default to department's default record type.
+      caseToCreate.RecordTypeId = Cases.getRecordTypeId(
+        Cases.defaultRecordTypeForDepartment.get(department)
+      );
+    }
+
+    uow.registerNew(caseToCreate);
+
+    Case parentCase = CasesSelector.newInstance()
+      .selectById(new Set<Id>{ parentCaseId })[0];
+
+    parentCase.Created_Support_Case__c = true;
+    uow.registerDirty(parentCase);
+  }
 }
