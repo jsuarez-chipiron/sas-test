@@ -27,10 +27,10 @@ done
 echo "This script creates a scratch org and prepares it for development."
 echo
 
-echo "[1 / 6] Creating Scratch org..."
+echo "[1 / 7] Creating Scratch org..."
 sfdx force:org:create -f $scratchDef -a $orgAlias -d $orgDuration --setdefaultusername
 
-echo "[2 / 6] Creating auth providers and named credentials..."
+echo "[2 / 7] Creating auth providers and named credentials..."
 # Auth provider requires the admin user's username so it cannot be pushed normally.
 # The others require the auth provider before they can be pushed.
 
@@ -57,16 +57,23 @@ cp scripts/create-org-templates/C_GeneralSetting.CLM_APIM_Subscription_Key.templ
 cp scripts/create-org-templates/LocalAuthProvider.APIM_Auth.template.xml sas-core/main/default/customMetadata/LocalAuthProvider.APIM_Auth.md-meta.xml
 
 # Sleep to ensure sharing rule calculation from org creation has finished before pushing sources
-echo "[3 / 6] Sleeping for 3m to ensure org creation has finished..."
+echo "[3 / 7] Sleeping for 3m to ensure org creation has finished..."
 echo "Zzz..."
 sleep 180
 
-echo "[4 / 6] Pushing source..."
+echo "[4 / 7] Pushing source..."
 sfdx force:source:push -u $orgAlias
 
-echo "[5 / 6] Pushing data..."
-sfdx force:data:tree:import -u $orgAlias -p $dataPlan
+echo "[5 / 7] Assigning extra permissions sets to admin..."
+sfdx force:user:permset:assign --permsetname SAS_Customer_Claims --targetusername $userName
+echo
 
-echo "[6 / 6] Org created successfully. Remember to enter authentication credentials."
+echo "[6 / 7] Pushing data..."
+cd scripts/create-org-mock-data/
+sfdx sfdmu:run --targetusername $orgAlias --sourceusername csvfile --quiet
+cd ../../
+echo
+
+echo "[7 / 7] Org created successfully. Remember to enter authentication credentials."
 echo "Opening the org in your browser..."
 sfdx force:org:open --path lightning/setup/NamedCredential/home -u $orgAlias
