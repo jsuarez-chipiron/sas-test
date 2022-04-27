@@ -2000,7 +2000,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Baggage delayed%2Flost</fullName>
+            <fullName>Baggage delayed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2048,6 +2048,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Items missing from checked-in baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Lounge</fullName>
             <default>false</default>
         </values>
@@ -2069,10 +2073,6 @@
         </values>
         <values>
             <fullName>Prepaid seat</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Regression</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2100,6 +2100,17 @@
         </values>
         <values>
             <fullName>Missed connecting flight</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Delay_Length__c</picklist>
+        <values>
+            <fullName>21 days or more</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Less than 21 days</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2807,10 +2818,6 @@
     <picklistValues>
         <picklist>Type_of_Customer__c</picklist>
         <values>
-            <fullName>Private customer</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Claim firm</fullName>
             <default>false</default>
         </values>
@@ -2820,6 +2827,10 @@
         </values>
         <values>
             <fullName>Other representative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Private customer</fullName>
             <default>false</default>
         </values>
     </picklistValues>

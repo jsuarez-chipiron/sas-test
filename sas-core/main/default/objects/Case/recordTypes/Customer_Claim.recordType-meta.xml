@@ -3478,6 +3478,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Customer Claim Regression</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Digital Channel Support Internal</fullName>
             <default>false</default>
         </values>
