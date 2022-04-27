@@ -335,7 +335,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
 
     if (c.accountId == null) {
       String searchField = !String.isBlank(c.FCS_EBNumber__c)
-        ? 'FCS_EBNumber__c'
+        ? 'EBNumber__c'
         : 'EmailPersonal__c';
       String searchValue = !String.isBlank(c.FCS_EBNumber__c)
         ? c.FCS_EBNumber__c
