@@ -57,6 +57,11 @@
         <label>Email - Customer Claim Firms</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Customer Claim Regression</fullName>
+        <default>false</default>
+        <label>Email - Customer Claim Regression</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Digital Channel Support Internal</fullName>
         <default>false</default>
         <label>Email - Digital Channel Support Internal</label>

@@ -1028,6 +1028,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Approval_Submitter__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Feedback_Category__c</field>
         <readable>true</readable>
@@ -1912,6 +1917,11 @@
         <field>LIA_Claim__c.Deadline__c</field>
         <readable>true</readable>
     </fieldPermissions>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Delay_Length__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.EuroBonus_Number__c</field>
@@ -1996,7 +2006,7 @@
         <editable>true</editable>
         <field>LIA_Claim__c.Total_delay_to_final_destination__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions>  
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Type_of_Customer__c</field>
