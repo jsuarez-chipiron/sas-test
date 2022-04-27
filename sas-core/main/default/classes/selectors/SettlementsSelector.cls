@@ -10,6 +10,7 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
       Settlement__c.BIC_Swift__c,
       Settlement__c.Claim__c,
       Settlement__c.City__c,
+      Settlement__c.Claim__c,
       Settlement__c.Country__c,
       Settlement__c.Currency__c,
       Settlement__c.EuroBonus_Number__c,
@@ -67,7 +68,9 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
   }
 
   public List<Settlement__c> selectByIdWithSettlementItems(Set<Id> ids) {
-    fflib_QueryFactory query = newQueryFactory().setCondition('Id IN :ids');
+    fflib_QueryFactory query = newQueryFactory()
+      .setCondition('Id IN :ids')
+      .selectField('Claim__r.Customer_Claim_Category__c');
     fflib_QueryFactory settlementItems = new SettlementItemsSelector()
       .addQueryFactorySubselect(query);
 

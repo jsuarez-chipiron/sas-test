@@ -30,6 +30,12 @@ export default class SettlementCalculator extends LightningElement {
   settlementCurrency;
   customerOptions;
 
+  MAX_LIABILITY_IN_XDR = 1288;
+  COST_ACCOUNTS_BAGGAGE = ["6741", "6742", "6743"];
+  maxLiabilityInSettlementCurrency = 0;
+  customersExceedingMaxLiability = [];
+  isBaggageClaim = false;
+
   showSpinner = false;
   dirty = false;
   error = undefined;
@@ -42,6 +48,20 @@ export default class SettlementCalculator extends LightningElement {
 
   get amountLabel() {
     return `Amount (${this.settlementCurrency})`;
+  }
+
+  get maxLiabilityDescription() {
+    return `Maximum liability: <b>${this.maxLiabilityInSettlementCurrency}</b> ${this.settlementCurrency}  |  <b>${this.MAX_LIABILITY_IN_XDR}</b> SDR`;
+  }
+
+  get maxLiabilityWarning() {
+    return `Warning: Total amount for ${this.customersExceedingMaxLiability.join(
+      ", "
+    )} exceeds maximum liability`;
+  }
+
+  get warnMaxLiability() {
+    return this.customersExceedingMaxLiability.length > 0;
   }
 
   get totals() {
@@ -68,7 +88,12 @@ export default class SettlementCalculator extends LightningElement {
       });
     }
     return {
-      currencies: currenciesToShow,
+      currencyText: `Total settlement: ${currenciesToShow
+        .map(
+          (entry) =>
+            `<b>${Math.round(entry.amount * 100) / 100}</b> ${entry.currency}`
+        )
+        .join("  |  ")}`,
       points: total
     };
   }
@@ -76,7 +101,8 @@ export default class SettlementCalculator extends LightningElement {
   exchangeRates = {
     sek: 0,
     usd: 0,
-    eur: 0
+    eur: 0,
+    xdr: 0
   };
 
   @wire(getObjectInfo, { objectApiName: SETTLEMENT_ITEM_OBJECT })
@@ -128,6 +154,26 @@ export default class SettlementCalculator extends LightningElement {
     }
   }
 
+  @wire(getExchangeRates, {
+    fromCurrency: "XDR",
+    toCurrency: "$settlementCurrency"
+  })
+  getExchangeRate({ error, data }) {
+    const ratesFound = !error && data != undefined && data.length > 0;
+    if (ratesFound) {
+      this.exchangeRates = {
+        ...this.exchangeRates,
+        xdr: data.find((a) => a.To_Currency__c === this.settlementCurrency)
+          ? data.find((a) => a.To_Currency__c === this.settlementCurrency)
+              .Rate__c
+          : 0
+      };
+      this.maxLiabilityInSettlementCurrency =
+        Math.round(this.MAX_LIABILITY_IN_XDR * this.exchangeRates.xdr * 100) /
+        100;
+    }
+  }
+
   @wire(getSettlement, { settlementId: "$recordId" })
   wiredSettlementWithItems({ error, data }) {
     // Only used to get settlement items.
@@ -149,6 +195,9 @@ export default class SettlementCalculator extends LightningElement {
             comments: settlementItem.Comments__c
           })
         );
+        this.isBaggageClaim =
+          settlement.Claim__r.Customer_Claim_Category__c === "Baggage";
+        this.findCustomersAboveMaxLiability();
       }
     } else {
       this.rows = [
@@ -174,11 +223,14 @@ export default class SettlementCalculator extends LightningElement {
     }
   }
 
-  @wire(getExchangeRates, { fromCurrency: "$settlementCurrency" })
+  @wire(getExchangeRates, {
+    fromCurrency: "$settlementCurrency"
+  })
   getExchangeRates({ error, data }) {
     const ratesFound = !error && data != undefined && data.length > 0;
     if (ratesFound) {
       this.exchangeRates = {
+        ...this.exchangeRates,
         eur: data.find((a) => a.To_Currency__c === "EUR")
           ? data.find((a) => a.To_Currency__c === "EUR").Rate__c
           : 0,
@@ -192,6 +244,29 @@ export default class SettlementCalculator extends LightningElement {
     }
   }
 
+  findCustomersAboveMaxLiability() {
+    // Check if the sum of all settlement items grouped by customer is higher than the defined maximum liability per customer
+    // Used to warn the agent if the amount is exceeded
+    const settlementTypeHasMaxLiability =
+      this.type.isMonetary || this.type.isVoucher;
+    if (settlementTypeHasMaxLiability) {
+      const totalsPerCustomer = this.rows.reduce((acc, row) => {
+        if (this.COST_ACCOUNTS_BAGGAGE.includes(row.costAccount)) {
+          acc[row.customer] =
+            acc[row.customer] != undefined
+              ? (acc[row.customer] += row.amount)
+              : row.amount;
+        }
+        return acc;
+      }, {});
+      this.customersExceedingMaxLiability = Object.entries(totalsPerCustomer)
+        .filter(
+          (customer) => customer[1] > this.maxLiabilityInSettlementCurrency
+        )
+        .map((customer) => customer[0]);
+    }
+  }
+
   handleAmountChange(event) {
     const rowIdx = this.rows.findIndex(
       (row) => row.idx == event.target.dataset.idx
@@ -202,6 +277,7 @@ export default class SettlementCalculator extends LightningElement {
       amount: Number(event.target.value)
     };
     this.dirty = true;
+    this.findCustomersAboveMaxLiability();
   }
 
   handleCustomerChange(event) {
@@ -211,6 +287,7 @@ export default class SettlementCalculator extends LightningElement {
     this.rows = [...this.rows];
     this.rows[rowIdx] = { ...this.rows[rowIdx], customer: event.target.value };
     this.dirty = true;
+    this.findCustomersAboveMaxLiability();
   }
 
   handleCostAccountChange(event) {
@@ -223,6 +300,7 @@ export default class SettlementCalculator extends LightningElement {
       costAccount: event.target.value
     };
     this.dirty = true;
+    this.findCustomersAboveMaxLiability();
   }
 
   handleCommentsChange(event) {
@@ -247,10 +325,12 @@ export default class SettlementCalculator extends LightningElement {
       }
     ];
     this.dirty = true;
+    this.findCustomersAboveMaxLiability();
   }
   handleRemoveRow(event) {
     this.rows = this.rows.filter((row) => row.idx != event.target.dataset.idx);
     this.dirty = true;
+    this.findCustomersAboveMaxLiability();
   }
   async handleSave() {
     const areAllFieldsValid = [

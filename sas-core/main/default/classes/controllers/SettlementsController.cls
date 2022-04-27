@@ -18,12 +18,17 @@ public without sharing class SettlementsController {
   }
 
   @AuraEnabled(cacheable=true)
-  public static List<Exchange_Rate__c> getExchangeRates(String fromCurrency) {
+  public static List<Exchange_Rate__c> getExchangeRates(
+    String fromCurrency,
+    String toCurrency
+  ) {
     if (fromCurrency == null) {
       return new List<Exchange_Rate__c>();
-    } else {
+    }
+    if (toCurrency == null) {
       return exchangeRates.selectByCurrency(fromCurrency);
     }
+    return exchangeRates.selectByCurrency(fromCurrency, toCurrency);
   }
 
   @AuraEnabled(cacheable=true)
@@ -34,11 +39,8 @@ public without sharing class SettlementsController {
   @AuraEnabled(cacheable=true)
   public static List<Customer__c> getPassengers(String settlementId) {
     // TODO: Create proper selector for me.
-    Settlement__c s = [
-      SELECT Id, Claim__c
-      FROM Settlement__c
-      WHERE Id = :settlementId
-    ][0];
-    return [SELECT Id, Name FROM Customer__c WHERE Claim__c = :s.Claim__c];
+    Settlement__c s = settlements.selectById(new Set<Id>{ settlementId })[0];
+    return CustomersSelector.newInstance()
+      .selectByClaimId(new Set<Id>{ s.Claim__c });
   }
 }
