@@ -47,7 +47,7 @@ public class AccountingFileBuilder {
     }
 
     String fileContents = '';
-    Integer sumOfEntries = 0;
+    Integer sumOfDebitEntries = 0;
 
     // Create one debit line per accounting entry.
     for (AccountingEntry entry : accountingEntries) {
@@ -60,16 +60,15 @@ public class AccountingFileBuilder {
             AccountingEntry.FIELD_LENGTHS.get(field),
             '0'
           );
-
-          sumOfEntries += entry.amount;
+          if (entry.type == AccountingEntry.EntryType.DEBIT) {
+            sumOfDebitEntries += entry.amount;
+          }
         } else if (field == 'VerificationNumber') {
           fileContents += String.valueOf(verificationNumber)
             .rightPad(AccountingEntry.FIELD_LENGTHS.get(field));
         } else {
           // Check if this is a constant field.
-          String fieldContents = AccountingEntry.CONSTANT_FIELDS_FOR_DEBITS.get(
-            field
-          );
+          String fieldContents = AccountingEntry.CONSTANT_FIELDS.get(field);
 
           // If yes, we should add that value. If not, we should get the value
           // from the accounting entry.
@@ -86,42 +85,7 @@ public class AccountingFileBuilder {
       fileContents += '\n';
     }
 
-    // Create corresponding credit lines
-    for (AccountingEntry entry : accountingEntries) {
-      for (String field : AccountingEntry.FIELDS_IN_ORDER) {
-        if (field == 'Amount') {
-          // A special case. Padded with zeroes to left.
-          String amountAsText = entry.data.get(field);
-
-          fileContents += amountAsText.leftPad(
-            AccountingEntry.FIELD_LENGTHS.get(field),
-            '0'
-          );
-        } else if (field == 'VerificationNumber') {
-          fileContents += String.valueOf(verificationNumber)
-            .rightPad(AccountingEntry.FIELD_LENGTHS.get(field));
-        } else if (field == 'CostCenter') {
-          fileContents += AccountingEntry.CREDIT_COST_CENTERS_BY_CURRENCY.get(
-            fileCurrency.name()
-          );
-        } else {
-          String fieldContents = AccountingEntry.CONSTANT_FIELDS_FOR_CREDITS.get(
-            field
-          );
-
-          String textToAdd = fieldContents == null
-            ? entry.data.get(field)
-            : fieldContents;
-
-          fileContents += textToAdd.rightPad(
-            AccountingEntry.FIELD_LENGTHS.get(field)
-          );
-        }
-      }
-      fileContents += '\n';
-    }
-
-    fileContents += createTotalLine(sumOfEntries, verificationNumber);
+    fileContents += createTotalLine(sumOfDebitEntries, verificationNumber);
 
     String dayOfYear = String.valueOf(Date.today().dayOfYear()).leftPad(3, '0');
 
@@ -165,22 +129,20 @@ public class AccountingFileBuilder {
   }
 
   private static String createTotalLine(
-    Integer sumOfEntries,
+    Integer sumOfDebitEntries,
     Decimal verificationNumber
   ) {
     String totalLine = 'RAT01';
     totalLine += String.valueOf(verificationNumber).rightPad(60);
-    totalLine += String.valueOf(sumOfEntries).leftPad(17, '0');
+    totalLine += String.valueOf(sumOfDebitEntries).leftPad(17, '0');
     totalLine += ''.rightPad(AccountingEntry.FIELD_LENGTHS.get('Description'));
-    totalLine += AccountingEntry.CONSTANT_FIELDS_FOR_DEBITS.get('CompanyCode')
+    totalLine += AccountingEntry.CONSTANT_FIELDS.get('CompanyCode')
       .rightPad(AccountingEntry.FIELD_LENGTHS.get('CompanyCode'));
-    totalLine += AccountingEntry.CONSTANT_FIELDS_FOR_DEBITS.get('Period')
+    totalLine += AccountingEntry.CONSTANT_FIELDS.get('Period')
       .rightPad(AccountingEntry.FIELD_LENGTHS.get('Period'));
-    totalLine += AccountingEntry.CONSTANT_FIELDS_FOR_DEBITS.get('FeederName')
+    totalLine += AccountingEntry.CONSTANT_FIELDS.get('FeederName')
       .rightPad(AccountingEntry.FIELD_LENGTHS.get('FeederName'));
-    totalLine += AccountingEntry.CONSTANT_FIELDS_FOR_DEBITS.get(
-        'DeliveryNumber'
-      )
+    totalLine += AccountingEntry.CONSTANT_FIELDS.get('DeliveryNumber')
       .rightPad(AccountingEntry.FIELD_LENGTHS.get('DeliveryNumber'));
 
     return totalLine;

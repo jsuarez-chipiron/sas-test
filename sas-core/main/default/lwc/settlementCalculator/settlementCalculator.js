@@ -17,7 +17,15 @@ export default class SettlementCalculator extends LightningElement {
   settlementItemRecordTypeId;
   settlementRecordTypeInfos;
 
-  rows = [{ idx: 0, amount: 0, customer: undefined, costAccount: undefined }];
+  rows = [
+    {
+      idx: 0,
+      amount: 0,
+      customer: undefined,
+      costAccount: undefined,
+      comments: undefined
+    }
+  ];
   costAccountOptions = [];
   settlementCurrency;
   customerOptions;
@@ -106,7 +114,9 @@ export default class SettlementCalculator extends LightningElement {
         data.fields.Settlement_Status__c.value !== "Denied";
       this.type = {
         isEuroBonusPoints: data.recordTypeInfo.name === "EB points",
-        isMonetary: data.recordTypeInfo.name === "Monetary" || data.recordTypeInfo.name === "Cheque",
+        isMonetary:
+          data.recordTypeInfo.name === "Monetary" ||
+          data.recordTypeInfo.name === "Cheque",
         isVoucher: data.recordTypeInfo.name === "Voucher"
       };
 
@@ -136,13 +146,19 @@ export default class SettlementCalculator extends LightningElement {
             amount: settlementItem.Amount__c,
             customer: settlementItem.Customer_Name__c,
             costAccount: settlementItem.Cost_Account__c,
-            comment: settlementItem.Comments__c
+            comments: settlementItem.Comments__c
           })
         );
       }
     } else {
       this.rows = [
-        { idx: 0, amount: 0, customer: undefined, costAccount: undefined }
+        {
+          idx: 0,
+          amount: 0,
+          customer: undefined,
+          costAccount: undefined,
+          comments: undefined
+        }
       ];
     }
   }
@@ -209,12 +225,12 @@ export default class SettlementCalculator extends LightningElement {
     this.dirty = true;
   }
 
-  handleCommentChange(event) {
+  handleCommentsChange(event) {
     const rowIdx = this.rows.findIndex(
-      (row) => row.id == event.target.dataset.idx
+      (row) => row.idx == event.target.dataset.idx
     );
     this.rows = [...this.rows];
-    this.rows[rowIdx] = { ...this.rows[rowIdx], comment: event.target.value };
+    this.rows[rowIdx] = { ...this.rows[rowIdx], comments: event.target.value };
     this.dirty = true;
   }
 
@@ -227,7 +243,7 @@ export default class SettlementCalculator extends LightningElement {
         amount: 0,
         customer: undefined,
         costAccount: undefined,
-        comment: undefined
+        comments: undefined
       }
     ];
     this.dirty = true;
@@ -253,7 +269,8 @@ export default class SettlementCalculator extends LightningElement {
       Amount__c: row.amount,
       Cost_Account__c: row.costAccount,
       Customer_Name__c: row.customer,
-      Comments__c: row.comments
+      Comments__c: row.comments,
+      Id: row.id
     }));
     try {
       await addSettlementsItemsToSettlement({
