@@ -128,11 +128,9 @@ public without sharing class SettlementService {
       return null;
     }
 
-    List<AccountingEntry> accountingEntries = new List<AccountingEntry>();
-
-    for (Settlement_Item__c s : settlementItemsToSend) {
-      accountingEntries.add(new AccountingEntry(s));
-    }
+    List<AccountingEntry> accountingEntries = AccountingEntry.createFromSettlementItems(
+      settlementItemsToSend
+    );
 
     Id textFileHandle = AccountingFileBuilder.create(
       accountingEntries,

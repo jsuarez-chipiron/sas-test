@@ -87,6 +87,21 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   public static final String STATUS_DONE = 'Done';
   public static final String STATUS_FAILED = 'Failed';
 
+  private static final Integer INSURANCE_DEDUCTIBLE_BAGGAGE = 1250;
+  private static final Integer INSURANCE_DEDUCTIBLE_PERSONAL_INJURY = 0;
+
+  private static final Set<String> COST_ACCOUNTS_BAGGAGE = new Set<String>{
+    '6741',
+    '6742',
+    '6743'
+  };
+
+  public static final String COST_ACCOUNT_CREDIT = '1654';
+  public static final String COST_ACCOUNT_INSURANCE = '1662';
+  public static final String COST_ACCOUNT_LIABILITY_OTHER = '6735';
+
+  public static final String COST_CENTER_DEBITS = '90801';
+
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
     processPayableVoucherAndEuroBonusSettlements();
   }
@@ -353,10 +368,12 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
       Decimal settlementTotal = 0;
       for (Settlement_Item__c item : itemsToUpsert) {
-        item.Cost_Center__c = '90801';
+        item.Cost_Center__c = COST_CENTER_DEBITS;
         item.Currency__c = settlement.Currency__c;
         item.Status__c = SettlementItems.STATUS_DRAFT;
-        item.Settlement__c = settlement.Id;
+        if (item.Settlement__c == null) {
+          item.Settlement__c = settlement.Id;
+        }
 
         if (
           settlement.RecordTypeId ==
@@ -369,6 +386,15 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         }
 
         settlementTotal += item.Amount__c;
+      }
+      if (
+        settlement.RecordTypeId ==
+        getRecordTypeId(Settlements.RecordType.Cheque) ||
+        settlement.RecordTypeId ==
+        getRecordTypeId(Settlements.RecordType.Monetary)
+      ) {
+        // Only monetary and cheque settlements should be checked for insurance.
+        updateInsuranceForSettlementItems(itemsToUpsert);
       }
       uow.registerUpsert(itemsToUpsert);
 
@@ -403,6 +429,101 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     }
 
     return false;
+  }
+
+  /**
+   * Marks the settlement item as insured and calculates the claimable amount
+   * from SAS's insurance company after deductible. Updates the record which
+   * was passed in.
+   *
+   * @return The same list with the updated settlement items.
+   */
+  private List<Settlement_Item__c> updateInsuranceForSettlementItems(
+    List<Settlement_Item__c> items
+  ) {
+    Map<String, List<Settlement_Item__c>> customerNamesToSettlementItems = new Map<String, List<Settlement_Item__c>>();
+    for (Settlement_Item__c item : items) {
+      // Group settlement items by customer
+      List<Settlement_Item__c> existingItemsForCustomer = customerNamesToSettlementItems.get(
+        item.Customer_Name__c
+      );
+      if (existingItemsForCustomer == null) {
+        customerNamesToSettlementItems.put(
+          item.Customer_Name__c,
+          new List<Settlement_Item__c>{ item }
+        );
+      } else {
+        existingItemsForCustomer.add(item);
+      }
+    }
+
+    Settlement__c settlement = instanceRecords[0];
+
+    LIA_Claim__c claim = ClaimsSelector.newInstance()
+      .selectById(new Set<Id>{ settlement.Claim__c })[0];
+
+    // We're making an assumption here that there is never a settlement which contains
+    // both baggage and personal injure claims.
+    Decimal deductible;
+
+    Boolean isPersonalInjuryClaim =
+      claim.Customer_Claim_Type__c == 'Personal injury';
+
+    if (isPersonalInjuryClaim) {
+      deductible = INSURANCE_DEDUCTIBLE_PERSONAL_INJURY;
+    } else {
+      deductible = INSURANCE_DEDUCTIBLE_BAGGAGE;
+    }
+
+    if (settlement.Currency__c != 'USD') {
+      // Deductible amounts are defined in USD so we need to convert them to
+      // settlement currency if it isn't USD.
+      List<Exchange_Rate__c> exchangeRateFromUSD = exchangeRatesSel.selectByCurrency(
+        'USD',
+        settlement.Currency__c
+      );
+
+      if (exchangeRateFromUSD.size() != 0) {
+        deductible = (deductible * exchangeRateFromUSD[0].Rate__c).setScale(2);
+      } else {
+        C_Log.log(
+          C_Log.Severity.Error,
+          'Failed to fetch exchange rate from: ' +
+          settlement.Currency__c +
+          ' to USD.',
+          null,
+          'Settlements',
+          null
+        );
+      }
+    }
+
+    for (String c : customerNamesToSettlementItems.keySet()) {
+      // Deductible is per customer.
+      Decimal totalDeductionForThisCustomer = 0;
+
+      for (Settlement_Item__c item : customerNamesToSettlementItems.get(c)) {
+        Boolean isPersonalInjuryClaimAndAccount =
+          isPersonalInjuryClaim &&
+          item.Cost_Account__c == COST_ACCOUNT_LIABILITY_OTHER;
+        Boolean isBaggageAccount = COST_ACCOUNTS_BAGGAGE.contains(
+          item.Cost_Account__c
+        );
+        Boolean isInsured = isBaggageAccount || isPersonalInjuryClaimAndAccount;
+        if (isInsured) {
+          item.Is_Insured__c = true;
+
+          Decimal maximumDeductionLeft =
+            deductible - totalDeductionForThisCustomer;
+          Decimal toDeduct = Math.min(maximumDeductionLeft, item.Amount__c);
+
+          item.Net_Amount_After_Deductible__c = item.Amount__c - toDeduct;
+          totalDeductionForThisCustomer += toDeduct;
+        }
+      }
+    }
+
+    return items;
   }
 
   private void processPayableVoucherAndEuroBonusSettlements() {

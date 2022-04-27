@@ -1,6 +1,26 @@
+/**
+ * The AccountingEntry class denotes a single entry in a double-entry
+ * bookkeeping system. These entries are used to generate the files sent to
+ * Racer for accounting. The entries are created from settlement items in
+ * settlements.
+ *
+ * Each settlement item has two or three AccountingEntry records. If the
+ * settlement item is not insured, one debit and one credit entry should be
+ * created for the item. If the item is insured, there should be one credit
+ * entry and two debit entries: one for the normal cost account of the item
+ * which contains the part of the amount which is not covered by insurance
+ * (i.e. it falls within the deductible), and one for the insurance cost
+ * account which contains the amount which falls above the deductible and
+ * can be claimed from insurance.
+ */
 public class AccountingEntry {
   private static final String TODAYS_DATE = Datetime.now().format('yyyyMMdd');
   private static final String TODAYS_PERIOD = Datetime.now().format('yyMM');
+
+  public enum EntryType {
+    CREDIT,
+    DEBIT
+  }
 
   // Defines the field lengths in columns for all fields in all records.
   public static final Map<String, Integer> FIELD_LENGTHS = new Map<String, Integer>{
@@ -25,23 +45,9 @@ public class AccountingEntry {
     'DeliveryNumber' => 2
   };
 
-  public static final Map<String, String> CONSTANT_FIELDS_FOR_DEBITS = new Map<String, String>{
+  public static final Map<String, String> CONSTANT_FIELDS = new Map<String, String>{
     'RecordIdentifier' => 'RAC',
     'AUN' => '01',
-    'CostCenter' => '90801',
-    'DebitOrCredit' => 'D',
-    'CompanyCode' => 'SK',
-    'Period' => TODAYS_PERIOD,
-    'FeederName' => 'SF',
-    'DeliveryNumber' => '01'
-  };
-
-  public static final Map<String, String> CONSTANT_FIELDS_FOR_CREDITS = new Map<String, String>{
-    'RecordIdentifier' => 'RAC',
-    'AUN' => '01',
-    'ReconciliationReference' => 'CARE2111',
-    'DebitOrCredit' => 'C',
-    'Description' => 'Balance post for debits',
     'CompanyCode' => 'SK',
     'Period' => TODAYS_PERIOD,
     'FeederName' => 'SF',
@@ -79,26 +85,147 @@ public class AccountingEntry {
 
   public Map<String, String> data;
   public Integer amount;
+  public EntryType type;
 
-  public AccountingEntry(Settlement_Item__c settlementItem) {
-    Integer amountInCents = (settlementItem.Amount__c * 100).intValue();
-    amount = amountInCents;
+  /**
+   * Constructs an AccountingEntry for the given settlement item.
+   *
+   * Instances of the class should not be created directly with the constructor
+   * from outside of the class. Use the provided createFromSettlementItems
+   * method instead.
+   *
+   * @param settlementItem The settlement item for which this is an accounting entry
+   * @param entryType Whether this is a credit or a debit entry for the settlement item
+   * @param isInsuranceAccountEntry Whether this debit entry is the insurance account entry for this settlement item. N/A for credit entries.
+   */
+  public AccountingEntry(
+    Settlement_Item__c settlementItem,
+    EntryType entryType,
+    Boolean isInsuranceAccountEntry
+  ) {
+    String costAccount;
+    String costCenter;
+    Decimal amountToSet;
+    String debitOrCredit;
+    String description = '';
+    String reconciliationReference;
+
+    switch on entryType {
+      when CREDIT {
+        amountToSet = settlementItem.Amount__c;
+        costAccount = Settlements.COST_ACCOUNT_CREDIT;
+        debitOrCredit = 'C';
+        reconciliationReference = 'CARE' + TODAYS_PERIOD;
+        description = 'Balance post for debits';
+
+        String creditCostCenter = CREDIT_COST_CENTERS_BY_CURRENCY.get(
+          settlementItem.Currency__c
+        );
+        if (creditCostCenter == null) {
+          creditCostCenter = CREDIT_COST_CENTERS_BY_CURRENCY.get('OTH');
+        }
+        costCenter = creditCostCenter;
+      }
+      when DEBIT {
+        debitOrCredit = 'D';
+        costCenter = Settlements.COST_CENTER_DEBITS;
+        reconciliationReference = settlementItem.Name;
+        if (settlementItem.Is_Insured__c) {
+          if (isInsuranceAccountEntry) {
+            // For insured items, we should debit everything above the
+            // deductible to the insurance cost account.
+            costAccount = Settlements.COST_ACCOUNT_INSURANCE;
+            amountToSet = settlementItem.Net_Amount_After_Deductible__c;
+            description = 'SAS Insurance';
+          } else {
+            // For insured items, we should debit up to the deductible to the
+            // normal cost account.
+            costAccount = settlementItem.Cost_Account__c;
+            Decimal deductible =
+              settlementItem.Amount__c -
+              settlementItem.Net_Amount_After_Deductible__c;
+            amountToSet = deductible;
+          }
+        } else {
+          costAccount = settlementItem.Cost_Account__c;
+          amountToSet = settlementItem.Amount__c;
+        }
+      }
+    }
+
+    Integer amountInCents = (amountToSet * 100).intValue();
+
+    this.type = entryType;
+    this.amount = amountInCents;
     this.data = new Map<String, String>{
       'ConversionDate' => (Datetime.newInstanceGmt(
           settlementItem.Settlement__r.Date_of_Exchange_Calculation__c,
           Time.newInstance(0, 0, 0, 0)
         ))
         .format('yyyyMMdd'),
-      'NaturalAccount' => settlementItem.Cost_Account__c,
-      'ReconciliationReference' => settlementItem.Name,
+      'CostCenter' => costCenter,
+      'NaturalAccount' => costAccount,
+      'ReconciliationReference' => reconciliationReference,
       'Product' => '',
       'Counterpart' => '',
       'Misc1' => '',
       'Misc2' => '',
       'Currency' => settlementItem.Currency__c,
-      'DebitOrCredit' => 'C',
+      'DebitOrCredit' => debitOrCredit,
       'Amount' => String.valueOf(amountInCents),
-      'Description' => ''
+      'Description' => description
     };
+  }
+
+  /**
+   * Creates a list of accounting entries from the given settlement items.
+   * These entries can then be used to generate the accounting files for RACER.
+   *
+   * The returned list includes entries in the same order as the input list,
+   * with all debit entries first, followed by the credit entries.
+   *
+   * @param settlementItems
+   * @return A full list of accounting entries including both
+   */
+  public static List<AccountingEntry> createFromSettlementItems(
+    List<Settlement_Item__c> settlementItems
+  ) {
+    /**
+     * The accounting files for RACER are in double entry format so we need to
+     * create both debits and credits for each settlement item.
+     *
+     * For insured settlement items, we need to separately create the entry
+     * for the part of the settlement that falls under the deductible, and the
+     * part which we can claim from insurance.
+     */
+    List<AccountingEntry> accountingEntries = new List<AccountingEntry>();
+
+    for (Settlement_Item__c s : settlementItems) {
+      if (s.Is_Insured__c) {
+        // If insured, and net amount == amount, we don't create the normal line at all.
+        // For insured settlement items, we need to create two entires: One for
+        // the non-deducted cost and one for what we claim
+        Boolean hasDeductiblePart =
+          s.Amount__c != s.Net_Amount_After_Deductible__c;
+        if (hasDeductiblePart) {
+          // If net amount is equal to settlements amount, we don't need to
+          // create an entry for the baggage cost account at all, because all
+          // will be debited to the insurance account.
+          accountingEntries.add(new AccountingEntry(s, EntryType.DEBIT, false));
+        }
+        Boolean hasInsuredPart = s.Net_Amount_After_Deductible__c > 0;
+        if (hasInsuredPart) {
+          accountingEntries.add(new AccountingEntry(s, EntryType.DEBIT, true));
+        }
+      } else {
+        accountingEntries.add(new AccountingEntry(s, EntryType.DEBIT, false));
+      }
+    }
+
+    for (Settlement_Item__c s : settlementItems) {
+      accountingEntries.add(new AccountingEntry(s, EntryType.CREDIT, false));
+    }
+
+    return accountingEntries;
   }
 }
