@@ -371,7 +371,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         item.Cost_Center__c = COST_CENTER_DEBITS;
         item.Currency__c = settlement.Currency__c;
         item.Status__c = SettlementItems.STATUS_DRAFT;
-        if (item.Settlement__c == null) {
+        if (item.Id == null) {
+          // If it's a new item, we need to set the parent settlement. Otherwise it's already set.
           item.Settlement__c = settlement.Id;
         }
 
