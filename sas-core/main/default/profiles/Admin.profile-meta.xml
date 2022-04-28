@@ -1168,7 +1168,7 @@
         <readable>true</readable>
     </fieldPermissions>
         <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.IsApproved__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1275,6 +1275,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.GDPR_Consent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Concerns_a_person_with_reduced_mobility__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

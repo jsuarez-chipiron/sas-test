@@ -2243,7 +2243,12 @@
         <editable>false</editable>
         <field>Case.Customer_Claim_Type__c</field>
         <readable>true</readable>
-    </fieldPermissions>       
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Concerns_a_person_with_reduced_mobility__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Feedback_Category__c</field>
