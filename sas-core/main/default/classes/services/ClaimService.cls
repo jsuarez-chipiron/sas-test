@@ -37,10 +37,13 @@ public without sharing class ClaimService {
     'insurance-company' => 'Insurance company',
     'in-flight-meal' => 'In-flight meal',
     'in-flight-service' => 'In-flight service',
+    'less-than-21-days' => 'Less than 21 days',
     'lounge' => 'Lounge',
     'meals-drinks' => 'Meals/Drinks',
     'missed-connection' => 'Missed connection',
+    'missing-items' => 'Items missing from checked-in baggage',
     'monetary' => 'Monetary',
+    'more-than-21-days' => '21 days or more',
     'never-arrived' => 'Never arrived',
     'other-representative' => 'Other representative',
     'other' => 'Other',
@@ -133,6 +136,7 @@ public without sharing class ClaimService {
       ),
       Customer_Claim_Type__c = jsonToPicklist.get(form.formData.claimType),
       Customer_s_Reference__c = form.formData.referenceNumber,
+      Delay_Length__c = jsonToPicklist.get(form.formData.baggageDelayTime),
       EuroBonus_Number__c = ebNumber,
       Flight_Date__c = String.isBlank(form.formData.departureDate)
         ? null
@@ -143,6 +147,8 @@ public without sharing class ClaimService {
       Liability_PNR__c = form.formData.bookingReference,
       Phone_Number__c = form.formData.phone,
       Postal_Code__c = form.formData.postalCode,
+      Purchase_Price__c = form.formData.baggagePurchasePrice,
+      Purchase_Year__c = form.formData.baggagePurchaseYear,
       PIR__c = form.formData.passengerIrregularityReportNumber,
       Preferred_Compensation_Method__c = jsonToPicklist.get(
         form.formData.preferredCompensationMethod

@@ -584,4 +584,90 @@ private class CaseFormTest {
       'Should have found a claim linked to the case.'
     );
   }
+
+  @IsTest
+  public static void shouldCreateBaggageClaimCases() {
+    CaseFormJSON2Apex requestBody = CaseFormJSON2Apex.parse(
+      '{ ' +
+      '  "formData\": {' +
+      '    "type": "claim",' +
+      '    "email": "test@example.com",' +
+      '    "firstName": "Test",' +
+      '    "lastName": "Testsson",' +
+      '    "phone": "000000000",' +
+      '    "address": "Frösundavik\'s allé 1",' +
+      '    "postalCode": "000000",' +
+      '    "city": "Stockholm",' +
+      '    "country": "SE",' +
+      '    "contactType": "private",' +
+      '    "claimCategory": "baggage",' +
+      '    "claimType": "baggage-delayed",' +
+      '    "baggageDelayTime": "less-than-21-days",' +
+      '    "baggagePurchasePrice": 500,' +
+      '    "baggagePurchaseYear": 2021,' +
+      '    "preferredCompensationMethod": "voucher",' +
+      '    "bookingReference": "TEST12"' +
+      '  },' +
+      '  "metaData": {' +
+      '    "market": "dk-da"' +
+      '  }' +
+      '}'
+    );
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    Test.startTest();
+    CaseFormResponse response = CaseForm.createCase(requestBody);
+    Test.StopTest();
+    Case c = [
+      SELECT Id, Origin
+      FROM Case
+      WHERE CaseNumber = :response.caseNumber
+    ];
+    LIA_Claim__c cl = [
+      SELECT
+        Id,
+        Customer_Claim_Type__c,
+        Delay_Length__c,
+        Purchase_Price__c,
+        Purchase_Year__c
+      FROM LIA_Claim__c
+      WHERE Case__c = :c.Id
+    ];
+    System.assertNotEquals(
+      null,
+      c,
+      'Should have found a case with the case number returned from create case.'
+    );
+    System.assertEquals(
+      'Form - Claims DK',
+      c.Origin,
+      'Origin should be set correctly for Denmark.'
+    );
+    System.assertNotEquals(
+      null,
+      cl,
+      'Should have found a claim linked to the case.'
+    );
+    System.assertEquals(
+      'Baggage delayed/lost',
+      cl.Customer_Claim_Type__c,
+      'Should have set claim type correctly.'
+    );
+    System.assertEquals(
+      'Less than 21 days',
+      cl.Delay_Length__c,
+      'Should have set delay length correctly.'
+    );
+    System.assertEquals(
+      500,
+      cl.Purchase_Price__c,
+      'Should have set purchase price correctly.'
+    );
+    System.assertEquals(
+      2021,
+      cl.Purchase_Year__c,
+      'Should have set purchase year correctly.'
+    );
+  }
 }
