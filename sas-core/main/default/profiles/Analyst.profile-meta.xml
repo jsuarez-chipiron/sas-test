@@ -1005,6 +1005,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Concerns_a_person_with_reduced_mobility__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.PNR_Payment_Status__c</field>
         <readable>true</readable>
