@@ -94,8 +94,8 @@
                 <field>Approval_Submitter__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IsApproved__c</field>
+                <behavior>Readonly</behavior>
+                <field>Concerns_a_person_with_reduced_mobility__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -250,6 +250,10 @@
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IsApproved__c</field>
+            </layoutItems>            
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>RecordTypeId</field>
