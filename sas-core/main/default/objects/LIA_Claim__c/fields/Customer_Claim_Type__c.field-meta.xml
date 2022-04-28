@@ -18,9 +18,9 @@
                 <label>Baggage damaged</label>
             </value>
             <value>
-                <fullName>Baggage delayed</fullName>
+                <fullName>Baggage delayed/lost</fullName>
                 <default>false</default>
-                <label>Baggage delayed</label>
+                <label>Baggage delayed/lost</label>
             </value>
             <value>
                 <fullName>Booking error</fullName>
@@ -158,7 +158,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>
-            <valueName>Baggage delayed</valueName>
+            <valueName>Baggage delayed/lost</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Baggage</controllingFieldValue>

@@ -1056,7 +1056,7 @@
                             <leftValueReference>CustomerClaimCategoryType.middleValue</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
-                                <stringValue>Baggage delayed</stringValue>
+                                <stringValue>Baggage delayed/lost</stringValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
