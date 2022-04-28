@@ -54,11 +54,10 @@ global class CaseFormJSON2Apex {
     global String preferredReimbursementMethod; // eurobonus, monetary, voucher
 
     global String passengerIrregularityReportNumber;
-    global String baggageType; // Not being used yet.
-    global Decimal baggagePurchasePrice; // Not being used yet.
-    global Decimal baggagePurchaseYear; // Not being used yet.
-    global Decimal totalClaimValue; // Not being used yet.
-    global Decimal claimAmount; // Not being used yet.
+
+    global String baggageDelayTime; // less-than-21-days, more-than-21-days
+    global Decimal baggagePurchasePrice;
+    global Integer baggagePurchaseYear;
   }
 
   global class MetaData {
