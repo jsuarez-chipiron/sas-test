@@ -65,6 +65,7 @@ public without sharing class Claims extends fflib_SObjectDomain {
   public override void onAfterInsert() {
     checkIfExistsInCARE();
     assignToQueueUsingFlow();
+    updateParentCaseBookings();
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
@@ -193,6 +194,19 @@ public without sharing class Claims extends fflib_SObjectDomain {
     for (LIA_Claim__c claim : instanceRecords) {
       if (claim.Liability_PNR__c == null) {
         claim.Claims_Exist_In_CARE_For_PNR__c = false;
+      }
+    }
+  }
+
+  private void updateParentCaseBookings() {
+    if (instanceRecords.size() == 1) {
+      LIA_Claim__c claim = instanceRecords[0];
+      // TODO: Fix this when we can support several bookings at once
+      if (claim.Liability_PNR__c != null) {
+        BookingService.addBookingToCaseAsync(
+          claim.Case__c,
+          claim.Liability_PNR__c
+        );
       }
     }
   }
