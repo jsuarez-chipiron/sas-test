@@ -49,7 +49,7 @@ public with sharing class Settlements_IntegrationTest {
       Address_line_2__c = 'Line 2',
       Amount__c = 120,
       Bank_Country__c = 'Sweden',
-      BIC_Swift__c = 'TESTBIC',
+      BIC_Swift__c = 'AAAAAAB1',
       City__c = 'Stockholm',
       Country__c = 'Sweden',
       Currency__c = 'SEK',
@@ -802,6 +802,7 @@ public with sharing class Settlements_IntegrationTest {
     insert claim;
 
     Settlement__c settlement = new Settlement__c(
+      BIC_Swift__c = 'AAAAAAB1',
       Claim__c = claim.Id,
       Currency__c = 'SEK',
       RecordTypeId = Settlements.getRecordTypeId(
@@ -894,6 +895,7 @@ public with sharing class Settlements_IntegrationTest {
     insert claim;
 
     Settlement__c settlement = new Settlement__c(
+      BIC_Swift__c = 'AAAAAAB1',
       Claim__c = claim.Id,
       Currency__c = 'SEK',
       RecordTypeId = Settlements.getRecordTypeId(
@@ -998,6 +1000,7 @@ public with sharing class Settlements_IntegrationTest {
     insert claim;
 
     Settlement__c settlement = new Settlement__c(
+      BIC_Swift__c = 'AAAAAAB1',
       Claim__c = claim.Id,
       Currency__c = 'USD',
       RecordTypeId = Settlements.getRecordTypeId(
@@ -1142,6 +1145,7 @@ public with sharing class Settlements_IntegrationTest {
     insert claim;
 
     Settlement__c settlement = new Settlement__c(
+      BIC_Swift__c = 'AAAAAAB1',
       Claim__c = claim.Id,
       RecordTypeId = Settlements.getRecordTypeId(
         Settlements.RecordType.Monetary
