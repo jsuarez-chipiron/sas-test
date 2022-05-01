@@ -175,6 +175,7 @@
         <searchResultsAdditionalFields>IRR_MessageType__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>IRR_RecipientName__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>IRR_Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
