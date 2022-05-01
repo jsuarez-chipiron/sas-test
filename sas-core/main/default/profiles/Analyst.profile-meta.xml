@@ -611,6 +611,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Group_Travel_Request__c.Number_Of_Passengers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>        
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Group_Travel_Request__c.Number_Of_Special_Baggage__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1264,6 +1269,11 @@
         <field>Case.GSB_Season__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Group_Departure_Airport__c</field>
+        <readable>true</readable>
+    </fieldPermissions>     
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Group_Destination__c</field>
