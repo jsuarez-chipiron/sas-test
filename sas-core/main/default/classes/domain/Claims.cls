@@ -75,12 +75,12 @@ public without sharing class Claims extends fflib_SObjectDomain {
   }
 
   public override void onBeforeInsert() {
-    capitalisePNR();
+    normalizeFields();
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
     clearClaimInCareField();
-    capitalisePNR();
+    normalizeFields();
   }
 
   /**
@@ -231,10 +231,19 @@ public without sharing class Claims extends fflib_SObjectDomain {
     }
   }
 
-  private void capitalisePNR() {
+  private void normalizeFields() {
     for (LIA_Claim__c claim : instanceRecords) {
-      if (claim.Liability_PNR__c != null) {
+      if (!String.isBlank(claim.Liability_PNR__c)) {
         claim.Liability_PNR__c = claim.Liability_PNR__c.toUpperCase();
+      }
+      if (!String.isBlank(claim.BIC_Swift__c)) {
+        claim.BIC_Swift__c = claim.BIC_Swift__c.toUpperCase();
+      }
+      if (!String.isBlank(claim.Bank_Account_Number__c)) {
+        claim.Bank_Account_Number__c = claim.Bank_Account_Number__c.toUpperCase();
+      }
+      if (!String.isBlank(claim.Flight_Number__c)) {
+        claim.Flight_Number__c = claim.Flight_Number__c.toUpperCase();
       }
     }
   }
