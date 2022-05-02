@@ -5,7 +5,7 @@
         <name>Are_all_Settlements_valid</name>
         <label>Are all Settlements valid?</label>
         <locationX>710</locationX>
-        <locationY>1550</locationY>
+        <locationY>1670</locationY>
         <defaultConnector>
             <targetReference>errorScreenInvalidSettlements</targetReference>
         </defaultConnector>
@@ -30,7 +30,7 @@
         <name>Case_can_be_submitted_for_Approval</name>
         <label>Case can be submitted for Approval</label>
         <locationX>578</locationX>
-        <locationY>1190</locationY>
+        <locationY>1310</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>No_email_draft_exists</name>
@@ -96,7 +96,7 @@
         <name>Customer_Claim_Or_Liability_Claim</name>
         <label>Customer Claim Or Liability Claim?</label>
         <locationX>578</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Customer_Claim</name>
@@ -133,7 +133,7 @@
         <name>Is_the_claim_result_valid</name>
         <label>Is the claim result valid?</label>
         <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>InvalidResult</targetReference>
         </defaultConnector>
@@ -175,6 +175,107 @@
             <label>Valid</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>What_is_case_status</name>
+        <label>What is case status?</label>
+        <locationX>1238</locationX>
+        <locationY>278</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>In_Progress</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Information.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Progress</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Customer_Claim_Or_Liability_Claim</targetReference>
+            </connector>
+            <label>In Progress</label>
+        </rules>
+        <rules>
+            <name>New_or_On_Hold_or_Awaiting_or_New_Response_Or_Escalated</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Information.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Information.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>On Hold</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Information.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Awaiting</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Information.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Awaiting Customer Response</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Information.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Response</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Information.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalated</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Invalid_Status_Error</targetReference>
+            </connector>
+            <label>New or On Hold or Awaiting or New Response Or Escalated</label>
+        </rules>
+        <rules>
+            <name>Waiting_for_Approval_or_Control_or_Transfer</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Information.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Approval</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Information.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Control</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Information.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Transfer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Case_in_Approval_Process</targetReference>
+            </connector>
+            <label>Waiting for Approval or Control or Transfer</label>
+        </rules>
+    </decisions>
     <formulas>
         <name>resultText</name>
         <dataType>String</dataType>
@@ -204,11 +305,11 @@
     <recordLookups>
         <name>Get_Case_Information</name>
         <label>Get Case Information</label>
-        <locationX>578</locationX>
+        <locationX>1238</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Customer_Claim_Or_Liability_Claim</targetReference>
+            <targetReference>What_is_case_status</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -226,7 +327,7 @@
         <name>Get_Claim_Information</name>
         <label>Get Claim Information</label>
         <locationX>578</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_the_claim_result_valid</targetReference>
@@ -247,7 +348,7 @@
         <name>Get_Email_Draft_for_this_Case</name>
         <label>Get Email Draft for this Case</label>
         <locationX>226</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_has_Settlements_to_approve</targetReference>
@@ -275,7 +376,7 @@
         <name>Get_Settlements_for_this_Case</name>
         <label>Get Settlements for this Case</label>
         <locationX>710</locationX>
-        <locationY>1310</locationY>
+        <locationY>1430</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_Settlements</targetReference>
@@ -303,7 +404,7 @@
         <name>Update_Case_Status</name>
         <label>Update Case Status</label>
         <locationX>578</locationX>
-        <locationY>1790</locationY>
+        <locationY>1910</locationY>
         <connector>
             <targetReference>Update_Settlements_for_this_Case</targetReference>
         </connector>
@@ -333,7 +434,7 @@
         <name>Update_Settlements_for_this_Case</name>
         <label>Update Settlements for this Case</label>
         <locationX>578</locationX>
-        <locationY>1910</locationY>
+        <locationY>2030</locationY>
         <connector>
             <targetReference>Send_Case_to_Approval</targetReference>
         </connector>
@@ -368,10 +469,26 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
+        <name>Error_Case_in_Approval_Process</name>
+        <label>Error Case in Approval Process</label>
+        <locationX>1634</locationX>
+        <locationY>398</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Case {!Get_Case_Information.CaseNumber} status is not valid for submitting for approval. Please refresh the page to see the latest status.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>errorScreenEmail</name>
         <label>Error Screen</label>
         <locationX>50</locationX>
-        <locationY>1310</locationY>
+        <locationY>1430</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -387,7 +504,7 @@
         <name>errorScreenInvalidSettlements</name>
         <label>Error Screen</label>
         <locationX>842</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -403,7 +520,7 @@
         <name>errorScreenNoSettlements</name>
         <label>Error Screen</label>
         <locationX>314</locationX>
-        <locationY>1310</locationY>
+        <locationY>1430</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -416,10 +533,26 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Invalid_Status_Error</name>
+        <label>Invalid Status Error</label>
+        <locationX>1370</locationX>
+        <locationY>398</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>CasesNotInProgress</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Please change the case status to &quot;In progress&quot;. &lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;﻿Only &quot;In progress&quot; cases can be submitted to approval.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>InvalidResult</name>
         <label>InvalidResult</label>
         <locationX>666</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -435,7 +568,7 @@
         <name>submitScreen</name>
         <label>Submit Screen</label>
         <locationX>578</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -451,7 +584,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>452</locationX>
+        <locationX>1112</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case_Information</targetReference>
@@ -462,7 +595,7 @@
         <name>Case_has_Settlements_to_approve</name>
         <label>Case has Settlements to approve</label>
         <locationX>578</locationX>
-        <locationY>1070</locationY>
+        <locationY>1190</locationY>
         <connector>
             <targetReference>Case_can_be_submitted_for_Approval</targetReference>
         </connector>
@@ -488,7 +621,7 @@
         <name>Send_Case_to_Approval</name>
         <label>Send Case to Approval</label>
         <locationX>578</locationX>
-        <locationY>2030</locationY>
+        <locationY>2150</locationY>
         <flowName>CLAIM_Case_Approval_Handler</flowName>
         <inputAssignments>
             <name>incomingCaseRecord</name>
@@ -502,7 +635,7 @@
         <name>Validate_Settlements</name>
         <label>Validate Settlements</label>
         <locationX>710</locationX>
-        <locationY>1430</locationY>
+        <locationY>1550</locationY>
         <connector>
             <targetReference>Are_all_Settlements_valid</targetReference>
         </connector>
