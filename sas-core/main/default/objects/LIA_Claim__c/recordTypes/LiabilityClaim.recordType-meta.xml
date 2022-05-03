@@ -1956,8 +1956,8 @@
     <picklistValues>
         <picklist>Customer_Claim_Category__c</picklist>
         <values>
-            <fullName>Baggage</fullName>
-            <default>true</default>
+            <fullName>Accident %26 injury</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
