@@ -498,7 +498,9 @@ private class CaseFormTest {
       '    "claimCategory": "accident-and-injury",' +
       '    "claimType": "other",' +
       '    "preferredCompensationMethod": "voucher",' +
-      '    "bookingReference": "TEST12"' +
+      '    "bookingReference": "TEST12",' +
+      '    "departureDate": "2022-03-02",' +
+      '    "flightNumber": "SK1234"' +
       '  },' +
       '  "metaData": {' +
       '    "market": "dk-da"' +
@@ -546,11 +548,12 @@ private class CaseFormTest {
       '    "lastName": "Testsson",' +
       '    "phone": "000000000",' +
       '    "contactType": "type",' +
-      '    "flightDate": "2022-03-02",' +
+      '    "departureDate": "2022-03-02",' +
       '    "flightNumber": "SK1234",' +
+      '    "claimCategory": "flight-disruptions",' +
       '    "bookingReference": "TEST12"' +
       '  },' +
-      '  "metaData": {' +
+      '  "metaData": {' + 
       '    "market": "dk-da"' +
       '  }' +
       '}'
@@ -602,6 +605,7 @@ private class CaseFormTest {
       '    "contactType": "private",' +
       '    "claimCategory": "baggage",' +
       '    "claimType": "baggage-delayed",' +
+      '    "passengerIrregularityReportNumber": "ARNSK12345",' +
       '    "baggageDelayTime": "less-than-21-days",' +
       '    "baggagePurchasePrice": 500,' +
       '    "baggagePurchaseYear": 2021,' +
