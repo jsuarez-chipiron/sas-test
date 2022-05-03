@@ -796,7 +796,9 @@ public with sharing class Settlements_IntegrationTest {
   static void addItemsToSettlementCreatesItems() {
     // Given
     LIA_Claim__c claim = new LIA_Claim__c(
-      Customer_Claim_Type__c = 'Baggage damaged'
+      Customer_Claim_Category__c = 'Baggage',  
+      Customer_Claim_Type__c = 'Baggage damaged',
+      PIR__c = 'ARNSK12345'
     );
 
     insert claim;
@@ -889,7 +891,9 @@ public with sharing class Settlements_IntegrationTest {
   static void addItemsToSettlementUpdatesExistingItems() {
     // Given
     LIA_Claim__c claim = new LIA_Claim__c(
-      Customer_Claim_Type__c = 'Baggage damaged'
+      Customer_Claim_Category__c = 'Baggage',  
+      Customer_Claim_Type__c = 'Baggage damaged',
+      PIR__c = 'ARNSK12345'
     );
 
     insert claim;
@@ -994,7 +998,9 @@ public with sharing class Settlements_IntegrationTest {
   static void addItemsToSettlementHandlesInsuranceCalculations() {
     // Given
     LIA_Claim__c claim = new LIA_Claim__c(
-      Customer_Claim_Type__c = 'Baggage damaged'
+      Customer_Claim_Category__c = 'Baggage',  
+      Customer_Claim_Type__c = 'Baggage damaged',
+      PIR__c = 'ARNSK12345'
     );
 
     insert claim;
@@ -1139,7 +1145,9 @@ public with sharing class Settlements_IntegrationTest {
   static void addItemsToSettlemenFailsIfSettlementHasNoCurrency() {
     // Given
     LIA_Claim__c claim = new LIA_Claim__c(
-      Customer_Claim_Type__c = 'Baggage damaged'
+      Customer_Claim_Category__c = 'Baggage',  
+      Customer_Claim_Type__c = 'Baggage damaged',
+      PIR__c = 'ARNSK12345'
     );
 
     insert claim;

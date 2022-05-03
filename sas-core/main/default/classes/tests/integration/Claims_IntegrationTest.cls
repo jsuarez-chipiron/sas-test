@@ -136,7 +136,8 @@ public with sharing class Claims_IntegrationTest {
     LIA_Claim__c claim = new LIA_Claim__c(
       Case__c = c.Id,
       Customer_Claim_Category__c = 'Baggage',
-      Liability_PNR__c = 'ABC123'
+      Liability_PNR__c = 'ABC123',
+      PIR__c = 'ARNSK12345'
     );
 
     Segment__c seg1 = new Segment__c(
@@ -199,7 +200,8 @@ public with sharing class Claims_IntegrationTest {
     LIA_Claim__c claim = new LIA_Claim__c(
       Case__c = c.Id,
       Customer_Claim_Category__c = 'Baggage',
-      Liability_PNR__c = 'ABC123'
+      Liability_PNR__c = 'ABC123',
+      PIR__c = 'ARNSK12345'
     );
 
     Segment__c seg1 = new Segment__c(
@@ -262,7 +264,9 @@ public with sharing class Claims_IntegrationTest {
     LIA_Claim__c claim = new LIA_Claim__c(
       Case__c = c.Id,
       Customer_Claim_Category__c = 'Flight disruptions',
-      Liability_PNR__c = 'ABC123'
+      Liability_PNR__c = 'ABC123',
+      Flight_Date__c = Date.today(),
+      Flight_Number__c = 'SK1'
     );
 
     Segment__c seg1 = new Segment__c(
@@ -325,7 +329,8 @@ public with sharing class Claims_IntegrationTest {
     LIA_Claim__c claim = new LIA_Claim__c(
       Case__c = c.Id,
       Customer_Claim_Category__c = 'Baggage',
-      Liability_PNR__c = 'ABC123'
+      Liability_PNR__c = 'ABC123',
+      PIR__c = 'ARNSK12345'
     );
 
     Segment__c seg1 = new Segment__c(

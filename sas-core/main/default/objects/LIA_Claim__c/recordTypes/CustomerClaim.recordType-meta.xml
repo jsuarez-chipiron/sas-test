@@ -1974,7 +1974,7 @@
         </values>
         <values>
             <fullName>Baggage</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
         <values>
             <fullName>Booking</fullName>
