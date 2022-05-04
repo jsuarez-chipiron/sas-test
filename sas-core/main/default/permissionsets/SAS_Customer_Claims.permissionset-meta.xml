@@ -231,7 +231,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>LIA_Claim__c.Concerns_a_person_with_reduced_mobility__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -302,6 +302,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>LIA_Claim__c.Delay_Length__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LIA_Claim__c.EuroBonus_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -313,11 +318,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Flight_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Claim__c.LIA_Firm__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -403,41 +403,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Type_of_Customer__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Firm__c.BIC__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Firm__c.Bank_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Firm__c.Comments_About_Firm__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Country__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Firm__c.Email__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Firm__c.IBAN__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Firm__c.Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -532,12 +497,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Settlement_Item__c.Deductible_Insurance_Amount__c</field>
+        <field>Settlement_Item__c.Error_Message__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Settlement_Item__c.Error_Message__c</field>
+        <field>Settlement_Item__c.Is_Insured__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Settlement_Item__c.Net_Amount_After_Deductible__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -780,15 +750,6 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>LIA_Firm__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>LIA_Major_Event__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
@@ -853,10 +814,6 @@
     </tabSettings>
     <tabSettings>
         <tab>LIA_Claim__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>LIA_Firm__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

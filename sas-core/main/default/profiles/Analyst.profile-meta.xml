@@ -446,6 +446,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Flight__c.Operating_Carrier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Flight__c.Scheduled_Arrival_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -604,6 +609,11 @@
         <field>Group_Travel_Request__c.Number_Of_Infants__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Group_Travel_Request__c.Number_Of_Passengers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>        
     <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Number_Of_Special_Baggage__c</field>
@@ -975,6 +985,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Approval_Submitter__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Feedback_Category__c</field>
         <readable>true</readable>
@@ -999,6 +1014,11 @@
         <field>Case.Last_Email_From_Address__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Concerns_a_person_with_reduced_mobility__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.PNR_Payment_Status__c</field>
@@ -1249,6 +1269,11 @@
         <field>Case.GSB_Season__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Group_Departure_Airport__c</field>
+        <readable>true</readable>
+    </fieldPermissions>     
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Group_Destination__c</field>
@@ -1524,11 +1549,6 @@
         <field>LIA_Claim__c.Jurisdiction__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.LIA_Firm__c</field>
-        <readable>false</readable>
-    </fieldPermissions> 
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.LIA_Major_Event__c</field>
@@ -1869,41 +1889,6 @@
         <field>Knowledge__kav.FCS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
-     <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Bank_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>            
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.BIC__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Comments_About_Firm__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Country__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.IBAN__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Phone__c</field>
-        <readable>false</readable>
-    </fieldPermissions>    
     <fieldPermissions>
         <editable>true</editable>
         <field>LiveChatTranscript.FCS_CODSId__c</field>
@@ -2657,9 +2642,6 @@
         <recordType>Knowledge__kav.SSI</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>LIA_Firm__c-Legal Firm Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>LiveChatTranscript-Chat Transcript Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -2824,15 +2806,6 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>LIA_Claim__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-	<objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>LIA_Firm__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
 	<objectPermissions>
@@ -3068,10 +3041,6 @@
         <tab>Group_Travel_Request__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities> 
-    <tabVisibilities>
-        <tab>LIA_Firm__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
     <tabVisibilities>
         <tab>LIA_Major_Event__c</tab>
         <visibility>Hidden</visibility>

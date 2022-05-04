@@ -1956,8 +1956,8 @@
     <picklistValues>
         <picklist>Customer_Claim_Category__c</picklist>
         <values>
-            <fullName>Baggage</fullName>
-            <default>true</default>
+            <fullName>Accident %26 injury</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
@@ -2039,10 +2039,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Regression</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Special assistance</fullName>
             <default>false</default>
         </values>
@@ -2067,6 +2063,17 @@
         </values>
         <values>
             <fullName>Missed connecting flight</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Delay_Length__c</picklist>
+        <values>
+            <fullName>21 days or more</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Less than 21 days</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2353,7 +2360,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Better Business Bureau (BBB)</fullName>
+            <fullName>Better Business Bureau %28BBB%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2794,10 +2801,6 @@
     <picklistValues>
         <picklist>Type_of_Customer__c</picklist>
         <values>
-            <fullName>Private customer</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Claim firm</fullName>
             <default>false</default>
         </values>
@@ -2807,6 +2810,10 @@
         </values>
         <values>
             <fullName>Other representative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Private customer</fullName>
             <default>false</default>
         </values>
     </picklistValues>

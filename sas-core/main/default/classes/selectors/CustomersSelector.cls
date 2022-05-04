@@ -28,4 +28,10 @@ public inherited sharing class CustomersSelector extends fflib_SObjectSelector {
       newQueryFactory().setCondition('Name IN :names').toSOQL()
     );
   }
+
+  public List<Customer__c> selectByClaimId(Set<Id> claimIds) {
+    return (List<Customer__c>) Database.query(
+      newQueryFactory().setCondition('Claim__c IN :claimIds').toSOQL()
+    );
+  }
 }

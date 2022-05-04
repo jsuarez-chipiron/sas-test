@@ -434,6 +434,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Flight__c.Operating_Carrier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Flight__c.Scheduled_Arrival_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1023,6 +1028,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Approval_Submitter__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Feedback_Category__c</field>
         <readable>true</readable>
@@ -1124,6 +1134,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Group_Departure_Airport__c</field>
+        <readable>true</readable>
+    </fieldPermissions>       
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Group_Destination__c</field>
         <readable>true</readable>
     </fieldPermissions>    
@@ -1158,7 +1173,7 @@
         <readable>true</readable>
     </fieldPermissions>
         <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.IsApproved__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1265,6 +1280,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.GDPR_Consent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Concerns_a_person_with_reduced_mobility__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1517,6 +1537,11 @@
         <field>Group_Travel_Request__c.Number_Of_Infants__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Group_Travel_Request__c.Number_Of_Passengers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>      
     <fieldPermissions>
         <editable>true</editable>
         <field>Group_Travel_Request__c.Number_Of_Special_Baggage__c</field>
@@ -1907,6 +1932,11 @@
         <field>LIA_Claim__c.Deadline__c</field>
         <readable>true</readable>
     </fieldPermissions>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Delay_Length__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.EuroBonus_Number__c</field>
@@ -1920,11 +1950,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Flight_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Claim__c.LIA_Firm__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1996,7 +2021,7 @@
         <editable>true</editable>
         <field>LIA_Claim__c.Total_delay_to_final_destination__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions>  
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Type_of_Customer__c</field>
@@ -2225,41 +2250,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Knowledge__kav.FCS_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Firm__c.Bank_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>    
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Firm__c.BIC__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Firm__c.Comments_About_Firm__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Country__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Firm__c.Email__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Firm__c.IBAN__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Firm__c.Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2764,9 +2754,6 @@
         <recordType>Knowledge__kav.SSI</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>LIA_Firm__c-Legal Firm Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>LiveChatTranscript-Chat Transcript Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -2934,15 +2921,6 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>FCS_FrequentFlyer__x</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>LIA_Firm__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
      <objectPermissions>
@@ -3122,10 +3100,6 @@
         <tab>Group_Travel_Request__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>    
-    <tabVisibilities>
-        <tab>LIA_Firm__c</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
     <tabVisibilities>
         <tab>LIA_Major_Event__c</tab>
         <visibility>DefaultOn</visibility>

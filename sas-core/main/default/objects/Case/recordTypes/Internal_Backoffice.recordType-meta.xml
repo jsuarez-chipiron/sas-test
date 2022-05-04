@@ -16,6 +16,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Customer Claim</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Digital Channel Support</fullName>
             <default>false</default>
         </values>
@@ -3359,6 +3363,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Proration</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Puzzle</fullName>
             <default>false</default>
         </values>
@@ -4970,6 +4978,10 @@
         </values>
         <values>
             <fullName>Partner Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proration</fullName>
             <default>false</default>
         </values>
         <values>

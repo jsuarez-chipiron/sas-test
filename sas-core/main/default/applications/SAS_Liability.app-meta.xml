@@ -3,24 +3,6 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Legal_Firm_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>LIA_Firm__c</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Legal_Firm_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>LIA_Firm__c</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>Major_Event_Record_Page</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
@@ -642,6 +624,7 @@
     <tabs>LIA_Major_Event__c</tabs>
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>
+    <tabs>standard-Task</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SAS_Liability_UtilityBar</utilityBar>
     <workspaceConfig>
@@ -665,6 +648,9 @@
         </mappings>
         <mappings>
             <tab>standard-Dashboard</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-Task</tab>
         </mappings>
         <mappings>
             <tab>standard-report</tab>

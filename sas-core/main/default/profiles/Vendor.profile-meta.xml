@@ -1782,6 +1782,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Flight__c.Operating_Carrier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Flight__c.Scheduled_Arrival_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1940,6 +1945,11 @@
         <field>Group_Travel_Request__c.Number_Of_Infants__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Group_Travel_Request__c.Number_Of_Passengers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>      
     <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Number_Of_Special_Baggage__c</field>
@@ -2381,6 +2391,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Approval_Submitter__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Concerns_a_person_with_reduced_mobility__c</field>
+        <readable>true</readable>
+    </fieldPermissions>        
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Feedback_Category__c</field>
         <readable>true</readable>
@@ -2635,6 +2655,11 @@
         <field>Case.Group_Outbound_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Group_Departure_Airport__c</field>
+        <readable>true</readable>
+    </fieldPermissions>     
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Group_Destination__c</field>
@@ -2893,7 +2918,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Bank_Country__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -2963,13 +2988,18 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Currency__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Customer_Claim_Category__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.Customer_Claim_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>     
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Customer_Reason_for_EU261_Claim__c</field>
@@ -2985,6 +3015,11 @@
         <field>LIA_Claim__c.Deadline__c</field>
         <readable>false</readable>
     </fieldPermissions>
+     <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.Delay_Length__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.EuroBonus_Number__c</field>
@@ -2999,11 +3034,6 @@
         <editable>false</editable>
         <field>LIA_Claim__c.Flight_Number__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.LIA_Firm__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3109,42 +3139,7 @@
         <editable>false</editable>
         <field>Knowledge__kav.FCS_SubType__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-     <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Bank_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>    
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.BIC__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Comments_About_Firm__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Country__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.IBAN__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Firm__c.Phone__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
+    </fieldPermissions>   
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Major_Event__c.End_Date__c</field>
@@ -3285,9 +3280,6 @@
     <layoutAssignments>
         <layout>Knowledge__kav-SAS SSI Layout</layout>
         <recordType>Knowledge__kav.SSI</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>LIA_Firm__c-Legal Firm Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>LIA_Major_Event__c-Major Event Layout</layout>
@@ -3864,10 +3856,6 @@
     </tabVisibilities> 
     <tabVisibilities>
         <tab>LIA_Claim__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>LIA_Firm__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

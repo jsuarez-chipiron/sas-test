@@ -14,6 +14,10 @@
         <feedItemType>CreateRecordEvent</feedItemType>
         <relatedSObjectType>Case</relatedSObjectType>
     </criteria>
+    <criteria>
+        <feedItemType>CreateRecordEvent</feedItemType>
+        <relatedSObjectType>Task</relatedSObjectType>
+    </criteria>
     <description>Shows Email, Chatter Post, and case updates</description>
     <label>Email Post and Status Update</label>
 </CustomFeedFilter>

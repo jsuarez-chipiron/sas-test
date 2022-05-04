@@ -2,10 +2,84 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>53.0</apiVersion>
     <assignments>
+        <name>Assign_flight_information_from_mandatory_fields</name>
+        <label>Assign flight information from mandatory fields</label>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>pNRToAssign</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>PNR</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ticketNumberToAssign</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Ticket_Number</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>flightNumberToAssign</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Flight_Number</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>flightDateToAssign</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Flight_Date</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Customer_Claim</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_flight_information_from_optional_fields</name>
+        <label>Assign flight information from optional fields</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>pNRToAssign</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>PNR1</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ticketNumberToAssign</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Ticket_Number1</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>flightNumberToAssign</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Flight_Number1</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>flightDateToAssign</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Flight_Date1</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Customer_Claim</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Change_team_customer_feedback_to_claims_0</name>
         <label>Change team customer feedback to claims</label>
-        <locationX>50</locationX>
-        <locationY>1214</locationY>
+        <locationX>182</locationX>
+        <locationY>1550</locationY>
         <assignmentItems>
             <assignToReference>teamToAssign</assignToReference>
             <operator>Assign</operator>
@@ -20,8 +94,8 @@
     <assignments>
         <name>Leave_current_team</name>
         <label>Leave current team</label>
-        <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationX>446</locationX>
+        <locationY>1550</locationY>
         <assignmentItems>
             <assignToReference>teamToAssign</assignToReference>
             <operator>Assign</operator>
@@ -36,8 +110,8 @@
     <decisions>
         <name>Is_claim_created_from_a_customer_feedback_case</name>
         <label>Is claim created from a customer feedback case?</label>
-        <locationX>182</locationX>
-        <locationY>1094</locationY>
+        <locationX>314</locationX>
+        <locationY>1430</locationY>
         <defaultConnector>
             <targetReference>Leave_current_team</targetReference>
         </defaultConnector>
@@ -59,10 +133,47 @@
         </rules>
     </decisions>
     <decisions>
+        <name>What_is_Customer_Claim_Category</name>
+        <label>What is Customer Claim Category?</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Baggage_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Baggage</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_flight_information_from_optional_fields</targetReference>
+            </connector>
+            <label>Baggage</label>
+        </rules>
+        <rules>
+            <name>Something_else_not_baggage_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Baggage</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_flight_information_from_mandatory_fields</targetReference>
+            </connector>
+            <label>Something else, not baggage</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>What_is_the_type_of_customer</name>
         <label>What is the type of customer?</label>
-        <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationX>314</locationX>
+        <locationY>1094</locationY>
         <defaultConnector>
             <targetReference>Is_claim_created_from_a_customer_feedback_case</targetReference>
         </defaultConnector>
@@ -105,6 +216,14 @@
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>Customer_Claim_Type__c</picklistField>
+        <picklistObject>LIA_Claim__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>delayLengthOptions</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Delay_Length__c</picklistField>
         <picklistObject>LIA_Claim__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -152,8 +271,8 @@
     <recordCreates>
         <name>Create_Customer</name>
         <label>Create Customer</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationX>182</locationX>
+        <locationY>1214</locationY>
         <connector>
             <targetReference>Is_claim_created_from_a_customer_feedback_case</targetReference>
         </connector>
@@ -181,8 +300,8 @@
     <recordCreates>
         <name>Create_Customer_Claim</name>
         <label>Create Customer Claim</label>
-        <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationX>314</locationX>
+        <locationY>974</locationY>
         <connector>
             <targetReference>What_is_the_type_of_customer</targetReference>
         </connector>
@@ -196,6 +315,12 @@
             <field>BIC_Swift__c</field>
             <value>
                 <elementReference>BIC_SWIFT</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Bank_Account_Holder_Name__c</field>
+            <value>
+                <elementReference>Bank_Account_Holder_Name</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -307,6 +432,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Delay_Length__c</field>
+            <value>
+                <elementReference>Delay_Length</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>EuroBonus_Number__c</field>
             <value>
                 <elementReference>EuroBonus_Number</elementReference>
@@ -315,19 +446,19 @@
         <inputAssignments>
             <field>Flight_Date__c</field>
             <value>
-                <elementReference>Flight_Date</elementReference>
+                <elementReference>flightDateToAssign</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Flight_Number__c</field>
             <value>
-                <elementReference>Flight_Number</elementReference>
+                <elementReference>flightNumberToAssign</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Liability_PNR__c</field>
             <value>
-                <elementReference>PNR</elementReference>
+                <elementReference>pNRToAssign</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -357,7 +488,7 @@
         <inputAssignments>
             <field>Purchase_Price__c</field>
             <value>
-                <elementReference>Purchase_price</elementReference>
+                <elementReference>Purchase_Price</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -375,7 +506,7 @@
         <inputAssignments>
             <field>Ticket_Number__c</field>
             <value>
-                <elementReference>Ticket_Number</elementReference>
+                <elementReference>ticketNumberToAssign</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -390,11 +521,11 @@
     <recordLookups>
         <name>Get_Claim_Record_Type</name>
         <label>Get Claim Record Type</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Customer_Claim</targetReference>
+            <targetReference>What_is_Customer_Claim_Category</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -411,7 +542,7 @@
     <recordLookups>
         <name>Get_Current_Case_Information_0</name>
         <label>Get Current Case Information</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -432,8 +563,8 @@
     <recordUpdates>
         <name>Update_Case_with_Customer_Claim_Information</name>
         <label>Update Case with Customer Claim Information</label>
-        <locationX>182</locationX>
-        <locationY>1430</locationY>
+        <locationX>314</locationX>
+        <locationY>1766</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -451,7 +582,7 @@
         <inputAssignments>
             <field>Initially_Provided_PNR__c</field>
             <value>
-                <elementReference>PNR</elementReference>
+                <elementReference>pNRToAssign</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -490,7 +621,7 @@
     <screens>
         <name>Customer_Care_Creation</name>
         <label>Customer Care Creation</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -549,7 +680,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -564,7 +695,7 @@
             <dataType>String</dataType>
             <fieldText>Type of Customer</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <isRequired>false</isRequired>
+            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>Claim_Firm</name>
@@ -833,15 +964,133 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>FlightInfo</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt; Flight Information&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <name>BaggageInfo</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Baggage Information&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Baggage</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Customer_Care_Creation_Section4</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
                 <name>Customer_Care_Creation_Section4_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>PIR</name>
+                    <dataType>String</dataType>
+                    <fieldText>PIR</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Customer_Care_Creation_Section4_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Purchase_Price</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Purchase Price</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <scale>2</scale>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>CustomerClaimCategoryType.middleValue</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Baggage damaged</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Purchase_Year</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Purchase Year</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;YYYY format&lt;/p&gt;</helpText>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Please add valid year in YYYY format older than 1990&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Purchase_Year}&gt;= 1990 &amp;&amp; {!Purchase_Year}&lt; 2030</formulaExpression>
+                    </validationRule>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>CustomerClaimCategoryType.middleValue</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Baggage damaged</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Delay_Length</name>
+                    <choiceReferences>delayLengthOptions</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Delay Length</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>CustomerClaimCategoryType.middleValue</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Baggage delayed/lost</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Baggage</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>FlightInfo</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt; Flight Information&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Customer_Care_Creation_Section5</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Customer_Care_Creation_Section5_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>PNR</name>
@@ -866,7 +1115,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>Customer_Care_Creation_Section4_Column2</name>
+                <name>Customer_Care_Creation_Section5_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Ticket_Number</name>
@@ -891,6 +1140,81 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Baggage</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Customer_Care_Creation_Section6</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Customer_Care_Creation_Section6_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>PNR1</name>
+                    <dataType>String</dataType>
+                    <fieldText>PNR</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Flight_Number1</name>
+                    <dataType>String</dataType>
+                    <fieldText>Flight Number</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Customer_Care_Creation_Section6_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Ticket_Number1</name>
+                    <dataType>String</dataType>
+                    <fieldText>Ticket Number</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Flight_Date1</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Flight Date</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Baggage</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>BankInfo</name>
@@ -898,11 +1222,18 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Customer_Care_Creation_Section5</name>
+            <name>Customer_Care_Creation_Section7</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>Customer_Care_Creation_Section5_Column1</name>
+                <name>Customer_Care_Creation_Section7_Column1</name>
                 <fieldType>Region</fieldType>
+                <fields>
+                    <name>Bank_Account_Holder_Name</name>
+                    <dataType>String</dataType>
+                    <fieldText>Bank Account Holder Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
                 <fields>
                     <name>Bank_Name</name>
                     <dataType>String</dataType>
@@ -957,7 +1288,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>Customer_Care_Creation_Section5_Column2</name>
+                <name>Customer_Care_Creation_Section7_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>BIC_SWIFT</name>
@@ -982,93 +1313,6 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
-        </fields>
-        <fields>
-            <name>BaggageInfo</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Baggage Information&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Baggage</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Customer_Care_Creation_Section6</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Customer_Care_Creation_Section6_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>PIR</name>
-                    <dataType>String</dataType>
-                    <fieldText>PIR</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>true</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Customer_Care_Creation_Section6_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Purchase_price</name>
-                    <dataType>Number</dataType>
-                    <fieldText>Purchase price</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                    <scale>2</scale>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Customer_Care_Creation_Section6_Column3</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Purchase_Year</name>
-                    <dataType>Number</dataType>
-                    <fieldText>Purchase Year</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;YYYY format&lt;/p&gt;</helpText>
-                    <isRequired>false</isRequired>
-                    <scale>0</scale>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Baggage</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Major_Event</name>
@@ -1102,7 +1346,7 @@
     <screens>
         <name>Customer_Claim_Message</name>
         <label>Customer Claim Message</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1119,13 +1363,34 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Customer_Claim_Message</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>flightDateToAssign</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>flightNumberToAssign</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>pNRToAssign</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
@@ -1135,6 +1400,13 @@
     </variables>
     <variables>
         <name>teamToAssign</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ticketNumberToAssign</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

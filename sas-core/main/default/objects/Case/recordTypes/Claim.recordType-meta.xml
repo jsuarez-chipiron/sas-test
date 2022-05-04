@@ -2648,6 +2648,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Proration</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Puzzle</fullName>
             <default>false</default>
         </values>

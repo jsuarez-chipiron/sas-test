@@ -13,7 +13,7 @@ public with sharing class Settlements_IntegrationTest {
       Address_line_2__c = 'Line 2',
       Amount__c = 600,
       Bank_Country__c = 'Sweden',
-      BIC_Swift__c = 'TESTBIC',
+      BIC_Swift__c = 'AAAAAAB1',
       City__c = 'Stockholm',
       Country__c = 'Sweden',
       Currency__c = 'NOK',
@@ -31,7 +31,7 @@ public with sharing class Settlements_IntegrationTest {
       Address_line_2__c = 'Line 2',
       Amount__c = 600,
       Bank_Country__c = 'Sweden',
-      BIC_Swift__c = 'TESTBIC',
+      BIC_Swift__c = 'AAAAAAB1B1B',
       City__c = 'Stockholm',
       Country__c = 'Sweden',
       Currency__c = 'NOK',
@@ -44,8 +44,26 @@ public with sharing class Settlements_IntegrationTest {
       ),
       Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
+    Settlement__c settlement3 = new Settlement__c(
+      Address_line_1__c = 'Frösundaviks allé 1',
+      Address_line_2__c = 'Line 2',
+      Amount__c = 120,
+      Bank_Country__c = 'Sweden',
+      BIC_Swift__c = 'AAAAAAB1',
+      City__c = 'Stockholm',
+      Country__c = 'Sweden',
+      Currency__c = 'SEK',
+      Date_of_Exchange_Calculation__c = Date.today(),
+      Bank_Account_Number__c = 'SE0000000000000',
+      Payee_Name__c = 'Test Testsson',
+      Postal_Code__c = '00100',
+      RecordTypeId = Settlements.getRecordTypeId(
+        Settlements.RecordType.Monetary
+      ),
+      Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
+    );
 
-    insert new List<SObject>{ counter, settlement1, settlement2 };
+    insert new List<SObject>{ counter, settlement1, settlement2, settlement3 };
 
     Settlement_Item__c settlementItemToInclude1 = new Settlement_Item__c(
       Amount__c = 50,
@@ -68,6 +86,15 @@ public with sharing class Settlements_IntegrationTest {
       Settlement__c = settlement2.Id,
       Status__c = 'Waiting for transfer'
     );
+    Settlement_Item__c settlementItemToInclude4 = new Settlement_Item__c(
+      Amount__c = 120,
+      Net_Amount_After_Deductible__c = 50,
+      Is_Insured__c = true,
+      Cost_Account__c = '6741',
+      Currency__c = 'SEK',
+      Settlement__c = settlement3.Id,
+      Status__c = 'Waiting for transfer'
+    );
     Settlement_Item__c settlementItemNotToInclude1 = new Settlement_Item__c(
       Amount__c = 50,
       Cost_Account__c = '6727',
@@ -86,6 +113,7 @@ public with sharing class Settlements_IntegrationTest {
       settlementItemToInclude1,
       settlementItemToInclude2,
       settlementItemToInclude3,
+      settlementItemToInclude4,
       settlementItemNotToInclude1,
       settlementItemNotToInclude2
     };
@@ -112,6 +140,11 @@ public with sharing class Settlements_IntegrationTest {
       SELECT Id, Status__c, Accounting_File_Name__c, Name
       FROM Settlement_Item__c
       WHERE Id = :settlementItemToInclude3.Id
+    ];
+    Settlement_Item__c settlementItemToInclude4Afterwards = [
+      SELECT Id, Status__c, Accounting_File_Name__c, Name
+      FROM Settlement_Item__c
+      WHERE Id = :settlementItemToInclude4.Id
     ];
     Settlement_Item__c settlementItemNotToInclude1Afterwards = [
       SELECT Id, Status__c, Accounting_File_Name__c, Name
@@ -186,6 +219,12 @@ public with sharing class Settlements_IntegrationTest {
       'Settlement item in different currency should not be modified.'
     );
 
+    ContentVersion createdFile = [
+      SELECT Id, Title, VersionData
+      FROM ContentVersion
+      WHERE Title = :expectedFileTitle
+    ];
+
     String comparisonText = [
         SELECT Body
         FROM StaticResource
@@ -196,14 +235,25 @@ public with sharing class Settlements_IntegrationTest {
       .replace('{PR}', Datetime.now().format('yyMM'))
       .replace('{-S1NAME---}', settlementItemToInclude1Afterwards.Name)
       .replace('{-S2NAME---}', settlementItemToInclude2Afterwards.Name)
-      .replace('{-S3NAME---}', settlementItemToInclude3Afterwards.Name);
+      .replace('{-S3NAME---}', settlementItemToInclude3Afterwards.Name)
+      .replace('{-S4NAME---}', settlementItemToInclude4Afterwards.Name);
+    // TODO: Fix reconciliation reference date.
     /**
      * When the testing option 'Independent Auto-Number Sequence' is enabled, the
      * generated autonumbers for Settlement Items are of format {YYMMDD}{000000}
      * instead of the expected {YYMMDD}{0000}. Thus the placeholder in the
      * template has to be 2 characters longer than expected. Hopefully this
      * doesn't blow up anything else.
+     *
+     * This is also why the example file template has wrong spacing for the
+     * debit lines.
      */
+
+    System.assertEquals(
+      comparisonText,
+      createdFile.VersionData.toString(),
+      'Created payment file contents should match example file.'
+    );
 
     Racer_Integration_Counter__c counterAfterwards = [
       SELECT Id, Accounting_Verification_Number__c, Payment_Run_Id__c
@@ -236,7 +286,7 @@ public with sharing class Settlements_IntegrationTest {
       Address_line_2__c = 'Line 2',
       Amount__c = 400,
       Bank_Country__c = 'Sweden',
-      BIC_Swift__c = 'SBANFIHH',
+      BIC_Swift__c = 'AAAAAAB1',
       City__c = 'Stockholm',
       Control_verified__c = true,
       Country__c = 'Sweden',
@@ -255,7 +305,7 @@ public with sharing class Settlements_IntegrationTest {
       Address_line_2__c = 'Line 2',
       Amount__c = 500,
       Bank_Country__c = 'Sweden',
-      BIC_Swift__c = 'TESTBIC',
+      BIC_Swift__c = 'AAAAAAB1',
       City__c = 'Stockholm',
       Control_verified__c = true,
       Country__c = 'Sweden',
@@ -274,7 +324,7 @@ public with sharing class Settlements_IntegrationTest {
       Address_line_2__c = 'Line 2',
       Amount__c = 500,
       Bank_Country__c = 'Sweden',
-      BIC_Swift__c = 'TESTBIC',
+      BIC_Swift__c = 'AAAAAAB1',
       City__c = 'Stockholm',
       Control_verified__c = true,
       Country__c = 'Sweden',
@@ -293,7 +343,7 @@ public with sharing class Settlements_IntegrationTest {
       Address_line_2__c = 'Line 2',
       Amount__c = 600,
       Bank_Country__c = 'Norway',
-      BIC_Swift__c = 'TESTBIC',
+      BIC_Swift__c = 'AAAAAAB1',
       City__c = 'Stockholm',
       Control_verified__c = true,
       Country__c = 'Sweden',
@@ -417,7 +467,6 @@ public with sharing class Settlements_IntegrationTest {
     System.assertEquals(
       comparisonText,
       createdFile.VersionData.toString(),
-      //comparisonText,
       'Created payment file contents should match example file.'
     );
 
@@ -740,6 +789,405 @@ public with sharing class Settlements_IntegrationTest {
     System.assert(
       settlementAfterProcessing.Error_Message__c.contains('400'),
       'Settlement should have error detail set to contain 400 error code as returned from API.'
+    );
+  }
+
+  @IsTest
+  static void addItemsToSettlementCreatesItems() {
+    // Given
+    LIA_Claim__c claim = new LIA_Claim__c(
+      Customer_Claim_Category__c = 'Baggage',  
+      Customer_Claim_Type__c = 'Baggage damaged',
+      PIR__c = 'ARNSK12345'
+    );
+
+    insert claim;
+
+    Settlement__c settlement = new Settlement__c(
+      BIC_Swift__c = 'AAAAAAB1',
+      Claim__c = claim.Id,
+      Currency__c = 'SEK',
+      RecordTypeId = Settlements.getRecordTypeId(
+        Settlements.RecordType.Monetary
+      ),
+      Settlement_Status__c = Settlements.STATUS_IN_PROGRESS
+    );
+
+    insert settlement;
+
+    // When
+    Settlement_Item__c si1 = new Settlement_Item__c(
+      Amount__c = 200,
+      Cost_Account__c = '6741',
+      Comments__c = 'Test comment 1',
+      Customer_Name__c = 'Test Testsson 1'
+    );
+    Settlement_Item__c si2 = new Settlement_Item__c(
+      Amount__c = 400,
+      Cost_Account__c = '6741',
+      Comments__c = 'Test comment 2',
+      Customer_Name__c = 'Test Testsson 2'
+    );
+
+    List<Settlement_Item__c> items = new List<Settlement_Item__c>{ si1, si2 };
+
+    Test.startTest();
+    SettlementService.addItemsToSettlement(settlement.Id, items);
+    Test.stopTest();
+
+    // Then
+    Settlement__c settlementAfterProcessing = [
+      SELECT Id, Amount__c, Error_Message__c, External_Reference__c
+      FROM Settlement__c
+      WHERE Id = :settlement.Id
+    ];
+
+    List<Settlement_Item__c> itemsAfterInsert = [
+      SELECT Id, Amount__c, Comments__c, Cost_Account__c, Customer_Name__c
+      FROM Settlement_Item__c
+      WHERE Settlement__c = :settlement.Id
+    ];
+
+    Settlement_Item__c si1AfterProcessing;
+    Settlement_Item__c si2AfterProcessing;
+
+    System.assertEquals(
+      2,
+      itemsAfterInsert.size(),
+      'There should be two settlement items for the given settlement.'
+    );
+
+    for (Settlement_Item__c si : itemsAfterInsert) {
+      if (si.Comments__c == si1.Comments__c) {
+        si1AfterProcessing = si;
+      } else {
+        si2AfterProcessing = si;
+      }
+    }
+
+    System.assertEquals(
+      si1.Amount__c + si2.Amount__c,
+      settlementAfterProcessing.Amount__c,
+      'Updating settlement items should set the amount of the settlement equal to sum of its settlement items.'
+    );
+    System.assertEquals(
+      si1.Comments__c,
+      si1AfterProcessing.Comments__c,
+      'Comments should be stored in the created settlement items correctly.'
+    );
+    System.assertEquals(
+      si1.Cost_Account__c,
+      si1AfterProcessing.Cost_Account__c,
+      'Cost account should be stored in the created settlement items correctly.'
+    );
+    System.assertEquals(
+      si2.Customer_Name__c,
+      si2AfterProcessing.Customer_Name__c,
+      'Customer name should be stored in the created settlement items correctly.'
+    );
+  }
+
+  @IsTest
+  static void addItemsToSettlementUpdatesExistingItems() {
+    // Given
+    LIA_Claim__c claim = new LIA_Claim__c(
+      Customer_Claim_Category__c = 'Baggage',  
+      Customer_Claim_Type__c = 'Baggage damaged',
+      PIR__c = 'ARNSK12345'
+    );
+
+    insert claim;
+
+    Settlement__c settlement = new Settlement__c(
+      BIC_Swift__c = 'AAAAAAB1',
+      Claim__c = claim.Id,
+      Currency__c = 'SEK',
+      RecordTypeId = Settlements.getRecordTypeId(
+        Settlements.RecordType.Monetary
+      ),
+      Settlement_Status__c = Settlements.STATUS_IN_PROGRESS
+    );
+
+    insert settlement;
+
+    Settlement_Item__c si1 = new Settlement_Item__c(
+      Amount__c = 200,
+      Cost_Account__c = '6741',
+      Comments__c = 'Test comment 1',
+      Customer_Name__c = 'Test Testsson 1',
+      Settlement__c = settlement.Id
+    );
+    Settlement_Item__c si2 = new Settlement_Item__c(
+      Amount__c = 400,
+      Cost_Account__c = '6741',
+      Comments__c = 'Test comment 2',
+      Customer_Name__c = 'Test Testsson 2',
+      Settlement__c = settlement.Id
+    );
+    List<Settlement_Item__c> existingItems = new List<Settlement_Item__c>{
+      si1,
+      si2
+    };
+
+    insert existingItems;
+
+    Settlement_Item__c si1Update = new Settlement_Item__c(
+      Amount__c = 400,
+      Cost_Account__c = '6741',
+      Comments__c = 'Test comment 1',
+      Customer_Name__c = 'Test Testsson 1',
+      Settlement__c = settlement.Id,
+      Id = si1.Id
+    );
+
+    Settlement_Item__c si2Update = new Settlement_Item__c(
+      Amount__c = 300,
+      Cost_Account__c = '6741',
+      Comments__c = 'Test comment 2',
+      Customer_Name__c = 'Test Testsson 2¨',
+      Settlement__c = settlement.Id,
+      Id = si2.Id
+    );
+
+    List<Settlement_Item__c> updatedItems = new List<Settlement_Item__c>{
+      si1Update,
+      si2Update
+    };
+
+    // When
+    Test.startTest();
+    SettlementService.addItemsToSettlement(settlement.Id, updatedItems);
+    Test.stopTest();
+
+    List<Settlement_Item__c> itemsAfterInsert = [
+      SELECT Id, Amount__c, Comments__c, Cost_Account__c, Customer_Name__c
+      FROM Settlement_Item__c
+      WHERE Settlement__c = :settlement.Id
+    ];
+
+    System.assertEquals(
+      2,
+      itemsAfterInsert.size(),
+      'There should be two settlement items for the given settlement.'
+    );
+
+    Settlement_Item__c si1AfterProcessing;
+    Settlement_Item__c si2AfterProcessing;
+
+    for (Settlement_Item__c si : itemsAfterInsert) {
+      if (si.Comments__c == si1.Comments__c) {
+        si1AfterProcessing = si;
+      } else {
+        si2AfterProcessing = si;
+      }
+    }
+
+    System.assertEquals(
+      si1.Id,
+      si1AfterProcessing.Id,
+      'The existing settlement item should have been updated instead of creating a new one.'
+    );
+
+    System.assertEquals(
+      si2.Id,
+      si2AfterProcessing.Id,
+      'The existing settlement item should have been updated instead of creating a new one.'
+    );
+  }
+  @IsTest
+  static void addItemsToSettlementHandlesInsuranceCalculations() {
+    // Given
+    LIA_Claim__c claim = new LIA_Claim__c(
+      Customer_Claim_Category__c = 'Baggage',  
+      Customer_Claim_Type__c = 'Baggage damaged',
+      PIR__c = 'ARNSK12345'
+    );
+
+    insert claim;
+
+    Settlement__c settlement = new Settlement__c(
+      BIC_Swift__c = 'AAAAAAB1',
+      Claim__c = claim.Id,
+      Currency__c = 'USD',
+      RecordTypeId = Settlements.getRecordTypeId(
+        Settlements.RecordType.Monetary
+      ),
+      Settlement_Status__c = Settlements.STATUS_IN_PROGRESS
+    );
+
+    insert settlement;
+
+    // When
+    Settlement_Item__c si1 = new Settlement_Item__c(
+      Amount__c = 1200,
+      Cost_Account__c = '6741',
+      Comments__c = 'Test comment 1',
+      Customer_Name__c = 'Test Testsson 1'
+    );
+    Settlement_Item__c si2 = new Settlement_Item__c(
+      Amount__c = 400,
+      Cost_Account__c = '6741',
+      Comments__c = 'Test comment 2',
+      Customer_Name__c = 'Test Testsson 1'
+    );
+    Settlement_Item__c si3 = new Settlement_Item__c(
+      Amount__c = 400,
+      Cost_Account__c = '6741',
+      Comments__c = 'Test comment 3',
+      Customer_Name__c = 'Test Testsson 2'
+    );
+
+    List<Settlement_Item__c> items = new List<Settlement_Item__c>{
+      si1,
+      si2,
+      si3
+    };
+
+    Test.startTest();
+    SettlementService.addItemsToSettlement(settlement.Id, items);
+    Test.stopTest();
+
+    // Then
+    Settlement__c settlementAfterProcessing = [
+      SELECT Id, Amount__c, Error_Message__c, External_Reference__c
+      FROM Settlement__c
+      WHERE Id = :settlement.Id
+    ];
+
+    List<Settlement_Item__c> itemsAfterInsert = [
+      SELECT
+        Id,
+        Amount__c,
+        Comments__c,
+        Cost_Account__c,
+        Customer_Name__c,
+        Is_Insured__c,
+        Net_Amount_After_Deductible__c
+      FROM Settlement_Item__c
+      WHERE Settlement__c = :settlement.Id
+    ];
+
+    Settlement_Item__c si1AfterProcessing;
+    Settlement_Item__c si2AfterProcessing;
+    Settlement_Item__c si3AfterProcessing;
+
+    System.assertEquals(
+      3,
+      itemsAfterInsert.size(),
+      'There should be three settlement items for the given settlement.'
+    );
+
+    for (Settlement_Item__c si : itemsAfterInsert) {
+      if (si.Comments__c == si1.Comments__c) {
+        si1AfterProcessing = si;
+      } else if (si.Comments__c == si2.Comments__c) {
+        si2AfterProcessing = si;
+      } else {
+        si3AfterProcessing = si;
+      }
+    }
+
+    System.assertEquals(
+      si1.Amount__c +
+      si2.Amount__c +
+      si3.Amount__c,
+      settlementAfterProcessing.Amount__c,
+      'Settlement amount should not be affected by insurance calculations.'
+    );
+    System.assertEquals(
+      si1.Amount__c,
+      si1AfterProcessing.Amount__c,
+      'Settlement item amounts should not be affected by insurance calculations.'
+    );
+    System.assertEquals(
+      si2.Amount__c,
+      si2AfterProcessing.Amount__c,
+      'Settlement item amounts should not be affected by insurance calculations.'
+    );
+    System.assertEquals(
+      si3.Amount__c,
+      si3AfterProcessing.Amount__c,
+      'Settlement item amounts should not be affected by insurance calculations.'
+    );
+    System.assertEquals(
+      true,
+      si1.Is_Insured__c,
+      'Settlement items should be set as insured.'
+    );
+    System.assertEquals(
+      true,
+      si2.Is_Insured__c,
+      'Settlement items should be set as insured.'
+    );
+    System.assertEquals(
+      true,
+      si3.Is_Insured__c,
+      'Settlement items should be set as insured.'
+    );
+    System.assertEquals(
+      0, // Assuming deductible of 1250.
+      si1AfterProcessing.Net_Amount_After_Deductible__c,
+      'First settlement for first customer should have all of payment fall under deductible.'
+    );
+    System.assertEquals(
+      350, // Assuming deductible of 1250.
+      si2AfterProcessing.Net_Amount_After_Deductible__c,
+      'Second settlement for first customer should have net amount left after deductible.'
+    );
+
+    System.assertEquals(
+      0, // Assuming deductible of 1250.
+      si3AfterProcessing.Net_Amount_After_Deductible__c,
+      'Different customer should have all of payment fall under deductible.'
+    );
+  }
+  @IsTest
+  static void addItemsToSettlemenFailsIfSettlementHasNoCurrency() {
+    // Given
+    LIA_Claim__c claim = new LIA_Claim__c(
+      Customer_Claim_Category__c = 'Baggage',  
+      Customer_Claim_Type__c = 'Baggage damaged',
+      PIR__c = 'ARNSK12345'
+    );
+
+    insert claim;
+
+    Settlement__c settlement = new Settlement__c(
+      BIC_Swift__c = 'AAAAAAB1',
+      Claim__c = claim.Id,
+      RecordTypeId = Settlements.getRecordTypeId(
+        Settlements.RecordType.Monetary
+      ),
+      Settlement_Status__c = Settlements.STATUS_IN_PROGRESS
+    );
+
+    insert settlement;
+
+    Settlement_Item__c si1 = new Settlement_Item__c(
+      Amount__c = 200,
+      Cost_Account__c = '6741',
+      Comments__c = 'Test comment 1',
+      Customer_Name__c = 'Test Testsson 1'
+    );
+
+    List<Settlement_Item__c> items = new List<Settlement_Item__c>{ si1 };
+
+    Exception caughtException;
+
+    // When
+    Test.startTest();
+    try {
+      SettlementService.addItemsToSettlement(settlement.Id, items);
+    } catch (Exception e) {
+      caughtException = e;
+    }
+    Test.stopTest();
+
+    // Then
+    System.assertEquals(
+      'Settlements.UpdateSettlementException',
+      caughtException.getTypeName(),
+      'Missing currency from settlement should have caused an UpdateSettlementException.'
     );
   }
 }

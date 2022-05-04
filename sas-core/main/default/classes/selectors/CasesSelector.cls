@@ -8,6 +8,8 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
       Case.FCS_EBLevel__c,
       Case.FCS_EBNumber__c,
       Case.FCS_Case_Reason__c,
+      Case.FCS_CaseType__c,
+      Case.ParentId,
       Case.RecordTypeId,
       Case.Status,
       Case.Department__c,
@@ -41,6 +43,12 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
       .addQueryFactorySubselect(caseQF);
 
     return (List<Case>) Database.query(caseQF.toSOQL());
+  }
+
+  public List<Case> selectByParentId(Set<Id> parentIds) {
+    return (List<Case>) Database.query(
+      newQueryFactory().setCondition('ParentId in :parentIds').toSOQL()
+    );
   }
 
   public List<Case> selectByProactivityId(Id proactivityId) {

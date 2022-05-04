@@ -21,6 +21,30 @@ public without sharing class Claims extends fflib_SObjectDomain {
     CustomerClaim
   }
 
+  public enum Category {
+    AccidentAndInjury,
+    AirportExperience,
+    Baggage,
+    Booking,
+    FlightDisruptions,
+    FlightExperience,
+    Other,
+    PassengerIrregularities,
+    TravelExtras
+  }
+
+  public static Map<String, Category> categoryNameToEnum = new Map<String, Category>{
+    'Accident &amp; injury' => Category.AccidentAndInjury,
+    'Airport experience' => Category.AirportExperience,
+    'Baggage' => Category.Baggage,
+    'Booking' => Category.Booking,
+    'Flight disruptions' => Category.FlightDisruptions,
+    'Flight experience' => Category.FlightExperience,
+    'Other' => Category.Other,
+    'Passenger irregularities' => Category.PassengerIrregularities,
+    'Travel extras bought not rendered' => Category.TravelExtras
+  };
+
   public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
     RecordType.CustomerClaim => 'CustomerClaim'
   };
@@ -41,6 +65,7 @@ public without sharing class Claims extends fflib_SObjectDomain {
   public override void onAfterInsert() {
     checkIfExistsInCARE();
     assignToQueueUsingFlow();
+    updateParentCaseBookings();
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
@@ -50,12 +75,71 @@ public without sharing class Claims extends fflib_SObjectDomain {
   }
 
   public override void onBeforeInsert() {
-    capitalisePNR();
+    normalizeFields();
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
     clearClaimInCareField();
-    capitalisePNR();
+    normalizeFields();
+  }
+
+  /**
+   * A claim can be prorated if it is a baggage claim and has at least one
+   * leg with an operating carrier which is not a part of Star Alliance.
+   *
+   * Proration of a claim is splitting costs related to a baggage claim between
+   * the airlines in the booking the claims is about. See Confluence for more
+   * details.
+   *
+   * @return A map from claim id to whether that claim can be prorated.
+   */
+  public Map<Id, Boolean> canBeProrated() {
+    Set<Id> parentCaseIds = new Set<Id>();
+    for (LIA_Claim__c claim : instanceRecords) {
+      if (
+        categoryNameToEnum.get(claim.Customer_Claim_Category__c) ==
+        Category.Baggage
+      ) {
+        parentCaseIds.add(claim.Case__c);
+      }
+    }
+
+    Map<Id, Boolean> bookingIdsToProrationStatus = new Map<Id, Boolean>();
+    List<Booking__c> bookingsForInstanceClaims = new List<Booking__c>();
+
+    if (parentCaseIds.size() > 0) {
+      bookingsForInstanceClaims = BookingsSelector.newInstance()
+        .selectByCaseId(parentCaseIds);
+
+      // Claim can potentially be prorated if the booking it is about
+      // has an operating carrier which is not a part of Star Alliance.
+      bookingIdsToProrationStatus = Bookings.newInstance(
+          bookingsForInstanceClaims
+        )
+        .haveNonStarAllianceOperatingCarriers();
+    }
+
+    Map<Id, Boolean> claimIdsToProrationStatus = new Map<Id, Boolean>();
+
+    for (LIA_Claim__c claim : instanceRecords) {
+      claimIdsToProrationStatus.put(claim.Id, false);
+      if (
+        categoryNameToEnum.get(claim.Customer_Claim_Category__c) ==
+        Category.Baggage
+      ) {
+        for (Booking__c booking : bookingsForInstanceClaims) {
+          if (booking.Booking_Reference__c == claim.Liability_PNR__c) {
+            claimIdsToProrationStatus.put(
+              claim.Id,
+              bookingIdsToProrationStatus.get(booking.Id)
+            );
+            break;
+          }
+        }
+      }
+    }
+
+    return claimIdsToProrationStatus;
   }
 
   private void assignToQueueUsingFlow() {
@@ -114,6 +198,19 @@ public without sharing class Claims extends fflib_SObjectDomain {
     }
   }
 
+  private void updateParentCaseBookings() {
+    if (instanceRecords.size() == 1) {
+      LIA_Claim__c claim = instanceRecords[0];
+      // TODO: Fix this when we can support several bookings at once
+      if (claim.Liability_PNR__c != null) {
+        BookingService.addBookingToCaseAsync(
+          claim.Case__c,
+          claim.Liability_PNR__c
+        );
+      }
+    }
+  }
+
   private void updateParentCaseBookings(Map<Id, LIA_Claim__c> existingRecords) {
     if (instanceRecords.size() == 1) {
       LIA_Claim__c claim = instanceRecords[0];
@@ -134,10 +231,19 @@ public without sharing class Claims extends fflib_SObjectDomain {
     }
   }
 
-  private void capitalisePNR() {
+  private void normalizeFields() {
     for (LIA_Claim__c claim : instanceRecords) {
-      if (claim.Liability_PNR__c != null) {
+      if (!String.isBlank(claim.Liability_PNR__c)) {
         claim.Liability_PNR__c = claim.Liability_PNR__c.toUpperCase();
+      }
+      if (!String.isBlank(claim.BIC_Swift__c)) {
+        claim.BIC_Swift__c = claim.BIC_Swift__c.toUpperCase();
+      }
+      if (!String.isBlank(claim.Bank_Account_Number__c)) {
+        claim.Bank_Account_Number__c = claim.Bank_Account_Number__c.toUpperCase();
+      }
+      if (!String.isBlank(claim.Flight_Number__c)) {
+        claim.Flight_Number__c = claim.Flight_Number__c.toUpperCase();
       }
     }
   }

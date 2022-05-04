@@ -12,6 +12,11 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
+                <field>Full_Name__c</field>
+                <uiBehavior>Readonly</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
                 <field>Trip_Type__c</field>
                 <uiBehavior>Readonly</uiBehavior>
             </quickActionLayoutItems>
@@ -30,6 +35,11 @@
             <quickActionLayoutItems>
                 <emptySpace>true</emptySpace>
                 <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Number_Of_Passengers__c</field>
+                <uiBehavior>Readonly</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>

@@ -25,12 +25,14 @@ public without sharing class Cases extends fflib_SObjectDomain {
 
   public enum RecordType {
     Channel,
-    CustomerClaim
+    CustomerClaim,
+    InternalBackoffice
   }
 
   public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
     RecordType.Channel => 'Channel',
-    RecordType.CustomerClaim => 'Customer Claim'
+    RecordType.CustomerClaim => 'Customer Claim',
+    RecordType.InternalBackoffice => 'Internal/Backoffice'
   };
 
   private static Map<RecordType, Id> recordTypeToId = new Map<RecordType, String>();
@@ -45,6 +47,10 @@ public without sharing class Cases extends fflib_SObjectDomain {
     }
     return rtId;
   }
+
+  public static Map<String, RecordType> defaultRecordTypeForDepartment = new Map<String, RecordType>{
+    'Customer Claim' => RecordType.CustomerClaim
+  };
 
   public override void onAfterDelete() {
     removeRelatedSurveyInvitations();
@@ -65,6 +71,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
     );
     lockClaimsAfterMerge((Map<Id, Case>) existingRecords);
     closeClaimCaseAfterApproval();
+    createProrationCasesForBaggageClaims();
   }
 
   public override void onBeforeInsert() {
@@ -328,7 +335,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
 
     if (c.accountId == null) {
       String searchField = !String.isBlank(c.FCS_EBNumber__c)
-        ? 'FCS_EBNumber__c'
+        ? 'EBNumber__c'
         : 'EmailPersonal__c';
       String searchValue = !String.isBlank(c.FCS_EBNumber__c)
         ? c.FCS_EBNumber__c
@@ -757,6 +764,86 @@ public without sharing class Cases extends fflib_SObjectDomain {
         notification.setBody(notificationBody);
         notification.send(new Set<String>{ c.OwnerId });
       }
+    }
+  }
+
+  /**
+   * Checks if any closed cases are baggage claim cases and if so, creates
+   * support cases for them for proration.
+   */
+  private void createProrationCasesForBaggageClaims() {
+    List<Case> closedClaimCases = new List<Case>();
+    List<Id> claimIds = new List<Id>();
+    for (Case c : instanceRecords) {
+      if (
+        c.RecordTypeId == getRecordTypeId(RecordType.CustomerClaim) &&
+        c.Status == STATUS_CLOSED &&
+        !c.Created_Support_Case__c
+      ) {
+        closedClaimCases.add(c);
+        claimIds.add(c.LIA_Claim__c);
+      }
+    }
+
+    List<Case> casesToHandle = new List<Case>();
+    if (closedClaimCases.size() > 0) {
+      // We have cases which have been closed and include claims which means
+      // they potentially need proration. Let's first check we don't already
+      // have an open proration case for them.
+      List<Case> childCasesFound = CasesSelector.newInstance()
+        .selectByParentId((new Map<Id, Case>(closedClaimCases)).keySet());
+
+      if (childCasesFound.size() == 0) {
+        casesToHandle = closedClaimCases;
+      } else {
+        for (Case c : closedClaimCases) {
+          Boolean prorationCaseExists = false;
+
+          for (Case childCase : childCasesFound) {
+            Boolean isAProrationCaseForParent =
+              childCase.ParentId == c.Id &&
+              childCase.FCS_CaseType__c == 'Proration';
+            if (isAProrationCaseForParent) {
+              prorationCaseExists = true;
+            }
+          }
+
+          if (!prorationCaseExists) {
+            // No proration case exists for this claim, we should check if we need to create one.
+            casesToHandle.add(c);
+          }
+        }
+      }
+    }
+
+    if (casesToHandle.size() > 0) {
+      List<LIA_Claim__c> claimsForCases = ClaimsSelector.newInstance()
+        .selectById(new Set<Id>(claimIds));
+
+      Map<Id, Boolean> claimIdToProrationStatus = Claims.newInstance(
+          claimsForCases
+        )
+        .canBeProrated();
+
+      fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+
+      for (Case c : casesToHandle) {
+        if (claimIdToProrationStatus.get(c.LIA_Claim__c)) {
+          CaseService.createSupportCase(
+            'Customer Claim',
+            'Proration',
+            new Case(
+              Subject = 'Proration case for claim: ' + c.CaseNumber,
+              RecordTypeId = getRecordTypeId(RecordType.InternalBackoffice),
+              FCS_CaseType__c = 'Proration'
+            ),
+            c.Id,
+            uow
+          );
+        }
+      }
+
+      uow.commitWork();
     }
   }
 

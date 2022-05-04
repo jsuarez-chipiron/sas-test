@@ -1,20 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>51.0</apiVersion>
+    <assignments>
+        <name>Assign_mandatory_name_values</name>
+        <label>Assign mandatory name values</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>firstName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>First_Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>lastName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Last_Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Liability_Claim</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_optional_name_values</name>
+        <label>Assign optional name values</label>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>firstName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>First_Name1</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>lastName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Last_Name1</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Liability_Claim</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <description>To show the none option</description>
         <name>None</name>
         <choiceText>--None--</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue/>
+            <stringValue></stringValue>
         </value>
     </choices>
     <decisions>
         <name>What_is_the_type_of_customer</name>
         <label>What is the type of customer?</label>
         <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationY>1094</locationY>
         <defaultConnector>
             <targetReference>Update_Case_With_Liability_Claim</targetReference>
         </defaultConnector>
@@ -31,6 +77,31 @@
             </conditions>
             <connector>
                 <targetReference>Create_Customer</targetReference>
+            </connector>
+            <label>Private customer</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>What_is_the_type_of_customer_0</name>
+        <label>What is the type of customer?</label>
+        <locationX>182</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>Assign_optional_name_values</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other representative</defaultConnectorLabel>
+        <rules>
+            <name>Private_customer_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Type_of_Customer</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Private customer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_mandatory_name_values</targetReference>
             </connector>
             <label>Private customer</label>
         </rules>
@@ -100,7 +171,7 @@
     <formulas>
         <name>fullCustomerName</name>
         <dataType>String</dataType>
-        <expression>{!First_Name} + &quot; &quot;+ {!Last_Name}</expression>
+        <expression>{!firstName} + &quot; &quot;+ {!lastName}</expression>
     </formulas>
     <interviewLabel>LIA Create Liability Claim {!$Flow.CurrentDateTime}</interviewLabel>
     <label>LIA Create Liability Claim</label>
@@ -127,7 +198,7 @@
         <name>Create_Customer</name>
         <label>Create Customer</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>1214</locationY>
         <connector>
             <targetReference>Update_Case_With_Liability_Claim</targetReference>
         </connector>
@@ -140,13 +211,13 @@
         <inputAssignments>
             <field>First_Name__c</field>
             <value>
-                <elementReference>First_Name</elementReference>
+                <elementReference>firstName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Last_Name__c</field>
             <value>
-                <elementReference>Last_Name</elementReference>
+                <elementReference>lastName</elementReference>
             </value>
         </inputAssignments>
         <object>Customer__c</object>
@@ -157,7 +228,7 @@
         <name>Create_Liability_Claim</name>
         <label>Create Liability Claim</label>
         <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationY>974</locationY>
         <connector>
             <targetReference>What_is_the_type_of_customer</targetReference>
         </connector>
@@ -236,7 +307,7 @@
         <inputAssignments>
             <field>Contact_First_Name__c</field>
             <value>
-                <elementReference>First_Name</elementReference>
+                <elementReference>firstName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -248,7 +319,7 @@
         <inputAssignments>
             <field>Contact_Last_Name__c</field>
             <value>
-                <elementReference>Last_Name</elementReference>
+                <elementReference>lastName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -399,7 +470,7 @@
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Liability_Claim</targetReference>
+            <targetReference>What_is_the_type_of_customer_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -461,7 +532,7 @@
         <name>Update_Case_With_Liability_Claim</name>
         <label>Update Case With Liability Claim</label>
         <locationX>182</locationX>
-        <locationY>1094</locationY>
+        <locationY>1430</locationY>
         <connector>
             <targetReference>Outcome</targetReference>
         </connector>
@@ -511,7 +582,7 @@
                     <fieldText>CARE Case Number</fieldText>
                     <fieldType>InputField</fieldType>
                     <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Please add the complain CARE Case Number&lt;/span&gt;&lt;/p&gt;</helpText>
-                    <isRequired>true</isRequired>
+                    <isRequired>false</isRequired>
                     <validationRule>
                         <errorMessage>&lt;p&gt;There is limit of 100 characters for this field&lt;/p&gt;</errorMessage>
                         <formulaExpression>LEN({!CARE_Case_Number}) &lt;= 100</formulaExpression>
@@ -804,7 +875,7 @@
             <dataType>String</dataType>
             <fieldText>Type of Customer</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <isRequired>false</isRequired>
+            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>Claim_Firm</name>
@@ -870,14 +941,68 @@
                     <dataType>String</dataType>
                     <fieldText>First Name</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Type_of_Customer</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Private customer</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <fields>
                     <name>Last_Name</name>
                     <dataType>String</dataType>
                     <fieldText>Last Name</fieldText>
                     <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Type_of_Customer</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Private customer</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>First_Name1</name>
+                    <dataType>String</dataType>
+                    <fieldText>First Name</fieldText>
+                    <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Type_of_Customer</leftValueReference>
+                            <operator>NotEqualTo</operator>
+                            <rightValue>
+                                <stringValue>Private customer</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Last_Name1</name>
+                    <dataType>String</dataType>
+                    <fieldText>Last Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Type_of_Customer</leftValueReference>
+                            <operator>NotEqualTo</operator>
+                            <rightValue>
+                                <stringValue>Private customer</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <fields>
                     <name>Email</name>
@@ -991,7 +1116,7 @@
                     <dataType>String</dataType>
                     <fieldText>Country</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1014,6 +1139,13 @@
             <fields>
                 <name>New_Liability_Claim_Section6_Column1</name>
                 <fieldType>Region</fieldType>
+                <fields>
+                    <name>Bank_Account_Holder_Name</name>
+                    <dataType>String</dataType>
+                    <fieldText>Bank Account Holder Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
                 <fields>
                     <name>Bank_Name</name>
                     <dataType>String</dataType>
@@ -1084,13 +1216,6 @@
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
-                <fields>
-                    <name>Bank_Account_Holder_Name</name>
-                    <dataType>String</dataType>
-                    <fieldText>Bank Account Holder Name</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
@@ -1108,7 +1233,7 @@
         <name>Outcome</name>
         <label>Outcome</label>
         <locationX>182</locationX>
-        <locationY>1214</locationY>
+        <locationY>1550</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1128,6 +1253,20 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>firstName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>lastName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <description>Case Id when the flow is called from</description>
         <name>recordId</name>
