@@ -25,6 +25,7 @@ public without sharing class ExchangeRates extends fflib_SObjectDomain {
     'AED',
     'CAD',
     'CHF',
+    'CNY',
     'CZK',
     'DKK',
     'EUR',
@@ -40,8 +41,34 @@ public without sharing class ExchangeRates extends fflib_SObjectDomain {
     'USD'
   };
 
+  //Units of USD in final XDR => USD calculation.
+  public static final Decimal SPECIAL_DRAWING_RIGHTS_USD_UNITS = 0.58252;
+  // Units of currency in each respective currency in the currency basket used for calculating the exchange rate of XDR => USD.
+  // The number of units is set by the IMF according to the weight of each currency in the basket.
+  public static final Map<String, Decimal> currencyToUnitsOfCurrency = new Map<String, Decimal>{
+    'EUR' => 0.38671,
+    'CNY' => 1.0174,
+    'JPY' => 11.900,
+    'GBP' => 0.085946
+  };
+
   public static void handleCurrencyFiles(List<Id> contentVersionIds) {
+    if (contentVersionIds.size() == 0) {
+      return;
+    }
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    Map<String, Exchange_Rate__c> newRates = generateExchangeRatesFromFile(
+      contentVersionIds,
+      uow
+    );
+    generateXdrExchangeRates(newRates, uow);
+    uow.commitWork();
+  }
+
+  private static Map<String, Exchange_Rate__c> generateExchangeRatesFromFile(
+    List<Id> contentVersionIds,
+    fflib_ISObjectUnitOfWork uow
+  ) {
     List<ContentVersion> cvs = contentVersionsSel.selectById(
       new Set<Id>(contentVersionIds),
       true
@@ -78,6 +105,7 @@ public without sharing class ExchangeRates extends fflib_SObjectDomain {
               Date__c = Date.valueOf(dataFields[3]),
               Name = dataFields[0] + '-' + dataFields[1]
             );
+            existingRatesByName.put(newRate.Name, newRate);
             uow.registerNew(newRate);
           } else {
             e.Rate__c = Decimal.valueOf(dataFields[2]);
@@ -87,6 +115,76 @@ public without sharing class ExchangeRates extends fflib_SObjectDomain {
         }
       }
     }
-    uow.commitWork();
+    return existingRatesByName;
+  }
+
+  /*
+   * Calculate exchange rate for XDR => Other currency
+   * Rate equals 1 XDR in USD expressed in other currency
+   */
+  private static void generateXdrExchangeRates(
+    Map<String, Exchange_Rate__c> allRatesByName,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    Decimal newRate = 0;
+    Decimal oneXdrInUsd = calculateOneXdrInUsd(allRatesByName);
+    Date dateOfGeneration = allRatesByName.size() > 0
+      ? allRatesByName.values()[0].Date__c
+      : Date.today();
+
+    //Update XDR => Currency rate
+    //No need to convert the SDR amount if currency is USD
+    //Convert SDR amount to active currency for non-USD currencies
+    for (String activeCurrency : ACTIVE_CURRENCIES) {
+      if (activeCurrency == 'USD') {
+        newRate = oneXdrInUsd;
+      } else {
+        Exchange_Rate__c usdToActiveCurrencyRate = allRatesByName.get(
+          'USD-' + activeCurrency
+        );
+        if (usdToActiveCurrencyRate != null) {
+          newRate = oneXdrInUsd * usdToActiveCurrencyRate.Rate__c;
+        }
+      }
+
+      Exchange_Rate__c existingXdrRate = allRatesByName.get(
+        'XDR-' + activeCurrency
+      );
+      if (existingXdrRate == null) {
+        Exchange_Rate__c newXdrRate = new Exchange_Rate__c(
+          From_Currency__c = 'XDR',
+          To_Currency__c = activeCurrency,
+          Rate__c = newRate,
+          Date__c = dateOfGeneration,
+          Name = 'XDR-' + activeCurrency
+        );
+        uow.registerNew(newXdrRate);
+      } else {
+        existingXdrRate.Rate__c = newRate;
+        existingXdrRate.Date__c = dateOfGeneration;
+        uow.registerDirty(existingXdrRate);
+      }
+    }
+  }
+
+  private static Decimal calculateOneXdrInUsd(
+    Map<String, Exchange_Rate__c> allRatesByName
+  ) {
+    // The exchange rate for XDR => USD  is set as the sum of the units of currency for each currency in the XDR basket expressed in USD.
+    // 1 XDR = [calculated sum] USD
+    Decimal oneXdrInUsd = SPECIAL_DRAWING_RIGHTS_USD_UNITS;
+
+    for (String basketCurrency : currencyToUnitsOfCurrency.keySet()) {
+      Exchange_Rate__c basketCurrencyToUsd = allRatesByName.get(
+        basketCurrency + '-USD'
+      );
+      if (basketCurrencyToUsd != null) {
+        oneXdrInUsd +=
+          currencyToUnitsOfCurrency.get(basketCurrency) *
+          basketCurrencyToUsd.Rate__c;
+      }
+    }
+    //Round to six decimal places
+    return oneXdrInUsd.setScale(6);
   }
 }

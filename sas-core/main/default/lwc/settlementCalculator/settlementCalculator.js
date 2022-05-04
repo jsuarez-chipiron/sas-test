@@ -181,6 +181,9 @@ export default class SettlementCalculator extends LightningElement {
     const settlementFound = !error && data != undefined && data.length === 1;
     if (settlementFound) {
       const settlement = data[0];
+      this.isBaggageClaim =
+        settlement.Claim__r.Customer_Claim_Category__c === "Baggage";
+
       const hasSettlementItems =
         settlement.Settlement_Items__r != undefined &&
         settlement.Settlement_Items__r.length > 0;
@@ -195,8 +198,6 @@ export default class SettlementCalculator extends LightningElement {
             comments: settlementItem.Comments__c
           })
         );
-        this.isBaggageClaim =
-          settlement.Claim__r.Customer_Claim_Category__c === "Baggage";
         this.findCustomersAboveMaxLiability();
       }
     } else {
