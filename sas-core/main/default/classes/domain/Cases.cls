@@ -778,7 +778,8 @@ public without sharing class Cases extends fflib_SObjectDomain {
       if (
         c.RecordTypeId == getRecordTypeId(RecordType.CustomerClaim) &&
         c.Status == STATUS_CLOSED &&
-        !c.Created_Support_Case__c
+        !c.Created_Support_Case__c &&
+        c.LIA_Claim__c != null
       ) {
         closedClaimCases.add(c);
         claimIds.add(c.LIA_Claim__c);
@@ -820,6 +821,10 @@ public without sharing class Cases extends fflib_SObjectDomain {
       List<LIA_Claim__c> claimsForCases = ClaimsSelector.newInstance()
         .selectById(new Set<Id>(claimIds));
 
+      if (claimsForCases == null || claimsForCases.size() == 0) {
+        // No claims found for the cases.
+        return;
+      }
       Map<Id, Boolean> claimIdToProrationStatus = Claims.newInstance(
           claimsForCases
         )
