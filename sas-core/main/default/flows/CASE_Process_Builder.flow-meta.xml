@@ -4,7 +4,7 @@
     <decisions>
         <name>Close_the_Case_directly</name>
         <label>Close the Case directly</label>
-        <locationX>446</locationX>
+        <locationX>176</locationX>
         <locationY>335</locationY>
         <defaultConnector>
             <targetReference>Notify_Case_Owner_of_New_Response</targetReference>
@@ -44,7 +44,7 @@
     <decisions>
         <name>Notify_Case_Owner_of_New_Response</name>
         <label>Notify Case Owner of New Response</label>
-        <locationX>842</locationX>
+        <locationX>484</locationX>
         <locationY>455</locationY>
         <defaultConnector>
             <targetReference>Update_Case_Fields</targetReference>
@@ -88,10 +88,63 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Should_survey_be_sent_after_closing_the_case</name>
+        <label>Should survey be sent after closing the case?</label>
+        <locationX>484</locationX>
+        <locationY>1247</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>SendSurveyOutcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>005</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.FirstName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Automated</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.LastName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Process</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FCS_LatestSurveyInvitation__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Chat</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Survey_Invitation_on_Case</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Update_Case_Fields</name>
         <label>Update Case Fields</label>
-        <locationX>842</locationX>
+        <locationX>484</locationX>
         <locationY>791</locationY>
+        <defaultConnector>
+            <targetReference>Should_survey_be_sent_after_closing_the_case</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Set_First_Closing_Date</name>
@@ -182,8 +235,8 @@
     <recordUpdates>
         <name>Close_the_Case</name>
         <label>Close the Case</label>
-        <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationX>176</locationX>
+        <locationY>1799</locationY>
         <inputAssignments>
             <field>Status</field>
             <value>
@@ -195,8 +248,11 @@
     <recordUpdates>
         <name>Update_First_Closing_Date</name>
         <label>Update First Closing Date</label>
-        <locationX>578</locationX>
+        <locationX>220</locationX>
         <locationY>911</locationY>
+        <connector>
+            <targetReference>Should_survey_be_sent_after_closing_the_case</targetReference>
+        </connector>
         <inputAssignments>
             <field>FCS_FirstClosingDate__c</field>
             <value>
@@ -208,7 +264,7 @@
     <recordUpdates>
         <name>Update_Reopened_Count</name>
         <label>Update Reopened Count</label>
-        <locationX>842</locationX>
+        <locationX>484</locationX>
         <locationY>911</locationY>
         <inputAssignments>
             <field>FCS_ReopenedCount__c</field>
@@ -219,7 +275,7 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>320</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Close_the_Case_directly</targetReference>
@@ -230,9 +286,23 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>Create_Survey_Invitation_on_Case</name>
+        <label>Create Survey Invitation on Case</label>
+        <locationX>352</locationX>
+        <locationY>1367</locationY>
+        <flowName>Create_Survey_Invitation_on_Case</flowName>
+        <inputAssignments>
+            <name>caseId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
         <name>Notify_Owner_Liability</name>
         <label>Notify Owner - Liability</label>
-        <locationX>710</locationX>
+        <locationX>352</locationX>
         <locationY>575</locationY>
         <connector>
             <targetReference>Update_Case_Fields</targetReference>
