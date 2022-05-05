@@ -72,6 +72,14 @@
         <type>Flexipage</type>
         <pageOrSobjectType>Settlement__c</pageOrSobjectType>
     </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <content>SAS_Home_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>standard-home</pageOrSobjectType>
+    </actionOverrides>
     <brand>
         <headerColor>#000099</headerColor>
         <logo>SAS_logo</logo>
@@ -301,6 +309,7 @@
         <type>Flexipage</type>
         <profile>Vendor</profile>
     </profileActionOverrides>
+    <tabs>standard-home</tabs>
     <tabs>standard-Case</tabs>
     <tabs>LIA_Claim__c</tabs>
     <tabs>Settlement__c</tabs>
@@ -338,6 +347,9 @@
         </mappings>
         <mappings>
             <tab>standard-Task</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-home</tab>
         </mappings>
         <mappings>
             <tab>standard-report</tab>
