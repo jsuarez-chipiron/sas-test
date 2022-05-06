@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Priority__c</field>
-        <value xsi:type="xsd:double">50.0</value>
+        <value xsi:type="xsd:double">60.0</value>
     </values>
     <values>
         <field>TestOnly__c</field>
