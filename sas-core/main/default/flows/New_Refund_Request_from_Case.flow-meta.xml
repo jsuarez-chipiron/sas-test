@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Refund_Request_Created</name>
         <label>Refund Request Created</label>
-        <locationX>176</locationX>
-        <locationY>878</locationY>
+        <locationX>50</locationX>
+        <locationY>1118</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
@@ -26,6 +26,80 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>51.0</apiVersion>
+    <assignments>
+        <name>Assign_email_to_validate</name>
+        <label>Assign email to validate</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>providedEmail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CustomerEmail.value</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_the_email_valid</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_email_to_validate_0</name>
+        <label>Assign email to validate</label>
+        <locationX>314</locationX>
+        <locationY>878</locationY>
+        <assignmentItems>
+            <assignToReference>providedEmail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ValidEmail.value</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_the_email_valid</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Is_the_email_valid</name>
+        <label>Is the email valid?</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>emailValidation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Refund_Request</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>emailValidation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Invalid_Input</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>emailValidation</name>
+        <dataType>Boolean</dataType>
+        <expression>REGEX ( UPPER ( {!providedEmail} ) ,&quot;^[A-Z0-9._%+-/!#$%&amp;&apos;*=?^_`{|}~]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$&quot;)</expression>
+    </formulas>
     <interviewLabel>New Refund Request from Case {!$Flow.CurrentDateTime}</interviewLabel>
     <label>New Refund Request from Case</label>
     <processMetadataValues>
@@ -50,8 +124,8 @@
     <recordCreates>
         <name>Create_Refund_Request</name>
         <label>Create Refund Request</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Get_Refund_Request_Record</targetReference>
         </connector>
@@ -64,7 +138,7 @@
         <inputAssignments>
             <field>Email__c</field>
             <value>
-                <elementReference>CustomerEmail.value</elementReference>
+                <elementReference>providedEmail</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -97,7 +171,7 @@
     <recordLookups>
         <name>Get_Current_Case_Information</name>
         <label>Get Current Case Information</label>
-        <locationX>176</locationX>
+        <locationX>314</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -118,8 +192,8 @@
     <recordLookups>
         <name>Get_Refund_Request_Record</name>
         <label>Get Refund Request Record</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationX>50</locationX>
+        <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_Current_Case_with_Refund_Request_Information</targetReference>
@@ -139,8 +213,8 @@
     <recordUpdates>
         <name>Update_Current_Case_with_Refund_Request_Information</name>
         <label>Update Current Case with Refund Request Information</label>
-        <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationX>50</locationX>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Refund_Request_Created</targetReference>
         </connector>
@@ -168,15 +242,54 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
+        <name>Invalid_Input</name>
+        <label>Invalid Input</label>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Assign_email_to_validate_0</targetReference>
+        </connector>
+        <fields>
+            <name>ErrorMessage</name>
+            <fieldText>&lt;p&gt;{!providedEmail} is not a valid email address and the Refund Request cannot be created.&lt;/p&gt;&lt;p&gt;Please enter a valid email address in order to create the refund request.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>ValidEmail</name>
+            <extensionName>flowruntime:email</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Valid Email</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>NewRefundRequest</name>
         <label>New Refund Request</label>
-        <locationX>176</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Create_Refund_Request</targetReference>
+            <targetReference>Assign_email_to_validate</targetReference>
         </connector>
         <fields>
             <name>NewRefundRequest_Section1</name>
@@ -288,7 +401,7 @@
     <screens>
         <name>Refund_Case_without_Refund_Request</name>
         <label>Refund Case without Refund Request</label>
-        <locationX>176</locationX>
+        <locationX>314</locationX>
         <locationY>158</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -307,8 +420,8 @@
     <screens>
         <name>Success</name>
         <label>Success</label>
-        <locationX>176</locationX>
-        <locationY>1118</locationY>
+        <locationX>50</locationX>
+        <locationY>1358</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -321,7 +434,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Refund_Case_without_Refund_Request</targetReference>
@@ -331,8 +444,8 @@
     <subflows>
         <name>Mark_potential_duplicates</name>
         <label>Mark potential duplicates</label>
-        <locationX>176</locationX>
-        <locationY>998</locationY>
+        <locationX>50</locationX>
+        <locationY>1238</locationY>
         <connector>
             <targetReference>Success</targetReference>
         </connector>
@@ -349,6 +462,13 @@
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>Refund Request {!Get_Refund_Request_Record.Name} with PNR {!Get_Refund_Request_Record.PNR__c} has been created to case {!Get_Current_Case_Information.CaseNumber}</text>
     </textTemplates>
+    <variables>
+        <name>providedEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
