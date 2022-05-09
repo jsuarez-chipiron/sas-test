@@ -85,7 +85,8 @@ public without sharing class Claims extends fflib_SObjectDomain {
 
   /**
    * A claim can be prorated if it is a baggage claim and has at least one
-   * leg with an operating carrier which is not a part of Star Alliance.
+   * leg with an operating carrier which is not a part of Star Alliance. It
+   * must also have at least one paid out settlement.
    *
    * Proration of a claim is splitting costs related to a baggage claim between
    * the airlines in the booking the claims is about. See Confluence for more
@@ -96,10 +97,13 @@ public without sharing class Claims extends fflib_SObjectDomain {
   public Map<Id, Boolean> canBeProrated() {
     Set<Id> parentCaseIds = new Set<Id>();
     for (LIA_Claim__c claim : instanceRecords) {
-      if (
+      Boolean isABaggageCaseWithSettlements =
         categoryNameToEnum.get(claim.Customer_Claim_Category__c) ==
-        Category.Baggage
-      ) {
+        Category.Baggage &&
+        claim.Settlements__r != null &&
+        !claim.Settlements__r.isEmpty();
+
+      if (isABaggageCaseWithSettlements) {
         parentCaseIds.add(claim.Case__c);
       }
     }

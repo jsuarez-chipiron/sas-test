@@ -151,7 +151,10 @@ public with sharing class Claims_IntegrationTest {
     insert new List<SObject>{ claim, ctb, seg1, seg2 };
 
     c.LIA_Claim__c = claim.Id;
-    update c;
+
+    Settlement__c settlement = new Settlement__c(Claim__c = claim.Id);
+
+    upsert new List<SObject>{ c, settlement };
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     // When claim case is closed
@@ -215,7 +218,10 @@ public with sharing class Claims_IntegrationTest {
     insert new List<SObject>{ claim, ctb, seg1, seg2 };
 
     c.LIA_Claim__c = claim.Id;
-    update c;
+
+    Settlement__c settlement = new Settlement__c(Claim__c = claim.Id);
+
+    upsert new List<SObject>{ c, settlement };
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     // When claim case is closed
@@ -280,7 +286,10 @@ public with sharing class Claims_IntegrationTest {
     insert new List<SObject>{ claim, ctb, seg1, seg2 };
 
     c.LIA_Claim__c = claim.Id;
-    update c;
+
+    Settlement__c settlement = new Settlement__c(Claim__c = claim.Id);
+
+    upsert new List<SObject>{ c, settlement };
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     // When claim case is closed
@@ -299,7 +308,7 @@ public with sharing class Claims_IntegrationTest {
   }
 
   @IsTest
-  public static void shouldNotCreateDuplicates() {
+  public static void shouldNotCreateDuplicateProrationCases() {
     // Given
     Flight__c flight1 = new Flight__c(
       Operating_Carrier__c = 'SK',
@@ -344,7 +353,10 @@ public with sharing class Claims_IntegrationTest {
     insert new List<SObject>{ claim, ctb, seg1, seg2 };
 
     c.LIA_Claim__c = claim.Id;
-    update c;
+
+    Settlement__c settlement = new Settlement__c(Claim__c = claim.Id);
+
+    upsert new List<SObject>{ c, settlement };
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     // When claim case is closed
@@ -363,6 +375,71 @@ public with sharing class Claims_IntegrationTest {
       1,
       supportCase.size(),
       'Only one support case should have been created for the closed claim case even though it was closed twice.'
+    );
+  }
+
+  @IsTest
+  public static void baggageClaimsClosedWithoutSettlementShouldNotBeProrated() {
+    // Given
+    Flight__c flight1 = new Flight__c(
+      Operating_Carrier__c = 'SK',
+      TEDS_Identifier__c = 'SK1'
+    );
+    Flight__c flight2 = new Flight__c(
+      Operating_Carrier__c = 'AY',
+      TEDS_Identifier__c = 'AY1'
+    );
+    Booking__c booking = new Booking__c(
+      Booking_Reference__c = 'ABC123',
+      TEDS_Identifier__c = 'ABC123'
+    );
+    Case c = new Case(
+      IsApproved__c = true,
+      RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
+      Status = Cases.STATUS_IN_PROGRESS
+    );
+
+    insert new List<SObject>{ c, booking, flight1, flight2 };
+
+    CaseToBooking__c ctb = new CaseToBooking__c(
+      Booking__c = booking.Id,
+      Case__c = c.Id
+    );
+
+    LIA_Claim__c claim = new LIA_Claim__c(
+      Case__c = c.Id,
+      Customer_Claim_Category__c = 'Baggage',
+      Liability_PNR__c = 'ABC123',
+      PIR__c = 'ARNSK12345'
+    );
+
+    Segment__c seg1 = new Segment__c(
+      Booking__c = booking.Id,
+      Flight__c = flight1.Id
+    );
+    Segment__c seg2 = new Segment__c(
+      Booking__c = booking.Id,
+      Flight__c = flight2.Id
+    );
+    insert new List<SObject>{ claim, ctb, seg1, seg2 };
+
+    c.LIA_Claim__c = claim.Id;
+
+    update c;
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    // When claim case is closed
+    Test.startTest();
+    c.Status = CASES.STATUS_CLOSED;
+    update c;
+    Test.stopTest();
+
+    // Then
+    List<Case> supportCase = [SELECT Id FROM Case WHERE ParentId = :c.Id];
+    System.assertEquals(
+      0,
+      supportCase.size(),
+      'Support cases should not be created for claims without settlements'
     );
   }
 }
