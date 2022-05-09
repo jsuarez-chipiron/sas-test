@@ -86,6 +86,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   public static final String STATUS_REJECTED_BY_BANK = 'Rejected by bank';
   public static final String STATUS_DONE = 'Done';
   public static final String STATUS_FAILED = 'Failed';
+  public static final String STATUS_FAILED_PROCESSED = 'Failed - Processed';
 
   private static final Integer INSURANCE_DEDUCTIBLE_BAGGAGE = 1250;
   private static final Integer INSURANCE_DEDUCTIBLE_PERSONAL_INJURY = 0;
@@ -261,9 +262,20 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   public void markAsDone(String reference, fflib_ISObjectUnitOfWork uow) {
     for (Settlement__c s : instanceRecords) {
-      s.Settlement_Status__c = STATUS_DONE;
-      s.External_Reference__c = reference;
-      uow.registerDirty(s);
+      if (
+        s.Settlement_Status__c != STATUS_FAILED &&
+        s.Settlement_Status__c != STATUS_FAILED_PROCESSED
+      ) {
+        // Failed settlements should never be reprocessed. At least payment
+        // acceptance files can be received out of order so that we first
+        // receive the L2 failure for a settlement and after that the
+        // acceptance file. Even this order should leave the settlements as
+        // failed.
+
+        s.Settlement_Status__c = STATUS_DONE;
+        s.External_Reference__c = reference;
+        uow.registerDirty(s);
+      }
     }
   }
 

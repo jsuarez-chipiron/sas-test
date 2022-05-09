@@ -45,6 +45,14 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     return (List<LIA_Claim__c>) Database.query(claimsQF.toSOQL());
   }
 
+  public List<LIA_Claim__c> selectByIdWithSettlements(Set<Id> ids) {
+    fflib_QueryFactory claimsQF = newQueryFactory().setCondition('Id IN :ids');
+    fflib_QueryFactory settlementsQF = new SettlementsSelector()
+      .addQueryFactorySubselect(claimsQF);
+
+    return (List<LIA_Claim__c>) Database.query(claimsQF.toSOQL());
+  }
+
   public List<LIA_Claim__c> selectByCaseIdWithCustomers(Set<Id> ids) {
     fflib_QueryFactory claimsQF = newQueryFactory()
       .setCondition('Case__c in :ids');

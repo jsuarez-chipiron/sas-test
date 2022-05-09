@@ -819,7 +819,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
 
     if (casesToHandle.size() > 0) {
       List<LIA_Claim__c> claimsForCases = ClaimsSelector.newInstance()
-        .selectById(new Set<Id>(claimIds));
+        .selectByIdWithSettlements(new Set<Id>(claimIds));
 
       if (claimsForCases == null || claimsForCases.size() == 0) {
         // No claims found for the cases.
