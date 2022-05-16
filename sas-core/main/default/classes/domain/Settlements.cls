@@ -338,55 +338,67 @@ public without sharing class Settlements extends fflib_SObjectDomain {
    *
    * @param itemsToUpsert Full list of settlement items this settlement should have the operation.
    */
-  public Boolean updateSettlementItems(List<Settlement_Item__c> itemsToUpsert) {
-    if (instanceRecords.size() > 1) {
-      return false;
-    }
-    Settlement__c settlement = instanceRecords[0];
-
-    if (
-      settlement.RecordTypeId !=
-      getRecordTypeId(Settlements.RecordType.EBPoints) &&
-      settlement.Currency__c == null
-    ) {
-      throw new UpdateSettlementException(
-        'Set currency before trying to update settlement items.'
-      );
-    }
-
-    // TODO: Verify that settlement can be updated. (Not locked and status is good to go, maybe?)
-    // TODO: Do we need to check locked status also here? Probably yes.
-    Boolean canBeModified =
-      settlement.Settlement_Status__c == STATUS_IN_PROGRESS ||
-      settlement.Settlement_Status__c == STATUS_DENIED;
-    if (canBeModified) {
-      fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-
-      List<Settlement_Item__c> existingItems = settlementItemsSel.selectBySettlementIds(
-        new Set<Id>{ settlement.Id }
-      );
-
-      for (Settlement_Item__c existingItem : existingItems) {
-        Boolean found = false;
-        for (Settlement_Item__c newItem : itemsToUpsert) {
-          if (newItem.Id == existingItem.Id) {
-            found = true;
-          }
-        }
-        if (!found) {
-          uow.registerDeleted(existingItem);
-        }
+  public Map<Id, List<Settlement_Item__c>> updateSettlementItems(
+    Map<Id, List<Settlement_Item__c>> itemsToUpsert,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    Set<Id> parentClaimIds = new Set<Id>();
+    for (Settlement__c settlement : instanceRecords) {
+      if (
+        settlement.RecordTypeId !=
+        getRecordTypeId(Settlements.RecordType.EBPoints) &&
+        settlement.Currency__c == null
+      ) {
+        throw new UpdateSettlementException(
+          'Set currency before trying to update settlement items.'
+        );
       }
 
-      Decimal settlementTotal = 0;
-      for (Settlement_Item__c item : itemsToUpsert) {
+      Boolean canBeModified =
+        settlement.Settlement_Status__c == STATUS_IN_PROGRESS ||
+        settlement.Settlement_Status__c == STATUS_DENIED;
+
+      if (!canBeModified) {
+        throw new UpdateSettlementException(
+          'Settlement status must be in progress or denied to update settlement items.'
+        );
+      }
+      parentClaimIds.add(settlement.Claim__c);
+    }
+
+    Map<Id, LIA_Claim__c> parentClaimsById = new Map<Id, LIA_Claim__c>(
+      ClaimsSelector.newInstance().selectById(parentClaimIds)
+    );
+    Map<String, Exchange_Rate__c> exchangeRatesToSEK = new Map<String, Exchange_Rate__c>();
+    Map<String, Exchange_Rate__c> exchangeRatesFromUSD = new Map<String, Exchange_Rate__c>();
+
+    for (Exchange_Rate__c er : exchangeRatesSel.selectByToCurrency('SEK')) {
+      exchangeRatesToSEK.put(er.From_Currency__c, er);
+    }
+
+    for (Exchange_Rate__c er : exchangeRatesSel.selectByFromCurrency('USD')) {
+      exchangeRatesFromUSD.put(er.To_Currency__c, er);
+    }
+
+    markRemovedSettlementItemsForDeletion(itemsToUpsert, uow);
+
+    for (Settlement__c settlement : instanceRecords) {
+      if (settlement.Id != null) {
+        uow.registerDirty(settlement);
+      }
+
+      Decimal sumOfLineItems = 0;
+
+      for (Settlement_Item__c item : itemsToUpsert.get(settlement.Id)) {
+        if (item.Id == null) {
+          uow.registerNew(item, Settlement_Item__c.Settlement__c, settlement);
+        } else {
+          uow.registerDirty(item);
+        }
+
         item.Cost_Center__c = COST_CENTER_DEBITS;
         item.Currency__c = settlement.Currency__c;
         item.Status__c = SettlementItems.STATUS_DRAFT;
-        if (item.Id == null) {
-          // If it's a new item, we need to set the parent settlement. Otherwise it's already set.
-          item.Settlement__c = settlement.Id;
-        }
 
         if (
           settlement.RecordTypeId ==
@@ -398,50 +410,118 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           );
         }
 
-        settlementTotal += item.Amount__c;
+        sumOfLineItems += item.Amount__c;
       }
-      if (
-        settlement.RecordTypeId ==
-        getRecordTypeId(Settlements.RecordType.Cheque) ||
-        settlement.RecordTypeId ==
-        getRecordTypeId(Settlements.RecordType.Monetary)
-      ) {
-        // Only monetary and cheque settlements should be checked for insurance.
-        updateInsuranceForSettlementItems(itemsToUpsert);
-      }
-      uow.registerUpsert(itemsToUpsert);
 
-      if (
-        settlement.RecordTypeId ==
-        getRecordTypeId(Settlements.RecordType.EBPoints)
-      ) {
-        settlement.EuroBonus_Points__c = settlementTotal;
-      } else {
-        settlement.Amount__c = settlementTotal;
-        if (settlement.Currency__c == 'SEK') {
-          settlement.Settlement_amount_in_SEK__c = settlementTotal;
-          settlement.Date_of_Exchange_Calculation__c = Date.today();
-        } else {
-          List<Exchange_Rate__c> exchangeRateToSEK = exchangeRatesSel.selectByCurrency(
-            settlement.Currency__c,
-            'SEK'
-          );
+      updateInsuranceForSettlementItems(
+        itemsToUpsert.get(settlement.id),
+        settlement,
+        parentClaimsById.get(settlement.Claim__c),
+        exchangeRatesFromUSD
+      );
 
-          if (exchangeRateToSEK.size() != 0) {
-            // There should always be exactly one, but just in case we lose exchange rate data, let's check.
-            settlement.Settlement_amount_in_SEK__c =
-              settlementTotal * exchangeRateToSEK[0].Rate__c;
-            settlement.Date_of_Exchange_Calculation__c = exchangeRateToSEK[0]
-              .Date__c;
-          }
-        }
-      }
-      uow.registerDirty(settlement);
-      uow.commitWork();
-      return true;
+      updateSettlementTotal(settlement, sumOfLineItems, exchangeRatesToSEK);
     }
 
-    return false;
+    return itemsToUpsert;
+  }
+
+  /**
+   * Given a list of new settlement items, marks all settlements items for
+   * instance records for deletion if they do not exist in the given
+   * itemsToUpsert.
+   */
+  private void markRemovedSettlementItemsForDeletion(
+    Map<Id, List<Settlement_Item__c>> itemsToUpsert,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    Set<Id> settlementIds = new Set<Id>();
+    for (Settlement__c s : instanceRecords) {
+      if (s.Id != null) {
+        settlementIds.add(s.Id);
+      }
+    }
+    if (settlementIds.size() == 0) {
+      // Nothing to remove if the settlements don't exist yet.
+      return;
+    }
+
+    List<Settlement_Item__c> allExistingSettlementItems = settlementItemsSel.selectBySettlementIds(
+      settlementIds
+    );
+
+    Map<Id, List<Settlement_Item__c>> existingSettlementItemsBySettlement = new Map<Id, List<Settlement_Item__c>>();
+
+    for (Settlement_Item__c si : allExistingSettlementItems) {
+      List<Settlement_Item__c> existing = existingSettlementItemsBySettlement.get(
+        si.Settlement__c
+      );
+      if (existing == null) {
+        existingSettlementItemsBySettlement.put(
+          si.Settlement__c,
+          new List<Settlement_Item__c>{ si }
+        );
+      } else {
+        existing.add(si);
+      }
+    }
+    for (Id settlementId : settlementIds) {
+      // If we have an existing settlement, we need to check if any of the
+      // existing settlements should be deleted and mark them for deletion if
+      // so.
+      List<Settlement_Item__c> existingItems = settlementItemsSel.selectBySettlementIds(
+        new Set<Id>{ settlementId }
+      );
+
+      for (Settlement_Item__c existingItem : existingItems) {
+        Boolean found = false;
+        for (Settlement_Item__c newItem : itemsToUpsert.get(settlementId)) {
+          if (newItem.Id == existingItem.Id) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          uow.registerDeleted(existingItem);
+        }
+      }
+    }
+  }
+
+  /**
+   * Updates the settlement amount fields for the given settlement based on the
+   * given sum of line items. Handles currency conversion calculation to SEK
+   * for Settlement_amount_in_SEK__c field.
+   */
+  private void updateSettlementTotal(
+    Settlement__c settlement,
+    Decimal sumOfLineItems,
+    Map<String, Exchange_Rate__c> exchangeRatesToSEK
+  ) {
+    if (
+      settlement.RecordTypeId ==
+      getRecordTypeId(Settlements.RecordType.EBPoints)
+    ) {
+      settlement.EuroBonus_Points__c = sumOfLineItems;
+    } else {
+      settlement.Amount__c = sumOfLineItems;
+      if (settlement.Currency__c == 'SEK') {
+        settlement.Settlement_amount_in_SEK__c = sumOfLineItems;
+        settlement.Date_of_Exchange_Calculation__c = Date.today();
+      } else {
+        Exchange_Rate__c exchangeRateToSEK = exchangeRatesToSEK.get(
+          settlement.Currency__c
+        );
+
+        if (exchangeRateToSEK != null) {
+          // There should always be exactly one, but just in case we lose exchange rate data, let's check.
+          settlement.Settlement_amount_in_SEK__c =
+            sumOfLineItems * exchangeRateToSEK.Rate__c;
+          settlement.Date_of_Exchange_Calculation__c = exchangeRateToSEK
+            .Date__c;
+        }
+      }
+    }
   }
 
   /**
@@ -452,28 +532,22 @@ public without sharing class Settlements extends fflib_SObjectDomain {
    * @return The same list with the updated settlement items.
    */
   private List<Settlement_Item__c> updateInsuranceForSettlementItems(
-    List<Settlement_Item__c> items
+    List<Settlement_Item__c> items,
+    Settlement__c settlement,
+    LIA_Claim__c claim,
+    Map<String, Exchange_Rate__c> exchangeRatesFromUSD
   ) {
-    Map<String, List<Settlement_Item__c>> customerNamesToSettlementItems = new Map<String, List<Settlement_Item__c>>();
-    for (Settlement_Item__c item : items) {
-      // Group settlement items by customer
-      List<Settlement_Item__c> existingItemsForCustomer = customerNamesToSettlementItems.get(
-        item.Customer_Name__c
-      );
-      if (existingItemsForCustomer == null) {
-        customerNamesToSettlementItems.put(
-          item.Customer_Name__c,
-          new List<Settlement_Item__c>{ item }
-        );
-      } else {
-        existingItemsForCustomer.add(item);
-      }
+    Boolean isAMonetaryClaim =
+      Settlement.RecordTypeId ==
+      getRecordTypeId(Settlements.RecordType.Cheque) ||
+      settlement.RecordTypeId ==
+      getRecordTypeId(Settlements.RecordType.Monetary);
+
+    Boolean isAnInsuredClaimType = isAMonetaryClaim;
+    // Only monetary payments are claimed from insurance.
+    if (!isAnInsuredClaimType) {
+      return items;
     }
-
-    Settlement__c settlement = instanceRecords[0];
-
-    LIA_Claim__c claim = ClaimsSelector.newInstance()
-      .selectById(new Set<Id>{ settlement.Claim__c })[0];
 
     // We're making an assumption here that there is never a settlement which contains
     // both baggage and personal injure claims.
@@ -488,16 +562,30 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       deductible = INSURANCE_DEDUCTIBLE_BAGGAGE;
     }
 
+    Map<String, List<Settlement_Item__c>> customerNamesToSettlementItems = new Map<String, List<Settlement_Item__c>>();
+    for (Settlement_Item__c item : items) {
+      // Group settlement items by customer as deductible is by customer.
+      List<Settlement_Item__c> existingItemsForCustomer = customerNamesToSettlementItems.get(
+        item.Customer_Name__c
+      );
+      if (existingItemsForCustomer == null) {
+        customerNamesToSettlementItems.put(
+          item.Customer_Name__c,
+          new List<Settlement_Item__c>{ item }
+        );
+      } else {
+        existingItemsForCustomer.add(item);
+      }
+    }
+
     if (settlement.Currency__c != 'USD') {
       // Deductible amounts are defined in USD so we need to convert them to
       // settlement currency if it isn't USD.
-      List<Exchange_Rate__c> exchangeRateFromUSD = exchangeRatesSel.selectByCurrency(
-        'USD',
+      Exchange_Rate__c exchangeRateFromUSD = exchangeRatesFromUSD.get(
         settlement.Currency__c
       );
-
-      if (exchangeRateFromUSD.size() != 0) {
-        deductible = (deductible * exchangeRateFromUSD[0].Rate__c).setScale(2);
+      if (exchangeRateFromUSD != null) {
+        deductible = (deductible * exchangeRateFromUSD.Rate__c).setScale(2);
       } else {
         C_Log.log(
           C_Log.Severity.Error,

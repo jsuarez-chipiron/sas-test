@@ -308,14 +308,28 @@ public without sharing class SettlementService {
     }
   }
 
-  public static Boolean addItemsToSettlement(
-    Id settlementId,
-    List<Settlement_Item__c> itemsToAdd
+  /**
+   * Updates the given settlements to have the given lists of items.
+   *
+   * If an already existing item for a settlement isn't included in this list
+   * it will be removed.
+   *
+   * If the items have ids, the corresponding existing items will be updated.
+   *
+   * Any items which do not have items will be created as new.
+   */
+  public static Map<Id, List<Settlement_Item__c>> updateItemsForSettlements(
+    Map<Id, List<Settlement_Item__c>> itemsToAddBySettlement
   ) {
-    Settlement__c settlement = settlementsSel.selectById(
-      new Set<Id>{ settlementId }
-    )[0];
-    return Settlements.newInstance(new List<Settlement__c>{ settlement })
-      .updateSettlementItems(itemsToAdd);
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+
+    Map<Id, List<Settlement_Item__c>> upsertedItems = Settlements.newInstance(
+        settlementsSel.selectById(itemsToAddBySettlement.keySet())
+      )
+      .updateSettlementItems(itemsToAddBySettlement, uow);
+
+    uow.commitWork();
+
+    return upsertedItems;
   }
 }
