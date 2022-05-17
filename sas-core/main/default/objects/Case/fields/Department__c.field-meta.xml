@@ -31,6 +31,11 @@
                 <label>Corporate</label>
             </value>
             <value>
+                <fullName>Customer Claim</fullName>
+                <default>false</default>
+                <label>Customer Claim</label>
+            </value>
+            <value>
                 <fullName>Vendor Management</fullName>
                 <default>false</default>
                 <label>Vendor Management</label>
@@ -99,11 +104,6 @@
                 <fullName>SoMe Support</fullName>
                 <default>false</default>
                 <label>SoMe Support</label>
-            </value>
-            <value>
-                <fullName>Customer Claim</fullName>
-                <default>false</default>
-                <label>Customer Claim</label>
             </value>
             <value>
                 <fullName>SME</fullName>
