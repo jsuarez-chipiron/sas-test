@@ -303,6 +303,119 @@ public without sharing class ClaimService {
     return insertedCase.CaseNumber;
   }
 
+  public static String createCompensationCardClaim(CaseFormJSON2Apex form) {
+    //new Case();
+    //new LIA_Claim__c();
+
+    //return insertedCase.CaseNumber;
+    return '';
+  }
+
+  /**
+   * Attempts to redeem the given compensation card claim. A compensation card
+   * can be renewed if it is a valid compensation card as defined by by the
+   * Vouchers API validate endpoint, and it has not yet been paid out.
+   *
+   * Information about whether a given compensation card has been paid out is
+   * stored in Salesforce.
+   *
+   * Also closes the parent case for the claim, and emails the customer about
+   * whether the card was redeemed successfully.
+   */
+  @future(callout=true)
+  public static void attemptToRedeemCompensationCardClaim(Id claimId) {
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    LIA_Claim__c claim = ClaimsSelector.newInstance()
+      .selectById(new Set<Id>{ claimId })[0];
+
+    Compensation_Card__c validatedCompensationCard;
+
+    Boolean cardHasBeenPaidOut = CompensationCards.hasBeenPaidOut(
+      claim.Compensation_Card_Number__c,
+      claim.Liability_PNR__c
+    );
+
+    Boolean canBeRedeemed = false;
+    if (!cardHasBeenPaidOut) {
+      try {
+        // Check Voucher API whether this is a valid compensation card number and
+        // a matching PNR.
+        VoucherValidateResponse response = VoucherIntegrationService.newInstance()
+          .validateVoucher(
+            claim.Compensation_Card_Number__c,
+            claim.Liability_PNR__c
+          );
+        validatedCompensationCard = CompensationCards.createFromValidVoucher(
+          claim.Compensation_Card_Number__c,
+          response,
+          claim.Id,
+          uow
+        );
+        canBeRedeemed = true;
+      } catch (VoucherIntegrationService.InvalidVoucherException e) {
+        C_Log.log(
+          C_Log.Severity.Info,
+          'Invalid compensation card redeem request.',
+          null,
+          'Claims',
+          null
+        );
+      } catch (Exception e) {
+        // TODO: Error handling? Can we reject the claim or should we ask the customer to try again?
+        C_Log.log(
+          C_Log.Severity.Error,
+          'Uncaught exception while redeeming a compensation card.',
+          e.getStackTraceString(),
+          'Claims',
+          null
+        );
+      }
+    }
+
+    if (canBeRedeemed) {
+      Settlements.createFromCompensationCard(
+        new List<LIA_Claim__c>{ claim },
+        new Map<Id, Compensation_Card__c>{
+          claim.Id => validatedCompensationCard
+        },
+        uow
+      );
+      uow.commitWork();
+
+      try {
+        fflib_ISObjectUnitOfWork uow2 = SAS_Service_Application.UnitOfWork.newInstance();
+        Claims.newInstance(new List<LIA_Claim__c>{ claim }).settle(uow2);
+        Cases.newInstance(
+            CasesSelector.newInstance().selectById(new Set<Id>{ claim.Case__c })
+          )
+          .close(uow2);
+        // TODO: Send email Email.toEmail.
+
+        uow2.commitWork();
+      } catch (Exception e) {
+        // Different logic for validation error than for others.
+        // Something failed
+        fflib_ISObjectUnitOfWork uow3 = SAS_Service_Application.UnitOfWork.newInstance();
+        Settlements.newInstance(
+            SettlementsSelector.newInstance()
+              .selectByClaimId(new Set<Id>{ claim.Id })
+          )
+          .markAsFailed(e.getMessage(), uow3);
+
+        uow3.commitWork();
+      }
+    } else {
+      fflib_ISObjectUnitOfWork rejectedUow = SAS_Service_Application.UnitOfWork.newInstance();
+      // Claims.newInstance(new List<LIA_Claim__c>{ claim }).reject(rejectedUow);
+      Cases.newInstance(
+          CasesSelector.newInstance().selectById(new Set<Id>{ claim.Case__c })
+        )
+        .close(uow2);
+      rejectedUow.commitWork();
+      // TODO: Send email
+    }
+  }
+
   @future(callout=true)
   public static void checkIfClaimsExistInCARE(
     Id claimId,

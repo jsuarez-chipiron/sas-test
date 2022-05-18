@@ -20,7 +20,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     );
   }
 
-  private List<Settlement__c> instanceRecords;
+  public List<Settlement__c> instanceRecords;
 
   public enum RecordType {
     Cheque,
@@ -103,17 +103,14 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   public static final String COST_CENTER_DEBITS = '90801';
 
+  public class UpdateException extends Exception {
+  }
+
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
     processPayableVoucherAndEuroBonusSettlements();
   }
 
-  public void markAsSentToRacer(String paymentFilename) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    markAsSentToRacer(paymentFilename, uow);
-    uow.commitWork();
-  }
-
-  public void markAsSentToRacer(
+  public Settlements markAsSentToRacer(
     String paymentFilename,
     fflib_ISObjectUnitOfWork uow
   ) {
@@ -131,15 +128,11 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
     SettlementItems.newInstance(correspondingSettlements)
       .markAsPendingL1Confirmation(uow);
+
+    return this;
   }
 
-  public void markAsReceivedByBank(String bankStatus, String errorMessage) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    markAsReceivedByBank(bankStatus, errorMessage, uow);
-    uow.commitWork();
-  }
-
-  public void markAsReceivedByBank(
+  public Settlements markAsReceivedByBank(
     String bankStatus,
     String errorMessage,
     fflib_ISObjectUnitOfWork uow
@@ -172,15 +165,11 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         null
       );
     }
+
+    return this;
   }
 
-  public void markAsReceivedByRacer(String racerStatus, String errorMessage) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    markAsReceivedByRacer(racerStatus, errorMessage, uow);
-    uow.commitWork();
-  }
-
-  public void markAsReceivedByRacer(
+  public Settlements markAsReceivedByRacer(
     String racerStatus,
     String errorMessage,
     fflib_ISObjectUnitOfWork uow
@@ -204,14 +193,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         null
       );
     }
-  }
 
-  public void markAsFailedPayment(
-    Map<Id, String> settlementIdsToErrorMessages
-  ) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    markAsFailedPayment(settlementIdsToErrorMessages, uow);
-    uow.commitWork();
+    return this;
   }
 
   /**
@@ -225,7 +208,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
    *
    * Expected to be used when we receive an L2 file from Racer.
    */
-  public void markAsFailedPayment(
+  public Settlements markAsFailedPayment(
     Map<Id, String> settlementIdsToErrorMessages,
     fflib_ISObjectUnitOfWork uow
   ) {
@@ -252,15 +235,14 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
     SettlementItems.newInstance(correspondingSettlementItems)
       .markAsSettlementFailed(uow);
+
+    return this;
   }
 
-  public void markAsDone(String reference) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    markAsDone(reference, uow);
-    uow.commitWork();
-  }
-
-  public void markAsDone(String reference, fflib_ISObjectUnitOfWork uow) {
+  public Settlements markAsDone(
+    String reference,
+    fflib_ISObjectUnitOfWork uow
+  ) {
     for (Settlement__c s : instanceRecords) {
       if (
         s.Settlement_Status__c != STATUS_FAILED &&
@@ -277,15 +259,14 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         uow.registerDirty(s);
       }
     }
+
+    return this;
   }
 
-  public void markAsFailed(String errorMessage) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    markAsFailed(errorMessage, uow);
-    uow.commitWork();
-  }
-
-  public void markAsFailed(String errorMessage, fflib_ISObjectUnitOfWork uow) {
+  public Settlements markAsFailed(
+    String errorMessage,
+    fflib_ISObjectUnitOfWork uow
+  ) {
     for (Settlement__c s : instanceRecords) {
       s.Settlement_Status__c = STATUS_FAILED;
       s.Error_Message__c = errorMessage;
@@ -298,6 +279,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       'Settlements',
       null
     );
+
+    return this;
   }
 
   /**
@@ -305,12 +288,14 @@ public without sharing class Settlements extends fflib_SObjectDomain {
    *
    * Locks also all settlement items related to this settlement.
    */
-  public void lock() {
+  public Settlements lock() {
     List<Settlement_Item__c> settlementItemsForInstanceRecords = settlementItemsSel.selectBySettlementIds(
       (new Map<Id, Settlement__c>(instanceRecords)).keySet()
     );
     Approval.lock(instanceRecords);
     Approval.lock(settlementItemsForInstanceRecords);
+
+    return this;
   }
 
   /**
@@ -318,12 +303,14 @@ public without sharing class Settlements extends fflib_SObjectDomain {
    *
    * Unlocks also all settlement items related to this settlement.
    */
-  public void unlock() {
+  public Settlements unlock() {
     List<Settlement_Item__c> settlementItemsForInstanceRecords = settlementItemsSel.selectBySettlementIds(
       (new Map<Id, Settlement__c>(instanceRecords)).keySet()
     );
     Approval.unlock(instanceRecords);
     Approval.unlock(settlementItemsForInstanceRecords);
+
+    return this;
   }
 
   public class UpdateSettlementException extends Exception {
@@ -338,7 +325,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
    *
    * @param itemsToUpsert Full list of settlement items this settlement should have the operation.
    */
-  public Map<Id, List<Settlement_Item__c>> updateSettlementItems(
+  public Settlements updateSettlementItems(
     Map<Id, List<Settlement_Item__c>> itemsToUpsert,
     fflib_ISObjectUnitOfWork uow
   ) {
@@ -349,7 +336,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         getRecordTypeId(Settlements.RecordType.EBPoints) &&
         settlement.Currency__c == null
       ) {
-        throw new UpdateSettlementException(
+        throw new UpdateException(
           'Set currency before trying to update settlement items.'
         );
       }
@@ -359,7 +346,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         settlement.Settlement_Status__c == STATUS_DENIED;
 
       if (!canBeModified) {
-        throw new UpdateSettlementException(
+        throw new UpdateException(
           'Settlement status must be in progress or denied to update settlement items.'
         );
       }
@@ -423,7 +410,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       updateSettlementTotal(settlement, sumOfLineItems, exchangeRatesToSEK);
     }
 
-    return itemsToUpsert;
+    return this;
+  }
   }
 
   /**
@@ -629,18 +617,16 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   private void processPayableVoucherAndEuroBonusSettlements() {
     for (Settlement__c settlement : instanceRecords) {
-      if (settlement.Settlement_Status__c == STATUS_WAITING_FOR_TRANSFER) {
-        if (
-          settlement.RecordTypeId ==
-          getRecordTypeId(Settlements.RecordType.EBPoints)
-        ) {
-          SettlementService.sendEuroBonusPoints(settlement.Id);
-        } else if (
-          settlement.RecordTypeId ==
-          getRecordTypeId(Settlements.RecordType.Voucher)
-        ) {
-          SettlementService.createAndSendVoucher(settlement.Id);
-        }
+      Boolean isToBePaidOut =
+        settlement.Settlement_Status__c == STATUS_WAITING_FOR_TRANSFER &&
+        ((settlement.RecordTypeId ==
+        getRecordTypeId(Settlements.RecordType.EBPoints)) ||
+        (settlement.RecordTypeId ==
+        getRecordTypeId(Settlements.RecordType.Voucher)));
+      if (isToBePaidOut) {
+        System.enqueueJob(
+          new SettlementService.ProcessPayableSettlement(settlement.Id)
+        );
       }
     }
   }
