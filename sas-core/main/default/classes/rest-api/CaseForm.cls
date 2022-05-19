@@ -11,10 +11,9 @@ global with sharing class CaseForm {
           return new CaseFormResponse(ClaimService.createClaim(form));
         }
         when 'compensation-card' {
-          return new CaseFormResponse('1234567890');
-          /*return new CaseFormResponse(
+          return new CaseFormResponse(
             ClaimService.createCompensationCardClaim(form)
-          );*/
+          );
         }
         when else {
           return new CaseFormResponse(CaseService.createCase(form));
