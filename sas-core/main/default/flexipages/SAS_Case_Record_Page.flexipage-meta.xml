@@ -295,36 +295,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>lookupFieldName</name>
-                    <value>Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>titleFieldName</name>
-                    <value>Case Refund Information</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>updateQuickActionName</name>
-                    <value>Case.Update_Case_Refund</value>
-                </componentInstanceProperties>
-                <componentName>console:relatedRecord</componentName>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Refund</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Department__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Refunds</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>lookupFieldName</name>
                     <value>Case.ParentId</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
