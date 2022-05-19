@@ -3,6 +3,11 @@
     <description>Permission for creating and editing proactivities</description>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Proactivity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Proactivity__c.Bank_Account_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -49,6 +54,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Proactivity__c.Phone_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Proactivity__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
