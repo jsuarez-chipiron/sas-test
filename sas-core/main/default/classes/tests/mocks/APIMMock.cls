@@ -6,6 +6,7 @@ global class APIMMock implements HttpCalloutMock {
   public static final String EB_NUMBER_NOT_IN_CLM = '987654321';
   public static final String EB_NUMBER_RETURN_500 = 'ERREBNUM';
   public static final String VOUCHER_INVALID_EMAIL = 'invalidemail@invalidemail.invalidemail';
+  public static final String VOUCHER_VALID_CARD_ID = '1234567890';
   public static final String PNR_FOR_WHICH_CLAIMS_EXIST = '987654';
   public static final String PNR_FOR_WHICH_CLAIMS_DO_NOT_EXIST = '000000';
 
@@ -79,9 +80,23 @@ global class APIMMock implements HttpCalloutMock {
         res.setStatusCode(404);
       }
     } else if (endpoint.contains('voucher')) {
-      if (req.getBody().contains(VOUCHER_INVALID_EMAIL)) {
+      if (endpoint.contains('validate')) {
+        // VoucherIntegrationService.validateVoucher
+        if (true /*VOUCHER_VALID_CARD_ID*/) {
+          // Valid voucher
+          res.setHeader('Content-Type', 'application/json');
+          res.setBody(
+            '{"departureTime": "","lastName": "Testsson","ticketNumber": 11712345678,"amount": 400,"flightDate": "2022-05-12","serviceClass": "a","type": "a","flightNumber": "SK1","firstName": "Test","phone": "0000000000","pnr": "abc123","subType": "a","currency": "EUR","email": "test@example.com"}'
+          );
+        } else {
+          // Invalid voucher
+          res.setStatusCode(404);
+        }
+      } else if (req.getBody().contains(VOUCHER_INVALID_EMAIL)) {
+        // VoucherIntegrationService.createVoucher
         res.setStatusCode(400);
       } else {
+        // VoucherIntegrationService.createVoucher
         res.setHeader('Content-Type', 'application/json');
         res.setBody('{"link":"test.sas.se", "caseId": "12345678"}');
       }

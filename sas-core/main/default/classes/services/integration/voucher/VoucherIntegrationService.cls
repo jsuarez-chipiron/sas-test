@@ -13,6 +13,9 @@ public without sharing class VoucherIntegrationService {
     );
   }
 
+  public class InvalidVoucherException extends Exception {
+  }
+
   public enum VoucherType {
     GIFTCARD,
     COMP
@@ -62,6 +65,38 @@ public without sharing class VoucherIntegrationService {
     }
 
     return VoucherCreateResponse.parse(response.getBody());
+  }
+
+  /** Attempts to validate a voucher with the given information. Validation
+   * checks whether a voucher with this id and booking reference combination
+   * exists. Returns the full details for the voucher if a valid one was found
+   * for the given details. Throws if one cannot be found.
+   *
+   * @param voucherId Unique identifier of the voucher to validate
+   * @param bookingReference PNR of the voucher to validate.
+   *
+   * @return The parsed response data as VoucherValidateResponse on success or null on failure.
+   */
+  public VoucherValidateResponse validateVoucher(
+    String voucherId,
+    String bookingReference
+  ) {
+    if (voucherId == null || bookingReference == null) {
+      throw new APIMIntegrationService.IntegrationException(
+        'Missing parameter: ' +
+        (voucherId == null ? 'voucherId' : 'bookingReference')
+      );
+    }
+
+    String path = '/validate/vouchers/' + voucherId + '/' + bookingReference;
+
+    HttpResponse response = makeRequest(HttpUtils.HTTP_METHOD.POST, path, null);
+
+    if (response.getStatusCode() == 404) {
+      throw new InvalidVoucherException();
+    }
+
+    return VoucherValidateResponse.parse(response.getBody());
   }
 
   /**
