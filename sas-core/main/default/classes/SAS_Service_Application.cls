@@ -22,6 +22,7 @@ public class SAS_Service_Application {
       Passenger__c.SObjectType => PassengersSelector.class,
       Proactivity__c.SObjectType => ProactivitiesSelector.class,
       Racer_Integration_Counter__c.SObjectType => RacerIntegrationCountersSelector.class,
+      Redeemed_Compensation_Card__c.SObjectType => RedeemedCompensationCardsSelector.class,
       Refund_Request__c.SObjectType => Refund_RequestsSelector.class,
       Segment__c.SObjectType => SegmentsSelector.class,
       Settlement__c.SObjectType => SettlementsSelector.class,
@@ -46,6 +47,7 @@ public class SAS_Service_Application {
       LiveChatTranscript.SObjectType => LiveChatTranscripts.Constructor.class,
       MessagingSession.SObjectType => MessagingSessions.Constructor.class,
       Passenger__c.SObjectType => Passengers.Constructor.class,
+      Redeemed_Compensation_Card__c.SObjectType => RedeemedCompensationCards.Constructor.class,
       Refund_Request__c.SObjectType => Refund_Requests.Constructor.class,
       Settlement__c.SObjectType => Settlements.Constructor.class,
       Settlement_Item__c.SObjectType => SettlementItems.Constructor.class,
@@ -69,6 +71,7 @@ public class SAS_Service_Application {
       Account.SObjectType,
       Booking__c.SObjectType,
       CaseToBooking__c.SObjectType,
+      Redeemed_Compensation_Card__c.SObjectType,
       ContentDocumentLink.SObjectType,
       ContentVersion.SObjectType,
       EmailMessage.SObjectType,
@@ -82,7 +85,8 @@ public class SAS_Service_Application {
       Group_Travel_Request__c.SobjectType,
       Racer_Integration_Counter__c.SObjectType,
       Settlement__c.SObjectType,
-      Settlement_Item__c.SObjectType
+      Settlement_Item__c.SObjectType,
+      Approval_Request__c.SObjectType
     }
   );
 }

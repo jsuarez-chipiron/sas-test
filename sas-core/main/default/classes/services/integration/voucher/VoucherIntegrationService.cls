@@ -88,7 +88,7 @@ public without sharing class VoucherIntegrationService {
       );
     }
 
-    String path = '/validate/vouchers/' + voucherId + '/' + bookingReference;
+    String path = 'validate/vouchers/' + voucherId + '/' + bookingReference;
 
     HttpResponse response = makeRequest(HttpUtils.HTTP_METHOD.POST, path, null);
 

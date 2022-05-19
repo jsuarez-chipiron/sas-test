@@ -2,14 +2,27 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
   public List<Schema.SObjectField> getSObjectFieldList() {
     return new List<Schema.SObjectField>{
       LIA_Claim__c.Id,
+      LIA_Claim__c.Address_line_1__c,
+      LIA_Claim__c.Address_line_2__c,
+      LIA_Claim__c.Bank_Account_Holder_Name__c,
       LIA_Claim__c.Bank_Account_Number__c,
+      LIA_Claim__c.Bank_Country__c,
+      LIA_Claim__c.Bank_Name__c,
+      LIA_Claim__c.BIC_Swift__c,
       LIA_Claim__c.Case__c,
+      LIA_Claim__c.City__c,
       LIA_Claim__c.Claims_Exist_In_CARE_For_PNR__c,
       LIA_Claim__c.Claim_Firm__c,
       LIA_Claim__c.Compensation_Card_Number__c,
       LIA_Claim__c.Contact_Email__c,
+      LIA_Claim__c.Contact_First_Name__c,
+      LIA_Claim__c.Contact_Full_Name__c,
+      LIA_Claim__c.Contact_Last_Name__c,
+      LIA_Claim__c.Country__c,
+      LIA_Claim__c.Currency__c,
       LIA_Claim__c.Customer_Claim_Category__c,
       LIA_Claim__c.Customer_Claim_Type__c,
+      LIA_Claim__c.Customer_s_Reference__c,
       LIA_Claim__c.EuroBonus_Number__c,
       LIA_Claim__c.Flight_Date__c,
       LIA_Claim__c.Flight_Number__c,
@@ -17,6 +30,9 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       LIA_Claim__c.Liability_PNR__c,
       LIA_Claim__c.Phone_Number__c,
       LIA_Claim__c.PIR__c,
+      LIA_Claim__c.Postal_Code__c,
+      LIA_Claim__c.Preferred_Compensation_Method__c,
+      LIA_Claim__c.RecordTypeId,
       LIA_Claim__c.Type_of_Customer__c
     };
   }

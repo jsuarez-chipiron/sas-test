@@ -7,6 +7,7 @@ global class APIMMock implements HttpCalloutMock {
   public static final String EB_NUMBER_RETURN_500 = 'ERREBNUM';
   public static final String VOUCHER_INVALID_EMAIL = 'invalidemail@invalidemail.invalidemail';
   public static final String VOUCHER_VALID_CARD_ID = '1234567890';
+  public static final String VOUCHER_VALID_PNR = 'ABC123';
   public static final String PNR_FOR_WHICH_CLAIMS_EXIST = '987654';
   public static final String PNR_FOR_WHICH_CLAIMS_DO_NOT_EXIST = '000000';
 
@@ -82,7 +83,10 @@ global class APIMMock implements HttpCalloutMock {
     } else if (endpoint.contains('voucher')) {
       if (endpoint.contains('validate')) {
         // VoucherIntegrationService.validateVoucher
-        if (true /*VOUCHER_VALID_CARD_ID*/) {
+        if (
+          endpoint.contains(VOUCHER_VALID_CARD_ID) &&
+          endpoint.contains(VOUCHER_VALID_PNR)
+        ) {
           // Valid voucher
           res.setHeader('Content-Type', 'application/json');
           res.setBody(

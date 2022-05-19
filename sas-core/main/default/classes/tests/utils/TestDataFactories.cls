@@ -61,4 +61,73 @@ public with sharing class TestDataFactories {
     );
     return toReturn;
   }
+
+  public class CasesClaims {
+    public List<Case> cases { get; set; }
+    public List<LIA_Claim__c> claims { get; set; }
+
+    CasesClaims(List<Case> cases, List<LIA_Claim__c> claims) {
+      this.cases = cases;
+      this.claims = claims;
+    }
+  }
+
+  /**
+   * Creates a collection of case and claim pairs and inserts them to the DB.
+   *
+   * @param count Number of case-claim pairs to create.
+   * @param fieldsForCases Map of field to field value for fields to set for all created cases.
+   * @param fieldsForClaims Map of field to field value for fields to set for all created claims.
+   */
+  public static CasesClaims createCasesWithClaims(
+    Integer count,
+    Map<Schema.SObjectField, Object> fieldsForCases,
+    Map<Schema.SObjectField, Object> fieldsForClaims
+  ) {
+    List<Case> casesToCreate = new List<Case>();
+    List<LIA_Claim__c> claimsToCreate = new List<LIA_Claim__c>();
+
+    for (Integer i = 0; i < count; i++) {
+      Case c = new Case(
+        Origin = 'Form - Claims SE',
+        RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
+        Status = Cases.STATUS_IN_PROGRESS
+      );
+      LIA_Claim__c claim = new LIA_Claim__c(
+        Customer_Claim_Category__c = 'Flight disruptions',
+        Liability_PNR__c = 'ABC123',
+        PIR__c = 'ARNSK12345',
+        RecordTypeId = Claims.getRecordTypeId(Claims.RecordType.CustomerClaim)
+      );
+
+      if (fieldsForCases != null) {
+        for (Schema.SObjectField field : fieldsForCases.keySet()) {
+          c.put(field, fieldsForCases.get(field));
+        }
+      }
+
+      if (fieldsForClaims != null) {
+        for (Schema.SObjectField field : fieldsForClaims.keySet()) {
+          claim.put(field, fieldsForClaims.get(field));
+        }
+      }
+      casesToCreate.add(c);
+      claimsToCreate.add(claim);
+    }
+    List<SObject> allToCreate = new List<SObject>();
+    allToCreate.addAll((List<SObject>) casesToCreate);
+    allToCreate.addAll((List<SObject>) claimsToCreate);
+    insert allToCreate;
+
+    for (Integer i = 0; i < count; i++) {
+      Case c = casesToCreate[0];
+      LIA_Claim__c claim = claimsToCreate[0];
+      c.LIA_Claim__c = claim.Id;
+      claim.Case__c = c.Id;
+    }
+
+    update allToCreate;
+
+    return new CasesClaims(casesToCreate, claimsToCreate);
+  }
 }
