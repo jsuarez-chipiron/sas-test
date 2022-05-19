@@ -116,6 +116,14 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     processPayableVoucherAndEuroBonusSettlements();
   }
 
+  public override void onBeforeInsert() {
+    normalizeFields();
+  }
+
+  public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
+    normalizeFields();
+  }
+
   public Settlements markAsSentToRacer(
     String paymentFilename,
     fflib_ISObjectUnitOfWork uow
@@ -443,7 +451,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   /**
    * Creates settlements without settlement items for the given claims.
-   * 
+   *
    * @param claims List of claims for which to create settlements.
    * @param recordTypeToCreate Which type of settlements should be created. If
    * null, the claims' preferred compensation methods will be used.
@@ -861,6 +869,19 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         System.enqueueJob(
           new SettlementService.ProcessPayableSettlement(settlement.Id)
         );
+      }
+    }
+  }
+
+  private void normalizeFields() {
+    for (Settlement__c settlement : instanceRecords) {
+      if (!String.isBlank(settlement.BIC_Swift__c)) {
+        settlement.BIC_Swift__c = settlement.BIC_Swift__c.toUpperCase()
+          .replace(' ', '');
+      }
+      if (!String.isBlank(settlement.Bank_Account_Number__c)) {
+        settlement.Bank_Account_Number__c = settlement.Bank_Account_Number__c.toUpperCase()
+          .replace(' ', '');
       }
     }
   }
