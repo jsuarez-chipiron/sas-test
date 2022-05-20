@@ -120,7 +120,6 @@ public without sharing class BankAccountUtils {
       return false;
     }
 
-    System.debug('Valid IBAN number');
     return true; // Default case
   }
 

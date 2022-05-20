@@ -26,8 +26,4 @@
         <field>Uses_IBAN__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
-    <values>
-        <field>Uses_IBAN__c</field>
-        <value xsi:type="xsd:boolean">true</value>
-    </values>
 </CustomMetadata>

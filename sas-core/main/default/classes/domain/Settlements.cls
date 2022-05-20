@@ -801,28 +801,24 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       }
 
       if (s.RecordTypeId == getRecordTypeId(Settlements.RecordType.EBPoints)) {
-        System.debug('EBPoints');
         if (!(s.EuroBonus_Points__c > 0)) {
           errorMessages.add('EuroBonus Points has to be greater than 0.');
         }
       } else if (
         s.RecordTypeId == getRecordTypeId(Settlements.RecordType.Cheque)
       ) {
-        System.debug('Cheque');
         if (!(s.Amount__c > 0)) {
           errorMessages.add('Amount has to be greater than 0.');
         }
       } else if (
         s.RecordTypeId == getRecordTypeId(Settlements.RecordType.Voucher)
       ) {
-        System.debug('Voucher');
         if (!(s.Amount__c > 0)) {
           errorMessages.add('Amount has to be greater than 0.');
         }
       } else if (
         s.RecordTypeId == getRecordTypeId(Settlements.RecordType.Monetary)
       ) {
-        System.debug('Monetary');
         if (!(s.Amount__c > 0)) {
           errorMessages.add('Amount has to be greater than 0.');
         }
@@ -857,7 +853,6 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       for (String e : errorsForAllSettlements) {
         errors += e + '\n';
       }
-      System.debug(errors);
       throw new SettlementValidityException(
         '\nOne or more Settlements are invalid. You need to correct the following:\n' +
         errors +

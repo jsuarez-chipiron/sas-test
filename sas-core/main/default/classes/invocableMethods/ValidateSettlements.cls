@@ -6,10 +6,10 @@ public without sharing class ValidateSettlements {
    */
   @InvocableMethod(label='Validate Settlements')
   public static void validate(List<List<Settlement__c>> settlementsToValidate) {
-    Map<Id, Settlement__c> idsToSe = new Map<Id, Settlement__c>(
+    Map<Id, Settlement__c> idsToSettlements = new Map<Id, Settlement__c>(
       settlementsToValidate[0]
     );
-    Set<Id> keys = idsToSe.keySet();
+    Set<Id> keys = idsToSettlements.keySet();
     (new Settlements(SettlementsSelector.newInstance().selectById(keys)))
       .validate();
   }

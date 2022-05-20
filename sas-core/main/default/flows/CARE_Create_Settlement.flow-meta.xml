@@ -122,7 +122,7 @@
             <label>Voucher Settlement</label>
         </rules>
     </decisions>
-    <description>Removed BIC/IBAN validation</description>
+    <description>No BIC validation</description>
     <dynamicChoiceSets>
         <name>voucherTypes</name>
         <dataType>Picklist</dataType>
@@ -613,40 +613,6 @@
         </connector>
     </start>
     <status>Active</status>
-    <variables>
-        <name>Bank_Info_Valid_Variable</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
-        <name>BIC_format_valid</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Bank_Info_Valid_Variable</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
-        <name>BIC_format_valid</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
     <variables>
         <name>createdSettlementId</name>
         <dataType>String</dataType>
