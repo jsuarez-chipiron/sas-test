@@ -1193,9 +1193,9 @@ public with sharing class Settlements_IntegrationTest {
 
     // Then
     System.assertEquals(
-      'Settlements.UpdateSettlementException',
+      'Settlements.UpdateException',
       caughtException.getTypeName(),
-      'Missing currency from settlement should have caused an UpdateSettlementException.'
+      'Missing currency from settlement should have caused an UpdateException.'
     );
   }
 }

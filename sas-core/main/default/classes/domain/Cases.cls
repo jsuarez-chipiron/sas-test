@@ -87,6 +87,14 @@ public without sharing class Cases extends fflib_SObjectDomain {
     enrichCaseTagData();
   }
 
+  public Cases close(fflib_ISObjectUnitOfWork uow) {
+    for (Case c : instanceRecords) {
+      c.Status = STATUS_CLOSED;
+    }
+    uow.registerDirty(instanceRecords);
+    return this;
+  }
+
   private void completeMilestones() {
     // how to handle maps?
     List<String> statusesThatCompleteMilestones = new List<String>{

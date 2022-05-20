@@ -442,4 +442,177 @@ public with sharing class Claims_IntegrationTest {
       'Support cases should not be created for claims without settlements'
     );
   }
+
+  @IsTest
+  public static void attemptingToRedeemUsedCompensationCardShouldFail() {
+    String bookingReference = 'pppppp';
+    String cardNumber = '0123456789';
+
+    Redeemed_Compensation_Card__c redeemedCard = new Redeemed_Compensation_Card__c(
+      Booking_Reference__c = bookingReference,
+      Compensation_Card_Number__c = cardNumber
+    );
+
+    insert redeemedCard;
+
+    TestDataFactories.CasesClaims createdCasesClaims = TestDataFactories.createCasesWithClaims(
+      1,
+      null,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Compensation_Card_Number__c => cardNumber,
+        LIA_Claim__c.Liability_PNR__c => bookingReference,
+        LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
+          Claims.RecordType.CompensationCard
+        )
+      }
+    );
+
+    Case c = createdCasesClaims.cases[0];
+    LIA_Claim__c claim = createdCasesClaims.claims[0];
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    ClaimService.attemptToRedeemCompensationCardClaim(claim.Id);
+    Test.stopTest();
+
+    List<Settlement__c> settlementsForClaim = [
+      SELECT Id
+      FROM Settlement__c
+      WHERE Claim__c = :claim.Id
+    ];
+    System.assertEquals(
+      0,
+      settlementsForClaim.size(),
+      'No settlements should have been created'
+    );
+    Case caseAfterAttempt = [SELECT Id, Status FROM Case WHERE Id = :c.Id];
+    System.assertEquals(
+      Cases.STATUS_CLOSED,
+      caseAfterAttempt.Status,
+      'Case should have been closed.'
+    );
+  }
+
+  @IsTest
+  public static void attemptingToRedeemAnInvalidCompensationCardShouldFail() {
+    String bookingReference = 'nnnnnn';
+    String cardNumber = '0000000';
+
+    TestDataFactories.CasesClaims createdCasesClaims = TestDataFactories.createCasesWithClaims(
+      1,
+      null,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.BIC_Swift__c => 'XXXXXXXX',
+        LIA_Claim__c.Compensation_Card_Number__c => cardNumber,
+        LIA_Claim__c.Liability_PNR__c => bookingReference,
+        LIA_Claim__c.Preferred_Compensation_Method__c => 'Monetary',
+        LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
+          Claims.RecordType.CompensationCard
+        )
+      }
+    );
+
+    Case c = createdCasesClaims.cases[0];
+    LIA_Claim__c claim = createdCasesClaims.claims[0];
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    ClaimService.attemptToRedeemCompensationCardClaim(claim.Id);
+    Test.stopTest();
+
+    List<Settlement__c> settlementsForClaim = [
+      SELECT Id, Amount__c, Settlement_Status__c
+      FROM Settlement__c
+      WHERE Claim__c = :claim.Id
+    ];
+    System.assertEquals(
+      0,
+      settlementsForClaim.size(),
+      'No settlements should have been created.'
+    );
+
+    List<Redeemed_Compensation_Card__c> compensationCards = [
+      SELECT Id
+      FROM Redeemed_Compensation_Card__c
+      WHERE Claim__c = :claim.Id
+    ];
+    System.assertEquals(
+      0,
+      compensationCards.size(),
+      'No redeemed compensation cards should have been created.'
+    );
+
+    Case caseAfterAttempt = [SELECT Id, Status FROM Case WHERE Id = :c.Id];
+    System.assertEquals(
+      Cases.STATUS_CLOSED,
+      caseAfterAttempt.Status,
+      'Case should have been closed.'
+    );
+  }
+
+  @IsTest
+  public static void attemptingToRedeemAValidUnusedCompensationCardShouldSucceed() {
+    String bookingReference = APIMMock.VOUCHER_VALID_PNR;
+    String cardNumber = APIMMock.VOUCHER_VALID_CARD_ID;
+
+    TestDataFactories.CasesClaims createdCasesClaims = TestDataFactories.createCasesWithClaims(
+      1,
+      null,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.BIC_Swift__c => 'XXXXXXXX',
+        LIA_Claim__c.Compensation_Card_Number__c => cardNumber,
+        LIA_Claim__c.Liability_PNR__c => bookingReference,
+        LIA_Claim__c.Preferred_Compensation_Method__c => 'Monetary',
+        LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
+          Claims.RecordType.CompensationCard
+        )
+      }
+    );
+
+    Case c = createdCasesClaims.cases[0];
+    LIA_Claim__c claim = createdCasesClaims.claims[0];
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    ClaimService.attemptToRedeemCompensationCardClaim(claim.Id);
+    Test.stopTest();
+
+    List<Settlement__c> settlementsForClaim = [
+      SELECT Id, Amount__c, Settlement_Status__c
+      FROM Settlement__c
+      WHERE Claim__c = :claim.Id
+    ];
+    System.assertEquals(
+      1,
+      settlementsForClaim.size(),
+      'A settlements should have been created.'
+    );
+    System.assertEquals(
+      Settlements.STATUS_WAITING_FOR_TRANSFER,
+      settlementsForClaim[0].Settlement_Status__c,
+      'Settlement should be waiting for transfer.'
+    );
+    System.assertEquals(
+      400,
+      settlementsForClaim[0].Amount__c,
+      'Settlement amount should match compensation card value.'
+    );
+    List<Redeemed_Compensation_Card__c> compensationCards = [
+      SELECT Id
+      FROM Redeemed_Compensation_Card__c
+      WHERE Claim__c = :claim.Id
+    ];
+    System.assertEquals(
+      1,
+      compensationCards.size(),
+      'The compensation card should be marked as redeemed.'
+    );
+    Case caseAfterAttempt = [SELECT Id, Status FROM Case WHERE Id = :c.Id];
+
+    System.assertEquals(
+      Cases.STATUS_CLOSED,
+      caseAfterAttempt.Status,
+      'Case should have been closed.'
+    );
+  }
 }
