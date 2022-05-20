@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Validates that all settlements are correct. If not, an error is thrown and an error message is shown.</description>
+        <name>Validate_Settlements_Apex</name>
+        <label>Validate Settlements Apex</label>
+        <locationX>710</locationX>
+        <locationY>1550</locationY>
+        <actionName>ValidateSettlements</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Validate_Settlements</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Settlement_Validation_Error_Screen</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>settlementsToValidate</name>
+            <value>
+                <elementReference>Get_Settlements_for_this_Case</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>51.0</apiVersion>
     <decisions>
         <name>Are_all_Settlements_valid</name>
         <label>Are all Settlements valid?</label>
         <locationX>710</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <defaultConnector>
             <targetReference>errorScreenInvalidSettlements</targetReference>
         </defaultConnector>
@@ -29,7 +51,7 @@
     <decisions>
         <name>Case_can_be_submitted_for_Approval</name>
         <label>Case can be submitted for Approval</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>1310</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -95,7 +117,7 @@
     <decisions>
         <name>Customer_Claim_Or_Liability_Claim</name>
         <label>Customer Claim Or Liability Claim?</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>398</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -132,7 +154,7 @@
     <decisions>
         <name>Is_the_claim_result_valid</name>
         <label>Is the claim result valid?</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>InvalidResult</targetReference>
@@ -178,7 +200,7 @@
     <decisions>
         <name>What_is_case_status</name>
         <label>What is case status?</label>
-        <locationX>1238</locationX>
+        <locationX>1436</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -276,6 +298,7 @@
             <label>Waiting for Approval or Control or Transfer</label>
         </rules>
     </decisions>
+    <description>Move validation v3</description>
     <formulas>
         <name>resultText</name>
         <dataType>String</dataType>
@@ -305,7 +328,7 @@
     <recordLookups>
         <name>Get_Case_Information</name>
         <label>Get Case Information</label>
-        <locationX>1238</locationX>
+        <locationX>1436</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -326,7 +349,7 @@
     <recordLookups>
         <name>Get_Claim_Information</name>
         <label>Get Claim Information</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -347,7 +370,7 @@
     <recordLookups>
         <name>Get_Email_Draft_for_this_Case</name>
         <label>Get Email Draft for this Case</label>
-        <locationX>226</locationX>
+        <locationX>358</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -379,7 +402,7 @@
         <locationY>1430</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Validate_Settlements</targetReference>
+            <targetReference>Validate_Settlements_Apex</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -404,7 +427,7 @@
         <name>Update_Case_Status</name>
         <label>Update Case Status</label>
         <locationX>578</locationX>
-        <locationY>1910</locationY>
+        <locationY>2030</locationY>
         <connector>
             <targetReference>Update_Settlements_for_this_Case</targetReference>
         </connector>
@@ -434,7 +457,7 @@
         <name>Update_Settlements_for_this_Case</name>
         <label>Update Settlements for this Case</label>
         <locationX>578</locationX>
-        <locationY>2030</locationY>
+        <locationY>2150</locationY>
         <connector>
             <targetReference>Send_Case_to_Approval</targetReference>
         </connector>
@@ -471,7 +494,7 @@
     <screens>
         <name>Error_Case_in_Approval_Process</name>
         <label>Error Case in Approval Process</label>
-        <locationX>1634</locationX>
+        <locationX>1898</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -504,7 +527,7 @@
         <name>errorScreenInvalidSettlements</name>
         <label>Error Screen</label>
         <locationX>842</locationX>
-        <locationY>1790</locationY>
+        <locationY>1910</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -535,7 +558,7 @@
     <screens>
         <name>Invalid_Status_Error</name>
         <label>Invalid Status Error</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -551,7 +574,7 @@
     <screens>
         <name>InvalidResult</name>
         <label>InvalidResult</label>
-        <locationX>666</locationX>
+        <locationX>798</locationX>
         <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -565,10 +588,26 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Settlement_Validation_Error_Screen</name>
+        <label>Settlement Validation Error Screen</label>
+        <locationX>1106</locationX>
+        <locationY>1670</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Settlement_Validation_Error_Message</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>submitScreen</name>
         <label>Submit Screen</label>
         <locationX>578</locationX>
-        <locationY>1790</locationY>
+        <locationY>1910</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -584,7 +623,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>1112</locationX>
+        <locationX>1310</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case_Information</targetReference>
@@ -594,7 +633,7 @@
     <subflows>
         <name>Case_has_Settlements_to_approve</name>
         <label>Case has Settlements to approve</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>1190</locationY>
         <connector>
             <targetReference>Case_can_be_submitted_for_Approval</targetReference>
@@ -621,7 +660,7 @@
         <name>Send_Case_to_Approval</name>
         <label>Send Case to Approval</label>
         <locationX>578</locationX>
-        <locationY>2150</locationY>
+        <locationY>2270</locationY>
         <flowName>CLAIM_Case_Approval_Handler</flowName>
         <inputAssignments>
             <name>incomingCaseRecord</name>
@@ -635,7 +674,7 @@
         <name>Validate_Settlements</name>
         <label>Validate Settlements</label>
         <locationX>710</locationX>
-        <locationY>1550</locationY>
+        <locationY>1670</locationY>
         <connector>
             <targetReference>Are_all_Settlements_valid</targetReference>
         </connector>

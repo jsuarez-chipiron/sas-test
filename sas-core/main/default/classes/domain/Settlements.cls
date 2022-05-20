@@ -754,6 +754,120 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     }
   }
 
+  public class SettlementValidityException extends Exception {
+  }
+
+  /**
+   * Validates that the settlement is ready to be submitted to approval
+   * Logic:
+   * Monetary:
+   * Check that Bank_Account_Number, BIC_Swift, Payee_Name, Currency, Bank_Country, and Amount are not null
+   * (Address_Line_1, City, Postal_Code and Country are not null and Type_Of_Customer = "Private Customer") or that Type_of_Customer != "Private Customer"
+   * Check that Amount is larger than 0
+   * Check that Bank_Account_Number and BIC_Swift are valid
+   *
+   * Cheque:
+   * Check that Payee_Name, Currency, Bank_Country, Amount, Address_Line_1, City, Postal_Code and Country are not null
+   * Check that Amount is larger than 0
+   *
+   * Voucher:
+   * Check that Voucher_Email, Currency, Amount, Payee_First_Name, Payee_Last_Name are not null
+   * Check that Amount is larger than 0
+   *
+   * EB Points:
+   * Check that EuroBonus_Number and EuroBonus_Points are not null
+   * Check that EuroBonus_Points are larger than 0
+   */
+  public Settlements validate() {
+    List<String> errorsForAllSettlements = new List<String>();
+    LIA_Claim__c c = ClaimsSelector.newInstance()
+      .selectById(new Set<Id>{ instanceRecords[0].Claim__c })[0]; // Get the corresponding claim
+    Boolean anySettlementsHasErrors = false;
+
+    for (Settlement__c s : instanceRecords) {
+      List<String> errorMessages = new List<String>();
+
+      for (
+        Schema.SObjectField field : getRequiredFieldsForSettlement(
+          s.RecordTypeId,
+          c.Type_of_Customer__c
+        )
+      ) {
+        if (s.get(field) == null) {
+          errorMessages.add(
+            field.getDescribe().getLabel() + ' cannot be empty.'
+          );
+        }
+      }
+
+      if (s.RecordTypeId == getRecordTypeId(Settlements.RecordType.EBPoints)) {
+        System.debug('EBPoints');
+        if (!(s.EuroBonus_Points__c > 0)) {
+          errorMessages.add('EuroBonus Points has to be greater than 0.');
+        }
+      } else if (
+        s.RecordTypeId == getRecordTypeId(Settlements.RecordType.Cheque)
+      ) {
+        System.debug('Cheque');
+        if (!(s.Amount__c > 0)) {
+          errorMessages.add('Amount has to be greater than 0.');
+        }
+      } else if (
+        s.RecordTypeId == getRecordTypeId(Settlements.RecordType.Voucher)
+      ) {
+        System.debug('Voucher');
+        if (!(s.Amount__c > 0)) {
+          errorMessages.add('Amount has to be greater than 0.');
+        }
+      } else if (
+        s.RecordTypeId == getRecordTypeId(Settlements.RecordType.Monetary)
+      ) {
+        System.debug('Monetary');
+        if (!(s.Amount__c > 0)) {
+          errorMessages.add('Amount has to be greater than 0.');
+        }
+        if (errorMessages.size() == 0) {
+          if (
+            !BankAccountUtils.validateIBAN(
+              s.Bank_Account_Number__c,
+              s.Bank_Country__c
+            )
+          ) {
+            errorMessages.add('Bank Account Number is invalid.');
+          }
+          if (!BankAccountUtils.validateBIC(s.BIC_Swift__c)) {
+            errorMessages.add(
+              'BIC number should be formatted as: XXXXXYY or XXXXXXYYYYY (X\'s are letters, Y\'s are letters or numbers).'
+            );
+          }
+        }
+      }
+
+      if (errorMessages.size() != 0) {
+        String errors = '';
+        for (String e : errorMessages) {
+          errors += e + '\n';
+        }
+        errorsForAllSettlements.add('Settlement ' + s.Name + ':\n' + errors);
+      }
+    }
+
+    if (errorsForAllSettlements.size() != 0) {
+      String errors = '';
+      for (String e : errorsForAllSettlements) {
+        errors += e + '\n';
+      }
+      System.debug(errors);
+      throw new SettlementValidityException(
+        '\nOne or more Settlements are invalid. You need to correct the following:\n' +
+        errors +
+        'Please correct these fields and resubmit the Settlements.'
+      );
+    }
+
+    return this;
+  }
+
   /**
    * Marks the settlement item as insured and calculates the claimable amount
    * from SAS's insurance company after deductible. Updates the record which
@@ -883,6 +997,58 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         settlement.Bank_Account_Number__c = settlement.Bank_Account_Number__c.toUpperCase()
           .replace(' ', '');
       }
+    }
+  }
+
+  private List<Schema.SObjectField> getRequiredFieldsForSettlement(
+    Id settlementRecordTypeId,
+    String claimTypeOfCustomer
+  ) {
+    Map<Id, List<Schema.SObjectField>> recordTypeIdToRequiredFields = new Map<Id, List<Schema.SObjectField>>{
+      getRecordTypeId(RecordType.Cheque) => new List<Schema.SObjectField>{
+        Settlement__c.Payee_Name__c,
+        Settlement__c.Currency__c,
+        Settlement__c.Bank_Country__c,
+        Settlement__c.Address_line_1__c,
+        Settlement__c.City__c,
+        Settlement__c.Postal_Code__c,
+        Settlement__c.Country__c
+      },
+      getRecordTypeId(RecordType.EBPoints) => new List<Schema.SObjectField>{
+        Settlement__c.EuroBonus_Number__c
+      },
+      getRecordTypeId(RecordType.Monetary) => new List<Schema.SObjectField>{
+        Settlement__c.Bank_Account_Number__c,
+        Settlement__c.BIC_Swift__c,
+        Settlement__c.Payee_Name__c,
+        Settlement__c.Currency__c,
+        Settlement__c.Bank_Country__c,
+        Settlement__c.Address_line_1__c,
+        Settlement__c.City__c,
+        Settlement__c.Postal_Code__c,
+        Settlement__c.Country__c
+      },
+      getRecordTypeId(RecordType.Voucher) => new List<Schema.SObjectField>{
+        Settlement__c.Voucher_Email__c,
+        Settlement__c.Currency__c,
+        Settlement__c.Payee_First_Name__c,
+        Settlement__c.Payee_Last_Name__c
+      }
+    };
+
+    if (
+      settlementRecordTypeId == getRecordTypeId(RecordType.Monetary) &&
+      claimTypeOfCustomer != 'Private Customer'
+    ) {
+      return new List<Schema.SObjectField>{
+        Settlement__c.Bank_Account_Number__c,
+        Settlement__c.BIC_Swift__c,
+        Settlement__c.Payee_Name__c,
+        Settlement__c.Currency__c,
+        Settlement__c.Bank_Country__c
+      };
+    } else {
+      return recordTypeIdToRequiredFields.get(settlementRecordTypeId);
     }
   }
 }
