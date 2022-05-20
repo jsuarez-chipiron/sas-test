@@ -279,16 +279,19 @@ public without sharing class Claims extends fflib_SObjectDomain {
   private void normalizeFields() {
     for (LIA_Claim__c claim : instanceRecords) {
       if (!String.isBlank(claim.Liability_PNR__c)) {
-        claim.Liability_PNR__c = claim.Liability_PNR__c.toUpperCase();
+        claim.Liability_PNR__c = claim.Liability_PNR__c.toUpperCase()
+          .replace(' ', '');
       }
       if (!String.isBlank(claim.BIC_Swift__c)) {
-        claim.BIC_Swift__c = claim.BIC_Swift__c.toUpperCase();
+        claim.BIC_Swift__c = claim.BIC_Swift__c.toUpperCase().replace(' ', '');
       }
       if (!String.isBlank(claim.Bank_Account_Number__c)) {
-        claim.Bank_Account_Number__c = claim.Bank_Account_Number__c.toUpperCase();
+        claim.Bank_Account_Number__c = claim.Bank_Account_Number__c.toUpperCase()
+          .replace(' ', '');
       }
       if (!String.isBlank(claim.Flight_Number__c)) {
-        claim.Flight_Number__c = claim.Flight_Number__c.toUpperCase();
+        claim.Flight_Number__c = claim.Flight_Number__c.toUpperCase()
+          .replace(' ', '');
       }
     }
   }
