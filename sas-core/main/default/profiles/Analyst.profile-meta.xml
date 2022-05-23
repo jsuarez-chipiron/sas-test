@@ -307,7 +307,15 @@
     <classAccesses>
         <apexClass>UnlockRecords</apexClass>
         <enabled>true</enabled>
-    </classAccesses>    
+    </classAccesses>
+    <classAccesses>
+        <apexClass>BankAccountUtils</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ValidateSettlements</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <classAccesses>
         <apexClass>VoucherCreateRequest</apexClass>
         <enabled>true</enabled>
