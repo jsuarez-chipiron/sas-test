@@ -32,8 +32,8 @@
     <assignments>
         <name>AutomaticApproval</name>
         <label>AutomaticApproval</label>
-        <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationX>1458</locationX>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -49,7 +49,7 @@
         <name>ManualApproval</name>
         <label>ManualApproval</label>
         <locationX>666</locationX>
-        <locationY>1526</locationY>
+        <locationY>1310</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -66,43 +66,43 @@
         <defaultConnector>
             <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>1000 or less</defaultConnectorLabel>
+        <defaultConnectorLabel>2625 or less</defaultConnectorLabel>
         <rules>
-            <name>More_than_2700</name>
+            <name>More_than_5250</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <numberValue>2700.0</numberValue>
+                    <numberValue>5250.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>ManualApproval</targetReference>
             </connector>
-            <label>More than 2700</label>
+            <label>More than 5250</label>
         </rules>
         <rules>
-            <name>Between_1000_and_2700</name>
+            <name>Between_2625_and_5250</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
-                    <numberValue>1000.0</numberValue>
+                    <numberValue>2625.0</numberValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <numberValue>2700.0</numberValue>
+                    <numberValue>5250.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Random_Check_Monetary</targetReference>
             </connector>
-            <label>Between 1000 and 2700</label>
+            <label>Between 2625 and 5250</label>
         </rules>
     </decisions>
     <decisions>
@@ -113,21 +113,21 @@
         <defaultConnector>
             <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>20000 or less</defaultConnectorLabel>
+        <defaultConnectorLabel>40000 or less</defaultConnectorLabel>
         <rules>
-            <name>More_than_20000</name>
+            <name>More_than_40000</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>incomingRecord.EuroBonus_Points__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <numberValue>20000.0</numberValue>
+                    <numberValue>40000.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>ManualApproval</targetReference>
             </connector>
-            <label>More than 20000</label>
+            <label>More than 40000</label>
         </rules>
     </decisions>
     <decisions>
@@ -245,21 +245,21 @@
         <defaultConnector>
             <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>2700 or less</defaultConnectorLabel>
+        <defaultConnectorLabel>5250 or less</defaultConnectorLabel>
         <rules>
-            <name>More_than_2700_voucher</name>
+            <name>More_than_5250_voucher</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <numberValue>2700.0</numberValue>
+                    <numberValue>5250.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>ManualApproval</targetReference>
             </connector>
-            <label>More than 2700</label>
+            <label>More than 5250</label>
         </rules>
     </decisions>
     <formulas>
@@ -291,8 +291,8 @@
     <recordCreates>
         <name>Create_Approval_Request</name>
         <label>Create Approval Request</label>
-        <locationX>578</locationX>
-        <locationY>998</locationY>
+        <locationX>1458</locationX>
+        <locationY>878</locationY>
         <inputAssignments>
             <field>OwnerId</field>
             <value>
@@ -323,8 +323,8 @@
     <recordLookups>
         <name>Get_SAS_AP_User</name>
         <label>Get SAS AP User</label>
-        <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationX>1458</locationX>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_Settlement_Status_to_Approved</targetReference>
@@ -344,8 +344,8 @@
     <recordUpdates>
         <name>Set_Settlement_Status_to_Approved</name>
         <label>Set Settlement Status to Approved</label>
-        <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationX>1458</locationX>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Create_Approval_Request</targetReference>
         </connector>
