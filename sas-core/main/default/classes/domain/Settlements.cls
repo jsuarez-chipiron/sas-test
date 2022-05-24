@@ -20,7 +20,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     );
   }
 
-  private List<Settlement__c> instanceRecords;
+  public List<Settlement__c> instanceRecords;
 
   public enum RecordType {
     Cheque,
@@ -86,6 +86,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   public static final String STATUS_REJECTED_BY_BANK = 'Rejected by bank';
   public static final String STATUS_DONE = 'Done';
   public static final String STATUS_FAILED = 'Failed';
+  public static final String STATUS_FAILED_PROCESSED = 'Failed - Processed';
 
   private static final Integer INSURANCE_DEDUCTIBLE_BAGGAGE = 1250;
   private static final Integer INSURANCE_DEDUCTIBLE_PERSONAL_INJURY = 0;
@@ -102,17 +103,28 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   public static final String COST_CENTER_DEBITS = '90801';
 
+  public static final Decimal CONVERSION_RATE_EUR_TO_EB_POINTS = 10;
+  public static final Decimal CONVERSION_RATE_EUR_TO_VOUCHER_EUR = 2;
+
+  public class CreateException extends Exception {
+  }
+
+  public class UpdateException extends Exception {
+  }
+
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
     processPayableVoucherAndEuroBonusSettlements();
   }
 
-  public void markAsSentToRacer(String paymentFilename) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    markAsSentToRacer(paymentFilename, uow);
-    uow.commitWork();
+  public override void onBeforeInsert() {
+    normalizeFields();
   }
 
-  public void markAsSentToRacer(
+  public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
+    normalizeFields();
+  }
+
+  public Settlements markAsSentToRacer(
     String paymentFilename,
     fflib_ISObjectUnitOfWork uow
   ) {
@@ -130,15 +142,11 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
     SettlementItems.newInstance(correspondingSettlements)
       .markAsPendingL1Confirmation(uow);
+
+    return this;
   }
 
-  public void markAsReceivedByBank(String bankStatus, String errorMessage) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    markAsReceivedByBank(bankStatus, errorMessage, uow);
-    uow.commitWork();
-  }
-
-  public void markAsReceivedByBank(
+  public Settlements markAsReceivedByBank(
     String bankStatus,
     String errorMessage,
     fflib_ISObjectUnitOfWork uow
@@ -171,15 +179,11 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         null
       );
     }
+
+    return this;
   }
 
-  public void markAsReceivedByRacer(String racerStatus, String errorMessage) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    markAsReceivedByRacer(racerStatus, errorMessage, uow);
-    uow.commitWork();
-  }
-
-  public void markAsReceivedByRacer(
+  public Settlements markAsReceivedByRacer(
     String racerStatus,
     String errorMessage,
     fflib_ISObjectUnitOfWork uow
@@ -203,14 +207,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         null
       );
     }
-  }
 
-  public void markAsFailedPayment(
-    Map<Id, String> settlementIdsToErrorMessages
-  ) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    markAsFailedPayment(settlementIdsToErrorMessages, uow);
-    uow.commitWork();
+    return this;
   }
 
   /**
@@ -224,7 +222,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
    *
    * Expected to be used when we receive an L2 file from Racer.
    */
-  public void markAsFailedPayment(
+  public Settlements markAsFailedPayment(
     Map<Id, String> settlementIdsToErrorMessages,
     fflib_ISObjectUnitOfWork uow
   ) {
@@ -251,29 +249,38 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
     SettlementItems.newInstance(correspondingSettlementItems)
       .markAsSettlementFailed(uow);
+
+    return this;
   }
 
-  public void markAsDone(String reference) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    markAsDone(reference, uow);
-    uow.commitWork();
-  }
-
-  public void markAsDone(String reference, fflib_ISObjectUnitOfWork uow) {
+  public Settlements markAsDone(
+    String reference,
+    fflib_ISObjectUnitOfWork uow
+  ) {
     for (Settlement__c s : instanceRecords) {
-      s.Settlement_Status__c = STATUS_DONE;
-      s.External_Reference__c = reference;
-      uow.registerDirty(s);
+      if (
+        s.Settlement_Status__c != STATUS_FAILED &&
+        s.Settlement_Status__c != STATUS_FAILED_PROCESSED
+      ) {
+        // Failed settlements should never be reprocessed. At least payment
+        // acceptance files can be received out of order so that we first
+        // receive the L2 failure for a settlement and after that the
+        // acceptance file. Even this order should leave the settlements as
+        // failed.
+
+        s.Settlement_Status__c = STATUS_DONE;
+        s.External_Reference__c = reference;
+        uow.registerDirty(s);
+      }
     }
+
+    return this;
   }
 
-  public void markAsFailed(String errorMessage) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    markAsFailed(errorMessage, uow);
-    uow.commitWork();
-  }
-
-  public void markAsFailed(String errorMessage, fflib_ISObjectUnitOfWork uow) {
+  public Settlements markAsFailed(
+    String errorMessage,
+    fflib_ISObjectUnitOfWork uow
+  ) {
     for (Settlement__c s : instanceRecords) {
       s.Settlement_Status__c = STATUS_FAILED;
       s.Error_Message__c = errorMessage;
@@ -286,6 +293,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       'Settlements',
       null
     );
+
+    return this;
   }
 
   /**
@@ -293,12 +302,14 @@ public without sharing class Settlements extends fflib_SObjectDomain {
    *
    * Locks also all settlement items related to this settlement.
    */
-  public void lock() {
+  public Settlements lock() {
     List<Settlement_Item__c> settlementItemsForInstanceRecords = settlementItemsSel.selectBySettlementIds(
       (new Map<Id, Settlement__c>(instanceRecords)).keySet()
     );
     Approval.lock(instanceRecords);
     Approval.lock(settlementItemsForInstanceRecords);
+
+    return this;
   }
 
   /**
@@ -306,15 +317,39 @@ public without sharing class Settlements extends fflib_SObjectDomain {
    *
    * Unlocks also all settlement items related to this settlement.
    */
-  public void unlock() {
+  public Settlements unlock() {
     List<Settlement_Item__c> settlementItemsForInstanceRecords = settlementItemsSel.selectBySettlementIds(
       (new Map<Id, Settlement__c>(instanceRecords)).keySet()
     );
     Approval.unlock(instanceRecords);
     Approval.unlock(settlementItemsForInstanceRecords);
+
+    return this;
   }
 
-  public class UpdateSettlementException extends Exception {
+  /**
+   * Approves the given settlements for transfer. Excepts that the settlements
+   * have already been validated.
+   */
+  public Settlements approve(fflib_ISObjectUnitOfWork uow) {
+    for (Settlement__c settlement : instanceRecords) {
+      if (settlement.Id == null) {
+        uow.registerNew(settlement);
+      } else {
+        uow.registerDirty(settlement);
+      }
+
+      settlement.Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER;
+
+      Approval_Request__c approval = new Approval_Request__c(
+        OwnerId = UserInfo.getUserId(),
+        Status__c = 'Approved',
+        Type__c = 'Approval'
+      );
+      uow.registerNew(approval, Approval_Request__c.Settlement__c, settlement);
+    }
+
+    return this;
   }
 
   /**
@@ -326,55 +361,67 @@ public without sharing class Settlements extends fflib_SObjectDomain {
    *
    * @param itemsToUpsert Full list of settlement items this settlement should have the operation.
    */
-  public Boolean updateSettlementItems(List<Settlement_Item__c> itemsToUpsert) {
-    if (instanceRecords.size() > 1) {
-      return false;
-    }
-    Settlement__c settlement = instanceRecords[0];
-
-    if (
-      settlement.RecordTypeId !=
-      getRecordTypeId(Settlements.RecordType.EBPoints) &&
-      settlement.Currency__c == null
-    ) {
-      throw new UpdateSettlementException(
-        'Set currency before trying to update settlement items.'
-      );
-    }
-
-    // TODO: Verify that settlement can be updated. (Not locked and status is good to go, maybe?)
-    // TODO: Do we need to check locked status also here? Probably yes.
-    Boolean canBeModified =
-      settlement.Settlement_Status__c == STATUS_IN_PROGRESS ||
-      settlement.Settlement_Status__c == STATUS_DENIED;
-    if (canBeModified) {
-      fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-
-      List<Settlement_Item__c> existingItems = settlementItemsSel.selectBySettlementIds(
-        new Set<Id>{ settlement.Id }
-      );
-
-      for (Settlement_Item__c existingItem : existingItems) {
-        Boolean found = false;
-        for (Settlement_Item__c newItem : itemsToUpsert) {
-          if (newItem.Id == existingItem.Id) {
-            found = true;
-          }
-        }
-        if (!found) {
-          uow.registerDeleted(existingItem);
-        }
+  public Settlements updateSettlementItems(
+    Map<Id, List<Settlement_Item__c>> itemsToUpsert,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    Set<Id> parentClaimIds = new Set<Id>();
+    for (Settlement__c settlement : instanceRecords) {
+      if (
+        settlement.RecordTypeId !=
+        getRecordTypeId(Settlements.RecordType.EBPoints) &&
+        settlement.Currency__c == null
+      ) {
+        throw new UpdateException(
+          'Set currency before trying to update settlement items.'
+        );
       }
 
-      Decimal settlementTotal = 0;
-      for (Settlement_Item__c item : itemsToUpsert) {
+      Boolean canBeModified =
+        settlement.Settlement_Status__c == STATUS_IN_PROGRESS ||
+        settlement.Settlement_Status__c == STATUS_DENIED;
+
+      if (!canBeModified) {
+        throw new UpdateException(
+          'Settlement status must be in progress or denied to update settlement items.'
+        );
+      }
+      parentClaimIds.add(settlement.Claim__c);
+    }
+
+    Map<Id, LIA_Claim__c> parentClaimsById = new Map<Id, LIA_Claim__c>(
+      ClaimsSelector.newInstance().selectById(parentClaimIds)
+    );
+    Map<String, Exchange_Rate__c> exchangeRatesToSEK = new Map<String, Exchange_Rate__c>();
+    Map<String, Exchange_Rate__c> exchangeRatesFromUSD = new Map<String, Exchange_Rate__c>();
+
+    for (Exchange_Rate__c er : exchangeRatesSel.selectByToCurrency('SEK')) {
+      exchangeRatesToSEK.put(er.From_Currency__c, er);
+    }
+
+    for (Exchange_Rate__c er : exchangeRatesSel.selectByFromCurrency('USD')) {
+      exchangeRatesFromUSD.put(er.To_Currency__c, er);
+    }
+
+    markRemovedSettlementItemsForDeletion(itemsToUpsert, uow);
+
+    for (Settlement__c settlement : instanceRecords) {
+      if (settlement.Id != null) {
+        uow.registerDirty(settlement);
+      }
+
+      Decimal sumOfLineItems = 0;
+
+      for (Settlement_Item__c item : itemsToUpsert.get(settlement.Id)) {
+        if (item.Id == null) {
+          uow.registerNew(item, Settlement_Item__c.Settlement__c, settlement);
+        } else {
+          uow.registerDirty(item);
+        }
+
         item.Cost_Center__c = COST_CENTER_DEBITS;
         item.Currency__c = settlement.Currency__c;
         item.Status__c = SettlementItems.STATUS_DRAFT;
-        if (item.Id == null) {
-          // If it's a new item, we need to set the parent settlement. Otherwise it's already set.
-          item.Settlement__c = settlement.Id;
-        }
 
         if (
           settlement.RecordTypeId ==
@@ -386,50 +433,434 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           );
         }
 
-        settlementTotal += item.Amount__c;
+        sumOfLineItems += item.Amount__c;
       }
-      if (
-        settlement.RecordTypeId ==
-        getRecordTypeId(Settlements.RecordType.Cheque) ||
-        settlement.RecordTypeId ==
-        getRecordTypeId(Settlements.RecordType.Monetary)
-      ) {
-        // Only monetary and cheque settlements should be checked for insurance.
-        updateInsuranceForSettlementItems(itemsToUpsert);
-      }
-      uow.registerUpsert(itemsToUpsert);
 
-      if (
-        settlement.RecordTypeId ==
-        getRecordTypeId(Settlements.RecordType.EBPoints)
-      ) {
-        settlement.EuroBonus_Points__c = settlementTotal;
-      } else {
-        settlement.Amount__c = settlementTotal;
-        if (settlement.Currency__c == 'SEK') {
-          settlement.Settlement_amount_in_SEK__c = settlementTotal;
-          settlement.Date_of_Exchange_Calculation__c = Date.today();
-        } else {
-          List<Exchange_Rate__c> exchangeRateToSEK = exchangeRatesSel.selectByCurrency(
-            settlement.Currency__c,
-            'SEK'
-          );
+      updateInsuranceForSettlementItems(
+        itemsToUpsert.get(settlement.id),
+        settlement,
+        parentClaimsById.get(settlement.Claim__c),
+        exchangeRatesFromUSD
+      );
 
-          if (exchangeRateToSEK.size() != 0) {
-            // There should always be exactly one, but just in case we lose exchange rate data, let's check.
-            settlement.Settlement_amount_in_SEK__c =
-              settlementTotal * exchangeRateToSEK[0].Rate__c;
-            settlement.Date_of_Exchange_Calculation__c = exchangeRateToSEK[0]
-              .Date__c;
+      updateSettlementTotal(settlement, sumOfLineItems, exchangeRatesToSEK);
+    }
+
+    return this;
+  }
+
+  /**
+   * Creates settlements without settlement items for the given claims.
+   *
+   * @param claims List of claims for which to create settlements.
+   * @param recordTypeToCreate Which type of settlements should be created. If
+   * null, the claims' preferred compensation methods will be used.
+   */
+  public static Settlements createFromClaim(
+    List<LIA_Claim__c> claims,
+    RecordType recordTypeToCreate,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    List<Settlement__c> settlementsToCreate = new List<Settlement__c>();
+
+    for (LIA_Claim__c claim : claims) {
+      if (recordTypeToCreate == null) {
+        switch on claim.Preferred_Compensation_Method__c {
+          when 'EuroBonus Points' {
+            recordTypeToCreate = RecordType.EBPoints;
+          }
+          when 'Monetary' {
+            recordTypeToCreate = RecordType.Monetary;
+          }
+          when 'Voucher' {
+            recordTypeToCreate = RecordType.Voucher;
+          }
+          when else {
+            recordTypeToCreate = RecordType.Monetary;
           }
         }
       }
-      uow.registerDirty(settlement);
-      uow.commitWork();
-      return true;
+
+      // Logic from settlement creation flow
+      Settlement__c settlementToCreate = new Settlement__c(
+        Address_line_1__c = claim.Address_line_1__c,
+        Address_line_2__c = claim.Address_line_2__c,
+        City__c = claim.City__c,
+        Claim__c = claim.Id,
+        Country__c = claim.Country__c,
+        Postal_Code__c = claim.Postal_Code__c,
+        Settlement_Status__c = Settlements.STATUS_IN_PROGRESS
+      );
+      switch on recordTypeToCreate {
+        when Cheque {
+          settlementToCreate.Bank_Country__c = 'United States'; // Cheques are supported only for US.
+          settlementToCreate.Country__c = 'United States'; // Cheques are supported only for US.
+          settlementToCreate.Currency__c = 'USD'; // Cheques are supported only for USD.
+          settlementToCreate.Payee_Name__c = claim.Bank_Account_Holder_Name__c;
+          settlementToCreate.Payee_reference__c = claim.Customer_s_Reference__c;
+          settlementToCreate.RecordTypeId = Settlements.getRecordTypeId(
+            Settlements.RecordType.Cheque
+          );
+        }
+        when EBPoints {
+          settlementToCreate.EuroBonus_Number__c = claim.EuroBonus_Number__c;
+          settlementToCreate.Payee_Name__c = claim.Contact_Full_Name__c;
+          settlementToCreate.RecordTypeId = Settlements.getRecordTypeId(
+            Settlements.RecordType.EBPoints
+          );
+        }
+        when Monetary {
+          settlementToCreate.BIC_Swift__c = claim.BIC_Swift__c;
+          settlementToCreate.Bank_Account_Number__c = claim.Bank_Account_Number__c;
+          settlementToCreate.Bank_Country__c = claim.Bank_Country__c;
+          settlementToCreate.Bank_Name__c = claim.Bank_Name__c;
+          settlementToCreate.Currency__c = claim.Currency__c;
+          settlementToCreate.Payee_Name__c = claim.Bank_Account_Holder_Name__c;
+          settlementToCreate.Payee_reference__c = claim.Customer_s_Reference__c;
+          settlementToCreate.RecordTypeId = Settlements.getRecordTypeId(
+            Settlements.RecordType.Monetary
+          );
+        }
+        when Voucher {
+          settlementToCreate.Bank_Country__c = 'Not Applicable';
+          settlementToCreate.Payee_First_Name__c = claim.Contact_First_Name__c;
+          settlementToCreate.Payee_Last_Name__c = claim.Contact_Last_Name__c;
+          settlementToCreate.RecordTypeId = Settlements.getRecordTypeId(
+            Settlements.RecordType.Voucher
+          );
+          settlementToCreate.Voucher_Email__c = claim.Contact_Email__c;
+        }
+      }
+      uow.registerNew(settlementToCreate);
+      settlementsToCreate.add(settlementToCreate);
     }
 
-    return false;
+    return newInstance(settlementsToCreate);
+  }
+
+  /**
+   * Creates settlements for the given claims using the given compensation
+   * cards. Payment details are taken from the claims and the compensation
+   * amount from compensation cards.
+   *
+   * The settlements contains also settlement items and are ready to be
+   * approved after they are created.
+   *
+   * @param cardClaims claims List of claims for which to create settlements.
+   * @param compensationCardByClaimId Map from claim.Id to the compensation
+   * card for that claim.
+   */
+  public static Settlements createFromCompensationCard(
+    List<LIA_Claim__c> cardClaims,
+    Map<Id, Redeemed_Compensation_Card__c> compensationCardByClaimId,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    Map<Id, Settlement__c> settlementsByClaimId = new Map<Id, Settlement__c>();
+
+    Settlements settlementsToCreate = createFromClaim(cardClaims, null, uow);
+
+    for (Settlement__c s : settlementsToCreate.instanceRecords) {
+      settlementsByClaimId.put(s.Claim__c, s);
+    }
+
+    for (LIA_Claim__c claim : cardClaims) {
+      Redeemed_Compensation_Card__c compensationCardForClaim = compensationCardByClaimId.get(
+        claim.Id
+      );
+      if (
+        claim.RecordTypeId !=
+        Claims.getRecordTypeId(Claims.RecordType.CompensationCard) ||
+        compensationCardForClaim == null
+      ) {
+        throw new CreateException(
+          'Not a compensation card claim or missing card information.'
+        );
+      }
+
+      Settlement__c settlementToCreate = settlementsByClaimId.get(claim.Id);
+      settlementToCreate.Currency__c = compensationCardForClaim.Currency__c;
+
+      if (claim.Preferred_Compensation_Method__c == 'Voucher') {
+        // There are several different voucher sybtypes issued as compensation
+        // cards. The subtype always begins with either IDB, IDG, VDB, or VDG
+        // for the different compensation situations. We can map these to the
+        // existing voucher cost accounts like this.
+        String voucherSubTypeCategory = String.isBlank(
+            compensationCardForClaim.Sub_Type__c
+          ) || compensationCardForClaim.Sub_Type__c.length() < 3
+          ? ''
+          : compensationCardForClaim.Sub_Type__c.substring(0, 3);
+        switch on voucherSubTypeCategory {
+          when 'IDB' {
+            settlementToCreate.Voucher_Type__c = '6721 - Denied boarding involuntary voucher';
+          }
+          when 'VDB' {
+            settlementToCreate.Voucher_Type__c = '6721 - Denied boarding voluntary voucher';
+          }
+          when 'IDG' {
+            settlementToCreate.Voucher_Type__c = '6721 - Downgrading involuntary voucher';
+          }
+          when 'VDG' {
+            settlementToCreate.Voucher_Type__c = '6721 - Downgrading voluntary voucher';
+          }
+          when else {
+            settlementToCreate.Voucher_Type__c = '6721 - Denied boarding involuntary voucher';
+          }
+        }
+      }
+    }
+
+    Map<Id, List<Settlement_Item__c>> itemsToCreateBySettlement = new Map<Id, List<Settlement_Item__c>>();
+
+    for (LIA_Claim__c claim : cardClaims) {
+      Redeemed_Compensation_Card__c compensationCardForClaim = compensationCardByClaimId.get(
+        claim.Id
+      );
+      Settlement__c settlement = settlementsByClaimId.get(claim.Id);
+
+      Settlement_Item__c itemToCreate = new Settlement_Item__c(
+        Comments__c = 'Automatic settlement item for compensation card.',
+        Customer_Name__c = claim.Contact_Full_Name__c,
+        Settlement__c = settlement.Id
+      );
+      switch on claim.Preferred_Compensation_Method__c {
+        when 'EuroBonus Points' {
+          itemToCreate.Amount__c =
+            CONVERSION_RATE_EUR_TO_EB_POINTS *
+            compensationCardForClaim.Amount__c;
+          itemToCreate.Cost_Account__c = '';
+        }
+        when 'Monetary' {
+          itemToCreate.Amount__c = compensationCardForClaim.Amount__c;
+          itemToCreate.Cost_Account__c = '';
+        }
+        when 'Voucher' {
+          itemToCreate.Amount__c =
+            CONVERSION_RATE_EUR_TO_VOUCHER_EUR *
+            compensationCardForClaim.Amount__c;
+        }
+        when else {
+          // Default to monetary
+          itemToCreate.Amount__c = compensationCardForClaim.Amount__c;
+          itemToCreate.Cost_Account__c = '';
+        }
+      }
+
+      itemsToCreateBySettlement.put(
+        settlement.Id,
+        new List<Settlement_Item__c>{ itemToCreate }
+      );
+    }
+
+    return settlementsToCreate
+      .updateSettlementItems(itemsToCreateBySettlement, uow);
+  }
+
+  /**
+   * Given a list of new settlement items, marks all settlements items for
+   * instance records for deletion if they do not exist in the given
+   * itemsToUpsert.
+   */
+  private void markRemovedSettlementItemsForDeletion(
+    Map<Id, List<Settlement_Item__c>> itemsToUpsert,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    Set<Id> settlementIds = new Set<Id>();
+    for (Settlement__c s : instanceRecords) {
+      if (s.Id != null) {
+        settlementIds.add(s.Id);
+      }
+    }
+    if (settlementIds.size() == 0) {
+      // Nothing to remove if the settlements don't exist yet.
+      return;
+    }
+
+    List<Settlement_Item__c> allExistingSettlementItems = settlementItemsSel.selectBySettlementIds(
+      settlementIds
+    );
+
+    Map<Id, List<Settlement_Item__c>> existingSettlementItemsBySettlement = new Map<Id, List<Settlement_Item__c>>();
+
+    for (Settlement_Item__c si : allExistingSettlementItems) {
+      List<Settlement_Item__c> existing = existingSettlementItemsBySettlement.get(
+        si.Settlement__c
+      );
+      if (existing == null) {
+        existingSettlementItemsBySettlement.put(
+          si.Settlement__c,
+          new List<Settlement_Item__c>{ si }
+        );
+      } else {
+        existing.add(si);
+      }
+    }
+    for (Id settlementId : settlementIds) {
+      // If we have an existing settlement, we need to check if any of the
+      // existing settlements should be deleted and mark them for deletion if
+      // so.
+      List<Settlement_Item__c> existingItems = settlementItemsSel.selectBySettlementIds(
+        new Set<Id>{ settlementId }
+      );
+
+      for (Settlement_Item__c existingItem : existingItems) {
+        Boolean found = false;
+        for (Settlement_Item__c newItem : itemsToUpsert.get(settlementId)) {
+          if (newItem.Id == existingItem.Id) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          uow.registerDeleted(existingItem);
+        }
+      }
+    }
+  }
+
+  /**
+   * Updates the settlement amount fields for the given settlement based on the
+   * given sum of line items. Handles currency conversion calculation to SEK
+   * for Settlement_amount_in_SEK__c field.
+   */
+  private void updateSettlementTotal(
+    Settlement__c settlement,
+    Decimal sumOfLineItems,
+    Map<String, Exchange_Rate__c> exchangeRatesToSEK
+  ) {
+    if (
+      settlement.RecordTypeId ==
+      getRecordTypeId(Settlements.RecordType.EBPoints)
+    ) {
+      settlement.EuroBonus_Points__c = sumOfLineItems;
+    } else {
+      settlement.Amount__c = sumOfLineItems;
+      if (settlement.Currency__c == 'SEK') {
+        settlement.Settlement_amount_in_SEK__c = sumOfLineItems;
+        settlement.Date_of_Exchange_Calculation__c = Date.today();
+      } else {
+        Exchange_Rate__c exchangeRateToSEK = exchangeRatesToSEK.get(
+          settlement.Currency__c
+        );
+
+        if (exchangeRateToSEK != null) {
+          // There should always be exactly one, but just in case we lose exchange rate data, let's check.
+          settlement.Settlement_amount_in_SEK__c =
+            sumOfLineItems * exchangeRateToSEK.Rate__c;
+          settlement.Date_of_Exchange_Calculation__c = exchangeRateToSEK
+            .Date__c;
+        }
+      }
+    }
+  }
+
+  public class SettlementValidityException extends Exception {
+  }
+
+  /**
+   * Validates that the settlement is ready to be submitted to approval
+   * Logic:
+   * Monetary:
+   * Check that Bank_Account_Number, BIC_Swift, Payee_Name, Currency, Bank_Country, and Amount are not null
+   * (Address_Line_1, City, Postal_Code and Country are not null and Type_Of_Customer = "Private Customer") or that Type_of_Customer != "Private Customer"
+   * Check that Amount is larger than 0
+   * Check that Bank_Account_Number and BIC_Swift are valid
+   *
+   * Cheque:
+   * Check that Payee_Name, Currency, Bank_Country, Amount, Address_Line_1, City, Postal_Code and Country are not null
+   * Check that Amount is larger than 0
+   *
+   * Voucher:
+   * Check that Voucher_Email, Currency, Amount, Payee_First_Name, Payee_Last_Name are not null
+   * Check that Amount is larger than 0
+   *
+   * EB Points:
+   * Check that EuroBonus_Number and EuroBonus_Points are not null
+   * Check that EuroBonus_Points are larger than 0
+   */
+  public Settlements validate() {
+    List<String> errorsForAllSettlements = new List<String>();
+    LIA_Claim__c c = ClaimsSelector.newInstance()
+      .selectById(new Set<Id>{ instanceRecords[0].Claim__c })[0]; // Get the corresponding claim
+    Boolean anySettlementsHasErrors = false;
+
+    for (Settlement__c s : instanceRecords) {
+      List<String> errorMessages = new List<String>();
+
+      for (
+        Schema.SObjectField field : getRequiredFieldsForSettlement(
+          s.RecordTypeId,
+          c.Type_of_Customer__c
+        )
+      ) {
+        if (s.get(field) == null) {
+          errorMessages.add(
+            field.getDescribe().getLabel() + ' cannot be empty.'
+          );
+        }
+      }
+
+      if (s.RecordTypeId == getRecordTypeId(Settlements.RecordType.EBPoints)) {
+        if (!(s.EuroBonus_Points__c > 0)) {
+          errorMessages.add('EuroBonus Points has to be greater than 0.');
+        }
+      } else if (
+        s.RecordTypeId == getRecordTypeId(Settlements.RecordType.Cheque)
+      ) {
+        if (!(s.Amount__c > 0)) {
+          errorMessages.add('Amount has to be greater than 0.');
+        }
+      } else if (
+        s.RecordTypeId == getRecordTypeId(Settlements.RecordType.Voucher)
+      ) {
+        if (!(s.Amount__c > 0)) {
+          errorMessages.add('Amount has to be greater than 0.');
+        }
+      } else if (
+        s.RecordTypeId == getRecordTypeId(Settlements.RecordType.Monetary)
+      ) {
+        if (!(s.Amount__c > 0)) {
+          errorMessages.add('Amount has to be greater than 0.');
+        }
+        if (errorMessages.size() == 0) {
+          if (
+            !BankAccountUtils.validateIBAN(
+              s.Bank_Account_Number__c,
+              s.Bank_Country__c
+            )
+          ) {
+            errorMessages.add('Bank Account Number is invalid.');
+          }
+          if (!BankAccountUtils.validateBIC(s.BIC_Swift__c)) {
+            errorMessages.add(
+              'BIC number should be formatted as: XXXXXYY or XXXXXXYYYYY (X\'s are letters, Y\'s are letters or numbers).'
+            );
+          }
+        }
+      }
+
+      if (errorMessages.size() != 0) {
+        String errors = '';
+        for (String e : errorMessages) {
+          errors += e + '\n';
+        }
+        errorsForAllSettlements.add('Settlement ' + s.Name + ':\n' + errors);
+      }
+    }
+
+    if (errorsForAllSettlements.size() != 0) {
+      String errors = '';
+      for (String e : errorsForAllSettlements) {
+        errors += e + '\n';
+      }
+      throw new SettlementValidityException(
+        '\nOne or more Settlements are invalid. You need to correct the following:\n' +
+        errors +
+        'Please correct these fields and resubmit the Settlements.'
+      );
+    }
+
+    return this;
   }
 
   /**
@@ -440,28 +871,22 @@ public without sharing class Settlements extends fflib_SObjectDomain {
    * @return The same list with the updated settlement items.
    */
   private List<Settlement_Item__c> updateInsuranceForSettlementItems(
-    List<Settlement_Item__c> items
+    List<Settlement_Item__c> items,
+    Settlement__c settlement,
+    LIA_Claim__c claim,
+    Map<String, Exchange_Rate__c> exchangeRatesFromUSD
   ) {
-    Map<String, List<Settlement_Item__c>> customerNamesToSettlementItems = new Map<String, List<Settlement_Item__c>>();
-    for (Settlement_Item__c item : items) {
-      // Group settlement items by customer
-      List<Settlement_Item__c> existingItemsForCustomer = customerNamesToSettlementItems.get(
-        item.Customer_Name__c
-      );
-      if (existingItemsForCustomer == null) {
-        customerNamesToSettlementItems.put(
-          item.Customer_Name__c,
-          new List<Settlement_Item__c>{ item }
-        );
-      } else {
-        existingItemsForCustomer.add(item);
-      }
+    Boolean isAMonetaryClaim =
+      Settlement.RecordTypeId ==
+      getRecordTypeId(Settlements.RecordType.Cheque) ||
+      settlement.RecordTypeId ==
+      getRecordTypeId(Settlements.RecordType.Monetary);
+
+    Boolean isAnInsuredClaimType = isAMonetaryClaim;
+    // Only monetary payments are claimed from insurance.
+    if (!isAnInsuredClaimType) {
+      return items;
     }
-
-    Settlement__c settlement = instanceRecords[0];
-
-    LIA_Claim__c claim = ClaimsSelector.newInstance()
-      .selectById(new Set<Id>{ settlement.Claim__c })[0];
 
     // We're making an assumption here that there is never a settlement which contains
     // both baggage and personal injure claims.
@@ -476,16 +901,30 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       deductible = INSURANCE_DEDUCTIBLE_BAGGAGE;
     }
 
+    Map<String, List<Settlement_Item__c>> customerNamesToSettlementItems = new Map<String, List<Settlement_Item__c>>();
+    for (Settlement_Item__c item : items) {
+      // Group settlement items by customer as deductible is by customer.
+      List<Settlement_Item__c> existingItemsForCustomer = customerNamesToSettlementItems.get(
+        item.Customer_Name__c
+      );
+      if (existingItemsForCustomer == null) {
+        customerNamesToSettlementItems.put(
+          item.Customer_Name__c,
+          new List<Settlement_Item__c>{ item }
+        );
+      } else {
+        existingItemsForCustomer.add(item);
+      }
+    }
+
     if (settlement.Currency__c != 'USD') {
       // Deductible amounts are defined in USD so we need to convert them to
       // settlement currency if it isn't USD.
-      List<Exchange_Rate__c> exchangeRateFromUSD = exchangeRatesSel.selectByCurrency(
-        'USD',
+      Exchange_Rate__c exchangeRateFromUSD = exchangeRatesFromUSD.get(
         settlement.Currency__c
       );
-
-      if (exchangeRateFromUSD.size() != 0) {
-        deductible = (deductible * exchangeRateFromUSD[0].Rate__c).setScale(2);
+      if (exchangeRateFromUSD != null) {
+        deductible = (deductible * exchangeRateFromUSD.Rate__c).setScale(2);
       } else {
         C_Log.log(
           C_Log.Severity.Error,
@@ -529,19 +968,82 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   private void processPayableVoucherAndEuroBonusSettlements() {
     for (Settlement__c settlement : instanceRecords) {
-      if (settlement.Settlement_Status__c == STATUS_WAITING_FOR_TRANSFER) {
-        if (
-          settlement.RecordTypeId ==
-          getRecordTypeId(Settlements.RecordType.EBPoints)
-        ) {
-          SettlementService.sendEuroBonusPoints(settlement.Id);
-        } else if (
-          settlement.RecordTypeId ==
-          getRecordTypeId(Settlements.RecordType.Voucher)
-        ) {
-          SettlementService.createAndSendVoucher(settlement.Id);
-        }
+      Boolean isToBePaidOut =
+        settlement.Settlement_Status__c == STATUS_WAITING_FOR_TRANSFER &&
+        ((settlement.RecordTypeId ==
+        getRecordTypeId(Settlements.RecordType.EBPoints)) ||
+        (settlement.RecordTypeId ==
+        getRecordTypeId(Settlements.RecordType.Voucher)));
+      if (isToBePaidOut) {
+        System.enqueueJob(
+          new SettlementService.ProcessPayableSettlement(settlement.Id)
+        );
       }
+    }
+  }
+
+  private void normalizeFields() {
+    for (Settlement__c settlement : instanceRecords) {
+      if (!String.isBlank(settlement.BIC_Swift__c)) {
+        settlement.BIC_Swift__c = settlement.BIC_Swift__c.toUpperCase()
+          .replace(' ', '');
+      }
+      if (!String.isBlank(settlement.Bank_Account_Number__c)) {
+        settlement.Bank_Account_Number__c = settlement.Bank_Account_Number__c.toUpperCase()
+          .replace(' ', '');
+      }
+    }
+  }
+
+  private List<Schema.SObjectField> getRequiredFieldsForSettlement(
+    Id settlementRecordTypeId,
+    String claimTypeOfCustomer
+  ) {
+    Map<Id, List<Schema.SObjectField>> recordTypeIdToRequiredFields = new Map<Id, List<Schema.SObjectField>>{
+      getRecordTypeId(RecordType.Cheque) => new List<Schema.SObjectField>{
+        Settlement__c.Payee_Name__c,
+        Settlement__c.Currency__c,
+        Settlement__c.Bank_Country__c,
+        Settlement__c.Address_line_1__c,
+        Settlement__c.City__c,
+        Settlement__c.Postal_Code__c,
+        Settlement__c.Country__c
+      },
+      getRecordTypeId(RecordType.EBPoints) => new List<Schema.SObjectField>{
+        Settlement__c.EuroBonus_Number__c
+      },
+      getRecordTypeId(RecordType.Monetary) => new List<Schema.SObjectField>{
+        Settlement__c.Bank_Account_Number__c,
+        Settlement__c.BIC_Swift__c,
+        Settlement__c.Payee_Name__c,
+        Settlement__c.Currency__c,
+        Settlement__c.Bank_Country__c,
+        Settlement__c.Address_line_1__c,
+        Settlement__c.City__c,
+        Settlement__c.Postal_Code__c,
+        Settlement__c.Country__c
+      },
+      getRecordTypeId(RecordType.Voucher) => new List<Schema.SObjectField>{
+        Settlement__c.Voucher_Email__c,
+        Settlement__c.Currency__c,
+        Settlement__c.Payee_First_Name__c,
+        Settlement__c.Payee_Last_Name__c
+      }
+    };
+
+    if (
+      settlementRecordTypeId == getRecordTypeId(RecordType.Monetary) &&
+      claimTypeOfCustomer != 'Private Customer'
+    ) {
+      return new List<Schema.SObjectField>{
+        Settlement__c.Bank_Account_Number__c,
+        Settlement__c.BIC_Swift__c,
+        Settlement__c.Payee_Name__c,
+        Settlement__c.Currency__c,
+        Settlement__c.Bank_Country__c
+      };
+    } else {
+      return recordTypeIdToRequiredFields.get(settlementRecordTypeId);
     }
   }
 }

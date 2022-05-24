@@ -1,12 +1,4 @@
 public without sharing class ClaimService {
-  // TODO: This parsing logic should be at the API layer.
-  private static Map<String, String> marketToOrigin = new Map<String, String>{
-    'dk-da' => 'Form - Claims DK',
-    'no-no' => 'Form - Claims NO',
-    'se-sv' => 'Form - Claims SE',
-    'default' => 'Form - Claims International'
-  };
-
   private static Map<String, String> jsonToPicklist = new Map<String, String>{
     '0-2' => '0-2',
     '2-3' => '2-3',
@@ -61,37 +53,8 @@ public without sharing class ClaimService {
     'wifi' => 'WiFi'
   };
 
-  private static ClaimsSelector claimsSel = ClaimsSelector.newInstance();
-
-  private static Group claimsQueue = [
-    SELECT Id
-    FROM Group
-    WHERE Type = 'Queue' AND DeveloperName = 'Customer_Claim'
-  ];
-
   public static String createClaim(CaseFormJSON2Apex form) {
-    String ebNumber;
-
-    try {
-      ebNumber = Accounts.parseIntoEuroBonusNumber(
-        form.formData.euroBonusNumber
-      );
-    } catch (Exception e) {
-      // Failed to parse, we can ignore this and leave the EB number as blank.
-    }
-
-    Case caseToCreate = new Case(
-      Initially_Provided_PNR__c = form.formData.bookingReference,
-      Description = form.formData.comment,
-      FCS_EBNumber__c = ebNumber,
-      OwnerId = claimsQueue.Id,
-      Origin = marketToOrigin.get(form.metaData.market) == null
-        ? marketToOrigin.get('default')
-        : marketToOrigin.get(form.metaData.market),
-      SuppliedEmail = form.formData.email,
-      RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
-      Subject = 'Claim, PNR: ' + form.formData.bookingReference
-    );
+    Case caseToCreate = createCaseRecord(form);
 
     // Auto-response emails are not triggered by default for cases created
     // through Apex. Setting the triggerAutoResponseEmail header forces
@@ -102,21 +65,180 @@ public without sharing class ClaimService {
     database.insert(caseToCreate, DMLOptions);
 
     Case insertedCase = [
-      SELECT CaseNumber
+      SELECT Id, CaseNumber
       FROM Case
       WHERE Id = :caseToCreate.Id
     ];
+
+    LIA_Claim__c claimToCreate = createClaimRecord(form, insertedCase);
+
+    insert claimToCreate;
+
+    Set<Id> contentIds = new Set<Id>();
+
+    if (form.formData.contentVersionIds != null) {
+      for (String contentId : form.formData.contentVersionIds) {
+        if (!String.isBlank(contentId)) {
+          contentIds.add(Id.valueOf(contentId));
+        }
+      }
+    }
+    List<SObject> objectsToCreate = new List<SObject>();
+    List<Claim_Expense__c> expenses = new List<Claim_Expense__c>();
+    List<Claim_Rebooked_Flight__c> rebookedFlights = new List<Claim_Rebooked_Flight__c>();
+    Map<Id, SObject> fileIdsToObjects = new Map<Id, SObject>();
+
+    if (form.formData.travelers != null) {
+      for (CaseFormJSON2Apex.Traveler t : form.formData.travelers) {
+        Customer__c customerToCreate = new Customer__c(
+          Claim__c = claimToCreate.Id,
+          First_Name__c = t.firstName == null ? ' ' : t.firstName,
+          Last_Name__c = t.lastName == null ? ' ' : t.lastName
+        );
+        objectsToCreate.add(customerToCreate);
+      }
+    }
+
+    if (form.formData.expenses != null) {
+      for (CaseFormJSON2Apex.Expense e : form.formData.expenses) {
+        Claim_Expense__c expenseToCreate = new Claim_Expense__c(
+          Claim__c = claimToCreate.Id,
+          Amount__c = e.amount == null ? 0 : e.amount,
+          Currency__c = e.expenseCurrency == null
+            ? null
+            : e.expenseCurrency.toUpperCase(),
+          Type__c = jsonToPicklist.get(e.expenseType)
+        );
+        objectsToCreate.add(expenseToCreate);
+
+        if (e.receiptFileId != null) {
+          for (String contentId : e.receiptFileId) {
+            if (!String.isBlank(contentId)) {
+              fileIdsToObjects.put(contentId, expenseToCreate);
+              contentIds.add(Id.valueOf(contentId));
+            }
+          }
+        }
+      }
+    }
+
+    if (form.formData.rebookedFlights != null) {
+      for (CaseFormJSON2Apex.Flight f : form.formData.rebookedFlights) {
+        Claim_Rebooked_Flight__c flightToCreate = new Claim_Rebooked_Flight__c(
+          Claim__c = claimToCreate.Id,
+          Departure_Date__c = Date.valueOf(f.departureDate),
+          Flight_Number__c = f.flightNumber
+        );
+        objectsToCreate.add(flightToCreate);
+
+        if (f.boardingPassFileId != null) {
+          for (String contentId : f.boardingPassFileId) {
+            if (!String.isBlank(contentId)) {
+              fileIdsToObjects.put(contentId, flightToCreate);
+              contentIds.add(Id.valueOf(contentId));
+            }
+          }
+        }
+      }
+    }
+
+    if (objectsToCreate.size() > 0) {
+      insert objectsToCreate;
+    }
+
+    List<ContentDocumentLink> linksToCreate = new List<ContentDocumentLink>();
+
+    List<ContentVersion> contentToLink = ContentVersionsSelector.newInstance()
+      .selectById(contentIds);
+    for (ContentVersion content : contentToLink) {
+      linksToCreate.add(
+        new ContentDocumentLink(
+          ContentDocumentId = content.ContentDocumentId,
+          LinkedEntityId = claimToCreate.Id
+        )
+      );
+      if (fileIdsToObjects.get(content.Id) != null) {
+        linksToCreate.add(
+          new ContentDocumentLink(
+            ContentDocumentId = content.ContentDocumentId,
+            LinkedEntityId = fileIdsToObjects.get(content.Id).Id
+          )
+        );
+      }
+    }
+
+    if (linksToCreate.size() > 0) {
+      insert linksToCreate;
+    }
+
+    insertedCase.LIA_Claim__c = claimToCreate.Id;
+    update insertedCase;
+
+    return insertedCase.CaseNumber;
+  }
+
+  public static String createCompensationCardClaim(CaseFormJSON2Apex form) {
+    Case caseToCreate = createCaseRecord(form);
+    // Auto-response emails are not triggered by default for cases created
+    // through Apex. Setting the triggerAutoResponseEmail header forces
+    // them to be sent.
+    Database.DMLOptions DMLOptions = new Database.DMLOptions();
+    DMLOptions.EmailHeader.triggerAutoResponseEmail = true;
+
+    database.insert(caseToCreate, DMLOptions);
+
+    Case insertedCase = [
+      SELECT Id, CaseNumber
+      FROM Case
+      WHERE Id = :caseToCreate.Id
+    ];
+
+    LIA_Claim__c claimToCreate = createClaimRecord(form, insertedCase);
+    claimToCreate.RecordTypeId = Claims.getRecordTypeId(
+      Claims.RecordType.CompensationCard
+    );
+
+    /*fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    uow.registerRelationship(insertedCase, Case.LIA_Claim__c, claimToCreate);
+    uow.registerDirty(insertedCase);
+    uow.registerNew(claimToCreate);
+    uow.commitWork();*/
+
+    insert claimToCreate;
+    insertedCase.LIA_Claim__c = claimToCreate.Id;
+    update insertedCase;
+
+    // attemptToRedeemCompensationCardClaim(claimToCreate.Id);
+    System.enqueueJob(new RedeemCompensationCardClaim(claimToCreate.Id));
+
+    return insertedCase.CaseNumber;
+  }
+
+  private static LIA_Claim__c createClaimRecord(
+    CaseFormJSON2Apex form,
+    Case insertedCase
+  ) {
+    String ebNumber;
+
+    try {
+      ebNumber = Accounts.parseIntoEuroBonusNumber(
+        form.formData.euroBonusNumber
+      );
+    } catch (Exception e) {
+      ebNumber = '';
+    }
 
     LIA_Claim__c claimToCreate = new LIA_Claim__c(
       Address_line_1__c = form.formData.address,
       Bank_Account_Holder_Name__c = form.formData.bankAccountHolderName,
       Bank_Name__c = form.formData.bankName,
       BIC_Swift__c = form.formData.bankBic,
-      Case__c = caseToCreate.Id,
+      Case__c = insertedCase.Id,
       City__c = form.formData.city,
       Comment__c = form.formData.comment,
       Company_Code__c = form.formData.companyCode,
       Company_Name__c = form.formData.companyName,
+      Compensation_Card_Number__c = form.formData.compensationCardId,
       Concerns_a_person_with_reduced_mobility__c = form.formData.personWithReducedMobility ==
         null
         ? false
@@ -197,110 +319,157 @@ public without sharing class ClaimService {
       }
     }
 
-    insert claimToCreate;
+    return claimToCreate;
+  }
 
-    ContentVersionsSelector contentVersions = ContentVersionsSelector.newInstance();
+  private static Case createCaseRecord(CaseFormJSON2Apex form) {
+    Map<String, String> marketToOrigin = new Map<String, String>{
+      'dk-da' => 'Form - Claims DK',
+      'no-no' => 'Form - Claims NO',
+      'se-sv' => 'Form - Claims SE',
+      'default' => 'Form - Claims International'
+    };
 
-    Set<Id> contentIds = new Set<Id>();
+    Group claimsQueue = [
+      SELECT Id
+      FROM Group
+      WHERE Type = 'Queue' AND DeveloperName = 'Customer_Claim'
+    ];
 
-    if (form.formData.contentVersionIds != null) {
-      for (String contentId : form.formData.contentVersionIds) {
-        if (!String.isBlank(contentId)) {
-          contentIds.add(Id.valueOf(contentId));
-        }
-      }
-    }
-    List<SObject> objectsToCreate = new List<SObject>();
-    List<Claim_Expense__c> expenses = new List<Claim_Expense__c>();
-    List<Claim_Rebooked_Flight__c> rebookedFlights = new List<Claim_Rebooked_Flight__c>();
-    Map<Id, SObject> fileIdsToObjects = new Map<Id, SObject>();
+    String ebNumber;
 
-    if (form.formData.travelers != null) {
-      for (CaseFormJSON2Apex.Traveler t : form.formData.travelers) {
-        Customer__c customerToCreate = new Customer__c(
-          Claim__c = claimToCreate.Id,
-          First_Name__c = t.firstName == null ? ' ' : t.firstName,
-          Last_Name__c = t.lastName == null ? ' ' : t.lastName
-        );
-        objectsToCreate.add(customerToCreate);
-      }
-    }
-
-    if (form.formData.expenses != null) {
-      for (CaseFormJSON2Apex.Expense e : form.formData.expenses) {
-        Claim_Expense__c expenseToCreate = new Claim_Expense__c(
-          Claim__c = claimToCreate.Id,
-          Amount__c = e.amount == null ? 0 : e.amount,
-          Currency__c = e.expenseCurrency == null
-            ? null
-            : e.expenseCurrency.toUpperCase(),
-          Type__c = jsonToPicklist.get(e.expenseType)
-        );
-        objectsToCreate.add(expenseToCreate);
-
-        if (e.receiptFileId != null) {
-          for (String contentId : e.receiptFileId) {
-            if (!String.isBlank(contentId)) {
-              fileIdsToObjects.put(contentId, expenseToCreate);
-              contentIds.add(Id.valueOf(contentId));
-            }
-          }
-        }
-      }
-    }
-
-    if (form.formData.rebookedFlights != null) {
-      for (CaseFormJSON2Apex.Flight f : form.formData.rebookedFlights) {
-        Claim_Rebooked_Flight__c flightToCreate = new Claim_Rebooked_Flight__c(
-          Claim__c = claimToCreate.Id,
-          Departure_Date__c = Date.valueOf(f.departureDate),
-          Flight_Number__c = f.flightNumber
-        );
-        objectsToCreate.add(flightToCreate);
-
-        if (f.boardingPassFileId != null) {
-          for (String contentId : f.boardingPassFileId) {
-            if (!String.isBlank(contentId)) {
-              fileIdsToObjects.put(contentId, flightToCreate);
-              contentIds.add(Id.valueOf(contentId));
-            }
-          }
-        }
-      }
-    }
-
-    if (objectsToCreate.size() > 0) {
-      insert objectsToCreate;
-    }
-
-    List<ContentDocumentLink> linksToCreate = new List<ContentDocumentLink>();
-
-    List<ContentVersion> contentToLink = contentVersions.selectById(contentIds);
-    for (ContentVersion content : contentToLink) {
-      linksToCreate.add(
-        new ContentDocumentLink(
-          ContentDocumentId = content.ContentDocumentId,
-          LinkedEntityId = claimToCreate.Id
-        )
+    try {
+      ebNumber = Accounts.parseIntoEuroBonusNumber(
+        form.formData.euroBonusNumber
       );
-      if (fileIdsToObjects.get(content.Id) != null) {
-        linksToCreate.add(
-          new ContentDocumentLink(
-            ContentDocumentId = content.ContentDocumentId,
-            LinkedEntityId = fileIdsToObjects.get(content.Id).Id
+    } catch (Exception e) {
+      ebNumber = '';
+    }
+
+    return new Case(
+      Initially_Provided_PNR__c = form.formData.bookingReference,
+      Description = form.formData.comment,
+      FCS_EBNumber__c = ebNumber,
+      OwnerId = claimsQueue.Id,
+      Origin = marketToOrigin.get(form.metaData.market) == null
+        ? marketToOrigin.get('default')
+        : marketToOrigin.get(form.metaData.market),
+      SuppliedEmail = form.formData.email,
+      RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
+      Subject = 'Claim, PNR: ' + form.formData.bookingReference
+    );
+  }
+
+  public class RedeemCompensationCardClaim implements Queueable, Database.AllowsCallouts {
+    private Id claimId;
+    public RedeemCompensationCardClaim(Id claimId) {
+      this.claimId = claimId;
+    }
+    public void execute(QueueableContext ctx) {
+      attemptToRedeemCompensationCardClaim(this.claimId);
+    }
+  }
+
+  /**
+   * Attempts to redeem the given compensation card claim. A compensation card
+   * can be renewed if it is a valid compensation card as defined by by the
+   * Vouchers API validate endpoint, and it has not yet been paid out.
+   *
+   * Information about whether a given compensation card has been paid out is
+   * stored in Salesforce.
+   *
+   * Also closes the parent case for the claim, and emails the customer about
+   * whether the card was redeemed successfully.
+   */
+  public static void attemptToRedeemCompensationCardClaim(Id claimId) {
+    LIA_Claim__c claim = ClaimsSelector.newInstance()
+      .selectById(new Set<Id>{ claimId })[0];
+
+    Cases parentCase = Cases.newInstance(
+      CasesSelector.newInstance().selectById(new Set<Id>{ claim.Case__c })
+    );
+
+    Boolean cardHasBeenPaidOut = RedeemedCompensationCards.hasBeenPaidOut(
+      claim.Compensation_Card_Number__c,
+      claim.Liability_PNR__c
+    );
+
+    if (cardHasBeenPaidOut) {
+      fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+      parentCase.close(uow);
+      uow.commitWork();
+    } else {
+      Boolean canBeRedeemed = false;
+
+      try {
+        fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+        // Check Voucher API whether this is a valid compensation card number and
+        // a matching PNR.
+        VoucherValidateResponse response = VoucherIntegrationService.newInstance()
+          .validateVoucher(
+            claim.Compensation_Card_Number__c,
+            claim.Liability_PNR__c
+          );
+        Redeemed_Compensation_Card__c validatedCompensationCard = RedeemedCompensationCards.createFromValidVoucher(
+            response,
+            claim,
+            uow
           )
+          .instanceRecords[0];
+        Settlements.createFromCompensationCard(
+          new List<LIA_Claim__c>{ claim },
+          new Map<Id, Redeemed_Compensation_Card__c>{
+            claim.Id => validatedCompensationCard
+          },
+          uow
         );
+        uow.commitWork();
+        canBeRedeemed = true;
+      } catch (VoucherIntegrationService.InvalidVoucherException e) {
+        fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+
+        C_Log.log(
+          C_Log.Severity.Info,
+          'Invalid compensation card redeem request.',
+          null,
+          'Claims',
+          null
+        );
+
+        parentCase.close(uow);
+        uow.commitWork();
+      } catch (Exception e) {
+        // TODO: Error handling? Can we reject the claim or should we ask the customer to try again?
+        C_Log.log(
+          C_Log.Severity.Error,
+          'Uncaught exception while redeeming a compensation card.',
+          e.getStackTraceString(),
+          'Claims',
+          null
+        );
+        throw e;
+      }
+
+      if (canBeRedeemed) {
+        try {
+          fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+          Claims.newInstance(new List<LIA_Claim__c>{ claim }).settle(uow);
+          parentCase.close(uow);
+          // TODO: Send email Email.toEmail.
+
+          uow.commitWork();
+        } catch (Exception e) {
+          fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+          Settlements.newInstance(
+              SettlementsSelector.newInstance()
+                .selectByClaimId(new Set<Id>{ claim.Id })
+            )
+            .markAsFailed(e.getMessage(), uow);
+
+          uow.commitWork();
+        }
       }
     }
-
-    if (linksToCreate.size() > 0) {
-      insert linksToCreate;
-    }
-
-    insertedCase.LIA_Claim__c = claimToCreate.Id;
-    update insertedCase;
-
-    return insertedCase.CaseNumber;
   }
 
   @future(callout=true)
@@ -310,7 +479,8 @@ public without sharing class ClaimService {
   ) {
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
 
-    LIA_Claim__c claim = claimsSel.selectById(new Set<Id>{ claimId })[0];
+    LIA_Claim__c claim = ClaimsSelector.newInstance()
+      .selectById(new Set<Id>{ claimId })[0];
     claim.Claims_Exist_In_CARE_For_PNR__c = ClaimsIntegrationService.checkIfClaimsExistForBookingReference(
       bookingReference
     );

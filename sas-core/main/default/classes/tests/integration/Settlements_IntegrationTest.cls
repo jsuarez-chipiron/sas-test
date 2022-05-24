@@ -793,10 +793,10 @@ public with sharing class Settlements_IntegrationTest {
   }
 
   @IsTest
-  static void addItemsToSettlementCreatesItems() {
+  static void updateItemsForSettlementsCreatesItems() {
     // Given
     LIA_Claim__c claim = new LIA_Claim__c(
-      Customer_Claim_Category__c = 'Baggage',  
+      Customer_Claim_Category__c = 'Baggage',
       Customer_Claim_Type__c = 'Baggage damaged',
       PIR__c = 'ARNSK12345'
     );
@@ -832,7 +832,9 @@ public with sharing class Settlements_IntegrationTest {
     List<Settlement_Item__c> items = new List<Settlement_Item__c>{ si1, si2 };
 
     Test.startTest();
-    SettlementService.addItemsToSettlement(settlement.Id, items);
+    SettlementService.updateItemsForSettlements(
+      new Map<Id, List<Settlement_Item__c>>{ settlement.Id => items }
+    );
     Test.stopTest();
 
     // Then
@@ -888,10 +890,10 @@ public with sharing class Settlements_IntegrationTest {
   }
 
   @IsTest
-  static void addItemsToSettlementUpdatesExistingItems() {
+  static void updateItemsForSettlementsUpdatesExistingItems() {
     // Given
     LIA_Claim__c claim = new LIA_Claim__c(
-      Customer_Claim_Category__c = 'Baggage',  
+      Customer_Claim_Category__c = 'Baggage',
       Customer_Claim_Type__c = 'Baggage damaged',
       PIR__c = 'ARNSK12345'
     );
@@ -956,7 +958,9 @@ public with sharing class Settlements_IntegrationTest {
 
     // When
     Test.startTest();
-    SettlementService.addItemsToSettlement(settlement.Id, updatedItems);
+    SettlementService.updateItemsForSettlements(
+      new Map<Id, List<Settlement_Item__c>>{ settlement.Id => updatedItems }
+    );
     Test.stopTest();
 
     List<Settlement_Item__c> itemsAfterInsert = [
@@ -995,10 +999,10 @@ public with sharing class Settlements_IntegrationTest {
     );
   }
   @IsTest
-  static void addItemsToSettlementHandlesInsuranceCalculations() {
+  static void updateItemsForSettlementsHandlesInsuranceCalculations() {
     // Given
     LIA_Claim__c claim = new LIA_Claim__c(
-      Customer_Claim_Category__c = 'Baggage',  
+      Customer_Claim_Category__c = 'Baggage',
       Customer_Claim_Type__c = 'Baggage damaged',
       PIR__c = 'ARNSK12345'
     );
@@ -1044,7 +1048,9 @@ public with sharing class Settlements_IntegrationTest {
     };
 
     Test.startTest();
-    SettlementService.addItemsToSettlement(settlement.Id, items);
+    SettlementService.updateItemsForSettlements(
+      new Map<Id, List<Settlement_Item__c>>{ settlement.Id => items }
+    );
     Test.stopTest();
 
     // Then
@@ -1142,10 +1148,10 @@ public with sharing class Settlements_IntegrationTest {
     );
   }
   @IsTest
-  static void addItemsToSettlemenFailsIfSettlementHasNoCurrency() {
+  static void updateItemsForSettlementsFailsIfSettlementHasNoCurrency() {
     // Given
     LIA_Claim__c claim = new LIA_Claim__c(
-      Customer_Claim_Category__c = 'Baggage',  
+      Customer_Claim_Category__c = 'Baggage',
       Customer_Claim_Type__c = 'Baggage damaged',
       PIR__c = 'ARNSK12345'
     );
@@ -1177,7 +1183,9 @@ public with sharing class Settlements_IntegrationTest {
     // When
     Test.startTest();
     try {
-      SettlementService.addItemsToSettlement(settlement.Id, items);
+      SettlementService.updateItemsForSettlements(
+        new Map<Id, List<Settlement_Item__c>>{ settlement.Id => items }
+      );
     } catch (Exception e) {
       caughtException = e;
     }
@@ -1185,9 +1193,9 @@ public with sharing class Settlements_IntegrationTest {
 
     // Then
     System.assertEquals(
-      'Settlements.UpdateSettlementException',
+      'Settlements.UpdateException',
       caughtException.getTypeName(),
-      'Missing currency from settlement should have caused an UpdateSettlementException.'
+      'Missing currency from settlement should have caused an UpdateException.'
     );
   }
 }

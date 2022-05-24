@@ -4,7 +4,7 @@
         <name>Navigate_To_Created_Settlement</name>
         <label>Navigate To Created Settlement</label>
         <locationX>578</locationX>
-        <locationY>974</locationY>
+        <locationY>854</locationY>
         <actionName>c:NavigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -102,7 +102,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_BIC_claim</targetReference>
+                <targetReference>Create_Monetary_Settlement</targetReference>
             </connector>
             <label>Monetary  Settlement</label>
         </rules>
@@ -122,7 +122,7 @@
             <label>Voucher Settlement</label>
         </rules>
     </decisions>
-    <description>BIC validation v6</description>
+    <description>No BIC validation</description>
     <dynamicChoiceSets>
         <name>voucherTypes</name>
         <dataType>Picklist</dataType>
@@ -321,7 +321,7 @@
         <name>Create_Monetary_Settlement</name>
         <label>Create Monetary Settlement</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>638</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
@@ -341,7 +341,7 @@
         <inputAssignments>
             <field>BIC_Swift__c</field>
             <value>
-                <elementReference>BIC_number</elementReference>
+                <elementReference>Get_Customer_Claim.BIC_Swift__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -561,31 +561,6 @@
         <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <description>Needs to be done before the settlement is created!</description>
-        <name>Update_BIC_claim</name>
-        <label>Update BIC claim</label>
-        <locationX>578</locationX>
-        <locationY>638</locationY>
-        <connector>
-            <targetReference>Create_Monetary_Settlement</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>BIC_Swift__c</field>
-            <value>
-                <elementReference>BIC_number</elementReference>
-            </value>
-        </inputAssignments>
-        <object>LIA_Claim__c</object>
-    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Create_a_Settlement</name>
@@ -623,30 +598,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Voucher</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>BIC_number</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>Get_Customer_Claim.BIC_Swift__c</elementReference>
-            </defaultValue>
-            <fieldText>BIC number</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-            <validationRule>
-                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;BIC number is invalid, should be formatted as: XXXXXYY or XXXXXXYYYYY (X&apos;s are letters, Y&apos;s are letters or numbers)﻿&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                <formulaExpression>REGEX({!BIC_number}, &quot;[A-Z]{6}[0-9A-Z]{2}([0-9A-Z]{3})?&quot;)</formulaExpression>
-            </validationRule>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Select_Settlement_Type</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Monetary</elementReference>
                     </rightValue>
                 </conditions>
             </visibilityRule>

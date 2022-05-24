@@ -7,7 +7,9 @@ public without sharing class SettlementsController {
     Id settlementId,
     List<Settlement_Item__c> settlementItems
   ) {
-    SettlementService.addItemsToSettlement(settlementId, settlementItems);
+    SettlementService.updateItemsForSettlements(
+      new Map<Id, List<Settlement_Item__c>>{ settlementId => settlementItems }
+    );
   }
 
   @AuraEnabled(cacheable=true)
@@ -26,9 +28,9 @@ public without sharing class SettlementsController {
       return new List<Exchange_Rate__c>();
     }
     if (toCurrency == null) {
-      return exchangeRates.selectByCurrency(fromCurrency);
+      return exchangeRates.selectByFromCurrency(fromCurrency);
     }
-    return exchangeRates.selectByCurrency(fromCurrency, toCurrency);
+    return exchangeRates.selectByCurrencies(fromCurrency, toCurrency);
   }
 
   @AuraEnabled(cacheable=true)

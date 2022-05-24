@@ -4,17 +4,49 @@
         <name>Minimise_flow_screen</name>
         <label>Minimise flow screen</label>
         <locationX>2294</locationX>
-        <locationY>1334</locationY>
+        <locationY>1574</locationY>
         <actionName>c:MinimizeUtilityItem</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
+        <name>Assign_email_to_validate</name>
+        <label>Assign email to validate</label>
+        <locationX>3680</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>providedEmail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CustomerEmail.value</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_the_email_valid</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_email_to_validate_0</name>
+        <label>Assign email to validate</label>
+        <locationX>4802</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>providedEmail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ValidEmail.value</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_the_email_valid</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>SetCaseFields1</name>
         <label>SetCaseFields1</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -30,7 +62,7 @@
         <name>SetCaseFields10</name>
         <label>SetCaseFields10</label>
         <locationX>2690</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -46,7 +78,7 @@
         <name>SetCaseFields11</name>
         <label>SetCaseFields11</label>
         <locationX>3218</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -62,7 +94,7 @@
         <name>SetCaseFields12</name>
         <label>SetCaseFields12</label>
         <locationX>3482</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -78,7 +110,7 @@
         <name>SetCaseFields13</name>
         <label>SetCaseFields13</label>
         <locationX>3746</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -94,7 +126,7 @@
         <name>SetCaseFields14</name>
         <label>SetCaseFields14</label>
         <locationX>4010</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -110,7 +142,7 @@
         <name>SetCaseFields15</name>
         <label>SetCaseFields15</label>
         <locationX>4274</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -126,7 +158,7 @@
         <name>SetCaseFields16</name>
         <label>SetCaseFields16</label>
         <locationX>2162</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -142,7 +174,7 @@
         <name>SetCaseFields17</name>
         <label>SetCaseFields17</label>
         <locationX>2954</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -158,7 +190,7 @@
         <name>SetCaseFields2</name>
         <label>SetCaseFields2</label>
         <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -174,7 +206,7 @@
         <name>SetCaseFields3</name>
         <label>SetCaseFields3</label>
         <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -190,7 +222,7 @@
         <name>SetCaseFields4</name>
         <label>SetCaseFields4</label>
         <locationX>842</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -206,7 +238,7 @@
         <name>SetCaseFields5</name>
         <label>SetCaseFields5</label>
         <locationX>1106</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -222,7 +254,7 @@
         <name>SetCaseFields6</name>
         <label>SetCaseFields6</label>
         <locationX>1370</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -238,7 +270,7 @@
         <name>SetCaseFields7</name>
         <label>SetCaseFields7</label>
         <locationX>1634</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -254,7 +286,7 @@
         <name>SetCaseFields8</name>
         <label>SetCaseFields8</label>
         <locationX>1898</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -270,7 +302,7 @@
         <name>SetCaseFields9</name>
         <label>SetCaseFields9</label>
         <locationX>2426</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>TeamToSet</assignToReference>
             <operator>Assign</operator>
@@ -283,10 +315,47 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Is_the_email_valid</name>
+        <label>Is the email valid?</label>
+        <locationX>3680</locationX>
+        <locationY>518</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>emailValidation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetRefundsRecordType</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>emailValidation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Invalid_Input</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>SetTeamAndCaseReason</name>
         <label>SetTeamAndCaseReason</label>
         <locationX>2294</locationX>
-        <locationY>518</locationY>
+        <locationY>758</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>TATicketsUSAOutcome</name>
@@ -643,6 +712,11 @@
         <picklistField>Refund_Macro__c</picklistField>
         <picklistObject>Refund_Request__c</picklistObject>
     </dynamicChoiceSets>
+    <formulas>
+        <name>emailValidation</name>
+        <dataType>Boolean</dataType>
+        <expression>REGEX ( UPPER ( {!providedEmail} ) ,&quot;^[A-Z0-9._%+-/!#$%&amp;&apos;*=?^_`{|}~]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$&quot;)</expression>
+    </formulas>
     <interviewLabel>New Refund Request {!$Flow.CurrentDateTime}</interviewLabel>
     <label>New Refund Request</label>
     <processMetadataValues>
@@ -668,7 +742,7 @@
         <name>Create_Refund_Request</name>
         <label>Create Refund Request</label>
         <locationX>2294</locationX>
-        <locationY>854</locationY>
+        <locationY>1094</locationY>
         <connector>
             <targetReference>Get_Created_Refund_Request</targetReference>
         </connector>
@@ -681,7 +755,7 @@
         <inputAssignments>
             <field>Email__c</field>
             <value>
-                <elementReference>CustomerEmail.value</elementReference>
+                <elementReference>providedEmail</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -727,7 +801,7 @@
         <name>CreateRefundCase</name>
         <label>Create Refund Case</label>
         <locationX>2294</locationX>
-        <locationY>1094</locationY>
+        <locationY>1334</locationY>
         <connector>
             <targetReference>Success</targetReference>
         </connector>
@@ -782,7 +856,7 @@
         <inputAssignments>
             <field>SuppliedEmail</field>
             <value>
-                <elementReference>CustomerEmail.value</elementReference>
+                <elementReference>providedEmail</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -804,7 +878,7 @@
         <name>Get_Created_Refund_Request</name>
         <label>Get Created Refund Request</label>
         <locationX>2294</locationX>
-        <locationY>974</locationY>
+        <locationY>1214</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CreateRefundCase</targetReference>
@@ -826,11 +900,11 @@
     <recordLookups>
         <name>GetRefundsQueueId</name>
         <label>Get Refunds Queue Id</label>
-        <locationX>2294</locationX>
+        <locationX>3680</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>GetRefundsRecordType</targetReference>
+            <targetReference>Assign_email_to_validate</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -848,7 +922,7 @@
         <name>GetRefundsRecordType</name>
         <label>GetRefundsRecordType</label>
         <locationX>2294</locationX>
-        <locationY>398</locationY>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>SetTeamAndCaseReason</targetReference>
@@ -867,9 +941,48 @@
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
+        <name>Invalid_Input</name>
+        <label>Invalid Input</label>
+        <locationX>4802</locationX>
+        <locationY>638</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Assign_email_to_validate_0</targetReference>
+        </connector>
+        <fields>
+            <name>ErrorMessage</name>
+            <fieldText>&lt;p&gt;{!providedEmail} is not a valid email address and the Refund Request cannot be created.&lt;/p&gt;&lt;p&gt;Please enter a valid email address in order to create the refund request.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>ValidEmail</name>
+            <extensionName>flowruntime:email</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Valid Email</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>NewRefundRequest</name>
         <label>New Refund Request</label>
-        <locationX>2294</locationX>
+        <locationX>3680</locationX>
         <locationY>158</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1039,7 +1152,7 @@
         <name>Success</name>
         <label>Success</label>
         <locationX>2294</locationX>
-        <locationY>1214</locationY>
+        <locationY>1454</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1055,13 +1168,20 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>2168</locationX>
+        <locationX>3554</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>NewRefundRequest</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>providedEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>SelectedRequestType</name>
         <dataType>String</dataType>

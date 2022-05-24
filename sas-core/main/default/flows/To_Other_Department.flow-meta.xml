@@ -4,7 +4,7 @@
         <description>Posts the internal comments to the chatter feed on the case</description>
         <name>CaseChatterFeed</name>
         <label>CaseChatterFeed</label>
-        <locationX>1898</locationX>
+        <locationX>2338</locationX>
         <locationY>1238</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
@@ -30,7 +30,7 @@
         <description>Escalation Reason to chatter</description>
         <name>Posting_Escalation_Reason_to_Chatter</name>
         <label>Posting Escalation Reason to Chatter</label>
-        <locationX>1634</locationX>
+        <locationX>2074</locationX>
         <locationY>1238</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
@@ -54,9 +54,25 @@
     </actionCalls>
     <apiVersion>49.0</apiVersion>
     <assignments>
+        <name>Assign_Comments_as_Description</name>
+        <label>Assign Comments as Description</label>
+        <locationX>1106</locationX>
+        <locationY>2198</locationY>
+        <assignmentItems>
+            <assignToReference>descriptionContent</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Comments</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Support_Case_Information</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_department_name_as_queue_name</name>
         <label>Assign department name as queue name</label>
-        <locationX>1568</locationX>
+        <locationX>1920</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>queueName</assignToReference>
@@ -70,10 +86,42 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Description_Content</name>
+        <label>Assign Description Content</label>
+        <locationX>1766</locationX>
+        <locationY>1358</locationY>
+        <assignmentItems>
+            <assignToReference>descriptionContent</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Description</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Support_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Note_as_Description</name>
+        <label>Assign Note as Description</label>
+        <locationX>1238</locationX>
+        <locationY>1358</locationY>
+        <assignmentItems>
+            <assignToReference>descriptionContent</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Note</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Refund_Request</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_case_status_On_Hold</name>
         <label>Set case status &quot;On Hold&quot;</label>
-        <locationX>1370</locationX>
-        <locationY>1478</locationY>
+        <locationX>1634</locationX>
+        <locationY>3278</locationY>
         <assignmentItems>
             <assignToReference>caseStatusAfterSupport</assignToReference>
             <operator>Assign</operator>
@@ -88,8 +136,8 @@
     <assignments>
         <name>Set_the_current_case_status</name>
         <label>Set the current case status</label>
-        <locationX>1106</locationX>
-        <locationY>1478</locationY>
+        <locationX>1370</locationX>
+        <locationY>3278</locationY>
         <assignmentItems>
             <assignToReference>caseStatusAfterSupport</assignToReference>
             <operator>Assign</operator>
@@ -149,8 +197,8 @@
     <decisions>
         <name>Do_we_need_set_the_parent_case_to_On_hold</name>
         <label>Do we need set the parent case to &quot;On hold&quot;?</label>
-        <locationX>1238</locationX>
-        <locationY>1358</locationY>
+        <locationX>1502</locationX>
+        <locationY>3158</locationY>
         <defaultConnector>
             <targetReference>Set_case_status_On_Hold</targetReference>
         </defaultConnector>
@@ -172,10 +220,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_it_customer_claim</name>
+        <label>Is it customer claim?</label>
+        <locationX>1502</locationX>
+        <locationY>2078</locationY>
+        <defaultConnector>
+            <targetReference>Do_we_need_set_the_parent_case_to_On_hold</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Customer_Claim1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DependentList.topValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Claim</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Comments_as_Description</targetReference>
+            </connector>
+            <label>Customer Claim</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Validates refund cases have a refund request record with a PNR before redirecting, creating a support case or escalating the case</description>
         <name>Is_refund_case_with_refund_request_recod</name>
         <label>Is refund case with refund request recod?</label>
-        <locationX>693</locationX>
+        <locationX>781</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>To_Other_Department</targetReference>
@@ -205,9 +278,34 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_Refund_Request_needed</name>
+        <label>Is Refund Request needed</label>
+        <locationX>1502</locationX>
+        <locationY>1238</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Description_Content</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Refund_Request</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DependentList.topValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Refunds</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Note_as_Description</targetReference>
+            </connector>
+            <label>Yes, Refund Request</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_status_valid</name>
         <label>Is status valid?</label>
-        <locationX>371</locationX>
+        <locationX>415</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Is_refund_case_with_refund_request_recod</targetReference>
@@ -247,7 +345,7 @@
         <description>Validating that the department and team is validated for redirection, support and escalations cases</description>
         <name>Is_the_department_validated</name>
         <label>Is the department validated?</label>
-        <locationX>1073</locationX>
+        <locationX>1249</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Assign_department_name_as_queue_name</targetReference>
@@ -308,7 +406,7 @@
     <decisions>
         <name>Redirection_Support_Or_Escalation</name>
         <label>Redirection Support Or Escalation</label>
-        <locationX>1568</locationX>
+        <locationX>1920</locationX>
         <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>CaseChatterFeed</targetReference>
@@ -325,7 +423,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Support_Case</targetReference>
+                <targetReference>Is_Refund_Request_needed</targetReference>
             </connector>
             <label>Support Request</label>
         </rules>
@@ -364,6 +462,11 @@
         <picklistField>Team__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <formulas>
+        <name>fullCustomerName</name>
+        <dataType>String</dataType>
+        <expression>{!First_Name} + &quot; &quot;+ {!Last_Name}</expression>
+    </formulas>
     <formulas>
         <name>InputPriority</name>
         <dataType>String</dataType>
@@ -407,13 +510,217 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
+        <name>Create_Customer</name>
+        <label>Create Customer</label>
+        <locationX>1106</locationX>
+        <locationY>2678</locationY>
+        <connector>
+            <targetReference>Update_Support_Case_with_Customer_Claim_Info</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>CustomerCreationError</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Claim__c</field>
+            <value>
+                <elementReference>Create_Customer_Claim</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>First_Name__c</field>
+            <value>
+                <elementReference>First_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Last_Name__c</field>
+            <value>
+                <elementReference>Last_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Customer__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Customer_Claim</name>
+        <label>Create Customer Claim</label>
+        <locationX>1106</locationX>
+        <locationY>2558</locationY>
+        <connector>
+            <targetReference>Create_Customer</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>CustomerClaimError</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>Create_Support_Case</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Comment__c</field>
+            <value>
+                <elementReference>descriptionContent</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Concerns_a_person_with_reduced_mobility__c</field>
+            <value>
+                <elementReference>Concerns_a_person_with_reduced_mobility</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Concerns_an_unaccompanied_minor__c</field>
+            <value>
+                <elementReference>Concerns_an_unaccompanied_minor</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contact_Email__c</field>
+            <value>
+                <elementReference>CustomerClaimCustomerEmail.value</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contact_First_Name__c</field>
+            <value>
+                <elementReference>First_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contact_Full_Name__c</field>
+            <value>
+                <elementReference>fullCustomerName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contact_Last_Name__c</field>
+            <value>
+                <elementReference>Last_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Customer_Claim_Category__c</field>
+            <value>
+                <elementReference>CustomerClaimCategoryType.topValue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Customer_Claim_Type__c</field>
+            <value>
+                <elementReference>CustomerClaimCategoryType.middleValue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>EuroBonus_Number__c</field>
+            <value>
+                <elementReference>EuroBonus_Number</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Flight_Date__c</field>
+            <value>
+                <elementReference>Flight_Date</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Flight_Number__c</field>
+            <value>
+                <elementReference>Flight_Number</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Liability_PNR__c</field>
+            <value>
+                <elementReference>CustomerClaimPNR</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>Get_Support_Case_Information.CaseNumber</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PIR__c</field>
+            <value>
+                <elementReference>PIR</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phone_Number__c</field>
+            <value>
+                <elementReference>CustomerClaimPhone.value</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_Claim_Record_Type.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type_of_Customer__c</field>
+            <value>
+                <stringValue>Private Customer</stringValue>
+            </value>
+        </inputAssignments>
+        <object>LIA_Claim__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Refund_Request</name>
+        <label>Create Refund Request</label>
+        <locationX>1238</locationX>
+        <locationY>1478</locationY>
+        <connector>
+            <targetReference>Create_Support_Case</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>RefundRequestError</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Country_of_Purchase__c</field>
+            <value>
+                <elementReference>CountryOfPurchase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email__c</field>
+            <value>
+                <elementReference>RefundRequestCustomerEmail.value</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Note__c</field>
+            <value>
+                <elementReference>descriptionContent</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PNR__c</field>
+            <value>
+                <elementReference>RefundRequestPNR</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Ticket_Numbers__c</field>
+            <value>
+                <elementReference>TicketNumbers</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Refund_Request__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
         <description>Creates  a support case based on the information capture in the To Other Department Screen</description>
         <name>Create_Support_Case</name>
         <label>Create Support Case</label>
-        <locationX>1238</locationX>
-        <locationY>1238</locationY>
+        <locationX>1502</locationX>
+        <locationY>1958</locationY>
         <connector>
-            <targetReference>Do_we_need_set_the_parent_case_to_On_hold</targetReference>
+            <targetReference>Is_it_customer_claim</targetReference>
         </connector>
         <inputAssignments>
             <field>Department__c</field>
@@ -424,13 +731,25 @@
         <inputAssignments>
             <field>Description</field>
             <value>
-                <elementReference>Description</elementReference>
+                <elementReference>descriptionContent</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FCS_EBNumber__c</field>
+            <value>
+                <elementReference>EuroBonus_Number</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>GDPR_Consent__c</field>
             <value>
                 <elementReference>GetCurrentCaseInformation.GDPR_Consent__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Initially_Provided_PNR__c</field>
+            <value>
+                <elementReference>RefundRequestPNR</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -470,6 +789,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Refund_Request__c</field>
+            <value>
+                <elementReference>Create_Refund_Request</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Subject</field>
             <value>
                 <elementReference>Subject</elementReference>
@@ -485,10 +810,52 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
+        <name>Get_Claim_Record_Type</name>
+        <label>Get Claim Record Type</label>
+        <locationX>1106</locationX>
+        <locationY>2438</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Customer_Claim</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>CustomerClaim</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Support_Case_Information</name>
+        <label>Get Support Case Information</label>
+        <locationX>1106</locationX>
+        <locationY>2318</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Claim_Record_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Create_Support_Case</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <description>Gets all the information of the case where the flow was triggered from</description>
         <name>GetCurrentCaseInformation</name>
         <label>GetCurrentCaseInformation</label>
-        <locationX>371</locationX>
+        <locationX>415</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -509,7 +876,7 @@
     <recordLookups>
         <name>GetDepartmentQueueId</name>
         <label>GetDepartmentQueueId</label>
-        <locationX>1568</locationX>
+        <locationX>1920</locationX>
         <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -531,7 +898,7 @@
         <description>Escalates the case another department</description>
         <name>EscalateCurrentCase</name>
         <label>EscalateCurrentCase</label>
-        <locationX>1634</locationX>
+        <locationX>2074</locationX>
         <locationY>1358</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
@@ -610,7 +977,7 @@
         <description>Update the current case to be directed to the right skill</description>
         <name>Redirect_Case</name>
         <label>Redirect Case</label>
-        <locationX>1898</locationX>
+        <locationX>2338</locationX>
         <locationY>1358</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
@@ -680,10 +1047,46 @@
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
+        <name>Update_Support_Case_with_Customer_Claim_Info</name>
+        <label>Update Support Case with Customer Claim Info</label>
+        <locationX>1106</locationX>
+        <locationY>2798</locationY>
+        <connector>
+            <targetReference>Do_we_need_set_the_parent_case_to_On_hold</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Create_Support_Case</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>descriptionContent</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Initially_Provided_PNR__c</field>
+            <value>
+                <elementReference>CustomerClaimPNR</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LIA_Claim__c</field>
+            <value>
+                <elementReference>Create_Customer_Claim</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>UpdateCurrentCaseInformation</name>
         <label>UpdateCurrentCaseInformation</label>
-        <locationX>1238</locationX>
-        <locationY>1694</locationY>
+        <locationX>1502</locationX>
+        <locationY>3494</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
         </connector>
@@ -727,6 +1130,38 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>CustomerClaimError</name>
+        <label>Customer Claim Error</label>
+        <locationX>1634</locationX>
+        <locationY>2678</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ErrorCustomerClaimCreation</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;Customer Claim cannot be created at this moment.&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;{!$Flow.FaultMessage}&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;If the error is due to invalid data, please click on &quot;previous&quot;, correct the invalid data and try again.&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>CustomerCreationError</name>
+        <label>Customer Creation Error</label>
+        <locationX>1370</locationX>
+        <locationY>2798</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ErrorCustomerCreation</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;Customer cannot be created at this moment.&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;{!$Flow.FaultMessage}&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;If the error is due to invalid data, please click on &quot;previous&quot;, correct the invalid data and try again.&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Department_not_available</name>
         <label>Department not available</label>
         <locationX>578</locationX>
@@ -761,8 +1196,8 @@
     <screens>
         <name>Redirection_Submission</name>
         <label>Redirection Submission</label>
-        <locationX>1568</locationX>
-        <locationY>1910</locationY>
+        <locationX>1920</locationX>
+        <locationY>3710</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -772,6 +1207,22 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <helpText>&lt;p&gt;If you need to create a new support case, please click on Finish and click on To Other Department&lt;/p&gt;</helpText>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>RefundRequestError</name>
+        <label>Refund Request Error</label>
+        <locationX>1502</locationX>
+        <locationY>1598</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ErrorRefundRequestCreation</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;Refund Request cannot be created at this moment.&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;{!$Flow.FaultMessage}&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;If the error is due to invalid data, please click on &quot;previous&quot;, correct the invalid data and try again.&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -795,7 +1246,7 @@
         <description>Input for making a request to another department</description>
         <name>To_Other_Department</name>
         <label>To Other Department</label>
-        <locationX>1073</locationX>
+        <locationX>1249</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -942,13 +1393,563 @@
                         <elementReference>Support</elementReference>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.topValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Refunds</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.topValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Customer Claim</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>RefundRequestInfo</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Refund Request Information&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DependentList.topValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Refunds</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Request_Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Support</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>To_Other_Department_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>To_Other_Department_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>RefundRequestPNR</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCurrentCaseInformation.Initially_Provided_PNR__c</elementReference>
+                    </defaultValue>
+                    <fieldText>PNR</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;PNR should be six characters long. If one isn&apos;t applicable, enter six dashes ------.&lt;/span&gt;&lt;/p&gt;</helpText>
+                    <isRequired>true</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;PNR should be six characters long. If one isn&apos;t applicable, enter six dashes ------.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!RefundRequestPNR}) = 6</formulaExpression>
+                    </validationRule>
+                </fields>
+                <fields>
+                    <name>TicketNumbers</name>
+                    <fieldText>Ticket numbers</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;One per line&lt;/span&gt;&lt;/p&gt;</helpText>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>CountryOfPurchase</name>
+                    <dataType>String</dataType>
+                    <fieldText>Country of purchase</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>RefundRequestCustomerEmail</name>
+                    <extensionName>flowruntime:email</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>Customer&apos;s Email</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>readonly</name>
+                        <value>
+                            <booleanValue>false</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>required</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>value</name>
+                        <value>
+                            <elementReference>GetCurrentCaseInformation.SuppliedEmail</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <fields>
+                    <name>RefundRequestPhone</name>
+                    <dataType>String</dataType>
+                    <fieldText>Customer&apos;s phone number</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Note</name>
+                    <fieldText>Note</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px;&quot;&gt;Add each passenger on a separate line&lt;/span&gt;&lt;/p&gt;</helpText>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DependentList.topValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Refunds</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Request_Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Support</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>To_Other_Department_Section2</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>To_Other_Department_Section2_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>CustomerClaimGeneralnfo</name>
+                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Customer Claim General Information&lt;/b&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <fields>
+                    <name>CustomerClaimCategoryType</name>
+                    <extensionName>flowruntime:dependentPicklists</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>dependencyWrapperApiName</name>
+                        <value>
+                            <stringValue>LIA_Claim__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>topPicklistApiName</name>
+                        <value>
+                            <stringValue>Customer_Claim_Category__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>middlePicklistApiName</name>
+                        <value>
+                            <stringValue>Customer_Claim_Type__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>topLabel</name>
+                        <value>
+                            <stringValue>Category</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>topRequired</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>middleLabel</name>
+                        <value>
+                            <stringValue>Type</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>middleRequired</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <fields>
+                    <name>Comments</name>
+                    <fieldText>Comments</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Request_Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Support</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.topValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Customer Claim</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>To_Other_Department_Section3</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>To_Other_Department_Section3_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Concerns_an_unaccompanied_minor</name>
+                    <dataType>Boolean</dataType>
+                    <fieldText>Concerns an unaccompanied minor</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>To_Other_Department_Section3_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Concerns_a_person_with_reduced_mobility</name>
+                    <dataType>Boolean</dataType>
+                    <fieldText>Concerns a person with reduced mobility</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DependentList.topValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Customer Claim</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Request_Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Support</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ContactInfo</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Contact Information&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Request_Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Support</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.topValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Customer Claim</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>To_Other_Department_Section4</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>To_Other_Department_Section4_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>First_Name</name>
+                    <dataType>String</dataType>
+                    <fieldText>First Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>Last_Name</name>
+                    <dataType>String</dataType>
+                    <fieldText>Last Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>CustomerClaimCustomerEmail</name>
+                    <extensionName>flowruntime:email</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>required</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>value</name>
+                        <value>
+                            <elementReference>GetCurrentCaseInformation.SuppliedEmail</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>To_Other_Department_Section4_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>EuroBonus_Number</name>
+                    <dataType>String</dataType>
+                    <fieldText>EuroBonus Number</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;There are 9 numbers in a EuroBonus Number&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!EuroBonus_Number}) = 9</formulaExpression>
+                    </validationRule>
+                </fields>
+                <fields>
+                    <name>CustomerClaimPhone</name>
+                    <extensionName>flowruntime:phone</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Request_Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Support</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.topValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Customer Claim</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>FlightInformation</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Flight Information&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Baggage</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>To_Other_Department_Section5</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>To_Other_Department_Section5_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>CustomerClaimPNR</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCurrentCaseInformation.Initially_Provided_PNR__c</elementReference>
+                    </defaultValue>
+                    <fieldText>PNR</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>Flight_Number</name>
+                    <dataType>String</dataType>
+                    <fieldText>Flight Number</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>To_Other_Department_Section5_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Ticket_Number</name>
+                    <dataType>String</dataType>
+                    <fieldText>Ticket Number</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Flight_Date</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Flight Date</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Baggage</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>To_Other_Department_Section6</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>To_Other_Department_Section6_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>BaggageInformation</name>
+                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Baggage Information&lt;/b&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <fields>
+                    <name>PIR</name>
+                    <dataType>String</dataType>
+                    <fieldText>PIR</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Baggage</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>245</locationX>
+        <locationX>289</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetCurrentCaseInformation</targetReference>
@@ -959,7 +1960,7 @@
         <description>Gets the care record type based on the Department and Team</description>
         <name>Get_Case_Record_Type</name>
         <label>Get Case Record Type</label>
-        <locationX>1568</locationX>
+        <locationX>1920</locationX>
         <locationY>998</locationY>
         <connector>
             <targetReference>Redirection_Support_Or_Escalation</targetReference>
@@ -998,6 +1999,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>descriptionContent</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <description>Queue name that needs to be assigned</description>
         <name>queueName</name>
         <dataType>String</dataType>
@@ -1012,5 +2020,13 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>refundRequestInformation</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Refund_Request__c</objectType>
     </variables>
 </Flow>

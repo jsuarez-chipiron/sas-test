@@ -193,12 +193,12 @@
         <defaultConnectorLabel>Queue</defaultConnectorLabel>
         <rules>
             <name>User</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12)</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Parent.Department__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>$Record.Parent.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
                 <rightValue>
-                    <stringValue>Refunds</stringValue>
+                    <stringValue>005</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -269,6 +269,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>SAS Operating Center</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.Department__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Refunds</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -585,7 +592,7 @@
         <inputAssignments>
             <name>userId</name>
             <value>
-                <elementReference>$Record.Parent.OwnerId</elementReference>
+                <elementReference>$Record.Parent.Approval_Submitter__c</elementReference>
             </value>
         </inputAssignments>
     </subflows>

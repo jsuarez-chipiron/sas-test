@@ -28,7 +28,7 @@ public inherited sharing class ExchangeRatesSelector extends fflib_SObjectSelect
     return (List<Exchange_Rate__c>) Database.query(newQueryFactory().toSOQL());
   }
 
-  public List<Exchange_Rate__c> selectByCurrency(String fromCurrency) {
+  public List<Exchange_Rate__c> selectByFromCurrency(String fromCurrency) {
     return (List<Exchange_Rate__c>) Database.query(
       newQueryFactory()
         .setCondition('From_Currency__c = :fromCurrency')
@@ -36,13 +36,21 @@ public inherited sharing class ExchangeRatesSelector extends fflib_SObjectSelect
     );
   }
 
-  public List<Exchange_Rate__c> selectByCurrency(
+  public List<Exchange_Rate__c> selectByCurrencies(
     String fromCurrency,
     String toCurrency
   ) {
     return (List<Exchange_Rate__c>) Database.query(
       newQueryFactory()
         .setCondition('From_Currency__c = :fromCurrency AND To_Currency__c = :toCurrency')
+        .toSOQL()
+    );
+  }
+
+  public List<Exchange_Rate__c> selectByToCurrency(String toCurrency) {
+    return (List<Exchange_Rate__c>) Database.query(
+      newQueryFactory()
+        .setCondition('To_Currency__c = :toCurrency')
         .toSOQL()
     );
   }

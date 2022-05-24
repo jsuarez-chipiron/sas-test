@@ -360,6 +360,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Comment__c</field>
+            <value>
+                <elementReference>Comments</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Company_Code__c</field>
             <value>
                 <elementReference>Company_Code</elementReference>
@@ -751,6 +757,15 @@
             </visibilityRule>
         </fields>
         <fields>
+            <name>Comments</name>
+            <defaultValue>
+                <stringValue>{!Get_Current_Case_Information_0.Description}</stringValue>
+            </defaultValue>
+            <fieldText>Comments</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
             <name>Customer_Care_Creation_Section1</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
@@ -815,6 +830,12 @@
                     <name>Email</name>
                     <extensionName>flowruntime:email</extensionName>
                     <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>value</name>
+                        <value>
+                            <elementReference>Get_Current_Case_Information_0.SuppliedEmail</elementReference>
+                        </value>
+                    </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -833,6 +854,9 @@
                 <fields>
                     <name>EuroBonus_Number</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>Get_Current_Case_Information_0.FCS_EBNumber__c</elementReference>
+                    </defaultValue>
                     <fieldText>EuroBonus Number</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -1313,32 +1337,6 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
-        </fields>
-        <fields>
-            <name>Major_Event</name>
-            <extensionName>flowruntime:lookup</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>fieldApiName</name>
-                <value>
-                    <stringValue>LIA_Major_Event__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Major Event</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>LIA_Claim__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>

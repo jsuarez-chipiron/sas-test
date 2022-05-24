@@ -553,7 +553,7 @@ private class CaseFormTest {
       '    "claimCategory": "flight-disruptions",' +
       '    "bookingReference": "TEST12"' +
       '  },' +
-      '  "metaData": {' + 
+      '  "metaData": {' +
       '    "market": "dk-da"' +
       '  }' +
       '}'
@@ -672,6 +672,67 @@ private class CaseFormTest {
       2021,
       cl.Purchase_Year__c,
       'Should have set purchase year correctly.'
+    );
+  }
+
+  @IsTest
+  public static void shouldCreateCompensationCardClaims() {
+    CaseFormJSON2Apex requestBody = CaseFormJSON2Apex.parse(
+      '{ ' +
+      '  "formData\": {' +
+      '    "type": "compensation-card",' +
+      '    "email": "test@example.com",' +
+      '    "firstName": "Test",' +
+      '    "lastName": "Testsson",' +
+      '    "phone": "000000000",' +
+      '    "address": "Frösundavik\'s allé 1",' +
+      '    "postalCode": "000000",' +
+      '    "city": "Stockholm",' +
+      '    "country": "SE",' +
+      '    "contactType": "private",' +
+      '    "compensationCardId": "SK12345678",' +
+      '    "preferredCompensationMethod": "voucher",' +
+      '    "bookingReference": "TEST12"' +
+      '  },' +
+      '  "metaData": {' +
+      '    "market": "dk-da"' +
+      '  }' +
+      '}'
+    );
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    Test.startTest();
+    CaseFormResponse response = CaseForm.createCase(requestBody);
+    Test.StopTest();
+
+    Case c = [
+      SELECT Id, Status
+      FROM Case
+      WHERE CaseNumber = :response.caseNumber
+    ];
+    LIA_Claim__c cl = [
+      SELECT
+        Id,
+        RecordTypeId,
+        Customer_Claim_Type__c,
+        Delay_Length__c,
+        Purchase_Price__c,
+        Purchase_Year__c
+      FROM LIA_Claim__c
+      WHERE Case__c = :c.Id
+    ];
+
+    System.assertEquals(
+      Claims.getRecordTypeId(Claims.RecordType.CompensationCard),
+      cl.RecordTypeId,
+      'Record type should be set to compensation card.'
+    );
+
+    System.assertEquals(
+      Cases.STATUS_CLOSED,
+      c.Status,
+      'Case should have been set to closed.'
     );
   }
 }

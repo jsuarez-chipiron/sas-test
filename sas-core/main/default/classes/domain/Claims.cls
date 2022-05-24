@@ -15,10 +15,12 @@ public without sharing class Claims extends fflib_SObjectDomain {
     return (Claims) SAS_Service_Application.Domain.newInstance(sObjectList);
   }
 
-  private List<LIA_Claim__c> instanceRecords;
+  public List<LIA_Claim__c> instanceRecords;
 
   public enum RecordType {
-    CustomerClaim
+    CompensationCard,
+    CustomerClaim,
+    LiabilityClaim
   }
 
   public enum Category {
@@ -46,7 +48,9 @@ public without sharing class Claims extends fflib_SObjectDomain {
   };
 
   public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
-    RecordType.CustomerClaim => 'CustomerClaim'
+    RecordType.CompensationCard => 'CompensationCard',
+    RecordType.CustomerClaim => 'CustomerClaim',
+    RecordType.LiabilityClaim => 'LiabilityClaim'
   };
 
   private static Map<RecordType, Id> recordTypeToId = new Map<RecordType, String>();
@@ -85,7 +89,8 @@ public without sharing class Claims extends fflib_SObjectDomain {
 
   /**
    * A claim can be prorated if it is a baggage claim and has at least one
-   * leg with an operating carrier which is not a part of Star Alliance.
+   * leg with an operating carrier which is not a part of Star Alliance. It
+   * must also have at least one paid out settlement.
    *
    * Proration of a claim is splitting costs related to a baggage claim between
    * the airlines in the booking the claims is about. See Confluence for more
@@ -96,10 +101,13 @@ public without sharing class Claims extends fflib_SObjectDomain {
   public Map<Id, Boolean> canBeProrated() {
     Set<Id> parentCaseIds = new Set<Id>();
     for (LIA_Claim__c claim : instanceRecords) {
-      if (
+      Boolean isABaggageCaseWithSettlements =
         categoryNameToEnum.get(claim.Customer_Claim_Category__c) ==
-        Category.Baggage
-      ) {
+        Category.Baggage &&
+        claim.Settlements__r != null &&
+        !claim.Settlements__r.isEmpty();
+
+      if (isABaggageCaseWithSettlements) {
         parentCaseIds.add(claim.Case__c);
       }
     }
@@ -140,6 +148,38 @@ public without sharing class Claims extends fflib_SObjectDomain {
     }
 
     return claimIdsToProrationStatus;
+  }
+
+  /**
+   * Settles the given instance claims. The claims will be approved
+   * automatically and skip control.
+   *
+   * Settlements must already exist for the claims for this to succeed.
+   *
+   * If settling fails, sets the settlements as failed and keeps the case in
+   * progress.
+   */
+  public Claims settle(fflib_ISObjectUnitOfWork uow) {
+    List<Settlement__c> settlementsForClaims = SettlementsSelector.newInstance()
+      .selectByClaimId((new Map<Id, LIA_Claim__c>(instanceRecords)).keySet());
+
+    Set<Id> caseIds = new Set<Id>();
+    for (LIA_Claim__c claim : instanceRecords) {
+      caseIds.add(claim.Case__c);
+    }
+    List<Case> casesForClaims = CasesSelector.newInstance().selectById(caseIds);
+
+    Settlements.newInstance(settlementsForClaims).approve(uow).lock();
+
+    return this;
+  }
+
+  public Claims createFromCompensationCardForm(CaseFormJSON2Apex formData) {
+    List<LIA_Claim__c> claimsToCreate = new List<LIA_Claim__c>();
+
+    LIA_Claim__c newClaim = new LIA_Claim__c();
+
+    return newInstance(new List<LIA_Claim__c>{ newClaim });
   }
 
   private void assignToQueueUsingFlow() {
@@ -202,7 +242,10 @@ public without sharing class Claims extends fflib_SObjectDomain {
     if (instanceRecords.size() == 1) {
       LIA_Claim__c claim = instanceRecords[0];
       // TODO: Fix this when we can support several bookings at once
-      if (claim.Liability_PNR__c != null) {
+      if (
+        claim.Liability_PNR__c != null &&
+        claim.RecordTypeId != getRecordTypeId(RecordType.CompensationCard)
+      ) {
         BookingService.addBookingToCaseAsync(
           claim.Case__c,
           claim.Liability_PNR__c
@@ -217,7 +260,9 @@ public without sharing class Claims extends fflib_SObjectDomain {
       // TODO: Fix this when we can support several bookings at once
       if (
         claim.Liability_PNR__c != null &&
-        existingRecords.get(claim.Id).Liability_PNR__c != claim.Liability_PNR__c
+        existingRecords.get(claim.Id).Liability_PNR__c !=
+        claim.Liability_PNR__c &&
+        claim.RecordTypeId != getRecordTypeId(RecordType.CompensationCard)
       ) {
         BookingService.removeBookingFromCase(
           claim.Case__c,
@@ -234,16 +279,19 @@ public without sharing class Claims extends fflib_SObjectDomain {
   private void normalizeFields() {
     for (LIA_Claim__c claim : instanceRecords) {
       if (!String.isBlank(claim.Liability_PNR__c)) {
-        claim.Liability_PNR__c = claim.Liability_PNR__c.toUpperCase();
+        claim.Liability_PNR__c = claim.Liability_PNR__c.toUpperCase()
+          .replace(' ', '');
       }
       if (!String.isBlank(claim.BIC_Swift__c)) {
-        claim.BIC_Swift__c = claim.BIC_Swift__c.toUpperCase();
+        claim.BIC_Swift__c = claim.BIC_Swift__c.toUpperCase().replace(' ', '');
       }
       if (!String.isBlank(claim.Bank_Account_Number__c)) {
-        claim.Bank_Account_Number__c = claim.Bank_Account_Number__c.toUpperCase();
+        claim.Bank_Account_Number__c = claim.Bank_Account_Number__c.toUpperCase()
+          .replace(' ', '');
       }
       if (!String.isBlank(claim.Flight_Number__c)) {
-        claim.Flight_Number__c = claim.Flight_Number__c.toUpperCase();
+        claim.Flight_Number__c = claim.Flight_Number__c.toUpperCase()
+          .replace(' ', '');
       }
     }
   }

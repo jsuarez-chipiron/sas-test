@@ -22,4 +22,8 @@
         <field>Payment_Type__c</field>
         <value xsi:type="xsd:string">CROSS BORDER EDI</value>
     </values>
+    <values>
+        <field>Uses_IBAN__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
 </CustomMetadata>

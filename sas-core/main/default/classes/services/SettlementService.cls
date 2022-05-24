@@ -173,9 +173,7 @@ public without sharing class SettlementService {
    * settlements as either done or failed depending on the results of the
    * operation.
    */
-  @future(callout=true)
   public static void sendEuroBonusPoints(Id settlementId) {
-    // TODO: Should this be in the domain class?
     Settlement__c settlement = settlementsSel.selectByIdWithClaimFields(
       new Set<Id>{ settlementId }
     )[0];
@@ -218,13 +216,17 @@ public without sharing class SettlementService {
         uow.commitWork();
       } else {
         // Domain failure, e.g. invalid EB number.
+        fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
         Settlements.newInstance(new List<Settlement__c>{ settlement })
-          .markAsFailed(resp.failureResponse.message);
+          .markAsFailed(resp.failureResponse.message, uow);
+        uow.commitWork();
       }
     } catch (Exception e) {
       // Service failure, e.g. something 5xx.
+      fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
       Settlements.newInstance(new List<Settlement__c>{ settlement })
-        .markAsFailed(e.getMessage());
+        .markAsFailed(e.getMessage(), uow);
+      uow.commitWork();
 
       C_Log.log(
         C_Log.Severity.Error,
@@ -242,9 +244,7 @@ public without sharing class SettlementService {
    * and send a voucher for the customer. Marks the settlements as either
    * done or failed depending on the results of the operation.
    */
-  @future(callout=true)
   public static void createAndSendVoucher(Id settlementId) {
-    // TODO: Should this be in the domain class?
     Settlement__c settlement = settlementsSel.selectByIdWithClaimFields(
       new Set<Id>{ settlementId }
     )[0];
@@ -294,8 +294,10 @@ public without sharing class SettlementService {
 
       uow.commitWork();
     } catch (Exception e) {
+      fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
       Settlements.newInstance(new List<Settlement__c>{ settlement })
-        .markAsFailed(e.getMessage());
+        .markAsFailed(e.getMessage(), uow);
+      uow.commitWork();
 
       C_Log.log(
         C_Log.Severity.Error,
@@ -308,14 +310,49 @@ public without sharing class SettlementService {
     }
   }
 
-  public static Boolean addItemsToSettlement(
-    Id settlementId,
-    List<Settlement_Item__c> itemsToAdd
+  /**
+   * Updates the given settlements to have the given lists of items.
+   *
+   * If an already existing item for a settlement isn't included in this list
+   * it will be removed.
+   *
+   * If the items have ids, the corresponding existing items will be updated.
+   *
+   * Any items which do not have items will be created as new.
+   */
+  public static void updateItemsForSettlements(
+    Map<Id, List<Settlement_Item__c>> itemsToAddBySettlement
   ) {
-    Settlement__c settlement = settlementsSel.selectById(
-      new Set<Id>{ settlementId }
-    )[0];
-    return Settlements.newInstance(new List<Settlement__c>{ settlement })
-      .updateSettlementItems(itemsToAdd);
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+
+    Settlements.newInstance(
+        settlementsSel.selectById(itemsToAddBySettlement.keySet())
+      )
+      .updateSettlementItems(itemsToAddBySettlement, uow);
+
+    uow.commitWork();
+  }
+
+  public class ProcessPayableSettlement implements Queueable, Database.AllowsCallouts {
+    private Id settlementId;
+    public ProcessPayableSettlement(Id settlementId) {
+      this.settlementId = settlementId;
+    }
+    public void execute(QueueableContext ctx) {
+      Settlement__c settlement = settlementsSel.selectByIdWithClaimFields(
+        new Set<Id>{ settlementId }
+      )[0];
+      if (
+        settlement.RecordTypeId ==
+        Settlements.getRecordTypeId(Settlements.RecordType.EBPoints)
+      ) {
+        sendEuroBonusPoints(settlementId);
+      } else if (
+        settlement.RecordTypeId ==
+        Settlements.getRecordTypeId(Settlements.RecordType.Voucher)
+      ) {
+        createAndSendVoucher(settlementId);
+      }
+    }
   }
 }
