@@ -1929,7 +1929,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HKD</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>JPY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NOK</fullName>
             <default>false</default>
         </values>
         <values>
