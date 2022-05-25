@@ -4,16 +4,13 @@
         <description>Validates that all settlements are correct. If not, an error is thrown and an error message is shown.</description>
         <name>Validate_Settlements_Apex</name>
         <label>Validate Settlements Apex</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>1550</locationY>
         <actionName>ValidateSettlements</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>submitScreen</targetReference>
+            <targetReference>Are_all_settlements_valid_decision</targetReference>
         </connector>
-        <faultConnector>
-            <targetReference>Settlement_Validation_Error_Screen</targetReference>
-        </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>settlementsToValidate</name>
@@ -21,8 +18,35 @@
                 <elementReference>Get_Settlements_for_this_Case</elementReference>
             </value>
         </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>51.0</apiVersion>
+    <decisions>
+        <description>Determines wether all settlements are valid. If not, shows and error screen</description>
+        <name>Are_all_settlements_valid_decision</name>
+        <label>Are all settlements valid decision</label>
+        <locationX>710</locationX>
+        <locationY>1670</locationY>
+        <defaultConnector>
+            <targetReference>Settlement_Validation_Error_Screen_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Settlements are invalid</defaultConnectorLabel>
+        <rules>
+            <name>Settlements_are_valid</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Validate_Settlements_Apex.isValid</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>submitScreen</targetReference>
+            </connector>
+            <label>Settlements are valid</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Case_can_be_submitted_for_Approval</name>
         <label>Case can be submitted for Approval</label>
@@ -273,7 +297,7 @@
             <label>Waiting for Approval or Control or Transfer</label>
         </rules>
     </decisions>
-    <description>New settlement validation v2</description>
+    <description>New settlement validation v3</description>
     <formulas>
         <name>resultText</name>
         <dataType>String</dataType>
@@ -373,7 +397,7 @@
     <recordLookups>
         <name>Get_Settlements_for_this_Case</name>
         <label>Get Settlements for this Case</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>1430</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -402,7 +426,7 @@
         <name>Update_Case_Status</name>
         <label>Update Case Status</label>
         <locationX>578</locationX>
-        <locationY>1790</locationY>
+        <locationY>1910</locationY>
         <connector>
             <targetReference>Update_Settlements_for_this_Case</targetReference>
         </connector>
@@ -432,7 +456,7 @@
         <name>Update_Settlements_for_this_Case</name>
         <label>Update Settlements for this Case</label>
         <locationX>578</locationX>
-        <locationY>1910</locationY>
+        <locationY>2030</locationY>
         <connector>
             <targetReference>Send_Case_to_Approval</targetReference>
         </connector>
@@ -547,16 +571,16 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Settlement_Validation_Error_Screen</name>
+        <name>Settlement_Validation_Error_Screen_0</name>
         <label>Settlement Validation Error Screen</label>
         <locationX>842</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>Settlement_Validation_Error_Message</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <name>Settlement_Validation_Error_Message_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!Validate_Settlements_Apex.errorMessage}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -566,7 +590,7 @@
         <name>submitScreen</name>
         <label>Submit Screen</label>
         <locationX>578</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -619,7 +643,7 @@
         <name>Send_Case_to_Approval</name>
         <label>Send Case to Approval</label>
         <locationX>578</locationX>
-        <locationY>2030</locationY>
+        <locationY>2150</locationY>
         <flowName>CLAIM_Case_Approval_Handler</flowName>
         <inputAssignments>
             <name>incomingCaseRecord</name>
