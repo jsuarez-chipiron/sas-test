@@ -203,7 +203,7 @@
                 <leftValueReference>Result</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Default Judgement</stringValue>
+                    <stringValue>Default judgement</stringValue>
                 </rightValue>
             </conditions>
             <connector>
