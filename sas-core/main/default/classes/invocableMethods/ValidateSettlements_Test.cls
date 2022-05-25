@@ -83,29 +83,27 @@ private class ValidateSettlements_Test {
     Boolean singleError = false;
     Boolean largeError = false;
 
-    try {
-      ValidateSettlements.validate(
-        new List<List<Settlement__c>>{
-          new List<Settlement__c>{ invalidSettlement1 }
-        }
-      );
-    } catch (Exception e) {
+    ValidateSettlements.ValidationStatus statusSingle = ValidateSettlements.validate(
+      new List<List<Settlement__c>>{
+        new List<Settlement__c>{ invalidSettlement1 }
+      }
+    )[0];
+    if (!statusSingle.isValid) {
       singleError = true;
     }
 
-    try {
-      ValidateSettlements.validate(
-        new List<List<Settlement__c>>{
-          new List<Settlement__c>{
-            invalidSettlement1,
-            invalidSettlement2,
-            invalidSettlement3,
-            invalidSettlement4,
-            invalidSettlement5
-          }
+    ValidateSettlements.ValidationStatus statusMulti = ValidateSettlements.validate(
+      new List<List<Settlement__c>>{
+        new List<Settlement__c>{
+          invalidSettlement1,
+          invalidSettlement2,
+          invalidSettlement3,
+          invalidSettlement4,
+          invalidSettlement5
         }
-      );
-    } catch (Exception e) {
+      }
+    )[0];
+    if (!statusMulti.isValid) {
       largeError = true;
     }
 
@@ -201,21 +199,20 @@ private class ValidateSettlements_Test {
 
     // When
     Boolean noError = false;
+
     Test.startTest();
-    try {
-      ValidateSettlements.validate(
-        new List<List<Settlement__c>>{
-          new List<Settlement__c>{
-            validSettlement1,
-            validSettlement2,
-            validSettlement3,
-            validSettlement4
-          }
+    ValidateSettlements.ValidationStatus status = ValidateSettlements.validate(
+      new List<List<Settlement__c>>{
+        new List<Settlement__c>{
+          validSettlement1,
+          validSettlement2,
+          validSettlement3,
+          validSettlement4
         }
-      );
-    } catch (Exception e) {
+      }
+    )[0];
+    if (!status.isValid) {
       noError = true;
-      System.debug(e);
     }
     Test.stopTest();
 
