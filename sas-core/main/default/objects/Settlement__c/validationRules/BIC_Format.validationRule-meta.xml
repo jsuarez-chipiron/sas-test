@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>BIC_Format</fullName>
-    <active>true</active>
-    <description>Validates the BIC format. NOTE: This has to be the same as the validation in the Create-settlement flow!</description>
-    <errorConditionFormula>AND(RecordType.Name == &apos;Monetary&apos;,  NOT(REGEX(BIC_Swift__c, &quot;[A-Z]{6}[0-9A-Z]{2}([0-9A-Z]{3})?&quot;)))</errorConditionFormula>
-    <errorDisplayField>BIC_Swift__c</errorDisplayField>
-    <errorMessage>BIC number is invalid, should be formatted as: XXXXXXYY or XXXXXXYYYYY (X&apos;s are letters and Y&apos;s are letters or numbers)</errorMessage>
-</ValidationRule>
