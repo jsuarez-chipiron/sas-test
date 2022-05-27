@@ -5,7 +5,7 @@
 package.xml
 **/destructiveChangesPost.xml
 **/destructiveChangesPre.xml
-
+**/emails/**
 
 
 # LWC configuration files
@@ -20,3 +20,9 @@ package.xml
 **/Trial Customer Portal User.profile-meta.xml
 
 #Data Files
+**/EmailTemplate.json
+**/email/**
+
+#Exceptions to rules
+!Group_Sales_Survey_Invitation_Link_1653310948956.email-meta.xml
+!Group_Sales_Survey_Invitation_Link_1653310948956.email
