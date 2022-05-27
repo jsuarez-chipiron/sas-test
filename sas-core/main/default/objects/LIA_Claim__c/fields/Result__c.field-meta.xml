@@ -52,9 +52,9 @@
                 <label>Claim rejected</label>
             </value>
             <value>
-                <fullName>Default judgment</fullName>
+                <fullName>Default judgement</fullName>
                 <default>false</default>
-                <label>Default judgment</label>
+                <label>Default judgement</label>
             </value>
         </valueSetDefinition>
     </valueSet>
