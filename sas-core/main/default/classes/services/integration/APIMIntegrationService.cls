@@ -7,6 +7,28 @@ public without sharing class APIMIntegrationService {
   public class IntegrationException extends Exception {
   }
 
+  public class IllegalArgumentsException extends Exception {
+  }
+
+  /**
+   * Base class for managing arbitrary query parameters for an APIM call.
+   */
+  public abstract class BaseQuery {
+    /**
+     * Returns the contents of this instance as a query param string that can
+     * be directly concatenated into a http call.
+     */
+    public abstract String toQueryParamString();
+
+    protected virtual String addField(
+      Boolean isFirst,
+      String fieldName,
+      String fieldValue
+    ) {
+      return (isFirst ? '?' : '&') + fieldName + '=' + fieldValue;
+    }
+  }
+
   /**
    * Constructs and fires a request to the APIM.
    *

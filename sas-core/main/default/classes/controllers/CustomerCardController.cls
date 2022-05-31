@@ -67,8 +67,8 @@ public without sharing class CustomerCardController {
   }
 
   @AuraEnabled
-  public static void refetchBookingData(String bookingReference) {
-    BookingService.fetchBookingByBookingReference(bookingReference);
+  public static void refetchBookingData(String bookingIdentifier) {
+    BookingService.fetchBookingByBookingIdentifier(bookingIdentifier);
   }
 
   @AuraEnabled

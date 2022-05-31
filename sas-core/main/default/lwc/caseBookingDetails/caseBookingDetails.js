@@ -290,7 +290,7 @@ export default class CaseBookingDetails extends NavigationMixin(
     this.showSpinner = true;
     try {
       await refetchBookingDataApex({
-        bookingReference: event.target.dataset.id
+        bookingIdentifier: event.target.dataset.id
       });
     } catch (error) {
       this.error = error;

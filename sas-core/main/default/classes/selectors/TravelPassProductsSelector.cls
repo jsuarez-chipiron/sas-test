@@ -17,6 +17,12 @@ public inherited sharing class TravelPassProductsSelector extends fflib_SObjectS
     return Travel_Pass_Product__c.SObjectType;
   }
 
+  public static TravelPassProductsSelector newInstance() {
+    return (TravelPassProductsSelector) SAS_Service_Application.Selector.newInstance(
+      Travel_Pass_Product__c.SObjectType
+    );
+  }
+
   public List<Travel_Pass_Product__c> selectById(Set<Id> ids) {
     return (List<Travel_Pass_Product__c>) selectSObjectsById(ids);
   }

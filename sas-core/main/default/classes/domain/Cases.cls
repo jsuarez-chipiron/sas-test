@@ -15,7 +15,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
     return (Cases) SAS_Service_Application.Domain.newInstance(sObjectList);
   }
 
-  private List<Case> instanceRecords;
+  public List<Case> instanceRecords;
 
   public static final String STATUS_IN_PROGRESS = 'In Progress';
   public static final String STATUS_WAITING_FOR_APPROVAL = 'Waiting for Approval';
@@ -218,7 +218,12 @@ public without sharing class Cases extends fflib_SObjectDomain {
       Case c = instanceRecords[0];
 
       if (!String.isBlank(c.Initially_Provided_PNR__c)) {
-        BookingService.addBookingToCaseAsync(c.Id, c.Initially_Provided_PNR__c);
+        System.enqueueJob(
+          new BookingService.AddBookingToCaseAsync(
+            c.Id,
+            c.Initially_Provided_PNR__c
+          )
+        );
       }
     }
   }
@@ -283,12 +288,10 @@ public without sharing class Cases extends fflib_SObjectDomain {
         if (
           oldCases == null || (c.AccountId != oldCases.values()[0].AccountId)
         ) {
-          AccountsSelector accounts = (AccountsSelector) SAS_Service_Application.Selector.newInstance(
-            Account.SObjectType
-          );
-          Account a = accounts.selectById(new Set<Id>{ c.AccountId })[0];
+          Account a = AccountsSelector.newInstance()
+            .selectById(new Set<Id>{ c.AccountId })[0];
           if (a.FCS_EBNumber__c != null && a.FCS_EBNumber__c.length() > 0) {
-            BookingService.fetchBookingsByEBNumber(a.FCS_EBNumber__c);
+            new BookingService.FetchBookingsByEBNumberAsync(a.FCS_EBNumber__c);
           }
         }
       }

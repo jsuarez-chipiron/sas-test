@@ -1,7 +1,6 @@
 @IsTest
 public with sharing class Bookings_IntegrationTest {
   public static String bookingReferenceOnlyInTEDS = 'TEDS12';
-  public static String ebNumberWithBookings = 'TEST123456';
 
   public static BookingsSelector bookings = (BookingsSelector) SAS_Service_Application.Selector.newInstance(
     Booking__c.SObjectType
@@ -99,13 +98,13 @@ public with sharing class Bookings_IntegrationTest {
   public static void itsPossibleToFetchBookingsByEBNumber() {
     // Given
     Account testAccount = FCS_TestDataFactory.createFrequentFlyers(1)[0];
-    testAccount.FCS_EBNumber__c = ebNumberWithBookings;
+    testAccount.FCS_EBNumber__c = APIMMock.EB_NUMBER_WITH_BOOKINGS;
     insert testAccount;
 
     Test.startTest();
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     // When
-    CustomerCardController.getBookingsForEBCustomer(ebNumberWithBookings);
+    CustomerCardController.getBookingsForEBCustomer(APIMMock.EB_NUMBER_WITH_BOOKINGS);
     Test.stopTest();
 
     // Then
@@ -155,18 +154,28 @@ public with sharing class Bookings_IntegrationTest {
   public static void itsPossibleToUpdateExistingBookings() {
     // Given
     Account testAccount = FCS_TestDataFactory.createFrequentFlyers(1)[0];
-    testAccount.FCS_EBNumber__c = ebNumberWithBookings;
+    testAccount.FCS_EBNumber__c = APIMMock.EB_NUMBER_WITH_BOOKINGS;
     insert testAccount;
 
-    Test.startTest();
+    Booking__c existingBooking = TestDataFactories.createBookings(
+      1,
+      APIMMock.DEFAULT_VALID_TEDS_PNR
+    )[0];
+    existingBooking.TEDS_Identifier__c = APIMMock.DEFAULT_VALID_TEDS_IDENTIFIER;
+    update existingBooking;
+
     Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    DateTime bookingLastModifiedBeforeFetch = [
+      SELECT LastModifiedDate
+      FROM Booking__c
+      WHERE Id = :existingBooking.Id
+    ][0]
+    .LastModifiedDate;
+
     // When
-    CustomerCardController.getBookingsForEBCustomer(ebNumberWithBookings);
-    Test.setMock(
-      HttpCalloutMock.class,
-      new TEDSBookingQuerySuccessAnotherMock()
-    );
-    CustomerCardController.getBookingsForEBCustomer(ebNumberWithBookings);
+    Test.startTest();
+    CustomerCardController.getBookingsForEBCustomer(APIMMock.EB_NUMBER_WITH_BOOKINGS);
     Test.stopTest();
 
     // Then
@@ -179,9 +188,10 @@ public with sharing class Bookings_IntegrationTest {
       'There should be only one booking for the account.'
     );
 
-    System.assert(
-      bookingsForAccount[0].Is_Cancelled__c == true,
-      'Booking should have been updated changed between the calls.'
+    System.assertNotEquals(
+      bookingLastModifiedBeforeFetch,
+      bookingsForAccount[0].LastModifiedDate,
+      'Booking should have been updated between the calls.'
     );
   }
 }

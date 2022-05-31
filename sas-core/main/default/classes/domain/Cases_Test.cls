@@ -209,8 +209,8 @@ private class Cases_Test {
     String testEBNumber = '0123456789';
     lstAcc[0].FCS_EBNumber__c = testEBNumber;
 
-    Test.startTest();
     Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
     insert lstAcc;
 
     Case c = new Case();
@@ -237,8 +237,8 @@ private class Cases_Test {
     String testEBNumber = '0123456789';
     lstAcc[0].FCS_EBNumber__c = testEBNumber;
 
-    Test.startTest();
     Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
     insert lstAcc;
 
     Case c = new Case();

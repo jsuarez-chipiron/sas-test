@@ -60,6 +60,7 @@ public class SAS_Service_Application {
       BookingService.class => BookingService.class,
       ClaimsIntegrationService.class => ClaimsIntegrationService.class,
       CLMIntegrationService.class => CLMIntegrationService.class,
+      FlightService.class => FlightService.class,
       SettlementService.class => SettlementService.class,
       TEDSIntegrationService.class => TEDSIntegrationService.class,
       VoucherIntegrationService.class => VoucherIntegrationService.class

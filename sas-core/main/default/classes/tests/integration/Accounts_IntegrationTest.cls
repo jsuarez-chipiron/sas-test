@@ -1,51 +1,20 @@
 @IsTest
 public with sharing class Accounts_IntegrationTest {
-  public static String bookingReference = 'SF1234';
-  public static String euroBonusNumber = '123456789098';
-
-  public static BookingsSelector bookings = (BookingsSelector) SAS_Service_Application.Selector.newInstance(
-    Booking__c.SObjectType
-  );
-
   @IsTest
-  public static void whenEBAccountIsCreatedBookingsAreCreated() {
+  public static void insertingAnEBAccountFetchesBookings() {
     // Given
-    fflib_ApexMocks mocks = new fflib_ApexMocks();
-    TEDSIntegrationService mockTEDSService = (TEDSIntegrationService) mocks.mock(
-      TEDSIntegrationService.class
-    );
-    mocks.startStubbing();
-    List<List<String>> query = new List<List<String>>{
-      new List<String>{ 'euroBonusNumber', euroBonusNumber }
-    };
-    mocks.when(mockTEDSService.fetchBookingsByQuery(query))
-      .thenReturn(
-        TestDataFactories.createParsedBookingData(
-          bookingReference,
-          euroBonusNumber
-        )
-      );
-    mocks.stopStubbing();
-    SAS_Service_Application.Service.setMock(
-      TEDSIntegrationService.class,
-      mockTEDSService
-    );
+    Account newAccount = FCS_TestDataFactory.createFrequentFlyers(1)[0];
+    newAccount.FCS_EBNumber__c = APIMMock.EB_NUMBER_WITH_BOOKINGS;
 
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     // When
-    Account newAccount = new Account(
-      FCS_EBNumber__c = euroBonusNumber,
-      RecordTypeId = C_RecordTypeHelper.ACCOUNT_PERSON_EBCUSTOMER,
-      FirstName = 'Test',
-      LastName = 'Account'
-    );
     insert newAccount;
     Test.stopTest();
 
     // Then
-    List<Booking__c> bookingsFromDB = bookings.selectByAccountId(
-      new Set<Id>{ newAccount.Id }
-    );
+    List<Booking__c> bookingsFromDB = BookingsSelector.newInstance()
+      .selectByAccountId(new Set<Id>{ newAccount.Id });
     System.assert(
       bookingsFromDB.size() > 0,
       'There should be a new booking related to the account'
