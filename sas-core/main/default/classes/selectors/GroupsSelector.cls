@@ -17,13 +17,23 @@ public inherited sharing class GroupsSelector extends fflib_SObjectSelector {
     return (List<Group>) selectSObjectsById(ids);
   }
 
+  public List<Group> selectQueuesByDeveloperName(Set<String> queueNames) {
+    String groupType = 'Queue';
+
+    return (List<Group>) Database.query(
+      newQueryFactory()
+        .setCondition('Type = :groupType AND DeveloperName IN :queueNames')
+        .toSOQL()
+    );
+  }
+
   /**
    * Finds a queue for a given department name. Each department has a single
    * default queue the name of which is the same as the department. Spaces in
    * department name are replaced with underscores.
    */
   public List<Group> selectQueuesByDepartment(Set<String> departmentNames) {
-    String queueType = 'Queue';
+    String groupType = 'Queue';
     Set<String> departmentsWithoutSpaces = new Set<String>();
     for (String department : departmentNames) {
       departmentsWithoutSpaces.add(department.replace(' ', '_'));
@@ -31,7 +41,7 @@ public inherited sharing class GroupsSelector extends fflib_SObjectSelector {
     return (List<Group>) Database.query(
       newQueryFactory()
         .setCondition(
-          'Type = :queueType AND DeveloperName IN :departmentsWithoutSpaces'
+          'Type = :groupType AND DeveloperName IN :departmentsWithoutSpaces'
         )
         .toSOQL()
     );
