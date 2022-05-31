@@ -5,7 +5,7 @@
 package.xml
 **/destructiveChangesPost.xml
 **/destructiveChangesPre.xml
-**/emails/**
+
 
 
 # LWC configuration files
@@ -21,8 +21,5 @@ package.xml
 
 #Data Files
 **/EmailTemplate.json
-**/email/**
 
-#Exceptions to rules
-!sas-core/main/default/email/unfiled$public/Group_Sales_Survey_Invitation_Link_1653310948956.email-meta.xml
-!sas-core/main/default/email/unfiled$public/Group_Sales_Survey_Invitation_Link_1653310948956.email
+
