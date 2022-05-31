@@ -9,7 +9,7 @@
             <type>email</type>
         </recipients>
         <senderType>DefaultWorkflowUser</senderType>
-        <template>unfiled$public/Group_Sales_Survey_Invitation_Link_1653310948956</template>
+        <template>SurveyEmailTemplates/Group_Sales_Survey_Invitation_Link_1653310948956</template>
     </alerts>
     <fieldUpdates>
         <fullName>ChangePriorityToHigh</fullName>
