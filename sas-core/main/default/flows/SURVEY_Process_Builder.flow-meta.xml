@@ -22,7 +22,7 @@
         <locationX>50</locationX>
         <locationY>575</locationY>
         <assignmentItems>
-            <assignToReference>invitation</assignToReference>
+            <assignToReference>invitationID</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>$Record.Invitation.Id</elementReference>
@@ -117,18 +117,10 @@
     </start>
     <status>Active</status>
     <variables>
-        <name>invitation</name>
+        <name>invitationID</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>invitationID</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>SurveyResponse</objectType>
     </variables>
 </Flow>
