@@ -22,7 +22,7 @@
         <locationX>50</locationX>
         <locationY>575</locationY>
         <assignmentItems>
-            <assignToReference>invitationID</assignToReference>
+            <assignToReference>invitationId</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>$Record.Invitation.Id</elementReference>
@@ -117,7 +117,7 @@
     </start>
     <status>Active</status>
     <variables>
-        <name>invitationID</name>
+        <name>invitationId</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
