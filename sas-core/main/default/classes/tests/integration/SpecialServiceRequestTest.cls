@@ -26,7 +26,11 @@ public class SpecialServiceRequestTest {
     Test.StopTest();
 
     Special_Service_Request__c req = [
-      SELECT Id, Type_Of_Service_Animal__c, Type__c
+      SELECT
+        Id,
+        Type_Of_Service_Animal__c,
+        Type__c,
+        Mobility_Device_Dimensions__c
       FROM Special_Service_Request__c
       WHERE Phone__c = '012000000000'
     ];
@@ -50,6 +54,11 @@ public class SpecialServiceRequestTest {
       'Form - SSR SE',
       c.Origin,
       'Case Origin should be set according to market.'
+    );
+    System.assertEquals(
+      null,
+      req.Mobility_Device_Dimensions__c,
+      'Unrelated fields should be empty.'
     );
   }
 
