@@ -34,6 +34,4 @@ public class IRR_MOD_CancelInfo {
     @AuraEnabled
     public String departureCity { get; set; }
 
-    @AuraEnabled
-    public String PaxRightURL { get; set; }
 }

@@ -14,6 +14,8 @@ public class IRR_EVT_NewInfoProcessor extends IRR_EVT_EventProcessor {
     private static final String ERROR_SCHD_TIME = 'Scheduled time of departure is missing from event: {0}';
 
     private static final String EVENT_FLOW_NAME = 'IRR_EVT_NewInfoFlow';
+    private static final String CANADA_PAX_RIGHT_URL = 'Find out more about your European Passenger Rights at https://www.sas.se/content/dam/sas/pdfs/travel-info/eu-passenger-rights-en.pdf and your Canadian Passenger Rights at https://www.flysas.com/en/legal-info/us-canada/canada-air-passenger-protection-rules/.';
+    private static final String EU_PAX_RIGHT_URL = 'Read more about your rights here https://www.flysas.com/en/legal-info/eu-passenger-rights/';
 
     @TestVisible
     private IRR_MOD_NewInfo newInfo;
@@ -69,6 +71,12 @@ public class IRR_EVT_NewInfoProcessor extends IRR_EVT_EventProcessor {
 
         //Retrieve passengers for flight
         this.passengerInfos = IRR_SVC_TedsService.getPassengerInfosForFlight(newInfo.flightId);
+        if(newInfo.stationDeparture=='YYZ' || newInfo.stationArrival =='YYZ'){
+            newInfo.paxURL = CANADA_PAX_RIGHT_URL;
+           }
+        else {
+            newInfo.paxURL = EU_PAX_RIGHT_URL;
+       }
     }
 
     /**
