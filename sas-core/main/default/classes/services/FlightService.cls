@@ -29,6 +29,8 @@ public without sharing class FlightService {
     if (flightData.size() == 0) {
       // Not found in TEDS. Booking reference doesn't exist in recent flight data (6 months or so).
       // TODO: Check EDW when an integration exists.
+      // TODO: Would it make more sense to return an instance of Flights, but
+      // with no instance records?
       return null;
     }
 

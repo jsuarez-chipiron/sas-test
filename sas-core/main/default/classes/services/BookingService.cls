@@ -159,11 +159,15 @@ public without sharing class BookingService {
 
     Bookings newBookings = Bookings.createFromTEDSData(bookingData);
 
-    Flights newFlights = FlightService.newInstance()
-      .fetchFlightsByReference(newBookings.getFlightIds(), false);
+    if (newBookings != null) {
+      Flights newFlights = FlightService.newInstance()
+        .fetchFlightsByReference(newBookings.getFlightIds(), false);
 
-    newBookings.upsertToDB();
-    newFlights.upsertToDB();
+      newBookings.upsertToDB();
+      if (newFlights != null) {
+        newFlights.upsertToDB();
+      }
+    }
 
     return newBookings;
   }
