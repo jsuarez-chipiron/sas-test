@@ -57,10 +57,9 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
      * @description Populates event object with additional information and initiates passengerInfo list.
      */
     public void initiateEvent() {
-
+        Boolean  canadaStation =false;
         //Retrieve passengers for booking
         this.passengerInfos = IRR_SVC_TedsService.getPassengerInfosForBooking(rebookInfo.bookingId);
-       
          if(passengerInfos != null && passengerInfos.size() > 0){
             for (IRR_MOD_PassengerInfo passengerInfo : passengerInfos) {
                 if(passengerInfo.itinerary != null && passengerInfo.itinerary.size() > 0){
@@ -68,14 +67,11 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
                         if(tripInfo.segments != null && tripInfo.segments.size() > 0){
                             for(IRR_MOD_SegmentInfo segmentInfo: tripInfo.segments){
                                 if(segmentInfo.stationArrival =='YYZ' || segmentInfo.stationDeparture =='YYZ'){
-                                    rebookInfo.isEnableCanada ='';
-                                    rebookInfo.smsCanada='Find out more about your European Passenger Rights at https://www.sas.se/content/dam/sas/pdfs/travel-info/eu-passenger-rights-en.pdf and your Canadian Passenger Rights at https://www.flysas.com/en/legal-info/us-canada/canada-air-passenger-protection-rules/';
-                                     break;
+                                     canadaStation = true;
                                 }
-                                else {
-                                     rebookInfo.smsCanada='Read more about your rights here https://www.sas.se/content/dam/sas/pdfs/travel-info/eu-passenger-rights-en.pdf';
-                                     rebookInfo.isEnableCanada ='display:none';
-                                     break;
+                                else{
+                                     canadaStation = false;
+
                                 }
                             }
                         }
@@ -83,6 +79,17 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
                 }
             }
         }
+
+        if(canadaStation){
+            rebookInfo.isEnableCanada ='';
+            rebookInfo.smsCanada='Find out more about your European Passenger Rights at https://www.sas.se/content/dam/sas/pdfs/travel-info/eu-passenger-rights-en.pdf and your Canadian Passenger Rights at https://www.flysas.com/en/legal-info/us-canada/canada-air-passenger-protection-rules/';
+
+        }
+        else{
+             rebookInfo.smsCanada='Read more about your rights here https://www.sas.se/content/dam/sas/pdfs/travel-info/eu-passenger-rights-en.pdf';
+             rebookInfo.isEnableCanada ='display:none';
+        }
+
     }
 
     /**
