@@ -69,10 +69,6 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
                                 if(segmentInfo.stationArrival =='YYZ' || segmentInfo.stationDeparture =='YYZ'){
                                      canadaStation = true;
                                 }
-                                else{
-                                     canadaStation = false;
-
-                                }
                             }
                         }
                     }
