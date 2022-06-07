@@ -578,6 +578,10 @@
             </lightning-button>
           </div>
         </div>
+
+        <template if:true={error}>
+          <c-c_-error-panel errors={error}></c-c_-error-panel>
+        </template>
       </div>
     </div>
 

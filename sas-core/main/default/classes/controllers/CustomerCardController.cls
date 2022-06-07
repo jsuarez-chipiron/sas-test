@@ -1,27 +1,19 @@
 public without sharing class CustomerCardController {
-  static AccountsSelector accounts = (AccountsSelector) SAS_Service_Application.Selector.newInstance(
-    Account.SObjectType
-  );
-  static BookingsSelector bookings = (BookingsSelector) SAS_Service_Application.Selector.newInstance(
-    Booking__c.SObjectType
-  );
-  static CasesSelector cases = (CasesSelector) SAS_Service_Application.Selector.newInstance(
-    Case.SObjectType
-  );
-  static TravelPassProductsSelector travelPassProducts = (TravelPassProductsSelector) SAS_Service_Application.Selector.newInstance(
-    Travel_Pass_Product__c.SObjectType
-  );
-
   @AuraEnabled
   public static void addBookingToCase(ID caseId, String bookingReference) {
+    if (!Bookings.isValidBookingReference(bookingReference)) {
+      throw new AuraHandledException(
+        'Booking reference should be 5 or 6 characters.'
+      );
+    }
+
     BookingService.addBookingToCase(caseId, bookingReference);
   }
 
   @AuraEnabled(cacheable=true)
   public static List<BookingJSON> getBookingsForCase(String caseId) {
-    List<Booking__c> bookingsFromDB = bookings.selectByCaseId(
-      new Set<Id>{ caseId }
-    );
+    List<Booking__c> bookingsFromDB = BookingsSelector.newInstance()
+      .selectByCaseId(new Set<Id>{ caseId });
     List<BookingJSON> toReturn = new List<BookingJSON>();
     Map<String, List<IRR_CommunicationLog__c>> logsByBookingReference = new Map<String, List<IRR_CommunicationLog__c>>();
     Map<String, Booking__c> bookingsByBookingReference = new Map<String, Booking__c>();
@@ -54,9 +46,8 @@ public without sharing class CustomerCardController {
     // Construct final JSON
     for (String key : bookingsByBookingReference.keySet()) {
       Booking__c b = bookingsByBookingReference.get(key);
-      List<Case> relatedCases = cases.selectByBookingReference(
-        new Set<String>{ b.Booking_Reference__c }
-      );
+      List<Case> relatedCases = CasesSelector.newInstance()
+        .selectByBookingReference(new Set<String>{ b.Booking_Reference__c });
       toReturn.add(
         new BookingJSON(b, relatedCases, logsByBookingReference.get(key))
       );
@@ -81,29 +72,15 @@ public without sharing class CustomerCardController {
     BookingService.removeBookingFromCase(caseId, bookingReference);
   }
 
-  @AuraEnabled
-  public static List<Booking__c> getBookingsForEBCustomer(
-    String euroBonusNumber
-  ) {
-    BookingService.fetchBookingsByEBNumber(euroBonusNumber);
-
-    Account acc = accounts.selectByEuroBonusNumber(
-      new Set<String>{ euroBonusNumber }
-    )[0];
-    return bookings.selectByAccountId(new Set<Id>{ acc.Id });
-    // TODO: This probably can't return anything
-  }
-
   @AuraEnabled(cacheable=true)
   public static List<Account> getAccountData(String accountId) {
-    return accounts.selectById(new Set<Id>{ accountId });
+    return AccountsSelector.newInstance().selectById(new Set<Id>{ accountId });
   }
 
   @AuraEnabled(cacheable=true)
   public static List<BookingJSON> getBookingData(String accountId) {
-    List<Booking__c> bookingsForCustomer = bookings.selectByAccountId(
-      new Set<Id>{ accountId }
-    );
+    List<Booking__c> bookingsForCustomer = BookingsSelector.newInstance()
+      .selectByAccountId(new Set<Id>{ accountId });
     List<BookingJSON> toReturn = new List<BookingJSON>();
     for (Booking__c b : bookingsForCustomer) {
       toReturn.add(
@@ -120,21 +97,19 @@ public without sharing class CustomerCardController {
   }
 
   @AuraEnabled(cacheable=true)
-  public static List<Case> getCasesForBooking(String bookingReference) {
-    return cases.selectByBookingReference(new Set<String>{ bookingReference });
-  }
-
-  @AuraEnabled(cacheable=true)
   public static List<Travel_Pass_Product__c> getTPProductsForAccount(
     String accountId
   ) {
-    return travelPassProducts.selectByAccountId(new Set<Id>{ accountId });
+    return TravelPassProductsSelector.newInstance()
+      .selectByAccountId(new Set<Id>{ accountId });
   }
 
   @AuraEnabled(cacheable=true)
   public static List<Case> getCaseData(String accountId) {
-    return cases.selectByAccountId(new Set<Id>{ accountId });
+    return CasesSelector.newInstance()
+      .selectByAccountId(new Set<Id>{ accountId });
   }
+
   @AuraEnabled(cacheable=true)
   public static List<BookingJSON.CommunicationLog> getAllCommunicationData(
     String euroBonusNumber
