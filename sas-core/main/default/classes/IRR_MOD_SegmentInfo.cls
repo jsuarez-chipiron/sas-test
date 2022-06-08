@@ -1,5 +1,5 @@
 /**
-* @author Niklas Lundkvist, Deloitte
+* @author Chetan Singh, Coforge
 * @date 2020
 *
 * @description Apex Defined Data Structure for IRR Event Flows and Message Templates.
@@ -44,6 +44,9 @@ public class IRR_MOD_SegmentInfo {
 
     @AuraEnabled
     public String serviceClass { get; set; }
+    // Added by Gaurav for Icoupan
+     @AuraEnabled
+    public Integer boardingSequenceNumber { get; set; }
 
     @AuraEnabled
     public String flightId { get; set; }

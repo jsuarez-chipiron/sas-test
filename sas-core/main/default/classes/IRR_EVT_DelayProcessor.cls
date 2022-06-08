@@ -17,6 +17,8 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
 
     @TestVisible
     private IRR_MOD_DelayInfo delayInfo;
+    @TestVisible
+    private IRR_MOD_ICouponInfo ICouponInfo;
 
     public String getEventName(){
         return 'Delay';
@@ -61,7 +63,7 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
         delayInfo.previousDelayedMinutes = delayMinutesByFlightIds.containsKey(delayInfo.flightId) ?
                 delayMinutesByFlightIds.get(delayInfo.flightId) : 0;
         delayInfo.firstDelay = delayInfo.previousDelayedMinutes == 0;
-        delayInfo.delayDifference = Math.abs(delayInfo.delayedMinutes - delayInfo.previousDelayedMinutes);
+        delayInfo.delayDifference =Math.abs(delayInfo.delayedMinutes - delayInfo.previousDelayedMinutes);
 
 
         IRR_SVC_CommunicationService.FlightIdSplit flightIdSplit =
@@ -70,7 +72,7 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
         delayInfo.stationDeparture = flightIdSplit.stationDeparture;
         delayInfo.stationArrival = flightIdSplit.stationArrival;
 
-        // //Retrieve Airport city names from TEDS
+        //Retrieve Airport city names from TEDS
         if(delayinfo.stationDeparture != null && delayinfo.stationDeparture != '' 
                 && delayinfo.stationArrival != null && delayinfo.stationArrival != ''){
         this.airportInfoMap =IRR_SVC_TedsService.getAirportCityNames(new Set<String>{delayinfo.stationDeparture,delayinfo.stationArrival} );        
@@ -84,8 +86,73 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
 
         //Retrieve passengers for flight
         this.passengerInfos = IRR_SVC_TedsService.getPassengerInfosForFlight(delayInfo.flightId);
-    }
 
+        Map<String,List<String>> segmentIdToBoarding = new Map<String,List<String>>();
+
+       // binding segment id with boarding sequence number 
+        for(IRR_MOD_PassengerInfo passenger :this.passengerInfos){
+
+            if( passenger.hasThisSegment ==true && 
+                passenger.thisSegment.serviceClass !=null&& 
+                passenger.thisSegment.boardingSequenceNumber !=null
+              ){
+                    if(!segmentIdToBoarding.containsKey(passenger.thisSegment.serviceClass)){
+                        segmentIdToBoarding.put(passenger.thisSegment.serviceClass,new List<String> { });
+
+                    }
+                  segmentIdToBoarding.get(passenger.thisSegment.serviceClass).add(String.valueOf(passenger.thisSegment.boardingSequenceNumber));
+
+            }
+        }
+        
+        
+        Map<String,String> serviceClassToSegId = new Map<String,String>();
+         
+   
+         if(delayInfo.delayedMinutes >= 120){
+             
+          List<IRR_MOD_ICouponInfo> iCouponInfo =    IRR_SVC_ICouponService.createFlightIrregulraity(delayInfo,segmentIdToBoarding);
+             if(iCouponInfo !=null && iCouponInfo.size()>0){
+                  delayInfo.hasCouponBatchId = true;
+             }
+            
+             System.debug('ICOUPONINFO-->'+iCouponInfo);
+             Map<String,IRR_MOD_ICouponInfo> classToAmount = new  Map<String,IRR_MOD_ICouponInfo>();
+             for(IRR_MOD_ICouponInfo icouponMod : iCouponInfo){
+                 classToAmount.put(icouponMod.serviceClassCode,icouponMod);
+             }
+
+            for(IRR_MOD_PassengerInfo passenger :this.passengerInfos){
+            
+            if( passenger.hasThisSegment ==true && 
+                passenger.thisSegment.serviceClass !=null &&
+                passenger.thisSegment.boardingSequenceNumber !=null
+                
+              ){
+                  if(classToAmount.containsKey(passenger.thisSegment.serviceClass)){
+                      
+                  IRR_MOD_ICouponInfo icoupon =classToAmount.get(passenger.thisSegment.serviceClass);
+
+                      String str    = 'The voucher amount is ' ;
+                               str +=icoupon.voucherAmount;
+                               str +=' ' +icoupon.currencyCode;
+                              str +='.';
+
+                      passenger.thisSegment.emailBackBody = str;
+                  }
+                 
+              }
+                else{
+                    passenger.thisSegment.emailBackBody ='';
+                }
+            }
+          
+        
+         }
+        
+
+    }
+   
     /**
      * @author Niklas Lundkvist, Deloitte
      * @date 2020
@@ -119,6 +186,7 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
             //Set passenger info in flowVariables and execute flow
             flowVariables.passengerInfo = passengerInfo;
             executeFlow(EVENT_FLOW_NAME, flowVariables);
+            
         }
     }
 
