@@ -44,9 +44,21 @@ public class IRR_MOD_SegmentInfo {
 
     @AuraEnabled
     public String serviceClass { get; set; }
-    // Added by Gaurav for Icoupan
-     @AuraEnabled
+    // Added for Icoupon
+    @AuraEnabled
     public Integer boardingSequenceNumber { get; set; }
+
+    @AuraEnabled
+    public Decimal couponAmount { get; set; }
+
+    @AuraEnabled
+    public String currencyCode { get; set; }
+
+    @AuraEnabled
+    public String serviceClassLabel { get; set; }
+
+    @AuraEnabled
+    public String emailBackBody { get; set; }
 
     @AuraEnabled
     public String flightId { get; set; }
@@ -62,4 +74,5 @@ public class IRR_MOD_SegmentInfo {
 
     @AuraEnabled
     public String rxType { get; set; }
+
 }
