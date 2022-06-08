@@ -21,6 +21,15 @@ public without sharing class Bookings extends fflib_SObjectDomain {
     return (Bookings) SAS_Service_Application.Domain.newInstance(sObjectList);
   }
 
+  public class BookingReferenceInvalidException extends Exception {
+  }
+
+  public static Boolean isValidBookingReference(String bookingReference) {
+    return (!String.isBlank(bookingReference) &&
+    (bookingReference.length() == 5 ||
+    bookingReference.length() == 6));
+  }
+
   /**
    * Whether the bookings have a non Star Alliance operating carrier for at
    * least one leg in the booking.

@@ -248,24 +248,28 @@ export default class CaseBookingDetails extends NavigationMixin(
   }
 
   async addBookingToCase(searchString) {
+    this.error = false;
     this.showSpinner = true;
     try {
       await addBookingToCaseApex({
         caseId: this.caseId,
         bookingReference: searchString
       });
+
+      setTimeout(() => {
+        // Timeout because bookings haven't finished updating during the await
+        refreshApex(this.wiredBookingsReference);
+        this.displayAddAnotherBookingForm = false;
+        this.showSpinner = false;
+      }, 6000);
     } catch (error) {
       this.error = error;
-    }
-    setTimeout(() => {
-      // Timeout because bookings haven't finished updating during the await
-      refreshApex(this.wiredBookingsReference);
-      this.displayAddAnotherBookingForm = false;
       this.showSpinner = false;
-    }, 6000);
+    }
   }
 
   async removeBookingFromCase(event) {
+    this.error = false;
     this.showSpinner = true;
     try {
       await removeBookingFromCaseApex({
@@ -275,32 +279,39 @@ export default class CaseBookingDetails extends NavigationMixin(
             ? this.bookings[this.bookings.length - 1].bookingReference
             : event.target.dataset.id
       });
+
+      setTimeout(() => {
+        // Timeout because bookings haven't finished updating during the await
+        refreshApex(this.wiredBookingsReference);
+        this.displayAddAnotherBookingForm = false;
+        this.showSpinner = false;
+      }, 6000);
     } catch (error) {
       this.error = error;
-    }
-    setTimeout(() => {
-      // Timeout because bookings haven't finished updating during the await
-      refreshApex(this.wiredBookingsReference);
       this.displayAddAnotherBookingForm = false;
       this.showSpinner = false;
-    }, 6000);
+    }
   }
 
   async refreshBooking(event) {
+    this.error = false;
     this.showSpinner = true;
     try {
       await refetchBookingDataApex({
         bookingIdentifier: event.target.dataset.id
       });
+
+      setTimeout(() => {
+        // Timeout because bookings haven't finished updating during the await
+        refreshApex(this.wiredBookingsReference);
+        this.displayAddAnotherBookingForm = false;
+        this.showSpinner = false;
+      }, 6000);
     } catch (error) {
       this.error = error;
-    }
-    setTimeout(() => {
-      // Timeout because bookings haven't finished updating during the await
-      refreshApex(this.wiredBookingsReference);
       this.displayAddAnotherBookingForm = false;
       this.showSpinner = false;
-    }, 6000);
+    }
   }
 
   handleDisplayAllFlights(event) {

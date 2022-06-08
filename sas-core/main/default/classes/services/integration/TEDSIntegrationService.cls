@@ -102,7 +102,7 @@ public without sharing class TEDSIntegrationService {
         toReturn += addField(isFirst, 'isCancelled', isCancelled);
       }
       if (reference != null) {
-        if (reference.length() != 5 && reference.length() != 6) {
+        if (!Bookings.isValidBookingReference(reference)) {
           throw new APIMIntegrationService.IllegalArgumentsException(
             'Booking reference must be 5 or 6 characters'
           );
