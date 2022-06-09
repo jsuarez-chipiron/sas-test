@@ -104,7 +104,7 @@ public with sharing class Bookings_IntegrationTest {
     Test.startTest();
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     // When
-    CustomerCardController.getBookingsForEBCustomer(APIMMock.EB_NUMBER_WITH_BOOKINGS);
+    BookingService.fetchBookingsByEBNumber(APIMMock.EB_NUMBER_WITH_BOOKINGS);
     Test.stopTest();
 
     // Then
@@ -129,19 +129,12 @@ public with sharing class Bookings_IntegrationTest {
     Test.startTest();
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     // When
-    List<Booking__c> bookingsFromCustomerCard = CustomerCardController.getBookingsForEBCustomer(
-      APIMMock.EB_NUMBER_WITHOUT_BOOKINGS
-    );
+    BookingService.fetchBookingsByEBNumber(APIMMock.EB_NUMBER_WITHOUT_BOOKINGS);
     Test.stopTest();
 
     // Then
     List<Booking__c> bookingsFromDB = bookings.selectByAccountId(
       new Set<Id>{ testAccount.Id }
-    );
-
-    System.assert(
-      bookingsFromCustomerCard.size() == 0,
-      'No bookings should be return by the controller.'
     );
 
     System.assert(
@@ -175,7 +168,9 @@ public with sharing class Bookings_IntegrationTest {
 
     // When
     Test.startTest();
-    CustomerCardController.getBookingsForEBCustomer(APIMMock.EB_NUMBER_WITH_BOOKINGS);
+    BookingService.fetchBookingByBookingIdentifier(
+      APIMMock.DEFAULT_VALID_TEDS_IDENTIFIER
+    );
     Test.stopTest();
 
     // Then
