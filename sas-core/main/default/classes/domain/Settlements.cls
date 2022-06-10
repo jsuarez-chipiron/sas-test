@@ -833,7 +833,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           }
           if (!BankAccountUtils.validateBIC(s.BIC_Swift__c)) {
             errorMessages.add(
-              'BIC number should be formatted as: XXXXXYY or XXXXXXYYYYY (X\'s are letters, Y\'s are letters or numbers).'
+              'BIC number should be formatted as: XXXXXXYY or XXXXXXYYYYY (X\'s are letters, Y\'s are letters or numbers).'
             );
           }
         }
