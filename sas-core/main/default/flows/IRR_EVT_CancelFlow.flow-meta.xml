@@ -3,13 +3,14 @@
     <actionCalls>
         <name>Retrieve_Flow_Variables</name>
         <label>Retrieve Flow Variables</label>
-        <locationX>299</locationX>
+        <locationX>402</locationX>
         <locationY>50</locationY>
         <actionName>IRR_ACT_StaticInput</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Time_to_departure</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <outputParameters>
             <assignToReference>cancelInfo</assignToReference>
             <name>cancelInfo</name>
@@ -19,10 +20,11 @@
             <name>passengerInfo</name>
         </outputParameters>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Send_SMS_and_Email</name>
         <label>Send SMS and Email</label>
-        <locationX>576</locationX>
+        <locationX>679</locationX>
         <locationY>289</locationY>
         <assignmentItems>
             <assignToReference>smsTemplateName</assignToReference>
@@ -56,17 +58,31 @@
     <decisions>
         <name>Time_to_departure</name>
         <label>Time to departure</label>
-        <locationX>291</locationX>
+        <locationX>394</locationX>
         <locationY>289</locationY>
         <defaultConnectorLabel>48h or more</defaultConnectorLabel>
         <rules>
             <name>Less_than_48h</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND ( 2 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>cancelInfo.minutesToScheduledTime</leftValueReference>
                 <operator>LessThan</operator>
                 <rightValue>
                     <numberValue>2880.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>cancelInfo.arrivalCity</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>YYZ</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>cancelInfo.departureCity</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>YYZ</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -81,6 +97,12 @@
         <name>BuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>

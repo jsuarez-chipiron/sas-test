@@ -123,14 +123,14 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
              }
 
             for(IRR_MOD_PassengerInfo passenger :this.passengerInfos){
-            
+
             if( passenger.hasThisSegment ==true && 
                 passenger.thisSegment.serviceClass !=null &&
                 passenger.thisSegment.boardingSequenceNumber !=null
-                
+
               ){
                   if(classToAmount.containsKey(passenger.thisSegment.serviceClass)){
-                      
+
                   IRR_MOD_ICouponInfo icoupon =classToAmount.get(passenger.thisSegment.serviceClass);
 
                       String str    = 'The voucher amount is ' ;
@@ -139,20 +139,18 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
                               str +='.';
 
                       passenger.thisSegment.emailBackBody = str;
+                      passenger.thisSegment.couponBatchId  = classToAmount.get(passenger.thisSegment.serviceClass).couponBatchId;
                   }
-                 
+
               }
                 else{
                     passenger.thisSegment.emailBackBody ='';
                 }
             }
-          
-        
          }
-        
-
     }
    
+    
     /**
      * @author Niklas Lundkvist, Deloitte
      * @date 2020

@@ -49,6 +49,9 @@ public class IRR_MOD_SegmentInfo {
     public Integer boardingSequenceNumber { get; set; }
 
     @AuraEnabled
+    public String couponBatchId { get; set; }
+
+    @AuraEnabled
     public Decimal couponAmount { get; set; }
 
     @AuraEnabled

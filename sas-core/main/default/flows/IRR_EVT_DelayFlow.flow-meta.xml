@@ -58,8 +58,8 @@
     <assignments>
         <name>Send_SMS_and_Email</name>
         <label>Send SMS and Email</label>
-        <locationX>989</locationX>
-        <locationY>886</locationY>
+        <locationX>1031</locationX>
+        <locationY>1099</locationY>
         <assignmentItems>
             <assignToReference>sendSMSMessage</assignToReference>
             <operator>Assign</operator>
@@ -95,8 +95,8 @@
     <decisions>
         <name>Delay_Difference</name>
         <label>Delay Difference</label>
-        <locationX>722</locationX>
-        <locationY>593</locationY>
+        <locationX>675</locationX>
+        <locationY>630</locationY>
         <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
             <name>Less_than_10_minutes</name>
@@ -135,7 +135,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_SMS_and_Email</targetReference>
+                <targetReference>Stop_Canada_Messages</targetReference>
             </connector>
             <label>More than 15 minutes</label>
         </rules>
@@ -145,9 +145,6 @@
         <label>Delay Difference</label>
         <locationX>1633</locationX>
         <locationY>565</locationY>
-        <defaultConnector>
-            <targetReference>Send_SMS_and_Email</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
             <name>Less_than_30_minutes</name>
@@ -178,6 +175,9 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Stop_Canada_Messages</targetReference>
+            </connector>
             <label>30 minutes or more</label>
         </rules>
     </decisions>
@@ -217,7 +217,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_SMS_and_Email</targetReference>
+                <targetReference>Stop_Canada_Messages</targetReference>
             </connector>
             <label>More than 1 hour</label>
         </rules>
@@ -267,6 +267,35 @@
                 <targetReference>Assignment</targetReference>
             </connector>
             <label>Has Coupon Id</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Stop_Canada_Messages</name>
+        <label>Stop Canada Messages</label>
+        <locationX>800</locationX>
+        <locationY>995</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No_Canada_Messages</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>delayInfo.stationArrival</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>YYZ</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>delayInfo.stationDeparture</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>YYZ</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_SMS_and_Email</targetReference>
+            </connector>
+            <label>No Canada Messages</label>
         </rules>
     </decisions>
     <decisions>
