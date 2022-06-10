@@ -411,6 +411,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       }
 
       Decimal sumOfLineItems = 0;
+      
+     
 
       for (Settlement_Item__c item : itemsToUpsert.get(settlement.Id)) {
         if (item.Id == null) {
@@ -431,10 +433,13 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           item.Cost_Account__c = voucherTypeToCostAccount.get(
             settlement.Voucher_Type__c
           );
-        }
+        } 
 
         sumOfLineItems += item.Amount__c;
-      }
+        
+        updateSettlementitemTotal(item, settlement, exchangeRatesToSEK);
+        
+      } 
 
       updateInsuranceForSettlementItems(
         itemsToUpsert.get(settlement.id),
@@ -442,8 +447,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         parentClaimsById.get(settlement.Claim__c),
         exchangeRatesFromUSD
       );
-
-      updateSettlementTotal(settlement, sumOfLineItems, exchangeRatesToSEK);
+      
+       updateSettlementTotal(settlement, sumOfLineItems, exchangeRatesToSEK);
     }
 
     return this;
@@ -734,7 +739,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     ) {
       settlement.EuroBonus_Points__c = sumOfLineItems;
     } else {
-      settlement.Amount__c = sumOfLineItems;
+      settlement.Amount__c = sumOfLineItems; 
       if (settlement.Currency__c == 'SEK') {
         settlement.Settlement_amount_in_SEK__c = sumOfLineItems;
         settlement.Date_of_Exchange_Calculation__c = Date.today();
@@ -746,7 +751,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         if (exchangeRateToSEK != null) {
           // There should always be exactly one, but just in case we lose exchange rate data, let's check.
           settlement.Settlement_amount_in_SEK__c =
-            sumOfLineItems * exchangeRateToSEK.Rate__c;
+            sumOfLineItems * exchangeRateToSEK.Rate__c; 
           settlement.Date_of_Exchange_Calculation__c = exchangeRateToSEK
             .Date__c;
         }
@@ -754,6 +759,36 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     }
   }
 
+  private void updateSettlementitemTotal(
+    Settlement_item__c item,
+    Settlement__c settlement,
+    Map<String, Exchange_Rate__c> exchangeRatesToSEK
+  ) {
+    if (
+      settlement.RecordTypeId !=
+      getRecordTypeId(Settlements.RecordType.EBPoints)
+    ) {
+      if (item.Currency__c == 'SEK') {
+        item.Amount_in_SEK__c = item.Amount__c;
+        item.Date_of_Exchange_Calculation__c = Date.today();
+        item.Exchange_Rate__c = 1;
+      } else {
+        Exchange_Rate__c exchangeRateToSEK = exchangeRatesToSEK.get(
+          item.Currency__c
+        );
+
+        if (exchangeRateToSEK != null) {
+          // There should always be exactly one, but just in case we lose exchange rate data, let's check.
+          item.Amount_in_SEK__c =
+          item.Amount__c * exchangeRateToSEK.Rate__c;
+          item.Exchange_Rate__c = exchangeRateToSEK.Rate__c;
+          item.Date_of_Exchange_Calculation__c = exchangeRateToSEK
+            .Date__c;
+        }
+      }
+    }
+  }
+  
   public class SettlementValidityException extends Exception {
   }
 

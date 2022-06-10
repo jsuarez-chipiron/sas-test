@@ -74,7 +74,7 @@
         <editable>false</editable>
         <field>Case.Proactivity__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Claim_Expense__c.Amount__c</field>
@@ -547,6 +547,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Settlement_Item__c.Amount_in_SEK__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Settlement_Item__c.Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -572,7 +577,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Settlement_Item__c.Date_of_Exchange_Calculation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Settlement_Item__c.Error_Message__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Settlement_Item__c.Exchange_Rate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -647,7 +662,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Settlement__c.Company__c</field>§
+        <field>Settlement__c.Company__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
