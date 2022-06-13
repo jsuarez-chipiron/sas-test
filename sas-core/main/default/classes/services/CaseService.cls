@@ -111,7 +111,10 @@ public without sharing class CaseService {
 
       caseToInsert.Origin = caseOrigin;
 
-      insert caseToInsert;
+      Database.DMLOptions DMLOptions = new Database.DMLOptions();
+      DMLOptions.EmailHeader.triggerAutoResponseEmail = true;
+
+      database.insert(caseToInsert, DMLOptions);
 
       Case insertedCase = [
         SELECT CaseNumber
