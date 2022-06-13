@@ -1,6 +1,6 @@
 /**
 * @author Niklas Lundkvist, Deloitte
-* @date 2020
+* @date 2022
 *
 * @description Application specific configuration for various factories.
 */
@@ -48,6 +48,7 @@ public class IRR_Application {
                             SFMC_SMSDefinition__mdt.SObjectType => IRR_SEL_SMSDefinitionsSelector.class,
                             ContentDocumentLink.SObjectType =>IRR_SEL_ContentDocumentLinksSelector.class,
                             IRR_AutomatedMessage__mdt.SObjectType =>IRR_SEL_AutomatedMessagesSelector.class,
+                            ServiceClass__mdt.SObjectType =>IRR_SEL_AutomatedServiceClassSelector.class,
                             IRR_AutomatedNoHandBag__mdt.SObjectType =>IRR_SEL_AutomatedNoHandBagSelector.class
                     }
             );
@@ -80,7 +81,8 @@ public class IRR_Application {
                             IRR_SVC_ICommunicationService.class => IRR_SVC_CommunicationServiceImpl.class,
                             IRR_SVC_ISFMCService.class => IRR_SVC_SFMCServiceImpl.class,
                             IRR_SVC_ITedsService.class => IRR_SVC_TedsServiceImpl.class,
-                            IRR_SVC_ILogsService.class => IRR_SVC_LogsServiceImpl.class
+                            IRR_SVC_ILogsService.class => IRR_SVC_LogsServiceImpl.class,
+                            IRR_SVC_IICouponService.Class =>IRR_SVC_ICouponServiceImpl.class
                     }
             );
 
