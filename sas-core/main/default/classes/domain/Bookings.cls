@@ -356,6 +356,36 @@ public without sharing class Bookings extends fflib_SObjectDomain {
 
     return this;
   }
+  /**
+   * Whether the bookings have at least one flight affected by irregularities
+   *
+   * @return A map from booking id to whether that booking was affected by irregularities
+   */
+  public Map<Id, Boolean> haveDelayedOrCancelledFlights() {
+    Set<Id> bookingIds = (new Map<Id, Booking__c>(instanceRecords)).keySet();
+
+    Map<Id, Boolean> flightIdToIrrStatus = Flights.newInstance(
+        FlightsSelector.newInstance().selectByBookingIds(bookingIds)
+      )
+      .isDelayedOrCancelled();
+
+    Map<Id, Boolean> toReturn = new Map<Id, Boolean>();
+    for (Booking__c booking : instanceRecords) {
+      Boolean isAffectedByIrregularity = false;
+      for (Segment__c segment : booking.Segments__r) {
+        Boolean flightIsDelayedOrCancelled = flightIdToIrrStatus.get(
+          segment.Flight__c
+        );
+        if (flightIsDelayedOrCancelled) {
+          isAffectedByIrregularity = true;
+          break;
+        }
+      }
+      toReturn.put(booking.Id, isAffectedByIrregularity);
+    }
+
+    return toReturn;
+  }
 
   public class FullBookingData {
     public Booking__c booking { get; set; }

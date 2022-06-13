@@ -227,6 +227,11 @@
                 <label>FI</label>
             </value>
             <value>
+                <fullName>Flight Delay Certificate</fullName>
+                <default>false</default>
+                <label>Flight Delay Certificate</label>
+            </value>
+            <value>
                 <fullName>Forsvaret NO</fullName>
                 <default>false</default>
                 <label>Forsvaret NO</label>
@@ -621,6 +626,106 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>ACE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>ADM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>AT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Benelux</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Bulk</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>CH</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>DE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>DK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>EE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>ES</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>FI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Forsvaret NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>FR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>IE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>Interline</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>IS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>IT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>LT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>LV</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>PL</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>RU</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>SE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>UK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <valueName>US</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Info Hub</controllingFieldValue>
             <valueName>Sales Information</valueName>
         </valueSettings>
@@ -861,22 +966,6 @@
             <valueName>SoMe</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Customer Claim</controllingFieldValue>
-            <valueName>Claims</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Customer Claim</controllingFieldValue>
-            <valueName>Customer Feedback</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Customer Claim</controllingFieldValue>
-            <valueName>Language</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Customer Claim</controllingFieldValue>
-            <valueName>Proration</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <valueName>International</valueName>
         </valueSettings>
@@ -911,6 +1000,26 @@
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
             <valueName>Support Scandinavia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <valueName>Claims</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <valueName>Customer Feedback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <valueName>Flight Delay Certificate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <valueName>Language</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <valueName>Proration</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Vendor Management</controllingFieldValue>
@@ -983,106 +1092,6 @@
         <valueSettings>
             <controllingFieldValue>Fraud</controllingFieldValue>
             <valueName>EMEA</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>ACE</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>ADM</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>AT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Benelux</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Bulk</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>CH</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>DE</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>DK</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>EE</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>ES</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>FI</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Forsvaret NO</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>FR</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>IE</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Interline</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>IS</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>IT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>LT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>LV</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>NO</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>PL</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>RU</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>SE</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>UK</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>US</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

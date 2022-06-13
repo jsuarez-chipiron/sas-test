@@ -2,6 +2,7 @@
 global class APIMMock implements HttpCalloutMock {
   public static final String INVALID_BOOKING_REFERENCE = 'AAAAAA';
   public static final String EB_NUMBER_WITH_BOOKINGS = '123456789';
+  public static final String BOOKING_REFERENCE_WITH_DELAY = 'DELAY1';
   public static final String EB_NUMBER_WITHOUT_BOOKINGS = 'TEST654321';
   public static final String CLM_TRANSACTION_ID = '0000000001';
   public static final String EB_NUMBER_NOT_IN_CLM = '987654321';
@@ -13,6 +14,7 @@ global class APIMMock implements HttpCalloutMock {
   public static final String PNR_FOR_WHICH_CLAIMS_DO_NOT_EXIST = '000000';
   public static final String DEFAULT_VALID_TEDS_PNR = 'TEST21';
   public static final String DEFAULT_VALID_TEDS_BOOKING_DATE = '20201126';
+  public static final String DELAYED_FLIGHT_ID = 'SK0903-20210410-ARN-EWR';
   public static final String DEFAULT_VALID_TEDS_IDENTIFIER =
     DEFAULT_VALID_TEDS_PNR +
     '-' +
@@ -24,10 +26,13 @@ global class APIMMock implements HttpCalloutMock {
     endpoint = req.getEndpoint();
     HttpResponse res = new HttpResponse();
     res.setStatusCode(200);
-
     if (endpoint.contains('teds-flight')) {
       res.setHeader('Content-Type', 'application/json');
-      res.setBody(APIMMockResponses.FLIGHT_RESPONSE_BODY);
+      if (endpoint.contains(DELAYED_FLIGHT_ID)) {
+        res.setBody(APIMMockResponses.DELAYED_FLIGHT_RESPONSE_BODY);
+      } else {
+        res.setBody(APIMMockResponses.FLIGHT_RESPONSE_BODY);
+      }
     } else if (endpoint.contains('/teds-booking/bookings/')) {
       res.setHeader('Content-Type', 'application/json');
       // Single booking
@@ -57,22 +62,18 @@ global class APIMMock implements HttpCalloutMock {
       ) {
         res.setHeader('Content-Type', 'application/json');
         res.setBody('[]');
-      } else {
-        /* else if (getQueryParam('reference') != null) {
-        // Bookings query with pnr
-        res.setBody(
-          '[' +
-          APIMMockResponses.SINGLE_BOOKING_RESPONSE_BODY.replace(
-            '{bookingReference}',
-            getQueryParam('reference')
-          ) +
-          ']'
-        );
-      } */ // Bookings query
+      } else if (reference == BOOKING_REFERENCE_WITH_DELAY) {
         res.setHeader('Content-Type', 'application/json');
-        // String reference = 'TEST21';
-
-        // String euroBonusNumber = getQueryParam('euroBonusNumber');
+        res.setBody(
+          APIMMockResponses.DELAYED_BOOKING_RESPONSE_BODY.replace(
+              '{bookingReference}',
+              reference
+            )
+            .replace('{bookingDate}', DEFAULT_VALID_TEDS_BOOKING_DATE)
+        );
+      } else {
+        // Bookings query
+        res.setHeader('Content-Type', 'application/json');
         if (euroBonusNumber == null) {
           euroBonusNumber = 'TEST987654';
         }
@@ -80,9 +81,6 @@ global class APIMMock implements HttpCalloutMock {
           reference = DEFAULT_VALID_TEDS_PNR;
         }
 
-        /*if (euroBonusNumber == EB_NUMBER_WITHOUT_BOOKINGS) {
-          res.setBody('[]');
-        } else {*/
         res.setBody(
           APIMMockResponses.BOOKINGS_QUERY_RESPONSE_BODY.replace(
               '{bookingReference}',
@@ -91,7 +89,6 @@ global class APIMMock implements HttpCalloutMock {
             .replace('{euroBonusNumber}', euroBonusNumber)
             .replace('{bookingDate}', DEFAULT_VALID_TEDS_BOOKING_DATE)
         );
-        //}
       }
     } else if (endpoint.contains('csharkservice')) {
       if (

@@ -95,6 +95,31 @@ public without sharing class Cases extends fflib_SObjectDomain {
     return this;
   }
 
+  public Cases emailOwner(
+    Messaging.SingleEmailMessage emailToSend,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    if (instanceRecords.size() > 1) {
+      // Let's not email too many people. Our email limits are pretty low and
+      // we should move to emailing through Marketing Cloud before mass mailing.
+      return this;
+    }
+    if (emailToSend.getReplyTo() == null) {
+      throw new EmailException('Email should have a set reply-to address');
+    }
+    Case c = instanceRecords[0];
+    List<OrgWideEmailAddress> owa = OrgWideEmailAddressesSelector.newInstance()
+      .selectPrimary();
+    if (owa.size() > 0) {
+      emailToSend.setOrgWideEmailAddressId(owa[0].Id);
+    }
+    emailToSend.setToAddresses(new List<String>{ c.SuppliedEmail });
+    emailToSend.setSaveAsActivity(true);
+    emailToSend.setWhatId(c.Id);
+    uow.registerEmail(emailToSend);
+    return this;
+  }
+
   private void completeMilestones() {
     // how to handle maps?
     List<String> statusesThatCompleteMilestones = new List<String>{
@@ -863,7 +888,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
     }
   }
 
-  private static String getThreadId(String caseId) {
+  public static String getThreadId(String caseId) {
     return 'ref:_' +
       UserInfo.getOrganizationId().left(5) +
       UserInfo.getOrganizationId().mid(11, 4) +

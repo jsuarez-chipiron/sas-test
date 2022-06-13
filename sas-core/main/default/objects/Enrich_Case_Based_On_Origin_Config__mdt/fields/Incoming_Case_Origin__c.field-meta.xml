@@ -581,6 +581,26 @@
                 <label>Form - Feedback SE</label>
             </value>
             <value>
+                <fullName>Form - Flight Delay Certificate DK</fullName>
+                <default>false</default>
+                <label>Form - Flight Delay Certificate DK</label>
+            </value>
+            <value>
+                <fullName>Form - Flight Delay Certificate International</fullName>
+                <default>false</default>
+                <label>Form - Flight Delay Certificate International</label>
+            </value>
+            <value>
+                <fullName>Form - Flight Delay Certificate NO</fullName>
+                <default>false</default>
+                <label>Form - Flight Delay Certificate NO</label>
+            </value>
+            <value>
+                <fullName>Form - Flight Delay Certificate SE</fullName>
+                <default>false</default>
+                <label>Form - Flight Delay Certificate SE</label>
+            </value>
+            <value>
                 <fullName>Form - Group Travel BE</fullName>
                 <default>false</default>
                 <label>Form - Group Travel BE</label>

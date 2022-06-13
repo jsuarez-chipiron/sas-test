@@ -202,4 +202,66 @@ public without sharing class Flights extends fflib_SObjectDomain {
 
     return this;
   }
+  /* Determine whether the flights are delayed/cancelled or not
+   *
+   * @return A map from flight id to whether that flight is delayed/cancelled or not
+   */
+  public Map<Id, Boolean> isDelayedOrCancelled() {
+    Map<Id, Boolean> toReturn = new Map<Id, Boolean>();
+    for (Flight__c flight : instanceRecords) {
+      Boolean isIrregularity =
+        flight.Arrival_Status__c == 'delayed' ||
+        (flight.Arrival_Status__c == 'cancelled' &&
+        flight.Departure_Status__c == 'cancelled');
+      toReturn.put(flight.Id, isIrregularity);
+    }
+    return toReturn;
+  }
+  /**
+   * Method to normalize a valid IATA flight number
+   * to the format used by TEDS.
+   * TEDS format is valid IATA format with trailing numbers leftpadded with 0
+   * Returns a normalized flight number.
+   *
+   *  @param enteredFlightNumber The flight number as entered by manual input (forms etc.)
+   */
+  public static String normalizeFlightNumber(String enteredFlightNumber) {
+    String toNormalize = enteredFlightNumber.toUpperCase();
+    String toReturn = '';
+    Pattern validTEDSFormat = Pattern.compile('^([A-Z]\\w|\\w[A-Z])(\\d{4})$');
+    Pattern validFlightNumberFormat = Pattern.compile(
+      '^([A-Z]\\w|\\w[A-Z])(\\d{1,4})$'
+    );
+    Boolean validIATAFlightNumber = isValidIATAFlightNumber(
+      toNormalize
+    );
+    if (validIATAFlightNumber) {
+      String airlineCode = toNormalize.substring(0, 2);
+      String flightNumber = toNormalize
+        .substring(2, toNormalize.length());
+      toReturn = airlineCode + flightNumber.leftPad(4, '0');
+    }
+    if (validTEDSFormat.matcher(toReturn).matches()) {
+      return toReturn;
+    } else {
+      throw new FlightException('Unable to normalize Flight Number');
+    }
+  }
+
+  /* Method to validate if an entered flight number is a valid IATA flight number
+   * Valid formats are:
+   * [LETTER][NUMBER] followed by 1-4 numbers
+   * [NUMBER][LETTER] followed by 1-4 numbers
+   * [LETTER][LETTER] followed by 1-4 numbers
+   */
+  public static Boolean isValidIATAFlightNumber(String toCheck) {
+    Pattern validFlightNumberFormat = Pattern.compile(
+      '^([A-Z]\\w|\\w[A-Z])(\\d{1,4})$'
+    );
+    Matcher matcher = validFlightNumberFormat.matcher(toCheck);
+    return matcher.matches();
+  }
+
+  public class FlightException extends Exception {
+  }
 }

@@ -37,4 +37,9 @@ public inherited sharing class ContentVersionsSelector extends fflib_SObjectSele
       return selectById(ids);
     }
   }
+  public List<ContentVersion> selectByTitle(String name) {
+    return (List<ContentVersion>) Database.query(
+      newQueryFactory().setCondition('Title = :name').toSOQL()
+    );
+  }
 }

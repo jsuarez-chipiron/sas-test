@@ -103,6 +103,33 @@ public inherited sharing class BookingsSelector extends fflib_SObjectSelector {
     return (List<Booking__c>) Database.query(bookingsQF.toSOQL());
   }
 
+  public List<Booking__c> selectByLastNameAndBookingReference(
+    String lastName,
+    String bookingReference
+  ) {
+    Set<Id> bookingIds = new Set<Id>();
+    List<Passenger__c> allPassengers = PassengersSelector.newInstance()
+      .selectByLastName(lastName);
+
+    for (Passenger__c p : allPassengers) {
+      bookingIds.add(p.Booking__c);
+    }
+    fflib_QueryFactory bookingsQF = newQueryFactory()
+      .setCondition(
+        'Booking_Reference__c = :bookingReference AND Id in :bookingIds'
+      );
+    fflib_QueryFactory segments = new SegmentsSelector()
+      .addQueryFactorySubselect(bookingsQF);
+
+    new FlightsSelector()
+      .configureQueryFactoryFields(
+        segments,
+        Segment__c.Flight__c.getDescribe().getRelationshipName()
+      );
+
+    return (List<Booking__c>) Database.query(bookingsQF.toSOQL());
+  }
+
   public override String getOrderBy() {
     return 'Name';
   }
