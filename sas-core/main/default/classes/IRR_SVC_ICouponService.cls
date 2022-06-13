@@ -7,7 +7,7 @@ public class IRR_SVC_ICouponService {
 
 
 
-  private static IRR_SVC_IICouponService service() {
+  public static IRR_SVC_IICouponService service() {
       return (IRR_SVC_IICouponService) IRR_Application.Service.newInstance(IRR_SVC_IICouponService.class);
   }
 
