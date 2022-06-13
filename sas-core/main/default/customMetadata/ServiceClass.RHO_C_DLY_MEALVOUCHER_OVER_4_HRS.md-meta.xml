@@ -15,6 +15,10 @@
         <value xsi:type="xsd:string">EUR</value>
     </values>
     <values>
+        <field>DelayInMinute__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>ExpiryTime__c</field>
         <value xsi:type="xsd:string">24 HR</value>
     </values>
@@ -24,7 +28,7 @@
     </values>
     <values>
         <field>Min_Delay__c</field>
-        <value xsi:type="xsd:double">240.0</value>
+        <value xsi:type="xsd:double">241.0</value>
     </values>
     <values>
         <field>Service_Class_Code__c</field>
