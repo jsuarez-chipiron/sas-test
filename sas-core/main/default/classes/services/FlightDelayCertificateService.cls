@@ -1,4 +1,4 @@
-public with sharing class FlightDelayCertificateService {
+public without sharing class FlightDelayCertificateService {
   private static final String TEMPLATE_IF_VALID_BOOKING = 'bookingExists';
   private static final String TEMPLATE_IF_INVALID_BOOKING = 'bookingDoesNotExist';
   private static final String replyToAddress = 'customercare@sas.se';
@@ -51,7 +51,7 @@ public with sharing class FlightDelayCertificateService {
     return '';
   }
 
-  public class FlightDelayCertificateJob implements Queueable, Database.AllowsCallouts {
+  public without sharing class FlightDelayCertificateJob implements Queueable, Database.AllowsCallouts {
     private String caseId;
     private String certificateRequestId;
 
@@ -69,12 +69,12 @@ public with sharing class FlightDelayCertificateService {
       Booking__c currentBooking;
 
       Cases insertedCase = Cases.newInstance(
-        CasesSelector.newInstance().selectById(new Set<Id>{ caseId })
+        CasesSelector.newInstance().selectById(new Set<Id>{ this.caseId })
       );
 
       FlightDelayCertificateRequests newRequests = FlightDelayCertificateRequests.newInstance(
         FlightDelayCertificateRequestsSelector.newInstance()
-          .selectByIdFull(new Set<Id>{ certificateRequestId })
+          .selectByIdFull(new Set<Id>{ this.certificateRequestId })
       );
 
       BookingService.addBookingToCase(
