@@ -446,6 +446,11 @@
                 <label>Email - SASSI Internal</label>
             </value>
             <value>
+                <fullName>Email - Scanned Compensation Cards</fullName>
+                <default>false</default>
+                <label>Email - Scanned Compensation Cards</label>
+            </value>
+            <value>
                 <fullName>Email - SGH Bag DK</fullName>
                 <default>false</default>
                 <label>Email - SGH Bag DK</label>
@@ -539,6 +544,26 @@
                 <fullName>Form - Claims SE</fullName>
                 <default>false</default>
                 <label>Form - Claims SE</label>
+            </value>
+            <value>
+                <fullName>Form - Compensation Card DK</fullName>
+                <default>false</default>
+                <label>Form - Compensation Card DK</label>
+            </value>
+            <value>
+                <fullName>Form - Compensation Card International</fullName>
+                <default>false</default>
+                <label>Form - Compensation Card International</label>
+            </value>
+            <value>
+                <fullName>Form - Compensation Card NO</fullName>
+                <default>false</default>
+                <label>Form - Compensation Card NO</label>
+            </value>
+            <value>
+                <fullName>Form - Compensation Card SE</fullName>
+                <default>false</default>
+                <label>Form - Compensation Card SE</label>
             </value>
             <value>
                 <fullName>Form - Death Certificate DK</fullName>

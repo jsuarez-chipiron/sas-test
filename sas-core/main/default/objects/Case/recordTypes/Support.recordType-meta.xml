@@ -1753,6 +1753,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Scanned Compensation Cards</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - SoMe Support</fullName>
             <default>false</default>
         </values>

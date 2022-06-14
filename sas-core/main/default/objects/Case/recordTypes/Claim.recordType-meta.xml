@@ -3594,6 +3594,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Scanned Compensation Cards</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Star Alliance Upgrades</fullName>
             <default>false</default>
         </values>

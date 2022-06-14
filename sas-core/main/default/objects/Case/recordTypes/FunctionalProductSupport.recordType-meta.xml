@@ -4129,6 +4129,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Scanned Compensation Cards</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Facebook</fullName>
             <default>false</default>
         </values>
