@@ -3694,6 +3694,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Scanned Compensation Cards</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Star Alliance Upgrades</fullName>
             <default>false</default>
         </values>
@@ -3799,6 +3803,10 @@
         <picklist>Team__c</picklist>
         <values>
             <fullName>Claims</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compensation Card</fullName>
             <default>false</default>
         </values>
         <values>

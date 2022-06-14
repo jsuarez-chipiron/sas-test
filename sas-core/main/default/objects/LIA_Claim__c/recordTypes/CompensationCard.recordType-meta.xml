@@ -1965,32 +1965,8 @@
     <picklistValues>
         <picklist>Customer_Claim_Category__c</picklist>
         <values>
-            <fullName>Accident %26 injury</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Airport experience</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Baggage</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Booking</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Flight disruptions</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Flight experience</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Travel extras bought not rendered</fullName>
-            <default>false</default>
+            <fullName>Compensation Card</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
@@ -2048,6 +2024,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Involuntary Denied Boarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Involuntary Downgrading</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Items missing from checked-in baggage</fullName>
             <default>false</default>
         </values>
@@ -2081,6 +2065,14 @@
         </values>
         <values>
             <fullName>Travel document control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voluntary Denied Boarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voluntary Downgrading</fullName>
             <default>false</default>
         </values>
         <values>

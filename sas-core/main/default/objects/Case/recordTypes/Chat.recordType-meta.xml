@@ -4305,6 +4305,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Scanned Compensation Cards</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Facebook Messenger</fullName>
             <default>false</default>
         </values>
