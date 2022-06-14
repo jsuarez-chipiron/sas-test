@@ -169,7 +169,10 @@ public without sharing class Claims extends fflib_SObjectDomain {
     }
     List<Case> casesForClaims = CasesSelector.newInstance().selectById(caseIds);
 
-    Settlements.newInstance(settlementsForClaims).approve(uow).lock();
+    Settlements.newInstance(settlementsForClaims)
+      .validate()
+      .approve(uow)
+      .lock();
 
     return this;
   }
