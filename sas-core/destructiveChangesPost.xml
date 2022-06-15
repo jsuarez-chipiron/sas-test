@@ -11,12 +11,13 @@
     When it is confirmed that an included change has been deployed to relevant environments,
     the block can be removed from this document.
 -->
-
     <types>
-        <members>CLMIntegrationServiceTest</members>
-        <members>Voucher_IntegrationTest</members>
-        <members>LoyaltyService</members>
-        <members>VoucherService</members>
+        <members>FetchFlightEventsTrigger</members>
+		<name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>FetchFlightEvents</members>
+        <members>FlightEvents_IntegrationTest</members>
 		<name>ApexClass</name>
     </types>
 </Package>
