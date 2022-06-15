@@ -3694,11 +3694,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Scanned Compensation Cards</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Star Alliance Upgrades</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Email - System %26 Tariff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Flight Delay Certificate DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Flight Delay Certificate International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Flight Delay Certificate NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Flight Delay Certificate SE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3786,7 +3806,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Compensation Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Customer Feedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight Delay Certificate</fullName>
             <default>false</default>
         </values>
         <values>

@@ -11,6 +11,12 @@ public inherited sharing class CaseToBookingsSelector extends fflib_SObjectSelec
     return CaseToBooking__c.SObjectType;
   }
 
+  public static CaseToBookingsSelector newInstance() {
+    return (CaseToBookingsSelector) SAS_Service_Application.Selector.newInstance(
+      CaseToBooking__c.SObjectType
+    );
+  }
+
   public List<CaseToBooking__c> selectById(Set<Id> ids) {
     return (List<CaseToBooking__c>) selectSObjectsById(ids);
   }
@@ -18,10 +24,10 @@ public inherited sharing class CaseToBookingsSelector extends fflib_SObjectSelec
   public List<CaseToBooking__c> selectByCaseId(Set<Id> caseIds) {
     if (caseIds.contains(null)) {
       return new List<CaseToBooking__c>();
-    }  
+    }
     return (List<CaseToBooking__c>) Database.query(
       newQueryFactory().setCondition('Case__c in :caseIds').toSOQL()
-    ); 
+    );
   }
 
   public List<CaseToBooking__c> selectByBookingReference(

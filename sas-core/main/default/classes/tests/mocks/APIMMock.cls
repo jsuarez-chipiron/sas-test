@@ -1,6 +1,8 @@
 @isTest
 global class APIMMock implements HttpCalloutMock {
   public static final String INVALID_BOOKING_REFERENCE = 'AAAAAA';
+  public static final String EB_NUMBER_WITH_BOOKINGS = '123456789';
+  public static final String BOOKING_REFERENCE_WITH_DELAY = 'DELAY1';
   public static final String EB_NUMBER_WITHOUT_BOOKINGS = 'TEST654321';
   public static final String CLM_TRANSACTION_ID = '0000000001';
   public static final String EB_NUMBER_NOT_IN_CLM = '987654321';
@@ -10,15 +12,27 @@ global class APIMMock implements HttpCalloutMock {
   public static final String VOUCHER_VALID_PNR = 'ABC123';
   public static final String PNR_FOR_WHICH_CLAIMS_EXIST = '987654';
   public static final String PNR_FOR_WHICH_CLAIMS_DO_NOT_EXIST = '000000';
+  public static final String DEFAULT_VALID_TEDS_PNR = 'TEST21';
+  public static final String DEFAULT_VALID_TEDS_BOOKING_DATE = '20201126';
+  public static final String DELAYED_FLIGHT_ID = 'SK0903-20210410-ARN-EWR';
+  public static final String DEFAULT_VALID_TEDS_IDENTIFIER =
+    DEFAULT_VALID_TEDS_PNR +
+    '-' +
+    DEFAULT_VALID_TEDS_BOOKING_DATE;
+
+  private String endpoint;
 
   global HttpResponse respond(HttpRequest req) {
-    String endpoint = req.getEndpoint();
+    endpoint = req.getEndpoint();
     HttpResponse res = new HttpResponse();
     res.setStatusCode(200);
-
     if (endpoint.contains('teds-flight')) {
       res.setHeader('Content-Type', 'application/json');
-      res.setBody(APIMMockResponses.FLIGHT_RESPONSE_BODY);
+      if (endpoint.contains(DELAYED_FLIGHT_ID)) {
+        res.setBody(APIMMockResponses.DELAYED_FLIGHT_RESPONSE_BODY);
+      } else {
+        res.setBody(APIMMockResponses.FLIGHT_RESPONSE_BODY);
+      }
     } else if (endpoint.contains('/teds-booking/bookings/')) {
       res.setHeader('Content-Type', 'application/json');
       // Single booking
@@ -33,38 +47,47 @@ global class APIMMock implements HttpCalloutMock {
       } else {
         res.setBody(
           APIMMockResponses.SINGLE_BOOKING_RESPONSE_BODY.replace(
-            '{bookingReference}',
-            reference
-          )
+              '{bookingReference}',
+              reference
+            )
+            .replace('{bookingDate}', DEFAULT_VALID_TEDS_BOOKING_DATE)
         );
       }
     } else if (endpoint.contains('/teds-booking/bookings?')) {
-      // Bookings query
-      res.setHeader('Content-Type', 'application/json');
-      String reference = 'TEST21';
-
-      String euroBonusNumber = endpoint.substringBetween(
-        'euroBonusNumber=',
-        '&'
-      ); // grab EuroBonus queryparam to insert in response
-      if (euroBonusNumber == null || euroBonusNumber.length() == 0) {
-        // if not found, check if it's the last one
-        euroBonusNumber = endpoint.substringAfter('euroBonusNumber=');
-        if (euroBonusNumber == null || euroBonusNumber.length() == 0) {
-          // doesn't seem to exist
+      String reference = getQueryParam('reference');
+      String euroBonusNumber = getQueryParam('euroBonusNumber');
+      if (
+        reference == INVALID_BOOKING_REFERENCE ||
+        euroBonusNumber == EB_NUMBER_WITHOUT_BOOKINGS
+      ) {
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody('[]');
+      } else if (reference == BOOKING_REFERENCE_WITH_DELAY) {
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody(
+          APIMMockResponses.DELAYED_BOOKING_RESPONSE_BODY.replace(
+              '{bookingReference}',
+              reference
+            )
+            .replace('{bookingDate}', DEFAULT_VALID_TEDS_BOOKING_DATE)
+        );
+      } else {
+        // Bookings query
+        res.setHeader('Content-Type', 'application/json');
+        if (euroBonusNumber == null) {
           euroBonusNumber = 'TEST987654';
         }
-      }
+        if (reference == null) {
+          reference = DEFAULT_VALID_TEDS_PNR;
+        }
 
-      if (euroBonusNumber == EB_NUMBER_WITHOUT_BOOKINGS) {
-        res.setBody('[]');
-      } else {
         res.setBody(
           APIMMockResponses.BOOKINGS_QUERY_RESPONSE_BODY.replace(
               '{bookingReference}',
               reference
             )
             .replace('{euroBonusNumber}', euroBonusNumber)
+            .replace('{bookingDate}', DEFAULT_VALID_TEDS_BOOKING_DATE)
         );
       }
     } else if (endpoint.contains('csharkservice')) {
@@ -134,5 +157,21 @@ global class APIMMock implements HttpCalloutMock {
       res.setStatusCode(404);
     }
     return res;
+  }
+
+  /**
+   * Returns the value for the given query parameter for this request.
+   *
+   * Naive implementation and breaks down with nested special characters, but
+   * should be good enough for testing.
+   */
+  private String getQueryParam(String paramName) {
+    String toReturn = endpoint.substringBetween(paramName + '=', '&');
+    if (toReturn == null) {
+      // Nothing found between param name and a following ampersand. Let's
+      // check if it is the last param.
+      toReturn = endpoint.substringAfter(paramName + '=');
+    }
+    return toReturn;
   }
 }

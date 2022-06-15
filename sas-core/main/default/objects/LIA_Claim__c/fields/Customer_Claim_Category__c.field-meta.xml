@@ -32,6 +32,11 @@
                 <label>Booking</label>
             </value>
             <value>
+                <fullName>Compensation Card</fullName>
+                <default>false</default>
+                <label>Compensation Card</label>
+            </value>
+            <value>
                 <fullName>Flight disruptions</fullName>
                 <default>false</default>
                 <label>Flight disruptions</label>

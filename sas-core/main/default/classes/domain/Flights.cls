@@ -5,7 +5,7 @@ public without sharing class Flights extends fflib_SObjectDomain {
     this.instanceRecords = (List<Flight__c>) Records;
   }
 
-  private List<Flight__c> instanceRecords;
+  public List<Flight__c> instanceRecords;
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
@@ -64,5 +64,204 @@ public without sharing class Flights extends fflib_SObjectDomain {
       );
     }
     return toReturn;
+  }
+
+  /**
+   * Parses flight data in TEDSFlight format into Flight__c objects and prepares them for DB insertion.
+   *
+   * @param flightData List of TEDSFlight objects containing flights to create.
+   *
+   * @return The list of created Flight__c objects.
+   */
+  public static Flights createFromTEDSData(List<TEDSFlight> flightData) {
+    Map<String, Flight__c> flightsProcessed = new Map<String, Flight__c>();
+
+    // Loop through each booking and create all sub objects.
+    for (TEDSFlight flight : flightData) {
+      // Loop through all segments in the trip and create segment and flight objects as necessary
+
+      // Create flights
+      String flightId = flight.id.trim().toUpperCase();
+
+      if (!flightsProcessed.containsKey(flightId)) {
+        Datetime scheduledArrivalDate = Datetime.valueOf(
+          flight.arrival.scheduledTime?.utc?.replace('T', ' ').replace('Z', '')
+        );
+        Datetime scheduledDepartureDate = Datetime.valueOf(
+          flight.departure.scheduledTime
+            ?.utc
+            ?.replace('T', ' ')
+            .replace('Z', '')
+        );
+        Datetime actualArrivalDate;
+        Datetime actualDepartureDate;
+        if (flight.arrival.actualTime != null) {
+          actualArrivalDate = Datetime.valueOf(
+            flight.arrival.actualTime?.utc?.replace('T', ' ').replace('Z', '')
+          );
+        }
+        if (flight.departure.actualTime != null) {
+          actualDepartureDate = Datetime.valueOf(
+            flight.departure.actualTime?.utc?.replace('T', ' ').replace('Z', '')
+          );
+        }
+        Datetime estimatedArrivalDate;
+        Datetime estimatedDepartureDate;
+        if (flight.arrival.estimatedTime != null) {
+          estimatedArrivalDate = Datetime.valueOf(
+            flight.arrival.estimatedTime
+              ?.utc
+              ?.replace('T', ' ')
+              .replace('Z', '')
+          );
+        }
+        if (flight.departure.estimatedTime != null) {
+          estimatedDepartureDate = Datetime.valueOf(
+            flight.departure.estimatedTime
+              ?.utc
+              ?.replace('T', ' ')
+              .replace('Z', '')
+          );
+        }
+
+        String scheduledArrivalDateLocal = flight.arrival.scheduledTime
+          ?.local
+          ?.replace('Z', '');
+        String scheduledDepartureDateLocal = flight.departure.scheduledTime
+          ?.local
+          ?.replace('Z', '');
+
+        String actualArrivalDateLocal;
+        String actualDepartureDateLocal;
+        if (flight.arrival.actualTime != null) {
+          actualArrivalDateLocal = flight.arrival.actualTime
+            ?.local
+            ?.replace('Z', '');
+        }
+        if (flight.departure.actualTime != null) {
+          actualDepartureDateLocal = flight.departure.actualTime
+            ?.local
+            ?.replace('Z', '');
+        }
+        String estimatedArrivalDateLocal;
+        String estimatedDepartureDateLocal;
+        if (flight.arrival.estimatedTime != null) {
+          estimatedArrivalDateLocal = flight.arrival.estimatedTime
+            ?.local
+            ?.replace('Z', '');
+        }
+        if (flight.departure.estimatedTime != null) {
+          estimatedDepartureDateLocal = flight.departure.estimatedTime
+            ?.local
+            ?.replace('Z', '');
+        }
+
+        Flight__c newFlight = new Flight__c(
+          Name = flightId,
+          Actual_Arrival_Time__c = actualArrivalDate,
+          Actual_Arrival_Time_Local__c = actualArrivalDateLocal,
+          Actual_Departure_Time__c = actualDepartureDate,
+          Actual_Departure_Time_Local__c = actualDepartureDateLocal,
+          Arrival_Airport__c = flight.arrival.station,
+          Arrival_Delayed_Minutes__c = flight.arrival.delayedMinutes,
+          Arrival_Gate__c = flight.arrival.gate,
+          Arrival_Status__c = flight.arrival.status,
+          Arrival_Terminal__c = flight.arrival.terminal?.id,
+          Departure_Airport__c = flight.departure.station,
+          Departure_Delayed_Minutes__c = flight.departure.delayedMinutes,
+          Departure_Gate__c = flight.departure.gate,
+          Departure_Status__c = flight.departure.status,
+          Departure_Terminal__c = flight.departure.terminal?.id,
+          Estimated_Arrival_Time__c = estimatedArrivalDate,
+          Estimated_Arrival_Time_Local__c = estimatedArrivalDateLocal,
+          Estimated_Departure_Time__c = estimatedDepartureDate,
+          Estimated_Departure_Time_Local__c = estimatedDepartureDateLocal,
+          Operating_Carrier__c = flight.carrier, // The carrier field from TEDS should always contain the operating carrier
+          Scheduled_Arrival_Time__c = scheduledArrivalDate,
+          Scheduled_Arrival_Time_Local__c = scheduledArrivalDateLocal,
+          Scheduled_Departure_Time__c = scheduledDepartureDate,
+          Scheduled_Departure_Time_Local__c = scheduledDepartureDateLocal,
+          TEDS_Identifier__c = flightId
+        );
+
+        flightsProcessed.put(flightId, newFlight);
+      }
+    }
+
+    return Flights.newInstance(flightsProcessed.values());
+  }
+
+  public Flights upsertToDB() {
+    try {
+      upsert instanceRecords TEDS_Identifier__c;
+    } catch (DMLException e) {
+      if (e.getDmlType(0) == StatusCode.DUPLICATE_VALUE) {
+        upsert instanceRecords TEDS_Identifier__c;
+      }
+    }
+
+    return this;
+  }
+  /* Determine whether the flights are delayed/cancelled or not
+   *
+   * @return A map from flight id to whether that flight is delayed/cancelled or not
+   */
+  public Map<Id, Boolean> isDelayedOrCancelled() {
+    Map<Id, Boolean> toReturn = new Map<Id, Boolean>();
+    for (Flight__c flight : instanceRecords) {
+      Boolean isIrregularity =
+        flight.Arrival_Status__c == 'delayed' ||
+        (flight.Arrival_Status__c == 'cancelled' &&
+        flight.Departure_Status__c == 'cancelled');
+      toReturn.put(flight.Id, isIrregularity);
+    }
+    return toReturn;
+  }
+  /**
+   * Method to normalize a valid IATA flight number
+   * to the format used by TEDS.
+   * TEDS format is valid IATA format with trailing numbers leftpadded with 0
+   * Returns a normalized flight number.
+   *
+   *  @param enteredFlightNumber The flight number as entered by manual input (forms etc.)
+   */
+  public static String normalizeFlightNumber(String enteredFlightNumber) {
+    String toNormalize = enteredFlightNumber.toUpperCase();
+    String toReturn = '';
+    Pattern validTEDSFormat = Pattern.compile('^([A-Z]\\w|\\w[A-Z])(\\d{4})$');
+    Pattern validFlightNumberFormat = Pattern.compile(
+      '^([A-Z]\\w|\\w[A-Z])(\\d{1,4})$'
+    );
+    Boolean validIATAFlightNumber = isValidIATAFlightNumber(
+      toNormalize
+    );
+    if (validIATAFlightNumber) {
+      String airlineCode = toNormalize.substring(0, 2);
+      String flightNumber = toNormalize
+        .substring(2, toNormalize.length());
+      toReturn = airlineCode + flightNumber.leftPad(4, '0');
+    }
+    if (validTEDSFormat.matcher(toReturn).matches()) {
+      return toReturn;
+    } else {
+      throw new FlightException('Unable to normalize Flight Number');
+    }
+  }
+
+  /* Method to validate if an entered flight number is a valid IATA flight number
+   * Valid formats are:
+   * [LETTER][NUMBER] followed by 1-4 numbers
+   * [NUMBER][LETTER] followed by 1-4 numbers
+   * [LETTER][LETTER] followed by 1-4 numbers
+   */
+  public static Boolean isValidIATAFlightNumber(String toCheck) {
+    Pattern validFlightNumberFormat = Pattern.compile(
+      '^([A-Z]\\w|\\w[A-Z])(\\d{1,4})$'
+    );
+    Matcher matcher = validFlightNumberFormat.matcher(toCheck);
+    return matcher.matches();
+  }
+
+  public class FlightException extends Exception {
   }
 }

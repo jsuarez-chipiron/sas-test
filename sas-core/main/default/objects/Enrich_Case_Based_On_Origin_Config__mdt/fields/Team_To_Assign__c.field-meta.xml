@@ -53,7 +53,7 @@
             <value>
                 <fullName>BOM BSP</fullName>
                 <default>false</default>
-                <label>BOM BSP </label>
+                <label>BOM BSP</label>
             </value>
             <value>
                 <fullName>BOM Forms Customer</fullName>
@@ -119,6 +119,11 @@
                 <fullName>Claims</fullName>
                 <default>false</default>
                 <label>Claims</label>
+            </value>
+            <value>
+                <fullName>Compensation Card</fullName>
+                <default>false</default>
+                <label>Compensation Card</label>
             </value>
             <value>
                 <fullName>Customer Feedback</fullName>
@@ -194,6 +199,11 @@
                 <fullName>FI</fullName>
                 <default>false</default>
                 <label>FI</label>
+            </value>
+            <value>
+                <fullName>Flight Delay Certificate</fullName>
+                <default>false</default>
+                <label>Flight Delay Certificate</label>
             </value>
             <value>
                 <fullName>Forsvaret NO</fullName>

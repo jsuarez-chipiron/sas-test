@@ -557,14 +557,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>FetchFlightEvents</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>FlightEvents_IntegrationTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>FlightService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1712,11 +1704,6 @@
         <editable>false</editable>
         <field>Exchange_Rate__c.Date__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Fetch_Flight__e.Flight_Identifiers__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

@@ -4441,6 +4441,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Scanned Compensation Cards</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Sykes Customer Care</fullName>
             <default>false</default>
         </values>

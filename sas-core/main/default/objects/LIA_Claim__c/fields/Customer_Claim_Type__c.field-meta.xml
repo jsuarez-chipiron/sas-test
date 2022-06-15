@@ -127,6 +127,26 @@
                 <default>false</default>
                 <label>Other</label>
             </value>
+            <value>
+                <fullName>Involuntary Denied Boarding</fullName>
+                <default>false</default>
+                <label>Involuntary Denied Boarding</label>
+            </value>
+            <value>
+                <fullName>Involuntary Downgrading</fullName>
+                <default>false</default>
+                <label>Involuntary Downgrading</label>
+            </value>
+            <value>
+                <fullName>Voluntary Denied Boarding</fullName>
+                <default>false</default>
+                <label>Voluntary Denied Boarding</label>
+            </value>
+            <value>
+                <fullName>Voluntary Downgrading</fullName>
+                <default>false</default>
+                <label>Voluntary Downgrading</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Accident &amp; injury</controllingFieldValue>
@@ -138,6 +158,7 @@
             <controllingFieldValue>Booking</controllingFieldValue>
             <controllingFieldValue>Flight experience</controllingFieldValue>
             <controllingFieldValue>Travel extras bought not rendered</controllingFieldValue>
+            <controllingFieldValue>Compensation Card</controllingFieldValue>
             <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
@@ -223,6 +244,22 @@
         <valueSettings>
             <controllingFieldValue>Travel extras bought not rendered</controllingFieldValue>
             <valueName>WiFi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compensation Card</controllingFieldValue>
+            <valueName>Involuntary Denied Boarding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compensation Card</controllingFieldValue>
+            <valueName>Involuntary Downgrading</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compensation Card</controllingFieldValue>
+            <valueName>Voluntary Denied Boarding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compensation Card</controllingFieldValue>
+            <valueName>Voluntary Downgrading</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

@@ -13,8 +13,15 @@ public inherited sharing class PassengersSelector extends fflib_SObjectSelector 
       Passenger__c.Phone__c
     };
   }
+
   public Schema.SObjectType getSObjectType() {
     return Passenger__c.SObjectType;
+  }
+
+  public static PassengersSelector newInstance() {
+    return (PassengersSelector) SAS_Service_Application.Selector.newInstance(
+      Passenger__c.SObjectType
+    );
   }
 
   public List<Passenger__c> selectByAccountId(Set<Id> accountIds) {
@@ -34,6 +41,11 @@ public inherited sharing class PassengersSelector extends fflib_SObjectSelector 
       newQueryFactory()
         .setCondition('EuroBonus_Number__c in :euroBonusNumbers')
         .toSOQL()
+    );
+  }
+  public List<Passenger__c> selectByLastName(String lastName) {
+    return (List<Passenger__c>) Database.query(
+      newQueryFactory().setCondition('Last_Name__c = :lastName').toSOQL()
     );
   }
 

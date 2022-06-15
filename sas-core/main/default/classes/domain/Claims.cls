@@ -244,11 +244,14 @@ public without sharing class Claims extends fflib_SObjectDomain {
       // TODO: Fix this when we can support several bookings at once
       if (
         claim.Liability_PNR__c != null &&
-        claim.RecordTypeId != getRecordTypeId(RecordType.CompensationCard)
+        claim.RecordTypeId != getRecordTypeId(RecordType.CompensationCard) &&
+        claim.Case__c != null
       ) {
-        BookingService.addBookingToCaseAsync(
-          claim.Case__c,
-          claim.Liability_PNR__c
+        System.enqueueJob(
+          new BookingService.AddBookingToCaseAsync(
+            claim.Case__c,
+            claim.Liability_PNR__c
+          )
         );
       }
     }
@@ -268,9 +271,11 @@ public without sharing class Claims extends fflib_SObjectDomain {
           claim.Case__c,
           existingRecords.get(claim.Id).Liability_PNR__c
         );
-        BookingService.addBookingToCaseAsync(
-          claim.Case__c,
-          claim.Liability_PNR__c
+        System.enqueueJob(
+          new BookingService.AddBookingToCaseAsync(
+            claim.Case__c,
+            claim.Liability_PNR__c
+          )
         );
       }
     }

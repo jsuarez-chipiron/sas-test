@@ -9,8 +9,15 @@ public inherited sharing class Refund_RequestsSelector extends fflib_SObjectSele
       Refund_Request__c.Ticket_Numbers__c
     };
   }
+
   public Schema.SObjectType getSObjectType() {
     return Refund_Request__c.SObjectType;
+  }
+
+  public static Refund_RequestsSelector newInstance() {
+    return (Refund_RequestsSelector) SAS_Service_Application.Selector.newInstance(
+      Refund_Request__c.SObjectType
+    );
   }
 
   public List<Refund_Request__c> selectById(Set<Id> ids) {

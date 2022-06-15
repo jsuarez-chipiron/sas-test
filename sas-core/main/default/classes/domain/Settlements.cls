@@ -434,6 +434,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         }
 
         sumOfLineItems += item.Amount__c;
+
+        updateSettlementItemTotal(item, settlement, exchangeRatesToSEK);
       }
 
       updateInsuranceForSettlementItems(
@@ -747,8 +749,35 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           // There should always be exactly one, but just in case we lose exchange rate data, let's check.
           settlement.Settlement_amount_in_SEK__c =
             sumOfLineItems * exchangeRateToSEK.Rate__c;
-          settlement.Date_of_Exchange_Calculation__c = exchangeRateToSEK
-            .Date__c;
+          settlement.Date_of_Exchange_Calculation__c = exchangeRateToSEK.Date__c;
+        }
+      }
+    }
+  }
+
+  private void updateSettlementItemTotal(
+    Settlement_Item__c item,
+    Settlement__c settlement,
+    Map<String, Exchange_Rate__c> exchangeRatesToSEK
+  ) {
+    if (
+      settlement.RecordTypeId !=
+      getRecordTypeId(Settlements.RecordType.EBPoints)
+    ) {
+      if (item.Currency__c == 'SEK') {
+        item.Amount_in_SEK__c = item.Amount__c;
+        item.Date_of_Exchange_Calculation__c = Date.today();
+        item.Exchange_Rate__c = 1;
+      } else {
+        Exchange_Rate__c exchangeRateToSEK = exchangeRatesToSEK.get(
+          item.Currency__c
+        );
+
+        if (exchangeRateToSEK != null) {
+          // There should always be exactly one, but just in case we lose exchange rate data, let's check.
+          item.Amount_in_SEK__c = item.Amount__c * exchangeRateToSEK.Rate__c;
+          item.Exchange_Rate__c = exchangeRateToSEK.Rate__c;
+          item.Date_of_Exchange_Calculation__c = exchangeRateToSEK.Date__c;
         }
       }
     }
@@ -833,7 +862,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           }
           if (!BankAccountUtils.validateBIC(s.BIC_Swift__c)) {
             errorMessages.add(
-              'BIC number should be formatted as: XXXXXYY or XXXXXXYYYYY (X\'s are letters, Y\'s are letters or numbers).'
+              'BIC number should be formatted as: XXXXXXYY or XXXXXXYYYYY (X\'s are letters, Y\'s are letters or numbers).'
             );
           }
         }

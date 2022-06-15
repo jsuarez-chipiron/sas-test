@@ -447,6 +447,11 @@
         <label>Email - SASSI Internal</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Scanned Compensation Cards</fullName>
+        <default>false</default>
+        <label>Email - Scanned Compensation Cards</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - SGH Bag DK</fullName>
         <default>false</default>
         <label>Email - SGH Bag DK</label>
@@ -542,6 +547,26 @@
         <label>Form - Claims SE</label>
     </standardValue>
     <standardValue>
+        <fullName>Form - Compensation Card DK</fullName>
+        <default>false</default>
+        <label>Form - Compensation Card DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Compensation Card International</fullName>
+        <default>false</default>
+        <label>Form - Compensation Card International</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Compensation Card NO</fullName>
+        <default>false</default>
+        <label>Form - Compensation Card NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Compensation Card SE</fullName>
+        <default>false</default>
+        <label>Form - Compensation Card SE</label>
+    </standardValue>
+    <standardValue>
         <fullName>Form - Death Certificate DK</fullName>
         <default>false</default>
         <label>Form - Death Certificate DK</label>
@@ -580,6 +605,26 @@
         <fullName>Form - Feedback SE</fullName>
         <default>false</default>
         <label>Form - Feedback SE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Flight Delay Certificate DK</fullName>
+        <default>false</default>
+        <label>Form - Flight Delay Certificate DK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Flight Delay Certificate International</fullName>
+        <default>false</default>
+        <label>Form - Flight Delay Certificate International</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Flight Delay Certificate NO</fullName>
+        <default>false</default>
+        <label>Form - Flight Delay Certificate NO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form - Flight Delay Certificate SE</fullName>
+        <default>false</default>
+        <label>Form - Flight Delay Certificate SE</label>
     </standardValue>
     <standardValue>
         <fullName>Form - Group Travel BE</fullName>

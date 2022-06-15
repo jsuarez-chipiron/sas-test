@@ -23,17 +23,17 @@ public class SpecialServiceRequestService {
     'wheelchair' => 'Mobility'
   };
 
-  private static Group salesControlQueue = [
-    SELECT Id
-    FROM Group
-    WHERE Type = 'Queue' AND DeveloperName = 'Sales_Control_BOM'
-  ];
+  private static final String SSR_QUEUE_NAME = 'Sales_Control_BOM';
 
   public static void createSpecialServiceRequest(
     SpecialServiceJSON2Apex specialServiceForm
   ) {
     String mobilityDimensions = '';
-    if (specialServiceForm.formData.type == 'wheelchair') {
+    if (
+      specialServiceForm.formData.type == 'wheelchair' &&
+      specialServiceForm.formData.bringsOwnMobilityDevice != null &&
+      specialServiceForm.formData.bringsOwnMobilityDevice
+    ) {
       mobilityDimensions =
         'Width: ' +
         specialServiceForm.formData.mobilityDeviceWidth +
@@ -76,6 +76,9 @@ public class SpecialServiceRequestService {
     if (marketToOrigin.get(specialServiceForm.metaData.market) != null) {
       caseOrigin = marketToOrigin.get(specialServiceForm.metaData.market);
     }
+
+    Group salesControlQueue = GroupsSelector.newInstance()
+      .selectQueuesByDeveloperName(new Set<String>{SSR_QUEUE_NAME})[0];
 
     Case caseToInsert = new Case(
       Initially_Provided_PNR__c = specialServiceForm.formData.bookingReference,

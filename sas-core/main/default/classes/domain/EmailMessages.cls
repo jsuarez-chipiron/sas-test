@@ -56,4 +56,37 @@ public without sharing class EmailMessages extends fflib_SObjectDomain {
       }
     }
   }
+
+  public static Messaging.EmailFileAttachment createEmailAttachmentFromBlob(
+    Blob content,
+    String fileName,
+    String contentType
+  ) {
+    Messaging.EmailFileAttachment newAttachment = new Messaging.EmailFileAttachment();
+    newAttachment.setContentType(contentType);
+    newAttachment.setFileName(fileName);
+    newAttachment.setInline(false);
+    newAttachment.setBody(content);
+    return newAttachment;
+  }
+
+  public static Messaging.SingleEmailMessage createSingleEmailMessageFromTemplate(
+    String templateName
+  ) {
+    List<EmailTemplate> templates = EmailTemplatesSelector.newInstance()
+      .selectByName(new Set<String>{ templateName });
+    Messaging.SingleEmailMessage emailToSend = new Messaging.SingleEmailMessage();
+
+    if (templates.size() != 1) {
+      throw new EmailTemplateNameException();
+    }
+
+    emailToSend.setSubject(templates[0].Subject);
+    emailToSend.setHtmlBody(templates[0].HtmlValue);
+    emailToSend.setPlainTextBody(templates[0].Body);
+    return emailToSend;
+  }
+
+  public class EmailTemplateNameException extends Exception {
+  }
 }

@@ -1929,7 +1929,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HKD</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>JPY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NOK</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2708,7 +2716,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Default judgment</fullName>
+            <fullName>Default judgement</fullName>
             <default>false</default>
         </values>
         <values>

@@ -25,6 +25,12 @@ public inherited sharing class SegmentsSelector extends fflib_SObjectSelector {
     return Segment__c.SObjectType;
   }
 
+  public static SegmentsSelector newInstance() {
+    return (SegmentsSelector) SAS_Service_Application.Selector.newInstance(
+      Segment__c.SObjectType
+    );
+  }
+
   public List<Segment__c> selectById(Set<Id> ids) {
     return (List<Segment__c>) selectSObjectsById(ids);
   }

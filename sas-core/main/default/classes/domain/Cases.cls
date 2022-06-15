@@ -15,7 +15,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
     return (Cases) SAS_Service_Application.Domain.newInstance(sObjectList);
   }
 
-  private List<Case> instanceRecords;
+  public List<Case> instanceRecords;
 
   public static final String STATUS_IN_PROGRESS = 'In Progress';
   public static final String STATUS_WAITING_FOR_APPROVAL = 'Waiting for Approval';
@@ -92,6 +92,31 @@ public without sharing class Cases extends fflib_SObjectDomain {
       c.Status = STATUS_CLOSED;
     }
     uow.registerDirty(instanceRecords);
+    return this;
+  }
+
+  public Cases emailOwner(
+    Messaging.SingleEmailMessage emailToSend,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    if (instanceRecords.size() > 1) {
+      // Let's not email too many people. Our email limits are pretty low and
+      // we should move to emailing through Marketing Cloud before mass mailing.
+      return this;
+    }
+    if (emailToSend.getReplyTo() == null) {
+      throw new EmailException('Email should have a set reply-to address');
+    }
+    Case c = instanceRecords[0];
+    List<OrgWideEmailAddress> owa = OrgWideEmailAddressesSelector.newInstance()
+      .selectPrimary();
+    if (owa.size() > 0) {
+      emailToSend.setOrgWideEmailAddressId(owa[0].Id);
+    }
+    emailToSend.setToAddresses(new List<String>{ c.SuppliedEmail });
+    emailToSend.setSaveAsActivity(true);
+    emailToSend.setWhatId(c.Id);
+    uow.registerEmail(emailToSend);
     return this;
   }
 
@@ -218,7 +243,12 @@ public without sharing class Cases extends fflib_SObjectDomain {
       Case c = instanceRecords[0];
 
       if (!String.isBlank(c.Initially_Provided_PNR__c)) {
-        BookingService.addBookingToCaseAsync(c.Id, c.Initially_Provided_PNR__c);
+        System.enqueueJob(
+          new BookingService.AddBookingToCaseAsync(
+            c.Id,
+            c.Initially_Provided_PNR__c
+          )
+        );
       }
     }
   }
@@ -283,12 +313,10 @@ public without sharing class Cases extends fflib_SObjectDomain {
         if (
           oldCases == null || (c.AccountId != oldCases.values()[0].AccountId)
         ) {
-          AccountsSelector accounts = (AccountsSelector) SAS_Service_Application.Selector.newInstance(
-            Account.SObjectType
-          );
-          Account a = accounts.selectById(new Set<Id>{ c.AccountId })[0];
+          Account a = AccountsSelector.newInstance()
+            .selectById(new Set<Id>{ c.AccountId })[0];
           if (a.FCS_EBNumber__c != null && a.FCS_EBNumber__c.length() > 0) {
-            BookingService.fetchBookingsByEBNumber(a.FCS_EBNumber__c);
+            new BookingService.FetchBookingsByEBNumberAsync(a.FCS_EBNumber__c);
           }
         }
       }
@@ -860,7 +888,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
     }
   }
 
-  private static String getThreadId(String caseId) {
+  public static String getThreadId(String caseId) {
     return 'ref:_' +
       UserInfo.getOrganizationId().left(5) +
       UserInfo.getOrganizationId().mid(11, 4) +

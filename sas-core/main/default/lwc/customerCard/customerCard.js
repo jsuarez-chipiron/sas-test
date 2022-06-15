@@ -237,6 +237,7 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   }
 
   async addCustomerToCase(searchString) {
+    this.error = false;
     this.showSpinner = true;
     try {
       let account = await findCustomer({
@@ -275,6 +276,7 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
   }
 
   async removeCustomerFromCase() {
+    this.error = false;
     this.showSpinner = true;
     try {
       const recordInput = {
@@ -344,13 +346,15 @@ export default class CustomerCard extends NavigationMixin(LightningElement) {
       await refetchTPProducts({
         accountId: this.accountId
       });
+
+      setTimeout(() => {
+        // Timeout because bookings haven't finished updating during the await
+        refreshApex(this.wiredTPProductsReference);
+        this.showSpinner = false;
+      }, 6000);
     } catch (error) {
       this.error = error;
-    }
-    setTimeout(() => {
-      // Timeout because bookings haven't finished updating during the await
-      refreshApex(this.wiredTPProductsReference);
       this.showSpinner = false;
-    }, 6000);
+    }
   }
 }

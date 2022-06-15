@@ -7,11 +7,11 @@ public without sharing class FCS_RemoveAdditionalSurveyResponses {
     /**
         @param invitationId The Id of related Survey Invitation
     */
-    public static void updateSurveyResponses(List<SurveyInvitation> invitationId) {
+    public static void updateSurveyResponses(List<Id> invitationId) {
         List<SurveyResponse> surveyResponses = [
             SELECT Id, InvitationId, Status
             FROM SurveyResponse
-            WHERE InvitationId IN: new Map<Id, SurveyInvitation>(invitationId).keySet()
+            WHERE InvitationId IN :invitationId
             ORDER BY Status DESC, CreatedDate ASC
         ];
         Set<Id> recordsBySurveyInvitation = new Set<Id>();

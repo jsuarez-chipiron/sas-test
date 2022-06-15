@@ -2,6 +2,7 @@ public without sharing class Accounts extends fflib_SObjectDomain {
   public Accounts(List<SObject> records) {
     super(records);
     Configuration.disableTriggerCRUDSecurity();
+    this.instanceRecords = (List<Account>) Records;
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
@@ -9,6 +10,12 @@ public without sharing class Accounts extends fflib_SObjectDomain {
       return new Accounts(records);
     }
   }
+
+  public static Accounts newInstance(List<Account> sObjectList) {
+    return (Accounts) SAS_Service_Application.Domain.newInstance(sObjectList);
+  }
+
+  public List<Account> instanceRecords;
 
   public override void onAfterInsert() {
     if (Records.size() == 1) {
@@ -67,7 +74,7 @@ public without sharing class Accounts extends fflib_SObjectDomain {
   }
 
   private void fetchBookingsFromTEDS() {
-    Account acc = (Account) Records[0];
+    Account acc = instanceRecords[0];
     if (
       acc.FCS_EBNumber__c != null &&
       !System.isFuture() &&
@@ -75,12 +82,15 @@ public without sharing class Accounts extends fflib_SObjectDomain {
       !System.isQueueable()
     ) {
       // Guard against nesting futures. FIXME: update logic so that this isn't needed
-      BookingService.fetchBookingsByEBNumber(acc.FCS_EBNumber__c);
+      // TODO: This should work fine now. Check.
+      System.enqueueJob(
+        new BookingService.FetchBookingsByEBNumberAsync(acc.FCS_EBNumber__c)
+      );
     }
   }
 
   private void fetchTravelPassAccount() {
-    Account acc = (Account) Records[0];
+    Account acc = instanceRecords[0];
     if (
       acc.FCS_TPAccountNumber__c != null &&
       acc.FCS_CMP__c != null &&

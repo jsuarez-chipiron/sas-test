@@ -890,6 +890,187 @@ public with sharing class Settlements_IntegrationTest {
   }
 
   @IsTest
+  static void updateAmountInSekForSettlementsItem() {
+    // Given
+    LIA_Claim__c claim = new LIA_Claim__c(
+      Customer_Claim_Category__c = 'Baggage',
+      Customer_Claim_Type__c = 'Baggage damaged',
+      PIR__c = 'ARNSK12345'
+    );
+
+    insert claim;
+
+    Settlement__c settlement = new Settlement__c(
+      BIC_Swift__c = 'AAAAAAB1',
+      Claim__c = claim.Id,
+      Currency__c = 'SEK',
+      RecordTypeId = Settlements.getRecordTypeId(
+        Settlements.RecordType.Monetary
+      ),
+      Settlement_Status__c = Settlements.STATUS_IN_PROGRESS
+    );
+
+    insert settlement;
+
+    // When
+    Settlement_Item__c si1 = new Settlement_Item__c(
+      Amount__c = 200,
+      Cost_Account__c = '6741',
+      Comments__c = 'Test comment 1',
+      Customer_Name__c = 'Test Testsson 1',
+      Exchange_Rate__c = 1
+    );
+    Settlement_Item__c si2 = new Settlement_Item__c(
+      Amount__c = 400,
+      Cost_Account__c = '6741',
+      Comments__c = 'Test comment 2',
+      Customer_Name__c = 'Test Testsson 2',
+      Exchange_Rate__c = 1
+    );
+
+    List<Settlement_Item__c> items = new List<Settlement_Item__c>{ si1, si2 };
+
+    Test.startTest();
+    SettlementService.updateItemsForSettlements(
+      new Map<Id, List<Settlement_Item__c>>{ settlement.Id => items }
+    );
+    Test.stopTest();
+
+    Settlement_Item__c si1AfterProcessing;
+    Settlement_Item__c si2AfterProcessing;
+
+    List<Settlement_Item__c> settlementItemAfterProcessing = [
+      SELECT
+        Id,
+        Amount__c,
+        Amount_In_SEK__c,
+        Comments__c,
+        Date_of_Exchange_Calculation__c,
+        Exchange_Rate__c
+      FROM Settlement_Item__c
+      WHERE Settlement__c = :settlement.Id
+    ];
+
+    for (Settlement_Item__c si : settlementItemAfterProcessing) {
+      if (si.Comments__c == si1.Comments__c) {
+        si1AfterProcessing = si;
+      } else {
+        si2AfterProcessing = si;
+      }
+    }
+
+    System.assertEquals(
+      si1AfterProcessing.Exchange_Rate__c * si1AfterProcessing.Amount__c,
+      si1AfterProcessing.Amount_In_SEK__c,
+      'Amount in SEK should be updated.'
+    );
+    System.assertEquals(
+      Date.today(),
+      si1AfterProcessing.Date_of_Exchange_Calculation__c,
+      'Date of Exchange Calculation should be updated.'
+    );
+    System.assertEquals(
+      si1.Exchange_Rate__c,
+      si1AfterProcessing.Exchange_Rate__c,
+      'Exchange Rate should be updated.'
+    );
+  }
+
+  @IsTest
+  static void updateAmountInSekFromUsdForSettlementsItem() {
+    // Given
+    Exchange_Rate__c rate = new Exchange_Rate__c(
+      Name = 'USD-SEK',
+      From_Currency__c = 'USD',
+      To_Currency__c = 'SEK',
+      Date__c = Date.Today(),
+      Rate__c = 9
+    );
+
+    LIA_Claim__c claim = new LIA_Claim__c(
+      Customer_Claim_Category__c = 'Baggage',
+      Customer_Claim_Type__c = 'Baggage damaged',
+      PIR__c = 'ARNSK12345'
+    );
+
+    insert new List<SObject>{ rate, claim };
+
+    Settlement__c settlement = new Settlement__c(
+      BIC_Swift__c = 'AAAAAAB1',
+      Claim__c = claim.Id,
+      Currency__c = 'USD',
+      RecordTypeId = Settlements.getRecordTypeId(
+        Settlements.RecordType.Monetary
+      ),
+      Settlement_Status__c = Settlements.STATUS_IN_PROGRESS
+    );
+
+    insert settlement;
+
+    // When
+    Settlement_Item__c si1 = new Settlement_Item__c(
+      Amount__c = 200,
+      Cost_Account__c = '6741',
+      Comments__c = 'Test comment 1',
+      Customer_Name__c = 'Test Testsson 1'
+    );
+    Settlement_Item__c si2 = new Settlement_Item__c(
+      Amount__c = 400,
+      Cost_Account__c = '6741',
+      Comments__c = 'Test comment 2',
+      Customer_Name__c = 'Test Testsson 2'
+    );
+
+    List<Settlement_Item__c> items = new List<Settlement_Item__c>{ si1, si2 };
+
+    Test.startTest();
+    SettlementService.updateItemsForSettlements(
+      new Map<Id, List<Settlement_Item__c>>{ settlement.Id => items }
+    );
+    Test.stopTest();
+
+    Settlement_Item__c si1AfterProcessing;
+    Settlement_Item__c si2AfterProcessing;
+
+    List<Settlement_Item__c> settlementItemAfterProcessing = [
+      SELECT
+        Id,
+        Amount__c,
+        Amount_In_SEK__c,
+        Comments__c,
+        Date_of_Exchange_Calculation__c,
+        Exchange_Rate__c
+      FROM Settlement_Item__c
+      WHERE Settlement__c = :settlement.Id
+    ];
+
+    for (Settlement_Item__c si : settlementItemAfterProcessing) {
+      if (si.Comments__c == si1.Comments__c) {
+        si1AfterProcessing = si;
+      } else {
+        si2AfterProcessing = si;
+      }
+    }
+
+    System.assertEquals(
+      rate.Rate__c * si2.Amount__c,
+      si2AfterProcessing.Amount_In_SEK__c,
+      'Exchange Calculation should be done coreect.'
+    );
+    System.assertEquals(
+      rate.Date__c,
+      si1AfterProcessing.Date_of_Exchange_Calculation__c,
+      'Date of Exchange Calculation should be done.'
+    );
+
+    System.assertEquals(
+      rate.Rate__c,
+      si1AfterProcessing.Exchange_Rate__c,
+      'Exchange Rate should be updated.'
+    );
+  }
+
+  @IsTest
   static void updateItemsForSettlementsUpdatesExistingItems() {
     // Given
     LIA_Claim__c claim = new LIA_Claim__c(
