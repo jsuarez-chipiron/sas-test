@@ -54,4 +54,10 @@ public class IRR_MOD_DelayInfo {
 
     @AuraEnabled
     public String departureCity { get; set; }
+
+    @AuraEnabled
+    public String couponBatchId { get; set; }
+
+    @AuraEnabled
+    public Boolean hasCouponBatchId { get; set; }
 }

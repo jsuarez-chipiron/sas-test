@@ -1,5 +1,5 @@
 /**
- * @author Niklas Lundkvist, Deloitte
+ * @author Chetan Singh, Coforge
  * @date 2020
  *
  * @description Model Class for Teds API callout responses.
@@ -15,6 +15,7 @@ public class IRR_MOD_TedsBooking {
   public String codsId { get; set; }
   public Audit audit { get; set; }
   public List<Passenger> passengers { get; set; }
+  public List<Passenger> segments { get; set; }
   public List<Trip> trips { get; set; }
 
   public class Arrival {
@@ -105,6 +106,8 @@ public class IRR_MOD_TedsBooking {
   }
 
   public class Segment {
+    // Added by Gaurav for Icoupon
+    public Integer boardingSequenceNumber { get; set; }
     public String segmentId { get; set; }
     public Baggage baggage { get; set; }
     public CheckIn checkin { get; set; }
@@ -177,4 +180,5 @@ public class IRR_MOD_TedsBooking {
                 List<IRR_MOD_TedsBooking>.class, replacementMap);
         return (List<IRR_MOD_TedsBooking>) jsonDeserializer.deserialize(json);
     }
+
 }

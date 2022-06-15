@@ -67,6 +67,7 @@ public class IRR_EVT_CancelProcessor extends IRR_EVT_EventProcessor {
 
         //Retrieve passengers for flight
         this.passengerInfos = IRR_SVC_TedsService.getPassengerInfosForFlight(cancelInfo.flightId);
+
     }
 
     /**

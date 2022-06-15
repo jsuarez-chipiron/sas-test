@@ -19,4 +19,10 @@ public class IRR_MOD_RebookInfo {
     @AuraEnabled
     public List<String> addedSegments { get; set; }
 
+    @AuraEnabled
+    public String isEnableCanada { get; set; }
+    
+     @AuraEnabled
+    public String smsCanada { get; set; }
+
 }

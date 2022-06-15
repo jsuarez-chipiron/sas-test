@@ -37,4 +37,7 @@ public class IRR_MOD_NewInfo {
     @AuraEnabled
     public String departureCity { get; set; }
 
+    @AuraEnabled
+    public String paxURL { get; set; }
+
 }

@@ -33,4 +33,5 @@ public class IRR_MOD_CancelInfo {
 
     @AuraEnabled
     public String departureCity { get; set; }
+
 }

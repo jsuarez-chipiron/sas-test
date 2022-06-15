@@ -352,6 +352,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         if (passengerSegment != null && passengerSegment.ticket != null) {
             segmentInfo.ticketNumber = passengerSegment.ticket.number_x;
         }
+         //Added by Gauraav 
         segmentInfo.segmentId = tripSegment.id;
         segmentInfo.flightId = String.isNotBlank(tripSegment.flight.operatingId) ? tripSegment.flight.operatingId :
                 tripSegment.flight.id;
@@ -366,6 +367,11 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         segmentInfo.statusCode = tripSegment.statusCode;
         segmentInfo.bookingClass = tripSegment.bookingClass;
         segmentInfo.serviceClass = tripSegment.serviceClass;
+                //Added by Gaurav Icoupan
+                if(passengerSegment !=null && passengerSegment.boardingSequenceNumber !=null){
+                      segmentInfo.boardingSequenceNumber = passengerSegment.boardingSequenceNumber;
+                }
+      
         if(tripsegment.remarks != null ) {
             for( IRR_MOD_TedsBooking.Remark remark : tripsegment.remarks) {
                 if(remark.type.contains('RXDISRUPT')){
@@ -476,6 +482,8 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
                 
                 if (segment.segmentId == tripThisSegment.id) {
                     passengerThisSegment = segment;
+                    //added by Gaurav Icoupon
+                    passengerThisSegment.boardingSequenceNumber = segment.boardingSequenceNumber;
                     passengerInfo.hasBoarded = segment.isBoarded;
                 }
                 if (tripNextSegment != null && segment.segmentId == tripNextSegment.id) passengerNextSegment = segment;
@@ -507,7 +515,7 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
             }
             if(hasRxdisrupt) break;
         }
-        
+
         return passengerInfo;
     }
 }
