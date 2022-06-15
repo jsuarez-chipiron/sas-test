@@ -53,6 +53,10 @@ public without sharing class ClaimService {
     'wifi' => 'WiFi'
   };
 
+  public static final String COMPENSATION_CARD_SUCCESS_EMAIL_TEMPLATE_NAME = 'compensation_card_success';
+  public static final String COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME = 'compensation_card_failure';
+  public static final String COMPENSATION_CARD_REPLY_TO_ADDRESS = 'customercare@sas.se';
+
   public static String createClaim(CaseFormJSON2Apex form) {
     Case caseToCreate = createCaseRecord(form);
 
@@ -198,17 +202,10 @@ public without sharing class ClaimService {
       Claims.RecordType.CompensationCard
     );
 
-    /*fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    uow.registerRelationship(insertedCase, Case.LIA_Claim__c, claimToCreate);
-    uow.registerDirty(insertedCase);
-    uow.registerNew(claimToCreate);
-    uow.commitWork();*/
-
     insert claimToCreate;
     insertedCase.LIA_Claim__c = claimToCreate.Id;
     update insertedCase;
 
-    // attemptToRedeemCompensationCardClaim(claimToCreate.Id);
     System.enqueueJob(new RedeemCompensationCardClaim(claimToCreate.Id));
 
     return insertedCase.CaseNumber;
@@ -329,12 +326,15 @@ public without sharing class ClaimService {
       'se-sv' => 'Form - Claims SE',
       'default' => 'Form - Claims International'
     };
+    Map<String, String> compensationCardMarketToOrigin = new Map<String, String>{
+      'dk-da' => 'Form - Compensation Card DK',
+      'no-no' => 'Form - Compensation Card NO',
+      'se-sv' => 'Form - Compensation Card SE',
+      'default' => 'Form - Compensation Card International'
+    };
 
-    Group claimsQueue = [
-      SELECT Id
-      FROM Group
-      WHERE Type = 'Queue' AND DeveloperName = 'Customer_Claim'
-    ];
+    Group claimsQueue = GroupsSelector.newInstance()
+      .selectQueuesByDeveloperName(new Set<String>{ 'Customer_Claim' })[0];
 
     String ebNumber;
 
@@ -346,14 +346,24 @@ public without sharing class ClaimService {
       ebNumber = '';
     }
 
+    String origin = null;
+
+    if (form.formData.type == 'compensation-card') {
+      origin = compensationCardMarketToOrigin.get(form.metaData.market) == null
+        ? compensationCardMarketToOrigin.get('default')
+        : compensationCardMarketToOrigin.get(form.metaData.market);
+    } else {
+      origin = marketToOrigin.get(form.metaData.market) == null
+        ? marketToOrigin.get('default')
+        : marketToOrigin.get(form.metaData.market);
+    }
+
     return new Case(
       Initially_Provided_PNR__c = form.formData.bookingReference,
       Description = form.formData.comment,
       FCS_EBNumber__c = ebNumber,
       OwnerId = claimsQueue.Id,
-      Origin = marketToOrigin.get(form.metaData.market) == null
-        ? marketToOrigin.get('default')
-        : marketToOrigin.get(form.metaData.market),
+      Origin = origin,
       SuppliedEmail = form.formData.email,
       RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
       Subject = 'Claim, PNR: ' + form.formData.bookingReference
@@ -396,7 +406,13 @@ public without sharing class ClaimService {
 
     if (cardHasBeenPaidOut) {
       fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-      parentCase.close(uow);
+
+      Messaging.SingleEmailMessage emailToSend = EmailMessages.createSingleEmailMessageFromTemplate(
+        COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME
+      );
+      emailToSend.setReplyTo(COMPENSATION_CARD_REPLY_TO_ADDRESS);
+
+      parentCase.emailOwner(emailToSend, uow).close(uow);
       uow.commitWork();
     } else {
       Boolean canBeRedeemed = false;
@@ -436,7 +452,13 @@ public without sharing class ClaimService {
           null
         );
 
-        parentCase.close(uow);
+        Messaging.SingleEmailMessage emailToSend = EmailMessages.createSingleEmailMessageFromTemplate(
+          COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME
+        );
+        emailToSend.setReplyTo(COMPENSATION_CARD_REPLY_TO_ADDRESS);
+
+        parentCase.emailOwner(emailToSend, uow).close(uow);
+
         uow.commitWork();
       } catch (Exception e) {
         // TODO: Error handling? Can we reject the claim or should we ask the customer to try again?
@@ -453,9 +475,15 @@ public without sharing class ClaimService {
       if (canBeRedeemed) {
         try {
           fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+
           Claims.newInstance(new List<LIA_Claim__c>{ claim }).settle(uow);
-          parentCase.close(uow);
-          // TODO: Send email Email.toEmail.
+
+          Messaging.SingleEmailMessage emailToSend = EmailMessages.createSingleEmailMessageFromTemplate(
+            COMPENSATION_CARD_SUCCESS_EMAIL_TEMPLATE_NAME
+          );
+          emailToSend.setReplyTo(COMPENSATION_CARD_REPLY_TO_ADDRESS);
+
+          parentCase.emailOwner(emailToSend, uow).close(uow);
 
           uow.commitWork();
         } catch (Exception e) {

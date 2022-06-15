@@ -677,6 +677,14 @@ private class CaseFormTest {
 
   @IsTest
   public static void shouldCreateCompensationCardClaims() {
+    // Given
+    TestDataFactories.insertEmailTemplates(
+      new Set<String>{
+        ClaimService.COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME,
+        ClaimService.COMPENSATION_CARD_SUCCESS_EMAIL_TEMPLATE_NAME
+      }
+    );
+
     CaseFormJSON2Apex requestBody = CaseFormJSON2Apex.parse(
       '{ ' +
       '  "formData\": {' +

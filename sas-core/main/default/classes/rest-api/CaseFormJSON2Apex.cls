@@ -15,7 +15,7 @@ global class CaseFormJSON2Apex {
 
     global List<String> contentVersionIds;
 
-    global String contactType; // private, corporate, travel-agency, other-representative
+    global String contactType; // private, corporate, travel-agency, other-representative, insurance-company
     global String companyName;
     global String companyCode;
     global String firstName;
