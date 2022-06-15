@@ -101,6 +101,8 @@ public class IRR_SVC_CommunicationService {
                 log.IRR_CodsId__c = message.passengerInfo.codsId;
                 log.IRR_RecipientName__c = message.passengerInfo.lastNameSlashFirstName;
             }
+            log.IRR_BoardingSequence__c = message.passengerInfo.thisSegment.boardingSequenceNumber;
+            log.IRR_CouponBatchId__c = message.passengerInfo.thisSegment.couponBatchId;
             log.IRR_Channel__c = String.valueOf(message.channel);
             log.IRR_ContactKey__c = message.contactKey;
             log.IRR_MessageKey__c = message.messageKey;
@@ -145,6 +147,7 @@ public class IRR_SVC_CommunicationService {
             log.IRR_MessageContent__c = sms.content;
             unitOfWork.registerNew(log);
         }
+
 
         /**
          * Add a generic sms errors to the log for messsages filtered and not forwarded to marketing cloud

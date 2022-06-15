@@ -20,6 +20,7 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
 
     @TestVisible
     protected Map<String,String> airportInfoMap = new Map<String,String>();
+    Boolean sendIcouponEmailMessage = false;
 
     abstract String getEventName();
 
@@ -111,11 +112,14 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
      */
     public void processMessages() {
         if (messages == null || messages.isEmpty()) return;
-        deduplicateMessages();
-        renderMessages();
-        pauseMessages();
-        whitelistFilterMessages();
-        sendMessages();
+        if(sendIcouponEmailMessage = false) {
+            deduplicateMessages();
+        }
+            renderMessages();
+            pauseMessages();
+            whitelistFilterMessages();
+            sendMessages();
+       
     }
 
     /**
@@ -166,11 +170,10 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
     protected void executeFlow(String flowName, IRR_MOD_FlowVariables flowVariables) {
 
         IRR_ACT_StaticInput.actionOutput = flowVariables;
-
         Flow.Interview interview = Flow.Interview.createInterview(flowName, flowMap);
         interview.start();
 
-        String emailTemplateName = (String) interview.getVariableValue('emailTemplateName');
+      String emailTemplateName = (String) interview.getVariableValue('emailTemplateName');
         Boolean sendEmailMessage = (Boolean) interview.getVariableValue('sendEmailMessage');
         sendEmailMessage = sendEmailMessage == null || String.isBlank(emailTemplateName) ? false : sendEmailMessage;
 
@@ -178,21 +181,39 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
         Boolean sendSMSMessage = (Boolean) interview.getVariableValue('sendSMSMessage');
         sendSMSMessage = sendSMSMessage == null || String.isBlank(smsTemplateName) ? false : sendSMSMessage;
 
-        if (sendSMSMessage || sendEmailMessage){
-            createMessages(sendSMSMessage, smsTemplateName, sendEmailMessage, emailTemplateName, flowVariables, false);
+        ///Added By Gaurav 
+         String iCouponEmailTemplateName = (String) interview.getVariableValue('IcouponEmailTemplateName');
+         sendIcouponEmailMessage = (Boolean) interview.getVariableValue('sendIcouponEmailMessage');
+         sendIcouponEmailMessage = sendIcouponEmailMessage == null || String.isBlank(iCouponEmailTemplateName) ? false : sendIcouponEmailMessage;
+
+        String iCouponSmsTemplateName = (String) interview.getVariableValue('IcouponSMSTemplateName');
+        Boolean sendIcoupnSMSMessage = (Boolean) interview.getVariableValue('sendIcouponSMSMessage');
+        sendIcoupnSMSMessage = sendIcoupnSMSMessage == null || String.isBlank(iCouponSmsTemplateName) ? false : sendIcoupnSMSMessage;
+      if (sendSMSMessage || sendEmailMessage  ){
+          
+        
+        createMessages(sendSMSMessage, smsTemplateName, sendEmailMessage, emailTemplateName, flowVariables, false);
         }
+     
+        if (sendIcoupnSMSMessage || sendIcouponEmailMessage ){
+            
+        createMessages(sendIcoupnSMSMessage, iCouponSmsTemplateName, sendIcouponEmailMessage,iCouponEmailTemplateName, flowVariables, false);
+        }
+
     }
 
     protected void createMessages(Boolean sendSMS, String SMSTemplate, Boolean sendEmail, String emailTemplate,
             IRR_MOD_FlowVariables flowVariables, Boolean responseMessage) {
         String serializedVariables = JSON.serialize(flowVariables);
         System.debug('flowVariables:' +flowVariables);
-        Map<String, Object> templateParams = (Map<String,Object>) JSON.deserializeUntyped(serializedVariables);
+        Map<String, Object> templateParams =new Map<String, Object>();
+               templateParams = (Map<String,Object>) JSON.deserializeUntyped(serializedVariables);
 
         if (sendSMS) {
             IRR_MOD_Message smsMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.SMS,
                     templateParams, SMSTemplate, flowVariables.passengerInfo, getEventName(), responseMessage);
             messages.add(smsMessage);
+            //system.debug('test ' + Integer.valueOf('tes'));
         }
         if (sendEmail) {
             IRR_MOD_Message emailMessage = new IRR_MOD_Message(MESSAGE_STATUS_DEFAULT, IRR_MOD_Message.MessageChannel.Email,

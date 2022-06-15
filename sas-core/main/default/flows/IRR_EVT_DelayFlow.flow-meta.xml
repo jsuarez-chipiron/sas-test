@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Retrieve_Flow_Variables</name>
         <label>Retrieve Flow Variables</label>
-        <locationX>536</locationX>
+        <locationX>995</locationX>
         <locationY>206</locationY>
         <actionName>IRR_ACT_StaticInput</actionName>
         <actionType>apex</actionType>
@@ -22,10 +22,44 @@
     </actionCalls>
     <apiVersion>49.0</apiVersion>
     <assignments>
+        <name>Assignment</name>
+        <label>Assignment</label>
+        <locationX>982</locationX>
+        <locationY>1536</locationY>
+        <assignmentItems>
+            <assignToReference>sendIcouponSMSMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IcouponSMSTemplateName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>irr_delay_icoupon_sms</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IcouponEmailTemplateName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>irr_delay_icoupon_email</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sendIcouponEmailMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Send_SMS_and_Email</name>
         <label>Send SMS and Email</label>
-        <locationX>536</locationX>
-        <locationY>1094</locationY>
+        <locationX>1031</locationX>
+        <locationY>1099</locationY>
         <assignmentItems>
             <assignToReference>sendSMSMessage</assignToReference>
             <operator>Assign</operator>
@@ -54,12 +88,15 @@
                 <stringValue>irr_delay_email_01</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Has_Coupon</targetReference>
+        </connector>
     </assignments>
     <decisions>
         <name>Delay_Difference</name>
         <label>Delay Difference</label>
-        <locationX>118</locationX>
-        <locationY>446</locationY>
+        <locationX>675</locationX>
+        <locationY>630</locationY>
         <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
             <name>Less_than_10_minutes</name>
@@ -98,7 +135,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_SMS_and_Email</targetReference>
+                <targetReference>Stop_Canada_Messages</targetReference>
             </connector>
             <label>More than 15 minutes</label>
         </rules>
@@ -106,11 +143,8 @@
     <decisions>
         <name>Delay_Difference_0</name>
         <label>Delay Difference</label>
-        <locationX>1174</locationX>
+        <locationX>1633</locationX>
         <locationY>565</locationY>
-        <defaultConnector>
-            <targetReference>Send_SMS_and_Email</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
             <name>Less_than_30_minutes</name>
@@ -141,13 +175,16 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Stop_Canada_Messages</targetReference>
+            </connector>
             <label>30 minutes or more</label>
         </rules>
     </decisions>
     <decisions>
         <name>Delay_Difference_0_0</name>
         <label>Delay Difference</label>
-        <locationX>734</locationX>
+        <locationX>1193</locationX>
         <locationY>566</locationY>
         <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
@@ -180,7 +217,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_SMS_and_Email</targetReference>
+                <targetReference>Stop_Canada_Messages</targetReference>
             </connector>
             <label>More than 1 hour</label>
         </rules>
@@ -188,7 +225,7 @@
     <decisions>
         <name>Delay_Sequence</name>
         <label>Delay Sequence</label>
-        <locationX>954</locationX>
+        <locationX>1413</locationX>
         <locationY>446</locationY>
         <defaultConnector>
             <targetReference>Delay_Difference_0</targetReference>
@@ -211,10 +248,61 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Has_Coupon</name>
+        <label>Has Coupon</label>
+        <locationX>984</locationX>
+        <locationY>1284</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Coupon_Id</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>delayInfo.hasCouponBatchId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assignment</targetReference>
+            </connector>
+            <label>Has Coupon Id</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Stop_Canada_Messages</name>
+        <label>Stop Canada Messages</label>
+        <locationX>800</locationX>
+        <locationY>995</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No_Canada_Messages</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>delayInfo.stationArrival</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>YYZ</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>delayInfo.stationDeparture</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>YYZ</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_SMS_and_Email</targetReference>
+            </connector>
+            <label>No Canada Messages</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Time_to_departure</name>
         <label>Time to departure</label>
-        <locationX>536</locationX>
-        <locationY>325</locationY>
+        <locationX>991</locationX>
+        <locationY>378</locationY>
         <defaultConnector>
             <targetReference>Delay_Sequence</targetReference>
         </defaultConnector>
@@ -233,6 +321,18 @@
                 <targetReference>Delay_Difference</targetReference>
             </connector>
             <label>Close to departure</label>
+        </rules>
+        <rules>
+            <name>Icoupon</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>delayInfo.hasCouponBatchId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Icoupon</label>
         </rules>
     </decisions>
     <interviewLabel>IRR_EVT_DelayFlow {!$Flow.CurrentDateTime}</interviewLabel>
@@ -257,13 +357,27 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>410</locationX>
+        <locationX>869</locationX>
         <locationY>48</locationY>
         <connector>
             <targetReference>Retrieve_Flow_Variables</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>currencyType</name>
+        <dataType>Picklist</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>currencyValues</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>delayInfo</name>
         <apexClass>IRR_MOD_DelayInfo</apexClass>
@@ -274,6 +388,20 @@
     </variables>
     <variables>
         <name>emailTemplateName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>IcouponEmailTemplateName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>IcouponSMSTemplateName</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -295,6 +423,20 @@
         <isOutput>true</isOutput>
     </variables>
     <variables>
+        <name>sendIcouponEmailMessage</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>sendIcouponSMSMessage</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
         <name>sendSMSMessage</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -307,5 +449,16 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>voucherValue</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
     </variables>
 </Flow>

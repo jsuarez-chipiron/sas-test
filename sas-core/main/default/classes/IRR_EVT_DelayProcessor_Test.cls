@@ -594,7 +594,7 @@ private class IRR_EVT_DelayProcessor_Test {
         eventProcessor.processMessages();
 
         //Then
-        System.assertEquals(1, eventProcessor.messages.size());
+        System.assertEquals(2, eventProcessor.messages.size());
         ((MSG_ITemplateCache) mocks.verify(cacheMock)).loadTemplates(new Set<String>{'TEST_TEMPLATE'});
         ((MSG_IRenderer) mocks.verify(rendererMock)).renderMessage(message);
         ((IRR_SVC_ISFMCService) mocks.verify(serviceMock))
