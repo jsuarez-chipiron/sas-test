@@ -91,7 +91,8 @@ public with sharing class TestDataFactories {
       Case c = new Case(
         Origin = 'Form - Claims SE',
         RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
-        Status = Cases.STATUS_IN_PROGRESS
+        Status = Cases.STATUS_IN_PROGRESS,
+        SuppliedEmail = 'test@example.com'
       );
       LIA_Claim__c claim = new LIA_Claim__c(
         Customer_Claim_Category__c = 'Flight disruptions',
@@ -129,5 +130,36 @@ public with sharing class TestDataFactories {
     update allToCreate;
 
     return new CasesClaims(casesToCreate, claimsToCreate);
+  }
+
+  public static void insertEmailTemplates(Set<String> templateNamesToCreate) {
+    User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+    System.runAs(thisUser) {
+      BrandTemplate bt = [
+        SELECT Id
+        FROM BrandTemplate
+        WHERE DeveloperName = 'SAS_Logo'
+      ];
+
+      List<EmailTemplate> toInsert = new List<EmailTemplate>();
+
+      for (String templateName : templateNamesToCreate) {
+        EmailTemplate template = new EmailTemplate(
+          Subject = 'Test',
+          HtmlValue = '<html>test</html>',
+          Body = 'test',
+          Name = templateName,
+          DeveloperName = templateName,
+          BrandTemplateId = bt.Id,
+          TemplateStyle = 'freeForm',
+          TemplateType = 'html',
+          FolderId = UserInfo.getUserId()
+        );
+
+        toInsert.add(template);
+      }
+
+      insert toInsert;
+    }
   }
 }
