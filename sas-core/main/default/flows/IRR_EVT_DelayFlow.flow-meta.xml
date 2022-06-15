@@ -58,8 +58,8 @@
     <assignments>
         <name>Send_SMS_and_Email</name>
         <label>Send SMS and Email</label>
-        <locationX>1031</locationX>
-        <locationY>1099</locationY>
+        <locationX>1206</locationX>
+        <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>sendSMSMessage</assignToReference>
             <operator>Assign</operator>
@@ -263,6 +263,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>delayInfo.firstDelay</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assignment</targetReference>
             </connector>
@@ -277,7 +284,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>No_Canada_Messages</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>delayInfo.stationArrival</leftValueReference>
                 <operator>NotEqualTo</operator>
