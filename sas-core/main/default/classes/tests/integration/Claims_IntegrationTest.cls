@@ -445,6 +445,13 @@ public with sharing class Claims_IntegrationTest {
 
   @IsTest
   public static void attemptingToRedeemUsedCompensationCardShouldFail() {
+    TestDataFactories.insertEmailTemplates(
+      new Set<String>{
+        ClaimService.COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME,
+        ClaimService.COMPENSATION_CARD_SUCCESS_EMAIL_TEMPLATE_NAME
+      }
+    );
+
     String bookingReference = 'pppppp';
     String cardNumber = '0123456789';
 
@@ -461,6 +468,7 @@ public with sharing class Claims_IntegrationTest {
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Compensation_Card_Number__c => cardNumber,
         LIA_Claim__c.Liability_PNR__c => bookingReference,
+        LIA_Claim__c.Customer_Claim_Category__c => 'Compensation Card',
         LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
           Claims.RecordType.CompensationCard
         )
@@ -495,6 +503,13 @@ public with sharing class Claims_IntegrationTest {
 
   @IsTest
   public static void attemptingToRedeemAnInvalidCompensationCardShouldFail() {
+    TestDataFactories.insertEmailTemplates(
+      new Set<String>{
+        ClaimService.COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME,
+        ClaimService.COMPENSATION_CARD_SUCCESS_EMAIL_TEMPLATE_NAME
+      }
+    );
+
     String bookingReference = 'nnnnnn';
     String cardNumber = '0000000';
 
@@ -505,6 +520,7 @@ public with sharing class Claims_IntegrationTest {
         LIA_Claim__c.BIC_Swift__c => 'XXXXXXXX',
         LIA_Claim__c.Compensation_Card_Number__c => cardNumber,
         LIA_Claim__c.Liability_PNR__c => bookingReference,
+        LIA_Claim__c.Customer_Claim_Category__c => 'Compensation Card',
         LIA_Claim__c.Preferred_Compensation_Method__c => 'Monetary',
         LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
           Claims.RecordType.CompensationCard
@@ -552,6 +568,13 @@ public with sharing class Claims_IntegrationTest {
 
   @IsTest
   public static void attemptingToRedeemAValidUnusedCompensationCardShouldSucceed() {
+    TestDataFactories.insertEmailTemplates(
+      new Set<String>{
+        ClaimService.COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME,
+        ClaimService.COMPENSATION_CARD_SUCCESS_EMAIL_TEMPLATE_NAME
+      }
+    );
+
     String bookingReference = APIMMock.VOUCHER_VALID_PNR;
     String cardNumber = APIMMock.VOUCHER_VALID_CARD_ID;
 
@@ -559,9 +582,13 @@ public with sharing class Claims_IntegrationTest {
       1,
       null,
       new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Bank_Account_Number__c => '1234',
+        LIA_Claim__c.Bank_Country__c => 'China',
+        LIA_Claim__c.Bank_Account_Holder_Name__c => 'Teemu Teekkari',
         LIA_Claim__c.BIC_Swift__c => 'XXXXXXXX',
         LIA_Claim__c.Compensation_Card_Number__c => cardNumber,
         LIA_Claim__c.Liability_PNR__c => bookingReference,
+        LIA_Claim__c.Customer_Claim_Category__c => 'Compensation Card',
         LIA_Claim__c.Preferred_Compensation_Method__c => 'Monetary',
         LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
           Claims.RecordType.CompensationCard
