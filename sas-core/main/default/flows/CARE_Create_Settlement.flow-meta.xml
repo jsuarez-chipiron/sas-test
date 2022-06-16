@@ -4,7 +4,7 @@
         <name>Navigate_To_Created_Settlement</name>
         <label>Navigate To Created Settlement</label>
         <locationX>578</locationX>
-        <locationY>854</locationY>
+        <locationY>1214</locationY>
         <actionName>c:NavigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -56,10 +56,60 @@
         </value>
     </choices>
     <decisions>
+        <name>Check_Customer_Data</name>
+        <label>Check Customer Data In Claim</label>
+        <locationX>974</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>NoCustomer</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Customer</defaultConnectorLabel>
+        <rules>
+            <name>Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Customer_Data.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_a_Settlement</targetReference>
+            </connector>
+            <label>Available</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>InProgress</name>
+        <label>Case Status is In Progress</label>
+        <locationX>1304</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>NoSettlement</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>caseStatus</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Customer_Claim.Case__r.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Progress</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Customer_Data</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Settlement_Type</name>
         <label>Settlement Type</label>
         <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationY>878</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Cheque_Settlement</name>
@@ -161,7 +211,7 @@
         <name>Create_Cheque_Settlement</name>
         <label>Create Cheque Settlement</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>998</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
@@ -250,7 +300,7 @@
         <name>Create_EB_Points_Settlement</name>
         <label>Create EB Points Settlement</label>
         <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationY>998</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
@@ -321,7 +371,7 @@
         <name>Create_Monetary_Settlement</name>
         <label>Create Monetary Settlement</label>
         <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationY>998</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
@@ -422,7 +472,7 @@
         <name>Create_Voucher_Settlement</name>
         <label>Create Voucher Settlement</label>
         <locationX>842</locationX>
-        <locationY>638</locationY>
+        <locationY>998</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
@@ -522,11 +572,11 @@
     <recordLookups>
         <name>Get_Customer_Claim</name>
         <label>Get Customer Claim Information</label>
-        <locationX>578</locationX>
+        <locationX>1304</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_a_Settlement</targetReference>
+            <targetReference>InProgress</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -541,10 +591,32 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <description>Customer Data</description>
+        <name>Get_Customer_Data</name>
+        <label>Get Customer Data</label>
+        <locationX>974</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Customer_Data</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Claim__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Customer__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Record_Type_Id</name>
         <label>Get Record Type Id</label>
         <locationX>578</locationX>
-        <locationY>398</locationY>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Settlement_Type</targetReference>
@@ -566,7 +638,7 @@
         <name>Create_a_Settlement</name>
         <label>Create a Settlement</label>
         <locationX>578</locationX>
-        <locationY>278</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -605,8 +677,40 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>NoCustomer</name>
+        <label>Can Not Create Settlement</label>
+        <locationX>1370</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>NoDataError</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(234, 5, 5);&quot;&gt;*Can not create settlement, &lt;/strong&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(234, 5, 5); background-color: rgb(255, 255, 255);&quot;&gt; Claim does not have any Customer.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>NoSettlement</name>
+        <label>Can Not Create Settlement</label>
+        <locationX>1634</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>DisplayError</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(240, 10, 10); background-color: rgb(255, 255, 255); font-size: 16px;&quot;&gt;*Can not create Settlement. Case Status should be &quot;In Progress&quot;.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>452</locationX>
+        <locationX>1178</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Customer_Claim</targetReference>
