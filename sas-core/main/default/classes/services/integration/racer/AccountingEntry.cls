@@ -129,7 +129,14 @@ public class AccountingEntry {
       when DEBIT {
         debitOrCredit = 'D';
         costCenter = Settlements.COST_CENTER_DEBITS;
-        reconciliationReference = settlementItem.Name;
+        if (settlementItem.Name.length() == 11) {
+          // We have a few broken settlement items where the name field is too
+          // long. This is a temporary fix to handle those.
+          // TODO: Remove this after summer.
+          reconciliationReference = settlementItem.Name.substring(1, 11);
+        } else {
+          reconciliationReference = settlementItem.Name;
+        }
         if (settlementItem.Is_Insured__c) {
           if (isInsuranceAccountEntry) {
             // For insured items, we should debit everything above the
