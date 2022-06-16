@@ -133,7 +133,7 @@ public class AccountingEntry {
           // We have a few broken settlement items where the name field is too
           // long. This is a temporary fix to handle those.
           // TODO: Remove this after summer.
-          reconciliationReference = settlementItem.substring(1, 11);
+          reconciliationReference = settlementItem.Name.substring(1, 11);
         } else {
           reconciliationReference = settlementItem.Name;
         }
