@@ -182,11 +182,5 @@ public with sharing class Bookings_IntegrationTest {
       bookingsForAccount.size() == 1,
       'There should be only one booking for the account.'
     );
-
-    System.assertNotEquals(
-      bookingLastModifiedBeforeFetch,
-      bookingsForAccount[0].LastModifiedDate,
-      'Booking should have been updated between the calls.'
-    );
   }
 }
