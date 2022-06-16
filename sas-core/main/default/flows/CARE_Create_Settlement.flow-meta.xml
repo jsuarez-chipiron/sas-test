@@ -85,7 +85,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>countOfCustomerData</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <operator>GreaterThan</operator>
                 <rightValue>
                     <numberValue>0.0</numberValue>
                 </rightValue>
