@@ -4,7 +4,7 @@
         <name>Navigate_To_Created_Settlement</name>
         <label>Navigate To Created Settlement</label>
         <locationX>578</locationX>
-        <locationY>1214</locationY>
+        <locationY>1334</locationY>
         <actionName>c:NavigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -23,6 +23,22 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>assignCustomerCount</name>
+        <label>assignCustomerCount</label>
+        <locationX>974</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>countOfCustomerData</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>Get_Customer_Data</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Customer_Data</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>Cheque</name>
         <choiceText>Cheque</choiceText>
@@ -59,7 +75,7 @@
         <name>Check_Customer_Data</name>
         <label>Check Customer Data In Claim</label>
         <locationX>974</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>NoCustomer</targetReference>
         </defaultConnector>
@@ -68,10 +84,10 @@
             <name>Available</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Customer_Data.Id</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>countOfCustomerData</leftValueReference>
+                <operator>NotEqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -109,7 +125,7 @@
         <name>Settlement_Type</name>
         <label>Settlement Type</label>
         <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Cheque_Settlement</name>
@@ -211,7 +227,7 @@
         <name>Create_Cheque_Settlement</name>
         <label>Create Cheque Settlement</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
@@ -300,7 +316,7 @@
         <name>Create_EB_Points_Settlement</name>
         <label>Create EB Points Settlement</label>
         <locationX>314</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
@@ -371,7 +387,7 @@
         <name>Create_Monetary_Settlement</name>
         <label>Create Monetary Settlement</label>
         <locationX>578</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
@@ -472,7 +488,7 @@
         <name>Create_Voucher_Settlement</name>
         <label>Create Voucher Settlement</label>
         <locationX>842</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
@@ -598,7 +614,7 @@
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Customer_Data</targetReference>
+            <targetReference>assignCustomerCount</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -608,7 +624,7 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Customer__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
@@ -616,7 +632,7 @@
         <name>Get_Record_Type_Id</name>
         <label>Get Record Type Id</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Settlement_Type</targetReference>
@@ -638,7 +654,7 @@
         <name>Create_a_Settlement</name>
         <label>Create a Settlement</label>
         <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -681,7 +697,7 @@
         <name>NoCustomer</name>
         <label>Can Not Create Settlement</label>
         <locationX>1370</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -717,6 +733,14 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>countOfCustomerData</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
     <variables>
         <name>createdSettlementId</name>
         <dataType>String</dataType>
