@@ -126,6 +126,11 @@
                 <label>Email - EuroBonus Partner Support</label>
             </value>
             <value>
+                <fullName>Email - EuroBonus Support</fullName>
+                <default>false</default>
+                <label>Email - EuroBonus Support</label>
+            </value>
+            <value>
                 <fullName>Email - Forsvaret NO</fullName>
                 <default>false</default>
                 <label>Email - Forsvaret NO</label>
