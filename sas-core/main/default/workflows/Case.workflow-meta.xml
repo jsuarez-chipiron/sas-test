@@ -1,2 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Workflow xmlns="http://soap.sforce.com/2006/04/metadata"/>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Corporate_Support_Scandinavia_Email_Survey</fullName>
+        <description>Corporate Support Scandinavia Email Survey</description>
+        <protected>false</protected>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderType>DefaultWorkflowUser</senderType>
+        <template>SurveyEmailTemplates/Corporate_Support_Scandinavia_Survey_Invitation_Link_1654158241180</template>
+    </alerts>
+    <alerts>
+        <fullName>EuroBonus_Email_Survey</fullName>
+        <description>EuroBonus Email Survey</description>
+        <protected>false</protected>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderType>DefaultWorkflowUser</senderType>
+        <template>SurveyEmailTemplates/EuroBonus_Survey_Invitation_Link_1654158377981</template>
+    </alerts>
+    <alerts>
+        <fullName>Group_Sales_Email_Survey</fullName>
+        <description>Group Sales Email Survey</description>
+        <protected>false</protected>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderType>DefaultWorkflowUser</senderType>
+        <template>SurveyEmailTemplates/Group_Sales_Survey_Invitation_Link_1653310948956</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>ChangePriorityToHigh</fullName>
+        <field>Priority</field>
+        <literalValue>High</literalValue>
+        <name>Changes the case priority to high.</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>
