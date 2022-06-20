@@ -206,7 +206,18 @@ public without sharing class ClaimService {
     insertedCase.LIA_Claim__c = claimToCreate.Id;
     update insertedCase;
 
-    System.enqueueJob(new RedeemCompensationCardClaim(claimToCreate.Id));
+    List<Feature_Switch__mdt> automationSwitch = [
+      SELECT Active__c
+      FROM Feature_Switch__mdt
+      WHERE QualifiedApiName = 'Process_Compensation_Cards_Automatically'
+    ];
+
+    if (
+      automationSwitch == null ||
+      automationSwitch.size() > 0 && automationSwitch[0].Active__c
+    ) {
+      System.enqueueJob(new RedeemCompensationCardClaim(claimToCreate.Id));
+    }
 
     return insertedCase.CaseNumber;
   }
