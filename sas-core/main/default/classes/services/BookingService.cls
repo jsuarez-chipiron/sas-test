@@ -97,11 +97,18 @@ public without sharing class BookingService {
       new List<IRR_MOD_TedsBooking>{ bookingData }
     );
 
-    Flights newFlights = FlightService.newInstance()
-      .fetchFlightsByReference(newBookings.getFlightIds(), false);
+    Set<String> flightIdsForBookings = newBookings.getFlightIds();
 
-    newBookings.upsertToDB();
-    newFlights.upsertToDB();
+    if (flightIdsForBookings.size() > 0) {
+      Flights newFlights = FlightService.newInstance()
+        .fetchFlightsByReference(flightIdsForBookings, false);
+      newBookings.upsertToDB();
+      if (newFlights != null) {
+        newFlights.upsertToDB();
+      }
+    } else {
+      newBookings.upsertToDB();
+    }
 
     return newBookings;
   }
@@ -131,7 +138,15 @@ public without sharing class BookingService {
       this.bookingReference = bookingReference;
     }
     public void execute(QueueableContext ctx) {
-      addBookingToCase(this.caseId, this.bookingReference);
+      try {
+        addBookingToCase(this.caseId, this.bookingReference);
+      } catch (IllegalArgumentsException e) {
+        // Invalid PNR or caseId, most likely due to user error. We can't do
+        // anything about these in the async flow.
+      } catch (APIMIntegrationService.IllegalArgumentsException e) {
+        // Invalid PNR or caseId, most likely due to user error. We can't do
+        // anything about these in the async flow.
+      }
     }
   }
 
@@ -145,7 +160,7 @@ public without sharing class BookingService {
     }
   }
 
-  private static Bookings fetchBookingsByQuery(
+  public static Bookings fetchBookingsByQuery(
     TEDSIntegrationService.BookingsQuery query
   ) {
     List<IRR_MOD_TedsBooking> bookingData = TEDSIntegrationService.newInstance()
@@ -160,12 +175,48 @@ public without sharing class BookingService {
     Bookings newBookings = Bookings.createFromTEDSData(bookingData);
 
     if (newBookings != null) {
-      Flights newFlights = FlightService.newInstance()
-        .fetchFlightsByReference(newBookings.getFlightIds(), false);
+      List<Flights> newFlights = new List<Flights>();
+      Set<String> flightIds = newBookings.getFlightIds();
+
+      if (flightIds.size() > 0) {
+        if (flightIds.size() <= 10) {
+          newFlights.add(
+            FlightService.newInstance()
+              .fetchFlightsByReference(flightIds, false)
+          );
+        } else {
+          // We can only search 10 flights at a time so let's bunch these up.
+          final Integer ITEMS_IN_BUCKET = 10;
+          List<Set<String>> bucketedFlights = new List<Set<String>>();
+
+          for (Integer i = 0; i < flightIds.size(); i = i + ITEMS_IN_BUCKET) {
+            bucketedFlights.add(new Set<String>());
+          }
+          Integer count = 0;
+
+          for (String flightIdentifier : flightIds) {
+            Integer bucket = count / ITEMS_IN_BUCKET;
+            bucketedFlights[bucket].add(flightIdentifier);
+
+            count++;
+          }
+
+          for (Set<String> bucket : bucketedFlights) {
+            newFlights.add(
+              FlightService.newInstance().fetchFlightsByReference(bucket, false)
+            );
+          }
+        }
+      }
 
       newBookings.upsertToDB();
-      if (newFlights != null) {
-        newFlights.upsertToDB();
+
+      for (Flights f : newFlights) {
+        // DML in a loop, but there really shouldn't be too many of these as
+        // each instance holds 10 flights.
+        if (f != null) {
+          f.upsertToDB();
+        }
       }
     }
 
