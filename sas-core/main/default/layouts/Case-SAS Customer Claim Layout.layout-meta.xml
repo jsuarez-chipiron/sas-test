@@ -256,7 +256,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>IsApproved__c</field>
+                <field>InApproval__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

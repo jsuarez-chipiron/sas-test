@@ -3,9 +3,16 @@
     <fullName>Disallow_manual_set_Waiting_for_transfer</fullName>
     <active>true</active>
     <description>Prevent users from setting the case status to Waiting for transfer manually</description>
-    <errorConditionFormula>AND(
-IsApproved__c = False,
-ISPICKVAL(Status, &apos;Waiting for Transfer&apos;)
-)</errorConditionFormula>
+    <errorConditionFormula>OR(
+AND(
+InApproval__c = False,
+OR(ISPICKVAL(Status, &apos;Waiting for Transfer&apos;),
+ISPICKVAL(Status, &apos;Waiting for Control&apos;),
+ISPICKVAL(Status, &apos;Waiting for Approval&apos;))
+), AND (
+InApproval__c = True, 
+ISPICKVAL(Status, &apos;Waiting for Transfer&apos;),
+ $User.Id  &lt;&gt;  OwnerId 
+))</errorConditionFormula>
     <errorMessage>You cannot set the case to this status manually</errorMessage>
 </ValidationRule>

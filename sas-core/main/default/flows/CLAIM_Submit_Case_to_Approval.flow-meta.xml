@@ -445,6 +445,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>InApproval__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Status</field>
             <value>
                 <stringValue>Waiting for Approval</stringValue>

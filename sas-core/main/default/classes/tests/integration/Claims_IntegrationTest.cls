@@ -121,7 +121,7 @@ public with sharing class Claims_IntegrationTest {
       TEDS_Identifier__c = 'ABC123'
     );
     Case c = new Case(
-      IsApproved__c = true,
+      InApproval__c = true,
       RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
       Status = Cases.STATUS_IN_PROGRESS
     );
@@ -188,7 +188,7 @@ public with sharing class Claims_IntegrationTest {
       TEDS_Identifier__c = 'ABC123'
     );
     Case c = new Case(
-      IsApproved__c = true,
+      InApproval__c = true,
       RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
       Status = Cases.STATUS_IN_PROGRESS
     );
@@ -255,7 +255,7 @@ public with sharing class Claims_IntegrationTest {
       TEDS_Identifier__c = 'ABC123'
     );
     Case c = new Case(
-      IsApproved__c = true,
+      InApproval__c = true,
       RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
       Status = Cases.STATUS_IN_PROGRESS
     );
@@ -323,7 +323,7 @@ public with sharing class Claims_IntegrationTest {
       TEDS_Identifier__c = 'ABC123'
     );
     Case c = new Case(
-      IsApproved__c = true,
+      InApproval__c = true,
       RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
       Status = Cases.STATUS_IN_PROGRESS
     );
@@ -394,7 +394,7 @@ public with sharing class Claims_IntegrationTest {
       TEDS_Identifier__c = 'ABC123'
     );
     Case c = new Case(
-      IsApproved__c = true,
+      InApproval__c = true,
       RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
       Status = Cases.STATUS_IN_PROGRESS
     );

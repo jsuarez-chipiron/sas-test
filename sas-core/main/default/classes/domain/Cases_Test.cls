@@ -457,7 +457,7 @@ private class Cases_Test {
     Case c = new Case(
       Status = Cases.STATUS_WAITING_FOR_CONTROL,
       RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
-      IsApproved__c = true
+      InApproval__c = true
     );
     LIA_Claim__c cl = new LIA_Claim__c();
     insert new List<SObject>{ c, cl };

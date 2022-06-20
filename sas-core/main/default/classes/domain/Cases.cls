@@ -764,14 +764,14 @@ public without sharing class Cases extends fflib_SObjectDomain {
           uowTry.registerEmail(emailToSend);
           uowTry.registerDeleted(existingDraftEmail);
           caseToUpdate[0].Status = STATUS_CLOSED;
-          caseToUpdate[0].IsApproved__c = false;
+          caseToUpdate[0].InApproval__c = false;
           uowTry.registerDirty(caseToUpdate[0]);
           uowTry.commitWork();
           sendSuccess = true;
         } catch (Exception exc) {
           fflib_ISObjectUnitOfWork uowCatch = SAS_Service_Application.UnitOfWork.newInstance();
           caseToUpdate[0].Status = STATUS_IN_PROGRESS;
-          caseToUpdate[0].IsApproved__c = false;
+          caseToUpdate[0].InApproval__c = false;
           uowCatch.registerDirty(caseToUpdate[0]);
           uowCatch.commitWork();
           sendSuccess = false;
