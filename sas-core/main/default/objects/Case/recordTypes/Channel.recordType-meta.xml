@@ -4622,6 +4622,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - EuroBonus Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Forsvaret NO</fullName>
             <default>false</default>
         </values>
@@ -5347,6 +5351,10 @@
         </values>
         <values>
             <fullName>General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Support</fullName>
             <default>false</default>
         </values>
         <values>

@@ -226,6 +226,11 @@
                 <label>GDPR</label>
             </value>
             <value>
+                <fullName>General Support</fullName>
+                <default>false</default>
+                <label>General Support</label>
+            </value>
+            <value>
                 <fullName>Gold DK</fullName>
                 <default>false</default>
                 <label>Gold DK</label>
