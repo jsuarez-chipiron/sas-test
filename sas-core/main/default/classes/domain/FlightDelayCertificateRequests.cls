@@ -22,6 +22,12 @@ public without sharing class FlightDelayCertificateRequests extends fflib_SObjec
   public List<Flight_Delay_Certificate_Request__c> instanceRecords;
   public Map<String, Blob> generatedFlightDelayCertificates = new Map<String, Blob>();
 
+  public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
+    updateBookingOnRelatedCase(
+      (Map<Id, Flight_Delay_Certificate_Request__c>) existingRecords
+    );
+  }
+
   public Blob generateFlightDelayCertificate(ID bookingId) {
     if (instanceRecords.size() != 1) {
       //TODO Should this return something else?
@@ -43,5 +49,23 @@ public without sharing class FlightDelayCertificateRequests extends fflib_SObjec
       fdcPageAsPdf = Blob.valueOf(e.getMessage());
     }
     return fdcPageAsPdf;
+  }
+
+  public void updateBookingOnRelatedCase(
+    Map<Id, Flight_Delay_Certificate_Request__c> oldFdcRequests
+  ) {
+    for (Flight_Delay_Certificate_Request__c req : instanceRecords) {
+      Flight_Delay_Certificate_Request__c fdcrBeforeUpdate = oldFdcRequests.get(
+        req.Id
+      );
+      if (req.Booking_Reference__c != fdcrBeforeUpdate.Booking_Reference__c) {
+        System.enqueueJob(
+          new BookingService.AddBookingToCaseAsync(
+            req.Case__c,
+            req.Booking_Reference__c
+          )
+        );
+      }
+    }
   }
 }
