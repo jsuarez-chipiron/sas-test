@@ -319,7 +319,12 @@ global class BookingJSON implements Comparable {
     BookingJSON otherBooking = (BookingJSON) other;
 
     Integer toReturn = 0;
-    if (flights == null || otherBooking.flights == null) {
+    if (
+      flights == null ||
+      otherBooking.flights == null ||
+      flights.size() == 0 ||
+      otherBooking.flights.size() == 0
+    ) {
       return toReturn;
     }
     if (

@@ -8,6 +8,9 @@ public without sharing class FlightService {
     );
   }
 
+  public class IllegalArgumentsException extends Exception {
+  }
+
   /**
    * Attempts to fetch the given flights from TEDS, and create necessary DB objects.
    * Does nothing if one isn't found.
@@ -20,6 +23,10 @@ public without sharing class FlightService {
     Set<String> flightReferences,
     Boolean shouldUpsertToDB
   ) {
+    if (flightReferences == null || flightReferences.size() == 0) {
+      throw new IllegalArgumentsException('flightReferences cannot be empty.');
+    }
+
     TEDSIntegrationService.FlightsQuery query = new TEDSIntegrationService.FlightsQuery();
     query.ids = flightReferences;
 
