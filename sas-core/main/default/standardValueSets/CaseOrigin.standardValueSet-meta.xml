@@ -52,6 +52,11 @@
         <label>Email - Customer Claim</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Customer Claim DBC</fullName>
+        <default>false</default>
+        <label>Email - Customer Claim DBC</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Customer Claim Firms</fullName>
         <default>false</default>
         <label>Email - Customer Claim Firms</label>
@@ -60,6 +65,11 @@
         <fullName>Email - Customer Claim Regression</fullName>
         <default>false</default>
         <label>Email - Customer Claim Regression</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Customer Claim Scanning</fullName>
+        <default>false</default>
+        <label>Email - Customer Claim Scanning</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Digital Channel Support Internal</fullName>
@@ -125,6 +135,11 @@
         <fullName>Email - EuroBonus Partner Support</fullName>
         <default>false</default>
         <label>Email - EuroBonus Partner Support</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - EuroBonus Support</fullName>
+        <default>false</default>
+        <label>Email - EuroBonus Support</label>
     </standardValue>
     <standardValue>
         <fullName>Email - Forsvaret NO</fullName>

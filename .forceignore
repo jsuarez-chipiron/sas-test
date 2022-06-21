@@ -7,7 +7,6 @@ package.xml
 **/destructiveChangesPre.xml
 **/emails/**
 
-
 # LWC configuration files
 **/jsconfig.json
 **/.eslintrc.json
@@ -21,4 +20,5 @@ package.xml
 
 #Data Files
 **/EmailTemplate.json
-**/email/**
+**/email/unfiled$public/**
+

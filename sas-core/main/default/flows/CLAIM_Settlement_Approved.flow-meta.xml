@@ -224,12 +224,6 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>IsApproved__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>OwnerId</field>
             <value>
                 <elementReference>Get_Case_Information.Approval_Submitter__r.Id</elementReference>

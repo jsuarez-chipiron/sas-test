@@ -61,74 +61,99 @@ public without sharing class TEDSIntegrationService {
     public String toTimeUTC { get; set; }
 
     public override String toQueryParamString() {
-      String toReturn = '';
-      Boolean isFirst = true;
+      String queryParamString = '';
 
-      if (arrivalStation != null) {
-        toReturn += addField(isFirst, 'arrivalStation', arrivalStation);
-      }
-      if (boardingPassPrintStatus != null) {
-        toReturn += addField(
-          isFirst,
-          'boardingPassPrintStatus',
-          boardingPassPrintStatus
-        );
-      }
-      if (cmp != null) {
-        toReturn += addField(isFirst, 'cmp', cmp);
-      }
-      if (createdFromTimeUTC != null) {
-        toReturn += addField(isFirst, 'createdFromTimeUTC', createdFromTimeUTC);
-      }
-      if (createdToTimeUTC != null) {
-        toReturn += addField(isFirst, 'createdToTimeUTC', createdToTimeUTC);
-      }
-      if (codsId != null) {
-        toReturn += addField(isFirst, 'codsId', codsId);
-      }
-      if (departureStation != null) {
-        toReturn += addField(isFirst, 'departureStation', departureStation);
-      }
-      if (euroBonusNumber != null) {
-        toReturn += addField(isFirst, 'euroBonusNumber', euroBonusNumber);
-      }
-      if (flightId != null) {
-        toReturn += addField(isFirst, 'flightId', flightId);
-      }
-      if (fromTimeUTC != null) {
-        toReturn += addField(isFirst, 'fromTimeUTC', fromTimeUTC);
-      }
-      if (isCancelled != null) {
-        toReturn += addField(isFirst, 'isCancelled', isCancelled);
-      }
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'arrivalStation',
+        arrivalStation
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'boardingPassPrintStatus',
+        boardingPassPrintStatus
+      );
+      queryParamString = addFieldToQueryParams(queryParamString, 'cmp', cmp);
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'createdFromTimeUTC',
+        createdFromTimeUTC
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'createdToTimeUTC',
+        createdToTimeUTC
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'codsId',
+        codsId
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'departureStation',
+        departureStation
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'euroBonusNumber',
+        euroBonusNumber
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'flightId',
+        flightId
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'fromTimeUTC',
+        fromTimeUTC
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'isCancelled',
+        isCancelled
+      );
       if (reference != null) {
         if (!Bookings.isValidBookingReference(reference)) {
           throw new APIMIntegrationService.IllegalArgumentsException(
             'Booking reference must be 5 or 6 characters'
           );
         }
-        toReturn += addField(isFirst, 'reference', reference);
+        queryParamString = addFieldToQueryParams(
+          queryParamString,
+          'reference',
+          reference
+        );
       }
-      if (status != null) {
-        toReturn += addField(isFirst, 'status', status);
-      }
-      if (ticketNumber != null) {
-        toReturn += addField(isFirst, 'ticketNumber', ticketNumber);
-      }
-      if (travelAdminCodsId != null) {
-        toReturn += addField(isFirst, 'travelAdminCodsId', travelAdminCodsId);
-      }
-      if (toTimeUTC != null) {
-        toReturn += addField(isFirst, 'toTimeUTC', toTimeUTC);
-      }
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'status',
+        status
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'ticketNumber',
+        ticketNumber
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'travelAdminCodsId',
+        travelAdminCodsId
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'toTimeUTC',
+        toTimeUTC
+      );
       if (creationOffices != null && !creationOffices.isEmpty()) {
-        toReturn += this.addField(
-          isFirst,
+        queryParamString = addFieldToQueryParams(
+          queryParamString,
           'creationOffices',
           String.join(new List<String>(creationOffices), ',')
         );
       }
-      return toReturn;
+      return queryParamString;
     }
   }
 
@@ -142,49 +167,58 @@ public without sharing class TEDSIntegrationService {
     public Set<String> ids { get; set; }
 
     public override String toQueryParamString() {
-      String toReturn = '';
-      Boolean isFirst = true;
+      String queryParamString = '';
 
-      if (aircraftRegistration != null) {
-        toReturn += addField(
-          isFirst,
-          'aircraftRegistration',
-          aircraftRegistration
-        );
-      }
-      if (arrivalStation != null) {
-        toReturn += this.addField(isFirst, 'arrivalStation', arrivalStation);
-      }
-      if (callSign != null) {
-        toReturn += this.addField(isFirst, 'callSign', callSign);
-      }
-      if (departureDate != null) {
-        toReturn += this.addField(isFirst, 'departureDate', departureDate);
-      }
-      if (departureStation != null) {
-        toReturn += this.addField(
-          isFirst,
-          'departureStation',
-          departureStation
-        );
-      }
-      if (flightNumber != null) {
-        toReturn += this.addField(isFirst, 'flightNumber', flightNumber);
-      }
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'aircraftRegistration',
+        aircraftRegistration
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'arrivalStation',
+        arrivalStation
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'callSign',
+        callSign
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'departureDate',
+        departureDate
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'departureStation',
+        departureStation
+      );
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'flightNumber',
+        flightNumber
+      );
       if (ids != null && !ids.isEmpty()) {
         if (ids.size() > 10) {
           throw new APIMIntegrationService.IllegalArgumentsException(
             'We can only search for maximum of 10 flights at a time.'
           );
         }
-        toReturn += this.addField(
-          isFirst,
+        queryParamString = addFieldToQueryParams(
+          queryParamString,
           'ids',
           String.join(new List<String>(ids), ',')
         );
       }
 
-      return toReturn;
+      if (queryParamString.length() == 0) {
+        throw new APIMIntegrationService.IllegalArgumentsException(
+          'Cannot query flights with an empty query.'
+        );
+      }
+
+      return queryParamString;
     }
   }
 
@@ -258,6 +292,8 @@ public without sharing class TEDSIntegrationService {
     if (query != null) {
       fullPath += query.toQueryParamString();
     }
+
+    System.debug(fullPath);
 
     Map<String, String> extraRequestHeaders = new Map<String, String>{
       'api-version' => 'v2',

@@ -262,6 +262,11 @@
                 <label>General</label>
             </value>
             <value>
+                <fullName>General Support</fullName>
+                <default>false</default>
+                <label>General Support</label>
+            </value>
+            <value>
                 <fullName>Gold DK</fullName>
                 <default>false</default>
                 <label>Gold DK</label>
@@ -1057,6 +1062,10 @@
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <valueName>Diamond SE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <valueName>General Support</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>

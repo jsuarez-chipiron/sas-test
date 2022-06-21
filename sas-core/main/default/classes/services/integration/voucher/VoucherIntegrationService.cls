@@ -90,7 +90,7 @@ public without sharing class VoucherIntegrationService {
 
     String path = 'validate/vouchers/' + voucherId + '/' + bookingReference;
 
-    HttpResponse response = makeRequest(HttpUtils.HTTP_METHOD.POST, path, null);
+    HttpResponse response = makeRequest(HttpUtils.HTTP_METHOD.GET, path, null);
 
     if (response.getStatusCode() == 404) {
       throw new InvalidVoucherException();

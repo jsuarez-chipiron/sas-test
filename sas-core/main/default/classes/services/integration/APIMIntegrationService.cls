@@ -20,12 +20,22 @@ public without sharing class APIMIntegrationService {
      */
     public abstract String toQueryParamString();
 
-    protected virtual String addField(
-      Boolean isFirst,
+    /**
+     * Returns the given query parameter string with the given field added to
+     * the query parameter string. Handles null checks.
+     */
+    protected virtual String addFieldToQueryParams(
+      String queryParamString,
       String fieldName,
       String fieldValue
     ) {
-      return (isFirst ? '?' : '&') + fieldName + '=' + fieldValue;
+      if (String.isBlank(fieldValue)) {
+        return queryParamString;
+      }
+      return (String.isBlank(queryParamString) ? '?' : '&') +
+        fieldName +
+        '=' +
+        fieldValue;
     }
   }
 

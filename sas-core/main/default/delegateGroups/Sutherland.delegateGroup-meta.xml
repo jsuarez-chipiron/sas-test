@@ -2,8 +2,11 @@
 <DelegateGroup xmlns="http://soap.sforce.com/2006/04/metadata">  
     <groups>Claims - Baggage</groups>
     <groups>Claims - Flight Disruptions</groups>
+    <groups>Claims - High Priority</groups>
     <groups>Claims - Other</groups>
     <label>Sutherland</label>
     <loginAccess>false</loginAccess>
+    <permissionSets>Service Presences - Breaks</permissionSets>
+    <permissionSets>Service Presences - Customer Claims</permissionSets>
     <roles>Sutherland</roles>
 </DelegateGroup>

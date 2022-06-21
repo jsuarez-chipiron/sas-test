@@ -153,7 +153,11 @@ public with sharing class C_Log {
     try {
       http.body = req.requestBody.toString();
     } catch (Exception e) {
-      http.body = 'Blob Data (' + req.requestBody.size() + ')';
+      if (req.requestBody != null) {
+        http.body = 'Blob Data (' + req.requestBody.size() + ')'; 
+      } else {
+        http.body = '';
+      }
     }
     return http;
   }
@@ -186,7 +190,11 @@ public with sharing class C_Log {
     try {
       http.body = req.getBodyAsBlob().toString();
     } catch (Exception e) {
-      http.body = 'Blob Data (' + req.getBodyAsBlob().size() + ')';
+      if (req.getBodyAsBlob() != null) {
+        http.body = 'Blob Data (' + req.getBodyAsBlob().size() + ')';
+      } else {
+        http.body = '';
+      }
     }
     return http;
   }

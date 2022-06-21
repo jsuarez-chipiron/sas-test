@@ -27,7 +27,7 @@
     </head>
 
     <body>
-        <apex:image value="{!imageLink}" width="387px" height="141px" />
+        <apex:image value="{!imageLink}" width="100%" />
         <h1>Flight Delay Certificate</h1>
         <apex:outputText value="It is hereby certified that the following passenger was affected by a flight irregularity" styleClass="infoText"
         />
@@ -50,10 +50,6 @@
                 <apex:facet name="header">Flight Number</apex:facet>
                 <apex:outputText value="{!flight.FlightNumber}" styleClass="flightInfo" />
             </apex:column>
-            <!--             <apex:column>
-                <apex:facet name="header">Flight Date</apex:facet>
-                <apex:outputText value="{!flight.FlightDate}" styleClass="flightInfo" />
-            </apex:column> -->
             <apex:column>
                 <apex:facet name="header">Departure Airport</apex:facet>
                 <apex:outputText value="{!flight.DepartureAirport}" styleClass="flightInfo" />

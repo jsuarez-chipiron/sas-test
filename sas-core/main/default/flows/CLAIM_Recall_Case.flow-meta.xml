@@ -200,7 +200,7 @@
         <inputAssignments>
             <field>Control_Reason__c</field>
             <value>
-                <stringValue/>
+                <stringValue></stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -239,6 +239,12 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>InApproval__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>OwnerId</field>
             <value>
