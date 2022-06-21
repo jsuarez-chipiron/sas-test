@@ -56,9 +56,19 @@
                 <label>Email - Customer Claim</label>
             </value>
             <value>
+                <fullName>Email - Customer Claim DBC</fullName>
+                <default>false</default>
+                <label>Email - Customer Claim DBC</label>
+            </value>
+            <value>
                 <fullName>Email - Customer Claim Regression</fullName>
                 <default>false</default>
                 <label>Email - Customer Claim Regression</label>
+            </value>
+            <value>
+                <fullName>Email - Customer Claim Scanning</fullName>
+                <default>false</default>
+                <label>Email - Customer Claim Scanning</label>
             </value>
             <value>
                 <fullName>Email - Digital Channel Support Internal</fullName>

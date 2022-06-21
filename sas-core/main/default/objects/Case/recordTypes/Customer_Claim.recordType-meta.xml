@@ -3482,7 +3482,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Customer Claim DBC</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Customer Claim Regression</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Customer Claim Scanning</fullName>
             <default>false</default>
         </values>
         <values>
