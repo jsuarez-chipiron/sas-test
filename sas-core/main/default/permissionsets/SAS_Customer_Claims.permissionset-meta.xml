@@ -894,6 +894,14 @@
         <object>Settlement__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <pageAccesses>
+        <apexPage>FlightDelayCertificateDataEntry</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>FlightDelayCertificatePage</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
     <recordTypeVisibilities>
         <recordType>Case.Customer_Claim</recordType>
         <visible>true</visible>
