@@ -28,13 +28,18 @@ public without sharing class FlightDelayCertificateRequests extends fflib_SObjec
     );
   }
 
+  public class FlightDelayCertificateException extends Exception {
+  }
+
   public Blob generateFlightDelayCertificate(ID bookingId) {
     if (instanceRecords.size() != 1) {
       //TODO Should this return something else?
       return null;
     }
     Flight_Delay_Certificate_Request__c request = instanceRecords[0];
-    PageReference fdcPage = Page.FlightDelayCertificatePage;
+    PageReference fdcPage = new PageReference(
+      '/apex/flightdelaycertificatepage'
+    );
     fdcPage.getParameters().put('bookingId', bookingId);
     fdcPage.getParameters().put('passengerName', request.Contact_Full_Name__c);
     fdcPage.getParameters().put('enteredFlight', request.Flight_Number__c);
@@ -46,7 +51,9 @@ public without sharing class FlightDelayCertificateRequests extends fflib_SObjec
     try {
       fdcPageAsPdf = fdcPage.getContentAsPDF();
     } catch (Exception e) {
-      fdcPageAsPdf = Blob.valueOf(e.getMessage());
+      throw new FlightDelayCertificateException(
+        'Could not covert PageReference to PDF. ' + e.getMessage()
+      );
     }
     return fdcPageAsPdf;
   }

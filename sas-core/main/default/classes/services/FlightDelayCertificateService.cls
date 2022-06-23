@@ -45,24 +45,46 @@ public without sharing class FlightDelayCertificateService {
     insert certificateRequest;
 
     System.enqueueJob(
-      new FlightDelayCertificateJob(caseToInsert.Id, certificateRequest.Id)
+      new AddBookingForRequest(caseToInsert.Id, certificateRequest.Id)
     );
 
     return '';
   }
 
-  public without sharing class FlightDelayCertificateJob implements Queueable, Database.AllowsCallouts {
+  public without sharing class AddBookingForRequest implements Queueable, Database.AllowsCallouts {
     private String caseId;
     private String certificateRequestId;
 
-    public FlightDelayCertificateJob(
-      String caseId,
-      String certificateRequestId
-    ) {
+    public AddBookingForRequest(String caseId, String certificateRequestId) {
       this.caseId = caseId;
       this.certificateRequestId = certificateRequestId;
     }
 
+    public void execute(QueueableContext ctx) {
+      List<Flight_Delay_Certificate_Request__c> insertedRequests = FlightDelayCertificateRequestsSelector.newInstance()
+        .selectByIdFull(new Set<Id>{ this.certificateRequestId });
+      BookingService.addBookingToCase(
+        caseId,
+        insertedRequests[0].Booking_Reference__c
+      );
+      //Chained Queueables are not allowing in tests
+      if (!Test.isRunningTest()) {
+        System.enqueueJob(
+          new FlightDelayCertificateSend(caseId, insertedRequests)
+        );
+      }
+    }
+  }
+  public without sharing class FlightDelayCertificateSend implements Queueable, Database.AllowsCallouts {
+    private String caseId;
+    private List<Flight_Delay_Certificate_Request__c> insertedRequests;
+    public FlightDelayCertificateSend(
+      String caseId,
+      List<Flight_Delay_Certificate_Request__c> insertedRequests
+    ) {
+      this.caseId = caseId;
+      this.insertedRequests = insertedRequests;
+    }
     public void execute(QueueableContext ctx) {
       fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
       Boolean bookingHasDelays = false;
@@ -73,14 +95,9 @@ public without sharing class FlightDelayCertificateService {
       );
 
       FlightDelayCertificateRequests newRequests = FlightDelayCertificateRequests.newInstance(
-        FlightDelayCertificateRequestsSelector.newInstance()
-          .selectByIdFull(new Set<Id>{ this.certificateRequestId })
+        this.insertedRequests
       );
 
-      BookingService.addBookingToCase(
-        insertedCase.instanceRecords[0].Id,
-        newRequests.instanceRecords[0].Booking_Reference__c
-      );
       List<Booking__c> bookingsForPassenger = BookingsSelector.newInstance()
         .selectByLastNameAndBookingReference(
           newRequests.instanceRecords[0].Contact_Last_Name__c,
@@ -114,6 +131,7 @@ public without sharing class FlightDelayCertificateService {
         Blob fdcPdf = newRequests.generateFlightDelayCertificate(
           currentBooking.Id
         );
+
         Messaging.EmailFileAttachment pdfToAttach = EmailMessages.createEmailAttachmentFromBlob(
           fdcPdf,
           fileName,
