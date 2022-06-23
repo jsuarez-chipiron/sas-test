@@ -49,7 +49,11 @@ public without sharing class FlightDelayCertificateRequests extends fflib_SObjec
     fdcPage.setRedirect(false);
     Blob fdcPageAsPdf;
     try {
-      fdcPageAsPdf = fdcPage.getContentAsPDF();
+      if (System.Test.isRunningTest()) {
+        fdcPageAsPdf = Blob.valueOf('test');
+      } else {
+        fdcPageAsPdf = fdcPage.getContentAsPDF();
+      }
     } catch (Exception e) {
       throw new FlightDelayCertificateException(
         'Could not covert PageReference to PDF. ' + e.getMessage()
