@@ -336,21 +336,26 @@ public without sharing class Bookings extends fflib_SObjectDomain {
       }
     }
 
-    List<SObject> toInsert = new List<SObject>();
+    List<SObject> passengersToInsert = new List<SObject>();
+    List<SObject> segmentsToInsert = new List<SObject>();
 
     for (FullBookingData b : fullRecords) {
       for (Passenger__c p : b.passengers) {
         p.Booking__c = b.booking.Id;
-        toInsert.add(p);
+        passengersToInsert.add(p);
       }
       for (Flight__c f : b.flights) {
         for (Segment__c s : b.segments.get(f.TEDS_Identifier__c)) {
           s.Booking__c = b.booking.Id;
           s.Flight__c = f.Id;
-          toInsert.add(s);
+          segmentsToInsert.add(s);
         }
       }
     }
+
+    List<SObject> toInsert = new List<SObject>();
+    toInsert.addAll(passengersToInsert);
+    toInsert.addAll(segmentsToInsert);
 
     insert toInsert;
 
