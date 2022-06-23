@@ -450,6 +450,31 @@
         <field>Flight__c.Scheduled_Departure_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FlightIrregularities__c.Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FlightIrregularities__c.Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FlightIrregularities__c.Duration_minutes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FlightIrregularities__c.Reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FlightIrregularities__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
         <field>Group_Travel_Request__c.Address__c</field>
@@ -2710,6 +2735,9 @@
         <layout>Flight__c-Flight Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>FlightIrregularities__c-Flight_Irregularities Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Passenger__c-Passenger Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -2931,6 +2959,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Flight__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>FlightIrregularities__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
