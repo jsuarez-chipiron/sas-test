@@ -201,22 +201,31 @@ private class ValidateSettlements_Test {
     Boolean noError = false;
 
     Test.startTest();
-    ValidateSettlements.ValidationStatus status = ValidateSettlements.validate(
-      new List<List<Settlement__c>>{
-        new List<Settlement__c>{
-          validSettlement1,
-          validSettlement2,
-          validSettlement3,
-          validSettlement4
+    ValidateSettlements.ValidationStatus status;
+    try {
+      status = ValidateSettlements.validate(
+        new List<List<Settlement__c>>{
+          new List<Settlement__c>{
+            validSettlement1,
+            validSettlement2,
+            validSettlement3,
+            validSettlement4
+          }
         }
-      }
-    )[0];
-    if (!status.isValid) {
+      )[0];
+    } catch (Exception e) {
+      status = new ValidateSettlements.ValidationStatus('Error');
+    }
+
+    
+    if (status.isValid) {
       noError = true;
     }
+    
     Test.stopTest();
-
+    
     // Then
-    System.assert(!noError, 'A valid settlement was invalidated');
+    System.assertEquals(status.errorMessage, '');
+    System.assert(noError, 'A valid settlement was invalidated');
   }
 }

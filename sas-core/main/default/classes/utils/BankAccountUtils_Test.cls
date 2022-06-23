@@ -15,9 +15,13 @@ private class BankAccountUtils_Test {
     // When
     List<Boolean> results = new List<Boolean>();
     for (List<String> bankDetails : invalidIBANList) {
-      results.add(
-        BankAccountUtils.validateIBAN(bankDetails[0], bankDetails[1])
-      );
+      try {
+        results.add(
+          BankAccountUtils.validateIBAN(bankDetails[0], bankDetails[1])
+        );
+      } catch (Exception e) {
+        results.add(false);
+      }
     }
 
     // Then
@@ -106,9 +110,13 @@ private class BankAccountUtils_Test {
     // When
     List<Boolean> results = new List<Boolean>();
     for (List<String> bankDetails : validIBANList) {
-      results.add(
-        BankAccountUtils.validateIBAN(bankDetails[0], bankDetails[1])
-      );
+      try {
+        results.add(
+          BankAccountUtils.validateIBAN(bankDetails[0], bankDetails[1])
+        );
+      } catch (Exception e) {
+        results.add(false);
+      }
     }
 
     // Then
