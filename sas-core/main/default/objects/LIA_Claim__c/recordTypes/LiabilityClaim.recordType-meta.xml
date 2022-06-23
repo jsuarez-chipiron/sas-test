@@ -950,6 +950,10 @@
             <fullName>Zimbabwe</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Åland Islands</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Country__c</picklist>
@@ -1895,6 +1899,10 @@
         </values>
         <values>
             <fullName>Zimbabwe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Åland Islands</fullName>
             <default>false</default>
         </values>
     </picklistValues>
