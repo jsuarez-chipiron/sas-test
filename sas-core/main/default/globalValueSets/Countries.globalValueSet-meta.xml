@@ -16,6 +16,11 @@
         <label>Algeria</label>
     </customValue>
     <customValue>
+        <fullName>Åland Islands</fullName>
+        <default>false</default>
+        <label>Åland Islands</label>
+    </customValue>
+    <customValue>
         <fullName>Andorra</fullName>
         <default>false</default>
         <label>Andorra</label>
