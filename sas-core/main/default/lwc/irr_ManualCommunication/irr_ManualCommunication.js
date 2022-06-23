@@ -14,9 +14,12 @@ import sendManualCommunication from '@salesforce/apex/IRR_CON_ManualCommunicatio
 import getManualTemplatesBySendMode from '@salesforce/apex/IRR_CON_ManualCommunication.getManualTemplatesBySendMode';
 import getBookingPassengerInfos from '@salesforce/apex/IRR_CON_ManualCommunication.getBookingPassengerInfos';
 import getAdvancedFilterPassengerInfos from "@salesforce/apex/IRR_CON_ManualCommunication.getAdvancedFilterPassengerInfos";
+import sendCsvEmail from "@salesforce/apex/IRR_CON_SendEmail.SendCsvEmail";
+
 
 import * as tableUtil from 'c/c_TableUtil';
 import { reduceErrors } from 'c/c_LdsUtils';
+import { convertToCSV } from 'c/c_Json2CsvUtils';
 
 import { FLIGHT_COLUMNS, PREVIOUS_FLIGHT_COLUMNS, NEXT_FLIGHT_COLUMNS, BOOKING_COLUMNS, BOOKING_FILTER_COLUMNS} from './passengerTableColumns';
 
@@ -58,9 +61,27 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     templatesBySendMode = {};
 
+    sendEmailResult = {};
+
     selectedRows = [];
 
     filterParameters = {};
+
+    flightHeaders = {
+        "thisSegment.flightId" :"Flight",
+        "bookingReference":"PNR",
+        "lastNameSlashFirstName":"Name",
+        "phoneNumber":"Phone",
+        "emailAddress":"Email",
+        "thisSegment.serviceClass":"Service Class",
+        "thisSegment.bookingClass":"Booking Class",
+        "thisSegment.status":"Status",
+        "thisSegment.statusCode":"Code",
+        "SSR":"SSR",
+        "ebLevel":"EB",
+        "otherFQTVCarrier":"FQTV"
+        
+    };
 
     connectedCallback() {
         const _ = this.init();
@@ -302,6 +323,7 @@ export default class IRR_ManualCommunication extends LightningElement {
         this.retrieveParameters = {};
         this.processedTable = [];
         this.passengerResult = [];
+        this.passengerResultunflatten = [];
         this.additionalRecipients = [];
         this.template.querySelector('c-irr_-recipient-modal').reset();
         this.leftPanelTab = "LEFT_FILTER";
@@ -344,6 +366,8 @@ export default class IRR_ManualCommunication extends LightningElement {
             }
             if (eventParameters) this.retrieveParameters = eventParameters;
             if (result) this.passengerResult = result.map(item => tableUtil.flatten(item));
+            if (result) this.passengerResultunflatten = result;
+            console.log(`Passenger result: ${JSON.stringify(this.passengerResultunflatten)}`);
             this.processTable();
             //Focus container div to capture keyboard events
             this.template.querySelector('div[focusable=""]').focus();
@@ -353,5 +377,38 @@ export default class IRR_ManualCommunication extends LightningElement {
         catch (e) {
             this.handleError(e);
         }
+    }
+    async downloadCSVFile () {
+        console.log("Downloading CSV file");
+        let evtParameters ;
+        const passengerInfos = this.selectedRows.map(row => tableUtil.flatten(row));
+        if(this.selectedRows.length > 0) {
+
+            try {
+                const csvData = convertToCSV(passengerInfos,this.flightHeaders);
+                if(csvData == null) return;
+                // console.log(`passengerInfos: ${JSON.stringify(passengerInfos)}`);
+                evtParameters = {CsvData: csvData};
+                this.sendEmailResult = await sendCsvEmail(evtParameters);
+                console.log(`sendEmailResult--> ${JSON.stringify(this.sendEmailResult)}`);
+            }
+            catch (e) {
+                this.handleError(e, true);
+                console.log(`Error in sending email--> ${JSON.stringify(e)}`);
+            }
+            // const blob = new Blob([result]);
+            // const exportedFilename = 'Passengers.csv';
+
+        }
+        // const csvData = tableUtil.convertToCSV(this.processedTable, this.COLUMNS);
+        // if(this.selectedRows.length > 0) {
+
+        //     exportCSVFile(this.flightHeaders, passengerInfos ,"passenger details" );
+        // } else {
+
+        //     exportCSVFile(this.flightHeaders, this.processedTable,"passenger details" );
+
+        // }
+
     }
 }

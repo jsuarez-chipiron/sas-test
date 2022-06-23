@@ -95,27 +95,38 @@
                         <div class="page-section page-main">
                             <lightning-card icon-name="utility:groups">
                                 <h1 slot="title" class="no-wrap">{tableHeading}</h1>
-                                <div class="slds-p-horizontal_small">
-                                    <div class="slds-media">
-                                        <div class="slds-media__body">
-                                            <lightning-datatable
-                                                    if:true={hasResults}
-                                                    key-field="passengerId"
-                                                    data={processedTable}
-                                                    columns={COLUMNS}
-                                                    sorted-by={sortBy}
-                                                    sorted-direction={sortDirection}
-                                                    onsort={handleTableSort}
-                                                    onrowselection={handleTableSelection}>
-                                            </lightning-datatable>
-                                            <div
-                                                    if:false={hasResults}
-                                                    class="slds-align_absolute-center slds-m-vertical_small">
-                                                {noPassengersFoundText}
+                                <lightning-card>
+                                    <div class="slds-p-around_medium lgc-bg-inverse">
+                                            <lightning-button icon-name="utility:email" 
+                                                              label="Email Hotel list" 
+                                                              title="Email Hotel list"
+                                                              onclick={downloadCSVFile} 
+                                                              variant="brand">
+                                            </lightning-button>
+                                        </p>
+                                    </div>
+                                    <div class="slds-p-horizontal_small">
+                                        <div class="slds-media">
+                                            <div class="slds-media__body">
+                                                <lightning-datatable
+                                                        if:true={hasResults}
+                                                        key-field="passengerId"
+                                                        data={processedTable}
+                                                        columns={COLUMNS}
+                                                        sorted-by={sortBy}
+                                                        sorted-direction={sortDirection}
+                                                        onsort={handleTableSort}
+                                                        onrowselection={handleTableSelection}>
+                                                </lightning-datatable>
+                                                <div
+                                                        if:false={hasResults}
+                                                        class="slds-align_absolute-center slds-m-vertical_small">
+                                                    {noPassengersFoundText}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </lightning-card>
                             </lightning-card>
                         </div>
                     </lightning-layout-item>
