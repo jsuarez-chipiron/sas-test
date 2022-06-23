@@ -30,7 +30,6 @@ public with sharing class FlightService_IntegrationTest {
     );
   }
 
-  // TODO: Reimplement
   @IsTest
   public static void shouldInsertDelayedFlightIrregularitiesByFlightId() {
     // Given
