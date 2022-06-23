@@ -852,12 +852,19 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           errorMessages.add('Amount has to be greater than 0.');
         }
         if (errorMessages.size() == 0) {
-          if (
-            !BankAccountUtils.validateIBAN(
+          Boolean bankAccountNumberIsValid = true;
+          try {
+            bankAccountNumberIsValid = BankAccountUtils.validateIBAN(
               s.Bank_Account_Number__c,
               s.Bank_Country__c
-            )
-          ) {
+            );
+          } catch (Exception e) {
+            errorMessages.add(
+              'Bank Account Number and the bank country do not match. ' +
+              e.getMessage()
+            );
+          }
+          if (!bankAccountNumberIsValid) {
             errorMessages.add('Bank Account Number is invalid.');
           }
           if (!BankAccountUtils.validateBIC(s.BIC_Swift__c)) {
