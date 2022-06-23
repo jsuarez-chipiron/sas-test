@@ -273,7 +273,6 @@ public without sharing class Bookings extends fflib_SObjectDomain {
    * to have its own DML statements.
    */
   public Bookings upsertToDB() {
-    // TODO: This should be called upsert.
     List<Booking__c> bookingsToUpsert = new List<Booking__c>();
     Map<String, Flight__c> uniqueFlightsToUpsert = new Map<String, Flight__c>();
 
