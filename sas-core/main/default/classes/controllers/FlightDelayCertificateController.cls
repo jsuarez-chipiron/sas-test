@@ -1,4 +1,4 @@
-public with sharing class FlightDelayCertificateController {
+public without sharing class FlightDelayCertificateController {
   public final static String CREATION_CONFIRM_MESSAGE = 'Flight Delay Certificate has been created. Please go to the related case to view the created file';
   public List<FlightWrapper> flightWrappers { get; set; }
   public Id bookingId { get; set; }
