@@ -22,6 +22,25 @@ public without sharing class CountryUtils {
     'AX' => 'FI'
   };
 
+  public static String getCountryNameByShortCode(String countryShortCode) {
+    String convertedShortCode = formCountryCodeToIBANCountryCode(
+      countryShortCode
+    );
+    String countryName;
+    try {
+      countryName = [
+        SELECT Country_Name__c
+        FROM Settlement_Country_Setting__mdt
+        WHERE Country_Short_Code__c = :convertedShortCode
+      ]
+      .Country_Name__c;
+    } catch (Exception e) {
+      // Incorrect country short code, return null
+    }
+
+    return countryName;
+  }
+
   /**
    * Converts the contry codes which are available for selection in the front end to the country codes which their banking system uses for IBAN, e.g. AX -> FI.
    * Source 1: https://www.iban.com/structure

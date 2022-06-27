@@ -294,24 +294,11 @@ public without sharing class ClaimService {
     );
 
     if (!String.isBlank(form.formData.country)) {
-      claimToCreate.Country__c = [
-        SELECT Country_Name__c
-        FROM Settlement_Country_Setting__mdt
-        WHERE Country_Short_Code__c = :form.formData.country
-      ]
-      .Country_Name__c;
+      claimToCreate.Country__c = CountryUtils.getCountryNameByShortCode(form.formData.country);
     }
 
     if (!String.isBlank(form.formData.bankCountry)) {
-      String countryShortCode = CountryUtils.formCountryCodeToIBANCountryCode(
-        form.formData.bankCountry
-      );
-      claimToCreate.Bank_Country__c = [
-        SELECT Country_Name__c
-        FROM Settlement_Country_Setting__mdt
-        WHERE Country_Short_Code__c = :countryShortCode
-      ]
-      .Country_Name__c;
+      claimToCreate.Bank_Country__c = CountryUtils.getCountryNameByShortCode(form.formData.bankCountry);
     }
 
     if (!String.isBlank(form.formData.bankAccountNumber)) {
