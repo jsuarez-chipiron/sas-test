@@ -56,7 +56,13 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
       new Map<Proactivity__c, String>{};
     }
 
-    String flightId = claim.Flight_Number__c != null &&
+    String flightId1 = claim.Flight_Number__c != null &&
+      claim.Flight_Date__c != null
+      ? claim.Flight_Number__c +
+        '-' +
+        String.valueOf(claim.Flight_Date__c).remove('-')
+      : null;
+    String flightId2 = claim.Flight_Number__c != null &&
       claim.Flight_Date__c != null
       ? claim.Flight_Number__c + '-' + String.valueOf(claim.Flight_Date__c)
       : null;
@@ -98,10 +104,17 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
     }
 
     whereQuery = buildQuery(whereQuery, 'Claim_Firm__c = :firm', firm != null);
+
+    // Two flight ids to handle different input formats.
     whereQuery = buildQuery(
       whereQuery,
-      'Flight_Id__c = :flightId',
-      !String.isBlank(flightId)
+      'Flight_Id__c = :flightId1',
+      !String.isBlank(flightId1)
+    );
+    whereQuery = buildQuery(
+      whereQuery,
+      'Flight_Id__c = :flightId2',
+      !String.isBlank(flightId2)
     );
 
     whereQuery = buildQuery(
@@ -118,7 +131,7 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
     List<String> cancellationCodes = new List<String>{};
     Flight__c flight;
 
-    if (flightId != null) {
+    if (flightId1 != null) {
       FlightsSelector flights = FlightsSelector.newInstance();
       try {
         flight = flights.selectByFlightNumberAndDate(
@@ -203,7 +216,8 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
       proactivites,
       flight,
       cancellationCodes,
-      flightId,
+      flightId1,
+      flightId2,
       passengerNames
     );
 
@@ -230,7 +244,8 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
     List<Proactivity__c> proactivites,
     Flight__c flight,
     List<String> cancellationCodes,
-    String flightId,
+    String flightId1,
+    String flightId2,
     List<String> passengerNames
   ) {
     Map<Proactivity__c, String> proactivityToReason = new Map<Proactivity__c, String>{};
@@ -258,7 +273,11 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
       ) {
         reasons = buildReasons(reasons, 'EB');
       }
-      if (!String.isBlank(p.Flight_Id__c) && p.Flight_Id__c == flightId) {
+      if (
+        !String.isBlank(p.Flight_Id__c) &&
+        (p.Flight_Id__c == flightId1 ||
+        p.Flight_Id__c == flightId2)
+      ) {
         reasons = buildReasons(reasons, 'Flight');
       }
       if (

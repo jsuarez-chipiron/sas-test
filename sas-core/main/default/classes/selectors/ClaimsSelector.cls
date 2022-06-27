@@ -87,7 +87,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
 
     if (!String.isBlank(proactivity.Flight_Id__c)) {
       flightNumber = proactivity.Flight_Id__c.substringBefore('-');
-      flightDate = Date.parse(proactivity.Flight_Id__c.substringAfter('-'));
+      flightDate = DateUtils.parseDateFromFlightId(proactivity.Flight_Id__c);
     }
 
     String bankAccountNumber = proactivity.Bank_Account_Number__c;
@@ -119,7 +119,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
 
     whereQuery = buildQuery(
       whereQuery,
-      'Flight_Number__c = :flightNumber AND Flight_Date__c = :flightDate',
+      '(Flight_Number__c = :flightNumber AND Flight_Date__c = :flightDate)',
       !String.isBlank(flightNumber) && flightDate != null
     );
 

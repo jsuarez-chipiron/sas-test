@@ -9,7 +9,7 @@ public without sharing class ProactivitiesController {
     @AuraEnabled
     public String type;
 
-    Proactivity(Proactivity__c proactivity, LIA_Claim__c claim, String reason) {
+    Proactivity(Proactivity__c proactivity, String reason) {
       this.id = proactivity.Id;
       this.note = proactivity.Note__c;
       this.type = proactivity.Type__c;
@@ -38,17 +38,9 @@ public without sharing class ProactivitiesController {
       proactivityToReason.keySet()
     );
 
-    if (proactivitiesFound.size() > 0) {
-      ClaimsSelector claims = ClaimsSelector.newInstance();
-
-      LIA_Claim__c claim = claims.selectByCaseIdWithCustomers(
-        new Set<Id>{ caseId }
-      )[0];
-
-      for (Proactivity__c p : proactivitiesFound) {
-        String reasons = proactivityToReason.get(p);
-        proactivitiesWithMatchingReason.add(new Proactivity(p, claim, reasons));
-      }
+    for (Proactivity__c p : proactivitiesFound) {
+      String reasons = proactivityToReason.get(p);
+      proactivitiesWithMatchingReason.add(new Proactivity(p, reasons));
     }
 
     return proactivitiesWithMatchingReason;
