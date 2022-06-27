@@ -71,7 +71,8 @@ public without sharing class EmailMessages extends fflib_SObjectDomain {
   }
 
   public static Messaging.SingleEmailMessage createSingleEmailMessageFromTemplate(
-    String templateName
+    String templateName,
+    Id caseId
   ) {
     List<EmailTemplate> templates = EmailTemplatesSelector.newInstance()
       .selectByName(new Set<String>{ templateName });
@@ -81,7 +82,11 @@ public without sharing class EmailMessages extends fflib_SObjectDomain {
       throw new EmailTemplateNameException();
     }
 
-    emailToSend.setSubject(templates[0].Subject);
+    emailToSend.setSubject(
+      templates[0].Subject +
+      ' ' +
+      Cases.getThreadId(caseId)
+    );
     emailToSend.setHtmlBody(templates[0].HtmlValue);
     emailToSend.setPlainTextBody(templates[0].Body);
     return emailToSend;

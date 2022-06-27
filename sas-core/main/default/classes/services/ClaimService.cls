@@ -410,6 +410,8 @@ public without sharing class ClaimService {
       CasesSelector.newInstance().selectById(new Set<Id>{ claim.Case__c })
     );
 
+    String caseId = parentCase.instanceRecords[0].Id;
+
     Boolean cardHasBeenPaidOut = RedeemedCompensationCards.hasBeenPaidOut(
       claim.Compensation_Card_Number__c,
       claim.Liability_PNR__c
@@ -419,7 +421,8 @@ public without sharing class ClaimService {
       fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
 
       Messaging.SingleEmailMessage emailToSend = EmailMessages.createSingleEmailMessageFromTemplate(
-        COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME
+        COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME,
+        caseId
       );
       emailToSend.setReplyTo(COMPENSATION_CARD_REPLY_TO_ADDRESS);
 
@@ -464,7 +467,8 @@ public without sharing class ClaimService {
         );
 
         Messaging.SingleEmailMessage emailToSend = EmailMessages.createSingleEmailMessageFromTemplate(
-          COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME
+          COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME,
+          caseId
         );
         emailToSend.setReplyTo(COMPENSATION_CARD_REPLY_TO_ADDRESS);
 
@@ -490,7 +494,8 @@ public without sharing class ClaimService {
           Claims.newInstance(new List<LIA_Claim__c>{ claim }).settle(uow);
 
           Messaging.SingleEmailMessage emailToSend = EmailMessages.createSingleEmailMessageFromTemplate(
-            COMPENSATION_CARD_SUCCESS_EMAIL_TEMPLATE_NAME
+            COMPENSATION_CARD_SUCCESS_EMAIL_TEMPLATE_NAME,
+            caseId
           );
           emailToSend.setReplyTo(COMPENSATION_CARD_REPLY_TO_ADDRESS);
 
