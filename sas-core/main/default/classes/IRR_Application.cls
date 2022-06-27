@@ -102,7 +102,9 @@ public class IRR_Application {
                             'manualCommunication' => new C_Application.EventDefinition(
                                     IRR_MOD_ManualRequest.class, IRR_EVT_ManualProcessor.Constructor.class),
                             'automatedCommunication' => new C_Application.EventDefinition(
-                                    IRR_MOD_AutomatedRequest.class, IRR_EVT_AutomatedProcessor.Constructor.class)
+                                    IRR_MOD_AutomatedRequest.class, IRR_EVT_AutomatedProcessor.Constructor.class),
+                            'NoAlternativeUN' => new C_Application.EventDefinition(
+                                    IRR_MOD_NoRebookInfo.class, IRR_EVT_NoRebookProcessor.Constructor.class)   
                     }
             );
 

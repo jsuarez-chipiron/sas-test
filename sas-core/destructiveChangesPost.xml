@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 
-<!--INSTRUCTIONS FOR DESTRUCTIVE CHANGES
+    <!--INSTRUCTIONS FOR DESTRUCTIVE CHANGES
     This file will remove the included components *AFTER* the deploy.
 
     For each destructive change, create a new block of changes and create a comment header
@@ -13,10 +13,11 @@
 -->
 
     <types>
-        <members>CLMIntegrationServiceTest</members>
-        <members>Voucher_IntegrationTest</members>
-        <members>LoyaltyService</members>
-        <members>VoucherService</members>
-		<name>ApexClass</name>
+        <members>IRR_CON_SendEmail</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>c_Json2CsvUtils</members>
+        <name>LightningComponentBundle</name>
     </types>
 </Package>
