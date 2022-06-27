@@ -227,7 +227,7 @@ private class IRR_EVT_NoRebookProcessor_Test {
         ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new Set<String>{'ARN','CPH'});
         List<IRR_MOD_Message> messages = eventProcessor.messages;
         System.assertEquals(2, messages.size());
-        System.assertEquals('irr_noalternativeUN_sms', messages[0].template);
+        System.assertEquals('irr_noalternativeUN_sms_01', messages[0].template);
         System.assertEquals('irr_noalternativeUN_email_01', messages[1].template);
         System.assertEquals('No Alternative Rebooking', messages[0].type);
         System.assertEquals('No Alternative Rebooking', messages[1].type);
