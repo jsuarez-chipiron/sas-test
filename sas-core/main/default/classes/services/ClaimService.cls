@@ -303,10 +303,13 @@ public without sharing class ClaimService {
     }
 
     if (!String.isBlank(form.formData.bankCountry)) {
+      String countryShortCode = CountryUtils.formCountryCodeToIBANCountryCode(
+        form.formData.bankCountry
+      );
       claimToCreate.Bank_Country__c = [
         SELECT Country_Name__c
         FROM Settlement_Country_Setting__mdt
-        WHERE Country_Short_Code__c = :form.formData.bankCountry
+        WHERE Country_Short_Code__c = :countryShortCode
       ]
       .Country_Name__c;
     }
