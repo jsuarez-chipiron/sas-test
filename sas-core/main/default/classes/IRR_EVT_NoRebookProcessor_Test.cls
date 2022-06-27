@@ -33,6 +33,7 @@ private class IRR_EVT_NoRebookProcessor_Test {
         noRebookInfo.eventTime = Datetime.now();
         noRebookInfo.scheduledTimeOfDepartureUTC = Datetime.now();
         noRebookInfo.scheduledTimeOfDepartureLocal = Datetime.now();
+        noRebookInfo.cancelledSegment = 'CANCELLED_SEGMENT';
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_NoRebookProcessor.Constructor().newInstance(noRebookInfo);
 
         //When
@@ -50,6 +51,7 @@ private class IRR_EVT_NoRebookProcessor_Test {
         noRebookInfo.bookingReference = 'TEST_BOOKING_REFERENCE';
         noRebookInfo.scheduledTimeOfDepartureUTC = Datetime.now();
         noRebookInfo.scheduledTimeOfDepartureLocal = Datetime.now();
+        noRebookInfo.cancelledSegment = 'CANCELLED_SEGMENT';
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_NoRebookProcessor.Constructor().newInstance(noRebookInfo);
 
         //When
@@ -225,8 +227,8 @@ private class IRR_EVT_NoRebookProcessor_Test {
         ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getAirportCityNames(new Set<String>{'ARN','CPH'});
         List<IRR_MOD_Message> messages = eventProcessor.messages;
         System.assertEquals(2, messages.size());
-        System.assertEquals('irr_rebooking_sms_01', messages[0].template);
-        System.assertEquals('irr_rebooking_email_01', messages[1].template);
+        System.assertEquals('irr_noalternativeUN_sms', messages[0].template);
+        System.assertEquals('irr_noalternativeUN_email_01', messages[1].template);
         System.assertEquals('No Alternative Rebooking', messages[0].type);
         System.assertEquals('No Alternative Rebooking', messages[1].type);
         System.assertEquals(passengerInfos[0], messages[0].passengerInfo);
