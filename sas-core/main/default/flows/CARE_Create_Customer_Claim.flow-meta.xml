@@ -1014,6 +1014,10 @@
                     <fieldText>PIR</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;PIR cannot be more than 10 characters, please validate the PIR number&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!PIR}) &lt; 11</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>

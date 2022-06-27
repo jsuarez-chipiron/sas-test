@@ -2731,6 +2731,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.StatusReadOnly__c</field>
+        <readable>true</readable>
+    </fieldPermissions>          
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Team__c</field>
         <readable>true</readable>

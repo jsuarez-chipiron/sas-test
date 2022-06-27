@@ -1429,7 +1429,12 @@
         <editable>false</editable>
         <field>Case.Refund_Request_Type__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.StatusReadOnly__c</field>
+        <readable>true</readable>
+    </fieldPermissions>            
     <fieldPermissions>
         <editable>true</editable>
         <field>CaseToBooking__c.Case__c</field>
