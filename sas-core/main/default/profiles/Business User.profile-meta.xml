@@ -2609,6 +2609,11 @@
         <field>Case.Special_Service_Request__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.StatusReadOnly__c</field>
+        <readable>true</readable>
+    </fieldPermissions>          
      <fieldPermissions>
         <editable>false</editable>
         <field>CaseToBooking__c.Case__c</field>
