@@ -58,23 +58,7 @@ public without sharing class ClaimService {
   public static final String COMPENSATION_CARD_REPLY_TO_ADDRESS = 'customercare@sas.se';
 
   public static String createClaim(CaseFormJSON2Apex form) {
-    Case caseToCreate = createCaseRecord(form);
-
-    // Auto-response emails are not triggered by default for cases created
-    // through Apex. Setting the triggerAutoResponseEmail header forces
-    // them to be sent.
-    Database.DMLOptions DMLOptions = new Database.DMLOptions();
-    DMLOptions.EmailHeader.triggerAutoResponseEmail = true;
-
-    database.insert(caseToCreate, DMLOptions);
-
-    Case insertedCase = [
-      SELECT Id, CaseNumber
-      FROM Case
-      WHERE Id = :caseToCreate.Id
-    ];
-
-    LIA_Claim__c claimToCreate = createClaimRecord(form, insertedCase);
+    LIA_Claim__c claimToCreate = createClaimRecord(form);
 
     insert claimToCreate;
 
@@ -92,6 +76,7 @@ public without sharing class ClaimService {
     List<Claim_Rebooked_Flight__c> rebookedFlights = new List<Claim_Rebooked_Flight__c>();
     Map<Id, SObject> fileIdsToObjects = new Map<Id, SObject>();
 
+    String travelersRichTextForCase;
     if (form.formData.travelers != null) {
       for (CaseFormJSON2Apex.Traveler t : form.formData.travelers) {
         Customer__c customerToCreate = new Customer__c(
@@ -100,9 +85,16 @@ public without sharing class ClaimService {
           Last_Name__c = t.lastName == null ? ' ' : t.lastName
         );
         objectsToCreate.add(customerToCreate);
+
+        travelersRichTextForCase +=
+          customerToCreate.First_Name__c +
+          ' ' +
+          customerToCreate.Last_Name__c +
+          '<br>';
       }
     }
 
+    String expensesRichTextForCase;
     if (form.formData.expenses != null) {
       for (CaseFormJSON2Apex.Expense e : form.formData.expenses) {
         Claim_Expense__c expenseToCreate = new Claim_Expense__c(
@@ -115,6 +107,14 @@ public without sharing class ClaimService {
         );
         objectsToCreate.add(expenseToCreate);
 
+        expensesRichTextForCase +=
+          expenseToCreate.Type__c +
+          ': ' +
+          expenseToCreate.Amount__c +
+          ' ' +
+          expenseToCreate.Currency__c +
+          '<br>';
+
         if (e.receiptFileId != null) {
           for (String contentId : e.receiptFileId) {
             if (!String.isBlank(contentId)) {
@@ -126,6 +126,7 @@ public without sharing class ClaimService {
       }
     }
 
+    String rebookedFlightsRichTextForCase;
     if (form.formData.rebookedFlights != null) {
       for (CaseFormJSON2Apex.Flight f : form.formData.rebookedFlights) {
         Claim_Rebooked_Flight__c flightToCreate = new Claim_Rebooked_Flight__c(
@@ -134,6 +135,12 @@ public without sharing class ClaimService {
           Flight_Number__c = f.flightNumber
         );
         objectsToCreate.add(flightToCreate);
+
+        rebookedFlightsRichTextForCase +=
+          flightToCreate.Flight_Number__c +
+          ' ' +
+          f.departureDate +
+          '<br>';
 
         if (f.boardingPassFileId != null) {
           for (String contentId : f.boardingPassFileId) {
@@ -175,14 +182,11 @@ public without sharing class ClaimService {
       insert linksToCreate;
     }
 
-    insertedCase.LIA_Claim__c = claimToCreate.Id;
-    update insertedCase;
+    Case caseToCreate = createCaseRecord(form, claimToCreate);
+    caseToCreate.Claim_Expenses__c = expensesRichTextForCase;
+    caseToCreate.Claim_Rebooked_Flights__c = rebookedFlightsRichTextForCase;
+    caseToCreate.Claim_Travelers__c = travelersRichTextForCase;
 
-    return insertedCase.CaseNumber;
-  }
-
-  public static String createCompensationCardClaim(CaseFormJSON2Apex form) {
-    Case caseToCreate = createCaseRecord(form);
     // Auto-response emails are not triggered by default for cases created
     // through Apex. Setting the triggerAutoResponseEmail header forces
     // them to be sent.
@@ -197,14 +201,39 @@ public without sharing class ClaimService {
       WHERE Id = :caseToCreate.Id
     ];
 
-    LIA_Claim__c claimToCreate = createClaimRecord(form, insertedCase);
+    claimToCreate.Case__c = insertedCase.Id;
+    claimToCreate.Name = insertedCase.CaseNumber;
+    update claimToCreate;
+
+    return insertedCase.CaseNumber;
+  }
+
+  public static String createCompensationCardClaim(CaseFormJSON2Apex form) {
+    LIA_Claim__c claimToCreate = createClaimRecord(form);
     claimToCreate.RecordTypeId = Claims.getRecordTypeId(
       Claims.RecordType.CompensationCard
     );
 
     insert claimToCreate;
-    insertedCase.LIA_Claim__c = claimToCreate.Id;
-    update insertedCase;
+
+    Case caseToCreate = createCaseRecord(form, claimToCreate);
+    // Auto-response emails are not triggered by default for cases created
+    // through Apex. Setting the triggerAutoResponseEmail header forces
+    // them to be sent.
+    Database.DMLOptions DMLOptions = new Database.DMLOptions();
+    DMLOptions.EmailHeader.triggerAutoResponseEmail = true;
+
+    database.insert(caseToCreate, DMLOptions);
+
+    Case insertedCase = [
+      SELECT Id, CaseNumber
+      FROM Case
+      WHERE Id = :caseToCreate.Id
+    ];
+
+    claimToCreate.Case__c = insertedCase.Id;
+    claimToCreate.Name = insertedCase.CaseNumber;
+    update claimToCreate;
 
     List<Feature_Switch__mdt> automationSwitch = [
       SELECT Active__c
@@ -222,10 +251,7 @@ public without sharing class ClaimService {
     return insertedCase.CaseNumber;
   }
 
-  private static LIA_Claim__c createClaimRecord(
-    CaseFormJSON2Apex form,
-    Case insertedCase
-  ) {
+  private static LIA_Claim__c createClaimRecord(CaseFormJSON2Apex form) {
     String ebNumber;
 
     try {
@@ -241,7 +267,6 @@ public without sharing class ClaimService {
       Bank_Account_Holder_Name__c = form.formData.bankAccountHolderName,
       Bank_Name__c = form.formData.bankName,
       BIC_Swift__c = form.formData.bankBic,
-      Case__c = insertedCase.Id,
       City__c = form.formData.city,
       Comment__c = form.formData.comment,
       Company_Code__c = form.formData.companyCode,
@@ -272,7 +297,6 @@ public without sharing class ClaimService {
         ? null
         : Date.valueOf(form.formData.departureDate),
       Flight_Number__c = form.formData.flightNumber,
-      Name = insertedCase.CaseNumber,
       Ticket_Number__c = form.formData.ticketNumber,
       Liability_PNR__c = form.formData.bookingReference,
       Phone_Number__c = form.formData.phone,
@@ -320,7 +344,10 @@ public without sharing class ClaimService {
     return claimToCreate;
   }
 
-  private static Case createCaseRecord(CaseFormJSON2Apex form) {
+  private static Case createCaseRecord(
+    CaseFormJSON2Apex form,
+    LIA_Claim__c createdClaim
+  ) {
     Map<String, String> marketToOrigin = new Map<String, String>{
       'dk-da' => 'Form - Claims DK',
       'no-no' => 'Form - Claims NO',
@@ -363,6 +390,7 @@ public without sharing class ClaimService {
       Initially_Provided_PNR__c = form.formData.bookingReference,
       Description = form.formData.comment,
       FCS_EBNumber__c = ebNumber,
+      LIA_Claim__c = createdClaim.Id,
       OwnerId = claimsQueue.Id,
       Origin = origin,
       SuppliedEmail = form.formData.email,
