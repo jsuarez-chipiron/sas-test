@@ -143,20 +143,29 @@ public with sharing class TestDataFactories {
 
       List<EmailTemplate> toInsert = new List<EmailTemplate>();
 
-      for (String templateName : templateNamesToCreate) {
-        EmailTemplate template = new EmailTemplate(
-          Subject = 'Test',
-          HtmlValue = '<html>test</html>',
-          Body = 'test',
-          Name = templateName,
-          DeveloperName = templateName,
-          BrandTemplateId = bt.Id,
-          TemplateStyle = 'freeForm',
-          TemplateType = 'html',
-          FolderId = UserInfo.getUserId()
-        );
+      List<EmailTemplate> existingTemplates = EmailTemplatesSelector.newInstance()
+        .selectByName(templateNamesToCreate);
+      List<String> existingTemplateNames = new List<String>();
+      for (EmailTemplate t : existingTemplates) {
+        existingTemplateNames.add(t.Name);
+      }
 
-        toInsert.add(template);
+      for (String templateName : templateNamesToCreate) {
+        if (!existingTemplateNames.contains(templateName)) {
+          // Insert only templates which don't exist yet.
+          EmailTemplate template = new EmailTemplate(
+            Subject = 'Test',
+            HtmlValue = '<html>test</html>',
+            Body = 'test',
+            Name = templateName,
+            DeveloperName = templateName,
+            BrandTemplateId = bt.Id,
+            TemplateStyle = 'freeForm',
+            TemplateType = 'html',
+            FolderId = UserInfo.getUserId()
+          );
+          toInsert.add(template);
+        }
       }
 
       insert toInsert;
