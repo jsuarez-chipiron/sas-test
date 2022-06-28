@@ -76,7 +76,7 @@ public without sharing class ClaimService {
     List<Claim_Rebooked_Flight__c> rebookedFlights = new List<Claim_Rebooked_Flight__c>();
     Map<Id, SObject> fileIdsToObjects = new Map<Id, SObject>();
 
-    String travelersRichTextForCase;
+    String travelersRichTextForCase = '';
     if (form.formData.travelers != null) {
       for (CaseFormJSON2Apex.Traveler t : form.formData.travelers) {
         Customer__c customerToCreate = new Customer__c(
@@ -94,7 +94,7 @@ public without sharing class ClaimService {
       }
     }
 
-    String expensesRichTextForCase;
+    String expensesRichTextForCase = '';
     if (form.formData.expenses != null) {
       for (CaseFormJSON2Apex.Expense e : form.formData.expenses) {
         Claim_Expense__c expenseToCreate = new Claim_Expense__c(
@@ -126,7 +126,7 @@ public without sharing class ClaimService {
       }
     }
 
-    String rebookedFlightsRichTextForCase;
+    String rebookedFlightsRichTextForCase = '';
     if (form.formData.rebookedFlights != null) {
       for (CaseFormJSON2Apex.Flight f : form.formData.rebookedFlights) {
         Claim_Rebooked_Flight__c flightToCreate = new Claim_Rebooked_Flight__c(
