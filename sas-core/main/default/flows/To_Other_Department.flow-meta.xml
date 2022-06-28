@@ -463,11 +463,6 @@
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <formulas>
-        <name>fullCustomerName</name>
-        <dataType>String</dataType>
-        <expression>{!First_Name} + &quot; &quot;+ {!Last_Name}</expression>
-    </formulas>
-    <formulas>
         <name>InputPriority</name>
         <dataType>String</dataType>
         <expression>IF({!Priority} = &quot;Medium&quot;, &quot;Medium&quot;, &quot;High&quot;)</expression>
@@ -586,12 +581,6 @@
             <field>Contact_First_Name__c</field>
             <value>
                 <elementReference>First_Name</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Contact_Full_Name__c</field>
-            <value>
-                <elementReference>fullCustomerName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
