@@ -49,11 +49,38 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
   ) {
     LIA_Claim__c claim;
     ClaimsSelector claims = ClaimsSelector.newInstance();
+    CasesSelector cases = CasesSelector.newInstance();
+    String whereQuery = '';
+
+    Id directlyLinkedProactivityId;
+    try {
+      directlyLinkedProactivityId = cases.selectById(new Set<Id>{ caseId })[0]
+        .Proactivity__c;
+    } catch (Exception e) {
+      // The case does not exist (should not happen)
+    }
+
+    whereQuery = buildQuery(
+      whereQuery,
+      'Id = :directlyLinkedProactivityId',
+      directlyLinkedProactivityId != null
+    );
 
     try {
       claim = claims.selectByCaseIdWithCustomers(new Set<Id>{ caseId })[0];
     } catch (Exception e) {
-      new Map<Proactivity__c, String>{};
+      if (directlyLinkedProactivityId != null) {
+        List<Proactivity__c> directlyLinkedProactivity = (List<Proactivity__c>) Database.query(
+          newQueryFactory().setCondition(whereQuery).toSOQL()
+        );
+        if (directlyLinkedProactivity.size() != 0) {
+          return new Map<Proactivity__c, String>{
+            directlyLinkedProactivity[0] => 'Directly linked'
+          };
+        }
+      }
+
+      return new Map<Proactivity__c, String>{};
     }
 
     String flightId1 = claim.Flight_Number__c != null &&
@@ -92,8 +119,6 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
       LIA_Claim__c.Phone_Number__c => 'Phone_Number__c = :phoneNumber',
       LIA_Claim__c.PIR__c => 'PIR__c = :pirNumber'
     };
-
-    String whereQuery = '';
 
     for (Schema.SObjectField field : claimFieldToQuery.keySet()) {
       whereQuery = buildQuery(
@@ -218,7 +243,8 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
       cancellationCodes,
       flightId1,
       flightId2,
-      passengerNames
+      passengerNames,
+      directlyLinkedProactivityId
     );
 
     return proactivityToReason;
@@ -246,7 +272,8 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
     List<String> cancellationCodes,
     String flightId1,
     String flightId2,
-    List<String> passengerNames
+    List<String> passengerNames,
+    Id directlyLinkedProactivityId
   ) {
     Map<Proactivity__c, String> proactivityToReason = new Map<Proactivity__c, String>{};
 
@@ -297,6 +324,9 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
       }
       if (p.Claim_Firm__c != null && p.Claim_Firm__c == claim.Claim_Firm__c) {
         reasons = buildReasons(reasons, 'Firm');
+      }
+      if (p.Id != null && p.Id == directlyLinkedProactivityId) {
+        reasons = buildReasons(reasons, 'Directly linked');
       }
       if (
         !String.isBlank(p.Airport__c) &&

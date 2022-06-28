@@ -43,6 +43,10 @@ private class ProactivitiesSelector_Test {
       From_Date__c = today,
       To_Date__c = today
     );
+    Proactivity__c directlyMatchedProactivity = new Proactivity__c(
+      Note__c = 'Test 6',
+      Type__c = 'Normal'
+    );
 
     Case caseWithOneProactivityRegularMatcher = new Case(
       FCS_EBNumber__c = '000000001'
@@ -60,13 +64,19 @@ private class ProactivitiesSelector_Test {
       FCS_EBNumber__c = '000000005'
     );
 
-    insert new List<Case>{
+    insert new List<SObject>{
       caseWithOneProactivityRegularMatcher,
       caseWithTwoProactivitiesRegularMatcher,
       caseWithOneProactivityAirportMatcher,
       caseWithOneProactivityCancellationCodeMatcher,
-      caseWithThreeProactivitiesCancellationCodeAndAirportMatcher
+      caseWithThreeProactivitiesCancellationCodeAndAirportMatcher,
+      directlyMatchedProactivity
     };
+
+    Case caseWithDirectMatch = new Case(
+      FCS_EBNumber__c = '000000006',
+      Proactivity__c = directlyMatchedProactivity.Id
+    );
 
     LIA_Claim__c claimWithOneProactivityRegularMatcher = new LIA_Claim__c(
       Case__c = caseWithOneProactivityRegularMatcher.Id,
@@ -156,12 +166,13 @@ private class ProactivitiesSelector_Test {
       majorEventProactivity,
       airportMatcherProactivity,
       cancellationCodeProactivity,
+      airportMatcherAndCancellationCodeProactivity,
       claimWithOneProactivityRegularMatcher,
       claimWithTwoProactivitiesRegularMatcher,
       claimWithOneProactivityAirportMatcher,
       claimWithOneProactivityCancellationCodeMatcher,
-      airportMatcherAndCancellationCodeProactivity,
-      claimWithThreeProactivitesCancellationCodeAndAirportMatcher
+      claimWithThreeProactivitesCancellationCodeAndAirportMatcher,
+      caseWithDirectMatch
     };
   }
 
@@ -188,14 +199,15 @@ private class ProactivitiesSelector_Test {
     System.assertEquals(
       1,
       oneProactivityRegularMatcher.size(),
-      'Selector did not select a single proactivity from case ID correctly (too many/few matches)'
+      'Should select a single proactivity from case ID correctly (too many/few matches)'
     );
     System.assertEquals(
       correctProactivity.Id,
       oneProactivityRegularMatcher[0].Id,
-      'Selector did not select a single proactivity from case ID correctly (wrong proactivity)'
+      'Should select a single proactivity from case ID correctly (wrong proactivity)'
     );
   }
+
   @IsTest
   static void shouldSelectMajorEventProactivityByCaseIdTest() {
     // Given (setup)
@@ -230,12 +242,12 @@ private class ProactivitiesSelector_Test {
     System.assertEquals(
       2,
       twoProactivitiesRegularMatcher.size(),
-      'Selector did not select two proactivities from case ID correctly (too many/few matches)'
+      'Should select two proactivities from case ID correctly (too many/few matches)'
     );
     System.assertEquals(
       2,
       correctlyMatched,
-      'Selector did not select two proactivities from case ID correctly (wrong proactivity)'
+      'Should select two proactivities from case ID correctly (wrong proactivity)'
     );
   }
   @IsTest
@@ -260,12 +272,12 @@ private class ProactivitiesSelector_Test {
     System.assertEquals(
       1,
       oneProactivityAirportMatcher.size(),
-      'Selector did not select a single proactivity with an airport matcher from case ID correctly (too many/few matches)'
+      'Should select a single proactivity with an airport matcher from case ID correctly (too many/few matches)'
     );
     System.assertEquals(
       correctProactivity.Id,
       oneProactivityAirportMatcher[0].Id,
-      'Selector did not select a single proactivity with an airport matcher from case ID correctly (wrong proactivity)'
+      'Should select a single proactivity with an airport matcher from case ID correctly (wrong proactivity)'
     );
   }
   @IsTest
@@ -290,12 +302,12 @@ private class ProactivitiesSelector_Test {
     System.assertEquals(
       1,
       oneProactivityCancellationCodeMatcher.size(),
-      'Selector did not select a single proactivity with a cancellation code matcher from case ID correctly (too many/few matches)'
+      'Should select a single proactivity with a cancellation code matcher from case ID correctly (too many/few matches)'
     );
     System.assertEquals(
       correctProactivity.Id,
       oneProactivityCancellationCodeMatcher[0].Id,
-      'Selector did not select a single proactivity with a cancellation code matcher from case ID correctly (wrong proactivity)'
+      'Should select a single proactivity with a cancellation code matcher from case ID correctly (wrong proactivity)'
     );
   }
   @IsTest
@@ -342,7 +354,39 @@ private class ProactivitiesSelector_Test {
     System.assertEquals(
       3,
       correctlyMatched,
-      'Selector did not select three proactivities with a cancellation code and airport matcher from case ID correctly (too many/few matches)'
+      'Should select three proactivities with a cancellation code and airport matcher from case ID correctly (too many/few matches)'
+    );
+  }
+
+  @IsTest
+  static void shouldSelectDirectlyLinkedProactivityByCaseIdTest() {
+    // Given (setup)
+    Proactivity__c correctProactivity = [
+      SELECT Id
+      FROM Proactivity__c
+      WHERE Note__c = 'Test 6'
+    ][0];
+    Case caseWithDirectMatch = [
+      SELECT Id
+      FROM Case
+      WHERE FCS_EBNumber__c = '000000006'
+    ][0];
+
+    // When
+    List<Proactivity__c> directMatchProactivity = proactivites.selectByCaseId(
+      caseWithDirectMatch.Id
+    );
+
+    // Then
+    System.assertEquals(
+      1,
+      directMatchProactivity.size(),
+      'Should select a single proactivity with a direct match from case ID correctly (too many/few matches)'
+    );
+    System.assertEquals(
+      correctProactivity.Id,
+      directMatchProactivity[0].Id,
+      'Should select a single proactivity with a direct match from case ID correctly (wrong proactivity)'
     );
   }
 }

@@ -99,7 +99,6 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     String pirNumber = proactivity.PIR__c;
 
     fflib_QueryFactory query = newQueryFactory();
-    String whereQuery = '';
     Map<Schema.SObjectField, String> proactivityFieldToQuery = new Map<Schema.SObjectField, String>{
       Proactivity__c.Bank_Account_Number__c => 'Bank_Account_Number__c = :bankAccountNumber',
       Proactivity__c.Booking_Reference__c => 'Liability_PNR__c = :bookingReference',
@@ -108,6 +107,23 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       Proactivity__c.Phone_Number__c => 'Phone_Number__c = :phoneNumber',
       Proactivity__c.PIR__c => 'PIR__c = :pirNumber'
     };
+
+    // Check directly linked cases with claims
+    Set<Id> directlyLinkedCasesIds = new Set<Id>{};
+    CasesSelector cases = CasesSelector.newInstance();
+    List<Case> directlyLinkedCases = cases.selectByDirectlyLinkedProactivityId(
+      new Set<Id>{ proactivityId }
+    );
+    for (Case c : directlyLinkedCases) {
+      directlyLinkedCasesIds.add(c.Id);
+    }
+
+    String whereQuery = '';
+    whereQuery = buildQuery(
+      whereQuery,
+      'Case__c IN :directlyLinkedCasesIds',
+      directlyLinkedCasesIds.size() > 0
+    );
 
     for (Schema.SObjectField field : proactivityFieldToQuery.keySet()) {
       whereQuery = buildQuery(

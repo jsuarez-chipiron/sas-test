@@ -59,19 +59,29 @@ private class ClaimsSelector_Test {
       From_Date__c = today,
       To_Date__c = today
     );
+    Proactivity__c directlyMatchedProactivity = new Proactivity__c(
+      Note__c = 'Test 6',
+      Type__c = 'Normal'
+    );
+
+    insert directlyMatchedProactivity;
 
     Case caseWithOneProactivityRegularMatcher = new Case();
     Case caseWithTwoProactivitiesRegularMatcher = new Case();
     Case caseWithOneProactivityAirportMatcher = new Case();
     Case caseWithOneProactivityCancellationCodeMatcher = new Case();
     Case caseWithThreeProactivitiesCancellationCodeAndAirportMatcher = new Case();
+    Case caseWithDirectMatch = new Case(
+      Proactivity__c = directlyMatchedProactivity.Id
+    );
 
     insert new List<Case>{
       caseWithOneProactivityRegularMatcher,
       caseWithTwoProactivitiesRegularMatcher,
       caseWithOneProactivityAirportMatcher,
       caseWithOneProactivityCancellationCodeMatcher,
-      caseWithThreeProactivitiesCancellationCodeAndAirportMatcher
+      caseWithThreeProactivitiesCancellationCodeAndAirportMatcher,
+      caseWithDirectMatch
     };
 
     LIA_Claim__c claimWithOneProactivityRegularMatcher = new LIA_Claim__c(
@@ -97,6 +107,10 @@ private class ClaimsSelector_Test {
       Case__c = caseWithThreeProactivitiesCancellationCodeAndAirportMatcher.Id,
       Flight_Number__c = 'SK3',
       Flight_Date__c = today
+    );
+    LIA_Claim__c claimWithDirectMatch = new LIA_Claim__c(
+      Case__c = caseWithDirectMatch.Id,
+      Phone_Number__c = '0000000001'
     );
 
     String flightIdentifier1 =
@@ -215,6 +229,7 @@ private class ClaimsSelector_Test {
       claimWithOneProactivityAirportMatcher,
       claimWithOneProactivityCancellationCodeMatcher,
       claimWithThreeProactivitesCancellationCodeAndAirportMatcher,
+      claimWithDirectMatch,
       airportMatcherAndCancellationCodeProactivity,
       flightIrregularity1,
       flightIrregularity2,
@@ -245,12 +260,12 @@ private class ClaimsSelector_Test {
     System.assertEquals(
       1,
       oneClaimNormalMatcher.size(),
-      'Selector did not select a single claim from proactivity ID correctly (too many/few matches)'
+      'Should select a single claim from proactivity ID correctly (too many/few matches)'
     );
     System.assertEquals(
       correctClaim.Id,
       oneClaimNormalMatcher[0].Id,
-      'Selector did not select a single claim from proactivity ID correctly (wrong claim)'
+      'Should select a single claim from proactivity ID correctly (wrong claim)'
     );
   }
   @IsTest
@@ -286,12 +301,12 @@ private class ClaimsSelector_Test {
     System.assertEquals(
       2,
       twoClaimsMajorEventMatcher.size(),
-      'Selector did not select two proactivities from case ID correctly (too many/few matches)'
+      'Should select two proactivities from case ID correctly (too many/few matches)'
     );
     System.assertEquals(
       2,
       correctlyMatched,
-      'Selector did not select two proactivities from case ID correctly (wrong proactivity)'
+      'Should select two proactivities from case ID correctly (wrong proactivity)'
     );
   }
   @IsTest
@@ -329,12 +344,12 @@ private class ClaimsSelector_Test {
     System.assertEquals(
       2,
       twoClaimsAirportMatcher.size(),
-      'Selector did not select two proactivities with airport matcher from case ID correctly (too many/few matches)'
+      'Should select two proactivities with airport matcher from case ID correctly (too many/few matches)'
     );
     System.assertEquals(
       2,
       correctlyMatched,
-      'Selector did not select two proactivities with airport matcher from case ID correctly (wrong proactivity)'
+      'Should select two proactivities with airport matcher from case ID correctly (wrong proactivity)'
     );
   }
 
@@ -373,12 +388,12 @@ private class ClaimsSelector_Test {
     System.assertEquals(
       2,
       twoClaimsCancellationCodeMatcher.size(),
-      'Selector did not select two proactivities with cancellation code matcher from case ID correctly (too many/few matches)'
+      'Should select two proactivities with cancellation code matcher from case ID correctly (too many/few matches)'
     );
     System.assertEquals(
       2,
       correctlyMatched,
-      'Selector did not select two proactivities with cancellation code matcher from case ID correctly (wrong proactivity)'
+      'Should select two proactivities with cancellation code matcher from case ID correctly (wrong proactivity)'
     );
   }
 
@@ -405,12 +420,44 @@ private class ClaimsSelector_Test {
     System.assertEquals(
       1,
       oneClaimCancellationCodeAndAirportMatcher.size(),
-      'Selector did not select a single claim from proactivity ID correctly (too many/few matches)'
+      'Should select a single claim from proactivity ID correctly (too many/few matches)'
     );
     System.assertEquals(
       correctClaim.Id,
       oneClaimCancellationCodeAndAirportMatcher[0].Id,
-      'Selector did not select a single claim from proactivity ID correctly (wrong claim)'
+      'Should select a single claim from proactivity ID correctly (wrong claim)'
+    );
+  }
+
+  @IsTest
+  static void shouldSelectClaimWithDirectMatch() {
+    // Given (setup)
+    Proactivity__c directMatchProactivity = [
+      SELECT Id
+      FROM Proactivity__c
+      WHERE Note__c = 'Test 6'
+    ][0];
+    LIA_Claim__c correctClaim = [
+      SELECT Id
+      FROM LIA_Claim__c
+      WHERE Phone_Number__c = '0000000001'
+    ][0];
+
+    // When
+    List<LIA_Claim__c> oneClaimDirectMatch = claims.selectByProactivityId(
+      directMatchProactivity.ID
+    );
+
+    // Then
+    System.assertEquals(
+      1,
+      oneClaimDirectMatch.size(),
+      'Should select a single claim from proactivity ID correctly (too many/few matches)'
+    );
+    System.assertEquals(
+      correctClaim.Id,
+      oneClaimDirectMatch[0].Id,
+      'Should select a single claim from proactivity ID correctly (wrong claim)'
     );
   }
 }
