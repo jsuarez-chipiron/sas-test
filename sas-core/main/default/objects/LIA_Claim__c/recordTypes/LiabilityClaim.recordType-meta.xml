@@ -19,11 +19,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>American Samoa</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Andorra</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Anguilla</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Antarctica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -112,6 +120,10 @@
         </values>
         <values>
             <fullName>Brazil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>British Indian Ocean Territory</fullName>
             <default>false</default>
         </values>
         <values>
@@ -288,6 +300,10 @@
         </values>
         <values>
             <fullName>French Polynesia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>French Southern Territories</fullName>
             <default>false</default>
         </values>
         <values>
@@ -619,6 +635,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>North Korea</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>North Macedonia</fullName>
             <default>false</default>
         </values>
@@ -703,6 +723,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Saint-Barthélemy</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Saint Kitts and Nevis</fullName>
             <default>false</default>
         </values>
@@ -776,6 +800,10 @@
         </values>
         <values>
             <fullName>South Korea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>South Sudan</fullName>
             <default>false</default>
         </values>
         <values>
@@ -899,6 +927,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>United States Minor Outlying Islands</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Uruguay</fullName>
             <default>false</default>
         </values>
@@ -971,6 +1003,10 @@
         </values>
         <values>
             <fullName>Andorra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Angola</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1047,6 +1083,10 @@
         </values>
         <values>
             <fullName>Bolivia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bonaire, Sint Eustatius and Saba</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1155,6 +1195,10 @@
         </values>
         <values>
             <fullName>Cuba</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Curaçao</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1706,6 +1750,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sint Maarten</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Slovakia</fullName>
             <default>false</default>
         </values>
@@ -1723,6 +1771,10 @@
         </values>
         <values>
             <fullName>South Africa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>South Georgia and the South Sandwich Islands</fullName>
             <default>false</default>
         </values>
         <values>
