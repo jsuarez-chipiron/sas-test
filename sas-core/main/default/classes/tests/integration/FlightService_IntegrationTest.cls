@@ -53,11 +53,14 @@ public with sharing class FlightService_IntegrationTest {
       }
     }
 
-    System.debug(irregularitiesListDelayed);
-
     System.assertEquals(
       delayReason,
       sampleIrregularity.Reason__c,
+      'Flightirregularity with delay not correctly inserted.'
+    );
+    System.assertEquals(
+      'RS',
+      sampleIrregularity.Code__c,
       'Flightirregularity with delay not correctly inserted.'
     );
   }
@@ -87,6 +90,11 @@ public with sharing class FlightService_IntegrationTest {
     System.assertEquals(
       cancellationReason,
       sampleIrregularity.Reason__c,
+      'Flightirregularity with cancellation not correctly inserted.'
+    );
+    System.assertEquals(
+      'AIRS',
+      sampleIrregularity.Code__c,
       'Flightirregularity with cancellation not correctly inserted.'
     );
   }

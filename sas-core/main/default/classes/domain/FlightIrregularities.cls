@@ -124,9 +124,13 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     List<FlightIrregularities__c> result = new List<FlightIrregularities__c>{};
     if (reasons != null) {
       for (TEDSFlight.DelayReasons reason : reasons) {
+        String code = 'N/A';
+        if (reason.reasonCode != null) {
+          code = reason.reasonCode;
+        }
         result.add(
           new FlightIrregularities__c(
-            Code__c = reason.reasonCode,
+            Code__c = code,
             Duration_minutes__c = DateUtils.convertISO8601DurationToMinutes(
               reason.duration
             ),
@@ -161,9 +165,13 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     List<FlightIrregularities__c> result = new List<FlightIrregularities__c>{};
     if (reasons != null) {
       for (TEDSFlight.CancellationReasons reason : reasons) {
+        String code = 'N/A';
+        if (reason.reasonCode != null) {
+          code = reason.reasonCode;
+        }
         result.add(
           new FlightIrregularities__c(
-            Code__c = reason.reasonCode,
+            Code__c = code,
             Reason__c = reason.supplementaryInformation,
             Type__c = 'Cancellation ' + additionalInfo
           )

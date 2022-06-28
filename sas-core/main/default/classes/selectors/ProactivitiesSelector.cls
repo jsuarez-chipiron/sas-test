@@ -185,7 +185,9 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
       );
 
       for (FlightIrregularities__c irregularity : irregularities) {
-        cancellationCodes.add(irregularity.Code__c);
+        if (irregularity.Code__c != null) {
+          cancellationCodes.add(irregularity.Code__c);
+        }
       }
 
       String airportQuery = '';
