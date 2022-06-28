@@ -292,15 +292,21 @@ public without sharing class Bookings extends fflib_SObjectDomain {
       .selectByTEDSIdFull(bookingTedsIds);
 
     if (bookingsFromDB.size() > 0) {
-      List<SObject> toDelete = new List<SObject>();
+      List<Passenger__c> passengersToDelete = new List<Passenger__c>();
+      List<Segment__c> segmentsToDelete = new List<Segment__c>();
       for (Booking__c existingBooking : bookingsFromDB) {
         for (Passenger__c existingPassenger : existingBooking.Passengers__r) {
-          toDelete.add(existingPassenger);
+          passengersToDelete.add(existingPassenger);
         }
         for (Segment__c existingSegment : existingBooking.Segments__r) {
-          toDelete.add(existingSegment);
+          segmentsToDelete.add(existingSegment);
         }
       }
+
+      List<SObject> toDelete = new List<SObject>();
+      toDelete.addAll(passengersToDelete);
+      toDelete.addAll(segmentsToDelete);
+
       try {
         delete toDelete;
       } catch (DMLException e) {
