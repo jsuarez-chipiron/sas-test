@@ -340,6 +340,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       }
 
       settlement.Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER;
+      settlement.Control_verified__c = true;
 
       Approval_Request__c approval = new Approval_Request__c(
         OwnerId = UserInfo.getUserId(),
