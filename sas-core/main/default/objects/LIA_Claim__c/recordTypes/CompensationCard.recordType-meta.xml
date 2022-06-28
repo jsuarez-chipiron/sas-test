@@ -3,7 +3,7 @@
     <fullName>CompensationCard</fullName>
     <active>true</active>
     <compactLayoutAssignment>Customer_Claim_Compact_Layout</compactLayoutAssignment>
-    <description>Record type to differentiate the customer claims</description>
+    <description>Record type for compensation cards.</description>
     <label>CompensationCard</label>
     <picklistValues>
         <picklist>Bank_Country__c</picklist>
