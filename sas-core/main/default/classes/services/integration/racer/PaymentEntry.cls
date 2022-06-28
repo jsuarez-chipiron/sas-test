@@ -519,12 +519,23 @@ public class PaymentEntry {
       WHERE Country_Name__c = :s.Bank_Country__c
     ][0];
 
-    // Country short code in payments is dependent on contact's country.
-    Settlement_Country_Setting__mdt contactCountrySettings = [
-      SELECT Country_Short_Code__c
-      FROM Settlement_Country_Setting__mdt
-      WHERE Country_Name__c = :s.Country__c
-    ][0];
+    String countryShortCode;
+
+    // Country short code should by default be set based on contact's address
+    // information, but if it doesn't exist, we can use bank country info.
+    // When we receive company information from the form, we don't ask for
+    // address information which would include the country.
+    if (String.isBlank(s.Country__c)) {
+      countryShortCode = bankCountrySettings.Country_Short_Code__c;
+    } else {
+      Settlement_Country_Setting__mdt contactCountrySettings = [
+        SELECT Country_Short_Code__c
+        FROM Settlement_Country_Setting__mdt
+        WHERE Country_Name__c = :s.Country__c
+      ][0];
+
+      countryShortCode = contactCountrySettings.Country_Short_Code__c;
+    }
 
     String paymentMethod = null;
 
@@ -593,7 +604,7 @@ public class PaymentEntry {
           : s.Address_line_2__c,
         'city' => s.City__c,
         'postalCode' => s.Postal_Code__c,
-        'countryExt' => contactCountrySettings.Country_Short_Code__c
+        'countryExt' => countryShortCode
       },
       'invoiceData' => new Map<String, String>{
         'ref2Invoice' => 'SF REF ' + s.Name,
