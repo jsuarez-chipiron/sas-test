@@ -402,6 +402,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Contact_Full_Name__c</field>
+            <value>
+                <elementReference>FullCustomerName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Contact_Last_Name__c</field>
             <value>
                 <elementReference>Last_Name</elementReference>
