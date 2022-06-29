@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Claim_Bank_Country__c</fullName>
     <externalId>false</externalId>
-    <formula>TEXT(LIA_Claim__r.Bank_Country__c)</formula>
+    <formula>IF(ISBLANK(TEXT(LIA_Claim__r.Bank_Country__c)),&quot;-&quot;,TEXT(LIA_Claim__r.Bank_Country__c))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Claim Bank Country</label>
     <required>false</required>
