@@ -514,7 +514,7 @@ public class PaymentEntry {
     );
 
     Settlement_Country_Setting__mdt bankCountrySettings = [
-      SELECT Payment_Type__c
+      SELECT Payment_Type__c, Country_Short_Code__c
       FROM Settlement_Country_Setting__mdt
       WHERE Country_Name__c = :s.Bank_Country__c
     ][0];
@@ -542,15 +542,24 @@ public class PaymentEntry {
     Boolean isChequeSettlement =
       Settlements.getRecordTypeId(Settlements.RecordType.Cheque) ==
       s.RecordTypeId;
+    Boolean isUSDPaymentToOutsideOfUS =
+      s.Currency__c == 'USD' &&
+      s.Bank_Country__c != 'United States';
+    Boolean isNonUSDPaymentToUS =
+      s.Bank_Country__c == 'United States' &&
+      s.Currency__c != 'USD';
 
     // Payment details are dependent on bank country
-    // USD to outside of US is the one case we're not handling correctly in the custom metadata.
-    // Cheque payments also have a specific payment type. This is only supported for US domestic
-    // cheque payments.
     if (isChequeSettlement) {
+      // Cheque payments also have a specific payment type. This is only
+      // supported for US domestic cheque payments.
       paymentMethod = 'NORDEA US DOM CHEQUE';
-    } else if (s.Currency__c == 'USD' && s.Bank_Country__c != 'United States') {
+    } else if (isUSDPaymentToOutsideOfUS) {
+      // USD to outside of US is one case we're not handling correctly in the custom metadata.
       paymentMethod = 'NORDEA CROSS BORDER EDI';
+    } else if (isNonUSDPaymentToUS) {
+      // Similarly for non-USD payments to US.
+      paymentMethod = 'CROSS BORDER EDI';
     } else {
       paymentMethod = bankCountrySettings.Payment_Type__c;
     }

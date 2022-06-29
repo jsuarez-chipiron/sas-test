@@ -866,7 +866,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Settlement__c.Payee_reference__c</field>
         <readable>true</readable>
     </fieldPermissions>
