@@ -32,6 +32,10 @@
                 <behavior>Readonly</behavior>
                 <field>Settlement_Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Accounting_Status__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

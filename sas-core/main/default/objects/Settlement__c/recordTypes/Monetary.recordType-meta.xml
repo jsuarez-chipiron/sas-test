@@ -5,6 +5,17 @@
     <compactLayoutAssignment>Settlement_Compact_Layout</compactLayoutAssignment>
     <label>Monetary</label>
     <picklistValues>
+        <picklist>Accounting_Status__c</picklist>
+        <values>
+            <fullName>Transferred</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting for transfer</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Bank_Country__c</picklist>
         <values>
             <fullName>Afghanistan</fullName>
@@ -128,10 +139,6 @@
         </values>
         <values>
             <fullName>Burundi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cambodia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -271,6 +278,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Micronesia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Fiji</fullName>
             <default>false</default>
         </values>
@@ -363,6 +374,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Vatican City</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Honduras</fullName>
             <default>false</default>
         </values>
@@ -431,6 +446,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cambodia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Kiribati</fullName>
             <default>false</default>
         </values>
@@ -444,10 +463,6 @@
         </values>
         <values>
             <fullName>Kyrgyzstan</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Laos</fullName>
             <default>false</default>
         </values>
         <values>
@@ -484,10 +499,6 @@
         </values>
         <values>
             <fullName>Macau</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Madagascar</fullName>
             <default>false</default>
         </values>
         <values>
@@ -532,14 +543,6 @@
         </values>
         <values>
             <fullName>Mexico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Micronesia</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Moldova</fullName>
             <default>false</default>
         </values>
         <values>
@@ -619,10 +622,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>North Macedonia</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Northern Mariana Islands</fullName>
             <default>false</default>
         </values>
@@ -659,6 +658,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Laos</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Peru</fullName>
             <default>false</default>
         </values>
@@ -684,6 +687,18 @@
         </values>
         <values>
             <fullName>Qatar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>South Korea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Madagascar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moldova</fullName>
             <default>false</default>
         </values>
         <values>
@@ -775,10 +790,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>South Korea</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Spain</fullName>
             <default>false</default>
         </values>
@@ -831,15 +842,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Tanzania</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Thailand</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>The Democratic Republic of the Congo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>North Macedonia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -895,6 +906,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Tanzania</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>United States</fullName>
             <default>false</default>
         </values>
@@ -908,10 +923,6 @@
         </values>
         <values>
             <fullName>Vanuatu</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Vatican City</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1078,10 +1089,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambodia</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Cameroon</fullName>
             <default>false</default>
         </values>
@@ -1218,6 +1225,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Micronesia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Fiji</fullName>
             <default>false</default>
         </values>
@@ -1310,6 +1321,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Vatican City</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Honduras</fullName>
             <default>false</default>
         </values>
@@ -1378,6 +1393,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cambodia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Kiribati</fullName>
             <default>false</default>
         </values>
@@ -1434,10 +1453,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Madagascar</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Malawi</fullName>
             <default>false</default>
         </values>
@@ -1479,14 +1494,6 @@
         </values>
         <values>
             <fullName>Mexico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Micronesia</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Moldova</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1566,10 +1573,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>North Macedonia</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Northern Mariana Islands</fullName>
             <default>false</default>
         </values>
@@ -1631,6 +1634,18 @@
         </values>
         <values>
             <fullName>Qatar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>South Korea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Madagascar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moldova</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1722,10 +1737,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>South Korea</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Spain</fullName>
             <default>false</default>
         </values>
@@ -1778,15 +1789,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Tanzania</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Thailand</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>The Democratic Republic of the Congo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>North Macedonia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1842,6 +1853,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Tanzania</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>United States</fullName>
             <default>false</default>
         </values>
@@ -1855,10 +1870,6 @@
         </values>
         <values>
             <fullName>Vanuatu</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Vatican City</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2025,49 +2036,6 @@
         </values>
         <values>
             <fullName>Waiting for transfer</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Voucher_Type__c</picklist>
-        <values>
-            <fullName>6721 - Denied boarding involuntary voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6721 - Denied boarding voluntary voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6722 - Downgrading involuntary voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6722 - Downgrading voluntary voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6727 - EU261 voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6733 - Goodwill voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6738 - Care voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6741 - Damage baggage voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6742 - Delayed baggage voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6743 - Pilfered baggage voucher</fullName>
             <default>false</default>
         </values>
     </picklistValues>

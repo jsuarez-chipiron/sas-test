@@ -406,9 +406,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>LIA_Claim__c.Contact_Full_Name__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -753,6 +753,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Settlement_Item__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Settlement__c.Accounting_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
