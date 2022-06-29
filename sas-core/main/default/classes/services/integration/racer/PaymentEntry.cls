@@ -514,32 +514,52 @@ public class PaymentEntry {
     );
 
     Settlement_Country_Setting__mdt bankCountrySettings = [
-      SELECT Payment_Type__c
+      SELECT Payment_Type__c, Country_Short_Code__c
       FROM Settlement_Country_Setting__mdt
       WHERE Country_Name__c = :s.Bank_Country__c
     ][0];
 
-    // Country short code in payments is dependent on contact's country.
-    Settlement_Country_Setting__mdt contactCountrySettings = [
-      SELECT Country_Short_Code__c
-      FROM Settlement_Country_Setting__mdt
-      WHERE Country_Name__c = :s.Country__c
-    ][0];
+    String countryShortCode;
+
+    // Country short code should by default be set based on contact's address
+    // information, but if it doesn't exist, we can use bank country info.
+    // When we receive company information from the form, we don't ask for
+    // address information which would include the country.
+    if (String.isBlank(s.Country__c)) {
+      countryShortCode = bankCountrySettings.Country_Short_Code__c;
+    } else {
+      Settlement_Country_Setting__mdt contactCountrySettings = [
+        SELECT Country_Short_Code__c
+        FROM Settlement_Country_Setting__mdt
+        WHERE Country_Name__c = :s.Country__c
+      ][0];
+
+      countryShortCode = contactCountrySettings.Country_Short_Code__c;
+    }
 
     String paymentMethod = null;
 
     Boolean isChequeSettlement =
       Settlements.getRecordTypeId(Settlements.RecordType.Cheque) ==
       s.RecordTypeId;
+    Boolean isUSDPaymentToOutsideOfUS =
+      s.Currency__c == 'USD' &&
+      s.Bank_Country__c != 'United States';
+    Boolean isNonUSDPaymentToUS =
+      s.Bank_Country__c == 'United States' &&
+      s.Currency__c != 'USD';
 
     // Payment details are dependent on bank country
-    // USD to outside of US is the one case we're not handling correctly in the custom metadata.
-    // Cheque payments also have a specific payment type. This is only supported for US domestic
-    // cheque payments.
     if (isChequeSettlement) {
+      // Cheque payments also have a specific payment type. This is only
+      // supported for US domestic cheque payments.
       paymentMethod = 'NORDEA US DOM CHEQUE';
-    } else if (s.Currency__c == 'USD' && s.Bank_Country__c != 'United States') {
+    } else if (isUSDPaymentToOutsideOfUS) {
+      // USD to outside of US is one case we're not handling correctly in the custom metadata.
       paymentMethod = 'NORDEA CROSS BORDER EDI';
+    } else if (isNonUSDPaymentToUS) {
+      // Similarly for non-USD payments to US.
+      paymentMethod = 'CROSS BORDER EDI';
     } else {
       paymentMethod = bankCountrySettings.Payment_Type__c;
     }
@@ -593,7 +613,7 @@ public class PaymentEntry {
           : s.Address_line_2__c,
         'city' => s.City__c,
         'postalCode' => s.Postal_Code__c,
-        'countryExt' => contactCountrySettings.Country_Short_Code__c
+        'countryExt' => countryShortCode
       },
       'invoiceData' => new Map<String, String>{
         'ref2Invoice' => 'SF REF ' + s.Name,

@@ -330,6 +330,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   /**
    * Approves the given settlements for transfer. Excepts that the settlements
    * have already been validated.
+   *
+   * Sets approver and submitter of the settlement to UserInfo.getUserId().
    */
   public Settlements approve(fflib_ISObjectUnitOfWork uow) {
     for (Settlement__c settlement : instanceRecords) {
@@ -339,7 +341,10 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         uow.registerDirty(settlement);
       }
 
+      settlement.Approver__c = UserInfo.getUserId();
+      settlement.Submitter__c = UserInfo.getUserId();
       settlement.Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER;
+      settlement.Control_verified__c = true;
 
       Approval_Request__c approval = new Approval_Request__c(
         OwnerId = UserInfo.getUserId(),
@@ -852,12 +857,19 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           errorMessages.add('Amount has to be greater than 0.');
         }
         if (errorMessages.size() == 0) {
-          if (
-            !BankAccountUtils.validateIBAN(
+          Boolean bankAccountNumberIsValid = true;
+          try {
+            bankAccountNumberIsValid = BankAccountUtils.validateIBAN(
               s.Bank_Account_Number__c,
               s.Bank_Country__c
-            )
-          ) {
+            );
+          } catch (Exception e) {
+            errorMessages.add(
+              'Bank Account Number and the bank country do not match. ' +
+              e.getMessage()
+            );
+          }
+          if (!bankAccountNumberIsValid) {
             errorMessages.add('Bank Account Number is invalid.');
           }
           if (!BankAccountUtils.validateBIC(s.BIC_Swift__c)) {

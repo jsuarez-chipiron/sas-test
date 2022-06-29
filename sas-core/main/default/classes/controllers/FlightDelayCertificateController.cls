@@ -50,7 +50,7 @@ public without sharing class FlightDelayCertificateController {
         fw.FlightDate = flight.TEDS_Identifier__c?.substring(6, 14);
         fw.ArrivalAirport = flight.Arrival_Airport__c;
         fw.DepartureAirport = flight.Departure_Airport__c;
-        fw.FlightStatus = flight.Departure_Status__c;
+        fw.FlightStatus = flight.Arrival_Status__c;
         flightWrappers.add(fw);
       }
     } else {

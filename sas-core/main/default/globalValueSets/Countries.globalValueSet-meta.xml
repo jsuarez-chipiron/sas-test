@@ -21,14 +21,29 @@
         <label>Åland Islands</label>
     </customValue>
     <customValue>
+        <fullName>American Samoa</fullName>
+        <default>false</default>
+        <label>American Samoa</label>
+    </customValue>
+    <customValue>
         <fullName>Andorra</fullName>
         <default>false</default>
         <label>Andorra</label>
     </customValue>
     <customValue>
+        <fullName>Angola</fullName>
+        <default>false</default>
+        <label>Angola</label>
+    </customValue>
+    <customValue>
         <fullName>Anguilla</fullName>
         <default>false</default>
         <label>Anguilla</label>
+    </customValue>
+    <customValue>
+        <fullName>Antarctica</fullName>
+        <default>false</default>
+        <label>Antarctica</label>
     </customValue>
     <customValue>
         <fullName>Antigua and Barbuda</fullName>
@@ -121,6 +136,11 @@
         <label>Bolivia</label>
     </customValue>
     <customValue>
+        <fullName>Bonaire, Sint Eustatius and Saba</fullName>
+        <default>false</default>
+        <label>Bonaire, Sint Eustatius and Saba</label>
+    </customValue>
+    <customValue>
         <fullName>Bosnia and Herzegovina</fullName>
         <default>false</default>
         <label>Bosnia and Herzegovina</label>
@@ -139,6 +159,11 @@
         <fullName>Brazil</fullName>
         <default>false</default>
         <label>Brazil</label>
+    </customValue>
+    <customValue>
+        <fullName>British Indian Ocean Territory</fullName>
+        <default>false</default>
+        <label>British Indian Ocean Territory</label>
     </customValue>
     <customValue>
         <fullName>Brunei Darussalam</fullName>
@@ -251,6 +276,11 @@
         <label>Cuba</label>
     </customValue>
     <customValue>
+        <fullName>Curaçao</fullName>
+        <default>false</default>
+        <label>Curaçao</label>
+    </customValue>
+    <customValue>
         <fullName>Cyprus</fullName>
         <default>false</default>
         <label>Cyprus</label>
@@ -359,6 +389,11 @@
         <fullName>French Polynesia</fullName>
         <default>false</default>
         <label>French Polynesia</label>
+    </customValue>
+    <customValue>
+        <fullName>French Southern Territories</fullName>
+        <default>false</default>
+        <label>French Southern Territories</label>
     </customValue>
     <customValue>
         <fullName>Gabon</fullName>
@@ -771,6 +806,11 @@
         <label>Norfolk Island</label>
     </customValue>
     <customValue>
+        <fullName>North Korea</fullName>
+        <default>false</default>
+        <label>North Korea</label>
+    </customValue>
+    <customValue>
         <fullName>North Macedonia</fullName>
         <default>false</default>
         <label>North Macedonia</label>
@@ -861,9 +901,29 @@
         <label>Qatar</label>
     </customValue>
     <customValue>
+        <fullName>Saint-Barthélemy</fullName>
+        <default>false</default>
+        <label>Saint-Barthélemy</label>
+    </customValue>
+    <customValue>
+        <fullName>Sint Maarten</fullName>
+        <default>false</default>
+        <label>Sint Maarten</label>
+    </customValue>
+    <customValue>
+        <fullName>South Georgia and the South Sandwich Islands</fullName>
+        <default>false</default>
+        <label>South Georgia and the South Sandwich Islands</label>
+    </customValue>
+    <customValue>
         <fullName>South Korea</fullName>
         <default>false</default>
         <label>South Korea</label>
+    </customValue>
+    <customValue>
+        <fullName>South Sudan</fullName>
+        <default>false</default>
+        <label>South Sudan</label>
     </customValue>
     <customValue>
         <fullName>Madagascar</fullName>
@@ -1134,6 +1194,11 @@
         <fullName>United States</fullName>
         <default>false</default>
         <label>United States</label>
+    </customValue>
+    <customValue>
+        <fullName>United States Minor Outlying Islands</fullName>
+        <default>false</default>
+        <label>United States Minor Outlying Islands</label>
     </customValue>
     <customValue>
         <fullName>Uruguay</fullName>

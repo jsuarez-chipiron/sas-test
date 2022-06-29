@@ -79,6 +79,9 @@ public without sharing class BankAccountUtils {
     return true;
   }
 
+  public class BankCountryAndIBANCodeDoNotMatchException extends Exception {
+  }
+
   // Source: https://www.ecbs.org/Download/EBS204_V3.2.pdf
   private static Boolean isValidIBAN(
     String accountNumber,
@@ -91,7 +94,9 @@ public without sharing class BankAccountUtils {
 
     String countryCodeFromAccountNumber = accountNumber.substring(0, 2);
     if (countryCodeFromAccountNumber != countryCodeForBankCountry) {
-      return false;
+      throw new BankCountryAndIBANCodeDoNotMatchException(
+        'The bank country has to match the country represented by the first two letters of the Bank Account Number.'
+      );
     }
 
     // Rearrange the IBAN
@@ -152,7 +157,6 @@ public without sharing class BankAccountUtils {
     for (Integer num : numbers) {
       residual = Math.mod(residual * 10 + num - 48, 97); // ASCII 0 = 48, 9 = 57
     }
-    System.debug(residual);
 
     return residual;
   }

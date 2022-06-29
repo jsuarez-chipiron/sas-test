@@ -117,7 +117,8 @@ public without sharing class FlightDelayCertificateService {
         : TEMPLATE_IF_INVALID_BOOKING;
 
       Messaging.SingleEmailMessage emailToSend = EmailMessages.createSingleEmailMessageFromTemplate(
-        nameOfEmailTemplateToUse
+        nameOfEmailTemplateToUse,
+        this.caseId
       );
       emailToSend.setReplyTo(replyToAddress);
       // Send delay certificate if associated booking contains delayed/cancelled flights.

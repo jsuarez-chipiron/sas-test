@@ -3,7 +3,7 @@
     <fullName>LIA_PNR__c</fullName>
     <description>PNR related to the Liability Claim</description>
     <externalId>false</externalId>
-    <formula>LIA_Claim__r.Liability_PNR__c</formula>
+    <formula>IF(ISBLANK(LIA_Claim__r.Liability_PNR__c),&quot;-&quot;, LIA_Claim__r.Liability_PNR__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <inlineHelpText>PNR related to the Liability Claim</inlineHelpText>
     <label>Claim PNR</label>
