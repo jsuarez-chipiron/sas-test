@@ -548,6 +548,9 @@ public class PaymentEntry {
     Boolean isNonUSDPaymentToUS =
       s.Bank_Country__c == 'United States' &&
       s.Currency__c != 'USD';
+    Boolean isNonSEKPaymentToSweden =
+      s.Currency__c != 'SEK' &&
+      s.Bank_Country__c == 'Sweden';
 
     // Payment details are dependent on bank country
     if (isChequeSettlement) {
@@ -555,11 +558,11 @@ public class PaymentEntry {
       // supported for US domestic cheque payments.
       paymentMethod = 'NORDEA US DOM CHEQUE';
     } else if (isUSDPaymentToOutsideOfUS) {
-      // USD to outside of US is one case we're not handling correctly in the custom metadata.
       paymentMethod = 'NORDEA CROSS BORDER EDI';
     } else if (isNonUSDPaymentToUS) {
-      // Similarly for non-USD payments to US.
       paymentMethod = 'CROSS BORDER EDI';
+    } else if (isNonSEKPaymentToSweden) {
+      paymentMethod = 'SEPA';
     } else {
       paymentMethod = bankCountrySettings.Payment_Type__c;
     }
