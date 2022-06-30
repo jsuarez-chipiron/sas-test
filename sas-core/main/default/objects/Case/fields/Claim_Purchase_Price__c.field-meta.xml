@@ -3,7 +3,7 @@
     <fullName>Claim_Purchase_Price__c</fullName>
     <externalId>false</externalId>
     <formula>LIA_Claim__r.Purchase_Price__c</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
     <label>Claim Purchase Price</label>
     <precision>18</precision>
     <required>false</required>
