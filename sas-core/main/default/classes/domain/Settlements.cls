@@ -103,7 +103,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   public static final String COST_CENTER_DEBITS = '90801';
 
-  public static final Decimal CONVERSION_RATE_EUR_TO_EB_POINTS = 10;
+  public static final Decimal CONVERSION_RATE_EUR_TO_EB_POINTS = 100;
   public static final Decimal CONVERSION_RATE_EUR_TO_VOUCHER_EUR = 2;
 
   public class CreateException extends Exception {
