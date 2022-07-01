@@ -41,6 +41,7 @@
             <controllingFieldValue>Belarus</controllingFieldValue>
             <controllingFieldValue>Belgium</controllingFieldValue>
             <controllingFieldValue>Belize</controllingFieldValue>
+            <controllingFieldValue>British Indian Ocean Territory</controllingFieldValue>
             <controllingFieldValue>Luxembourg</controllingFieldValue>
             <controllingFieldValue>Macau</controllingFieldValue>
             <controllingFieldValue>Afghanistan</controllingFieldValue>
@@ -49,11 +50,14 @@
             <controllingFieldValue>Malaysia</controllingFieldValue>
             <controllingFieldValue>Algeria</controllingFieldValue>
             <controllingFieldValue>Maldives</controllingFieldValue>
+            <controllingFieldValue>American Samoa</controllingFieldValue>
             <controllingFieldValue>Andorra</controllingFieldValue>
+            <controllingFieldValue>Antarctica</controllingFieldValue>
             <controllingFieldValue>Mali</controllingFieldValue>
             <controllingFieldValue>Anguilla</controllingFieldValue>
             <controllingFieldValue>Malta</controllingFieldValue>
             <controllingFieldValue>Antigua and Barbuda</controllingFieldValue>
+            <controllingFieldValue>Angola</controllingFieldValue>
             <controllingFieldValue>Marshall Islands</controllingFieldValue>
             <controllingFieldValue>Argentina</controllingFieldValue>
             <controllingFieldValue>Martinique</controllingFieldValue>
@@ -80,6 +84,7 @@
             <controllingFieldValue>Morocco</controllingFieldValue>
             <controllingFieldValue>Mozambique</controllingFieldValue>
             <controllingFieldValue>Myanmar</controllingFieldValue>
+            <controllingFieldValue>Bonaire, Sint Eustatius and Saba</controllingFieldValue>
             <controllingFieldValue>Burkina Faso</controllingFieldValue>
             <controllingFieldValue>Burundi</controllingFieldValue>
             <controllingFieldValue>Cameroon</controllingFieldValue>
@@ -89,6 +94,7 @@
             <controllingFieldValue>Chad</controllingFieldValue>
             <controllingFieldValue>Chile</controllingFieldValue>
             <controllingFieldValue>China</controllingFieldValue>
+            <controllingFieldValue>Curaçao</controllingFieldValue>
             <controllingFieldValue>Namibia</controllingFieldValue>
             <controllingFieldValue>Nauru</controllingFieldValue>
             <controllingFieldValue>Nepal</controllingFieldValue>
@@ -98,6 +104,7 @@
             <controllingFieldValue>Nicaragua</controllingFieldValue>
             <controllingFieldValue>Niger</controllingFieldValue>
             <controllingFieldValue>Nigeria</controllingFieldValue>
+            <controllingFieldValue>North Korea</controllingFieldValue>
             <controllingFieldValue>Christmas Island</controllingFieldValue>
             <controllingFieldValue>Cocos (Keeling) Islands</controllingFieldValue>
             <controllingFieldValue>Colombia</controllingFieldValue>
@@ -139,6 +146,7 @@
             <controllingFieldValue>Ethiopia</controllingFieldValue>
             <controllingFieldValue>Falkland Islands</controllingFieldValue>
             <controllingFieldValue>Faroe Islands</controllingFieldValue>
+            <controllingFieldValue>French Southern Territories</controllingFieldValue>
             <controllingFieldValue>Micronesia</controllingFieldValue>
             <controllingFieldValue>Fiji</controllingFieldValue>
             <controllingFieldValue>France</controllingFieldValue>
@@ -149,9 +157,11 @@
             <controllingFieldValue>Romania</controllingFieldValue>
             <controllingFieldValue>Russia</controllingFieldValue>
             <controllingFieldValue>Rwanda</controllingFieldValue>
+            <controllingFieldValue>Saint-Barthélemy</controllingFieldValue>
             <controllingFieldValue>Saint Kitts and Nevis</controllingFieldValue>
             <controllingFieldValue>Saint Lucia</controllingFieldValue>
             <controllingFieldValue>Saint Martin</controllingFieldValue>
+            <controllingFieldValue>Sint Maarten</controllingFieldValue>
             <controllingFieldValue>French Guiana</controllingFieldValue>
             <controllingFieldValue>French Polynesia</controllingFieldValue>
             <controllingFieldValue>Gabon</controllingFieldValue>
@@ -181,11 +191,13 @@
             <controllingFieldValue>Guyana</controllingFieldValue>
             <controllingFieldValue>Haiti</controllingFieldValue>
             <controllingFieldValue>Heard and Mc Donald Islands</controllingFieldValue>
+            <controllingFieldValue>South Georgia and the South Sandwich Islands</controllingFieldValue>
             <controllingFieldValue>Slovakia</controllingFieldValue>
             <controllingFieldValue>Slovenia</controllingFieldValue>
             <controllingFieldValue>Solomon Islands</controllingFieldValue>
             <controllingFieldValue>Somalia</controllingFieldValue>
             <controllingFieldValue>South Africa</controllingFieldValue>
+            <controllingFieldValue>South Sudan</controllingFieldValue>
             <controllingFieldValue>Spain</controllingFieldValue>
             <controllingFieldValue>Sri Lanka</controllingFieldValue>
             <controllingFieldValue>St. Helena</controllingFieldValue>
@@ -261,6 +273,7 @@
             <controllingFieldValue>Barbados</controllingFieldValue>
             <controllingFieldValue>Belarus</controllingFieldValue>
             <controllingFieldValue>Belize</controllingFieldValue>
+            <controllingFieldValue>British Indian Ocean Territory</controllingFieldValue>
             <controllingFieldValue>Macau</controllingFieldValue>
             <controllingFieldValue>Afghanistan</controllingFieldValue>
             <controllingFieldValue>Malawi</controllingFieldValue>
@@ -268,10 +281,13 @@
             <controllingFieldValue>Malaysia</controllingFieldValue>
             <controllingFieldValue>Algeria</controllingFieldValue>
             <controllingFieldValue>Maldives</controllingFieldValue>
+            <controllingFieldValue>American Samoa</controllingFieldValue>
             <controllingFieldValue>Andorra</controllingFieldValue>
+            <controllingFieldValue>Antarctica</controllingFieldValue>
             <controllingFieldValue>Mali</controllingFieldValue>
             <controllingFieldValue>Anguilla</controllingFieldValue>
             <controllingFieldValue>Antigua and Barbuda</controllingFieldValue>
+            <controllingFieldValue>Angola</controllingFieldValue>
             <controllingFieldValue>Marshall Islands</controllingFieldValue>
             <controllingFieldValue>Argentina</controllingFieldValue>
             <controllingFieldValue>Martinique</controllingFieldValue>
@@ -296,6 +312,7 @@
             <controllingFieldValue>Morocco</controllingFieldValue>
             <controllingFieldValue>Mozambique</controllingFieldValue>
             <controllingFieldValue>Myanmar</controllingFieldValue>
+            <controllingFieldValue>Bonaire, Sint Eustatius and Saba</controllingFieldValue>
             <controllingFieldValue>Burkina Faso</controllingFieldValue>
             <controllingFieldValue>Burundi</controllingFieldValue>
             <controllingFieldValue>Cameroon</controllingFieldValue>
@@ -305,6 +322,7 @@
             <controllingFieldValue>Chad</controllingFieldValue>
             <controllingFieldValue>Chile</controllingFieldValue>
             <controllingFieldValue>China</controllingFieldValue>
+            <controllingFieldValue>Curaçao</controllingFieldValue>
             <controllingFieldValue>Namibia</controllingFieldValue>
             <controllingFieldValue>Nauru</controllingFieldValue>
             <controllingFieldValue>Nepal</controllingFieldValue>
@@ -313,6 +331,7 @@
             <controllingFieldValue>Nicaragua</controllingFieldValue>
             <controllingFieldValue>Niger</controllingFieldValue>
             <controllingFieldValue>Nigeria</controllingFieldValue>
+            <controllingFieldValue>North Korea</controllingFieldValue>
             <controllingFieldValue>Christmas Island</controllingFieldValue>
             <controllingFieldValue>Cocos (Keeling) Islands</controllingFieldValue>
             <controllingFieldValue>Colombia</controllingFieldValue>
@@ -350,6 +369,7 @@
             <controllingFieldValue>Ethiopia</controllingFieldValue>
             <controllingFieldValue>Falkland Islands</controllingFieldValue>
             <controllingFieldValue>Faroe Islands</controllingFieldValue>
+            <controllingFieldValue>French Southern Territories</controllingFieldValue>
             <controllingFieldValue>Micronesia</controllingFieldValue>
             <controllingFieldValue>Fiji</controllingFieldValue>
             <controllingFieldValue>South Korea</controllingFieldValue>
@@ -358,9 +378,11 @@
             <controllingFieldValue>Reunion</controllingFieldValue>
             <controllingFieldValue>Russia</controllingFieldValue>
             <controllingFieldValue>Rwanda</controllingFieldValue>
+            <controllingFieldValue>Saint-Barthélemy</controllingFieldValue>
             <controllingFieldValue>Saint Kitts and Nevis</controllingFieldValue>
             <controllingFieldValue>Saint Lucia</controllingFieldValue>
             <controllingFieldValue>Saint Martin</controllingFieldValue>
+            <controllingFieldValue>Sint Maarten</controllingFieldValue>
             <controllingFieldValue>French Guiana</controllingFieldValue>
             <controllingFieldValue>French Polynesia</controllingFieldValue>
             <controllingFieldValue>Gabon</controllingFieldValue>
@@ -388,9 +410,11 @@
             <controllingFieldValue>Guyana</controllingFieldValue>
             <controllingFieldValue>Haiti</controllingFieldValue>
             <controllingFieldValue>Heard and Mc Donald Islands</controllingFieldValue>
+            <controllingFieldValue>South Georgia and the South Sandwich Islands</controllingFieldValue>
             <controllingFieldValue>Solomon Islands</controllingFieldValue>
             <controllingFieldValue>Somalia</controllingFieldValue>
             <controllingFieldValue>South Africa</controllingFieldValue>
+            <controllingFieldValue>South Sudan</controllingFieldValue>
             <controllingFieldValue>Sri Lanka</controllingFieldValue>
             <controllingFieldValue>St. Helena</controllingFieldValue>
             <controllingFieldValue>St. Pierre and Miquelon</controllingFieldValue>
@@ -462,6 +486,7 @@
             <controllingFieldValue>Barbados</controllingFieldValue>
             <controllingFieldValue>Belarus</controllingFieldValue>
             <controllingFieldValue>Belize</controllingFieldValue>
+            <controllingFieldValue>British Indian Ocean Territory</controllingFieldValue>
             <controllingFieldValue>Macau</controllingFieldValue>
             <controllingFieldValue>Afghanistan</controllingFieldValue>
             <controllingFieldValue>Malawi</controllingFieldValue>
@@ -469,10 +494,13 @@
             <controllingFieldValue>Malaysia</controllingFieldValue>
             <controllingFieldValue>Algeria</controllingFieldValue>
             <controllingFieldValue>Maldives</controllingFieldValue>
+            <controllingFieldValue>American Samoa</controllingFieldValue>
             <controllingFieldValue>Andorra</controllingFieldValue>
+            <controllingFieldValue>Antarctica</controllingFieldValue>
             <controllingFieldValue>Mali</controllingFieldValue>
             <controllingFieldValue>Anguilla</controllingFieldValue>
             <controllingFieldValue>Antigua and Barbuda</controllingFieldValue>
+            <controllingFieldValue>Angola</controllingFieldValue>
             <controllingFieldValue>Marshall Islands</controllingFieldValue>
             <controllingFieldValue>Argentina</controllingFieldValue>
             <controllingFieldValue>Martinique</controllingFieldValue>
@@ -497,6 +525,7 @@
             <controllingFieldValue>Morocco</controllingFieldValue>
             <controllingFieldValue>Mozambique</controllingFieldValue>
             <controllingFieldValue>Myanmar</controllingFieldValue>
+            <controllingFieldValue>Bonaire, Sint Eustatius and Saba</controllingFieldValue>
             <controllingFieldValue>Burkina Faso</controllingFieldValue>
             <controllingFieldValue>Burundi</controllingFieldValue>
             <controllingFieldValue>Cameroon</controllingFieldValue>
@@ -506,6 +535,7 @@
             <controllingFieldValue>Chad</controllingFieldValue>
             <controllingFieldValue>Chile</controllingFieldValue>
             <controllingFieldValue>China</controllingFieldValue>
+            <controllingFieldValue>Curaçao</controllingFieldValue>
             <controllingFieldValue>Namibia</controllingFieldValue>
             <controllingFieldValue>Nauru</controllingFieldValue>
             <controllingFieldValue>Nepal</controllingFieldValue>
@@ -514,6 +544,7 @@
             <controllingFieldValue>Nicaragua</controllingFieldValue>
             <controllingFieldValue>Niger</controllingFieldValue>
             <controllingFieldValue>Nigeria</controllingFieldValue>
+            <controllingFieldValue>North Korea</controllingFieldValue>
             <controllingFieldValue>Christmas Island</controllingFieldValue>
             <controllingFieldValue>Cocos (Keeling) Islands</controllingFieldValue>
             <controllingFieldValue>Colombia</controllingFieldValue>
@@ -551,6 +582,7 @@
             <controllingFieldValue>Ethiopia</controllingFieldValue>
             <controllingFieldValue>Falkland Islands</controllingFieldValue>
             <controllingFieldValue>Faroe Islands</controllingFieldValue>
+            <controllingFieldValue>French Southern Territories</controllingFieldValue>
             <controllingFieldValue>Micronesia</controllingFieldValue>
             <controllingFieldValue>Fiji</controllingFieldValue>
             <controllingFieldValue>South Korea</controllingFieldValue>
@@ -559,9 +591,11 @@
             <controllingFieldValue>Reunion</controllingFieldValue>
             <controllingFieldValue>Russia</controllingFieldValue>
             <controllingFieldValue>Rwanda</controllingFieldValue>
+            <controllingFieldValue>Saint-Barthélemy</controllingFieldValue>
             <controllingFieldValue>Saint Kitts and Nevis</controllingFieldValue>
             <controllingFieldValue>Saint Lucia</controllingFieldValue>
             <controllingFieldValue>Saint Martin</controllingFieldValue>
+            <controllingFieldValue>Sint Maarten</controllingFieldValue>
             <controllingFieldValue>French Guiana</controllingFieldValue>
             <controllingFieldValue>French Polynesia</controllingFieldValue>
             <controllingFieldValue>Gabon</controllingFieldValue>
@@ -589,9 +623,11 @@
             <controllingFieldValue>Guyana</controllingFieldValue>
             <controllingFieldValue>Haiti</controllingFieldValue>
             <controllingFieldValue>Heard and Mc Donald Islands</controllingFieldValue>
+            <controllingFieldValue>South Georgia and the South Sandwich Islands</controllingFieldValue>
             <controllingFieldValue>Solomon Islands</controllingFieldValue>
             <controllingFieldValue>Somalia</controllingFieldValue>
             <controllingFieldValue>South Africa</controllingFieldValue>
+            <controllingFieldValue>South Sudan</controllingFieldValue>
             <controllingFieldValue>Sri Lanka</controllingFieldValue>
             <controllingFieldValue>St. Helena</controllingFieldValue>
             <controllingFieldValue>St. Pierre and Miquelon</controllingFieldValue>
@@ -628,6 +664,7 @@
             <controllingFieldValue>Tanzania</controllingFieldValue>
             <controllingFieldValue>Jersey</controllingFieldValue>
             <controllingFieldValue>United States</controllingFieldValue>
+            <controllingFieldValue>United States Minor Outlying Islands</controllingFieldValue>
             <controllingFieldValue>Jordan</controllingFieldValue>
             <controllingFieldValue>Uruguay</controllingFieldValue>
             <controllingFieldValue>Kazakhstan</controllingFieldValue>
