@@ -605,10 +605,10 @@ public without sharing class Settlements extends fflib_SObjectDomain {
             settlementToCreate.Voucher_Type__c = '6721 - Denied boarding voluntary voucher';
           }
           when 'IDG' {
-            settlementToCreate.Voucher_Type__c = '6721 - Downgrading involuntary voucher';
+            settlementToCreate.Voucher_Type__c = '6722 - Downgrading involuntary voucher';
           }
           when 'VDG' {
-            settlementToCreate.Voucher_Type__c = '6721 - Downgrading voluntary voucher';
+            settlementToCreate.Voucher_Type__c = '6722 - Downgrading voluntary voucher';
           }
           when else {
             settlementToCreate.Voucher_Type__c = '6721 - Denied boarding involuntary voucher';
@@ -639,7 +639,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         }
         when 'Monetary' {
           itemToCreate.Amount__c = compensationCardForClaim.Amount__c;
-          itemToCreate.Cost_Account__c = '';
+          itemToCreate.Cost_Account__c = '6721'; // TODO: Set this based on compensation card type.
         }
         when 'Voucher' {
           itemToCreate.Amount__c =
@@ -649,7 +649,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         when else {
           // Default to monetary
           itemToCreate.Amount__c = compensationCardForClaim.Amount__c;
-          itemToCreate.Cost_Account__c = '';
+          itemToCreate.Cost_Account__c = '6721'; // TODO: Set this based on compensation card type.
         }
       }
 
