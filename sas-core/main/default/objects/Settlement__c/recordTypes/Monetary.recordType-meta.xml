@@ -2140,47 +2140,4 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
-        <picklist>Voucher_Type__c</picklist>
-        <values>
-            <fullName>6721 - Denied boarding involuntary voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6721 - Denied boarding voluntary voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6722 - Downgrading involuntary voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6722 - Downgrading voluntary voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6727 - EU261 voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6733 - Goodwill voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6738 - Care voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6741 - Damage baggage voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6742 - Delayed baggage voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6743 - Pilfered baggage voucher</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
 </RecordType>
