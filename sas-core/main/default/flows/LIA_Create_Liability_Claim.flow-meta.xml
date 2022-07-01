@@ -168,11 +168,6 @@
         <picklistField>Type_of_Customer__c</picklistField>
         <picklistObject>LIA_Claim__c</picklistObject>
     </dynamicChoiceSets>
-    <formulas>
-        <name>fullCustomerName</name>
-        <dataType>String</dataType>
-        <expression>{!firstName} + &quot; &quot;+ {!lastName}</expression>
-    </formulas>
     <interviewLabel>LIA Create Liability Claim {!$Flow.CurrentDateTime}</interviewLabel>
     <label>LIA Create Liability Claim</label>
     <processMetadataValues>
@@ -308,12 +303,6 @@
             <field>Contact_First_Name__c</field>
             <value>
                 <elementReference>firstName</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Contact_Full_Name__c</field>
-            <value>
-                <elementReference>fullCustomerName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
