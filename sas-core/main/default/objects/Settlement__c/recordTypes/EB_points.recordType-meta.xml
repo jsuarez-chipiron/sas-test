@@ -5,17 +5,6 @@
     <compactLayoutAssignment>Settlement_Compact_Layout</compactLayoutAssignment>
     <label>EB points</label>
     <picklistValues>
-        <picklist>Accounting_Status__c</picklist>
-        <values>
-            <fullName>Transferred</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Waiting for transfer</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Bank_Country__c</picklist>
         <values>
             <fullName>Afghanistan</fullName>
