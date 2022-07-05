@@ -34,6 +34,30 @@ public without sharing class DateUtils {
   }
 
   /**
+   * Calculates whether there is 3 years or more between two datetimes.
+   * Used to determine whether a claim has been filed in time to be eligable for EU261 compensation.
+   *
+   * @param datetime1
+   * @param datetime2
+   *
+   * @return true if there is 3 years or more difference between the two datetimes.
+   */
+  public static Boolean isEligableForCompensation(
+    Datetime datetime1,
+    Datetime datetime2
+  ) {
+    Date date1 = datetime1.date();
+    Date date2 = datetime2.date();
+    Integer dayDelta = date1.daysBetween(date2);
+    if (Math.abs(dayDelta) > 1096) {
+      // Three years and an extra day (gap year guard)
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
    * Converts a TEDS duration into an Apex Integer which represents the duration in minutes.
    * ISO 8601 duration has the form: P(n)Y(n)M(n)DT(n)H(n)M(n)S.
    * Source: https://www.digi.com/resources/documentation/digidocs/90001437-13/reference/r_iso_8601_duration_format.htm
