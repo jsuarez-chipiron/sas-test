@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>EB_points</fullName>
     <active>true</active>
-    <compactLayoutAssignment>Settlement_Compact_Layout</compactLayoutAssignment>
+    <compactLayoutAssignment>settlement_EB_compact_Layout</compactLayoutAssignment>
     <label>EB points</label>
     <picklistValues>
         <picklist>Bank_Country__c</picklist>
@@ -151,6 +151,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cambodia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cameroon</fullName>
             <default>false</default>
         </values>
@@ -291,10 +295,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Micronesia</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Fiji</fullName>
             <default>false</default>
         </values>
@@ -391,10 +391,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Vatican City</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Honduras</fullName>
             <default>false</default>
         </values>
@@ -463,10 +459,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambodia</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Kiribati</fullName>
             <default>false</default>
         </values>
@@ -480,6 +472,10 @@
         </values>
         <values>
             <fullName>Kyrgyzstan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Laos</fullName>
             <default>false</default>
         </values>
         <values>
@@ -516,6 +512,10 @@
         </values>
         <values>
             <fullName>Macau</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Madagascar</fullName>
             <default>false</default>
         </values>
         <values>
@@ -560,6 +560,14 @@
         </values>
         <values>
             <fullName>Mexico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Micronesia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moldova</fullName>
             <default>false</default>
         </values>
         <values>
@@ -643,6 +651,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>North Macedonia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Northern Mariana Islands</fullName>
             <default>false</default>
         </values>
@@ -679,10 +691,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Laos</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Peru</fullName>
             <default>false</default>
         </values>
@@ -708,18 +716,6 @@
         </values>
         <values>
             <fullName>Qatar</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>South Korea</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Madagascar</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Moldova</fullName>
             <default>false</default>
         </values>
         <values>
@@ -823,6 +819,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>South Korea</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>South Sudan</fullName>
             <default>false</default>
         </values>
@@ -879,15 +879,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Tanzania</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Thailand</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>The Democratic Republic of the Congo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>North Macedonia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -943,10 +943,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Tanzania</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>United States</fullName>
             <default>false</default>
         </values>
@@ -964,6 +960,10 @@
         </values>
         <values>
             <fullName>Vanuatu</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vatican City</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1154,6 +1154,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cambodia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cameroon</fullName>
             <default>false</default>
         </values>
@@ -1294,10 +1298,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Micronesia</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Fiji</fullName>
             <default>false</default>
         </values>
@@ -1394,10 +1394,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Vatican City</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Honduras</fullName>
             <default>false</default>
         </values>
@@ -1466,10 +1462,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambodia</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Kiribati</fullName>
             <default>false</default>
         </values>
@@ -1483,6 +1475,10 @@
         </values>
         <values>
             <fullName>Kyrgyzstan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Laos</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1519,6 +1515,10 @@
         </values>
         <values>
             <fullName>Macau</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Madagascar</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1563,6 +1563,14 @@
         </values>
         <values>
             <fullName>Mexico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Micronesia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moldova</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1646,6 +1654,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>North Macedonia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Northern Mariana Islands</fullName>
             <default>false</default>
         </values>
@@ -1682,10 +1694,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Laos</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Peru</fullName>
             <default>false</default>
         </values>
@@ -1711,18 +1719,6 @@
         </values>
         <values>
             <fullName>Qatar</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>South Korea</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Madagascar</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Moldova</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1826,6 +1822,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>South Korea</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>South Sudan</fullName>
             <default>false</default>
         </values>
@@ -1882,15 +1882,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Tanzania</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Thailand</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>The Democratic Republic of the Congo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>North Macedonia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1946,10 +1946,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Tanzania</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>United States</fullName>
             <default>false</default>
         </values>
@@ -1967,6 +1963,10 @@
         </values>
         <values>
             <fullName>Vanuatu</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vatican City</fullName>
             <default>false</default>
         </values>
         <values>
