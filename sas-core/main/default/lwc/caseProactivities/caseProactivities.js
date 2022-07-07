@@ -4,9 +4,9 @@ import getProactivitiesForRecord from "@salesforce/apex/ProactivitiesController.
 
 /**
  * A component which displays a list of proactivities for the given record.
- * 
+ *
  * Currently can be added to Case and Settlement record pages. If these should
- * be visible elsewhere, ProactivitiesController needs to be extended to be 
+ * be visible elsewhere, ProactivitiesController needs to be extended to be
  * able to fetch proactivities for new object types. See implementation of
  * ProactivitiesController.getProactivitiesForRecord.
  */
@@ -25,6 +25,11 @@ export default class CaseProactivities extends NavigationMixin(
         label: {
           fieldName: "note"
         }
+      },
+      cellAttributes: {
+        iconName: {
+          fieldName: "typeIcon"
+        }
       }
     },
     { label: "Match on", fieldName: "matchingReasons", initialWidth: 120 }
@@ -36,7 +41,14 @@ export default class CaseProactivities extends NavigationMixin(
   proactivitiesFound = false;
 
   sortProactivitiesByMatches(first, second) {
-    // Sort first by string length as that is a good enough proxy for quality of match.
+    // Sort first by proactivity type (Major event is always first), then string length as that is a good enough proxy for quality of match.
+    if (first.typeIcon != second.typeIcon) {
+      if (first.typeIcon === "standard:announcement") {
+        return -1;
+      } else if (second.typeIcon === "standard:announcement") {
+        return 1;
+      }
+    }
     if (first.matchingReasons.length < second.matchingReasons.length) {
       return 1;
     } else if (first.matchingReasons.length > second.matchingReasons.length) {
@@ -50,7 +62,10 @@ export default class CaseProactivities extends NavigationMixin(
     }
   }
 
-  @wire(getProactivitiesForRecord, { recordId: "$recordId", objectApiName: "$objectApiName" })
+  @wire(getProactivitiesForRecord, {
+    recordId: "$recordId",
+    objectApiName: "$objectApiName"
+  })
   wiredProactivities({ error, data }) {
     if (error) {
       this.showSpinner = false;
@@ -65,7 +80,11 @@ export default class CaseProactivities extends NavigationMixin(
         .map((proactivity) => ({
           id: proactivity.id,
           note: proactivity.note,
-          matchingReasons: proactivity.matchingReasons
+          matchingReasons: proactivity.matchingReasons,
+          typeIcon:
+            proactivity.type == "Major Event"
+              ? "standard:announcement"
+              : "standard:note"
         }))
         .sort(this.sortProactivitiesByMatches)
         .map((proactivity, idx) => ({ ...proactivity, idx }));

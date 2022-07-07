@@ -14,7 +14,9 @@ global class APIMMock implements HttpCalloutMock {
   public static final String PNR_FOR_WHICH_CLAIMS_DO_NOT_EXIST = '000000';
   public static final String DEFAULT_VALID_TEDS_PNR = 'TEST21';
   public static final String DEFAULT_VALID_TEDS_BOOKING_DATE = '20201126';
-  public static final String DELAYED_FLIGHT_ID = 'SK0903-20210410-ARN-EWR';
+  public static final String DELAYED_FLIGHT_ID_1 = 'SK0903-20210410-ARN-EWR';
+  public static final String DELAYED_FLIGHT_ID_2 = 'WF0075-20220531-TRD-OSL';
+  public static final String CANCELLED_FLIGHT_ID = 'LH2434-20220531-MUC-BLL';
   public static final String DEFAULT_VALID_TEDS_IDENTIFIER =
     DEFAULT_VALID_TEDS_PNR +
     '-' +
@@ -28,8 +30,13 @@ global class APIMMock implements HttpCalloutMock {
     res.setStatusCode(200);
     if (endpoint.contains('teds-flight')) {
       res.setHeader('Content-Type', 'application/json');
-      if (endpoint.contains(DELAYED_FLIGHT_ID)) {
+      if (
+        endpoint.contains(DELAYED_FLIGHT_ID_1) ||
+        endpoint.contains(DELAYED_FLIGHT_ID_2)
+      ) {
         res.setBody(APIMMockResponses.DELAYED_FLIGHT_RESPONSE_BODY);
+      } else if (endpoint.contains(CANCELLED_FLIGHT_ID)) {
+        res.setBody(APIMMockResponses.CANCELLED_FLIGHT_RESPONSE_BODY);
       } else {
         res.setBody(APIMMockResponses.FLIGHT_RESPONSE_BODY);
       }

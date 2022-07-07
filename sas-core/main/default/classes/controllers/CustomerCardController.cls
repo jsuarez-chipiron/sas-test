@@ -48,9 +48,10 @@ public without sharing class CustomerCardController {
       Booking__c b = bookingsByBookingReference.get(key);
       List<Case> relatedCases = CasesSelector.newInstance()
         .selectByBookingReference(new Set<String>{ b.Booking_Reference__c });
-      toReturn.add(
-        new BookingJSON(b, relatedCases, logsByBookingReference.get(key))
-      );
+      List<IRR_CommunicationLog__c> logs = logsByBookingReference.get(key);
+      if (logs.size() > 0) {
+        toReturn.add(new BookingJSON(b, relatedCases, logs));
+      }
     }
     toReturn.sort();
 

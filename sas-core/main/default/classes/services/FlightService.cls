@@ -41,11 +41,10 @@ public without sharing class FlightService {
       return null;
     }
 
-    Flights newFlights = Flights.createFromTEDSData(flightData);
-
-    if (shouldUpsertToDB) {
-      newFlights.upsertToDB();
-    }
+    Flights newFlights = Flights.createFromTEDSData(
+      flightData,
+      shouldUpsertToDB
+    );
 
     return newFlights;
   }
