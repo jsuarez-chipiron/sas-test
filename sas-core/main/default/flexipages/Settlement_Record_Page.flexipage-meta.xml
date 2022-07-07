@@ -254,6 +254,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>currencyConverter</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>caseProactivities</componentName>
             </componentInstance>
         </itemInstances>
@@ -272,11 +277,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListContainer</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>currencyConverter</componentName>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
