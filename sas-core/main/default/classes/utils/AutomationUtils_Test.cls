@@ -96,7 +96,15 @@ private class AutomationUtils_Test {
       Type__c = 'OneWay'
     );
 
-    insert new List<Booking__c>{ booking1, booking2, booking3 };
+    // TODO: remove, the IRR_Communication log should not be required
+    insert new List<SObject>{
+      booking1,
+      booking2,
+      booking3,
+      new IRR_CommunicationLog__c(IRR_BookingReference__c = 'ABC123'),
+      new IRR_CommunicationLog__c(IRR_BookingReference__c = 'ABC124'),
+      new IRR_CommunicationLog__c(IRR_BookingReference__c = 'ABC125')
+    };
 
     Segment__c segment1 = new Segment__c(
       Booking__c = booking1.Id,
@@ -187,6 +195,7 @@ private class AutomationUtils_Test {
       List<BookingJSON> booking = CustomerCardController.getBookingsForCase(
         String.valueOf(claim.Case__c)
       );
+      System.debug(booking.size());
       isFiledOnTimeResult.add(AutomationUtils.isFiledOnTime(claim, booking[0]));
     }
 
