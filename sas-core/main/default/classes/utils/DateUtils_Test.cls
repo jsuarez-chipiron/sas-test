@@ -8,10 +8,10 @@ private class DateUtils_Test {
     Datetime justInTime = DateTime.newInstance(2019, 1, 1);
     Datetime aheadInTime = DateTime.newInstance(2024, 1, 1);
     Datetime aheadJustInTime = DateTime.newInstance(2025, 1, 1);
-    Datetime justOutOfTime = DateTime.newInstance(2018, 12, 31); // 3 years and 1 extra day (depending on gap year)
+    Datetime justOutOfTime = DateTime.newInstance(2018, 12, 30); // 3 years and 2 extra days (depending on gap year).
     Datetime outOfTime = DateTime.newInstance(2015, 1, 1);
-    Datetime aheadJustOutOfTime = DateTime.newInstance(2025, 1, 2);
-    Datetime aheadOutOfTime = DateTime.newInstance(2027, 1, 2);
+    Datetime aheadJustOutOfTime = DateTime.newInstance(2025, 1, 3);
+    Datetime aheadOutOfTime = DateTime.newInstance(2027, 1, 3);
     List<DateTime> dates = new List<DateTime>{
       inTime,
       justInTime,
