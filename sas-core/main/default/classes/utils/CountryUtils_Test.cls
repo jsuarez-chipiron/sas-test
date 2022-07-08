@@ -50,7 +50,7 @@ private class CountryUtils_Test {
     // When
     for (String code : countryFormCountryCodes) {
       convertedCountryCodes.add(
-        CountryUtils.formCountryCodeToIBANCountryCode(code)
+        CountryUtils.countryCodeToIBANCountryCode(code)
       );
     }
 
@@ -94,6 +94,42 @@ private class CountryUtils_Test {
         IBANCountries[i],
         countries[i],
         'Country name not gotten correctly'
+      );
+    }
+  }
+
+  @IsTest
+  static void shouldAssertIfInEU() {
+    // Given
+    List<String> countryCodes = new List<String>{
+      'GF',
+      'SE',
+      'MQ',
+      'JE',
+      'US',
+      'NOTACODE'
+    };
+    List<Boolean> isInEuCorrect = new List<Boolean>{
+      true,
+      true,
+      true,
+      false,
+      false,
+      false
+    };
+    List<Boolean> isInEu = new List<Boolean>{};
+
+    // When
+    for (String code : countryCodes) {
+      isInEu.add(CountryUtils.isInEU(code));
+    }
+
+    // Then
+    for (Integer i = 0; i < isInEu.size(); i++) {
+      System.assertEquals(
+        isInEuCorrect[i],
+        isInEu[i],
+        'Should determine if country is in the EU or not.'
       );
     }
   }

@@ -34,6 +34,10 @@
                 <behavior>Edit</behavior>
                 <field>Longitude__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_In_European_Union__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

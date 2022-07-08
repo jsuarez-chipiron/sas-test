@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <inlineHelpText>The longitude of the airport.</inlineHelpText>
     <label>Longitude</label>
-    <precision>14</precision>
+    <precision>15</precision>
     <required>false</required>
     <scale>12</scale>
     <trackTrending>false</trackTrending>
