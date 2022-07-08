@@ -101,6 +101,11 @@ public without sharing class AutomationUtils {
     return null;
   }
 
+  /**
+   * @param TODO
+   * TODO
+   * @return TODO
+   */
   private static Boolean isCoveredByEU261(LIA_Claim__c c, BookingJSON b) {
     return true;
   }
@@ -127,6 +132,11 @@ public without sharing class AutomationUtils {
     return flight;
   }
 
+  /**
+   * @param TODO
+   * TODO
+   * @return TODO
+   */
   public static Boolean isFiledOnTime(LIA_Claim__c claim, BookingJSON booking) {
     BookingJSON.Flight flight = getRelevantFlight(claim, booking);
     Datetime claimCreation = claim.CreatedDate; // TODO: Should this be the case creation date?
@@ -153,6 +163,11 @@ public without sharing class AutomationUtils {
     return flight.arrivalDelayedMinutes.intValue();
   }
 
+  /**
+   * @param TODO
+   * TODO
+   * @return TODO
+   */
   private static Integer getFlightDistanceKm(
     LIA_Claim__c claim,
     BookingJSON booking
@@ -163,13 +178,25 @@ public without sharing class AutomationUtils {
 
     // Get haversine distance
 
+    // Sum
+
     return 1;
   }
 
+  /**
+   * @param TODO
+   * TODO
+   * @return TODO
+   */
   private static Boolean isDuplicate(LIA_Claim__c claim, BookingJSON booking) {
     return false;
   }
 
+  /**
+   * @param TODO
+   * TODO
+   * @return TODO
+   */
   private static List<LIA_Claim__c> areSupportedForAutomation(
     Map<LIA_Claim__c, BookingJSON> claimToBooking
   ) {
@@ -213,5 +240,51 @@ public without sharing class AutomationUtils {
       type +
       ' bookings are not currently supported for EU261 automation.'
     );
+  }
+
+  /**
+   * Calculates the haversine distance in meters between two airports.
+   *
+   * @param airport1
+   * @param airport2
+   *
+   * @return An Integer value of the distance in meters between the two airports.
+   */
+  public static Integer distanceBetweenAirportsInMeters(
+    Airport__c airport1,
+    Airport__c airport2
+  ) {
+    Double dist = distanceBetweenAirportsInKilometers(airport1, airport2);
+    return Integer.valueOf(
+      Decimal.valueOf(dist * 1000).round(System.RoundingMode.HALF_UP)
+    );
+  }
+
+  /**
+   * Calculates the haversine distance in kilometers, rounded normally, between two airports.
+   *
+   * @param airport1
+   * @param airport2
+   *
+   * @return An Double value of the distance in kilometers between the two airports.
+   */
+  public static Double distanceBetweenAirportsInKilometers(
+    Airport__c airport1,
+    Airport__c airport2
+  ) {
+    Double long1 = Double.valueOf(airport1.Longitude__c);
+    Double lat1 = Double.valueOf(airport1.Latitude__c);
+    Double long2 = Double.valueOf(airport2.Longitude__c);
+    Double lat2 = Double.valueOf(airport2.Latitude__c);
+
+    Location loc1 = Location.newInstance(
+      airport1.Latitude__c,
+      airport1.Longitude__c
+    );
+    Location loc2 = Location.newInstance(
+      airport2.Latitude__c,
+      airport2.Longitude__c
+    );
+    return Location.getDistance(loc1, loc2, 'km');
   }
 }

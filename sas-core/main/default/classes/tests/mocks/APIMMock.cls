@@ -102,6 +102,8 @@ global class APIMMock implements HttpCalloutMock {
       String ids = getQueryParam('ids');
       if (ids == 'RUN') {
         res.setBody(APIMMockResponses.AIRPORT_RESPONSE_BODY_SPECIAL_TERRITORY);
+      } else if (ids.contains('ITM')) {
+        res.setBody(APIMMockResponses.AIRPORT_RESPONSE_BODY_MULTIPLE);
       } else {
         res.setBody(APIMMockResponses.AIRPORT_RESPONSE_BODY);
       }
