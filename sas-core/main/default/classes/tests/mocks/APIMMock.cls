@@ -97,6 +97,14 @@ global class APIMMock implements HttpCalloutMock {
             .replace('{bookingDate}', DEFAULT_VALID_TEDS_BOOKING_DATE)
         );
       }
+    } else if (endpoint.contains('/teds-airport/airports?')) {
+      res.setHeader('Content-Type', 'application/json');
+      String ids = getQueryParam('ids');
+      if (ids == 'RUN') {
+        res.setBody(APIMMockResponses.AIRPORT_RESPONSE_BODY_SPECIAL_TERRITORY);
+      } else {
+        res.setBody(APIMMockResponses.AIRPORT_RESPONSE_BODY);
+      }
     } else if (endpoint.contains('csharkservice')) {
       if (
         req.getHeader('SOAPAction') ==
