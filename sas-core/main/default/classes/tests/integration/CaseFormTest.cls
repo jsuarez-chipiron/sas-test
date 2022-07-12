@@ -743,4 +743,308 @@ private class CaseFormTest {
       'Case should have been set to closed.'
     );
   }
+
+  @IsTest
+  public static void shouldCreateAndPrioritiseCasesCorrectly() {
+    //Given
+    // Create EB accounts
+    List<Account> newAccounts = FCS_TestDataFactory.createFrequentFlyers(3);
+    List<Account> newAccountsWithCorrectEBLevel = new List<Account>{};
+    List<String> EBLevels = new List<String>{ 'B', 'D', 'P' };
+    List<CaseFormJSON2Apex> requestBodies = new List<CaseFormJSON2Apex>{};
+
+    for (Integer i = 0; i < newAccounts.size(); i++) {
+      Account a = newAccounts[i];
+      String EBLevel = EBLevels[i];
+      String email = i + 'test@test.com';
+      String firstName = i + 'testFirst';
+      String lastName = i + 'testLast';
+      String phone = i + '0000000';
+      String EBNumber = a.FCS_EBNumber__c;
+      a.PersonEmail = email;
+      a.FirstName = firstName;
+      a.LastName = lastName;
+      a.Phone = phone;
+      a.FCS_EBLevel__c = EBLevel;
+      newAccountsWithCorrectEBLevel.add(a);
+      requestBodies.add(
+        CaseFormJSON2Apex.parse(
+          '{ ' +
+          '  "formData\": {' +
+          '    "type": "claim",' +
+          '    "email": "' +
+          email +
+          '",' +
+          '    "firstName": "' +
+          firstName +
+          '",' +
+          '    "lastName": "' +
+          lastName +
+          '",' +
+          '    "phone": "' +
+          phone +
+          '",' +
+          '    "address": "Testway",' +
+          '    "postalCode": "00000",' +
+          '    "city": "Stockholm",' +
+          '    "country": "SE",' +
+          '    "euroBonusNumber": "' +
+          EBNumber +
+          '",' +
+          '    "contactType": "private",' +
+          '    "claimCategory": "accident-and-injury",' +
+          '    "claimType": "other",' +
+          '    "preferredCompensationMethod": "voucher",' +
+          '    "bookingReference": "' +
+          EBLevel +
+          '12",' +
+          '    "departureDate": "2022-03-02",' +
+          '    "flightNumber": "S' +
+          i +
+          '123' +
+          i +
+          '"' +
+          '  },' +
+          '  "metaData": {' +
+          '    "market": "dk-da"' +
+          '  }' +
+          '}'
+        )
+      );
+    }
+
+    insert newAccountsWithCorrectEBLevel;
+
+    Map<Id, String> accountToPriority = new Map<Id, String>{
+      newAccountsWithCorrectEBLevel[0].Id => 'Medium',
+      newAccountsWithCorrectEBLevel[1].Id => 'High',
+      newAccountsWithCorrectEBLevel[2].Id => 'Medium'
+    }; // Medium, check this
+
+    // When
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    Test.startTest();
+    Set<String> responseCaseNumbers = new Set<String>{};
+    for (CaseFormJSON2Apex formData : requestBodies) {
+      responseCaseNumbers.add(CaseForm.createCase(formData).caseNumber);
+    }
+    Test.StopTest();
+
+    // Then
+    List<Case> cases = [
+      SELECT Id, FCS_EBNumber__c, FCS_EBLevel__c, Priority, AccountId
+      FROM Case
+      WHERE CaseNumber IN :responseCaseNumbers
+    ];
+
+    Set<Id> caseIds = new Set<Id>{};
+    for (Case newCase : cases) {
+      caseIds.add(newCase.Id);
+    }
+
+    for (Account a : newAccounts) {
+      Case newCase;
+      for (Case c : cases) {
+        if (c.AccountId == a.Id) {
+          newCase = c;
+        }
+      }
+
+      System.assertEquals(
+        accountToPriority.get(a.Id),
+        newCase.Priority,
+        'Should assign the correct priority to cases.'
+      );
+    }
+  }
+
+  @IsTest
+  public static void shouldCreateAndRouteCasesCorrectly() {
+    //Given
+    // Create EB accounts
+    List<Account> newAccounts = FCS_TestDataFactory.createFrequentFlyers(4);
+    List<Account> newAccountsWithCorrectEBLevel = new List<Account>{};
+    List<String> EBLevels = new List<String>{ 'B', 'G', 'D', 'P' };
+    List<String> claimCategories = new List<String>{
+      'flight-disruptions',
+      'baggage',
+      'accident-and-injury',
+      'flight-disruptions'
+    };
+
+    List<String> claimTypes = new List<String>{
+      'flight-delay',
+      'baggage-delayed',
+      'other',
+      'flight-delay'
+    };
+    List<CaseFormJSON2Apex> requestBodies = new List<CaseFormJSON2Apex>{};
+    String baggageJson =
+      '    "passengerIrregularityReportNumber": "ARNSK12345",' +
+      '    "baggageDelayTime": "less-than-21-days",' +
+      '    "baggagePurchasePrice": 500,' +
+      '    "baggagePurchaseYear": 2021,';
+
+    for (Integer i = 0; i < newAccounts.size(); i++) {
+      Account a = newAccounts[i];
+      String EBLevel = EBLevels[i];
+      String email = i + 'test@test.com';
+      String firstName = i + 'testFirst';
+      String lastName = i + 'testLast';
+      String phone = i + '0000000';
+      String EBNumber = a.FCS_EBNumber__c;
+      a.PersonEmail = email;
+      a.FirstName = firstName;
+      a.LastName = lastName;
+      a.Phone = phone;
+      a.FCS_EBLevel__c = EBLevel;
+      newAccountsWithCorrectEBLevel.add(a);
+      String jsonContent =
+        '{ ' +
+        '  "formData\": {' +
+        '    "type": "claim",' +
+        '    "email": "' +
+        email +
+        '",' +
+        '    "firstName": "' +
+        firstName +
+        '",' +
+        '    "lastName": "' +
+        lastName +
+        '",' +
+        '    "phone": "' +
+        phone +
+        '",' +
+        '    "address": "Testway",' +
+        '    "postalCode": "00000",' +
+        '    "city": "Stockholm",' +
+        '    "country": "SE",' +
+        '    "euroBonusNumber": "' +
+        EBNumber +
+        '",' +
+        '    "contactType": "private",' +
+        '    "claimCategory": "' +
+        claimCategories[i] +
+        '",' +
+        '    "claimType": "' +
+        claimTypes[i] +
+        '",' +
+        (claimCategories[i] == 'baggage' ? baggageJson : '') +
+        '    "preferredCompensationMethod": "voucher",' +
+        '    "bookingReference": "' +
+        EBLevel +
+        '12",' +
+        '    "departureDate": "2022-03-02",' +
+        '    "flightNumber": "S' +
+        i +
+        '123' +
+        i +
+        '"' +
+        '  },' +
+        '  "metaData": {' +
+        '    "market": "dk-da"' +
+        '  }' +
+        '}';
+
+      requestBodies.add(CaseFormJSON2Apex.parse(jsonContent));
+    }
+
+    insert newAccountsWithCorrectEBLevel;
+
+    // When
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    Test.startTest();
+    Set<String> responseCaseNumbers = new Set<String>{};
+    for (CaseFormJSON2Apex formData : requestBodies) {
+      responseCaseNumbers.add(CaseForm.createCase(formData).caseNumber);
+    }
+    Test.StopTest();
+
+    List<String> groupNames = new List<String>{
+      'Claims - Flight Disruptions',
+      'Claims - Baggage',
+      'Claims - Other',
+      'Claims - High Priority'
+    };
+    List<Group> groups = [SELECT Id, Name FROM Group WHERE Name IN :groupNames];
+
+    Group disruptionGroup;
+    Group baggageGroup;
+    Group otherGroup;
+    Group highPriorityGroup;
+
+    for (Group g : groups) {
+      switch on groupNames.indexOf(g.Name) {
+        when 0 {
+          disruptionGroup = g;
+        }
+        when 1 {
+          baggageGroup = g;
+        }
+        when 2 {
+          otherGroup = g;
+        }
+        when 3 {
+          highPriorityGroup = g;
+        }
+        when else {
+          System.debug(
+            'Error. Group should have a name from the groupNames list.'
+          );
+        }
+      }
+    }
+
+    Map<Id, String> accountToGroupName = new Map<Id, String>{
+      newAccounts[0].Id => disruptionGroup.Name,
+      newAccounts[1].Id => baggageGroup.Name,
+      newAccounts[2].Id => otherGroup.Name,
+      newAccounts[3].Id => highPriorityGroup.Name
+    };
+
+    // Then
+    List<Case> cases = [
+      SELECT Id, OwnerId, AccountId
+      FROM Case
+      WHERE CaseNumber IN :responseCaseNumbers
+    ];
+
+    Set<Id> caseIds = new Set<Id>{};
+    Set<Id> caseOwnerIds = new Set<Id>{};
+    for (Case newCase : cases) {
+      caseIds.add(newCase.Id);
+      caseOwnerIds.add(newCase.OwnerId);
+    }
+
+    List<Group> queueGroups = [
+      SELECT Name, Id
+      FROM Group
+      WHERE Id IN :caseOwnerIds
+    ];
+
+    for (Account a : newAccounts) {
+      LIA_Claim__c claim;
+      Case newCase;
+      for (Case c : cases) {
+        if (c.AccountId == a.Id) {
+          newCase = c;
+        }
+      }
+
+      Boolean hasGroup = false;
+      for (Group g : queueGroups) {
+        if (g.Id == newCase.OwnerId) {
+          System.assertEquals(
+            accountToGroupName.get(a.Id),
+            g.Name,
+            'Should assign the correct priority to cases.'
+          );
+          hasGroup = true;
+        }
+      }
+      System.assert(hasGroup, 'Every case should have a group.');
+    }
+  }
 }

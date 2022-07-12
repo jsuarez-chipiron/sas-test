@@ -185,7 +185,7 @@ public without sharing class Claims extends fflib_SObjectDomain {
     return newInstance(new List<LIA_Claim__c>{ newClaim });
   }
 
-  private void assignToQueueUsingFlow() {
+  public void assignToQueueUsingFlow() {
     //Assign one Claim at a time
     if (instanceRecords.size() > 1) {
       return;
