@@ -205,6 +205,10 @@ public without sharing class ClaimService {
     claimToCreate.Name = insertedCase.CaseNumber;
     update claimToCreate;
 
+    // HOTFIX: Run the routing flow again, TODO: Code a more permanent soultion
+    Claims claims = new Claims(new List<LIA_Claim__c>{ claimToCreate });
+    claims.assignToQueueUsingFlow();
+
     return insertedCase.CaseNumber;
   }
 
@@ -318,11 +322,15 @@ public without sharing class ClaimService {
     );
 
     if (!String.isBlank(form.formData.country)) {
-      claimToCreate.Country__c = CountryUtils.getCountryNameByShortCode(form.formData.country);
+      claimToCreate.Country__c = CountryUtils.getCountryNameByShortCode(
+        form.formData.country
+      );
     }
 
     if (!String.isBlank(form.formData.bankCountry)) {
-      claimToCreate.Bank_Country__c = CountryUtils.getCountryNameByShortCode(form.formData.bankCountry);
+      claimToCreate.Bank_Country__c = CountryUtils.getCountryNameByShortCode(
+        form.formData.bankCountry
+      );
     }
 
     if (!String.isBlank(form.formData.bankAccountNumber)) {
