@@ -4,8 +4,8 @@
         <description>Posts the internal comments to the chatter feed on the case</description>
         <name>CaseChatterFeed</name>
         <label>CaseChatterFeed</label>
-        <locationX>138</locationX>
-        <locationY>1238</locationY>
+        <locationX>490</locationX>
+        <locationY>1910</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
@@ -29,13 +29,13 @@
     <actionCalls>
         <description>Since we can get maximum 100 records in flow due to governor limits, so using apex</description>
         <name>Get_Caes_from_Apex</name>
-        <label>Get Caes from Apex</label>
-        <locationX>50</locationX>
-        <locationY>758</locationY>
+        <label>Get Case from Apex</label>
+        <locationX>292</locationX>
+        <locationY>158</locationY>
         <actionName>FCS_MassRedirection</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Loop_through_selected_Cases</targetReference>
+            <targetReference>LoopthroughCases</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -53,8 +53,8 @@
     <assignments>
         <name>Add_Case_to_new_List</name>
         <label>Add Case to new List</label>
-        <locationX>138</locationX>
-        <locationY>1118</locationY>
+        <locationX>490</locationX>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>CasesToUpdate</assignToReference>
             <operator>Add</operator>
@@ -69,8 +69,8 @@
     <assignments>
         <name>Assign_Case_Values</name>
         <label>Assign Case Values</label>
-        <locationX>138</locationX>
-        <locationY>998</locationY>
+        <locationX>490</locationX>
+        <locationY>1670</locationY>
         <assignmentItems>
             <assignToReference>Loop_through_selected_Cases.Department__c</assignToReference>
             <operator>Assign</operator>
@@ -113,8 +113,8 @@
     <assignments>
         <name>Assign_regular_queue</name>
         <label>Assign regular queue</label>
-        <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationX>402</locationX>
+        <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>queueName</assignToReference>
             <operator>Assign</operator>
@@ -126,12 +126,78 @@
             <targetReference>CaseRecordType</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assign_Values</name>
+        <label>Assign Closed Case To List</label>
+        <locationX>380</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>ListOfClosedCases</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LoopthroughCases.CaseNumber</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopthroughCases</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>check_for_Closed_Cases</name>
+        <label>Check For Closed Cases</label>
+        <locationX>512</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>LoopthroughCases</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Closed</defaultConnectorLabel>
+        <rules>
+            <name>Case_Is_closed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopthroughCases.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Values</targetReference>
+            </connector>
+            <label>Closed Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_Closed_Cases_Found</name>
+        <label>If Closed Cases Found</label>
+        <locationX>292</locationX>
+        <locationY>830</locationY>
+        <defaultConnector>
+            <targetReference>Mass_Redirection</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Closed Case</defaultConnectorLabel>
+        <rules>
+            <name>Closed_Cases</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ListOfClosedCases</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Closed_Cases_Found</targetReference>
+            </connector>
+            <label>Closed Cases</label>
+        </rules>
+    </decisions>
     <decisions>
         <description>Verify that cases have been selected</description>
         <name>Verify_Selected_Records</name>
         <label>Verify Selected Records</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationX>534</locationX>
+        <locationY>1070</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>SelectedRecords</name>
@@ -155,8 +221,8 @@
     <loops>
         <name>Loop_through_selected_Cases</name>
         <label>Loop through selected Cases</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationX>402</locationX>
+        <locationY>1550</locationY>
         <collectionReference>lstCasesfromapex</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -164,6 +230,20 @@
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Update_selected_Cases</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>LoopthroughCases</name>
+        <label>Loop Through Cases</label>
+        <locationX>292</locationX>
+        <locationY>278</locationY>
+        <collectionReference>lstCasesfromapex</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>check_for_Closed_Cases</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>If_Closed_Cases_Found</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -188,11 +268,11 @@
     <recordLookups>
         <name>GetDepartmentQueueId</name>
         <label>GetDepartmentQueueId</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationX>402</locationX>
+        <locationY>1430</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Caes_from_Apex</targetReference>
+            <targetReference>Loop_through_selected_Cases</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -209,8 +289,8 @@
     <recordUpdates>
         <name>Update_selected_Cases</name>
         <label>Update selected Cases</label>
-        <locationX>50</locationX>
-        <locationY>1454</locationY>
+        <locationX>402</locationX>
+        <locationY>2126</locationY>
         <connector>
             <targetReference>Success_Confirmation</targetReference>
         </connector>
@@ -218,11 +298,27 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
+        <name>Closed_Cases_Found</name>
+        <label>Closed Cases Found</label>
+        <locationX>50</locationX>
+        <locationY>950</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Massage</name>
+            <fieldText>&lt;p&gt;*This Selection contains one or more  Closed Cases. Please update the status or remove from the selection. Case Number(s) :{!ListOfClosedCases}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <description>To redirect multiple cases</description>
         <name>Mass_Redirection</name>
         <label>Mass Redirection</label>
-        <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationX>534</locationX>
+        <locationY>950</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -309,8 +405,8 @@
     <screens>
         <name>Success_Confirmation</name>
         <label>Success Confirmation</label>
-        <locationX>50</locationX>
-        <locationY>1574</locationY>
+        <locationX>402</locationX>
+        <locationY>2246</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -323,18 +419,18 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>166</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Mass_Redirection</targetReference>
+            <targetReference>Get_Caes_from_Apex</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>CaseRecordType</name>
         <label>CaseRecordType</label>
-        <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationX>402</locationX>
+        <locationY>1310</locationY>
         <connector>
             <targetReference>GetDepartmentQueueId</targetReference>
         </connector>
@@ -373,6 +469,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>ListOfClosedCases</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>lstCasesfromapex</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
@@ -389,6 +492,13 @@
     </variables>
     <variables>
         <name>queueName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Status</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
