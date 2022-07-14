@@ -31,7 +31,8 @@ public without sharing class FlightDelayCertificateController {
 
     imageLink =
       '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' +
-      ContentVersionsSelector.newInstance().selectByTitle('header')[0]?.Id;
+      ContentVersionsSelector.newInstance().selectByTitle('SAS-Logo_B3_RGB')[0]
+        ?.Id;
 
     flightWrappers = new List<FlightWrapper>();
     if (bookingId != null && !manualEntry) {
