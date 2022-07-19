@@ -66,43 +66,43 @@
         <defaultConnector>
             <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>2625 or less</defaultConnectorLabel>
+        <defaultConnectorLabel>10000 or less</defaultConnectorLabel>
         <rules>
-            <name>More_than_5250</name>
+            <name>More_than_15250</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <numberValue>5250.0</numberValue>
+                    <numberValue>15250.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>ManualApproval</targetReference>
             </connector>
-            <label>More than 5250</label>
+            <label>More than 15250</label>
         </rules>
         <rules>
-            <name>Between_2625_and_5250</name>
+            <name>Between_10000_and_15250</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
-                    <numberValue>2625.0</numberValue>
+                    <numberValue>10000.0</numberValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <numberValue>5250.0</numberValue>
+                    <numberValue>15250.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Random_Check_Monetary</targetReference>
             </connector>
-            <label>Between 2625 and 5250</label>
+            <label>Between 10000 and 15250</label>
         </rules>
     </decisions>
     <decisions>
@@ -113,21 +113,21 @@
         <defaultConnector>
             <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>40000 or less</defaultConnectorLabel>
+        <defaultConnectorLabel>120000 or less</defaultConnectorLabel>
         <rules>
-            <name>More_than_40000</name>
+            <name>More_than_120000</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>incomingRecord.EuroBonus_Points__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <numberValue>40000.0</numberValue>
+                    <numberValue>120000.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>ManualApproval</targetReference>
             </connector>
-            <label>More than 40000</label>
+            <label>More than 120000</label>
         </rules>
     </decisions>
     <decisions>
@@ -146,7 +146,7 @@
                 <leftValueReference>randomCheckForManualApproval</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <numberValue>5.0</numberValue>
+                    <numberValue>3.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -168,7 +168,7 @@
                 <leftValueReference>randomCheckForManualApproval</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <numberValue>3.0</numberValue>
+                    <numberValue>1.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -245,21 +245,21 @@
         <defaultConnector>
             <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>5250 or less</defaultConnectorLabel>
+        <defaultConnectorLabel>15250 or less</defaultConnectorLabel>
         <rules>
-            <name>More_than_5250_voucher</name>
+            <name>More_than_15250_voucher</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <numberValue>5250.0</numberValue>
+                    <numberValue>15250.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>ManualApproval</targetReference>
             </connector>
-            <label>More than 5250</label>
+            <label>More than 15250</label>
         </rules>
     </decisions>
     <formulas>
@@ -268,7 +268,7 @@
         <expression>IF({!Get_SAS_AP_User.Id} &lt;&gt; NULL, {!Get_SAS_AP_User.Id}, {!$User.Id})</expression>
     </formulas>
     <interviewLabel>CLAIM {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>CLAIM Settlement Evaluation</label>
+    <label>CLAIM Settlement Evaluation High Limit</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
