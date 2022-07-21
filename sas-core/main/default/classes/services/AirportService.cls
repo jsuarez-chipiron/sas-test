@@ -34,8 +34,7 @@ public without sharing class AirportService {
       .fetchAirportsByQuery(query);
 
     if (airportData.size() == 0) {
-      // Not found in TEDS. Booking reference doesn't exist in recent airport data (6 months or so).
-      // TODO: Check EDW when an integration exists.
+      // Not found in TEDS.
       // TODO: Would it make more sense to return an instance of Airports, but
       // with no instance records?
       return null;

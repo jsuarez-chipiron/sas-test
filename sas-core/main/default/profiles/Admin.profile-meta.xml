@@ -507,6 +507,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Airport__c.Is_EU261_Applicable__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Airport__c.TEDS_Identifier__c</field>
         <readable>true</readable>
     </fieldPermissions>
