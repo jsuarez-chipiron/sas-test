@@ -46,6 +46,9 @@ public without sharing class Airports extends fflib_SObjectDomain {
           Longitude__c = Decimal.valueOf(airport.coordinates.longitude)
             .setScale(12),
           Is_In_European_Union__c = CountryUtils.isInEU(airport.country.code),
+          Is_EU261_Applicable__c = CountryUtils.isInEUOrNorwaySwitzerlandIceland(
+            airport.country.code
+          ),
           TEDS_Identifier__c = airportId
         );
 

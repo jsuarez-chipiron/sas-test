@@ -99,7 +99,7 @@ private class CountryUtils_Test {
   }
 
   @IsTest
-  static void shouldAssertIfInEU() {
+  static void shouldAssertIfInEUOrNorwaySwitzerlandIceland() {
     // Given
     List<String> countryCodes = new List<String>{
       'GF',
@@ -121,7 +121,7 @@ private class CountryUtils_Test {
 
     // When
     for (String code : countryCodes) {
-      isInEu.add(CountryUtils.isInEU(code));
+      isInEu.add(CountryUtils.isInEUOrNorwaySwitzerlandIceland(code));
     }
 
     // Then

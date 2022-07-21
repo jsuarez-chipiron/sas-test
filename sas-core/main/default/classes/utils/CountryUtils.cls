@@ -93,10 +93,9 @@ public without sharing class CountryUtils {
   }
 
   /**
-   * Asserts whether the country is within the european union, Norway, Switzerland or Iceland (EU261).
+   * Asserts whether the country is within the european union.
    * Source 1: https://european-union.europa.eu/principles-countries-history/country-profiles_en?page=0
    * Source 2: https://www.iban.com/country-codes
-   * Source 3: https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_en.htm
    *
    * @param countryOrTerritoryCode A String of a country (or territory) short code.
    * @return A Boolean
@@ -106,10 +105,30 @@ public without sharing class CountryUtils {
 
     if (countryCodesInEU.contains(countryCode)) {
       return true;
-    } else if (countryCodesNotInEUButEU261Applicable.contains(countryCode)) {
-      return true;
     }
 
+    return false;
+  }
+
+  /**
+   * Asserts whether the country is within the european union, Norway, Switzerland or Iceland (EU261).
+   * Source 1: https://european-union.europa.eu/principles-countries-history/country-profiles_en?page=0
+   * Source 2: https://www.iban.com/country-codes
+   * Source 3: https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_en.htm
+   *
+   * @param countryOrTerritoryCode A String of a country (or territory) short code.
+   * @return A Boolean
+   */
+  public static Boolean isInEUOrNorwaySwitzerlandIceland(
+    String countryOrTerritoryCode
+  ) {
+    if (isInEU(countryOrTerritoryCode)) {
+      return true;
+    } else if (
+      countryCodesNotInEUButEU261Applicable.contains(countryOrTerritoryCode)
+    ) {
+      return true;
+    }
     return false;
   }
 }
