@@ -35,6 +35,14 @@ public inherited sharing class SegmentsSelector extends fflib_SObjectSelector {
     return (List<Segment__c>) selectSObjectsById(ids);
   }
 
+  public List<Segment__c> selectByBookingId(Set<Id> bookingIds) {
+    return (List<Segment__c>) Database.query(
+      newQueryFactory()
+        .setCondition('Booking__c IN :bookingIds')
+        .toSOQL()
+    );
+  }
+
   public override String getOrderBy() {
     return 'Booking__c, Identifier__c';
   }

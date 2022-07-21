@@ -105,7 +105,7 @@ global class APIMMock implements HttpCalloutMock {
       } else if (ids.contains('ITM')) {
         res.setBody(APIMMockResponses.AIRPORT_RESPONSE_BODY_MULTIPLE);
       } else {
-        res.setBody(APIMMockResponses.AIRPORT_RESPONSE_BODY);
+        res.setBody(APIMMockResponses.AIRPORT_RESPONSE_BODY_MULTIPLE);
       }
     } else if (endpoint.contains('csharkservice')) {
       if (

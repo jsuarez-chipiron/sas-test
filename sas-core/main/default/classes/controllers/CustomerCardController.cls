@@ -50,6 +50,7 @@ public without sharing class CustomerCardController {
         .selectByBookingReference(new Set<String>{ b.Booking_Reference__c });
       List<IRR_CommunicationLog__c> logs = logsByBookingReference.get(key);
       if (logs.size() > 0) {
+        // TODO: Refactor, the change I made was not good.
         toReturn.add(new BookingJSON(b, relatedCases, logs));
       }
     }
