@@ -73,29 +73,16 @@ public without sharing class AutomationUtils {
     Map<Id, Boolean> claimToWasAutomated = new Map<Id, Boolean>{};
 
     List<LIA_Claim__c> claims = ClaimsSelector.newInstance()
-      .selectById(claimIds);
-    List<AutomationContainer> claimsToAutomate = new List<AutomationContainer>{};
+      .selectByIdWithCustomers(claimIds);
 
-    // Get information, TODO: Make batchable, use Set<Id>, don't overfetch, handle duplication
     for (LIA_Claim__c c : claims) {
       claimToWasAutomated.put(c.Id, false);
-      List<BookingJSON> bookings = CustomerCardController.getBookingsForCase(
-        String.valueOf(c.Case__c)
-      );
-      for (BookingJSON b : bookings) {
-        // TODO: Can there be multiple bookings per claim? No?
-        if (b.bookingReference == c.Liability_PNR__c) {
-          AutomationContainer claimToAutomate = new AutomationContainer(c, b);
-          if (claimToAutomate.isAutomatable) {
-            claimsToAutomate.add(claimToAutomate);
-          }
-          break;
-        }
-      }
     }
 
+    List<AutomationContainer> claimsToAutomate = gatherInfoAboutClaimsToAutomate(
+      claims
+    );
     List<AutomationContainer> handledClaims = new List<AutomationContainer>{};
-
     for (AutomationContainer ac : claimsToAutomate) {
       // TODO: Determine if EU261 is applicable
       // Was the flight from/to the right place
@@ -116,12 +103,10 @@ public without sharing class AutomationUtils {
       // TODO: Determine if a claim is a duplicate
       if (isDuplicate(ac)) {
         System.debug('This claim is a duplicate');
-        ac.handleClaim();
-        ac.rejectClaim();
         handledClaims.add(ac);
         continue;
       }
-      // TODO: ~Check proactivities and similar cases
+      // TODO: ~Check proactivities
 
       // TODO: Determine if it is a delay or a cancellation and handle differently
       if (true) {
@@ -138,6 +123,7 @@ public without sharing class AutomationUtils {
           claimToWasAutomated.put(ac.claim.Id, true);
         }
         when 'Unhandled' {
+          // Fill the case/claim with all information gathered.
           claimToWasAutomated.put(ac.claim.Id, false);
         }
         when else {
@@ -214,7 +200,7 @@ public without sharing class AutomationUtils {
   }
 
   /**
-   * @param TODO
+   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
    * TODO
    * @return TODO
    */
@@ -231,7 +217,7 @@ public without sharing class AutomationUtils {
    * the denial of boarding or cancellation will delay the passenger's arrival
    * after the scheduled time." - EU261
    *
-   * @param TODO
+   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
    * @return TODO
    */
   public static Integer calculateEU261Compensation(AutomationContainer ac) {
@@ -281,6 +267,7 @@ public without sharing class AutomationUtils {
     Integer minutesDelayed = getMinutesDelayed(ac);
 
     if (minutesDelayed < 120) {
+      // Double check
       // Reject
       ac.rejectClaim();
     } else {
@@ -309,7 +296,7 @@ public without sharing class AutomationUtils {
   }
 
   /**
-   * @param TODO
+   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
    * TODO
    * @return TODO
    */
@@ -350,7 +337,7 @@ public without sharing class AutomationUtils {
    * Calculates the total flight distance for the booking.
    * Thoughts: This is a bit wierd, does this concern individual flights or the whole booking?
    * And if the whole booking, how is a "leg" determined? This currently has to be handled individually
-   * @param TODO
+   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
    * TODO
    * @return TODO
    */
@@ -397,12 +384,28 @@ public without sharing class AutomationUtils {
   }
 
   /**
-   * @param TODO
-   * TODO
-   * @return TODO
+   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
+   * Checks whether there is another claim which is associated with the same booking pnr, PIR and/or the same flight number + passenger.
+   * Beyond the PNR check, this also catches passengers which have made two bookings for the same flight.
+   * These passengers should not be entitled to double compensation.
+   * TODO: Are there any other cases we should check?
+   * TODO: Break most out into claimsselector
+   * @return a Boolean which asserts whether the claim is a duplicate or not
    */
-  private static Boolean isDuplicate(AutomationContainer ac) {
-    return false;
+  public static Boolean isDuplicate(AutomationContainer ac) {
+    List<LIA_Claim__c> duplicateClaims = ClaimsSelector.newInstance()
+      .selectDuplicatesById(ac.claim.Id);
+
+    switch on duplicateClaims.size() {
+      when 1 {
+        return false; // Matched only itself
+      }
+      when 0 {
+        throw new AutomationException('The claim is not in the database.');
+      }
+    }
+
+    return true;
   }
 
   /**
@@ -508,11 +511,40 @@ public without sharing class AutomationUtils {
    * Todo: Implement.
    * This can likely not be automated :(
    *
-   * @param TODO
+   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
    * @return TODO
    */
   private static Decimal calculateCareCompensation(AutomationContainer ac) {
     return 0;
+  }
+
+  /**
+   * Todo: Refactor, make batchable. Implement fetching of more data (purchase data etc.)
+   *
+   * @param claims a list of claims for which to find information.
+   * @return a list of AutomationContainers containing all information necessary to automate the claim.
+   */
+  private static List<AutomationContainer> gatherInfoAboutClaimsToAutomate(
+    List<LIA_Claim__c> claims
+  ) {
+    List<AutomationContainer> claimsToAutomate = new List<AutomationContainer>{};
+    // Get information, TODO: Make batchable, use Set<Id>, don't overfetch, handle duplication
+    for (LIA_Claim__c c : claims) {
+      List<BookingJSON> bookings = CustomerCardController.getBookingsForCase(
+        String.valueOf(c.Case__c)
+      );
+      for (BookingJSON b : bookings) {
+        // TODO: Can there be multiple bookings per claim? No?
+        if (b.bookingReference == c.Liability_PNR__c) {
+          AutomationContainer claimToAutomate = new AutomationContainer(c, b);
+          if (claimToAutomate.isAutomatable) {
+            claimsToAutomate.add(claimToAutomate);
+          }
+          break;
+        }
+      }
+    }
+    return claimsToAutomate;
   }
 
   private static void notSupported(String type) {
