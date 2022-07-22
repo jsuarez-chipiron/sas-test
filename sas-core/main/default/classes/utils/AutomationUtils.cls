@@ -1,5 +1,10 @@
 /**
+ * @param claim a LIA_Claim__c to be automated
+ * @param booking a BookingJSON associated with the claim
+ *
  * Utility class which handles case/claim automation
+ * Contains all information needed (not currently) to automate a claim.
+ * Investigate: Can people in the same booking have different amount of flights?
  */
 public without sharing class AutomationUtils {
   public class AutomationContainer {
@@ -61,13 +66,12 @@ public without sharing class AutomationUtils {
   }
 
   /**
-   * @param claims
+   * @param claimIds a Set of Ids of the claims to be automated
    *
    * Todo: Rethink, make batchable, make testable (guard for callouts)
    * Todo: If rejected, add a information to the case/claim.
-   * Thoughts: We need to widen the scope from claim to case as a claim only can have one flight.
    *
-   * @return A map from claim id to whether that claim has been automated.
+   * @return A map from claim id to whether or not that claim has been automated.
    */
   public static Map<Id, Boolean> automateEU261(Set<Id> claimIds) {
     Map<Id, Boolean> claimToWasAutomated = new Map<Id, Boolean>{};
@@ -84,8 +88,7 @@ public without sharing class AutomationUtils {
     );
     List<AutomationContainer> handledClaims = new List<AutomationContainer>{};
     for (AutomationContainer ac : claimsToAutomate) {
-      // TODO: Determine if EU261 is applicable
-      // Was the flight from/to the right place
+      // Was the flight from/to the right place + insanely complex edge case
       if (!isCoveredByEU261(ac)) {
         System.debug('This claim is not covered by EU261');
         continue;
@@ -137,72 +140,12 @@ public without sharing class AutomationUtils {
   }
 
   /**
-   * Calculates the haversine distance in meters between two airports.
-   *
-   * @param airport1 String of the IATA airport code.
-   * @param airport2 String of the IATA airport code.
-   *
-   * @return An Integer value of the distance in meters between the two airports.
-   */
-  public static Integer distanceBetweenAirportsInMeters(
-    String airport1Id,
-    String airport2Id
-  ) {
-    Double dist = distanceBetweenAirportsInKilometers(airport1Id, airport2Id);
-    return Integer.valueOf(
-      Decimal.valueOf(dist * 1000).round(System.RoundingMode.HALF_UP)
-    );
-  }
-
-  /**
-   * Calculates the haversine distance in kilometers between two airports (rounded normally).
-   *
-   * @param airport1
-   * @param airport2
-   *
-   * @return An Double value of the distance in kilometers between the two airports.
-   */
-  public static Double distanceBetweenAirportsInKilometers(
-    String airport1Id,
-    String airport2Id
-  ) {
-    List<Airport__c> airportsFound = AirportsSelector.newInstance()
-      .selectAndOrFetchByTEDSId(new Set<String>{ airport1Id, airport2Id });
-    Airport__c airport1;
-    Airport__c airport2;
-
-    for (Airport__c a : airportsFound) {
-      if (a.TEDS_Identifier__c == airport1Id) {
-        airport1 = a;
-      }
-      if (a.TEDS_Identifier__c == airport2Id) {
-        airport2 = a;
-      }
-    }
-    if (airport1 == null || airport2 == null) {
-      throw new AirportNotFoundException('Could not find both airports.');
-    }
-
-    Double long1 = Double.valueOf(airport1.Longitude__c);
-    Double lat1 = Double.valueOf(airport1.Latitude__c);
-    Double long2 = Double.valueOf(airport2.Longitude__c);
-    Double lat2 = Double.valueOf(airport2.Latitude__c);
-
-    Location loc1 = Location.newInstance(
-      airport1.Latitude__c,
-      airport1.Longitude__c
-    );
-    Location loc2 = Location.newInstance(
-      airport2.Latitude__c,
-      airport2.Longitude__c
-    );
-    return Location.getDistance(loc1, loc2, 'km');
-  }
-
-  /**
    * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
-   * TODO
-   * @return TODO
+   *
+   * If there has been more than 3 years since the flight flew the customer is no longer eligable to apply for compensation.
+   * Source: TODO, does this vary depending on country? (e.g 1 year Belgium, 5 years France?) There was a reason I coded 3 years (?)
+   *
+   * @return a boolean which asserts whether the claim was filed on time.
    */
   public static Boolean isFiledOnTime(AutomationContainer ac) {
     BookingJSON.Flight flight = getRelevantFlight(ac);
@@ -212,13 +155,14 @@ public without sharing class AutomationUtils {
   }
 
   /**
-   * Todo: Implement.
+   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
+   *
+   * Calculates how much compensation the customer(s) is/are entitled to as per EU261:
    * "In determining the distance, the basis shall be the last destination at which
    * the denial of boarding or cancellation will delay the passenger's arrival
    * after the scheduled time." - EU261
    *
-   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
-   * @return TODO
+   * @return the amount of compensation in EUR
    */
   public static Integer calculateEU261Compensation(AutomationContainer ac) {
     Integer flightDistance = getFlightDistanceKm(ac); // Todo: Handle multi flight
@@ -233,7 +177,9 @@ public without sharing class AutomationUtils {
     if (flightDistance <= 1500) {
       return noEligablePax * 250;
     } else if (
-      flightDistance > 1500 && (flightDistance <= 3500 || isIntraCommunity(ac))
+      flightDistance > 1500 &&
+      (flightDistance <= 3500 ||
+      CountryUtils.isIntraCommunity(ac.originAirport, ac.destinationAirport))
     ) {
       return noEligablePax * 400;
     } else {
@@ -248,9 +194,6 @@ public without sharing class AutomationUtils {
   public class NoMatchingFlightException extends Exception {
   }
 
-  public class AirportNotFoundException extends Exception {
-  }
-
   public class NoDelayException extends Exception {
   }
 
@@ -261,6 +204,13 @@ public without sharing class AutomationUtils {
   }
 
   // DELAY
+  /**
+   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
+   *
+   * Automatically handles the compensation process for a claim with a delayed flight.
+   *
+   * @return the same AutomationUtils.AutomationContainer with updated information
+   */
   private static AutomationContainer automateEU261Delay(
     AutomationContainer ac
   ) {
@@ -290,6 +240,13 @@ public without sharing class AutomationUtils {
   }
 
   // CANCELLATION
+  /**
+   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
+   *
+   * Automatically handles the compensation process for a claim with a cancelled flight.
+   *
+   * @return the same AutomationUtils.AutomationContainer with updated information
+   */
   private static Boolean automateEU261Cancellation(AutomationContainer ac) {
     // TODO: Understand
     return null;
@@ -297,11 +254,24 @@ public without sharing class AutomationUtils {
 
   /**
    * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
-   * TODO
-   * @return TODO
+   *
+   * Calculates whether the claim is covered by EU261
+   * EU261 is only applicable for flights leaving and/or arriving to an airport in the European Union, Iceland, Norway or Switzerland.
+   * Also, if the customer has already received benefits related to a law of a non-EU country they are not eligable for compensation.
+   * Source: https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_en.htm
+   *
+   * TODO:
+   * The "already received benefits"-part, might be impossible to automate.
+   * Is there any data which is shared between carriers? Can we add a checkmark "I have not received compensation under non-EU law"?
+   *
+   * @return a boolean which asserts if the claim is covered by EU261
    */
   private static Boolean isCoveredByEU261(AutomationContainer ac) {
-    return true;
+    // ~TODO(c): Determine if the customer has already received benefits related to a law of a non-EU country
+    return CountryUtils.oneIsInEU261Territory(
+      ac.originAirport,
+      ac.destinationAirport
+    );
   }
 
   private static BookingJSON.Flight getRelevantFlight(AutomationContainer ac) {
@@ -334,12 +304,13 @@ public without sharing class AutomationUtils {
   }
 
   /**
+   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
+   *
    * Calculates the total flight distance for the booking.
    * Thoughts: This is a bit wierd, does this concern individual flights or the whole booking?
-   * And if the whole booking, how is a "leg" determined? This currently has to be handled individually
-   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
-   * TODO
-   * @return TODO
+   * And if the whole booking, how is a "leg" determined? This currently has to be handled individually.
+   *
+   * @return the distance in km, rounded normally.
    */
   private static Integer getFlightDistanceKm(AutomationContainer ac) {
     BookingJSON.Flight flight = getRelevantFlight(ac);
@@ -354,12 +325,13 @@ public without sharing class AutomationUtils {
       when 'OneWay' {
         if (ac.booking.flights.size() == 1) {
           return Integer.valueOf(
-            distanceBetweenAirportsInKilometers(
+            CountryUtils.distanceBetweenAirportsInKilometers(
               flight.departureAirport,
               flight.arrivalAirport
             )
           ); // Supported
         } else {
+          return null;
         }
       }
       when 'RoundTrip' {
@@ -379,18 +351,15 @@ public without sharing class AutomationUtils {
     // Get haversine distance
 
     // Sum
-
-    return 1;
   }
 
   /**
    * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
+   *
    * Checks whether there is another claim which is associated with the same booking pnr, PIR and/or the same flight number + passenger.
    * Beyond the PNR check, this also catches passengers which have made two bookings for the same flight.
    * These passengers should not be entitled to double compensation.
    * TODO: Are there any other cases we should check?
-   * TODO: Break most out into claimsselector
-   * @return a Boolean which asserts whether the claim is a duplicate or not
    */
   public static Boolean isDuplicate(AutomationContainer ac) {
     List<LIA_Claim__c> duplicateClaims = ClaimsSelector.newInstance()
@@ -409,9 +378,10 @@ public without sharing class AutomationUtils {
   }
 
   /**
-   * @param TODO
-   * TODO
-   * @return TODO
+   * @param claim
+   * @param booking
+   *
+   * Asserts whether automation has been implemented for different types of bookings.
    */
   private static Boolean isSupportedForAutomation(
     LIA_Claim__c claim,
@@ -453,10 +423,12 @@ public without sharing class AutomationUtils {
   }
 
   /**
-   * TODO: Make much more complicated
+   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
+   *
+   * TODO: Make much more complicated, this data is not available in TEDS.
    * Investigate: Can people in the same booking have different number of flights?
-   * @param AutomationUtils.AutomationContainer ac
-   * @return The amount of passengers which should have compensation
+   *
+   * @return The amount of passengers which are entitled to compensation.
    */
   private static Integer getNoPaxEligableForCompensation(
     AutomationContainer ac
@@ -471,57 +443,23 @@ public without sharing class AutomationUtils {
   }
 
   /**
-   * TODO: Reimplement, multi flights
-   * Investigate: Can people in the same booking have different number of flights?
-   * @param AutomationUtils.AutomationContainer ac
-   * @return The amount of passengers which should have compensation
-   */
-  private static Boolean isIntraCommunity(AutomationContainer ac) {
-    // TODO: think about how to handle airport data
-    List<Airport__c> airportsFound = AirportsSelector.newInstance()
-      .selectAndOrFetchByTEDSId(
-        new Set<String>{ ac.originAirport, ac.destinationAirport }
-      );
-    Airport__c originAirport;
-    Airport__c destinationAirport;
-
-    for (Airport__c a : airportsFound) {
-      if (a.TEDS_Identifier__c == ac.originAirport) {
-        originAirport = a;
-      }
-      if (a.TEDS_Identifier__c == ac.destinationAirport) {
-        destinationAirport = a;
-      }
-    }
-    if (originAirport == null || destinationAirport == null) {
-      throw new AirportNotFoundException('Could not find both airports.');
-    }
-
-    if (
-      originAirport.Is_EU261_Applicable__c &&
-      destinationAirport.Is_EU261_Applicable__c
-    ) {
-      return true;
-    }
-
-    return false;
-  }
-
-  /**
+   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
+   *
    * Todo: Implement.
    * This can likely not be automated :(
+   * Thoughts: Can we make a custom type of case where agents only check and approve claim expenses?
    *
-   * @param ac an AutomationUtils.AutomationContainer containing information about the booking and the claim.
-   * @return TODO
+   * @return a Decimal with the care compensation in EUR, rounded to two decimals
    */
   private static Decimal calculateCareCompensation(AutomationContainer ac) {
-    return 0;
+    return 0.0;
   }
 
   /**
+   * @param claims a list of claims for which to find information.
+   *
    * Todo: Refactor, make batchable. Implement fetching of more data (purchase data etc.)
    *
-   * @param claims a list of claims for which to find information.
    * @return a list of AutomationContainers containing all information necessary to automate the claim.
    */
   private static List<AutomationContainer> gatherInfoAboutClaimsToAutomate(

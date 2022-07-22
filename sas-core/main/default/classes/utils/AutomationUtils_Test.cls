@@ -1,18 +1,11 @@
 @IsTest
 private class AutomationUtils_Test {
-  public static Set<String> airportIdsFromTEDS = new Set<String>{
-    'ARN',
-    'HEL',
-    'ITM',
-    'RUN',
-    'SYD'
-  };
-
   /**
    * Common setup for the test classes
    * TODO: Break out into testfactory or at least simplify
    * WHAT IS CREATED:
    * Parentheses signify dynamic values. E.g. "no. pax 0 (1)" means that 0 pax are inserted but during a test 1 is "faked"
+   *
    * CLAIM 1:
    * In time for EU261.
    * Flight inside the EU.
@@ -20,36 +13,42 @@ private class AutomationUtils_Test {
    * Delayed for 1 minute. (Not eligable for care, not eligable for EU261)
    * Type: OneWay.
    * Extra: Is a duplicate with CLAIM 7
+   *
    * CLAIM 2:
    * Just in time for EU261.
    * Flight inside the EU.
    * No. pax 0.
    * Delayed for 120 minutes. (Eligable for care, not eligable EU261)
    * Type: OneWay.
+   *
    * CLAIM 3:
    * Too late for EU261.
    * Flight inside the EU.
    * No. pax 0 (3).
    * Delayed for 181 minutes. (Eligable for care, eligable for (3*250) EUR EU261)
    * Type: OneWay.
+   *
    * CLAIM 4:
    * In time for EU261.
    * Flight inside the EU but >3500km.
    * No. pax 0 (1).
    * Delayed for 181 minutes. (Eligable for care, eligable for (1*400) EUR EU261)
    * Type: OneWay.
+   *
    * CLAIM 5:
    * In time for EU261.
    * Flight inside the EU and <3500km.
    * No. pax 0 (1).
    * Delayed for 241 minutes. (Eligable for care, eligable for (1*400) EUR EU261)
    * Type: OneWay.
+   *
    * CLAIM 6:
    * In time for EU261.
    * Flight from outside to inside the EU and >3500km.
    * No. pax 0 (1).
    * Delayed for 400 minutes. (Eligable for care, eligable for (1*600) EUR EU261)
    * Type: OneWay.
+   *
    * CLAIM 7:
    * In time for EU261.
    * Flight inside the EU.
@@ -57,6 +56,7 @@ private class AutomationUtils_Test {
    * Delayed for 400 minutes. (Eligable for care, eligable for (0*250) EUR EU261)
    * Type: OneWay.
    * Extra: Is a duplicate with CLAIM 1 and 8
+   *
    * CLAIM 8:
    * In time for EU261.
    * Flight inside the EU.
@@ -409,75 +409,6 @@ private class AutomationUtils_Test {
         isFiledOnTimeResult[i],
         'Should automate correctly'
       );
-    }
-  }
-
-  @isTest
-  static void shouldCalculateDistanceBetweenAirports() {
-    // Given
-    Test.setMock(HttpCalloutMock.class, new APIMMock()); // Needed for TEDSbooking-fetches caused by trigger
-
-    // When
-    Test.startTest();
-    AirportService.newInstance()
-      .fetchAirportsByReference(airportIdsFromTEDS, true);
-    Test.stopTest();
-
-    // Then
-    List<Airport__c> airportsFromDB = AirportsSelector.newInstance()
-      .selectByTEDSId(airportIdsFromTEDS);
-
-    Airport__c ARN;
-    for (Airport__c a : airportsFromDB) {
-      if (a.TEDS_Identifier__c == 'ARN') {
-        ARN = a;
-        break;
-      }
-    }
-
-    for (Airport__c a : airportsFromDB) {
-      switch on a.TEDS_Identifier__c {
-        when 'HEL' {
-          System.assertEquals(
-            398569,
-            AutomationUtils.distanceBetweenAirportsInMeters(
-              ARN.TEDS_Identifier__c,
-              a.TEDS_Identifier__c
-            ),
-            'Should calculate the distance between ARN and HEL correctly.'
-          );
-        }
-        when 'ITM' {
-          System.assertEquals(
-            8062362,
-            AutomationUtils.distanceBetweenAirportsInMeters(
-              ARN.TEDS_Identifier__c,
-              a.TEDS_Identifier__c
-            ),
-            'Should calculate the distance between ARN and ITM correctly.'
-          );
-        }
-        when 'RUN' {
-          System.assertEquals(
-            9584413,
-            AutomationUtils.distanceBetweenAirportsInMeters(
-              ARN.TEDS_Identifier__c,
-              a.TEDS_Identifier__c
-            ),
-            'Should calculate the distance between RUN and ARN correctly.'
-          );
-        }
-        when 'SYD' {
-          System.assertEquals(
-            15597941,
-            AutomationUtils.distanceBetweenAirportsInMeters(
-              ARN.TEDS_Identifier__c,
-              a.TEDS_Identifier__c
-            ),
-            'Should calculate the distance between SYD and ARN correctly.'
-          );
-        }
-      }
     }
   }
 
