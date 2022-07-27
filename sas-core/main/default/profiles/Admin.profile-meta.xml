@@ -2037,11 +2037,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>LIA_Claim__c.LIA_Major_Event__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>LIA_Claim__c.Last_Checked_Claims_From_CARE__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2375,26 +2370,6 @@
         <field>LiveChatTranscript.TURI_Chat_User_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Major_Event__c.End_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Major_Event__c.Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Major_Event__c.Major_Event_Description__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Major_Event__c.Start_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>    
     <fieldPermissions>
         <editable>false</editable>
         <field>MessagingEndUser.IsOptedOut</field>
@@ -2904,9 +2879,6 @@
         <layout>LocalAuthProvider__mdt-Local Auth Provider Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>LIA_Major_Event__c-Major Event Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>MessagingSession-Messaging Session Layout</layout>
     </layoutAssignments>    
     <layoutAssignments>
@@ -3083,15 +3055,6 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>FCS_FrequentFlyer__x</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-     <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>LIA_Major_Event__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -3271,10 +3234,6 @@
         <tab>Group_Travel_Request__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>    
-    <tabVisibilities>
-        <tab>LIA_Major_Event__c</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
     <tabVisibilities>
         <tab>Proactivity__c</tab>
         <visibility>DefaultOn</visibility>

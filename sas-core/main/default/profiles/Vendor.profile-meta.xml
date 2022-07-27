@@ -3102,11 +3102,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>LIA_Claim__c.LIA_Major_Event__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>LIA_Claim__c.Last_Checked_Claims_From_CARE__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -3204,26 +3199,6 @@
         <editable>false</editable>
         <field>Knowledge__kav.FCS_SubType__c</field>
         <readable>true</readable>
-    </fieldPermissions>   
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Major_Event__c.End_Date__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Major_Event__c.Id__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Major_Event__c.Major_Event_Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Major_Event__c.Start_Date__c</field>
-        <readable>false</readable>
     </fieldPermissions>   
     <fieldPermissions>
         <editable>false</editable>
@@ -3351,9 +3326,6 @@
     <layoutAssignments>
         <layout>Knowledge__kav-SAS SSI Layout</layout>
         <recordType>Knowledge__kav.SSI</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>LIA_Major_Event__c-Major Event Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>MessagingSession-Messaging Session Layout</layout>
@@ -3945,10 +3917,6 @@
     </tabVisibilities> 
     <tabVisibilities>
         <tab>LIA_Claim__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>LIA_Major_Event__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

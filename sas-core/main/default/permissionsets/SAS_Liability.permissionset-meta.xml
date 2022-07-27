@@ -222,11 +222,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>LIA_Claim__c.LIA_Major_Event__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>LIA_Claim__c.Legal_Conclusion__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -325,26 +320,6 @@
         <field>LIA_Claim__c.Voucher_Compensation__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Major_Event__c.End_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Major_Event__c.Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Major_Event__c.Major_Event_Description__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>LIA_Major_Event__c.Start_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>SAS Liability</label>
     <license>Salesforce</license>
@@ -357,15 +332,6 @@
         <object>LIA_Claim__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>LIA_Major_Event__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
     <recordTypeVisibilities>
         <recordType>Case.Claim</recordType>
         <visible>true</visible>
@@ -376,10 +342,6 @@
     </recordTypeVisibilities>
     <tabSettings>
         <tab>LIA_Claim__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>LIA_Major_Event__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>

@@ -315,7 +315,6 @@
     <tabs>Settlement__c</tabs>
     <tabs>Claim_Firm__c</tabs>
     <tabs>Proactivity__c</tabs>
-    <tabs>LIA_Major_Event__c</tabs>
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>
     <tabs>standard-Task</tabs>
@@ -328,9 +327,6 @@
         <mappings>
             <fieldName>Case__c</fieldName>
             <tab>LIA_Claim__c</tab>
-        </mappings>
-        <mappings>
-            <tab>LIA_Major_Event__c</tab>
         </mappings>
         <mappings>
             <tab>Proactivity__c</tab>
