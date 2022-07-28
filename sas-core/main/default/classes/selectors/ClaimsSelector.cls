@@ -166,6 +166,9 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     String airport = proactivity.Airport__c;
     Date fromDate = proactivity.From_Date__c;
     Date toDate = proactivity.To_Date__c;
+    if (toDate != null) {
+      toDate.addDays(1); // To handle comparison between Date and Datetime. 22/02/2022 03:00 > 22/02/2022 (00:00) but 22/02/2022 03:00 < 23/02/2022.
+    }
     String cancellationCode = proactivity.Cancellation_Code__c;
     List<Id> bookingList = new List<Id>();
     List<Id> flightIdsWithMatchingCancellationCode = new List<Id>();

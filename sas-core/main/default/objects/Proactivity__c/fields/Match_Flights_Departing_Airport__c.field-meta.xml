@@ -6,6 +6,7 @@
     <externalId>false</externalId>
     <inlineHelpText>If the proactivity should match flights departing the airport</inlineHelpText>
     <label>Match Flights Departing Airport</label>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
