@@ -58,6 +58,27 @@ public without sharing class DateUtils {
   }
 
   /**
+   * @param datetime1
+   * @param datetime2
+   *
+   * Calculates whether there is 24 hours or more between two datetimes.
+   * Used to determine whether a destinaiton should be considered a final destination or not.
+   */
+  public static Boolean isLessThan24HoursBetween(
+    Datetime datetime1,
+    Datetime datetime2
+  ) {
+    Long millisecondDelta = Math.abs(datetime1.getTime() - datetime2.getTime());
+    Long hourDelta = millisecondDelta / (3600000);
+
+    if (hourDelta >= 24.0) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
    * Converts a TEDS duration into an Apex Integer which represents the duration in minutes.
    * ISO 8601 duration has the form: P(n)Y(n)M(n)DT(n)H(n)M(n)S.
    * Source: https://www.digi.com/resources/documentation/digidocs/90001437-13/reference/r_iso_8601_duration_format.htm
