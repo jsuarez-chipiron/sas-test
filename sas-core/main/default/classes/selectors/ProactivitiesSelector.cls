@@ -330,27 +330,62 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
       if (p.Id != null && p.Id == directlyLinkedProactivityId) {
         reasons = buildReasons(reasons, 'Directly linked');
       }
-      if (
-        !String.isBlank(p.Airport__c) &&
-        p.Airport__c == flight.Departure_Airport__c &&
-        ((flight.Actual_Departure_Time__c >= p.From_Date__c &&
-        flight.Actual_Departure_Time__c <= p.To_Date__c) ||
-        (flight.Scheduled_Departure_Time__c >= p.From_Date__c &&
-        flight.Scheduled_Departure_Time__c <= p.To_Date__c)) &&
-        p.Match_Flights_Departing_Airport__c
-      ) {
-        reasons = buildReasons(reasons, 'Departure airport');
-      }
-      if (
-        !String.isBlank(p.Airport__c) &&
-        p.Airport__c == flight.Arrival_Airport__c &&
-        ((flight.Actual_Arrival_Time__c >= p.From_Date__c &&
-        flight.Actual_Arrival_Time__c <= p.To_Date__c) ||
-        (flight.Scheduled_Arrival_Time__c >= p.From_Date__c &&
-        flight.Scheduled_Arrival_Time__c <= p.To_Date__c)) &&
-        p.Match_Flights_Arriving_To_Airport__c
-      ) {
-        reasons = buildReasons(reasons, 'Arrival airport');
+
+      // This is much less complex than it looks. If it were not for nullchecks this could be done in 4 lines.
+      if (!String.isBlank(p.Airport__c) && flight != null) {
+        Boolean matchesActualDepartureTime = false;
+        Boolean matchesScheduledDepartureTime = false;
+        if (
+          flight.Actual_Departure_Time__c != null &&
+          flight.Actual_Arrival_Time__c != null
+        ) {
+          matchesActualDepartureTime = (flight.Actual_Departure_Time__c.date() >=
+          p.From_Date__c &&
+          flight.Actual_Departure_Time__c.date() <= p.To_Date__c);
+        }
+        if (
+          flight.Scheduled_Departure_Time__c != null &&
+          flight.Scheduled_Arrival_Time__c != null
+        ) {
+          matchesScheduledDepartureTime = (flight.Scheduled_Departure_Time__c.date() >=
+          p.From_Date__c &&
+          flight.Scheduled_Departure_Time__c.date() <= p.To_Date__c);
+        }
+
+        Boolean matchesActualArrivalTime = false;
+        Boolean matchesScheduledArrivalTime = false;
+        if (
+          flight.Actual_Arrival_Time__c != null &&
+          flight.Actual_Arrival_Time__c != null
+        ) {
+          matchesActualArrivalTime = (flight.Actual_Arrival_Time__c.date() >=
+          p.From_Date__c &&
+          flight.Actual_Arrival_Time__c.date() <= p.To_Date__c);
+        }
+        if (
+          flight.Scheduled_Arrival_Time__c != null &&
+          flight.Scheduled_Arrival_Time__c != null
+        ) {
+          matchesScheduledArrivalTime = (flight.Scheduled_Arrival_Time__c.date() >=
+          p.From_Date__c &&
+          flight.Scheduled_Arrival_Time__c.date() <= p.To_Date__c);
+        }
+
+        if (
+          p.Airport__c == flight.Departure_Airport__c &&
+          (matchesActualDepartureTime || matchesScheduledDepartureTime) &&
+          p.Match_Flights_Departing_Airport__c
+        ) {
+          reasons = buildReasons(reasons, 'Departure airport');
+        }
+
+        if (
+          p.Airport__c == flight.Arrival_Airport__c &&
+          (matchesActualArrivalTime || matchesScheduledArrivalTime) &&
+          p.Match_Flights_Arriving_To_Airport__c
+        ) {
+          reasons = buildReasons(reasons, 'Arrival airport');
+        }
       }
       for (String cancellationCode : cancellationCodes) {
         if (cancellationCode == p.Cancellation_Code__c) {
