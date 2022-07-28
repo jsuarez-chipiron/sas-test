@@ -6,6 +6,7 @@
     <inlineHelpText>Date when the proactivity stops being relevant</inlineHelpText>
     <label>To Date</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Date</type>
 </CustomField>

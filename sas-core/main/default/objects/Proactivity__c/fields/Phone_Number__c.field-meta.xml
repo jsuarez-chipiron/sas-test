@@ -6,6 +6,7 @@
     <inlineHelpText>Phone number to match on.</inlineHelpText>
     <label>Phone Number</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Phone</type>
 </CustomField>
