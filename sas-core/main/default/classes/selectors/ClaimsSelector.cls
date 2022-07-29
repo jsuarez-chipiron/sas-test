@@ -60,6 +60,74 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     return (List<LIA_Claim__c>) Database.query(claimsQF.toSOQL());
   }
 
+  public class insufficientFlightInfoException extends Exception {
+  }
+
+  public List<LIA_Claim__c> selectDuplicatesById(Id claimId) {
+    LIA_Claim__c claim = selectByIdWithCustomers(new Set<Id>{ claimId })[0];
+
+    // This names-solution is not fantastic. It is oversensitive and is likely to collide on some "Svenssons" or "Smiths".
+    Set<String> names = new Set<String>{};
+
+    if (claim.Customers__r != null) {
+      for (Customer__c customer : claim.Customers__r) {
+        if (!String.isBlank(customer.Name)) {
+          names.add(customer.Name);
+        }
+        if (
+          !String.isBlank(customer.First_Name__c) &&
+          !String.isBlank(customer.Last_Name__c)
+        ) {
+          names.add(customer.First_Name__c + ' ' + customer.Last_Name__c);
+        }
+      }
+    }
+
+    String bookingReference = claim.Liability_PNR__c;
+    Date flightDate = claim.Flight_Date__c;
+    String flightNumber = claim.Flight_Number__c;
+    String pirNumber = claim.PIR__c;
+
+    String whereQuery = '';
+
+    whereQuery = buildQuery(
+      whereQuery,
+      'Liability_PNR__c = :bookingReference',
+      !String.isBlank(bookingReference)
+    );
+
+    whereQuery = buildQuery(
+      whereQuery,
+      'PIR__c = :pirNumber',
+      !String.isBlank(pirNumber)
+    );
+
+    if (String.isBlank(flightNumber) == null || flightDate == null) {
+      throw new insufficientFlightInfoException(
+        'Claim does not have sufficient information about the flight.'
+      );
+    }
+
+    // Passenger name and flightId matches
+    // Can this be done in one query? Would require two subqueries and comparing one list against another.
+    List<Customer__c> allCustomersWithSameNames = CustomersSelector.newInstance()
+      .selectByName(names);
+    List<Id> claimsWithPassengersWithSameNames = new List<Id>{};
+    for (Customer__c c : allCustomersWithSameNames) {
+      claimsWithPassengersWithSameNames.add(c.Claim__c);
+    }
+
+    whereQuery = buildQuery(
+      whereQuery,
+      '((Flight_Number__c = :flightNumber AND Flight_Date__c = :flightDate) AND (Id IN :claimsWithPassengersWithSameNames))',
+      true
+    );
+
+    return (List<LIA_Claim__c>) Database.query(
+      newQueryFactory().setCondition(whereQuery).toSOQL()
+    );
+  }
+
   public List<LIA_Claim__c> selectByIdWithSettlements(Set<Id> ids) {
     fflib_QueryFactory claimsQF = newQueryFactory().setCondition('Id IN :ids');
     fflib_QueryFactory settlementsQF = new SettlementsSelector()
