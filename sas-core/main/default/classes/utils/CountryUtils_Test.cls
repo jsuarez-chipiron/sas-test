@@ -170,40 +170,28 @@ private class CountryUtils_Test {
         when 'HEL' {
           System.assertEquals(
             398569,
-            CountryUtils.distanceBetweenAirportsInMeters(
-              ARN.TEDS_Identifier__c,
-              a.TEDS_Identifier__c
-            ),
+            CountryUtils.distanceBetweenAirportsInMeters(ARN, a),
             'Should calculate the distance between ARN and HEL correctly.'
           );
         }
         when 'ITM' {
           System.assertEquals(
             8062362,
-            CountryUtils.distanceBetweenAirportsInMeters(
-              ARN.TEDS_Identifier__c,
-              a.TEDS_Identifier__c
-            ),
+            CountryUtils.distanceBetweenAirportsInMeters(ARN, a),
             'Should calculate the distance between ARN and ITM correctly.'
           );
         }
         when 'RUN' {
           System.assertEquals(
             9584413,
-            CountryUtils.distanceBetweenAirportsInMeters(
-              ARN.TEDS_Identifier__c,
-              a.TEDS_Identifier__c
-            ),
+            CountryUtils.distanceBetweenAirportsInMeters(ARN, a),
             'Should calculate the distance between RUN and ARN correctly.'
           );
         }
         when 'SYD' {
           System.assertEquals(
             15597941,
-            CountryUtils.distanceBetweenAirportsInMeters(
-              ARN.TEDS_Identifier__c,
-              a.TEDS_Identifier__c
-            ),
+            CountryUtils.distanceBetweenAirportsInMeters(ARN, a),
             'Should calculate the distance between SYD and ARN correctly.'
           );
         }

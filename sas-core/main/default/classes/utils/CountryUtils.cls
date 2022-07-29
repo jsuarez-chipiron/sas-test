@@ -135,16 +135,16 @@ public without sharing class CountryUtils {
   /**
    * Calculates the haversine distance in meters between two airports.
    *
-   * @param airport1Id String of the IATA airport code.
-   * @param airport2Id String of the IATA airport code.
+   * @param airport1 an Airport__c
+   * @param airport2 an Airport__c
    *
    * @return An Integer value of the distance in meters between the two airports.
    */
   public static Integer distanceBetweenAirportsInMeters(
-    String airport1Id,
-    String airport2Id
+    Airport__c airport1,
+    Airport__c airport2
   ) {
-    Double dist = distanceBetweenAirportsInKilometers(airport1Id, airport2Id);
+    Double dist = distanceBetweenAirportsInKilometers(airport1, airport2);
     return Integer.valueOf(
       Decimal.valueOf(dist * 1000).round(System.RoundingMode.HALF_UP)
     );
@@ -153,89 +153,37 @@ public without sharing class CountryUtils {
   /**
    * Calculates the haversine distance in kilometers between two airports (rounded normally).
    *
-   * @param airport1Id String of the IATA airport code.
-   * @param airport2Id String of the IATA airport code.
+   * @param airport1 an Airport__c
+   * @param airport2 an Airport__c
    *
    * @return A Double value of the distance in kilometers between the two airports.
    */
   public static Double distanceBetweenAirportsInKilometers(
-    String airport1Id,
-    String airport2Id
+    Airport__c airport1,
+    Airport__c airport2
   ) {
-    List<Airport__c> airports = getAirports(airport1Id, airport2Id);
+    if (airport1 == null || airport2 == null) {
+      throw new AirportsNotDefinedException(
+        'At least one of the airports equal to null.'
+      );
+    }
 
-    Double long1 = Double.valueOf(airports[0].Longitude__c);
-    Double lat1 = Double.valueOf(airports[0].Latitude__c);
-    Double long2 = Double.valueOf(airports[1].Longitude__c);
-    Double lat2 = Double.valueOf(airports[1].Latitude__c);
+    Double long1 = Double.valueOf(airport1.Longitude__c);
+    Double lat1 = Double.valueOf(airport1.Latitude__c);
+    Double long2 = Double.valueOf(airport2.Longitude__c);
+    Double lat2 = Double.valueOf(airport2.Latitude__c);
 
     Location loc1 = Location.newInstance(
-      airports[0].Latitude__c,
-      airports[0].Longitude__c
+      airport1.Latitude__c,
+      airport1.Longitude__c
     );
     Location loc2 = Location.newInstance(
-      airports[1].Latitude__c,
-      airports[1].Longitude__c
+      airport2.Latitude__c,
+      airport2.Longitude__c
     );
     return Location.getDistance(loc1, loc2, 'km');
   }
 
-  /**
-   * @param airport1Id String of the IATA airport code.
-   * @param airport2Id String of the IATA airport code.
-   * @return a Boolean which asserts if both airports are within EU261-applicable territory
-   */
-  public static Boolean isIntraCommunity(String airport1Id, String airport2Id) {
-    List<Airport__c> airports = getAirports(airport1Id, airport2Id);
-    if (
-      airports[0].Is_EU261_Applicable__c && airports[1].Is_EU261_Applicable__c
-    ) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * @param airport1Id String of the IATA airport code.
-   * @param airport2Id String of the IATA airport code.
-   * @return a Boolean which asserts if one of the airports is within EU261-applicable territory
-   */
-  public static Boolean oneIsInEU261Territory(
-    String airport1Id,
-    String airport2Id
-  ) {
-    List<Airport__c> airports = getAirports(airport1Id, airport2Id);
-    if (
-      airports[0].Is_EU261_Applicable__c || airports[1].Is_EU261_Applicable__c
-    ) {
-      return true;
-    }
-    return false;
-  }
-
-  private static List<Airport__c> getAirports(
-    String airportId1,
-    String airportId2
-  ) {
-    List<Airport__c> airportsFound = AirportsSelector.newInstance()
-      .selectAndOrFetchByTEDSId(new Set<String>{ airportId1, airportId2 });
-    Airport__c originAirport;
-    Airport__c destinationAirport;
-
-    for (Airport__c a : airportsFound) {
-      if (a.TEDS_Identifier__c == airportId1) {
-        originAirport = a;
-      }
-      if (a.TEDS_Identifier__c == airportId2) {
-        destinationAirport = a;
-      }
-    }
-    if (originAirport == null || destinationAirport == null) {
-      throw new AirportNotFoundException('Could not find both airports.');
-    }
-    return new List<Airport__c>{ originAirport, destinationAirport };
-  }
-
-  public class AirportNotFoundException extends Exception {
+  public class AirportsNotDefinedException extends Exception {
   }
 }

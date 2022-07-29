@@ -1,4 +1,5 @@
 public inherited sharing class FlightsSelector extends fflib_SObjectSelector {
+  // TODO: Make the airports lookups
   public List<Schema.SObjectField> getSObjectFieldList() {
     return new List<Schema.SObjectField>{
       Flight__c.Id,

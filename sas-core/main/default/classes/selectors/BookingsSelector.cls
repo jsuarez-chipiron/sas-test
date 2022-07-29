@@ -43,6 +43,7 @@ public inherited sharing class BookingsSelector extends fflib_SObjectSelector {
     return (List<Booking__c>) Database.query(bookingsQF.toSOQL());
   }
 
+  // Todo: Rename to selectByBookingReferenceFull
   public List<Booking__c> selectByBookingReference(String bookingReference) {
     fflib_QueryFactory bookingsQF = newQueryFactory()
       .setCondition('Booking_Reference__c = :bookingReference');

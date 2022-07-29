@@ -2,6 +2,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
   public List<Schema.SObjectField> getSObjectFieldList() {
     return new List<Schema.SObjectField>{
       LIA_Claim__c.Id,
+      LIA_Claim__c.Name,
       LIA_Claim__c.CreatedDate,
       LIA_Claim__c.Address_line_1__c,
       LIA_Claim__c.Address_line_2__c,
