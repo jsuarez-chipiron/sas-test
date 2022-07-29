@@ -2576,9 +2576,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Case.FCS_CaseReason__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
@@ -2591,9 +2591,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Case.FCS_CaseSubReason__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
