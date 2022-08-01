@@ -72,6 +72,22 @@ public with sharing class TestDataFactories {
     }
   }
 
+  public class CasesClaimsBookings {
+    public List<Case> cases { get; set; }
+    public List<LIA_Claim__c> claims { get; set; }
+    public List<Booking__c> bookings { get; set; }
+
+    CasesClaimsBookings(
+      List<Case> cases,
+      List<LIA_Claim__c> claims,
+      List<Booking__c> bookings
+    ) {
+      this.cases = cases;
+      this.claims = claims;
+      this.bookings = bookings;
+    }
+  }
+
   /**
    * Creates a collection of case and claim pairs and inserts them to the DB.
    *
@@ -130,6 +146,235 @@ public with sharing class TestDataFactories {
     update allToCreate;
 
     return new CasesClaims(casesToCreate, claimsToCreate);
+  }
+
+  /**
+   * Creates a collection of case, claims, bookings, flights and customers and inserts them to the DB.
+   * @param fieldsForClaims A list with one instance of a map of field to value per object you want to create.
+   * @param fieldsForCases Like fieldsForClaims but for Cases.
+   * @param fieldsForBookings Like fieldsForClaims but for Bookings.
+   * @param fieldsForFlightsPerBooking A list with lists of one instance of a map of field to value per object you want to create. So, if you create two bookings, one with one flight and one with two flights you will pass in a list with two lists, where one of the lists has the fields for one flight and one for two flights.
+   * @param fieldsForCustomersPerBooking Like fieldsForFlightsPerBooking.
+   *
+   */
+  public static CasesClaimsBookings createClaimsWithCasesBookingsFlightsAndCustomers(
+    List<Map<Schema.SObjectField, Object>> fieldsForClaims,
+    List<Map<Schema.SObjectField, Object>> fieldsForCases,
+    List<Map<Schema.SObjectField, Object>> fieldsForBookings,
+    List<List<Map<Schema.SObjectField, Object>>> fieldsForFlightsPerBooking,
+    List<List<Map<Schema.SObjectField, Object>>> fieldsForCustomersPerBooking
+  ) {
+    Integer count = fieldsForClaims.size();
+    // List of categories of lists of fields for a single object
+    List<List<Map<Schema.SObjectField, Object>>> fieldsForEverySingleObject = new List<List<Map<Schema.SObjectField, Object>>>{
+      fieldsForClaims,
+      fieldsForCases,
+      fieldsForBookings
+    };
+    // List of categories of lists of lists of fields for a single object
+    List<List<List<Map<Schema.SObjectField, Object>>>> fieldsForEveryMultiObject = new List<List<List<Map<Schema.SObjectField, Object>>>>{
+      fieldsForFlightsPerBooking,
+      fieldsForCustomersPerBooking
+    };
+    Date today = Date.today();
+
+    List<SObject> claimsToCreate = new List<SObject>();
+    List<SObject> casesToCreate = new List<SObject>();
+    List<SObject> flightsToCreate = new List<SObject>();
+    List<SObject> bookingsToCreate = new List<SObject>();
+
+    List<String> objectCreationOrder = new List<String>{
+      'Claims',
+      'Cases',
+      'Bookings'
+    };
+
+    for (Integer i = 0; i < objectCreationOrder.size(); i++) {
+      String currentObject = objectCreationOrder[i];
+      List<Map<Schema.SObjectField, Object>> fieldsForObjects = fieldsForEverySingleObject[
+        i
+      ];
+
+      for (Integer j = 0; j < count; j++) {
+        Map<Schema.SObjectField, Object> fieldsForObject = fieldsForObjects[j];
+        SObject toCreate = null;
+
+        // Create default objects
+        switch on currentObject {
+          when 'Claims' {
+            toCreate = new LIA_Claim__c(
+              Customer_Claim_Category__c = 'Flight disruptions',
+              Liability_PNR__c = 'AUTO' + String.valueOf(j),
+              RecordTypeId = Claims.getRecordTypeId(
+                Claims.RecordType.CustomerClaim
+              ),
+              Flight_Number__c = 'SK123' + String.valueOf(j),
+              Flight_Date__c = today
+            );
+          }
+          when 'Cases' {
+            toCreate = new Case(
+              Origin = 'Form - Claims SE',
+              RecordTypeId = Cases.getRecordTypeId(
+                Cases.RecordType.CustomerClaim
+              ),
+              Status = 'New',
+              SuppliedEmail = 'test@example.com'
+            );
+          }
+          when 'Bookings' {
+            toCreate = new Booking__c(
+              Name = 'Test' + String.valueOf(j),
+              Booking_Reference__c = 'AUTO' + String.valueOf(j),
+              TEDS_Identifier__c = 'Manual-' + String.valueOf(j)
+            );
+          }
+        }
+
+        // Fill with custom fields
+        if (fieldsForObject != null) {
+          for (Schema.SObjectField field : fieldsForObject.keySet()) {
+            toCreate.put(field, fieldsForObject.get(field));
+          }
+        }
+
+        // Divide into separate lists for linking
+        switch on currentObject {
+          when 'Claims' {
+            claimsToCreate.add(toCreate);
+          }
+          when 'Cases' {
+            casesToCreate.add(toCreate);
+          }
+          when 'Bookings' {
+            bookingsToCreate.add(toCreate);
+          }
+        }
+      }
+    }
+
+    List<SObject> objectsToCreate = new List<SObject>{};
+    objectsToCreate.addAll(claimsToCreate);
+    objectsToCreate.addAll(casesToCreate);
+    objectsToCreate.addAll(bookingsToCreate);
+    insert objectsToCreate;
+
+    // Create flights and customers
+    List<String> objectCreationOrder2 = new List<String>{
+      'Flights',
+      'Customers'
+    };
+    Map<Integer, List<Flight__c>> indexToFlights = new Map<Integer, List<Flight__c>>{};
+    Map<Integer, List<Customer__c>> indexToCustomers = new Map<Integer, List<Customer__c>>{};
+    List<SObject> multiObjectsToInsert = new List<SObject>{};
+    for (Integer i = 0; i < objectCreationOrder2.size(); i++) {
+      String currentObject = objectCreationOrder2[i];
+      List<List<Map<Schema.SObjectField, Object>>> fieldsForObjectsPerBooking = fieldsForEveryMultiObject[
+        i
+      ];
+      for (Integer j = 0; j < count; j++) {
+        Id claimId = claimsToCreate[j].Id;
+        List<Map<Schema.SObjectField, Object>> fieldsForObjectsOneBooking = fieldsForObjectsPerBooking[
+          j
+        ];
+        List<SObject> objectsForThisBooking = new List<SObject>{};
+        for (Integer k = 0; k < fieldsForObjectsOneBooking.size(); k++) {
+          String dynamicInfo = String.valueOf(j) + '0' + String.valueOf(k);
+
+          switch on currentObject {
+            when 'Flights' {
+              objectsForThisBooking.add(
+                new Flight__c(
+                  Arrival_Airport__c = 'ARN',
+                  Departure_Airport__c = 'UME',
+                  Scheduled_Arrival_Time__c = today,
+                  Scheduled_Departure_Time__c = today,
+                  TEDS_Identifier__c = 'SK1' + dynamicInfo
+                )
+              );
+            }
+            when 'Customers' {
+              // Adding the email is a workaround for insert errors (not fantastic)
+              objectsForThisBooking.add(
+                new Customer__c(
+                  Name = 'Test Testsson' + dynamicInfo,
+                  First_Name__c = 'Test' + dynamicInfo,
+                  Last_Name__c = 'Testsson' + dynamicInfo,
+                  Claim__c = claimId,
+                  Email__c = dynamicInfo + '@test.com'
+                )
+              );
+            }
+          }
+
+          Map<Schema.SObjectField, Object> fieldsForObject = fieldsForObjectsOneBooking[
+            k
+          ];
+          if (fieldsForObject != null) {
+            for (Schema.SObjectField field : fieldsForObject.keySet()) {
+              objectsForThisBooking[k].put(field, fieldsForObject.get(field));
+            }
+          }
+
+          switch on currentObject {
+            when 'Flights' {
+              indexToFlights.put(j, objectsForThisBooking);
+            }
+            when 'Customers' {
+              indexToCustomers.put(j, objectsForThisBooking);
+            }
+          }
+          multiObjectsToInsert.add(objectsForThisBooking[k]);
+        }
+      }
+    }
+
+    insert multiObjectsToInsert;
+
+    // Link objects
+    List<SObject> objectsToUpdate = new List<SObject>{};
+    List<SObject> linkingObjectsToCreate = new List<SObject>{};
+    for (Integer i = 0; i < count; i++) {
+      Case caseToUpdate = (Case) casesToCreate[i];
+      LIA_Claim__c claimToUpdate = (LIA_Claim__c) claimsToCreate[i];
+      Booking__c bookingToUpdate = (Booking__c) bookingsToCreate[i];
+      List<Flight__c> flightsToUpdate = indexToFlights.get(i);
+
+      caseToUpdate.LIA_Claim__c = claimToUpdate.Id;
+      claimToUpdate.Case__c = caseToUpdate.Id;
+      claimToUpdate.Liability_PNR__c = bookingToUpdate.Booking_Reference__c;
+      claimToUpdate.Flight_Number__c = flightsToUpdate[0]
+        .TEDS_Identifier__c.substring(0, 6); // First flight is selected as the "claim flight" as default
+      claimToUpdate.Flight_Date__c = flightsToUpdate[0]
+        .Scheduled_Arrival_Time__c.date();
+
+      linkingObjectsToCreate.add(
+        new CaseToBooking__c(
+          Case__c = caseToUpdate.Id,
+          Booking__c = bookingToUpdate.Id
+        )
+      );
+
+      // TODO: handle segment type (Outbound, Inbound, Cancelled)
+      for (Flight__c flight : flightsToUpdate) {
+        linkingObjectsToCreate.add(
+          new Segment__c(Flight__c = flight.Id, Booking__c = bookingToUpdate.Id)
+        );
+      }
+      objectsToUpdate.add(caseToUpdate);
+      objectsToUpdate.add(claimToUpdate);
+    }
+
+    linkingObjectsToCreate.sort(); // Chunking
+    objectsToUpdate.sort(); // Chunking
+    insert linkingObjectsToCreate;
+    update objectsToUpdate;
+
+    return new CasesClaimsBookings(
+      casesToCreate,
+      claimsToCreate,
+      bookingsToCreate
+    );
   }
 
   public static void insertEmailTemplates(Set<String> templateNamesToCreate) {
