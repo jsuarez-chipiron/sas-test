@@ -134,7 +134,10 @@ public without sharing class Bookings extends fflib_SObjectDomain {
           newPassenger.Phone__c = p.contact.phone[0].number_x;
         }
 
-        if (p.contact.email.size() > 0) {
+        if (
+          p.contact.email.size() > 0 &&
+          StringUtils.isEmailAddress(p.contact.email[0].address)
+        ) {
           newPassenger.Email__c = p.contact.email[0].address;
         }
 
