@@ -2,67 +2,33 @@
 private class AutomationUtils_Test {
   /**
    * Common setup for the test classes
-   * TODO: Break out into testfactory or at least simplify
    * WHAT IS CREATED:
-   * Parentheses signify dynamic values. E.g. "no. pax 0 (1)" means that 0 pax are inserted but during a test 1 is "faked"
    *
    * CLAIM 1:
-   * In time for EU261.
-   * Flight inside the EU.
-   * No. pax 0.
-   * Delayed for 1 minute. (Not eligable for care, not eligable for EU261)
-   * Type: OneWay.
-   * Extra: Is a duplicate with CLAIM 7
+   * In time for EU261. Flight inside the EU. 2 pax. Not eligable for care, not eligable for EU261. OneWay.
    *
    * CLAIM 2:
-   * Just in time for EU261.
-   * Flight inside the EU.
-   * No. pax 0.
-   * Delayed for 120 minutes. (Eligable for care, not eligable EU261)
-   * Type: OneWay.
+   * Just in time for EU261. Flight inside the EU. 0 pax. Eligable for care, not eligable EU261. OneWay.
+   * Extra: Is a duplicate with CLAIM 7
    *
    * CLAIM 3:
-   * Too late for EU261.
-   * Flight inside the EU.
-   * No. pax 0 (3).
-   * Delayed for 181 minutes. (Eligable for care, eligable for (3*250) EUR EU261)
-   * Type: OneWay.
+   * Too late for EU261. Flight inside the EU. 3 pax. Eligable for care, eligable for 3*250 EUR EU261. OneWay.
    *
    * CLAIM 4:
-   * In time for EU261.
-   * Flight inside the EU but >3500km.
-   * No. pax 0 (1).
-   * Delayed for 181 minutes. (Eligable for care, eligable for (1*400) EUR EU261)
-   * Type: OneWay.
+   * In time for EU261. Flight inside the EU but >3500km. 1 pax. Eligable for care, eligable for 1*400 EUR EU261. OneWay.
    *
    * CLAIM 5:
-   * In time for EU261.
-   * Flight inside the EU and <3500km.
-   * No. pax 0 (1).
-   * Delayed for 241 minutes. (Eligable for care, eligable for (1*400) EUR EU261)
-   * Type: OneWay.
+   * In time for EU261. Flight inside the EU and <3500km. 1 pax. Eligable for care, eligable for 1*400 EUR EU261. OneWay.
    *
    * CLAIM 6:
-   * In time for EU261.
-   * Flight from outside to inside the EU and >3500km.
-   * No. pax 0 (1).
-   * Delayed for 400 minutes. (Eligable for care, eligable for (1*600) EUR EU261)
-   * Type: OneWay.
+   * In time for EU261. Flight from outside to inside the EU and >3500km. 1 pax. Eligable for care, eligable for 1*600 EUR EU261. OneWay.
    *
    * CLAIM 7:
-   * In time for EU261.
-   * Flight inside the EU.
-   * No. pax 1 (0).
-   * Delayed for 400 minutes. (Eligable for care, eligable for (0*250) EUR EU261)
-   * Type: OneWay.
-   * Extra: Is a duplicate with CLAIM 1 and 8
+   * In time for EU261. Flight inside the EU. 1 pax. Eligable for care, eligable for 0*250 EUR EU261. OneWay.
+   * Extra: Is a duplicate with CLAIM 2 and 8
    *
    * CLAIM 8:
-   * In time for EU261.
-   * Flight inside the EU.
-   * No. pax 1 (0).
-   * Delayed for 400 minutes. (Eligable for care, eligable for (0*250) EUR EU261)
-   * Type: OneWay.
+   * In time for EU261. Flight inside the EU. 1 pax. Eligable for care, eligable for 0*250 EUR EU261. OneWay.
    * Extra: Is a duplicate with CLAIM 7
    */
   @testSetup
@@ -73,319 +39,211 @@ private class AutomationUtils_Test {
     Date tooLate = today.addYears(-4);
     Date placeholderTime = today.addYears(-2);
 
-    List<Booking__c> createdBookings = TestDataFactories.createBookings(
-      3,
-      'AUTO'
-    );
-    createdBookings.addAll(TestDataFactories.createBookings(5, 'AUTO1')); // Because Salesforce (chunks)
-
-    List<String> bookingReferences = new List<String>{
-      'AUTO0',
-      'AUTO1',
-      'AUTO2',
-      'AUTO10',
-      'AUTO11',
-      'AUTO12',
-      'AUTO13',
-      'AUTO14'
-    }; // TODO: refactor
-
-    List<SObject> toUpdate = new List<SObject>{};
-    List<Case> casesToCreate = new List<Case>{};
-    for (Integer i = 0; i < bookingReferences.size(); i++) {
-      casesToCreate.add(new Case());
-    }
-
-    insert casesToCreate;
-
-    List<String> departureAirports = new List<String>{
-      'UME',
-      'UME',
-      'UME',
-      'CDG',
-      'RUN',
-      'SYD',
-      'UME',
-      'UME'
-    };
-
-    List<Integer> delayedMinutes = new List<Integer>{
-      1,
-      120,
-      181,
-      181,
-      241,
-      400,
-      400,
-      400
-    }; // TODO: add 160
-
-    List<Date> flightDates = new List<Date>{
-      inTime,
-      justInTime,
-      tooLate,
-      placeholderTime,
-      placeholderTime,
-      placeholderTime,
-      placeholderTime,
-      placeholderTime
-    };
-
-    List<List<Customer__c>> customers = new List<List<Customer__c>>{
-      new List<Customer__c>{
-        new Customer__c(
-          Name = 'A1 B1',
-          First_Name__c = 'A1',
-          Last_Name__c = 'B1'
-        ),
-        new Customer__c(
-          Name = 'A2 B2',
-          First_Name__c = 'A2',
-          Last_Name__c = 'B2'
-        )
+    // Sch_Dep_T, Sch_Arr_T, Delay_Min, Dep_A, Arr_A
+    List<List<Map<String, Object>>> flightsToCreate = new List<List<Map<String, Object>>>{
+      new List<Map<String, Object>>{
+        new Map<String, Object>{
+          'Sch_Dep_T' => inTime,
+          'Sch_Arr_T' => inTime,
+          'Delay_Min' => 1
+        }
       },
-      new List<Customer__c>{},
-      new List<Customer__c>{
-        new Customer__c(
-          Name = 'A3 B3',
-          First_Name__c = 'A3',
-          Last_Name__c = 'B3'
-        ),
-        new Customer__c(
-          Name = 'A4 B4',
-          First_Name__c = 'A4',
-          Last_Name__c = 'B4'
-        ),
-        new Customer__c(
-          Name = 'A5 B5',
-          First_Name__c = 'A5',
-          Last_Name__c = 'B5'
-        )
+      new List<Map<String, Object>>{
+        new Map<String, Object>{ 'Sch_Arr_T' => justInTime, 'Delay_Min' => 120 }
       },
-      new List<Customer__c>{
-        new Customer__c(
-          Name = 'A6 B6',
-          First_Name__c = 'A6',
-          Last_Name__c = 'B6'
-        )
+      new List<Map<String, Object>>{
+        new Map<String, Object>{ 'Sch_Arr_T' => tooLate, 'Delay_Min' => 181 }
       },
-      new List<Customer__c>{
-        new Customer__c(
-          Name = 'A7 B7',
-          First_Name__c = 'A7',
-          Last_Name__c = 'B7'
-        )
+      new List<Map<String, Object>>{
+        new Map<String, Object>{ 'Dep_A' => 'CDG', 'Delay_Min' => 181 }
       },
-      new List<Customer__c>{
-        new Customer__c(
-          Name = 'A8 B8',
-          First_Name__c = 'A8',
-          Last_Name__c = 'B8'
-        )
+      new List<Map<String, Object>>{
+        new Map<String, Object>{ 'Dep_A' => 'RUN', 'Delay_Min' => 241 }
       },
-      new List<Customer__c>{
-        new Customer__c(
-          Name = 'Test Testsson',
-          First_Name__c = 'Test',
-          Last_Name__c = 'Testsson'
-        )
+      new List<Map<String, Object>>{
+        new Map<String, Object>{ 'Dep_A' => 'SYD', 'Delay_Min' => 400 }
       },
-      new List<Customer__c>{
-        new Customer__c(
-          Name = 'Test Testsson',
-          First_Name__c = 'Test',
-          Last_Name__c = 'Testsson'
-        )
+      new List<Map<String, Object>>{
+        new Map<String, Object>{ 'Delay_Min' => 400 }
+      },
+      new List<Map<String, Object>>{
+        new Map<String, Object>{ 'Delay_Min' => 400 }
       }
     };
 
-    List<String> customFlightIds = new List<String>{};
-    for (Integer i = 0; i < createdBookings.size(); i++) {
-      customFlightIds.add(
-        'SK' +
-        String.valueOf(i + 1) +
-        '-' +
-        String.valueOf(flightDates[i]).remove('-') +
-        '-' +
-        departureAirports[i] +
-        '-ARN'
-      );
+    // Generate null variables and flight id
+    for (Integer i = 0; i < flightsToCreate.size(); i++) {
+      List<Map<String, Object>> flightsInABooking = flightsToCreate[i];
+      for (Integer j = 0; j < flightsInABooking.size(); j++) {
+        Map<String, Object> flight = flightsInABooking[j];
+        Date flightTime = (Date) flight.get('Sch_Arr_T');
+        String depAirport = (String) flight.get('Dep_A');
+        String arrAirport = (String) flight.get('Arr_A');
+        if (flightTime == null) {
+          flightTime = placeholderTime;
+        }
+        if (arrAirport == null) {
+          arrAirport = 'ARN';
+        }
+        if (depAirport == null) {
+          depAirport = 'UME';
+        }
+        String flightId =
+          'SK1' +
+          String.valueOf(i) +
+          '0' +
+          String.valueOf(j) +
+          '-' +
+          String.valueOf(flightTime).remove('-') +
+          '-' +
+          depAirport +
+          '-' +
+          arrAirport;
+
+        flight.put('TEDS_Id', flightId);
+        flight.put('Sch_Arr_T', flightTime);
+        flight.put('Arr_A', arrAirport);
+        flight.put('Dep_A', depAirport);
+      }
     }
 
-    // Link bookings to flights for easier bulk handling
-    Set<Id> bookingIds = new Set<Id>{};
-
-    for (Booking__c b : createdBookings) {
-      bookingIds.add(b.Id);
-    }
-
-    List<Segment__c> bookingSegments = SegmentsSelector.newInstance()
-      .selectByBookingId(bookingIds);
-
-    Map<Id, Segment__c> bookingIdToSegment = new Map<Id, Segment__c>{};
-    Map<Id, Flight__c> bookingIdToFlight = new Map<Id, Flight__c>{};
-
-    for (Booking__c b : createdBookings) {
-      Segment__c bookingSegment;
-      for (Segment__c s : bookingSegments) {
-        if (s.Booking__c == b.Id) {
-          bookingIdToSegment.put(b.Id, s);
-          break;
+    // Name, First_Name__c, Last_Name__c
+    List<List<Map<String, String>>> customersToCreate = new List<List<Map<String, String>>>{
+      new List<Map<String, String>>{ null, null },
+      new List<Map<String, String>>{},
+      new List<Map<String, String>>{ null, null, null },
+      new List<Map<String, String>>{ null },
+      new List<Map<String, String>>{ null },
+      new List<Map<String, String>>{ null },
+      new List<Map<String, String>>{
+        new Map<String, String>{
+          'Name' => 'Test Testsson',
+          'First_Name__c' => 'Test',
+          'Last_Name__c' => 'Testsson'
+        }
+      },
+      new List<Map<String, String>>{
+        new Map<String, String>{
+          'Name' => 'Test Testsson',
+          'First_Name__c' => 'Test',
+          'Last_Name__c' => 'Testsson'
         }
       }
+    };
+
+    // Type
+    List<Map<String, String>> bookingsToCreate = new List<Map<String, String>>{
+      new Map<String, String>{ 'Type' => 'OneWay' },
+      new Map<String, String>{ 'Type' => 'OneWay' },
+      new Map<String, String>{ 'Type' => 'OneWay' },
+      new Map<String, String>{ 'Type' => 'OneWay' },
+      new Map<String, String>{ 'Type' => 'OneWay' },
+      new Map<String, String>{ 'Type' => 'OneWay' },
+      new Map<String, String>{ 'Type' => 'OneWay' },
+      new Map<String, String>{ 'Type' => 'OneWay' }
+    }; // TODO: add different types.
+
+    List<Map<Schema.SObjectField, Object>> fieldsForClaimsToCreate = new List<Map<Schema.SObjectField, Object>>{};
+    List<Map<Schema.SObjectField, Object>> fieldsForCasesToCreate = new List<Map<Schema.SObjectField, Object>>{};
+    List<Map<Schema.SObjectField, Object>> fieldsForBookingsToCreate = new List<Map<Schema.SObjectField, Object>>{};
+    List<List<Map<Schema.SObjectField, Object>>> fieldsForFlightsToCreate = new List<List<Map<Schema.SObjectField, Object>>>{};
+    List<List<Map<Schema.SObjectField, Object>>> fieldsForCustomersToCreate = new List<List<Map<Schema.SObjectField, Object>>>{};
+
+    for (
+      Integer bookingIndex = 0;
+      bookingIndex < bookingsToCreate.size();
+      bookingIndex++
+    ) {
+      Map<String, String> booking = bookingsToCreate[bookingIndex];
+
+      fieldsForClaimsToCreate.add(null);
+      fieldsForCasesToCreate.add(
+        new Map<Schema.SObjectField, Object>{ Case.Status => 'New' }
+      );
+      fieldsForBookingsToCreate.add(
+        new Map<Schema.SObjectField, Object>{
+          Booking__c.Type__c => booking.get('Type')
+        }
+      );
+
+      List<Map<Schema.SObjectField, Object>> bookingFlights = new List<Map<Schema.SObjectField, Object>>{};
+      List<Map<Schema.SObjectField, Object>> bookingCustomers = new List<Map<Schema.SObjectField, Object>>{};
+
+      List<Map<String, Object>> flights = flightsToCreate[bookingIndex];
+      for (Map<String, Object> flight : flights) {
+        if (flight == null) {
+          bookingFlights.add(null);
+          continue;
+        }
+        bookingFlights.add(
+          new Map<Schema.SObjectField, Object>{
+            Flight__c.TEDS_Identifier__c => flight.get('TEDS_Id'),
+            Flight__c.Scheduled_Arrival_Time__c => flight.get('Sch_Arr_T'),
+            Flight__c.Arrival_Airport__c => flight.get('Arr_A'),
+            Flight__c.Departure_Airport__c => flight.get('Dep_A'),
+            Flight__c.Arrival_Delayed_Minutes__c => flight.get('Delay_Min')
+          }
+        );
+      }
+
+      List<Map<String, String>> customers = customersToCreate[bookingIndex];
+      for (Map<String, String> customer : customers) {
+        if (customer == null) {
+          bookingCustomers.add(null);
+          continue;
+        }
+        bookingCustomers.add(
+          new Map<Schema.SObjectField, Object>{
+            Customer__c.Name => customer.get('Name'),
+            Customer__c.First_Name__c => customer.get('First_Name__c'),
+            Customer__c.Last_Name__c => customer.get('Last_Name__c')
+          }
+        );
+      }
+      fieldsForFlightsToCreate.add(bookingFlights);
+      fieldsForCustomersToCreate.add(bookingCustomers);
     }
 
-    // Update records
-    List<SObject> toInsert = new List<SObject>{};
-    List<String> bookingTypes = new List<String>{
-      'OneWay',
-      'OneWay',
-      'OneWay',
-      'OneWay',
-      'OneWay',
-      'OneWay',
-      'OneWay',
-      'OneWay'
-    }; // TODO: add multiple types
-
-    // First update/insert pass
-    for (Integer i = 0; i < createdBookings.size(); i++) {
-      Booking__c booking = createdBookings[i];
-      Case c = casesToCreate[i];
-      String flightId = customFlightIds[i];
-
-      booking.Type__c = bookingTypes[i];
-      booking.Booking_Reference__c = bookingReferences[i];
-      toUpdate.add(booking);
-      toInsert.add(
-        new CaseToBooking__c(Booking__c = booking.Id, Case__c = c.Id)
-      );
-
-      c.Initially_Provided_PNR__c = booking.Booking_Reference__c;
-      toUpdate.add(c);
-
-      // The factory assigns one flight to multiple bookings so we have to replace the flights
-      Integer minutesDelayed = delayedMinutes[i];
-
-      Flight__c flight = new Flight__c(TEDS_Identifier__c = customFlightIds[i]);
-
-      Datetime flightTime = flightDates[i];
-      Datetime scheduledDepartureTime = flightTime;
-      flightTime.addMinutes(5); // Hypersonic planes
-      Datetime scheduledArrivalTime = flightTime;
-      flightTime.addMinutes(minutesDelayed);
-      Datetime arrivalTime = flightTime;
-      flight.Arrival_Airport__c = 'ARN';
-      flight.Departure_Airport__c = departureAirports[i];
-      flight.Scheduled_Arrival_Time__c = scheduledArrivalTime;
-      flight.Actual_Arrival_Time__c = arrivalTime;
-      flight.Scheduled_Departure_Time__c = scheduledDepartureTime;
-      flight.Arrival_Delayed_Minutes__c = minutesDelayed;
-      flight.TEDS_Identifier__c = flightId;
-
-      bookingIdToFlight.put(booking.Id, flight);
-      toInsert.add(flight);
-    }
-
-    toInsert.sort(); // Make fewer chunks
-    toUpdate.sort();
-    insert toInsert;
-    update toUpdate;
-
-    List<Sobject> toInsert2 = new List<Sobject>{};
-    List<Sobject> toUpdate2 = new List<Sobject>{};
-    Map<Id, LIA_Claim__c> bookingIdToClaim = new Map<Id, LIA_Claim__c>{};
-
-    // Second update/insert pass
-    for (Integer i = 0; i < createdBookings.size(); i++) {
-      Booking__c booking = createdBookings[i];
-      Segment__c segment = bookingIdToSegment.get(booking.Id);
-      Flight__c flight = bookingIdToFlight.get(booking.Id);
-      Case c = casesToCreate[i];
-
-      String flightId = customFlightIds[i];
-      LIA_Claim__c claim = new LIA_Claim__c(
-        Case__c = c.Id,
-        Phone_Number__c = '0000000000',
-        Liability_PNR__c = booking.TEDS_Identifier__c,
-        Flight_Number__c = flightId.substringBefore('-'),
-        Flight_Date__c = flightDates[i],
-        Customer_Claim_Category__c = 'Flight disruptions'
-      );
-
-      // Modify cases for some of the tests
-      toInsert2.add(claim);
-      bookingIdToClaim.put(booking.Id, claim);
-      segment.Flight__c = flight.Id;
-
-      toUpdate2.add(segment);
-
-      // Connect the bookings to their respective cases
-      CaseToBooking__c ctb = new CaseToBooking__c(
-        Booking__c = booking.Id,
-        Case__c = c.Id
-      );
-      toInsert2.add(ctb);
-      toInsert2.add(
-        new IRR_CommunicationLog__c(
-          IRR_BookingReference__c = booking.TEDS_Identifier__c
-        )
-      );
-    }
-
-    toInsert2.sort();
-
-    update toUpdate2;
-    Test.setMock(HttpCalloutMock.class, new APIMMock()); // Needed for TEDSbooking-fetches caused by trigger
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
-    insert toInsert2;
+    TestDataFactories.CasesClaimsBookings createdCasesClaimsBookings = TestDataFactories.createClaimsWithCasesBookingsFlightsAndCustomers(
+      fieldsForClaimsToCreate,
+      fieldsForCasesToCreate,
+      fieldsForBookingsToCreate,
+      fieldsForFlightsToCreate,
+      fieldsForCustomersToCreate
+    );
     Test.stopTest();
 
-    List<Sobject> toInsert3 = new List<Sobject>{};
-    List<Sobject> toUpdate3 = new List<Sobject>{};
-    Id auto13FlightId;
-    String auto13FlightNumber;
-    Date auto13FlightDate;
-    // Third update/insert pass
-    for (Integer i = 0; i < createdBookings.size(); i++) {
-      Booking__c booking = createdBookings[i];
-      LIA_Claim__c claim = bookingIdToClaim.get(booking.Id);
-      Flight__c flight = bookingIdToFlight.get(booking.Id);
-      Segment__c segment = bookingIdToSegment.get(booking.Id);
+    List<SObject> objectsToUpdate = new List<SObject>{};
 
-      for (Customer__c c : customers[i]) {
-        c.Claim__c = claim.Id;
-        toInsert3.add(c);
-      }
+    // Make duplicates
+    List<LIA_Claim__c> claims = createdCasesClaimsBookings.claims;
 
-      // Modify cases for some of the tests
-      switch on booking.TEDS_Identifier__c {
-        when 'AUTO0' {
-          toInsert3.add(
-            new FlightIrregularities__c(Flight__c = flight.Id, Code__c = 'AUTH')
-          );
-        }
-        when 'AUTO13' {
-          claim.Phone_Number__c = '0000000001';
-          claim.Liability_PNR__c = 'AUTO1';
-          auto13FlightId = flight.Id;
-          auto13FlightNumber = claim.Flight_Number__c;
-          auto13FlightDate = claim.Flight_Date__c;
-          toUpdate3.add(claim);
-        }
-        when 'AUTO14' {
-          segment.Flight__c = auto13FlightId;
-          claim.Phone_Number__c = '0000000001';
-          claim.Flight_Number__c = auto13FlightNumber;
-          claim.Flight_Date__c = auto13FlightDate;
-          toUpdate3.add(claim);
-          toUpdate3.add(segment);
-        }
-      }
-    }
+    // ??? (must have to do with trigger logic updating the ctb from the PNR)
+    List<Booking__c> bookings = createdCasesClaimsBookings.bookings;
+    CaseToBooking__c iDissapear = [
+      SELECT Case__c, Booking__c
+      FROM CaseToBooking__c
+      WHERE Booking__c = :bookings[6].Id
+    ][0];
+    iDissapear.Id = null;
+    // ???
 
-    update toUpdate3;
-    insert toInsert3;
+    claims[6].Liability_PNR__c = claims[1].Liability_PNR__c;
+    claims[6].Flight_Number__c = claims[7].Flight_Number__c;
+    claims[6].Flight_Date__c = claims[7].Flight_Date__c;
+    List<Segment__c> makeUsDuplicates = [
+      SELECT Flight__c
+      FROM Segment__c
+      WHERE Segment__c.Booking__c IN (:bookings[6].Id, :bookings[7].Id)
+    ];
+    makeUsDuplicates[0].Flight__c = makeUsDuplicates[1].Flight__c;
+    objectsToUpdate.add(makeUsDuplicates[0]);
+
+    objectsToUpdate.add(claims[6]);
+    update objectsToUpdate;
+    insert iDissapear;
   }
 
   @isTest
@@ -394,7 +252,7 @@ private class AutomationUtils_Test {
     List<LIA_Claim__c> claims = [
       SELECT Id, Case__c, Flight_Number__c, CreatedDate
       FROM LIA_Claim__c
-      WHERE Phone_Number__c = '0000000000'
+      WHERE Liability_PNR__c LIKE 'AUTO%'
     ];
     List<Id> claimIds = new List<Id>{};
 
@@ -417,12 +275,19 @@ private class AutomationUtils_Test {
       true,
       true,
       true,
-      true
-    }; // -, Duplicate, -{4}
+      true,
+      false,
+      false
+    }; // -, Duplicate, -{4}, Duplicate, Duplicate
 
     for (Boolean b : claimToWasAutomated.values()) {
       System.debug(b);
     }
+
+    System.assert(
+      claimToWasAutomated.values().size() == claims.size(),
+      'Should automate all cases.'
+    );
 
     for (Integer i = 0; i < claimToWasAutomated.size(); i++) {
       System.assertEquals(
@@ -439,30 +304,25 @@ private class AutomationUtils_Test {
     List<LIA_Claim__c> claims = [
       SELECT Id, Case__c, Flight_Number__c, CreatedDate, Flight_Date__c
       FROM LIA_Claim__c
-      WHERE Phone_Number__c = '0000000000'
+      WHERE Liability_PNR__c LIKE 'AUTO%'
     ];
     List<Boolean> isFiledOnTimeResult = new List<Boolean>{};
 
     // When
     // TODO: Do this in batch
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
     for (LIA_Claim__c claim : claims) {
-      List<CaseToBooking__c> ctbs = CaseToBookingsSelector.newInstance()
-        .selectByCaseId(new Set<Id>{ claim.Case__c });
-      List<Booking__c> bookings = BookingsSelector.newInstance()
-        .selectByIdFull(new Set<Id>{ ctbs[0].Booking__c });
+      Booking__c booking = getClaimBooking(claim);
+      List<AutomationUtils.Trip> trips = getBookingTrips(booking);
+
       isFiledOnTimeResult.add(
         AutomationUtils.isFiledOnTime(
-          new AutomationUtils.AutomationInfoContainer(
-            claim,
-            bookings[0],
-            AutomationUtils.divideIntoTrips(
-              bookings[0],
-              bookings[0].Segments__r
-            )
-          )
+          new AutomationUtils.AutomationInfoContainer(claim, booking, trips)
         )
       );
     }
+    Test.stopTest();
 
     // Then
     List<Boolean> correctResults = new List<Boolean>{
@@ -475,6 +335,11 @@ private class AutomationUtils_Test {
       true,
       true
     };
+
+    System.assert(
+      isFiledOnTimeResult.size() == claims.size(),
+      'Should check if all claims are filed on time.'
+    );
 
     for (Integer i = 0; i < isFiledOnTimeResult.size(); i++) {
       System.assertEquals(
@@ -492,7 +357,7 @@ private class AutomationUtils_Test {
     List<LIA_Claim__c> claimsWithoutData = [
       SELECT Id
       FROM LIA_Claim__c
-      WHERE Phone_Number__c = '0000000000'
+      WHERE Liability_PNR__c LIKE 'AUTO%'
     ];
     List<Integer> compensations = new List<Integer>{};
 
@@ -509,23 +374,12 @@ private class AutomationUtils_Test {
     // When
     // TODO: batch
     for (Integer i = 0; i < claims.size(); i++) {
-      List<CaseToBooking__c> ctbs = CaseToBookingsSelector.newInstance()
-        .selectByCaseId(new Set<Id>{ claims[i].Case__c });
-      List<Booking__c> bookings = BookingsSelector.newInstance()
-        .selectByIdFull(new Set<Id>{ ctbs[0].Booking__c });
-      List<AutomationUtils.Trip> trips = AutomationUtils.divideIntoTrips(
-        bookings[0],
-        bookings[0].Segments__r
-      );
-      List<AutomationUtils.Trip> tripsWithAirports = new List<AutomationUtils.Trip>{};
-      for (AutomationUtils.Trip t : trips) {
-        t.forceSetFlights();
-        tripsWithAirports.add(t);
-      }
+      Booking__c booking = getClaimBooking(claims[i]);
+      List<AutomationUtils.Trip> trips = getBookingTrips(booking);
       AutomationUtils.AutomationInfoContainer ac = new AutomationUtils.AutomationInfoContainer(
         claims[i],
-        bookings[0],
-        tripsWithAirports
+        booking,
+        trips
       );
       compensations.add(AutomationUtils.calculateEU261Compensation(ac));
     }
@@ -544,6 +398,11 @@ private class AutomationUtils_Test {
       0
     }; // Delay not long enough, No passengers, 3 delayed < 1500km, 1 delayed >1500 km <3500km, 1 delayed >3500km but intra community, 1 delayed >3500 >4hrs delay, -
 
+    System.assert(
+      compensations.size() == claims.size(),
+      'Should calculate all compensations.'
+    );
+
     for (Integer i = 0; i < compensations.size(); i++) {
       System.assertEquals(
         correctCompensations[i],
@@ -558,26 +417,22 @@ private class AutomationUtils_Test {
     //Given
     List<LIA_Claim__c> claimsToCheck = new List<LIA_Claim__c>{};
     claimsToCheck.addAll(
-      [SELECT Id FROM LIA_Claim__c WHERE Phone_Number__c = '0000000000' LIMIT 2]
+      [SELECT Id FROM LIA_Claim__c WHERE Liability_PNR__c IN ('AUTO1', 'AUTO2')]
     );
     claimsToCheck.addAll(
-      [SELECT Id FROM LIA_Claim__c WHERE Phone_Number__c = '0000000001']
+      [SELECT Id FROM LIA_Claim__c WHERE Liability_PNR__c IN ('AUTO6', 'AUTO7')]
     );
 
     List<Id> claimIdsToCheck = new List<Id>{};
     Map<Id, Boolean> claimIdToIsDuplicateCorrect = new Map<Id, Boolean>{};
-    List<Boolean> correctIsDuplicate = new List<Boolean>{
-      false,
-      true,
-      true,
-      true
-    }; // Not duplicate, duplicate with no. 3, duplicate with no. 2 and 4, duplicate with no. 3
+    Map<String, Boolean> correctIsDuplicate = new Map<String, Boolean>{
+      'AUTO1' => true,
+      'AUTO2' => false,
+      'AUTO6' => true,
+      'AUTO7' => true
+    }; // Duplicate duplicate with no. 3, not , duplicate with no. 1 and 4, duplicate with no. 3
     for (Integer i = 0; i < claimsToCheck.size(); i++) {
       claimIdsToCheck.add(claimsToCheck[i].Id);
-      claimIdToIsDuplicateCorrect.put(
-        claimsToCheck[i].Id,
-        correctIsDuplicate[i]
-      );
     }
 
     List<LIA_Claim__c> claimsWithPassengersToCheck = ClaimsSelector.newInstance()
@@ -587,108 +442,61 @@ private class AutomationUtils_Test {
     // TODO: batch
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
-    Map<Id, Boolean> claimIdToIsDuplicate = new Map<Id, Boolean>{};
+    Map<String, Boolean> claimIdToIsDuplicate = new Map<String, Boolean>{};
+    List<String> pnrOrder = new List<String>{};
     for (Integer i = 0; i < claimsWithPassengersToCheck.size(); i++) {
       LIA_Claim__c claim = claimsWithPassengersToCheck[i];
-      List<CaseToBooking__c> ctbs = CaseToBookingsSelector.newInstance()
-        .selectByCaseId(new Set<Id>{ claim.Case__c });
-      List<Booking__c> bookings = BookingsSelector.newInstance()
-        .selectByIdFull(new Set<Id>{ ctbs[0].Booking__c });
-      List<AutomationUtils.Trip> trips = AutomationUtils.divideIntoTrips(
-        bookings[0],
-        bookings[0].Segments__r
-      );
-      List<AutomationUtils.Trip> tripsWithAirports = new List<AutomationUtils.Trip>{};
-      for (AutomationUtils.Trip t : trips) {
-        t.forceSetFlights();
-        tripsWithAirports.add(t);
-      }
+      pnrOrder.add(claim.Liability_PNR__c);
+      Booking__c booking = getClaimBooking(claim);
+      List<AutomationUtils.Trip> trips = getBookingTrips(booking);
+
       AutomationUtils.AutomationInfoContainer ac = new AutomationUtils.AutomationInfoContainer(
         claim,
-        bookings[0],
-        tripsWithAirports
+        booking,
+        trips
       );
-      claimIdToIsDuplicate.put(claim.Id, AutomationUtils.isDuplicate(ac));
+      claimIdToIsDuplicate.put(
+        claim.Liability_PNR__c,
+        AutomationUtils.isDuplicate(ac)
+      );
     }
 
     Test.stopTest();
 
     // Then
-    for (Id claimId : claimIdToIsDuplicate.keySet()) {
+    for (String claimId : pnrOrder) {
       System.assertEquals(
-        claimIdToIsDuplicateCorrect.get(claimId),
+        correctIsDuplicate.get(claimId),
         claimIdToIsDuplicate.get(claimId),
         'Should assert if the claim is a duplicate or not.'
       );
     }
   }
 
-  // TODO: Implement
-  @IsTest
-  public static void shouldAutomateFlightDelayClaimCases() {
-    //Given
-    //   List<CaseFormJSON2Apex> requestBodies = new List<CaseFormJSON2Apex>{};
+  // TODO: Implement form to resolution (end-to-end) tests
 
-    //   List<Flight__c> flightsToCreate = new List<Flight__c>{};
+  private static Booking__c getClaimBooking(LIA_Claim__c claim) {
+    List<CaseToBooking__c> ctbs = CaseToBookingsSelector.newInstance()
+      .selectByCaseId(new Set<Id>{ claim.Case__c });
+    List<Booking__c> bookings = BookingsSelector.newInstance()
+      .selectByIdFull(new Set<Id>{ ctbs[0].Booking__c });
+    return bookings[0];
+  }
 
-    //   for (Integer i = 0; i < 4; i++) {
+  private static List<AutomationUtils.Trip> getBookingTrips(
+    Booking__c booking
+  ) {
+    List<AutomationUtils.Trip> tripsWithAirports = new List<AutomationUtils.Trip>{};
+    for (
+      AutomationUtils.Trip t : AutomationUtils.divideIntoTrips(
+        booking,
+        booking.Segments__r
+      )
+    ) {
+      t.forceSetFlights();
+      tripsWithAirports.add(t);
+    }
 
-    //     String flightNumber = 'SK' + i + '123';
-
-    //     flightsToCreate.add(new Flight__c(flightNumber=flightNumber, TEDS_Identifier__c=flightNumber));
-
-    //     String jsonContent =
-    //       '{ ' +
-    //       '  "formData\": {' +
-    //       '    "type": "claim",' +
-    //       '    "email": "test@test.com",' +
-    //       '    "firstName": "Test",' +
-    //       '    "lastName": "Testsson",' +
-    //       '    "phone": "00000000",' +
-    //       '    "address": "Testway",' +
-    //       '    "postalCode": "00000",' +
-    //       '    "city": "Stockholm",' +
-    //       '    "country": "SE",' +
-    //       '    "euroBonusNumber": "000000000",' +
-    //       '    "contactType": "private",' +
-    //       '    "claimCategory": "flight-disruptions",' +
-    //       '    "claimType": "flight-delay",' +
-    //       '    "preferredCompensationMethod": "voucher",' +
-    //       '    "bookingReference": "AUTO' +
-    //       i +
-    //       '",' +
-    //       '    "departureDate": "2022-03-02",' +
-    //       '    "flightNumber": "'+flightNumber+'"' +
-    //       '  },' +
-    //       '  "metaData": {' +
-    //       '    "market": "dk-da"' +
-    //       '  }' +
-    //       '}';
-
-    //     requestBodies.add(CaseFormJSON2Apex.parse(jsonContent));
-    //   }
-
-    //   // When
-    //   Test.setMock(HttpCalloutMock.class, new APIMMock());
-
-    //   Test.startTest();
-    //   Set<String> responseCaseNumbers = new Set<String>{};
-    //   for (CaseFormJSON2Apex formData : requestBodies) {
-    //     responseCaseNumbers.add(CaseForm.createCase(formData).caseNumber);
-    //   }
-    //   Test.StopTest();
-
-    //   // Then
-    //   List<Case> cases = [
-    //     SELECT Id, OwnerId, AccountId
-    //     FROM Case
-    //     WHERE CaseNumber IN :responseCaseNumbers
-    //   ];
-
-    //   Set<Id> caseIds = new Set<Id>{};
-    //   Set<Id> caseOwnerIds = new Set<Id>{};
-    //   for (Case newCase : cases) {
-    //     caseIds.add(newCase.Id);
-    //   }
+    return tripsWithAirports;
   }
 }
