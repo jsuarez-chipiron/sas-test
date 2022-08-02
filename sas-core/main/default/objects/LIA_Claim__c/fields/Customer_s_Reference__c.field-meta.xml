@@ -3,7 +3,7 @@
     <fullName>Customer_s_Reference__c</fullName>
     <externalId>false</externalId>
     <label>Customer&apos;s Reference</label>
-    <length>255</length>
+    <length>80</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
