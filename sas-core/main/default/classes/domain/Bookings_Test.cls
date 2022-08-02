@@ -131,4 +131,44 @@ public with sharing class Bookings_Test {
       'Booking should not be marked as containing delayed flights'
     );
   }
+
+  @IsTest
+  public static void invalidPnrsShouldBeIdentifiedCorrectly() {
+    List<String> pnrs = new List<String>{
+      'ABCD',
+      '',
+      null,
+      '"abcde',
+      'ÖABCDE'
+    };
+
+    for (String pnr : pnrs) {
+      System.assert(
+        !Bookings.isValidBookingReference(pnr),
+        'PNR: ' +
+        pnr +
+        ' should be invalid.'
+      );
+    }
+  }
+
+  @IsTest
+  public static void validPnrsShouldBeIdentifiedCorrectly() {
+    List<String> pnrs = new List<String>{
+      'ABCDE',
+      'ABCDEF',
+      '234DER',
+      'A2B4C8',
+      '12345'
+    };
+
+    for (String pnr : pnrs) {
+      System.assert(
+        Bookings.isValidBookingReference(pnr),
+        'PNR: ' +
+        pnr +
+        ' should be valid.'
+      );
+    }
+  }
 }
