@@ -6,7 +6,7 @@ global class APIMMock implements HttpCalloutMock {
   public static final String EB_NUMBER_WITHOUT_BOOKINGS = 'TEST654321';
   public static final String CLM_TRANSACTION_ID = '0000000001';
   public static final String EB_NUMBER_NOT_IN_CLM = '987654321';
-  public static final String EB_NUMBER_RETURN_500 = 'ERREBNUM';
+  public static final String EB_NUMBER_RETURN_500 = '777777777';
   public static final String VOUCHER_INVALID_EMAIL = 'invalidemail@invalidemail.invalidemail';
   public static final String VOUCHER_VALID_CARD_ID = '1234567890';
   public static final String VOUCHER_VALID_PNR = 'ABC123';

@@ -64,12 +64,24 @@ private class ValidateSettlements_Test {
       false,
       false
     );
+    Settlement__c invalidSettlement6 = validSettlement.clone(
+      false,
+      true,
+      false,
+      false
+    );
 
     invalidSettlement1.Amount__c = 0;
     invalidSettlement2.City__c = null;
     invalidSettlement3.Bank_Account_Number__c = 'SE738000081034000978324';
     invalidSettlement4.Claim__c = otherClaim.Id;
     invalidSettlement5.Address_line_1__c = null;
+
+    invalidSettlement6.RecordTypeId = Settlements.getRecordTypeId(
+      Settlements.RecordType.EBPoints
+    );
+    invalidSettlement6.EuroBonus_Number__c = '1234';
+    invalidSettlement6.EuroBonus_Points__c = 1000;
 
     insert new List<Settlement__c>{
       invalidSettlement1,
@@ -188,6 +200,7 @@ private class ValidateSettlements_Test {
     validSettlement4.EuroBonus_Points__c = 1;
     validSettlement4.Bank_Country__c = null;
     validSettlement4.Country__c = null;
+
     Test.setMock(HttpCalloutMock.class, new APIMMock());
 
     insert new List<Settlement__c>{
@@ -217,13 +230,12 @@ private class ValidateSettlements_Test {
       status = new ValidateSettlements.ValidationStatus('Error');
     }
 
-    
     if (status.isValid) {
       noError = true;
     }
-    
+
     Test.stopTest();
-    
+
     // Then
     System.assertEquals(status.errorMessage, '');
     System.assert(noError, 'A valid settlement was invalidated');

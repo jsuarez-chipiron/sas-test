@@ -838,6 +838,14 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         if (!(s.EuroBonus_Points__c > 0)) {
           errorMessages.add('EuroBonus Points has to be greater than 0.');
         }
+
+        try {
+          Accounts.parseIntoEuroBonusNumber(s.EuroBonus_Number__c);
+        } catch (Accounts.IncorrectEBNumberException e) {
+          errorMessages.add(
+            'EuroBonus number is not in correct format (9 digits).'
+          );
+        }
       } else if (
         s.RecordTypeId == getRecordTypeId(Settlements.RecordType.Cheque)
       ) {
