@@ -110,6 +110,26 @@ public class AccountingEntry {
     String description = '';
     String reconciliationReference;
 
+    if (
+      settlementItem.Amount__c == null ||
+      settlementItem.Currency__c == null ||
+      settlementItem.Cost_Account__c == null
+    ) {
+      String errorMessage =
+        'Missing data from settlement item when creating accounting entry: ' +
+        settlementItem.Id +
+        ' | Amount: ' +
+        settlementItem.Amount__c +
+        ' | Currency: ' +
+        settlementItem.Currency__c +
+        ' | Cost Account: ' +
+        settlementItem.Cost_Account__c;
+
+      C_Log.log(C_Log.Severity.Error, errorMessage, null, 'Racer', null);
+
+      throw new IllegalArgumentException(errorMessage);
+    }
+
     switch on entryType {
       when CREDIT {
         amountToSet = settlementItem.Amount__c;
