@@ -117,7 +117,7 @@ public without sharing class TEDSIntegrationService {
       if (reference != null) {
         if (!Bookings.isValidBookingReference(reference)) {
           throw new APIMIntegrationService.IllegalArgumentsException(
-            'Booking reference must be 5 or 6 characters'
+            'Booking reference must be 5 or 6 alphanumeric characters'
           );
         }
         queryParamString = addFieldToQueryParams(
