@@ -220,6 +220,14 @@ public without sharing class ClaimService {
 
     insert claimToCreate;
 
+    Customer__c customerToCreate = new Customer__c(
+      Claim__c = claimToCreate.Id,
+      First_Name__c = form.formData.firstName == null ? ' ' : form.formData.firstName,
+      Last_Name__c = form.formData.lastName == null ? ' ' : form.formData.lastName
+    );
+
+    insert customerToCreate;
+
     Case caseToCreate = createCaseRecord(form, claimToCreate);
     // Auto-response emails are not triggered by default for cases created
     // through Apex. Setting the triggerAutoResponseEmail header forces
