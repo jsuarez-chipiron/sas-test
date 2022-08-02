@@ -159,6 +159,8 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
                         flowVariables, manualRequest.responseMessage);
                 }
             }
+          //https://dev.azure.com/flysas/Irregularity%20Communication/_workitems/edit/25595
+          deduplicateMessages();
         }
      /**
      * @author Chetan Singh, CoforgeTech

@@ -71,7 +71,7 @@ public abstract class IRR_EVT_EventProcessor implements IRR_EVT_IEventProcessor 
      *
      * @description De-duplicates messages in scope.
      */
-    private void deduplicateMessages() {
+    protected void deduplicateMessages() {
         List<IRR_MOD_Message> deduplicatedMessages = new List<IRR_MOD_Message>();
         Set<String> recipients = new Set<String>();
         for (IRR_MOD_Message message : messages) {
