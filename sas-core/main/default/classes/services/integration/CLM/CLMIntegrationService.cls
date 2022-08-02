@@ -185,6 +185,9 @@ public without sharing class CLMIntegrationService {
     String ticketNumber,
     String claimId
   ) {
+    // throws on invalid number
+    Accounts.parseIntoEuroBonusNumber(euroBonusNumber);
+
     Map<String, Object> bodyMap = new Map<String, Object>{
       'ebNumber' => euroBonusNumber,
       'pointType' => String.valueOf(POINTS_TYPE.EXTRA),
