@@ -308,4 +308,50 @@ public without sharing class Claims extends fflib_SObjectDomain {
       }
     }
   }
+  /*
+   * Returns the priority of the case depending of EB level and level of costs.
+   * Todo: this could be moved to the cases domain depending on how we rewrite the routing.
+   */
+  public List<String> getPriority() {
+    List<String> toReturn = new List<String>{};
+
+    Set<Id> caseIds = new Set<Id>();
+    for (LIA_Claim__c claim : instanceRecords) {
+      caseIds.add(claim.Case__c);
+    }
+    List<Case> casesForClaims = CasesSelector.newInstance().selectById(caseIds);
+
+    Map<Id, Case> claimIdToCase = new Map<Id, Case>{};
+
+    for (Case c : casesForClaims) {
+      for (LIA_Claim__c claim : instanceRecords) {
+        if (claim.Case__c == c.Id) {
+          claimIdToCase.put(claim.Id, c);
+        }
+      }
+    }
+
+    for (LIA_Claim__c claim : instanceRecords) {
+      Case c = claimIdToCase.get(claim.Id);
+      String priority = 'Medium';
+
+      switch on c.FCS_EBLevel__c {
+        when 'P' {
+          toReturn.add('Pandion');
+          continue;
+        }
+        when 'D', 'G' {
+          priority = 'High';
+        }
+      }
+
+      if (claim.Submitted_Claim_Expenses_in_SEK__c > 25000) {
+        priority = 'High Care Costs';
+      }
+
+      toReturn.add(priority);
+    }
+
+    return toReturn;
+  }
 }
