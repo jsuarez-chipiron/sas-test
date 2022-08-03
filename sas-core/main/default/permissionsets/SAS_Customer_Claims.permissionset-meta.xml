@@ -191,6 +191,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim_Expense__c.Claim_Expense_Amount_In_SEK__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Claim_Expense__c.Date_of_Exchange_Calculation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Claim_Firm__c.Email__c</field>
         <readable>true</readable>
@@ -513,6 +523,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Reason_for_Delay_Cancellation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Submitted_Claim_Expenses_in_SEK__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

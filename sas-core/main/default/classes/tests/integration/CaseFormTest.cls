@@ -157,6 +157,16 @@ private class CaseFormTest {
 
   @IsTest
   public static void shouldCreateClaimCasesWithAllFields() {
+    // Add exchange rate for claim expense calculations
+    Decimal rate = 10.3;
+    Exchange_Rate__c newRate = new Exchange_Rate__c(
+      From_Currency__c = 'USD',
+      To_Currency__c = 'SEK',
+      Rate__c = rate,
+      Date__c = Date.valueOf('2022-08-02'),
+      Name = 'USD-SEK'
+    );
+
     // Create attachments
     ContentVersion powerOfAttorneyFile = new ContentVersion(
       Title = 'Power of attorney',
@@ -193,7 +203,8 @@ private class CaseFormTest {
       receiptFile1,
       receiptFile2,
       boardingPassFile1,
-      boardingPassFile2
+      boardingPassFile2,
+      newRate
     };
     CaseFormJSON2Apex requestBody = CaseFormJSON2Apex.parse(
       '{ ' +
@@ -367,7 +378,11 @@ private class CaseFormTest {
     );
 
     List<Claim_Expense__c> expenses = [
-      SELECT Amount__c, Currency__c, Type__c
+      SELECT
+        Amount__c,
+        Currency__c,
+        Type__c,
+        Claim_Expense_Amount_In_SEK__c
       FROM Claim_Expense__c
       WHERE Claim__c = :cl.Id
     ];
@@ -382,6 +397,7 @@ private class CaseFormTest {
       if (e.Type__c == 'transportation') {
         System.assertEquals('USD', e.Currency__c);
         System.assertEquals(399, e.Amount__c);
+        System.assertEquals(399 * rate, e.Claim_Expense_Amount_In_SEK__c);
       } else {
         System.assertEquals('NOK', e.Currency__c);
         System.assertEquals(250.55, e.Amount__c);
