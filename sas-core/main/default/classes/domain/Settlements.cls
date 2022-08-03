@@ -1060,12 +1060,14 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   private void normalizeFields() {
     for (Settlement__c settlement : instanceRecords) {
       if (!String.isBlank(settlement.BIC_Swift__c)) {
-        settlement.BIC_Swift__c = settlement.BIC_Swift__c.toUpperCase()
-          .replace(' ', '');
+        settlement.BIC_Swift__c = StringUtils.removeWhitespace(
+          settlement.BIC_Swift__c.toUpperCase()
+        );
       }
       if (!String.isBlank(settlement.Bank_Account_Number__c)) {
-        settlement.Bank_Account_Number__c = settlement.Bank_Account_Number__c.toUpperCase()
-          .replace(' ', '');
+        settlement.Bank_Account_Number__c = StringUtils.removeWhitespace(
+          settlement.Bank_Account_Number__c.toUpperCase()
+        );
       }
     }
   }

@@ -3,7 +3,6 @@
  * layer.
  */
 public without sharing class StringUtils {
-
   /**
    * Constructs a query parameter string from a list of (name, value) parameter tuples.
    * Does not url encode the string.
@@ -22,5 +21,16 @@ public without sharing class StringUtils {
     Matcher emailMatcher = emailPattern.matcher(s);
 
     return emailMatcher.matches();
+  }
+
+  /**
+   * Removes all whitespace from the given string and returns the result.
+   */
+  public static String removeWhitespace(String s) {
+    if (s == null) {
+      return null;
+    }
+
+    return s.replaceAll('[\\s\u00A0\u200B-\u200D\uFEFF]+', '');
   }
 }

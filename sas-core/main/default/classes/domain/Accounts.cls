@@ -52,7 +52,9 @@ public without sharing class Accounts extends fflib_SObjectDomain {
   public static String parseIntoEuroBonusNumber(String potentialEBNumber) {
     String toReturn;
     if (!String.isBlank(potentialEBNumber)) {
-      String ebNumberWithoutWhitespace = potentialEBNumber.replace(' ', '');
+      String ebNumberWithoutWhitespace = StringUtils.removeWhitespace(
+        potentialEBNumber
+      );
       Pattern onlyNumbersPattern = Pattern.compile('([0-9]+)');
       Matcher matcher = onlyNumbersPattern.matcher(ebNumberWithoutWhitespace);
       try {
