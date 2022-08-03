@@ -127,10 +127,6 @@
                 <behavior>Readonly</behavior>
                 <field>Date_of_Exchange_Calculation__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Exchange_Rate_SEK_to_currency__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
