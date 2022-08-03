@@ -23,6 +23,10 @@
                 <behavior>Required</behavior>
                 <field>Deadline__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Submitted_Claim_Expenses_in_SEK__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
