@@ -222,8 +222,12 @@ public without sharing class ClaimService {
 
     Customer__c customerToCreate = new Customer__c(
       Claim__c = claimToCreate.Id,
-      First_Name__c = form.formData.firstName == null ? ' ' : form.formData.firstName,
-      Last_Name__c = form.formData.lastName == null ? ' ' : form.formData.lastName
+      First_Name__c = form.formData.firstName == null
+        ? ' '
+        : form.formData.firstName,
+      Last_Name__c = form.formData.lastName == null
+        ? ' '
+        : form.formData.lastName
     );
 
     insert customerToCreate;
@@ -346,9 +350,9 @@ public without sharing class ClaimService {
         // US bank account numbers should be sent to Racer as {accountNumber}ABA{routingNumber}
         // Other countries have only an account number.
         claimToCreate.Bank_Account_Number__c =
-          form.formData.bankAccountNumber.replace(' ', '') +
+          StringUtils.removeWhitespace(form.formData.bankAccountNumber) +
           'ABA' +
-          form.formData.bankRoutingNumber.replace(' ', '');
+          StringUtils.removeWhitespace(form.formData.bankRoutingNumber);
       } else {
         claimToCreate.Bank_Account_Number__c = form.formData.bankAccountNumber.replace(
           ' ',
