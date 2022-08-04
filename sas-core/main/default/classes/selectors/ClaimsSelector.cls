@@ -334,10 +334,16 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     String whereQuery = '';
 
     if (!String.isBlank(bankAccountNumber)) {
-      if (String.isBlank(whereQuery)) {
-        whereQuery += 'Bank_Account_Number__c = :bankAccountNumber';
-      } else {
-        whereQuery += ' OR Bank_Account_Number__c = :bankAccountNumber';
+      //Exclude bank account number matches from appearing in similar cases if the account belongs
+      // to a claim firm not slow down page load when there are a lot of matches
+      List<Bank_Account_Info__c> claimFirmBankAccounts = BankAccountInfosSelector.newInstance()
+        .selectByBankAccountNumber(new Set<String>{ bankAccountNumber });
+      if (claimFirmBankAccounts.size() == 0) {
+        if (String.isBlank(whereQuery)) {
+          whereQuery += 'Bank_Account_Number__c = :bankAccountNumber';
+        } else {
+          whereQuery += ' OR Bank_Account_Number__c = :bankAccountNumber';
+        }
       }
     }
 

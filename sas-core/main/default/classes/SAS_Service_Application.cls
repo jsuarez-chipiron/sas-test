@@ -7,6 +7,7 @@ public class SAS_Service_Application {
     new Map<SObjectType, Type>{
       Account.SObjectType => AccountsSelector.class,
       Booking__c.SObjectType => BookingsSelector.class,
+      Bank_Account_Info__c.SObjectType => BankAccountInfosSelector.class,
       Case.SObjectType => CasesSelector.class,
       CaseToBooking__c.SObjectType => CaseToBookingsSelector.class,
       ContentVersion.SObjectType => ContentVersionsSelector.class,

@@ -137,8 +137,8 @@ public with sharing class TestDataFactories {
     insert allToCreate;
 
     for (Integer i = 0; i < count; i++) {
-      Case c = casesToCreate[0];
-      LIA_Claim__c claim = claimsToCreate[0];
+      Case c = casesToCreate[i];
+      LIA_Claim__c claim = claimsToCreate[i];
       c.LIA_Claim__c = claim.Id;
       claim.Case__c = c.Id;
     }

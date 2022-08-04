@@ -178,4 +178,126 @@ private class CasesSelector_Test {
       'Should select three cases with mixed matching from proactivity ID correctly (wrong case)'
     );
   }
+
+  @IsTest
+  public static void similarCasesShouldBeFetchedForNonClaimFirmIban() {
+    String bookingReference = 'ABC123';
+    String bankAccountNumber = 'SE7280000810340009783242';
+
+    TestDataFactories.CasesClaims createdCasesClaims = TestDataFactories.createCasesWithClaims(
+      2,
+      null,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Liability_PNR__c => bookingReference,
+        LIA_Claim__c.Bank_Account_Number__c => bankAccountNumber,
+        LIA_Claim__c.Customer_Claim_Category__c => 'Flight disruptions',
+        LIA_Claim__c.Flight_Date__c => Date.valueOf('2022-01-01'),
+        LIA_Claim__c.Flight_Number__c => 'SK1234'
+      }
+    );
+
+    LIA_Claim__c cl = createdCasesClaims.claims[1];
+    cl.Liability_PNR__c = 'ABC124';
+    cl.PIR__c = 'ARNSK12456';
+    cl.Flight_Date__c = Date.valueOf('2022-02-02');
+    cl.Flight_Number__c = 'SK1235';
+    update cl;
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    List<Case> similarCases = CasesSelector.newInstance()
+      .selectSimilarCasesById(createdCasesClaims.cases[0].Id);
+    Test.stopTest();
+    System.assertEquals(
+      2,
+      similarCases.size(),
+      'Should have found more than one case'
+    );
+  }
+
+  @IsTest
+  public static void similarCasesShouldNotBeFetchedForClaimFirmIban() {
+    //Should exclude results where only bank account matches if number is connected to a Claim Firm
+    String bookingReference = 'ABC123';
+    String bankAccountNumber = 'SE7280000810340009783242';
+
+    Claim_Firm__c cf = new Claim_Firm__c(Name = 'Testfirm');
+    insert cf;
+
+    Bank_Account_Info__c bai = new Bank_Account_Info__c(
+      Bank_Account_Number__c = bankAccountNumber,
+      Claim_Firm__c = cf.Id
+    );
+
+    insert bai;
+
+    TestDataFactories.CasesClaims createdCasesClaims = TestDataFactories.createCasesWithClaims(
+      2,
+      null,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Liability_PNR__c => bookingReference,
+        LIA_Claim__c.Bank_Account_Number__c => bankAccountNumber,
+        LIA_Claim__c.Customer_Claim_Category__c => 'Flight disruptions',
+        LIA_Claim__c.Flight_Date__c => Date.valueOf('2022-01-01'),
+        LIA_Claim__c.Flight_Number__c => 'SK1234'
+      }
+    );
+
+    LIA_Claim__c cl = createdCasesClaims.claims[1];
+    cl.Liability_PNR__c = 'ABC124';
+    cl.PIR__c = 'ARNSK12456';
+    cl.Flight_Date__c = Date.valueOf('2022-02-02');
+    cl.Flight_Number__c = 'SK1235';
+    update cl;
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    List<Case> similarCases = CasesSelector.newInstance()
+      .selectSimilarCasesById(createdCasesClaims.cases[0].Id);
+    Test.stopTest();
+    System.assertEquals(
+      1,
+      similarCases.size(),
+      'Should not have found more than one case'
+    );
+  }
+
+  @IsTest
+  public static void similarCasesShouldBeFetchedForClaimFirms() {
+    //Find similar cases if other info matches for claims with a bank account connected to a Claim Firm
+    String bookingReference = 'ABC123';
+    String bankAccountNumber = 'SE7280000810340009783242';
+
+    Claim_Firm__c cf = new Claim_Firm__c(Name = 'Testfirm');
+    insert cf;
+
+    Bank_Account_Info__c bai = new Bank_Account_Info__c(
+      Bank_Account_Number__c = bankAccountNumber,
+      Claim_Firm__c = cf.Id
+    );
+
+    insert bai;
+
+    TestDataFactories.CasesClaims createdCasesClaims = TestDataFactories.createCasesWithClaims(
+      2,
+      null,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Liability_PNR__c => bookingReference,
+        LIA_Claim__c.Bank_Account_Number__c => bankAccountNumber,
+        LIA_Claim__c.Customer_Claim_Category__c => 'Flight disruptions',
+        LIA_Claim__c.Flight_Date__c => Date.valueOf('2022-01-01'),
+        LIA_Claim__c.Flight_Number__c => 'SK1234'
+      }
+    );
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    List<Case> similarCases = CasesSelector.newInstance()
+      .selectSimilarCasesById(createdCasesClaims.cases[0].Id);
+    Test.stopTest();
+    System.assertEquals(
+      2,
+      similarCases.size(),
+      'Should have found more than one case'
+    );
+  }
 }

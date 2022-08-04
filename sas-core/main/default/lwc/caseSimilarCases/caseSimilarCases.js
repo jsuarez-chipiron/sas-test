@@ -152,6 +152,13 @@ export default class CaseSimilarCases extends NavigationMixin(
         );
 
       const formattedCases = data.map((caseWithClaim, idx) => {
+        const flightId =
+          caseWithClaim.Claims__r[0].Flight_Number__c !== undefined &&
+          caseWithClaim.Claims__r[0].Flight_Date__c !== undefined
+            ? caseWithClaim.Claims__r[0].Flight_Number__c +
+              "-" +
+              caseWithClaim.Claims__r[0].Flight_Date__c
+            : "";
         return {
           idx,
           id: caseWithClaim.Id,
@@ -160,10 +167,7 @@ export default class CaseSimilarCases extends NavigationMixin(
           date: caseWithClaim.CreatedDate,
           EbNumber: caseWithClaim.Claims__r[0].EuroBonus_Number__c,
           email: caseWithClaim.Claims__r[0].Contact_Email__c,
-          flight:
-            caseWithClaim.Claims__r[0].Flight_Number__c +
-            "-" +
-            caseWithClaim.Claims__r[0].Flight_Date__c,
+          flight: flightId,
           owner: caseWithClaim.Owner.Name,
           pir: caseWithClaim.Claims__r[0].PIR__c,
           status: caseWithClaim.Status
