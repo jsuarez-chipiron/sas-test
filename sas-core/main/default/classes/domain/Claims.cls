@@ -35,6 +35,13 @@ public without sharing class Claims extends fflib_SObjectDomain {
     TravelExtras
   }
 
+  public enum Priority {
+    Medium,
+    High,
+    Pandion,
+    HighCareCosts
+  }
+
   public static Map<String, Category> categoryNameToEnum = new Map<String, Category>{
     'Accident &amp; injury' => Category.AccidentAndInjury,
     'Airport experience' => Category.AirportExperience,
@@ -51,6 +58,13 @@ public without sharing class Claims extends fflib_SObjectDomain {
     RecordType.CompensationCard => 'CompensationCard',
     RecordType.CustomerClaim => 'CustomerClaim',
     RecordType.LiabilityClaim => 'LiabilityClaim'
+  };
+
+  public static Map<Priority, String> priorityToName = new Map<Priority, String>{
+    Priority.Medium => 'Medium',
+    Priority.High => 'High',
+    Priority.Pandion => 'Pandion',
+    Priority.HighCareCosts => 'High Care Costs'
   };
 
   private static Map<RecordType, Id> recordTypeToId = new Map<RecordType, String>();
@@ -307,5 +321,48 @@ public without sharing class Claims extends fflib_SObjectDomain {
         );
       }
     }
+  }
+
+  /*
+   * Returns the priority of the case depending of EB level and level of costs.
+   * Todo: this could be moved to the cases domain depending on how we rewrite the routing.
+   */
+  public List<Priority> getPriority() {
+    List<Priority> toReturn = new List<Priority>{};
+
+    Set<Id> caseIds = new Set<Id>();
+    for (LIA_Claim__c claim : instanceRecords) {
+      caseIds.add(claim.Case__c);
+    }
+    List<Case> casesForClaims = CasesSelector.newInstance().selectById(caseIds);
+
+    Map<Id, Case> claimIdToCase = new Map<Id, Case>{};
+
+    for (Case c : casesForClaims) {
+      claimIdToCase.put(c.LIA_Claim__c, c);
+    }
+
+    for (LIA_Claim__c claim : instanceRecords) {
+      Case c = claimIdToCase.get(claim.Id);
+      Priority casePriority = Priority.Medium;
+
+      switch on c.FCS_EBLevel__c {
+        when 'P' {
+          toReturn.add(Priority.Pandion);
+          continue;
+        }
+        when 'D', 'G' {
+          casePriority = Priority.High;
+        }
+      }
+
+      if (claim.Submitted_Claim_Expenses_in_SEK__c > 25000) {
+        casePriority = Priority.HighCareCosts;
+      }
+
+      toReturn.add(casePriority);
+    }
+
+    return toReturn;
   }
 }
