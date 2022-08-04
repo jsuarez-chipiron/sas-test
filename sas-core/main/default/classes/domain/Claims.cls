@@ -35,6 +35,13 @@ public without sharing class Claims extends fflib_SObjectDomain {
     TravelExtras
   }
 
+  public enum Priority {
+    Medium,
+    High,
+    Pandion,
+    HighCareCosts
+  }
+
   public static Map<String, Category> categoryNameToEnum = new Map<String, Category>{
     'Accident &amp; injury' => Category.AccidentAndInjury,
     'Airport experience' => Category.AirportExperience,
@@ -51,6 +58,13 @@ public without sharing class Claims extends fflib_SObjectDomain {
     RecordType.CompensationCard => 'CompensationCard',
     RecordType.CustomerClaim => 'CustomerClaim',
     RecordType.LiabilityClaim => 'LiabilityClaim'
+  };
+
+  public static Map<Priority, String> priorityToName = new Map<Priority, String>{
+    Priority.Medium => 'Medium',
+    Priority.High => 'High',
+    Priority.Pandion => 'Pandion',
+    Priority.HighCareCosts => 'High Care Costs'
   };
 
   private static Map<RecordType, Id> recordTypeToId = new Map<RecordType, String>();
@@ -308,12 +322,13 @@ public without sharing class Claims extends fflib_SObjectDomain {
       }
     }
   }
+
   /*
    * Returns the priority of the case depending of EB level and level of costs.
    * Todo: this could be moved to the cases domain depending on how we rewrite the routing.
    */
-  public List<String> getPriority() {
-    List<String> toReturn = new List<String>{};
+  public List<Priority> getPriority() {
+    List<Priority> toReturn = new List<Priority>{};
 
     Set<Id> caseIds = new Set<Id>();
     for (LIA_Claim__c claim : instanceRecords) {
@@ -324,32 +339,28 @@ public without sharing class Claims extends fflib_SObjectDomain {
     Map<Id, Case> claimIdToCase = new Map<Id, Case>{};
 
     for (Case c : casesForClaims) {
-      for (LIA_Claim__c claim : instanceRecords) {
-        if (claim.Case__c == c.Id) {
-          claimIdToCase.put(claim.Id, c);
-        }
-      }
+      claimIdToCase.put(c.LIA_Claim__c, c);
     }
 
     for (LIA_Claim__c claim : instanceRecords) {
       Case c = claimIdToCase.get(claim.Id);
-      String priority = 'Medium';
+      Priority casePriority = Priority.Medium;
 
       switch on c.FCS_EBLevel__c {
         when 'P' {
-          toReturn.add('Pandion');
+          toReturn.add(Priority.Pandion);
           continue;
         }
         when 'D', 'G' {
-          priority = 'High';
+          casePriority = Priority.High;
         }
       }
 
       if (claim.Submitted_Claim_Expenses_in_SEK__c > 25000) {
-        priority = 'High Care Costs';
+        casePriority = Priority.HighCareCosts;
       }
 
-      toReturn.add(priority);
+      toReturn.add(casePriority);
     }
 
     return toReturn;

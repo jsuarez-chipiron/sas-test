@@ -6,7 +6,9 @@ public without sharing class GetCasePriority {
   @InvocableMethod(label='Get Case Priority')
   public static List<String> getPriority(List<LIA_Claim__c> claimsToCheck) {
     return new List<String>{
-      Claims.newInstance(claimsToCheck).getPriority()[0]
+      Claims.priorityToName.get(
+        Claims.newInstance(claimsToCheck).getPriority()[0]
+      )
     };
   }
 }
