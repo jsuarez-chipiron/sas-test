@@ -35,13 +35,6 @@ public without sharing class Claims extends fflib_SObjectDomain {
     TravelExtras
   }
 
-  public enum Priority {
-    Medium,
-    High,
-    Pandion,
-    HighCareCosts
-  }
-
   public static Map<String, Category> categoryNameToEnum = new Map<String, Category>{
     'Accident &amp; injury' => Category.AccidentAndInjury,
     'Airport experience' => Category.AirportExperience,
@@ -60,13 +53,6 @@ public without sharing class Claims extends fflib_SObjectDomain {
     RecordType.LiabilityClaim => 'LiabilityClaim'
   };
 
-  public static Map<Priority, String> priorityToName = new Map<Priority, String>{
-    Priority.Medium => 'Medium',
-    Priority.High => 'High',
-    Priority.Pandion => 'Pandion',
-    Priority.HighCareCosts => 'High Care Costs'
-  };
-
   private static Map<RecordType, Id> recordTypeToId = new Map<RecordType, String>();
 
   public static Id getRecordTypeId(RecordType rt) {
@@ -82,7 +68,6 @@ public without sharing class Claims extends fflib_SObjectDomain {
 
   public override void onAfterInsert() {
     checkIfExistsInCARE();
-    assignToQueueUsingFlow();
     updateParentCaseBookings();
   }
 
@@ -199,23 +184,6 @@ public without sharing class Claims extends fflib_SObjectDomain {
     return newInstance(new List<LIA_Claim__c>{ newClaim });
   }
 
-  public void assignToQueueUsingFlow() {
-    //Assign one Claim at a time
-    if (instanceRecords.size() > 1) {
-      return;
-    }
-    LIA_Claim__c lc = instanceRecords[0];
-    if (lc.RecordTypeId == getRecordTypeId(RecordType.CustomerClaim)) {
-      Map<String, Object> inputs = new Map<String, Object>();
-      inputs.put('recordId', lc.Id);
-
-      Flow.Interview.CLAIM_Route_Case_to_Queue claimRoutingFlow = new Flow.Interview.CLAIM_Route_Case_to_Queue(
-        inputs
-      );
-      claimRoutingFlow.start();
-    }
-  }
-
   private void checkIfExistsInCARE(Map<Id, LIA_Claim__c> existingRecords) {
     for (LIA_Claim__c claim : instanceRecords) {
       if (claim.Liability_PNR__c != null) {
@@ -321,48 +289,5 @@ public without sharing class Claims extends fflib_SObjectDomain {
         );
       }
     }
-  }
-
-  /*
-   * Returns the priority of the case depending of EB level and level of costs.
-   * Todo: this could be moved to the cases domain depending on how we rewrite the routing.
-   */
-  public List<Priority> getPriority() {
-    List<Priority> toReturn = new List<Priority>{};
-
-    Set<Id> caseIds = new Set<Id>();
-    for (LIA_Claim__c claim : instanceRecords) {
-      caseIds.add(claim.Case__c);
-    }
-    List<Case> casesForClaims = CasesSelector.newInstance().selectById(caseIds);
-
-    Map<Id, Case> claimIdToCase = new Map<Id, Case>{};
-
-    for (Case c : casesForClaims) {
-      claimIdToCase.put(c.LIA_Claim__c, c);
-    }
-
-    for (LIA_Claim__c claim : instanceRecords) {
-      Case c = claimIdToCase.get(claim.Id);
-      Priority casePriority = Priority.Medium;
-
-      switch on c.FCS_EBLevel__c {
-        when 'P' {
-          toReturn.add(Priority.Pandion);
-          continue;
-        }
-        when 'D', 'G' {
-          casePriority = Priority.High;
-        }
-      }
-
-      if (claim.Submitted_Claim_Expenses_in_SEK__c > 25000) {
-        casePriority = Priority.HighCareCosts;
-      }
-
-      toReturn.add(casePriority);
-    }
-
-    return toReturn;
   }
 }

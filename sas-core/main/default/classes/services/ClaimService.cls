@@ -195,19 +195,14 @@ public without sharing class ClaimService {
 
     database.insert(caseToCreate, DMLOptions);
 
-    Case insertedCase = [
-      SELECT Id, CaseNumber
-      FROM Case
-      WHERE Id = :caseToCreate.Id
-    ];
+    Case insertedCase = CasesSelector.newInstance()
+      .selectById(new Set<Id>{ caseToCreate.Id })[0];
 
     claimToCreate.Case__c = insertedCase.Id;
     claimToCreate.Name = insertedCase.CaseNumber;
     update claimToCreate;
 
-    // HOTFIX: Run the routing flow again, TODO: Code a more permanent soultion
-    Claims claims = new Claims(new List<LIA_Claim__c>{ claimToCreate });
-    claims.assignToQueueUsingFlow();
+    CaseService.assignPriorityAndRouteToQueue(new Set<Id>{ insertedCase.Id });
 
     return insertedCase.CaseNumber;
   }
