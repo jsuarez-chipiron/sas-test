@@ -1,6 +1,6 @@
 public inherited sharing class GroupsSelector extends fflib_SObjectSelector {
   public List<Schema.SObjectField> getSObjectFieldList() {
-    return new List<Schema.SObjectField>{ Group.Id };
+    return new List<Schema.SObjectField>{ Group.Id, Group.Name };
   }
 
   public Schema.SObjectType getSObjectType() {
@@ -17,6 +17,15 @@ public inherited sharing class GroupsSelector extends fflib_SObjectSelector {
     return (List<Group>) selectSObjectsById(ids);
   }
 
+  public List<Group> selectGroupsByName(Set<String> queueNames) {
+    String groupType = 'Queue';
+
+    return (List<Group>) Database.query(
+      newQueryFactory()
+        .setCondition('Type = :groupType AND Name IN :queueNames')
+        .toSOQL()
+    );
+  }
   public List<Group> selectQueuesByDeveloperName(Set<String> queueNames) {
     String groupType = 'Queue';
 

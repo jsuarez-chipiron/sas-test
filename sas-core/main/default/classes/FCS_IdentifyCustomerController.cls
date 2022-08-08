@@ -6,7 +6,7 @@
  */
 public without sharing class FCS_IdentifyCustomerController {
   /**
-   * Used to handle request to fins a customer from the component. A list of frequent flyer record is fetched by
+   * Used to handle request to find a customer from the component. A list of frequent flyer record is fetched by
    * a query, and then the first record in the list is synced to a corresponding account record in Salesforce.
    * If the account already exists it is updated, otherwise created.
    * @param searchField Field on Frequent Flyer object to use as filter to retrieve customer, e.g. EBNumber__c

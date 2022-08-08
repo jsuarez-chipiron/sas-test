@@ -253,7 +253,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
     }
   }
 
-  class CaseException extends Exception {
+  public class CaseException extends Exception {
   }
 
   /**
@@ -409,6 +409,8 @@ public without sharing class Cases extends fflib_SObjectDomain {
         c.FCS_EBNumber__c = acc.FCS_EBNumber__c;
 
         update c;
+
+        // CaseService.assignPriorityAndRouteToQueue(new Set<Id>{ c.Id });
       }
     }
   }
