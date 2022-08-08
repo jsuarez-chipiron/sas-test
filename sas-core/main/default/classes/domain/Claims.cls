@@ -68,11 +68,13 @@ public without sharing class Claims extends fflib_SObjectDomain {
 
   public override void onAfterInsert() {
     checkIfExistsInCARE();
+    fetchCAREClaims();
     updateParentCaseBookings();
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
     checkIfExistsInCARE((Map<Id, LIA_Claim__c>) existingRecords);
+    fetchCAREClaims((Map<Id, LIA_Claim__c>) existingRecords);
     updateParentCaseBookings((Map<Id, LIA_Claim__c>) existingRecords);
     // TODO: We should also update EB accounts correctly. Requires fixing of the entire EB accounts fetching flow.
   }
@@ -289,5 +291,48 @@ public without sharing class Claims extends fflib_SObjectDomain {
         );
       }
     }
+  }
+
+  /*
+   * Returns the priority of the case depending of EB level and level of costs.
+   * Todo: this could be moved to the cases domain depending on how we rewrite the routing.
+   */
+  public List<Priority> getPriority() {
+    List<Priority> toReturn = new List<Priority>{};
+
+    Set<Id> caseIds = new Set<Id>();
+    for (LIA_Claim__c claim : instanceRecords) {
+      caseIds.add(claim.Case__c);
+    }
+    List<Case> casesForClaims = CasesSelector.newInstance().selectById(caseIds);
+
+    Map<Id, Case> claimIdToCase = new Map<Id, Case>{};
+
+    for (Case c : casesForClaims) {
+      claimIdToCase.put(c.LIA_Claim__c, c);
+    }
+
+    for (LIA_Claim__c claim : instanceRecords) {
+      Case c = claimIdToCase.get(claim.Id);
+      Priority casePriority = Priority.Medium;
+
+      switch on c.FCS_EBLevel__c {
+        when 'P' {
+          toReturn.add(Priority.Pandion);
+          continue;
+        }
+        when 'D', 'G' {
+          casePriority = Priority.High;
+        }
+      }
+
+      if (claim.Submitted_Claim_Expenses_in_SEK__c > 25000) {
+        casePriority = Priority.HighCareCosts;
+      }
+
+      toReturn.add(casePriority);
+    }
+
+    return toReturn;
   }
 }

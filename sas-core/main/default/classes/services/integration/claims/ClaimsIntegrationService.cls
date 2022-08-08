@@ -23,11 +23,13 @@ public without sharing class ClaimsIntegrationService {
   public static Boolean checkIfClaimsExistForBookingReference(
     String bookingReference
   ) {
+    FetchCAREClaimsQuery query = new FetchCAREClaimsQuery();
+    query.pnr = bookingReference;
+
     HttpResponse response = makeRequest(
       HttpUtils.HTTP_METHOD.GET,
-      'claim' +
-      '?pnr=' +
-      bookingReference
+      'claim',
+      query
     );
 
     if (response.getStatusCode() == 404) {
@@ -35,6 +37,55 @@ public without sharing class ClaimsIntegrationService {
     }
 
     return ClaimsCheckCAREResponse.parse(response.getBody()).claimsfound;
+  }
+
+  public class FetchCAREClaimsQuery extends APIMIntegrationService.BaseQuery {
+    public String pnr { get; set; }
+    public String caseId { get; set; }
+    public String pir { get; set; }
+
+    public override String toQueryParamString() {
+      String queryParamString = '';
+
+      queryParamString = addFieldToQueryParams(queryParamString, 'pnr', pnr);
+      queryParamString = addFieldToQueryParams(
+        queryParamString,
+        'caseId',
+        caseId
+      );
+      queryParamString = addFieldToQueryParams(queryParamString, 'pir', pir);
+
+      return queryParamString;
+    }
+  }
+
+  public static FetchCAREClaimsResponse fetchClaimsByQuery(
+    FetchCAREClaimsQuery query
+  ) {
+    if (
+      !String.isBlank(query.pnr) && !Bookings.isValidBookingReference(query.pnr)
+    ) {
+      throw new APIMIntegrationService.IllegalArgumentsException(
+        'Booking reference must be 5 or 6 characters'
+      );
+    }
+
+    // Request path is /claim/claimdetails/{pnr}/{pir}/{caseId}
+    // Any unused ones should be replaced with '-'.
+
+    String path = 'claimdetails';
+
+    path += String.isBlank(query.pnr) ? '-' : query.pnr;
+    path += String.isBlank(query.pir) ? '-' : query.pir;
+    path += String.isBlank(query.caseId) ? '-' : query.caseId;
+
+    HttpResponse response = makeRequest(HttpUtils.HTTP_METHOD.GET, path, null);
+
+    if (response.getStatusCode() == 404) {
+      return null;
+    }
+
+    return FetchCAREClaimsResponse.parse(response.getBody());
   }
 
   /**
@@ -52,11 +103,16 @@ public without sharing class ClaimsIntegrationService {
    */
   private static HttpResponse makeRequest(
     HttpUtils.HTTP_METHOD method,
-    String path
+    String path,
+    APIMIntegrationService.BaseQuery query
   ) {
     HttpRequest request = new HttpRequest();
 
     String fullPath = API_PATH + path;
+
+    if (query != null) {
+      fullPath += query.toQueryParamString();
+    }
 
     Map<String, String> extraRequestHeaders = new Map<String, String>{
       'Accept' => 'application/json',
