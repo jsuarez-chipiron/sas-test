@@ -252,12 +252,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Claim_Expense__c.Currency__c</field>
+        <field>Claim_Expense__c.Claim_Expense_Amount_In_SEK__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Claim_Expense__c.Claim_Expense_Amount_In_SEK__c</field>
+        <field>Claim_Expense__c.Currency__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -454,11 +454,6 @@
         <editable>true</editable>
         <field>LIA_Claim__c.Contact_First_Name__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>LIA_Claim__c.Contact_Full_Name__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -1121,6 +1116,10 @@
         <recordType>Settlement__c.Voucher</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabSettings>
+        <tab>CARE_Cases</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
     <tabSettings>
         <tab>Customer__c</tab>
         <visibility>Visible</visibility>

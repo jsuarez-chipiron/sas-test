@@ -34,7 +34,6 @@ public inherited sharing class CAREClaimsSelector extends fflib_SObjectSelector 
 
     LIA_Claim__c claimForCase = claims[0];
 
-    String bankAccountNumber = claimForCase.Bank_Account_Number__c;
     String bookingReference = claimForCase.Liability_PNR__c;
     String pirNumber = claimForCase.PIR__c;
 
@@ -51,6 +50,40 @@ public inherited sharing class CAREClaimsSelector extends fflib_SObjectSelector 
         whereQuery += ' OR PIR__c = :pirNumber';
       }
     }
+
+    return (List<CARE_Claim__c>) Database.query(
+      newQueryFactory().setCondition(whereQuery).toSOQL()
+    );
+  }
+
+  public List<CARE_Claim__c> selectByQuery(
+    String caseId,
+    String pir,
+    String bookingReference
+  ) {
+    String whereQuery = '';
+
+    if (!String.isBlank(bookingReference)) {
+      whereQuery += 'Booking_Reference__c = :bookingReference';
+    }
+
+    if (!String.isBlank(pir)) {
+      if (String.isBlank(whereQuery)) {
+        whereQuery += 'PIR__c = :pir';
+      } else {
+        whereQuery += ' OR PIR__c = :pir';
+      }
+    }
+
+    if (!String.isBlank(caseId)) {
+      if (String.isBlank(whereQuery)) {
+        whereQuery += 'Case_Id__c = :caseId';
+      } else {
+        whereQuery += ' OR Case_Id__c = :caseId';
+      }
+    }
+
+    System.debug(whereQuery);
 
     return (List<CARE_Claim__c>) Database.query(
       newQueryFactory().setCondition(whereQuery).toSOQL()

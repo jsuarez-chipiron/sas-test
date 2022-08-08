@@ -75,9 +75,11 @@ public without sharing class ClaimsIntegrationService {
 
     String path = 'claimdetails';
 
-    path += String.isBlank(query.pnr) ? '-' : query.pnr;
-    path += String.isBlank(query.pir) ? '-' : query.pir;
-    path += String.isBlank(query.caseId) ? '-' : query.caseId;
+    path += String.isBlank(query.pnr) ? '/-' : '/' + query.pnr;
+    path += String.isBlank(query.pir) ? '/-' : '/' + query.pir;
+    path += String.isBlank(query.caseId) ? '/-' : '/' + query.caseId;
+
+    System.debug(path);
 
     HttpResponse response = makeRequest(HttpUtils.HTTP_METHOD.GET, path, null);
 
