@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Corporate_Support_Scandinavia_Email</name>
+        <label>Send Corporate Support Scandinavia Email</label>
+        <locationX>110</locationX>
+        <locationY>408</locationY>
+        <actionName>Case.Corporate_Support_Scandinavia_Email_Survey</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.FCS_RelatedCase__r.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_EuroBonus_Email</name>
+        <label>Send EuroBonus Email</label>
+        <locationX>374</locationX>
+        <locationY>408</locationY>
+        <actionName>Case.EuroBonus_Email_Survey</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.FCS_RelatedCase__r.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Group_Sales_Email</name>
+        <label>Send Group Sales Email</label>
+        <locationX>638</locationX>
+        <locationY>408</locationY>
+        <actionName>Case.Group_Sales_Email_Survey</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.FCS_RelatedCase__r.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>55.0</apiVersion>
+    <decisions>
+        <name>Email_Template</name>
+        <label>Email Template</label>
+        <locationX>506</locationX>
+        <locationY>288</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Send_Corporate_Support_Scandinavia_Survey</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Survey.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CSI Corporate Support Scandinavia</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Corporate_Support_Scandinavia_Email</targetReference>
+            </connector>
+            <label>Send Corporate Support Scandinavia Survey</label>
+        </rules>
+        <rules>
+            <name>Send_EuroBonus_Survey</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Survey.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CSI EuroBonus</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_EuroBonus_Email</targetReference>
+            </connector>
+            <label>Send EuroBonus Survey</label>
+        </rules>
+        <rules>
+            <name>Send_Group_Sales_Survey</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Survey.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CSI Group Sales</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Survey.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CSI Group Sales Scandinavia</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Group_Sales_Email</targetReference>
+            </connector>
+            <label>Send Group Sales Survey</label>
+        </rules>
+    </decisions>
+    <interviewLabel>SURVEY INVITATION {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SURVEY INVITATION Process Builder</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <object>SurveyInvitation</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <name>Wait_1_hour_to_send_Email_Survey_Link</name>
+            <connector>
+                <targetReference>Email_Template</targetReference>
+            </connector>
+            <label>Wait 1 hour to send Email Survey Link</label>
+            <offsetNumber>1</offsetNumber>
+            <offsetUnit>Hours</offsetUnit>
+            <timeSource>RecordTriggerEvent</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
