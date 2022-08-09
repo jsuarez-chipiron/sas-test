@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Route_Case</name>
+        <label>Route Case</label>
+        <locationX>314</locationX>
+        <locationY>1886</locationY>
+        <actionName>RouteCaseAndSetPriority</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>casesToRoute</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>53.0</apiVersion>
     <assignments>
         <name>Assign_email_to_validate</name>
@@ -640,7 +655,10 @@
         <name>Update_Case_with_Customer_Claim_Information</name>
         <label>Update Case with Customer Claim Information</label>
         <locationX>314</locationX>
-        <locationY>2006</locationY>
+        <locationY>1766</locationY>
+        <connector>
+            <targetReference>Route_Case</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>

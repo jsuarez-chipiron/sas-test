@@ -83,6 +83,10 @@
         <apexClass>RefundRequestService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>RouteCaseAndSetPriority</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
 	<classAccesses>
         <apexClass>RefundJsonToApex</apexClass>
         <enabled>true</enabled>
