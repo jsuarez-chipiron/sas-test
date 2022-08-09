@@ -573,11 +573,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Airport__c.Is_In_European_Union__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Airport__c.Is_EU261_Applicable__c</field>
         <readable>true</readable>
     </fieldPermissions>

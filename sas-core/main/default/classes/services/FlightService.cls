@@ -10,6 +10,8 @@ public without sharing class FlightService {
 
   public class IllegalArgumentsException extends Exception {
   }
+  public class InvalidDelayException extends Exception {
+  }
 
   /**
    * Attempts to fetch the given flights from TEDS, and create necessary DB objects.
@@ -47,5 +49,60 @@ public without sharing class FlightService {
     );
 
     return newFlights;
+  }
+
+  /**
+   * Calculates the delays for different flights individually.
+   *
+   * @param flights a Flights object with the flights for which to calculate delays.
+   * @param flightIdToIrregularities a Map from Flight Id to all flight irregularities.
+   *
+   * We currently ignore special cases such as the "deicing 8+ minute"-rule.
+   * TODO: Refactor, use this in gatherinformation, batch call (somewhat janky)
+   *
+   * @return a map from flight Id to the delay in minutes SAS is responsible for.
+   *
+   * @throws InvalidDelayException If the actual delay cannot be accounted for with irregularities in the db.
+   */
+  public Map<Id, Integer> getTotalDelayInMinutesWithinSASControl(
+    Flights flights,
+    Map<Id, List<FlightIrregularities__c>> flightIdToIrregularities
+  ) {
+    Map<Id, Integer> flightIdToDelay = new Map<Id, Integer>{};
+
+    for (Flight__c flight : flights.instanceRecords) {
+      FlightIrregularities flightIrregularities = new FlightIrregularities(
+        flightIdToIrregularities.get(flight.Id)
+      );
+      List<Decimal> delayDivided = flightIrregularities.getTotalDelayInMinutesDivided();
+
+      Integer departureDelay = Integer.valueOf(delayDivided[0]);
+      Integer arrivalDelay = Integer.valueOf(delayDivided[1]);
+      Integer departureDelayWithinSASControl = Integer.valueOf(delayDivided[2]);
+      Integer arrivalDelayWithinSASControl = Integer.valueOf(delayDivided[3]);
+      Integer netDelayOnArrival = Integer.valueOf(
+        flight.Arrival_Delayed_Minutes__c
+      );
+      Integer amountOfDelayEliminated =
+        departureDelay +
+        arrivalDelay -
+        netDelayOnArrival; // Such as time made up for during flight. Todo: extend to count overlays (multiflight, requires refactor). (talk to liability about this)
+
+      // Todo: Create N/A irregularities on irregularity-creation to cover so that this never happens
+      if (amountOfDelayEliminated < 0) {
+        throw new InvalidDelayException(
+          'The actual delay is larger than the delay caused by irregularities.'
+        );
+      }
+
+      Integer netDelayWithinSASControl =
+        departureDelayWithinSASControl +
+        arrivalDelayWithinSASControl -
+        amountOfDelayEliminated;
+
+      flightIdToDelay.put(flight.Id, netDelayWithinSASControl);
+    }
+
+    return flightIdToDelay;
   }
 }
