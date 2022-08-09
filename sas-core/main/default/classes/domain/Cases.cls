@@ -410,7 +410,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
 
         update c;
 
-        // CaseService.assignPriorityAndRouteToQueue(new Set<Id>{ c.Id });
+        CaseService.assignPriorityAndRouteToQueue(new Set<Id>{ c.Id });
       }
     }
   }
