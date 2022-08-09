@@ -293,13 +293,13 @@ public without sharing class CaseService {
     Integer casesRemaining = casesToRoute.size();
     while (casesRemaining > 0) {
       // Break down into batches of <2000
-      if (casesRemaining > 1900) {
+      if (casesRemaining > 250) {
         List<Case> notAllCases = new List<Case>{};
-        for (Integer i = 0; i < 1900; i++) {
-          notAllCases.add(casesToRoute[i]);
+        for (Integer i = 0; i < 250; i++) {
+          notAllCases.add(casesToRoute[0]);
           casesToRoute.remove(0);
-          casesRemaining = casesToRoute.size();
         }
+        casesRemaining = casesToRoute.size();
         routeCases(notAllCases, queues);
       } else {
         routeCases(casesToRoute, queues);

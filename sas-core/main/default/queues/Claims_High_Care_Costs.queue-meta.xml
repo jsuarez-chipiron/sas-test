@@ -7,6 +7,7 @@
             <publicGroup>Claims_High_Care_Costs</publicGroup>
         </publicGroups>
     </queueMembers>
+    <queueRoutingConfig>High_Care_Costs</queueRoutingConfig>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
