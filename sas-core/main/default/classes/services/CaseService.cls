@@ -234,17 +234,28 @@ public without sharing class CaseService {
     uow.registerDirty(parentCase);
   }
 
+  /**
+   * Cases with Customers with Diamond and Gold EB-level should have "high" priority.
+   * Cases get routeAndPrioritized to a queue depending on their claim type.
+   *
+   * Special cases:
+   * 1. Pandion customers have their own queue.
+   * 2. Claims with high care costs have a special queue as we quickly want to
+   *    compensate customers who might have been put in a difficult economical situation.
+   */
   @future
   public static void assignPriorityAndRouteToQueue(Set<Id> caseIds) {
-    List<Case> cases = CasesSelector.newInstance().selectByIdWithClaim(caseIds); // Can't access LIA_Claim__r for some reason?
-    Map<Id, Case> claimIdToCase = new Map<Id, Case>{};
+    List<Case> cases = CasesSelector.newInstance().selectById(caseIds);
 
+    Map<Id, Case> claimIdToCase = new Map<Id, Case>{};
     for (Case c : cases) {
       if (c.LIA_Claim__c != null) {
         claimIdToCase.put(c.LIA_Claim__c, c);
       } else {
         throw new Cases.CaseException(
-          'Case cannot be routed if it is not connected to a claim.'
+          'Case ' +
+          c.CaseNumber +
+          ' cannot be routed as it is not connected to a claim.'
         );
       }
     }
@@ -264,7 +275,6 @@ public without sharing class CaseService {
       }
     }
 
-    // Don't make an expensive DB-call if there are no cases to route
     if (casesToRoute.size() == 0) {
       return;
     }
@@ -280,19 +290,9 @@ public without sharing class CaseService {
     List<Group> queues = GroupsSelector.newInstance()
       .selectGroupsByName(groupNames);
 
-    /**
-     * Cases with Customers with Diamond and Gold EB-level should have "high" priority.
-     * Cases get routeAndPrioritized to a queue depending on their claim type.
-     *
-     * Special cases:
-     * 1. Pandion customers have their own queue.
-     * 2. Claims with high care costs have a special queue as we quickly want to
-     *    compensate customers who might have been put in a difficult economical situation.
-     *
-     * (Break down the params to run in batches of <2000)
-     */
     Integer casesRemaining = casesToRoute.size();
     while (casesRemaining > 0) {
+      // Break down into batches of <2000
       if (casesRemaining > 1900) {
         List<Case> notAllCases = new List<Case>{};
         for (Integer i = 0; i < 1900; i++) {
@@ -306,12 +306,8 @@ public without sharing class CaseService {
         casesRemaining = 0;
       }
     }
-    routeCases(casesToRoute, queues);
   }
 
-  /**
-   *
-   */
   private static void routeCases(List<Case> casesToRoute, List<Group> queues) {
     Map<String, List<SObject>> params = new Map<String, List<SObject>>{
       'Cases' => casesToRoute,

@@ -18,7 +18,8 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
       Case.FCS_CaseResolution__c,
       Case.FCS_CaseResolutionDetails__c,
       Case.Proactivity__c,
-      Case.LIA_Claim__c
+      Case.LIA_Claim__c,
+      Case.OwnerId
     };
   }
 
