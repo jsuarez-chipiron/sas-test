@@ -261,11 +261,7 @@ public without sharing class CaseService {
       if (c.LIA_Claim__c != null) {
         claimIdToCase.put(c.LIA_Claim__c, c);
       } else {
-        throw new Cases.CaseException(
-          'Case ' +
-          c.CaseNumber +
-          ' cannot be routed as it is not connected to a claim.'
-        );
+        return;
       }
     }
 
