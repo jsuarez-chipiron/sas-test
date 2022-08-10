@@ -11,6 +11,7 @@ global class APIMMock implements HttpCalloutMock {
   public static final String VOUCHER_VALID_CARD_ID = '1234567890';
   public static final String VOUCHER_VALID_PNR = 'ABC123';
   public static final String PNR_FOR_WHICH_CLAIMS_EXIST = '987654';
+  public static final String PIR_FOR_WHICH_CLAIMS_EXIST = 'MIASK10139';
   public static final String PNR_FOR_WHICH_CLAIMS_DO_NOT_EXIST = '000000';
   public static final String DEFAULT_VALID_TEDS_PNR = 'TEST21';
   public static final String DEFAULT_VALID_TEDS_BOOKING_DATE = '20201126';
@@ -143,6 +144,19 @@ global class APIMMock implements HttpCalloutMock {
         // VoucherIntegrationService.createVoucher
         res.setHeader('Content-Type', 'application/json');
         res.setBody('{"link":"test.sas.se", "caseId": "12345678"}');
+      }
+    } else if (endpoint.contains('claim/claimdetails')) {
+      if (
+        endpoint.contains(PNR_FOR_WHICH_CLAIMS_EXIST) ||
+        endpoint.contains(PIR_FOR_WHICH_CLAIMS_EXIST)
+      ) {
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody(APIMMockResponses.CARE_CLAIM_DETAILS_FOUND);
+      } else if (endpoint.contains(PNR_FOR_WHICH_CLAIMS_DO_NOT_EXIST)) {
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody(APIMMockResponses.CARE_CLAIM_DETAILS_NOT_FOUND);
+      } else {
+        res.setStatusCode(404);
       }
     } else if (endpoint.contains('claim/claim')) {
       if (endpoint.contains(PNR_FOR_WHICH_CLAIMS_EXIST)) {
