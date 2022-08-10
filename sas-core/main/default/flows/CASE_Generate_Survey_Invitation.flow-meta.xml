@@ -1,114 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Send_Corporate_Support_Scandinavia_Email</name>
-        <label>Send Corporate Support Scandinavia Email</label>
-        <locationX>50</locationX>
-        <locationY>1214</locationY>
-        <actionName>Case.Corporate_Support_Scandinavia_Email_Survey</actionName>
-        <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>caseRecord.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <name>Send_EuroBonus_Email</name>
-        <label>Send EuroBonus Email</label>
-        <locationX>314</locationX>
-        <locationY>1214</locationY>
-        <actionName>Case.EuroBonus_Email_Survey</actionName>
-        <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>caseRecord.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <name>Send_Group_Sales_Email</name>
-        <label>Send Group Sales Email</label>
-        <locationX>578</locationX>
-        <locationY>1214</locationY>
-        <actionName>Case.Group_Sales_Email_Survey</actionName>
-        <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>caseRecord.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
     <apiVersion>54.0</apiVersion>
-    <decisions>
-        <name>What_Email_Survey_Invitation_template_to_send</name>
-        <label>What Email Survey Invitation template to send?</label>
-        <locationX>446</locationX>
-        <locationY>1094</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Send_Corporate_Support_Scandinavia_Survey</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>CSI_Corporate_Support_Scandinavia</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Send_Corporate_Support_Scandinavia_Email</targetReference>
-            </connector>
-            <label>Send Corporate Support Scandinavia Survey</label>
-        </rules>
-        <rules>
-            <name>Send_EuroBonus_Survey</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>CSI_EuroBonus</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Send_EuroBonus_Email</targetReference>
-            </connector>
-            <label>Send EuroBonus Survey</label>
-        </rules>
-        <rules>
-            <name>Send_Group_Sales_Survey</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>CSI_Group_Sales_Scandinavia</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>CSI_Group_Sales</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Send_Group_Sales_Email</targetReference>
-            </connector>
-            <label>Send Group Sales Survey</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>What_survey_to_send</name>
         <label>What survey to send?</label>
-        <locationX>776</locationX>
+        <locationX>578</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -333,8 +229,8 @@
             <label>CSI Group Sales Scandinavia</label>
         </rules>
     </decisions>
-    <interviewLabel>CASE Send Email Survey Invitation Link {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>CASE Send Email Survey Invitation Link</label>
+    <interviewLabel>CASE Generate Survey Invitation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CASE Generate Survey Invitation</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -357,7 +253,7 @@
     <recordCreates>
         <name>Create_Survey_Invitation</name>
         <label>Create Survey Invitation</label>
-        <locationX>776</locationX>
+        <locationX>578</locationX>
         <locationY>614</locationY>
         <connector>
             <targetReference>Get_Survey_Invitation_Link</targetReference>
@@ -404,7 +300,7 @@
     <recordLookups>
         <name>Get_SASCommunityId</name>
         <label>Get SASCommunityId</label>
-        <locationX>776</locationX>
+        <locationX>578</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -427,7 +323,7 @@
     <recordLookups>
         <name>Get_Survey_Id_for_CSI_Corporate_Support_Scandinavia</name>
         <label>Get Survey Id for CSI Corporate Support Scandinavia</label>
-        <locationX>248</locationX>
+        <locationX>50</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -450,7 +346,7 @@
     <recordLookups>
         <name>Get_Survey_Id_for_CSI_EuroBonus</name>
         <label>Get Survey Id for CSI EuroBonus</label>
-        <locationX>512</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -473,7 +369,7 @@
     <recordLookups>
         <name>Get_Survey_Id_for_CSI_Group_Sales</name>
         <label>Get Survey Id for CSI Group Sales</label>
-        <locationX>776</locationX>
+        <locationX>578</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -496,7 +392,7 @@
     <recordLookups>
         <name>Get_Survey_Id_for_CSI_Group_Sales_Scandinavia</name>
         <label>Get Survey Id for CSI Group Sales Scandinavia</label>
-        <locationX>1040</locationX>
+        <locationX>842</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -519,7 +415,7 @@
     <recordLookups>
         <name>Get_Survey_Invitation_Link</name>
         <label>Get Survey Invitation Link</label>
-        <locationX>776</locationX>
+        <locationX>578</locationX>
         <locationY>734</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -540,11 +436,8 @@
     <recordUpdates>
         <name>Update_Survey_Information_to_Case</name>
         <label>Update Survey Information to Case</label>
-        <locationX>776</locationX>
+        <locationX>578</locationX>
         <locationY>854</locationY>
-        <connector>
-            <targetReference>Delay_Sending_Email_Survey</targetReference>
-        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -568,13 +461,13 @@
         <object>Case</object>
     </recordUpdates>
     <start>
-        <locationX>650</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_SASCommunityId</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>caseRecord</name>
         <dataType>SObject</dataType>
@@ -597,38 +490,4 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
-    <waits>
-        <name>Delay_Sending_Email_Survey</name>
-        <label>Delay Sending Email Survey</label>
-        <locationX>776</locationX>
-        <locationY>974</locationY>
-        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
-        <waitEvents>
-            <name>Wait_for_1_hour</name>
-            <conditionLogic>and</conditionLogic>
-            <connector>
-                <targetReference>What_Email_Survey_Invitation_template_to_send</targetReference>
-            </connector>
-            <eventType>AlarmEvent</eventType>
-            <inputParameters>
-                <name>AlarmTime</name>
-                <value>
-                    <elementReference>$Flow.InterviewStartTime</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>TimeOffset</name>
-                <value>
-                    <numberValue>1.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>TimeOffsetUnit</name>
-                <value>
-                    <stringValue>Hours</stringValue>
-                </value>
-            </inputParameters>
-            <label>Wait for 1 hour</label>
-        </waitEvents>
-    </waits>
 </Flow>
