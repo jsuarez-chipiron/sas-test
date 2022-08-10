@@ -293,46 +293,30 @@ public without sharing class Claims extends fflib_SObjectDomain {
     }
   }
 
-  /*
-   * Returns the priority of the case depending of EB level and level of costs.
-   * Todo: this could be moved to the cases domain depending on how we rewrite the routing.
-   */
-  public List<Priority> getPriority() {
-    List<Priority> toReturn = new List<Priority>{};
+  private void fetchCAREClaims(Map<Id, LIA_Claim__c> existingRecords) {
+    if (instanceRecords.size() == 1) {
+      LIA_Claim__c updatedRecord = instanceRecords[0];
+      LIA_Claim__c existingRecord = existingRecords.get(updatedRecord.Id);
 
-    Set<Id> caseIds = new Set<Id>();
-    for (LIA_Claim__c claim : instanceRecords) {
-      caseIds.add(claim.Case__c);
-    }
-    List<Case> casesForClaims = CasesSelector.newInstance().selectById(caseIds);
+      Boolean hasChangedPNROrPIR =
+        existingRecord.Liability_PNR__c != updatedRecord.Liability_PNR__c ||
+        existingRecord.PIR__c != updatedRecord.PIR__c;
 
-    Map<Id, Case> claimIdToCase = new Map<Id, Case>{};
-
-    for (Case c : casesForClaims) {
-      claimIdToCase.put(c.LIA_Claim__c, c);
-    }
-
-    for (LIA_Claim__c claim : instanceRecords) {
-      Case c = claimIdToCase.get(claim.Id);
-      Priority casePriority = Priority.Medium;
-
-      switch on c.FCS_EBLevel__c {
-        when 'P' {
-          toReturn.add(Priority.Pandion);
-          continue;
-        }
-        when 'D', 'G' {
-          casePriority = Priority.High;
-        }
+      if (hasChangedPNROrPIR) {
+        fetchCAREClaims();
       }
-
-      if (claim.Submitted_Claim_Expenses_in_SEK__c > 25000) {
-        casePriority = Priority.HighCareCosts;
-      }
-
-      toReturn.add(casePriority);
     }
+  }
 
-    return toReturn;
+  private void fetchCAREClaims() {
+    if (instanceRecords.size() == 1) {
+      System.enqueueJob(
+        new ClaimService.FetchCAREClaimsFromEDWAsync(
+          instanceRecords[0].Liability_PNR__c,
+          instanceRecords[0].PIR__c,
+          null
+        )
+      );
+    }
   }
 }
