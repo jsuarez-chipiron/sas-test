@@ -234,6 +234,16 @@ public without sharing class CaseService {
     uow.registerDirty(parentCase);
   }
 
+  public class AssignPriorityAndRouteToQueueAsync implements Queueable, Database.AllowsCallouts {
+    private Set<Id> caseIds;
+    public AssignPriorityAndRouteToQueueAsync(Set<Id> caseIds) {
+      this.caseIds = caseIds;
+    }
+    public void execute(QueueableContext ctx) {
+      assignPriorityAndRouteToQueue(this.caseIds);
+    }
+  }
+
   /**
    * Cases with Customers with Diamond and Gold EB-level should have "high" priority.
    * Cases get routeAndPrioritized to a queue depending on their claim type.
@@ -243,7 +253,6 @@ public without sharing class CaseService {
    * 2. Claims with high care costs have a special queue as we quickly want to
    *    compensate customers who might have been put in a difficult economical situation.
    */
-  @future
   public static void assignPriorityAndRouteToQueue(Set<Id> caseIds) {
     List<Case> cases = CasesSelector.newInstance().selectById(caseIds);
 
