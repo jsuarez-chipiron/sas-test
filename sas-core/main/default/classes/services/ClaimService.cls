@@ -202,7 +202,11 @@ public without sharing class ClaimService {
     claimToCreate.Name = insertedCase.CaseNumber;
     update claimToCreate;
 
-    CaseService.assignPriorityAndRouteToQueue(new Set<Id>{ insertedCase.Id });
+    System.enqueueJob(
+      new CaseService.AssignPriorityAndRouteToQueueAsync(
+        new Set<Id>{ insertedCase.Id }
+      )
+    );
 
     return insertedCase.CaseNumber;
   }
