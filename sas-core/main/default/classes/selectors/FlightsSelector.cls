@@ -1,4 +1,5 @@
 public inherited sharing class FlightsSelector extends fflib_SObjectSelector {
+  // TODO: Make the airports lookups
   public List<Schema.SObjectField> getSObjectFieldList() {
     return new List<Schema.SObjectField>{
       Flight__c.Id,
@@ -46,7 +47,23 @@ public inherited sharing class FlightsSelector extends fflib_SObjectSelector {
 
   public List<Flight__c> selectByTEDSId(Set<String> flightIds) {
     return (List<Flight__c>) Database.query(
-      newQueryFactory().setCondition('TEDS_Identifier__c = :flightIds').toSOQL()
+      newQueryFactory()
+        .setCondition('TEDS_Identifier__c IN :flightIds')
+        .toSOQL()
+    );
+  }
+
+  public List<Flight__c> selectByFlightNumberAndDate(
+    String flightNumber,
+    Date departureDate
+  ) {
+    String parsedDate = String.valueOf(departureDate).remove('-');
+    String flightLikeId = flightNumber + '-' + parsedDate + '-___-___';
+
+    return (List<Flight__c>) Database.query(
+      newQueryFactory()
+        .setCondition('TEDS_Identifier__c LIKE :flightLikeId')
+        .toSOQL()
     );
   }
 

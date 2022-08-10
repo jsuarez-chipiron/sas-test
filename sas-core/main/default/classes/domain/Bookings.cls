@@ -24,10 +24,21 @@ public without sharing class Bookings extends fflib_SObjectDomain {
   public class BookingReferenceInvalidException extends Exception {
   }
 
+  /**
+   * Returns true if the given string is a valid booking reference.
+   *
+   * Valid booking reference is 5-6 alphanumeric characters. There are also
+   * stricter limitations, but just in case they aren't fully universal, this
+   * is a relatively lenient check.
+   */
   public static Boolean isValidBookingReference(String bookingReference) {
-    return (!String.isBlank(bookingReference) &&
-    (bookingReference.length() == 5 ||
-    bookingReference.length() == 6));
+    if (String.isBlank(bookingReference)) {
+      return false;
+    }
+
+    return Pattern.compile('[a-zA-Z0-9]{5,6}')
+      .matcher(bookingReference)
+      .matches();
   }
 
   /**
@@ -134,7 +145,10 @@ public without sharing class Bookings extends fflib_SObjectDomain {
           newPassenger.Phone__c = p.contact.phone[0].number_x;
         }
 
-        if (p.contact.email.size() > 0) {
+        if (
+          p.contact.email.size() > 0 &&
+          StringUtils.isEmailAddress(p.contact.email[0].address)
+        ) {
           newPassenger.Email__c = p.contact.email[0].address;
         }
 
@@ -273,7 +287,6 @@ public without sharing class Bookings extends fflib_SObjectDomain {
    * to have its own DML statements.
    */
   public Bookings upsertToDB() {
-    // TODO: This should be called upsert.
     List<Booking__c> bookingsToUpsert = new List<Booking__c>();
     Map<String, Flight__c> uniqueFlightsToUpsert = new Map<String, Flight__c>();
 

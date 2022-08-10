@@ -1,7 +1,6 @@
 /**
  * Data structure and parser for TEDS Flight API v2 data
  */
-
 public class TEDSFlight {
   public String id { get; set; }
   public String carrier { get; set; }
@@ -38,6 +37,8 @@ public class TEDSFlight {
     public String station { get; set; }
     public String status { get; set; }
     public Terminal terminal { get; set; }
+    public List<DelayReasons> delayReasons { get; set; }
+    public List<CancellationReasons> cancellationReasons { get; set; }
   }
 
   public class Departure {
@@ -49,6 +50,8 @@ public class TEDSFlight {
     public String station { get; set; }
     public String status { get; set; }
     public Terminal terminal { get; set; }
+    public List<DelayReasons> delayReasons { get; set; }
+    public List<CancellationReasons> cancellationReasons { get; set; }
   }
 
   public class Terminal {
@@ -59,6 +62,18 @@ public class TEDSFlight {
   public class TimeInfo {
     public String utc { get; set; }
     public String local { get; set; }
+  }
+
+  public class DelayReasons {
+    public String reasonText { get; set; }
+    public String subReasonCode { get; set; }
+    public String duration { get; set; }
+    public String reasonCode { get; set; }
+  }
+
+  public class CancellationReasons {
+    public String reasonCode { get; set; }
+    public String supplementaryInformation { get; set; }
   }
 
   private static final Map<String, String> REPLACEMENT_MAP = new Map<String, String>{

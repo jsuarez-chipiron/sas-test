@@ -639,7 +639,33 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         }
         when 'Monetary' {
           itemToCreate.Amount__c = compensationCardForClaim.Amount__c;
-          itemToCreate.Cost_Account__c = '6721'; // TODO: Set this based on compensation card type.
+
+          // There are several different voucher sybtypes issued as compensation
+          // cards. The subtype always begins with either IDB, IDG, VDB, or VDG
+          // for the different compensation situations. We can map these to the
+          // existing voucher cost accounts like this.
+          String voucherSubTypeCategory = String.isBlank(
+              compensationCardForClaim.Sub_Type__c
+            ) || compensationCardForClaim.Sub_Type__c.length() < 3
+            ? ''
+            : compensationCardForClaim.Sub_Type__c.substring(0, 3);
+          switch on voucherSubTypeCategory {
+            when 'IDB' {
+              itemToCreate.Cost_Account__c = '6721';
+            }
+            when 'VDB' {
+              itemToCreate.Cost_Account__c = '6721';
+            }
+            when 'IDG' {
+              itemToCreate.Cost_Account__c = '6722';
+            }
+            when 'VDG' {
+              itemToCreate.Cost_Account__c = '6722';
+            }
+            when else {
+              itemToCreate.Cost_Account__c = '6721';
+            }
+          }
         }
         when 'Voucher' {
           itemToCreate.Amount__c =
@@ -838,6 +864,14 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         if (!(s.EuroBonus_Points__c > 0)) {
           errorMessages.add('EuroBonus Points has to be greater than 0.');
         }
+
+        try {
+          Accounts.parseIntoEuroBonusNumber(s.EuroBonus_Number__c);
+        } catch (Accounts.IncorrectEBNumberException e) {
+          errorMessages.add(
+            'EuroBonus number is not in correct format (9 digits).'
+          );
+        }
       } else if (
         s.RecordTypeId == getRecordTypeId(Settlements.RecordType.Cheque)
       ) {
@@ -1026,12 +1060,14 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   private void normalizeFields() {
     for (Settlement__c settlement : instanceRecords) {
       if (!String.isBlank(settlement.BIC_Swift__c)) {
-        settlement.BIC_Swift__c = settlement.BIC_Swift__c.toUpperCase()
-          .replace(' ', '');
+        settlement.BIC_Swift__c = StringUtils.removeWhitespace(
+          settlement.BIC_Swift__c.toUpperCase()
+        );
       }
       if (!String.isBlank(settlement.Bank_Account_Number__c)) {
-        settlement.Bank_Account_Number__c = settlement.Bank_Account_Number__c.toUpperCase()
-          .replace(' ', '');
+        settlement.Bank_Account_Number__c = StringUtils.removeWhitespace(
+          settlement.Bank_Account_Number__c.toUpperCase()
+        );
       }
     }
   }

@@ -3,24 +3,6 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Major_Event_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>LIA_Major_Event__c</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Major_Event_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>LIA_Major_Event__c</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>SAS_Case_Record_Page</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
@@ -630,7 +612,6 @@
     <tabs>Settlement__c</tabs>
     <tabs>Proactivity__c</tabs>
     <tabs>Claim_Firm__c</tabs>
-    <tabs>LIA_Major_Event__c</tabs>
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>
     <tabs>standard-Task</tabs>
@@ -642,9 +623,6 @@
         </mappings>
         <mappings>
             <tab>LIA_Claim__c</tab>
-        </mappings>
-        <mappings>
-            <tab>LIA_Major_Event__c</tab>
         </mappings>
         <mappings>
             <tab>Proactivity__c</tab>

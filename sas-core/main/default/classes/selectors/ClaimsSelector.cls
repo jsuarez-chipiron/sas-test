@@ -2,6 +2,8 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
   public List<Schema.SObjectField> getSObjectFieldList() {
     return new List<Schema.SObjectField>{
       LIA_Claim__c.Id,
+      LIA_Claim__c.Name,
+      LIA_Claim__c.CreatedDate,
       LIA_Claim__c.Address_line_1__c,
       LIA_Claim__c.Address_line_2__c,
       LIA_Claim__c.Bank_Account_Holder_Name__c,
@@ -33,7 +35,8 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       LIA_Claim__c.Postal_Code__c,
       LIA_Claim__c.Preferred_Compensation_Method__c,
       LIA_Claim__c.RecordTypeId,
-      LIA_Claim__c.Type_of_Customer__c
+      LIA_Claim__c.Type_of_Customer__c,
+      LIA_Claim__c.Submitted_Claim_Expenses_in_SEK__c
     };
   }
 
@@ -47,9 +50,6 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     );
   }
 
-  private static ProactivitiesSelector proactivities = ProactivitiesSelector.newInstance();
-  private static CustomersSelector customers = CustomersSelector.newInstance();
-
   public List<LIA_Claim__c> selectById(Set<Id> ids) {
     return (List<LIA_Claim__c>) selectSObjectsById(ids);
   }
@@ -60,6 +60,74 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       .addQueryFactorySubselect(claimsQF);
 
     return (List<LIA_Claim__c>) Database.query(claimsQF.toSOQL());
+  }
+
+  public class insufficientFlightInfoException extends Exception {
+  }
+
+  public List<LIA_Claim__c> selectDuplicatesById(Id claimId) {
+    LIA_Claim__c claim = selectByIdWithCustomers(new Set<Id>{ claimId })[0];
+
+    // This names-solution is not fantastic. It is oversensitive and is likely to collide on some "Svenssons" or "Smiths".
+    Set<String> names = new Set<String>{};
+
+    if (claim.Customers__r != null) {
+      for (Customer__c customer : claim.Customers__r) {
+        if (!String.isBlank(customer.Name)) {
+          names.add(customer.Name);
+        }
+        if (
+          !String.isBlank(customer.First_Name__c) &&
+          !String.isBlank(customer.Last_Name__c)
+        ) {
+          names.add(customer.First_Name__c + ' ' + customer.Last_Name__c);
+        }
+      }
+    }
+
+    String bookingReference = claim.Liability_PNR__c;
+    Date flightDate = claim.Flight_Date__c;
+    String flightNumber = claim.Flight_Number__c;
+    String pirNumber = claim.PIR__c;
+
+    String whereQuery = '';
+
+    whereQuery = buildQuery(
+      whereQuery,
+      'Liability_PNR__c = :bookingReference',
+      !String.isBlank(bookingReference)
+    );
+
+    whereQuery = buildQuery(
+      whereQuery,
+      'PIR__c = :pirNumber',
+      !String.isBlank(pirNumber)
+    );
+
+    if (String.isBlank(flightNumber) == null || flightDate == null) {
+      throw new insufficientFlightInfoException(
+        'Claim does not have sufficient information about the flight.'
+      );
+    }
+
+    // Passenger name and flightId matches
+    // Can this be done in one query? Would require two subqueries and comparing one list against another.
+    List<Customer__c> allCustomersWithSameNames = CustomersSelector.newInstance()
+      .selectByName(names);
+    List<Id> claimsWithPassengersWithSameNames = new List<Id>{};
+    for (Customer__c c : allCustomersWithSameNames) {
+      claimsWithPassengersWithSameNames.add(c.Claim__c);
+    }
+
+    whereQuery = buildQuery(
+      whereQuery,
+      '((Flight_Number__c = :flightNumber AND Flight_Date__c = :flightDate) AND (Id IN :claimsWithPassengersWithSameNames))',
+      true
+    );
+
+    return (List<LIA_Claim__c>) Database.query(
+      newQueryFactory().setCondition(whereQuery).toSOQL()
+    );
   }
 
   public List<LIA_Claim__c> selectByIdWithSettlements(Set<Id> ids) {
@@ -80,6 +148,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
   }
 
   public List<LIA_Claim__c> selectByProactivityId(Id proactivityId) {
+    ProactivitiesSelector proactivities = ProactivitiesSelector.newInstance();
     Proactivity__c proactivity = proactivities.selectById(
       new Set<Id>{ proactivityId }
     )[0];
@@ -89,7 +158,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
 
     if (!String.isBlank(proactivity.Flight_Id__c)) {
       flightNumber = proactivity.Flight_Id__c.substringBefore('-');
-      flightDate = Date.parse(proactivity.Flight_Id__c.substringAfter('-'));
+      flightDate = DateUtils.parseDateFromFlightId(proactivity.Flight_Id__c);
     }
 
     String bankAccountNumber = proactivity.Bank_Account_Number__c;
@@ -101,48 +170,47 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     String pirNumber = proactivity.PIR__c;
 
     fflib_QueryFactory query = newQueryFactory();
+    Map<Schema.SObjectField, String> proactivityFieldToQuery = new Map<Schema.SObjectField, String>{
+      Proactivity__c.Bank_Account_Number__c => 'Bank_Account_Number__c = :bankAccountNumber',
+      Proactivity__c.Booking_Reference__c => 'Liability_PNR__c = :bookingReference',
+      Proactivity__c.Email__c => 'Contact_Email__c = :email',
+      Proactivity__c.EuroBonus_Number__c => 'EuroBonus_Number__c = :euroBonusNumber',
+      Proactivity__c.Phone_Number__c => 'Phone_Number__c = :phoneNumber',
+      Proactivity__c.PIR__c => 'PIR__c = :pirNumber'
+    };
+
+    // Check directly linked cases with claims
+    Set<Id> directlyLinkedCasesIds = new Set<Id>{};
+    CasesSelector cases = CasesSelector.newInstance();
+    List<Case> directlyLinkedCases = cases.selectByDirectlyLinkedProactivityId(
+      new Set<Id>{ proactivityId }
+    );
+    for (Case c : directlyLinkedCases) {
+      directlyLinkedCasesIds.add(c.Id);
+    }
+
     String whereQuery = '';
+    whereQuery = buildQuery(
+      whereQuery,
+      'Case__c IN :directlyLinkedCasesIds',
+      directlyLinkedCasesIds.size() > 0
+    );
 
-    if (!String.isBlank(bankAccountNumber)) {
-      if (String.isBlank(whereQuery)) {
-        whereQuery += 'Bank_Account_Number__c = :bankAccountNumber';
-      } else {
-        whereQuery += ' OR Bank_Account_Number__c = :bankAccountNumber';
-      }
+    for (Schema.SObjectField field : proactivityFieldToQuery.keySet()) {
+      whereQuery = buildQuery(
+        whereQuery,
+        proactivityFieldToQuery.get(field),
+        !String.isBlank((String) proactivity.get(field))
+      );
     }
 
-    if (!String.isBlank(bookingReference)) {
-      if (String.isBlank(whereQuery)) {
-        whereQuery += 'Liability_PNR__c = :bookingReference';
-      } else {
-        whereQuery += ' OR Liability_PNR__c = :bookingReference';
-      }
-    }
+    whereQuery = buildQuery(
+      whereQuery,
+      '(Flight_Number__c = :flightNumber AND Flight_Date__c = :flightDate)',
+      !String.isBlank(flightNumber) && flightDate != null
+    );
 
-    if (!String.isBlank(email)) {
-      if (String.isBlank(whereQuery)) {
-        whereQuery += 'Contact_Email__c = :email';
-      } else {
-        whereQuery += ' OR Contact_Email__c = :email';
-      }
-    }
-
-    if (!String.isBlank(euroBonusNumber)) {
-      if (String.isBlank(whereQuery)) {
-        whereQuery += 'EuroBonus_Number__c = :euroBonusNumber';
-      } else {
-        whereQuery += ' OR EuroBonus_Number__c = :euroBonusNumber';
-      }
-    }
-
-    if (!String.isBlank(flightNumber) && flightDate != null) {
-      if (String.isBlank(whereQuery)) {
-        whereQuery += 'Flight_Number__c = :flightNumber AND Flight_Date__c = :flightDate';
-      } else {
-        whereQuery += ' OR Flight_Number__c = :flightNumber AND Flight_Date__c = :flightDate';
-      }
-    }
-
+    CustomersSelector customers = CustomersSelector.newInstance();
     if (!String.isBlank(passengerName)) {
       List<Customer__c> matchingCustomers = customers.selectByName(
         new Set<String>{ passengerName }
@@ -152,33 +220,96 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
         for (Customer__c c : matchingCustomers) {
           claimIdsFromCustomers.add(c.Claim__c);
         }
-        if (String.isBlank(whereQuery)) {
-          whereQuery += 'Id IN :claimIdsFromCustomers';
-        } else {
-          whereQuery += ' OR Id IN :claimIdsFromCustomers';
-        }
+
+        whereQuery = buildQuery(
+          whereQuery,
+          'Id IN :claimIdsFromCustomers',
+          true
+        );
       }
     }
 
-    if (!String.isBlank(phoneNumber)) {
-      if (String.isBlank(whereQuery)) {
-        whereQuery += 'Phone_Number__c = :phoneNumber';
+    List<LIA_Claim__c> flightClaimList = new List<LIA_Claim__c>();
+
+    Boolean matchArriving = proactivity.Match_Flights_Arriving_To_Airport__c;
+    Boolean matchDeparting = proactivity.Match_Flights_Departing_Airport__c;
+    String airport = proactivity.Airport__c;
+    Date fromDate = proactivity.From_Date__c;
+    Date toDate = proactivity.To_Date__c;
+    if (toDate != null) {
+      toDate = toDate.addDays(1); // To handle comparison between Date and Datetime. 22/02/2022 03:00 > 22/02/2022 (00:00) but 22/02/2022 03:00 < 23/02/2022.
+    }
+    String cancellationCode = proactivity.Cancellation_Code__c;
+    List<Id> bookingList = new List<Id>();
+    List<Id> flightIdsWithMatchingCancellationCode = new List<Id>();
+    List<Segment__c> allSegments = new List<Segment__c>();
+    String arrivalQuery = '(Flight__r.Scheduled_Arrival_Time__c >= :fromDate AND Flight__r.Scheduled_Arrival_Time__c <= :toDate AND Flight__r.Arrival_Airport__c = :airport)';
+    String departingQuery = '(Flight__r.Scheduled_Departure_Time__c >= :fromDate AND Flight__r.Scheduled_Departure_Time__c <= :toDate AND Flight__r.Departure_Airport__c = :airport)';
+    String advancedMatcherQuery = '';
+
+    if (matchArriving && matchDeparting) {
+      advancedMatcherQuery += arrivalQuery + ' OR ' + departingQuery;
+    } else if (matchArriving) {
+      advancedMatcherQuery = arrivalQuery;
+    } else if (matchDeparting) {
+      advancedMatcherQuery = departingQuery;
+    }
+
+    if (cancellationCode != null) {
+      List<FlightIrregularities__c> irregularityList = [
+        SELECT Flight__c
+        FROM FlightIrregularities__c
+        WHERE Code__c = :cancellationCode
+      ];
+
+      for (FlightIrregularities__c fi : irregularityList) {
+        flightIdsWithMatchingCancellationCode.add(fi.Flight__c);
+      }
+      if (advancedMatcherQuery.length() > 0) {
+        advancedMatcherQuery =
+          '(' +
+          advancedMatcherQuery +
+          ') AND Flight__r.Id IN :flightIdsWithMatchingCancellationCode';
       } else {
-        whereQuery += ' OR Phone_Number__c = :phoneNumber';
+        advancedMatcherQuery = 'Flight__r.Id IN :flightIdsWithMatchingCancellationCode';
       }
     }
 
-    if (!String.isBlank(pirNumber)) {
-      if (String.isBlank(whereQuery)) {
-        whereQuery += 'PIR__c = :pirNumber';
-      } else {
-        whereQuery += ' OR PIR__c = :pirNumber';
-      }
+    if (!String.isBlank(advancedMatcherQuery)) {
+      allSegments = Database.query(
+        'SELECT Booking__r.Id FROM Segment__c WHERE ' + advancedMatcherQuery
+      );
     }
 
-    return (List<LIA_Claim__c>) Database.query(
+    for (Segment__c s : allSegments) {
+      bookingList.add(s.Booking__c);
+    }
+
+    flightClaimList = [
+      SELECT Id, Case__c
+      FROM LIA_Claim__c
+      WHERE
+        Case__c IN (
+          SELECT Case__c
+          FROM CaseToBooking__c
+          WHERE Booking__r.Id IN :bookingList
+        )
+    ];
+
+    if (whereQuery.length() == 0) {
+      if (flightClaimList.size() != 0) {
+        return flightClaimList;
+      }
+      return new List<LIA_Claim__c>{};
+    }
+
+    List<LIA_Claim__c> results = (List<LIA_Claim__c>) Database.query(
       newQueryFactory().setCondition(whereQuery).toSOQL()
     );
+
+    results.addAll(flightClaimList);
+
+    return results;
   }
 
   public List<LIA_Claim__c> selectSimilarClaimsByCaseId(Id caseId) {
@@ -204,10 +335,16 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     String whereQuery = '';
 
     if (!String.isBlank(bankAccountNumber)) {
-      if (String.isBlank(whereQuery)) {
-        whereQuery += 'Bank_Account_Number__c = :bankAccountNumber';
-      } else {
-        whereQuery += ' OR Bank_Account_Number__c = :bankAccountNumber';
+      //Exclude bank account number matches from appearing in similar cases if the account belongs
+      // to a claim firm not slow down page load when there are a lot of matches
+      List<Bank_Account_Info__c> claimFirmBankAccounts = BankAccountInfosSelector.newInstance()
+        .selectByBankAccountNumber(new Set<String>{ bankAccountNumber });
+      if (claimFirmBankAccounts.size() == 0) {
+        if (String.isBlank(whereQuery)) {
+          whereQuery += 'Bank_Account_Number__c = :bankAccountNumber';
+        } else {
+          whereQuery += ' OR Bank_Account_Number__c = :bankAccountNumber';
+        }
       }
     }
 
@@ -282,5 +419,20 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     return (List<LIA_Claim__c>) Database.query(
       newQueryFactory().setCondition(whereQuery).toSOQL()
     );
+  }
+
+  private static String buildQuery(
+    String whereQuery,
+    String queryToAdd,
+    Boolean shouldBeAdded
+  ) {
+    if (shouldBeAdded) {
+      if (String.isBlank(whereQuery)) {
+        whereQuery += queryToAdd;
+      } else {
+        whereQuery += ' OR ' + queryToAdd;
+      }
+    }
+    return whereQuery;
   }
 }

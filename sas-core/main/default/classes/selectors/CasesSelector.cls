@@ -16,7 +16,10 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
       Case.Department__c,
       Case.FCS_CaseType__c,
       Case.FCS_CaseResolution__c,
-      Case.FCS_CaseResolutionDetails__c
+      Case.FCS_CaseResolutionDetails__c,
+      Case.Proactivity__c,
+      Case.LIA_Claim__c,
+      Case.OwnerId
     };
   }
 
@@ -52,12 +55,26 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
     );
   }
 
+  public List<Case> selectByDirectlyLinkedProactivityId(
+    Set<Id> proactivityIds
+  ) {
+    fflib_QueryFactory directlyLinkedQF = newQueryFactory()
+      .setCondition('Proactivity__c IN :proactivityIds');
+
+    return (List<Case>) Database.query(directlyLinkedQF.toSOQL());
+  }
+
   public List<Case> selectByProactivityId(Id proactivityId) {
     List<LIA_Claim__c> claimsByProactivity = claims.selectByProactivityId(
       proactivityId
     );
 
-    if (claimsByProactivity.size() == 0) {
+    // Check directly linked cases with no claims.
+    List<Case> directlyLinkedCases = selectByDirectlyLinkedProactivityId(
+      new Set<Id>{ proactivityId }
+    );
+
+    if (claimsByProactivity.size() == 0 && directlyLinkedCases.size() == 0) {
       return new List<Case>();
     }
 
@@ -66,7 +83,14 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
       casesToFind.add(claim.Case__c);
     }
 
-    return selectById(casesToFind);
+    // Handle duplicate values (edgecase)
+    Set<Case> resultNoDuplicates = new Set<Case>();
+    List<Case> result = new List<Case>{};
+    resultNoDuplicates.addAll(selectById(casesToFind));
+    resultNoDuplicates.addAll(directlyLinkedCases);
+    result.addAll(resultNoDuplicates);
+
+    return result;
   }
 
   public List<Case> selectByAccountId(Set<Id> accountIds) {

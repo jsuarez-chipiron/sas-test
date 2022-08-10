@@ -117,7 +117,7 @@ public without sharing class TEDSIntegrationService {
       if (reference != null) {
         if (!Bookings.isValidBookingReference(reference)) {
           throw new APIMIntegrationService.IllegalArgumentsException(
-            'Booking reference must be 5 or 6 characters'
+            'Booking reference must be 5 or 6 alphanumeric characters'
           );
         }
         queryParamString = addFieldToQueryParams(
@@ -222,6 +222,35 @@ public without sharing class TEDSIntegrationService {
     }
   }
 
+  public class AirportsQuery extends APIMIntegrationService.BaseQuery {
+    public Set<String> ids { get; set; }
+
+    public override String toQueryParamString() {
+      String queryParamString = '';
+
+      if (ids != null && !ids.isEmpty()) {
+        if (ids.size() > 10) {
+          throw new APIMIntegrationService.IllegalArgumentsException(
+            'We can only search for maximum of 10 airports at a time.'
+          );
+        }
+        queryParamString = addFieldToQueryParams(
+          queryParamString,
+          'ids',
+          String.join(new List<String>(ids), ',')
+        );
+      }
+
+      if (queryParamString.length() == 0) {
+        throw new APIMIntegrationService.IllegalArgumentsException(
+          'Cannot query airports with an empty query.'
+        );
+      }
+
+      return queryParamString;
+    }
+  }
+
   /** Fetches a single booking from TEDS based on the booking identifier.
    *
    * @param bookingIdentifier Full booking identifier in format {PNR}-{creationDate}. E.g. ABC123-20220506
@@ -266,6 +295,18 @@ public without sharing class TEDSIntegrationService {
     HttpResponse response = makeRequest('/teds-flight/flights', query);
 
     return TEDSFlight.parseArray(response.getBody());
+  }
+
+  /** Fetches all airports from TEDS which match the provided query.
+   *
+   * @param query Query to execute.
+   *
+   * @return List of the found airports, or an empty list of none were found.
+   */
+  public List<TEDSAirport> fetchAirportsByQuery(AirportsQuery query) {
+    // TODO: Map<String, String>
+    HttpResponse response = makeRequest('/teds-airport/airports', query);
+    return TEDSAirport.parseArray(response.getBody());
   }
 
   /**

@@ -4352,14 +4352,126 @@
     <picklistValues>
         <picklist>Feedback_Category__c</picklist>
         <values>
+            <fullName>Airport experience</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight disruptions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight experience</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel extras</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Feedback_Type__c</picklist>
         <values>
+            <fullName>Baggage damaged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage delayed%2Flost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cabin environment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Denied boarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Downgrading</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extra baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight cancellation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gate issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In-flight meal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In-flight service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lounge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meals%2FDrinks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missed connection</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prepaid seat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regression</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special assistance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel document control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WiFi</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -4567,6 +4679,26 @@
         </values>
         <values>
             <fullName>Email - Corporate Support Scandinavia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Customer Claim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Customer Claim DBC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Customer Claim Firms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Customer Claim Regression</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Customer Claim Scanning</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4834,6 +4966,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Refund OC External</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Refund Operating Center</fullName>
             <default>false</default>
         </values>
@@ -4906,6 +5042,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Special Sales NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Star Alliance Request</fullName>
             <default>false</default>
         </values>
@@ -4930,6 +5070,38 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Form - Claims DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Claims International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Claims NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Claims SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Compensation Card DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Compensation Card International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Compensation Card NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Compensation Card SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Form - Death Certificate DK</fullName>
             <default>false</default>
         </values>
@@ -4943,6 +5115,38 @@
         </values>
         <values>
             <fullName>Form - Death Certificate SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Feedback DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Feedback International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Feedback NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Feedback SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Flight Delay Certificate DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Flight Delay Certificate International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Flight Delay Certificate NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Flight Delay Certificate SE</fullName>
             <default>false</default>
         </values>
         <values>

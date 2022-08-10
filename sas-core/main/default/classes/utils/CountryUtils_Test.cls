@@ -1,5 +1,13 @@
 @IsTest
 private class CountryUtils_Test {
+  public static Set<String> airportIdsFromTEDS = new Set<String>{
+    'ARN',
+    'HEL',
+    'ITM',
+    'RUN',
+    'SYD'
+  };
+
   @IsTest
   static void shouldReplaceCountryCode() {
     // Given
@@ -50,7 +58,7 @@ private class CountryUtils_Test {
     // When
     for (String code : countryFormCountryCodes) {
       convertedCountryCodes.add(
-        CountryUtils.formCountryCodeToIBANCountryCode(code)
+        CountryUtils.countryCodeToIBANCountryCode(code)
       );
     }
 
@@ -95,6 +103,99 @@ private class CountryUtils_Test {
         countries[i],
         'Country name not gotten correctly'
       );
+    }
+  }
+
+  @IsTest
+  static void shouldAssertIfInEUOrNorwaySwitzerlandIceland() {
+    // Given
+    List<String> countryCodes = new List<String>{
+      'GF',
+      'SE',
+      'MQ',
+      'JE',
+      'US',
+      'NOTACODE'
+    };
+    List<Boolean> isInEuCorrect = new List<Boolean>{
+      true,
+      true,
+      true,
+      false,
+      false,
+      false
+    };
+    List<Boolean> isInEu = new List<Boolean>{};
+
+    // When
+    for (String code : countryCodes) {
+      isInEu.add(CountryUtils.isInEUOrNorwaySwitzerlandIceland(code));
+    }
+
+    // Then
+    for (Integer i = 0; i < isInEu.size(); i++) {
+      System.assertEquals(
+        isInEuCorrect[i],
+        isInEu[i],
+        'Should determine if country is in the EU or not.'
+      );
+    }
+  }
+
+  @isTest
+  static void shouldCalculateDistanceBetweenAirports() {
+    // Given
+    Test.setMock(HttpCalloutMock.class, new APIMMock()); // Needed for TEDSbooking-fetches caused by trigger
+
+    // When
+    Test.startTest();
+    AirportService.newInstance()
+      .fetchAirportsByReference(airportIdsFromTEDS, true);
+    Test.stopTest();
+
+    // Then
+    List<Airport__c> airportsFromDB = AirportsSelector.newInstance()
+      .selectByTEDSId(airportIdsFromTEDS);
+
+    Airport__c ARN;
+    for (Airport__c a : airportsFromDB) {
+      if (a.TEDS_Identifier__c == 'ARN') {
+        ARN = a;
+        break;
+      }
+    }
+
+    for (Airport__c a : airportsFromDB) {
+      switch on a.TEDS_Identifier__c {
+        when 'HEL' {
+          System.assertEquals(
+            398569,
+            CountryUtils.distanceBetweenAirportsInMeters(ARN, a),
+            'Should calculate the distance between ARN and HEL correctly.'
+          );
+        }
+        when 'ITM' {
+          System.assertEquals(
+            8062362,
+            CountryUtils.distanceBetweenAirportsInMeters(ARN, a),
+            'Should calculate the distance between ARN and ITM correctly.'
+          );
+        }
+        when 'RUN' {
+          System.assertEquals(
+            9584413,
+            CountryUtils.distanceBetweenAirportsInMeters(ARN, a),
+            'Should calculate the distance between RUN and ARN correctly.'
+          );
+        }
+        when 'SYD' {
+          System.assertEquals(
+            15597941,
+            CountryUtils.distanceBetweenAirportsInMeters(ARN, a),
+            'Should calculate the distance between SYD and ARN correctly.'
+          );
+        }
+      }
     }
   }
 }

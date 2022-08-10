@@ -6,6 +6,7 @@ public without sharing class Flights extends fflib_SObjectDomain {
   }
 
   public List<Flight__c> instanceRecords;
+  private FlightIrregularities flightIrregularities;
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
@@ -70,11 +71,17 @@ public without sharing class Flights extends fflib_SObjectDomain {
    * Parses flight data in TEDSFlight format into Flight__c objects and prepares them for DB insertion.
    *
    * @param flightData List of TEDSFlight objects containing flights to create.
+   * @param shouldUpsertToDB Boolean which asserts whether the records should be upserted or not
    *
    * @return The list of created Flight__c objects.
    */
-  public static Flights createFromTEDSData(List<TEDSFlight> flightData) {
+  public static Flights createFromTEDSData(
+    List<TEDSFlight> flightData,
+    Boolean shouldUpsertToDB
+  ) {
     Map<String, Flight__c> flightsProcessed = new Map<String, Flight__c>();
+    Map<String, TEDSFlight.Arrival> TEDSIdToTEDSArrival = new Map<String, TEDSFlight.Arrival>{};
+    Map<String, TEDSFlight.Departure> TEDSIdToTEDSDeparture = new Map<String, TEDSFlight.Departure>{};
 
     // Loop through each booking and create all sub objects.
     for (TEDSFlight flight : flightData) {
@@ -82,6 +89,10 @@ public without sharing class Flights extends fflib_SObjectDomain {
 
       // Create flights
       String flightId = flight.id.trim().toUpperCase();
+
+      // Save irregularity data for batch insert
+      TEDSIdToTEDSArrival.put(flightId, flight.arrival);
+      TEDSIdToTEDSDeparture.put(flightId, flight.departure);
 
       if (!flightsProcessed.containsKey(flightId)) {
         Datetime scheduledArrivalDate = Datetime.valueOf(
@@ -188,7 +199,20 @@ public without sharing class Flights extends fflib_SObjectDomain {
       }
     }
 
-    return Flights.newInstance(flightsProcessed.values());
+    Flights newFlights = Flights.newInstance(flightsProcessed.values());
+    List<String> TEDSIds = new List<String>(flightsProcessed.keySet());
+
+    newFlights.flightIrregularities = FlightIrregularities.createFromTEDSData(
+      TEDSIds,
+      TEDSIdToTEDSArrival,
+      TEDSIdToTEDSDeparture
+    );
+
+    if (shouldUpsertToDB) {
+      newFlights.upsertToDB();
+    }
+
+    return newFlights;
   }
 
   public Flights upsertToDB() {
@@ -200,8 +224,14 @@ public without sharing class Flights extends fflib_SObjectDomain {
       }
     }
 
+    if (flightIrregularities.instanceRecords.size() > 0) {
+      upsert flightIrregularities.addFlightReferences(instanceRecords)
+        .instanceRecords;
+    }
+
     return this;
   }
+
   /* Determine whether the flights are delayed/cancelled or not
    *
    * @return A map from flight id to whether that flight is delayed/cancelled or not
@@ -232,13 +262,10 @@ public without sharing class Flights extends fflib_SObjectDomain {
     Pattern validFlightNumberFormat = Pattern.compile(
       '^([A-Z]\\w|\\w[A-Z])(\\d{1,4})$'
     );
-    Boolean validIATAFlightNumber = isValidIATAFlightNumber(
-      toNormalize
-    );
+    Boolean validIATAFlightNumber = isValidIATAFlightNumber(toNormalize);
     if (validIATAFlightNumber) {
       String airlineCode = toNormalize.substring(0, 2);
-      String flightNumber = toNormalize
-        .substring(2, toNormalize.length());
+      String flightNumber = toNormalize.substring(2, toNormalize.length());
       toReturn = airlineCode + flightNumber.leftPad(4, '0');
     }
     if (validTEDSFormat.matcher(toReturn).matches()) {

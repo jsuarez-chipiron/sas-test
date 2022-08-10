@@ -233,4 +233,88 @@ public without sharing class CaseService {
     parentCase.Created_Support_Case__c = true;
     uow.registerDirty(parentCase);
   }
+
+  /**
+   * Cases with Customers with Diamond and Gold EB-level should have "high" priority.
+   * Cases get routeAndPrioritized to a queue depending on their claim type.
+   *
+   * Special cases:
+   * 1. Pandion customers have their own queue.
+   * 2. Claims with high care costs have a special queue as we quickly want to
+   *    compensate customers who might have been put in a difficult economical situation.
+   */
+  @future
+  public static void assignPriorityAndRouteToQueue(Set<Id> caseIds) {
+    List<Case> cases = CasesSelector.newInstance().selectById(caseIds);
+
+    Map<Id, Case> claimIdToCase = new Map<Id, Case>{};
+    for (Case c : cases) {
+      if (c.LIA_Claim__c != null) {
+        claimIdToCase.put(c.LIA_Claim__c, c);
+      } else {
+        throw new Cases.CaseException(
+          'Case ' +
+          c.CaseNumber +
+          ' cannot be routed as it is not connected to a claim.'
+        );
+      }
+    }
+
+    List<LIA_Claim__c> caseClaims = ClaimsSelector.newInstance()
+      .selectByIdWithCustomers(claimIdToCase.keySet());
+
+    List<Case> casesToRoute = new List<Case>{};
+    for (LIA_Claim__c claim : caseClaims) {
+      Case c = claimIdToCase.get(claim.Id);
+      if (
+        claim.RecordTypeId ==
+        Claims.getRecordTypeId(Claims.RecordType.CustomerClaim) &&
+        String.valueOf(c.OwnerId).substring(0, 3) == '00G'
+      ) {
+        casesToRoute.add(c);
+      }
+    }
+
+    if (casesToRoute.size() == 0) {
+      return;
+    }
+
+    Set<String> groupNames = new Set<String>{
+      'Claims - High Priority',
+      'Claims - High Care Costs',
+      'Claims - Flight Disruptions',
+      'Claims - Baggage',
+      'Claims - Other'
+    };
+
+    List<Group> queues = GroupsSelector.newInstance()
+      .selectGroupsByName(groupNames);
+
+    Integer casesRemaining = casesToRoute.size();
+    while (casesRemaining > 0) {
+      if (casesRemaining > 250) {
+        List<Case> notAllCases = new List<Case>{};
+        for (Integer i = 0; i < 250; i++) {
+          notAllCases.add(casesToRoute[0]);
+          casesToRoute.remove(0);
+        }
+        casesRemaining = casesToRoute.size();
+        routeCases(notAllCases, queues);
+      } else {
+        routeCases(casesToRoute, queues);
+        casesRemaining = 0;
+      }
+    }
+  }
+
+  private static void routeCases(List<Case> casesToRoute, List<Group> queues) {
+    Map<String, List<SObject>> params = new Map<String, List<SObject>>{
+      'Cases' => casesToRoute,
+      'Groups' => queues
+    };
+    Flow.Interview.CASE_Route_And_Set_Priority routeAndPrioritize = new Flow.Interview.CASE_Route_And_Set_Priority(
+      params
+    );
+    routeAndPrioritize.start();
+  }
 }

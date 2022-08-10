@@ -10,7 +10,15 @@ public class FCS_MassRedirection {
     List<Requestcase> requestCases
   ) {
     List<Case> lstCses = [
-      SELECT Id, Department__c, Team__c, IsRedirected__c, RecordTypeId, OwnerId
+      SELECT
+        Id,
+        Department__c,
+        Team__c,
+        IsRedirected__c,
+        RecordTypeId,
+        OwnerId,
+        Status,
+        CaseNumber
       FROM Case
       WHERE Id = :requestCases[0].caseIds
     ];

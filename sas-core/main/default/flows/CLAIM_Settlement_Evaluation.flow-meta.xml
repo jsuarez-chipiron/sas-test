@@ -268,7 +268,7 @@
         <expression>IF({!Get_SAS_AP_User.Id} &lt;&gt; NULL, {!Get_SAS_AP_User.Id}, {!$User.Id})</expression>
     </formulas>
     <interviewLabel>CLAIM {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>CLAIM Settlement Evaluation</label>
+    <label>CLAIM Settlement Evaluation High Limit</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

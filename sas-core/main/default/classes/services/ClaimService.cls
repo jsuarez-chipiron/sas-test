@@ -195,19 +195,14 @@ public without sharing class ClaimService {
 
     database.insert(caseToCreate, DMLOptions);
 
-    Case insertedCase = [
-      SELECT Id, CaseNumber
-      FROM Case
-      WHERE Id = :caseToCreate.Id
-    ];
+    Case insertedCase = CasesSelector.newInstance()
+      .selectById(new Set<Id>{ caseToCreate.Id })[0];
 
     claimToCreate.Case__c = insertedCase.Id;
     claimToCreate.Name = insertedCase.CaseNumber;
     update claimToCreate;
 
-    // HOTFIX: Run the routing flow again, TODO: Code a more permanent soultion
-    Claims claims = new Claims(new List<LIA_Claim__c>{ claimToCreate });
-    claims.assignToQueueUsingFlow();
+    CaseService.assignPriorityAndRouteToQueue(new Set<Id>{ insertedCase.Id });
 
     return insertedCase.CaseNumber;
   }
@@ -219,6 +214,18 @@ public without sharing class ClaimService {
     );
 
     insert claimToCreate;
+
+    Customer__c customerToCreate = new Customer__c(
+      Claim__c = claimToCreate.Id,
+      First_Name__c = form.formData.firstName == null
+        ? ' '
+        : form.formData.firstName,
+      Last_Name__c = form.formData.lastName == null
+        ? ' '
+        : form.formData.lastName
+    );
+
+    insert customerToCreate;
 
     Case caseToCreate = createCaseRecord(form, claimToCreate);
     // Auto-response emails are not triggered by default for cases created
@@ -338,9 +345,9 @@ public without sharing class ClaimService {
         // US bank account numbers should be sent to Racer as {accountNumber}ABA{routingNumber}
         // Other countries have only an account number.
         claimToCreate.Bank_Account_Number__c =
-          form.formData.bankAccountNumber.replace(' ', '') +
+          StringUtils.removeWhitespace(form.formData.bankAccountNumber) +
           'ABA' +
-          form.formData.bankRoutingNumber.replace(' ', '');
+          StringUtils.removeWhitespace(form.formData.bankRoutingNumber);
       } else {
         claimToCreate.Bank_Account_Number__c = form.formData.bankAccountNumber.replace(
           ' ',

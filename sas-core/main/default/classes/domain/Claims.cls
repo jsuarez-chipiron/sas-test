@@ -68,7 +68,6 @@ public without sharing class Claims extends fflib_SObjectDomain {
 
   public override void onAfterInsert() {
     checkIfExistsInCARE();
-    assignToQueueUsingFlow();
     updateParentCaseBookings();
   }
 
@@ -185,23 +184,6 @@ public without sharing class Claims extends fflib_SObjectDomain {
     return newInstance(new List<LIA_Claim__c>{ newClaim });
   }
 
-  public void assignToQueueUsingFlow() {
-    //Assign one Claim at a time
-    if (instanceRecords.size() > 1) {
-      return;
-    }
-    LIA_Claim__c lc = instanceRecords[0];
-    if (lc.RecordTypeId == getRecordTypeId(RecordType.CustomerClaim)) {
-      Map<String, Object> inputs = new Map<String, Object>();
-      inputs.put('recordId', lc.Id);
-
-      Flow.Interview.CLAIM_Route_Case_to_Queue claimRoutingFlow = new Flow.Interview.CLAIM_Route_Case_to_Queue(
-        inputs
-      );
-      claimRoutingFlow.start();
-    }
-  }
-
   private void checkIfExistsInCARE(Map<Id, LIA_Claim__c> existingRecords) {
     for (LIA_Claim__c claim : instanceRecords) {
       if (claim.Liability_PNR__c != null) {
@@ -287,19 +269,24 @@ public without sharing class Claims extends fflib_SObjectDomain {
   private void normalizeFields() {
     for (LIA_Claim__c claim : instanceRecords) {
       if (!String.isBlank(claim.Liability_PNR__c)) {
-        claim.Liability_PNR__c = claim.Liability_PNR__c.toUpperCase()
-          .replace(' ', '');
+        claim.Liability_PNR__c = StringUtils.removeWhitespace(
+          claim.Liability_PNR__c.toUpperCase()
+        );
       }
       if (!String.isBlank(claim.BIC_Swift__c)) {
-        claim.BIC_Swift__c = claim.BIC_Swift__c.toUpperCase().replace(' ', '');
+        claim.BIC_Swift__c = StringUtils.removeWhitespace(
+          claim.BIC_Swift__c.toUpperCase()
+        );
       }
       if (!String.isBlank(claim.Bank_Account_Number__c)) {
-        claim.Bank_Account_Number__c = claim.Bank_Account_Number__c.toUpperCase()
-          .replace(' ', '');
+        claim.Bank_Account_Number__c = StringUtils.removeWhitespace(
+          claim.Bank_Account_Number__c.toUpperCase()
+        );
       }
       if (!String.isBlank(claim.Flight_Number__c)) {
-        claim.Flight_Number__c = claim.Flight_Number__c.toUpperCase()
-          .replace(' ', '');
+        claim.Flight_Number__c = StringUtils.removeWhitespace(
+          claim.Flight_Number__c.toUpperCase()
+        );
       }
     }
   }

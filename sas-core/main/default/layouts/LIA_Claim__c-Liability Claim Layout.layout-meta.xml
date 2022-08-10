@@ -23,6 +23,10 @@
                 <behavior>Required</behavior>
                 <field>Deadline__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Submitted_Claim_Expenses_in_SEK__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -36,10 +40,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Liability_Claim_Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LIA_Major_Event__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -156,7 +156,7 @@
         <label>Contact Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Contact_Full_Name__c</field>
             </layoutItems>
             <layoutItems>

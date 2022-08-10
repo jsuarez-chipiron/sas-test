@@ -4,6 +4,8 @@
     <fields>Name</fields>
     <fields>RecordTypeId</fields>
     <fields>Claim__c</fields>
+    <fields>Currency__c</fields>
+    <fields>Amount__c</fields>
     <fields>Submitter__c</fields>
     <fields>Approver__c</fields>
     <fields>OwnerId</fields>

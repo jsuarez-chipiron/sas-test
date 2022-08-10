@@ -6,7 +6,7 @@ global class APIMMock implements HttpCalloutMock {
   public static final String EB_NUMBER_WITHOUT_BOOKINGS = 'TEST654321';
   public static final String CLM_TRANSACTION_ID = '0000000001';
   public static final String EB_NUMBER_NOT_IN_CLM = '987654321';
-  public static final String EB_NUMBER_RETURN_500 = 'ERREBNUM';
+  public static final String EB_NUMBER_RETURN_500 = '777777777';
   public static final String VOUCHER_INVALID_EMAIL = 'invalidemail@invalidemail.invalidemail';
   public static final String VOUCHER_VALID_CARD_ID = '1234567890';
   public static final String VOUCHER_VALID_PNR = 'ABC123';
@@ -14,7 +14,9 @@ global class APIMMock implements HttpCalloutMock {
   public static final String PNR_FOR_WHICH_CLAIMS_DO_NOT_EXIST = '000000';
   public static final String DEFAULT_VALID_TEDS_PNR = 'TEST21';
   public static final String DEFAULT_VALID_TEDS_BOOKING_DATE = '20201126';
-  public static final String DELAYED_FLIGHT_ID = 'SK0903-20210410-ARN-EWR';
+  public static final String DELAYED_FLIGHT_ID_1 = 'SK0903-20210410-ARN-EWR';
+  public static final String DELAYED_FLIGHT_ID_2 = 'WF0075-20220531-TRD-OSL';
+  public static final String CANCELLED_FLIGHT_ID = 'LH2434-20220531-MUC-BLL';
   public static final String DEFAULT_VALID_TEDS_IDENTIFIER =
     DEFAULT_VALID_TEDS_PNR +
     '-' +
@@ -28,8 +30,13 @@ global class APIMMock implements HttpCalloutMock {
     res.setStatusCode(200);
     if (endpoint.contains('teds-flight')) {
       res.setHeader('Content-Type', 'application/json');
-      if (endpoint.contains(DELAYED_FLIGHT_ID)) {
+      if (
+        endpoint.contains(DELAYED_FLIGHT_ID_1) ||
+        endpoint.contains(DELAYED_FLIGHT_ID_2)
+      ) {
         res.setBody(APIMMockResponses.DELAYED_FLIGHT_RESPONSE_BODY);
+      } else if (endpoint.contains(CANCELLED_FLIGHT_ID)) {
+        res.setBody(APIMMockResponses.CANCELLED_FLIGHT_RESPONSE_BODY);
       } else {
         res.setBody(APIMMockResponses.FLIGHT_RESPONSE_BODY);
       }
@@ -89,6 +96,16 @@ global class APIMMock implements HttpCalloutMock {
             .replace('{euroBonusNumber}', euroBonusNumber)
             .replace('{bookingDate}', DEFAULT_VALID_TEDS_BOOKING_DATE)
         );
+      }
+    } else if (endpoint.contains('/teds-airport/airports?')) {
+      res.setHeader('Content-Type', 'application/json');
+      String ids = getQueryParam('ids');
+      if (ids == 'RUN') {
+        res.setBody(APIMMockResponses.AIRPORT_RESPONSE_BODY_SPECIAL_TERRITORY);
+      } else if (ids.contains('ITM')) {
+        res.setBody(APIMMockResponses.AIRPORT_RESPONSE_BODY_MULTIPLE);
+      } else {
+        res.setBody(APIMMockResponses.AIRPORT_RESPONSE_BODY_MULTIPLE);
       }
     } else if (endpoint.contains('csharkservice')) {
       if (
