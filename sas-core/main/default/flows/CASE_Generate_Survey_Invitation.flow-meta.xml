@@ -4,7 +4,7 @@
     <decisions>
         <name>What_survey_to_send</name>
         <label>What survey to send?</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -228,6 +228,21 @@
             </connector>
             <label>CSI Group Sales Scandinavia</label>
         </rules>
+        <rules>
+            <name>Customer_Feedback</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>caseRecord.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Chat</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Survey_Id_for_Customer_Feedback</targetReference>
+            </connector>
+            <label>Customer Feedback</label>
+        </rules>
     </decisions>
     <interviewLabel>CASE Generate Survey Invitation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CASE Generate Survey Invitation</label>
@@ -253,7 +268,7 @@
     <recordCreates>
         <name>Create_Survey_Invitation</name>
         <label>Create Survey Invitation</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>614</locationY>
         <connector>
             <targetReference>Get_Survey_Invitation_Link</targetReference>
@@ -300,7 +315,7 @@
     <recordLookups>
         <name>Get_SASCommunityId</name>
         <label>Get SASCommunityId</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -413,9 +428,32 @@
         </outputAssignments>
     </recordLookups>
     <recordLookups>
+        <name>Get_Survey_Id_for_Customer_Feedback</name>
+        <label>Get Survey Id for Customer Feedback</label>
+        <locationX>1106</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Survey_Invitation</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Customer Feedback</stringValue>
+            </value>
+        </filters>
+        <object>Survey</object>
+        <outputAssignments>
+            <assignToReference>surveyId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Survey_Invitation_Link</name>
         <label>Get Survey Invitation Link</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>734</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -436,7 +474,7 @@
     <recordUpdates>
         <name>Update_Survey_Information_to_Case</name>
         <label>Update Survey Information to Case</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>854</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -461,7 +499,7 @@
         <object>Case</object>
     </recordUpdates>
     <start>
-        <locationX>452</locationX>
+        <locationX>584</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_SASCommunityId</targetReference>
