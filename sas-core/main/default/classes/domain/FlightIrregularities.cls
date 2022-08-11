@@ -125,8 +125,12 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     if (reasons != null) {
       for (TEDSFlight.DelayReasons reason : reasons) {
         String code = 'N/A';
+        String reasonText = reason.reasonText;
         if (reason.reasonCode != null) {
           code = reason.reasonCode;
+        }
+        if (reasonText.length() > 2000) {
+          reasonText = reasonText.substring(0, 2000);
         }
         result.add(
           new FlightIrregularities__c(
@@ -134,7 +138,7 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
             Duration_minutes__c = DateUtils.convertISO8601DurationToMinutes(
               reason.duration
             ),
-            Reason__c = reason.reasonText,
+            Reason__c = reasonText,
             Type__c = 'Delay ' + additionalInfo
           )
         );
@@ -154,7 +158,7 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
 
   /**
    * Creates FlightIrregularities__c of type "Cancellation" from TEDS data.
-   * @param reasons A list of TEDSFlight.DelayReasons from which the FlightIrregularities__c should be created.
+   * @param reasons A list of TEDSFlight.CancellationReasons from which the FlightIrregularities__c should be created.
    * @param additionalInfo A String with additional info to add to the type of the irregularity, either: "(arrival)" or "(departure)".
    * @return A List of the FlightIrregularities__c created from the TEDS data.
    */
@@ -166,13 +170,17 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     if (reasons != null) {
       for (TEDSFlight.CancellationReasons reason : reasons) {
         String code = 'N/A';
+        String reasonText = reason.supplementaryInformation;
         if (reason.reasonCode != null) {
           code = reason.reasonCode;
+        }
+        if (reasonText.length() > 2000) {
+          reasonText = reasonText.substring(0, 2000);
         }
         result.add(
           new FlightIrregularities__c(
             Code__c = code,
-            Reason__c = reason.supplementaryInformation,
+            Reason__c = reasonText,
             Type__c = 'Cancellation ' + additionalInfo
           )
         );
