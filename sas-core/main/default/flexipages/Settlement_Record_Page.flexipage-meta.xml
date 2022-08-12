@@ -32,6 +32,27 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Settlement__c.Mark_as_Failed</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Settlement_Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Done</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Business User</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>System Administrator</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
