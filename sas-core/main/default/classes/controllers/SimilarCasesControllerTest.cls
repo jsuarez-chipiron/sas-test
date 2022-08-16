@@ -36,6 +36,13 @@ public with sharing class SimilarCasesControllerTest {
     Case similarCase = similar.cases[1];
     Case differentCase = different.cases[0];
 
+    LIA_Claim__c cl = similar.claims[1];
+    cl.PIR__c = 'ARNSK12456';
+    cl.Liability_PNR__c = '12345D';
+    cl.Flight_Number__c = 'SK2';
+    cl.Flight_Date__c = Date.today().addDays(2);
+    update cl;
+
     CARE_Claim__c similarCAREClaim = new CARE_Claim__c(
       Booking_Reference__c = sharedBookingReference
     );
