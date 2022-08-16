@@ -1,44 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <layouts>
-        <layout>SAS Feedback Layout</layout>
-        <sections>
-            <label><!-- Case Information --></label>
-            <section>Case Information</section>
-        </sections>
-        <sections>
-            <label><!-- Custom Links --></label>
-            <section>Custom Links</section>
-        </sections>
-        <sections>
-            <label><!-- Description Information --></label>
-            <section>Description Information</section>
-        </sections>
-        <sections>
-            <label><!-- System Information --></label>
-            <section>System Information</section>
-        </sections>
-    </layouts>
-    <layouts>
-        <layout>SAS Information Layout</layout>
-        <sections>
-            <label><!-- Case Information --></label>
-            <section>Case Information</section>
-        </sections>
-        <sections>
-            <label><!-- Custom Links --></label>
-            <section>Custom Links</section>
-        </sections>
-        <sections>
-            <label><!-- Description Information --></label>
-            <section>Description Information</section>
-        </sections>
-        <sections>
-            <label><!-- System Information --></label>
-            <section>System Information</section>
-        </sections>
-    </layouts>
-    <layouts>
         <layout>SAS Internal/Backoffice Layout</layout>
         <sections>
             <label><!-- Additional Information --></label>
@@ -101,20 +63,8 @@
         <name>SocialPublisher</name>
     </quickActions>
     <recordTypes>
-        <label><!-- Feedback --></label>
-        <name>Feedback</name>
-    </recordTypes>
-    <recordTypes>
-        <label><!-- Information --></label>
-        <name>Information</name>
-    </recordTypes>
-    <recordTypes>
         <label><!-- Internal/Backoffice --></label>
         <name>Internal_Backoffice</name>
-    </recordTypes>
-    <recordTypes>
-        <label><!-- Support --></label>
-        <name>Support</name>
     </recordTypes>
     <validationRules>
         <errorMessage><!-- Update Type after changing Record Type. --></errorMessage>
