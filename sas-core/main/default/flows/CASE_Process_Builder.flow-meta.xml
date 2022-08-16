@@ -88,8 +88,8 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Should_survey_be_sent_after_closing_the_case</name>
-        <label>Should survey be sent after closing the case?</label>
+        <name>Should_a_survey_invitation_be_created</name>
+        <label>Should a survey invitation be created?</label>
         <locationX>484</locationX>
         <locationY>1247</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
@@ -132,12 +132,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Survey_Invitation_on_Case</targetReference>
+                <targetReference>Create_Survey_Invitation_for_chat</targetReference>
             </connector>
-            <label>Yes - Chat</label>
+            <label>Yes - Survey for Chat Cases</label>
         </rules>
         <rules>
-            <name>SendEmailSurveyOutcome</name>
+            <name>Yes_Survey_for_Closed_Cases</name>
             <conditionLogic>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND (7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13 OR 14 OR 15 OR 16 OR 17 OR 18 OR 19 OR 20 OR 21 OR 22 OR 23 OR 24 OR 25 OR 26 OR 27)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Status</leftValueReference>
@@ -331,7 +331,7 @@
             <connector>
                 <targetReference>Create_Survey_Invitation_for_Email_Sending</targetReference>
             </connector>
-            <label>Yes - Email</label>
+            <label>Yes - Survey for Closed Cases</label>
         </rules>
     </decisions>
     <decisions>
@@ -340,7 +340,7 @@
         <locationX>484</locationX>
         <locationY>791</locationY>
         <defaultConnector>
-            <targetReference>Should_survey_be_sent_after_closing_the_case</targetReference>
+            <targetReference>Should_a_survey_invitation_be_created</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -448,7 +448,7 @@
         <locationX>220</locationX>
         <locationY>911</locationY>
         <connector>
-            <targetReference>Should_survey_be_sent_after_closing_the_case</targetReference>
+            <targetReference>Should_a_survey_invitation_be_created</targetReference>
         </connector>
         <inputAssignments>
             <field>FCS_FirstClosingDate__c</field>
@@ -483,6 +483,19 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>Create_Survey_Invitation_for_chat</name>
+        <label>Create Survey Invitation for chat</label>
+        <locationX>220</locationX>
+        <locationY>1367</locationY>
+        <flowName>CASE_Generate_Survey_Invitation</flowName>
+        <inputAssignments>
+            <name>caseRecord</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Create_Survey_Invitation_for_Email_Sending</name>
         <label>Create Survey Invitation for Email Sending</label>
         <locationX>484</locationX>
@@ -494,20 +507,6 @@
                 <elementReference>$Record</elementReference>
             </value>
         </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Create_Survey_Invitation_on_Case</name>
-        <label>Create Survey Invitation on Case</label>
-        <locationX>220</locationX>
-        <locationY>1367</locationY>
-        <flowName>Create_Survey_Invitation_on_Case</flowName>
-        <inputAssignments>
-            <name>caseId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
         <name>Notify_Owner_Liability</name>
