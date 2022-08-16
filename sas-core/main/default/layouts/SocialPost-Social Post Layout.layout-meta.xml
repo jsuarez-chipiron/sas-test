@@ -162,9 +162,6 @@
     </platformActionList>
     <quickActionList>
         <quickActionListItems>
-            <quickActionName>SocialPost.TagInfo</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
             <quickActionName>FeedItem.TextPost</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
@@ -185,12 +182,6 @@
         <quickActionListItems>
             <quickActionName>FeedItem.ContentNote</quickActionName>
         </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>SocialPost.TagSupport</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>SocialPost.TagFeedback</quickActionName>
-        </quickActionListItems>
     </quickActionList>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
@@ -207,7 +198,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h5r000000oBp6</masterLabel>
+        <masterLabel>00h1j000005008c</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
