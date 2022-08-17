@@ -18,7 +18,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       LIA_Claim__c.Compensation_Card_Number__c,
       LIA_Claim__c.Contact_Email__c,
       LIA_Claim__c.Contact_First_Name__c,
-      LIA_Claim__c.Contact_Full_Name__c,
+      LIA_Claim__c.Full_Name__c,
       LIA_Claim__c.Contact_Last_Name__c,
       LIA_Claim__c.Country__c,
       LIA_Claim__c.Currency__c,
