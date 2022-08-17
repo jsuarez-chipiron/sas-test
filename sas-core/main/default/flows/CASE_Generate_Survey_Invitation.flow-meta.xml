@@ -294,6 +294,13 @@
             <label>Customer Feedback</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>surveyInvitationLink</name>
+        <dataType>String</dataType>
+        <expression>IF( ISPICKVAL({!caseRecord.Origin}, &quot;Chat&quot;), 
+{!Get_Survey_Invitation_Link.InvitationLink} + &quot;&amp;guestUserLang=&quot; + {!caseRecord.FCS_SurveyLanguage__c}, 
+{!Get_Survey_Invitation_Link.InvitationLink})</expression>
+    </formulas>
     <interviewLabel>CASE Generate Survey Invitation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CASE Generate Survey Invitation</label>
     <processMetadataValues>
@@ -543,7 +550,7 @@
         <inputAssignments>
             <field>FCS_SurveyInvitationLink__c</field>
             <value>
-                <elementReference>Get_Survey_Invitation_Link.InvitationLink</elementReference>
+                <elementReference>surveyInvitationLink</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
