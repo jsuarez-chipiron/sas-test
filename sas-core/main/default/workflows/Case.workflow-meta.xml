@@ -33,6 +33,17 @@
         <senderType>DefaultWorkflowUser</senderType>
         <template>SurveyEmailTemplates/Group_Sales_Survey_Invitation_Link_1653310948956</template>
     </alerts>
+    <alerts>
+        <fullName>Group_Sales_Scandinavia_Email_Survey</fullName>
+        <description>Group Sales Scandinavia Email Survey</description>
+        <protected>false</protected>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderType>DefaultWorkflowUser</senderType>
+        <template>SurveyEmailTemplates/Group_Sales_Scandinavia_Survey_Invitation_Link_1660742681545</template>
+    </alerts>
     <fieldUpdates>
         <fullName>ChangePriorityToHigh</fullName>
         <field>Priority</field>
