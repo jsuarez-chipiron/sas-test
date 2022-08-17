@@ -2890,6 +2890,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>LIA_Claim__c.Full_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>LIA_Claim__c.Contact_Last_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
