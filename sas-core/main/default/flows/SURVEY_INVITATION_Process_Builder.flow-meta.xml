@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Send_Corporate_Support_Scandinavia_Email</name>
         <label>Send Corporate Support Scandinavia Email</label>
-        <locationX>110</locationX>
+        <locationX>50</locationX>
         <locationY>408</locationY>
         <actionName>Case.Corporate_Support_Scandinavia_Email_Survey</actionName>
         <actionType>emailAlert</actionType>
@@ -18,7 +18,7 @@
     <actionCalls>
         <name>Send_EuroBonus_Email</name>
         <label>Send EuroBonus Email</label>
-        <locationX>374</locationX>
+        <locationX>314</locationX>
         <locationY>408</locationY>
         <actionName>Case.EuroBonus_Email_Survey</actionName>
         <actionType>emailAlert</actionType>
@@ -33,9 +33,24 @@
     <actionCalls>
         <name>Send_Group_Sales_Email</name>
         <label>Send Group Sales Email</label>
-        <locationX>638</locationX>
+        <locationX>578</locationX>
         <locationY>408</locationY>
         <actionName>Case.Group_Sales_Email_Survey</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.FCS_RelatedCase__r.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Group_Sales_Scandinavia_Email</name>
+        <label>Send Group Sales Scandinavia Email</label>
+        <locationX>842</locationX>
+        <locationY>408</locationY>
+        <actionName>Case.Group_Sales_Scandinavia_Email_Survey</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -49,7 +64,7 @@
     <decisions>
         <name>Email_Template</name>
         <label>Email Template</label>
-        <locationX>506</locationX>
+        <locationX>578</locationX>
         <locationY>288</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -92,6 +107,14 @@
                     <stringValue>CSI Group Sales</stringValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Send_Group_Sales_Email</targetReference>
+            </connector>
+            <label>Send Group Sales Survey</label>
+        </rules>
+        <rules>
+            <name>Send_Group_Sales_Scandinavia_Survey</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Survey.Name</leftValueReference>
                 <operator>EqualTo</operator>
@@ -100,9 +123,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Group_Sales_Email</targetReference>
+                <targetReference>Send_Group_Sales_Scandinavia_Email</targetReference>
             </connector>
-            <label>Send Group Sales Survey</label>
+            <label>Send Group Sales Scandinavia Survey</label>
         </rules>
     </decisions>
     <interviewLabel>SURVEY INVITATION {!$Flow.CurrentDateTime}</interviewLabel>
@@ -127,7 +150,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <object>SurveyInvitation</object>
         <recordTriggerType>Create</recordTriggerType>
