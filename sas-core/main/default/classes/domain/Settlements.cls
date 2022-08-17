@@ -511,7 +511,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         }
         when EBPoints {
           settlementToCreate.EuroBonus_Number__c = claim.EuroBonus_Number__c;
-          settlementToCreate.Payee_Name__c = claim.Contact_Full_Name__c;
+          settlementToCreate.Payee_Name__c = claim.Full_Name__c;
           settlementToCreate.RecordTypeId = Settlements.getRecordTypeId(
             Settlements.RecordType.EBPoints
           );
@@ -627,7 +627,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
       Settlement_Item__c itemToCreate = new Settlement_Item__c(
         Comments__c = 'Automatic settlement item for compensation card.',
-        Customer_Name__c = claim.Contact_Full_Name__c,
+        Customer_Name__c = claim.Full_Name__c,
         Settlement__c = settlement.Id
       );
       switch on claim.Preferred_Compensation_Method__c {

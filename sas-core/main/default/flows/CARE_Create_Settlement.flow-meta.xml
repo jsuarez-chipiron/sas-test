@@ -360,7 +360,7 @@
         <inputAssignments>
             <field>Payee_Name__c</field>
             <value>
-                <elementReference>Get_Customer_Claim.Contact_Full_Name__c</elementReference>
+                <elementReference>Get_Customer_Claim.Full_Name__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -550,7 +550,7 @@
         <inputAssignments>
             <field>Payee_Name__c</field>
             <value>
-                <elementReference>Get_Customer_Claim.Contact_Full_Name__c</elementReference>
+                <elementReference>Get_Customer_Claim.Full_Name__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
