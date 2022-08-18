@@ -3215,6 +3215,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>SurveyInvitation.ChatSurvey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
         <editable>true</editable>
         <field>SurveyInvitation.FCS_RelatedCase__c</field>
         <readable>true</readable>

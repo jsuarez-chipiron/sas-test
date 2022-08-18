@@ -26,6 +26,10 @@
                 <behavior>Readonly</behavior>
                 <field>ResponseStatus</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ChatSurvey__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

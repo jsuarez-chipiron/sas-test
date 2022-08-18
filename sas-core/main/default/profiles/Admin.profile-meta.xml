@@ -2675,6 +2675,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SurveyInvitation.ChatSurvey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SurveyInvitation.FCS_NumberOfResponses__c</field>
         <readable>true</readable>
     </fieldPermissions>

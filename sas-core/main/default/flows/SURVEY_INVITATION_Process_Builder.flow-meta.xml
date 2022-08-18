@@ -128,7 +128,6 @@
             <label>Send Group Sales Scandinavia Survey</label>
         </rules>
     </decisions>
-    <environments>Default</environments>
     <interviewLabel>SURVEY INVITATION {!$Flow.CurrentDateTime}</interviewLabel>
     <label>SURVEY INVITATION Process Builder</label>
     <processMetadataValues>
@@ -153,7 +152,21 @@
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
-        <filterFormula>{!$Record.FCS_RelatedCase__r.RecordType.Name} = &apos;Channel&apos;</filterFormula>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ChatSurvey__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>FCS_RelatedCase__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>SurveyInvitation</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
