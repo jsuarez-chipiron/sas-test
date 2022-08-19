@@ -993,11 +993,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>LIA_Claim__c.LIA_Major_Event__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>LIA_Claim__c.Last_Checked_Claims_From_CARE__c</field>
         <readable>true</readable>
     </fieldPermissions>
