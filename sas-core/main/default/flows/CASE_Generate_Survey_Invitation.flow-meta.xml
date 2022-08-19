@@ -297,9 +297,17 @@
     <formulas>
         <name>surveyInvitationLink</name>
         <dataType>String</dataType>
-        <expression>IF( ISPICKVAL({!caseRecord.Origin}, &quot;Chat&quot;), 
-{!Get_Survey_Invitation_Link.InvitationLink} + &quot;&amp;guestUserLang=&quot; + {!caseRecord.FCS_SurveyLanguage__c}, 
-{!Get_Survey_Invitation_Link.InvitationLink})</expression>
+        <expression>IF( ISPICKVAL({!caseRecord.Origin}, &quot;Chat&quot;), {!surveyLinkChatLanguageDefaulted}, IF({!Get_Survey_Id_for_CSI_Group_Sales} = true, {!surveyLinkEnglishDefaulted}, {!Get_Survey_Invitation_Link.InvitationLink}))</expression>
+    </formulas>
+    <formulas>
+        <name>surveyLinkChatLanguageDefaulted</name>
+        <dataType>String</dataType>
+        <expression>{!Get_Survey_Invitation_Link.InvitationLink} + &quot;&amp;guestUserLang=&quot; + {!caseRecord.FCS_SurveyLanguage__c}</expression>
+    </formulas>
+    <formulas>
+        <name>surveyLinkEnglishDefaulted</name>
+        <dataType>String</dataType>
+        <expression>{!Get_Survey_Invitation_Link.InvitationLink} + &quot;&amp;guestUserLang=en-US&quot;</expression>
     </formulas>
     <interviewLabel>CASE Generate Survey Invitation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CASE Generate Survey Invitation</label>
