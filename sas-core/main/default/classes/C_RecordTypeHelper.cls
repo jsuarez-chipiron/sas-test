@@ -9,12 +9,7 @@ public with sharing class C_RecordTypeHelper {
   /**
     Static variables to store id of record types on case object
     */
-  @TestVisible
-  public static final Id CASE_INFORMATION;
-  @TestVisible
-  public static final Id CASE_FEEDBACK;
-  @TestVisible
-  public static final Id CASE_SUPPORT;
+
   @TestVisible
   public static final Id CASE_INTERNAL_BACKOFFICE;
   @TestVisible
@@ -45,12 +40,6 @@ public with sharing class C_RecordTypeHelper {
     for (Integer i = 0, sz = rtList.size(); i < sz; i++) {
       RecordType rt = rtList[i];
       if (rt.SobjectType == 'Case') {
-        if (rt.DeveloperName == 'Information')
-          CASE_INFORMATION = rt.Id;
-        if (rt.DeveloperName == 'Feedback')
-          CASE_FEEDBACK = rt.Id;
-        if (rt.DeveloperName == 'Support')
-          CASE_SUPPORT = rt.Id;
         if (rt.DeveloperName == 'Internal_Backoffice')
           CASE_INTERNAL_BACKOFFICE = rt.Id;
         if (rt.DeveloperName == 'Channel')
