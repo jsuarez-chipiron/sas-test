@@ -166,14 +166,14 @@
         <excludedStandardButtons>New</excludedStandardButtons>
         <excludedStandardButtons>OpenListInQuip</excludedStandardButtons>
         <excludedStandardButtons>NewFromDocument</excludedStandardButtons>
-        <excludedStandardButtons>PrintableListView</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <excludedStandardButtons>Import</excludedStandardButtons>
         <excludedStandardButtons>MassChangeOwner</excludedStandardButtons>
-        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>PrintableListView</excludedStandardButtons>
         <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Case__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Contact_Full_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Full_Name__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Contact_Email__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>EuroBonus_Number__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Liability_PNR__c</searchResultsAdditionalFields>
