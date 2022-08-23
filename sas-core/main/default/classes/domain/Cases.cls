@@ -29,6 +29,10 @@ public without sharing class Cases extends fflib_SObjectDomain {
     InternalBackoffice
   }
 
+  public static Map<String, Integer> departmentToDaysInactive = new Map<String, Integer>{
+    'Customer Claim' => 90
+  };
+
   public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
     RecordType.Channel => 'Channel',
     RecordType.CustomerClaim => 'Customer Claim',
@@ -892,6 +896,19 @@ public without sharing class Cases extends fflib_SObjectDomain {
 
       uow.commitWork();
     }
+  }
+
+  /**
+   * Lock cases from being edited and marks them as read-only
+   * Used to permanently close cases after some time
+   */
+  public Cases markAsReadOnly(fflib_ISObjectUnitOfWork uow) {
+    for (Case c : instanceRecords) {
+      c.IsReadOnly__c = true;
+      uow.registerDirty(c);
+    }
+    Approval.lock(instanceRecords);
+    return this;
   }
 
   public static String getThreadId(String caseId) {

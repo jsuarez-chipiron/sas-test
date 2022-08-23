@@ -119,7 +119,7 @@ public class FetchCAREClaimsResponse {
      * The response from EDW is unfortunately a bit weird so we need to
      * manually parse the response, instead of relying to standard Salesforce
      * parsing.
-     * 
+     *
      * See the APIM mock responses for a full example of the schema.
      *
      * At a high level the response structure follows the structure the
@@ -131,7 +131,7 @@ public class FetchCAREClaimsResponse {
      * Another issue is that most of the lists contain an extra level, except
      * for settlement items. So, e.g. for customers, the data looks like this (for
      * a single case).
-     * 
+     *
      * If there is a single customer:
      * ```
      * {
@@ -463,20 +463,35 @@ public class FetchCAREClaimsResponse {
               /**
                * Parsing tree should be here
                * "settlementItem": [
-               *   // this is always an array, even if there is only a single element. TODO: Is this true?
+               *   {...items}
                * ],
-               * ...
+               * or 
+               * "settlementItem: {
+               *    // single item properties
+               * }
                */
-              parser.nextToken(); // Skip START_ARRAY
-              currentToken = parser.nextToken(); // Land on START_OBJECT
-              while (currentToken != JSONToken.END_ARRAY) {
-                if (currentToken == JSONToken.START_OBJECT) {
+              currentToken = parser.nextToken(); // Land on START_OBJECT or START_ARRAY
+              switch on currentToken {
+                when START_OBJECT {
                   parsedSettlement.settlementItems.add(
                     (SettlementItems) parser.readValueAs(SettlementItems.class)
                   );
                   parser.skipChildren();
                 }
-                currentToken = parser.nextToken();
+                when START_ARRAY {
+                  currentToken = parser.nextToken();
+                  while (currentToken != JSONToken.END_ARRAY) {
+                    if (currentToken == JSONToken.START_OBJECT) {
+                      parsedSettlement.settlementItems.add(
+                        (SettlementItems) parser.readValueAs(
+                          SettlementItems.class
+                        )
+                      );
+                      parser.skipChildren();
+                    }
+                    currentToken = parser.nextToken();
+                  }
+                }
               }
             }
           }

@@ -85,6 +85,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Information.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer_Claim</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>ErrorScreenNoToAddressInDraftMail</targetReference>
             </connector>
