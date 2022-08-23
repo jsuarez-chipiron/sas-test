@@ -255,7 +255,7 @@
             <targetReference>lookupCase</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <description>Variable for storing the CaseId</description>
         <name>caseId</name>
