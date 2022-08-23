@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Email_to_Customer_about_Read_Only_Case</name>
+        <label>Send Email to Customer about Read-Only Case</label>
+        <locationX>314</locationX>
+        <locationY>935</locationY>
+        <actionName>SendEmailForReadOnlyCase</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>caseIds</name>
+            <value>
+                <elementReference>$Record.Parent.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
         <name>Set_New_Owner_Id_Queue</name>
         <label>Set New Owner Id - Queue</label>
         <locationX>842</locationX>
-        <locationY>1055</locationY>
+        <locationY>1295</locationY>
         <assignmentItems>
             <assignToReference>newOwnerId</assignToReference>
             <operator>Assign</operator>
@@ -27,7 +42,7 @@
     <assignments>
         <name>Set_New_Owner_Id_User</name>
         <label>Set New Owner Id - User</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1175</locationY>
         <assignmentItems>
             <assignToReference>newOwnerId</assignToReference>
@@ -43,7 +58,7 @@
     <assignments>
         <name>Set_New_Response</name>
         <label>Set New Response</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>1055</locationY>
         <assignmentItems>
             <assignToReference>newStatus</assignToReference>
@@ -59,7 +74,7 @@
     <assignments>
         <name>Set_New_Status_and_Owner</name>
         <label>Set New Status and Owner</label>
-        <locationX>1524</locationX>
+        <locationX>1788</locationX>
         <locationY>1427</locationY>
         <assignmentItems>
             <assignToReference>newStatus</assignToReference>
@@ -82,7 +97,7 @@
     <assignments>
         <name>Set_Status_to_New_Response</name>
         <label>Set Status to New Response</label>
-        <locationX>644</locationX>
+        <locationX>710</locationX>
         <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>newStatus</assignToReference>
@@ -98,7 +113,7 @@
     <decisions>
         <name>Case_Status</name>
         <label>Case Status</label>
-        <locationX>1018</locationX>
+        <locationX>1150</locationX>
         <locationY>575</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -164,7 +179,7 @@
     <decisions>
         <name>Check_Last_Login</name>
         <label>Check Last Login</label>
-        <locationX>446</locationX>
+        <locationX>710</locationX>
         <locationY>1055</locationY>
         <defaultConnector>
             <targetReference>Get_Group_Id</targetReference>
@@ -189,7 +204,7 @@
     <decisions>
         <name>Check_User_Last_Login</name>
         <label>Check User Last Login</label>
-        <locationX>1238</locationX>
+        <locationX>1502</locationX>
         <locationY>935</locationY>
         <defaultConnector>
             <targetReference>Set_New_Response</targetReference>
@@ -214,7 +229,7 @@
     <decisions>
         <name>Email_Direction</name>
         <label>Email Direction</label>
-        <locationX>1766</locationX>
+        <locationX>1964</locationX>
         <locationY>335</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -251,12 +266,27 @@
     <decisions>
         <name>New_Owner</name>
         <label>New Owner</label>
-        <locationX>644</locationX>
+        <locationX>710</locationX>
         <locationY>815</locationY>
         <defaultConnector>
             <targetReference>Get_Group_Id</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Queue</defaultConnectorLabel>
+        <rules>
+            <name>Read_Only_Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Parent.IsReadOnly__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Email_to_Customer_about_Read_Only_Case</targetReference>
+            </connector>
+            <label>Read Only Case</label>
+        </rules>
         <rules>
             <name>User</name>
             <conditionLogic>1 AND  (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12)</conditionLogic>
@@ -353,7 +383,7 @@
     <decisions>
         <name>Owner_Type</name>
         <label>Owner Type</label>
-        <locationX>1524</locationX>
+        <locationX>1788</locationX>
         <locationY>695</locationY>
         <defaultConnector>
             <targetReference>Set_New_Status_and_Owner</targetReference>
@@ -442,7 +472,7 @@
         <name>Get_Group_Id</name>
         <label>Get Group Id</label>
         <locationX>842</locationX>
-        <locationY>935</locationY>
+        <locationY>1175</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_New_Owner_Id_Queue</targetReference>
@@ -462,7 +492,7 @@
     <recordLookups>
         <name>Get_User_Record</name>
         <label>Get User Record</label>
-        <locationX>1238</locationX>
+        <locationX>1502</locationX>
         <locationY>815</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -483,7 +513,7 @@
     <recordLookups>
         <name>Get_User_Records</name>
         <label>Get User Records</label>
-        <locationX>446</locationX>
+        <locationX>710</locationX>
         <locationY>935</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -504,7 +534,7 @@
     <recordUpdates>
         <name>Update_number_of_emails_received</name>
         <label>Update number of emails received</label>
-        <locationX>1018</locationX>
+        <locationX>1150</locationX>
         <locationY>455</locationY>
         <connector>
             <targetReference>Case_Status</targetReference>
@@ -540,7 +570,7 @@
     <recordUpdates>
         <name>Update_number_of_emails_sent</name>
         <label>Update number of emails sent</label>
-        <locationX>2250</locationX>
+        <locationX>2514</locationX>
         <locationY>455</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -561,7 +591,7 @@
     <recordUpdates>
         <name>Update_Parent_Case</name>
         <label>Update Parent Case</label>
-        <locationX>1018</locationX>
+        <locationX>1150</locationX>
         <locationY>1703</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -592,7 +622,7 @@
         <object>Case</object>
     </recordUpdates>
     <start>
-        <locationX>1640</locationX>
+        <locationX>1838</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Email_Direction</targetReference>
@@ -605,7 +635,7 @@
     <subflows>
         <name>Notify_Owner_of_New_Response</name>
         <label>Notify Owner of New Response</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>1055</locationY>
         <connector>
             <targetReference>Set_New_Status_and_Owner</targetReference>
@@ -645,7 +675,7 @@
     <subflows>
         <name>Notify_Owner_of_New_Response_0</name>
         <label>Notify Owner of New Response</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1295</locationY>
         <connector>
             <targetReference>Update_Parent_Case</targetReference>

@@ -14,6 +14,8 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
       Case.Status,
       Case.SuppliedEmail,
       Case.Department__c,
+      Case.Team__c,
+      Case.Origin,
       Case.FCS_CaseType__c,
       Case.FCS_CaseResolution__c,
       Case.FCS_CaseResolutionDetails__c,
@@ -165,6 +167,20 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
     }
 
     return selectByIdWithClaim(caseIds);
+  }
+
+  public List<Case> selectInactiveByDepartment(String department) {
+    String statusToFetch = Cases.STATUS_CLOSED;
+    Datetime lastUpdatedCutoff = System.Test.isRunningTest()
+      ? System.now().addDays(1)
+      : System.now()
+          .addDays(Cases.departmentToDaysInactive.get(department) * -1);
+
+    fflib_QueryFactory casesQF = newQueryFactory()
+      .setCondition(
+        'Status = :statusToFetch AND LastModifiedDate <= :lastUpdatedCutoff AND Department__c = :department'
+      );
+    return (List<Case>) Database.query(casesQF.toSOQL());
   }
 
   public override String getOrderBy() {
