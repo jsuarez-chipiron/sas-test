@@ -1,6 +1,7 @@
 @IsTest
 public with sharing class FlightService_IntegrationTest {
   public static String flightIdFromTEDS = 'SK2569-20210410-ARN-CPH';
+  public static String flightIdFromTEDSWithLongReason = 'SK0909-20200410-ARN-CPH';
   public static String gateInDetailedFlightInfo = 'E135';
   public static String delayedFlightIdFromTEDS = 'WF0075-20220531-TRD-OSL';
   public static String cancelledFlightIdFromTEDS = 'LH2434-20220531-MUC-BLL';
@@ -96,6 +97,36 @@ public with sharing class FlightService_IntegrationTest {
       'AIRS',
       sampleIrregularity.Code__c,
       'Flightirregularity with cancellation not correctly inserted.'
+    );
+  }
+
+  @IsTest
+  public static void shouldTruncateReasonText() {
+    // Given
+    Set<String> flightIds = new Set<String>();
+    flightIds.add(flightIdFromTEDSWithLongReason);
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    // When
+    Test.startTest();
+    FlightService.newInstance().fetchFlightsByReference(flightIds, true);
+    Test.stopTest();
+
+    // Then
+    List<FlightIrregularities__c> irregularitiesFromDb = FlightIrregularitiesSelector.newInstance()
+      .selectByTEDSFlightId(new Set<String>{ flightIdFromTEDSWithLongReason });
+
+    FlightIrregularities__c relevantIrregularity;
+    for (FlightIrregularities__c fi : irregularitiesFromDb) {
+      if (fi.Code__c == 'AIRS') {
+        relevantIrregularity = fi;
+      }
+    }
+
+    System.assertEquals(
+      2000,
+      relevantIrregularity.Reason__c.length(),
+      'Flight should exist and have detailed flight info.'
     );
   }
 }
