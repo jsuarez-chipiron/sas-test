@@ -47,7 +47,7 @@
             <label>Customer Feedback</label>
         </rules>
     </decisions>
-    <description>Flow for creating a Survey Invitation and relating it to the Parent Case</description>
+    <description>Flow for creating a Survey Invitation and relating it to the Parent Case- Only used for chat- Obsolete. Now, CASE Create Survey Invitation Link generates all the survey links for parent cases</description>
     <formulas>
         <name>surveyInvitationLink</name>
         <dataType>String</dataType>
@@ -59,6 +59,12 @@
         <name>BuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>

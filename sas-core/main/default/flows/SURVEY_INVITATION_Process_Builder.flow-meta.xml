@@ -128,6 +128,7 @@
             <label>Send Group Sales Scandinavia Survey</label>
         </rules>
     </decisions>
+    <description>Contains the logic for sending the correct email template based on the survey as well as the time for emailing the survey link</description>
     <interviewLabel>SURVEY INVITATION {!$Flow.CurrentDateTime}</interviewLabel>
     <label>SURVEY INVITATION Process Builder</label>
     <processMetadataValues>
