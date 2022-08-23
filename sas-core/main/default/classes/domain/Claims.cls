@@ -68,11 +68,13 @@ public without sharing class Claims extends fflib_SObjectDomain {
 
   public override void onAfterInsert() {
     checkIfExistsInCARE();
+    fetchCAREClaims();
     updateParentCaseBookings();
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
     checkIfExistsInCARE((Map<Id, LIA_Claim__c>) existingRecords);
+    fetchCAREClaims((Map<Id, LIA_Claim__c>) existingRecords);
     updateParentCaseBookings((Map<Id, LIA_Claim__c>) existingRecords);
     // TODO: We should also update EB accounts correctly. Requires fixing of the entire EB accounts fetching flow.
   }
@@ -288,6 +290,33 @@ public without sharing class Claims extends fflib_SObjectDomain {
           claim.Flight_Number__c.toUpperCase()
         );
       }
+    }
+  }
+
+  private void fetchCAREClaims(Map<Id, LIA_Claim__c> existingRecords) {
+    if (instanceRecords.size() == 1) {
+      LIA_Claim__c updatedRecord = instanceRecords[0];
+      LIA_Claim__c existingRecord = existingRecords.get(updatedRecord.Id);
+
+      Boolean hasChangedPNROrPIR =
+        existingRecord.Liability_PNR__c != updatedRecord.Liability_PNR__c ||
+        existingRecord.PIR__c != updatedRecord.PIR__c;
+
+      if (hasChangedPNROrPIR) {
+        fetchCAREClaims();
+      }
+    }
+  }
+
+  private void fetchCAREClaims() {
+    if (instanceRecords.size() == 1) {
+      System.enqueueJob(
+        new ClaimService.FetchCAREClaimsFromEDWAsync(
+          instanceRecords[0].Liability_PNR__c,
+          instanceRecords[0].PIR__c,
+          null
+        )
+      );
     }
   }
 }

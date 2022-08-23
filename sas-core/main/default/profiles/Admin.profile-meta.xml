@@ -45,6 +45,22 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>FetchExistingCARECasesQueueable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CAREClaims</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CAREClaimsSelector</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CareCasesController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>Cases</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1982,6 +1998,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>LIA_Claim__c.Full_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LIA_Claim__c.Contact_Last_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2667,6 +2688,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SurveyInvitation.ChatSurvey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SurveyInvitation.FCS_NumberOfResponses__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2805,18 +2831,10 @@
     <layoutAssignments>
         <layout>Case-SAS Customer Claim Layout</layout>
         <recordType>Case.Customer_Claim</recordType>
-    </layoutAssignments>         
-    <layoutAssignments>
-        <layout>Case-SAS Feedback Layout</layout>
-        <recordType>Case.Feedback</recordType>
-    </layoutAssignments>
+    </layoutAssignments>    
     <layoutAssignments>
         <layout>Case-SAS FP Support</layout>
         <recordType>Case.FunctionalProductSupport</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-SAS Information Layout</layout>
-        <recordType>Case.Information</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-SAS Internal%2FBackoffice Layout</layout>
@@ -2829,10 +2847,6 @@
 	<layoutAssignments>
         <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Chat</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-SAS Support Layout</layout>
-        <recordType>Case.Support</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Customer__c-Customer Layout</layout>
@@ -3162,27 +3176,12 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Case.Feedback</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
         <recordType>Case.FunctionalProductSupport</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.Information</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>Case.Internal_Backoffice</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.Support</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

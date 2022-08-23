@@ -10,9 +10,6 @@ private class C_RecordTypeHelper_Test {
         Map<String, ID> caseRecordTypes = new Map<String, ID>{};
         for(RecordType rt : rtypes) caseRecordTypes.put(rt.DeveloperName, rt.Id);
 
-        System.assertEquals(C_RecordTypeHelper.CASE_INFORMATION, caseRecordTypes.get('Information'));
-        System.assertEquals(C_RecordTypeHelper.CASE_FEEDBACK, caseRecordTypes.get('Feedback'));
-        System.assertEquals(C_RecordTypeHelper.CASE_SUPPORT, caseRecordTypes.get('Support'));
         System.assertEquals(C_RecordTypeHelper.CASE_INTERNAL_BACKOFFICE, caseRecordTypes.get('Internal_Backoffice'));
     }
 

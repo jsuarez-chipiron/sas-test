@@ -151,27 +151,39 @@ export default class CaseSimilarCases extends NavigationMixin(
           []
         );
 
-      const formattedCases = data.map((caseWithClaim, idx) => {
-        const flightId =
-          caseWithClaim.Claims__r[0].Flight_Number__c !== undefined &&
-          caseWithClaim.Claims__r[0].Flight_Date__c !== undefined
-            ? caseWithClaim.Claims__r[0].Flight_Number__c +
-              "-" +
-              caseWithClaim.Claims__r[0].Flight_Date__c
-            : "";
-        return {
-          idx,
-          id: caseWithClaim.Id,
-          caseNumber: caseWithClaim.CaseNumber,
-          bookingReference: caseWithClaim.Claims__r[0].Liability_PNR__c,
-          date: caseWithClaim.CreatedDate,
-          EbNumber: caseWithClaim.Claims__r[0].EuroBonus_Number__c,
-          email: caseWithClaim.Claims__r[0].Contact_Email__c,
-          flight: flightId,
-          owner: caseWithClaim.Owner.Name,
-          pir: caseWithClaim.Claims__r[0].PIR__c,
-          status: caseWithClaim.Status
-        };
+      const formattedCases = data.map((entry, idx) => {
+        if (entry.type === "CARE_Claim__c") {
+          return {
+            idx,
+            id: entry.claimData.Id,
+            caseNumber: `CARE-${entry.claimData.Case_Id__c}`,
+            date: entry.claimData.Date_Created_In_CARE__c,
+            bookingReference: entry.claimData.Booking_Reference__c,
+            pir: entry.claimData.PIR__c
+          };
+        } else {
+          const caseWithClaim = entry.caseData;
+          const flightId =
+            caseWithClaim.Claims__r[0].Flight_Number__c !== undefined &&
+            caseWithClaim.Claims__r[0].Flight_Date__c !== undefined
+              ? caseWithClaim.Claims__r[0].Flight_Number__c +
+                "-" +
+                caseWithClaim.Claims__r[0].Flight_Date__c
+              : "";
+          return {
+            idx,
+            id: caseWithClaim.Id,
+            caseNumber: caseWithClaim.CaseNumber,
+            bookingReference: caseWithClaim.Claims__r[0].Liability_PNR__c,
+            date: caseWithClaim.CreatedDate,
+            EbNumber: caseWithClaim.Claims__r[0].EuroBonus_Number__c,
+            email: caseWithClaim.Claims__r[0].Contact_Email__c,
+            flight: flightId,
+            owner: caseWithClaim.Owner.Name,
+            pir: caseWithClaim.Claims__r[0].PIR__c,
+            status: caseWithClaim.Status
+          };
+        }
       });
 
       const thisCase = formattedCases.filter(

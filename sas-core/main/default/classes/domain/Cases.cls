@@ -785,7 +785,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
         }
 
         String notificationTitle = sendSuccess
-          ? 'Case closed'
+          ? 'Case Closed'
           : 'Case could not be closed';
         String notificationBody = sendSuccess
           ? 'Case ' +

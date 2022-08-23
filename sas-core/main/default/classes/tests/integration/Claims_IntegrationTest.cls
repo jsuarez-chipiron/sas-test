@@ -642,4 +642,62 @@ public with sharing class Claims_IntegrationTest {
       'Case should have been closed.'
     );
   }
+  @IsTest
+  public static void fetchingByCAREClaimsByPNRShouldCreateRecords() {
+    String bookingReference = APIMMock.PNR_FOR_WHICH_CLAIMS_EXIST;
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    ClaimService.fetchCAREClaimsFromEDW(bookingReference, null, null);
+    Test.stopTest();
+
+    CARE_Claim__c createdCAREClaim = [
+      SELECT Id, Booking_Reference__c
+      FROM CARE_Claim__c
+      WHERE Booking_Reference__c = :bookingReference
+    ];
+
+    System.assertEquals(
+      bookingReference,
+      createdCAREClaim.Booking_Reference__c,
+      'A CARE claim should have been inserted into the DB.'
+    );
+  }
+
+  @IsTest
+  public static void fetchingByCAREClaimsByPIRShouldCreateRecords() {
+    String pir = APIMMock.PIR_FOR_WHICH_CLAIMS_EXIST;
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    ClaimService.fetchCAREClaimsFromEDW(null, pir, null);
+    Test.stopTest();
+
+    CARE_Claim__c createdCAREClaim = [
+      SELECT Id, PIR__c
+      FROM CARE_Claim__c
+      WHERE PIR__c = :pir
+    ];
+
+    System.assertEquals(
+      pir,
+      createdCAREClaim.PIR__c,
+      'A CARE claim should have been inserted into the DB.'
+    );
+  }
+
+  @IsTest
+  public static void fetchingInvalidCAREClaimsShouldNotCreateAnything() {
+    String bookingReference = APIMMock.PNR_FOR_WHICH_CLAIMS_DO_NOT_EXIST;
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    ClaimService.fetchCAREClaimsFromEDW(bookingReference, null, null);
+    Test.stopTest();
+
+    List<CARE_Claim__c> createdCAREClaims = [SELECT Id FROM CARE_Claim__c];
+
+    System.assertEquals(
+      0,
+      createdCAREClaims.size(),
+      'No claim should have been created.'
+    );
+  }
 }

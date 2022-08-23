@@ -293,6 +293,18 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CAREClaims</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CAREClaimsSelector</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CareCasesController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CaseForm</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -3042,6 +3054,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>LIA_Claim__c.Full_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>LIA_Claim__c.Contact_Last_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3211,6 +3228,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>SurveyInvitation.ChatSurvey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
         <editable>true</editable>
         <field>SurveyInvitation.FCS_RelatedCase__c</field>
         <readable>true</readable>
@@ -3275,14 +3297,6 @@
         <recordType>Case.Customer_Claim</recordType>
     </layoutAssignments>  
     <layoutAssignments>
-        <layout>Case-SAS Feedback Layout</layout>
-        <recordType>Case.Feedback</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-SAS Information Layout</layout>
-        <recordType>Case.Information</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Case-SAS Internal%2FBackoffice Layout</layout>
         <recordType>Case.Internal_Backoffice</recordType>
     </layoutAssignments>
@@ -3293,10 +3307,6 @@
 	<layoutAssignments>
         <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Chat</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-SAS Support Layout</layout>
-        <recordType>Case.Support</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Customer__c-Customer Layout</layout>
@@ -3652,7 +3662,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>        
 	<recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Case.Channel</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -3663,23 +3673,8 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Case.Feedback</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>true</default>
-        <recordType>Case.Information</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
         <recordType>Case.Internal_Backoffice</recordType>
         <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.Support</recordType>
-        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>

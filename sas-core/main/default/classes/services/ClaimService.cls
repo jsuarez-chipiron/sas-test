@@ -546,10 +546,66 @@ public without sharing class ClaimService {
                 .selectByClaimId(new Set<Id>{ claim.Id })
             )
             .markAsFailed(e.getMessage(), uow);
-
           uow.commitWork();
         }
       }
+    }
+  }
+
+  public static void fetchCAREClaimsFromEDW(
+    String bookingReference,
+    String pir,
+    String caseId
+  ) {
+    /**
+     * TODO:
+     * 1. Check if we have fetched already.
+     * - [ ] Create an object for storing these fetches
+     * - [ ] Enable this part only after the decommission
+     * 2. If not, fetch.*/
+    ClaimsIntegrationService.FetchCAREClaimsQuery query = new ClaimsIntegrationService.FetchCAREClaimsQuery();
+    query.pnr = bookingReference;
+    query.caseId = caseId;
+    query.pir = pir;
+
+    try {
+      FetchCAREClaimsResponse response = ClaimsIntegrationService.fetchClaimsByQuery(
+        query
+      );
+
+      if (response == null) {
+        return;
+      }
+
+      CAREClaims.create(response).upsertToDB();
+    } catch (Exception e) {
+      System.debug(e);
+      C_Log.log(
+        C_Log.Severity.Error,
+        'Error when fetching CARE claims: ' + e.getMessage(),
+        null,
+        'CARE',
+        null
+      );
+    }
+  }
+
+  public class FetchCAREClaimsFromEDWAsync implements Queueable, Database.AllowsCallouts {
+    private String bookingReference;
+    private String pir;
+    private String caseId;
+
+    public FetchCAREClaimsFromEDWAsync(
+      String bookingReference,
+      String pir,
+      String caseId
+    ) {
+      this.bookingReference = bookingReference;
+      this.caseId = caseId;
+      this.pir = pir;
+    }
+    public void execute(QueueableContext ctx) {
+      fetchCAREClaimsFromEDW(bookingReference, pir, caseId);
     }
   }
 

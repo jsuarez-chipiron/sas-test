@@ -85,6 +85,18 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CAREClaims</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CAREClaimsSelector</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CareCasesController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>Cases</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2631,14 +2643,6 @@
         <recordType>Case.Claim</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-SAS Feedback Layout</layout>
-        <recordType>Case.Feedback</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-SAS Information Layout</layout>
-        <recordType>Case.Information</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Case-SAS Internal%2FBackoffice Layout</layout>
         <recordType>Case.Internal_Backoffice</recordType>
     </layoutAssignments>
@@ -2649,10 +2653,6 @@
 	<layoutAssignments>
         <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Chat</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-SAS Support Layout</layout>
-        <recordType>Case.Support</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Customer__c-Customer Layout</layout>
@@ -3029,17 +3029,7 @@
     </recordTypeVisibilities>    
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Case.Feedback</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
         <recordType>Case.FunctionalProductSupport</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.Information</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -3047,12 +3037,7 @@
         <personAccountDefault>true</personAccountDefault>
         <recordType>Case.Internal_Backoffice</recordType>
         <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.Support</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>  
+    </recordTypeVisibilities> 
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Contact.EmailContact</recordType>
