@@ -239,20 +239,17 @@ public class FetchCAREClaimsResponse {
     parser.nextToken(); // Skip START_OBJECT
     parser.nextToken(); // Skip FIELD_NAME: "case"
     JSONToken currentToken = parser.nextToken(); // Land on START_OBJECT or START_ARRAY
-
     switch on currentToken {
       when START_OBJECT {
         parsedCases.add(parseSingleCase(parser));
       }
       when START_ARRAY {
-        while (currentToken != JSONToken.END_ARRAY) {
+        while (currentToken != JSONToken.END_ARRAY && currentToken != null) {
           if (parser.getCurrentToken() == JSONToken.START_OBJECT) {
             parsedCases.add(parseSingleCase(parser));
-            parser.skipChildren();
           } else {
             currentToken = parser.nextToken();
           }
-          parser.nextToken(); // Skip END_ARRAY
         }
       }
     }
@@ -262,8 +259,17 @@ public class FetchCAREClaimsResponse {
 
   private static Cases parseSingleCase(JSONParser parser) {
     Cases parsedCase = new Cases();
-    while (parser.nextToken() != null) {
+    Integer mismatchedParenCount = 1;
+    // Loop until we find the matching paren for the case object's opening paren
+    while (mismatchedParenCount != 0) {
+      parser.nextToken();
       switch on parser.getCurrentToken() {
+        when START_OBJECT {
+          mismatchedParenCount++;
+        }
+        when END_OBJECT {
+          mismatchedParenCount--;
+        }
         when FIELD_NAME {
           String fieldName = parser.getCurrentName();
           switch on fieldName {
@@ -465,7 +471,7 @@ public class FetchCAREClaimsResponse {
                * "settlementItem": [
                *   {...items}
                * ],
-               * or 
+               * or
                * "settlementItem: {
                *    // single item properties
                * }
