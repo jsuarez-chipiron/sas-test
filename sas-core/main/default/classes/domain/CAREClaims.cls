@@ -133,58 +133,63 @@ public without sharing class CAREClaims extends fflib_SObjectDomain {
     for (
       FetchCAREClaimsResponse.Settlements settlement : responseCase.settlements
     ) {
-      String toAdd = '<b>Settlement</b><br>';
-      toAdd +=
-        'Total: ' +
-        settlement.amount +
-        ' ' +
-        dictionary.get(settlement.settlementCurrency) +
-        '<br>';
+      if (settlement.amount != null) {
+        String toAdd = '<b>Settlement</b><br>';
+        toAdd +=
+          'Total: ' +
+          settlement.amount +
+          ' ' +
+          dictionary.get(settlement.settlementCurrency) +
+          '<br>';
 
-      toAdd +=
-        'Created: ' +
-        settlement.dateCreated +
-        '<br>Approved: ' +
-        settlement.dateApproved +
-        '<br>';
+        toAdd +=
+          'Created: ' +
+          settlement.dateCreated +
+          '<br>Approved: ' +
+          settlement.dateApproved +
+          '<br>';
 
-      if (
-        settlement.settlementItems != null &&
-        !settlement.settlementItems.isEmpty()
-      ) {
-        toAdd += '<b>Items</b><br>';
-        for (
-          FetchCAREClaimsResponse.SettlementItems item : settlement.settlementItems
+        if (
+          settlement.settlementItems != null &&
+          !settlement.settlementItems.isEmpty()
         ) {
-          String settlementItem = '* ';
-          if (item.stiEurobonusPoints != null && item.stiEurobonusPoints > 0) {
-            settlementItem +=
-              item.stiEurobonusPoints +
-              ' points for ' +
-              customerIdToName.get(item.stiCusId) +
-              '. Comments: ' +
-              item.stiComments +
-              '<br><br>';
-          } else {
-            settlementItem +=
-              item.stiAmount +
-              ' ' +
-              dictionary.get(settlement.settlementCurrency) +
-              ' for ' +
-              customerIdToName.get(item.stiCusId) +
-              '. Cost Acc: ' +
-              dictionary.get(item.stiCostAcc) +
-              '. Comments: ' +
-              item.stiComments +
-              '<br><br>';
+          toAdd += '<b>Items</b><br>';
+          for (
+            FetchCAREClaimsResponse.SettlementItems item : settlement.settlementItems
+          ) {
+            String settlementItem = '* ';
+            if (
+              item.stiEurobonusPoints != null &&
+              item.stiEurobonusPoints > 0
+            ) {
+              settlementItem +=
+                item.stiEurobonusPoints +
+                ' points for ' +
+                customerIdToName.get(item.stiCusId) +
+                '. Comments: ' +
+                item.stiComments +
+                '<br><br>';
+            } else {
+              settlementItem +=
+                item.stiAmount +
+                ' ' +
+                dictionary.get(settlement.settlementCurrency) +
+                ' for ' +
+                customerIdToName.get(item.stiCusId) +
+                '. Cost Acc: ' +
+                dictionary.get(item.stiCostAcc) +
+                '. Comments: ' +
+                item.stiComments +
+                '<br><br>';
+            }
+            toAdd += settlementItem;
           }
-          toAdd += settlementItem;
         }
+
+        toAdd += '<br><br>';
+
+        parsedSettlements += toAdd;
       }
-
-      toAdd += '<br><br>';
-
-      parsedSettlements += toAdd;
     }
 
     return new CARE_Claim__c(
