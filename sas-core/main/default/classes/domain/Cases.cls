@@ -128,6 +128,9 @@ public without sharing class Cases extends fflib_SObjectDomain {
     // how to handle maps?
     List<String> statusesThatCompleteMilestones = new List<String>{
       'Awaiting Customer Response',
+      'Waiting for Approval',
+      'Waiting for Control',
+      'Waiting for Transfer',
       'Closed',
       'Escalated',
       'Merged',
