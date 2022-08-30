@@ -386,7 +386,7 @@ public class FetchCAREClaimsResponse {
         while (currentToken != JSONToken.END_ARRAY) {
           if (currentToken == JSONToken.START_OBJECT) {
             parsedSettlements.add(parseSingleSettlement(parser));
-            // parser.skipChildren(); TODO: Should this exist or not?
+            currentToken = parser.getCurrentToken();
           } else {
             currentToken = parser.nextToken();
           }
@@ -394,6 +394,7 @@ public class FetchCAREClaimsResponse {
         parser.nextToken(); // Skip END_ARRAY
       }
     }
+    parser.nextToken(); // Skip top level END_OBJECT
     return parsedSettlements;
   }
 
@@ -401,7 +402,7 @@ public class FetchCAREClaimsResponse {
     Settlements parsedSettlement = new Settlements();
 
     JSONToken currentToken = parser.nextToken();
-    while (currentToken != null && currentToken != JSONToken.END_OBJECT) {
+    while (currentToken != JSONToken.END_OBJECT) {
       switch on parser.getCurrentToken() {
         when FIELD_NAME {
           switch on parser.getCurrentName() {
