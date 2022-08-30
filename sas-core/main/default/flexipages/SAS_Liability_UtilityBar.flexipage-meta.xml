@@ -4,21 +4,25 @@
         <itemInstances>
             <componentInstance>
                 <componentName>runtime_service_omnichannel:omniWidget</componentName>
+                <identifier>runtime_service_omnichannel_omniWidget</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>console:history</componentName>
+                <identifier>console_history</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>notes:utilityBarNoteList</componentName>
+                <identifier>notes_utilityBarNoteList</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>macros:macroUtilityItem</componentName>
+                <identifier>macros_macroUtilityItem</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -65,6 +69,7 @@
                     <value>340</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
+                <identifier>flowruntime_interview</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -108,6 +113,7 @@
                     <value>340</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
+                <identifier>flowruntime_interview2</identifier>
             </componentInstance>
         </itemInstances>
         <name>utilityItems</name>
