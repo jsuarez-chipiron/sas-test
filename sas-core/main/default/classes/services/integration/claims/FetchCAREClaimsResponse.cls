@@ -207,13 +207,18 @@ public class FetchCAREClaimsResponse {
   ) {
     List<Object> toReturn = new List<Object>();
 
-    parser.nextToken(); // Skip START_OBJECT
+    parser.nextToken(); // Skip START_OBJECT or jump to empty string
+    if (parser.getCurrentToken() == JSONToken.VALUE_STRING) {
+      // If there are no values for a potential array, we get an empty string.
+      parser.nextToken();
+      return toReturn;
+    }
     parser.nextToken(); // Skip mid-level name. Format is always {"customers": {"customer": {} | []}}
     JSONToken currentToken = parser.nextToken(); // Land on START_OBJECT or START_ARRAY
 
     switch on currentToken {
       when START_ARRAY {
-        while (currentToken != null && currentToken != JSONToken.END_ARRAY) {
+        while (currentToken != JSONToken.END_ARRAY) {
           if (parser.getCurrentToken() == JSONToken.START_OBJECT) {
             toReturn.add(parser.readValueAs(apexType));
             parser.skipChildren();
@@ -226,7 +231,8 @@ public class FetchCAREClaimsResponse {
         parser.skipChildren();
       }
     }
-    parser.nextToken();
+    parser.nextToken(); // Skip END_ARRAY or END_OBJECT
+    parser.nextToken(); // Skip top level END_OBJECT
 
     return toReturn;
   }
@@ -239,20 +245,17 @@ public class FetchCAREClaimsResponse {
     parser.nextToken(); // Skip START_OBJECT
     parser.nextToken(); // Skip FIELD_NAME: "case"
     JSONToken currentToken = parser.nextToken(); // Land on START_OBJECT or START_ARRAY
-
     switch on currentToken {
       when START_OBJECT {
         parsedCases.add(parseSingleCase(parser));
       }
       when START_ARRAY {
-        while (currentToken != JSONToken.END_ARRAY) {
+        while (currentToken != JSONToken.END_ARRAY && currentToken != null) {
           if (parser.getCurrentToken() == JSONToken.START_OBJECT) {
             parsedCases.add(parseSingleCase(parser));
-            parser.skipChildren();
           } else {
             currentToken = parser.nextToken();
           }
-          parser.nextToken(); // Skip END_ARRAY
         }
       }
     }
@@ -262,75 +265,83 @@ public class FetchCAREClaimsResponse {
 
   private static Cases parseSingleCase(JSONParser parser) {
     Cases parsedCase = new Cases();
-    while (parser.nextToken() != null) {
-      switch on parser.getCurrentToken() {
-        when FIELD_NAME {
-          String fieldName = parser.getCurrentName();
-          switch on fieldName {
-            when 'dateCreated' {
-              parser.nextValue();
-              parsedCase.dateCreated = parser.getDateTimeValue();
+    parser.nextToken();
+    // Loop until we find the matching paren for the case object's opening paren
+    while (parser.getCurrentToken() != JSONToken.END_OBJECT) {
+      if (parser.getCurrentToken() == JSONToken.FIELD_NAME) {
+        switch on parser.getCurrentName() {
+          when 'dateCreated' {
+            parser.nextValue();
+            parsedCase.dateCreated = parser.getDateTimeValue();
+            parser.nextToken();
+          }
+          when 'flightDate' {
+            parser.nextValue();
+            parsedCase.flightDate = parser.getDateTimeValue();
+            parser.nextToken();
+          }
+          when 'lastModified' {
+            parser.nextValue();
+            parsedCase.lastModified = parser.getDateTimeValue();
+            parser.nextToken();
+          }
+          when 'dateClosed' {
+            parser.nextValue();
+            parsedCase.dateClosed = parser.getDateTimeValue();
+            parser.nextToken();
+          }
+          when 'caseId' {
+            parser.nextValue();
+            parsedCase.caseId = parser.getText();
+            parser.nextToken();
+          }
+          when 'customerId' {
+            parser.nextValue();
+            parsedCase.customerId = parser.getText();
+            parser.nextToken();
+          }
+          when 'pir' {
+            parser.nextValue();
+            parsedCase.pir = parser.getText();
+            parser.nextToken();
+          }
+          when 'pnr' {
+            parser.nextValue();
+            parsedCase.pnr = parser.getText();
+            parser.nextToken();
+          }
+          when 'flightNumber' {
+            parser.nextValue();
+            parsedCase.flightNumber = parser.getText();
+            parser.nextToken();
+          }
+          when 'categories' {
+            for (Object category : parseToList(parser, Categories.class)) {
+              parsedCase.categories.add((Categories) category);
             }
-            when 'flightDate' {
-              parser.nextValue();
-              parsedCase.flightDate = parser.getDateTimeValue();
+          }
+          when 'customers' {
+            for (Object customer : parseToList(parser, Customers.class)) {
+              parsedCase.customers.add((Customers) customer);
             }
-            when 'lastModified' {
-              parser.nextValue();
-              parsedCase.lastModified = parser.getDateTimeValue();
+          }
+          when 'decisions' {
+            for (Object decision : parseToList(parser, Decisions.class)) {
+              parsedCase.decisions.add((Decisions) decision);
             }
-            when 'dateClosed' {
-              parser.nextValue();
-              parsedCase.dateClosed = parser.getDateTimeValue();
+          }
+          when 'notes' {
+            for (Object note : parseToList(parser, Notes.class)) {
+              parsedCase.notes.add((Notes) note);
             }
-            when 'caseId' {
-              parser.nextValue();
-              parsedCase.caseId = parser.getText();
+          }
+          when 'pnrs' {
+            for (Object pnr : parseToList(parser, Pnrs.class)) {
+              parsedCase.pnrs.add((Pnrs) pnr);
             }
-            when 'customerId' {
-              parser.nextValue();
-              parsedCase.customerId = parser.getText();
-            }
-            when 'pir' {
-              parser.nextValue();
-              parsedCase.pir = parser.getText();
-            }
-            when 'pnr' {
-              parser.nextValue();
-              parsedCase.pnr = parser.getText();
-            }
-            when 'flightNumber' {
-              parser.nextValue();
-              parsedCase.flightNumber = parser.getText();
-            }
-            when 'categories' {
-              for (Object category : parseToList(parser, Categories.class)) {
-                parsedCase.categories.add((Categories) category);
-              }
-            }
-            when 'customers' {
-              for (Object customer : parseToList(parser, Customers.class)) {
-                parsedCase.customers.add((Customers) customer);
-              }
-            }
-            when 'decisions' {
-              for (Object decision : parseToList(parser, Decisions.class)) {
-                parsedCase.decisions.add((Decisions) decision);
-              }
-            }
-            when 'notes' {
-              for (Object note : parseToList(parser, Notes.class)) {
-                parsedCase.notes.add((Notes) note);
-              }
-            }
-            when 'pnrs' {
-              for (Object pnr : parseToList(parser, Pnrs.class)) {
-                parsedCase.pnrs.add((Pnrs) pnr);
-              }
-            }
-            when 'settlements' {
-              parsedCase.settlements = parseSettlements(parser);
-            }
+          }
+          when 'settlements' {
+            parsedCase.settlements = parseSettlements(parser);
           }
         }
       }
@@ -355,7 +366,13 @@ public class FetchCAREClaimsResponse {
      * ...
      */
     List<Settlements> parsedSettlements = new List<Settlements>();
-    parser.nextToken(); // Skip START_OBJECT
+    parser.nextToken(); // Skip START_OBJECT or jump to value string
+    if (parser.getCurrentToken() == JSONToken.VALUE_STRING) {
+      // If there are no values for a potential array, we get an empty string.
+      parser.nextToken();
+      return parsedSettlements;
+    }
+
     parser.nextToken(); // Skip FIELD_NAME "settlement"
 
     JSONToken currentToken = parser.nextToken(); // Land on START_OBJECT or START_ARRAY
@@ -363,12 +380,13 @@ public class FetchCAREClaimsResponse {
     switch on currentToken {
       when START_OBJECT {
         parsedSettlements.add(parseSingleSettlement(parser));
+        parser.nextToken(); // Skip END_OBJECT
       }
       when START_ARRAY {
         while (currentToken != JSONToken.END_ARRAY) {
           if (currentToken == JSONToken.START_OBJECT) {
             parsedSettlements.add(parseSingleSettlement(parser));
-            // parser.skipChildren(); TODO: Should this exist or not?
+            currentToken = parser.getCurrentToken();
           } else {
             currentToken = parser.nextToken();
           }
@@ -376,6 +394,7 @@ public class FetchCAREClaimsResponse {
         parser.nextToken(); // Skip END_ARRAY
       }
     }
+    parser.nextToken(); // Skip top level END_OBJECT
     return parsedSettlements;
   }
 
@@ -383,7 +402,7 @@ public class FetchCAREClaimsResponse {
     Settlements parsedSettlement = new Settlements();
 
     JSONToken currentToken = parser.nextToken();
-    while (currentToken != null && currentToken != JSONToken.END_OBJECT) {
+    while (currentToken != JSONToken.END_OBJECT) {
       switch on parser.getCurrentToken() {
         when FIELD_NAME {
           switch on parser.getCurrentName() {
@@ -465,13 +484,17 @@ public class FetchCAREClaimsResponse {
                * "settlementItem": [
                *   {...items}
                * ],
-               * or 
+               * or
                * "settlementItem: {
                *    // single item properties
                * }
                */
-              currentToken = parser.nextToken(); // Land on START_OBJECT or START_ARRAY
+              currentToken = parser.nextToken(); // Land on START_OBJECT or START_ARRAY or VALUE_STRING
               switch on currentToken {
+                when VALUE_STRING {
+                  // If there are no values for a potential array, we get an empty string. We can just skip this
+                  currentToken = parser.nextToken();
+                }
                 when START_OBJECT {
                   parsedSettlement.settlementItems.add(
                     (SettlementItems) parser.readValueAs(SettlementItems.class)
@@ -499,6 +522,7 @@ public class FetchCAREClaimsResponse {
       }
       currentToken = parser.nextToken();
     }
+    parser.nextToken(); // Skip END_OBJECT
     return parsedSettlement;
   }
 }
