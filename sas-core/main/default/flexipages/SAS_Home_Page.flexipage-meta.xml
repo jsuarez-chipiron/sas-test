@@ -28,6 +28,7 @@
                     <value>10</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:filterListCard</componentName>
+                <identifier>flexipage_filterListCard</identifier>
             </componentInstance>
         </itemInstances>
         <name>top</name>
@@ -37,6 +38,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>home:recentRecordContainer</componentName>
+                <identifier>home_recentRecordContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>bottomLeft</name>
@@ -46,6 +48,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>runtime_sales_activities:todayTaskContainer</componentName>
+                <identifier>runtime_sales_activities_todayTaskContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>bottomRight</name>
@@ -59,6 +62,7 @@
                     <value>GLOBAL</value>
                 </componentInstanceProperties>
                 <componentName>forceChatter:publisher</componentName>
+                <identifier>forceChatter_publisher</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -68,6 +72,7 @@
                     <value>NEWS</value>
                 </componentInstanceProperties>
                 <componentName>forceChatter:exposedFeed</componentName>
+                <identifier>forceChatter_exposedFeed</identifier>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>

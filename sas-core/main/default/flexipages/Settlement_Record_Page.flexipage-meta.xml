@@ -76,6 +76,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -89,6 +90,7 @@
                     <value>non-linear</value>
                 </componentInstanceProperties>
                 <componentName>runtime_sales_pathassistant:pathAssistant</componentName>
+                <identifier>runtime_sales_pathassistant_pathAssistant</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -99,6 +101,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
+                <identifier>force_detailPanel</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -121,6 +124,7 @@
                     <value>UTIL_Show_Email_on_Case_related_to_Settlement</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
+                <identifier>flowruntime_interview</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-3d2cd49d-06dc-4749-93dd-b5b7bc6b488f</name>
@@ -142,6 +146,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -155,6 +160,7 @@
                     <value>Draft Email</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -185,6 +191,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
@@ -203,6 +210,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>settlementCalculator</componentName>
+                <identifier>settlementCalculator</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -212,6 +220,7 @@
                     <value>maintabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -234,6 +243,7 @@
                     <value>CLAIM_Manual_Approval</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
+                <identifier>flowruntime_interview2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Settlement_Status__c}</leftValue>
@@ -258,6 +268,7 @@
                     <value>CLAIM_Control_Verification</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
+                <identifier>flowruntime_interview3</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -276,11 +287,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>currencyConverter</componentName>
+                <identifier>currencyConverter</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>caseProactivities</componentName>
+                <identifier>caseProactivities</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -298,6 +311,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListContainer</componentName>
+                <identifier>force_relatedListContainer</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

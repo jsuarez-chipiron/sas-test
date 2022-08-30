@@ -168,6 +168,7 @@
         <picklistField>Type_of_Customer__c</picklistField>
         <picklistObject>LIA_Claim__c</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <interviewLabel>LIA Create Liability Claim {!$Flow.CurrentDateTime}</interviewLabel>
     <label>LIA Create Liability Claim</label>
     <processMetadataValues>
@@ -648,6 +649,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>CourtInfo</name>
@@ -785,6 +787,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>ClaimAmounts</name>
@@ -852,6 +855,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>Contact_Information</name>
@@ -1060,6 +1064,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>New_Liability_Claim_Section5</name>
@@ -1116,6 +1121,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>BankInformation</name>
@@ -1214,6 +1220,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
