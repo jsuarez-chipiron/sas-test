@@ -39,6 +39,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Is_the_email_valid</targetReference>
         </connector>
     </assignments>
@@ -712,6 +713,7 @@
         <picklistField>Refund_Macro__c</picklistField>
         <picklistObject>Refund_Request__c</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>emailValidation</name>
         <dataType>Boolean</dataType>
@@ -1031,6 +1033,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>CustomerEmail</name>
@@ -1080,6 +1083,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>RequestType</name>
