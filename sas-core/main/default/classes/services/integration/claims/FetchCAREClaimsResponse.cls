@@ -380,7 +380,6 @@ public class FetchCAREClaimsResponse {
     switch on currentToken {
       when START_OBJECT {
         parsedSettlements.add(parseSingleSettlement(parser));
-        parser.nextToken(); // Skip END_OBJECT
       }
       when START_ARRAY {
         while (currentToken != JSONToken.END_ARRAY) {
