@@ -41,11 +41,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CAREClaims</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CAREClaimsSelector</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CareCasesController</apexClass>

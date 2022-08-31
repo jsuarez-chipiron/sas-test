@@ -50,11 +50,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CAREClaims</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CAREClaimsSelector</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CareCasesController</apexClass>
@@ -359,6 +359,61 @@
 	 <fieldPermissions>
         <editable>true</editable>
         <field>Booking__c.GDPR_Wiped__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Booking_Reference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Case_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Categories__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Customers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Date_Closed_In_CARE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Date_Created_In_CARE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Decisions__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Departure_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Flight_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Last_Modified_In_CARE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.PIR__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3215,6 +3270,10 @@
         <recordType>PersonAccount.EBCustomer</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabVisibilities>
+        <tab>CARE_Cases</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities> 
     <tabVisibilities>
         <tab>C_Log__c</tab>
         <visibility>DefaultOff</visibility>
