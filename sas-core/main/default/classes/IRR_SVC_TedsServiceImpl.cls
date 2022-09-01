@@ -200,7 +200,9 @@ public class IRR_SVC_TedsServiceImpl implements IRR_SVC_ITedsService {
         if (responseObject.statusCode >= 300 || responseObject.statusCode < 200) {
             throwTedsException(responseObject);
         }
-        List<IRR_MOD_TedsBooking> tedsBookings = IRR_MOD_TedsBooking.parseArray(responseObject.responseBody);
+        // List<IRR_MOD_TedsBooking> tedsBookings = IRR_MOD_TedsBooking.parseArray(responseObject.responseBody);
+        String responseBody = responseObject.responseBody.replace('"number"', '"number_x"');
+        List<IRR_MOD_TedsBooking> tedsBookings = (List<IRR_MOD_TedsBooking>)JSON.deserialize(responseBody,List<IRR_MOD_TedsBooking>.class);
         return tedsBookings;
     }
 
