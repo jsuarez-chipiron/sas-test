@@ -27,8 +27,8 @@ private class DateUtils_Test {
     List<Boolean> resultsPos = new List<Boolean>{};
     List<Boolean> resultsNeg = new List<Boolean>{};
     for (Datetime dat : dates) {
-      resultsPos.add(DateUtils.isEligableForCompensation(today, dat));
-      resultsNeg.add(DateUtils.isEligableForCompensation(dat, today));
+      resultsPos.add(DateUtils.areWithinTimeLimit(today, dat, 3.0));
+      resultsNeg.add(DateUtils.areWithinTimeLimit(dat, today, 3.0));
     }
 
     // Then

@@ -29,6 +29,10 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     Voucher
   }
 
+  /*public class SettlementItem {
+
+  }*/
+
   public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
     RecordType.Cheque => 'Cheque',
     RecordType.EBPoints => 'EB points',
