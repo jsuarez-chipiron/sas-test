@@ -2,10 +2,43 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>53.0</apiVersion>
     <assignments>
+        <name>Assign_email_to_validate</name>
+        <label>Assign email to validate</label>
+        <locationX>710</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>providedEmail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Email.value</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_the_email_valid</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_email_to_validate_0</name>
+        <label>Assign email to validate</label>
+        <locationX>842</locationX>
+        <locationY>878</locationY>
+        <assignmentItems>
+            <assignToReference>providedEmail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ValidEmail.value</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Is_the_email_valid</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_flight_information_from_mandatory_fields</name>
         <label>Assign flight information from mandatory fields</label>
         <locationX>314</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>pNRToAssign</assignToReference>
             <operator>Assign</operator>
@@ -35,14 +68,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_Customer_Claim</targetReference>
+            <targetReference>Get_Claim_Record_Type</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_flight_information_from_optional_fields</name>
         <label>Assign flight information from optional fields</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>pNRToAssign</assignToReference>
             <operator>Assign</operator>
@@ -72,14 +105,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_Customer_Claim</targetReference>
+            <targetReference>Get_Claim_Record_Type</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Change_team_customer_feedback_to_claims_0</name>
         <label>Change team customer feedback to claims</label>
         <locationX>182</locationX>
-        <locationY>1550</locationY>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>teamToAssign</assignToReference>
             <operator>Assign</operator>
@@ -95,7 +128,7 @@
         <name>Leave_current_team</name>
         <label>Leave current team</label>
         <locationX>446</locationX>
-        <locationY>1550</locationY>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>teamToAssign</assignToReference>
             <operator>Assign</operator>
@@ -111,7 +144,7 @@
         <name>Is_claim_created_from_a_customer_feedback_case</name>
         <label>Is claim created from a customer feedback case?</label>
         <locationX>314</locationX>
-        <locationY>1430</locationY>
+        <locationY>1670</locationY>
         <defaultConnector>
             <targetReference>Leave_current_team</targetReference>
         </defaultConnector>
@@ -133,10 +166,47 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_the_email_valid</name>
+        <label>Is the email valid?</label>
+        <locationX>710</locationX>
+        <locationY>638</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>emailValidation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>What_is_Customer_Claim_Category</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>emailValidation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Invalid_input</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>What_is_Customer_Claim_Category</name>
         <label>What is Customer Claim Category?</label>
         <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Baggage_0</name>
@@ -173,7 +243,7 @@
         <name>What_is_the_type_of_customer</name>
         <label>What is the type of customer?</label>
         <locationX>314</locationX>
-        <locationY>1094</locationY>
+        <locationY>1334</locationY>
         <defaultConnector>
             <targetReference>Is_claim_created_from_a_customer_feedback_case</targetReference>
         </defaultConnector>
@@ -244,6 +314,11 @@
     </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
+        <name>emailValidation</name>
+        <dataType>Boolean</dataType>
+        <expression>REGEX ( UPPER ( {!providedEmail} ) ,&quot;^[A-Z0-9._%+-/!#$%&amp;&apos;*=?^_`{|}~]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$&quot;)</expression>
+    </formulas>
+    <formulas>
         <name>FullCustomerName</name>
         <dataType>String</dataType>
         <expression>{!First_Name} + &quot; &quot;+ {!Last_Name}</expression>
@@ -273,7 +348,7 @@
         <name>Create_Customer</name>
         <label>Create Customer</label>
         <locationX>182</locationX>
-        <locationY>1214</locationY>
+        <locationY>1454</locationY>
         <connector>
             <targetReference>Is_claim_created_from_a_customer_feedback_case</targetReference>
         </connector>
@@ -302,7 +377,7 @@
         <name>Create_Customer_Claim</name>
         <label>Create Customer Claim</label>
         <locationX>314</locationX>
-        <locationY>974</locationY>
+        <locationY>1214</locationY>
         <connector>
             <targetReference>What_is_the_type_of_customer</targetReference>
         </connector>
@@ -393,7 +468,7 @@
         <inputAssignments>
             <field>Contact_Email__c</field>
             <value>
-                <elementReference>Email.value</elementReference>
+                <elementReference>providedEmail</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -523,10 +598,10 @@
         <name>Get_Claim_Record_Type</name>
         <label>Get Claim Record Type</label>
         <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationY>1094</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>What_is_Customer_Claim_Category</targetReference>
+            <targetReference>Create_Customer_Claim</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -543,7 +618,7 @@
     <recordLookups>
         <name>Get_Current_Case_Information_0</name>
         <label>Get Current Case Information</label>
-        <locationX>314</locationX>
+        <locationX>710</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -565,7 +640,7 @@
         <name>Update_Case_with_Customer_Claim_Information</name>
         <label>Update Case with Customer Claim Information</label>
         <locationX>314</locationX>
-        <locationY>1766</locationY>
+        <locationY>2006</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -595,7 +670,7 @@
         <inputAssignments>
             <field>SuppliedEmail</field>
             <value>
-                <elementReference>Email.value</elementReference>
+                <elementReference>providedEmail</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -622,13 +697,13 @@
     <screens>
         <name>Customer_Care_Creation</name>
         <label>Customer Care Creation</label>
-        <locationX>314</locationX>
+        <locationX>710</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Claim_Record_Type</targetReference>
+            <targetReference>Assign_email_to_validate</targetReference>
         </connector>
         <fields>
             <name>GeneralInfo</name>
@@ -1150,6 +1225,10 @@
                     <fieldText>Ticket Number</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;No more than 20 characters are allowed for this field. You can only add one ticket number.&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!Ticket_Number}) &lt;= 20</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>Flight_Date</name>
@@ -1216,6 +1295,10 @@
                     <fieldText>Ticket Number</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;No more than 20 characters are allowed for this field. You can only add one ticket number.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!Ticket_Number1}) &lt;= 20</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>Flight_Date1</name>
@@ -1325,6 +1408,10 @@
                     <fieldText>BIC/SWIFT</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;BIC/SWIFT cannot be more than 11 characters. BIC/SWIFT should be formatted as: XXXXXXYY or XXXXXXYYYYY (X\&apos;s are letters, Y\&apos;s are letters or numbers)&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!BIC_SWIFT})  &lt;= 11</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>Bank_Account_Number</name>
@@ -1332,6 +1419,10 @@
                     <fieldText>Bank Account Number</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Bank Account Number cannot be more than 35 characters.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!Bank_Account_Number}) &lt;=35</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1350,7 +1441,7 @@
     <screens>
         <name>Customer_Claim_Message</name>
         <label>Customer Claim Message</label>
-        <locationX>314</locationX>
+        <locationX>710</locationX>
         <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1366,8 +1457,59 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>Invalid_input</name>
+        <label>Invalid input</label>
+        <locationX>842</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Assign_email_to_validate_0</targetReference>
+        </connector>
+        <fields>
+            <name>ErrorMessage</name>
+            <fieldText>&lt;p&gt;{!providedEmail} is not a valid email address and the customer claim cannot be created.&lt;/p&gt;&lt;p&gt;Please enter a valid email address in order to create the customer claim.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>ValidEmail</name>
+            <extensionName>flowruntime:email</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>disabled</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>readonly</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>placeholder</name>
+                <value>
+                    <stringValue>you@example.com</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>584</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Customer_Claim_Message</targetReference>
@@ -1390,6 +1532,14 @@
     </variables>
     <variables>
         <name>pNRToAssign</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Email to be validated</description>
+        <name>providedEmail</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
