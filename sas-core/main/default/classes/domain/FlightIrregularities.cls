@@ -225,6 +225,21 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     return explanation;
   }
 
+  public void removeNA0Delay() {
+    List<FlightIrregularities__c> irregularitiesToSave = new List<FlightIrregularities__c>{};
+    for (FlightIrregularities__c fi : instanceRecords) {
+      if (
+        !((fi.Code__c == 'N/A' && fi.Duration_minutes__c == 0) ||
+        (fi.Code__c == null &&
+        fi.Duration_minutes__c == null))
+      ) {
+        irregularitiesToSave.add(fi);
+      }
+    }
+
+    this.instanceRecords = irregularitiesToSave;
+  }
+
   /**
    * Creates FlightIrregularities__c of type "Delay" from TEDS data.
    * @param reasons A list of TEDSFlight.DelayReasons from which the FlightIrregularities__c should be created.

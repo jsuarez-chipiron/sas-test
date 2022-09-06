@@ -41,7 +41,10 @@ public without sharing class Trip {
    *
    * @return A map of booking id to each trip in booking
    */
-  public static List<Trip> createFromBooking(Booking__c b) {
+  public static List<Trip> createFromBooking(
+    Booking__c b,
+    Map<String, Airport__c> airportCodeToAirport
+  ) {
     Map<Id, List<Trip>> bookingIdToTrips = new Map<Id, List<Trip>>{};
 
     // Sort the Segments
@@ -51,7 +54,7 @@ public without sharing class Trip {
       );
     }
 
-    return divideBookingSegmentsIntoTrips(b);
+    return divideBookingSegmentsIntoTrips(b, airportCodeToAirport);
   }
 
   public class InsufficientDataException extends Exception {
@@ -63,6 +66,11 @@ public without sharing class Trip {
   private Trip(List<Segment__c> segmentsInOrder) {
     // make some checks about the booking to make it clear what all we need.
     // should have all data by now, just populate the properties.
+    if (segmentsInOrder.size() == 0) {
+      throw new InsufficientDataException(
+        'A trip must have at least one segment'
+      );
+    }
     this.sortedSegments = segmentsInOrder;
     this.hasOnlySASFlights = true;
     this.tripType = nameToType.get(segmentsInOrder[0].Trip_Type__c);
@@ -132,19 +140,19 @@ public without sharing class Trip {
     return getFlightToFinalDestination().Arrival_Delayed_Minutes__c > 0;
   }
 
+  // Do not use in batch
   private void setAirports() {
     Flight__c firstFlight = sortedSegments[0].Flight__r;
     Flight__c finalFlight = getFlightToFinalDestination();
 
     String originAirportCode = firstFlight.Departure_Airport__c;
-    String destinationAirportCode = firstFlight.Arrival_Airport__c;
+    String destinationAirportCode = finalFlight.Arrival_Airport__c;
 
     List<Airport__c> aps = AirportsSelector.newInstance()
       .selectByIATACode(
         new Set<String>{ originAirportCode, destinationAirportCode }
       );
 
-    // TODO: Need to fetch airports separately
     for (Airport__c a : aps) {
       if (a.TEDS_Identifier__c == originAirportCode) {
         this.originAirport = a;
@@ -152,6 +160,18 @@ public without sharing class Trip {
         this.destinationAirport = a;
       }
     }
+  }
+
+  private void setAirports(Map<String, Airport__c> airportCodeToAirport) {
+    Flight__c firstFlight = sortedSegments[0].Flight__r;
+    Flight__c finalFlight = getFlightToFinalDestination();
+
+    this.originAirport = airportCodeToAirport.get(
+      firstFlight.Departure_Airport__c
+    );
+    this.destinationAirport = airportCodeToAirport.get(
+      finalFlight.Arrival_Airport__c
+    );
   }
 
   /*
@@ -162,7 +182,10 @@ public without sharing class Trip {
    *
    * @return a List<Trip> of the trips sorted in reverse order.
    */
-  private static List<Trip> divideBookingSegmentsIntoTrips(Booking__c booking) {
+  private static List<Trip> divideBookingSegmentsIntoTrips(
+    Booking__c booking,
+    Map<String, Airport__c> airportCodeToAirport
+  ) {
     List<Trip> tripsToReturn = new List<Trip>{};
     List<Segment__c> sortedSegments = Segments.newInstance(booking.Segments__r)
       .getSortedInstanceRecords();
@@ -248,7 +271,7 @@ public without sharing class Trip {
 
     // No, refactor, DB-call -> see eu261-service 773
     for (Trip t : tripsToReturn) {
-      t.setAirports();
+      t.setAirports(airportCodeToAirport);
     }
 
     return tripsToReturn;
