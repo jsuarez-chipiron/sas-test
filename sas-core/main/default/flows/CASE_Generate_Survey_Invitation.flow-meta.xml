@@ -571,7 +571,7 @@
             <targetReference>Get_SASCommunityId</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>caseRecord</name>
         <dataType>SObject</dataType>
