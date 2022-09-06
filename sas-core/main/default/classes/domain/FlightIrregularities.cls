@@ -14,6 +14,20 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     'AIRS' => true
   };
 
+  public static final Set<String> POTENTIALROTATIONCODES = new Set<String>{
+    'EQUI',
+    'CREW',
+    'RA (93)',
+    'RA',
+    '93',
+    'RC (95)',
+    'RC',
+    '95',
+    'RS (94)',
+    'RS',
+    '94'
+  };
+
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
       return new FlightIrregularities(records);
@@ -119,6 +133,15 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     }
 
     return this;
+  }
+
+  public Boolean containsRotationIrregularities() {
+    for (FlightIrregularities__c f : instanceRecords) {
+      if (POTENTIALROTATIONCODES.contains(f.Code__c)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public Map<Id, Boolean> isWithinSASControl() {

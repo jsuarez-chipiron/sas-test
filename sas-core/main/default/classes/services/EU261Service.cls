@@ -204,7 +204,7 @@ public without sharing class EU261Service {
         ac.unhandledReason = 'can handle only one booking per claim';
         ac.canBeEvaluated = false;
         // TODO: Ensure that we have only a specific number of trips.
-      } else if (ac.hasPotentiallyDuplicateClaims && false) {
+      } else if (ac.hasPotentiallyDuplicateClaims) {
         ac.unhandledReason = 'cannot handle potential duplicates';
         ac.canBeEvaluated = false;
       } else if (ac.booking.instanceRecords[0].Passengers__r.size() != 1) {
@@ -244,24 +244,14 @@ public without sharing class EU261Service {
       ) {
         ac.unhandledReason = 'cannot handle claim expenses';
         ac.canBeEvaluated = false;
-      } else if (
-        ac.flightToIrregularities.get(
-          ac.tripWithClaimFlight.sortedSegments[0].Flight__c
-        ) == null ||
-        ac.flightToIrregularities.get(
-            ac.tripWithClaimFlight.sortedSegments[0].Flight__c
-          )
-          .size() != 1
-      ) {
-        ac.unhandledReason = 'cannot handle flights without exactly one irregularity';
+      } else if (hasRotationIrregularities(ac)) {
+        ac.unhandledReason = 'cannot handle flights with irregularities caused by rotations';
         ac.canBeEvaluated = false;
-      } else if (
-        ac.flightToIrregularities.get(
-            ac.tripWithClaimFlight.sortedSegments[0].Flight__c
-          )[0]
-          .Type__c.substringBefore(' ') != 'Delay'
-      ) {
-        ac.unhandledReason = 'cannot handle irregularities which are not type "Delay"';
+      } else if (ac.hasCancellation()) {
+        ac.unhandledReason = 'cannot handle claims regarding a trip that has cancellations';
+        ac.canBeEvaluated = false;
+      } else if (!canCalculateDelay(ac)) {
+        ac.unhandledReason = 'there were issues calculating the delay'; // Can we code better logging?
         ac.canBeEvaluated = false;
       } else if (
         getMinutesDelayedWithinSASControl(ac) <= (2 * 60) ||
@@ -273,10 +263,7 @@ public without sharing class EU261Service {
         ac.unhandledReason = 'cannot handle claims where SAS is not the only operating carrier';
         ac.canBeEvaluated = false;
       } else if (
-        ac.claim.instanceRecords[0].Contact_Last_Name__c.toLowerCase() !=
-        ac.booking.instanceRecords[0]
-          .Passengers__r[0]
-          .Last_Name__c.toLowerCase()
+        false // ac.claim.instanceRecords[0].Contact_Last_Name__c.toLowerCase() != // ac.booking.instanceRecords[0] //   .Passengers__r[0] //   .Last_Name__c.toLowerCase()
       ) {
         // TODO: This won't work for claims submitted by agencies because there is no last name. But those should always have files anyway.
         ac.unhandledReason = 'can handle only claims when contact name matches booking passenger';
@@ -288,6 +275,15 @@ public without sharing class EU261Service {
     }
 
     return claimsToAutomate;
+  }
+
+  private static boolean canCalculateDelay(ClaimWithCompensationDetails ac) {
+    try {
+      getMinutesDelayedWithinSASControl(ac);
+    } catch (Exception e) {
+      return false;
+    }
+    return true;
   }
 
   private static void calculateReimbursement(
@@ -467,6 +463,20 @@ public without sharing class EU261Service {
     Airport__c destinationAirport = ac.tripWithClaimFlight.destinationAirport;
     return originAirport.Is_EU261_Applicable__c &&
       destinationAirport.Is_EU261_Applicable__c;
+  }
+
+  private static Boolean hasRotationIrregularities(
+    ClaimWithCompensationDetails ac
+  ) {
+    Flight__c flight = ac.tripWithClaimFlight.getFlightToFinalDestination();
+    List<FlightIrregularities__c> flightIrregularities = ac.flightToIrregularities.get(
+      flight.Id
+    );
+    FlightIrregularities irregularities = new FlightIrregularities(
+      flightIrregularities
+    );
+
+    return irregularities.containsRotationIrregularities();
   }
 
   /**
@@ -786,10 +796,13 @@ public without sharing class EU261Service {
       Map<Id, List<FlightIrregularities__c>> claimSpecificIrregularities = new Map<Id, List<FlightIrregularities__c>>{};
       if (c.booking.instanceRecords.size() > 0) {
         for (Segment__c s : c.booking.instanceRecords[0].Segments__r) {
-          claimSpecificIrregularities.put(
-            s.Flight__c,
-            flightIdToIrregularities.get(s.Flight__c)
+          List<FlightIrregularities__c> flightIrreg = flightIdToIrregularities.get(
+            s.Flight__c
           );
+          if (flightIrreg == null) {
+            flightIrreg = new List<FlightIrregularities__c>{};
+          }
+          claimSpecificIrregularities.put(s.Flight__c, flightIrreg);
         }
       }
       c.flightToIrregularities = claimSpecificIrregularities;
