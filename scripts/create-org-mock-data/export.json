@@ -5,6 +5,10 @@
       "operation": "Insert"
     },
     {
+      "query": "SELECT TEDS_Identifier__c, Name, City__c, Country_Code__c, Country_Name__c, Latitude__c, Longitude__c FROM Airport__c",
+      "operation": "Insert"
+    },
+    {
       "query": "SELECT Booking_Reference__c, Is_Cancelled__c, TEDS_Identifier__c, Type__c FROM Booking__c",
       "operation": "Insert"
     },

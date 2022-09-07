@@ -21,6 +21,11 @@
                 <label>Basic 9 - 17</label>
             </value>
             <value>
+                <fullName>Customer Claim</fullName>
+                <default>false</default>
+                <label>Customer Claim</label>
+            </value>
+            <value>
                 <fullName>Digital Channel Support</fullName>
                 <default>false</default>
                 <label>Digital Channel Support</label>

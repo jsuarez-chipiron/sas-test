@@ -294,6 +294,7 @@
             <label>Customer Feedback</label>
         </rules>
     </decisions>
+    <description>Contains the logic to generate the survey invitation link based on the case</description>
     <formulas>
         <name>surveyInvitationLink</name>
         <dataType>String</dataType>
@@ -570,7 +571,7 @@
             <targetReference>Get_SASCommunityId</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>caseRecord</name>
         <dataType>SObject</dataType>

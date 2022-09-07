@@ -290,6 +290,7 @@
         <picklistField>Settlement_Reason__c</picklistField>
         <picklistObject>LIA_Claim__c</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <interviewLabel>LIA Update Liability Claim Result {!$Flow.CurrentDateTime}</interviewLabel>
     <label>LIA Update Liability Claim Result</label>
     <processMetadataValues>
@@ -517,6 +518,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>Paid_Amounts_Update_Section2</name>
@@ -571,6 +573,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>

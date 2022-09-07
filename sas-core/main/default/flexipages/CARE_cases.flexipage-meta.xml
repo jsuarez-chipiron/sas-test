@@ -4,6 +4,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>careCaseSearch</componentName>
+                <identifier>careCaseSearch</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>

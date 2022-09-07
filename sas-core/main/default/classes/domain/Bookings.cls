@@ -17,11 +17,65 @@ public without sharing class Bookings extends fflib_SObjectDomain {
     }
   }
 
+  public enum Type {
+    DayReturn,
+    RoundTrip,
+    MultiCity,
+    OneWay,
+    Unknown
+  }
+
+  public static Map<String, Type> nameToBookingType = new Map<String, Type>{
+    'DayReturn' => Type.DayReturn,
+    'RoundTrip' => Type.RoundTrip,
+    'MultiCity' => Type.MultiCity,
+    'OneWay' => Type.OneWay,
+    'Unknown' => Type.Unknown
+  };
+
   public static Bookings newInstance(List<Booking__c> sObjectList) {
     return (Bookings) SAS_Service_Application.Domain.newInstance(sObjectList);
   }
 
-  public class BookingReferenceInvalidException extends Exception {
+  public class InsufficientDataException extends Exception {
+  }
+
+  public class InvalidTripException extends Exception {
+  }
+
+  /**
+   * Divides the flights in the booking into different trips. If there is an issue, the booking's trip(s) get set to null.
+   * If the booking is a OneWay there should only be one trip.
+   * If the booking is a Roundtrip or Dayreturn there should be two trips.
+   * If the booking is a MultiCity there can be 1(?) or more trips.
+   *
+   * The compensation should, logically, be calculated with respect to each "final destination" in the booking (see EU261 Article 2 h: https://eur-lex.europa.eu/legal-content/EN/TXT/?qid=1476179175834&uri=CELEX:32004R0261)
+   * When a pax stays in a city for more than 24 hours it counts as a "final destination" according to internal SAS policy (TODO: find a good source).
+   * After 24 hours the booking is considered a "package" under EU law (Council Directive 90/314/EEC Article 2 §1: https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=celex%3A31990L0314)
+   *
+   * TODO: Find a solid source for the 24 hour policy.
+   * TODO: Think about implementation: When there is a cancelled flight and a customers trip becomes e.g.
+   * ARN -> CPH (Delay 200 minutes + Wait >24hrs because of cancellation) -> LAX (Delay 260 minutes).
+   * The customer could, according to this implementation, claim compensation for both ARN -> CPH and CPH -> LAX.
+   * This seems fair. However, I think there is a good case for us not needing to provide them with more compensation.
+   *
+   * @return A map of booking id to each trip in booking
+   */
+  public Map<Id, List<Trip>> getTrips() {
+    Map<Id, List<Trip>> bookingIdToTrips = new Map<Id, List<Trip>>{};
+
+    // Sort the Segments
+    for (Booking__c b : instanceRecords) {
+      if (b.Segments__r == null) {
+        throw new InsufficientDataException(
+          'You must fetch the Segments__r for the booking.'
+        );
+      }
+
+      bookingIdToTrips.put(b.Id, Trip.createFromBooking(b));
+    }
+
+    return bookingIdToTrips;
   }
 
   /**

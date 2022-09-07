@@ -61,11 +61,6 @@ public with sharing class AirportService_IntegrationTest {
       airportFromDB.TEDS_Identifier__c,
       'Airport should exist and have the correct TEDS Identifier.'
     );
-    System.assertEquals(
-      true,
-      airportFromDB.Is_In_European_Union__c,
-      'Airport should exist and have the correct TEDS Identifier.'
-    );
   }
 
   @IsTest
@@ -125,11 +120,6 @@ public with sharing class AirportService_IntegrationTest {
       'Roland Garros Airport',
       airportFromDB.Name,
       'Special territory airport should exist and have the right name.'
-    );
-    System.assertEquals(
-      true,
-      airportFromDB.Is_In_European_Union__c,
-      'Special territory airport should exist and be in the EU.'
     );
   }
 }

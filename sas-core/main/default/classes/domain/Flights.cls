@@ -18,6 +18,8 @@ public without sharing class Flights extends fflib_SObjectDomain {
     return (Flights) SAS_Service_Application.Domain.newInstance(sObjectList);
   }
 
+  public static final String SAS_AIRLINE_IATA_DESIGNATOR = 'SK';
+
   public static final Set<String> STAR_ALLIANCE_AIRLINE_IATA_DESIGNATORS = new Set<String>{
     'A3',
     'AC',
@@ -62,6 +64,17 @@ public without sharing class Flights extends fflib_SObjectDomain {
         STAR_ALLIANCE_AIRLINE_IATA_DESIGNATORS.contains(
           flight.Operating_Carrier__c
         )
+      );
+    }
+    return toReturn;
+  }
+
+  public Map<Id, Boolean> operatedBySAS() {
+    Map<Id, Boolean> toReturn = new Map<Id, Boolean>();
+    for (Flight__c flight : instanceRecords) {
+      toReturn.put(
+        flight.Id,
+        flight.Operating_Carrier__c == SAS_AIRLINE_IATA_DESIGNATOR
       );
     }
     return toReturn;
@@ -287,6 +300,20 @@ public without sharing class Flights extends fflib_SObjectDomain {
     );
     Matcher matcher = validFlightNumberFormat.matcher(toCheck);
     return matcher.matches();
+  }
+
+  public Map<Id, Integer> getFlightDistancesInMeters() {
+    Map<Id, Integer> toReturn = new Map<Id, Integer>();
+    for (Flight__c f : instanceRecords) {
+      toReturn.put(
+        f.Id,
+        Airports.distanceBetweenAirportsInMeters(
+          f.Departure_Airport__c,
+          f.Arrival_Airport__c
+        )
+      );
+    }
+    return toReturn;
   }
 
   public class FlightException extends Exception {

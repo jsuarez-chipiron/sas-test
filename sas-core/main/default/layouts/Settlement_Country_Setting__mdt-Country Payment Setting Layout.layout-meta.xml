@@ -38,6 +38,10 @@
                 <behavior>Edit</behavior>
                 <field>Uses_IBAN__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Maximum_Time_To_Claim_Compensation__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

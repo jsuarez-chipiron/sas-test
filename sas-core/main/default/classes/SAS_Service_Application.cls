@@ -60,6 +60,7 @@ public class SAS_Service_Application {
       Passenger__c.SObjectType => Passengers.Constructor.class,
       Redeemed_Compensation_Card__c.SObjectType => RedeemedCompensationCards.Constructor.class,
       Refund_Request__c.SObjectType => Refund_Requests.Constructor.class,
+      Segment__c.SObjectType => Segments.Constructor.class,
       Settlement__c.SObjectType => Settlements.Constructor.class,
       Settlement_Item__c.SObjectType => SettlementItems.Constructor.class,
       SocialPost.SObjectType => SocialPosts.Constructor.class
@@ -71,6 +72,7 @@ public class SAS_Service_Application {
       BookingService.class => BookingService.class,
       ClaimsIntegrationService.class => ClaimsIntegrationService.class,
       CLMIntegrationService.class => CLMIntegrationService.class,
+      EU261Service.class => EU261Service.class,
       FlightService.class => FlightService.class,
       AirportService.class => AirportService.class,
       SettlementService.class => SettlementService.class,
