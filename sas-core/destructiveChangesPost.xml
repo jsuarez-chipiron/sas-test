@@ -12,12 +12,8 @@
     the block can be removed from this document.
 -->
     <types>
-        <members>FetchFlightEventsTrigger</members>
-		<name>ApexTrigger</name>
-    </types>
-    <types>
-        <members>FetchFlightEvents</members>
-        <members>FlightEvents_IntegrationTest</members>
+        <members>AutomationUtils</members>
+        <members>AutomationUtils_Test</members>
 		<name>ApexClass</name>
     </types>
 </Package>
