@@ -55,6 +55,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Is_the_email_valid</targetReference>
         </connector>
     </assignments>
@@ -95,6 +96,7 @@
             <label>No</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>emailValidation</name>
         <dataType>Boolean</dataType>
@@ -332,6 +334,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>CustomerEmail</name>
@@ -387,6 +390,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>Note</name>

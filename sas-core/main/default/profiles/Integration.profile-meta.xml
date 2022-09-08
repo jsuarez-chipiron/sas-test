@@ -41,11 +41,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CAREClaims</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CAREClaimsSelector</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CareCasesController</apexClass>
@@ -1338,11 +1338,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Airport__c.Longitude__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Airport__c.Is_In_European_Union__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

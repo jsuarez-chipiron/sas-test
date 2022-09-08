@@ -18,8 +18,16 @@ public without sharing class AirportService {
    * @param airportReferences Set of airports to find using the full TEDS airport Id. Maximum of 10 per call.
    *
    * @throws IntegrationError If there is a problem with the integration.
+   * @throws IllegalArgumentsException If there are no airport references.
    */
   public Airports fetchAirportsByReference(
+    Set<String> airportReferences,
+    Boolean shouldUpsertToDB
+  ) {
+    return fetchAirportsByReferenceStatic(airportReferences, shouldUpsertToDB);
+  }
+
+  public static Airports fetchAirportsByReferenceStatic(
     Set<String> airportReferences,
     Boolean shouldUpsertToDB
   ) {

@@ -294,11 +294,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CAREClaims</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CAREClaimsSelector</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CareCasesController</apexClass>
@@ -1699,6 +1699,61 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>CARE_Claim__c.Booking_Reference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Case_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Categories__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Customers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Date_Closed_In_CARE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Date_Created_In_CARE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Decisions__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Departure_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Flight_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.Last_Modified_In_CARE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CARE_Claim__c.PIR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Exchange_Rate__c.From_Currency__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1850,11 +1905,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Airport__c.Longitude__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Airport__c.Is_In_European_Union__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3386,6 +3436,15 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>CARE_Claim__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
@@ -3913,6 +3972,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>CARE_Cases</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities> 
+    <tabVisibilities>
         <tab>Exchange_Rate__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -3928,7 +3991,7 @@
         <tab>Refund_Request__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities> 
-        <tabVisibilities>
+    <tabVisibilities>
         <tab>Special_Service_Request__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities> 

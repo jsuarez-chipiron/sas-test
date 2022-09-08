@@ -20,6 +20,7 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -33,6 +34,7 @@
                     <value>500</value>
                 </componentInstanceProperties>
                 <componentName>runtime_service_liveagent:chatBody</componentName>
+                <identifier>runtime_service_liveagent_chatBody</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-f035271f-754a-4cf6-9dbf-7b1df468ea1e</name>
@@ -42,6 +44,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>runtime_service_liveagent:pastChats</componentName>
+                <identifier>runtime_service_liveagent_pastChats</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-dcfa27ec-98ab-41b1-8c9b-2c1fe73ffc4e</name>
@@ -51,6 +54,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
+                <identifier>force_detailPanel</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -68,6 +72,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListContainer</componentName>
+                <identifier>force_relatedListContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-ddcf1746-c2fa-4b5a-af4b-cd83b57fb21d</name>
@@ -89,6 +94,7 @@
                     <value>Standard.Tab.chat</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>chatTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -102,6 +108,7 @@
                     <value>Standard.Tab.pastChats</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>pastChatsTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -115,6 +122,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-83af56a9-8b53-40af-9ba1-73b791a311a2</name>
@@ -128,6 +136,7 @@
                     <value>Facet-83af56a9-8b53-40af-9ba1-73b791a311a2</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>
@@ -137,6 +146,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>fcs_CaseTag</componentName>
+                <identifier>fcs_CaseTag</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -154,6 +164,7 @@
                     <value>LiveChatTranscript.Chat_transcript_detail_information</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -167,16 +178,19 @@
                     <value>Case.Case_Details_for_Chat</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>customerCard</componentName>
+                <identifier>customerCard</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>caseBookingDetails</componentName>
+                <identifier>caseBookingDetails</identifier>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>

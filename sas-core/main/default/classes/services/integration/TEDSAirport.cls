@@ -18,22 +18,16 @@ public class TEDSAirport {
     public String longitude { get; set; }
   }
 
-  private static final Map<String, String> REPLACEMENT_MAP = new Map<String, String>{
-    'number' => 'number_x'
-  };
-
   public static TEDSAirport parse(String json) {
     ffhttp_JsonDeserializer jsonDeserializer = new ffhttp_JsonDeserializer(
-      TEDSAirport.class,
-      REPLACEMENT_MAP
+      TEDSAirport.class
     );
     return (TEDSAirport) jsonDeserializer.deserialize(json);
   }
 
   public static List<TEDSAirport> parseArray(String json) {
     ffhttp_JsonDeserializer jsonDeserializer = new ffhttp_JsonDeserializer(
-      List<TEDSAirport>.class,
-      REPLACEMENT_MAP
+      List<TEDSAirport>.class
     );
 
     return (List<TEDSAirport>) jsonDeserializer.deserialize(json);

@@ -36,10 +36,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Is_In_European_Union__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Is_EU261_Applicable__c</field>
             </layoutItems>
         </layoutColumns>

@@ -193,6 +193,7 @@
                     <value>10</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -206,6 +207,7 @@
                     <value>non-linear</value>
                 </componentInstanceProperties>
                 <componentName>runtime_sales_pathassistant:pathAssistant</componentName>
+                <identifier>runtime_sales_pathassistant_pathAssistant</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -215,6 +217,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListQuickLinksContainer</componentName>
+                <identifier>force_relatedListQuickLinksContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -224,6 +227,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceChatter:recordFeedContainer</componentName>
+                <identifier>forceChatter_recordFeedContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-88d4a701-9ae4-476c-b07b-2a635196ff24</name>
@@ -233,6 +237,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
+                <identifier>force_detailPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-423363f3-b163-4160-9a00-c58e1e657418</name>
@@ -254,6 +259,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListContainer</componentName>
+                <identifier>force_relatedListContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-ba80526e-8f00-477c-a038-5b09477da211</name>
@@ -275,6 +281,7 @@
                     <value>Standard.Tab.feed</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>feedTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -292,6 +299,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -309,6 +317,7 @@
                     <value>Standard.Tab.relatedLists</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>relatedListsTab</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-ef70b060-3b43-4a47-8a2d-98da6781215c</name>
@@ -330,6 +339,7 @@
                     <value>SupportCaseReply</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
+                <identifier>flowruntime_interview</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -352,11 +362,13 @@
                     <value>Facet-ef70b060-3b43-4a47-8a2d-98da6781215c</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>caseSimilarCases</componentName>
+                <identifier>caseSimilarCases</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>
@@ -366,6 +378,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>caseProactivities</componentName>
+                <identifier>caseProactivities</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -383,6 +396,7 @@
                     <value>Case.Case_Details</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -413,6 +427,7 @@
                     <value>LIA_Create_Liability_Claim</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
+                <identifier>flowruntime_interview2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.LIA_Claim__r.Name}</leftValue>
@@ -436,6 +451,7 @@
                     <value>LIA_Claim__c.Liability_claim_details</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.LIA_Claim__r.Name}</leftValue>
@@ -467,6 +483,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -492,6 +509,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -517,11 +535,13 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>customerCard</componentName>
+                <identifier>customerCard</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                     <criteria>
@@ -555,6 +575,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>caseBookingDetails</componentName>
+                <identifier>caseBookingDetails</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                     <criteria>
@@ -588,6 +609,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>gdpr_GDPRDelete</componentName>
+                <identifier>gdpr_GDPRDelete</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Manual_GDPR_Delete}</leftValue>

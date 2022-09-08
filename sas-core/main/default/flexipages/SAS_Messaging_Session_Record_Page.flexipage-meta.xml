@@ -20,6 +20,7 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -34,6 +35,7 @@
                     <value>500</value>
                 </componentInstanceProperties>
                 <componentName>runtime_service_livemessage:chatBody</componentName>
+                <identifier>runtime_service_livemessage_chatBody</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -44,6 +46,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
+                <identifier>force_detailPanel</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -66,6 +69,7 @@
                     <value>Standard.Tab.chat</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>chatTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -79,6 +83,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -93,6 +98,7 @@
                     <value>maintabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -103,6 +109,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>fcs_CaseTag</componentName>
+                <identifier>fcs_CaseTag</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -120,16 +127,19 @@
                     <value>MessagingEndUser._UpdateMessagingEndUser</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>messagingCases</componentName>
+                <identifier>messagingCases</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>customerCard</componentName>
+                <identifier>customerCard</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

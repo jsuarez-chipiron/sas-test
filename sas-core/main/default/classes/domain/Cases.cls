@@ -17,6 +17,7 @@ public without sharing class Cases extends fflib_SObjectDomain {
 
   public List<Case> instanceRecords;
 
+  public static final String STATUS_NEW = 'New';
   public static final String STATUS_IN_PROGRESS = 'In Progress';
   public static final String STATUS_WAITING_FOR_APPROVAL = 'Waiting for Approval';
   public static final String STATUS_WAITING_FOR_CONTROL = 'Waiting for Control';
@@ -128,6 +129,9 @@ public without sharing class Cases extends fflib_SObjectDomain {
     // how to handle maps?
     List<String> statusesThatCompleteMilestones = new List<String>{
       'Awaiting Customer Response',
+      'Waiting for Approval',
+      'Waiting for Control',
+      'Waiting for Transfer',
       'Closed',
       'Escalated',
       'Merged',

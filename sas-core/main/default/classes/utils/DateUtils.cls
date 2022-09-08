@@ -12,6 +12,7 @@ public without sharing class DateUtils {
    * @return The Date parsed from the flight id or null.
    */
   public static Date parseDateFromFlightId(String flightId) {
+    // Move to Flights domain
     String flightDate = flightId.substringAfter('-');
     Date cleanDate;
     try {
@@ -34,23 +35,24 @@ public without sharing class DateUtils {
   }
 
   /**
-   * Calculates whether there is 3 years or more between two datetimes.
+   * Calculates whether there is X years or less between two datetimes.
    * Used to determine whether a claim has been filed in time to be eligable for EU261 compensation.
    *
    * @param datetime1
    * @param datetime2
+   * @param timeLimitYears a decimal with the time limit in years before a customer is no longer eligable for compensation.
    *
-   * @return true if there is 3 years or more difference between the two datetimes.
+   * @return true if there is X years or less difference between the two datetimes.
    */
-  public static Boolean isEligableForCompensation(
+  public static Boolean areWithinTimeLimit( // Move to somewhere, - Nathan: Now a bit more general, this seems like an ok place?
     Datetime datetime1,
-    Datetime datetime2
+    Datetime datetime2,
+    Decimal timeLimitYears
   ) {
     Date date1 = datetime1.date();
     Date date2 = datetime2.date();
     Integer dayDelta = date1.daysBetween(date2);
-    if (Math.abs(dayDelta) > 1096) {
-      // Three years and an extra day (gap year guard)
+    if (Math.abs(dayDelta) > Math.round(timeLimitYears * 365.25 + 1)) {
       return false;
     }
 
@@ -64,18 +66,18 @@ public without sharing class DateUtils {
    * Calculates whether there is 24 hours or more between two datetimes.
    * Used to determine whether a destinaiton should be considered a final destination or not.
    */
-  public static Boolean isLessThan24HoursBetween(
+  public static Boolean isMoreThan24HoursBetween(
     Datetime datetime1,
     Datetime datetime2
   ) {
     Long millisecondDelta = Math.abs(datetime1.getTime() - datetime2.getTime());
     Long hourDelta = millisecondDelta / (3600000);
 
-    if (hourDelta >= 24.0) {
-      return false;
+    if (hourDelta > 24.0) {
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   /**

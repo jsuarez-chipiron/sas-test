@@ -2,8 +2,10 @@
  * Utility class which handles Countries
  */
 public without sharing class CountryUtils {
+  private static final Decimal DEFAULT_AMOUNT_OF_YEARS_YOU_CAN_WAIT_TO_FILE_A_CLAIM = 3.0;
+
   // Maps the country codes which are associated with another country in a "child to parent"-type relationship, e.g. Åland (AX) to Finland (FI).
-  private static Map<String, String> countryCodeToIBANCountryCode = new Map<String, String>{
+  private static final Map<String, String> countryCodeToIBANCountryCode = new Map<String, String>{
     'GF' => 'FR',
     'GP' => 'FR',
     'MQ' => 'FR',
@@ -24,7 +26,7 @@ public without sharing class CountryUtils {
 
   // TODO: Consider: This could be stored in the settlement country settings
   // Source: https://european-union.europa.eu/principles-countries-history/country-profiles_en
-  private static Set<String> countryCodesInEU = new Set<String>{
+  private static final Set<String> countryCodesInEU = new Set<String>{
     'AT',
     'BE',
     'BG',
@@ -54,7 +56,7 @@ public without sharing class CountryUtils {
     'SE'
   };
 
-  private static Set<String> countryCodesNotInEUButEU261Applicable = new Set<String>{
+  private static final Set<String> countryCodesNotInEUButEU261Applicable = new Set<String>{
     'NO',
     'CH',
     'IS'
@@ -132,58 +134,40 @@ public without sharing class CountryUtils {
     return false;
   }
 
-  /**
-   * Calculates the haversine distance in meters between two airports.
-   *
-   * @param airport1 an Airport__c
-   * @param airport2 an Airport__c
-   *
-   * @return An Integer value of the distance in meters between the two airports.
-   */
-  public static Integer distanceBetweenAirportsInMeters(
-    Airport__c airport1,
-    Airport__c airport2
+  public static Map<String, Decimal> getAmountOfYearsYouCanWaitToFileAClaim(
+    Set<String> countryNames
   ) {
-    Double dist = distanceBetweenAirportsInKilometers(airport1, airport2);
-    return Integer.valueOf(
-      Decimal.valueOf(dist * 1000).round(System.RoundingMode.HALF_UP)
-    );
-  }
+    Map<String, Decimal> countryToTimeLimit = new Map<String, Decimal>{};
 
-  /**
-   * Calculates the haversine distance in kilometers between two airports (rounded normally).
-   *
-   * @param airport1 an Airport__c
-   * @param airport2 an Airport__c
-   *
-   * @return A Double value of the distance in kilometers between the two airports.
-   */
-  public static Double distanceBetweenAirportsInKilometers(
-    Airport__c airport1,
-    Airport__c airport2
-  ) {
-    if (airport1 == null || airport2 == null) {
-      throw new AirportsNotDefinedException(
-        'At least one of the airports equal to null.'
+    List<Settlement_Country_Setting__mdt> countrySettings = [
+      SELECT Maximum_Time_To_Claim_Compensation__c, Country_Name__c
+      FROM Settlement_Country_Setting__mdt
+      WHERE Country_Name__c IN :countryNames
+    ];
+
+    for (Settlement_Country_Setting__mdt countrySetting : countrySettings) {
+      if (countrySetting.Maximum_Time_To_Claim_Compensation__c == null) {
+        countryToTimeLimit.put(
+          countrySetting.Country_Name__c,
+          DEFAULT_AMOUNT_OF_YEARS_YOU_CAN_WAIT_TO_FILE_A_CLAIM
+        );
+      } else {
+        countryToTimeLimit.put(
+          countrySetting.Country_Name__c,
+          countrySetting.Maximum_Time_To_Claim_Compensation__c
+        );
+      }
+    }
+
+    if (countryToTimeLimit.keySet().size() != countryNames.size()) {
+      throw new CountryNotFoundException(
+        'Could not find countrysetting for country.'
       );
     }
 
-    Double long1 = Double.valueOf(airport1.Longitude__c);
-    Double lat1 = Double.valueOf(airport1.Latitude__c);
-    Double long2 = Double.valueOf(airport2.Longitude__c);
-    Double lat2 = Double.valueOf(airport2.Latitude__c);
-
-    Location loc1 = Location.newInstance(
-      airport1.Latitude__c,
-      airport1.Longitude__c
-    );
-    Location loc2 = Location.newInstance(
-      airport2.Latitude__c,
-      airport2.Longitude__c
-    );
-    return Location.getDistance(loc1, loc2, 'km');
+    return countryToTimeLimit;
   }
 
-  public class AirportsNotDefinedException extends Exception {
+  private class CountryNotFoundException extends Exception {
   }
 }

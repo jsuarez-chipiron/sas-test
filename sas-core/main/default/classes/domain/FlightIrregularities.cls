@@ -6,11 +6,21 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
   }
   public List<FlightIrregularities__c> instanceRecords;
   public Map<String, List<FlightIrregularities__c>> TEDSIdToIrregularities = new Map<String, List<FlightIrregularities__c>>{};
+  // This should likely be stored in CancellationCode.globalValueSet. However, db calls makes that very annoying.
+  // TODO: Populate, get help from liability: https://docs.google.com/spreadsheets/d/1lo-pu7Ew-f-5z18Ke51962j_VZkI9FfA8kYiKTFUw5o/edit#gid=801456937
+  public static final Map<String, Boolean> codeToSASIsResponsible = new Map<String, Boolean>{
+    'N/A' => true,
+    'WEAT' => false,
+    'AIRS' => true
+  };
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
       return new FlightIrregularities(records);
     }
+  }
+
+  public class IrregularityException extends Exception {
   }
 
   public static FlightIrregularities newInstance(
@@ -109,6 +119,110 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     }
 
     return this;
+  }
+
+  public Map<Id, Boolean> isWithinSASControl() {
+    Map<Id, Boolean> irregularityToIsWithinControl = new Map<Id, Boolean>{};
+
+    for (FlightIrregularities__c f : instanceRecords) {
+      Boolean SASisResponsible = codeToSASIsResponsible.get(f.Code__c);
+      if (SASisResponsible == null) {
+        SASisResponsible = true;
+      }
+      irregularityToIsWithinControl.put(f.Id, SASisResponsible);
+    }
+
+    return irregularityToIsWithinControl;
+  }
+
+  public Map<Id, List<FlightIrregularities__c>> getFlightIdToIrregularities() {
+    Map<Id, List<FlightIrregularities__c>> flightIdToIrregularities = new Map<Id, List<FlightIrregularities__c>>();
+    for (FlightIrregularities__c irregularity : instanceRecords) {
+      List<FlightIrregularities__c> currentIrregularities = flightIdToIrregularities.get(
+        irregularity.Flight__c
+      );
+      if (currentIrregularities == null) {
+        flightIdToIrregularities.put(
+          irregularity.Flight__c,
+          new List<FlightIrregularities__c>{ irregularity }
+        );
+      } else {
+        currentIrregularities.add(irregularity);
+      }
+    }
+    return flightIdToIrregularities;
+  }
+
+  /*
+   * @return a List of 4 decimal values of:
+   * delay on departure [0],
+   * delay on arrival [1],
+   * delay on departure within SAS' control [2],
+   * delay on arrival within SAS' control [3].
+   */
+  public List<Decimal> getTotalDelayInMinutesDivided() {
+    Decimal departureDelay = 0;
+    Decimal arrivalDelay = 0;
+    Decimal departureDelayWithinSASControl = 0;
+    Decimal arrivalDelayWithinSASControl = 0;
+
+    for (FlightIrregularities__c f : instanceRecords) {
+      String cancellationOrDelay = f.Type__c.substringBefore(' ');
+      String arrivalOrDeparture = f.Type__c.substringAfter(' ');
+      if (cancellationOrDelay == 'Cancellation') {
+        throw new IrregularityException(
+          'At least one irregularity is a cancellation irregularity'
+        );
+      }
+      Boolean SASisResponsible = codeToSASIsResponsible.get(f.Code__c);
+      if (SASisResponsible == null) {
+        SASisResponsible = true;
+      }
+
+      if (arrivalOrDeparture == '(departure)') {
+        if (SASisResponsible) {
+          departureDelayWithinSASControl += f.Duration_minutes__c;
+        }
+        departureDelay += f.Duration_minutes__c;
+      } else if (arrivalOrDeparture == '(arrival)') {
+        if (SASisResponsible) {
+          arrivalDelayWithinSASControl += f.Duration_minutes__c;
+        }
+        arrivalDelay += f.Duration_minutes__c;
+      } else {
+        throw new IrregularityException('Invalid irregularity type');
+      }
+    }
+
+    return new List<Decimal>{
+      departureDelay,
+      arrivalDelay,
+      departureDelayWithinSASControl,
+      arrivalDelayWithinSASControl
+    };
+  }
+
+  /**
+   * @return a String with an explanation which of the irregularities SAS is not responsible for.
+   */
+  public String getOutsideSASControlExplanation() {
+    Decimal totalDelayOutsideSASControl = 0;
+    String explanation = 'SAS is not responsible for delay(s) with reason code(s): ';
+
+    for (FlightIrregularities__c f : instanceRecords) {
+      Boolean SASisResponsible = codeToSASIsResponsible.get(f.Code__c);
+      if (SASisResponsible == null) {
+        SASisResponsible = true;
+      }
+      if (!SASisResponsible) {
+        totalDelayOutsideSASControl += f.Duration_minutes__c;
+        explanation += f.Code__c + ' (' + f.Duration_minutes__c + ' minutes), ';
+      }
+    }
+
+    explanation += '(Total: ' + totalDelayOutsideSASControl + ' minutes)';
+
+    return explanation;
   }
 
   /**
