@@ -420,7 +420,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>flowLayout</name>
-                    <value>oneColumn</value>
+                    <value>twoColumn</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>flowName</name>
