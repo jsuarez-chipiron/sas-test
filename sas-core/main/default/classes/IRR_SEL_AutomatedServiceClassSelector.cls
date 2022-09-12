@@ -1,10 +1,17 @@
+/**
+ * @description       : 
+ * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @group             : 
+ * @last modified on  : 09-07-2022
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+**/
 public class IRR_SEL_AutomatedServiceClassSelector extends fflib_SObjectSelector implements IRR_SEL_IAutomatedServiceClassSelector  {
     
     public static IRR_SEL_IAutomatedServiceClassSelector newInstance() 
     {
 
         return (IRR_SEL_IAutomatedServiceClassSelector) IRR_Application.Selector.newInstance(
-            ServiceClass__mdt.SObjectType);
+            IRR_Icoupon_Voucher__mdt.SObjectType);
     }
 
     public List<Schema.SObjectField> getSObjectFieldList() 
@@ -13,14 +20,15 @@ public class IRR_SEL_AutomatedServiceClassSelector extends fflib_SObjectSelector
         return new List<Schema.SObjectField> 
         { 
 
-            ServiceClass__mdt.DeveloperName,
-            ServiceClass__mdt.MasterLabel,
-            ServiceClass__mdt.AirportCode__c,
-            ServiceClass__mdt.CoupanValue__c,
-            ServiceClass__mdt.Currency__c,
-            ServiceClass__mdt.Min_Delay__c,
-            ServiceClass__mdt.Max_Delay__c,
-            ServiceClass__mdt.Service_Class_Code__c
+            IRR_Icoupon_Voucher__mdt.DeveloperName,
+            IRR_Icoupon_Voucher__mdt.MasterLabel,
+            IRR_Icoupon_Voucher__mdt.AirportCode__c,
+            IRR_Icoupon_Voucher__mdt.CoupanValue__c,
+            IRR_Icoupon_Voucher__mdt.Currency__c,
+            IRR_Icoupon_Voucher__mdt.Min_Delay__c,
+            IRR_Icoupon_Voucher__mdt.Max_Delay__c,
+            IRR_Icoupon_Voucher__mdt.ReasonComment__c,
+            IRR_Icoupon_Voucher__mdt.Service_Class_Code__c
 
         };
 
@@ -28,10 +36,10 @@ public class IRR_SEL_AutomatedServiceClassSelector extends fflib_SObjectSelector
 
     public Schema.SObjectType getSObjectType() {
 
-        return ServiceClass__mdt.SobjectType ;
+        return IRR_Icoupon_Voucher__mdt.SobjectType ;
     }
 
-    public List<ServiceClass__mdt> selectAutomatedServiceClass(){
+    public List<IRR_Icoupon_Voucher__mdt> selectAutomatedServiceClass(){
 
          return Database.query(newQueryFactory().toSOQL());
                

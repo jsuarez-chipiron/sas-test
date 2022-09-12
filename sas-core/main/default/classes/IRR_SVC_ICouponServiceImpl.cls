@@ -1,19 +1,24 @@
+/**
+* @author Gaurav singh, Coforge
+* @date 2022
+*
+* @description Concrete implementation of Icoupon integration functionality.
+*/
+
 public class IRR_SVC_ICouponServiceImpl implements IRR_SVC_IICouponService {
 
     private static final String NAMED_CREDENTIAL = 'callout:SAS_APIM_ICOUPON';
     Private static final String ICOUPON_Url = '/api/v2/flight/flightIrreg?preventDuplicates=true';
     private static final String AIRLINE_CODE = 'SK';
-    private static final String REASON_COMMENT = 'Cancellation with passenger delay 2-3 hours';
-    
     Public static List<IRR_MOD_ICouponInfo> classCoupons;
-    Public static  List<ServiceClass__mdt> serviceClassList;
+    Public static  List<IRR_Icoupon_Voucher__mdt> serviceClassList;
 
     public  IRR_SVC_ICouponServiceImpl(){
-        serviceClassList =new List<ServiceClass__mdt>();
+        serviceClassList =new List<IRR_Icoupon_Voucher__mdt>();
         classCoupons = new List<IRR_MOD_ICouponInfo>();
-        List<ServiceClass__mdt> serviceMtdList =IRR_SEL_AutomatedServiceClassSelector.newInstance().selectAutomatedServiceClass();
+        List<IRR_Icoupon_Voucher__mdt> serviceMtdList =IRR_SEL_AutomatedServiceClassSelector.newInstance().selectAutomatedServiceClass();
         System.debug('serviceMtdList ++ ' +serviceMtdList);
-        for(ServiceClass__mdt serviceMtd :serviceMtdList){
+        for(IRR_Icoupon_Voucher__mdt serviceMtd :serviceMtdList){
             
             serviceClassList.add(serviceMtd);
         }
@@ -39,16 +44,16 @@ public class IRR_SVC_ICouponServiceImpl implements IRR_SVC_IICouponService {
 
     /**
      * @author Gaurav Singh, Coforge
-     * @date 2020
+     * @date 2022
      *
-     * @description create Flight Voucher coupons for individual pax.
+     * @description create Flight Voucher  for individual passenger.
      *
-     * @param delayInfo     - delay info of the pax
+     * @param delayInfo     - delay info 
      * @param classWithPassenger - Passengers's service class with segment Id
      *
-     * @return The list of coupon batch Id from Icoupon
+     * @return IRR_MOD_ICouponInfo
      */
-    public List<IRR_MOD_ICouponInfo> createFlightIrregulraity(IRR_MOD_DelayInfo delayInfo,Map<String ,List<String>> classWithPassenger) {
+    public List<IRR_MOD_ICouponInfo> createFlightIrregularity(IRR_MOD_DelayInfo delayInfo,Map<String ,List<String>> classWithPassenger) {
 
 
         for(String key :  classWithPassenger.keySet()){
@@ -59,12 +64,22 @@ public class IRR_SVC_ICouponServiceImpl implements IRR_SVC_IICouponService {
 
     }
 
+  /**
+     * @author Gaurav Singh, Coforge
+     * @date 2022
+     *
+     * @description .Fetching voucher value from metadata
+     *
+     * @param delayminute - delay flight id 
+     * @param airportcode - code of the airport
+     * @param serviceClass - service Class of the pass
+     *
+     * @return IRR_Icoupon_Voucher__mdt
+     */
+    public IRR_Icoupon_Voucher__mdt selectCoupanValue(Integer delayInMinute,String airportCode, String serviceClass) {
 
-    public ServiceClass__mdt selectCoupanValue(Integer delayInMinute,String airportCode, String serviceClass) {
-
-        ServiceClass__mdt serviceMetadata = new ServiceClass__mdt();
-        //Decimal couponVale =0;
-        for(ServiceClass__mdt mtd :  serviceClassList){
+        IRR_Icoupon_Voucher__mdt serviceMetadata = new IRR_Icoupon_Voucher__mdt();
+        for(IRR_Icoupon_Voucher__mdt mtd :  serviceClassList){
 
            if( airportCode.toLowerCase()==  mtd.AirportCode__c.toLowerCase() &&
                serviceClass.toLowerCase()==mtd.Service_Class_Code__c.toLowerCase() &&
@@ -87,11 +102,22 @@ public class IRR_SVC_ICouponServiceImpl implements IRR_SVC_IICouponService {
         return serviceMetadata;
     }
 
-
-      private void createIcouponRequestBody(IRR_MOD_DelayInfo delayInfo,String serviceClass,Map<String ,List<String>> classWithPassenger) {
+ 
+    /**
+     * @author Gaurav Singh, Coforge
+     * @date 2022
+     *
+     * @description Creates Icoupon request body structure .
+     *
+     * @param delayInfo - delay info
+     * @param serviceClass - service class of the pass
+     *@param classWithPassenger - map of every pass with his class
+     * @return void
+     */   
+    private void createIcouponRequestBody(IRR_MOD_DelayInfo delayInfo,String serviceClass,Map<String ,List<String>> classWithPassenger) {
            Integer fliteNumber = getFliteNumber(delayInfo.flightRef);
-          ServiceClass__mdt serviceMetadata =new ServiceClass__mdt();
-          serviceMetadata = selectCoupanValue(delayInfo.delayedMinutes,delayInfo.stationDeparture,serviceClass);
+           IRR_Icoupon_Voucher__mdt serviceMetadata =new IRR_Icoupon_Voucher__mdt();
+           serviceMetadata = selectCoupanValue(delayInfo.delayedMinutes,delayInfo.stationDeparture,serviceClass);
            Decimal voucherAmount =serviceMetadata.CoupanValue__c;
            String currencyCode =serviceMetadata.Currency__c;
 
@@ -101,7 +127,7 @@ public class IRR_SVC_ICouponServiceImpl implements IRR_SVC_IICouponService {
                     'causingFlightNumber' =>fliteNumber,
                     'causingFlightDate' => delayInfo.scheduledTimeOfDepartureUTC.Year()+'-'+delayInfo.scheduledTimeOfDepartureUTC.Month()+'-'+delayInfo.scheduledTimeOfDepartureUTC.Day(),//'2022-03-15', // delayInfo.scheduledTimeOfDepartureUTC,
                     'voucherValue' => voucherAmount,
-                    'reasonComment' =>String.valueOf(REASON_COMMENT) ,
+                    'reasonComment' => serviceMetadata.ReasonComment__c,
                     'RedemptionPassDetails' => new Map<String, Object> {
                                             'airlineCode' =>  String.valueOf(AIRLINE_CODE),
                                             'flightNumber' => fliteNumber,
@@ -127,21 +153,37 @@ public class IRR_SVC_ICouponServiceImpl implements IRR_SVC_IICouponService {
               }
           }
     }
-
+ /**
+     * @author Gaurav Singh, Coforge
+     * @date 2022
+     *
+     * @description removing char from flight number .
+     *
+     * @param flight number 
+     * @return integer
+     */ 
     Private  Integer getFliteNumber(String fliteNumber){
         String fNumber = fliteNumber.replaceAll('\\D+','');
         Integer fNumberInt = Integer.valueOf(fNumber);
         return fNumberInt;
     }
 
-
-      public IRR_MOD_ICouponInfo callIcouponAPI(Map<String, Object> requestBody) {
+ /**
+     * @author Gaurav Singh, Coforge
+     * @date 2022
+     *
+     * @description making callout for icoupon .
+     *
+     * @param icoupon request body
+     * @return IRR_MOD_ICouponInfo
+     */ 
+    public IRR_MOD_ICouponInfo callIcouponAPI(Map<String, Object> requestBody) {
         system.debug('ICOUPON REQUEST---> ' +requestBody  );
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor.executeRequest(
              ICOUPON_Url, C_IntegrationExecutor.Method.POST, requestBody, null);
         IRR_MOD_ICouponInfo iCouponRes = new IRR_MOD_ICouponInfo();
        if(responseObject.statusCode==200){
-            system.debug('ICOUPON RESPONSE---> ' + 	responseObject.responseBody);
+            system.debug('ICOUPON RESPONSE---> ' +  responseObject.responseBody);
             iCouponRes = (IRR_MOD_ICouponInfo)Json.deserialize(responseObject.responseBody, IRR_MOD_ICouponInfo.Class);
        }
         else if(responseObject.statusCode == 409 ){
@@ -154,11 +196,5 @@ public class IRR_SVC_ICouponServiceImpl implements IRR_SVC_IICouponService {
         }
         return iCouponRes;
     }
-
-   // private void throwTedsException(C_IntegrationExecutor.IntegrationResponse response) {
-     //   throw new IRR_SVC_ICouponService.IcouponException(String.format(INTEGRATION_ERROR_TEMPLATE, new List<String>{
-       //         String.valueOf(response.statusCode), response.responseBody}));
-    //}
-
 
 }

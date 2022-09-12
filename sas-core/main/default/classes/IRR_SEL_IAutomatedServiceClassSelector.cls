@@ -1,3 +1,3 @@
 public interface  IRR_SEL_IAutomatedServiceClassSelector {
-   List<ServiceClass__mdt> selectAutomatedServiceClass ();
+   List<IRR_Icoupon_Voucher__mdt> selectAutomatedServiceClass ();
 }
