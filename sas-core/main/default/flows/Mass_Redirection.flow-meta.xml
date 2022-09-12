@@ -128,7 +128,7 @@
     </assignments>
     <assignments>
         <name>Assign_Values</name>
-        <label>Assign Closed Case To List</label>
+        <label>Assign Case To List</label>
         <locationX>314</locationX>
         <locationY>638</locationY>
         <assignmentItems>
@@ -144,16 +144,16 @@
     </assignments>
     <decisions>
         <name>check_for_Closed_Cases</name>
-        <label>Check For Closed Cases</label>
+        <label>Check For Valid Cases</label>
         <locationX>446</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>LoopthroughCases</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Not Closed</defaultConnectorLabel>
+        <defaultConnectorLabel>Valid</defaultConnectorLabel>
         <rules>
             <name>Case_Is_closed</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>LoopthroughCases.Status</leftValueReference>
                 <operator>EqualTo</operator>
@@ -161,21 +161,35 @@
                     <stringValue>Closed</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>LoopthroughCases.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Approval</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LoopthroughCases.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Control</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assign_Values</targetReference>
             </connector>
-            <label>Closed Case</label>
+            <label>Invalid</label>
         </rules>
     </decisions>
     <decisions>
         <name>If_Closed_Cases_Found</name>
-        <label>If Closed Cases Found</label>
+        <label>Invalid Cases Found</label>
         <locationX>226</locationX>
         <locationY>950</locationY>
         <defaultConnector>
             <targetReference>Mass_Redirection</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No Closed Case</defaultConnectorLabel>
+        <defaultConnectorLabel>Valid Case</defaultConnectorLabel>
         <rules>
             <name>Closed_Cases</name>
             <conditionLogic>and</conditionLogic>
@@ -189,7 +203,7 @@
             <connector>
                 <targetReference>Closed_Cases_Found</targetReference>
             </connector>
-            <label>Closed Cases</label>
+            <label>Invalid Cases</label>
         </rules>
     </decisions>
     <decisions>
@@ -219,6 +233,7 @@
         </rules>
     </decisions>
     <description>Flow to redirect multiple cases.</description>
+    <environments>Default</environments>
     <interviewLabel>Mass Redirection {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Mass Redirection</label>
     <loops>
@@ -310,7 +325,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Massage</name>
-            <fieldText>&lt;p&gt;*This Selection contains one or more  Closed Cases. Please update the status or remove from the selection. Case Number(s) :{!ListOfClosedCases}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;*Case in Closed, Waiting For Approval, Waiting For Control Status can not be redirected or escalated to other department. Please update the status or remove from the selection. Case Number(s) :{!ListOfClosedCases}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
