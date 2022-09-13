@@ -135,6 +135,36 @@ public without sharing class Claim {
     TravelExtras
   }
 
+  public enum Type {
+    BaggageDamaged,
+    BaggageDelayedLost,
+    BookingError,
+    CabinEnvironment,
+    ComplaintAboutRefund,
+    DeniedBoarding,
+    Downgrading,
+    ExtraBaggage,
+    FlightCancellation,
+    FlightDelay,
+    GateIssues,
+    InFlightMeal,
+    InFlightService,
+    MissingItemsFromBaggage,
+    Lounge,
+    MealsDrinks,
+    MissedConnection,
+    PersonalInjury,
+    PrepaidSeat,
+    SpecialAssistance,
+    TravelDocumentControl,
+    WiFi,
+    Other,
+    InvoluntaryDeniedBoarding,
+    InvoluntaryDowngrading,
+    VoluntaryDeniedBoarding,
+    VoluntaryDowngrading
+  }
+
   public enum CustomerType {
     PrivateCustomer,
     ClaimFirm,
@@ -176,33 +206,33 @@ public without sharing class Claim {
     UnableToHandle
   }
 
-  public static final Map<EU261HandlingStatus, String> EU261_STATUS_ENUM_TO_PICKLIST_VALUE = new Map<EU261HandlingStatus, String>{
+  private static final Map<EU261HandlingStatus, String> EU261_STATUS_ENUM_TO_PICKLIST_VALUE = new Map<EU261HandlingStatus, String>{
     EU261HandlingStatus.Unhandled => 'Unhandled',
     EU261HandlingStatus.EligibleForCompensation => 'Eligible for compensation',
     EU261HandlingStatus.IneligibleForCompensation => 'Ineligible for compensation',
     EU261HandlingStatus.UnableToHandle => 'Unable to handle'
   };
 
-  public static final Map<String, EU261HandlingStatus> EU261_STATUS_PICKLIST_VALUE_TO_ENUM = new Map<String, EU261HandlingStatus>{
+  private static final Map<String, EU261HandlingStatus> EU261_STATUS_PICKLIST_VALUE_TO_ENUM = new Map<String, EU261HandlingStatus>{
     'Unhandled' => EU261HandlingStatus.Unhandled,
     'Eligible for compensation' => EU261HandlingStatus.EligibleForCompensation,
     'Ineligible for compensation' => EU261HandlingStatus.IneligibleForCompensation,
     'Unable to handle' => EU261HandlingStatus.UnableToHandle
   };
 
-  public static final Map<CompensationType, String> COMPENSATION_TYPE_ENUM_TO_PICKLIST_VALUE = new Map<CompensationType, String>{
+  private static final Map<CompensationType, String> COMPENSATION_TYPE_ENUM_TO_PICKLIST_VALUE = new Map<CompensationType, String>{
     CompensationType.Voucher => 'Voucher',
     CompensationType.Monetary => 'Monetary',
     CompensationType.EBPoints => 'EBPoints'
   };
 
-  public static final Map<String, CompensationType> COMPENSATION_TYPE_PICKLIST_VALUE_TO_ENUM = new Map<String, CompensationType>{
+  private static final Map<String, CompensationType> COMPENSATION_TYPE_PICKLIST_VALUE_TO_ENUM = new Map<String, CompensationType>{
     'Voucher' => CompensationType.Voucher,
     'Monetary' => CompensationType.Monetary,
     'EBPoints' => CompensationType.EBPoints
   };
 
-  public static final Map<String, DelayLength> DELAY_LENGTH_PICKLIST_VALUE_TO_ENUM = new Map<String, DelayLength>{
+  private static final Map<String, DelayLength> DELAY_LENGTH_PICKLIST_VALUE_TO_ENUM = new Map<String, DelayLength>{
     '0-2' => DelayLength.ZeroToTwo,
     '2-3' => DelayLength.TwoToThree,
     '3-4' => DelayLength.ThreeToFour,
@@ -210,7 +240,7 @@ public without sharing class Claim {
     'Never arrived' => DelayLength.NeverArrived
   };
 
-  public static final Map<DelayLength, String> DELAY_LENGTH_ENUM_TO_PICKLIST_VALUE = new Map<DelayLength, String>{
+  private static final Map<DelayLength, String> DELAY_LENGTH_ENUM_TO_PICKLIST_VALUE = new Map<DelayLength, String>{
     DelayLength.ZeroToTwo => '0-2',
     DelayLength.TwoToThree => '2-3',
     DelayLength.ThreeToFour => '3-4',
@@ -218,17 +248,17 @@ public without sharing class Claim {
     DelayLength.NeverArrived => 'Never arrived'
   };
 
-  public static final Map<String, BaggageDelayLength> BAGGAGE_DELAY_LENGTH_PICKLIST_VALUE_TO_ENUM = new Map<String, BaggageDelayLength>{
+  private static final Map<String, BaggageDelayLength> BAGGAGE_DELAY_LENGTH_PICKLIST_VALUE_TO_ENUM = new Map<String, BaggageDelayLength>{
     'Less than 21 days' => BaggageDelayLength.LessThan21Days,
     '21 days or more' => BaggageDelayLength.MoreThan21Days
   };
 
-  public static final Map<BaggageDelayLength, String> BAGGAGE_DELAY_LENGTH_ENUM_TO_PICKLIST_VALUE = new Map<BaggageDelayLength, String>{
+  private static final Map<BaggageDelayLength, String> BAGGAGE_DELAY_LENGTH_ENUM_TO_PICKLIST_VALUE = new Map<BaggageDelayLength, String>{
     BaggageDelayLength.LessThan21Days => 'Less than 21 days',
     BaggageDelayLength.MoreThan21Days => '21 days or more'
   };
 
-  public static final Map<String, ExpenseType> EXPENSE_TYPE_PICKLIST_VALUE_TO_ENUM = new Map<String, ExpenseType>{
+  private static final Map<String, ExpenseType> EXPENSE_TYPE_PICKLIST_VALUE_TO_ENUM = new Map<String, ExpenseType>{
     'Accommodation' => ExpenseType.Accommodation,
     'Food' => ExpenseType.Food,
     'Other' => ExpenseType.Other,
@@ -236,7 +266,7 @@ public without sharing class Claim {
     'Transportation' => ExpenseType.Transportation
   };
 
-  public static final Map<ExpenseType, String> EXPENSE_TYPE_ENUM_TO_PICKLIST_VALUE = new Map<ExpenseType, String>{
+  private static final Map<ExpenseType, String> EXPENSE_TYPE_ENUM_TO_PICKLIST_VALUE = new Map<ExpenseType, String>{
     ExpenseType.Accommodation => 'Accommodation',
     ExpenseType.Food => 'Food',
     ExpenseType.Other => 'Other',
@@ -244,7 +274,7 @@ public without sharing class Claim {
     ExpenseType.Transportation => 'Transportation'
   };
 
-  public static final Map<String, Category> CATEGORY_PICKLIST_VALUE_TO_ENUM = new Map<String, Category>{
+  private static final Map<String, Category> CATEGORY_PICKLIST_VALUE_TO_ENUM = new Map<String, Category>{
     'Accident &amp; injury' => Category.AccidentAndInjury,
     'Airport experience' => Category.AirportExperience,
     'Baggage' => Category.Baggage,
@@ -256,7 +286,7 @@ public without sharing class Claim {
     'Travel extras bought not rendered' => Category.TravelExtras
   };
 
-  public static final Map<Category, String> CATEGORY_ENUM_TO_PICKLIST_VALUE = new Map<Category, String>{
+  private static final Map<Category, String> CATEGORY_ENUM_TO_PICKLIST_VALUE = new Map<Category, String>{
     Category.AccidentAndInjury => 'Accident &amp; injury',
     Category.AirportExperience => 'Airport experience',
     Category.Baggage => 'Baggage',
@@ -268,51 +298,21 @@ public without sharing class Claim {
     Category.TravelExtras => 'Travel extras bought not rendered'
   };
 
-  public static final Map<CustomerType, String> CUSTOMER_TYPE_ENUM_TO_PICKLIST_VALUE = new Map<CustomerType, String>{
+  private static final Map<CustomerType, String> CUSTOMER_TYPE_ENUM_TO_PICKLIST_VALUE = new Map<CustomerType, String>{
     CustomerType.ClaimFirm => 'Claim firm',
     CustomerType.InsuranceCompany => 'Insurance company',
     CustomerType.OtherRepresentative => 'Other representative',
     CustomerType.PrivateCustomer => 'Private customer'
   };
 
-  public static final Map<String, CustomerType> CUSTOMER_TYPE_PICKLIST_VALUE_TO_ENUM = new Map<String, CustomerType>{
+  private static final Map<String, CustomerType> CUSTOMER_TYPE_PICKLIST_VALUE_TO_ENUM = new Map<String, CustomerType>{
     'Claim firm' => CustomerType.ClaimFirm,
     'Insurance company' => CustomerType.InsuranceCompany,
     'Other representative' => CustomerType.OtherRepresentative,
     'Private customer' => CustomerType.PrivateCustomer
   };
 
-  public enum Type {
-    BaggageDamaged,
-    BaggageDelayedLost,
-    BookingError,
-    CabinEnvironment,
-    ComplaintAboutRefund,
-    DeniedBoarding,
-    Downgrading,
-    ExtraBaggage,
-    FlightCancellation,
-    FlightDelay,
-    GateIssues,
-    InFlightMeal,
-    InFlightService,
-    MissingItemsFromBaggage,
-    Lounge,
-    MealsDrinks,
-    MissedConnection,
-    PersonalInjury,
-    PrepaidSeat,
-    SpecialAssistance,
-    TravelDocumentControl,
-    WiFi,
-    Other,
-    InvoluntaryDeniedBoarding,
-    InvoluntaryDowngrading,
-    VoluntaryDeniedBoarding,
-    VoluntaryDowngrading
-  }
-
-  public static final Map<String, Type> TYPE_PICKLIST_VALUE_TO_ENUM = new Map<String, Type>{
+  private static final Map<String, Type> TYPE_PICKLIST_VALUE_TO_ENUM = new Map<String, Type>{
     'Baggage damaged' => Type.BaggageDamaged,
     'Baggage delayed/lost' => Type.BaggageDelayedLost,
     'Booking error' => Type.BookingError,
@@ -342,7 +342,7 @@ public without sharing class Claim {
     'Voluntary Downgrading' => Type.VoluntaryDowngrading
   };
 
-  public static final Map<Type, String> TYPE_ENUM_TO_PICKLIST_VALUE = new Map<Type, String>{
+  private static final Map<Type, String> TYPE_ENUM_TO_PICKLIST_VALUE = new Map<Type, String>{
     Type.BaggageDamaged => 'Baggage damaged',
     Type.BaggageDelayedLost => 'Baggage delayed/lost',
     Type.BookingError => 'Booking error',
@@ -372,13 +372,13 @@ public without sharing class Claim {
     Type.VoluntaryDowngrading => 'Voluntary Downgrading'
   };
 
-  public static Map<RecordType, String> recordTypeToEnumToDeveloperName = new Map<RecordType, String>{
+  private static Map<RecordType, String> recordTypeToEnumToDeveloperName = new Map<RecordType, String>{
     RecordType.CompensationCard => 'CompensationCard',
     RecordType.CustomerClaim => 'CustomerClaim',
     RecordType.LiabilityClaim => 'LiabilityClaim'
   };
 
-  public static Map<String, RecordType> recordTypeDeveloperNameToEnum = new Map<String, RecordType>{
+  private static Map<String, RecordType> recordTypeDeveloperNameToEnum = new Map<String, RecordType>{
     'CompensationCard' => RecordType.CompensationCard,
     'CustomerClaim' => RecordType.CustomerClaim,
     'LiabilityClaim' => RecordType.LiabilityClaim
