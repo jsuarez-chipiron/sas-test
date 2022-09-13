@@ -213,8 +213,8 @@ public without sharing class ClaimService {
 
   public static String createCompensationCardClaim(CaseFormJSON2Apex form) {
     LIA_Claim__c claimToCreate = createClaimRecord(form);
-    claimToCreate.RecordTypeId = Claims.getRecordTypeId(
-      Claims.RecordType.CompensationCard
+    claimToCreate.RecordTypeId = Claim.getRecordTypeIdByEnum(
+      Claim.RecordType.CompensationCard
     );
 
     insert claimToCreate;
@@ -325,7 +325,7 @@ public without sharing class ClaimService {
       Preferred_Reimbursement_Method__c = jsonToPicklist.get(
         form.formData.preferredReimbursementMethod
       ),
-      RecordTypeId = Claims.getRecordTypeId(Claims.RecordType.CustomerClaim),
+      RecordTypeId = Claim.getRecordTypeIdByEnum(Claim.RecordType.CustomerClaim),
       Total_delay_to_final_destination__c = jsonToPicklist.get(
         form.formData.delayLength
       ),

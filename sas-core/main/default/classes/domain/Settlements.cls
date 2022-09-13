@@ -574,13 +574,13 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       settlementsByClaimId.put(s.Claim__c, s);
     }
 
-    for (LIA_Claim__c claim : cardClaims) {
+    for (LIA_Claim__c cl : cardClaims) {
       Redeemed_Compensation_Card__c compensationCardForClaim = compensationCardByClaimId.get(
-        claim.Id
+        cl.Id
       );
       if (
-        claim.RecordTypeId !=
-        Claims.getRecordTypeId(Claims.RecordType.CompensationCard) ||
+        cl.RecordTypeId !=
+        Claim.getRecordTypeIdByEnum(Claim.RecordType.CompensationCard) ||
         compensationCardForClaim == null
       ) {
         throw new CreateException(
@@ -588,10 +588,10 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         );
       }
 
-      Settlement__c settlementToCreate = settlementsByClaimId.get(claim.Id);
+      Settlement__c settlementToCreate = settlementsByClaimId.get(cl.Id);
       settlementToCreate.Currency__c = compensationCardForClaim.Currency__c;
 
-      if (claim.Preferred_Compensation_Method__c == 'Voucher') {
+      if (cl.Preferred_Compensation_Method__c == 'Voucher') {
         // There are several different voucher sybtypes issued as compensation
         // cards. The subtype always begins with either IDB, IDG, VDB, or VDG
         // for the different compensation situations. We can map these to the

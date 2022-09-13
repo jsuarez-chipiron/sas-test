@@ -749,8 +749,8 @@ private class EU261Service_Test {
       LIA_Claim__c.Customer_Claim_Type__c => 'Flight delay',
       LIA_Claim__c.Country__c => 'Sweden',
       LIA_Claim__c.Liability_PNR__c => bookingReference,
-      LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
-        Claims.RecordType.CustomerClaim
+      LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
+        Claim.RecordType.CustomerClaim
       )
     };
     claimFields.putAll(extraClaimFields);
