@@ -470,6 +470,11 @@
                 <label>Partner Support</label>
             </value>
             <value>
+                <fullName>Payment Escalation</fullName>
+                <default>false</default>
+                <label>Payment Escalation</label>
+            </value>
+            <value>
                 <fullName>PL</fullName>
                 <default>false</default>
                 <label>PL</label>
@@ -1030,6 +1035,10 @@
         <valueSettings>
             <controllingFieldValue>Customer Claim</controllingFieldValue>
             <valueName>Language</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <valueName>Payment Escalation</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Customer Claim</controllingFieldValue>

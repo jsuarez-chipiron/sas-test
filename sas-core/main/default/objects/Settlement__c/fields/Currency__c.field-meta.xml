@@ -787,11 +787,6 @@
             <valueName>CAD</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>China</controllingFieldValue>
-            <controllingFieldValue>Not Applicable</controllingFieldValue>
-            <valueName>CNY</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>New Zealand</controllingFieldValue>
             <valueName>NZD</valueName>
         </valueSettings>
@@ -810,6 +805,10 @@
             <controllingFieldValue>Not Applicable</controllingFieldValue>
             <controllingFieldValue>Switzerland</controllingFieldValue>
             <valueName>CHF</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not Applicable</controllingFieldValue>
+            <valueName>CNY</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Not Applicable</controllingFieldValue>

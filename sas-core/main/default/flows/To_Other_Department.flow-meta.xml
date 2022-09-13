@@ -238,6 +238,13 @@
                     <stringValue>Customer Claim</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>DependentList.middleValue</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Payment Escalation</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assign_Comments_as_Description</targetReference>
             </connector>
