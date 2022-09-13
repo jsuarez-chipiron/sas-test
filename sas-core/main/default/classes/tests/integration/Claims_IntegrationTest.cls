@@ -469,8 +469,8 @@ public with sharing class Claims_IntegrationTest {
         LIA_Claim__c.Compensation_Card_Number__c => cardNumber,
         LIA_Claim__c.Liability_PNR__c => bookingReference,
         LIA_Claim__c.Customer_Claim_Category__c => 'Compensation Card',
-        LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
-          Claims.RecordType.CompensationCard
+        LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
+          Claim.RecordType.CompensationCard
         )
       }
     );
@@ -522,8 +522,8 @@ public with sharing class Claims_IntegrationTest {
         LIA_Claim__c.Liability_PNR__c => bookingReference,
         LIA_Claim__c.Customer_Claim_Category__c => 'Compensation Card',
         LIA_Claim__c.Preferred_Compensation_Method__c => 'Monetary',
-        LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
-          Claims.RecordType.CompensationCard
+        LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
+          Claim.RecordType.CompensationCard
         )
       }
     );
@@ -590,8 +590,8 @@ public with sharing class Claims_IntegrationTest {
         LIA_Claim__c.Liability_PNR__c => bookingReference,
         LIA_Claim__c.Customer_Claim_Category__c => 'Compensation Card',
         LIA_Claim__c.Preferred_Compensation_Method__c => 'Monetary',
-        LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
-          Claims.RecordType.CompensationCard
+        LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
+          Claim.RecordType.CompensationCard
         )
       }
     );

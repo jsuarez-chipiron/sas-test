@@ -13,8 +13,8 @@ public with sharing class SimilarCasesControllerTest {
         LIA_Claim__c.Flight_Number__c => 'SK1',
         LIA_Claim__c.Flight_Date__c => Date.today(),
         LIA_Claim__c.Customer_Claim_Category__c => 'Flight disruptions',
-        LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
-          Claims.RecordType.CustomerClaim
+        LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
+          Claim.RecordType.CustomerClaim
         )
       }
     );
@@ -26,8 +26,8 @@ public with sharing class SimilarCasesControllerTest {
         LIA_Claim__c.Flight_Number__c => 'LH2',
         LIA_Claim__c.Flight_Date__c => Date.today().addDays(1),
         LIA_Claim__c.Customer_Claim_Category__c => 'Flight disruptions',
-        LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
-          Claims.RecordType.CustomerClaim
+        LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
+          Claim.RecordType.CustomerClaim
         )
       }
     );

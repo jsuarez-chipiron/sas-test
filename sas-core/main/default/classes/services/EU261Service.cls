@@ -187,7 +187,7 @@ public without sharing class EU261Service {
         ac.canBeEvaluated = false;
       } else if (
         ac.claim.instanceRecords[0].RecordTypeId !=
-        Claims.getRecordTypeId(Claims.RecordType.CustomerClaim)
+        Claim.getRecordTypeIdByEnum(Claim.RecordType.CustomerClaim)
       ) {
         ac.unhandledReason = 'can handle only claims with record type CustomerClaim';
         ac.canBeEvaluated = false;

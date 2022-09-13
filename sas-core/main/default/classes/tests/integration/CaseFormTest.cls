@@ -744,7 +744,7 @@ private class CaseFormTest {
     ];
 
     System.assertEquals(
-      Claims.getRecordTypeId(Claims.RecordType.CompensationCard),
+      Claim.getRecordTypeIdByEnum(Claim.RecordType.CompensationCard),
       cl.RecordTypeId,
       'Record type should be set to compensation card.'
     );

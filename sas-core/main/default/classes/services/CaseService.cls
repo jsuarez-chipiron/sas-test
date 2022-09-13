@@ -285,11 +285,11 @@ public without sharing class CaseService {
       .selectByIdWithCustomers(claimIdToCase.keySet());
 
     List<Case> casesToRoute = new List<Case>{};
-    for (LIA_Claim__c claim : caseClaims) {
-      Case c = claimIdToCase.get(claim.Id);
+    for (LIA_Claim__c cl : caseClaims) {
+      Case c = claimIdToCase.get(cl.Id);
       if (
-        claim.RecordTypeId ==
-        Claims.getRecordTypeId(Claims.RecordType.CustomerClaim) &&
+        cl.RecordTypeId ==
+        Claim.getRecordTypeIdByEnum(Claim.RecordType.CustomerClaim) &&
         String.valueOf(c.OwnerId).substring(0, 3) == '00G'
       ) {
         casesToRoute.add(c);
