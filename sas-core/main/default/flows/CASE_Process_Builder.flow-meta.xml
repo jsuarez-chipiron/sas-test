@@ -331,6 +331,7 @@
             <connector>
                 <targetReference>Create_Survey_Invitation_for_email_sending</targetReference>
             </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
             <label>Yes - Survey for Closed Cases</label>
         </rules>
     </decisions>
@@ -403,6 +404,7 @@
         </rules>
     </decisions>
     <description>Flow to replace old Case Process Builder</description>
+    <environments>Default</environments>
     <formulas>
         <name>newReopenedCount</name>
         <dataType>Number</dataType>
