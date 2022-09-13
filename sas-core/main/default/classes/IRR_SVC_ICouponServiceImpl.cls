@@ -16,7 +16,7 @@ public class IRR_SVC_ICouponServiceImpl implements IRR_SVC_IICouponService {
     public  IRR_SVC_ICouponServiceImpl(){
         serviceClassList =new List<IRR_Icoupon_Voucher__mdt>();
         classCoupons = new List<IRR_MOD_ICouponInfo>();
-        List<IRR_Icoupon_Voucher__mdt> serviceMtdList = IRR_SEL_IcouponVoucherSelector.newInstance().selectAutomatedServiceClass();
+        List<IRR_Icoupon_Voucher__mdt> serviceMtdList = IRR_SEL_IcouponVoucherSelector.newInstance().getIcouponVoucher();
         for(IRR_Icoupon_Voucher__mdt serviceMtd :serviceMtdList){
             
             serviceClassList.add(serviceMtd);

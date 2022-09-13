@@ -39,7 +39,7 @@ public class IRR_SEL_IcouponVoucherSelector extends fflib_SObjectSelector implem
         return IRR_Icoupon_Voucher__mdt.SobjectType ;
     }
 
-    public List<IRR_Icoupon_Voucher__mdt> selectAutomatedServiceClass(){
+    public List<IRR_Icoupon_Voucher__mdt> getIcouponVoucher(){
 
          return Database.query(newQueryFactory().toSOQL());
                
