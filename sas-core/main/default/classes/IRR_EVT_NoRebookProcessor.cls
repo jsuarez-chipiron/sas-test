@@ -129,7 +129,7 @@ public class IRR_EVT_NoRebookProcessor extends IRR_EVT_EventProcessor {
                             segmentInfo.departureCity = this.airportInfoMap.get(segmentInfo.stationDeparture);
                              //New requirement for a link to info on passenger rights for passengers with disabilities when traveling to/from the USA
                              if(noRebookInfo.cancelledSegment ==segmentInfo.segmentId){
-                                passengerInfo.cancelledStaionArrival = segmentInfo.stationArrival;
+                                passengerInfo.cancelledStationArrival = segmentInfo.stationArrival;
                                 passengerInfo.cancelledStationDeparture= segmentInfo.stationDeparture;
                              }
                         }

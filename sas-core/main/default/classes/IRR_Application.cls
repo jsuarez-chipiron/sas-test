@@ -48,7 +48,7 @@ public class IRR_Application {
                             SFMC_SMSDefinition__mdt.SObjectType => IRR_SEL_SMSDefinitionsSelector.class,
                             ContentDocumentLink.SObjectType =>IRR_SEL_ContentDocumentLinksSelector.class,
                             IRR_AutomatedMessage__mdt.SObjectType =>IRR_SEL_AutomatedMessagesSelector.class,
-                            IRR_Icoupon_Voucher__mdt.SObjectType =>IRR_SEL_AutomatedServiceClassSelector.class,
+                            IRR_Icoupon_Voucher__mdt.SObjectType =>IRR_SEL_IcouponVoucherSelector.class,
                             IRR_AutomatedNoHandBag__mdt.SObjectType =>IRR_SEL_AutomatedNoHandBagSelector.class
                     }
             );

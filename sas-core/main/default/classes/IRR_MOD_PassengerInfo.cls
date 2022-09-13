@@ -80,11 +80,11 @@ public class IRR_MOD_PassengerInfo {
     public List<IRR_MOD_TripInfo> itinerary { get; set; }
     //New requirement for a link to info on passenger rights for passengers with disabilities when traveling to/from the USA
     @AuraEnabled
-    public String cancelledStaionArrival { get; set; }
+    public String cancelledStationArrival { get; set; }
 
     @AuraEnabled
     public String cancelledStationDeparture { get; set; }
     
     @AuraEnabled
-    public Boolean isReebokUSSation { get; set; }
+    public Boolean isReebokUSStation { get; set; }
 }

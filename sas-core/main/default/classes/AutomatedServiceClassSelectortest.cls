@@ -11,10 +11,10 @@ public class AutomatedServiceClassSelectortest {
     @IsTest
     static void testgetSObjectFieldList() {
         Test.startTest();
-        IRR_SEL_AutomatedServiceClassSelector obj = new IRR_SEL_AutomatedServiceClassSelector();
+        IRR_SEL_IcouponVoucherSelector obj = new IRR_SEL_IcouponVoucherSelector();
         obj.getSObjectFieldList();
         obj.selectAutomatedServiceClass();
-        IRR_SEL_AutomatedServiceClassSelector.newInstance();
+        IRR_SEL_IcouponVoucherSelector.newInstance();
         Test.stopTest();
     }
 }

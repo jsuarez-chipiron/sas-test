@@ -1,16 +1,16 @@
 /**
- * @description       : 
- * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
- * @group             : 
- * @last modified on  : 09-07-2022
- * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
-**/
-public class IRR_SEL_AutomatedServiceClassSelector extends fflib_SObjectSelector implements IRR_SEL_IAutomatedServiceClassSelector  {
+* @author Gaurav Singh, Coforge
+* @date 2020
+*
+* @description Selector class for the IRR Icoupon Voucher metadata object.
+*/
+
+public class IRR_SEL_IcouponVoucherSelector extends fflib_SObjectSelector implements IRR_SEL_IIcouponVoucherSelector  {
     
-    public static IRR_SEL_IAutomatedServiceClassSelector newInstance() 
+    public static IRR_SEL_IIcouponVoucherSelector newInstance() 
     {
 
-        return (IRR_SEL_IAutomatedServiceClassSelector) IRR_Application.Selector.newInstance(
+        return (IRR_SEL_IIcouponVoucherSelector) IRR_Application.Selector.newInstance(
             IRR_Icoupon_Voucher__mdt.SObjectType);
     }
 

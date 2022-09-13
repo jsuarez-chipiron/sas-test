@@ -16,8 +16,7 @@ public class IRR_SVC_ICouponServiceImpl implements IRR_SVC_IICouponService {
     public  IRR_SVC_ICouponServiceImpl(){
         serviceClassList =new List<IRR_Icoupon_Voucher__mdt>();
         classCoupons = new List<IRR_MOD_ICouponInfo>();
-        List<IRR_Icoupon_Voucher__mdt> serviceMtdList =IRR_SEL_AutomatedServiceClassSelector.newInstance().selectAutomatedServiceClass();
-        System.debug('serviceMtdList ++ ' +serviceMtdList);
+        List<IRR_Icoupon_Voucher__mdt> serviceMtdList = IRR_SEL_IcouponVoucherSelector.newInstance().selectAutomatedServiceClass();
         for(IRR_Icoupon_Voucher__mdt serviceMtd :serviceMtdList){
             
             serviceClassList.add(serviceMtd);
@@ -178,12 +177,11 @@ public class IRR_SVC_ICouponServiceImpl implements IRR_SVC_IICouponService {
      * @return IRR_MOD_ICouponInfo
      */ 
     public IRR_MOD_ICouponInfo callIcouponAPI(Map<String, Object> requestBody) {
-        system.debug('ICOUPON REQUEST---> ' +requestBody  );
         C_IntegrationExecutor.IntegrationResponse responseObject = integrationExecutor.executeRequest(
              ICOUPON_Url, C_IntegrationExecutor.Method.POST, requestBody, null);
         IRR_MOD_ICouponInfo iCouponRes = new IRR_MOD_ICouponInfo();
        if(responseObject.statusCode==200){
-            system.debug('ICOUPON RESPONSE---> ' +  responseObject.responseBody);
+            system.debug('ICOUPON RESPONSE---> ' + responseObject.responseBody);
             iCouponRes = (IRR_MOD_ICouponInfo)Json.deserialize(responseObject.responseBody, IRR_MOD_ICouponInfo.Class);
        }
         else if(responseObject.statusCode == 409 ){

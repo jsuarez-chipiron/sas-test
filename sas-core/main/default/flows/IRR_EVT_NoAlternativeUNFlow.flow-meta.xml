@@ -167,7 +167,7 @@
                 <leftValueReference>USAirport</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>passengerInfo.cancelledStaionArrival</elementReference>
+                    <elementReference>passengerInfo.cancelledStationArrival</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
