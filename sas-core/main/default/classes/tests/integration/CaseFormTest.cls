@@ -829,7 +829,7 @@ private class CaseFormTest {
 
     Map<Id, String> accountToPriority = new Map<Id, String>{
       newAccountsWithCorrectEBLevel[0].Id => 'Medium',
-      newAccountsWithCorrectEBLevel[1].Id => 'High',
+      newAccountsWithCorrectEBLevel[1].Id => 'Medium', //Disabled EBG/EBD priority for now
       newAccountsWithCorrectEBLevel[2].Id => 'Medium'
     }; // Medium, check this
 
