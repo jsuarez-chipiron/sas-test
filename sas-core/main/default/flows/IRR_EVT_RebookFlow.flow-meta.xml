@@ -109,7 +109,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>passengerInfo.isReebokUSStation</leftValueReference>
+                <leftValueReference>passengerInfo.isRebookUSStation</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -123,7 +123,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>passengerInfo.isReebokUSStation</leftValueReference>
+                <leftValueReference>passengerInfo.isRebookUSStation</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>

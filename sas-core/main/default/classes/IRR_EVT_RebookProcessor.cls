@@ -150,7 +150,7 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
                              usStation.split(';').contains(segmentInfo.stationArrival) ||
                              usStation.split(';').contains(segmentInfo.stationDeparture)
                              ){
-                                passengerInfo.isReebokUSStation = true;
+                                passengerInfo.isRebookUSStation = true;
 
                              }
                         }

@@ -86,5 +86,5 @@ public class IRR_MOD_PassengerInfo {
     public String cancelledStationDeparture { get; set; }
     
     @AuraEnabled
-    public Boolean isReebokUSStation { get; set; }
+    public Boolean isRebookUSStation { get; set; }
 }
