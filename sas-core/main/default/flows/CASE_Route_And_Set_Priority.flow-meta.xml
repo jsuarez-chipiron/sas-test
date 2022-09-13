@@ -179,14 +179,14 @@
     </assignments>
     <assignments>
         <name>Set_Priority_To_High</name>
-        <label>Set Priority To High</label>
+        <label>Set Priority To Medium</label>
         <locationX>660</locationX>
         <locationY>1286</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.Priority</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>High</stringValue>
+                <stringValue>Medium</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -222,7 +222,7 @@
             <connector>
                 <targetReference>Set_Priority_To_High</targetReference>
             </connector>
-            <label>Yes, High Priority</label>
+            <label>Yes, High Priority (INACTIVE)</label>
         </rules>
     </decisions>
     <decisions>
@@ -366,6 +366,7 @@
         </rules>
     </decisions>
     <description>Sets the priority of the Case and routes it to the appropriate queue. Needs the relevant queues as input.</description>
+    <environments>Default</environments>
     <interviewLabel>CASE: Route And Set Priority {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CASE: Route And Set Priority</label>
     <loops>
