@@ -760,9 +760,9 @@ private class CaseFormTest {
   public static void shouldCreateAndPrioritiseCasesCorrectly() {
     //Given
     // Create EB accounts
-    List<Account> newAccounts = FCS_TestDataFactory.createFrequentFlyers(3);
+    List<Account> newAccounts = FCS_TestDataFactory.createFrequentFlyers(5);
     List<Account> newAccountsWithCorrectEBLevel = new List<Account>{};
-    List<String> EBLevels = new List<String>{ 'B', 'D', 'P' };
+    List<String> EBLevels = new List<String>{ 'B', 'D', 'P', 'B', 'B' };
     List<CaseFormJSON2Apex> requestBodies = new List<CaseFormJSON2Apex>{};
 
     for (Integer i = 0; i < newAccounts.size(); i++) {
@@ -779,6 +779,16 @@ private class CaseFormTest {
       a.Phone = phone;
       a.FCS_EBLevel__c = EBLevel;
       newAccountsWithCorrectEBLevel.add(a);
+      String isMinor = 'false';
+      String hasReducedMobility = 'false';
+
+      if (i == 3) {
+        isMinor = 'true';
+      }
+      if (i == 4) {
+        hasReducedMobility = 'true';
+      }
+
       requestBodies.add(
         CaseFormJSON2Apex.parse(
           '{ ' +
@@ -807,6 +817,12 @@ private class CaseFormTest {
           '    "claimCategory": "accident-and-injury",' +
           '    "claimType": "other",' +
           '    "preferredCompensationMethod": "voucher",' +
+          '    "unaccompaniedMinor": ' +
+          isMinor +
+          ',' +
+          '    "personWithReducedMobility": ' +
+          hasReducedMobility +
+          ',' +
           '    "bookingReference": "' +
           EBLevel +
           '12",' +
@@ -830,8 +846,10 @@ private class CaseFormTest {
     Map<Id, String> accountToPriority = new Map<Id, String>{
       newAccountsWithCorrectEBLevel[0].Id => 'Medium',
       newAccountsWithCorrectEBLevel[1].Id => 'Medium', //Disabled EBG/EBD priority for now
-      newAccountsWithCorrectEBLevel[2].Id => 'Medium'
-    }; // Medium, check this
+      newAccountsWithCorrectEBLevel[2].Id => 'Medium',
+      newAccountsWithCorrectEBLevel[3].Id => 'Medium',
+      newAccountsWithCorrectEBLevel[4].Id => 'Medium'
+    };
 
     // When
     Test.setMock(HttpCalloutMock.class, new APIMMock());

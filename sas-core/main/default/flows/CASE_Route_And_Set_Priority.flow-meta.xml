@@ -219,6 +219,13 @@
                     <stringValue>D</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Loop_Cases.LIA_Claim__r.Concerns_a_person_with_reduced_mobility__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Set_Priority_To_High</targetReference>
             </connector>
