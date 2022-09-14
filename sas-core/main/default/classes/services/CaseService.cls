@@ -270,10 +270,11 @@ public without sharing class CaseService {
    *    compensate customers who might have been put in a difficult economical situation.
    */
   public static void assignPriorityAndRouteToQueue(Set<Id> caseIds) {
-    List<Case> cases = CasesSelector.newInstance().selectById(caseIds);
+    List<Case> casesToSortThrough = CasesSelector.newInstance()
+      .selectById(caseIds);
 
     Map<Id, Case> claimIdToCase = new Map<Id, Case>{};
-    for (Case c : cases) {
+    for (Case c : casesToSortThrough) {
       if (c.LIA_Claim__c != null) {
         claimIdToCase.put(c.LIA_Claim__c, c);
       } else {
@@ -286,11 +287,13 @@ public without sharing class CaseService {
 
     List<Case> casesToRoute = new List<Case>{};
     for (LIA_Claim__c cl : caseClaims) {
-      Case c = claimIdToCase.get(cl.Id);
+      Case c = claimIdToCase.get(cl.Id); // Do we want to route compensationcards this way? @Jesús
       if (
-        cl.RecordTypeId ==
+        (cl.RecordTypeId ==
         Claim.getRecordTypeIdByEnum(Claim.RecordType.CustomerClaim) &&
-        String.valueOf(c.OwnerId).substring(0, 3) == '00G'
+        String.valueOf(c.OwnerId).substring(0, 3) == '00G') ||
+        cl.RecordTypeId ==
+        Claim.getRecordTypeIdByEnum(Claim.RecordType.CompensationCard)
       ) {
         casesToRoute.add(c);
       }
