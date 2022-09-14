@@ -304,6 +304,8 @@ public without sharing class CaseService {
       'Claims - High Priority',
       'Claims - High Care Costs',
       'Claims - Flight Disruptions',
+      'Claims - Flight Disruptions Expenses',
+      'Claims - Compensation Card',
       'Claims - Baggage',
       'Claims - Other'
     };
