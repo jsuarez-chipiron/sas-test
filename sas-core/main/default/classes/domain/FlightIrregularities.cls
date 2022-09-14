@@ -14,6 +14,20 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     'AIRS' => true
   };
 
+  public static final Set<String> POTENTIALROTATIONCODES = new Set<String>{
+    'EQUI',
+    'CREW',
+    'RA (93)',
+    'RA',
+    '93',
+    'RC (95)',
+    'RC',
+    '95',
+    'RS (94)',
+    'RS',
+    '94'
+  };
+
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
       return new FlightIrregularities(records);
@@ -121,6 +135,15 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     return this;
   }
 
+  public Boolean containsRotationIrregularities() {
+    for (FlightIrregularities__c f : instanceRecords) {
+      if (POTENTIALROTATIONCODES.contains(f.Code__c)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public Map<Id, Boolean> isWithinSASControl() {
     Map<Id, Boolean> irregularityToIsWithinControl = new Map<Id, Boolean>{};
 
@@ -223,6 +246,21 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     explanation += '(Total: ' + totalDelayOutsideSASControl + ' minutes)';
 
     return explanation;
+  }
+
+  public void removeNA0Delay() {
+    List<FlightIrregularities__c> irregularitiesToSave = new List<FlightIrregularities__c>{};
+    for (FlightIrregularities__c fi : instanceRecords) {
+      if (
+        !((fi.Code__c == 'N/A' && fi.Duration_minutes__c == 0) ||
+        (fi.Code__c == null &&
+        fi.Duration_minutes__c == null))
+      ) {
+        irregularitiesToSave.add(fi);
+      }
+    }
+
+    this.instanceRecords = irregularitiesToSave;
   }
 
   /**
