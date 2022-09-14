@@ -253,8 +253,8 @@
     </decisions>
     <decisions>
         <description>Validates refund cases have a refund request record with a PNR before redirecting, creating a support case or escalating the case</description>
-        <name>Is_refund_case_with_refund_request_recod</name>
-        <label>Is refund case with refund request recod?</label>
+        <name>Is_refund_case_with_refund_request_record</name>
+        <label>Is refund case with refund request record?</label>
         <locationX>781</locationX>
         <locationY>398</locationY>
         <defaultConnector>
@@ -315,7 +315,7 @@
         <locationX>415</locationX>
         <locationY>278</locationY>
         <defaultConnector>
-            <targetReference>Is_refund_case_with_refund_request_recod</targetReference>
+            <targetReference>Is_refund_case_with_refund_request_record</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>To other department</defaultConnectorLabel>
         <rules>
@@ -360,7 +360,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Department_not_available_for_redirection_support_and_escalation</name>
-            <conditionLogic>1 OR 2 OR (3 AND 4)</conditionLogic>
+            <conditionLogic>1 OR 2 OR (3 AND 4 AND 5)</conditionLogic>
             <conditions>
                 <leftValueReference>DependentList.topValue</leftValueReference>
                 <operator>EqualTo</operator>
@@ -387,6 +387,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Refunds</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.Department__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Claim</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1382,7 +1389,7 @@
             <helpText>&lt;p&gt;Please describe what it is needed from the other department/team&lt;/p&gt;</helpText>
             <isRequired>true</isRequired>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>(1 AND 2 AND 3) OR 4</conditionLogic>
                 <conditions>
                     <leftValueReference>Request_Type</leftValueReference>
                     <operator>EqualTo</operator>
@@ -1402,6 +1409,13 @@
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>Customer Claim</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.middleValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Payment Escalation</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1630,6 +1644,13 @@
                         <stringValue>Customer Claim</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.middleValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Payment Escalation</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -1689,6 +1710,13 @@
                         <elementReference>Support</elementReference>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.middleValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Payment Escalation</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -1709,6 +1737,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Customer Claim</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.middleValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Payment Escalation</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1807,6 +1842,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Customer Claim</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.middleValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Payment Escalation</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
