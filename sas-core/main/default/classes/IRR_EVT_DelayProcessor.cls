@@ -109,7 +109,7 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
         Map<String,String> serviceClassToSegId = new Map<String,String>();
          
    
-         if(delayInfo.delayedMinutes >= 120 && delayInfo.firstDelay ==false){
+         if(delayInfo.delayedMinutes >= 120 && delayInfo.firstDelay ==true){
           List<IRR_MOD_ICouponInfo> iCouponInfo = IRR_SVC_ICouponService.createFlightIrregularity(delayInfo,segmentIdToBoarding);
              if(iCouponInfo !=null && iCouponInfo.size()>0){
                   delayInfo.hasCouponBatchId = true;
