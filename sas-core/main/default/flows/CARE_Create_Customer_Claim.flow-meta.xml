@@ -4,12 +4,12 @@
         <name>Route_Case</name>
         <label>Route Case</label>
         <locationX>314</locationX>
-        <locationY>1886</locationY>
+        <locationY>2126</locationY>
         <actionName>RouteCaseAndSetPriority</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>casesToRoute</name>
+            <name>caseToRoute</name>
             <value>
                 <elementReference>recordId</elementReference>
             </value>
@@ -655,7 +655,7 @@
         <name>Update_Case_with_Customer_Claim_Information</name>
         <label>Update Case with Customer Claim Information</label>
         <locationX>314</locationX>
-        <locationY>1766</locationY>
+        <locationY>2006</locationY>
         <connector>
             <targetReference>Route_Case</targetReference>
         </connector>
