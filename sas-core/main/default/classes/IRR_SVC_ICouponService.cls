@@ -1,8 +1,14 @@
+/**
+* @author Gaurav Singh, Coforge
+* @date 2022
+*
+* @description This is the entry point for icoupon system.
+*/
 public class IRR_SVC_ICouponService {
     
 
-    public static List<IRR_MOD_ICouponInfo> createFlightIrregulraity(IRR_MOD_DelayInfo delayInfo,Map<String ,List<String>> classWithPassenger) {
-         return service().createFlightIrregulraity(delayInfo,classWithPassenger);
+    public static List<IRR_MOD_ICouponInfo> createFlightIrregularity(IRR_MOD_DelayInfo delayInfo,Map<String ,List<String>> classWithPassenger) {
+         return service().createFlightIrregularity(delayInfo,classWithPassenger);
       }
 
 
