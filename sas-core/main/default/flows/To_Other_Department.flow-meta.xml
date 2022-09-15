@@ -52,6 +52,24 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <actionCalls>
+        <name>Route_Support_Case_to_Claim_Queue</name>
+        <label>Route Support Case to Claim Queue</label>
+        <locationX>1106</locationX>
+        <locationY>2918</locationY>
+        <actionName>RouteCaseAndSetPriority</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Do_we_need_set_the_parent_case_to_On_hold</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>caseToRoute</name>
+            <value>
+                <elementReference>Create_Support_Case</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Assign_Comments_as_Description</name>
@@ -478,6 +496,11 @@
     </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
+        <name>claimRecordTypeName</name>
+        <dataType>String</dataType>
+        <expression>IF({!CustomerClaimCategoryType.topValue} = &quot;Compensation Card&quot;, &quot;CompensationCard&quot;, &quot;CustomerClaim&quot;)</expression>
+    </formulas>
+    <formulas>
         <name>InputPriority</name>
         <dataType>String</dataType>
         <expression>IF({!Priority} = &quot;Medium&quot;, &quot;Medium&quot;, &quot;High&quot;)</expression>
@@ -827,7 +850,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>CustomerClaim</stringValue>
+                <elementReference>claimRecordTypeName</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1056,7 +1079,7 @@
         <locationX>1106</locationX>
         <locationY>2798</locationY>
         <connector>
-            <targetReference>Do_we_need_set_the_parent_case_to_On_hold</targetReference>
+            <targetReference>Route_Support_Case_to_Claim_Queue</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
