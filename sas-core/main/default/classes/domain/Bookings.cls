@@ -77,6 +77,8 @@ public without sharing class Bookings extends fflib_SObjectDomain {
 
     return bookingIdToTrips;
   }
+  public class MissingDataException extends Exception {
+  }
 
   /**
    * Returns true if the given string is a valid booking reference.
@@ -440,20 +442,17 @@ public without sharing class Bookings extends fflib_SObjectDomain {
    * @return A map from booking id to whether that booking was affected by irregularities
    */
   public Map<Id, Boolean> haveDelayedOrCancelledFlights() {
-    Set<Id> bookingIds = (new Map<Id, Booking__c>(instanceRecords)).keySet();
-
-    Map<Id, Boolean> flightIdToIrrStatus = Flights.newInstance(
-        FlightsSelector.newInstance().selectByBookingIds(bookingIds)
-      )
-      .isDelayedOrCancelled();
-
+    if (fullRecords == null) {
+      throw new MissingDataException('FullBookingData should not be null');
+    }
     Map<Id, Boolean> toReturn = new Map<Id, Boolean>();
-    for (Booking__c booking : instanceRecords) {
+    for (FullBookingData fbd : fullRecords) {
+      Booking__c booking = fbd.booking;
       Boolean isAffectedByIrregularity = false;
-      for (Segment__c segment : booking.Segments__r) {
-        Boolean flightIsDelayedOrCancelled = flightIdToIrrStatus.get(
-          segment.Flight__c
-        );
+      Map<Id, Boolean> flightIdToIrrStatus = Flights.newInstance(fbd.flights)
+        .isDelayedOrCancelled();
+      for (Flight__c flight : fbd.flights) {
+        Boolean flightIsDelayedOrCancelled = flightIdToIrrStatus.get(flight.Id);
         if (flightIsDelayedOrCancelled) {
           isAffectedByIrregularity = true;
           break;
@@ -463,6 +462,117 @@ public without sharing class Bookings extends fflib_SObjectDomain {
     }
 
     return toReturn;
+  }
+
+  /**
+   * Checks whether a certain flight exists in a booking
+   * @param flightId A flight in the format of Flight Number-Flight Date (ex. SK0001-20201010)
+   * @return Map of Booking Id and if the flight is part of the booking
+   */
+  public Map<Id, Boolean> containsFlight(String flightId) {
+    if (fullRecords == null) {
+      throw new MissingDataException('FullBookingData should not be null');
+    }
+    Map<Id, Boolean> toReturn = new Map<Id, Boolean>();
+    for (FullBookingData fbd : fullRecords) {
+      Boolean hasFlight = false;
+      for (Flight__c flight : fbd.flights) {
+        if (flight.TEDS_Identifier__c.substring(0, 15) == flightId) {
+          hasFlight = true;
+          break;
+        }
+      }
+      toReturn.put(fbd.booking.Id, hasFlight);
+    }
+
+    return toReturn;
+  }
+  /**
+   * Checks whether a certain passenger exists in a booking
+   * @param passengerLastName Last name of the passenger to check
+   * @return Map of Booking Id and if the passenger is part of the booking
+   */
+  public Map<Id, Boolean> containsPassenger(String passengerLastName) {
+    if (fullRecords == null) {
+      throw new MissingDataException('FullBookingData should not be null');
+    }
+    Map<Id, Boolean> toReturn = new Map<Id, Boolean>();
+    for (FullBookingData fbd : fullRecords) {
+      Boolean hasPassenger = false;
+      for (Passenger__c passenger : fbd.passengers) {
+        if (passenger.Last_Name__c == passengerLastName) {
+          hasPassenger = true;
+          break;
+        }
+      }
+      toReturn.put(fbd.booking.Id, hasPassenger);
+    }
+    return toReturn;
+  }
+
+  /**
+   * Loads Passenger, Flight, Segment data for instance of domain that was not
+   * created as part of retrieving data from TEDS.
+   * Stores the data in the same FullBookingData format as if domain instance was
+   * created from call to TEDS
+   */
+  public Bookings reloadFullBookingData() {
+    Set<Id> bookingIds = new Map<Id, Booking__c>(instanceRecords).keySet();
+    Map<Id, Flight__c> idsToFlights = new Map<Id, Flight__c>(
+      FlightsSelector.newInstance().selectByBookingIds(bookingIds)
+    );
+    List<Passenger__c> allPassengers = PassengersSelector.newInstance()
+      .selectByBookingId(bookingIds);
+    List<Segment__c> allSegments = SegmentsSelector.newInstance()
+      .selectByBookingId(bookingIds);
+
+    Map<String, List<Segment__c>> flightIdToSegments = new Map<String, List<Segment__c>>();
+    Map<Id, List<Flight__c>> bookingIdToFlights = new Map<Id, List<Flight__c>>();
+
+    //Sort Segments for TEDS Flight Id
+    //Sort Flights by Booking
+    for (Segment__c segment : allSegments) {
+      Flight__c flightForSegment = idsToFlights.get(segment.Flight__c);
+      if (bookingIdToFlights.get(segment.Booking__c) == null) {
+        bookingIdToFlights.put(segment.Booking__c, new List<Flight__c>());
+      }
+      if (flightForSegment != null) {
+        bookingIdToFlights.get(segment.Booking__c).add(flightForSegment);
+      }
+
+      if (flightIdToSegments.get(flightForSegment.TEDS_Identifier__c) == null) {
+        flightIdToSegments.put(
+          flightForSegment.TEDS_Identifier__c,
+          new List<Segment__c>()
+        );
+      }
+      flightIdToSegments.get(flightForSegment.TEDS_Identifier__c).add(segment);
+    }
+    Map<Id, List<Passenger__c>> bookingIdToPassengers = new Map<Id, List<Passenger__c>>();
+    //Sort passenger by booking Id
+    for (Passenger__c passenger : allPassengers) {
+      if (bookingIdToPassengers.get(passenger.Booking__c) == null) {
+        bookingIdToPassengers.put(
+          passenger.Booking__c,
+          new List<Passenger__c>()
+        );
+      }
+      bookingIdToPassengers.get(passenger.Booking__c).add(passenger);
+    }
+
+    if (fullRecords == null) {
+      fullRecords = new List<FullBookingData>();
+    }
+    for (Booking__c booking : instanceRecords) {
+      FullBookingData fbd = new FullBookingData(
+        booking,
+        bookingIdToFlights.get(booking.Id),
+        bookingIdToPassengers.get(booking.Id),
+        flightIdToSegments
+      );
+      fullRecords.add(fbd);
+    }
+    return this;
   }
 
   public class FullBookingData {

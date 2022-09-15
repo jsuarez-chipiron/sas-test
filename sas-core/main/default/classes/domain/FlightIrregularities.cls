@@ -281,7 +281,7 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
         if (reason.reasonCode != null) {
           code = reason.reasonCode;
         }
-        if (reasonText.length() > 2000) {
+        if (reasonText?.length() > 2000) {
           reasonText = reasonText.substring(0, 2000);
         }
         result.add(
@@ -326,7 +326,7 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
         if (reason.reasonCode != null) {
           code = reason.reasonCode;
         }
-        if (reasonText.length() > 2000) {
+        if (reasonText?.length() > 2000) {
           reasonText = reasonText.substring(0, 2000);
         }
         result.add(

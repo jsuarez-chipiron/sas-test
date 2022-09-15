@@ -48,6 +48,11 @@ public inherited sharing class PassengersSelector extends fflib_SObjectSelector 
       newQueryFactory().setCondition('Last_Name__c = :lastName').toSOQL()
     );
   }
+  public List<Passenger__c> selectByBookingId(Set<Id> bookingIds) {
+    return (List<Passenger__c>) Database.query(
+      newQueryFactory().setCondition('Booking__c IN :bookingIds').toSOQL()
+    );
+  }
 
   public override String getOrderBy() {
     return 'Last_Name__c';

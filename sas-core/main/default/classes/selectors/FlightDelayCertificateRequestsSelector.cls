@@ -7,7 +7,8 @@ public with sharing class FlightDelayCertificateRequestsSelector extends fflib_S
       Flight_Delay_Certificate_Request__c.Contact_First_Name__c,
       Flight_Delay_Certificate_Request__c.Contact_Last_Name__c,
       Flight_Delay_Certificate_Request__c.Contact_Full_Name__c,
-      Flight_Delay_Certificate_Request__c.Flight_Number__c
+      Flight_Delay_Certificate_Request__c.Flight_Number__c,
+      Flight_Delay_Certificate_Request__c.Flight_Date__c
     };
   }
 

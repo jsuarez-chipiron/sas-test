@@ -322,6 +322,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Flight_Delay_Certificate_Request__c.Flight_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Flight_Delay_Certificate_Request__c.Flight_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
