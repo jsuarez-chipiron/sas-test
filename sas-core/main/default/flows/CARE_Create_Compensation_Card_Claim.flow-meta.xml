@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Route_Case_to_Queue</name>
+        <label>Route Case to Queue</label>
+        <locationX>176</locationX>
+        <locationY>998</locationY>
+        <actionName>RouteCaseAndSetPriority</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>caseToRoute</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>53.0</apiVersion>
     <choices>
         <name>Involuntary_Denied_Boarding</name>
@@ -313,6 +328,9 @@
         <label>Update Case with Customer Claim Information</label>
         <locationX>176</locationX>
         <locationY>878</locationY>
+        <connector>
+            <targetReference>Route_Case_to_Queue</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -732,7 +750,7 @@
             <targetReference>Customer_Claim_Message</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
