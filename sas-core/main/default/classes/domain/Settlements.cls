@@ -611,7 +611,6 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         }
 
         Settlement__c settlementToCreate = settlementsByClaimId.get(cl.Id);
-        //settlementToCreate.Currency__c = compensationCardForClaim.Currency__c;
         settlementToCreate.Currency__c = bankCurrency.Default_Currency__c;
 
         List<Exchange_Rate__c> er = exchangeRatesSel.selectByCurrencies(
