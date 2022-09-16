@@ -567,6 +567,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     fflib_ISObjectUnitOfWork uow
   ) {
     Map<Id, Settlement__c> settlementsByClaimId = new Map<Id, Settlement__c>();
+    Decimal eRates = 1;
+    String Country;
 
     Settlements settlementsToCreate = createFromClaim(cardClaims, null, uow);
 
@@ -587,35 +589,67 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           'Not a compensation card claim or missing card information.'
         );
       }
+      if (
+        cl.Preferred_Compensation_Method__c == 'Monetary' ||
+        cl.Preferred_Compensation_Method__c == 'Voucher'
+      ) {
+        if (cl.Preferred_Compensation_Method__c == 'Monetary') {
+          Country = cl.Bank_Country__c;
+        } else {
+          Country = cl.Country__c;
+        }
+        Settlement_Country_Setting__mdt bankCurrency = [
+          SELECT Default_Currency__c
+          FROM Settlement_Country_Setting__mdt
+          WHERE Country_Name__c = :Country
+        ];
 
-      Settlement__c settlementToCreate = settlementsByClaimId.get(cl.Id);
-      settlementToCreate.Currency__c = compensationCardForClaim.Currency__c;
+        if (cl.Preferred_Compensation_Method__c == 'Voucher') {
+          bankCurrency.Default_Currency__c = getVoucherCurrencies(
+            bankCurrency.Default_Currency__c
+          );
+        }
 
-      if (cl.Preferred_Compensation_Method__c == 'Voucher') {
-        // There are several different voucher sybtypes issued as compensation
-        // cards. The subtype always begins with either IDB, IDG, VDB, or VDG
-        // for the different compensation situations. We can map these to the
-        // existing voucher cost accounts like this.
-        String voucherSubTypeCategory = String.isBlank(
-            compensationCardForClaim.Sub_Type__c
-          ) || compensationCardForClaim.Sub_Type__c.length() < 3
-          ? ''
-          : compensationCardForClaim.Sub_Type__c.substring(0, 3);
-        switch on voucherSubTypeCategory {
-          when 'IDB' {
-            settlementToCreate.Voucher_Type__c = '6721 - Denied boarding involuntary voucher';
-          }
-          when 'VDB' {
-            settlementToCreate.Voucher_Type__c = '6721 - Denied boarding voluntary voucher';
-          }
-          when 'IDG' {
-            settlementToCreate.Voucher_Type__c = '6722 - Downgrading involuntary voucher';
-          }
-          when 'VDG' {
-            settlementToCreate.Voucher_Type__c = '6722 - Downgrading voluntary voucher';
-          }
-          when else {
-            settlementToCreate.Voucher_Type__c = '6721 - Denied boarding involuntary voucher';
+        Settlement__c settlementToCreate = settlementsByClaimId.get(cl.Id);
+        //settlementToCreate.Currency__c = compensationCardForClaim.Currency__c;
+        settlementToCreate.Currency__c = bankCurrency.Default_Currency__c;
+
+        List<Exchange_Rate__c> er = exchangeRatesSel.selectByCurrencies(
+          compensationCardForClaim.Currency__c,
+          settlementToCreate.Currency__c
+        );
+        if (
+          compensationCardForClaim.Currency__c != settlementToCreate.Currency__c
+        ) {
+          eRates = er[0].Rate__c;
+        }
+
+        if (cl.Preferred_Compensation_Method__c == 'Voucher') {
+          // There are several different voucher sybtypes issued as compensation
+          // cards. The subtype always begins with either IDB, IDG, VDB, or VDG
+          // for the different compensation situations. We can map these to the
+          // existing voucher cost accounts like this.
+          String voucherSubTypeCategory = String.isBlank(
+              compensationCardForClaim.Sub_Type__c
+            ) || compensationCardForClaim.Sub_Type__c.length() < 3
+            ? ''
+            : compensationCardForClaim.Sub_Type__c.substring(0, 3);
+          switch on voucherSubTypeCategory {
+            when 'IDB' {
+              settlementToCreate.Voucher_Type__c = '6721 - Denied boarding involuntary voucher';
+            }
+            when 'VDB' {
+              settlementToCreate.Voucher_Type__c = '6721 - Denied boarding voluntary voucher';
+            }
+            when 'IDG' {
+              settlementToCreate.Voucher_Type__c = '6722 - Downgrading involuntary voucher';
+            }
+            when 'VDG' {
+              settlementToCreate.Voucher_Type__c = '6722 - Downgrading voluntary voucher';
+            }
+            when else {
+              settlementToCreate.Voucher_Type__c = '6721 - Denied boarding involuntary voucher';
+            }
           }
         }
       }
@@ -642,7 +676,7 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           itemToCreate.Cost_Account__c = '';
         }
         when 'Monetary' {
-          itemToCreate.Amount__c = compensationCardForClaim.Amount__c;
+          itemToCreate.Amount__c = compensationCardForClaim.Amount__c * eRates;
 
           // There are several different voucher sybtypes issued as compensation
           // cards. The subtype always begins with either IDB, IDG, VDB, or VDG
@@ -674,11 +708,12 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         when 'Voucher' {
           itemToCreate.Amount__c =
             CONVERSION_RATE_EUR_TO_VOUCHER_EUR *
-            compensationCardForClaim.Amount__c;
+            compensationCardForClaim.Amount__c *
+            eRates;
         }
         when else {
           // Default to monetary
-          itemToCreate.Amount__c = compensationCardForClaim.Amount__c;
+          itemToCreate.Amount__c = compensationCardForClaim.Amount__c * eRates;
           itemToCreate.Cost_Account__c = '6721'; // TODO: Set this based on compensation card type.
         }
       }
@@ -1126,5 +1161,31 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     } else {
       return recordTypeIdToRequiredFields.get(settlementRecordTypeId);
     }
+  }
+  private static List<String> availableCurrency = new List<String>();
+
+  public static String getVoucherCurrencies(String currencyResult) {
+    //get the picklist value
+    if (availableCurrency.size() == 0) {
+      String controllingFieldValue = 'Not Applicable';
+      String dependentField = 'Currency__c';
+      Schema.SObjectType objType = Schema.getGlobalDescribe()
+        .get('LIA_Claim__c');
+      Schema.DescribeSObjectResult describeResult = objType.getDescribe();
+      Schema.DescribeFieldResult dependentFieldInfo = describeResult.fields.getMap()
+        .get(dependentField)
+        .getDescribe();
+
+      //get dependent value i.e Currencies
+      List<Schema.PicklistEntry> dependentValues = dependentFieldInfo.getPicklistValues();
+      for (Schema.PicklistEntry c : dependentValues) {
+        availableCurrency.add(c.value);
+      }
+    }
+    // if currency is not available to pay voucher then set it to EURO
+    if (!availableCurrency.contains(currencyResult)) {
+      currencyResult = 'EUR';
+    }
+    return currencyResult;
   }
 }
