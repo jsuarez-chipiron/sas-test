@@ -2,7 +2,11 @@
 <DelegateGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <groups>Approvers</groups>
     <groups>Claims - Baggage</groups>
+    <groups>Claims - Compensation Card</groups>
     <groups>Claims - Flight Disruptions</groups>
+    <groups>Claims - Flight Disruptions Expenses</groups>
+    <groups>Claims - High Care Costs</groups>
+    <groups>Claims - High Priority</groups>
     <groups>Claims - Other</groups>
     <groups>Control</groups>
     <label>Customer Claim Supervisors</label>
