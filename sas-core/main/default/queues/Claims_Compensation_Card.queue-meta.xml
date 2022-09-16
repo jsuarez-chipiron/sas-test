@@ -7,6 +7,7 @@
             <publicGroup>Claims_Compensation_Card</publicGroup>
         </publicGroups>
     </queueMembers>
+    <queueRoutingConfig>Compensation_Card</queueRoutingConfig>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

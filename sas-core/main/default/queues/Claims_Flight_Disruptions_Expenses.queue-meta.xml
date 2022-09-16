@@ -7,6 +7,7 @@
             <publicGroup>Claims_Flight_Disruptions_Expenses</publicGroup>
         </publicGroups>
     </queueMembers>
+    <queueRoutingConfig>Flight_Disruption_Expense</queueRoutingConfig>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
