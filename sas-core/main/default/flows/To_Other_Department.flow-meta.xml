@@ -378,7 +378,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Department_not_available_for_redirection_support_and_escalation</name>
-            <conditionLogic>1 OR 2 OR (3 AND 4 AND 5 AND 6)</conditionLogic>
+            <conditionLogic>1 OR 2 OR (3 AND 4 AND 5 AND 6) OR 7</conditionLogic>
             <conditions>
                 <leftValueReference>DependentList.topValue</leftValueReference>
                 <operator>EqualTo</operator>
@@ -417,6 +417,13 @@
             <conditions>
                 <leftValueReference>GetCurrentCaseInformation.Department__c</leftValueReference>
                 <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Distribution</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>DependentList.topValue</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Distribution</stringValue>
                 </rightValue>
