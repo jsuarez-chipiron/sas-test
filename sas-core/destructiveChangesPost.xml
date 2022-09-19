@@ -20,4 +20,8 @@
         <members>IRR_SEL_AutomatedServiceClassSelector</members>
         <name>ApexClass</name>
     </types>
+    <types>
+        <members>ServiceClass__mdt</members>
+        <name>CustomObject</name>
+    </types>
 </Package>
