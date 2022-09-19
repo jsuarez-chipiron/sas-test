@@ -3,6 +3,8 @@ public inherited sharing class CustomersSelector extends fflib_SObjectSelector {
     return new List<Schema.SObjectField>{
       Customer__c.Id,
       Customer__c.Name,
+      Customer__c.CreatedDate,
+      Customer__c.LastModifiedDate,
       Customer__c.Claim__c,
       Customer__c.First_Name__c,
       Customer__c.Last_Name__c
