@@ -18,6 +18,7 @@
     <types>
         <members>AutomatedServiceClassSelectortest</members>
         <members>IRR_SEL_AutomatedServiceClassSelector</members>
+        <members>IRR_SEL_IAutomatedServiceClassSelector</members>
         <name>ApexClass</name>
     </types>
     <types>
