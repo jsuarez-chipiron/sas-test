@@ -1150,6 +1150,12 @@
                 <elementReference>Create_Customer_Claim</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedEmail</field>
+            <value>
+                <elementReference>CustomerClaimCustomerEmail.value</elementReference>
+            </value>
+        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>

@@ -2197,6 +2197,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Claims</controllingFieldValue>
+            <valueName>Claim created</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Claims</controllingFieldValue>
             <valueName>Claim status</valueName>
         </valueSettings>
         <valueSettings>
