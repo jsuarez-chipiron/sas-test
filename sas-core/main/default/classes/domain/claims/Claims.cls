@@ -142,6 +142,32 @@ public without sharing class Claims extends fflib_SObjectDomain {
     return newInstance(new List<LIA_Claim__c>{ newClaim });
   }
 
+  public static Claims createFromClaims(List<Claim> listOfClaims) {
+    List<LIA_Claim__c> claimsToCreate = new List<LIA_Claim__c>();
+
+    for (Claim cl : listOfClaims) {
+      cl.updateSObjectFields();
+      claimsToCreate.add(cl.underlyingSObject);
+    }
+
+    return newInstance(claimsToCreate);
+  }
+
+  public Claims upsertToDB() {
+    for (Claim obj : this.objects) {
+      obj.updateSObjectFields();
+    }
+    upsert this.Records;
+
+    List<Claim> claimObjects = new List<Claim>();
+    for (LIA_Claim__c c : this.instanceRecords) {
+      claimObjects.add(new Claim(c));
+    }
+    this.objects = claimObjects;
+
+    return this;
+  }
+
   private void checkIfExistsInCARE(Map<Id, LIA_Claim__c> existingRecords) {
     for (LIA_Claim__c claim : instanceRecords) {
       if (claim.Liability_PNR__c != null) {

@@ -1,5 +1,6 @@
 public without sharing class ClaimService {
   private static Map<String, String> jsonToPicklist = new Map<String, String>{
+    // TODO: Remove when we deprecate old forms
     '0-2' => '0-2',
     '2-3' => '2-3',
     '3-4' => '3-4',
@@ -57,7 +58,144 @@ public without sharing class ClaimService {
   public static final String COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME = 'compensation_card_failure';
   public static final String COMPENSATION_CARD_REPLY_TO_ADDRESS = 'customercare@sas.se';
 
+  public static String createClaim(CreateClaimRequest request) {
+    Claims c = Claims.createFromClaims(
+      new List<Claim>{ createClaimRecord(request) }
+    );
+    c.upsertToDB();
+
+    Claim claimToCreate = c.objects[0];
+
+    List<SObject> objectsToCreate = new List<SObject>();
+    Map<Id, SObject> fileIdsToObjects = new Map<Id, SObject>();
+
+    String travelersRichTextForAutoResponseEmail = '';
+    for (CreateClaimRequest.Traveler traveler : request.travelers) {
+      Customer cust = createCustomer(traveler, claimToCreate);
+      objectsToCreate.add(cust.underlyingSObject);
+
+      travelersRichTextForAutoResponseEmail += traveler.toString() + '<br>';
+    }
+
+    String expensesRichTextForAutoResponseEmail = '';
+    for (CreateClaimRequest.Expense expense : request.expenses) {
+      ClaimExpense exp = createClaimExpense(expense, claimToCreate);
+      objectsToCreate.add(exp.underlyingSObject);
+
+      expensesRichTextForAutoResponseEmail += expense.toString() + '<br>';
+
+      for (Id contentId : expense.contentVersionIds) {
+        fileIdsToObjects.put(contentId, exp.underlyingSObject);
+      }
+    }
+
+    String rebookedFlightsRichTextForAutoResponseEmail = '';
+    for (CreateClaimRequest.RebookedFlight flight : request.rebookedFlights) {
+      ClaimRebookedFlight rf = createRebookedFlight(flight, claimToCreate);
+      objectsToCreate.add(rf.underlyingSObject);
+
+      rebookedFlightsRichTextForAutoResponseEmail += flight.toString() + '<br>';
+
+      for (Id contentId : flight.contentVersionIds) {
+        fileIdsToObjects.put(contentId, rf.underlyingSObject);
+      }
+    }
+
+    if (objectsToCreate.size() > 0) {
+      insert objectsToCreate;
+    }
+
+    for (Id contentId : request.filesToLink) {
+      fileIdsToObjects.put(contentId, claimToCreate.underlyingSObject);
+    }
+
+    insert constructContentLinks(fileIdsToObjects, claimToCreate.id);
+
+    Case caseToCreate = createCaseRecord(request, claimToCreate);
+    caseToCreate.Claim_Expenses__c = expensesRichTextForAutoResponseEmail;
+    caseToCreate.Claim_Rebooked_Flights__c = rebookedFlightsRichTextForAutoResponseEmail;
+    caseToCreate.Claim_Travelers__c = travelersRichTextForAutoResponseEmail;
+
+    // Auto-response emails are not triggered by default for cases created
+    // through Apex. Setting the triggerAutoResponseEmail header forces
+    // them to be sent.
+    Database.DMLOptions DMLOptions = new Database.DMLOptions();
+    DMLOptions.EmailHeader.triggerAutoResponseEmail = true;
+
+    database.insert(caseToCreate, DMLOptions);
+
+    Case insertedCase = CasesSelector.newInstance()
+      .selectById(new Set<Id>{ caseToCreate.Id })[0];
+
+    // We need to do this dance because we want claim name to match the case
+    // number, and they to be linked to each other.
+    claimToCreate.parentCaseId = insertedCase.Id;
+    claimToCreate.Name = insertedCase.CaseNumber;
+    c.upsertToDB();
+
+    System.enqueueJob(
+      new CaseService.AssignPriorityAndRouteToQueueAsync(
+        new Set<Id>{ insertedCase.Id }
+      )
+    );
+
+    return insertedCase.CaseNumber;
+  }
+
+  public static String createCompensationCardClaim(
+    RedeemCompensationCardRequest request
+  ) {
+    Claims c = Claims.createFromClaims(
+      new List<Claim>{ createClaimRecord(request) }
+    );
+    c.upsertToDB();
+
+    Claim claimToCreate = c.objects[0];
+
+    Customer cust = new Customer(claimToCreate);
+    cust.firstName = request.contact.firstName == null
+      ? ' '
+      : request.contact.firstName;
+    cust.lastName = request.contact.lastName == null
+      ? ' '
+      : request.contact.lastName;
+    cust.updateSObjectFields();
+    insert cust.underlyingSObject;
+
+    Case caseToCreate = createCaseRecord(request, claimToCreate);
+    // Auto-response emails are not triggered by default for cases created
+    // through Apex. Setting the triggerAutoResponseEmail header forces
+    // them to be sent.
+    Database.DMLOptions DMLOptions = new Database.DMLOptions();
+    DMLOptions.EmailHeader.triggerAutoResponseEmail = true;
+
+    database.insert(caseToCreate, DMLOptions);
+
+    Case insertedCase = CasesSelector.newInstance()
+      .selectById(new Set<Id>{ caseToCreate.Id })[0];
+
+    claimToCreate.parentCaseId = insertedCase.Id;
+    claimToCreate.Name = insertedCase.CaseNumber;
+    c.upsertToDB();
+
+    List<Feature_Switch__mdt> automationSwitch = [
+      SELECT Active__c
+      FROM Feature_Switch__mdt
+      WHERE QualifiedApiName = 'Process_Compensation_Cards_Automatically'
+    ];
+
+    if (
+      automationSwitch == null ||
+      automationSwitch.size() > 0 && automationSwitch[0].Active__c
+    ) {
+      System.enqueueJob(new RedeemCompensationCardClaim(claimToCreate.id));
+    }
+
+    return insertedCase.CaseNumber;
+  }
+
   public static String createClaim(CaseFormJSON2Apex form) {
+    // TODO: Remove when we deprecate old forms
     LIA_Claim__c claimToCreate = createClaimRecord(form);
 
     insert claimToCreate;
@@ -212,6 +350,7 @@ public without sharing class ClaimService {
   }
 
   public static String createCompensationCardClaim(CaseFormJSON2Apex form) {
+    // TODO: Remove when we deprecate old forms
     LIA_Claim__c claimToCreate = createClaimRecord(form);
     claimToCreate.RecordTypeId = Claim.getRecordTypeIdByEnum(
       Claim.RecordType.CompensationCard
@@ -325,7 +464,9 @@ public without sharing class ClaimService {
       Preferred_Reimbursement_Method__c = jsonToPicklist.get(
         form.formData.preferredReimbursementMethod
       ),
-      RecordTypeId = Claim.getRecordTypeIdByEnum(Claim.RecordType.CustomerClaim),
+      RecordTypeId = Claim.getRecordTypeIdByEnum(
+        Claim.RecordType.CustomerClaim
+      ),
       Total_delay_to_final_destination__c = jsonToPicklist.get(
         form.formData.delayLength
       ),
@@ -625,5 +766,186 @@ public without sharing class ClaimService {
 
     uow.registerDirty(claim);
     uow.commitWork();
+  }
+
+  private static Case createCaseRecord(
+    CreateClaimRequest request,
+    Claim createdClaim
+  ) {
+    Group claimsQueue = GroupsSelector.newInstance()
+      .selectQueuesByDeveloperName(new Set<String>{ 'Customer_Claim' })[0];
+
+    return new Case(
+      Initially_Provided_PNR__c = request.bookingReference,
+      Description = request.comment,
+      FCS_EBNumber__c = request.contact.euroBonusNumber,
+      LIA_Claim__c = createdClaim.id,
+      OwnerId = claimsQueue.Id,
+      Origin = request.origin,
+      SuppliedEmail = request.contact.email,
+      RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
+      Subject = 'Claim, PNR: ' + request.bookingReference
+    );
+  }
+
+  private static Case createCaseRecord(
+    RedeemCompensationCardRequest request,
+    Claim createdClaim
+  ) {
+    Group claimsQueue = GroupsSelector.newInstance()
+      .selectQueuesByDeveloperName(new Set<String>{ 'Customer_Claim' })[0];
+
+    return new Case(
+      Initially_Provided_PNR__c = request.bookingReference,
+      FCS_EBNumber__c = request.contact.euroBonusNumber,
+      LIA_Claim__c = createdClaim.id,
+      OwnerId = claimsQueue.Id,
+      Origin = request.origin,
+      SuppliedEmail = request.contact.email,
+      RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
+      Subject = 'Claim, PNR: ' + request.bookingReference
+    );
+  }
+
+  private static Claim createClaimRecord(RedeemCompensationCardRequest r) {
+    Claim newClaim = new Claim();
+
+    newClaim.bankAccountHolderName = r.compensationDetails.bankAccountHolderName;
+    newClaim.bankName = r.compensationDetails.bankName;
+    newClaim.bankBicSwift = r.compensationDetails.bankBic;
+    newClaim.bankCountry = r.compensationDetails.bankCountry;
+    newClaim.bookingReference = r.bookingReference;
+    newClaim.compensationCardNumber = r.compensationCardNumber;
+    newClaim.contactAddressLine1 = r.contact.addressLine1;
+    newClaim.contactAddressLine2 = r.contact.addressLine2;
+    newClaim.contactCountry = r.contact.country;
+    newClaim.contactCity = r.contact.city;
+    newClaim.contactEmail = r.contact.email;
+    newClaim.contactFirstName = r.contact.firstName;
+    newClaim.contactLastName = r.contact.lastName;
+    newClaim.contactPhone = r.contact.phone;
+    newClaim.contactPostalCode = r.contact.postalCode;
+    newClaim.contactType = Claim.ContactType.PrivateCustomer;
+    newClaim.euroBonusNumber = r.contact.euroBonusNumber;
+    newClaim.preferredCurrency = r.compensationDetails.preferredCurrency;
+    newClaim.preferredCompensationMethod = r.compensationDetails.preferredCompensationMethod;
+    newClaim.preferredReimbursementMethod = r.compensationDetails.preferredReimbursementMethod;
+    newClaim.recordType = Claim.RecordType.CompensationCard;
+    newClaim.referenceNumber = r.compensationDetails.referenceNumber;
+
+    newClaim.updateSObjectFields();
+
+    return newClaim;
+  }
+
+  private static Claim createClaimRecord(CreateClaimRequest r) {
+    Claim newClaim = new Claim();
+
+    newClaim.bankAccountHolderName = r.compensationDetails.bankAccountHolderName;
+    newClaim.bankName = r.compensationDetails.bankName;
+    newClaim.bankBicSwift = r.compensationDetails.bankBic;
+    newClaim.bankCountry = r.compensationDetails.bankCountry;
+    newClaim.contactCity = r.contact.city;
+    newClaim.comment = r.comment;
+    newClaim.companyCode = r.contact.companyCode;
+    newClaim.companyName = r.contact.companyName;
+    newClaim.personWithReducedMobility = r.personWithReducedMobility;
+    newClaim.unaccompaniedMinor = r.unaccompaniedMinor;
+    newClaim.contactAddressLine1 = r.contact.addressLine1;
+    newClaim.contactAddressLine2 = r.contact.addressLine2;
+    newClaim.contactEmail = r.contact.email;
+    newClaim.contactFirstName = r.contact.firstName;
+    newClaim.contactLastName = r.contact.lastName;
+    newClaim.contactCountry = r.contact.country;
+    newClaim.preferredCurrency = r.compensationDetails.preferredCurrency;
+    newClaim.category = r.category;
+    newClaim.type = r.type;
+    newClaim.referenceNumber = r.compensationDetails.referenceNumber;
+    newClaim.baggageDelayLength = r.baggageDelayLength;
+    newClaim.euroBonusNumber = r.contact.euroBonusNumber;
+    newClaim.departureDate = r.departureDate;
+    newClaim.flightNumber = r.flightNumber;
+    newClaim.ticketNumber = r.ticketNumber;
+    newClaim.bookingReference = r.bookingReference;
+    newClaim.contactPhone = r.contact.phone;
+    newClaim.contactPostalCode = r.contact.postalCode;
+    newClaim.baggagePurchasePrice = r.baggagePurchasePrice;
+    newClaim.baggagePurchaseYear = r.baggagePurchaseYear;
+    newClaim.pir = r.passengerIrregularityReportNumber;
+    newClaim.preferredCompensationMethod = r.compensationDetails.preferredCompensationMethod;
+    newClaim.preferredReimbursementMethod = r.compensationDetails.preferredReimbursementMethod;
+    newClaim.recordType = r.recordType;
+    newClaim.delayToDestination = r.delayLength;
+    newClaim.contactType = r.contact.type;
+
+    newClaim.updateSObjectFields();
+
+    return newClaim;
+  }
+
+  private static List<ContentDocumentLink> constructContentLinks(
+    Map<Id, SObject> fileIdsToObjects,
+    Id claimId
+  ) {
+    List<ContentDocumentLink> toReturn = new List<ContentDocumentLink>();
+
+    List<ContentVersion> contentToLink = ContentVersionsSelector.newInstance()
+      .selectById(fileIdsToObjects.keySet());
+
+    for (ContentVersion content : contentToLink) {
+      toReturn.add(
+        new ContentDocumentLink(
+          ContentDocumentId = content.ContentDocumentId,
+          LinkedEntityId = claimId
+        )
+      );
+      if (
+        fileIdsToObjects.get(content.Id) != null &&
+        fileIdsToObjects.get(content.Id).Id != claimId
+      ) {
+        toReturn.add(
+          new ContentDocumentLink(
+            ContentDocumentId = content.ContentDocumentId,
+            LinkedEntityId = fileIdsToObjects.get(content.Id).Id
+          )
+        );
+      }
+    }
+
+    return toReturn;
+  }
+
+  private static ClaimExpense createClaimExpense(
+    CreateClaimRequest.Expense expense,
+    Claim parentClaim
+  ) {
+    ClaimExpense ce = new ClaimExpense(parentClaim);
+    ce.amount = expense.amount;
+    ce.currencyOfAmount = expense.expenseCurrency;
+    ce.type = expense.type;
+    ce.updateSObjectFields();
+    return ce;
+  }
+
+  private static Customer createCustomer(
+    CreateClaimRequest.Traveler traveler,
+    Claim parentClaim
+  ) {
+    Customer c = new Customer(parentClaim);
+    c.firstName = traveler.firstName;
+    c.lastName = traveler.lastName;
+    c.updateSObjectFields();
+    return c;
+  }
+
+  private static ClaimRebookedFlight createRebookedFlight(
+    CreateClaimRequest.RebookedFlight rebookedFlight,
+    Claim parentClaim
+  ) {
+    ClaimRebookedFlight rf = new ClaimRebookedFlight(parentClaim);
+    rf.departureDate = rebookedFlight.departureDate;
+    rf.flightNumber = rebookedFlight.flightNumber;
+    rf.updateSObjectFields();
+    return rf;
   }
 }
