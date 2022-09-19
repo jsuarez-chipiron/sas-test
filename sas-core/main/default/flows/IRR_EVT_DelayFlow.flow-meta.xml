@@ -24,8 +24,8 @@
     <assignments>
         <name>Assignment</name>
         <label>Assignment</label>
-        <locationX>1321</locationX>
-        <locationY>1694</locationY>
+        <locationX>1101</locationX>
+        <locationY>1780</locationY>
         <assignmentItems>
             <assignToReference>sendIcouponSMSMessage</assignToReference>
             <operator>Assign</operator>
@@ -56,10 +56,44 @@
         </assignmentItems>
     </assignments>
     <assignments>
+        <name>Only_for_AMS</name>
+        <label>Only for AMS</label>
+        <locationX>1329</locationX>
+        <locationY>1825</locationY>
+        <assignmentItems>
+            <assignToReference>sendIcouponSMSMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IcouponSMSTemplateName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>irr_delay_icoupon_sms_AMS</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sendIcouponEmailMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IcouponEmailTemplateName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>irr_delay_icoupon_email_AMS</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Send_SMS_and_Email</name>
         <label>Send SMS and Email</label>
-        <locationX>1148</locationX>
-        <locationY>1141</locationY>
+        <locationX>916</locationX>
+        <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>sendSMSMessage</assignToReference>
             <operator>Assign</operator>
@@ -95,8 +129,8 @@
     <assignments>
         <name>US_Assignment</name>
         <label>US Assignment</label>
-        <locationX>805</locationX>
-        <locationY>1660</locationY>
+        <locationX>591</locationX>
+        <locationY>1583</locationY>
         <assignmentItems>
             <assignToReference>sendEmailMessage</assignToReference>
             <operator>Assign</operator>
@@ -190,8 +224,8 @@
     <decisions>
         <name>Check_US_Station</name>
         <label>Check US Station</label>
-        <locationX>761</locationX>
-        <locationY>1379</locationY>
+        <locationX>695</locationX>
+        <locationY>1240</locationY>
         <defaultConnector>
             <targetReference>Send_SMS_and_Email</targetReference>
         </defaultConnector>
@@ -412,9 +446,34 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assignment</targetReference>
+                <targetReference>hasAirportAMS</targetReference>
             </connector>
             <label>Has Coupon Id</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>hasAirportAMS</name>
+        <label>hasAirportAMS</label>
+        <locationX>1239</locationX>
+        <locationY>1559</locationY>
+        <defaultConnector>
+            <targetReference>Assignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>iCoupon_for_AMS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>delayInfo.stationDeparture</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>AMS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Only_for_AMS</targetReference>
+            </connector>
+            <label>iCoupon for AMS</label>
         </rules>
     </decisions>
     <decisions>

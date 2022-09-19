@@ -21,7 +21,7 @@
         <name>ApexClass</name>
     </types>
     <types>
-        <members>IRR_Icoupon_Voucher__mdt</members>
+        <members>ServiceClass__mdt</members>
         <name>CustomObject</name>
     </types>
 </Package>
