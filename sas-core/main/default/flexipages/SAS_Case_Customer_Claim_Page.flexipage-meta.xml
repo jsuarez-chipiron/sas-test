@@ -455,10 +455,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>createQuickActionName</name>
-                    <value>NewCase</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>lookupFieldName</name>
                     <value>Case.ParentId</value>
                 </componentInstanceProperties>

@@ -47,6 +47,11 @@
         <label>Email - CS Feedback</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - CS Norway</fullName>
+        <default>false</default>
+        <label>Email - CS Norway</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Customer Claim</fullName>
         <default>false</default>
         <label>Email - Customer Claim</label>

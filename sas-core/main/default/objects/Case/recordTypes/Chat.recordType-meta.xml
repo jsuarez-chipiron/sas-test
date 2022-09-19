@@ -802,6 +802,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Claim created</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Claim status</fullName>
             <default>false</default>
         </values>

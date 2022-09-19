@@ -126,6 +126,11 @@
                 <label>Compensation Card</label>
             </value>
             <value>
+                <fullName>CS Norway</fullName>
+                <default>false</default>
+                <label>CS Norway</label>
+            </value>
+            <value>
                 <fullName>Customer Feedback</fullName>
                 <default>false</default>
                 <label>Customer Feedback</label>
