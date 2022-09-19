@@ -20,4 +20,8 @@
         <members>IRR_SEL_AutomatedServiceClassSelector</members>
         <name>ApexClass</name>
     </types>
+    <types>
+        <members>IRR_Icoupon_Voucher__mdt</members>
+        <name>CustomObject</name>
+    </types>
 </Package>
