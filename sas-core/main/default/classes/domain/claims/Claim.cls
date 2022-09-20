@@ -126,9 +126,9 @@ public without sharing class Claim extends AbstractSObjectWrapper {
   }
 
   public Claim(LIA_Claim__c c) {
-    this();
+    super(c);
     this.underlyingSObject = c;
-    this.id = c.Id;
+    this.containsDetailObjectData = false;
 
     this.contactAddressLine1 = c.Address_line_1__c;
     this.contactAddressLine2 = c.Address_line_2__c;

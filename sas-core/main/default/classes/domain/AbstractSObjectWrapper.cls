@@ -8,10 +8,8 @@
 public without sharing abstract class AbstractSObjectWrapper {
   public String name;
   public Id id;
-  public Datetime createdDate { get; private set; } // cannot be modified manually
-  public Datetime lastModifiedDate { get; private set; } // cannot be modified manually
-
-  public SObject underlyingSObject { get; private set; }
+  public Datetime createdDate { get; protected set; } // cannot be modified manually
+  public Datetime lastModifiedDate { get; protected set; } // cannot be modified manually
 
   public abstract void updateSObjectFields();
 
@@ -20,7 +18,6 @@ public without sharing abstract class AbstractSObjectWrapper {
   }
 
   public AbstractSObjectWrapper(SObject obj) {
-    this.underlyingSObject = obj;
     this.id = obj.Id;
     this.name = (String) obj.get('Name');
     this.createdDate = (Datetime) obj.get('CreatedDate');
