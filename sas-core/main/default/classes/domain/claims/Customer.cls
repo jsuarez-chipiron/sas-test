@@ -26,7 +26,7 @@ public without sharing class Customer extends AbstractSObjectWrapper {
   public Customer(Customer__c c) {
     super(c);
     this.firstName = c.First_Name__c;
-    this.firstName = c.Last_Name__c;
+    this.lastName = c.Last_Name__c;
     this.parentClaimId = c.Claim__c;
   }
 }

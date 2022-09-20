@@ -56,6 +56,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
 
   public Boolean containsDetailObjectData { get; private set; }
 
+  public List<Customer> customers;
+
   public override void updateSObjectFields() {
     this.underlyingSObject.Address_line_1__c = this.contactAddressLine1;
     this.underlyingSObject.Address_line_2__c = this.contactAddressLine2;
@@ -188,6 +190,14 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     this.contactType = CUSTOMER_TYPE_PICKLIST_VALUE_TO_ENUM.get(
       c.Type_of_Customer__c
     );
+
+    if (c.Customers__r != null) {
+      List<Customer> customersToAdd = new List<Customer>();
+      for (Customer__c cc : c.Customers__r) {
+        customersToAdd.add(new Customer(cc));
+      }
+      customers = customersToAdd;
+    }
   }
 
   public Claim(

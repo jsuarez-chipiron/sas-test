@@ -21,6 +21,10 @@ private class EU261Service_Test {
   private static String twoClaimsSameBookingReference = 'TWOCLA';
   private static String minimalClaimBookingReference = 'MINIMA';
   private static String rotationBookingReference = 'ROTATI';
+  private static String groupBookingReference = 'GROUPB';
+  private static String differentLastNamesReference = 'DIFFLA';
+  private static String missingTravelersBookingReference = 'MISSTR';
+  private static String claimFirmBookingReference = 'CLAIMF';
 
   public static Set<String> allTestPnrs = new Set<String>{
     'ONTIME',
@@ -42,6 +46,10 @@ private class EU261Service_Test {
     'EXPENS',
     'NOTOPE',
     'TWOCLA',
+    'GROUPB',
+    'DIFFLA',
+    'MISSTR',
+    'CLAIMF',
     'MINIMA'
   };
 
@@ -298,6 +306,26 @@ private class EU261Service_Test {
       TEDS_Identifier__c = 'uniqueBooking23',
       Type__c = 'OneWay'
     );
+    Booking__c groupBooking = new Booking__c(
+      Booking_Reference__c = groupBookingReference,
+      TEDS_Identifier__c = 'uniqueBooking24',
+      Type__c = 'OneWay'
+    );
+    Booking__c differentLastNamesBooking = new Booking__c(
+      Booking_Reference__c = differentLastNamesReference,
+      TEDS_Identifier__c = 'uniqueBooking25',
+      Type__c = 'OneWay'
+    );
+    Booking__c missingTravelersBooking = new Booking__c(
+      Booking_Reference__c = missingTravelersBookingReference,
+      TEDS_Identifier__c = 'uniqueBooking26',
+      Type__c = 'OneWay'
+    );
+    Booking__c claimFirmBooking = new Booking__c(
+      Booking_Reference__c = claimFirmBookingReference,
+      TEDS_Identifier__c = 'uniqueBooking27',
+      Type__c = 'OneWay'
+    );
     insert new List<SObject>{
       airportHEL,
       airportARN,
@@ -335,7 +363,11 @@ private class EU261Service_Test {
       notOperatedBySASBooking,
       twoClaimsSameBookingReferenceBooking,
       minimalClaimBooking,
-      rotationBooking
+      rotationBooking,
+      groupBooking,
+      differentLastNamesBooking,
+      missingTravelersBooking,
+      claimFirmBooking
     };
     Segment__c oneWaySegment = new Segment__c(
       Booking__c = oneWayBooking.Id,
@@ -384,17 +416,17 @@ private class EU261Service_Test {
     );
     Segment__c individualsSegment = new Segment__c(
       Booking__c = individualPassengerBooking.Id,
-      Flight__c = flight1.Id,
+      Flight__c = flightForMinimalClaim.Id,
       Seat__c = '1A'
     );
     Segment__c husbandsSegment = new Segment__c(
       Booking__c = coupleBooking.Id,
-      Flight__c = flight1.Id,
+      Flight__c = flightForMinimalClaim.Id,
       Seat__c = '1A'
     );
     Segment__c wifesSegment = new Segment__c(
       Booking__c = coupleBooking.Id,
-      Flight__c = flight1.Id,
+      Flight__c = flightForMinimalClaim.Id,
       Seat__c = '1B'
     );
     Segment__c twoSegmentsOne = new Segment__c(
@@ -484,6 +516,51 @@ private class EU261Service_Test {
       First_Name__c = 'Sven',
       Last_Name__c = 'Svensson'
     );
+    Segment__c groupBookingSegment1 = new Segment__c(
+      Booking__c = groupBooking.Id,
+      Flight__c = flightForMinimalClaim.Id,
+      Seat__c = '1A'
+    );
+    Segment__c groupBookingSegment2 = new Segment__c(
+      Booking__c = groupBooking.Id,
+      Flight__c = flightForMinimalClaim.Id,
+      Seat__c = '2A'
+    );
+    Segment__c groupBookingSegment3 = new Segment__c(
+      Booking__c = groupBooking.Id,
+      Flight__c = flightForMinimalClaim.Id,
+      Seat__c = '3A'
+    );
+    Segment__c groupBookingSegment4 = new Segment__c(
+      Booking__c = groupBooking.Id,
+      Flight__c = flightForMinimalClaim.Id,
+      Seat__c = '4A'
+    );
+    Segment__c groupBookingSegment5 = new Segment__c(
+      Booking__c = groupBooking.Id,
+      Flight__c = flightForMinimalClaim.Id,
+      Seat__c = '5A'
+    );
+    Segment__c differentLastNamesSegment1 = new Segment__c(
+      Booking__c = differentLastNamesBooking.Id,
+      Flight__c = flightForMinimalClaim.Id,
+      Seat__c = '1A'
+    );
+    Segment__c differentLastNamesSegment2 = new Segment__c(
+      Booking__c = differentLastNamesBooking.Id,
+      Flight__c = flightForMinimalClaim.Id,
+      Seat__c = '2A'
+    );
+    Segment__c missingTravelersSegment = new Segment__c(
+      Booking__c = missingTravelersBooking.Id,
+      Flight__c = flightForMinimalClaim.Id,
+      Seat__c = '1A'
+    );
+    Segment__c claimFirmSegment = new Segment__c(
+      Booking__c = claimFirmBooking.Id,
+      Flight__c = flightForMinimalClaim.Id,
+      Seat__c = '1A'
+    );
     Passenger__c dayReturnPassenger = new Passenger__c(
       Booking__c = dayReturnBooking.Id,
       Identifier__c = 'P1',
@@ -524,25 +601,25 @@ private class EU261Service_Test {
       Booking__c = coupleBooking.Id,
       Identifier__c = 'P2',
       First_Name__c = 'Birgit',
-      Last_Name__c = 'Birgitsdottir'
+      Last_Name__c = 'Svensson'
     );
     Passenger__c twoSegmentsPassenger = new Passenger__c(
       Booking__c = oneWayBookingWithTwoSegments.Id,
       Identifier__c = 'P1',
-      First_Name__c = 'Birgit',
-      Last_Name__c = 'Birgitsdottir'
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
     );
     Passenger__c duplicateBookingOnePassenger = new Passenger__c(
       Booking__c = duplicateBookingOne.Id,
       Identifier__c = 'P1',
-      First_Name__c = 'Birgit',
-      Last_Name__c = 'Birgitsdottir'
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
     );
     Passenger__c duplicateBookingTwoPassenger = new Passenger__c(
       Booking__c = duplicateBookingTwo.Id,
       Identifier__c = 'P1',
-      First_Name__c = 'Birgit',
-      Last_Name__c = 'Birgitsdottir'
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
     );
     Passenger__c withFilePassenger = new Passenger__c(
       Booking__c = withFileBooking.Id,
@@ -612,6 +689,60 @@ private class EU261Service_Test {
     );
     Passenger__c rotationPassenger = new Passenger__c(
       Booking__c = rotationBooking.Id,
+      Identifier__c = 'P1',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
+    Passenger__c groupPassenger1 = new Passenger__c(
+      Booking__c = groupBooking.Id,
+      Identifier__c = 'P1',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
+    Passenger__c groupPassenger2 = new Passenger__c(
+      Booking__c = groupBooking.Id,
+      Identifier__c = 'P2',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
+    Passenger__c groupPassenger3 = new Passenger__c(
+      Booking__c = groupBooking.Id,
+      Identifier__c = 'P3',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
+    Passenger__c groupPassenger4 = new Passenger__c(
+      Booking__c = groupBooking.Id,
+      Identifier__c = 'P4',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
+    Passenger__c groupPassenger5 = new Passenger__c(
+      Booking__c = groupBooking.Id,
+      Identifier__c = 'P5',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
+    Passenger__c differentLastNamesPassenger1 = new Passenger__c(
+      Booking__c = differentLastNamesBooking.Id,
+      Identifier__c = 'P1',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
+    Passenger__c differentLastNamesPassenger2 = new Passenger__c(
+      Booking__c = differentLastNamesBooking.Id,
+      Identifier__c = 'P2',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Birgitsdottir'
+    );
+    Passenger__c missingTravelersPassenger = new Passenger__c(
+      Booking__c = missingTravelersBooking.Id,
+      Identifier__c = 'P1',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
+    Passenger__c claimFirmPassenger = new Passenger__c(
+      Booking__c = claimFirmBooking.Id,
       Identifier__c = 'P1',
       First_Name__c = 'Sven',
       Last_Name__c = 'Svensson'
@@ -712,6 +843,15 @@ private class EU261Service_Test {
       twoClaimsSameBookingReferenceSegment,
       minimalClaimSegment,
       rotationSegment,
+      groupBookingSegment1,
+      groupBookingSegment2,
+      groupBookingSegment3,
+      groupBookingSegment4,
+      groupBookingSegment5,
+      differentLastNamesSegment1,
+      differentLastNamesSegment2,
+      missingTravelersSegment,
+      claimFirmSegment,
       oneWayPassenger,
       dayReturnPassenger,
       roundTripPassenger,
@@ -735,6 +875,15 @@ private class EU261Service_Test {
       twoClaimsSameBookingReferencePassenger,
       minimalClaimPassenger,
       rotationPassenger,
+      groupPassenger1,
+      groupPassenger2,
+      groupPassenger3,
+      groupPassenger4,
+      groupPassenger5,
+      differentLastNamesPassenger1,
+      differentLastNamesPassenger2,
+      missingTravelersPassenger,
+      claimFirmPassenger,
       flight1Delay,
       flight3Delay,
       nonEUFlightDelay,
@@ -786,6 +935,7 @@ private class EU261Service_Test {
     Map<Schema.SObjectField, Object> claimFields = new Map<Schema.SObjectField, Object>{
       LIA_Claim__c.Customer_Claim_Category__c => 'Flight disruptions',
       LIA_Claim__c.Customer_Claim_Type__c => 'Flight delay',
+      LIA_Claim__c.Type_of_Customer__c => 'Private customer',
       LIA_Claim__c.Country__c => 'Sweden',
       LIA_Claim__c.Liability_PNR__c => bookingReference,
       LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
@@ -793,13 +943,22 @@ private class EU261Service_Test {
       )
     };
     claimFields.putAll(extraClaimFields);
-    return TestDataFactories.createCasesWithClaims(
+
+    TestDataFactories.CasesClaims toReturn = TestDataFactories.createCasesWithClaims(
       1,
       new Map<Schema.SObjectField, Object>{
         Case.Initially_Provided_PNR__c => bookingReference
       },
       claimFields
     );
+
+    insert new Customer__c(
+      First_Name__c = 'Sven',
+      Last_Name__c = toReturn.claims[0].Contact_Last_Name__c,
+      Claim__c = toReturn.claims[0].Id
+    );
+
+    return toReturn;
   }
 
   private static Set<Id> getClaimIds(
@@ -902,12 +1061,160 @@ private class EU261Service_Test {
   }
 
   @IsTest
-  static void onlyClaimsWithOnePassengerCanBeEvaluated() {
+  static void onlyClaimsWhichDoNotRequirePOACanBeEvaluated() {
+    TestDataFactories.CasesClaims groupClaim = createDefaultTestClaim(
+      groupBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
+        LIA_Claim__c.Flight_Number__c => 'SK9',
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
+      }
+    );
+    TestDataFactories.CasesClaims differentLastNamesClaim = createDefaultTestClaim(
+      differentLastNamesReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
+        LIA_Claim__c.Flight_Number__c => 'SK9',
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
+      }
+    );
+    TestDataFactories.CasesClaims missingTravelersFromBookingClaim = createDefaultTestClaim(
+      missingTravelersBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
+        LIA_Claim__c.Flight_Number__c => 'SK9',
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
+      }
+    );
+    TestDataFactories.CasesClaims claimFirmClaim = createDefaultTestClaim(
+      claimFirmBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
+        LIA_Claim__c.Type_of_Customer__c => 'Claim firm',
+        LIA_Claim__c.Flight_Number__c => 'SK9',
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
+      }
+    );
+
+    insert new Customer__c(
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson',
+      Claim__c = groupClaim.claims[0].Id
+    );
+    insert new Customer__c(
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson',
+      Claim__c = groupClaim.claims[0].Id
+    );
+    insert new Customer__c(
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson',
+      Claim__c = groupClaim.claims[0].Id
+    );
+    insert new Customer__c(
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson',
+      Claim__c = groupClaim.claims[0].Id
+    );
+
+    insert new Customer__c(
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Birgitsdottir',
+      Claim__c = differentLastNamesClaim.claims[0].Id
+    );
+
+    insert new Customer__c(
+      First_Name__c = 'Birgit',
+      Last_Name__c = 'Svensson',
+      Claim__c = missingTravelersFromBookingClaim.claims[0].Id
+    );
+
+    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
+      groupClaim,
+      differentLastNamesClaim,
+      missingTravelersFromBookingClaim,
+      claimFirmClaim
+    };
+
+    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
+
+    Set<Id> claimIds = getClaimIds(casesClaims);
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+      .automateEU261Claims(claimIds, uow);
+    Test.stopTest();
+
+    System.assert(
+      claimsWithEvaluationDetails.size() == 4,
+      'Should have evaluated four claims.'
+    );
+    for (
+      EU261Service.ClaimWithCompensationDetails claim : claimsWithEvaluationDetails
+    ) {
+      if (claim.claim.instanceRecords[0].Id == groupClaim.claims[0].Id) {
+        System.assertEquals(
+          false,
+          claim.canBeEvaluated,
+          'It should not be possible to evaluate a claim with more than four travelers.'
+        );
+        System.assertEquals(
+          'can handle only claims which do not require power of attorney',
+          claim.unhandledReason,
+          'Rejection reason should be "can handle only claims which do not require power of attorney"'
+        );
+      } else if (
+        claim.claim.instanceRecords[0].Id ==
+        differentLastNamesClaim.claims[0].Id
+      ) {
+        System.assertEquals(
+          false,
+          claim.canBeEvaluated,
+          'It should not be possible to evaluate a claim with different last names.'
+        );
+        System.assertEquals(
+          'can handle only claims which do not require power of attorney',
+          claim.unhandledReason,
+          'Rejection reason should be "can handle only claims which do not require power of attorney"'
+        );
+      } else if (
+        claim.claim.instanceRecords[0].Id ==
+        missingTravelersFromBookingClaim.claims[0].Id
+      ) {
+        System.assertEquals(
+          false,
+          claim.canBeEvaluated,
+          'It should not be possible to evaluate a claim when claimed travelers are not included in the booking.'
+        );
+        System.assertEquals(
+          'can handle only claims which do not require power of attorney',
+          claim.unhandledReason,
+          'Rejection reason should be "can handle only claims which do not require power of attorney"'
+        );
+      } else {
+        System.assertEquals(
+          false,
+          claim.canBeEvaluated,
+          'It should not be possible to evaluate a claim submitted by a claim firm.'
+        );
+        System.assertEquals(
+          'can handle only claims which do not require power of attorney',
+          claim.unhandledReason,
+          'Rejection reason should be "can handle only claims which do not require power of attorney"'
+        );
+      }
+    }
+  }
+
+  @IsTest
+  static void claimsWithAnyNumberOfPassengersCanBeEvaluated() {
     TestDataFactories.CasesClaims individualClaim = createDefaultTestClaim(
       individualPassengerBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK1',
+        LIA_Claim__c.Flight_Number__c => 'SK9',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -915,9 +1222,15 @@ private class EU261Service_Test {
       coupleBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK1',
+        LIA_Claim__c.Flight_Number__c => 'SK9',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
+    );
+
+    insert new Customer__c(
+      First_Name__c = 'Birgit',
+      Last_Name__c = 'Svensson',
+      Claim__c = coupleClaim.claims[0].Id
     );
 
     List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
@@ -945,16 +1258,31 @@ private class EU261Service_Test {
           claim.canBeEvaluated,
           'It should be possible to evaluate a claim with a single passenger.'
         );
-      } else {
         System.assertEquals(
-          false,
-          claim.canBeEvaluated,
-          'Claims with more than one passenger cannot be evaluated.'
+          true,
+          claim.customerEntitledToCompensation,
+          'Customer should be entitled to compensation'
         );
         System.assertEquals(
-          'can handle only one passenger per claim',
-          claim.unhandledReason,
-          'Rejection reason should be "can handle only one passenger per claim"'
+          400,
+          claim.EU261Compensation,
+          'Compensation should be 400€'
+        );
+      } else {
+        System.assertEquals(
+          true,
+          claim.canBeEvaluated,
+          'It should be possible to evaluate a claim with two passengers.'
+        );
+        System.assertEquals(
+          true,
+          claim.customerEntitledToCompensation,
+          'Customer should be entitled to compensation'
+        );
+        System.assertEquals(
+          800,
+          claim.EU261Compensation,
+          'Compensation should be 800€'
         );
       }
     }
