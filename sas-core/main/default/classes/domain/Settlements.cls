@@ -126,6 +126,9 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
     normalizeFields();
+    removeSettlementItemsOnCurrencyChange(
+      (Map<Id, Settlement__c>) existingRecords
+    );
   }
 
   public Settlements markAsSentToRacer(
@@ -1106,6 +1109,23 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         settlement.Bank_Account_Number__c = StringUtils.removeWhitespace(
           settlement.Bank_Account_Number__c.toUpperCase()
         );
+      }
+    }
+  }
+
+  private void removeSettlementItemsOnCurrencyChange(
+    Map<Id, Settlement__c> existingRecords
+  ) {
+    for (Settlement__c settlement : instanceRecords) {
+      if (
+        settlement.Currency__c != existingRecords.get(Settlement.Id).Currency__c
+      ) {
+        List<Settlement_Item__c> itemToDelete = settlementItemsSel.selectBySettlementIds(
+          new Set<Id>{ Settlement.Id }
+        );
+        settlement.Amount__c = 0;
+        settlement.Settlement_amount_in_SEK__c = 0;
+        delete itemToDelete;
       }
     }
   }

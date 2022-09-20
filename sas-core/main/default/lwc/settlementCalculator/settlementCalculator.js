@@ -14,6 +14,7 @@ import getExchangeRates from "@salesforce/apex/SettlementsController.getExchange
 
 export default class SettlementCalculator extends LightningElement {
   @api recordId;
+  lastModifiedDate;
   settlementItemRecordTypeId;
   settlementRecordTypeInfos;
 
@@ -145,7 +146,7 @@ export default class SettlementCalculator extends LightningElement {
           data.recordTypeInfo.name === "Cheque",
         isVoucher: data.recordTypeInfo.name === "Voucher"
       };
-
+      this.lastModifiedDate = data.lastModifiedDate;
       if (!this.type.isEuroBonusPoints) {
         this.settlementCurrency = data.fields.Currency__c.value;
       } else {
@@ -174,7 +175,10 @@ export default class SettlementCalculator extends LightningElement {
     }
   }
 
-  @wire(getSettlement, { settlementId: "$recordId" })
+  @wire(getSettlement, {
+    settlementId: "$recordId",
+    lastModifiedDate: "$lastModifiedDate"
+  })
   wiredSettlementWithItems({ error, data }) {
     // Only used to get settlement items.
     // TODO: Move to a cleaner approach with getRecord, or something.
@@ -199,6 +203,10 @@ export default class SettlementCalculator extends LightningElement {
           })
         );
         this.findCustomersAboveMaxLiability();
+      } else {
+        if (!this.type.isEuroBonusPoints) {
+          this.rows = [];
+        }
       }
     } else {
       this.rows = [
