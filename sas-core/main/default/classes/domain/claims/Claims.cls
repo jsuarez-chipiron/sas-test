@@ -168,6 +168,22 @@ public without sharing class Claims extends fflib_SObjectDomain {
     return this;
   }
 
+  public Claims upsertToDB(fflib_ISObjectUnitOfWork uow) {
+    for (Claim obj : this.objects) {
+      obj.updateSObjectFields();
+    }
+
+    for (LIA_Claim__c c : this.instanceRecords) {
+      if (c.Id == null) {
+        uow.registerNew(c);
+      } else {
+        uow.registerDirty(c);
+      }
+    }
+
+    return this;
+  }
+
   private void checkIfExistsInCARE(Map<Id, LIA_Claim__c> existingRecords) {
     for (LIA_Claim__c claim : instanceRecords) {
       if (claim.Liability_PNR__c != null) {

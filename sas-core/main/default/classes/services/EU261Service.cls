@@ -38,8 +38,10 @@ public without sharing class EU261Service {
     public Boolean hasPotentiallyDuplicateClaims = false;
     public Boolean hasRelatedFiles = false;
 
-    public ClaimWithCompensationDetails(LIA_Claim__c c) {
-      this.claim = new Claims(new List<LIA_Claim__c>{ c });
+    public ClaimWithCompensationDetails(Claim c) {
+      this.claim = Claims.newInstance(
+        (new List<LIA_Claim__c>{ c.underlyingSObject })
+      );
     }
 
     public Boolean hasTripWithClaimFlight() {
@@ -173,21 +175,14 @@ public without sharing class EU261Service {
     List<ClaimWithCompensationDetails> claimsToAutomate
   ) {
     for (ClaimWithCompensationDetails ac : claimsToAutomate) {
-      if (
-        ac.claim.instanceRecords[0].Customer_Claim_Category__c !=
-        'Flight disruptions'
-      ) {
+      Claim c = ac.claim.objects[0];
+      if (c.category != Claim.Category.FlightDisruptions) {
         ac.unhandledReason = 'can handle only claims in category "Flight disruptions"';
         ac.canBeEvaluated = false;
-      } else if (
-        ac.claim.instanceRecords[0].Customer_Claim_Type__c != 'Flight delay'
-      ) {
+      } else if (c.type != Claim.Type.FlightDelay) {
         ac.unhandledReason = 'can handle only claims in type "Flight delay"';
         ac.canBeEvaluated = false;
-      } else if (
-        ac.claim.instanceRecords[0].RecordTypeId !=
-        Claim.getRecordTypeIdByEnum(Claim.RecordType.CustomerClaim)
-      ) {
+      } else if (c.recordType != Claim.RecordType.CustomerClaim) {
         ac.unhandledReason = 'can handle only claims with record type CustomerClaim';
         ac.canBeEvaluated = false;
       } else if (
@@ -239,9 +234,7 @@ public without sharing class EU261Service {
       ) {
         ac.unhandledReason = 'can only handle claims with origin and destination airports in EU';
         ac.canBeEvaluated = false;
-      } else if (
-        ac.claim.instanceRecords[0].Submitted_Claim_Expenses_in_SEK__c > 0
-      ) {
+      } else if (c.submittedClaimExpenses > 0) {
         ac.unhandledReason = 'cannot handle claim expenses';
         ac.canBeEvaluated = false;
       } else if (hasRotationIrregularities(ac)) {
@@ -362,11 +355,11 @@ public without sharing class EU261Service {
    * @return a boolean which asserts whether the claim was filed on time.
    */
   private static Boolean isFiledOnTime(ClaimWithCompensationDetails ac) {
-    Datetime claimCreation = ac.claim.instanceRecords[0].CreatedDate;
+    Claim c = ac.claim.objects[0];
     Datetime tripDate = ac.tripWithClaimFlight.getFinalDestinationArrivalTime();
 
     return DateUtils.areWithinTimeLimit(
-      claimCreation,
+      c.createdDate,
       tripDate,
       ac.maximumTimeToClaimCompensation
     );
@@ -604,22 +597,27 @@ public without sharing class EU261Service {
   ) {
     // 1. Get claims
     ClaimsSelector claimsSel = ClaimsSelector.newInstance();
-    List<LIA_Claim__c> claims = claimsSel.selectByIdWithCustomers(claimIds);
+    List<Claim> claims = new List<Claim>();
+
+    for (LIA_Claim__c c : claimsSel.selectByIdWithCustomers(claimIds)) {
+      claims.add(new Claim(c));
+    }
 
     // 2. Extract information needed for selection
     Set<String> allCountriesInClaims = new Set<String>{};
     Set<Id> allCaseIdsInClaims = new Set<Id>();
     Set<String> allPnrsInClaims = new Set<String>();
-    for (LIA_Claim__c c : claims) {
-      allCountriesInClaims.add(c.Country__c);
-      allCaseIdsInClaims.add(c.Case__c);
-      allPnrsInClaims.add(c.Liability_PNR__c);
+    for (Claim c : claims) {
+      allCountriesInClaims.add(c.contactCountry);
+      allCaseIdsInClaims.add(c.parentCaseId);
+      allPnrsInClaims.add(c.bookingReference);
     }
 
     // 3. Get "duplicate" claims
-    List<LIA_Claim__c> otherClaimsWithMatchingPnrs = claimsSel.selectByBookingReference(
-      allPnrsInClaims
-    );
+    List<Claim> otherClaimsWithMatchingPnrs = new List<Claim>();
+    for (LIA_Claim__c c : claimsSel.selectByBookingReference(allPnrsInClaims)) {
+      otherClaimsWithMatchingPnrs.add(new Claim(c));
+    }
 
     // 4. Get any files connected to the claims, TODO: use the contentversion selector Nathan: I can't get this to work, could you have a look? @Mikko
     List<ContentDocumentLink> filesForClaims = new List<ContentDocumentLink>{};
@@ -687,9 +685,9 @@ public without sharing class EU261Service {
   }
 
   private static List<ClaimWithCompensationDetails> constructClaimWithCompensationDetails(
-    List<LIA_Claim__c> claims,
+    List<Claim> claims,
     Map<String, Decimal> countryToClaimSubmissionTimeLimit,
-    List<LIA_Claim__c> otherClaimsWithMatchingPnrs,
+    List<Claim> otherClaimsWithMatchingPnrs,
     List<ContentDocumentLink> filesForClaims,
     Map<Id, List<CaseToBooking__c>> caseIdToCaseToBookings,
     Map<Id, Booking__c> bookingsById,
@@ -697,7 +695,7 @@ public without sharing class EU261Service {
     Map<String, Airport__c> airportCodeToAirport
   ) {
     List<ClaimWithCompensationDetails> claimsToAutomate = new List<ClaimWithCompensationDetails>{};
-    for (LIA_Claim__c c : claims) {
+    for (Claim c : claims) {
       ClaimWithCompensationDetails cwcd = new ClaimWithCompensationDetails(c);
 
       // TODO: refactor handle with airportCodeToAirport
@@ -707,10 +705,10 @@ public without sharing class EU261Service {
       // );
 
       // check if the claim matches any other claim by PNR
-      for (LIA_Claim__c otherClaim : otherClaimsWithMatchingPnrs) {
+      for (Claim otherClaim : otherClaimsWithMatchingPnrs) {
         if (
-          c.Liability_PNR__c == otherClaim.Liability_PNR__c &&
-          c.Id != otherClaim.Id
+          c.bookingReference == otherClaim.bookingReference &&
+          c.id != otherClaim.id
         ) {
           cwcd.hasPotentiallyDuplicateClaims = true;
         }
@@ -718,7 +716,7 @@ public without sharing class EU261Service {
 
       // check if there are any files linked to the parent case, problematic due to PoAs
       for (ContentDocumentLink cdl : filesForClaims) {
-        if (cdl.LinkedEntityId == c.Case__c) {
+        if (cdl.LinkedEntityId == c.parentCaseId) {
           cwcd.hasRelatedFiles = true;
         }
       }
@@ -736,14 +734,14 @@ public without sharing class EU261Service {
   }
 
   private static void setBookings(
-    LIA_Claim__c c,
+    Claim c,
     ClaimWithCompensationDetails cwcd,
     Map<Id, List<CaseToBooking__c>> caseIdToCaseToBookings,
     Map<Id, Booking__c> bookingsById
   ) {
     // Get bookings for claim
     List<Booking__c> bookingsForClaim = new List<Booking__c>();
-    for (CaseToBooking__c ctb : caseIdToCaseToBookings.get(c.Case__c)) {
+    for (CaseToBooking__c ctb : caseIdToCaseToBookings.get(c.parentCaseId)) {
       // TODO: Fix this can be null.
       Booking__c booking = bookingsById.get(ctb.Booking__c);
       if (booking != null) {
@@ -761,7 +759,7 @@ public without sharing class EU261Service {
 
   // TODO: use airportCodeToAirport to eliminate db calls in for-loop
   private static void setTrips(
-    LIA_Claim__c c,
+    Claim c,
     ClaimWithCompensationDetails cwcd,
     Map<String, Airport__c> airportCodeToAirport
   ) {
@@ -769,9 +767,9 @@ public without sharing class EU261Service {
 
     // Todo: use stringutils / the flight domain (implement)
     String flightNumberDate =
-      c.Flight_Number__c +
+      c.flightNumber +
       '-' +
-      String.valueOf(c.Flight_Date__c).remove('-');
+      String.valueOf(c.departureDate).remove('-');
 
     if (cwcd.booking.instanceRecords.size() > 0) {
       for (Trip t : cwcd.trips.get(cwcd.booking.instanceRecords[0].Id)) {
@@ -836,28 +834,29 @@ public without sharing class EU261Service {
     List<ClaimWithCompensationDetails> claimsToPayOut,
     fflib_ISObjectUnitOfWork uow
   ) {
-    for (ClaimWithCompensationDetails c : claimsWhichCannotBeEvaluated) {
-      c.claim.instanceRecords[0].EU261_Handling_Note__c = c.unhandledReason;
-      c.claim.instanceRecords[0].EU261_Handling_Status__c = 'Unable to handle';
-      uow.registerDirty(c.claim.instanceRecords);
+    for (ClaimWithCompensationDetails cc : claimsWhichCannotBeEvaluated) {
+      Claim c = cc.claim.objects[0];
+      c.eu261HandlingNote = cc.unhandledReason;
+      c.eu261HandlingStatus = Claim.EU261HandlingStatus.UnableToHandle;
+      cc.claim.upsertToDB(uow);
     }
 
-    for (ClaimWithCompensationDetails c : claimsToReject) {
-      c.claim.instanceRecords[0].EU261_Handling_Note__c = c.rejectionReason;
-      c.claim.instanceRecords[0]
-        .EU261_Handling_Status__c = 'Ineligible for compensation';
-      uow.registerDirty(c.claim.instanceRecords);
+    for (ClaimWithCompensationDetails cc : claimsToReject) {
+      Claim c = cc.claim.objects[0];
+      c.eu261HandlingNote = cc.rejectionReason;
+      c.eu261HandlingStatus = Claim.EU261HandlingStatus.IneligibleForCompensation;
+      cc.claim.upsertToDB(uow);
     }
 
-    for (ClaimWithCompensationDetails c : claimsToPayOut) {
-      c.claim.instanceRecords[0].EU261_Handling_Note__c =
+    for (ClaimWithCompensationDetails cc : claimsToPayOut) {
+      Claim c = cc.claim.objects[0];
+      c.eu261HandlingNote =
         'Compensation: ' +
-        c.EU261Compensation +
+        cc.EU261Compensation +
         ' | Reimbursement: ' +
-        c.careReimbursement;
-      c.claim.instanceRecords[0]
-        .EU261_Handling_Status__c = 'Eligible for compensation';
-      uow.registerDirty(c.claim.instanceRecords);
+        cc.careReimbursement;
+      c.eu261HandlingStatus = Claim.EU261HandlingStatus.EligibleForCompensation;
+      cc.claim.upsertToDB(uow);
     }
   }
 
