@@ -598,7 +598,6 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         // existing voucher cost accounts like this.
 
         Settlement__c settlementToCreate = settlementsByClaimId.get(cl.Id);
-        settlementToCreate.Currency__c = compensationCardForClaim.Currency__c;
 
         String voucherSubTypeCategory = String.isBlank(
             compensationCardForClaim.Sub_Type__c
@@ -646,6 +645,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           itemToCreate.Cost_Account__c = '';
         }
         when 'Voucher' {
+          settlement.Currency__c = compensationCardForClaim.Currency__c;
+
           itemToCreate.Amount__c =
             CONVERSION_RATE_EUR_TO_VOUCHER_EUR *
             compensationCardForClaim.Amount__c;
