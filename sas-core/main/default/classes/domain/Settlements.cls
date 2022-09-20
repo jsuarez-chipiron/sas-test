@@ -126,7 +126,9 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
     normalizeFields();
-    trackCurrencyChange(existingRecords);
+    removeSettlementItemsOnCurrencyChange(
+      (Map<Id, Settlement__c>) existingRecords
+    );
   }
 
   public Settlements markAsSentToRacer(
@@ -1111,11 +1113,12 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     }
   }
 
-  private void trackCurrencyChange(Map<Id, SObject> ExistingRecords) {
+  private void removeSettlementItemsOnCurrencyChange(
+    Map<Id, Settlement__c> existingRecords
+  ) {
     for (Settlement__c settlement : instanceRecords) {
       if (
-        settlement.Currency__c !=
-        ExistingRecords.get(Settlement.Id).get('Currency__c')
+        settlement.Currency__c != existingRecords.get(Settlement.Id).Currency__c
       ) {
         List<Settlement_Item__c> itemToDelete = settlementItemsSel.selectBySettlementIds(
           new Set<Id>{ Settlement.Id }
