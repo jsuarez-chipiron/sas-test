@@ -74,22 +74,24 @@ private class ProactivitiesController_Test {
     );
     LIA_Claim__c claimWithOneProactivityAirportMatcher = new LIA_Claim__c(
       Case__c = caseWithOneProactivityAirportMatcher.Id,
-      Flight_Number__c = 'SK1',
+      Flight_Number__c = Flights.normalizeFlightNumber('SK1'),
       Flight_Date__c = today
     );
     LIA_Claim__c claimWithOneProactivityCancellationCodeMatcher = new LIA_Claim__c(
       Case__c = caseWithOneProactivityCancellationCodeMatcher.Id,
-      Flight_Number__c = 'SK2',
+      Flight_Number__c = Flights.normalizeFlightNumber('SK2'),
       Flight_Date__c = today
     );
 
     String flightIdentifier1 =
-      'SK1-' +
+      Flights.normalizeFlightNumber('SK1') +
+      '-' +
       String.valueOf(today).remove('-') +
       '-UME-ARN';
 
     String flightIdentifier2 =
-      'SK2-' +
+      Flights.normalizeFlightNumber('SK2') +
+      '-' +
       String.valueOf(today).remove('-') +
       '-ARN-UME';
 
@@ -206,7 +208,7 @@ private class ProactivitiesController_Test {
       'Incorrect amount of matches for proactivity/case match'
     );
     System.assertEquals(
-      'Arrival airport',
+      'SK0001: (Arrival airport)',
       proactivitiesWithMatchingReason[0].matchingReasons,
       'Incorrect matching reason(s) for proactivity/case match'
     );
@@ -233,7 +235,7 @@ private class ProactivitiesController_Test {
       'Incorrect amount of matches for proactivity/case match'
     );
     System.assertEquals(
-      'Cancellation code "AIRS"',
+      'SK0002: (Code "AIRS")',
       proactivitiesWithMatchingReason[0].matchingReasons,
       'Incorrect matching reason(s) for proactivity/case match'
     );

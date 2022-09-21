@@ -47,6 +47,13 @@ private class ProactivitiesSelector_Test {
       Note__c = 'Test 6',
       Type__c = 'Normal'
     );
+    Proactivity__c strikeCodeProactivity = new Proactivity__c(
+      Note__c = 'Test 7',
+      Type__c = 'Normal',
+      Cancellation_Code__c = 'INDU',
+      From_Date__c = today,
+      To_Date__c = today
+    );
 
     Case caseWithOneProactivityRegularMatcher = new Case(
       FCS_EBNumber__c = '000000001'
@@ -63,6 +70,9 @@ private class ProactivitiesSelector_Test {
     Case caseWithThreeProactivitiesCancellationCodeAndAirportMatcher = new Case(
       FCS_EBNumber__c = '000000005'
     );
+    Case caseWithNoRelevantClaimFlight = new Case(
+      FCS_EBNumber__c = '000000007'
+    );
 
     insert new List<SObject>{
       caseWithOneProactivityRegularMatcher,
@@ -70,6 +80,7 @@ private class ProactivitiesSelector_Test {
       caseWithOneProactivityAirportMatcher,
       caseWithOneProactivityCancellationCodeMatcher,
       caseWithThreeProactivitiesCancellationCodeAndAirportMatcher,
+      caseWithNoRelevantClaimFlight,
       directlyMatchedProactivity
     };
 
@@ -88,32 +99,51 @@ private class ProactivitiesSelector_Test {
     );
     LIA_Claim__c claimWithOneProactivityAirportMatcher = new LIA_Claim__c(
       Case__c = caseWithOneProactivityAirportMatcher.Id,
-      Flight_Number__c = 'SK1',
+      Flight_Number__c = Flights.normalizeFlightNumber('SK1'),
       Flight_Date__c = today
     );
+
     LIA_Claim__c claimWithOneProactivityCancellationCodeMatcher = new LIA_Claim__c(
       Case__c = caseWithOneProactivityCancellationCodeMatcher.Id,
-      Flight_Number__c = 'SK2',
+      Flight_Number__c = Flights.normalizeFlightNumber('SK2'),
       Flight_Date__c = today
     );
+
     LIA_Claim__c claimWithThreeProactivitesCancellationCodeAndAirportMatcher = new LIA_Claim__c(
       Case__c = caseWithThreeProactivitiesCancellationCodeAndAirportMatcher.Id,
-      Flight_Number__c = 'SK3',
+      Flight_Number__c = Flights.normalizeFlightNumber('SK3'),
+      Liability_PNR__c = 'ABC123',
+      Flight_Date__c = today
+    );
+
+    LIA_Claim__c claimWithNoIrrelevantClaimFlight = new LIA_Claim__c(
+      Case__c = caseWithNoRelevantClaimFlight.Id,
+      Flight_Number__c = Flights.normalizeFlightNumber('SK8'),
+      Liability_PNR__c = 'ABC124',
       Flight_Date__c = today
     );
 
     String flightIdentifier1 =
-      'SK1-' +
+      Flights.normalizeFlightNumber('SK1') +
+      '-' +
       String.valueOf(today).remove('-') +
       '-UME-ARN';
 
     String flightIdentifier2 =
-      'SK2-' +
+      Flights.normalizeFlightNumber('SK2') +
+      '-' +
       String.valueOf(today).remove('-') +
       '-ARN-UME';
 
     String flightIdentifier3 =
-      'SK3-' +
+      Flights.normalizeFlightNumber('SK3') +
+      '-' +
+      String.valueOf(today).remove('-') +
+      '-UME-ARN';
+
+    String flightIdentifier4 =
+      Flights.normalizeFlightNumber('SK4') +
+      '-' +
       String.valueOf(today).remove('-') +
       '-UME-ARN';
 
@@ -141,7 +171,52 @@ private class ProactivitiesSelector_Test {
       TEDS_Identifier__c = flightIdentifier3
     );
 
-    insert new List<Flight__c>{ flight1, flight2, flight3 };
+    Flight__c flight4 = new Flight__c(
+      Arrival_Airport__c = 'ARN',
+      Departure_Airport__c = 'UME',
+      Scheduled_Arrival_Time__c = today,
+      Scheduled_Departure_Time__c = today,
+      TEDS_Identifier__c = flightIdentifier4
+    );
+
+    Booking__c flight3Booking = new Booking__c(
+      TEDS_Identifier__c = 'ABC123',
+      Booking_Reference__c = 'ABC123'
+    );
+    Booking__c flight4Booking = new Booking__c(
+      TEDS_Identifier__c = 'ABC124',
+      Booking_Reference__c = 'ABC124'
+    );
+
+    insert new List<SObject>{
+      flight1,
+      flight2,
+      flight3,
+      flight4,
+      flight3Booking,
+      flight4Booking
+    };
+
+    CaseToBooking__c ctb1 = new CaseToBooking__c(
+      Case__c = caseWithThreeProactivitiesCancellationCodeAndAirportMatcher.Id,
+      Booking__c = flight3Booking.Id
+    );
+    CaseToBooking__c ctb2 = new CaseToBooking__c(
+      Case__c = caseWithNoRelevantClaimFlight.Id,
+      Booking__c = flight4Booking.Id
+    );
+    Segment__c seg1 = new Segment__c(
+      Booking__c = flight3Booking.Id,
+      Flight__c = flight3.Id
+    );
+    Segment__c seg2 = new Segment__c(
+      Booking__c = flight4Booking.Id,
+      Flight__c = flight1.Id
+    );
+    Segment__c seg3 = new Segment__c(
+      Booking__c = flight4Booking.Id,
+      Flight__c = flight4.Id
+    );
 
     FlightIrregularities__c flightIrregularity1 = new FlightIrregularities__c(
       Flight__c = flight1.Id,
@@ -158,20 +233,33 @@ private class ProactivitiesSelector_Test {
       Code__c = 'AIRS'
     );
 
+    FlightIrregularities__c flightIrregularity4 = new FlightIrregularities__c(
+      Flight__c = flight4.Id,
+      Code__c = 'INDU'
+    );
+
     insert new List<SObject>{
+      ctb1,
+      ctb2,
+      seg1,
+      seg2,
+      seg3,
       flightIrregularity1,
       flightIrregularity2,
       flightIrregularity3,
+      flightIrregularity4,
       normalProactivity,
       majorEventProactivity,
       airportMatcherProactivity,
       cancellationCodeProactivity,
       airportMatcherAndCancellationCodeProactivity,
+      strikeCodeProactivity,
       claimWithOneProactivityRegularMatcher,
       claimWithTwoProactivitiesRegularMatcher,
       claimWithOneProactivityAirportMatcher,
       claimWithOneProactivityCancellationCodeMatcher,
       claimWithThreeProactivitesCancellationCodeAndAirportMatcher,
+      claimWithNoIrrelevantClaimFlight,
       caseWithDirectMatch
     };
   }
@@ -250,6 +338,7 @@ private class ProactivitiesSelector_Test {
       'Should select two proactivities from case ID correctly (wrong proactivity)'
     );
   }
+
   @IsTest
   static void shouldSelectAirportMatcherProactivityByCaseIdTest() {
     // Given (setup)
@@ -280,6 +369,7 @@ private class ProactivitiesSelector_Test {
       'Should select a single proactivity with an airport matcher from case ID correctly (wrong proactivity)'
     );
   }
+
   @IsTest
   static void shouldSelectCancellationCodeProactivityByCaseIdTest() {
     // Given (setup)
@@ -310,6 +400,7 @@ private class ProactivitiesSelector_Test {
       'Should select a single proactivity with a cancellation code matcher from case ID correctly (wrong proactivity)'
     );
   }
+
   @IsTest
   static void shouldSelectCancellationCodeAndAirportProactivityByCaseIdTest() {
     // Given (setup)
@@ -386,6 +477,52 @@ private class ProactivitiesSelector_Test {
     System.assertEquals(
       correctProactivity.Id,
       directMatchProactivity[0].Id,
+      'Should select a single proactivity with a direct match from case ID correctly (wrong proactivity)'
+    );
+  }
+
+  @IsTest
+  static void shouldSelectNonClaimFlightProactivites() {
+    // Given (setup)
+    Proactivity__c correctProactivity = [
+      SELECT Id
+      FROM Proactivity__c
+      WHERE Note__c = 'Test 3'
+    ][0];
+    Proactivity__c correctProactivity2 = [
+      SELECT Id
+      FROM Proactivity__c
+      WHERE Note__c = 'Test 7'
+    ][0];
+    Case caseWithIrrelevantClaimFlight = [
+      SELECT Id
+      FROM Case
+      WHERE FCS_EBNumber__c = '000000007'
+    ][0];
+
+    // When
+    List<Proactivity__c> nonClaimFlightProactiviies = proactivites.selectByCaseId(
+      caseWithIrrelevantClaimFlight.Id
+    );
+
+    for (Proactivity__c p : nonClaimFlightProactiviies) {
+      Proactivity__c pasdf = p;
+    }
+
+    // Then
+    System.assertEquals(
+      2,
+      nonClaimFlightProactiviies.size(),
+      'Should select a single proactivity with a direct match from case ID correctly (too many/few matches)'
+    );
+    System.assertEquals(
+      correctProactivity.Id,
+      nonClaimFlightProactiviies[0].Id,
+      'Should select a single proactivity with a direct match from case ID correctly (wrong proactivity)'
+    );
+    System.assertEquals(
+      correctProactivity2.Id,
+      nonClaimFlightProactiviies[1].Id,
       'Should select a single proactivity with a direct match from case ID correctly (wrong proactivity)'
     );
   }

@@ -77,7 +77,10 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     return (List<LIA_Claim__c>) Database.query(claimsQF.toSOQL());
   }
 
-  public class insufficientFlightInfoException extends Exception {
+  public class InsufficientFlightInfoException extends Exception {
+  }
+
+  public class TooManyMatchesException extends Exception {
   }
 
   public List<LIA_Claim__c> selectDuplicatesById(Id claimId) {
@@ -120,7 +123,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     );
 
     if (String.isBlank(flightNumber) == null || flightDate == null) {
-      throw new insufficientFlightInfoException(
+      throw new InsufficientFlightInfoException(
         'Claim does not have sufficient information about the flight.'
       );
     }
@@ -172,7 +175,12 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     return (List<LIA_Claim__c>) Database.query(claimsQF.toSOQL());
   }
 
+  /**
+		@throws TooManyMatchesException if there are more than or equal to 50000 matches, custom exception as the default one is not catchable
+	*/
   public List<LIA_Claim__c> selectByProactivityId(Id proactivityId) {
+    Integer lim = 50000;
+
     ProactivitiesSelector proactivities = ProactivitiesSelector.newInstance();
     Proactivity__c proactivity = proactivities.selectById(
       new Set<Id>{ proactivityId }
@@ -285,7 +293,10 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
         SELECT Flight__c
         FROM FlightIrregularities__c
         WHERE Code__c = :cancellationCode
+        LIMIT :lim
       ];
+
+      checkIfAtLimit(irregularityList.size());
 
       for (FlightIrregularities__c fi : irregularityList) {
         flightIdsWithMatchingCancellationCode.add(fi.Flight__c);
@@ -302,8 +313,12 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
 
     if (!String.isBlank(advancedMatcherQuery)) {
       allSegments = Database.query(
-        'SELECT Booking__r.Id FROM Segment__c WHERE ' + advancedMatcherQuery
+        'SELECT Booking__r.Id FROM Segment__c WHERE ' +
+        advancedMatcherQuery +
+        ' LIMIT ' +
+        lim
       );
+      checkIfAtLimit(allSegments.size());
     }
 
     for (Segment__c s : allSegments) {
@@ -319,6 +334,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
           FROM CaseToBooking__c
           WHERE Booking__r.Id IN :bookingList
         )
+      LIMIT :lim
     ];
 
     if (whereQuery.length() == 0) {
@@ -328,13 +344,22 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       return new List<LIA_Claim__c>{};
     }
 
+    checkIfAtLimit(flightClaimList.size());
+
     List<LIA_Claim__c> results = (List<LIA_Claim__c>) Database.query(
-      newQueryFactory().setCondition(whereQuery).toSOQL()
+      newQueryFactory().setCondition(whereQuery).setLimit(lim).toSOQL()
     );
 
     results.addAll(flightClaimList);
+    checkIfAtLimit(results.size());
 
     return results;
+  }
+
+  private void checkIfAtLimit(Integer recordCount) {
+    if (recordCount >= 50000) {
+      throw new TooManyMatchesException();
+    }
   }
 
   public List<LIA_Claim__c> selectSimilarClaimsByCaseId(Id caseId) {

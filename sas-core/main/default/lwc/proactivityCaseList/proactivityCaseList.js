@@ -22,26 +22,46 @@ export default class CaseProactivities extends NavigationMixin(
   showSpinner = true;
   error = undefined;
   casesFound = false;
+  tooManyMatches = false;
+  showTable = false;
+  noMatchedCases = 0;
+  MATCHLIMIT = 50; // More than this is not necessary, source: Nathan Allard + Alexander Vasberg
 
   get cardTitle() {
-    return `Matching Cases (${this.rows.length})`;
+    if (this.tooManyMatches) {
+      return "Matching Cases (50.000+)";
+    } else if (this.noMatchedCases > this.MATCHLIMIT) {
+      return `Matching Cases (${this.MATCHLIMIT} of ${this.noMatchedCases})`;
+    } else {
+      return `Matching Cases (${this.noMatchedCases})`;
+    }
   }
 
   @wire(getCasesForProactivity, { proactivityId: "$recordId" })
   wiredCases({ error, data }) {
+    console.log("asdf");
+
     if (error) {
+      if (
+        error.body.exceptionType == "ClaimsSelector.TooManyMatchesException"
+      ) {
+        this.rows = [];
+        this.tooManyMatches = true;
+        this.casesFound = true;
+      } else {
+        this.error = error;
+      }
       this.showSpinner = false;
-      this.error = error;
     } else if (data == undefined || data.length === 0) {
       this.rows = [];
       this.showSpinner = false;
       this.casesFound = false;
     } else {
-      this.rows = data.map((caseData, idx) => ({
+      this.noMatchedCases = data.length;
+      this.rows = data.slice(0, this.MATCHLIMIT).map((caseData, idx) => ({
         ...caseData,
         idx
       }));
-
       this.rows.forEach((row, idx) =>
         this[NavigationMixin.GenerateUrl]({
           type: "standard__recordPage",
@@ -62,6 +82,7 @@ export default class CaseProactivities extends NavigationMixin(
 
       this.showSpinner = false;
       this.casesFound = true;
+      this.showTable = true;
     }
   }
 }
