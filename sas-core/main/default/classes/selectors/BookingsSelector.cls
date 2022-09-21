@@ -45,8 +45,14 @@ public inherited sharing class BookingsSelector extends fflib_SObjectSelector {
 
   // Todo: Rename to selectByBookingReferenceFull
   public List<Booking__c> selectByBookingReference(String bookingReference) {
+    return selectByBookingReference(new Set<String>{ bookingReference });
+  }
+
+  public List<Booking__c> selectByBookingReference(
+    Set<String> bookingReferences
+  ) {
     fflib_QueryFactory bookingsQF = newQueryFactory()
-      .setCondition('Booking_Reference__c = :bookingReference');
+      .setCondition('Booking_Reference__c IN :bookingReferences');
     fflib_QueryFactory passengers = new PassengersSelector()
       .addQueryFactorySubselect(bookingsQF);
     fflib_QueryFactory segments = new SegmentsSelector()
