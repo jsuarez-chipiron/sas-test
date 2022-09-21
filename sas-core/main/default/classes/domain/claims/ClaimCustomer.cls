@@ -1,8 +1,4 @@
-/**
- * Represents an individual claim with one-to-one mapping to the underlying
- * sObject.
- */
-public without sharing class Customer extends AbstractSObjectWrapper {
+public without sharing class ClaimCustomer extends AbstractSObjectWrapper {
   public Customer__c underlyingSObject { get; private set; }
 
   public Id parentClaimId;
@@ -14,16 +10,16 @@ public without sharing class Customer extends AbstractSObjectWrapper {
     this.underlyingSObject.Last_Name__c = this.lastName;
     this.underlyingSObject.Claim__c = this.parentClaimId;
   }
-  private Customer() {
+  private ClaimCustomer() {
     this.underlyingSObject = new Customer__c();
   }
 
-  public Customer(Claim parentClaim) {
+  public ClaimCustomer(Claim parentClaim) {
     this();
     this.parentClaimId = parentClaim.id;
   }
 
-  public Customer(Customer__c c) {
+  public ClaimCustomer(Customer__c c) {
     super(c);
     this.firstName = c.First_Name__c;
     this.lastName = c.Last_Name__c;

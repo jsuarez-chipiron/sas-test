@@ -56,7 +56,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
 
   public Boolean containsDetailObjectData { get; private set; }
 
-  public List<Customer> customers;
+  public List<ClaimCustomer> customers;
 
   public override void updateSObjectFields() {
     this.underlyingSObject.Address_line_1__c = this.contactAddressLine1;
@@ -192,9 +192,9 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     );
 
     if (c.Customers__r != null) {
-      List<Customer> customersToAdd = new List<Customer>();
+      List<ClaimCustomer> customersToAdd = new List<ClaimCustomer>();
       for (Customer__c cc : c.Customers__r) {
-        customersToAdd.add(new Customer(cc));
+        customersToAdd.add(new ClaimCustomer(cc));
       }
       customers = customersToAdd;
     }

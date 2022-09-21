@@ -296,7 +296,7 @@ public without sharing class EU261Service {
       return true;
     }
 
-    for (Customer cust : c.customers) {
+    for (ClaimCustomer cust : c.customers) {
       if (cust.lastName != c.contactLastName) {
         return true;
       }
