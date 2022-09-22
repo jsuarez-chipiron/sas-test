@@ -91,6 +91,7 @@ public class SAS_Service_Application {
       ContentVersion.SObjectType,
       EmailMessage.SObjectType,
       Exchange_Rate__c.SObjectType,
+      FeedItem.SObjectType,
       Flight__c.SObjectType,
       Airport__c.SObjectType,
       LIA_Claim__c.SObjectType,

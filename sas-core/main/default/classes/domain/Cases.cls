@@ -125,6 +125,16 @@ public without sharing class Cases extends fflib_SObjectDomain {
     return this;
   }
 
+  public Cases routeToQueue(String queueName, fflib_ISObjectUnitOfWork uow) {
+    List<Group> queues = GroupsSelector.newInstance()
+      .selectQueuesByDeveloperName(new Set<String>{ queueName });
+    for (Case c : instanceRecords) {
+      c.OwnerId = queues[0].Id;
+    }
+    uow.registerDirty(instanceRecords);
+    return this;
+  }
+
   private void completeMilestones() {
     // how to handle maps?
     List<String> statusesThatCompleteMilestones = new List<String>{

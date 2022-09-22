@@ -57,6 +57,7 @@ public without sharing class ClaimService {
   public static final String COMPENSATION_CARD_SUCCESS_EMAIL_TEMPLATE_NAME = 'compensation_card_success';
   public static final String COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME = 'compensation_card_failure';
   public static final String COMPENSATION_CARD_REPLY_TO_ADDRESS = 'customercare@sas.se';
+  public static final String COMPENSATION_CARD_OMNI_QUEUE_NAME = 'Claims_Compensation_Card'; //TODO: Switch to compensation card
 
   public static String createClaim(CreateClaimRequest request) {
     Claims c = Claims.createFromClaims(
@@ -604,7 +605,9 @@ public without sharing class ClaimService {
       );
       emailToSend.setReplyTo(COMPENSATION_CARD_REPLY_TO_ADDRESS);
 
-      parentCase.emailOwner(emailToSend, uow).close(uow);
+      parentCase.emailOwner(emailToSend, uow)
+        .routeToQueue(COMPENSATION_CARD_OMNI_QUEUE_NAME, uow)
+        .close(uow);
       uow.commitWork();
     } else {
       Boolean canBeRedeemed = false;
@@ -650,7 +653,9 @@ public without sharing class ClaimService {
         );
         emailToSend.setReplyTo(COMPENSATION_CARD_REPLY_TO_ADDRESS);
 
-        parentCase.emailOwner(emailToSend, uow).close(uow);
+        parentCase.emailOwner(emailToSend, uow)
+          .routeToQueue(COMPENSATION_CARD_OMNI_QUEUE_NAME, uow)
+          .close(uow);
 
         uow.commitWork();
       } catch (Exception e) {
@@ -677,7 +682,9 @@ public without sharing class ClaimService {
           );
           emailToSend.setReplyTo(COMPENSATION_CARD_REPLY_TO_ADDRESS);
 
-          parentCase.emailOwner(emailToSend, uow).close(uow);
+          parentCase.emailOwner(emailToSend, uow)
+            .routeToQueue(COMPENSATION_CARD_OMNI_QUEUE_NAME, uow)
+            .close(uow);
 
           uow.commitWork();
         } catch (Exception e) {
@@ -687,6 +694,12 @@ public without sharing class ClaimService {
                 .selectByClaimId(new Set<Id>{ claim.Id })
             )
             .markAsFailed(e.getMessage(), uow);
+          parentCase.routeToQueue(COMPENSATION_CARD_OMNI_QUEUE_NAME, uow);
+          CaseService.createChatterPost(
+            parentCase.instanceRecords,
+            e.getMessage(),
+            uow
+          );
           uow.commitWork();
         }
       }

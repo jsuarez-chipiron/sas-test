@@ -343,4 +343,20 @@ public without sharing class CaseService {
     );
     routeAndPrioritize.start();
   }
+  public static void createChatterPost(
+    List<Case> casesToPost,
+    String feedItemBody,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    List<FeedItem> toCreate = new List<FeedItem>();
+    for (Case c : casesToPost) {
+      FeedItem fi = new FeedItem(
+        ParentId = c.Id,
+        Body = feedItemBody,
+        Type = 'TextPost'
+      );
+      toCreate.add(fi);
+    }
+    uow.registerNew(toCreate);
+  }
 }
