@@ -42,6 +42,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
   public String flightNumber;
   public String ticketNumber;
   public String bookingReference;
+  public String travelAgentBookingReference;
 
   public BaggageDelayLength baggageDelayLength;
   public String pir;
@@ -115,6 +116,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     this.underlyingSObject.Total_delay_to_final_destination__c = DELAY_LENGTH_ENUM_TO_PICKLIST_VALUE.get(
       this.delayToDestination
     );
+    this.underlyingSObject.Travel_Agent_Booking_Reference__c = this.travelAgentBookingReference;
     this.underlyingSObject.Type_of_Customer__c = CUSTOMER_TYPE_ENUM_TO_PICKLIST_VALUE.get(
       this.contactType
     );
@@ -181,6 +183,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     this.baggagePurchaseYear = c.Purchase_Year__c;
     this.recordType = getRecordTypeEnumById(c.RecordTypeId);
     this.submittedClaimExpenses = c.Submitted_Claim_Expenses_in_SEK__c;
+    this.travelAgentBookingReference = c.Travel_Agent_Booking_Reference__c;
     this.ticketNumber = c.Ticket_Number__c;
     this.delayToDestination = DELAY_LENGTH_PICKLIST_VALUE_TO_ENUM.get(
       c.Total_delay_to_final_destination__c

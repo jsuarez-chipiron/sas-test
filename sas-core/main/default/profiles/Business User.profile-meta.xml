@@ -3089,7 +3089,12 @@
         <editable>false</editable>
         <field>LIA_Claim__c.Total_delay_to_final_destination__c</field>
         <readable>false</readable>
-    </fieldPermissions>   
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.Travel_Agent_Booking_Reference__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Type_of_Customer__c</field>

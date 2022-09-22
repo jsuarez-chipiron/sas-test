@@ -877,6 +877,7 @@ public without sharing class ClaimService {
     newClaim.recordType = r.recordType;
     newClaim.delayToDestination = r.delayLength;
     newClaim.contactType = r.contact.type;
+    newClaim.travelAgentBookingReference = r.travelAgentBookingReference;
 
     newClaim.updateSObjectFields();
 
