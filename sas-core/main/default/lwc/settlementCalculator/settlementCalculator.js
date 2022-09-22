@@ -204,9 +204,15 @@ export default class SettlementCalculator extends LightningElement {
         );
         this.findCustomersAboveMaxLiability();
       } else {
-        if (!this.type.isEuroBonusPoints) {
-          this.rows = [];
-        }
+        this.rows = [
+          {
+            idx: 0,
+            amount: 0,
+            customer: undefined,
+            costAccount: undefined,
+            comments: undefined
+          }
+        ];
       }
     } else {
       this.rows = [
