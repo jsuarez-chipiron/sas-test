@@ -25,6 +25,7 @@ global class CaseFormJSONV2 {
     global Boolean personWithReducedMobility;
 
     global String bookingReference;
+    global String travelAgentBookingReference;
     global String departureDate; // 2022-02-20
     global String flightNumber; // SK1234
     global String ticketNumber;

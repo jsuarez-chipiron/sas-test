@@ -51,6 +51,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       LIA_Claim__c.Submitted_Claim_Expenses_in_SEK__c,
       LIA_Claim__c.Ticket_Number__c,
       LIA_Claim__c.Total_delay_to_final_destination__c,
+      LIA_Claim__c.Travel_Agent_Booking_Reference__c,
       LIA_Claim__c.Type_of_Customer__c
     };
   }

@@ -13,6 +13,7 @@ public without sharing class CreateClaimRequest {
   public String comment { get; private set; }
 
   public String bookingReference { get; private set; }
+  public String travelAgentBookingReference { get; private set; }
   public String passengerIrregularityReportNumber { get; private set; }
   public String flightNumber { get; private set; }
   public Date departureDate { get; private set; }
@@ -383,6 +384,7 @@ public without sharing class CreateClaimRequest {
     filesToLink = fileIds;
 
     bookingReference = jsonData.formData.claim.bookingReference;
+    travelAgentBookingReference = jsonData.formData.claim.travelAgentBookingReference;
     passengerIrregularityReportNumber = jsonData.formData.claim.passengerIrregularityReportNumber;
     ticketNumber = jsonData.formData.claim.ticketNumber;
     baggagePurchaseYear = jsonData.formData.claim.baggagePurchaseYear;
