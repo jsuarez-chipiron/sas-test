@@ -272,22 +272,38 @@ public class FetchCAREClaimsResponse {
         switch on parser.getCurrentName() {
           when 'dateCreated' {
             parser.nextValue();
-            parsedCase.dateCreated = parser.getDateTimeValue();
+            parsedCase.dateCreated = DateUtils.isValidIsoDatetime(
+                parser.getText()
+              )
+              ? parser.getDatetimeValue()
+              : null;
             parser.nextToken();
           }
           when 'flightDate' {
             parser.nextValue();
-            parsedCase.flightDate = parser.getDateTimeValue();
+            parsedCase.flightDate = DateUtils.isValidIsoDatetime(
+                parser.getText()
+              )
+              ? parser.getDatetimeValue()
+              : null;
             parser.nextToken();
           }
           when 'lastModified' {
             parser.nextValue();
-            parsedCase.lastModified = parser.getDateTimeValue();
+            parsedCase.lastModified = DateUtils.isValidIsoDatetime(
+                parser.getText()
+              )
+              ? parser.getDatetimeValue()
+              : null;
             parser.nextToken();
           }
           when 'dateClosed' {
             parser.nextValue();
-            parsedCase.dateClosed = parser.getDateTimeValue();
+            parsedCase.dateClosed = DateUtils.isValidIsoDatetime(
+                parser.getText()
+              )
+              ? parser.getDatetimeValue()
+              : null;
             parser.nextToken();
           }
           when 'caseId' {

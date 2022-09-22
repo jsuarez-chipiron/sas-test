@@ -60,4 +60,17 @@ private class DateUtils_Test {
       );
     }
   }
+
+  @IsTest
+  public static void validDatestringShouldReturnTrue() {
+    String validDatestring = '2022-01-01T12:34:56Z';
+    Boolean validFormat = DateUtils.isValidIsoDatetime(validDatestring);
+    System.assert(validFormat, 'Datetime validation should have succeeded');
+  }
+  @IsTest
+  public static void invalidDatestringShouldReturnFalse() {
+    String invalidDatestring = 'test bla bla';
+    Boolean invalidFormat = DateUtils.isValidIsoDatetime(invalidDatestring);
+    System.assert(!invalidFormat, 'Datetime validation should have failed');
+  }
 }
