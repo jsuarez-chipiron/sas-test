@@ -14,7 +14,10 @@ private class EU261Service_Test {
   private static String twoIrregularitiesBookingReference = 'TWOIRR';
   private static String tooShortDelayBookingReference = 'TOOSHO';
   private static String tooLongDelayBookingReference = 'TOOLON';
-  private static String cancellationBookingReference = 'CANCEL';
+  private static String cancellationBookingWithinSASControlReference = 'CANCEL';
+  private static String cancellationBookingOutsideSASControlReference = 'CANCE2';
+  private static String cancellationBookingUnsupportedReference = 'CANCE3';
+  private static String cancellationBookingTwoCancellationsReference = 'CANCE4';
   private static String missingClaimedFlightBookingReference = 'MISSIN';
   private static String claimExpensesBookingReference = 'EXPENS';
   private static String notOperatedBySASBookingReference = 'NOTOPE';
@@ -60,7 +63,7 @@ private class EU261Service_Test {
       Arrival_Airport__c = 'ARN',
       Departure_Airport__c = 'HEL',
       Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK1-20220817',
+      TEDS_Identifier__c = 'SK0001-20220817',
       Arrival_Delayed_Minutes__c = 130,
       Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
       Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
@@ -72,13 +75,13 @@ private class EU261Service_Test {
       Operating_Carrier__c = 'SK',
       Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0),
       Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 18, 2, 1, 0),
-      TEDS_Identifier__c = 'SK2-20220817'
+      TEDS_Identifier__c = 'SK0002-20220817'
     );
     Flight__c flight3 = new Flight__c(
       Arrival_Airport__c = 'HEL',
       Departure_Airport__c = 'CPH',
       Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK3-20220818',
+      TEDS_Identifier__c = 'SK0003-20220818',
       Arrival_Delayed_Minutes__c = 130,
       Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0),
       Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 18, 2, 1, 0),
@@ -88,7 +91,7 @@ private class EU261Service_Test {
       Arrival_Airport__c = 'HEL',
       Departure_Airport__c = 'CPH',
       Operating_Carrier__c = 'LH',
-      TEDS_Identifier__c = 'LH1-20220818',
+      TEDS_Identifier__c = 'LH0001-20220818',
       Arrival_Delayed_Minutes__c = 130,
       Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0),
       Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 18, 2, 1, 0),
@@ -98,7 +101,7 @@ private class EU261Service_Test {
       Arrival_Airport__c = 'ARN',
       Departure_Airport__c = 'JFK',
       Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK4-20220817',
+      TEDS_Identifier__c = 'SK0004-20220817',
       Arrival_Delayed_Minutes__c = 130,
       Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
       Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
@@ -108,7 +111,7 @@ private class EU261Service_Test {
       Arrival_Airport__c = 'ARN',
       Departure_Airport__c = 'CPH',
       Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK5-20220817',
+      TEDS_Identifier__c = 'SK0005-20220817',
       Arrival_Delayed_Minutes__c = 170,
       Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
       Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
@@ -118,7 +121,7 @@ private class EU261Service_Test {
       Arrival_Airport__c = 'ARN',
       Departure_Airport__c = 'CPH',
       Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK6-20220817',
+      TEDS_Identifier__c = 'SK0006-20220817',
       Arrival_Delayed_Minutes__c = 30,
       Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
       Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
@@ -128,23 +131,25 @@ private class EU261Service_Test {
       Arrival_Airport__c = 'ARN',
       Departure_Airport__c = 'CPH',
       Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK7-20220817',
+      TEDS_Identifier__c = 'SK0007-20220817',
       Arrival_Delayed_Minutes__c = 400,
       Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
       Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
       Actual_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 8, 41, 0)
     );
-    Flight__c flightWithCancellation = new Flight__c(
+    Flight__c flightWithCancellationWithinSASControl = new Flight__c(
       Arrival_Airport__c = 'ARN',
       Departure_Airport__c = 'CPH',
       Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK8-20220817'
+      TEDS_Identifier__c = 'SK0008-20220817',
+      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
+      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0)
     );
     Flight__c flightForMinimalClaim = new Flight__c(
       Arrival_Airport__c = 'ARN',
       Departure_Airport__c = 'CPH',
       Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK9-20220817',
+      TEDS_Identifier__c = 'SK0009-20220817',
       Arrival_Delayed_Minutes__c = 280,
       Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
       Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
@@ -154,11 +159,35 @@ private class EU261Service_Test {
       Arrival_Airport__c = 'ARN',
       Departure_Airport__c = 'CPH',
       Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK10-20220817',
+      TEDS_Identifier__c = 'SK0010-20220817',
       Arrival_Delayed_Minutes__c = 280,
       Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
       Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
       Actual_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 6, 41, 0)
+    );
+    Flight__c flightWithCancellationOutsideSASControl = new Flight__c(
+      Arrival_Airport__c = 'ARN',
+      Departure_Airport__c = 'CPH',
+      Operating_Carrier__c = 'SK',
+      TEDS_Identifier__c = 'SK0011-20220817',
+      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
+      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0)
+    );
+    Flight__c flightWithCancellationUnsupported = new Flight__c(
+      Arrival_Airport__c = 'ARN',
+      Departure_Airport__c = 'CPH',
+      Operating_Carrier__c = 'SK',
+      TEDS_Identifier__c = 'SK0012-20220817',
+      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
+      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0)
+    );
+    Flight__c flightWithTECHCancellation = new Flight__c(
+      Arrival_Airport__c = 'CPH',
+      Departure_Airport__c = 'HEL',
+      Operating_Carrier__c = 'SK',
+      TEDS_Identifier__c = 'SK0013-20220817',
+      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 4, 1, 0),
+      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 6, 1, 0)
     );
     Airport__c airportHEL = new Airport__c(
       City__c = 'Helsinki',
@@ -271,8 +300,8 @@ private class EU261Service_Test {
       TEDS_Identifier__c = 'uniqueBooking16',
       Type__c = 'OneWay'
     );
-    Booking__c cancellationBooking = new Booking__c(
-      Booking_Reference__c = cancellationBookingReference,
+    Booking__c cancellationBookingWithinSASControl = new Booking__c(
+      Booking_Reference__c = cancellationBookingWithinSASControlReference,
       TEDS_Identifier__c = 'uniqueBooking17',
       Type__c = 'OneWay'
     );
@@ -326,6 +355,21 @@ private class EU261Service_Test {
       TEDS_Identifier__c = 'uniqueBooking27',
       Type__c = 'OneWay'
     );
+    Booking__c cancellationBookingOutsideSASControl = new Booking__c(
+      Booking_Reference__c = cancellationBookingOutsideSASControlReference,
+      TEDS_Identifier__c = 'uniqueBooking28',
+      Type__c = 'OneWay'
+    );
+    Booking__c cancellationBookingUnsupported = new Booking__c(
+      Booking_Reference__c = cancellationBookingUnsupportedReference,
+      TEDS_Identifier__c = 'uniqueBooking29',
+      Type__c = 'OneWay'
+    );
+    Booking__c cancellationBookingTwoCancellations = new Booking__c(
+      Booking_Reference__c = cancellationBookingTwoCancellationsReference,
+      TEDS_Identifier__c = 'uniqueBooking23',
+      Type__c = 'OneWay'
+    );
     insert new List<SObject>{
       airportHEL,
       airportARN,
@@ -339,7 +383,10 @@ private class EU261Service_Test {
       flightWithTwoIrregularities,
       flightWithTooShortDelay,
       flightWithTooLongDelay,
-      flightWithCancellation,
+      flightWithCancellationWithinSASControl,
+      flightWithCancellationOutsideSASControl,
+      flightWithCancellationUnsupported,
+      flightWithTECHCancellation,
       flightForMinimalClaim,
       flightWithRotation,
       oneWayBooking,
@@ -357,7 +404,10 @@ private class EU261Service_Test {
       twoIrregularitiesBooking,
       tooShortDelayBooking,
       tooLongDelayBooking,
-      cancellationBooking,
+      cancellationBookingWithinSASControl,
+      cancellationBookingOutsideSASControl,
+      cancellationBookingUnsupported,
+      cancellationBookingTwoCancellations,
       missingClaimedFlightBooking,
       claimExpensesBooking,
       notOperatedBySASBooking,
@@ -474,9 +524,33 @@ private class EU261Service_Test {
       Flight__c = flightWithTooLongDelay.Id,
       Seat__c = '1A'
     );
-    Segment__c cancellationSegment = new Segment__c(
-      Booking__c = cancellationBooking.Id,
-      Flight__c = flightWithCancellation.Id,
+    Segment__c cancellationWithinSASControlSegment = new Segment__c(
+      Booking__c = cancellationBookingWithinSASControl.Id,
+      Flight__c = flightWithCancellationWithinSASControl.Id,
+      Trip_Type__c = 'Cancelled',
+      Seat__c = '1A'
+    );
+    Segment__c cancellationOutsideSASControlSegment = new Segment__c(
+      Booking__c = cancellationBookingOutsideSASControl.Id,
+      Flight__c = flightWithCancellationOutsideSASControl.Id,
+      Trip_Type__c = 'Cancelled',
+      Seat__c = '1A'
+    );
+    Segment__c cancellationUnsupportedSegment = new Segment__c(
+      Booking__c = cancellationBookingUnsupported.Id,
+      Flight__c = flightWithCancellationUnsupported.Id,
+      Trip_Type__c = 'Cancelled',
+      Seat__c = '1A'
+    );
+    Segment__c doubleCancellationSegment1 = new Segment__c(
+      Booking__c = cancellationBookingTwoCancellations.Id,
+      Flight__c = flightWithCancellationWithinSASControl.Id,
+      Trip_Type__c = 'Cancelled',
+      Seat__c = '1A'
+    );
+    Segment__c doubleCancellationSegment2 = new Segment__c(
+      Booking__c = cancellationBookingTwoCancellations.Id,
+      Flight__c = flightWithTECHCancellation.Id,
       Trip_Type__c = 'Cancelled',
       Seat__c = '1A'
     );
@@ -651,8 +725,26 @@ private class EU261Service_Test {
       First_Name__c = 'Sven',
       Last_Name__c = 'Svensson'
     );
-    Passenger__c cancellationPassenger = new Passenger__c(
-      Booking__c = cancellationBooking.Id,
+    Passenger__c cancellationWithinSASControlPassenger = new Passenger__c(
+      Booking__c = cancellationBookingWithinSASControl.Id,
+      Identifier__c = 'P1',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
+    Passenger__c cancellationOutsideSASControlPassenger = new Passenger__c(
+      Booking__c = cancellationBookingOutsideSASControl.Id,
+      Identifier__c = 'P1',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
+    Passenger__c cancellationUnsupportedPassenger = new Passenger__c(
+      Booking__c = cancellationBookingUnsupported.Id,
+      Identifier__c = 'P1',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
+    Passenger__c twoCancellationsPassenger = new Passenger__c(
+      Booking__c = cancellationBookingTwoCancellations.Id,
       Identifier__c = 'P1',
       First_Name__c = 'Sven',
       Last_Name__c = 'Svensson'
@@ -751,60 +843,75 @@ private class EU261Service_Test {
     FlightIrregularities__c flight1Delay = new FlightIrregularities__c(
       Flight__c = flight1.Id,
       Duration_minutes__c = 130,
-      Code__c = 'AIRS',
+      Code__c = 'FA',
       Type__c = 'Delay (arrival)'
     );
     FlightIrregularities__c flight3Delay = new FlightIrregularities__c(
       Flight__c = flight3.Id,
       Duration_minutes__c = 130,
-      Code__c = 'AIRS',
+      Code__c = 'FA',
       Type__c = 'Delay (arrival)'
     );
     FlightIrregularities__c nonEUFlightDelay = new FlightIrregularities__c(
       Flight__c = nonEUFlight.Id,
       Duration_minutes__c = 130,
-      Code__c = 'AIRS',
+      Code__c = 'FA',
       Type__c = 'Delay (arrival)'
     );
     FlightIrregularities__c tooShortFlightDelay = new FlightIrregularities__c(
       Flight__c = flightWithTooShortDelay.Id,
       Duration_minutes__c = 30,
-      Code__c = 'AIRS',
+      Code__c = 'FA',
       Type__c = 'Delay (arrival)'
     );
     FlightIrregularities__c tooLongFlightDelay = new FlightIrregularities__c(
       Flight__c = flightWithTooLongDelay.Id,
       Duration_minutes__c = 400,
-      Code__c = 'AIRS',
+      Code__c = 'FA',
       Type__c = 'Delay (arrival)'
     );
     FlightIrregularities__c twoDelaysFirstFlightDelay = new FlightIrregularities__c(
       Flight__c = flightWithTwoIrregularities.Id,
       Duration_minutes__c = 120,
-      Code__c = 'AIRS',
+      Code__c = 'FA',
       Type__c = 'Delay (arrival)'
     );
     FlightIrregularities__c twoDelaysSecondFlightDelay = new FlightIrregularities__c(
       Flight__c = flightWithTwoIrregularities.Id,
       Duration_minutes__c = 50,
-      Code__c = 'AIRS',
+      Code__c = 'FA',
       Type__c = 'Delay (arrival)'
     );
-    FlightIrregularities__c flightCancellation = new FlightIrregularities__c(
-      Flight__c = flightWithCancellation.Id,
+    FlightIrregularities__c flightCancellationWithinSASControl = new FlightIrregularities__c(
+      Flight__c = flightWithCancellationWithinSASControl.Id,
+      Code__c = 'TECH',
+      Type__c = 'Cancellation (arrival)'
+    );
+    FlightIrregularities__c flightCancellationOutsideSASControl = new FlightIrregularities__c(
+      Flight__c = flightWithCancellationOutsideSASControl.Id,
+      Code__c = 'WEAT',
+      Type__c = 'Cancellation (arrival)'
+    );
+    FlightIrregularities__c flightCancellationUnsupported = new FlightIrregularities__c(
+      Flight__c = flightWithCancellationUnsupported.Id,
       Code__c = 'AIRS',
+      Type__c = 'Cancellation (arrival)'
+    );
+    FlightIrregularities__c flightCancellationTECH = new FlightIrregularities__c(
+      Flight__c = flightWithTECHCancellation.Id,
+      Code__c = 'TECH',
       Type__c = 'Cancellation (arrival)'
     );
     FlightIrregularities__c nonSASDelay = new FlightIrregularities__c(
       Flight__c = nonSASFlight.Id,
       Duration_minutes__c = 130,
-      Code__c = 'AIRS',
+      Code__c = 'FA',
       Type__c = 'Delay (arrival)'
     );
     FlightIrregularities__c minimalClaimDelay = new FlightIrregularities__c(
       Flight__c = flightForMinimalClaim.Id,
       Duration_minutes__c = 280,
-      Code__c = 'AIRS',
+      Code__c = 'FA',
       Type__c = 'Delay (arrival)'
     );
     FlightIrregularities__c rotationDelay = new FlightIrregularities__c(
@@ -836,7 +943,11 @@ private class EU261Service_Test {
       twoIrregularitiesSegment,
       tooShortDelaySegment,
       tooLongDelaySegment,
-      cancellationSegment,
+      cancellationWithinSASControlSegment,
+      cancellationOutsideSASControlSegment,
+      cancellationUnsupportedSegment,
+      doubleCancellationSegment1,
+      doubleCancellationSegment2,
       missingClaimedFlightSegment,
       claimExpensesSegment,
       notOperatedBySASSegment,
@@ -868,7 +979,10 @@ private class EU261Service_Test {
       twoIrregularitiesPassenger,
       tooShortDelayPassenger,
       tooLongDelayPassenger,
-      cancellationPassenger,
+      cancellationWithinSASControlPassenger,
+      cancellationOutsideSASControlPassenger,
+      cancellationUnsupportedPassenger,
+      twoCancellationsPassenger,
       missingClaimedFlightPassenger,
       claimExpensesPassenger,
       notOperatedBySASPassenger,
@@ -891,7 +1005,10 @@ private class EU261Service_Test {
       tooLongFlightDelay,
       twoDelaysFirstFlightDelay,
       twoDelaysSecondFlightDelay,
-      flightCancellation,
+      flightCancellationWithinSASControl,
+      flightCancellationOutsideSASControl,
+      flightCancellationUnsupported,
+      flightCancellationTECH,
       nonSASDelay,
       minimalClaimDelay,
       rotationDelay
@@ -980,7 +1097,7 @@ private class EU261Service_Test {
       oneWayBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK1',
+        LIA_Claim__c.Flight_Number__c => 'SK0001',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -988,7 +1105,7 @@ private class EU261Service_Test {
       dayReturnBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK1',
+        LIA_Claim__c.Flight_Number__c => 'SK0001',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -996,7 +1113,7 @@ private class EU261Service_Test {
       multiCityBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK1',
+        LIA_Claim__c.Flight_Number__c => 'SK0001',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1004,7 +1121,7 @@ private class EU261Service_Test {
       roundTripBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK1',
+        LIA_Claim__c.Flight_Number__c => 'SK0001',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1012,7 +1129,7 @@ private class EU261Service_Test {
       unknownBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK1',
+        LIA_Claim__c.Flight_Number__c => 'SK0001',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1214,7 +1331,7 @@ private class EU261Service_Test {
       individualPassengerBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK9',
+        LIA_Claim__c.Flight_Number__c => 'SK0009',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1222,7 +1339,7 @@ private class EU261Service_Test {
       coupleBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK9',
+        LIA_Claim__c.Flight_Number__c => 'SK0009',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1294,7 +1411,7 @@ private class EU261Service_Test {
       oneWayBookingWithTwoSegmentsReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK1',
+        LIA_Claim__c.Flight_Number__c => 'SK0001',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1347,7 +1464,7 @@ private class EU261Service_Test {
       duplicateBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK1',
+        LIA_Claim__c.Flight_Number__c => 'SK0001',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1404,7 +1521,7 @@ private class EU261Service_Test {
       withFileBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK1',
+        LIA_Claim__c.Flight_Number__c => 'SK0001',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1463,7 +1580,7 @@ private class EU261Service_Test {
       nonEUBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK4',
+        LIA_Claim__c.Flight_Number__c => 'SK0004',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1507,7 +1624,7 @@ private class EU261Service_Test {
       claimExpensesBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK1',
+        LIA_Claim__c.Flight_Number__c => 'SK0001',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1552,7 +1669,7 @@ private class EU261Service_Test {
       tooShortDelayBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK6',
+        LIA_Claim__c.Flight_Number__c => 'SK0006',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1560,7 +1677,7 @@ private class EU261Service_Test {
       tooLongDelayBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK7',
+        LIA_Claim__c.Flight_Number__c => 'SK0007',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1603,7 +1720,7 @@ private class EU261Service_Test {
       missingClaimedFlightBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK6',
+        LIA_Claim__c.Flight_Number__c => 'SK0006',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1641,7 +1758,7 @@ private class EU261Service_Test {
       twoIrregularitiesBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK5',
+        LIA_Claim__c.Flight_Number__c => 'SK0005',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1674,7 +1791,7 @@ private class EU261Service_Test {
       rotationBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK10',
+        LIA_Claim__c.Flight_Number__c => 'SK0010',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1707,50 +1824,12 @@ private class EU261Service_Test {
   }
 
   @IsTest
-  static void onlyClaimsWithoutCancellationsCanBeEvaluated() {
-    TestDataFactories.CasesClaims claim = createDefaultTestClaim(
-      cancellationBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK8',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claim
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
-
-    Test.setMock(HttpCalloutMock.class, new APIMMock());
-    Test.startTest();
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
-      .automateEU261Claims(claimIds, uow);
-    Test.stopTest();
-
-    System.assertEquals(
-      false,
-      claimsWithEvaluationDetails[0].canBeEvaluated,
-      'It should not be possible to evaluate claims with cancellations.'
-    );
-    System.assertEquals(
-      'cannot handle claims regarding a trip that has cancellations',
-      claimsWithEvaluationDetails[0].unhandledReason,
-      'Rejection reason should be "cannot handle claims regarding a trip that has cancellations"'
-    );
-  }
-
-  @IsTest
   static void onlyClaimsWithFlightsOperatedBySASCanBeEvaluated() {
     TestDataFactories.CasesClaims claim = createDefaultTestClaim(
       notOperatedBySASBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'LH1',
+        LIA_Claim__c.Flight_Number__c => 'LH0001',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-18')
       }
     );
@@ -1788,7 +1867,7 @@ private class EU261Service_Test {
       twoClaimsSameBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK1',
+        LIA_Claim__c.Flight_Number__c => 'SK0001',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1796,7 +1875,7 @@ private class EU261Service_Test {
       twoClaimsSameBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK1',
+        LIA_Claim__c.Flight_Number__c => 'SK0001',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1834,7 +1913,7 @@ private class EU261Service_Test {
       minimalClaimBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK9',
+        LIA_Claim__c.Flight_Number__c => 'SK0009',
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
@@ -1866,6 +1945,158 @@ private class EU261Service_Test {
       'Compensation: 400 | Reimbursement: 0',
       automatedClaim.EU261_Handling_Note__c,
       'Handling Note should be "Compensation: 400 | Reimbursement: 0"'
+    );
+  }
+
+  @IsTest
+  static void minimalCancellationClaimShouldBeAutomatedCorrectly() {
+    TestDataFactories.CasesClaims claim = createDefaultTestClaim(
+      cancellationBookingWithinSASControlReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
+        LIA_Claim__c.Flight_Number__c => 'SK0008',
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
+      }
+    );
+
+    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
+      claim
+    };
+
+    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
+
+    Set<Id> claimIds = getClaimIds(casesClaims);
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+      .automateEU261Claims(claimIds, uow);
+    Test.stopTest();
+
+    System.assertEquals(
+      true,
+      claimsWithEvaluationDetails[0].canBeEvaluated,
+      'The minimal cancellation claim should be automated.'
+    );
+    System.assertEquals(
+      400,
+      claimsWithEvaluationDetails[0].EU261Compensation,
+      'We shuold pay out €400 for the minimal cancellation claim'
+    );
+  }
+
+  @IsTest
+  static void minimalCancellationClaimsWithCancellationsOutsideSASControlShouldBeDenied() {
+    TestDataFactories.CasesClaims claim = createDefaultTestClaim(
+      cancellationBookingOutsideSASControlReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
+        LIA_Claim__c.Flight_Number__c => 'SK0011',
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
+      }
+    );
+
+    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
+      claim
+    };
+
+    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
+
+    Set<Id> claimIds = getClaimIds(casesClaims);
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+      .automateEU261Claims(claimIds, uow);
+    Test.stopTest();
+
+    System.assertEquals(
+      true,
+      claimsWithEvaluationDetails[0].canBeEvaluated,
+      'It should be possible to evaluate minimal claims with cancellations outside SAS control.'
+    );
+    System.assertEquals(
+      false,
+      claimsWithEvaluationDetails[0].customerEntitledToCompensation,
+      'Minimal cancellation claims with cancellations outside SAS control should not receive any compensation'
+    );
+  }
+
+  @IsTest
+  static void claimsWithUnsupportedCancellationCodesShouldNotBeAutomated() {
+    TestDataFactories.CasesClaims claim = createDefaultTestClaim(
+      cancellationBookingUnsupportedReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
+        LIA_Claim__c.Flight_Number__c => 'SK0012',
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
+      }
+    );
+
+    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
+      claim
+    };
+
+    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
+
+    Set<Id> claimIds = getClaimIds(casesClaims);
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+      .automateEU261Claims(claimIds, uow);
+    Test.stopTest();
+
+    System.assertEquals(
+      false,
+      claimsWithEvaluationDetails[0].canBeEvaluated,
+      'It should not be possible to evaluate claims with unsupported cancellation codes.'
+    );
+    System.assertEquals(
+      'cannot determine wether SAS is responsible or not.',
+      claimsWithEvaluationDetails[0].unhandledReason,
+      'Unhandled reason should be "cannot determine wether SAS is responsible or not."'
+    );
+  }
+
+  @IsTest
+  static void claimsWithTwoCancellationsShouldNotBeAutomated() {
+    TestDataFactories.CasesClaims claim = createDefaultTestClaim(
+      cancellationBookingTwoCancellationsReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
+        LIA_Claim__c.Flight_Number__c => 'SK0013',
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
+      }
+    );
+
+    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
+      claim
+    };
+
+    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
+
+    Set<Id> claimIds = getClaimIds(casesClaims);
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+      .automateEU261Claims(claimIds, uow);
+    Test.stopTest();
+
+    System.assertEquals(
+      false,
+      claimsWithEvaluationDetails[0].canBeEvaluated,
+      'It should not be possible to evaluate claims with unsupported cancellation codes.'
+    );
+    System.assertEquals(
+      'can handle only one flight per claim', // cannot determine wether SAS is responsible or not.
+      claimsWithEvaluationDetails[0].unhandledReason,
+      'Unhandled reason should be "can handle only one flight per claim"'
     );
   }
 }

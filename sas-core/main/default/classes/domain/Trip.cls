@@ -4,6 +4,7 @@ public without sharing class Trip {
   public List<Segment__c> sortedSegments; // TODO: public Segments segments; instead?
   private Set<Type> segmentTypes = new Set<Type>{}; // These are trip types, not segment types. TODO: What to do?
   public Boolean hasOnlySASFlights;
+  public Flight__c claimFlight;
   public Type tripType;
 
   public enum Type {
@@ -60,7 +61,7 @@ public without sharing class Trip {
   public class InsufficientDataException extends Exception {
   }
 
-  public class InvalidTripException extends Exception {
+  public class TripException extends Exception {
   }
 
   private Trip(List<Segment__c> segmentsInOrder) {
@@ -73,7 +74,7 @@ public without sharing class Trip {
     }
     this.sortedSegments = segmentsInOrder;
     this.hasOnlySASFlights = true;
-    this.tripType = nameToType.get(segmentsInOrder[0].Trip_Type__c);
+    this.tripType = nameToType.get(segmentsInOrder[0].Trip_Type__c); // Needs to be updated
 
     List<Flight__c> fs = new List<Flight__c>();
 
@@ -91,18 +92,16 @@ public without sharing class Trip {
     }
   }
 
-  public Boolean containsFlight(String flightNumberDate) {
+  public Flight__c getFlight(String flightNumberDate) {
     for (Segment__c s : this.sortedSegments) {
-      List<String> parts = s.Flight__r.TEDS_Identifier__c.split('-');
-      if (parts.size() < 2) {
-        return false;
-      }
-      String segmentFlightId = parts[0] + '-' + parts[1];
+      String segmentFlightId = Flights.TEDSIdToSimpleFlightIds(
+        s.Flight__r.TEDS_Identifier__c
+      )[0];
       if (segmentFlightId == flightNumberDate) {
-        return true;
+        return s.Flight__r;
       }
     }
-    return false;
+    return null;
   }
 
   public Datetime getFinalDestinationArrivalTime() {
@@ -117,11 +116,110 @@ public without sharing class Trip {
   public Flight__c getFlightToFinalDestination() {
     Flight__c lastFlight = sortedSegments[sortedSegments.size() - 1].Flight__r;
     if (lastFlight == null) {
-      throw new InvalidTripException(
+      throw new TripException(
         'Segment in trip does not contain all necessary information.'
       );
     }
     return lastFlight;
+  }
+
+  public Boolean claimFlightIsCancelled() {
+    if (this.claimFlight == null) {
+      throw new TripException('Claim flight is not set');
+    }
+
+    Integer noClaimSegments = 0;
+    Integer noCancelledClaimSegments = 0;
+
+    for (Segment__c s : sortedSegments) {
+      if (s.Flight__r.Id == claimFlight.Id) {
+        noClaimSegments += 1;
+        if (nameToType.get(s.Trip_Type__c) == Type.Cancelled) {
+          noCancelledClaimSegments += 1;
+        }
+      }
+    }
+
+    if (noCancelledClaimSegments == 0) {
+      return false;
+    } else if (noClaimSegments == noCancelledClaimSegments) {
+      return true;
+    } else {
+      throw new TripException(
+        'All segments for a cancelled flight are not cancelled'
+      ); // Do we need to check this?
+    }
+  }
+
+  public Boolean claimFlightCancellationIsWithinSASControl(
+    Map<Id, List<FlightIrregularities__c>> flightToIrregularities
+  ) {
+    if (!claimFlightIsCancelled()) {
+      throw new TripException('Claim flight is not cancelled.');
+    }
+
+    FlightIrregularities irregularities = new FlightIrregularities(
+      flightToIrregularities.get(this.claimFlight.Id)
+    );
+    irregularities.removeNA0Delay();
+
+    Integer noIrregularities = irregularities.instanceRecords.size();
+    if (noIrregularities == 1) {
+      FlightIrregularities__c relevantIrregularity = irregularities.instanceRecords[0];
+
+      if (relevantIrregularity.Code__c.length() != 4) {
+        throw new TripException(
+          'Claim flight irregularity is not a cancellation'
+        );
+      } else {
+        return irregularities.isWithinSASControl().get(relevantIrregularity.Id);
+      }
+    } else if (noIrregularities == 0) {
+      throw new TripException('Claim flight has no valid irregularities.');
+    } else {
+      throw new TripException(
+        'Cancelled flight has more than one irregularity'
+      );
+    }
+  }
+
+  public Boolean canGetOriginalTrip() {
+    try {
+      this.getOriginalTrip();
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  public Boolean hasOnlyOneSegment() {
+    if (this.sortedSegments.size() == 1) {
+      return true;
+    }
+    return false;
+  }
+
+  // Returns the originally planned trip.
+  public Trip getOriginalTrip() {
+    if (hasOnlyOneSegment()) {
+      return this;
+    }
+    throw new TripException('This trip type is not yet supported.');
+  }
+
+  // Returns the trip suggested as a rebooking.
+  public Trip getSuggestedRebookingForClaimFlight() {
+    if (this.claimFlightIsCancelled()) {
+      if (hasOnlyOneSegment()) {
+        return null;
+      }
+    } else {
+      throw new TripException(
+        'This trip\'s claimflight is not cancelled and can not have a suggested rebooking.'
+      );
+    }
+
+    throw new TripException('This trip type is not yet supported.');
   }
 
   public Boolean hasCancelledOrUnknownSegments() {

@@ -6,12 +6,13 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
   }
   public List<FlightIrregularities__c> instanceRecords;
   public Map<String, List<FlightIrregularities__c>> TEDSIdToIrregularities = new Map<String, List<FlightIrregularities__c>>{};
+
   // This should likely be stored in CancellationCode.globalValueSet. However, db calls makes that very annoying.
   // TODO: Populate, get help from liability: https://docs.google.com/spreadsheets/d/1lo-pu7Ew-f-5z18Ke51962j_VZkI9FfA8kYiKTFUw5o/edit#gid=801456937
   public static final Map<String, Boolean> codeToSASIsResponsible = new Map<String, Boolean>{
-    'N/A' => true,
     'WEAT' => false,
-    'AIRS' => true
+    'TECH' => true,
+    'FA' => true
   };
 
   public static final Set<String> POTENTIALROTATIONCODES = new Set<String>{
@@ -148,11 +149,18 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
 
   public Map<Id, Boolean> isWithinSASControl() {
     Map<Id, Boolean> irregularityToIsWithinControl = new Map<Id, Boolean>{};
+    Boolean test1 = codeToSASIsResponsible.get('AIRS');
+    Boolean test2 = codeToSASIsResponsible.get('TECH');
+    Boolean test3 = codeToSASIsResponsible.get('FA');
+    Boolean test4 = codeToSASIsResponsible.get('WEAT');
+    Boolean test5 = codeToSASIsResponsible.get('-----');
 
     for (FlightIrregularities__c f : instanceRecords) {
       Boolean SASisResponsible = codeToSASIsResponsible.get(f.Code__c);
       if (SASisResponsible == null) {
-        SASisResponsible = true;
+        throw new IrregularityException(
+          'Cannot determine wether SAS is within control or not.'
+        );
       }
       irregularityToIsWithinControl.put(f.Id, SASisResponsible);
     }
@@ -190,33 +198,41 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     Decimal arrivalDelay = 0;
     Decimal departureDelayWithinSASControl = 0;
     Decimal arrivalDelayWithinSASControl = 0;
+    Boolean cancellationExists = false;
 
     for (FlightIrregularities__c f : instanceRecords) {
       String cancellationOrDelay = f.Type__c.substringBefore(' ');
       String arrivalOrDeparture = f.Type__c.substringAfter(' ');
       if (cancellationOrDelay == 'Cancellation') {
-        throw new IrregularityException(
-          'At least one irregularity is a cancellation irregularity'
-        );
-      }
-      Boolean SASisResponsible = codeToSASIsResponsible.get(f.Code__c);
-      if (SASisResponsible == null) {
-        SASisResponsible = true;
-      }
-
-      if (arrivalOrDeparture == '(departure)') {
-        if (SASisResponsible) {
-          departureDelayWithinSASControl += f.Duration_minutes__c;
-        }
-        departureDelay += f.Duration_minutes__c;
-      } else if (arrivalOrDeparture == '(arrival)') {
-        if (SASisResponsible) {
-          arrivalDelayWithinSASControl += f.Duration_minutes__c;
-        }
-        arrivalDelay += f.Duration_minutes__c;
+        cancellationExists = true;
       } else {
-        throw new IrregularityException('Invalid irregularity type');
+        Boolean SASisResponsible = codeToSASIsResponsible.get(f.Code__c);
+        if (SASisResponsible == null) {
+          throw new IrregularityException(
+            'Cannot determine wether SAS is within control or not.'
+          );
+        }
+
+        if (arrivalOrDeparture == '(departure)') {
+          if (SASisResponsible) {
+            departureDelayWithinSASControl += f.Duration_minutes__c;
+          }
+          departureDelay += f.Duration_minutes__c;
+        } else if (arrivalOrDeparture == '(arrival)') {
+          if (SASisResponsible) {
+            arrivalDelayWithinSASControl += f.Duration_minutes__c;
+          }
+          arrivalDelay += f.Duration_minutes__c;
+        } else {
+          throw new IrregularityException('Invalid irregularity type');
+        }
       }
+    }
+
+    if (cancellationExists && (departureDelay + arrivalDelay) != 0) {
+      throw new IrregularityException(
+        'There are both cancellation and delay irregularities'
+      );
     }
 
     return new List<Decimal>{
@@ -237,7 +253,9 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     for (FlightIrregularities__c f : instanceRecords) {
       Boolean SASisResponsible = codeToSASIsResponsible.get(f.Code__c);
       if (SASisResponsible == null) {
-        SASisResponsible = true;
+        throw new IrregularityException(
+          'Cannot get explanation of why SAS is within control or not.'
+        );
       }
       if (!SASisResponsible) {
         totalDelayOutsideSASControl += f.Duration_minutes__c;

@@ -37,6 +37,7 @@ public without sharing class EU261Service {
     public Decimal maximumTimeToClaimCompensation;
     public Boolean hasPotentiallyDuplicateClaims = false;
     public Boolean hasRelatedFiles = false;
+    public Integer daysUntilFlightWhenInformedOfCancellation; // TODO: Move
 
     public ClaimWithCompensationDetails(Claim c) {
       this.claim = Claims.newInstance(
@@ -53,16 +54,16 @@ public without sharing class EU261Service {
 
     public Boolean hasDelay() {
       if (this.tripWithClaimFlight == null) {
-        return null;
+        throw new AutomationException('tripWithClaimFlight not set');
       }
       return this.tripWithClaimFlight.isDelayedToDestination();
     }
 
     public Boolean hasCancellation() {
       if (this.tripWithClaimFlight == null) {
-        return null;
+        throw new AutomationException('tripWithClaimFlight not set');
       }
-      return this.tripWithClaimFlight.hasCancelledSegments();
+      return this.tripWithClaimFlight.claimFlightIsCancelled();
     }
   }
 
@@ -243,23 +244,32 @@ public without sharing class EU261Service {
       } else if (hasRotationIrregularities(ac)) {
         ac.unhandledReason = 'cannot handle flights with irregularities caused by rotations';
         ac.canBeEvaluated = false;
-      } else if (ac.hasCancellation()) {
-        ac.unhandledReason = 'cannot handle claims regarding a trip that has cancellations';
-        ac.canBeEvaluated = false;
-      } else if (!canCalculateDelay(ac)) {
-        ac.unhandledReason = 'there were issues calculating the delay'; // Can we code better logging?
-        ac.canBeEvaluated = false;
-      } else if (
-        getMinutesDelayedWithinSASControl(ac) <= (2 * 60) ||
-        getMinutesDelayedWithinSASControl(ac) >= (5 * 60)
-      ) {
-        ac.unhandledReason = 'can handle only delays between 2 and 5 hours';
-        ac.canBeEvaluated = false;
       } else if (!SASIsOnlyOperatingCarrier(ac)) {
         ac.unhandledReason = 'cannot handle claims where SAS is not the only operating carrier';
         ac.canBeEvaluated = false;
       } else if (requiresPowerOfAttorney(ac)) {
         ac.unhandledReason = 'can handle only claims which do not require power of attorney';
+        ac.canBeEvaluated = false;
+      } else if (
+        ac.hasCancellation() &&
+        !canDetermineIfSASIsResponsibleForCancellation(ac)
+      ) {
+        ac.unhandledReason = 'cannot determine wether SAS is responsible or not.';
+        ac.canBeEvaluated = false;
+      } else if (
+        ac.hasCancellation() && !ac.tripWithClaimFlight.canGetOriginalTrip()
+      ) {
+        ac.unhandledReason = 'this trip type is not yet supported.';
+        ac.canBeEvaluated = false;
+      } else if (!ac.hasCancellation() && !canCalculateDelay(ac)) {
+        ac.unhandledReason = 'there were issues calculating the delay'; // Can we code better logging?
+        ac.canBeEvaluated = false;
+      } else if (
+        (!ac.hasCancellation() &&
+        (getMinutesDelayedWithinSASControl(ac) <= (2 * 60) ||
+        getMinutesDelayedWithinSASControl(ac) >= (5 * 60)))
+      ) {
+        ac.unhandledReason = 'can handle only delays between 2 and 5 hours';
         ac.canBeEvaluated = false;
       } else {
         ac.canBeEvaluated = true;
@@ -354,17 +364,21 @@ public without sharing class EU261Service {
       } else if (!isFiledOnTime(ac)) {
         ac.rejectionReason = 'not filed on time';
         ac.customerEntitledToCompensation = false;
-      } else if (!cancellationCodeIsWithinSASControl(ac) && false) {
-        // TODO: Implement cancellation logic, should be sorted out by canWeEvaluate()
-        ac.rejectionReason = 'cancellation code not within SAS control';
-        ac.customerEntitledToCompensation = false;
+      } else if (ac.hasCancellation()) {
+        // If the claim flight was cancelled the customer should receive compensation according to the cancellation logic
+        if (!cancellationCodeIsWithinSASControl(ac)) {
+          ac.rejectionReason = 'cancellation code not within SAS control';
+          ac.customerEntitledToCompensation = false;
+        } else {
+          ac = setEU261CompensationCancellation(ac);
+        }
       } else if (!ac.hasDelay()) {
-        ac.rejectionReason = 'flight not delayed';
+        ac.rejectionReason = 'flight not cancelled and not delayed';
         ac.customerEntitledToCompensation = false;
       } else {
         Boolean canBeCompensated = true; // Nathan: What is this for? Seems like something canWeEvaluate() handles?
         if (canBeCompensated) {
-          ac = setEU261Compensation(ac); // Also sets wether they are entitled
+          ac = setEU261CompensationDelay(ac); // Also sets wether they are entitled
         } else {
           ac.rejectionReason = 'unknown';
           ac.customerEntitledToCompensation = false;
@@ -422,12 +436,195 @@ public without sharing class EU261Service {
   }
 
   /**
-   * Calculates how much compensation in EUR the customer(s) is/are entitled to as per EU261.
+   * Calculates how much compensation in EUR the customer(s) is/are entitled to as per EU261 regarding cancellations.
+   * Source: EU261 Article 6 and 7. (https://eur-lex.europa.eu/legal-content/EN/TXT/?qid=1476179175834&uri=CELEX:32004R0261)
+   *
+   * @return the ClaimWithCompensationDetails object with the correct compensation in EUR and/or rejection reason.
+   *
+   * TODO: Construct explanation for logging
+   * TODO: Double check logic
+   */
+  private static ClaimWithCompensationDetails setEU261CompensationCancellation(
+    ClaimWithCompensationDetails ac
+  ) {
+    // Get the original flight plan
+    Trip originalTrip = ac.tripWithClaimFlight.getOriginalTrip();
+    Datetime originalDeparture = originalTrip.sortedSegments[0]
+      .Flight__r.Scheduled_Departure_Time__c;
+    Datetime originalArrival = originalTrip.sortedSegments[
+        originalTrip.sortedSegments.size() - 1
+      ]
+      .Flight__r.Scheduled_Arrival_Time__c;
+
+    Integer flightDistanceInKm = Airports.distanceBetweenAirportsInMeters(
+      originalTrip.originAirport,
+      originalTrip.destinationAirport
+    );
+    Boolean isIntraCommunity = isIntraCommunity(originalTrip);
+
+    // Get the new (suggested) flight plan
+    Trip newTrip = ac.tripWithClaimFlight.getSuggestedRebookingForClaimFlight();
+    Integer arrivalDifference;
+    Integer departureDifference;
+    Integer compensation;
+    if (newTrip == null) {
+      // No suggested rebooking => full EU261 (10h outside timeframe => full compensation)
+      compensation = calculateCompensationCancellation(
+        600,
+        flightDistanceInKm,
+        isIntraCommunity
+      );
+    } else {
+      // Current state of this automation as we cannot identify suggested reroutings
+      if (true) {
+        throw new AutomationException(
+          'This is an unsupported trip type and should have been caught by "canWeEvaluate".'
+        );
+      }
+
+      Datetime newDeparture = newTrip.sortedSegments[0]
+        .Flight__r.Scheduled_Departure_Time__c;
+      Datetime newArrival = newTrip.sortedSegments[
+          newTrip.sortedSegments.size() - 1
+        ]
+        .Flight__r.Scheduled_Arrival_Time__c;
+
+      // Compare the original rebooking against the suggested rebooking and calculate compensation
+      departureDifference = Integer.valueOf(
+        DateUtils.getHoursBetween(newDeparture, originalDeparture)
+      );
+      arrivalDifference = Integer.valueOf(
+        DateUtils.getHoursBetween(newArrival, originalArrival)
+      ); // Do we need to round up?
+
+      Integer compensationForEarlyFlight = 0;
+      Integer compensationForLateFlight = 0;
+      final Integer MAXIMUM_ACCEPTABLE_TIME_LATE_ARRIVAL = 240;
+      final Integer MAXIMUM_ACCEPTABLE_TIME_EARLY_DEPARTURE = 120;
+
+      if (newArrival > originalArrival) {
+        Integer minutesOutsideTimeFrame = getMinutesOutsideTimeFrame(
+          MAXIMUM_ACCEPTABLE_TIME_LATE_ARRIVAL,
+          arrivalDifference,
+          ac.daysUntilFlightWhenInformedOfCancellation
+        );
+
+        compensationForLateFlight = calculateCompensationCancellation(
+          minutesOutsideTimeFrame,
+          flightDistanceInKm,
+          isIntraCommunity
+        );
+      }
+
+      if (newDeparture < originalDeparture) {
+        Integer minutesOutsideTimeFrame = getMinutesOutsideTimeFrame(
+          MAXIMUM_ACCEPTABLE_TIME_EARLY_DEPARTURE,
+          departureDifference,
+          ac.daysUntilFlightWhenInformedOfCancellation
+        );
+
+        compensationForEarlyFlight = calculateCompensationCancellation(
+          minutesOutsideTimeFrame,
+          flightDistanceInKm,
+          isIntraCommunity
+        );
+      }
+
+      compensation = Math.max(
+        compensationForEarlyFlight,
+        compensationForLateFlight
+      );
+    }
+
+    Integer numberOfEligiblePassengers = getNumberOfPassengersEligibleForCompensation(
+      ac
+    );
+
+    Integer totalCompensation = compensation * numberOfEligiblePassengers;
+
+    if (totalCompensation > 0) {
+      ac.customerEntitledToCompensation = true;
+      ac.EU261Compensation = totalCompensation;
+    } else {
+      ac.customerEntitledToCompensation = false;
+    }
+
+    return ac;
+  }
+
+  // Somewhat unclear, TODO: double check
+  private static Integer calculateCompensationCancellation(
+    Integer minutesOutsideTimeFrame,
+    Integer flightDistanceInKm,
+    Boolean isIntraCommunity
+  ) {
+    final Integer MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_SHORT_DISTANCE = 120;
+    final Integer MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_MEDIUM_DISTANCE = 180;
+    final Integer MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_LONG_DISTANCE = 240;
+    final Integer MEDIUM_DISTANCE = 1500;
+    final Integer LONG_DISTANCE = 3500;
+
+    Integer compensation;
+    if (minutesOutsideTimeFrame == 0) {
+      compensation = 0;
+    } else if (flightDistanceInKm <= MEDIUM_DISTANCE) {
+      compensation = 250;
+      if (
+        minutesOutsideTimeFrame <
+        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_SHORT_DISTANCE
+      ) {
+        compensation /= 2;
+      }
+    } else if (
+      flightDistanceInKm > MEDIUM_DISTANCE &&
+      (flightDistanceInKm <= LONG_DISTANCE || isIntraCommunity)
+    ) {
+      compensation = 400;
+      if (
+        minutesOutsideTimeFrame <
+        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_MEDIUM_DISTANCE
+      ) {
+        compensation /= 2;
+      }
+    } else {
+      compensation = 600;
+      if (
+        minutesOutsideTimeFrame <
+        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_LONG_DISTANCE
+      ) {
+        compensation /= 2;
+      }
+    }
+
+    return compensation;
+  }
+
+  public static Integer getMinutesOutsideTimeFrame(
+    Integer timeFrame,
+    Integer delay,
+    Integer daysUntilFlightWhenInformedOfCancellation
+  ) {
+    Integer minutesOutsideTimeFrame;
+    if (daysUntilFlightWhenInformedOfCancellation > 14) {
+      minutesOutsideTimeFrame = 0;
+    } else if (
+      daysUntilFlightWhenInformedOfCancellation <= 14 &&
+      daysUntilFlightWhenInformedOfCancellation > 7
+    ) {
+      minutesOutsideTimeFrame = Math.max(0, delay - timeFrame);
+    } else {
+      minutesOutsideTimeFrame = Math.max(0, delay - timeFrame / 2);
+    }
+    return minutesOutsideTimeFrame;
+  }
+
+  /**
+   * Calculates how much compensation in EUR the customer(s) is/are entitled to as per EU261 regarding delays.
    * Source: EU261 Article 6 and 7. (https://eur-lex.europa.eu/legal-content/EN/TXT/?qid=1476179175834&uri=CELEX:32004R0261)
    *
    * @return the ClaimWithCompensationDetails object with the correct compensation in EUR and/or rejection reason.
    */
-  private static ClaimWithCompensationDetails setEU261Compensation(
+  private static ClaimWithCompensationDetails setEU261CompensationDelay(
     ClaimWithCompensationDetails ac
   ) {
     final Integer MINIMUM_DELAY_FOR_COMPENSATION = 180;
@@ -436,14 +633,14 @@ public without sharing class EU261Service {
     final Integer MEDIUM_DISTANCE = 1500;
     final Integer LONG_DISTANCE = 3500;
 
-    Integer delayedMinutes = getMinutesDelayedWithinSASControl(ac);
     Integer flightDistanceInKm = Airports.distanceBetweenAirportsInMeters(
       ac.tripWithClaimFlight.originAirport,
       ac.tripWithClaimFlight.destinationAirport
     );
     Integer numberOfEligiblePassengers = getNumberOfPassengersEligibleForCompensation(
       ac
-    ); // Calculate revenue, todo: implement
+    );
+    Integer delayedMinutes = getMinutesDelayedWithinSASControl(ac);
 
     if (delayedMinutes < MINIMUM_DELAY_FOR_COMPENSATION) {
       ac.customerEntitledToCompensation = false;
@@ -453,7 +650,8 @@ public without sharing class EU261Service {
         ac.EU261Compensation = numberOfEligiblePassengers * 250;
       } else if (
         flightDistanceInKm > MEDIUM_DISTANCE &&
-        (flightDistanceInKm <= LONG_DISTANCE || isIntraCommunity(ac))
+        (flightDistanceInKm <= LONG_DISTANCE ||
+        isIntraCommunity(ac.tripWithClaimFlight))
       ) {
         ac.EU261Compensation = numberOfEligiblePassengers * 400;
       } else if (delayedMinutes < MINIMUM_DELAY_FOR_INCREASED_COMPENSATION) {
@@ -470,11 +668,10 @@ public without sharing class EU261Service {
       } else {
         ac.customerEntitledToCompensation = true;
         if (delayedMinutes >= MINIMUM_DELAY_FOR_REFUND) {
-          ac.customerEntitledToRefund = true;
+          ac.customerEntitledToRefund = true; // Not relevant, not handled here. TODO: Check if refund handles these cases?
         }
       }
     }
-
     return ac;
   }
 
@@ -507,9 +704,9 @@ public without sharing class EU261Service {
     return (isToOrFromEU261Territory && !hasReceivedBenefitsWhichVoidEU261);
   }
 
-  private static Boolean isIntraCommunity(ClaimWithCompensationDetails ac) {
-    Airport__c originAirport = ac.tripWithClaimFlight.originAirport;
-    Airport__c destinationAirport = ac.tripWithClaimFlight.destinationAirport;
+  private static Boolean isIntraCommunity(Trip trip) {
+    Airport__c originAirport = trip.originAirport;
+    Airport__c destinationAirport = trip.destinationAirport;
     return originAirport.Is_EU261_Applicable__c &&
       destinationAirport.Is_EU261_Applicable__c;
   }
@@ -575,47 +772,23 @@ public without sharing class EU261Service {
     return ac.tripWithClaimFlight.hasOnlySASFlights;
   }
 
-  /**
-   * TODO: Ask Liability for help. See FlightIrregularities.isWithinSASControl()
-   */
+  private static Boolean canDetermineIfSASIsResponsibleForCancellation(
+    ClaimWithCompensationDetails ac
+  ) {
+    try {
+      cancellationCodeIsWithinSASControl(ac);
+      return true;
+    } catch (FlightIrregularities.IrregularityException e) {
+      return false;
+    }
+  }
+
   private static Boolean cancellationCodeIsWithinSASControl(
     ClaimWithCompensationDetails ac
   ) {
-    if (!ac.tripWithClaimFlight.hasCancelledSegments()) {
-      return false; // TODO: Implement, set return to null
-    } else {
-      List<FlightIrregularities__c> irregularitiesWithCancellationCodes = new List<FlightIrregularities__c>{};
-      // Get all irregularities with cancellation codes
-      for (Segment__c s : ac.tripWithClaimFlight.sortedSegments) {
-        for (
-          FlightIrregularities__c f : ac.flightToIrregularities.get(s.Flight__c)
-        ) {
-          if (f.Type__c.substringBefore(' ') == 'Cancellation') {
-            irregularitiesWithCancellationCodes.add(f);
-          }
-        }
-      }
-
-      // Evaluate if it is within SAS control
-      if (irregularitiesWithCancellationCodes.size() == 0) {
-        // TODO: Define: What should we do here?
-        throw new AutomationException('Cancellation has no cancellation code.');
-      } else if (irregularitiesWithCancellationCodes.size() == 1) {
-        Map<Id, Boolean> irregularityToIsWithinSASControl = FlightIrregularities.newInstance(
-            irregularitiesWithCancellationCodes
-          )
-          .isWithinSASControl();
-
-        Boolean isWithinSASControl = irregularityToIsWithinSASControl.get(
-          irregularitiesWithCancellationCodes[0].Id
-        );
-        return isWithinSASControl;
-      } else {
-        throw new AutomationException(
-          'Bookings with more than one cancellation code in a trip is currently not supported for automation.'
-        );
-      }
-    }
+    return ac.tripWithClaimFlight.claimFlightCancellationIsWithinSASControl(
+      ac.flightToIrregularities
+    );
   }
 
   private static Integer getNumberOfPassengersEligibleForCompensation(
@@ -839,15 +1012,18 @@ public without sharing class EU261Service {
     cwcd.trips = cwcd.booking.getTrips(airportCodeToAirport);
 
     // Todo: use stringutils / the flight domain (implement)
-    String flightNumberDate =
-      c.flightNumber +
-      '-' +
-      String.valueOf(c.departureDate).remove('-');
+    String flightNumberDate = FlightService.constructFlightNumberDate(
+      c.flightNumber,
+      c.departureDate
+    );
 
     if (cwcd.booking.instanceRecords.size() > 0) {
       for (Trip t : cwcd.trips.get(cwcd.booking.instanceRecords[0].Id)) {
-        if (t.containsFlight(flightNumberDate)) {
+        Flight__c claimFlight = t.getFlight(flightNumberDate);
+        if (claimFlight != null) {
           cwcd.tripWithClaimFlight = t;
+          t.claimFlight = claimFlight;
+          break;
         }
       }
     }
