@@ -71,6 +71,10 @@ public without sharing class FlightService {
     Map<Id, Integer> flightIdToDelay = new Map<Id, Integer>{};
 
     for (Flight__c flight : flights.instanceRecords) {
+      if (flight.Arrival_Delayed_Minutes__c == null) {
+        flightIdToDelay.put(flight.Id, 0);
+        continue;
+      }
       FlightIrregularities flightIrregularities = new FlightIrregularities(
         flightIdToIrregularities.get(flight.Id)
       );
@@ -104,5 +108,21 @@ public without sharing class FlightService {
     }
 
     return flightIdToDelay;
+  }
+
+  /**
+   * Constructs a flightNumber + date combination like the one used in TEDS
+   *
+   * @param flightNumber E.g. SK1234
+   * @param flightDate
+   * @return a string like: SK1234-20220101
+   */
+  public static String constructFlightNumberDate(
+    String flightNumber,
+    Date flightDate
+  ) {
+    return Flights.normalizeFlightNumber(flightNumber) +
+      '-' +
+      String.valueOf(flightDate).remove('-');
   }
 }

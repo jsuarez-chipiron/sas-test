@@ -124,28 +124,16 @@ private class ProactivitiesSelector_Test {
     );
 
     String flightIdentifier1 =
-      Flights.normalizeFlightNumber('SK1') +
-      '-' +
-      String.valueOf(today).remove('-') +
-      '-UME-ARN';
+      FlightService.constructFlightNumberDate('SK1', today) + '-UME-ARN';
 
     String flightIdentifier2 =
-      Flights.normalizeFlightNumber('SK2') +
-      '-' +
-      String.valueOf(today).remove('-') +
-      '-ARN-UME';
+      FlightService.constructFlightNumberDate('SK2', today) + '-ARN-UME';
 
     String flightIdentifier3 =
-      Flights.normalizeFlightNumber('SK3') +
-      '-' +
-      String.valueOf(today).remove('-') +
-      '-UME-ARN';
+      FlightService.constructFlightNumberDate('SK3', today) + '-UME-ARN';
 
     String flightIdentifier4 =
-      Flights.normalizeFlightNumber('SK4') +
-      '-' +
-      String.valueOf(today).remove('-') +
-      '-UME-ARN';
+      FlightService.constructFlightNumberDate('SK4', today) + '-UME-ARN';
 
     Flight__c flight1 = new Flight__c(
       Arrival_Airport__c = 'ARN',

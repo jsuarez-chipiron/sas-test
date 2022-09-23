@@ -57,8 +57,9 @@ public inherited sharing class FlightsSelector extends fflib_SObjectSelector {
     String flightNumber,
     Date departureDate
   ) {
-    String parsedDate = String.valueOf(departureDate).remove('-');
-    String flightLikeId = flightNumber + '-' + parsedDate + '-___-___';
+    String flightLikeId =
+      FlightService.constructFlightNumberDate(flightNumber, departureDate) +
+      '-___-___';
 
     return (List<Flight__c>) Database.query(
       newQueryFactory()

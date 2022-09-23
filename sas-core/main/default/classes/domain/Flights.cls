@@ -264,7 +264,7 @@ public without sharing class Flights extends fflib_SObjectDomain {
   /*
    * Returns variations of the flight id written in plain text
    * Format: BT0151-20220713-RIX-OSL
-   * A List Returns a flight Id on format
+   *
    * @return A list with ids with the following formats: BT0151-20220713, BT0151-2022-07-13
    */
   public static List<String> TEDSIdToSimpleFlightIds(String TEDSId) {
