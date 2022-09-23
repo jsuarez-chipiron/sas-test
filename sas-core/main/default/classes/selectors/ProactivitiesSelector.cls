@@ -50,7 +50,7 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
     LIA_Claim__c claim;
     ClaimsSelector claims = ClaimsSelector.newInstance();
     CasesSelector cases = CasesSelector.newInstance();
-    String whereQuery = '';
+    Set<String> queryParts = new Set<String>{};
 
     Id directlyLinkedProactivityId;
     try {
@@ -60,18 +60,18 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
       // The case does not exist (should not happen)
     }
 
-    whereQuery = buildQuery(
-      whereQuery,
-      'Id = :directlyLinkedProactivityId',
-      directlyLinkedProactivityId != null
-    );
+    if (directlyLinkedProactivityId != null) {
+      queryParts.add('Id = :directlyLinkedProactivityId');
+    }
 
     try {
       claim = claims.selectByCaseIdWithCustomers(new Set<Id>{ caseId })[0];
     } catch (Exception e) {
       if (directlyLinkedProactivityId != null) {
         List<Proactivity__c> directlyLinkedProactivity = (List<Proactivity__c>) Database.query(
-          newQueryFactory().setCondition(whereQuery).toSOQL()
+          newQueryFactory()
+            .setCondition('Id = :directlyLinkedProactivityId')
+            .toSOQL()
         );
         if (directlyLinkedProactivity.size() != 0) {
           return new Map<Proactivity__c, String>{
@@ -127,14 +127,14 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
     };
 
     for (Schema.SObjectField field : claimFieldToQuery.keySet()) {
-      whereQuery = buildQuery(
-        whereQuery,
-        claimFieldToQuery.get(field),
-        !String.isBlank((String) claim.get(field))
-      );
+      if (!String.isBlank((String) claim.get(field))) {
+        queryParts.add(claimFieldToQuery.get(field));
+      }
     }
 
-    whereQuery = buildQuery(whereQuery, 'Claim_Firm__c = :firm', firm != null);
+    if (firm != null) {
+      queryParts.add('Claim_Firm__c = :firm');
+    }
 
     Flight__c claimFlight;
     List<Flight__c> flightsConnectedToTheClaim = new List<Flight__c>{};
@@ -164,17 +164,11 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
     }
 
     // Match on claim flight (Two flight ids to handle different input formats):
-    whereQuery = buildQuery(
-      whereQuery,
-      'Flight_Id__c IN :stringFlightIds',
-      true
-    );
+    queryParts.add('Flight_Id__c IN :stringFlightIds');
 
-    whereQuery = buildQuery(
-      whereQuery,
-      'Passenger_Name__c IN :passengerNames',
-      passengerNames.size() != 0
-    );
+    if (passengerNames.size() != 0) {
+      queryParts.add('Passenger_Name__c IN :passengerNames');
+    }
 
     if (
       claimFlight == null &&
@@ -211,18 +205,18 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
         flightIdToIrregularities.get(f.Id)
       );
 
-      whereQuery = buildQuery(
-        whereQuery,
-        flightQ.query,
-        !String.isBlank(flightQ.query)
-      );
-      flightQueriesMetaData.add(flightQ);
+      if (!String.isBlank(flightQ.query)) {
+        queryParts.add(flightQ.query);
+        flightQueriesMetaData.add(flightQ);
+      }
     }
 
     // Avoid db calls
-    if (whereQuery.length() == 0) {
+    if (queryParts.size() == 0) {
       return new Map<Proactivity__c, String>{};
     }
+
+    String whereQuery = buildQuery(queryParts);
 
     List<Proactivity__c> proactivites = (List<Proactivity__c>) Database.query(
       newQueryFactory().setCondition(whereQuery).toSOQL()
@@ -294,16 +288,17 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
         }
       }
 
-      airportQuery = buildQuery(
-        airportQuery,
-        departingQuery,
-        !String.isBlank(fromAirport)
-      );
-      airportQuery = buildQuery(
-        airportQuery,
-        arrivingQuery,
-        !String.isBlank(toAirport)
-      );
+      if (!String.isBlank(fromAirport)) {
+        airportQuery = departingQuery;
+      }
+
+      if (!String.isBlank(toAirport)) {
+        if (airportQuery == '') {
+          airportQuery = arrivingQuery;
+        } else {
+          airportQuery += ' OR ' + arrivingQuery;
+        }
+      }
 
       String cancellationCodeRow = '';
       for (String cc : cancellationCodes) {
@@ -346,19 +341,16 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
     return new FlightQuery(airportQuery, flight, cancellationCodes);
   }
 
-  private static String buildQuery(
-    String whereQuery,
-    String queryToAdd,
-    Boolean shouldBeAdded
-  ) {
-    if (shouldBeAdded) {
-      if (String.isBlank(whereQuery)) {
-        whereQuery += queryToAdd;
+  private static String buildQuery(Set<String> queryParts) {
+    String query = '';
+    for (String queryPart : queryParts) {
+      if (String.isBlank(query)) {
+        query += queryPart;
       } else {
-        whereQuery += ' OR ' + queryToAdd;
+        query += ' OR ' + queryPart;
       }
     }
-    return whereQuery;
+    return query;
   }
 
   private static Map<Proactivity__c, String> getMatchingReasons(
@@ -372,62 +364,67 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
     Map<Proactivity__c, String> proactivityToReason = new Map<Proactivity__c, String>{};
 
     for (Proactivity__c p : proactivites) {
-      String reasons = '';
+      Set<String> reasons = new Set<String>{};
       if (
         !String.isBlank(p.Bank_Account_Number__c) &&
         p.Bank_Account_Number__c == claim.Bank_Account_Number__c
       ) {
-        reasons = buildReasons(reasons, 'Bank');
+        reasons.add('Bank');
       }
       if (
         !String.isBlank(p.Booking_Reference__c) &&
         p.Booking_Reference__c == claim.Liability_PNR__c
       ) {
-        reasons = buildReasons(reasons, 'PNR');
+        reasons.add('PNR');
       }
       if (!String.isBlank(p.Email__c) && p.Email__c == claim.Contact_Email__c) {
-        reasons = buildReasons(reasons, 'Email');
+        reasons.add('Email');
       }
       if (
         !String.isBlank(p.EuroBonus_Number__c) &&
         p.EuroBonus_Number__c == claim.EuroBonus_Number__c
       ) {
-        reasons = buildReasons(reasons, 'EB');
+        reasons.add('EB');
       }
       if (
         !String.isBlank(p.Passenger_Name__c) &&
         passengerNames.contains(p.Passenger_Name__c)
       ) {
-        reasons = buildReasons(reasons, 'Name');
+        reasons.add('Name');
       }
       if (
         !String.isBlank(p.Phone_Number__c) &&
         p.Phone_Number__c == claim.Phone_Number__c
       ) {
-        reasons = buildReasons(reasons, 'Phone');
+        reasons.add('Phone');
       }
       if (!String.isBlank(p.PIR__c) && p.PIR__c == claim.PIR__c) {
-        reasons = buildReasons(reasons, 'PIR');
+        reasons.add('PIR');
       }
       if (p.Claim_Firm__c != null && p.Claim_Firm__c == claim.Claim_Firm__c) {
-        reasons = buildReasons(reasons, 'Firm');
+        reasons.add('Firm');
       }
       if (p.Id != null && p.Id == directlyLinkedProactivityId) {
-        reasons = buildReasons(reasons, 'Directly linked');
+        reasons.add('Directly linked');
       }
       for (String flightId : stringFlightIds) {
         if (!String.isBlank(p.Flight_Id__c) && (p.Flight_Id__c == flightId)) {
-          reasons = buildReasons(reasons, 'Flight');
+          reasons.add('Flight');
         }
       }
       for (FlightQuery fq : flightQueriesMetaData) {
         String matchReasons = getFlightMatchReason(fq, p);
         if (!String.isBlank(matchReasons)) {
-          reasons = buildReasons(reasons, matchReasons);
+          reasons.add(matchReasons);
         }
       }
 
-      proactivityToReason.put(p, reasons);
+      String reasonsExplanation = '';
+      for (String reason : reasons) {
+        reasonsExplanation = buildReasons(reasonsExplanation, reason);
+      }
+
+      proactivityToReason.put(p, reasonsExplanation);
     }
 
     return proactivityToReason;
