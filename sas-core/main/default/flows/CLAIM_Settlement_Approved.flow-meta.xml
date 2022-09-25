@@ -112,8 +112,8 @@
         <locationY>638</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Liability</name>
-            <conditionLogic>and</conditionLogic>
+            <name>Liability_or_No_Department_Emergency_Case</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Case_Information.Department__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -121,10 +121,17 @@
                     <stringValue>Liability</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Information.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Set_case_status_to_closed</targetReference>
             </connector>
-            <label>Liability</label>
+            <label>Liability or No Department - Emergency Case</label>
         </rules>
         <rules>
             <name>Customer_Claim</name>
@@ -142,6 +149,7 @@
             <label>Customer Claim</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>todayDate</name>
         <dataType>Date</dataType>

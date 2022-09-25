@@ -3354,7 +3354,11 @@
     <layoutAssignments>
         <layout>Case-SAS Customer Claim Layout</layout>
         <recordType>Case.Customer_Claim</recordType>
-    </layoutAssignments>  
+    </layoutAssignments> 
+    <layoutAssignments>
+        <layout>Case-SAS Customer Claim Layout</layout>
+        <recordType>Case.Emergency</recordType>
+    </layoutAssignments>     
     <layoutAssignments>
         <layout>Case-SAS Internal%2FBackoffice Layout</layout>
         <recordType>Case.Internal_Backoffice</recordType>
@@ -3377,6 +3381,10 @@
         <layout>LIA_Claim__c-Customer Claim Layout</layout>
         <recordType>LIA_Claim__c.CustomerClaim</recordType>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>LIA_Claim__c-Customer Claim Layout</layout>
+        <recordType>LIA_Claim__c.EmergencyClaim</recordType>
+    </layoutAssignments>    
     <layoutAssignments>
         <layout>LIA_Claim__c-Liability Claim Layout</layout>
         <recordType>LIA_Claim__c.LiabilityClaim</recordType>
@@ -3741,6 +3749,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Case.Emergency</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>    
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Case.Internal_Backoffice</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -3754,6 +3767,11 @@
         <recordType>LIA_Claim__c.CustomerClaim</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LIA_Claim__c.EmergencyClaim</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>    
     <recordTypeVisibilities>        
         <default>false</default>   
         <recordType>LIA_Claim__c.LiabilityClaim</recordType>
