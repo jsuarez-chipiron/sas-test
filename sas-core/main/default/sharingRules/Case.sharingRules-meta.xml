@@ -11,14 +11,33 @@
         <criteriaItems>
             <field>Team__c</field>
             <operation>notEqual</operation>
-            <value>Feedback,Fraud Investigation</value>
+            <value>Fraud Investigation,Feedback</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Emergency</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>Sharing_Liability_Cases_with_Liability_group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Sharing Liability Cases with Liability group</label>
+        <sharedTo>
+            <group>Liability</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Claim</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Sharing_cases_with_SAS_people</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>Sharing all cases with SAS people</description>
+        <description>Sharing all cases with SAS people except emergency cases</description>
         <label>Sharing cases with SAS people</label>
         <sharedTo>
             <role>SAS</role>
@@ -28,17 +47,26 @@
             <operation>notEqual</operation>
             <value>00000000</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Claim,Emergency</value>
+        </criteriaItems>
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
-    <sharingOwnerRules>
-        <fullName>Liability_Cases_to_Liability_team</fullName>
+    <sharingCriteriaRules>
+        <fullName>Sharing_emergency_cases_with_emergency_group</fullName>
         <accessLevel>Edit</accessLevel>
-        <label>Liability Cases to Liability team</label>
+        <description>Sharing all the emergency cases only with the users that are part of the emergency group</description>
+        <label>Sharing emergency cases with emergency group</label>
         <sharedTo>
-            <group>Liability</group>
+            <group>Emergency</group>
         </sharedTo>
-        <sharedFrom>
-            <group>Liability</group>
-        </sharedFrom>
-    </sharingOwnerRules>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Emergency</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
 </SharingRules>

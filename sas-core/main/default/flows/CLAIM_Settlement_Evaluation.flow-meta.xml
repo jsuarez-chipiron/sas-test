@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Random_Number_Check</name>
         <label>Random Number Check</label>
-        <locationX>666</locationX>
-        <locationY>158</locationY>
+        <locationX>792</locationX>
+        <locationY>278</locationY>
         <actionName>GetRandomNumber</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -32,8 +32,8 @@
     <assignments>
         <name>AutomaticApproval</name>
         <label>AutomaticApproval</label>
-        <locationX>1458</locationX>
-        <locationY>518</locationY>
+        <locationX>264</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -48,8 +48,8 @@
     <assignments>
         <name>ManualApproval</name>
         <label>ManualApproval</label>
-        <locationX>666</locationX>
-        <locationY>1310</locationY>
+        <locationX>176</locationX>
+        <locationY>1526</locationY>
         <assignmentItems>
             <assignToReference>NeedsManuallyApproval</assignToReference>
             <operator>Assign</operator>
@@ -61,9 +61,10 @@
     <decisions>
         <name>Amount_in_SEK</name>
         <label>Amount in SEK</label>
-        <locationX>710</locationX>
-        <locationY>398</locationY>
+        <locationX>836</locationX>
+        <locationY>518</locationY>
         <defaultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>10000 or less</defaultConnectorLabel>
@@ -108,8 +109,8 @@
     <decisions>
         <name>EB_points_amount</name>
         <label>EB points amount</label>
-        <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationX>176</locationX>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
@@ -131,10 +132,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_settlement_related_to_an_emergency_claim</name>
+        <label>Is settlement related to an emergency claim?</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <defaultConnector>
+            <targetReference>Random_Number_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>incomingRecord.IsEmergencyClaim__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ManualApproval</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Random_Check_Monetary</name>
         <label>Random Check Monetary</label>
-        <locationX>710</locationX>
-        <locationY>518</locationY>
+        <locationX>836</locationX>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>ManualApproval</targetReference>
         </defaultConnector>
@@ -150,6 +176,7 @@
                 </rightValue>
             </conditions>
             <connector>
+                <isGoTo>true</isGoTo>
                 <targetReference>AutomaticApproval</targetReference>
             </connector>
             <label>Manual Approval Check</label>
@@ -158,8 +185,8 @@
     <decisions>
         <name>Settlement_Type</name>
         <label>Settlement Type</label>
-        <locationX>666</locationX>
-        <locationY>278</locationY>
+        <locationX>792</locationX>
+        <locationY>398</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Direct_to_Manual_Approval</name>
@@ -240,9 +267,10 @@
     <decisions>
         <name>Voucher_amount_in_SEK</name>
         <label>Voucher amount in SEK</label>
-        <locationX>1370</locationX>
-        <locationY>398</locationY>
+        <locationX>1496</locationX>
+        <locationY>518</locationY>
         <defaultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>15250 or less</defaultConnectorLabel>
@@ -262,13 +290,14 @@
             <label>More than 15250</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>runningUser</name>
         <dataType>String</dataType>
         <expression>IF({!Get_SAS_AP_User.Id} &lt;&gt; NULL, {!Get_SAS_AP_User.Id}, {!$User.Id})</expression>
     </formulas>
     <interviewLabel>CLAIM {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>CLAIM Settlement Evaluation High Limit</label>
+    <label>CLAIM Settlement Evaluation</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -291,8 +320,8 @@
     <recordCreates>
         <name>Create_Approval_Request</name>
         <label>Create Approval Request</label>
-        <locationX>1458</locationX>
-        <locationY>878</locationY>
+        <locationX>264</locationX>
+        <locationY>998</locationY>
         <inputAssignments>
             <field>OwnerId</field>
             <value>
@@ -323,8 +352,8 @@
     <recordLookups>
         <name>Get_SAS_AP_User</name>
         <label>Get SAS AP User</label>
-        <locationX>1458</locationX>
-        <locationY>638</locationY>
+        <locationX>264</locationX>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_Settlement_Status_to_Approved</targetReference>
@@ -344,8 +373,8 @@
     <recordUpdates>
         <name>Set_Settlement_Status_to_Approved</name>
         <label>Set Settlement Status to Approved</label>
-        <locationX>1458</locationX>
-        <locationY>758</locationY>
+        <locationX>264</locationX>
+        <locationY>878</locationY>
         <connector>
             <targetReference>Create_Approval_Request</targetReference>
         </connector>
@@ -373,10 +402,10 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>540</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Random_Number_Check</targetReference>
+            <targetReference>Is_settlement_related_to_an_emergency_claim</targetReference>
         </connector>
     </start>
     <status>Active</status>

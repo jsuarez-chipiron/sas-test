@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Lock_Settlement</name>
         <label>Lock Settlement</label>
-        <locationX>402</locationX>
+        <locationX>534</locationX>
         <locationY>398</locationY>
         <actionName>LockRecords</actionName>
         <actionType>apex</actionType>
@@ -22,9 +22,31 @@
     <decisions>
         <name>Case_needs_manual_approval</name>
         <label>Case needs manual approval</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>854</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Emergency_Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>incomingCaseRecord.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>numberOfManualApprovalsNeeded</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Approvers_Emergency_Queue_Id</targetReference>
+            </connector>
+            <label>Yes - Emergency Case</label>
+        </rules>
         <rules>
             <name>Yes</name>
             <conditionLogic>and</conditionLogic>
@@ -33,6 +55,13 @@
                 <operator>GreaterThan</operator>
                 <rightValue>
                     <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>incomingCaseRecord.RecordType.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -56,12 +85,13 @@
             <label>No</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>CLAIM Case Approval Handler {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CLAIM Case Approval Handler</label>
     <loops>
         <name>Approve_each_Settlement</name>
         <label>Approve each Settlement</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>278</locationY>
         <collectionReference>Get_Settlements_related_to_Case</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -94,7 +124,7 @@
     <recordLookups>
         <name>Get_Settlements_related_to_Case</name>
         <label>Get Settlements related to Case</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -122,7 +152,7 @@
     <recordUpdates>
         <name>Assign_Case_to_Approvers</name>
         <label>Assign Case to Approvers</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>1094</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -147,9 +177,36 @@
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
+        <name>Assign_Case_to_Approvers_Emergency</name>
+        <label>Assign Case to Approvers Emergency</label>
+        <locationX>50</locationX>
+        <locationY>1094</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>incomingCaseRecord.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>approversEmergencyQueueId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Waiting for Approval</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_Case_Status</name>
         <label>Update Case Status</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>974</locationY>
         <connector>
             <targetReference>Send_Case_to_Control_Handler</targetReference>
@@ -172,7 +229,7 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>188</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Settlements_related_to_Case</targetReference>
@@ -182,7 +239,7 @@
     <subflows>
         <name>Check_number_of_Settlements_needing_approval</name>
         <label>Check number of Settlements needing approval</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>734</locationY>
         <connector>
             <targetReference>Case_needs_manual_approval</targetReference>
@@ -208,7 +265,7 @@
     <subflows>
         <name>Evaluate_approval_for_Settlement</name>
         <label>Evaluate approval for Settlement</label>
-        <locationX>402</locationX>
+        <locationX>534</locationX>
         <locationY>518</locationY>
         <connector>
             <targetReference>Approve_each_Settlement</targetReference>
@@ -223,9 +280,29 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
+        <name>Get_Approvers_Emergency_Queue_Id</name>
+        <label>Get Approvers - Emergency Queue Id</label>
+        <locationX>50</locationX>
+        <locationY>974</locationY>
+        <connector>
+            <targetReference>Assign_Case_to_Approvers_Emergency</targetReference>
+        </connector>
+        <flowName>Retrieve_Queue_Id</flowName>
+        <inputAssignments>
+            <name>QueueName</name>
+            <value>
+                <stringValue>Approvers_Emergency</stringValue>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>approversEmergencyQueueId</assignToReference>
+            <name>QueueId</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>Get_Approvers_Queue_Id</name>
         <label>Get Approvers Queue Id</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>974</locationY>
         <connector>
             <targetReference>Assign_Case_to_Approvers</targetReference>
@@ -245,7 +322,7 @@
     <subflows>
         <name>Send_Case_to_Control_Handler</name>
         <label>Send Case to Control Handler</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1094</locationY>
         <flowName>CLAIM_Case_Control_Handler</flowName>
         <inputAssignments>
@@ -256,6 +333,13 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>approversEmergencyQueueId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>approversQueueId</name>
         <dataType>String</dataType>

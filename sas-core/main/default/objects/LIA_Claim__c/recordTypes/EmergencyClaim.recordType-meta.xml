@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CustomerClaim</fullName>
+    <fullName>EmergencyClaim</fullName>
     <active>true</active>
     <compactLayoutAssignment>Customer_Claim_Compact_Layout</compactLayoutAssignment>
-    <description>Record type to differentiate the customer claims</description>
-    <label>CustomerClaim</label>
+    <description>Record type to differentiate emergency claims</description>
+    <label>EmergencyClaim</label>
     <picklistValues>
         <picklist>Bank_Country__c</picklist>
         <values>
@@ -1012,6 +1012,10 @@
         <picklist>Contact_Type__c</picklist>
         <values>
             <fullName>Passenger</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Passenger%27s Relative</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2084,31 +2088,7 @@
     <picklistValues>
         <picklist>Customer_Claim_Category__c</picklist>
         <values>
-            <fullName>Accident %26 injury</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Airport experience</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Baggage</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Booking</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Flight disruptions</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Flight experience</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Travel extras bought not rendered</fullName>
+            <fullName>Compensation Card</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2167,6 +2147,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Involuntary Denied Boarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Involuntary Downgrading</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Items missing from checked-in baggage</fullName>
             <default>false</default>
         </values>
@@ -2203,22 +2191,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Voluntary Denied Boarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voluntary Downgrading</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WiFi</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Customer_Reason_for_EU261_Claim__c</picklist>
-        <values>
-            <fullName>Cancelled flight</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Delayed flight</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Missed connecting flight</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2231,6 +2212,25 @@
         <values>
             <fullName>Less than 21 days</fullName>
             <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EU261_Handling_Status__c</picklist>
+        <values>
+            <fullName>Eligible for compensation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ineligible for compensation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unable to handle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unhandled</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
