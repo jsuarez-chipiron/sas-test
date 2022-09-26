@@ -113,6 +113,8 @@ global class MSG_RendererEnhanced implements MSG_IRenderer{
             if(tc.isUiTypeLEX()){
                 if (String.isNotBlank(tc.subject)) subject = new Template(tc.subject,LEX_EXPR_OPEN,LEX_EXPR_CLOSE, LEX_EXPR_ALT_OPEN, LEX_EXPR_ALT_CLOSE);
                 String bodySrc = tc.getData(isHtml);
+                // 26429-Manual tampering on email templates causes error 
+                bodySrc = bodySrc.replace('&#39;','\'');
                 if(letterhead==null && isHtml)bodySrc = bodySrc.replace('<head>','<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">');
                 body = new Template(bodySrc,LEX_EXPR_OPEN,LEX_EXPR_CLOSE, LEX_EXPR_ALT_OPEN, LEX_EXPR_ALT_CLOSE);
             }
