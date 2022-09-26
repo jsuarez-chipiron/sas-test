@@ -229,6 +229,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Contact_Type__c</field>
+            <value>
+                <elementReference>Contact_Type</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Country__c</field>
             <value>
                 <elementReference>CustomerCountry</elementReference>

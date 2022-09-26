@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Case page for customer claims</description>
+    <description>Case page for customer claims. It is used for customer claims, compensation cards and emergency claims</description>
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
@@ -133,7 +133,7 @@
                         <valueListItems>
                             <value>Case.Update_Team</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <booleanFilter>(1 OR 2 OR 3) AND 4</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
@@ -148,6 +148,11 @@
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>New Response</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Customer Claim</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
