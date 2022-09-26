@@ -1822,6 +1822,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>FlightIrregularities__c.Cancellation_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>FlightIrregularities__c.Description__c</field>
         <readable>true</readable>
     </fieldPermissions>

@@ -7,7 +7,8 @@ public inherited sharing class FlightIrregularitiesSelector extends fflib_SObjec
       FlightIrregularities__c.Reason__c,
       FlightIrregularities__c.Duration_minutes__c,
       FlightIrregularities__c.Type__c,
-      FlightIrregularities__c.Description__c
+      FlightIrregularities__c.Description__c,
+      FlightIrregularities__c.Cancellation_Time__c
     };
   }
 

@@ -134,7 +134,7 @@ public without sharing class DateUtils {
 
     return minutes;
   }
-  
+
   /**
    * Matches:
    *  2021-10-13T04:13:00+01:00
@@ -156,5 +156,14 @@ public without sharing class DateUtils {
       isValid = true;
     }
     return isValid;
+  }
+
+  /**
+   * @param datetimeString A String like: 2021-10-13T12:13:00
+   *
+   * @return The corresponding Apex Datetime
+   */
+  public static Datetime isoDatetimeToApexDateTime(String isoDateTime) {
+    return (Datetime) json.deserialize('"' + isoDateTime + '"', Datetime.class);
   }
 }
