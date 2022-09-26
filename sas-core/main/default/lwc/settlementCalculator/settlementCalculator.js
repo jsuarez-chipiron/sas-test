@@ -6,6 +6,7 @@ import SETTLEMENT_OBJECT from "@salesforce/schema/Settlement__c";
 import SETTLEMENT_CURRENCY_FIELD from "@salesforce/schema/Settlement__c.Currency__c";
 import SETTLEMENT_STATUS_FIELD from "@salesforce/schema/Settlement__c.Settlement_Status__c";
 import COST_ACCOUNT_FIELD from "@salesforce/schema/Settlement_Item__c.Cost_Account__c";
+import CASE_RECORD_TYPE from "@salesforce/schema/Settlement__c.Claim__r.Case__r.RecordType.Name";
 
 import addSettlementsItemsToSettlement from "@salesforce/apex/SettlementsController.addSettlementsItemsToSettlement";
 import getSettlement from "@salesforce/apex/SettlementsController.getSettlement";
@@ -46,6 +47,11 @@ export default class SettlementCalculator extends LightningElement {
     isMonetary: false,
     isVoucher: false
   };
+
+  isInvalidStatus = false;
+  isInvalidRecordType = false;
+  validRecordType = ["Customer Claim", "Claim"];
+  validStatus = ["In progress", "Denied"];
 
   get amountLabel() {
     return `Amount (${this.settlementCurrency})`;
@@ -132,13 +138,29 @@ export default class SettlementCalculator extends LightningElement {
 
   @wire(getRecord, {
     recordId: "$recordId",
-    fields: [SETTLEMENT_CURRENCY_FIELD, SETTLEMENT_STATUS_FIELD]
+    fields: [
+      SETTLEMENT_CURRENCY_FIELD,
+      SETTLEMENT_STATUS_FIELD,
+      CASE_RECORD_TYPE
+    ]
   })
   wiredSettlement({ error, data }) {
     if (!error && data) {
-      this.cannotBeUpdated =
-        data.fields.Settlement_Status__c.value !== "In progress" &&
-        data.fields.Settlement_Status__c.value !== "Denied";
+      //caseRecordType fetch value for case record name as the case record name from settlement
+      //could be access through claim__r.case__r.RecordType.Name
+      const caseRecordType =
+        data.fields.Claim__r.value.fields.Case__r.value.fields.RecordType.value
+          .fields.Name.value;
+      const caseStatus = data.fields.Settlement_Status__c.value;
+
+      if (!this.validStatus.includes(caseStatus)) {
+        this.isInvalidStatus = true;
+      }
+      if (!this.validRecordType.includes(caseRecordType)) {
+        this.isInvalidRecordType = true;
+      }
+
+      this.cannotBeUpdated = this.isInvalidStatus || this.isInvalidRecordType;
       this.type = {
         isEuroBonusPoints: data.recordTypeInfo.name === "EB points",
         isMonetary:
