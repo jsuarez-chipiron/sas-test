@@ -1,0 +1,56 @@
+<!--
+ - @author Chetan Singh, Coforge
+ - @date 2020
+ -->
+
+<!-- IRR Hotel Accomodation File send Modal -->
+
+<template>
+    <section role="dialog" tabindex="-1" aria-labelledby="confirm-heading-01" aria-modal="true" aria-describedby="confirm-content-id-1" class={modalClass}>
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <button
+                        onclick={handleCancel}
+                        class="slds-button slds-button_icon slds-modal__close"
+                        title="Close">
+                    <lightning-icon icon-name="utility:close" alternative-text="Close" title="Close" variant="inverse">
+                    </lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="confirm-heading-01" class="slds-modal__title slds-hyphenate">Confirm File Send to Hotel Accomodation Tool</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="confirm-content-id-1"></div>
+                <lightning-card title="Send Passenger Attachment" icon-name="utility:attach">
+                    <div class="slds-p-around_medium lgc-bg-inverse">
+                            <lightning-combobox
+                                    class="combobox-actions slds-p-left_small"
+                                    slot="actions"
+                                    variant="label-hidden"
+                                    label="Select Email"
+                                    value={emailPicklistOptions}
+                                    options={emailPicklistOptions}
+                                    onchange={handleEmailChange}>
+                            </lightning-combobox>
+                    </div>
+                </lightning-card>
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item padding="around-small" size="6" >
+                        <lightning-input
+                                data-input-group="additionalRecipient"
+                                data-recipient-index={rIdx}
+                                value={recipient}
+                                onchange={handleChange}
+                                type="email"
+                                label="Email Address"
+                                name="emailAddress">
+                        </lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+            <footer class="slds-modal__footer slds-modal__footer_directional">
+                <button class="slds-button slds-button_neutral" onclick={handleCancel}>Cancel</button>
+                <button class="slds-button slds-button_brand" onclick={handleSend}>Send</button>
+            </footer>
+        </div>
+    </section>
+</template>

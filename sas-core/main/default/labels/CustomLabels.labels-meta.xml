@@ -132,4 +132,11 @@
         <shortDescription>transactionHandlingCode</shortDescription>
         <value>D</value>
     </labels>
+    <labels>
+        <fullName>Distribution_Lists</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>email lists to send Passenger data to Hotel Accomodation Tool</shortDescription>
+        <value>chetan.singh@sas.dk;tom.fichter@sas.se</value>
+    </labels>
 </CustomLabels>
