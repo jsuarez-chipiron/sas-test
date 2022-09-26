@@ -52,6 +52,7 @@ public class TEDSFlight {
     public Terminal terminal { get; set; }
     public List<DelayReasons> delayReasons { get; set; }
     public List<CancellationReasons> cancellationReasons { get; set; }
+    public String cancellationTime { get; set; }
   }
 
   public class Terminal {

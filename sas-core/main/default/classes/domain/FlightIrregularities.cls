@@ -73,7 +73,8 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
           flightSpecificIrregularities.addAll(
             createFlightIrregularityFromCancellation(
               arrival.cancellationReasons,
-              '(arrival)'
+              '(arrival)',
+              null
             )
           );
         }
@@ -90,7 +91,8 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
           flightSpecificIrregularities.addAll(
             createFlightIrregularityFromCancellation(
               departure.cancellationReasons,
-              '(departure)'
+              '(departure)',
+              departure.cancellationTime
             )
           );
         }
@@ -316,24 +318,36 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
    */
   private static List<FlightIrregularities__c> createFlightIrregularityFromCancellation(
     List<TEDSFlight.CancellationReasons> reasons,
-    String additionalInfo
+    String additionalInfo,
+    String isoCancellationTime
   ) {
     List<FlightIrregularities__c> result = new List<FlightIrregularities__c>{};
     if (reasons != null) {
       for (TEDSFlight.CancellationReasons reason : reasons) {
         String code = 'N/A';
         String reasonText = reason.supplementaryInformation;
+        Datetime cancellationTime;
         if (reason.reasonCode != null) {
           code = reason.reasonCode;
         }
         if (reasonText?.length() > 2000) {
           reasonText = reasonText.substring(0, 2000);
         }
+        if (isoCancellationTime != null) {
+          try {
+            cancellationTime = DateUtils.isoDatetimeToApexDateTime(
+              isoCancellationTime
+            );
+          } catch (Exception e) {
+          }
+        }
+
         result.add(
           new FlightIrregularities__c(
             Code__c = code,
             Reason__c = reasonText,
-            Type__c = 'Cancellation ' + additionalInfo
+            Type__c = 'Cancellation ' + additionalInfo,
+            Cancellation_Time__c = cancellationTime
           )
         );
       }
