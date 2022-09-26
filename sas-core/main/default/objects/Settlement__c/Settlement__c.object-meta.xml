@@ -180,6 +180,6 @@
         <searchResultsAdditionalFields>Voucher_Email__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>EuroBonus_Number__c</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
