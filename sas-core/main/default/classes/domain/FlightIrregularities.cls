@@ -149,11 +149,6 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
 
   public Map<Id, Boolean> isWithinSASControl() {
     Map<Id, Boolean> irregularityToIsWithinControl = new Map<Id, Boolean>{};
-    Boolean test1 = codeToSASIsResponsible.get('AIRS');
-    Boolean test2 = codeToSASIsResponsible.get('TECH');
-    Boolean test3 = codeToSASIsResponsible.get('FA');
-    Boolean test4 = codeToSASIsResponsible.get('WEAT');
-    Boolean test5 = codeToSASIsResponsible.get('-----');
 
     for (FlightIrregularities__c f : instanceRecords) {
       Boolean SASisResponsible = codeToSASIsResponsible.get(f.Code__c);

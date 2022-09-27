@@ -885,22 +885,26 @@ private class EU261Service_Test {
     FlightIrregularities__c flightCancellationWithinSASControl = new FlightIrregularities__c(
       Flight__c = flightWithCancellationWithinSASControl.Id,
       Code__c = 'TECH',
-      Type__c = 'Cancellation (arrival)'
+      Type__c = 'Cancellation (arrival)',
+      Cancellation_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0)
     );
     FlightIrregularities__c flightCancellationOutsideSASControl = new FlightIrregularities__c(
       Flight__c = flightWithCancellationOutsideSASControl.Id,
       Code__c = 'WEAT',
-      Type__c = 'Cancellation (arrival)'
+      Type__c = 'Cancellation (arrival)',
+      Cancellation_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0)
     );
     FlightIrregularities__c flightCancellationUnsupported = new FlightIrregularities__c(
       Flight__c = flightWithCancellationUnsupported.Id,
       Code__c = 'AIRS',
-      Type__c = 'Cancellation (arrival)'
+      Type__c = 'Cancellation (arrival)',
+      Cancellation_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0)
     );
     FlightIrregularities__c flightCancellationTECH = new FlightIrregularities__c(
       Flight__c = flightWithTECHCancellation.Id,
       Code__c = 'TECH',
-      Type__c = 'Cancellation (arrival)'
+      Type__c = 'Cancellation (arrival)',
+      Cancellation_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0)
     );
     FlightIrregularities__c nonSASDelay = new FlightIrregularities__c(
       Flight__c = nonSASFlight.Id,
@@ -1942,9 +1946,9 @@ private class EU261Service_Test {
       'Handling status should be "Eligible for compensation"'
     );
     System.assertEquals(
-      'Compensation: 400 | Reimbursement: 0',
+      'Compensation: 250 | Reimbursement: 0',
       automatedClaim.EU261_Handling_Note__c,
-      'Handling Note should be "Compensation: 400 | Reimbursement: 0"'
+      'Handling Note should be "Compensation: 250 | Reimbursement: 0"'
     );
   }
 
@@ -1980,9 +1984,9 @@ private class EU261Service_Test {
       'The minimal cancellation claim should be automated.'
     );
     System.assertEquals(
-      400,
+      250,
       claimsWithEvaluationDetails[0].EU261Compensation,
-      'We shuold pay out €400 for the minimal cancellation claim'
+      'We shuold pay out €250 for the minimal cancellation claim'
     );
   }
 

@@ -37,7 +37,6 @@ public without sharing class EU261Service {
     public Decimal maximumTimeToClaimCompensation;
     public Boolean hasPotentiallyDuplicateClaims = false;
     public Boolean hasRelatedFiles = false;
-    public Integer daysUntilFlightWhenInformedOfCancellation; // TODO: Move
 
     public ClaimWithCompensationDetails(Claim c) {
       this.claim = Claims.newInstance(
@@ -456,14 +455,22 @@ public without sharing class EU261Service {
       ]
       .Flight__r.Scheduled_Arrival_Time__c;
 
-    Integer flightDistanceInKm = Airports.distanceBetweenAirportsInMeters(
-      originalTrip.originAirport,
-      originalTrip.destinationAirport
-    );
+    Decimal flightDistanceInM =
+      Airports.distanceBetweenAirportsInMeters(
+        ac.tripWithClaimFlight.originAirport,
+        ac.tripWithClaimFlight.destinationAirport
+      ) / 1000;
+    Integer flightDistanceInKm = flightDistanceInM.intValue();
     Boolean isIntraCommunity = isIntraCommunity(originalTrip);
 
     // Get the new (suggested) flight plan
     Trip newTrip = ac.tripWithClaimFlight.getSuggestedRebookingForClaimFlight();
+    List<FlightIrregularities__c> flightIrregularities = ac.flightToIrregularities.get(
+      originalTrip.claimFlight.Id
+    );
+    Integer daysUntilFlightWhenInformedOfCancellation = originalTrip.getDaysBetweenCancellationAndDeparture(
+      flightIrregularities
+    );
     Integer arrivalDifference;
     Integer departureDifference;
     Integer compensation;
@@ -506,7 +513,7 @@ public without sharing class EU261Service {
         Integer minutesOutsideTimeFrame = getMinutesOutsideTimeFrame(
           MAXIMUM_ACCEPTABLE_TIME_LATE_ARRIVAL,
           arrivalDifference,
-          ac.daysUntilFlightWhenInformedOfCancellation
+          daysUntilFlightWhenInformedOfCancellation
         );
 
         compensationForLateFlight = calculateCompensationCancellation(
@@ -520,7 +527,7 @@ public without sharing class EU261Service {
         Integer minutesOutsideTimeFrame = getMinutesOutsideTimeFrame(
           MAXIMUM_ACCEPTABLE_TIME_EARLY_DEPARTURE,
           departureDifference,
-          ac.daysUntilFlightWhenInformedOfCancellation
+          daysUntilFlightWhenInformedOfCancellation
         );
 
         compensationForEarlyFlight = calculateCompensationCancellation(
@@ -633,10 +640,12 @@ public without sharing class EU261Service {
     final Integer MEDIUM_DISTANCE = 1500;
     final Integer LONG_DISTANCE = 3500;
 
-    Integer flightDistanceInKm = Airports.distanceBetweenAirportsInMeters(
-      ac.tripWithClaimFlight.originAirport,
-      ac.tripWithClaimFlight.destinationAirport
-    );
+    Decimal flightDistanceInM =
+      Airports.distanceBetweenAirportsInMeters(
+        ac.tripWithClaimFlight.originAirport,
+        ac.tripWithClaimFlight.destinationAirport
+      ) / 1000;
+    Integer flightDistanceInKm = flightDistanceInM.intValue();
     Integer numberOfEligiblePassengers = getNumberOfPassengersEligibleForCompensation(
       ac
     );

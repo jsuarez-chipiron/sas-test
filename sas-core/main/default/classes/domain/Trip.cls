@@ -151,6 +151,33 @@ public without sharing class Trip {
     }
   }
 
+  public Integer getDaysBetweenCancellationAndDeparture(
+    List<FlightIrregularities__c> flightIrregularities
+  ) {
+    if (!claimFlightIsCancelled() || flightIrregularities == null) {
+      return null;
+    } else if (flightIrregularities.size() == 1) {
+      FlightIrregularities__c cancellation = flightIrregularities[0];
+      Datetime departureTime = this.claimFlight.Scheduled_Departure_Time__c;
+      Datetime cancellationTime = cancellation.Cancellation_Time__c;
+      if (cancellationTime == null) {
+        throw new TripException(
+          'Cancellation does not have a cancellation time'
+        );
+      }
+      Decimal hoursBetween = DateUtils.getHoursBetween(
+        departureTime,
+        cancellationTime
+      );
+      Integer daysBetween = (hoursBetween / 24).intValue();
+      return daysBetween;
+    } else {
+      throw new TripException(
+        'Cancelled flight does not have exactly one irregularity.'
+      );
+    }
+  }
+
   public Boolean claimFlightCancellationIsWithinSASControl(
     Map<Id, List<FlightIrregularities__c>> flightToIrregularities
   ) {
