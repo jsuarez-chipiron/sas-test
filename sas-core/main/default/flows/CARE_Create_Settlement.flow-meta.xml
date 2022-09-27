@@ -122,6 +122,13 @@
                     <stringValue>Claim</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Customer_Claim.Case__r.RecordType.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Case_Record_Not_Valid</targetReference>
             </connector>

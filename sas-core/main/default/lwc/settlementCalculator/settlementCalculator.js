@@ -6,7 +6,7 @@ import SETTLEMENT_OBJECT from "@salesforce/schema/Settlement__c";
 import SETTLEMENT_CURRENCY_FIELD from "@salesforce/schema/Settlement__c.Currency__c";
 import SETTLEMENT_STATUS_FIELD from "@salesforce/schema/Settlement__c.Settlement_Status__c";
 import COST_ACCOUNT_FIELD from "@salesforce/schema/Settlement_Item__c.Cost_Account__c";
-import CASE_RECORD_TYPE from "@salesforce/schema/Settlement__c.Claim__r.Case__r.RecordType.Name";
+import CASE_RECORD_TYPE_FIELD from "@salesforce/schema/Settlement__c.Claim__r.Case__r.RecordType.Name";
 
 import addSettlementsItemsToSettlement from "@salesforce/apex/SettlementsController.addSettlementsItemsToSettlement";
 import getSettlement from "@salesforce/apex/SettlementsController.getSettlement";
@@ -48,10 +48,12 @@ export default class SettlementCalculator extends LightningElement {
     isVoucher: false
   };
 
-  isInvalidStatus = false;
-  isInvalidRecordType = false;
-  validRecordType = ["Customer Claim", "Claim"];
-  validStatus = ["In progress", "Denied"];
+  CASE_RECORD_TYPE_TO_CREATE_SETTLEMENT = [
+    "Customer Claim",
+    "Claim",
+    "Emergency"
+  ];
+  SETTLEMENT_STATUS_TO_MODIFY_SETTLEMENT_ITEM = ["In progress", "Denied"];
 
   get amountLabel() {
     return `Amount (${this.settlementCurrency})`;
@@ -141,7 +143,7 @@ export default class SettlementCalculator extends LightningElement {
     fields: [
       SETTLEMENT_CURRENCY_FIELD,
       SETTLEMENT_STATUS_FIELD,
-      CASE_RECORD_TYPE
+      CASE_RECORD_TYPE_FIELD
     ]
   })
   wiredSettlement({ error, data }) {
@@ -151,16 +153,13 @@ export default class SettlementCalculator extends LightningElement {
       const caseRecordType =
         data.fields.Claim__r.value.fields.Case__r.value.fields.RecordType.value
           .fields.Name.value;
-      const caseStatus = data.fields.Settlement_Status__c.value;
+      const settlementStatus = data.fields.Settlement_Status__c.value;
 
-      if (!this.validStatus.includes(caseStatus)) {
-        this.isInvalidStatus = true;
-      }
-      if (!this.validRecordType.includes(caseRecordType)) {
-        this.isInvalidRecordType = true;
-      }
-
-      this.cannotBeUpdated = this.isInvalidStatus || this.isInvalidRecordType;
+      this.cannotBeUpdated =
+        !this.SETTLEMENT_STATUS_TO_MODIFY_SETTLEMENT_ITEM.includes(
+          settlementStatus
+        ) ||
+        !this.CASE_RECORD_TYPE_TO_CREATE_SETTLEMENT.includes(caseRecordType);
       this.type = {
         isEuroBonusPoints: data.recordTypeInfo.name === "EB points",
         isMonetary:
