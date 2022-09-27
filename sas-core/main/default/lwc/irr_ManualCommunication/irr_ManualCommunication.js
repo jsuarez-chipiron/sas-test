@@ -15,7 +15,6 @@ import sendManualCommunication from '@salesforce/apex/IRR_CON_ManualCommunicatio
 import getManualTemplatesBySendMode from '@salesforce/apex/IRR_CON_ManualCommunication.getManualTemplatesBySendMode';
 import getBookingPassengerInfos from '@salesforce/apex/IRR_CON_ManualCommunication.getBookingPassengerInfos';
 import getAdvancedFilterPassengerInfos from "@salesforce/apex/IRR_CON_ManualCommunication.getAdvancedFilterPassengerInfos";
-import sendCsvEmail from "@salesforce/apex/IRR_CON_SendEmail.SendCsvEmail";
 import distributionList from '@salesforce/label/c.Distribution_Lists';
 
 import * as tableUtil from 'c/c_TableUtil';
@@ -65,6 +64,12 @@ export default class IRR_ManualCommunication extends LightningElement {
     @track isDisabled = false;
 
     @api emailPicklistOptions = [];
+
+    @track isHotelModel= false;
+
+    @track passData;
+
+    @track fileName;
 
     showEmailPicklist = false;
 
@@ -435,6 +440,34 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     handleFileSend(){
 
+
+
+        const passengerInfos = this.selectedRows.map(row => tableUtil.flatten(row));
+        const params = Object.values(this.retrieveParameters).join(" - ");
+        const param =  params.split('-');
+        const [ flight, date ] = param;
+        this.fileName = `${flight}_${date}`;
+        if(this.selectedRows.length > 0) {
+            this.isHotelModel  = true
+          // this.isDisabled = true;
+           const csvData = convertToCSV(passengerInfos,this.flightHeaders);
+           if(csvData == null) return;
+           this.passData = csvData;
+        } else {
+           const toastEvent = new ShowToastEvent({
+               title: 'No Recipients Selected',
+               message: 'Please select at least one recipient in order to email.',
+           });
+           this.dispatchEvent(toastEvent);
+           return;
+
+        }
+    
+
+    }
+
+    hideHotelModel(event){
+        this.isHotelModel = event.detail;
     }
 
 }

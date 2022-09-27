@@ -5,6 +5,7 @@
 
 <!-- IRR Manual Communication -->
 <template>
+   
     <div focusable="" onkeyup={handleGlobalKeyUp} tabindex="0" class="no-focus">
         <c-c_-loading-modal load-count={loadCount}></c-c_-loading-modal>
         <c-c_-error-modal errors={errors} critical={criticalError} onclearerrors={clearErrors}></c-c_-error-modal>
@@ -34,11 +35,16 @@
                 selected-recipients={additionalRecipients}
                 show-recipient-modal={showRecipientModal}>
         </c-irr_-recipient-modal>
-        <c-irr_-hotel-accomodation
-                show-recipient-modal={showHotelRecipient}
-                additional-recipients={additionalHotelRecipients}
-                onsendfile={downloadCSVFile}>
-        </c-irr_-hotel-accomodation>
+        <template if:true={isHotelModel}>
+                <c-irr_-hotel-accomodation 
+                onclosehotelacc={hideHotelModel}
+                is-show-modal={isHotelModel}
+                pass-data = {passData}
+                file-name = {fileName}
+                >
+               </c-irr_-hotel-accomodation> 
+       </template>
+      
         <lightning-layout multiple-rows="true">
             <lightning-layout-item padding="around-small" size="12">
                 <div class="page-section page-header">
@@ -46,7 +52,7 @@
                             if:true={showRetrieve}
                             onretrieve={handleRetrieveEvent}>
                     </c-irr_-retrieve-panel>
-                    <c-irr_-send-panel
+                   <c-irr_-send-panel
                             if:false={showRetrieve}
                             additional-recipient-count={additionalRecipients.length}
                             templates-by-send-mode={templatesBySendMode}
