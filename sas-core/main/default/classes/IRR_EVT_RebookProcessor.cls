@@ -142,6 +142,17 @@ public class IRR_EVT_RebookProcessor extends IRR_EVT_EventProcessor {
                         for(IRR_MOD_SegmentInfo segmentInfo: tripInfo.segments){
                            segmentInfo.arrivalCity = this.airportInfoMap.get(segmentInfo.stationArrival);
                            segmentInfo.departureCity = this.airportInfoMap.get(segmentInfo.stationDeparture);
+                           //New requirement for a link to info on passenger rights for passengers with disabilities when traveling to/from the USA
+                           String usStation =String.valueOf(System.Label.US_Station);
+                           if(segmentInfo.segmentId !=null &&
+                             rebookInfo.addedSegments !=null && 
+                             rebookInfo.addedSegments.contains(segmentInfo.segmentId) && 
+                             usStation.split(';').contains(segmentInfo.stationArrival) ||
+                             usStation.split(';').contains(segmentInfo.stationDeparture)
+                             ){
+                                passengerInfo.isRebookUSStation = true;
+
+                             }
                         }
                     }
 

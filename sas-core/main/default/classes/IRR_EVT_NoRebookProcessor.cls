@@ -111,13 +111,14 @@ public class IRR_EVT_NoRebookProcessor extends IRR_EVT_EventProcessor {
                                 if(!airportCodes.contains(segmentInfo.stationDeparture)) {
                                     airportCodes.add(segmentInfo.stationDeparture);
                                 }
+                               
                             }
                         }
                     }
                 }
             }
         }
-        this.airportInfoMap = IRR_SVC_TedsService.getAirportCityNames(airportCodes);
+         this.airportInfoMap = IRR_SVC_TedsService.getAirportCityNames(airportCodes);
 
         for (IRR_MOD_PassengerInfo passengerInfo : passengerInfos) {
             if(passengerInfo.itinerary != null && passengerInfo.itinerary.size() > 0) {
@@ -126,6 +127,11 @@ public class IRR_EVT_NoRebookProcessor extends IRR_EVT_EventProcessor {
                         for(IRR_MOD_SegmentInfo segmentInfo: tripInfo.segments) {
                             segmentInfo.arrivalCity = this.airportInfoMap.get(segmentInfo.stationArrival);
                             segmentInfo.departureCity = this.airportInfoMap.get(segmentInfo.stationDeparture);
+                             //New requirement for a link to info on passenger rights for passengers with disabilities when traveling to/from the USA
+                             if(noRebookInfo.cancelledSegment ==segmentInfo.segmentId){
+                                passengerInfo.cancelledStationArrival = segmentInfo.stationArrival;
+                                passengerInfo.cancelledStationDeparture= segmentInfo.stationDeparture;
+                             }
                         }
                     }
                 }

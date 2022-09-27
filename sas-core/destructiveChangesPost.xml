@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 
-<!--INSTRUCTIONS FOR DESTRUCTIVE CHANGES
+    <!--INSTRUCTIONS FOR DESTRUCTIVE CHANGES
     This file will remove the included components *AFTER* the deploy.
 
     For each destructive change, create a new block of changes and create a comment header
@@ -13,11 +13,16 @@
 -->
     <types>
         <members>FetchFlightEventsTrigger</members>
-		<name>ApexTrigger</name>
+        <name>ApexTrigger</name>
     </types>
     <types>
-        <members>FetchFlightEvents</members>
-        <members>FlightEvents_IntegrationTest</members>
-		<name>ApexClass</name>
+        <members>AutomatedServiceClassSelectortest</members>
+        <members>IRR_SEL_AutomatedServiceClassSelector</members>
+        <members>IRR_SEL_IAutomatedServiceClassSelector</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>ServiceClass__mdt</members>
+        <name>CustomObject</name>
     </types>
 </Package>
