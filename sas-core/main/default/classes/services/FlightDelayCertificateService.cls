@@ -60,37 +60,41 @@ public without sharing class FlightDelayCertificateService {
     List<Booking__c> insertedBookings
   ) {
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-
-    Bookings bookings = Bookings.newInstance(insertedBookings);
-    bookings.reloadFullBookingData();
-    Booking__c currentBooking = bookings.fullRecords[0].booking;
-
-    Cases insertedCase = Cases.newInstance(
-      CasesSelector.newInstance().selectById(new Set<Id>{ caseId })
-    );
-
     FlightDelayCertificateRequests newRequests = FlightDelayCertificateRequests.newInstance(
       insertedRequests
     );
     Flight_Delay_Certificate_Request__c currentRequest = newRequests.instanceRecords[0];
 
-    Boolean bookingHasDelays = bookings.haveDelayedOrCancelledFlights()
-      .get(currentBooking.Id);
-    Boolean passengerInBooking = bookings.containsPassenger(
-        currentRequest.Contact_Last_Name__c
-      )
-      .get(currentBooking.Id);
-    Boolean enteredFlightInBooking = bookings.containsFlight(
-        currentRequest.Flight_Number__c +
-        '-' +
-        String.valueOf(currentRequest.Flight_Date__c).replace('-', '')
-      )
-      .get(currentBooking.Id);
+    Booking__c currentBooking = null;
 
-    Boolean isValidBooking =
-      bookingHasDelays &&
-      passengerInBooking &&
-      enteredFlightInBooking;
+    Boolean isValidBooking = false;
+
+    Cases insertedCase = Cases.newInstance(
+      CasesSelector.newInstance().selectById(new Set<Id>{ caseId })
+    );
+
+    if (insertedBookings.size() > 0) {
+      Bookings bookings = Bookings.newInstance(insertedBookings);
+      bookings.reloadFullBookingData();
+      currentBooking = bookings.fullRecords[0].booking;
+
+      Boolean bookingHasDelays = bookings.haveDelayedOrCancelledFlights()
+        .get(currentBooking.Id);
+      Boolean passengerInBooking = bookings.containsPassenger(
+          currentRequest.Contact_Last_Name__c
+        )
+        .get(currentBooking.Id);
+      Boolean enteredFlightInBooking = bookings.containsFlight(
+          currentRequest.Flight_Number__c +
+          '-' +
+          String.valueOf(currentRequest.Flight_Date__c).replace('-', '')
+        )
+        .get(currentBooking.Id);
+      isValidBooking =
+        bookingHasDelays &&
+        passengerInBooking &&
+        enteredFlightInBooking;
+    }
 
     String nameOfEmailTemplateToUse = isValidBooking
       ? TEMPLATE_IF_VALID_BOOKING
@@ -156,13 +160,17 @@ public without sharing class FlightDelayCertificateService {
         caseId,
         insertedRequests[0].Booking_Reference__c
       );
+      List<Booking__c> insertedBookings = bookings != null
+        ? bookings.instanceRecords
+        : new List<Booking__c>();
+
       //Chained Queueables are not allowing in tests
       if (!Test.isRunningTest()) {
         System.enqueueJob(
           new FlightDelayCertificateSend(
             caseId,
             insertedRequests,
-            bookings.instanceRecords
+            insertedBookings
           )
         );
       }
