@@ -428,6 +428,13 @@
                 <stringValue>5</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>CreatedById</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>EmailMessage</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
