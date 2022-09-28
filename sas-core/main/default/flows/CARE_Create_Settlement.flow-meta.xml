@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Navigate_To_Created_Settlement</name>
         <label>Navigate To Created Settlement</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>1334</locationY>
         <actionName>c:NavigateToRecord</actionName>
         <actionType>component</actionType>
@@ -26,7 +26,7 @@
     <assignments>
         <name>assignCustomerCount</name>
         <label>assignCustomerCount</label>
-        <locationX>974</locationX>
+        <locationX>1238</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>countOfCustomerData</assignToReference>
@@ -74,7 +74,7 @@
     <decisions>
         <name>Check_Customer_Data</name>
         <label>Check Customer Data In Claim</label>
-        <locationX>974</locationX>
+        <locationX>1238</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>NoCustomer</targetReference>
@@ -98,13 +98,42 @@
     </decisions>
     <decisions>
         <name>InProgress</name>
-        <label>Case Status is In Progress</label>
-        <locationX>1304</locationX>
+        <label>Is Case Valid</label>
+        <locationX>974</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>NoSettlement</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>caseRecordType</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Customer_Claim.Case__r.RecordType.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Claim</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Customer_Claim.Case__r.RecordType.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Claim</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Customer_Claim.Case__r.RecordType.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Record_Not_Valid</targetReference>
+            </connector>
+            <label>Case Record Type</label>
+        </rules>
         <rules>
             <name>caseStatus</name>
             <conditionLogic>and</conditionLogic>
@@ -118,13 +147,13 @@
             <connector>
                 <targetReference>Get_Customer_Data</targetReference>
             </connector>
-            <label>Yes</label>
+            <label>Case Status</label>
         </rules>
     </decisions>
     <decisions>
         <name>Settlement_Type</name>
         <label>Settlement Type</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>998</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -233,7 +262,7 @@
     <recordCreates>
         <name>Create_Cheque_Settlement</name>
         <label>Create Cheque Settlement</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
@@ -334,7 +363,7 @@
     <recordCreates>
         <name>Create_EB_Points_Settlement</name>
         <label>Create EB Points Settlement</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
@@ -411,7 +440,7 @@
     <recordCreates>
         <name>Create_Monetary_Settlement</name>
         <label>Create Monetary Settlement</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
@@ -518,7 +547,7 @@
     <recordCreates>
         <name>Create_Voucher_Settlement</name>
         <label>Create Voucher Settlement</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
@@ -625,7 +654,7 @@
     <recordLookups>
         <name>Get_Customer_Claim</name>
         <label>Get Customer Claim Information</label>
-        <locationX>1304</locationX>
+        <locationX>974</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -647,7 +676,7 @@
         <description>Customer Data</description>
         <name>Get_Customer_Data</name>
         <label>Get Customer Data</label>
-        <locationX>974</locationX>
+        <locationX>1238</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -668,7 +697,7 @@
     <recordLookups>
         <name>Get_Record_Type_Id</name>
         <label>Get Record Type Id</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -688,9 +717,25 @@
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
+        <name>Case_Record_Not_Valid</name>
+        <label>Case Record Not Valid</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>invalidCaseRecord</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Case Record is Not Valid&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Can not create Settlement for {!Get_Customer_Claim.Case__r.RecordType.Name}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Create_a_Settlement</name>
         <label>Create a Settlement</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -733,14 +778,14 @@
     <screens>
         <name>NoCustomer</name>
         <label>Can Not Create Settlement</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>NoDataError</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(234, 5, 5);&quot;&gt;*Can not create settlement, &lt;/strong&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(234, 5, 5); background-color: rgb(255, 255, 255);&quot;&gt; Claim does not have any Customer.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(34, 33, 33);&quot;&gt;*Can not create settlement, &lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(34, 33, 33); background-color: rgb(255, 255, 255);&quot;&gt; Claim does not have any Customer.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -749,21 +794,21 @@
     <screens>
         <name>NoSettlement</name>
         <label>Can Not Create Settlement</label>
-        <locationX>1634</locationX>
+        <locationX>1898</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>DisplayError</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(240, 10, 10); background-color: rgb(255, 255, 255); font-size: 16px;&quot;&gt;*Can not create Settlement. Case Status should be &quot;In Progress&quot;.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(21, 20, 20); background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;*Can not create Settlement. Case Status should be &quot;In Progress&quot;.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>1178</locationX>
+        <locationX>848</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Customer_Claim</targetReference>

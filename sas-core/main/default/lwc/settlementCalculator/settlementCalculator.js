@@ -6,6 +6,7 @@ import SETTLEMENT_OBJECT from "@salesforce/schema/Settlement__c";
 import SETTLEMENT_CURRENCY_FIELD from "@salesforce/schema/Settlement__c.Currency__c";
 import SETTLEMENT_STATUS_FIELD from "@salesforce/schema/Settlement__c.Settlement_Status__c";
 import COST_ACCOUNT_FIELD from "@salesforce/schema/Settlement_Item__c.Cost_Account__c";
+import CASE_RECORD_TYPE_FIELD from "@salesforce/schema/Settlement__c.Claim__r.Case__r.RecordType.Name";
 
 import addSettlementsItemsToSettlement from "@salesforce/apex/SettlementsController.addSettlementsItemsToSettlement";
 import getSettlement from "@salesforce/apex/SettlementsController.getSettlement";
@@ -46,6 +47,13 @@ export default class SettlementCalculator extends LightningElement {
     isMonetary: false,
     isVoucher: false
   };
+
+  CASE_RECORD_TYPE_TO_CREATE_SETTLEMENT = [
+    "Customer Claim",
+    "Claim",
+    "Emergency"
+  ];
+  SETTLEMENT_STATUS_TO_MODIFY_SETTLEMENT_ITEM = ["In progress", "Denied"];
 
   get amountLabel() {
     return `Amount (${this.settlementCurrency})`;
@@ -132,13 +140,26 @@ export default class SettlementCalculator extends LightningElement {
 
   @wire(getRecord, {
     recordId: "$recordId",
-    fields: [SETTLEMENT_CURRENCY_FIELD, SETTLEMENT_STATUS_FIELD]
+    fields: [
+      SETTLEMENT_CURRENCY_FIELD,
+      SETTLEMENT_STATUS_FIELD,
+      CASE_RECORD_TYPE_FIELD
+    ]
   })
   wiredSettlement({ error, data }) {
     if (!error && data) {
+      //caseRecordType fetch value for case record name as the case record name from settlement
+      //could be access through claim__r.case__r.RecordType.Name
+      const caseRecordType =
+        data.fields.Claim__r.value.fields.Case__r.value.fields.RecordType.value
+          .fields.Name.value;
+      const settlementStatus = data.fields.Settlement_Status__c.value;
+
       this.cannotBeUpdated =
-        data.fields.Settlement_Status__c.value !== "In progress" &&
-        data.fields.Settlement_Status__c.value !== "Denied";
+        !this.SETTLEMENT_STATUS_TO_MODIFY_SETTLEMENT_ITEM.includes(
+          settlementStatus
+        ) ||
+        !this.CASE_RECORD_TYPE_TO_CREATE_SETTLEMENT.includes(caseRecordType);
       this.type = {
         isEuroBonusPoints: data.recordTypeInfo.name === "EB points",
         isMonetary:
