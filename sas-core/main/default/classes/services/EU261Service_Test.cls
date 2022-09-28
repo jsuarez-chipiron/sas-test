@@ -18,6 +18,7 @@ private class EU261Service_Test {
   private static String cancellationBookingOutsideSASControlReference = 'CANCE2';
   private static String cancellationBookingUnsupportedReference = 'CANCE3';
   private static String cancellationBookingTwoCancellationsReference = 'CANCE4';
+  private static String cancellationWithRebookingBookingReference = 'CANCE5';
   private static String missingClaimedFlightBookingReference = 'MISSIN';
   private static String claimExpensesBookingReference = 'EXPENS';
   private static String notOperatedBySASBookingReference = 'NOTOPE';
@@ -188,6 +189,22 @@ private class EU261Service_Test {
       TEDS_Identifier__c = 'SK0013-20220817',
       Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 4, 1, 0),
       Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 6, 1, 0)
+    );
+    Flight__c flightWithTECHCancellationReplacement = new Flight__c(
+      Arrival_Airport__c = 'CPH',
+      Departure_Airport__c = 'HEL',
+      Operating_Carrier__c = 'SK',
+      TEDS_Identifier__c = 'SK0014-20220817',
+      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 8, 1, 0),
+      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 11, 1, 0)
+    );
+    Flight__c flightWithCancellationOutsideSASControlReplacement = new Flight__c(
+      Arrival_Airport__c = 'ARN',
+      Departure_Airport__c = 'CPH',
+      Operating_Carrier__c = 'SK',
+      TEDS_Identifier__c = 'SK0015-20220817',
+      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 8, 1, 0),
+      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 11, 1, 0)
     );
     Airport__c airportHEL = new Airport__c(
       City__c = 'Helsinki',
@@ -370,6 +387,12 @@ private class EU261Service_Test {
       TEDS_Identifier__c = 'uniqueBooking23',
       Type__c = 'OneWay'
     );
+    Booking__c cancellationBookingWithRebooking = new Booking__c(
+      Booking_Reference__c = cancellationWithRebookingBookingReference,
+      TEDS_Identifier__c = 'uniqueBooking28',
+      Type__c = 'OneWay'
+    );
+
     insert new List<SObject>{
       airportHEL,
       airportARN,
@@ -387,6 +410,8 @@ private class EU261Service_Test {
       flightWithCancellationOutsideSASControl,
       flightWithCancellationUnsupported,
       flightWithTECHCancellation,
+      flightWithTECHCancellationReplacement,
+      flightWithCancellationOutsideSASControlReplacement,
       flightForMinimalClaim,
       flightWithRotation,
       oneWayBooking,
@@ -408,6 +433,7 @@ private class EU261Service_Test {
       cancellationBookingOutsideSASControl,
       cancellationBookingUnsupported,
       cancellationBookingTwoCancellations,
+      cancellationBookingWithRebooking,
       missingClaimedFlightBooking,
       claimExpensesBooking,
       notOperatedBySASBooking,
@@ -422,107 +448,128 @@ private class EU261Service_Test {
     Segment__c oneWaySegment = new Segment__c(
       Booking__c = oneWayBooking.Id,
       Flight__c = flight1.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c dayReturnSegment1 = new Segment__c(
       Booking__c = dayReturnBooking.Id,
       Flight__c = flight1.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c dayReturnSegment2 = new Segment__c(
       Booking__c = dayReturnBooking.Id,
       Flight__c = flight2.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c roundTripSegment1 = new Segment__c(
       Booking__c = roundTripBooking.Id,
       Flight__c = flight1.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c roundTripSegment2 = new Segment__c(
       Booking__c = roundTripBooking.Id,
       Flight__c = flight2.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c multiCitySegment1 = new Segment__c(
       Booking__c = multiCityBooking.Id,
       Flight__c = flight1.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c multiCitySegment2 = new Segment__c(
       Booking__c = multiCityBooking.Id,
       Flight__c = flight2.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c multiCitySegment3 = new Segment__c(
       Booking__c = multiCityBooking.Id,
       Flight__c = flight3.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c unknownSegment = new Segment__c(
       Booking__c = unknownBooking.Id,
       Flight__c = flight1.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c individualsSegment = new Segment__c(
       Booking__c = individualPassengerBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c husbandsSegment = new Segment__c(
       Booking__c = coupleBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c wifesSegment = new Segment__c(
       Booking__c = coupleBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '1B'
+      Seat__c = '1B',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c twoSegmentsOne = new Segment__c(
       Booking__c = oneWayBookingWithTwoSegments.Id,
       Flight__c = flight1.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c twoSegmentsTwo = new Segment__c(
       Booking__c = oneWayBookingWithTwoSegments.Id,
       Flight__c = flight2.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c duplicateBookingOneSegment = new Segment__c(
       Booking__c = duplicateBookingOne.Id,
       Flight__c = flight1.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c duplicateBookingTwoSegment = new Segment__c(
       Booking__c = duplicateBookingTwo.Id,
       Flight__c = flight1.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c withFileSegment = new Segment__c(
       Booking__c = withFileBooking.Id,
       Flight__c = flight1.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c nonEUSegment = new Segment__c(
       Booking__c = nonEUBooking.Id,
       Flight__c = nonEUFlight.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c twoIrregularitiesSegment = new Segment__c(
       Booking__c = twoIrregularitiesBooking.Id,
       Flight__c = flightWithTwoIrregularities.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c tooShortDelaySegment = new Segment__c(
       Booking__c = tooShortDelayBooking.Id,
       Flight__c = flightWithTooShortDelay.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c tooLongDelaySegment = new Segment__c(
       Booking__c = tooLongDelayBooking.Id,
       Flight__c = flightWithTooLongDelay.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c cancellationWithinSASControlSegment = new Segment__c(
       Booking__c = cancellationBookingWithinSASControl.Id,
@@ -530,10 +577,16 @@ private class EU261Service_Test {
       Trip_Type__c = 'Cancelled',
       Seat__c = '1A'
     );
-    Segment__c cancellationOutsideSASControlSegment = new Segment__c(
+    Segment__c cancellationOutsideSASControlSegment1 = new Segment__c(
       Booking__c = cancellationBookingOutsideSASControl.Id,
       Flight__c = flightWithCancellationOutsideSASControl.Id,
       Trip_Type__c = 'Cancelled',
+      Seat__c = '1A'
+    );
+    Segment__c cancellationOutsideSASControlSegment2 = new Segment__c(
+      Booking__c = cancellationBookingOutsideSASControl.Id,
+      Flight__c = flightWithCancellationOutsideSASControlReplacement.Id,
+      Trip_Type__c = 'Outbound',
       Seat__c = '1A'
     );
     Segment__c cancellationUnsupportedSegment = new Segment__c(
@@ -554,35 +607,53 @@ private class EU261Service_Test {
       Trip_Type__c = 'Cancelled',
       Seat__c = '1A'
     );
+    Segment__c bookingRebookingSegment1 = new Segment__c(
+      Booking__c = cancellationBookingWithRebooking.Id,
+      Flight__c = flightWithTECHCancellation.Id,
+      Trip_Type__c = 'Cancelled',
+      Seat__c = '1A'
+    );
+    Segment__c bookingRebookingSegment2 = new Segment__c(
+      Booking__c = cancellationBookingWithRebooking.Id,
+      Flight__c = flightWithTECHCancellationReplacement.Id,
+      Trip_Type__c = 'Outbound',
+      Seat__c = '1A'
+    );
     Segment__c missingClaimedFlightSegment = new Segment__c(
       Booking__c = missingClaimedFlightBooking.Id,
       Flight__c = flight1.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c claimExpensesSegment = new Segment__c(
       Booking__c = claimExpensesBooking.Id,
       Flight__c = flight1.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c notOperatedBySASSegment = new Segment__c(
       Booking__c = notOperatedBySASBooking.Id,
       Flight__c = nonSASFlight.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c twoClaimsSameBookingReferenceSegment = new Segment__c(
       Booking__c = twoClaimsSameBookingReferenceBooking.Id,
       Flight__c = flight1.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c minimalClaimSegment = new Segment__c(
       Booking__c = minimalClaimBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c rotationSegment = new Segment__c(
       Booking__c = rotationBooking.Id,
       Flight__c = flightWithRotation.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Passenger__c oneWayPassenger = new Passenger__c(
       Booking__c = oneWayBooking.Id,
@@ -839,6 +910,12 @@ private class EU261Service_Test {
       First_Name__c = 'Sven',
       Last_Name__c = 'Svensson'
     );
+    Passenger__c rebookedPassenger = new Passenger__c(
+      Booking__c = cancellationBookingWithRebooking.Id,
+      Identifier__c = 'P1',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
 
     FlightIrregularities__c flight1Delay = new FlightIrregularities__c(
       Flight__c = flight1.Id,
@@ -886,25 +963,25 @@ private class EU261Service_Test {
       Flight__c = flightWithCancellationWithinSASControl.Id,
       Code__c = 'TECH',
       Type__c = 'Cancellation (arrival)',
-      Cancellation_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0)
+      Cancellation_Time__c = DateTime.newInstance(2022, 8, 10, 0, 1, 0)
     );
     FlightIrregularities__c flightCancellationOutsideSASControl = new FlightIrregularities__c(
       Flight__c = flightWithCancellationOutsideSASControl.Id,
       Code__c = 'WEAT',
       Type__c = 'Cancellation (arrival)',
-      Cancellation_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0)
+      Cancellation_Time__c = DateTime.newInstance(2022, 8, 10, 0, 1, 0)
     );
     FlightIrregularities__c flightCancellationUnsupported = new FlightIrregularities__c(
       Flight__c = flightWithCancellationUnsupported.Id,
       Code__c = 'AIRS',
       Type__c = 'Cancellation (arrival)',
-      Cancellation_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0)
+      Cancellation_Time__c = DateTime.newInstance(2022, 8, 10, 0, 1, 0)
     );
     FlightIrregularities__c flightCancellationTECH = new FlightIrregularities__c(
       Flight__c = flightWithTECHCancellation.Id,
       Code__c = 'TECH',
       Type__c = 'Cancellation (arrival)',
-      Cancellation_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0)
+      Cancellation_Time__c = DateTime.newInstance(2022, 8, 10, 0, 1, 0)
     );
     FlightIrregularities__c nonSASDelay = new FlightIrregularities__c(
       Flight__c = nonSASFlight.Id,
@@ -948,7 +1025,8 @@ private class EU261Service_Test {
       tooShortDelaySegment,
       tooLongDelaySegment,
       cancellationWithinSASControlSegment,
-      cancellationOutsideSASControlSegment,
+      cancellationOutsideSASControlSegment1,
+      cancellationOutsideSASControlSegment2,
       cancellationUnsupportedSegment,
       doubleCancellationSegment1,
       doubleCancellationSegment2,
@@ -958,6 +1036,8 @@ private class EU261Service_Test {
       twoClaimsSameBookingReferenceSegment,
       minimalClaimSegment,
       rotationSegment,
+      bookingRebookingSegment1,
+      bookingRebookingSegment2,
       groupBookingSegment1,
       groupBookingSegment2,
       groupBookingSegment3,
@@ -993,6 +1073,7 @@ private class EU261Service_Test {
       twoClaimsSameBookingReferencePassenger,
       minimalClaimPassenger,
       rotationPassenger,
+      rebookedPassenger,
       groupPassenger1,
       groupPassenger2,
       groupPassenger3,
@@ -1339,8 +1420,8 @@ private class EU261Service_Test {
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
-    TestDataFactories.CasesClaims coupleClaim = createDefaultTestClaim(
-      coupleBookingReference,
+    TestDataFactories.CasesClaims claimFirmClaim = createDefaultTestClaim(
+      claimFirmBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
         LIA_Claim__c.Flight_Number__c => 'SK0009',
@@ -1355,8 +1436,10 @@ private class EU261Service_Test {
     );
 
     List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      individualClaim,
-      coupleClaim
+      groupClaim,
+      differentLastNamesClaim,
+      missingTravelersFromBookingClaim,
+      claimFirmClaim
     };
 
     createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
@@ -1370,14 +1453,51 @@ private class EU261Service_Test {
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
+    System.assert(
+      claimsWithEvaluationDetails.size() == 4,
+      'Should have evaluated four claims.'
+    );
     for (
       EU261Service.ClaimWithCompensationDetails claim : claimsWithEvaluationDetails
     ) {
-      if (claim.claim.instanceRecords[0].Id == individualClaim.claims[0].Id) {
+      if (claim.claim.instanceRecords[0].Id == groupClaim.claims[0].Id) {
         System.assertEquals(
-          true,
+          false,
           claim.canBeEvaluated,
-          'It should be possible to evaluate a claim with a single passenger.'
+          'It should not be possible to evaluate a claim with more than four travelers.'
+        );
+        System.assertEquals(
+          'can handle only claims which do not require power of attorney',
+          claim.unhandledReason,
+          'Rejection reason should be "can handle only claims which do not require power of attorney"'
+        );
+      } else if (
+        claim.claim.instanceRecords[0].Id ==
+        differentLastNamesClaim.claims[0].Id
+      ) {
+        System.assertEquals(
+          false,
+          claim.canBeEvaluated,
+          'It should not be possible to evaluate a claim with different last names.'
+        );
+        System.assertEquals(
+          'can handle only claims which do not require power of attorney',
+          claim.unhandledReason,
+          'Rejection reason should be "can handle only claims which do not require power of attorney"'
+        );
+      } else if (
+        claim.claim.instanceRecords[0].Id ==
+        missingTravelersFromBookingClaim.claims[0].Id
+      ) {
+        System.assertEquals(
+          false,
+          claim.canBeEvaluated,
+          'It should not be possible to evaluate a claim when claimed travelers are not included in the booking.'
+        );
+        System.assertEquals(
+          'can handle only claims which do not require power of attorney',
+          claim.unhandledReason,
+          'Rejection reason should be "can handle only claims which do not require power of attorney"'
         );
         System.assertEquals(
           true,
@@ -1404,59 +1524,6 @@ private class EU261Service_Test {
           800,
           claim.EU261Compensation,
           'Compensation should be 800€'
-        );
-      }
-    }
-  }
-
-  @IsTest
-  static void onlyClaimsWithOneSegmentCanBeEvaluated() {
-    TestDataFactories.CasesClaims claims = createDefaultTestClaim(
-      oneWayBookingWithTwoSegmentsReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0001',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claims
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
-
-    Test.setMock(HttpCalloutMock.class, new APIMMock());
-    Test.startTest();
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
-      .automateEU261Claims(claimIds, uow);
-    Test.stopTest();
-
-    for (
-      EU261Service.ClaimWithCompensationDetails claim : claimsWithEvaluationDetails
-    ) {
-      if (
-        claim.booking.instanceRecords[0].Booking_Reference__c ==
-        oneWayBookingReference
-      ) {
-        System.assertEquals(
-          true,
-          claim.canBeEvaluated,
-          'Claim with a single segment should be possible to evaluate.'
-        );
-      } else {
-        System.assertEquals(
-          false,
-          claim.canBeEvaluated,
-          'Claim with more than one segment cannot be evaluated.'
-        );
-        System.assertEquals(
-          'can handle only one flight per claim',
-          claim.unhandledReason,
-          'Rejection reason should be "can handle only one flight per claim"'
         );
       }
     }
@@ -1510,69 +1577,6 @@ private class EU261Service_Test {
           'can handle only one booking per claim',
           claim.unhandledReason,
           'Rejection reason should be "can handle only one booking per claim"'
-        );
-      }
-    }
-  }
-
-  // THIS IS CURRENTLY BROKEN, TODO: find new way to implement this
-  @IsTest
-  static void onlyClaimsWithoutFilesCanBeEvaluated() {
-    if (true) {
-      return;
-    }
-    TestDataFactories.CasesClaims caseClaim = createDefaultTestClaim(
-      withFileBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0001',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      caseClaim
-    };
-
-    ContentVersion cv = new ContentVersion(
-      ContentLocation = 'S',
-      PathOnClient = 'PowerOfAttorney.txt',
-      Title = 'PowerOfAttorney',
-      VersionData = Blob.valueOf('Power!')
-    );
-    insert cv;
-    List<ContentVersion> contentToLink = ContentVersionsSelector.newInstance()
-      .selectById(new Set<Id>{ cv.Id });
-    ContentDocumentLink cdl = new ContentDocumentLink(
-      ContentDocumentId = contentToLink[0].ContentDocumentId,
-      LinkedEntityId = caseClaim.cases[0].Id
-    );
-    insert cdl;
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
-
-    Test.setMock(HttpCalloutMock.class, new APIMMock());
-    Test.startTest();
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
-      .automateEU261Claims(claimIds, uow);
-    Test.stopTest();
-
-    for (
-      EU261Service.ClaimWithCompensationDetails claim : claimsWithEvaluationDetails
-    ) {
-      if (claimIds.contains(claim.claim.instanceRecords[0].Id)) {
-        System.assertEquals(
-          false,
-          claim.canBeEvaluated,
-          'It should not be possible to evaluate claims with files.'
-        );
-        System.assertEquals(
-          'cannot handle claims with attachments (might have POA)',
-          claim.unhandledReason,
-          'Rejection reason should be "cannot handle claims with attachments (might have POA)"'
         );
       }
     }
@@ -1953,7 +1957,7 @@ private class EU261Service_Test {
   }
 
   @IsTest
-  static void minimalCancellationClaimShouldBeAutomatedCorrectly() {
+  static void minimalCancellationClaimWithoutRebookingCannotBeEvaluated() {
     TestDataFactories.CasesClaims claim = createDefaultTestClaim(
       cancellationBookingWithinSASControlReference,
       new Map<Schema.SObjectField, Object>{
@@ -1979,14 +1983,14 @@ private class EU261Service_Test {
     Test.stopTest();
 
     System.assertEquals(
-      true,
+      false,
       claimsWithEvaluationDetails[0].canBeEvaluated,
       'The minimal cancellation claim should be automated.'
     );
     System.assertEquals(
-      250,
-      claimsWithEvaluationDetails[0].EU261Compensation,
-      'We shuold pay out €250 for the minimal cancellation claim'
+      'this trip type is not yet supported.',
+      claimsWithEvaluationDetails[0].unhandledReason,
+      'This trip type should not be supported.'
     );
   }
 
@@ -2098,9 +2102,48 @@ private class EU261Service_Test {
       'It should not be possible to evaluate claims with unsupported cancellation codes.'
     );
     System.assertEquals(
-      'can handle only one flight per claim', // cannot determine wether SAS is responsible or not.
+      'this trip type is not yet supported.', // cannot determine wether SAS is responsible or not.
       claimsWithEvaluationDetails[0].unhandledReason,
-      'Unhandled reason should be "can handle only one flight per claim"'
+      'Unhandled reason should be "this trip type is not yet supported."'
+    );
+  }
+
+  @IsTest
+  static void minimalCancellationClaimShouldBeAutomatedCorrectly() {
+    // A rebooked flight which arrives 3h later than the original flight.
+    TestDataFactories.CasesClaims claim = createDefaultTestClaim(
+      cancellationWithRebookingBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
+        LIA_Claim__c.Flight_Number__c => 'SK0013',
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
+      }
+    );
+
+    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
+      claim
+    };
+
+    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
+
+    Set<Id> claimIds = getClaimIds(casesClaims);
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+      .automateEU261Claims(claimIds, uow);
+    Test.stopTest();
+
+    System.assertEquals(
+      true,
+      claimsWithEvaluationDetails[0].canBeEvaluated,
+      'The minimal cancellation claim should be automated.'
+    );
+    System.assertEquals(
+      250,
+      claimsWithEvaluationDetails[0].EU261Compensation,
+      'We shuold pay out €250 for the minimal cancellation claim'
     );
   }
 }

@@ -213,9 +213,9 @@ public without sharing class EU261Service {
         ac.canBeEvaluated = false;
       } else if (
         ac.booking.instanceRecords[0].Segments__r.size() >
-        ac.booking.instanceRecords[0].Passengers__r.size()
+        2 * ac.booking.instanceRecords[0].Passengers__r.size()
       ) {
-        ac.unhandledReason = 'can handle only one flight per claim'; // Each passenger should have a single segment per flight
+        ac.unhandledReason = 'can handle only one or two flights per claim'; // Each passenger should have a single segment per flight
         ac.canBeEvaluated = false;
       } else if (
         invalidFareBases.contains(
@@ -256,7 +256,9 @@ public without sharing class EU261Service {
         ac.unhandledReason = 'cannot determine wether SAS is responsible or not.';
         ac.canBeEvaluated = false;
       } else if (
-        ac.hasCancellation() && !ac.tripWithClaimFlight.canGetOriginalTrip()
+        ac.hasCancellation() &&
+        (!ac.tripWithClaimFlight.canGetOriginalTrip() ||
+        !ac.tripWithClaimFlight.canGetSuggestedRebookingTrip())
       ) {
         ac.unhandledReason = 'this trip type is not yet supported.';
         ac.canBeEvaluated = false;
@@ -448,12 +450,10 @@ public without sharing class EU261Service {
   ) {
     // Get the original flight plan
     Trip originalTrip = ac.tripWithClaimFlight.getOriginalTrip();
-    Datetime originalDeparture = originalTrip.sortedSegments[0]
-      .Flight__r.Scheduled_Departure_Time__c;
-    Datetime originalArrival = originalTrip.sortedSegments[
-        originalTrip.sortedSegments.size() - 1
-      ]
-      .Flight__r.Scheduled_Arrival_Time__c;
+    Datetime originalDeparture = originalTrip.getFirstFlight()
+      .Scheduled_Departure_Time__c;
+    Datetime originalArrival = originalTrip.getFlightToFinalDestination()
+      .Scheduled_Arrival_Time__c;
 
     Decimal flightDistanceInM =
       Airports.distanceBetweenAirportsInMeters(
@@ -462,19 +462,25 @@ public without sharing class EU261Service {
       ) / 1000;
     Integer flightDistanceInKm = flightDistanceInM.intValue();
     Boolean isIntraCommunity = isIntraCommunity(originalTrip);
-
-    // Get the new (suggested) flight plan
-    Trip newTrip = ac.tripWithClaimFlight.getSuggestedRebookingForClaimFlight();
     List<FlightIrregularities__c> flightIrregularities = ac.flightToIrregularities.get(
       originalTrip.claimFlight.Id
     );
     Integer daysUntilFlightWhenInformedOfCancellation = originalTrip.getDaysBetweenCancellationAndDeparture(
       flightIrregularities
     );
+
+    // Get the new (suggested) flight plan
+    Trip newTrip = ac.tripWithClaimFlight.getSuggestedRebookingForClaimFlight();
     Integer arrivalDifference;
     Integer departureDifference;
     Integer compensation;
     if (newTrip == null) {
+      // Current state of this automation as we cannot determine that we have not suggested a rebooking
+      if (true) {
+        throw new AutomationException(
+          'We do not have enough data to evaluate this claim (likely cancellation without rebooking).'
+        );
+      }
       // No suggested rebooking => full EU261 (10h outside timeframe => full compensation)
       compensation = calculateCompensationCancellation(
         600,
@@ -482,26 +488,17 @@ public without sharing class EU261Service {
         isIntraCommunity
       );
     } else {
-      // Current state of this automation as we cannot identify suggested reroutings
-      if (true) {
-        throw new AutomationException(
-          'This is an unsupported trip type and should have been caught by "canWeEvaluate".'
-        );
-      }
-
-      Datetime newDeparture = newTrip.sortedSegments[0]
-        .Flight__r.Scheduled_Departure_Time__c;
-      Datetime newArrival = newTrip.sortedSegments[
-          newTrip.sortedSegments.size() - 1
-        ]
-        .Flight__r.Scheduled_Arrival_Time__c;
+      Datetime newDeparture = newTrip.getFirstFlight()
+        .Scheduled_Departure_Time__c;
+      Datetime newArrival = newTrip.getFlightToFinalDestination()
+        .Scheduled_Arrival_Time__c;
 
       // Compare the original rebooking against the suggested rebooking and calculate compensation
       departureDifference = Integer.valueOf(
-        DateUtils.getHoursBetween(newDeparture, originalDeparture)
+        DateUtils.getHoursBetween(newDeparture, originalDeparture) * 60
       );
       arrivalDifference = Integer.valueOf(
-        DateUtils.getHoursBetween(newArrival, originalArrival)
+        DateUtils.getHoursBetween(newArrival, originalArrival) * 60
       ); // Do we need to round up?
 
       Integer compensationForEarlyFlight = 0;
@@ -1018,7 +1015,11 @@ public without sharing class EU261Service {
     ClaimWithCompensationDetails cwcd,
     Map<String, Airport__c> airportCodeToAirport
   ) {
-    cwcd.trips = cwcd.booking.getTrips(airportCodeToAirport);
+    try {
+      cwcd.trips = cwcd.booking.getTrips(airportCodeToAirport);
+    } catch (Trip.BookingTypeNotSupportedException e) {
+      return;
+    }
 
     // Todo: use stringutils / the flight domain (implement)
     String flightNumberDate = FlightService.constructFlightNumberDate(
