@@ -279,15 +279,13 @@ public without sharing class EU261Service {
    * 2. All claimed passengers can be found from the booking's passengers
    * 3. All claimed passengers have the same last name as the contaxt person
    * 4. There are less than four people overall in the booking
-   * 5. TODO: CHECK IF WE CAN SOMEHOW IDENTIFY CHILDREN
+   * 5. TODO: Check if we can somehow identify children from the booking
+   * 6. TODO: Consider infants
    */
   private static Boolean requiresPowerOfAttorney(
     ClaimWithCompensationDetails ac
   ) {
     Claim c = ac.claim.objects[0];
-
-    System.debug(c.customers.size());
-    System.debug(String.valueOf(c.contactType));
 
     if (
       c.contactType != Claim.ContactType.PrivateCustomer ||
@@ -297,15 +295,15 @@ public without sharing class EU261Service {
     }
 
     for (ClaimCustomer cust : c.customers) {
-      if (cust.lastName != c.contactLastName) {
+      if (cust.lastName.toLowerCase() != c.contactLastName.toLowerCase()) {
         return true;
       }
 
       Boolean claimedCustomerFoundInBooking = false;
       for (Passenger__c p : ac.booking.instanceRecords[0].Passengers__r) {
         if (
-          p.Last_Name__c == cust.lastName &&
-          p.First_Name__c == cust.firstName
+          p.Last_Name__c.toLowerCase() == cust.lastName.toLowerCase() &&
+          p.First_Name__c.toLowerCase() == cust.firstName.toLowerCase()
         ) {
           claimedCustomerFoundInBooking = true;
         }
@@ -336,11 +334,20 @@ public without sharing class EU261Service {
     }
   }
 
+  private static Boolean isStaffBooking(ClaimWithCompensationDetails ac) {
+    // TODO: Implement this. We are not currently storing the data but when we
+    // are, this is just something like return ac.booking.IsIdTicket__c;
+    return false;
+  }
+
   private static void determineEligibilityAndCalculateCompensation(
     List<ClaimWithCompensationDetails> claimsWhichCanBeEvaluated
   ) {
     for (ClaimWithCompensationDetails ac : claimsWhichCanBeEvaluated) {
-      if (!isCoveredByEU261(ac)) {
+      if (isStaffBooking(ac)) {
+        ac.rejectionReason = 'id and staff tickets are not eligible';
+        ac.customerEntitledToCompensation = false;
+      } else if (!isCoveredByEU261(ac)) {
         // Was the flight from/to the right place + insanely complex edge case
         ac.rejectionReason = 'not covered by EU261';
         ac.customerEntitledToCompensation = false;
@@ -614,27 +621,39 @@ public without sharing class EU261Service {
   private static Integer getNumberOfPassengersEligibleForCompensation(
     ClaimWithCompensationDetails ac
   ) {
-    // TODO: Check: Is it an ID ticket? -> Not eligable (?) TODO: Check as a booking.
     // TODO: Check: Is fare = 0?
-    // TODO: Check: Is it an award ticket? (? ask someone). This is fine.
-    // TODO: Check: Is it an infant domestic?
-    // TODO: Check: Is it DK domestic?
 
     List<Passenger__c> passengers = ac.booking.instanceRecords[0].Passengers__r; // FIXME: This should always be about travelers in claim, not passengers in booking
+
+    List<ClaimCustomer> customers = ac.claim.objects[0].customers;
 
     List<Passenger__c> eligiblePassengers = new List<Passenger__c>();
 
     for (Passenger__c passenger : passengers) {
-      Boolean isInfant = passenger.Identifier__c.contains('inf');
-      if (isInfant) {
-        Boolean isDomesticTripInDenmark =
-          ac.tripWithClaimFlight.destinationAirport.Country_Code__c == 'DK' &&
-          ac.tripWithClaimFlight.originAirport.Country_Code__c == 'DK';
-        if (isDomesticTripInDenmark) {
+      Boolean claimedPassenger = false;
+      for (ClaimCustomer cc : customers) {
+        if (
+          cc.firstName.toLowerCase() == passenger.First_Name__c.toLowerCase() &&
+          cc.lastName.toLowerCase() == passenger.Last_Name__c.toLowerCase()
+        ) {
+          claimedPassenger = true;
+          break;
+        }
+      }
+
+      if (claimedPassenger) {
+        Boolean isInfant = passenger.Identifier__c.toLowerCase()
+          .contains('inf');
+        if (isInfant) {
+          Boolean isDomesticTripInDenmark =
+            ac.tripWithClaimFlight.destinationAirport.Country_Code__c == 'DK' &&
+            ac.tripWithClaimFlight.originAirport.Country_Code__c == 'DK';
+          if (isDomesticTripInDenmark) {
+            eligiblePassengers.add(passenger);
+          }
+        } else {
           eligiblePassengers.add(passenger);
         }
-      } else {
-        eligiblePassengers.add(passenger);
       }
     }
 
