@@ -202,17 +202,20 @@ public without sharing class EU261Service {
       } else if (ac.hasPotentiallyDuplicateClaims) {
         ac.unhandledReason = 'cannot handle potential duplicates';
         ac.canBeEvaluated = false;
-      } else if (ac.booking.instanceRecords[0].Passengers__r.size() != 1) {
-        ac.unhandledReason = 'can handle only one passenger per claim';
-        ac.canBeEvaluated = false;
       } else if (ac.bookingType != Bookings.Type.OneWay) {
         ac.unhandledReason = 'can handle only one one way trips';
         ac.canBeEvaluated = false;
       } else if (ac.booking.instanceRecords[0].Segments__r.size() == 0) {
         ac.unhandledReason = 'no flight associated with the claim';
         ac.canBeEvaluated = false;
-      } else if (ac.booking.instanceRecords[0].Segments__r.size() > 1) {
-        ac.unhandledReason = 'can handle only one flight per claim';
+      } else if (c.customers == null || c.customers.isEmpty()) {
+        ac.unhandledReason = 'cannot handle claims without any travellers';
+        ac.canBeEvaluated = false;
+      } else if (
+        ac.booking.instanceRecords[0].Segments__r.size() >
+        ac.booking.instanceRecords[0].Passengers__r.size()
+      ) {
+        ac.unhandledReason = 'can handle only one flight per claim'; // Each passenger should have a single segment per flight
         ac.canBeEvaluated = false;
       } else if (
         invalidFareBases.contains(
@@ -255,11 +258,8 @@ public without sharing class EU261Service {
       } else if (!SASIsOnlyOperatingCarrier(ac)) {
         ac.unhandledReason = 'cannot handle claims where SAS is not the only operating carrier';
         ac.canBeEvaluated = false;
-      } else if (
-        false // ac.claim.instanceRecords[0].Contact_Last_Name__c.toLowerCase() != // ac.booking.instanceRecords[0] //   .Passengers__r[0] //   .Last_Name__c.toLowerCase()
-      ) {
-        // TODO: This won't work for claims submitted by agencies because there is no last name. But those should always have files anyway.
-        ac.unhandledReason = 'can handle only claims when contact name matches booking passenger';
+      } else if (requiresPowerOfAttorney(ac)) {
+        ac.unhandledReason = 'can handle only claims which do not require power of attorney';
         ac.canBeEvaluated = false;
       } else {
         ac.canBeEvaluated = true;
@@ -268,6 +268,53 @@ public without sharing class EU261Service {
     }
 
     return claimsToAutomate;
+  }
+
+  /**
+   * Returns false if the contact person is allowed to make the claim for all
+   * customers claimed in the claim without a power of attorney.
+   *
+   * They are allowed to do this only if all of the following are true:
+   * 1. Claimant is a private customer
+   * 2. All claimed passengers can be found from the booking's passengers
+   * 3. All claimed passengers have the same last name as the contaxt person
+   * 4. There are less than four people overall in the booking
+   * 5. TODO: Check if we can somehow identify children from the booking
+   * 6. TODO: Consider infants
+   */
+  private static Boolean requiresPowerOfAttorney(
+    ClaimWithCompensationDetails ac
+  ) {
+    Claim c = ac.claim.objects[0];
+
+    if (
+      c.contactType != Claim.ContactType.PrivateCustomer ||
+      c.customers.size() > 4
+    ) {
+      return true;
+    }
+
+    for (ClaimCustomer cust : c.customers) {
+      if (cust.lastName.toLowerCase() != c.contactLastName.toLowerCase()) {
+        return true;
+      }
+
+      Boolean claimedCustomerFoundInBooking = false;
+      for (Passenger__c p : ac.booking.instanceRecords[0].Passengers__r) {
+        if (
+          p.Last_Name__c.toLowerCase() == cust.lastName.toLowerCase() &&
+          p.First_Name__c.toLowerCase() == cust.firstName.toLowerCase()
+        ) {
+          claimedCustomerFoundInBooking = true;
+        }
+      }
+
+      if (!claimedCustomerFoundInBooking) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private static boolean canCalculateDelay(ClaimWithCompensationDetails ac) {
@@ -287,11 +334,20 @@ public without sharing class EU261Service {
     }
   }
 
+  private static Boolean isStaffBooking(ClaimWithCompensationDetails ac) {
+    // TODO: Implement this. We are not currently storing the data but when we
+    // are, this is just something like return ac.booking.IsIdTicket__c;
+    return false;
+  }
+
   private static void determineEligibilityAndCalculateCompensation(
     List<ClaimWithCompensationDetails> claimsWhichCanBeEvaluated
   ) {
     for (ClaimWithCompensationDetails ac : claimsWhichCanBeEvaluated) {
-      if (!isCoveredByEU261(ac)) {
+      if (isStaffBooking(ac)) {
+        ac.rejectionReason = 'id and staff tickets are not eligible';
+        ac.customerEntitledToCompensation = false;
+      } else if (!isCoveredByEU261(ac)) {
         // Was the flight from/to the right place + insanely complex edge case
         ac.rejectionReason = 'not covered by EU261';
         ac.customerEntitledToCompensation = false;
@@ -562,29 +618,46 @@ public without sharing class EU261Service {
     }
   }
 
-  /**
-   * TODO: Make much more complicated, this data is not available in TEDS (?ö).
-   * Investigate: Can people in the same booking have different number of flights?
-   * @param AutomationUtils.AutomationContainer ac
-   * @return The amount of passengers which should have compensation
-   */
   private static Integer getNumberOfPassengersEligibleForCompensation(
     ClaimWithCompensationDetails ac
   ) {
-    // TODO: Check: Is it an ID ticket? -> Not eligable (?)
     // TODO: Check: Is fare = 0?
-    // TODO: Check: Is it an award ticket? (? ask someone)
-    // TODO: Check: Is it an infant domestic?
-    // TODO: Check: Is it DK domestic?
 
-    Integer numberOfPassengers = ac.booking.instanceRecords[0]
-      .Passengers__r.size();
-    if (numberOfPassengers != 1) {
-      throw new AutomationException(
-        'Claims with more (or less) than one passenger is currently not supported.'
-      );
+    List<Passenger__c> passengers = ac.booking.instanceRecords[0].Passengers__r; // FIXME: This should always be about travelers in claim, not passengers in booking
+
+    List<ClaimCustomer> customers = ac.claim.objects[0].customers;
+
+    List<Passenger__c> eligiblePassengers = new List<Passenger__c>();
+
+    for (Passenger__c passenger : passengers) {
+      Boolean claimedPassenger = false;
+      for (ClaimCustomer cc : customers) {
+        if (
+          cc.firstName.toLowerCase() == passenger.First_Name__c.toLowerCase() &&
+          cc.lastName.toLowerCase() == passenger.Last_Name__c.toLowerCase()
+        ) {
+          claimedPassenger = true;
+          break;
+        }
+      }
+
+      if (claimedPassenger) {
+        Boolean isInfant = passenger.Identifier__c.toLowerCase()
+          .contains('inf');
+        if (isInfant) {
+          Boolean isDomesticTripInDenmark =
+            ac.tripWithClaimFlight.destinationAirport.Country_Code__c == 'DK' &&
+            ac.tripWithClaimFlight.originAirport.Country_Code__c == 'DK';
+          if (isDomesticTripInDenmark) {
+            eligiblePassengers.add(passenger);
+          }
+        } else {
+          eligiblePassengers.add(passenger);
+        }
+      }
     }
-    return numberOfPassengers;
+
+    return eligiblePassengers.size();
   }
 
   /**

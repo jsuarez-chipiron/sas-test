@@ -72,7 +72,7 @@ public without sharing class ClaimService {
 
     String travelersRichTextForAutoResponseEmail = '';
     for (CreateClaimRequest.Traveler traveler : request.travelers) {
-      Customer cust = createCustomer(traveler, claimToCreate);
+      ClaimCustomer cust = createCustomer(traveler, claimToCreate);
       objectsToCreate.add(cust.underlyingSObject);
 
       travelersRichTextForAutoResponseEmail += traveler.toString() + '<br>';
@@ -153,7 +153,7 @@ public without sharing class ClaimService {
 
     Claim claimToCreate = c.objects[0];
 
-    Customer cust = new Customer(claimToCreate);
+    ClaimCustomer cust = new ClaimCustomer(claimToCreate);
     cust.firstName = request.contact.firstName == null
       ? ' '
       : request.contact.firstName;
@@ -941,11 +941,11 @@ public without sharing class ClaimService {
     return ce;
   }
 
-  private static Customer createCustomer(
+  private static ClaimCustomer createCustomer(
     CreateClaimRequest.Traveler traveler,
     Claim parentClaim
   ) {
-    Customer c = new Customer(parentClaim);
+    ClaimCustomer c = new ClaimCustomer(parentClaim);
     c.firstName = traveler.firstName;
     c.lastName = traveler.lastName;
     c.updateSObjectFields();
