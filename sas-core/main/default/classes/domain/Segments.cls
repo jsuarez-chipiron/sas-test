@@ -51,11 +51,7 @@ public without sharing class Segments extends fflib_SObjectDomain {
 
     public Integer compareTo(Object compareTo) {
       SegmentWrapper otherSegment = (SegmentWrapper) compareTo;
-      if (segment.flight__r == null || segment.Seat__c == null) {
-        throw new SegmentException(
-          'The segment should contain a flight and a seat.'
-        );
-      }
+
       if (
         segment.flight__r.Scheduled_Departure_Time__c >
         otherSegment.segment.flight__r.Scheduled_Departure_Time__c
@@ -67,13 +63,7 @@ public without sharing class Segments extends fflib_SObjectDomain {
       ) {
         return -1;
       } else {
-        /*if (segment.Seat__c != otherSegment.segment.Seat__c) {
-          return 0;
-        }*/
         return 0;
-        /*throw new SegmentException(
-          'The scheduled departure time for the segments and their seats are the same.'
-        );*/
       }
     }
   }

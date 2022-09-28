@@ -156,7 +156,7 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Settlement Item</label>
     <nameField>
-        <displayFormat>{YY}{MM}{DD}{0000}</displayFormat>
+        <displayFormat>{0000000000}</displayFormat>
         <label>Settlement Item</label>
         <trackHistory>true</trackHistory>
         <type>AutoNumber</type>

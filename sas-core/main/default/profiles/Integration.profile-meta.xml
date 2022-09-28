@@ -15,7 +15,55 @@
         <default>false</default>
         <visible>true</visible>
     </applicationVisibilities>
-        <classAccesses>
+    <classAccesses>
+        <apexClass>Claim</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ClaimExpense</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ClaimRebookedFlight</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Customer</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AbstractSObjectWrapper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Currencies</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CaseFormJSONV2</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CaseFormV2</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RedeemCompensationCard</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RedeemCompensationCardJSON</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CreateClaimRequest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RedeemCompensationCardRequest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>Accounts</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -81,6 +129,10 @@
     </classAccesses>
 	<classAccesses>
         <apexClass>RefundRequestService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RouteCaseAndSetPriority</apexClass>
         <enabled>true</enabled>
     </classAccesses>
 	<classAccesses>
@@ -1293,6 +1345,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>FlightIrregularities__c.Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>FlightIrregularities__c.Cancellation_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

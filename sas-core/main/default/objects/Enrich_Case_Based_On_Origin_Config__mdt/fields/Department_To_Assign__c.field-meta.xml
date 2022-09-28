@@ -31,11 +31,6 @@
                 <label>Customer Claim</label>
             </value>
             <value>
-                <fullName>Vendor Management</fullName>
-                <default>false</default>
-                <label>Vendor Management</label>
-            </value>
-            <value>
                 <fullName>Digital Channel Support</fullName>
                 <default>false</default>
                 <label>Digital Channel Support</label>
@@ -44,6 +39,11 @@
                 <fullName>Direct Sales</fullName>
                 <default>false</default>
                 <label>Direct Sales</label>
+            </value>
+            <value>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+                <label>Distribution</label>
             </value>
             <value>
                 <fullName>EuroBonus</fullName>
@@ -104,6 +104,11 @@
                 <fullName>SoMe Support</fullName>
                 <default>false</default>
                 <label>SoMe Support</label>
+            </value>
+            <value>
+                <fullName>Vendor Management</fullName>
+                <default>false</default>
+                <label>Vendor Management</label>
             </value>
         </valueSetDefinition>
     </valueSet>

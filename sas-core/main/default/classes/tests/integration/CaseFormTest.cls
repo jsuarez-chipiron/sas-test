@@ -744,7 +744,7 @@ private class CaseFormTest {
     ];
 
     System.assertEquals(
-      Claims.getRecordTypeId(Claims.RecordType.CompensationCard),
+      Claim.getRecordTypeIdByEnum(Claim.RecordType.CompensationCard),
       cl.RecordTypeId,
       'Record type should be set to compensation card.'
     );
@@ -760,9 +760,9 @@ private class CaseFormTest {
   public static void shouldCreateAndPrioritiseCasesCorrectly() {
     //Given
     // Create EB accounts
-    List<Account> newAccounts = FCS_TestDataFactory.createFrequentFlyers(3);
+    List<Account> newAccounts = FCS_TestDataFactory.createFrequentFlyers(5);
     List<Account> newAccountsWithCorrectEBLevel = new List<Account>{};
-    List<String> EBLevels = new List<String>{ 'B', 'D', 'P' };
+    List<String> EBLevels = new List<String>{ 'B', 'D', 'P', 'B', 'B' };
     List<CaseFormJSON2Apex> requestBodies = new List<CaseFormJSON2Apex>{};
 
     for (Integer i = 0; i < newAccounts.size(); i++) {
@@ -779,6 +779,16 @@ private class CaseFormTest {
       a.Phone = phone;
       a.FCS_EBLevel__c = EBLevel;
       newAccountsWithCorrectEBLevel.add(a);
+      String isMinor = 'false';
+      String hasReducedMobility = 'false';
+
+      if (i == 3) {
+        isMinor = 'true';
+      }
+      if (i == 4) {
+        hasReducedMobility = 'true';
+      }
+
       requestBodies.add(
         CaseFormJSON2Apex.parse(
           '{ ' +
@@ -807,6 +817,12 @@ private class CaseFormTest {
           '    "claimCategory": "accident-and-injury",' +
           '    "claimType": "other",' +
           '    "preferredCompensationMethod": "voucher",' +
+          '    "unaccompaniedMinor": ' +
+          isMinor +
+          ',' +
+          '    "personWithReducedMobility": ' +
+          hasReducedMobility +
+          ',' +
           '    "bookingReference": "' +
           EBLevel +
           '12",' +
@@ -829,9 +845,11 @@ private class CaseFormTest {
 
     Map<Id, String> accountToPriority = new Map<Id, String>{
       newAccountsWithCorrectEBLevel[0].Id => 'Medium',
-      newAccountsWithCorrectEBLevel[1].Id => 'High',
-      newAccountsWithCorrectEBLevel[2].Id => 'Medium'
-    }; // Medium, check this
+      newAccountsWithCorrectEBLevel[1].Id => 'Medium', //Disabled EBG/EBD priority for now
+      newAccountsWithCorrectEBLevel[2].Id => 'Medium',
+      newAccountsWithCorrectEBLevel[3].Id => 'Medium',
+      newAccountsWithCorrectEBLevel[4].Id => 'Medium'
+    };
 
     // When
     Test.setMock(HttpCalloutMock.class, new APIMMock());
@@ -1036,6 +1054,11 @@ private class CaseFormTest {
       WHERE Id IN :caseOwnerIds
     ];
 
+    System.assertEquals(
+      4,
+      newAccounts.size(),
+      'Accounts were not correctly created'
+    );
     for (Account a : newAccounts) {
       LIA_Claim__c claim;
       Case newCase;
@@ -1188,6 +1211,11 @@ private class CaseFormTest {
       WHERE Id = :cases[0].OwnerId
     ][0];
 
+    System.assertEquals(
+      1,
+      newAccounts.size(),
+      'Accounts were not correctly created'
+    );
     for (Account a : newAccounts) {
       LIA_Claim__c claim;
       Case newCase;
@@ -1200,8 +1228,225 @@ private class CaseFormTest {
       System.assertEquals(
         correctGroup.Name,
         assignedQueueGroup.Name,
-        'Should assign a case with high claim costs to a special queue.'
+        'Should assign a case with high claim costs to a special queue (' +
+        correctGroup.Name +
+        ').'
       );
     }
+  }
+
+  @isTest
+  static void shouldRouteClaimsWithFlightDisruptionsExpensesToSpecialQueue() {
+    ContentVersion receiptFile = new ContentVersion(
+      Title = 'Receipt',
+      PathOnClient = 'Receipt 1.txt',
+      VersionData = Blob.valueOf('Test Content 2'),
+      IsMajorVersion = true
+    );
+
+    insert new List<SObject>{ receiptFile };
+
+    List<Account> newAccounts = FCS_TestDataFactory.createFrequentFlyers(1);
+    List<Account> newAccountsWithCorrectEBLevel = new List<Account>{};
+    List<String> EBLevels = new List<String>{ 'B' };
+    List<CaseFormJSON2Apex> requestBodies = new List<CaseFormJSON2Apex>{};
+
+    for (Integer i = 0; i < newAccounts.size(); i++) {
+      Account a = newAccounts[i];
+      String EBLevel = EBLevels[i];
+      String EBNumber = a.FCS_EBNumber__c;
+      a.FCS_EBLevel__c = EBLevel;
+      newAccountsWithCorrectEBLevel.add(a);
+      requestBodies.add(
+        CaseFormJSON2Apex.parse(
+          '{ ' +
+          '  "formData": {' +
+          '    "type": "claim",' +
+          '    "claimCategory": "flight-disruptions",' +
+          '    "claimType": "flight-delay",' +
+          //
+          '    "contactType": "private",' +
+          '    "email": "test@example.com",' +
+          '    "phone": "000000000",' +
+          '    "firstName": "Test",' +
+          '    "lastName": "Testsson",' +
+          '    "address": "Frösundaviks allé 1",' +
+          '    "postalCode":"16970",' +
+          '    "city": "Solna",' +
+          '    "country": "SE",' +
+          '    "euroBonusNumber": "' +
+          EBNumber +
+          '",' +
+          '    "companyCode": "ABC",' +
+          '    "companyName": "Test Aktiebolag",' +
+          '    "referenceNumber": "1234567890",' +
+          //
+          '    "bankAccountHolderName": "Test Testsson",' +
+          '    "bankAccountNumber": "FI0000000000000000",' +
+          '    "bankCountry": "FI",' +
+          '    "bankName": "S-Pankki",' +
+          '    "bankBic": "SBANFIHH",' +
+          //
+          '    "unaccompaniedMinor": true,' +
+          '    "personWithReducedMobility": true,' +
+          //
+          '    "comment": "An angry comment.",' +
+          //
+          '    "delayLength": "2-3",' +
+          '    "preferredCurrency": "EUR",' +
+          '    "preferredCompensationMethod": "eurobonus",' +
+          '    "preferredReimbursementMethod": "monetary",' +
+          //
+          '    "departureDate": "2022-03-02",' +
+          '    "flightNumber": "SK1234",' +
+          '    "bookingReference": "TEST12",' +
+          '    "passengerIrregularityReportNumber": "TEST13",' +
+          //
+          '    "expenses": [' +
+          '      { "expenseType": "food", "expenseCurrency": "SEK", "amount": 300, "receiptFileId": ["' +
+          receiptFile.Id +
+          '"] }],' +
+          '    "travelers": [' +
+          '      { "firstName": "Test", "lastName": "Testsson"},' +
+          '      { "firstName": "Test", "lastName": "Testsdottir"}' +
+          '    ]' +
+          '  },' +
+          '  "metaData": {' +
+          '    "market": "dk-da"' +
+          '  }' +
+          '}'
+        )
+      );
+    }
+
+    insert newAccountsWithCorrectEBLevel;
+
+    // When
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    Test.startTest();
+    Set<String> responseCaseNumbers = new Set<String>{};
+    for (
+      CaseFormJSON2Apex formData : new List<CaseFormJSON2Apex>{
+        requestBodies[0]
+      }
+    ) {
+      responseCaseNumbers.add(CaseForm.createCase(formData).caseNumber);
+    }
+    Test.StopTest();
+
+    Group correctGroup = [
+      SELECT Id, Name
+      FROM Group
+      WHERE Name = 'Claims - Flight Disruptions Expenses'
+    ][0];
+
+    // Then
+    List<Case> cases = [
+      SELECT Id, OwnerId, AccountId
+      FROM Case
+      WHERE CaseNumber IN :responseCaseNumbers
+    ];
+
+    Group assignedQueueGroup = [
+      SELECT Name, Id
+      FROM Group
+      WHERE Id = :cases[0].OwnerId
+    ][0];
+
+    System.assertEquals(
+      1,
+      newAccounts.size(),
+      'Accounts were not correctly created'
+    );
+    for (Account a : newAccounts) {
+      LIA_Claim__c claim;
+      Case newCase;
+      for (Case c : cases) {
+        if (c.AccountId == a.Id) {
+          newCase = c;
+        }
+      }
+
+      System.assertEquals(
+        correctGroup.Name,
+        assignedQueueGroup.Name,
+        'Should assign a case with high claim costs to a special queue (' +
+        correctGroup.Name +
+        ').'
+      );
+    }
+  }
+
+  @isTest
+  public static void shouldRouteClaimsWithCompensationCardToSpecialQueue() {
+    // Given
+    TestDataFactories.insertEmailTemplates(
+      new Set<String>{
+        ClaimService.COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME,
+        ClaimService.COMPENSATION_CARD_SUCCESS_EMAIL_TEMPLATE_NAME
+      }
+    );
+
+    CaseFormJSON2Apex requestBody = CaseFormJSON2Apex.parse(
+      '{ ' +
+      '  "formData\": {' +
+      '    "type": "compensation-card",' +
+      '    "email": "test@example.com",' +
+      '    "firstName": "Test",' +
+      '    "lastName": "Testsson",' +
+      '    "phone": "000000000",' +
+      '    "address": "Frösundavik\'s allé 1",' +
+      '    "postalCode": "000000",' +
+      '    "city": "Stockholm",' +
+      '    "country": "SE",' +
+      '    "contactType": "private",' +
+      '    "compensationCardId": "SK12345678",' +
+      '    "preferredCompensationMethod": "voucher",' +
+      '    "bookingReference": "TEST12"' +
+      '  },' +
+      '  "metaData": {' +
+      '    "market": "dk-da"' +
+      '  }' +
+      '}'
+    );
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    Test.startTest();
+    CaseFormResponse response = CaseForm.createCase(requestBody);
+    Case caseToRoute = [
+      SELECT Id
+      FROM Case
+      WHERE CaseNumber = :response.caseNumber
+    ][0];
+    CaseService.assignPriorityAndRouteToQueue(new Set<Id>{ caseToRoute.Id });
+    Test.StopTest();
+
+    Case cases = [
+      SELECT Id, Status, OwnerId
+      FROM Case
+      WHERE CaseNumber = :response.caseNumber
+    ][0];
+
+    Group correctGroup = [
+      SELECT Id, Name
+      FROM Group
+      WHERE Name = 'Claims - Compensation Card'
+    ][0];
+
+    Group assignedQueueGroup = [
+      SELECT Name, Id
+      FROM Group
+      WHERE Id = :cases.OwnerId
+    ][0];
+
+    System.assertEquals(
+      correctGroup.Name,
+      assignedQueueGroup.Name,
+      'Should assign a case with high claim costs to a special queue (' +
+      correctGroup.Name +
+      ').'
+    );
   }
 }

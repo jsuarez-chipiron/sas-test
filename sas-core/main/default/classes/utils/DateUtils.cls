@@ -134,4 +134,36 @@ public without sharing class DateUtils {
 
     return minutes;
   }
+
+  /**
+   * Matches:
+   *  2021-10-13T04:13:00+01:00
+   *  2021-10-13T12:13:00-08:00
+   *  2021-10-13T12:13:00
+   * Non-Matches:
+   *  2021-10-13
+   *
+   * @param datetimeString String to validate
+   *
+   * @return true/false if it matches
+   */
+  public static Boolean isValidIsoDatetime(String datetimeString) {
+    Boolean isValid = false;
+    Pattern validIsoDatetime = Pattern.compile(
+      '^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d(\\.\\d+)?(([+-]\\d\\d:\\d\\d)|Z)?$'
+    );
+    if (validIsoDatetime.matcher(datetimeString).matches()) {
+      isValid = true;
+    }
+    return isValid;
+  }
+
+  /**
+   * @param datetimeString A String like: 2021-10-13T12:13:00
+   *
+   * @return The corresponding Apex Datetime
+   */
+  public static Datetime isoDatetimeToApexDateTime(String isoDateTime) {
+    return (Datetime) json.deserialize('"' + isoDateTime + '"', Datetime.class);
+  }
 }

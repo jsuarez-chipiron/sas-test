@@ -37,6 +37,7 @@ public without sharing class FlightDelayCertificateController {
     if (bookingId != null && !manualEntry) {
       List<Flight__c> flightsInBooking = FlightsSelector.newInstance()
         .selectByBookingIds(new Set<Id>{ bookingId });
+
       for (Flight__c flight : flightsInBooking) {
         String flightId = flight.TEDS_Identifier__c.substringBefore('-');
         FlightWrapper fw = new FlightWrapper();
@@ -62,6 +63,7 @@ public without sharing class FlightDelayCertificateController {
   public void createManualCertificateFromData() {
     List<Flight_Delay_Certificate_Request__c> requests = FlightDelayCertificateRequestsSelector.newInstance()
       .selectByIdFull(new Set<Id>{ fdcrId });
+    updateFdcr(requests[0]);
     Blob generatedCertificate = FlightDelayCertificateRequests.newInstance(
         requests
       )
@@ -111,6 +113,11 @@ public without sharing class FlightDelayCertificateController {
       ApexPages.currentPage().getParameters().get('index')
     );
     flightWrappers.remove(indexVal - 1);
+  }
+
+  public void updateFdcr(Flight_Delay_Certificate_Request__c fdcr) {
+    fdcr.Booking_Reference__c = bookingReference;
+    update fdcr;
   }
 
   /**

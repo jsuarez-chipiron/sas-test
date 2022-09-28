@@ -29,6 +29,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Distribution</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EuroBonus</fullName>
             <default>false</default>
         </values>
@@ -840,6 +844,10 @@
         </values>
         <values>
             <fullName>Child</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Claim created</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4670,6 +4678,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - CS Norway</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Corporate Support Backoffice</fullName>
             <default>false</default>
         </values>
@@ -5478,6 +5490,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CS Norway</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Chat</fullName>
             <default>false</default>
         </values>
@@ -5707,6 +5723,10 @@
         </values>
         <values>
             <fullName>Partner Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment Escalation</fullName>
             <default>false</default>
         </values>
         <values>

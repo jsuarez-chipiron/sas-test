@@ -277,6 +277,13 @@
                     <stringValue>SoMe Support</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>DepartmentTeamList.topValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Distribution</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Invalid_Department_Error</targetReference>
             </connector>
@@ -299,6 +306,7 @@
         <picklistField>Team__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <interviewLabel>Manual Case Creation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Create New Case</label>
     <processMetadataValues>

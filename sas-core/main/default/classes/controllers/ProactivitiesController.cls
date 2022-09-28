@@ -33,7 +33,7 @@ public without sharing class ProactivitiesController {
     List<Proactivity> proactivitiesWithMatchingReason = new List<Proactivity>();
     Map<Proactivity__c, String> proactivityToReason = proactivities.selectByCaseIdWithMatchingReasons(
       caseId
-    ); //
+    );
     List<Proactivity__c> proactivitiesFound = new List<Proactivity__c>(
       proactivityToReason.keySet()
     );
@@ -50,6 +50,6 @@ public without sharing class ProactivitiesController {
   public static List<Case> getCasesForProactivity(String proactivityId) {
     CasesSelector cases = CasesSelector.newInstance();
 
-    return cases.selectByProactivityId(proactivityId);
+    return cases.selectByProactivityId(proactivityId); // Limit here does not improve performance
   }
 }

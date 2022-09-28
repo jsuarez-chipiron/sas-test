@@ -171,11 +171,26 @@
             </connector>
             <label>Liability Claim</label>
         </rules>
+        <rules>
+            <name>Emergency_Claim</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Information.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_has_Settlements_to_approve</targetReference>
+            </connector>
+            <label>Emergency Claim</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Is_the_claim_result_valid</name>
         <label>Is the claim result valid?</label>
-        <locationX>710</locationX>
+        <locationX>622</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>InvalidResult</targetReference>
@@ -320,6 +335,7 @@
         </rules>
     </decisions>
     <description>New settlement validation v3</description>
+    <environments>Default</environments>
     <formulas>
         <name>resultText</name>
         <dataType>String</dataType>
@@ -370,7 +386,7 @@
     <recordLookups>
         <name>Get_Claim_Information</name>
         <label>Get Claim Information</label>
-        <locationX>710</locationX>
+        <locationX>622</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -391,7 +407,7 @@
     <recordLookups>
         <name>Get_Email_Draft_for_this_Case</name>
         <label>Get Email Draft for this Case</label>
-        <locationX>358</locationX>
+        <locationX>270</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -601,7 +617,7 @@
     <screens>
         <name>InvalidResult</name>
         <label>InvalidResult</label>
-        <locationX>798</locationX>
+        <locationX>710</locationX>
         <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>

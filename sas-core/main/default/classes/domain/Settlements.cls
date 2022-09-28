@@ -29,10 +29,6 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     Voucher
   }
 
-  /*public class SettlementItem {
-
-  }*/
-
   public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
     RecordType.Cheque => 'Cheque',
     RecordType.EBPoints => 'EB points',
@@ -126,6 +122,9 @@ public without sharing class Settlements extends fflib_SObjectDomain {
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
     normalizeFields();
+    removeSettlementItemsOnCurrencyChange(
+      (Map<Id, Settlement__c>) existingRecords
+    );
   }
 
   public Settlements markAsSentToRacer(
@@ -574,13 +573,13 @@ public without sharing class Settlements extends fflib_SObjectDomain {
       settlementsByClaimId.put(s.Claim__c, s);
     }
 
-    for (LIA_Claim__c claim : cardClaims) {
+    for (LIA_Claim__c cl : cardClaims) {
       Redeemed_Compensation_Card__c compensationCardForClaim = compensationCardByClaimId.get(
-        claim.Id
+        cl.Id
       );
       if (
-        claim.RecordTypeId !=
-        Claims.getRecordTypeId(Claims.RecordType.CompensationCard) ||
+        cl.RecordTypeId !=
+        Claim.getRecordTypeIdByEnum(Claim.RecordType.CompensationCard) ||
         compensationCardForClaim == null
       ) {
         throw new CreateException(
@@ -588,14 +587,14 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         );
       }
 
-      Settlement__c settlementToCreate = settlementsByClaimId.get(claim.Id);
-      settlementToCreate.Currency__c = compensationCardForClaim.Currency__c;
-
-      if (claim.Preferred_Compensation_Method__c == 'Voucher') {
+      if (cl.Preferred_Compensation_Method__c == 'Voucher') {
         // There are several different voucher sybtypes issued as compensation
         // cards. The subtype always begins with either IDB, IDG, VDB, or VDG
         // for the different compensation situations. We can map these to the
         // existing voucher cost accounts like this.
+
+        Settlement__c settlementToCreate = settlementsByClaimId.get(cl.Id);
+
         String voucherSubTypeCategory = String.isBlank(
             compensationCardForClaim.Sub_Type__c
           ) || compensationCardForClaim.Sub_Type__c.length() < 3
@@ -641,8 +640,42 @@ public without sharing class Settlements extends fflib_SObjectDomain {
             compensationCardForClaim.Amount__c;
           itemToCreate.Cost_Account__c = '';
         }
-        when 'Monetary' {
-          itemToCreate.Amount__c = compensationCardForClaim.Amount__c;
+        when 'Voucher' {
+          settlement.Currency__c = compensationCardForClaim.Currency__c;
+
+          itemToCreate.Amount__c =
+            CONVERSION_RATE_EUR_TO_VOUCHER_EUR *
+            compensationCardForClaim.Amount__c;
+        }
+        when else {
+          String country = claim.Bank_Country__c;
+
+          Settlement_Country_Setting__mdt bankCurrency = [
+            SELECT Default_Currency__c
+            FROM Settlement_Country_Setting__mdt
+            WHERE Country_Name__c = :country
+          ];
+          settlement.Currency__c = bankCurrency.Default_Currency__c;
+
+          List<Exchange_Rate__c> er = exchangeRatesSel.selectByCurrencies(
+            compensationCardForClaim.Currency__c,
+            settlement.Currency__c
+          );
+
+          if (compensationCardForClaim.Currency__c != settlement.Currency__c) {
+            if (er.isEmpty()) {
+              throw new CreateException(
+                'Exchange rate does not exist ' +
+                compensationCardForClaim.Currency__c +
+                '-' +
+                settlement.Currency__c
+              );
+            }
+            itemToCreate.Amount__c =
+              compensationCardForClaim.Amount__c * er[0].Rate__c;
+          } else {
+            itemToCreate.Amount__c = compensationCardForClaim.Amount__c;
+          }
 
           // There are several different voucher sybtypes issued as compensation
           // cards. The subtype always begins with either IDB, IDG, VDB, or VDG
@@ -670,16 +703,6 @@ public without sharing class Settlements extends fflib_SObjectDomain {
               itemToCreate.Cost_Account__c = '6721';
             }
           }
-        }
-        when 'Voucher' {
-          itemToCreate.Amount__c =
-            CONVERSION_RATE_EUR_TO_VOUCHER_EUR *
-            compensationCardForClaim.Amount__c;
-        }
-        when else {
-          // Default to monetary
-          itemToCreate.Amount__c = compensationCardForClaim.Amount__c;
-          itemToCreate.Cost_Account__c = '6721'; // TODO: Set this based on compensation card type.
         }
       }
 
@@ -1072,6 +1095,23 @@ public without sharing class Settlements extends fflib_SObjectDomain {
         settlement.Bank_Account_Number__c = StringUtils.removeWhitespace(
           settlement.Bank_Account_Number__c.toUpperCase()
         );
+      }
+    }
+  }
+
+  private void removeSettlementItemsOnCurrencyChange(
+    Map<Id, Settlement__c> existingRecords
+  ) {
+    for (Settlement__c settlement : instanceRecords) {
+      if (
+        settlement.Currency__c != existingRecords.get(Settlement.Id).Currency__c
+      ) {
+        List<Settlement_Item__c> itemToDelete = settlementItemsSel.selectBySettlementIds(
+          new Set<Id>{ Settlement.Id }
+        );
+        settlement.Amount__c = 0;
+        settlement.Settlement_amount_in_SEK__c = 0;
+        delete itemToDelete;
       }
     }
   }

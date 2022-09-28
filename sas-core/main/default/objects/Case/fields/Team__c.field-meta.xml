@@ -157,6 +157,11 @@
                 <label>Compensation Card</label>
             </value>
             <value>
+                <fullName>CS Norway</fullName>
+                <default>false</default>
+                <label>CS Norway</label>
+            </value>
+            <value>
                 <fullName>Customer Feedback</fullName>
                 <default>false</default>
                 <label>Customer Feedback</label>
@@ -468,6 +473,11 @@
                 <fullName>Partner Support</fullName>
                 <default>false</default>
                 <label>Partner Support</label>
+            </value>
+            <value>
+                <fullName>Payment Escalation</fullName>
+                <default>false</default>
+                <label>Payment Escalation</label>
             </value>
             <value>
                 <fullName>PL</fullName>
@@ -1033,6 +1043,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Customer Claim</controllingFieldValue>
+            <valueName>Payment Escalation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
             <valueName>Proration</valueName>
         </valueSettings>
         <valueSettings>
@@ -1110,6 +1124,10 @@
         <valueSettings>
             <controllingFieldValue>Fraud</controllingFieldValue>
             <valueName>EMEA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Distribution</controllingFieldValue>
+            <valueName>CS Norway</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

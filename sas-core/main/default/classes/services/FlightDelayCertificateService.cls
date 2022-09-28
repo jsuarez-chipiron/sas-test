@@ -39,6 +39,9 @@ public without sharing class FlightDelayCertificateService {
       Flight_Number__c = Flights.normalizeFlightNumber(
         form.formdata.flightNumber
       ),
+      Flight_Date__c = String.isBlank(form.formdata.departureDate)
+        ? null
+        : Date.valueOf(form.formdata.departureDate),
       Case__c = caseToInsert.Id
     );
 
@@ -49,6 +52,96 @@ public without sharing class FlightDelayCertificateService {
     );
 
     return '';
+  }
+
+  public static void sendFlightDelayCertificate(
+    String caseId,
+    List<Flight_Delay_Certificate_Request__c> insertedRequests,
+    List<Booking__c> insertedBookings
+  ) {
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    FlightDelayCertificateRequests newRequests = FlightDelayCertificateRequests.newInstance(
+      insertedRequests
+    );
+    Flight_Delay_Certificate_Request__c currentRequest = newRequests.instanceRecords[0];
+
+    Booking__c currentBooking = null;
+
+    Boolean isValidBooking = false;
+
+    Cases insertedCase = Cases.newInstance(
+      CasesSelector.newInstance().selectById(new Set<Id>{ caseId })
+    );
+
+    if (insertedBookings.size() > 0) {
+      Bookings bookings = Bookings.newInstance(insertedBookings);
+      bookings.reloadFullBookingData();
+      currentBooking = bookings.fullRecords[0].booking;
+
+      Boolean bookingHasDelays = bookings.haveDelayedOrCancelledFlights()
+        .get(currentBooking.Id);
+      Boolean passengerInBooking = bookings.containsPassenger(
+          currentRequest.Contact_Last_Name__c
+        )
+        .get(currentBooking.Id);
+      Boolean enteredFlightInBooking = bookings.containsFlight(
+          currentRequest.Flight_Number__c +
+          '-' +
+          String.valueOf(currentRequest.Flight_Date__c).replace('-', '')
+        )
+        .get(currentBooking.Id);
+      isValidBooking =
+        bookingHasDelays &&
+        passengerInBooking &&
+        enteredFlightInBooking;
+    }
+
+    String nameOfEmailTemplateToUse = isValidBooking
+      ? TEMPLATE_IF_VALID_BOOKING
+      : TEMPLATE_IF_INVALID_BOOKING;
+
+    Messaging.SingleEmailMessage emailToSend = EmailMessages.createSingleEmailMessageFromTemplate(
+      nameOfEmailTemplateToUse,
+      caseId
+    );
+    emailToSend.setReplyTo(replyToAddress);
+    // Send delay certificate if associated booking contains delayed/cancelled flights.
+    // If booking does not exist or if the associated booking does not contain delayed/cancelled flights, we send a generic response
+    if (isValidBooking) {
+      String fileName =
+        currentRequest.Contact_Full_Name__c +
+        '_' +
+        currentRequest.Booking_Reference__c +
+        '.pdf';
+      Blob fdcPdf = newRequests.generateFlightDelayCertificate(
+        currentBooking.Id
+      );
+
+      Messaging.EmailFileAttachment pdfToAttach = EmailMessages.createEmailAttachmentFromBlob(
+        fdcPdf,
+        fileName,
+        'application/pdf'
+      );
+      emailToSend.setFileAttachments(
+        new List<Messaging.EmailFileAttachment>{ pdfToAttach }
+      );
+    }
+
+    insertedCase.emailOwner(emailToSend, uow).close(uow);
+
+    try {
+      uow.commitWork();
+    } catch (Exception e) {
+      C_Log.log(
+        C_Log.Severity.Error,
+        e.getTypeName() +
+        ': ' +
+        e.getMessage(),
+        e.getStackTraceString(),
+        'FlightDelayCertificateService',
+        null
+      );
+    }
   }
 
   public without sharing class AddBookingForRequest implements Queueable, Database.AllowsCallouts {
@@ -63,14 +156,22 @@ public without sharing class FlightDelayCertificateService {
     public void execute(QueueableContext ctx) {
       List<Flight_Delay_Certificate_Request__c> insertedRequests = FlightDelayCertificateRequestsSelector.newInstance()
         .selectByIdFull(new Set<Id>{ this.certificateRequestId });
-      BookingService.addBookingToCase(
+      Bookings bookings = BookingService.addBookingToCase(
         caseId,
         insertedRequests[0].Booking_Reference__c
       );
+      List<Booking__c> insertedBookings = bookings != null
+        ? bookings.instanceRecords
+        : new List<Booking__c>();
+
       //Chained Queueables are not allowing in tests
       if (!Test.isRunningTest()) {
         System.enqueueJob(
-          new FlightDelayCertificateSend(caseId, insertedRequests)
+          new FlightDelayCertificateSend(
+            caseId,
+            insertedRequests,
+            insertedBookings
+          )
         );
       }
     }
@@ -78,86 +179,22 @@ public without sharing class FlightDelayCertificateService {
   public without sharing class FlightDelayCertificateSend implements Queueable, Database.AllowsCallouts {
     private String caseId;
     private List<Flight_Delay_Certificate_Request__c> insertedRequests;
+    private List<Booking__c> insertedBookings;
     public FlightDelayCertificateSend(
       String caseId,
-      List<Flight_Delay_Certificate_Request__c> insertedRequests
+      List<Flight_Delay_Certificate_Request__c> insertedRequests,
+      List<Booking__c> insertedBookings
     ) {
       this.caseId = caseId;
       this.insertedRequests = insertedRequests;
+      this.insertedBookings = insertedBookings;
     }
     public void execute(QueueableContext ctx) {
-      fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-      Boolean bookingHasDelays = false;
-      Booking__c currentBooking;
-
-      Cases insertedCase = Cases.newInstance(
-        CasesSelector.newInstance().selectById(new Set<Id>{ this.caseId })
+      sendFlightDelayCertificate(
+        this.caseId,
+        this.insertedRequests,
+        this.insertedBookings
       );
-
-      FlightDelayCertificateRequests newRequests = FlightDelayCertificateRequests.newInstance(
-        this.insertedRequests
-      );
-
-      List<Booking__c> bookingsForPassenger = BookingsSelector.newInstance()
-        .selectByLastNameAndBookingReference(
-          newRequests.instanceRecords[0].Contact_Last_Name__c,
-          newRequests.instanceRecords[0].Booking_Reference__c
-        );
-      Map<Id, Boolean> bookingsIdToIrrStatus = Bookings.newInstance(
-          bookingsForPassenger
-        )
-        .haveDelayedOrCancelledFlights();
-      // Only handle one booking at a time
-      if (bookingsForPassenger.size() == 1) {
-        currentBooking = bookingsForPassenger[0];
-        bookingHasDelays = bookingsIdToIrrStatus.get(currentBooking.Id);
-      }
-      String nameOfEmailTemplateToUse = bookingHasDelays
-        ? TEMPLATE_IF_VALID_BOOKING
-        : TEMPLATE_IF_INVALID_BOOKING;
-
-      Messaging.SingleEmailMessage emailToSend = EmailMessages.createSingleEmailMessageFromTemplate(
-        nameOfEmailTemplateToUse,
-        this.caseId
-      );
-      emailToSend.setReplyTo(replyToAddress);
-      // Send delay certificate if associated booking contains delayed/cancelled flights.
-      // If booking does not exist or if the associated booking does not contain delayed/cancelled flights, we send a generic response
-      if (bookingHasDelays) {
-        String fileName =
-          newRequests.instanceRecords[0].Contact_Full_Name__c +
-          '_' +
-          newRequests.instanceRecords[0].Booking_Reference__c +
-          '.pdf';
-        Blob fdcPdf = newRequests.generateFlightDelayCertificate(
-          currentBooking.Id
-        );
-
-        Messaging.EmailFileAttachment pdfToAttach = EmailMessages.createEmailAttachmentFromBlob(
-          fdcPdf,
-          fileName,
-          'application/pdf'
-        );
-        emailToSend.setFileAttachments(
-          new List<Messaging.EmailFileAttachment>{ pdfToAttach }
-        );
-      }
-
-      insertedCase.emailOwner(emailToSend, uow).close(uow);
-
-      try {
-        uow.commitWork();
-      } catch (Exception e) {
-        C_Log.log(
-          C_Log.Severity.Error,
-          e.getTypeName() +
-          ': ' +
-          e.getMessage(),
-          e.getStackTraceString(),
-          'FlightDelayCertificateService',
-          null
-        );
-      }
     }
   }
 }

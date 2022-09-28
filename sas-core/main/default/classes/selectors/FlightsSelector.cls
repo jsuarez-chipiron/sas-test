@@ -89,6 +89,21 @@ public inherited sharing class FlightsSelector extends fflib_SObjectSelector {
     return selectById(flightIds);
   }
 
+  public List<Flight__c> selectBybookingReference(
+    Set<String> bookingReference
+  ) {
+    List<Booking__c> bookings = BookingsSelector.newInstance()
+      .selectByBookingReference(bookingReference);
+    List<Flight__c> toReturn = new List<Flight__c>{};
+    for (Booking__c b : bookings) {
+      for (Segment__c s : b.Segments__r) {
+        toReturn.add(s.Flight__r);
+      }
+    }
+
+    return toReturn;
+  }
+
   public override String getOrderBy() {
     return 'TEDS_Identifier__c';
   }

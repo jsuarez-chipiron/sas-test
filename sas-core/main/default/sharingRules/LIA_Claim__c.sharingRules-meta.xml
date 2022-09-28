@@ -43,4 +43,18 @@
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Sharing_emergency_claims_with_emergency_group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Sharing emergency claims with emergency group</label>
+        <sharedTo>
+            <group>Emergency</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>EmergencyClaim</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
 </SharingRules>

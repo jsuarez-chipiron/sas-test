@@ -455,6 +455,11 @@ public with sharing class Claims_IntegrationTest {
     String bookingReference = 'pppppp';
     String cardNumber = '0123456789';
 
+    Group compensationCardQueue = GroupsSelector.newInstance()
+      .selectQueuesByDeveloperName(
+        new Set<String>{ ClaimService.COMPENSATION_CARD_OMNI_QUEUE_NAME }
+      )[0];
+
     Redeemed_Compensation_Card__c redeemedCard = new Redeemed_Compensation_Card__c(
       Booking_Reference__c = bookingReference,
       Compensation_Card_Number__c = cardNumber
@@ -469,8 +474,8 @@ public with sharing class Claims_IntegrationTest {
         LIA_Claim__c.Compensation_Card_Number__c => cardNumber,
         LIA_Claim__c.Liability_PNR__c => bookingReference,
         LIA_Claim__c.Customer_Claim_Category__c => 'Compensation Card',
-        LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
-          Claims.RecordType.CompensationCard
+        LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
+          Claim.RecordType.CompensationCard
         )
       }
     );
@@ -493,11 +498,20 @@ public with sharing class Claims_IntegrationTest {
       settlementsForClaim.size(),
       'No settlements should have been created'
     );
-    Case caseAfterAttempt = [SELECT Id, Status FROM Case WHERE Id = :c.Id];
+    Case caseAfterAttempt = [
+      SELECT Id, Status, OwnerId
+      FROM Case
+      WHERE Id = :c.Id
+    ];
     System.assertEquals(
       Cases.STATUS_CLOSED,
       caseAfterAttempt.Status,
       'Case should have been closed.'
+    );
+    System.assertEquals(
+      compensationCardQueue.Id,
+      caseAfterAttempt.OwnerId,
+      'Case should have been assigned to the Compensation Card queue.'
     );
   }
 
@@ -513,6 +527,11 @@ public with sharing class Claims_IntegrationTest {
     String bookingReference = 'nnnnnn';
     String cardNumber = '0000000';
 
+    Group compensationCardQueue = GroupsSelector.newInstance()
+      .selectQueuesByDeveloperName(
+        new Set<String>{ ClaimService.COMPENSATION_CARD_OMNI_QUEUE_NAME }
+      )[0];
+
     TestDataFactories.CasesClaims createdCasesClaims = TestDataFactories.createCasesWithClaims(
       1,
       null,
@@ -522,8 +541,8 @@ public with sharing class Claims_IntegrationTest {
         LIA_Claim__c.Liability_PNR__c => bookingReference,
         LIA_Claim__c.Customer_Claim_Category__c => 'Compensation Card',
         LIA_Claim__c.Preferred_Compensation_Method__c => 'Monetary',
-        LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
-          Claims.RecordType.CompensationCard
+        LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
+          Claim.RecordType.CompensationCard
         )
       }
     );
@@ -558,11 +577,20 @@ public with sharing class Claims_IntegrationTest {
       'No redeemed compensation cards should have been created.'
     );
 
-    Case caseAfterAttempt = [SELECT Id, Status FROM Case WHERE Id = :c.Id];
+    Case caseAfterAttempt = [
+      SELECT Id, Status, OwnerId
+      FROM Case
+      WHERE Id = :c.Id
+    ];
     System.assertEquals(
       Cases.STATUS_CLOSED,
       caseAfterAttempt.Status,
       'Case should have been closed.'
+    );
+    System.assertEquals(
+      compensationCardQueue.Id,
+      caseAfterAttempt.OwnerId,
+      'Case should have been assigned to the Compensation Card queue.'
     );
   }
 
@@ -577,24 +605,36 @@ public with sharing class Claims_IntegrationTest {
 
     String bookingReference = APIMMock.VOUCHER_VALID_PNR;
     String cardNumber = APIMMock.VOUCHER_VALID_CARD_ID;
+    Group compensationCardQueue = GroupsSelector.newInstance()
+      .selectQueuesByDeveloperName(
+        new Set<String>{ ClaimService.COMPENSATION_CARD_OMNI_QUEUE_NAME }
+      )[0];
 
     TestDataFactories.CasesClaims createdCasesClaims = TestDataFactories.createCasesWithClaims(
       1,
       null,
       new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Bank_Account_Number__c => '1234',
-        LIA_Claim__c.Bank_Country__c => 'China',
+        LIA_Claim__c.Bank_Account_Number__c => 'SE7280000810340009783242',
+        LIA_Claim__c.Bank_Country__c => 'Sweden',
         LIA_Claim__c.Bank_Account_Holder_Name__c => 'Teemu Teekkari',
-        LIA_Claim__c.BIC_Swift__c => 'XXXXXXXX',
+        LIA_Claim__c.BIC_Swift__c => 'AAAABBCC',
         LIA_Claim__c.Compensation_Card_Number__c => cardNumber,
         LIA_Claim__c.Liability_PNR__c => bookingReference,
         LIA_Claim__c.Customer_Claim_Category__c => 'Compensation Card',
         LIA_Claim__c.Preferred_Compensation_Method__c => 'Monetary',
-        LIA_Claim__c.RecordTypeId => Claims.getRecordTypeId(
-          Claims.RecordType.CompensationCard
+        LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
+          Claim.RecordType.CompensationCard
         )
       }
     );
+    Exchange_Rate__c rate = new Exchange_Rate__c(
+      Name = 'EUR-SEK',
+      From_Currency__c = 'EUR',
+      To_Currency__c = 'SEK',
+      Date__c = Date.Today(),
+      Rate__c = 2
+    );
+    insert rate;
 
     Case c = createdCasesClaims.cases[0];
     LIA_Claim__c claim = createdCasesClaims.claims[0];
@@ -620,7 +660,7 @@ public with sharing class Claims_IntegrationTest {
       'Settlement should be waiting for transfer.'
     );
     System.assertEquals(
-      400,
+      800,
       settlementsForClaim[0].Amount__c,
       'Settlement amount should match compensation card value.'
     );
@@ -634,12 +674,21 @@ public with sharing class Claims_IntegrationTest {
       compensationCards.size(),
       'The compensation card should be marked as redeemed.'
     );
-    Case caseAfterAttempt = [SELECT Id, Status FROM Case WHERE Id = :c.Id];
+    Case caseAfterAttempt = [
+      SELECT Id, Status, OwnerId
+      FROM Case
+      WHERE Id = :c.Id
+    ];
 
     System.assertEquals(
       Cases.STATUS_CLOSED,
       caseAfterAttempt.Status,
       'Case should have been closed.'
+    );
+    System.assertEquals(
+      compensationCardQueue.Id,
+      caseAfterAttempt.OwnerId,
+      'Case should have been assigned to the Compensation Card queue.'
     );
   }
   @IsTest

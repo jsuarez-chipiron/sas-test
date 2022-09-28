@@ -94,11 +94,13 @@ public with sharing class TestDataFactories {
         Status = Cases.STATUS_IN_PROGRESS,
         SuppliedEmail = 'test@example.com'
       );
-      LIA_Claim__c claim = new LIA_Claim__c(
+      LIA_Claim__c cl = new LIA_Claim__c(
         Customer_Claim_Category__c = 'Flight disruptions',
         Liability_PNR__c = 'ABC123',
         PIR__c = 'ARNSK12345',
-        RecordTypeId = Claims.getRecordTypeId(Claims.RecordType.CustomerClaim)
+        RecordTypeId = Claim.getRecordTypeIdByEnum(
+          Claim.RecordType.CustomerClaim
+        )
       );
 
       if (fieldsForCases != null) {
@@ -109,11 +111,11 @@ public with sharing class TestDataFactories {
 
       if (fieldsForClaims != null) {
         for (Schema.SObjectField field : fieldsForClaims.keySet()) {
-          claim.put(field, fieldsForClaims.get(field));
+          cl.put(field, fieldsForClaims.get(field));
         }
       }
       casesToCreate.add(c);
-      claimsToCreate.add(claim);
+      claimsToCreate.add(cl);
     }
     List<SObject> allToCreate = new List<SObject>();
     allToCreate.addAll((List<SObject>) casesToCreate);
@@ -122,9 +124,9 @@ public with sharing class TestDataFactories {
 
     for (Integer i = 0; i < count; i++) {
       Case c = casesToCreate[i];
-      LIA_Claim__c claim = claimsToCreate[i];
-      c.LIA_Claim__c = claim.Id;
-      claim.Case__c = c.Id;
+      LIA_Claim__c cl = claimsToCreate[i];
+      c.LIA_Claim__c = cl.Id;
+      cl.Case__c = c.Id;
     }
 
     update allToCreate;

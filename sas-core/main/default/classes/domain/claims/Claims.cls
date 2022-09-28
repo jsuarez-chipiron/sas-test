@@ -2,7 +2,15 @@ public without sharing class Claims extends fflib_SObjectDomain {
   public Claims(List<SObject> records) {
     super(records);
     Configuration.disableTriggerCRUDSecurity();
+
     this.instanceRecords = (List<LIA_Claim__c>) Records;
+
+    List<Claim> claimObjects = new List<Claim>();
+    for (LIA_Claim__c c : this.instanceRecords) {
+      claimObjects.add(new Claim(c));
+    }
+
+    this.objects = claimObjects;
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
@@ -15,56 +23,9 @@ public without sharing class Claims extends fflib_SObjectDomain {
     return (Claims) SAS_Service_Application.Domain.newInstance(sObjectList);
   }
 
+  public List<Claim> objects;
+
   public List<LIA_Claim__c> instanceRecords;
-
-  public enum RecordType {
-    CompensationCard,
-    CustomerClaim,
-    LiabilityClaim
-  }
-
-  public enum Category {
-    AccidentAndInjury,
-    AirportExperience,
-    Baggage,
-    Booking,
-    FlightDisruptions,
-    FlightExperience,
-    Other,
-    PassengerIrregularities,
-    TravelExtras
-  }
-
-  public static Map<String, Category> categoryNameToEnum = new Map<String, Category>{
-    'Accident &amp; injury' => Category.AccidentAndInjury,
-    'Airport experience' => Category.AirportExperience,
-    'Baggage' => Category.Baggage,
-    'Booking' => Category.Booking,
-    'Flight disruptions' => Category.FlightDisruptions,
-    'Flight experience' => Category.FlightExperience,
-    'Other' => Category.Other,
-    'Passenger irregularities' => Category.PassengerIrregularities,
-    'Travel extras bought not rendered' => Category.TravelExtras
-  };
-
-  public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
-    RecordType.CompensationCard => 'CompensationCard',
-    RecordType.CustomerClaim => 'CustomerClaim',
-    RecordType.LiabilityClaim => 'LiabilityClaim'
-  };
-
-  private static Map<RecordType, Id> recordTypeToId = new Map<RecordType, String>();
-
-  public static Id getRecordTypeId(RecordType rt) {
-    Id rtId = recordTypeToId.get(rt);
-    if (rtId == null) {
-      rtId = Schema.SObjectType.LIA_Claim__c.getRecordTypeInfosByName()
-        .get(recordTypeToDeveloperName.get(rt))
-        .getRecordTypeId();
-      recordTypeToId.put(rt, rtId);
-    }
-    return rtId;
-  }
 
   public override void onAfterInsert() {
     checkIfExistsInCARE();
@@ -101,15 +62,13 @@ public without sharing class Claims extends fflib_SObjectDomain {
    */
   public Map<Id, Boolean> canBeProrated() {
     Set<Id> parentCaseIds = new Set<Id>();
-    for (LIA_Claim__c claim : instanceRecords) {
+    for (Claim cl : objects) {
       Boolean isABaggageCaseWithSettlements =
-        categoryNameToEnum.get(claim.Customer_Claim_Category__c) ==
-        Category.Baggage &&
-        claim.Settlements__r != null &&
-        !claim.Settlements__r.isEmpty();
+        cl.category == Claim.Category.Baggage &&
+        !cl.underlyingSObject.Settlements__r.isEmpty();
 
       if (isABaggageCaseWithSettlements) {
-        parentCaseIds.add(claim.Case__c);
+        parentCaseIds.add(cl.parentCaseId);
       }
     }
 
@@ -130,16 +89,13 @@ public without sharing class Claims extends fflib_SObjectDomain {
 
     Map<Id, Boolean> claimIdsToProrationStatus = new Map<Id, Boolean>();
 
-    for (LIA_Claim__c claim : instanceRecords) {
-      claimIdsToProrationStatus.put(claim.Id, false);
-      if (
-        categoryNameToEnum.get(claim.Customer_Claim_Category__c) ==
-        Category.Baggage
-      ) {
+    for (Claim cl : objects) {
+      claimIdsToProrationStatus.put(cl.underlyingSObject.Id, false);
+      if (cl.category == Claim.Category.Baggage) {
         for (Booking__c booking : bookingsForInstanceClaims) {
-          if (booking.Booking_Reference__c == claim.Liability_PNR__c) {
+          if (booking.Booking_Reference__c == cl.bookingReference) {
             claimIdsToProrationStatus.put(
-              claim.Id,
+              cl.id,
               bookingIdsToProrationStatus.get(booking.Id)
             );
             break;
@@ -165,8 +121,8 @@ public without sharing class Claims extends fflib_SObjectDomain {
       .selectByClaimId((new Map<Id, LIA_Claim__c>(instanceRecords)).keySet());
 
     Set<Id> caseIds = new Set<Id>();
-    for (LIA_Claim__c claim : instanceRecords) {
-      caseIds.add(claim.Case__c);
+    for (Claim cl : objects) {
+      caseIds.add(cl.parentCaseId);
     }
     List<Case> casesForClaims = CasesSelector.newInstance().selectById(caseIds);
 
@@ -184,6 +140,48 @@ public without sharing class Claims extends fflib_SObjectDomain {
     LIA_Claim__c newClaim = new LIA_Claim__c();
 
     return newInstance(new List<LIA_Claim__c>{ newClaim });
+  }
+
+  public static Claims createFromClaims(List<Claim> listOfClaims) {
+    List<LIA_Claim__c> claimsToCreate = new List<LIA_Claim__c>();
+
+    for (Claim cl : listOfClaims) {
+      cl.updateSObjectFields();
+      claimsToCreate.add(cl.underlyingSObject);
+    }
+
+    return newInstance(claimsToCreate);
+  }
+
+  public Claims upsertToDB() {
+    for (Claim obj : this.objects) {
+      obj.updateSObjectFields();
+    }
+    upsert this.Records;
+
+    List<Claim> claimObjects = new List<Claim>();
+    for (LIA_Claim__c c : this.instanceRecords) {
+      claimObjects.add(new Claim(c));
+    }
+    this.objects = claimObjects;
+
+    return this;
+  }
+
+  public Claims upsertToDB(fflib_ISObjectUnitOfWork uow) {
+    for (Claim obj : this.objects) {
+      obj.updateSObjectFields();
+    }
+
+    for (LIA_Claim__c c : this.instanceRecords) {
+      if (c.Id == null) {
+        uow.registerNew(c);
+      } else {
+        uow.registerDirty(c);
+      }
+    }
+
+    return this;
   }
 
   private void checkIfExistsInCARE(Map<Id, LIA_Claim__c> existingRecords) {
@@ -226,18 +224,18 @@ public without sharing class Claims extends fflib_SObjectDomain {
   }
 
   private void updateParentCaseBookings() {
-    if (instanceRecords.size() == 1) {
-      LIA_Claim__c claim = instanceRecords[0];
+    if (objects.size() == 1) {
+      Claim cl = objects[0];
       // TODO: Fix this when we can support several bookings at once
       if (
-        claim.Liability_PNR__c != null &&
-        claim.RecordTypeId != getRecordTypeId(RecordType.CompensationCard) &&
-        claim.Case__c != null
+        cl.bookingReference != null &&
+        cl.recordType != Claim.RecordType.CompensationCard &&
+        cl.parentCaseId != null
       ) {
         System.enqueueJob(
           new BookingService.AddBookingToCaseAsync(
-            claim.Case__c,
-            claim.Liability_PNR__c
+            cl.parentCaseId,
+            cl.bookingReference
           )
         );
       }
@@ -245,23 +243,23 @@ public without sharing class Claims extends fflib_SObjectDomain {
   }
 
   private void updateParentCaseBookings(Map<Id, LIA_Claim__c> existingRecords) {
-    if (instanceRecords.size() == 1) {
-      LIA_Claim__c claim = instanceRecords[0];
+    if (objects.size() == 1) {
+      Claim cl = objects[0];
+      Claim oldRecord = new Claim(existingRecords.get(cl.id));
       // TODO: Fix this when we can support several bookings at once
       if (
-        claim.Liability_PNR__c != null &&
-        existingRecords.get(claim.Id).Liability_PNR__c !=
-        claim.Liability_PNR__c &&
-        claim.RecordTypeId != getRecordTypeId(RecordType.CompensationCard)
+        cl.bookingReference != null &&
+        oldRecord.bookingReference != cl.bookingReference &&
+        cl.recordType != Claim.RecordType.CompensationCard
       ) {
         BookingService.removeBookingFromCase(
-          claim.Case__c,
-          existingRecords.get(claim.Id).Liability_PNR__c
+          cl.parentCaseId,
+          oldRecord.bookingReference
         );
         System.enqueueJob(
           new BookingService.AddBookingToCaseAsync(
-            claim.Case__c,
-            claim.Liability_PNR__c
+            cl.parentCaseId,
+            cl.bookingReference
           )
         );
       }
@@ -294,13 +292,13 @@ public without sharing class Claims extends fflib_SObjectDomain {
   }
 
   private void fetchCAREClaims(Map<Id, LIA_Claim__c> existingRecords) {
-    if (instanceRecords.size() == 1) {
-      LIA_Claim__c updatedRecord = instanceRecords[0];
-      LIA_Claim__c existingRecord = existingRecords.get(updatedRecord.Id);
+    if (objects.size() == 1) {
+      Claim newRecord = objects[0];
+      Claim oldRecord = new Claim(existingRecords.get(newRecord.id));
 
       Boolean hasChangedPNROrPIR =
-        existingRecord.Liability_PNR__c != updatedRecord.Liability_PNR__c ||
-        existingRecord.PIR__c != updatedRecord.PIR__c;
+        oldRecord.bookingReference != newRecord.bookingReference ||
+        oldRecord.pir != newRecord.pir;
 
       if (hasChangedPNROrPIR) {
         fetchCAREClaims();
@@ -309,11 +307,11 @@ public without sharing class Claims extends fflib_SObjectDomain {
   }
 
   private void fetchCAREClaims() {
-    if (instanceRecords.size() == 1) {
+    if (objects.size() == 1) {
       System.enqueueJob(
         new ClaimService.FetchCAREClaimsFromEDWAsync(
-          instanceRecords[0].Liability_PNR__c,
-          instanceRecords[0].PIR__c,
+          objects[0].bookingReference,
+          objects[0].pir,
           null
         )
       );

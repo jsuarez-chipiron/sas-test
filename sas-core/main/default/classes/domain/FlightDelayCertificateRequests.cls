@@ -31,7 +31,7 @@ public without sharing class FlightDelayCertificateRequests extends fflib_SObjec
   public class FlightDelayCertificateException extends Exception {
   }
 
-  public Blob generateFlightDelayCertificate(ID bookingId) {
+  public Blob generateFlightDelayCertificate(Id bookingId) {
     if (instanceRecords.size() != 1) {
       //TODO Should this return something else?
       return null;

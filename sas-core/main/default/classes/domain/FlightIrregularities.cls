@@ -14,6 +14,20 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     'AIRS' => true
   };
 
+  public static final Set<String> POTENTIALROTATIONCODES = new Set<String>{
+    'EQUI',
+    'CREW',
+    'RA (93)',
+    'RA',
+    '93',
+    'RC (95)',
+    'RC',
+    '95',
+    'RS (94)',
+    'RS',
+    '94'
+  };
+
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
       return new FlightIrregularities(records);
@@ -59,7 +73,8 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
           flightSpecificIrregularities.addAll(
             createFlightIrregularityFromCancellation(
               arrival.cancellationReasons,
-              '(arrival)'
+              '(arrival)',
+              null
             )
           );
         }
@@ -76,7 +91,8 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
           flightSpecificIrregularities.addAll(
             createFlightIrregularityFromCancellation(
               departure.cancellationReasons,
-              '(departure)'
+              '(departure)',
+              departure.cancellationTime
             )
           );
         }
@@ -119,6 +135,15 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     }
 
     return this;
+  }
+
+  public Boolean containsRotationIrregularities() {
+    for (FlightIrregularities__c f : instanceRecords) {
+      if (POTENTIALROTATIONCODES.contains(f.Code__c)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public Map<Id, Boolean> isWithinSASControl() {
@@ -225,6 +250,21 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     return explanation;
   }
 
+  public void removeNA0Delay() {
+    List<FlightIrregularities__c> irregularitiesToSave = new List<FlightIrregularities__c>{};
+    for (FlightIrregularities__c fi : instanceRecords) {
+      if (
+        !((fi.Code__c == 'N/A' && fi.Duration_minutes__c == 0) ||
+        (fi.Code__c == null &&
+        fi.Duration_minutes__c == null))
+      ) {
+        irregularitiesToSave.add(fi);
+      }
+    }
+
+    this.instanceRecords = irregularitiesToSave;
+  }
+
   /**
    * Creates FlightIrregularities__c of type "Delay" from TEDS data.
    * @param reasons A list of TEDSFlight.DelayReasons from which the FlightIrregularities__c should be created.
@@ -243,7 +283,7 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
         if (reason.reasonCode != null) {
           code = reason.reasonCode;
         }
-        if (reasonText.length() > 2000) {
+        if (reasonText?.length() > 2000) {
           reasonText = reasonText.substring(0, 2000);
         }
         result.add(
@@ -278,24 +318,36 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
    */
   private static List<FlightIrregularities__c> createFlightIrregularityFromCancellation(
     List<TEDSFlight.CancellationReasons> reasons,
-    String additionalInfo
+    String additionalInfo,
+    String isoCancellationTime
   ) {
     List<FlightIrregularities__c> result = new List<FlightIrregularities__c>{};
     if (reasons != null) {
       for (TEDSFlight.CancellationReasons reason : reasons) {
         String code = 'N/A';
         String reasonText = reason.supplementaryInformation;
+        Datetime cancellationTime;
         if (reason.reasonCode != null) {
           code = reason.reasonCode;
         }
-        if (reasonText.length() > 2000) {
+        if (reasonText?.length() > 2000) {
           reasonText = reasonText.substring(0, 2000);
         }
+        if (isoCancellationTime != null) {
+          try {
+            cancellationTime = DateUtils.isoDatetimeToApexDateTime(
+              isoCancellationTime
+            );
+          } catch (Exception e) {
+          }
+        }
+
         result.add(
           new FlightIrregularities__c(
             Code__c = code,
             Reason__c = reasonText,
-            Type__c = 'Cancellation ' + additionalInfo
+            Type__c = 'Cancellation ' + additionalInfo,
+            Cancellation_Time__c = cancellationTime
           )
         );
       }

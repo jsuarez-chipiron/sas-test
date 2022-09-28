@@ -5,7 +5,7 @@
         <name>Count_related_Settlements</name>
         <label>Count related Settlements</label>
         <locationX>886</locationX>
-        <locationY>854</locationY>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>numberOfSettlements</assignToReference>
             <operator>AssignCount</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>EB_points_high_amount</name>
         <label>EB points high amount</label>
-        <locationX>1194</locationX>
-        <locationY>518</locationY>
+        <locationX>1238</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>highAmountFlag</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>Flag_inactive_account</name>
         <label>Flag inactive account</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>inactiveAccountFlag</assignToReference>
             <operator>Assign</operator>
@@ -53,7 +53,7 @@
         <name>Monetary_high_amount</name>
         <label>Monetary high amount</label>
         <locationX>314</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>highAmountFlag</assignToReference>
             <operator>Assign</operator>
@@ -68,8 +68,8 @@
     <assignments>
         <name>NeedsControl</name>
         <label>NeedsControl</label>
-        <locationX>754</locationX>
-        <locationY>1094</locationY>
+        <locationX>985</locationX>
+        <locationY>1766</locationY>
         <assignmentItems>
             <assignToReference>controlNeeded</assignToReference>
             <operator>Assign</operator>
@@ -91,8 +91,8 @@
     <assignments>
         <name>NoControl</name>
         <label>NoControl</label>
-        <locationX>1029</locationX>
-        <locationY>1646</locationY>
+        <locationX>974</locationX>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>controlNeeded</assignToReference>
             <operator>Assign</operator>
@@ -115,7 +115,7 @@
         <name>Store_in_related_Settlements</name>
         <label>Store in related Settlements</label>
         <locationX>446</locationX>
-        <locationY>974</locationY>
+        <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>relatedSettlements</assignToReference>
             <operator>Add</operator>
@@ -124,6 +124,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Count_related_Settlements</targetReference>
         </connector>
     </assignments>
@@ -131,7 +132,7 @@
         <name>Store_in_related_Settlements_0</name>
         <label>Store in related Settlements</label>
         <locationX>886</locationX>
-        <locationY>734</locationY>
+        <locationY>854</locationY>
         <assignmentItems>
             <assignToReference>relatedSettlements</assignToReference>
             <operator>Add</operator>
@@ -146,8 +147,8 @@
     <assignments>
         <name>Store_in_related_Settlements_0_0</name>
         <label>Store in related Settlements</label>
-        <locationX>1326</locationX>
-        <locationY>734</locationY>
+        <locationX>1370</locationX>
+        <locationY>854</locationY>
         <assignmentItems>
             <assignToReference>relatedSettlements</assignToReference>
             <operator>Add</operator>
@@ -156,6 +157,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Count_related_Settlements</targetReference>
         </connector>
     </assignments>
@@ -163,7 +165,7 @@
         <name>Voucher_high_amount</name>
         <label>Voucher high amount</label>
         <locationX>754</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>highAmountFlag</assignToReference>
             <operator>Assign</operator>
@@ -178,8 +180,8 @@
     <decisions>
         <name>Check_High_Settlement_Amount_EB</name>
         <label>Check High Settlement Amount - EB</label>
-        <locationX>1326</locationX>
-        <locationY>398</locationY>
+        <locationX>1370</locationX>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Store_in_related_Settlements_0_0</targetReference>
         </defaultConnector>
@@ -204,7 +206,7 @@
         <name>Check_High_Settlement_Amount_Monetary</name>
         <label>Check High Settlement Amount - Monetary</label>
         <locationX>446</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Store_in_related_Settlements</targetReference>
         </defaultConnector>
@@ -229,7 +231,7 @@
         <name>Check_High_Settlement_Amount_Voucher</name>
         <label>Check High Settlement Amount - Voucher</label>
         <locationX>886</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Store_in_related_Settlements_0</targetReference>
         </defaultConnector>
@@ -253,8 +255,8 @@
     <decisions>
         <name>Check_Settlement_Type</name>
         <label>Check Settlement Type</label>
-        <locationX>1029</locationX>
-        <locationY>158</locationY>
+        <locationX>985</locationX>
+        <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Monetary</name>
@@ -320,8 +322,8 @@
     <decisions>
         <name>Does_Bank_Account_Number_exist_on_whitelist</name>
         <label>Does Bank Account Number exist on whitelist</label>
-        <locationX>160</locationX>
-        <locationY>518</locationY>
+        <locationX>116</locationX>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Check_High_Settlement_Amount_Monetary</targetReference>
         </defaultConnector>
@@ -344,6 +346,7 @@
                 </rightValue>
             </conditions>
             <connector>
+                <isGoTo>true</isGoTo>
                 <targetReference>NoControl</targetReference>
             </connector>
             <label>Yes</label>
@@ -372,10 +375,36 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_the_settlement_related_to_an_emergency_claim</name>
+        <label>Is the settlement related to an emergency claim?</label>
+        <locationX>253</locationX>
+        <locationY>158</locationY>
+        <defaultConnector>
+            <targetReference>Check_Settlement_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_emergency_claim</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>incomingRecord.IsEmergencyClaim__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>NoControl</targetReference>
+            </connector>
+            <label>Yes - emergency claim</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Should_Settlement_be_flagged</name>
         <label>Should Settlement be flagged?</label>
         <locationX>886</locationX>
-        <locationY>974</locationY>
+        <locationY>1094</locationY>
         <defaultConnector>
             <targetReference>NoControl</targetReference>
         </defaultConnector>
@@ -403,6 +432,7 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>chequeMessage</name>
         <dataType>String</dataType>
@@ -457,8 +487,8 @@
     <recordLookups>
         <name>Get_Bank_Account</name>
         <label>Get Bank Account</label>
-        <locationX>160</locationX>
-        <locationY>278</locationY>
+        <locationX>116</locationX>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Other_Settlements_IBAN</targetReference>
@@ -478,8 +508,8 @@
     <recordLookups>
         <name>Get_Other_Settlements_EB</name>
         <label>Get Other Settlements - EB Points</label>
-        <locationX>1326</locationX>
-        <locationY>278</locationY>
+        <locationX>1370</locationX>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_High_Settlement_Amount_EB</targetReference>
@@ -520,8 +550,8 @@
     <recordLookups>
         <name>Get_Other_Settlements_IBAN</name>
         <label>Get Other Settlements - IBAN</label>
-        <locationX>160</locationX>
-        <locationY>398</locationY>
+        <locationX>116</locationX>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Does_Bank_Account_Number_exist_on_whitelist</targetReference>
@@ -563,7 +593,7 @@
         <name>Get_Other_Settlements_Voucher</name>
         <label>Get Other Settlements - Voucher</label>
         <locationX>886</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_High_Settlement_Amount_Voucher</targetReference>
@@ -604,8 +634,8 @@
     <recordUpdates>
         <name>Update_Control_Reason</name>
         <label>Update Control Reason</label>
-        <locationX>754</locationX>
-        <locationY>1214</locationY>
+        <locationX>985</locationX>
+        <locationY>1886</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -631,8 +661,8 @@
     <recordUpdates>
         <name>Update_Status</name>
         <label>Update Status</label>
-        <locationX>1029</locationX>
-        <locationY>1766</locationY>
+        <locationX>974</locationX>
+        <locationY>1334</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -657,10 +687,10 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>903</locationX>
+        <locationX>127</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_Settlement_Type</targetReference>
+            <targetReference>Is_the_settlement_related_to_an_emergency_claim</targetReference>
         </connector>
     </start>
     <status>Active</status>

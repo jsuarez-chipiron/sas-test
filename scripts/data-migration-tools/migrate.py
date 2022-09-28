@@ -331,11 +331,11 @@ def getDataFrame(name):
     while True:
         try:
             try:
-                df = pd.read_csv(DATA_PATH + inp)
+                df = pd.read_csv(DATA_PATH + inp, encoding='ISO-8859-1')
                 break
             except:
                 pass
-            df = pd.read_csv(DATA_PATH + inp + '.csv')
+            df = pd.read_csv(DATA_PATH + inp + '.csv', encoding='ISO-8859-1')
             break
         except:
             print('File does not exist, please check the file name.')

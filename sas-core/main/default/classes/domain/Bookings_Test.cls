@@ -36,6 +36,7 @@ public with sharing class Bookings_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     Boolean result = Bookings.newInstance(new List<Booking__c>{ bookingToTest })
+      .reloadFullBookingData()
       .haveDelayedOrCancelledFlights()
       .get(bookingToTest.Id);
     Test.stopTest();
@@ -80,6 +81,7 @@ public with sharing class Bookings_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     Boolean result = Bookings.newInstance(new List<Booking__c>{ bookingToTest })
+      .reloadFullBookingData()
       .haveDelayedOrCancelledFlights()
       .get(bookingToTest.Id);
     Test.stopTest();
@@ -123,6 +125,7 @@ public with sharing class Bookings_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     Boolean result = Bookings.newInstance(new List<Booking__c>{ bookingToTest })
+      .reloadFullBookingData()
       .haveDelayedOrCancelledFlights()
       .get(bookingToTest.Id);
     Test.stopTest();
@@ -170,5 +173,70 @@ public with sharing class Bookings_Test {
         ' should be valid.'
       );
     }
+  }
+
+  @IsTest
+  public static void bookingShouldContainPassengerFlight() {
+    Case c = TestDataFactories.createCasesWithClaims(
+        1,
+        null,
+        new Map<Schema.SObjectField, Object>{
+          LIA_Claim__c.Liability_PNR__c => APIMMock.DEFAULT_VALID_TEDS_PNR,
+          LIA_Claim__c.Flight_Number__c => 'SK0402',
+          LIA_Claim__c.Flight_Date__c => Date.valueOf('2021-04-20')
+        }
+      )
+      .cases[0];
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    BookingService.addBookingToCase(c.Id, APIMMock.DEFAULT_VALID_TEDS_PNR);
+    Bookings b = Bookings.newInstance(
+        BookingsSelector.newInstance()
+          .selectByBookingReference(APIMMock.DEFAULT_VALID_TEDS_PNR)
+      )
+      .reloadFullBookingData();
+    Test.stopTest();
+    Booking__c currentBooking = b.fullRecords[0].booking;
+    System.assert(
+      b.containsFlight('SK0402-20210420').get(currentBooking.Id),
+      'Flight should have been found in the booking'
+    );
+    System.assert(
+      b.containsPassenger('TESTSSON').get(currentBooking.Id),
+      'Passenger should have been found in the booking'
+    );
+    System.assert(
+      !b.containsFlight('SK9999-20190620').get(currentBooking.Id),
+      'Flight should not have been found in the booking'
+    );
+    System.assert(
+      !b.containsPassenger('OtherTestsson').get(currentBooking.Id),
+      'Passenger should not have been found in the booking'
+    );
+  }
+
+  @IsTest
+  public static void shouldReloadDataProperly() {
+    Case c = TestDataFactories.createCasesWithClaims(
+        1,
+        null,
+        new Map<Schema.SObjectField, Object>{
+          LIA_Claim__c.Liability_PNR__c => APIMMock.DEFAULT_VALID_TEDS_PNR,
+          LIA_Claim__c.Flight_Number__c => 'SK0402',
+          LIA_Claim__c.Flight_Date__c => Date.valueOf('2021-04-20')
+        }
+      )
+      .cases[0];
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    BookingService.addBookingToCase(c.Id, APIMMock.DEFAULT_VALID_TEDS_PNR);
+    Bookings b = Bookings.newInstance(
+        BookingsSelector.newInstance()
+          .selectByBookingReference(APIMMock.DEFAULT_VALID_TEDS_PNR)
+      )
+      .reloadFullBookingData();
+    Test.stopTest();
+    System.assertNotEquals(b.fullRecords, null);
   }
 }

@@ -65,6 +65,7 @@ public with sharing class FlightService_IntegrationTest {
       'Flightirregularity with delay not correctly inserted.'
     );
   }
+
   @IsTest
   public static void shouldInsertCancelledFlightIrregularitiesByFlightId() {
     // Given
@@ -91,12 +92,20 @@ public with sharing class FlightService_IntegrationTest {
     System.assertEquals(
       cancellationReason,
       sampleIrregularity.Reason__c,
-      'Flightirregularity with cancellation not correctly inserted.'
+      'Flightirregularity with cancellation not correctly inserted (Reason__c).'
     );
     System.assertEquals(
       'AIRS',
       sampleIrregularity.Code__c,
-      'Flightirregularity with cancellation not correctly inserted.'
+      'Flightirregularity with cancellation not correctly inserted (Code__c).'
+    );
+    Datetime cancellationTime = DateUtils.isoDatetimeToApexDateTime(
+      '2022-03-29T08:35:00'
+    );
+    System.assertEquals(
+      cancellationTime,
+      sampleIrregularity.Cancellation_Time__c,
+      'Flightirregularity with cancellation not correctly inserted (Cancellation_Time__c).'
     );
   }
 

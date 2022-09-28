@@ -197,6 +197,13 @@
         <picklistField>Voucher_Type__c</picklistField>
         <picklistObject>Settlement__c</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
+    <formulas>
+        <description>Used to identify settlements related to an emergency claim and to provide access to only the emergency group</description>
+        <name>emergencyClaimIdentifier</name>
+        <dataType>Boolean</dataType>
+        <expression>IF({!Get_Customer_Claim.RecordType.Name} = &quot;EmergencyClaim&quot;, true, false)</expression>
+    </formulas>
     <formulas>
         <name>TodayDate</name>
         <dataType>Date</dataType>
@@ -287,6 +294,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>IsEmergencyClaim__c</field>
+            <value>
+                <elementReference>emergencyClaimIdentifier</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Payee_Name__c</field>
             <value>
                 <elementReference>Get_Customer_Claim.Bank_Account_Holder_Name__c</elementReference>
@@ -308,6 +321,12 @@
             <field>RecordTypeId</field>
             <value>
                 <elementReference>Get_Record_Type_Id.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Settlement_Status__c</field>
+            <value>
+                <stringValue>In progress</stringValue>
             </value>
         </inputAssignments>
         <object>Settlement__c</object>
@@ -355,6 +374,12 @@
             <field>EuroBonus_Number__c</field>
             <value>
                 <elementReference>Get_Customer_Claim.EuroBonus_Number__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IsEmergencyClaim__c</field>
+            <value>
+                <elementReference>emergencyClaimIdentifier</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -453,6 +478,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>IsEmergencyClaim__c</field>
+            <value>
+                <elementReference>emergencyClaimIdentifier</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Payee_Name__c</field>
             <value>
                 <elementReference>Get_Customer_Claim.Bank_Account_Holder_Name__c</elementReference>
@@ -533,6 +564,12 @@
             <field>Currency__c</field>
             <value>
                 <elementReference>Get_Customer_Claim.Currency__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IsEmergencyClaim__c</field>
+            <value>
+                <elementReference>emergencyClaimIdentifier</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

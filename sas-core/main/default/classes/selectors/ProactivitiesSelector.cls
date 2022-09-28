@@ -50,7 +50,7 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
     LIA_Claim__c claim;
     ClaimsSelector claims = ClaimsSelector.newInstance();
     CasesSelector cases = CasesSelector.newInstance();
-    String whereQuery = '';
+    Set<String> queryParts = new Set<String>{};
 
     Id directlyLinkedProactivityId;
     try {
@@ -60,18 +60,18 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
       // The case does not exist (should not happen)
     }
 
-    whereQuery = buildQuery(
-      whereQuery,
-      'Id = :directlyLinkedProactivityId',
-      directlyLinkedProactivityId != null
-    );
+    if (directlyLinkedProactivityId != null) {
+      queryParts.add('Id = :directlyLinkedProactivityId');
+    }
 
     try {
       claim = claims.selectByCaseIdWithCustomers(new Set<Id>{ caseId })[0];
     } catch (Exception e) {
       if (directlyLinkedProactivityId != null) {
         List<Proactivity__c> directlyLinkedProactivity = (List<Proactivity__c>) Database.query(
-          newQueryFactory().setCondition(whereQuery).toSOQL()
+          newQueryFactory()
+            .setCondition('Id = :directlyLinkedProactivityId')
+            .toSOQL()
         );
         if (directlyLinkedProactivity.size() != 0) {
           return new Map<Proactivity__c, String>{
@@ -83,16 +83,22 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
       return new Map<Proactivity__c, String>{};
     }
 
-    String flightId1 = claim.Flight_Number__c != null &&
-      claim.Flight_Date__c != null
-      ? claim.Flight_Number__c +
-        '-' +
-        String.valueOf(claim.Flight_Date__c).remove('-')
-      : null;
-    String flightId2 = claim.Flight_Number__c != null &&
-      claim.Flight_Date__c != null
-      ? claim.Flight_Number__c + '-' + String.valueOf(claim.Flight_Date__c)
-      : null;
+    String claimFlightNumber;
+    String flightId1 = null;
+    String flightId2 = null;
+    if (claim.Flight_Number__c != null) {
+      claimFlightNumber = Flights.normalizeFlightNumber(claim.Flight_Number__c);
+      flightId1 = claimFlightNumber != null &&
+        claim.Flight_Date__c != null
+        ? claimFlightNumber +
+          '-' +
+          String.valueOf(claim.Flight_Date__c).remove('-')
+        : null;
+      flightId2 = claimFlightNumber != null &&
+        claim.Flight_Date__c != null
+        ? claimFlightNumber + '-' + String.valueOf(claim.Flight_Date__c)
+        : null;
+    }
 
     List<String> passengerNames = new List<String>();
     if (claim.Customers__r != null) {
@@ -121,88 +127,197 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
     };
 
     for (Schema.SObjectField field : claimFieldToQuery.keySet()) {
-      whereQuery = buildQuery(
-        whereQuery,
-        claimFieldToQuery.get(field),
-        !String.isBlank((String) claim.get(field))
-      );
+      if (!String.isBlank((String) claim.get(field))) {
+        queryParts.add(claimFieldToQuery.get(field));
+      }
     }
 
-    whereQuery = buildQuery(whereQuery, 'Claim_Firm__c = :firm', firm != null);
+    if (firm != null) {
+      queryParts.add('Claim_Firm__c = :firm');
+    }
 
-    // Two flight ids to handle different input formats.
-    whereQuery = buildQuery(
-      whereQuery,
-      'Flight_Id__c = :flightId1',
-      !String.isBlank(flightId1)
-    );
-    whereQuery = buildQuery(
-      whereQuery,
-      'Flight_Id__c = :flightId2',
-      !String.isBlank(flightId2)
-    );
+    Flight__c claimFlight;
+    List<Flight__c> flightsConnectedToTheClaim = new List<Flight__c>{};
+    if (claim.Liability_PNR__c != null) {
+      flightsConnectedToTheClaim = FlightsSelector.newInstance()
+        .selectByBookingReference(new Set<String>{ claim.Liability_PNR__c });
+    }
 
-    whereQuery = buildQuery(
-      whereQuery,
-      'Passenger_Name__c IN :passengerNames',
-      passengerNames.size() != 0
-    );
-
-    // Get query parameters related to flight
-    Date arrivalTime;
-    Date departureTime;
-    String fromAirport;
-    String toAirport;
-    List<String> cancellationCodes = new List<String>{};
-    Flight__c flight;
-
+    // Match on any flight in the booking:
+    Set<Id> flightIds = new Set<Id>{};
+    Set<String> stringFlightIds = new Set<String>{};
+    for (Flight__c f : flightsConnectedToTheClaim) {
+      List<String> simpleFlightIds = Flights.TEDSIdToSimpleFlightIds(
+        f.TEDS_Identifier__c
+      );
+      stringFlightIds.addAll(simpleFlightIds);
+      if (simpleFlightIds.contains(flightId1)) {
+        claimFlight = f;
+      }
+      flightIds.add(f.Id);
+    }
     if (flightId1 != null) {
+      stringFlightIds.add(flightId2);
+    }
+    if (flightId1 != null) {
+      stringFlightIds.add(flightId2);
+    }
+
+    // Match on claim flight (Two flight ids to handle different input formats):
+    queryParts.add('Flight_Id__c IN :stringFlightIds');
+
+    if (passengerNames.size() != 0) {
+      queryParts.add('Passenger_Name__c IN :passengerNames');
+    }
+
+    if (
+      claimFlight == null &&
+      claimFlightNumber != null &&
+      claim.Flight_Date__c != null
+    ) {
       FlightsSelector flights = FlightsSelector.newInstance();
       try {
-        flight = flights.selectByFlightNumberAndDate(
-          claim.Flight_Number__c,
+        claimFlight = flights.selectByFlightNumberAndDate(
+          claimFlightNumber,
           claim.Flight_Date__c
         )[0];
+        flightsConnectedToTheClaim.add(claimFlight);
+        flightIds.add(claimFlight.Id);
       } catch (Exception e) {
         // No flight matches the claim
       }
     }
 
-    if (flight != null) {
-      FlightIrregularitiesSelector flightIrregularities = FlightIrregularitiesSelector.newInstance();
-      String departingQuery = '(From_Date__c <= :departureTime AND To_Date__c >= :departureTime AND Match_Flights_Departing_Airport__c = TRUE AND Airport__c = :fromAirport)';
-      String arrivingQuery = '(From_Date__c <= :arrivalTime AND To_Date__c >= :arrivalTime AND Match_Flights_Arriving_To_Airport__c = TRUE AND Airport__c = :toAirport)';
-      arrivalTime = flight.Scheduled_Arrival_Time__c.date();
-      departureTime = flight.Scheduled_Departure_Time__c.date();
-      fromAirport = flight.Departure_Airport__c;
-      toAirport = flight.Arrival_Airport__c;
+    Map<Id, List<FlightIrregularities__c>> flightIdToIrregularities = new Map<Id, List<FlightIrregularities__c>>{};
 
-      List<FlightIrregularities__c> irregularities = flightIrregularities.selectByFlightNumberDateAndAirports(
-        claim.Flight_Number__c,
-        claim.Flight_Date__c,
-        fromAirport,
-        toAirport
+    if (flightsConnectedToTheClaim.size() > 0) {
+      List<FlightIrregularities__c> irregularities = FlightIrregularitiesSelector.newInstance()
+        .selectByFlightId(flightIds);
+
+      FlightIrregularities irregs = new FlightIrregularities(irregularities);
+      flightIdToIrregularities = irregs.getFlightIdToIrregularities();
+    }
+
+    List<FlightQuery> flightQueriesMetaData = new List<FlightQuery>{};
+    for (Flight__c f : flightsConnectedToTheClaim) {
+      FlightQuery flightQ = getFlightQuery(
+        f,
+        flightIdToIrregularities.get(f.Id)
       );
 
-      for (FlightIrregularities__c irregularity : irregularities) {
-        if (irregularity.Code__c != null) {
-          cancellationCodes.add(irregularity.Code__c);
+      if (!String.isBlank(flightQ.query)) {
+        queryParts.add(flightQ.query);
+        flightQueriesMetaData.add(flightQ);
+      }
+    }
+
+    // Avoid db calls
+    if (queryParts.size() == 0) {
+      return new Map<Proactivity__c, String>{};
+    }
+
+    String whereQuery = buildQuery(queryParts);
+
+    List<Proactivity__c> proactivites = (List<Proactivity__c>) Database.query(
+      newQueryFactory().setCondition(whereQuery).toSOQL()
+    );
+
+    Map<Proactivity__c, String> proactivityToReason = getMatchingReasons(
+      claim,
+      proactivites,
+      flightQueriesMetaData,
+      stringFlightIds,
+      passengerNames,
+      directlyLinkedProactivityId
+    );
+
+    return proactivityToReason;
+  }
+
+  private class FlightQuery {
+    public String query;
+    public Flight__c flight;
+    public List<String> cancellationCodes;
+
+    public FlightQuery(String q, Flight__c f, List<String> ccs) {
+      this.query = q;
+      this.flight = f;
+      this.cancellationCodes = ccs;
+    }
+  }
+
+  private static FlightQuery getFlightQuery(
+    Flight__c flight,
+    List<FlightIrregularities__c> flightIrregularities
+  ) {
+    String airportQuery = '';
+    List<String> cancellationCodes = new List<String>{};
+
+    if (flight != null) {
+      String arrivalTime = String.valueOf(
+        flight.Scheduled_Arrival_Time__c.date()
+      );
+      String departureTime = String.valueOf(
+        flight.Scheduled_Departure_Time__c.date()
+      );
+
+      String fromAirport = flight.Departure_Airport__c;
+      String toAirport = flight.Arrival_Airport__c;
+      String departingQuery =
+        '(From_Date__c <= ' +
+        departureTime +
+        ' AND To_Date__c >= ' +
+        departureTime +
+        ' AND Match_Flights_Departing_Airport__c = TRUE AND Airport__c = \'' +
+        fromAirport +
+        '\')';
+      String arrivingQuery =
+        '(From_Date__c <= ' +
+        arrivalTime +
+        ' AND To_Date__c >= ' +
+        arrivalTime +
+        ' AND Match_Flights_Arriving_To_Airport__c = TRUE AND Airport__c = \'' +
+        toAirport +
+        '\')';
+
+      if (flightIrregularities != null) {
+        for (FlightIrregularities__c irregularity : flightIrregularities) {
+          if (irregularity.Code__c != null) {
+            cancellationCodes.add(irregularity.Code__c);
+          }
         }
       }
 
-      String airportQuery = '';
-      airportQuery = buildQuery(
-        airportQuery,
-        departingQuery,
-        !String.isBlank(fromAirport)
-      );
-      airportQuery = buildQuery(
-        airportQuery,
-        arrivingQuery,
-        !String.isBlank(toAirport)
-      );
+      if (!String.isBlank(fromAirport)) {
+        airportQuery = departingQuery;
+      }
 
-      String cancellationCodeQuery = '((From_Date__c <= :arrivalTime AND To_Date__c >= :departureTime) AND Cancellation_Code__c IN :cancellationCodes)';
+      if (!String.isBlank(toAirport)) {
+        if (airportQuery == '') {
+          airportQuery = arrivingQuery;
+        } else {
+          airportQuery += ' OR ' + arrivingQuery;
+        }
+      }
+
+      String cancellationCodeRow = '';
+      for (String cc : cancellationCodes) {
+        cancellationCodeRow = buildReasons(
+          cancellationCodeRow,
+          '\'' +
+          cc +
+          '\''
+        );
+      }
+
+      String cancellationCodeQuery =
+        '((From_Date__c <= ' +
+        arrivalTime +
+        ' AND To_Date__c >= ' +
+        departureTime +
+        ') AND Cancellation_Code__c IN (' +
+        cancellationCodeRow +
+        '))';
       // If a proactivity has both airport and cancellation code matcher both of them must match
       if (cancellationCodes.size() != 0) {
         airportQuery =
@@ -221,187 +336,176 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
           airportQuery +
           ') AND Cancellation_Code__c = \'\')';
       }
-
-      whereQuery = buildQuery(
-        whereQuery,
-        airportQuery,
-        !String.isBlank(airportQuery)
-      );
     }
 
-    // Avoid db calls
-    if (whereQuery.length() == 0) {
-      return new Map<Proactivity__c, String>{};
-    }
-
-    List<Proactivity__c> proactivites = (List<Proactivity__c>) Database.query(
-      newQueryFactory().setCondition(whereQuery).toSOQL()
-    );
-
-    Map<Proactivity__c, String> proactivityToReason = getMatchingReasons(
-      claim,
-      proactivites,
-      flight,
-      cancellationCodes,
-      flightId1,
-      flightId2,
-      passengerNames,
-      directlyLinkedProactivityId
-    );
-
-    return proactivityToReason;
+    return new FlightQuery(airportQuery, flight, cancellationCodes);
   }
 
-  private static String buildQuery(
-    String whereQuery,
-    String queryToAdd,
-    Boolean shouldBeAdded
-  ) {
-    if (shouldBeAdded) {
-      if (String.isBlank(whereQuery)) {
-        whereQuery += queryToAdd;
+  private static String buildQuery(Set<String> queryParts) {
+    String query = '';
+    for (String queryPart : queryParts) {
+      if (String.isBlank(query)) {
+        query += queryPart;
       } else {
-        whereQuery += ' OR ' + queryToAdd;
+        query += ' OR ' + queryPart;
       }
     }
-    return whereQuery;
+    return query;
   }
 
   private static Map<Proactivity__c, String> getMatchingReasons(
     LIA_Claim__c claim,
     List<Proactivity__c> proactivites,
-    Flight__c flight,
-    List<String> cancellationCodes,
-    String flightId1,
-    String flightId2,
+    List<FlightQuery> flightQueriesMetaData,
+    Set<String> stringFlightIds,
     List<String> passengerNames,
     Id directlyLinkedProactivityId
   ) {
     Map<Proactivity__c, String> proactivityToReason = new Map<Proactivity__c, String>{};
 
     for (Proactivity__c p : proactivites) {
-      String reasons = '';
+      Set<String> reasons = new Set<String>{};
       if (
         !String.isBlank(p.Bank_Account_Number__c) &&
         p.Bank_Account_Number__c == claim.Bank_Account_Number__c
       ) {
-        reasons = buildReasons(reasons, 'Bank');
+        reasons.add('Bank');
       }
       if (
         !String.isBlank(p.Booking_Reference__c) &&
         p.Booking_Reference__c == claim.Liability_PNR__c
       ) {
-        reasons = buildReasons(reasons, 'PNR');
+        reasons.add('PNR');
       }
       if (!String.isBlank(p.Email__c) && p.Email__c == claim.Contact_Email__c) {
-        reasons = buildReasons(reasons, 'Email');
+        reasons.add('Email');
       }
       if (
         !String.isBlank(p.EuroBonus_Number__c) &&
         p.EuroBonus_Number__c == claim.EuroBonus_Number__c
       ) {
-        reasons = buildReasons(reasons, 'EB');
-      }
-      if (
-        !String.isBlank(p.Flight_Id__c) &&
-        (p.Flight_Id__c == flightId1 ||
-        p.Flight_Id__c == flightId2)
-      ) {
-        reasons = buildReasons(reasons, 'Flight');
+        reasons.add('EB');
       }
       if (
         !String.isBlank(p.Passenger_Name__c) &&
         passengerNames.contains(p.Passenger_Name__c)
       ) {
-        reasons = buildReasons(reasons, 'Name');
+        reasons.add('Name');
       }
       if (
         !String.isBlank(p.Phone_Number__c) &&
         p.Phone_Number__c == claim.Phone_Number__c
       ) {
-        reasons = buildReasons(reasons, 'Phone');
+        reasons.add('Phone');
       }
       if (!String.isBlank(p.PIR__c) && p.PIR__c == claim.PIR__c) {
-        reasons = buildReasons(reasons, 'PIR');
+        reasons.add('PIR');
       }
       if (p.Claim_Firm__c != null && p.Claim_Firm__c == claim.Claim_Firm__c) {
-        reasons = buildReasons(reasons, 'Firm');
+        reasons.add('Firm');
       }
       if (p.Id != null && p.Id == directlyLinkedProactivityId) {
-        reasons = buildReasons(reasons, 'Directly linked');
+        reasons.add('Directly linked');
       }
-
-      // This is much less complex than it looks. If it were not for nullchecks this could be done in 4 lines.
-      if (!String.isBlank(p.Airport__c) && flight != null) {
-        Boolean matchesActualDepartureTime = false;
-        Boolean matchesScheduledDepartureTime = false;
-        if (
-          flight.Actual_Departure_Time__c != null &&
-          flight.Actual_Arrival_Time__c != null
-        ) {
-          matchesActualDepartureTime = (flight.Actual_Departure_Time__c.date() >=
-          p.From_Date__c &&
-          flight.Actual_Departure_Time__c.date() <= p.To_Date__c);
-        }
-        if (
-          flight.Scheduled_Departure_Time__c != null &&
-          flight.Scheduled_Arrival_Time__c != null
-        ) {
-          matchesScheduledDepartureTime = (flight.Scheduled_Departure_Time__c.date() >=
-          p.From_Date__c &&
-          flight.Scheduled_Departure_Time__c.date() <= p.To_Date__c);
-        }
-
-        Boolean matchesActualArrivalTime = false;
-        Boolean matchesScheduledArrivalTime = false;
-        if (
-          flight.Actual_Arrival_Time__c != null &&
-          flight.Actual_Arrival_Time__c != null
-        ) {
-          matchesActualArrivalTime = (flight.Actual_Arrival_Time__c.date() >=
-          p.From_Date__c &&
-          flight.Actual_Arrival_Time__c.date() <= p.To_Date__c);
-        }
-        if (
-          flight.Scheduled_Arrival_Time__c != null &&
-          flight.Scheduled_Arrival_Time__c != null
-        ) {
-          matchesScheduledArrivalTime = (flight.Scheduled_Arrival_Time__c.date() >=
-          p.From_Date__c &&
-          flight.Scheduled_Arrival_Time__c.date() <= p.To_Date__c);
-        }
-
-        if (
-          p.Airport__c == flight.Departure_Airport__c &&
-          (matchesActualDepartureTime || matchesScheduledDepartureTime) &&
-          p.Match_Flights_Departing_Airport__c
-        ) {
-          reasons = buildReasons(reasons, 'Departure airport');
-        }
-
-        if (
-          p.Airport__c == flight.Arrival_Airport__c &&
-          (matchesActualArrivalTime || matchesScheduledArrivalTime) &&
-          p.Match_Flights_Arriving_To_Airport__c
-        ) {
-          reasons = buildReasons(reasons, 'Arrival airport');
+      for (String flightId : stringFlightIds) {
+        if (!String.isBlank(p.Flight_Id__c) && (p.Flight_Id__c == flightId)) {
+          reasons.add('Flight');
         }
       }
-      for (String cancellationCode : cancellationCodes) {
-        if (cancellationCode == p.Cancellation_Code__c) {
-          reasons = buildReasons(
-            reasons,
-            'Cancellation code "' +
-            cancellationCode +
-            '"'
-          );
-          break; // A proactivity can only have one code
+      for (FlightQuery fq : flightQueriesMetaData) {
+        String matchReasons = getFlightMatchReason(fq, p);
+        if (!String.isBlank(matchReasons)) {
+          reasons.add(matchReasons);
         }
       }
-      proactivityToReason.put(p, reasons);
+
+      String reasonsExplanation = '';
+      for (String reason : reasons) {
+        reasonsExplanation = buildReasons(reasonsExplanation, reason);
+      }
+
+      proactivityToReason.put(p, reasonsExplanation);
     }
 
     return proactivityToReason;
+  }
+
+  private static String getFlightMatchReason(FlightQuery fq, Proactivity__c p) {
+    Flight__c flight = fq.flight;
+    List<String> cancellationCodes = fq.cancellationCodes;
+    String reasons = '';
+
+    // This is much less complex than it looks. If it were not for nullchecks this could be done in 4 lines.
+    if (!String.isBlank(p.Airport__c) && flight != null) {
+      Boolean matchesActualDepartureTime = false;
+      Boolean matchesScheduledDepartureTime = false;
+      if (
+        flight.Actual_Departure_Time__c != null &&
+        flight.Actual_Arrival_Time__c != null
+      ) {
+        matchesActualDepartureTime = (flight.Actual_Departure_Time__c.date() >=
+        p.From_Date__c &&
+        flight.Actual_Departure_Time__c.date() <= p.To_Date__c);
+      }
+      if (
+        flight.Scheduled_Departure_Time__c != null &&
+        flight.Scheduled_Arrival_Time__c != null
+      ) {
+        matchesScheduledDepartureTime = (flight.Scheduled_Departure_Time__c.date() >=
+        p.From_Date__c &&
+        flight.Scheduled_Departure_Time__c.date() <= p.To_Date__c);
+      }
+
+      Boolean matchesActualArrivalTime = false;
+      Boolean matchesScheduledArrivalTime = false;
+      if (
+        flight.Actual_Arrival_Time__c != null &&
+        flight.Actual_Arrival_Time__c != null
+      ) {
+        matchesActualArrivalTime = (flight.Actual_Arrival_Time__c.date() >=
+        p.From_Date__c &&
+        flight.Actual_Arrival_Time__c.date() <= p.To_Date__c);
+      }
+      if (
+        flight.Scheduled_Arrival_Time__c != null &&
+        flight.Scheduled_Arrival_Time__c != null
+      ) {
+        matchesScheduledArrivalTime = (flight.Scheduled_Arrival_Time__c.date() >=
+        p.From_Date__c &&
+        flight.Scheduled_Arrival_Time__c.date() <= p.To_Date__c);
+      }
+
+      if (
+        p.Airport__c == flight.Departure_Airport__c &&
+        (matchesActualDepartureTime || matchesScheduledDepartureTime) &&
+        p.Match_Flights_Departing_Airport__c
+      ) {
+        reasons = buildReasons(reasons, 'Departure airport');
+      }
+
+      if (
+        p.Airport__c == flight.Arrival_Airport__c &&
+        (matchesActualArrivalTime || matchesScheduledArrivalTime) &&
+        p.Match_Flights_Arriving_To_Airport__c
+      ) {
+        reasons = buildReasons(reasons, 'Arrival airport');
+      }
+    }
+    for (String cancellationCode : cancellationCodes) {
+      if (cancellationCode == p.Cancellation_Code__c) {
+        reasons = buildReasons(reasons, 'Code "' + cancellationCode + '"');
+        break; // A proactivity can only have one code
+      }
+    }
+
+    if (!String.isBlank(reasons)) {
+      reasons =
+        flight.TEDS_Identifier__c.substringBefore('-') +
+        ': (' +
+        reasons +
+        ')';
+    }
+    return reasons;
   }
 
   private static String buildReasons(String reasons, String reason) {

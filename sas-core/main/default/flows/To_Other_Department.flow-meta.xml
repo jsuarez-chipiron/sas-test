@@ -4,8 +4,8 @@
         <description>Posts the internal comments to the chatter feed on the case</description>
         <name>CaseChatterFeed</name>
         <label>CaseChatterFeed</label>
-        <locationX>2338</locationX>
-        <locationY>1238</locationY>
+        <locationX>2866</locationX>
+        <locationY>1358</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
@@ -30,8 +30,8 @@
         <description>Escalation Reason to chatter</description>
         <name>Posting_Escalation_Reason_to_Chatter</name>
         <label>Posting Escalation Reason to Chatter</label>
-        <locationX>2074</locationX>
-        <locationY>1238</locationY>
+        <locationX>2602</locationX>
+        <locationY>1358</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
@@ -52,12 +52,30 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <actionCalls>
+        <name>Route_Support_Case_to_Claim_Queue</name>
+        <label>Route Support Case to Claim Queue</label>
+        <locationX>1634</locationX>
+        <locationY>3038</locationY>
+        <actionName>RouteCaseAndSetPriority</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Do_we_need_set_the_parent_case_to_On_hold</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>caseToRoute</name>
+            <value>
+                <elementReference>Create_Support_Case</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Assign_Comments_as_Description</name>
         <label>Assign Comments as Description</label>
-        <locationX>1106</locationX>
-        <locationY>2198</locationY>
+        <locationX>1634</locationX>
+        <locationY>2318</locationY>
         <assignmentItems>
             <assignToReference>descriptionContent</assignToReference>
             <operator>Assign</operator>
@@ -72,8 +90,8 @@
     <assignments>
         <name>Assign_department_name_as_queue_name</name>
         <label>Assign department name as queue name</label>
-        <locationX>1920</locationX>
-        <locationY>758</locationY>
+        <locationX>2448</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>queueName</assignToReference>
             <operator>Assign</operator>
@@ -88,8 +106,8 @@
     <assignments>
         <name>Assign_Description_Content</name>
         <label>Assign Description Content</label>
-        <locationX>1766</locationX>
-        <locationY>1358</locationY>
+        <locationX>2294</locationX>
+        <locationY>1478</locationY>
         <assignmentItems>
             <assignToReference>descriptionContent</assignToReference>
             <operator>Assign</operator>
@@ -104,8 +122,8 @@
     <assignments>
         <name>Assign_Note_as_Description</name>
         <label>Assign Note as Description</label>
-        <locationX>1238</locationX>
-        <locationY>1358</locationY>
+        <locationX>1766</locationX>
+        <locationY>1478</locationY>
         <assignmentItems>
             <assignToReference>descriptionContent</assignToReference>
             <operator>Assign</operator>
@@ -120,8 +138,8 @@
     <assignments>
         <name>Set_case_status_On_Hold</name>
         <label>Set case status &quot;On Hold&quot;</label>
-        <locationX>1634</locationX>
-        <locationY>3278</locationY>
+        <locationX>2162</locationX>
+        <locationY>3398</locationY>
         <assignmentItems>
             <assignToReference>caseStatusAfterSupport</assignToReference>
             <operator>Assign</operator>
@@ -136,8 +154,8 @@
     <assignments>
         <name>Set_the_current_case_status</name>
         <label>Set the current case status</label>
-        <locationX>1370</locationX>
-        <locationY>3278</locationY>
+        <locationX>1898</locationX>
+        <locationY>3398</locationY>
         <assignmentItems>
             <assignToReference>caseStatusAfterSupport</assignToReference>
             <operator>Assign</operator>
@@ -197,8 +215,8 @@
     <decisions>
         <name>Do_we_need_set_the_parent_case_to_On_hold</name>
         <label>Do we need set the parent case to &quot;On hold&quot;?</label>
-        <locationX>1502</locationX>
-        <locationY>3158</locationY>
+        <locationX>2030</locationX>
+        <locationY>3278</locationY>
         <defaultConnector>
             <targetReference>Set_case_status_On_Hold</targetReference>
         </defaultConnector>
@@ -222,8 +240,8 @@
     <decisions>
         <name>Is_it_customer_claim</name>
         <label>Is it customer claim?</label>
-        <locationX>1502</locationX>
-        <locationY>2078</locationY>
+        <locationX>2030</locationX>
+        <locationY>2198</locationY>
         <defaultConnector>
             <targetReference>Do_we_need_set_the_parent_case_to_On_hold</targetReference>
         </defaultConnector>
@@ -238,6 +256,13 @@
                     <stringValue>Customer Claim</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>DependentList.middleValue</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Payment Escalation</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assign_Comments_as_Description</targetReference>
             </connector>
@@ -245,11 +270,36 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_it_record_type_emergency</name>
+        <label>Is it record type emergency?</label>
+        <locationX>381</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Is_status_valid</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Emergency_Case_Record_Type</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Emergency_Case_Error</targetReference>
+            </connector>
+            <label>Emergency Case Record Type</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Validates refund cases have a refund request record with a PNR before redirecting, creating a support case or escalating the case</description>
-        <name>Is_refund_case_with_refund_request_recod</name>
-        <label>Is refund case with refund request recod?</label>
-        <locationX>781</locationX>
-        <locationY>398</locationY>
+        <name>Is_refund_case_with_refund_request_record</name>
+        <label>Is refund case with refund request record?</label>
+        <locationX>1111</locationX>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>To_Other_Department</targetReference>
         </defaultConnector>
@@ -280,8 +330,8 @@
     <decisions>
         <name>Is_Refund_Request_needed</name>
         <label>Is Refund Request needed</label>
-        <locationX>1502</locationX>
-        <locationY>1238</locationY>
+        <locationX>2030</locationX>
+        <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>Assign_Description_Content</targetReference>
         </defaultConnector>
@@ -305,10 +355,10 @@
     <decisions>
         <name>Is_status_valid</name>
         <label>Is status valid?</label>
-        <locationX>415</locationX>
-        <locationY>278</locationY>
+        <locationX>712</locationX>
+        <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Is_refund_case_with_refund_request_recod</targetReference>
+            <targetReference>Is_refund_case_with_refund_request_record</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>To other department</defaultConnectorLabel>
         <rules>
@@ -345,15 +395,15 @@
         <description>Validating that the department and team is validated for redirection, support and escalations cases</description>
         <name>Is_the_department_validated</name>
         <label>Is the department validated?</label>
-        <locationX>1249</locationX>
-        <locationY>638</locationY>
+        <locationX>1645</locationX>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Assign_department_name_as_queue_name</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Department_not_available_for_redirection_support_and_escalation</name>
-            <conditionLogic>1 OR 2 OR (3 AND 4)</conditionLogic>
+            <conditionLogic>1 OR 2 OR (3 AND 4 AND 5 AND 6) OR 7</conditionLogic>
             <conditions>
                 <leftValueReference>DependentList.topValue</leftValueReference>
                 <operator>EqualTo</operator>
@@ -382,6 +432,27 @@
                     <stringValue>Refunds</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.Department__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Claim</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.Department__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Distribution</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>DependentList.topValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Distribution</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Department_not_available</targetReference>
             </connector>
@@ -402,12 +473,41 @@
             </connector>
             <label>Functional Product Support</label>
         </rules>
+        <rules>
+            <name>Only_support_cases_are_allowed_from_Distribution_department</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.Team__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CS Norway</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Request_Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Redirection</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Request_Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Escalation</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Distribution_Department_Error</targetReference>
+            </connector>
+            <label>Only support cases are allowed from Distribution department</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Redirection_Support_Or_Escalation</name>
         <label>Redirection Support Or Escalation</label>
-        <locationX>1920</locationX>
-        <locationY>1118</locationY>
+        <locationX>2448</locationX>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>CaseChatterFeed</targetReference>
         </defaultConnector>
@@ -464,6 +564,11 @@
     </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
+        <name>claimRecordTypeName</name>
+        <dataType>String</dataType>
+        <expression>IF({!CustomerClaimCategoryType.topValue} = &quot;Compensation Card&quot;, &quot;CompensationCard&quot;, &quot;CustomerClaim&quot;)</expression>
+    </formulas>
+    <formulas>
         <name>InputPriority</name>
         <dataType>String</dataType>
         <expression>IF({!Priority} = &quot;Medium&quot;, &quot;Medium&quot;, &quot;High&quot;)</expression>
@@ -508,8 +613,8 @@
     <recordCreates>
         <name>Create_Customer</name>
         <label>Create Customer</label>
-        <locationX>1106</locationX>
-        <locationY>2678</locationY>
+        <locationX>1634</locationX>
+        <locationY>2798</locationY>
         <connector>
             <targetReference>Update_Support_Case_with_Customer_Claim_Info</targetReference>
         </connector>
@@ -540,8 +645,8 @@
     <recordCreates>
         <name>Create_Customer_Claim</name>
         <label>Create Customer Claim</label>
-        <locationX>1106</locationX>
-        <locationY>2558</locationY>
+        <locationX>1634</locationX>
+        <locationY>2678</locationY>
         <connector>
             <targetReference>Create_Customer</targetReference>
         </connector>
@@ -662,8 +767,8 @@
     <recordCreates>
         <name>Create_Refund_Request</name>
         <label>Create Refund Request</label>
-        <locationX>1238</locationX>
-        <locationY>1478</locationY>
+        <locationX>1766</locationX>
+        <locationY>1598</locationY>
         <connector>
             <targetReference>Create_Support_Case</targetReference>
         </connector>
@@ -707,8 +812,8 @@
         <description>Creates  a support case based on the information capture in the To Other Department Screen</description>
         <name>Create_Support_Case</name>
         <label>Create Support Case</label>
-        <locationX>1502</locationX>
-        <locationY>1958</locationY>
+        <locationX>2030</locationX>
+        <locationY>2078</locationY>
         <connector>
             <targetReference>Is_it_customer_claim</targetReference>
         </connector>
@@ -802,8 +907,8 @@
     <recordLookups>
         <name>Get_Claim_Record_Type</name>
         <label>Get Claim Record Type</label>
-        <locationX>1106</locationX>
-        <locationY>2438</locationY>
+        <locationX>1634</locationX>
+        <locationY>2558</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_Customer_Claim</targetReference>
@@ -813,7 +918,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>CustomerClaim</stringValue>
+                <elementReference>claimRecordTypeName</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -823,8 +928,8 @@
     <recordLookups>
         <name>Get_Support_Case_Information</name>
         <label>Get Support Case Information</label>
-        <locationX>1106</locationX>
-        <locationY>2318</locationY>
+        <locationX>1634</locationX>
+        <locationY>2438</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Claim_Record_Type</targetReference>
@@ -845,11 +950,11 @@
         <description>Gets all the information of the case where the flow was triggered from</description>
         <name>GetCurrentCaseInformation</name>
         <label>GetCurrentCaseInformation</label>
-        <locationX>415</locationX>
+        <locationX>381</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_status_valid</targetReference>
+            <targetReference>Is_it_record_type_emergency</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -866,8 +971,8 @@
     <recordLookups>
         <name>GetDepartmentQueueId</name>
         <label>GetDepartmentQueueId</label>
-        <locationX>1920</locationX>
-        <locationY>878</locationY>
+        <locationX>2448</locationX>
+        <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Case_Record_Type</targetReference>
@@ -888,8 +993,8 @@
         <description>Escalates the case another department</description>
         <name>EscalateCurrentCase</name>
         <label>EscalateCurrentCase</label>
-        <locationX>2074</locationX>
-        <locationY>1358</locationY>
+        <locationX>2602</locationX>
+        <locationY>1478</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
         </connector>
@@ -967,8 +1072,8 @@
         <description>Update the current case to be directed to the right skill</description>
         <name>Redirect_Case</name>
         <label>Redirect Case</label>
-        <locationX>2338</locationX>
-        <locationY>1358</locationY>
+        <locationX>2866</locationX>
+        <locationY>1478</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
         </connector>
@@ -1039,10 +1144,10 @@
     <recordUpdates>
         <name>Update_Support_Case_with_Customer_Claim_Info</name>
         <label>Update Support Case with Customer Claim Info</label>
-        <locationX>1106</locationX>
-        <locationY>2798</locationY>
+        <locationX>1634</locationX>
+        <locationY>2918</locationY>
         <connector>
-            <targetReference>Do_we_need_set_the_parent_case_to_On_hold</targetReference>
+            <targetReference>Route_Support_Case_to_Claim_Queue</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1070,13 +1175,19 @@
                 <elementReference>Create_Customer_Claim</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedEmail</field>
+            <value>
+                <elementReference>CustomerClaimCustomerEmail.value</elementReference>
+            </value>
+        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
         <name>UpdateCurrentCaseInformation</name>
         <label>UpdateCurrentCaseInformation</label>
-        <locationX>1502</locationX>
-        <locationY>3494</locationY>
+        <locationX>2030</locationX>
+        <locationY>3614</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
         </connector>
@@ -1106,8 +1217,8 @@
     <screens>
         <name>Closed_Case_Error</name>
         <label>Closed Case Error</label>
-        <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1122,8 +1233,8 @@
     <screens>
         <name>CustomerClaimError</name>
         <label>Customer Claim Error</label>
-        <locationX>1634</locationX>
-        <locationY>2678</locationY>
+        <locationX>2162</locationX>
+        <locationY>2798</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1138,8 +1249,8 @@
     <screens>
         <name>CustomerCreationError</name>
         <label>Customer Creation Error</label>
-        <locationX>1370</locationX>
-        <locationY>2798</locationY>
+        <locationX>1898</locationX>
+        <locationY>2918</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1154,8 +1265,8 @@
     <screens>
         <name>Department_not_available</name>
         <label>Department not available</label>
-        <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationX>842</locationX>
+        <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1168,10 +1279,46 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Distribution_Department_Error</name>
+        <label>Distribution Department Error</label>
+        <locationX>1370</locationX>
+        <locationY>878</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>To_Other_Department</targetReference>
+        </connector>
+        <fields>
+            <name>OnlySupportCaseAllowed</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;{!GetCurrentCaseInformation.Team__c} is only allowed to create support cases to other departments and teams&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Emergency_Case_Error</name>
+        <label>Emergency Case Error</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>EmergencyCase</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;To Other Department functionality is not available for Emergency Cases.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Functional_Production_Support_Error</name>
         <label>Functional Production Support Error</label>
-        <locationX>842</locationX>
-        <locationY>758</locationY>
+        <locationX>1106</locationX>
+        <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1186,8 +1333,8 @@
     <screens>
         <name>Redirection_Submission</name>
         <label>Redirection Submission</label>
-        <locationX>1920</locationX>
-        <locationY>3710</locationY>
+        <locationX>2448</locationX>
+        <locationY>3830</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1203,8 +1350,8 @@
     <screens>
         <name>RefundRequestError</name>
         <label>Refund Request Error</label>
-        <locationX>1502</locationX>
-        <locationY>1598</locationY>
+        <locationX>2030</locationX>
+        <locationY>1718</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1219,8 +1366,8 @@
     <screens>
         <name>RefundRequestMissing</name>
         <label>Refund Request missing</label>
-        <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1236,8 +1383,8 @@
         <description>Input for making a request to another department</description>
         <name>To_Other_Department</name>
         <label>To Other Department</label>
-        <locationX>1249</locationX>
-        <locationY>518</locationY>
+        <locationX>1645</locationX>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1375,7 +1522,7 @@
             <helpText>&lt;p&gt;Please describe what it is needed from the other department/team&lt;/p&gt;</helpText>
             <isRequired>true</isRequired>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>(1 AND 2 AND 3) OR 4</conditionLogic>
                 <conditions>
                     <leftValueReference>Request_Type</leftValueReference>
                     <operator>EqualTo</operator>
@@ -1395,6 +1542,13 @@
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>Customer Claim</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.middleValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Payment Escalation</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1623,6 +1777,13 @@
                         <stringValue>Customer Claim</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.middleValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Payment Escalation</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -1682,6 +1843,13 @@
                         <elementReference>Support</elementReference>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.middleValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Payment Escalation</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -1702,6 +1870,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Customer Claim</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.middleValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Payment Escalation</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1800,6 +1975,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Customer Claim</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DependentList.middleValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Payment Escalation</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1945,7 +2127,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>289</locationX>
+        <locationX>255</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetCurrentCaseInformation</targetReference>
@@ -1956,8 +2138,8 @@
         <description>Gets the care record type based on the Department and Team</description>
         <name>Get_Case_Record_Type</name>
         <label>Get Case Record Type</label>
-        <locationX>1920</locationX>
-        <locationY>998</locationY>
+        <locationX>2448</locationX>
+        <locationY>1118</locationY>
         <connector>
             <targetReference>Redirection_Support_Or_Escalation</targetReference>
         </connector>

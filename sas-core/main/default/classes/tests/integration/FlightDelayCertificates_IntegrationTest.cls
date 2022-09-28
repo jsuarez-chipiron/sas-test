@@ -8,7 +8,7 @@ public with sharing class FlightDelayCertificates_IntegrationTest {
       '    "email": "test@example.com",' +
       '    "firstName": "Test",' +
       '    "lastName": "Testsson",' +
-      '    "flightDate": "2022-03-02",' +
+      '    "departureDate": "2022-03-02",' +
       '    "flightNumber": "SK0903",' +
       '    "bookingReference": "DELAY1"' +
       '  },' +

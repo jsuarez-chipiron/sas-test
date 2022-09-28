@@ -171,26 +171,99 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>Info Hub</controllingFieldValue>
-            <valueName>Content</valueName>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>Care</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Distribution</controllingFieldValue>
+            <valueName>Baggage</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Distribution</controllingFieldValue>
+            <valueName>Cancellation &amp; Refunds</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Distribution</controllingFieldValue>
+            <valueName>Changes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
             <controllingFieldValue>Sales Control BOM</controllingFieldValue>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>Customer Claim</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <controllingFieldValue>Care</controllingFieldValue>
             <controllingFieldValue>Corporate</controllingFieldValue>
+            <controllingFieldValue>Customer Claim</controllingFieldValue>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
             <controllingFieldValue>Direct Sales</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
             <controllingFieldValue>Fraud</controllingFieldValue>
             <controllingFieldValue>Functional Product Support</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
             <valueName>Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Distribution</controllingFieldValue>
+            <valueName>EuroBonus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Distribution</controllingFieldValue>
+            <valueName>Irregularities</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Distribution</controllingFieldValue>
+            <valueName>New Booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <controllingFieldValue>Sales Control BOM</controllingFieldValue>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Distribution</controllingFieldValue>
+            <valueName>Special Service Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Group Sales</controllingFieldValue>
+            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
+            <controllingFieldValue>SoMe Support</controllingFieldValue>
+            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
+            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Distribution</controllingFieldValue>
+            <valueName>Travel Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info Hub</controllingFieldValue>
+            <valueName>Content</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
@@ -211,47 +284,6 @@
             <controllingFieldValue>Refunds</controllingFieldValue>
             <controllingFieldValue>Refunds OC KANA</controllingFieldValue>
             <valueName>Voucher Handling</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales Control BOM</controllingFieldValue>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Special Service Request</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <controllingFieldValue>Care</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Baggage</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Cancellation &amp; Refunds</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Changes</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>EuroBonus</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
@@ -277,22 +309,7 @@
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Irregularities</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>New Booking</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Distribution</controllingFieldValue>
             <valueName>Non-SAS Products</valueName>
         </valueSettings>
         <valueSettings>
@@ -312,14 +329,6 @@
         <valueSettings>
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
-            <controllingFieldValue>Agent Helpdesk</controllingFieldValue>
-            <controllingFieldValue>EuroBonus</controllingFieldValue>
-            <controllingFieldValue>Group Sales</controllingFieldValue>
-            <valueName>Travel Information</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>SAS Operating Center</controllingFieldValue>
-            <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>Corporate</controllingFieldValue>
             <valueName>Travel Pass</valueName>
         </valueSettings>
@@ -327,6 +336,7 @@
             <controllingFieldValue>SAS Operating Center</controllingFieldValue>
             <controllingFieldValue>SoMe Support</controllingFieldValue>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
+            <controllingFieldValue>Distribution</controllingFieldValue>
             <valueName>Voucher</valueName>
         </valueSettings>
         <valueSettings>

@@ -4,6 +4,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       LIA_Claim__c.Id,
       LIA_Claim__c.Name,
       LIA_Claim__c.CreatedDate,
+      LIA_Claim__c.LastModifiedDate,
       LIA_Claim__c.Address_line_1__c,
       LIA_Claim__c.Address_line_2__c,
       LIA_Claim__c.Bank_Account_Holder_Name__c,
@@ -15,28 +16,43 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       LIA_Claim__c.City__c,
       LIA_Claim__c.Claims_Exist_In_CARE_For_PNR__c,
       LIA_Claim__c.Claim_Firm__c,
+      LIA_Claim__c.Comment__c,
+      LIA_Claim__c.Company_Code__c,
+      LIA_Claim__c.Company_Name__c,
       LIA_Claim__c.Compensation_Card_Number__c,
+      LIA_Claim__c.Concerns_a_person_with_reduced_mobility__c,
+      LIA_Claim__c.Concerns_an_unaccompanied_minor__c,
       LIA_Claim__c.Contact_Email__c,
       LIA_Claim__c.Contact_First_Name__c,
-      LIA_Claim__c.Full_Name__c,
       LIA_Claim__c.Contact_Last_Name__c,
       LIA_Claim__c.Country__c,
       LIA_Claim__c.Currency__c,
       LIA_Claim__c.Customer_Claim_Category__c,
       LIA_Claim__c.Customer_Claim_Type__c,
       LIA_Claim__c.Customer_s_Reference__c,
+      LIA_Claim__c.Delay_Length__c,
+      LIA_Claim__c.EU261_Handling_Note__c,
+      LIA_Claim__c.EU261_Handling_Status__c,
+      LIA_Claim__c.Full_Name__c,
       LIA_Claim__c.EuroBonus_Number__c,
       LIA_Claim__c.Flight_Date__c,
       LIA_Claim__c.Flight_Number__c,
       LIA_Claim__c.Last_Checked_Claims_From_CARE__c,
       LIA_Claim__c.Liability_PNR__c,
+      LIA_Claim__c.Name,
       LIA_Claim__c.Phone_Number__c,
       LIA_Claim__c.PIR__c,
       LIA_Claim__c.Postal_Code__c,
       LIA_Claim__c.Preferred_Compensation_Method__c,
+      LIA_Claim__c.Preferred_Reimbursement_Method__c,
+      LIA_Claim__c.Purchase_Price__c,
+      LIA_Claim__c.Purchase_Year__c,
       LIA_Claim__c.RecordTypeId,
-      LIA_Claim__c.Type_of_Customer__c,
-      LIA_Claim__c.Submitted_Claim_Expenses_in_SEK__c
+      LIA_Claim__c.Submitted_Claim_Expenses_in_SEK__c,
+      LIA_Claim__c.Ticket_Number__c,
+      LIA_Claim__c.Total_delay_to_final_destination__c,
+      LIA_Claim__c.Travel_Agent_Booking_Reference__c,
+      LIA_Claim__c.Type_of_Customer__c
     };
   }
 
@@ -62,7 +78,10 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     return (List<LIA_Claim__c>) Database.query(claimsQF.toSOQL());
   }
 
-  public class insufficientFlightInfoException extends Exception {
+  public class InsufficientFlightInfoException extends Exception {
+  }
+
+  public class TooManyMatchesException extends Exception {
   }
 
   public List<LIA_Claim__c> selectDuplicatesById(Id claimId) {
@@ -105,7 +124,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     );
 
     if (String.isBlank(flightNumber) == null || flightDate == null) {
-      throw new insufficientFlightInfoException(
+      throw new InsufficientFlightInfoException(
         'Claim does not have sufficient information about the flight.'
       );
     }
@@ -157,7 +176,12 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     return (List<LIA_Claim__c>) Database.query(claimsQF.toSOQL());
   }
 
+  /**
+		@throws TooManyMatchesException if there are more than or equal to 50000 matches, custom exception as the default one is not catchable
+	*/
   public List<LIA_Claim__c> selectByProactivityId(Id proactivityId) {
+    Integer lim = 50000;
+
     ProactivitiesSelector proactivities = ProactivitiesSelector.newInstance();
     Proactivity__c proactivity = proactivities.selectById(
       new Set<Id>{ proactivityId }
@@ -270,7 +294,10 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
         SELECT Flight__c
         FROM FlightIrregularities__c
         WHERE Code__c = :cancellationCode
+        LIMIT :lim
       ];
+
+      checkIfAtLimit(irregularityList.size());
 
       for (FlightIrregularities__c fi : irregularityList) {
         flightIdsWithMatchingCancellationCode.add(fi.Flight__c);
@@ -287,8 +314,12 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
 
     if (!String.isBlank(advancedMatcherQuery)) {
       allSegments = Database.query(
-        'SELECT Booking__r.Id FROM Segment__c WHERE ' + advancedMatcherQuery
+        'SELECT Booking__r.Id FROM Segment__c WHERE ' +
+        advancedMatcherQuery +
+        ' LIMIT ' +
+        lim
       );
+      checkIfAtLimit(allSegments.size());
     }
 
     for (Segment__c s : allSegments) {
@@ -304,6 +335,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
           FROM CaseToBooking__c
           WHERE Booking__r.Id IN :bookingList
         )
+      LIMIT :lim
     ];
 
     if (whereQuery.length() == 0) {
@@ -313,13 +345,22 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       return new List<LIA_Claim__c>{};
     }
 
+    checkIfAtLimit(flightClaimList.size());
+
     List<LIA_Claim__c> results = (List<LIA_Claim__c>) Database.query(
-      newQueryFactory().setCondition(whereQuery).toSOQL()
+      newQueryFactory().setCondition(whereQuery).setLimit(lim).toSOQL()
     );
 
     results.addAll(flightClaimList);
+    checkIfAtLimit(results.size());
 
     return results;
+  }
+
+  private void checkIfAtLimit(Integer recordCount) {
+    if (recordCount >= 50000) {
+      throw new TooManyMatchesException();
+    }
   }
 
   public List<LIA_Claim__c> selectSimilarClaimsByCaseId(Id caseId) {
