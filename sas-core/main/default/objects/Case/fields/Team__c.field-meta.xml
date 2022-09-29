@@ -1031,10 +1031,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Customer Claim</controllingFieldValue>
-            <valueName>Customer Feedback</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Customer Claim</controllingFieldValue>
             <valueName>Flight Delay Certificate</valueName>
         </valueSettings>
         <valueSettings>
@@ -1050,16 +1046,16 @@
             <valueName>Proration</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Vendor Management</controllingFieldValue>
-            <valueName>Vendor Management</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Digital Channel Support</controllingFieldValue>
             <valueName>Internal</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Direct Sales</controllingFieldValue>
             <valueName>Backoffice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Distribution</controllingFieldValue>
+            <valueName>CS Norway</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>EuroBonus</controllingFieldValue>
@@ -1126,8 +1122,8 @@
             <valueName>EMEA</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Distribution</controllingFieldValue>
-            <valueName>CS Norway</valueName>
+            <controllingFieldValue>Vendor Management</controllingFieldValue>
+            <valueName>Vendor Management</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
