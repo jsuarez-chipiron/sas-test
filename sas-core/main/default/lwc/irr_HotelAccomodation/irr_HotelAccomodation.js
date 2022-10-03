@@ -6,19 +6,23 @@ export default class IRR_HotelAccomodation extends LightningElement {
 
     @api emailPicklistOptions = [];
 
+    @api selectedCount;
+
     @track recipients = [];
 
     @api isShowModal = false;
 
-    @api passData ;
+    @api paxData ;
      
     @api fileName;
 
-    @track toAddresses ='';
+    @track toAddresses = [];
 
     showEmailPicklist = false;
 
     @track isDisabledSend = false;
+
+    idTracker = 0;
 
     connectedCallback() {
         for(const emailList of distributionList.split(';')){
@@ -34,16 +38,24 @@ export default class IRR_HotelAccomodation extends LightningElement {
         return this.showRecipientModal ? 'slds-modal slds-fade-in-open' : 'slds-modal';
     }
 
+    get passengerText() {
+        return this.selectedCount > 1 ? 'Passengers' : 'Passenger' ;
+    }
     handleEmailChange(event) {
 
-        this.toAddresses = event.detail.value;
+        const {name , value , dataset: {recipientIndex} } = event.target;
+        this.toAddresses[recipientIndex][name] = value;
+        console.log(`toAdd :${JSON.stringify(this.toAddresses)}`);
 
     }
-    showModalBox() {  
+    handleChange(event) {
+        this.recipients.push(event.detail.value);
+    }
+    showModalBox() {
         this.isShowModal = true;
     }
 
-    hideModalBox() {  
+    hideModalBox() {
         this.isShowModal = false;
         const sendEvent = new CustomEvent('closehotelacc', {
             detail: false
@@ -59,8 +71,20 @@ export default class IRR_HotelAccomodation extends LightningElement {
         });
         this.dispatchEvent(sendEvent);
     }
+
+    handleAdd() {
+        const idNumber = ++this.idTracker;
+        this.toAddresses.push({ id: `rec${idNumber}`});
+    }
+
     handleSend(event){
-         if(this.toAddresses ==='' || this.toAddresses ===undefined){
+
+        this.toAddresses.forEach ( (address) => {
+            this.recipients.push(address.emailAddress);
+
+        })
+
+         if(this.recipients === '' || this.recipients === undefined){
             const toastEvent = new ShowToastEvent({
                 title: 'No Address Selected',
                 message: 'Please select an email.',
@@ -69,14 +93,12 @@ export default class IRR_HotelAccomodation extends LightningElement {
             return ;
          }
          this.isDisabledSend = true;
-         sendCsvEmail({CsvData: this.passData,FileName: this.fileName, SendTo : 'gaurav.singh@sas.dk'}).then(result => {
-           //Show email msg 
+         sendCsvEmail({PaxData: this.paxData, FileName: this.fileName, SendTo : this.recipients }).then(result => {
             const toastEvent = new ShowToastEvent({
                 title: 'Send successfuly',
-                message: 'Email has been sent successfuly.',
+                message: 'Email(s) have been sent successfuly.',
             });
             this.dispatchEvent(toastEvent);
-            //Hide model 
             this.isShowModal = false;
             const sendEvent = new CustomEvent('closehotelacc', {
                 detail: false

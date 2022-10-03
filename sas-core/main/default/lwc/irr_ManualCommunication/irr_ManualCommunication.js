@@ -119,10 +119,6 @@ export default class IRR_ManualCommunication extends LightningElement {
         }
     }
 
-    // get emailPicklistOptions () {
-        
-    //  }
-
     get noPassengersFoundText() {
         return this.passengerResult.length === 0 ?
             'No passengers found, or flight does not exist. Please check Flight ID.' : 'No passengers matching filter';
@@ -410,62 +406,29 @@ export default class IRR_ManualCommunication extends LightningElement {
         }
     }
 
-    downloadCSVFile () {
+    handleFileSend() {
         const passengerInfos = this.selectedRows.map(row => tableUtil.flatten(row));
         const params = Object.values(this.retrieveParameters).join(" - ");
         const param =  params.split('-');
-        const [ flight, date ] = param;
-        const fileName = `${flight}_${date}`;
-        if(this.selectedRows.length > 0) {
-           this.isDisabled = true;
-           const csvData = convertToCSV(passengerInfos,this.flightHeaders);
-           if(csvData == null) return;
-           sendCsvEmail({CsvData: csvData,FileName: fileName, SendTo : this.toAddresses}).then(result => {
-               this.showSuccess = true;
-               this.emailSuccess = true;
-           })
-           .catch(error => {
-               this.handleError(error, true);
-           });
-        } else {
-           const toastEvent = new ShowToastEvent({
-               title: 'No Recipients Selected',
-               message: 'Please select at least one recipient in order to email.',
-           });
-           this.dispatchEvent(toastEvent);
-           return;
-
-        }
-    }
-
-    handleFileSend(){
-
-
-
-        const passengerInfos = this.selectedRows.map(row => tableUtil.flatten(row));
-        const params = Object.values(this.retrieveParameters).join(" - ");
-        const param =  params.split('-');
-        const [ flight, date ] = param;
-        this.fileName = `${flight}_${date}`;
+        const [ flight,date,departureStation ] = param;
+        this.fileName = `${flight}_${departureStation}_${date}`;
         if(this.selectedRows.length > 0) {
             this.isHotelModel  = true
-          // this.isDisabled = true;
-           const csvData = convertToCSV(passengerInfos,this.flightHeaders);
-           if(csvData == null) return;
-           this.passData = csvData;
+            const csvData = convertToCSV(passengerInfos,this.flightHeaders);
+            if(csvData == null) return;
+            this.paxData = csvData;
+            this.passengerCount = this.selectedRows.length;
         } else {
-           const toastEvent = new ShowToastEvent({
-               title: 'No Recipients Selected',
-               message: 'Please select at least one recipient in order to email.',
-           });
+            const toastEvent = new ShowToastEvent({
+                title: 'No Recipients Selected',
+                message: 'Please select at least one recipient in order to email the Attachment.',
+            });
            this.dispatchEvent(toastEvent);
            return;
-
         }
     
 
     }
-
     hideHotelModel(event){
         this.isHotelModel = event.detail;
     }
