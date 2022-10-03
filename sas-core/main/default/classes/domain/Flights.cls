@@ -264,7 +264,7 @@ public without sharing class Flights extends fflib_SObjectDomain {
   /*
    * Returns variations of the flight id written in plain text
    * Format: BT0151-20220713-RIX-OSL
-   * A List Returns a flight Id on format
+   *
    * @return A list with ids with the following formats: BT0151-20220713, BT0151-2022-07-13
    */
   public static List<String> TEDSIdToSimpleFlightIds(String TEDSId) {
@@ -281,6 +281,22 @@ public without sharing class Flights extends fflib_SObjectDomain {
     String format2 = flightNumber + '-' + flightDateSeparated;
 
     return new List<String>{ format1, format2 };
+  }
+
+  /**
+   * Constructs a flightNumber + date combination like the one used in TEDS
+   *
+   * @param flightNumber E.g. SK1234
+   * @param flightDate
+   * @return a string like: SK1234-20220101
+   */
+  public static String constructTEDSFlightNumberDate(
+    String flightNumber,
+    Date flightDate
+  ) {
+    return normalizeFlightNumber(flightNumber) +
+      '-' +
+      String.valueOf(flightDate).remove('-');
   }
 
   /**

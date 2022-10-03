@@ -50,16 +50,12 @@ public inherited sharing class FlightIrregularitiesSelector extends fflib_SObjec
     String fromAirport,
     String toAirport
   ) {
-    String parsedDate = String.valueOf(departureDate).remove('-');
     String flightId =
-      flightNumber +
-      '-' +
-      parsedDate +
+      Flights.constructTEDSFlightNumberDate(flightNumber, departureDate) +
       '-' +
       fromAirport +
       '-' +
-      toAirport +
-      '';
+      toAirport;
 
     return (List<FlightIrregularities__c>) Database.query(
       newQueryFactory()

@@ -61,7 +61,9 @@ public without sharing class Bookings extends fflib_SObjectDomain {
    *
    * @return A map of booking id to each trip in booking
    */
-  public Map<Id, List<Trip>> getTrips(Map<String, Airport__c> airportCodeToAirport) {
+  public Map<Id, List<Trip>> getTrips(
+    Map<String, Airport__c> airportCodeToAirport
+  ) {
     Map<Id, List<Trip>> bookingIdToTrips = new Map<Id, List<Trip>>{};
 
     // Sort the Segments
@@ -72,7 +74,10 @@ public without sharing class Bookings extends fflib_SObjectDomain {
         );
       }
 
-      bookingIdToTrips.put(b.Id, Trip.createFromBooking(b, airportCodeToAirport));
+      bookingIdToTrips.put(
+        b.Id,
+        Trip.createFromBooking(b, airportCodeToAirport)
+      );
     }
 
     return bookingIdToTrips;
