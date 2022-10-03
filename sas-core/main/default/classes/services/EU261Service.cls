@@ -482,15 +482,18 @@ public without sharing class EU261Service {
     Integer compensation;
     if (newTrip == null) {
       // Current state of this automation as we cannot determine that we have not suggested a rebooking
-      if (true) {
+      Boolean allDataIsAvailable = false; // Temp (dev), EDW
+      if (!allDataIsAvailable) {
         throw new AutomationException(
           'We do not have enough data to evaluate this claim (likely cancellation without rebooking).'
         );
       }
-      // No suggested rebooking => full EU261 (10h outside timeframe => full compensation)
+      // No suggested rebooking => full EU261 (10h outside timeframe => full compensation, except if you were informed on time)
       compensation = calculateCompensationCancellation(
         600,
+        0,
         flightDistanceInKmRounded,
+        daysUntilFlightWhenInformedOfCancellation,
         isIntraCommunity
       );
     } else {
@@ -506,43 +509,21 @@ public without sharing class EU261Service {
       arrivalDifference = Integer.valueOf(
         DateUtils.getHoursBetween(newArrival, originalArrival) * 60
       ); // Do we need to round up?
-
-      Integer compensationForEarlyFlight = 0;
-      Integer compensationForLateFlight = 0;
-      final Integer MAXIMUM_ACCEPTABLE_TIME_LATE_ARRIVAL = 240;
-      final Integer MAXIMUM_ACCEPTABLE_TIME_EARLY_DEPARTURE = 120;
-
+      Integer minutesLateOnArrival = 0;
+      Integer minutesEarlyOnDeparture = 0;
       if (newArrival > originalArrival) {
-        Integer minutesOutsideTimeFrame = getMinutesOutsideTimeFrame(
-          MAXIMUM_ACCEPTABLE_TIME_LATE_ARRIVAL,
-          arrivalDifference,
-          daysUntilFlightWhenInformedOfCancellation
-        );
-
-        compensationForLateFlight = calculateCompensationCancellation(
-          minutesOutsideTimeFrame,
-          flightDistanceInKmRounded,
-          isIntraCommunity
-        );
+        minutesLateOnArrival = arrivalDifference;
       }
-
       if (newDeparture < originalDeparture) {
-        Integer minutesOutsideTimeFrame = getMinutesOutsideTimeFrame(
-          MAXIMUM_ACCEPTABLE_TIME_EARLY_DEPARTURE,
-          departureDifference,
-          daysUntilFlightWhenInformedOfCancellation
-        );
-
-        compensationForEarlyFlight = calculateCompensationCancellation(
-          minutesOutsideTimeFrame,
-          flightDistanceInKmRounded,
-          isIntraCommunity
-        );
+        minutesEarlyOnDeparture = departureDifference;
       }
 
-      compensation = Math.max(
-        compensationForEarlyFlight,
-        compensationForLateFlight
+      compensation = calculateCompensationCancellation(
+        minutesLateOnArrival,
+        minutesEarlyOnDeparture,
+        flightDistanceInKmRounded,
+        daysUntilFlightWhenInformedOfCancellation,
+        isIntraCommunity
       );
     }
 
@@ -562,25 +543,42 @@ public without sharing class EU261Service {
     return ac;
   }
 
-  // Somewhat unclear, TODO: double check
   private static Integer calculateCompensationCancellation(
-    Integer minutesOutsideTimeFrame,
+    Integer minutesLateOnArrival,
+    Integer minutesEarlyOnDeparture,
     Integer flightDistanceInKm,
+    Integer daysUntilFlightWhenInformedOfCancellation,
     Boolean isIntraCommunity
   ) {
+    final Integer MAXIMUM_ACCEPTABLE_TIME_LATE_ARRIVAL = 240;
+    final Integer MAXIMUM_ACCEPTABLE_TIME_EARLY_DEPARTURE = 120;
     final Integer MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_SHORT_DISTANCE = 120;
     final Integer MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_MEDIUM_DISTANCE = 180;
     final Integer MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_LONG_DISTANCE = 240;
     final Integer MEDIUM_DISTANCE = 1500;
     final Integer LONG_DISTANCE = 3500;
 
+    Boolean isEligableForCompensation =
+      isOutSideTimeFrame(
+        MAXIMUM_ACCEPTABLE_TIME_LATE_ARRIVAL,
+        minutesLateOnArrival,
+        daysUntilFlightWhenInformedOfCancellation
+      ) ||
+      isOutSideTimeFrame(
+        MAXIMUM_ACCEPTABLE_TIME_EARLY_DEPARTURE,
+        minutesEarlyOnDeparture,
+        daysUntilFlightWhenInformedOfCancellation
+      );
+
+    if (!isEligableForCompensation) {
+      return 0;
+    }
+
     Integer compensation;
-    if (minutesOutsideTimeFrame == 0) {
-      compensation = 0;
-    } else if (flightDistanceInKm <= MEDIUM_DISTANCE) {
+    if (flightDistanceInKm <= MEDIUM_DISTANCE) {
       compensation = 250;
       if (
-        minutesOutsideTimeFrame <
+        minutesLateOnArrival <=
         MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_SHORT_DISTANCE
       ) {
         compensation /= 2;
@@ -591,7 +589,7 @@ public without sharing class EU261Service {
     ) {
       compensation = 400;
       if (
-        minutesOutsideTimeFrame <
+        minutesLateOnArrival <=
         MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_MEDIUM_DISTANCE
       ) {
         compensation /= 2;
@@ -599,7 +597,7 @@ public without sharing class EU261Service {
     } else {
       compensation = 600;
       if (
-        minutesOutsideTimeFrame <
+        minutesLateOnArrival <=
         MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_LONG_DISTANCE
       ) {
         compensation /= 2;
@@ -609,9 +607,9 @@ public without sharing class EU261Service {
     return compensation;
   }
 
-  public static Integer getMinutesOutsideTimeFrame(
+  public static Boolean isOutSideTimeFrame(
     Integer timeFrame,
-    Integer delay,
+    Integer deviation,
     Integer daysUntilFlightWhenInformedOfCancellation
   ) {
     Integer minutesOutsideTimeFrame;
@@ -621,11 +619,12 @@ public without sharing class EU261Service {
       daysUntilFlightWhenInformedOfCancellation <= 14 &&
       daysUntilFlightWhenInformedOfCancellation > 7
     ) {
-      minutesOutsideTimeFrame = Math.max(0, delay - timeFrame);
+      minutesOutsideTimeFrame = Math.max(0, deviation - timeFrame);
     } else {
-      minutesOutsideTimeFrame = Math.max(0, delay - timeFrame / 2);
+      minutesOutsideTimeFrame = Math.max(0, deviation - timeFrame / 2);
     }
-    return minutesOutsideTimeFrame;
+
+    return minutesOutsideTimeFrame > 0;
   }
 
   /**
