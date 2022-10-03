@@ -5,6 +5,7 @@
 
 <!-- IRR Manual Communication -->
 <template>
+   
     <div focusable="" onkeyup={handleGlobalKeyUp} tabindex="0" class="no-focus">
         <c-c_-loading-modal load-count={loadCount}></c-c_-loading-modal>
         <c-c_-error-modal errors={errors} critical={criticalError} onclearerrors={clearErrors}></c-c_-error-modal>
@@ -34,6 +35,15 @@
                 selected-recipients={additionalRecipients}
                 show-recipient-modal={showRecipientModal}>
         </c-irr_-recipient-modal>
+        <template if:true={isHotelModel}>
+                <c-irr_-hotel-accomodation 
+                onclosehotelacc={hideHotelModel}
+                is-show-modal={isHotelModel}
+                pax-data={paxData}
+                selected-count={passengerCount}
+                file-name = {fileName}>
+               </c-irr_-hotel-accomodation> 
+       </template>
         <lightning-layout multiple-rows="true">
             <lightning-layout-item padding="around-small" size="12">
                 <div class="page-section page-header">
@@ -41,7 +51,7 @@
                             if:true={showRetrieve}
                             onretrieve={handleRetrieveEvent}>
                     </c-irr_-retrieve-panel>
-                    <c-irr_-send-panel
+                   <c-irr_-send-panel
                             if:false={showRetrieve}
                             additional-recipient-count={additionalRecipients.length}
                             templates-by-send-mode={templatesBySendMode}
@@ -96,14 +106,18 @@
                         <div class="page-section page-main">
                             <lightning-card icon-name="utility:groups">
                                 <h1 slot="title" class="no-wrap">{tableHeading}</h1>
-                                <lightning-card  >
+                                <lightning-card>
+                                    <lightning-card>
                                         <div class="slds-p-around_medium lgc-bg-inverse">
-                                                <lightning-button icon-name="utility:email" 
-                                                                  label="Send Email to Hotel Accomodation App" 
-                                                                  title="Send Email to Hotel Accomodation App"
-                                                                  onclick={downloadCSVFile} variant="brand"></lightning-button>
-                                            </p>
+                                                <lightning-button 
+                                                        icon-name="utility:email" 
+                                                        label="Send Email to Hotel Accomodation App" 
+                                                        title="Send Email to Hotel Accomodation App"
+                                                        onclick={handleFileSend} 
+                                                        variant="brand">
+                                                </lightning-button>
                                         </div>
+                                    </lightning-card>
                                         <div class="slds-p-horizontal_small">
                                             <div class="slds-media">
                                                 <div class="slds-media__body">

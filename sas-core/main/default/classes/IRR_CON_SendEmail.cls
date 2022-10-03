@@ -1,26 +1,34 @@
+/**
+* @author Chetan Singh, Coforge
+* @date 2022
+*
+* @description Controller class for the manual comm to send Passenger list to Hotel Accomodation tool.
+*/
+
 public class IRR_CON_SendEmail {
 
     @AuraEnabled
-    public static map<String,String> SendCsvEmail(String CsvData,String FileName) {
-        CsvData= CsvData.replaceAll('"','');
-        CsvData= CsvData.replaceAll('"','');
-        System.debug('FileName'+FileName);
+    public static map<String,String> SendCsvEmail(String PaxData,String FileName,List<String> SendTo) {
+
+        PaxData = PaxData.replaceAll('"','');
+        PaxData = PaxData.replaceAll('"','');
         map<String, String> result = new map<String, String> ();
+
         try{
             Messaging.EmailFileAttachment csvAttachment = new Messaging.EmailFileAttachment();
-            Blob csvBlob = blob.valueOf('\uFEFF'+CsvData);
+            Blob csvBlob = blob.valueOf('\uFEFF'+PaxData);
             String csvName = FileName+'.xls';
             csvAttachment.contenttype='application/vnd.ms-excel; charset=UTF-8';
             csvAttachment.setFileName(csvName);
             csvAttachment.setBody(csvBlob);
             Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-            String[] toAddresses = new String[]{'Soren.Fredriksson@sas.se'};
-            String[] ccAddresses = new String[]{'chetan.singh@sas.dk', 'tom.fichter@sas.se'};
-            String subject = 'Salesforce data to Hotel Accommodation Tool';
+            String[] toAddresses = SendTo;
+            String[] ccAddresses = new String[]{'chetan.singh@sas.dk','soren.fredriksson@sas.se','tom.fichter@sas.se'};
+            String subject = 'Salesforce Passenger data to Lexit Hotel Accommodation Tool';
             email.setSubject(subject);
             email.setToAddresses(toAddresses);
             email.setCcAddresses(ccAddresses);
-            email.setPlainTextBody('Salesforce data to Hotel Accommodation Tool');
+            email.setPlainTextBody('Salesforce Passenger data to Lexit Hotel Accommodation Tool');
             email.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttachment});
             Messaging.SendEmailResult[] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[]{email});
             if (r[0].success) {
@@ -36,7 +44,6 @@ public class IRR_CON_SendEmail {
             System.debug('The email failed to send----> ' + Ex.getMessage());
             result.put('ERROR', 'The email failed to send----> ' + Ex.getMessage());
         }
-        System.debug('result-->' +result);
         return result;
     }
 }
