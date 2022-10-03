@@ -2,8 +2,7 @@ public without sharing class Trip {
   public Airport__c originAirport;
   public Airport__c destinationAirport;
   public List<Leg> sortedLegs;
-  public Boolean hasOnlySASFlights;
-  public Flight__c claimFlight;
+  public Boolean SASIsOnlyOperatingCarrier;
   public FlightHistory flightHistory;
 
   public enum Type {
@@ -77,7 +76,7 @@ public without sharing class Trip {
     }
 
     this.sortedLegs = legsInOrder;
-    this.hasOnlySASFlights = true;
+    this.SASIsOnlyOperatingCarrier = true;
 
     List<Flight__c> fs = new List<Flight__c>();
     for (Leg l : legsInOrder) {
@@ -88,13 +87,14 @@ public without sharing class Trip {
       Boolean operatedBySAS : Flights.newInstance(fs).operatedBySAS().values()
     ) {
       if (!operatedBySAS) {
-        hasOnlySASFlights = false;
+        SASIsOnlyOperatingCarrier = false;
       }
     }
 
     this.flightHistory = new FlightHistory(this.sortedLegs);
   }
 
+  // GENERAL LOGIC
   public Flight__c getFlight(String flightNumberDate) {
     for (Leg l : this.sortedLegs) {
       String segmentFlightId = Flights.TEDSIdToSimpleFlightIds(
@@ -107,11 +107,6 @@ public without sharing class Trip {
     return null;
   }
 
-  public Datetime getFinalDestinationArrivalTime() {
-    Flight__c lastFlight = getFlightToFinalDestination();
-    return lastFlight.Scheduled_Arrival_Time__c;
-  }
-
   public Flight__c getFlightToFinalDestination() {
     return sortedLegs[sortedLegs.size() - 1].flight;
   }
@@ -120,108 +115,40 @@ public without sharing class Trip {
     return sortedLegs[0].flight;
   }
 
+  public Boolean isIntraCommunity() {
+    return originAirport.Is_EU261_Applicable__c &&
+      destinationAirport.Is_EU261_Applicable__c;
+  }
+
   // DELAY LOGIC
+  public Datetime getFinalDestinationArrivalTime() {
+    Flight__c lastFlight = getFlightToFinalDestination();
+    return lastFlight.Scheduled_Arrival_Time__c;
+  }
+
   public Boolean isDelayedToDestination() {
     return getFlightToFinalDestination().Arrival_Delayed_Minutes__c > 0;
   }
 
   // CANCELLATION LOGIC
-  // Todo: update to use irregularities like getNoCancelledFlights()
-  public Boolean claimFlightIsCancelled() {
-    if (this.claimFlight == null) {
-      throw new TripException('Claim flight is not set');
-    }
-
-    for (Leg l : sortedLegs) {
-      if (l.flight.Id == claimFlight.Id) {
-        if (l.segmentType == Type.Cancelled) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
   public Integer getNoCancelledFlights(
     Map<Id, List<FlightIrregularities__c>> flightToIrregularities
   ) {
     Integer noCancelledFlights = 0;
     for (Leg l : sortedLegs) {
-      List<FlightIrregularities__c> irregularities = flightToIrregularities.get(
-        l.flight.Id
+      FlightIrregularities fi = new FlightIrregularities(
+        flightToIrregularities.get(l.flight.Id)
       );
-      for (FlightIrregularities__c fi : irregularities) {
-        if (fi.Type__c.substringBefore(' ') == 'Cancellation') {
-          noCancelledFlights += 1;
-          break;
-        }
+      if (fi.containsCancellation()) {
+        noCancelledFlights += 1;
       }
     }
     return noCancelledFlights;
   }
 
-  public Integer getDaysBetweenCancellationAndDeparture(
-    List<FlightIrregularities__c> flightIrregularities
-  ) {
-    if (!claimFlightIsCancelled()) {
-      throw new TripException('Claim flight is not cancelled.');
-    } else if (flightIrregularities.size() == 1) {
-      FlightIrregularities__c cancellation = flightIrregularities[0];
-      Datetime departureTime = this.claimFlight.Scheduled_Departure_Time__c;
-      Datetime cancellationTime = cancellation.Cancellation_Time__c;
-      if (cancellationTime == null) {
-        throw new TripException(
-          'Cancellation does not have a cancellation time'
-        );
-      }
-      Decimal hoursBetween = DateUtils.getHoursBetween(
-        departureTime,
-        cancellationTime
-      );
-      Integer daysBetween = (hoursBetween / 24).intValue();
-      return daysBetween;
-    } else {
-      throw new TripException(
-        'Cancelled flight does not have exactly one irregularity.'
-      );
-    }
-  }
-  public Boolean claimFlightCancellationIsWithinSASControl(
-    Map<Id, List<FlightIrregularities__c>> flightToIrregularities
-  ) {
-    if (!claimFlightIsCancelled()) {
-      throw new TripException('Claim flight is not cancelled.');
-    }
-
-    FlightIrregularities irregularities = new FlightIrregularities(
-      flightToIrregularities.get(this.claimFlight.Id)
-    );
-    irregularities.removeNA0Delay();
-
-    Integer noIrregularities = irregularities.instanceRecords.size();
-    if (noIrregularities == 1) {
-      FlightIrregularities__c relevantIrregularity = irregularities.instanceRecords[0];
-
-      if (relevantIrregularity.Code__c.length() != 4) {
-        throw new TripException(
-          'Claim flight irregularity is not a cancellation'
-        );
-      } else {
-        return irregularities.isWithinSASControl().get(relevantIrregularity.Id);
-      }
-    } else if (noIrregularities == 0) {
-      throw new TripException('Claim flight has no valid irregularities.');
-    } else {
-      throw new TripException(
-        'Cancelled flight has more than one irregularity'
-      );
-    }
-  }
-
   public Boolean canGetOriginalTrip() {
     try {
-      this.getOriginalTrip();
+      this.getOriginalTripWithFlight();
       return true;
     } catch (Exception e) {
       return false;
@@ -230,7 +157,7 @@ public without sharing class Trip {
 
   public Boolean canGetSuggestedRebookingTrip() {
     try {
-      if (this.getSuggestedRebookingForClaimFlight() == null) {
+      if (this.getSuggestedRebookingWithoutFlight() == null) {
         throw new TripException();
       }
       return true;
@@ -239,7 +166,8 @@ public without sharing class Trip {
     }
   }
 
-  public Trip getOriginalTrip() {
+  // Flight__c cancelledFlight, TODO: Make dependant on cancelledFlight
+  public Trip getOriginalTripWithFlight() {
     Trip originalTrip = flightHistory.getOriginalTrip();
     if (
       originalTrip.getFirstFlight().Departure_Airport__c !=
@@ -253,19 +181,14 @@ public without sharing class Trip {
     }
     originalTrip.originAirport = this.originAirport;
     originalTrip.destinationAirport = this.destinationAirport;
-    originalTrip.claimFlight = this.claimFlight;
     return originalTrip;
   }
 
-  public Trip getSuggestedRebookingForClaimFlight() {
-    if (!this.claimFlightIsCancelled()) {
-      throw new TripException(
-        'This trip\'s claimflight is not cancelled and cannot have a suggested rebooking.'
-      );
-    }
+  // Flight__c cancelledFlight, TODO: Make dependant on cancelledFlight
+  public Trip getSuggestedRebookingWithoutFlight() {
     Trip suggestedRebookedTrip;
     try {
-      suggestedRebookedTrip = flightHistory.getSuggestedRebooking();
+      suggestedRebookedTrip = flightHistory.getSuggestedRebooking(); // TODO: Make dependant on cancelledFlight
     } catch (NoRouteException e) {
       return null;
     }
@@ -459,10 +382,10 @@ public without sharing class Trip {
    * Fanny ARN->CPH 2022-01-01 00:00 Oneway
    * Becomes:
    * ARN->CPH 2022-01-01 00:00 Oneway
-   * 
+   *
    * This is done to simplify cancellation compensation handling.
    */
-  public static List<Leg> combineIntoLegs(List<Segment__c> sortedSegments) {
+  public static List<Leg> createFromSegments(List<Segment__c> sortedSegments) {
     String departureAirport = sortedSegments[0].Flight__r.Departure_Airport__c;
     String arrivalAirport = sortedSegments[0].Flight__r.Arrival_Airport__c;
     Datetime departureTime = sortedSegments[0]
@@ -520,7 +443,7 @@ public without sharing class Trip {
   ) {
     List<Segment__c> sortedSegments = Segments.newInstance(booking.Segments__r)
       .getSortedInstanceRecords();
-    List<Leg> sortedLegs = Leg.combineIntoLegs(sortedSegments);
+    List<Leg> sortedLegs = Leg.createFromSegments(sortedSegments);
 
     // Leg latestLeg;
     // List<Leg> legsInCurrentTrip = new List<Leg>{};

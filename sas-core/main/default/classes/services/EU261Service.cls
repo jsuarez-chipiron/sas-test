@@ -33,10 +33,10 @@ public without sharing class EU261Service {
     public String rejectionReason;
     public String outsideSASControlExplanation;
     public Boolean customerEntitledToCompensation = false;
-    public Boolean customerEntitledToRefund;
     public Decimal maximumTimeToClaimCompensation;
     public Boolean hasPotentiallyDuplicateClaims = false;
     public Boolean hasRelatedFiles = false;
+    public Flight__c claimFlight;
 
     public ClaimWithCompensationDetails(Claim c) {
       this.claim = Claims.newInstance(
@@ -52,17 +52,23 @@ public without sharing class EU261Service {
     }
 
     public Boolean hasDelay() {
-      if (this.tripWithClaimFlight == null) {
+      if (claimFlight == null) {
         throw new AutomationException('tripWithClaimFlight not set');
       }
       return this.tripWithClaimFlight.isDelayedToDestination();
     }
 
     public Boolean hasCancellation() {
-      if (this.tripWithClaimFlight == null) {
-        throw new AutomationException('tripWithClaimFlight not set');
+      if (claimFlight == null) {
+        throw new AutomationException('claimFlight not set');
       }
-      return this.tripWithClaimFlight.claimFlightIsCancelled();
+
+      FlightIrregularities claimIrregularities = new FlightIrregularities(
+        flightToIrregularities.get(claimFlight.Id)
+      );
+      claimIrregularities.removeNA0Delay();
+
+      return claimIrregularities.containsCancellation();
     }
   }
 
@@ -243,7 +249,7 @@ public without sharing class EU261Service {
       } else if (hasRotationIrregularities(ac)) {
         ac.unhandledReason = 'cannot handle flights with irregularities caused by rotations';
         ac.canBeEvaluated = false;
-      } else if (!SASIsOnlyOperatingCarrier(ac)) {
+      } else if (!ac.tripWithClaimFlight.SASIsOnlyOperatingCarrier) {
         ac.unhandledReason = 'cannot handle claims where SAS is not the only operating carrier';
         ac.canBeEvaluated = false;
       } else if (requiresPowerOfAttorney(ac)) {
@@ -449,28 +455,28 @@ public without sharing class EU261Service {
     ClaimWithCompensationDetails ac
   ) {
     // Get the original flight plan
-    Trip originalTrip = ac.tripWithClaimFlight.getOriginalTrip();
+    Trip originalTrip = ac.tripWithClaimFlight.getOriginalTripWithFlight();
     Datetime originalDeparture = originalTrip.getFirstFlight()
       .Scheduled_Departure_Time__c;
     Datetime originalArrival = originalTrip.getFlightToFinalDestination()
       .Scheduled_Arrival_Time__c;
 
-    Decimal flightDistanceInM =
+    Decimal flightDistanceInKm =
       Airports.distanceBetweenAirportsInMeters(
         ac.tripWithClaimFlight.originAirport,
         ac.tripWithClaimFlight.destinationAirport
       ) / 1000;
-    Integer flightDistanceInKm = flightDistanceInM.intValue();
-    Boolean isIntraCommunity = isIntraCommunity(originalTrip);
+    Integer flightDistanceInKmRounded = flightDistanceInKm.intValue();
+    Boolean isIntraCommunity = originalTrip.isIntraCommunity();
     List<FlightIrregularities__c> flightIrregularities = ac.flightToIrregularities.get(
-      originalTrip.claimFlight.Id
+      ac.claimFlight.Id
     );
-    Integer daysUntilFlightWhenInformedOfCancellation = originalTrip.getDaysBetweenCancellationAndDeparture(
-      flightIrregularities
+    Integer daysUntilFlightWhenInformedOfCancellation = getDaysBetweenCancellationAndDeparture(
+      ac
     );
 
     // Get the new (suggested) flight plan
-    Trip newTrip = ac.tripWithClaimFlight.getSuggestedRebookingForClaimFlight();
+    Trip newTrip = ac.tripWithClaimFlight.getSuggestedRebookingWithoutFlight();
     Integer arrivalDifference;
     Integer departureDifference;
     Integer compensation;
@@ -484,7 +490,7 @@ public without sharing class EU261Service {
       // No suggested rebooking => full EU261 (10h outside timeframe => full compensation)
       compensation = calculateCompensationCancellation(
         600,
-        flightDistanceInKm,
+        flightDistanceInKmRounded,
         isIntraCommunity
       );
     } else {
@@ -515,7 +521,7 @@ public without sharing class EU261Service {
 
         compensationForLateFlight = calculateCompensationCancellation(
           minutesOutsideTimeFrame,
-          flightDistanceInKm,
+          flightDistanceInKmRounded,
           isIntraCommunity
         );
       }
@@ -529,7 +535,7 @@ public without sharing class EU261Service {
 
         compensationForEarlyFlight = calculateCompensationCancellation(
           minutesOutsideTimeFrame,
-          flightDistanceInKm,
+          flightDistanceInKmRounded,
           isIntraCommunity
         );
       }
@@ -633,7 +639,6 @@ public without sharing class EU261Service {
   ) {
     final Integer MINIMUM_DELAY_FOR_COMPENSATION = 180;
     final Integer MINIMUM_DELAY_FOR_INCREASED_COMPENSATION = 240;
-    final Integer MINIMUM_DELAY_FOR_REFUND = 300;
     final Integer MEDIUM_DISTANCE = 1500;
     final Integer LONG_DISTANCE = 3500;
 
@@ -657,7 +662,7 @@ public without sharing class EU261Service {
       } else if (
         flightDistanceInKm > MEDIUM_DISTANCE &&
         (flightDistanceInKm <= LONG_DISTANCE ||
-        isIntraCommunity(ac.tripWithClaimFlight))
+        ac.tripWithClaimFlight.isIntraCommunity())
       ) {
         ac.EU261Compensation = numberOfEligiblePassengers * 400;
       } else if (delayedMinutes < MINIMUM_DELAY_FOR_INCREASED_COMPENSATION) {
@@ -673,9 +678,6 @@ public without sharing class EU261Service {
         ac.rejectionReason = 'no passenger in this claim has a revenue ticket.';
       } else {
         ac.customerEntitledToCompensation = true;
-        if (delayedMinutes >= MINIMUM_DELAY_FOR_REFUND) {
-          ac.customerEntitledToRefund = true; // Not relevant, not handled here. TODO: Check if refund handles these cases?
-        }
       }
     }
     return ac;
@@ -710,13 +712,6 @@ public without sharing class EU261Service {
     return (isToOrFromEU261Territory && !hasReceivedBenefitsWhichVoidEU261);
   }
 
-  private static Boolean isIntraCommunity(Trip trip) {
-    Airport__c originAirport = trip.originAirport;
-    Airport__c destinationAirport = trip.destinationAirport;
-    return originAirport.Is_EU261_Applicable__c &&
-      destinationAirport.Is_EU261_Applicable__c;
-  }
-
   private static Boolean hasRotationIrregularities(
     ClaimWithCompensationDetails ac
   ) {
@@ -729,6 +724,40 @@ public without sharing class EU261Service {
     );
 
     return irregularities.containsRotationIrregularities();
+  }
+
+  private static Integer getDaysBetweenCancellationAndDeparture(
+    ClaimWithCompensationDetails ac
+  ) {
+    FlightIrregularities claimIrregularities = new FlightIrregularities(
+      ac.flightToIrregularities.get(ac.claimFlight.Id)
+    );
+    claimIrregularities.removeNA0Delay();
+
+    if (!claimIrregularities.containsCancellation()) {
+      throw new AutomationException('Claim flight is not cancelled.');
+    }
+
+    if (claimIrregularities.instanceRecords.size() == 1) {
+      FlightIrregularities__c cancellation = claimIrregularities.instanceRecords[0];
+      Datetime departureTime = ac.claimFlight.Scheduled_Departure_Time__c;
+      Datetime cancellationTime = cancellation.Cancellation_Time__c;
+      if (cancellationTime == null) {
+        throw new AutomationException(
+          'Cancellation does not have a cancellation time.'
+        );
+      }
+      Decimal hoursBetween = DateUtils.getHoursBetween(
+        departureTime,
+        cancellationTime
+      );
+      Integer daysBetween = (hoursBetween / 24).intValue();
+      return daysBetween;
+    } else {
+      throw new AutomationException(
+        'Cancelled flight does not have exactly one irregularity.'
+      );
+    }
   }
 
   /**
@@ -772,12 +801,6 @@ public without sharing class EU261Service {
     return delayCausedByIrregularitiesWithinSASControl;
   }
 
-  private static Boolean SASIsOnlyOperatingCarrier(
-    ClaimWithCompensationDetails ac
-  ) {
-    return ac.tripWithClaimFlight.hasOnlySASFlights;
-  }
-
   private static Boolean canDetermineIfSASIsResponsibleForCancellation(
     ClaimWithCompensationDetails ac
   ) {
@@ -792,9 +815,29 @@ public without sharing class EU261Service {
   private static Boolean cancellationCodeIsWithinSASControl(
     ClaimWithCompensationDetails ac
   ) {
-    return ac.tripWithClaimFlight.claimFlightCancellationIsWithinSASControl(
-      ac.flightToIrregularities
+    FlightIrregularities claimIrregularities = new FlightIrregularities(
+      ac.flightToIrregularities.get(ac.claimFlight.Id)
     );
+    claimIrregularities.removeNA0Delay();
+
+    if (!claimIrregularities.containsCancellation()) {
+      throw new AutomationException('Claim flight is not cancelled.');
+    }
+
+    Integer noIrregularities = claimIrregularities.instanceRecords.size();
+    if (noIrregularities == 1) {
+      FlightIrregularities__c relevantIrregularity = claimIrregularities.instanceRecords[0];
+      return claimIrregularities.isWithinSASControl()
+        .get(relevantIrregularity.Id);
+    } else if (noIrregularities == 0) {
+      throw new AutomationException(
+        'Claim flight has no valid irregularities.'
+      );
+    } else {
+      throw new AutomationException(
+        'Cancelled flight has more than one irregularity.'
+      );
+    }
   }
 
   private static Integer getNumberOfPassengersEligibleForCompensation(
@@ -1022,7 +1065,7 @@ public without sharing class EU261Service {
     }
 
     // Todo: use stringutils / the flight domain (implement)
-    String flightNumberDate = FlightService.constructFlightNumberDate(
+    String flightNumberDate = Flights.constructTEDSFlightNumberDate(
       c.flightNumber,
       c.departureDate
     );
@@ -1032,7 +1075,7 @@ public without sharing class EU261Service {
         Flight__c claimFlight = t.getFlight(flightNumberDate);
         if (claimFlight != null) {
           cwcd.tripWithClaimFlight = t;
-          t.claimFlight = claimFlight;
+          cwcd.claimFlight = claimFlight;
           break;
         }
       }
@@ -1141,8 +1184,6 @@ public without sharing class EU261Service {
         'More: ' +
         'outsideSASControlExplanation: ' +
         c.outsideSASControlExplanation +
-        '. customerEntitledToRefund: ' +
-        c.customerEntitledToRefund +
         '. maximumTimeToClaimCompensation: ' +
         c.maximumTimeToClaimCompensation +
         '. hasPotentiallyDuplicateClaims: ' +

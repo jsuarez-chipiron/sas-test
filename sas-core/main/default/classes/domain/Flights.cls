@@ -284,6 +284,22 @@ public without sharing class Flights extends fflib_SObjectDomain {
   }
 
   /**
+   * Constructs a flightNumber + date combination like the one used in TEDS
+   *
+   * @param flightNumber E.g. SK1234
+   * @param flightDate
+   * @return a string like: SK1234-20220101
+   */
+  public static String constructTEDSFlightNumberDate(
+    String flightNumber,
+    Date flightDate
+  ) {
+    return normalizeFlightNumber(flightNumber) +
+      '-' +
+      String.valueOf(flightDate).remove('-');
+  }
+
+  /**
    * Method to normalize a valid IATA flight number
    * to the format used by TEDS.
    * TEDS format is valid IATA format with trailing numbers leftpadded with 0

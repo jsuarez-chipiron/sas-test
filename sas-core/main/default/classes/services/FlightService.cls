@@ -109,20 +109,4 @@ public without sharing class FlightService {
 
     return flightIdToDelay;
   }
-
-  /**
-   * Constructs a flightNumber + date combination like the one used in TEDS
-   *
-   * @param flightNumber E.g. SK1234
-   * @param flightDate
-   * @return a string like: SK1234-20220101
-   */
-  public static String constructFlightNumberDate(
-    String flightNumber,
-    Date flightDate
-  ) {
-    return Flights.normalizeFlightNumber(flightNumber) +
-      '-' +
-      String.valueOf(flightDate).remove('-');
-  }
 }

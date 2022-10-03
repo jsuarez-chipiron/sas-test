@@ -51,7 +51,7 @@ public inherited sharing class FlightIrregularitiesSelector extends fflib_SObjec
     String toAirport
   ) {
     String flightId =
-      FlightService.constructFlightNumberDate(flightNumber, departureDate) +
+      Flights.constructTEDSFlightNumberDate(flightNumber, departureDate) +
       '-' +
       fromAirport +
       '-' +

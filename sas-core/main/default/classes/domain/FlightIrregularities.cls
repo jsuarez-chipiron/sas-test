@@ -278,6 +278,16 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     this.instanceRecords = irregularitiesToSave;
   }
 
+  public Boolean containsCancellation() {
+    for (FlightIrregularities__c f : instanceRecords) {
+      String cancellationOrDelay = f.Type__c.substringBefore(' ');
+      if (cancellationOrDelay == 'Cancellation') {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /**
    * Creates FlightIrregularities__c of type "Delay" from TEDS data.
    * @param reasons A list of TEDSFlight.DelayReasons from which the FlightIrregularities__c should be created.
