@@ -457,8 +457,10 @@ public without sharing class Trip {
    * E.g.
    * Jonas ARN->CPH 2022-01-01 00:00 Oneway
    * Fanny ARN->CPH 2022-01-01 00:00 Oneway
-   * becomes:
+   * Becomes:
    * ARN->CPH 2022-01-01 00:00 Oneway
+   * 
+   * This is done to simplify cancellation compensation handling.
    */
   public static List<Leg> combineIntoLegs(List<Segment__c> sortedSegments) {
     String departureAirport = sortedSegments[0].Flight__r.Departure_Airport__c;

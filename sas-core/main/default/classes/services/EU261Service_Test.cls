@@ -384,12 +384,12 @@ private class EU261Service_Test {
     );
     Booking__c cancellationBookingTwoCancellations = new Booking__c(
       Booking_Reference__c = cancellationBookingTwoCancellationsReference,
-      TEDS_Identifier__c = 'uniqueBooking23',
+      TEDS_Identifier__c = 'uniqueBooking30',
       Type__c = 'OneWay'
     );
     Booking__c cancellationBookingWithRebooking = new Booking__c(
       Booking_Reference__c = cancellationWithRebookingBookingReference,
-      TEDS_Identifier__c = 'uniqueBooking28',
+      TEDS_Identifier__c = 'uniqueBooking31',
       Type__c = 'OneWay'
     );
 
@@ -1420,8 +1420,8 @@ private class EU261Service_Test {
         LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
       }
     );
-    TestDataFactories.CasesClaims claimFirmClaim = createDefaultTestClaim(
-      claimFirmBookingReference,
+    TestDataFactories.CasesClaims coupleClaim = createDefaultTestClaim(
+      coupleBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
         LIA_Claim__c.Flight_Number__c => 'SK0009',
@@ -1436,10 +1436,8 @@ private class EU261Service_Test {
     );
 
     List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      groupClaim,
-      differentLastNamesClaim,
-      missingTravelersFromBookingClaim,
-      claimFirmClaim
+      individualClaim,
+      coupleClaim
     };
 
     createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
@@ -1453,51 +1451,14 @@ private class EU261Service_Test {
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
-    System.assert(
-      claimsWithEvaluationDetails.size() == 4,
-      'Should have evaluated four claims.'
-    );
     for (
       EU261Service.ClaimWithCompensationDetails claim : claimsWithEvaluationDetails
     ) {
-      if (claim.claim.instanceRecords[0].Id == groupClaim.claims[0].Id) {
+      if (claim.claim.instanceRecords[0].Id == individualClaim.claims[0].Id) {
         System.assertEquals(
-          false,
+          true,
           claim.canBeEvaluated,
-          'It should not be possible to evaluate a claim with more than four travelers.'
-        );
-        System.assertEquals(
-          'can handle only claims which do not require power of attorney',
-          claim.unhandledReason,
-          'Rejection reason should be "can handle only claims which do not require power of attorney"'
-        );
-      } else if (
-        claim.claim.instanceRecords[0].Id ==
-        differentLastNamesClaim.claims[0].Id
-      ) {
-        System.assertEquals(
-          false,
-          claim.canBeEvaluated,
-          'It should not be possible to evaluate a claim with different last names.'
-        );
-        System.assertEquals(
-          'can handle only claims which do not require power of attorney',
-          claim.unhandledReason,
-          'Rejection reason should be "can handle only claims which do not require power of attorney"'
-        );
-      } else if (
-        claim.claim.instanceRecords[0].Id ==
-        missingTravelersFromBookingClaim.claims[0].Id
-      ) {
-        System.assertEquals(
-          false,
-          claim.canBeEvaluated,
-          'It should not be possible to evaluate a claim when claimed travelers are not included in the booking.'
-        );
-        System.assertEquals(
-          'can handle only claims which do not require power of attorney',
-          claim.unhandledReason,
-          'Rejection reason should be "can handle only claims which do not require power of attorney"'
+          'It should be possible to evaluate a claim with a single passenger.'
         );
         System.assertEquals(
           true,
@@ -1505,9 +1466,9 @@ private class EU261Service_Test {
           'Customer should be entitled to compensation'
         );
         System.assertEquals(
-          400,
+          250,
           claim.EU261Compensation,
-          'Compensation should be 400€'
+          'Compensation should be 250€'
         );
       } else {
         System.assertEquals(
@@ -1521,7 +1482,7 @@ private class EU261Service_Test {
           'Customer should be entitled to compensation'
         );
         System.assertEquals(
-          800,
+          500,
           claim.EU261Compensation,
           'Compensation should be 800€'
         );
