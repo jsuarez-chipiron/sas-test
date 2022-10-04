@@ -107,6 +107,11 @@ public with sharing class FlightService_IntegrationTest {
       sampleIrregularity.Cancellation_Time__c,
       'Flightirregularity with cancellation not correctly inserted (Cancellation_Time__c).'
     );
+    System.assertEquals(
+      'Tentative',
+      sampleIrregularity.Eligible_For_EU261__c,
+      'Flightirregularity with cancellation not correctly inserted (Eligible_For_EU261__c).'
+    );
   }
 
   @IsTest

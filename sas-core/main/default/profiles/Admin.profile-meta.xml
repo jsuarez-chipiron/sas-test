@@ -599,6 +599,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>FlightIrregularities__c.Eligible_For_EU261__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>FlightIrregularities__c.Reason__c</field>
         <readable>true</readable>
     </fieldPermissions>
