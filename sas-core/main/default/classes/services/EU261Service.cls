@@ -16,6 +16,24 @@ public without sharing class EU261Service {
     );
   }
 
+  private static Map<String, Integer> countryToClaimTimeLimitInMonths = new Map<String, Integer>{
+    'BE' => 12,
+    'DK' => 3 * 12,
+    'FI' => 3 * 12,
+    'FR' => 5 * 12,
+    'DE' => 3 * 12,
+    'IT' => 2 * 12,
+    'NL' => 5 * 12,
+    'NO' => 3 * 12,
+    'PL' => 12,
+    'ES' => 5 * 12,
+    'SE' => 2,
+    'UK' => 6 * 12,
+    'IE' => 6 * 12,
+    'LV' => 6,
+    'default' => 0
+  };
+
   private static Set<String> invalidFareBases = new Set<String>{};
 
   @TestVisible
