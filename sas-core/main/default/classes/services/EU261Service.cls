@@ -425,21 +425,41 @@ public without sharing class EU261Service {
   }
 
   /**
-   * If there has been more than X years since the flight flew the customer is no longer eligable to apply for compensation.
-   * If there is no information about the country limit in the database the limit is set to 3 years.
-   * TODO: Find limits for different countries and talk to Liability if we can implement some general rule.
+   * Returns true if the claim was filed on time and the customer is entitled
+   * to compensation based on that.
    *
-   * @return a boolean which asserts whether the claim was filed on time.
+   * The time limit for filing a claim is different in different jurisdictions.
+   * We pick the longest of arrival and departure countries' filing limit, so
+   * to the benefit of the customer.
    */
   private static Boolean isFiledOnTime(ClaimWithCompensationDetails ac) {
     Claim c = ac.claim.objects[0];
     Datetime tripDate = ac.tripWithClaimFlight.getFinalDestinationArrivalTime();
 
-    return DateUtils.areWithinTimeLimit(
-      c.createdDate,
-      tripDate,
-      ac.maximumTimeToClaimCompensation
+    Integer limitInDepartureCountry = countryToClaimTimeLimitInMonths.get(
+      ac.tripWithClaimFlight.originAirport.Country_Code__c
     );
+    Integer limitInArrivalCountry = countryToClaimTimeLimitInMonths.get(
+      ac.tripWithClaimFlight.destinationAirport.Country_Code__c
+    );
+
+    Integer timeLimit;
+
+    if (limitInDepartureCountry != null && limitInArrivalCountry != null) {
+      timeLimit = Math.max(limitInDepartureCountry, limitInArrivalCountry);
+    } else if (limitInDepartureCountry != null) {
+      timeLimit = limitInDepartureCountry;
+    } else if (limitInArrivalCountry != null) {
+      timeLimit = limitInArrivalCountry;
+    } else {
+      timeLimit = countryToClaimTimeLimitInMonths.get('default');
+    }
+
+    // TODO: Determine if this is enough or we need closer to the exact date. This checks only on month level and ignores the days.
+    Boolean filedWithinTimelimit =
+      c.createdDate.date().monthsBetween(tripDate.date()) <= timeLimit;
+
+    return filedWithinTimelimit;
   }
 
   /**
