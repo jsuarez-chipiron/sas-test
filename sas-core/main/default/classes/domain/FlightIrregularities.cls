@@ -299,6 +299,7 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     String additionalInfo
   ) {
     List<FlightIrregularities__c> result = new List<FlightIrregularities__c>{};
+    String eligibleForEU261;
     if (reasons != null) {
       for (TEDSFlight.DelayReasons reason : reasons) {
         String code = 'N/A';
@@ -309,6 +310,14 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
         if (reasonText?.length() > 2000) {
           reasonText = reasonText.substring(0, 2000);
         }
+        if (codeToSASIsResponsible.get(code) == null) {
+          eligibleForEU261 = 'Tentative';
+        } else if (codeToSASIsResponsible.get(code)) {
+          eligibleForEU261 = 'Yes';
+        } else {
+          eligibleForEU261 = 'No';
+        }
+
         result.add(
           new FlightIrregularities__c(
             Code__c = code,
@@ -316,7 +325,8 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
               reason.duration
             ),
             Reason__c = reasonText,
-            Type__c = 'Delay ' + additionalInfo
+            Type__c = 'Delay ' + additionalInfo,
+            Eligible_For_EU261__c = eligibleForEU261
           )
         );
       }
@@ -326,7 +336,8 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
         new FlightIrregularities__c(
           Code__c = 'N/A',
           Reason__c = '',
-          Type__c = 'Delay ' + additionalInfo
+          Type__c = 'Delay ' + additionalInfo,
+          Eligible_For_EU261__c = 'Tentative'
         )
       );
     }
@@ -345,6 +356,7 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     String isoCancellationTime
   ) {
     List<FlightIrregularities__c> result = new List<FlightIrregularities__c>{};
+    String eligibleForEU261;
     if (reasons != null) {
       for (TEDSFlight.CancellationReasons reason : reasons) {
         String code = 'N/A';
@@ -364,13 +376,20 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
           } catch (Exception e) {
           }
         }
-
+        if (codeToSASIsResponsible.get(code) == null) {
+          eligibleForEU261 = 'Tentative';
+        } else if (codeToSASIsResponsible.get(code)) {
+          eligibleForEU261 = 'Yes';
+        } else {
+          eligibleForEU261 = 'No';
+        }
         result.add(
           new FlightIrregularities__c(
             Code__c = code,
             Reason__c = reasonText,
             Type__c = 'Cancellation ' + additionalInfo,
-            Cancellation_Time__c = cancellationTime
+            Cancellation_Time__c = cancellationTime,
+            Eligible_For_EU261__c = eligibleForEU261
           )
         );
       }
@@ -380,7 +399,8 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
         new FlightIrregularities__c(
           Code__c = 'N/A',
           Reason__c = '',
-          Type__c = 'Cancellation ' + additionalInfo
+          Type__c = 'Cancellation ' + additionalInfo,
+          Eligible_For_EU261__c = 'Tentative'
         )
       );
     }
