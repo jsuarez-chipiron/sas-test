@@ -504,20 +504,58 @@ public class PaymentEntry {
   public String paymentCurrency;
 
   private static final String TODAYS_DATE = Datetime.now().format('yyyyMMdd');
+  private static final Map<String, Settlement_Currency_Setting__mdt> currencyToSettings = new Map<String, Settlement_Currency_Setting__mdt>();
+  private static final Map<String, Settlement_Bank_Setting__mdt> bankToSettings = new Map<String, Settlement_Bank_Setting__mdt>();
+  private static final Map<String, Settlement_Country_Setting__mdt> countryToSettings = new Map<String, Settlement_Country_Setting__mdt>();
+
+  //Fetch from DB once if value doesn't exist
+  public static Settlement_Currency_Setting__mdt getSettlementCurrencySetting(
+    String currencyToFetch
+  ) {
+    Settlement_Currency_Setting__mdt toReturn = currencyToSettings.get(
+      currencyToFetch
+    );
+    if (toReturn == null) {
+      toReturn = Settlement_Currency_Setting__mdt.getInstance(currencyToFetch);
+      currencyToSettings.put(currencyToFetch, toReturn);
+    }
+    return toReturn;
+  }
+  public static Settlement_Bank_Setting__mdt getSettlementBankSetting(
+    String bankToFetch
+  ) {
+    Settlement_Bank_Setting__mdt toReturn = bankToSettings.get(bankToFetch);
+    if (toReturn == null) {
+      toReturn = Settlement_Bank_Setting__mdt.getInstance(bankToFetch);
+      bankToSettings.put(bankToFetch, toReturn);
+    }
+    return toReturn;
+  }
+  public static Settlement_Country_Setting__mdt getSettlementCountrySetting(
+    String countryToFetch
+  ) {
+    Settlement_Country_Setting__mdt toReturn = countryToSettings.get(
+      countryToFetch
+    );
+    if (toReturn == null) {
+      toReturn = Settlement_Country_Setting__mdt.getInstance(countryToFetch);
+      countryToSettings.put(countryToFetch, toReturn);
+    }
+    return toReturn;
+  }
 
   public PaymentEntry(Settlement__c s) {
-    Settlement_Currency_Setting__mdt currencySettings = Settlement_Currency_Setting__mdt.getAll()
-      .get(s.Currency__c);
+    Settlement_Currency_Setting__mdt currencySettings = getSettlementCurrencySetting(
+      s.Currency__c
+    );
 
-    Settlement_Bank_Setting__mdt bankSettings = Settlement_Bank_Setting__mdt.getInstance(
+    Settlement_Bank_Setting__mdt bankSettings = getSettlementBankSetting(
       currencySettings.Settlement_Bank_Setting__c
     );
 
-    Settlement_Country_Setting__mdt bankCountrySettings = [
-      SELECT Payment_Type__c, Country_Short_Code__c
-      FROM Settlement_Country_Setting__mdt
-      WHERE Country_Name__c = :s.Bank_Country__c
-    ][0];
+    Settlement_Country_Setting__mdt bankCountrySettings = getSettlementCountrySetting(
+      s.Bank_Country__c.replace(' ', '_')
+    );
 
     String countryShortCode;
 
@@ -528,11 +566,9 @@ public class PaymentEntry {
     if (String.isBlank(s.Country__c)) {
       countryShortCode = bankCountrySettings.Country_Short_Code__c;
     } else {
-      Settlement_Country_Setting__mdt contactCountrySettings = [
-        SELECT Country_Short_Code__c
-        FROM Settlement_Country_Setting__mdt
-        WHERE Country_Name__c = :s.Country__c
-      ][0];
+      Settlement_Country_Setting__mdt contactCountrySettings = getSettlementCountrySetting(
+        s.Country__c.replace(' ', '_')
+      );
 
       countryShortCode = contactCountrySettings.Country_Short_Code__c;
     }
