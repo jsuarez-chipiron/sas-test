@@ -504,20 +504,33 @@ public class PaymentEntry {
   public String paymentCurrency;
 
   private static final String TODAYS_DATE = Datetime.now().format('yyyyMMdd');
+  private static final Map<String, Settlement_Currency_Setting__mdt> currencyToSettings = Settlement_Currency_Setting__mdt.getAll();
+  private static final Map<Id, Settlement_Bank_Setting__mdt> bankToSettings = new Map<Id, Settlement_Bank_Setting__mdt>();
+  private static final Map<String, Settlement_Country_Setting__mdt> countryToSettings = Settlement_Country_Setting__mdt.getAll();
+
+  // getAll() returns a map of DeveloperName => Mdt Object. We need to be able to fetch these
+  // based on the Id found in Settlement_Currency_Setting__mdt
+  static {
+    for (
+      Settlement_Bank_Setting__mdt sbs : Settlement_Bank_Setting__mdt.getAll()
+        .values()
+    ) {
+      bankToSettings.put(sbs.Id, sbs);
+    }
+  }
 
   public PaymentEntry(Settlement__c s) {
-    Settlement_Currency_Setting__mdt currencySettings = Settlement_Currency_Setting__mdt.getAll()
-      .get(s.Currency__c);
+    Settlement_Currency_Setting__mdt currencySettings = currencyToSettings.get(
+      s.Currency__c
+    );
 
-    Settlement_Bank_Setting__mdt bankSettings = Settlement_Bank_Setting__mdt.getInstance(
+    Settlement_Bank_Setting__mdt bankSettings = bankToSettings.get(
       currencySettings.Settlement_Bank_Setting__c
     );
 
-    Settlement_Country_Setting__mdt bankCountrySettings = [
-      SELECT Payment_Type__c, Country_Short_Code__c
-      FROM Settlement_Country_Setting__mdt
-      WHERE Country_Name__c = :s.Bank_Country__c
-    ][0];
+    Settlement_Country_Setting__mdt bankCountrySettings = countryToSettings.get(
+      s.Bank_Country__c.replace(' ', '_')
+    );
 
     String countryShortCode;
 
@@ -528,11 +541,9 @@ public class PaymentEntry {
     if (String.isBlank(s.Country__c)) {
       countryShortCode = bankCountrySettings.Country_Short_Code__c;
     } else {
-      Settlement_Country_Setting__mdt contactCountrySettings = [
-        SELECT Country_Short_Code__c
-        FROM Settlement_Country_Setting__mdt
-        WHERE Country_Name__c = :s.Country__c
-      ][0];
+      Settlement_Country_Setting__mdt contactCountrySettings = countryToSettings.get(
+        s.Country__c.replace(' ', '_')
+      );
 
       countryShortCode = contactCountrySettings.Country_Short_Code__c;
     }
