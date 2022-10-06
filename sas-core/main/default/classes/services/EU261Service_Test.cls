@@ -65,7 +65,7 @@ private class EU261Service_Test {
       Departure_Airport__c = 'HEL',
       Operating_Carrier__c = 'SK',
       TEDS_Identifier__c = 'SK0001-20220817',
-      Arrival_Delayed_Minutes__c = 130,
+      Arrival_Delayed_Minutes__c = 190,
       Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
       Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
       Actual_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 4, 11, 0)
@@ -113,7 +113,7 @@ private class EU261Service_Test {
       Departure_Airport__c = 'CPH',
       Operating_Carrier__c = 'SK',
       TEDS_Identifier__c = 'SK0005-20220817',
-      Arrival_Delayed_Minutes__c = 170,
+      Arrival_Delayed_Minutes__c = 190,
       Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
       Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
       Actual_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 4, 51, 0)
@@ -919,7 +919,7 @@ private class EU261Service_Test {
 
     FlightIrregularities__c flight1Delay = new FlightIrregularities__c(
       Flight__c = flight1.Id,
-      Duration_minutes__c = 130,
+      Duration_minutes__c = 190,
       Code__c = 'FA',
       Type__c = 'Delay (arrival)'
     );
@@ -955,7 +955,7 @@ private class EU261Service_Test {
     );
     FlightIrregularities__c twoDelaysSecondFlightDelay = new FlightIrregularities__c(
       Flight__c = flightWithTwoIrregularities.Id,
-      Duration_minutes__c = 50,
+      Duration_minutes__c = 70,
       Code__c = 'FA',
       Type__c = 'Delay (arrival)'
     );
@@ -1234,28 +1234,26 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
-    for (
-      EU261Service.ClaimWithCompensationDetails claim : claimsWithEvaluationDetails
-    ) {
-      if (claim.bookingType == Bookings.Type.OneWay) {
+    for (EU261Claim c : claimsWithEvaluationDetails) {
+      if (c.bookingType == Bookings.Type.OneWay) {
         System.assertEquals(
-          true,
-          claim.canBeEvaluated,
+          Claim.EU261HandlingStatus.EligibleForCompensation,
+          c.decision.verdict,
           'One way claim should be possible to evaluate.'
         );
       } else {
         System.assertEquals(
-          false,
-          claim.canBeEvaluated,
+          Claim.EU261HandlingStatus.UnableToHandle,
+          c.decision.verdict,
           'Other booking types should not be available for evaluation.'
         );
         System.assertEquals(
           'can handle only one one way trips',
-          claim.unhandledReason,
+          c.decision.reasoning,
           'Rejection reason should be "can handle only one one way trips"'
         );
       }
@@ -1345,7 +1343,7 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
@@ -1353,57 +1351,54 @@ private class EU261Service_Test {
       claimsWithEvaluationDetails.size() == 4,
       'Should have evaluated four claims.'
     );
-    for (
-      EU261Service.ClaimWithCompensationDetails claim : claimsWithEvaluationDetails
-    ) {
-      if (claim.claim.instanceRecords[0].Id == groupClaim.claims[0].Id) {
+    for (EU261Claim c : claimsWithEvaluationDetails) {
+      if (c.claimObj.instanceRecords[0].Id == groupClaim.claims[0].Id) {
         System.assertEquals(
-          false,
-          claim.canBeEvaluated,
+          Claim.EU261HandlingStatus.UnableToHandle,
+          c.decision.verdict,
           'It should not be possible to evaluate a claim with more than four travelers.'
         );
         System.assertEquals(
           'can handle only claims which do not require power of attorney',
-          claim.unhandledReason,
+          c.decision.reasoning,
           'Rejection reason should be "can handle only claims which do not require power of attorney"'
         );
       } else if (
-        claim.claim.instanceRecords[0].Id ==
-        differentLastNamesClaim.claims[0].Id
+        c.claimObj.instanceRecords[0].Id == differentLastNamesClaim.claims[0].Id
       ) {
         System.assertEquals(
-          false,
-          claim.canBeEvaluated,
+          Claim.EU261HandlingStatus.UnableToHandle,
+          c.decision.verdict,
           'It should not be possible to evaluate a claim with different last names.'
         );
         System.assertEquals(
           'can handle only claims which do not require power of attorney',
-          claim.unhandledReason,
+          c.decision.reasoning,
           'Rejection reason should be "can handle only claims which do not require power of attorney"'
         );
       } else if (
-        claim.claim.instanceRecords[0].Id ==
+        c.claimObj.instanceRecords[0].Id ==
         missingTravelersFromBookingClaim.claims[0].Id
       ) {
         System.assertEquals(
-          false,
-          claim.canBeEvaluated,
+          Claim.EU261HandlingStatus.UnableToHandle,
+          c.decision.verdict,
           'It should not be possible to evaluate a claim when claimed travelers are not included in the booking.'
         );
         System.assertEquals(
           'can handle only claims which do not require power of attorney',
-          claim.unhandledReason,
+          c.decision.reasoning,
           'Rejection reason should be "can handle only claims which do not require power of attorney"'
         );
       } else {
         System.assertEquals(
-          false,
-          claim.canBeEvaluated,
+          Claim.EU261HandlingStatus.UnableToHandle,
+          c.decision.verdict,
           'It should not be possible to evaluate a claim submitted by a claim firm.'
         );
         System.assertEquals(
           'can handle only claims which do not require power of attorney',
-          claim.unhandledReason,
+          c.decision.reasoning,
           'Rejection reason should be "can handle only claims which do not require power of attorney"'
         );
       }
@@ -1447,43 +1442,31 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
-    for (
-      EU261Service.ClaimWithCompensationDetails claim : claimsWithEvaluationDetails
-    ) {
-      if (claim.claim.instanceRecords[0].Id == individualClaim.claims[0].Id) {
+    for (EU261Claim c : claimsWithEvaluationDetails) {
+      if (c.claimObj.instanceRecords[0].Id == individualClaim.claims[0].Id) {
         System.assertEquals(
-          true,
-          claim.canBeEvaluated,
+          Claim.EU261HandlingStatus.EligibleForCompensation,
+          c.decision.verdict,
           'It should be possible to evaluate a claim with a single passenger.'
         );
         System.assertEquals(
-          true,
-          claim.customerEntitledToCompensation,
-          'Customer should be entitled to compensation'
-        );
-        System.assertEquals(
           250,
-          claim.EU261Compensation,
+          c.decision.compensationAmount,
           'Compensation should be 250€'
         );
       } else {
         System.assertEquals(
-          true,
-          claim.canBeEvaluated,
+          Claim.EU261HandlingStatus.EligibleForCompensation,
+          c.decision.verdict,
           'It should be possible to evaluate a claim with two passengers.'
         );
         System.assertEquals(
-          true,
-          claim.customerEntitledToCompensation,
-          'Customer should be entitled to compensation'
-        );
-        System.assertEquals(
           500,
-          claim.EU261Compensation,
+          c.decision.compensationAmount,
           'Compensation should be 800€'
         );
       }
@@ -1512,31 +1495,29 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
-    for (
-      EU261Service.ClaimWithCompensationDetails claim : claimsWithEvaluationDetails
-    ) {
+    for (EU261Claim c : claimsWithEvaluationDetails) {
       if (
-        claim.booking.instanceRecords[0].Booking_Reference__c ==
+        c.booking.instanceRecords[0].Booking_Reference__c ==
         oneWayBookingReference
       ) {
         System.assertEquals(
-          true,
-          claim.canBeEvaluated,
+          Claim.EU261HandlingStatus.EligibleForCompensation,
+          c.decision.verdict,
           'Claim with a single booking should be possible to evaluate.'
         );
       } else {
         System.assertEquals(
-          false,
-          claim.canBeEvaluated,
+          Claim.EU261HandlingStatus.UnableToHandle,
+          c.decision.verdict,
           'Claim with more than one booking cannot be evaluated.'
         );
         System.assertEquals(
           'can handle only one booking per claim',
-          claim.unhandledReason,
+          c.decision.reasoning,
           'Rejection reason should be "can handle only one booking per claim"'
         );
       }
@@ -1565,22 +1546,20 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
-    for (
-      EU261Service.ClaimWithCompensationDetails claim : claimsWithEvaluationDetails
-    ) {
-      if (claimIds.contains(claim.claim.instanceRecords[0].Id)) {
+    for (EU261Claim c : claimsWithEvaluationDetails) {
+      if (claimIds.contains(c.claimObj.instanceRecords[0].Id)) {
         System.assertEquals(
-          false,
-          claim.canBeEvaluated,
+          Claim.EU261HandlingStatus.UnableToHandle,
+          c.decision.verdict,
           'It should not be possible to evaluate claims with files.'
         );
         System.assertEquals(
           'can only handle claims with origin and destination airports in EU',
-          claim.unhandledReason,
+          c.decision.reasoning,
           'Rejection reason should be "can only handle claims with origin and destination airports in EU"'
         );
       }
@@ -1616,18 +1595,18 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
     System.assertEquals(
-      false,
-      claimsWithEvaluationDetails[0].canBeEvaluated,
+      Claim.EU261HandlingStatus.UnableToHandle,
+      claimsWithEvaluationDetails[0].decision.verdict,
       'It should not be possible to evaluate claims with expenses.'
     );
     System.assertEquals(
       'cannot handle claim expenses',
-      claimsWithEvaluationDetails[0].unhandledReason,
+      claimsWithEvaluationDetails[0].decision.reasoning,
       'Rejection reason should be "cannot handle claim expenses"'
     );
   }
@@ -1663,21 +1642,19 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
-    for (
-      EU261Service.ClaimWithCompensationDetails claim : claimsWithEvaluationDetails
-    ) {
+    for (EU261Claim c : claimsWithEvaluationDetails) {
       System.assertEquals(
-        false,
-        claim.canBeEvaluated,
+        Claim.EU261HandlingStatus.UnableToHandle,
+        c.decision.verdict,
         'It should not be possible to evaluate claims with too long or too short delay.'
       );
       System.assertEquals(
         'can handle only delays between 2 and 5 hours',
-        claim.unhandledReason,
+        c.decision.reasoning,
         'Rejection reason should be "can handle only delays between 2 and 5 hours"'
       );
     }
@@ -1705,25 +1682,25 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
     System.assertEquals(
-      false,
-      claimsWithEvaluationDetails[0].canBeEvaluated,
+      Claim.EU261HandlingStatus.UnableToHandle,
+      claimsWithEvaluationDetails[0].decision.verdict,
       'It should not be possible to evaluate claims with flight missing from booking.'
     );
     System.assertEquals(
       'cannot find claimed flight from booking',
-      claimsWithEvaluationDetails[0].unhandledReason,
+      claimsWithEvaluationDetails[0].decision.reasoning,
       'Rejection reason should be "cannot find claimed flight from booking"'
     );
   }
 
   @IsTest
   static void claimsWithMoreThanOneIrregularityCanBeEvaluated() {
-    TestDataFactories.CasesClaims claim = createDefaultTestClaim(
+    TestDataFactories.CasesClaims c = createDefaultTestClaim(
       twoIrregularitiesBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
@@ -1733,7 +1710,7 @@ private class EU261Service_Test {
     );
 
     List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claim
+      c
     };
 
     createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
@@ -1743,20 +1720,20 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
     System.assertEquals(
-      true,
-      claimsWithEvaluationDetails[0].canBeEvaluated,
+      Claim.EU261HandlingStatus.EligibleForCompensation,
+      claimsWithEvaluationDetails[0].decision.verdict,
       'It should be possible to evaluate claims with more than one irregularity.'
     );
   }
 
   @IsTest
   static void claimsWithRotationIrregularitiesCannotBeEvaluated() {
-    TestDataFactories.CasesClaims claim = createDefaultTestClaim(
+    TestDataFactories.CasesClaims c = createDefaultTestClaim(
       rotationBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
@@ -1766,7 +1743,7 @@ private class EU261Service_Test {
     );
 
     List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claim
+      c
     };
 
     createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
@@ -1776,25 +1753,25 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
     System.assertEquals(
-      false,
-      claimsWithEvaluationDetails[0].canBeEvaluated,
+      Claim.EU261HandlingStatus.UnableToHandle,
+      claimsWithEvaluationDetails[0].decision.verdict,
       'It should not be possible to evaluate claims with rotation delays.'
     );
     System.assertEquals(
       'cannot handle flights with irregularities caused by rotations',
-      claimsWithEvaluationDetails[0].unhandledReason,
+      claimsWithEvaluationDetails[0].decision.reasoning,
       'Rejection reason should be "cannot handle flights with irregularities caused by rotations"'
     );
   }
 
   @IsTest
   static void onlyClaimsWithFlightsOperatedBySASCanBeEvaluated() {
-    TestDataFactories.CasesClaims claim = createDefaultTestClaim(
+    TestDataFactories.CasesClaims c = createDefaultTestClaim(
       notOperatedBySASBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
@@ -1804,7 +1781,7 @@ private class EU261Service_Test {
     );
 
     List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claim
+      c
     };
 
     createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
@@ -1814,18 +1791,18 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
     System.assertEquals(
-      false,
-      claimsWithEvaluationDetails[0].canBeEvaluated,
+      Claim.EU261HandlingStatus.UnableToHandle,
+      claimsWithEvaluationDetails[0].decision.verdict,
       'It should not be possible to evaluate claims with flights not operated by SAS.'
     );
     System.assertEquals(
       'cannot handle claims where SAS is not the only operating carrier',
-      claimsWithEvaluationDetails[0].unhandledReason,
+      claimsWithEvaluationDetails[0].decision.reasoning,
       'Rejection reason should be "cannot handle claims where SAS is not the only operating carrier"'
     );
   }
@@ -1860,18 +1837,18 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
     System.assertEquals(
-      false,
-      claimsWithEvaluationDetails[0].canBeEvaluated,
+      Claim.EU261HandlingStatus.UnableToHandle,
+      claimsWithEvaluationDetails[0].decision.verdict,
       'It should not be possible to evaluate claims with flights not operated by SAS.'
     );
     System.assertEquals(
       'cannot handle potential duplicates',
-      claimsWithEvaluationDetails[0].unhandledReason,
+      claimsWithEvaluationDetails[0].decision.reasoning,
       'Rejection reason should be "cannot handle potential duplicates"'
     );
   }
@@ -1898,12 +1875,12 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
     LIA_Claim__c automatedClaim = claimsWithEvaluationDetails[0]
-      .claim.instanceRecords[0];
+      .claimObj.instanceRecords[0];
 
     System.assertEquals(
       'Eligible for compensation',
@@ -1919,7 +1896,7 @@ private class EU261Service_Test {
 
   @IsTest
   static void minimalCancellationClaimWithoutRebookingCannotBeEvaluated() {
-    TestDataFactories.CasesClaims claim = createDefaultTestClaim(
+    TestDataFactories.CasesClaims c = createDefaultTestClaim(
       cancellationBookingWithinSASControlReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
@@ -1929,7 +1906,7 @@ private class EU261Service_Test {
     );
 
     List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claim
+      c
     };
 
     createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
@@ -1939,25 +1916,25 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
     System.assertEquals(
-      false,
-      claimsWithEvaluationDetails[0].canBeEvaluated,
-      'The minimal cancellation claim should be automated.'
+      Claim.EU261HandlingStatus.UnableToHandle,
+      claimsWithEvaluationDetails[0].decision.verdict,
+      'No rebooking cannot be automated.'
     );
     System.assertEquals(
       'this trip type is not yet supported.',
-      claimsWithEvaluationDetails[0].unhandledReason,
+      claimsWithEvaluationDetails[0].decision.reasoning,
       'This trip type should not be supported.'
     );
   }
 
   @IsTest
   static void minimalCancellationClaimsWithCancellationsOutsideSASControlShouldBeDenied() {
-    TestDataFactories.CasesClaims claim = createDefaultTestClaim(
+    TestDataFactories.CasesClaims c = createDefaultTestClaim(
       cancellationBookingOutsideSASControlReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
@@ -1967,7 +1944,7 @@ private class EU261Service_Test {
     );
 
     List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claim
+      c
     };
 
     createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
@@ -1977,25 +1954,20 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
     System.assertEquals(
-      true,
-      claimsWithEvaluationDetails[0].canBeEvaluated,
-      'It should be possible to evaluate minimal claims with cancellations outside SAS control.'
-    );
-    System.assertEquals(
-      false,
-      claimsWithEvaluationDetails[0].customerEntitledToCompensation,
-      'Minimal cancellation claims with cancellations outside SAS control should not receive any compensation'
+      Claim.EU261HandlingStatus.IneligibleForCompensation,
+      claimsWithEvaluationDetails[0].decision.verdict,
+      'It should be possible to evaluate minimal claims with cancellations outside SAS control and they should not receive any compensation.'
     );
   }
 
   @IsTest
   static void claimsWithUnsupportedCancellationCodesShouldNotBeAutomated() {
-    TestDataFactories.CasesClaims claim = createDefaultTestClaim(
+    TestDataFactories.CasesClaims c = createDefaultTestClaim(
       cancellationBookingUnsupportedReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
@@ -2005,7 +1977,7 @@ private class EU261Service_Test {
     );
 
     List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claim
+      c
     };
 
     createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
@@ -2015,25 +1987,25 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
     System.assertEquals(
-      false,
-      claimsWithEvaluationDetails[0].canBeEvaluated,
+      Claim.EU261HandlingStatus.UnableToHandle,
+      claimsWithEvaluationDetails[0].decision.verdict,
       'It should not be possible to evaluate claims with unsupported cancellation codes.'
     );
     System.assertEquals(
       'cannot determine wether SAS is responsible or not.',
-      claimsWithEvaluationDetails[0].unhandledReason,
+      claimsWithEvaluationDetails[0].decision.reasoning,
       'Unhandled reason should be "cannot determine wether SAS is responsible or not."'
     );
   }
 
   @IsTest
   static void claimsWithTwoCancellationsShouldNotBeAutomated() {
-    TestDataFactories.CasesClaims claim = createDefaultTestClaim(
+    TestDataFactories.CasesClaims c = createDefaultTestClaim(
       cancellationBookingTwoCancellationsReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
@@ -2043,7 +2015,7 @@ private class EU261Service_Test {
     );
 
     List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claim
+      c
     };
 
     createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
@@ -2053,18 +2025,18 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
     System.assertEquals(
-      false,
-      claimsWithEvaluationDetails[0].canBeEvaluated,
+      Claim.EU261HandlingStatus.UnableToHandle,
+      claimsWithEvaluationDetails[0].decision.verdict,
       'It should not be possible to evaluate claims with unsupported cancellation codes.'
     );
     System.assertEquals(
       'this trip type is not yet supported.', // cannot determine wether SAS is responsible or not.
-      claimsWithEvaluationDetails[0].unhandledReason,
+      claimsWithEvaluationDetails[0].decision.reasoning,
       'Unhandled reason should be "this trip type is not yet supported."'
     );
   }
@@ -2072,7 +2044,7 @@ private class EU261Service_Test {
   @IsTest
   static void minimalCancellationClaimShouldBeAutomatedCorrectly() {
     // A rebooked flight which arrives 3h later than the original flight.
-    TestDataFactories.CasesClaims claim = createDefaultTestClaim(
+    TestDataFactories.CasesClaims c = createDefaultTestClaim(
       cancellationWithRebookingBookingReference,
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
@@ -2082,7 +2054,7 @@ private class EU261Service_Test {
     );
 
     List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claim
+      c
     };
 
     createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
@@ -2092,18 +2064,18 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Service.ClaimWithCompensationDetails> claimsWithEvaluationDetails = EU261Service.newInstance()
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
     System.assertEquals(
-      true,
-      claimsWithEvaluationDetails[0].canBeEvaluated,
+      Claim.EU261HandlingStatus.EligibleForCompensation,
+      claimsWithEvaluationDetails[0].decision.verdict,
       'The minimal cancellation claim should be automated.'
     );
     System.assertEquals(
       250,
-      claimsWithEvaluationDetails[0].EU261Compensation,
+      claimsWithEvaluationDetails[0].decision.compensationAmount,
       'We shuold pay out €250 for the minimal cancellation claim'
     );
   }

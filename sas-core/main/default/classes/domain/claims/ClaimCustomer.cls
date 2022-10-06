@@ -5,6 +5,12 @@ public without sharing class ClaimCustomer extends AbstractSObjectWrapper {
   public String firstName;
   public String lastName;
 
+  public String fullName {
+    get {
+      return firstName + ' ' + lastName;
+    }
+  }
+
   public override void updateSObjectFields() {
     this.underlyingSObject.First_Name__c = this.firstName;
     this.underlyingSObject.Last_Name__c = this.lastName;

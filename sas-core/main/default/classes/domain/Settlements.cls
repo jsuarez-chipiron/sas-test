@@ -100,6 +100,8 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   public static final String COST_ACCOUNT_CREDIT = '1654';
   public static final String COST_ACCOUNT_INSURANCE = '1662';
   public static final String COST_ACCOUNT_LIABILITY_OTHER = '6735';
+  public static final String COST_ACCOUNT_EU261_COMPENSATION = '6727';
+  public static final String COST_ACCOUNT_EU261_REIMBURSEMENT = '6738';
 
   public static final String COST_CENTER_DEBITS = '90801';
 
@@ -715,6 +717,55 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     return settlementsToCreate
       .updateSettlementItems(itemsToCreateBySettlement, uow);
   }
+
+  /*
+  public static Settlements createFromSettlementItems(
+    List<LIA_Claim__c> claims,
+    List<SettlementItem> settlementItems,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    Map<Id, Settlement__c> settlementsByClaimId = new Map<Id, Settlement__c>();
+    Settlements settlementsToCreate = createFromClaim(cardClaims, null, uow);
+    for (Settlement__c s : settlementsToCreate.instanceRecords) {
+      settlementsByClaimId.put(s.Claim__c, s);
+    }
+
+    Map<Id, List<Settlement_Item__c>> itemsToCreateBySettlement = new Map<Id, List<Settlement_Item__c>>();
+
+    for (CompensationRequest cr : compensationRequests) {
+      List<Settlement_Item__c> itemsToCreate = new List<Settlement_Item__c>();
+
+      if (cr.compensationAmount != 0) {
+        // TODO: Currency conversion.
+        Settlement_Item__c itemToCreate = new Settlement_Item__c(
+          Amount__c = cr.compensationAmount,
+          Comments__c = 'Automatic compensation due to EU261', // TODO: Explanation here?
+          Cost_Account__c = '6727',
+          Customer_Name__c = cr.customer.fullName,
+          Settlement__c = cr.claimId
+        );
+        itemsToCreate.add(compensationItemToCreate);
+      }
+
+      if (cr.reimbursementAmount != 0) {
+        // TODO: Currency conversion.
+        Settlement_Item__c itemToCreate = new Settlement_Item__c(
+          Amount__c = cr.reimbursementAmount,
+          Comments__c = 'Automatic reimbursement due to EU261', // TODO: Explanation here?
+          Cost_Account__c = '6738',
+          Customer_Name__c = cr.customer.fullName,
+          Settlement__c = cr.claimId
+        );
+      }
+
+      itemsToCreateBySettlement.put(
+        settlementsByClaimId.get(cr.claimId).Id,
+        itemsToCreate
+      );
+    }
+
+    return settlementsToCreate;
+  }*/
 
   /**
    * Given a list of new settlement items, marks all settlements items for
