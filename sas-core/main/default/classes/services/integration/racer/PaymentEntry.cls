@@ -506,8 +506,7 @@ public class PaymentEntry {
   private static final String TODAYS_DATE = Datetime.now().format('yyyyMMdd');
   private static final Map<String, Settlement_Currency_Setting__mdt> currencyToSettings = Settlement_Currency_Setting__mdt.getAll();
   private static final Map<Id, Settlement_Bank_Setting__mdt> bankToSettings = new Map<Id, Settlement_Bank_Setting__mdt>();
-  private static final Map<String, Settlement_Country_Setting__mdt> countryToSettings = Settlement_Country_Setting__mdt.getAll();
-
+  private static final Map<String, Settlement_Country_Setting__mdt> countryToSettings = new Map<String, Settlement_Country_Setting__mdt>();
   // getAll() returns a map of DeveloperName => Mdt Object. We need to be able to fetch these
   // based on the Id found in Settlement_Currency_Setting__mdt
   static {
@@ -516,6 +515,12 @@ public class PaymentEntry {
         .values()
     ) {
       bankToSettings.put(sbs.Id, sbs);
+    }
+    for (
+      Settlement_Country_Setting__mdt scs : Settlement_Country_Setting__mdt.getAll()
+        .values()
+    ) {
+      countryToSettings.put(scs.Country_Name__c, scs);
     }
   }
 
@@ -529,7 +534,7 @@ public class PaymentEntry {
     );
 
     Settlement_Country_Setting__mdt bankCountrySettings = countryToSettings.get(
-      s.Bank_Country__c.replace(' ', '_')
+      s.Bank_Country__c
     );
 
     String countryShortCode;
@@ -542,7 +547,7 @@ public class PaymentEntry {
       countryShortCode = bankCountrySettings.Country_Short_Code__c;
     } else {
       Settlement_Country_Setting__mdt contactCountrySettings = countryToSettings.get(
-        s.Country__c.replace(' ', '_')
+        s.Country__c
       );
 
       countryShortCode = contactCountrySettings.Country_Short_Code__c;
