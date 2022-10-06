@@ -508,6 +508,8 @@ public class PaymentEntry {
   private static final Map<Id, Settlement_Bank_Setting__mdt> bankToSettings = new Map<Id, Settlement_Bank_Setting__mdt>();
   private static final Map<String, Settlement_Country_Setting__mdt> countryToSettings = Settlement_Country_Setting__mdt.getAll();
 
+  // getAll() returns a map of DeveloperName => Mdt Object. We need to be able to fetch these
+  // based on the Id found in Settlement_Currency_Setting__mdt
   static {
     for (
       Settlement_Bank_Setting__mdt sbs : Settlement_Bank_Setting__mdt.getAll()
