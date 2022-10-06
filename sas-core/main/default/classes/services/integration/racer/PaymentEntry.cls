@@ -504,56 +504,29 @@ public class PaymentEntry {
   public String paymentCurrency;
 
   private static final String TODAYS_DATE = Datetime.now().format('yyyyMMdd');
-  private static final Map<String, Settlement_Currency_Setting__mdt> currencyToSettings = new Map<String, Settlement_Currency_Setting__mdt>();
-  private static final Map<String, Settlement_Bank_Setting__mdt> bankToSettings = new Map<String, Settlement_Bank_Setting__mdt>();
-  private static final Map<String, Settlement_Country_Setting__mdt> countryToSettings = new Map<String, Settlement_Country_Setting__mdt>();
+  private static final Map<String, Settlement_Currency_Setting__mdt> currencyToSettings = Settlement_Currency_Setting__mdt.getAll();
+  private static final Map<Id, Settlement_Bank_Setting__mdt> bankToSettings = new Map<Id, Settlement_Bank_Setting__mdt>();
+  private static final Map<String, Settlement_Country_Setting__mdt> countryToSettings = Settlement_Country_Setting__mdt.getAll();
 
-  //Fetch from DB once if value doesn't exist
-  public static Settlement_Currency_Setting__mdt getSettlementCurrencySetting(
-    String currencyToFetch
-  ) {
-    Settlement_Currency_Setting__mdt toReturn = currencyToSettings.get(
-      currencyToFetch
-    );
-    if (toReturn == null) {
-      toReturn = Settlement_Currency_Setting__mdt.getInstance(currencyToFetch);
-      currencyToSettings.put(currencyToFetch, toReturn);
+  static {
+    for (
+      Settlement_Bank_Setting__mdt sbs : Settlement_Bank_Setting__mdt.getAll()
+        .values()
+    ) {
+      bankToSettings.put(sbs.Id, sbs);
     }
-    return toReturn;
-  }
-  public static Settlement_Bank_Setting__mdt getSettlementBankSetting(
-    String bankToFetch
-  ) {
-    Settlement_Bank_Setting__mdt toReturn = bankToSettings.get(bankToFetch);
-    if (toReturn == null) {
-      toReturn = Settlement_Bank_Setting__mdt.getInstance(bankToFetch);
-      bankToSettings.put(bankToFetch, toReturn);
-    }
-    return toReturn;
-  }
-  public static Settlement_Country_Setting__mdt getSettlementCountrySetting(
-    String countryToFetch
-  ) {
-    Settlement_Country_Setting__mdt toReturn = countryToSettings.get(
-      countryToFetch
-    );
-    if (toReturn == null) {
-      toReturn = Settlement_Country_Setting__mdt.getInstance(countryToFetch);
-      countryToSettings.put(countryToFetch, toReturn);
-    }
-    return toReturn;
   }
 
   public PaymentEntry(Settlement__c s) {
-    Settlement_Currency_Setting__mdt currencySettings = getSettlementCurrencySetting(
+    Settlement_Currency_Setting__mdt currencySettings = currencyToSettings.get(
       s.Currency__c
     );
 
-    Settlement_Bank_Setting__mdt bankSettings = getSettlementBankSetting(
+    Settlement_Bank_Setting__mdt bankSettings = bankToSettings.get(
       currencySettings.Settlement_Bank_Setting__c
     );
 
-    Settlement_Country_Setting__mdt bankCountrySettings = getSettlementCountrySetting(
+    Settlement_Country_Setting__mdt bankCountrySettings = countryToSettings.get(
       s.Bank_Country__c.replace(' ', '_')
     );
 
@@ -566,7 +539,7 @@ public class PaymentEntry {
     if (String.isBlank(s.Country__c)) {
       countryShortCode = bankCountrySettings.Country_Short_Code__c;
     } else {
-      Settlement_Country_Setting__mdt contactCountrySettings = getSettlementCountrySetting(
+      Settlement_Country_Setting__mdt contactCountrySettings = countryToSettings.get(
         s.Country__c.replace(' ', '_')
       );
 
