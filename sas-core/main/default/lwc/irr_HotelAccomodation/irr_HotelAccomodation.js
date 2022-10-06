@@ -1,3 +1,12 @@
+/**
+ * @author Chetan Singh, Coforge
+ * @date 2022
+ *
+ * @description Email input panel for the Hotel accommodation Tool(Lexit).
+ * Emails are being fetched from CMDT and also can be put manually by Agents.
+ */
+
+
 import { LightningElement,track,api } from 'lwc';
 import distributionList from '@salesforce/label/c.Distribution_Lists';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -45,7 +54,6 @@ export default class IRR_HotelAccomodation extends LightningElement {
 
         const {name , value , dataset: {recipientIndex} } = event.target;
         this.toAddresses[recipientIndex][name] = value;
-        console.log(`toAdd :${JSON.stringify(this.toAddresses)}`);
 
     }
     handleChange(event) {
@@ -63,6 +71,10 @@ export default class IRR_HotelAccomodation extends LightningElement {
         this.dispatchEvent(sendEvent);
 
     }
+    validateFields() {
+        return [...this.template.querySelectorAll('lightning-input')]
+            .reduce((previousValue, cmp) => cmp.reportValidity() && previousValue, true);
+    }
 
     handleCancel(){
         this.isShowModal = false;
@@ -77,7 +89,8 @@ export default class IRR_HotelAccomodation extends LightningElement {
         this.toAddresses.push({ id: `rec${idNumber}`});
     }
 
-    handleSend(event){
+    handleSend(){
+        if (!this.validateFields()) return; 
 
         this.toAddresses.forEach ( (address) => {
             this.recipients.push(address.emailAddress);
