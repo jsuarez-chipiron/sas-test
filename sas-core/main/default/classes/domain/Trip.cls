@@ -120,6 +120,10 @@ public without sharing class Trip {
       destinationAirport.Is_EU261_Applicable__c;
   }
 
+  public String getJSON() {
+    return JSON.serialize(this);
+  }
+
   // DELAY LOGIC
   public Datetime getFinalDestinationArrivalTime() {
     Flight__c lastFlight = getFlightToFinalDestination();
@@ -131,6 +135,18 @@ public without sharing class Trip {
   }
 
   // CANCELLATION LOGIC
+  public Boolean hasCancelledSegments() {
+    Integer noCancelledFlights = 0;
+    for (Leg l : sortedLegs) {
+      for (Segment__c s : l.segments) {
+        if (Trip.nameToType.get(s.Trip_Type__c) == Type.Cancelled) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   public Integer getNoCancelledFlights(
     Map<Id, List<FlightIrregularities__c>> flightToIrregularities
   ) {

@@ -24,6 +24,42 @@ public without sharing class EU261Service {
     uow.commitWork();
   }
 
+  public void batchProcessEU261Claims(Set<Id> claimIds) {
+    List<Id> claimIdsOdered = new List<Id>(claimIds);
+    Integer claimsRemaining = claimIdsOdered.size();
+    while (claimsRemaining > 0) {
+      if (claimsRemaining > 100) {
+        // 200 is too much
+        List<Id> notAllClaimIds = new List<Id>{};
+        for (Integer i = 0; i < 100; i++) {
+          notAllClaimIds.add(claimIdsOdered[0]);
+          claimIdsOdered.remove(0);
+        }
+        claimsRemaining = claimIdsOdered.size();
+        System.enqueueJob(
+          new ProcessEU261ClaimsAsync(new Set<Id>(notAllClaimIds))
+        );
+      } else {
+        System.enqueueJob(
+          new ProcessEU261ClaimsAsync(new Set<Id>(claimIdsOdered))
+        );
+        claimsRemaining = 0;
+      }
+    }
+  }
+
+  public class ProcessEU261ClaimsAsync implements Queueable, Database.AllowsCallouts {
+    private Set<Id> claimIds;
+
+    public ProcessEU261ClaimsAsync(Set<Id> claimIds) {
+      this.claimIds = claimIds;
+    }
+
+    public void execute(QueueableContext ctx) {
+      EU261Service.newInstance().processEU261Claims(claimIds);
+    }
+  }
+
   /**
    * @param claimIds a Set of Ids of the claims to be automated
    *
