@@ -200,10 +200,13 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'can handle only claims in category "Flight disruptions"'
       );
-    } else if (c.type != Claim.Type.FlightDelay) {
+    } else if (
+      !(c.type == Claim.Type.FlightDelay ||
+      c.type == Claim.Type.FlightCancellation)
+    ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'can handle only claims in type "Flight delay"'
+        'can handle only claims in type "Flight delay" or "Flight cancellation"'
       );
     } else if (c.recordType != Claim.RecordType.CustomerClaim) {
       return new Decision(
@@ -238,7 +241,7 @@ public class EU261Claim {
     } else if (this.bookingType != Bookings.Type.OneWay) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'can handle only one one way trips'
+        'can handle only one way trips'
       );
     } else if (this.booking.instanceRecords[0].Segments__r.size() == 0) {
       return new Decision(
@@ -249,14 +252,6 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot handle claims without any travellers'
-      );
-    } else if (
-      this.booking.instanceRecords[0].Segments__r.size() >
-      2 * this.booking.instanceRecords[0].Passengers__r.size()
-    ) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'can handle only one or two flights per claim'
       );
     } else if (
       invalidFareBases.contains(
@@ -302,36 +297,50 @@ public class EU261Claim {
         'can handle only claims which do not require power of attorney'
       );
     } else if (
-      this.hasCancellation() &&
+      c.type == Claim.Type.FlightCancellation && !this.hasCancellation()
+    ) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'the claim flight is not cancelled'
+      );
+    } else if (
+      this.hasCancellation() != this.tripWithClaimFlight.hasCancelledSegments()
+    ) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'the claim flight is cancelled but the booking has no cancelled segments'
+      );
+    } else if (
+      c.type == Claim.Type.FlightCancellation &&
       !this.canDetermineIfSASIsResponsibleForCancellation()
     ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'cannot determine wether SAS is responsible or not.'
+        'cannot determine wether SAS is responsible or not for the cancellation'
       );
     } else if (
-      this.hasCancellation() &&
+      c.type == Claim.Type.FlightCancellation &&
       (!this.tripWithClaimFlight.canGetOriginalTrip() ||
       !this.tripWithClaimFlight.canGetSuggestedRebookingTrip())
     ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'this trip type is not yet supported.'
+        'this trip type is not yet supported for automated cancellation handling'
       );
-    } else if (!this.hasCancellation() && !this.canCalculateDelay()) {
+    } else if (c.type == Claim.Type.FlightDelay && !this.canCalculateDelay()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'there were issues calculating the delay'
       );
     } else if (
-      (!this.hasCancellation() &&
+      (c.type == Claim.Type.FlightDelay &&
       (getMinutesDelayedWithinSASControl() <= (2 * 60) ||
       getMinutesDelayedWithinSASControl() >= (5 * 60)))
     ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'can handle only delays between 2 and 5 hours'
-      );
+      ); // We should remove this early
     } else {
       return null;
     }
@@ -619,6 +628,7 @@ public class EU261Claim {
 
     Integer noIrregularities = claimIrregularities.instanceRecords.size();
     if (noIrregularities == 1) {
+      // TODO: Debug irregularities
       FlightIrregularities__c relevantIrregularity = claimIrregularities.instanceRecords[0];
       return claimIrregularities.isWithinSASControl()
         .get(relevantIrregularity.Id);
@@ -638,6 +648,8 @@ public class EU261Claim {
       this.cancellationCodeIsWithinSASControl();
       return true;
     } catch (FlightIrregularities.IrregularityException e) {
+      return false;
+    } catch (AutomationException e2) {
       return false;
     }
   }

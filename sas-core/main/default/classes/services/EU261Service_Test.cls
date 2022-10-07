@@ -1252,9 +1252,9 @@ private class EU261Service_Test {
           'Other booking types should not be available for evaluation.'
         );
         System.assertEquals(
-          'can handle only one one way trips',
+          'can handle only one way trips',
           c.decision.reasoning,
-          'Rejection reason should be "can handle only one one way trips"'
+          'Rejection reason should be "can handle only one way trips"'
         );
       }
     }
@@ -1901,7 +1901,8 @@ private class EU261Service_Test {
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
         LIA_Claim__c.Flight_Number__c => 'SK0008',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
+        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
       }
     );
 
@@ -1926,7 +1927,7 @@ private class EU261Service_Test {
       'No rebooking cannot be automated.'
     );
     System.assertEquals(
-      'this trip type is not yet supported.',
+      'this trip type is not yet supported for automated cancellation handling',
       claimsWithEvaluationDetails[0].decision.reasoning,
       'This trip type should not be supported.'
     );
@@ -1939,7 +1940,8 @@ private class EU261Service_Test {
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
         LIA_Claim__c.Flight_Number__c => 'SK0011',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
+        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
       }
     );
 
@@ -1972,7 +1974,8 @@ private class EU261Service_Test {
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
         LIA_Claim__c.Flight_Number__c => 'SK0012',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
+        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
       }
     );
 
@@ -1997,9 +2000,9 @@ private class EU261Service_Test {
       'It should not be possible to evaluate claims with unsupported cancellation codes.'
     );
     System.assertEquals(
-      'cannot determine wether SAS is responsible or not.',
+      'cannot determine wether SAS is responsible or not for the cancellation',
       claimsWithEvaluationDetails[0].decision.reasoning,
-      'Unhandled reason should be "cannot determine wether SAS is responsible or not."'
+      'Unhandled reason should be "cannot determine wether SAS is responsible or not for the cancellation"'
     );
   }
 
@@ -2010,7 +2013,8 @@ private class EU261Service_Test {
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
         LIA_Claim__c.Flight_Number__c => 'SK0013',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
+        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
       }
     );
 
@@ -2035,9 +2039,9 @@ private class EU261Service_Test {
       'It should not be possible to evaluate claims with unsupported cancellation codes.'
     );
     System.assertEquals(
-      'this trip type is not yet supported.', // cannot determine wether SAS is responsible or not.
+      'this trip type is not yet supported for automated cancellation handling', // cannot determine wether SAS is responsible or not  for the cancellation.
       claimsWithEvaluationDetails[0].decision.reasoning,
-      'Unhandled reason should be "this trip type is not yet supported."'
+      'Unhandled reason should be "this trip type is not yet supported for automated cancellation handling"'
     );
   }
 
@@ -2049,7 +2053,8 @@ private class EU261Service_Test {
       new Map<Schema.SObjectField, Object>{
         LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
         LIA_Claim__c.Flight_Number__c => 'SK0013',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
+        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
       }
     );
 
