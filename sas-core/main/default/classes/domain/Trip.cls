@@ -124,6 +124,18 @@ public without sharing class Trip {
     return JSON.serialize(this);
   }
 
+  public void logJSON(String additionalInfo) {
+    System.debug(
+      '--------- TRIP-DEBUG (' +
+      additionalInfo +
+      ') START ---------\n' +
+      this.getJSON() +
+      '\n---------- TRIP-DEBUG (' +
+      additionalInfo +
+      ') END ----------\n'
+    );
+  }
+
   // DELAY LOGIC
   public Datetime getFinalDestinationArrivalTime() {
     Flight__c lastFlight = getFlightToFinalDestination();
@@ -276,6 +288,7 @@ public without sharing class Trip {
       Airport nextAirport;
       List<Leg> tripLegsInOrder = new List<Leg>{};
       List<Leg> routes = currentAirport.availableRoutesFromAirport;
+      Integer noIterations = 0;
       while (routes.size() != 0) {
         Leg currentLeg;
         switch on routes.size() {
@@ -305,6 +318,10 @@ public without sharing class Trip {
         );
         routes = nextAirport.availableRoutesFromAirport;
         currentAirport = nextAirport;
+        noIterations += 1;
+        if (noIterations == 200) {
+          throw new TripException('Likely infinite loop');
+        }
       }
       if (currentAirport.IATACode != destinationAirport.IATACode) {
         throw new TripException('Error while calculating original trip.');
@@ -380,7 +397,7 @@ public without sharing class Trip {
    * Class used to combine different passengers' segments into one.
    */
   public class Leg {
-    List<Segment__c> segments;
+    transient List<Segment__c> segments;
     Flight__c flight;
     Type segmentType;
 
