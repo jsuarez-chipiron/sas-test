@@ -2039,9 +2039,9 @@ private class EU261Service_Test {
       'It should not be possible to evaluate claims with unsupported cancellation codes.'
     );
     System.assertEquals(
-      'this trip type is not yet supported for automated cancellation handling', // cannot determine wether SAS is responsible or not  for the cancellation.
+      'there are more than one cancellation connected to this claim',
       claimsWithEvaluationDetails[0].decision.reasoning,
-      'Unhandled reason should be "this trip type is not yet supported for automated cancellation handling"'
+      'Unhandled reason should be "there are more than one cancellation connected to this claim"'
     );
   }
 
