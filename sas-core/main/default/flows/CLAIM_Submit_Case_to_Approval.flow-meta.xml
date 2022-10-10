@@ -224,7 +224,7 @@
                 <leftValueReference>Get_Claim_Information.Result__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Default judgment</stringValue>
+                    <stringValue>Default judgement</stringValue>
                 </rightValue>
             </conditions>
             <connector>
