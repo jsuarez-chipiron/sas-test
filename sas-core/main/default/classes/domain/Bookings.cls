@@ -405,16 +405,7 @@ public without sharing class Bookings extends fflib_SObjectDomain {
     }
 
     // Upsert flights
-    // The upsert operation seems to fail due to a race condition between two threads
-    // trying to upsert the records simultaneously. One thread succeeds and the other
-    // fails with a duplicate value exception.
-    try {
-      upsert uniqueFlightsToUpsert.values() TEDS_Identifier__c;
-    } catch (DMLException e) {
-      if (e.getDmlType(0) == StatusCode.DUPLICATE_VALUE) {
-        upsert uniqueFlightsToUpsert.values() TEDS_Identifier__c;
-      }
-    }
+    (new Flights(uniqueFlightsToUpsert.values())).upsertToDB();
 
     List<SObject> passengersToInsert = new List<SObject>();
     List<SObject> segmentsToInsert = new List<SObject>();
