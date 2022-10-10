@@ -12,6 +12,7 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
   public static final Map<String, Boolean> codeToSASIsResponsible = new Map<String, Boolean>{
     'WEAT' => false,
     'TECH' => true,
+    'INDU' => true,
     'FA' => true
   };
 
@@ -276,6 +277,72 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     }
 
     this.instanceRecords = irregularitiesToSave;
+  }
+
+  public void removeAllButCancellations() {
+    List<FlightIrregularities__c> irregularitiesToSave = new List<FlightIrregularities__c>{};
+    for (FlightIrregularities__c fi : instanceRecords) {
+      String cancellationOrDelay = fi.Type__c.substringBefore(' ');
+      if (cancellationOrDelay == 'Cancellation') {
+        irregularitiesToSave.add(fi);
+      }
+    }
+
+    this.instanceRecords = irregularitiesToSave;
+  }
+
+  // We might be able to get rid of this in the future.
+  public void removeDuplicates() {
+    List<FlightIrregularities__c> irregularitiesToSave = new List<FlightIrregularities__c>{};
+    List<IrregularityWrapper> addedIrregularities = new List<IrregularityWrapper>{};
+    for (FlightIrregularities__c fi : instanceRecords) {
+      IrregularityWrapper iw = new IrregularityWrapper(fi);
+      if (!addedIrregularities.contains(iw)) {
+        addedIrregularities.add(iw);
+        irregularitiesToSave.add(fi);
+      }
+    }
+
+    this.instanceRecords = irregularitiesToSave;
+  }
+
+  /*
+    A duplicate is defined as the other object having the same:
+    Code__c,
+    Flight__c,
+    Reason__c,
+    Duration_minutes__c,
+    Type__c,
+    Description__c,
+    Cancellation_Time__c
+  */
+  private class IrregularityWrapper {
+    public FlightIrregularities__c irregulatity;
+
+    public IrregularityWrapper(FlightIrregularities__c irregulatity) {
+      this.irregulatity = irregulatity;
+    }
+
+    public Boolean equals(Object compareTo) {
+      IrregularityWrapper otherIrregulatity = (IrregularityWrapper) compareTo;
+
+      if (
+        irregulatity.Code__c == otherIrregulatity.irregulatity.Code__c &&
+        irregulatity.Flight__c == otherIrregulatity.irregulatity.Flight__c &&
+        irregulatity.Reason__c == otherIrregulatity.irregulatity.Reason__c &&
+        irregulatity.Duration_minutes__c ==
+        otherIrregulatity.irregulatity.Duration_minutes__c &&
+        irregulatity.Type__c == otherIrregulatity.irregulatity.Type__c &&
+        irregulatity.Description__c ==
+        otherIrregulatity.irregulatity.Description__c &&
+        irregulatity.Cancellation_Time__c ==
+        otherIrregulatity.irregulatity.Cancellation_Time__c
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
   public Boolean containsCancellation() {

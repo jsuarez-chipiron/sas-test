@@ -323,6 +323,12 @@ public class EU261Claim {
       (!this.tripWithClaimFlight.canGetOriginalTrip() ||
       !this.tripWithClaimFlight.canGetSuggestedRebookingTrip())
     ) {
+      this.tripWithClaimFlight.logJSON(
+        'Case: ' +
+        String.valueOf(c.parentCaseId) +
+        '. PNR: ' +
+        c.bookingReference
+      ); // If we get here, this should not happen
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'this trip type is not yet supported for automated cancellation handling'
@@ -567,9 +573,15 @@ public class EU261Claim {
       // TODO: Will this ever happen?
       return new Decision('', totalCompensation, 0); // TODO: Reimbursement!
     } else {
+      String reason = 'unknown';
+      if (numberOfEligiblePassengers == 0) {
+        reason = 'there are no passengers which are eligible for compensation';
+      } else if (compensation == 0) {
+        reason = 'the offered rebooking is not outside the timeframe allowed by EU261';
+      }
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'unknown'
+        reason
       );
     }
   }
@@ -620,7 +632,8 @@ public class EU261Claim {
     FlightIrregularities claimIrregularities = new FlightIrregularities(
       this.flightToIrregularities.get(this.claimFlight.Id)
     );
-    claimIrregularities.removeNA0Delay();
+    claimIrregularities.removeAllButCancellations();
+    claimIrregularities.removeDuplicates();
 
     if (!claimIrregularities.containsCancellation()) {
       throw new AutomationException('Claim flight is not cancelled.');
@@ -628,7 +641,6 @@ public class EU261Claim {
 
     Integer noIrregularities = claimIrregularities.instanceRecords.size();
     if (noIrregularities == 1) {
-      // TODO: Debug irregularities
       FlightIrregularities__c relevantIrregularity = claimIrregularities.instanceRecords[0];
       return claimIrregularities.isWithinSASControl()
         .get(relevantIrregularity.Id);
@@ -697,7 +709,8 @@ public class EU261Claim {
     FlightIrregularities claimIrregularities = new FlightIrregularities(
       this.flightToIrregularities.get(this.claimFlight.Id)
     );
-    claimIrregularities.removeNA0Delay();
+    claimIrregularities.removeAllButCancellations();
+    claimIrregularities.removeDuplicates();
 
     if (!claimIrregularities.containsCancellation()) {
       throw new AutomationException('Claim flight is not cancelled.');
