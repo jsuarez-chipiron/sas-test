@@ -18,13 +18,13 @@
                size="small" ></lightning-icon>
             <span class="slds-assistive-text">Close</span>
          </button>
-         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Confirm Attachment Send to Hotel Accomodation Tool</h2>
+         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Confirm Attachment Send to Hotel Accommodation Tool</h2>
       </header>
       <div class="slds-modal__content slds-p-around_medium" id="confirm-content-id-1">
         <lightning-layout multiple-rows="true">
             <lightning-layout-item padding="around-small" size="12">
                 <p style="text-align: center;">
-                    This Attachment will contain <b>{selectedCount} {passengerText} .</b>
+                    This Attachment will contain <b>{selectedCount} {passengerText}.</b>
                 </p>
             </lightning-layout-item>
         </lightning-layout>
@@ -33,14 +33,13 @@
         <lightning-layout multiple-rows="true">
             <lightning-layout-item padding="around-small" size="12">
                 <p style="text-align: center;">
-                    Choose from the Drop down to select the recipient.Also click the plus button to start adding additional recipients.
+                    Choose from the drop down to select the recipient. Also click the plus button to start adding additional recipients.
                 </p>
             </lightning-layout-item>
         </lightning-layout>
     </div>
       <!-- modal body start -->
-      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-        <lightning-card title="Send Passenger Data as Attachment" icon-name="utility:attach">
+    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
             <div class="slds-p-around_medium lgc-bg-inverse">
                     <lightning-combobox
                             class="combobox-actions slds-p-left_small"
@@ -51,8 +50,7 @@
                             options={emailPicklistOptions}
                             onchange={handleChange}>
                     </lightning-combobox>
-            </div>
-        </lightning-card>
+    </div>
         <lightning-layout multiple-rows="true">
             <template for:each={toAddresses} for:item="toAddress" for:index="rIdx">
                 <lightning-layout-item padding="around-small" size="6" key={toAddress.id}>
