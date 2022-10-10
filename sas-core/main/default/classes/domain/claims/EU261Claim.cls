@@ -159,6 +159,32 @@ public class EU261Claim {
     return claimIrregularities.containsCancellation();
   }
 
+  private Boolean hasMoreThanOneCancellation() {
+    List<FlightIrregularities__c> allIrregularities = new List<FlightIrregularities__c>();
+    for (List<FlightIrregularities__c> fi : flightToIrregularities.values()) {
+      allIrregularities.addAll(fi);
+    }
+    FlightIrregularities irr = new FlightIrregularities(allIrregularities);
+    irr.removeAllButCancellations();
+    irr.removeDuplicates();
+
+    return irr.instanceRecords.size() > 1;
+  }
+
+  private Boolean hasOnlyOneFlightRoute() {
+    String firstFlightRoute =
+      booking.instanceRecords[0].Segments__r[0].Flight__r.Departure_Airport__c +
+      booking.instanceRecords[0].Segments__r[0].Flight__r.Arrival_Airport__c;
+    for (Segment__c s : booking.instanceRecords[0].Segments__r) {
+      String segmentFlightRoute =
+        s.Flight__r.Departure_Airport__c + s.Flight__r.Arrival_Airport__c;
+      if (segmentFlightRoute != firstFlightRoute) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   /**
    * Verifies that we have necessessary information for this claim, and that the
    * type of the claim is such that we are able to evaluate it.
@@ -309,6 +335,17 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'the claim flight is cancelled but the booking has no cancelled segments'
+      );
+    } else if (hasMoreThanOneCancellation()) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'there are more than one cancellation connected to this claim'
+      );
+    } else if (!hasOnlyOneFlightRoute()) {
+      // Super-basic flight handling
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'can only handle claims with a single flight route'
       );
     } else if (
       c.type == Claim.Type.FlightCancellation &&
