@@ -11,6 +11,7 @@
     <groups>Control</groups>
     <label>Customer Claim Supervisors</label>
     <loginAccess>false</loginAccess>
+    <roles>Student Consulting</roles>
     <roles>Sutherland</roles>
     <roles>Sykes</roles>
     <roles>SAS</roles>
