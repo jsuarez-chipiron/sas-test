@@ -229,6 +229,28 @@ public without sharing class Flights extends fflib_SObjectDomain {
   }
 
   public Flights upsertToDB() {
+    Set<Id> flightIds = new Set<Id>();
+
+    for (Flight__c f : instanceRecords) {
+      flightIds.add(f.Id);
+    }
+
+    List<FlightIrregularities__c> irregularitiesToDelete = FlightIrregularitiesSelector.newInstance()
+      .selectByFlightId(flightIds);
+
+    try {
+      delete irregularitiesToDelete; // Delete and re-insert all irregularities
+    } catch (DMLException e) {
+      if (e.getDmlType(0) == StatusCode.ENTITY_IS_DELETED) {
+        // A parallel thread may have deleted the entities. Let's just ignore.
+      } else {
+        throw e;
+      }
+    }
+
+    // The upsert operation seems to fail due to a race condition between two threads
+    // trying to upsert the records simultaneously. One thread succeeds and the other
+    // fails with a duplicate value exception.
     try {
       upsert instanceRecords TEDS_Identifier__c;
     } catch (DMLException e) {
@@ -237,9 +259,11 @@ public without sharing class Flights extends fflib_SObjectDomain {
       }
     }
 
-    if (flightIrregularities.instanceRecords.size() > 0) {
-      upsert flightIrregularities.addFlightReferences(instanceRecords)
-        .instanceRecords;
+    if (flightIrregularities != null) {
+      if (flightIrregularities.instanceRecords.size() > 0) {
+        insert flightIrregularities.addFlightReferences(instanceRecords)
+          .instanceRecords;
+      }
     }
 
     return this;
