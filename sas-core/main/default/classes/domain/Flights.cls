@@ -229,14 +229,14 @@ public without sharing class Flights extends fflib_SObjectDomain {
   }
 
   public Flights upsertToDB() {
-    Set<Id> flightIds = new Set<Id>();
+    Set<String> flightIds = new Set<String>();
 
     for (Flight__c f : instanceRecords) {
-      flightIds.add(f.Id);
+      flightIds.add(f.TEDS_Identifier__c);
     }
 
     List<FlightIrregularities__c> irregularitiesToDelete = FlightIrregularitiesSelector.newInstance()
-      .selectByFlightId(flightIds);
+      .selectByTEDSFlightId(flightIds);
 
     try {
       delete irregularitiesToDelete; // Delete and re-insert all irregularities
