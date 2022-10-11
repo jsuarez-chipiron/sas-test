@@ -342,6 +342,7 @@ def writeToCsv(df, name):
 
 # Randomizes the "airport"-part of the TEDSIdentifier (to avoid conflicts)
 def randomizeTEDSIdentifier(x):
+    x = str(x)
     existingMask = TEDSIDToMask.get(x)
     if (existingMask != None):
         return existingMask
@@ -354,6 +355,7 @@ def randomizeTEDSIdentifier(x):
     return mask
 
 def maskBookingReference(x):
+    x = str(x)
     existingMask = PNRToMask.get(x)
     if (existingMask != None):
         return existingMask
@@ -366,6 +368,7 @@ def maskBookingReference(x):
     return mask
 
 def maskLastName(x):
+    x = str(x)
     existingMask = lastNameToMask.get(x.lower())
     if (existingMask != None):
         return existingMask
@@ -378,6 +381,7 @@ def maskLastName(x):
     return mask
 
 def addGmail(x):
+    x = str(x)
     return x + '@gmail.com'
 
 def getDataFrame(name):
@@ -395,7 +399,8 @@ def getDataFrame(name):
         except:
             print('File does not exist, please check the file name.')
             inp = input(f'Name of the file with {name}: ')
-    
+
+    df.columns = df.columns.str.upper()
     return df
 
 def getIds(df, col='ID'):
