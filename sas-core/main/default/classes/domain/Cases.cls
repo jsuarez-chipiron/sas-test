@@ -100,6 +100,40 @@ public without sharing class Cases extends fflib_SObjectDomain {
     return this;
   }
 
+  public Cases emailContactPeople(
+    Map<Id, Messaging.SingleEmailMessage> emailToSendByCaseId,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    List<OrgWideEmailAddress> owa = OrgWideEmailAddressesSelector.newInstance()
+      .selectPrimary();
+
+    for (
+      Messaging.SingleEmailMessage emailToSend : emailToSendByCaseId.values()
+    ) {
+      if (emailToSend.getReplyTo() == null) {
+        throw new EmailException(
+          'All emails should have a set reply-to address'
+        );
+      }
+    }
+
+    for (Case c : instanceRecords) {
+      Messaging.SingleEmailMessage emailToSend = emailToSendByCaseId.get(c.Id);
+      if (emailToSend != null) {
+        if (owa.size() > 0) {
+          emailToSend.setOrgWideEmailAddressId(owa[0].Id);
+        }
+
+        emailToSend.setToAddresses(new List<String>{ c.SuppliedEmail });
+        emailToSend.setSaveAsActivity(true);
+        emailToSend.setWhatId(c.Id);
+        uow.registerEmail(emailToSend);
+      }
+    }
+
+    return this;
+  }
+
   public Cases emailOwner(
     Messaging.SingleEmailMessage emailToSend,
     fflib_ISObjectUnitOfWork uow

@@ -1316,6 +1316,11 @@ private class EU261Service_Test {
       Last_Name__c = 'Svensson',
       Claim__c = groupClaim.claims[0].Id
     );
+    insert new Customer__c(
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson',
+      Claim__c = groupClaim.claims[0].Id
+    );
 
     insert new Customer__c(
       First_Name__c = 'Sven',

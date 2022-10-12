@@ -12,6 +12,10 @@ public without sharing class EU261Service {
   private static final SettlementItem.CostAccount COMPENSATION_COST_ACCOUNT = SettlementItem.CostAccount.CA6727;
   private static final SettlementItem.CostAccount REIMBURSEMENT_COST_ACCOUNT = SettlementItem.CostAccount.CA6738;
 
+  private static final String AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME = 'eu261_automation_approved';
+  private static final String AUTOMATION_REJECTED_EMAIL_TEMPLATE_NAME = 'eu261_automation_rejected';
+  private static final String AUTOMATION_REPLY_TO_ADDRESS = 'test@example.com';
+
   public static EU261Service newInstance() {
     return (EU261Service) SAS_Service_Application.Service.newInstance(
       EU261Service.class
@@ -76,7 +80,7 @@ public without sharing class EU261Service {
       c.evaluate();
     }
 
-    storeClaimResolution(claimsToAutomate, uow);
+    storeClaimDecision(claimsToAutomate, uow);
 
     /**
      * TODO: Enable when we can create settlements.
@@ -86,7 +90,8 @@ public without sharing class EU261Service {
             claimsToPayOut.add(c);
           }
         }
-        settleClaims(claimsToPayOut, uow);
+        createSettlementsForClaims(claimsToPayOut);
+        settleAndRejectClaims();
         // TODO: Send approval emails
      */
 
@@ -265,7 +270,7 @@ public without sharing class EU261Service {
     return toReturn;
   }
 
-  private static void storeClaimResolution(
+  private static void storeClaimDecision(
     List<EU261Claim> claimsToAutomate,
     fflib_ISObjectUnitOfWork uow
   ) {
@@ -291,48 +296,105 @@ public without sharing class EU261Service {
   }
 
   /**
-   * Settle the claims which can be settled. For the time being just adds description of
-   * what was processed.
+   * Does two DB inserts.
    */
-  /*private static void settleClaims(
-    List<EU261Claim> claimsToPayOut,
-    fflib_ISObjectUnitOfWork uow
+  private static Settlements createSettlementsForClaims(
+    List<EU261Claim> claimsToPayOut
   ) {
+    Map<Id, List<SettlementItem>> settlementsItemsByClaimId = new Map<Id, List<SettlementItem>>();
+
+    List<LIA_Claim__c> payableClaimSObjects = new List<LIA_Claim__c>();
+
     for (EU261Claim c : claimsToPayOut) {
-      List<SettlementItem> settlementsItemsForDecision = new List<SettlementItem>();
+      List<SettlementItem> settlementsItemsForClaim = new List<SettlementItem>();
       for (
         ClaimCustomer customer : c.decision.compensationPerCustomer.keySet()
       ) {
-        settlementsItemsForDecision.add(
-          new SettlementItem(
-            customer,
-            COMPENSATION_COST_ACCOUNT,
-            c.decision.compensationPerCustomer.get(customer),
-            'Automatic EU261 compensation'
-          )
-        );
+        SettlementItem si = new SettlementItem();
+        si.customerName = customer.fullName;
+        si.costAccount = COMPENSATION_COST_ACCOUNT;
+        si.amount = c.decision.compensationPerCustomer.get(customer);
+        si.comments = 'Automatic EU261 compensation';
+        settlementsItemsForClaim.add(si);
       }
       if (
         c.decision.reimbursementAmount != null &&
         c.decision.reimbursementAmount > 0
       ) {
-        settlementsItemsForDecision.add(
-          new SettlementItem(
-            c.claimObj.objects[0].contactFullName,
-            REIMBURSEMENT_COST_ACCOUNT,
-            c.decision.compensationPerCustomer.get(c.claimObj.objects[0].contactFullName),
-            'Automatic EU261 reimbursement'
-          )
-        );
+        SettlementItem si = new SettlementItem();
+        si.customerName = c.claimObj.objects[0].contactFullName;
+        si.costAccount = REIMBURSEMENT_COST_ACCOUNT;
+        si.amount = c.decision.reimbursementAmount;
+        si.comments = 'Automatic EU261 reimbursement';
+        settlementsItemsForClaim.add(si);
       }
-      Settlements s = Settlements.createFromSettlementItems(
-        c.claimObj,
-        settlementsItemsForDecision,
-        uow
+      settlementsItemsByClaimId.put(
+        c.claimObj.objects[0].id,
+        settlementsItemsForClaim
       );
-      // claim.claim.settle(uow);
+      payableClaimSObjects.add(c.claimObj.instanceRecords[0]);
     }
-  }*/
+
+    fflib_ISObjectUnitOfWork uow1 = SAS_Service_Application.UnitOfWork.newInstance();
+    Settlements s = Settlements.createFromClaim(
+      payableClaimSObjects,
+      null,
+      uow1
+    );
+    uow1.commitWork();
+
+    Map<Id, List<SettlementItem>> settlementsItemsBySettlementId = new Map<Id, List<SettlementItem>>();
+
+    for (Settlement__c singleSettlement : s.instanceRecords) {
+      settlementsItemsBySettlementId.put(
+        singleSettlement.Id,
+        settlementsItemsByClaimId.get(singleSettlement.Claim__c)
+      );
+    }
+
+    fflib_ISObjectUnitOfWork uow2 = SAS_Service_Application.UnitOfWork.newInstance();
+    s.updateSettlementItems(settlementsItemsBySettlementId, uow2);
+    uow2.commitWork();
+
+    return s;
+  }
+
+  private void settleAndRejectClaims(List<EU261Claim> claimsToRejectAndSettle) {
+    List<Case> parentCasesObjs = new List<Case>();
+    for (EU261Claim c : claimsToRejectAndSettle) {
+      // TODO: Doesn't work yet. parentCases.add(c.parentCase);
+    }
+    Cases parentCases = Cases.newInstance(parentCasesObjs);
+
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    // eligibleClaims.settle();
+    // ineligbleClaims.reject();
+
+    //TODO: Claims.newInstance(new List<LIA_Claim__c>{ claim }).settle(uow);
+
+    Map<Id, Messaging.SingleEmailMessage> emailsByCaseId = new Map<Id, Messaging.SingleEmailMessage>();
+
+    for (EU261Claim c : claimsToRejectAndSettle) {
+      // TODO: Create settlements for the claims which can be settled.
+
+      String templateName = c.decision.verdict ==
+        Claim.EU261HandlingStatus.EligibleForCompensation
+        ? AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME
+        : AUTOMATION_REJECTED_EMAIL_TEMPLATE_NAME;
+
+      Messaging.SingleEmailMessage emailToSend = EmailMessages.createSingleEmailMessageFromTemplate(
+        templateName,
+        c.claimObj.objects[0].parentCaseId
+      );
+      emailToSend.setReplyTo(AUTOMATION_REPLY_TO_ADDRESS);
+
+      emailsByCaseId.put(c.claimObj.objects[0].parentCaseId, emailToSend);
+    }
+
+    parentCases.emailContactPeople(emailsByCaseId, uow).close(uow);
+
+    uow.commitWork();
+  }
 
   /*private static void debugResult(
     List<ClaimWithCompensationDetails> automatedClaims

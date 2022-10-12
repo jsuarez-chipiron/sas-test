@@ -473,6 +473,21 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Automatic_Rejection__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Automatic_Settlement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Claim_Expense_Max_Amount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Exchange_Rate__c.From_Currency__c</field>
         <readable>true</readable>

@@ -363,6 +363,31 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   }
 
   /**
+   * @param itemsToUpsert Map from Settlement Id to list of SettlementItems for each settlement.
+   */
+  public Settlements updateSettlementItems(
+    Map<Id, List<SettlementItem>> itemsToUpsert,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    Map<Id, List<Settlement_Item__c>> sObjectsToUpsert = new Map<Id, List<Settlement_Item__c>>();
+
+    //
+
+    for (Id settlementId : itemsToUpsert.keySet()) {
+      List<Settlement_Item__c> items = new List<Settlement_Item__c>();
+
+      for (SettlementItem si : itemsToUpsert.get(settlementId)) {
+        si.updateSObjectFields();
+        items.add(si.underlyingSObject);
+      }
+
+      sObjectsToUpsert.put(settlementId, items);
+    }
+
+    return updateSettlementItems(sObjectsToUpsert, uow);
+  }
+
+  /**
    * Updates the list of settlement items for this settlement. Upserts the
    * given items and removes all settlement items related to the settlement,
    * but not included in the given items.
@@ -717,55 +742,6 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     return settlementsToCreate
       .updateSettlementItems(itemsToCreateBySettlement, uow);
   }
-
-  /*
-  public static Settlements createFromSettlementItems(
-    List<LIA_Claim__c> claims,
-    List<SettlementItem> settlementItems,
-    fflib_ISObjectUnitOfWork uow
-  ) {
-    Map<Id, Settlement__c> settlementsByClaimId = new Map<Id, Settlement__c>();
-    Settlements settlementsToCreate = createFromClaim(cardClaims, null, uow);
-    for (Settlement__c s : settlementsToCreate.instanceRecords) {
-      settlementsByClaimId.put(s.Claim__c, s);
-    }
-
-    Map<Id, List<Settlement_Item__c>> itemsToCreateBySettlement = new Map<Id, List<Settlement_Item__c>>();
-
-    for (CompensationRequest cr : compensationRequests) {
-      List<Settlement_Item__c> itemsToCreate = new List<Settlement_Item__c>();
-
-      if (cr.compensationAmount != 0) {
-        // TODO: Currency conversion.
-        Settlement_Item__c itemToCreate = new Settlement_Item__c(
-          Amount__c = cr.compensationAmount,
-          Comments__c = 'Automatic compensation due to EU261', // TODO: Explanation here?
-          Cost_Account__c = '6727',
-          Customer_Name__c = cr.customer.fullName,
-          Settlement__c = cr.claimId
-        );
-        itemsToCreate.add(compensationItemToCreate);
-      }
-
-      if (cr.reimbursementAmount != 0) {
-        // TODO: Currency conversion.
-        Settlement_Item__c itemToCreate = new Settlement_Item__c(
-          Amount__c = cr.reimbursementAmount,
-          Comments__c = 'Automatic reimbursement due to EU261', // TODO: Explanation here?
-          Cost_Account__c = '6738',
-          Customer_Name__c = cr.customer.fullName,
-          Settlement__c = cr.claimId
-        );
-      }
-
-      itemsToCreateBySettlement.put(
-        settlementsByClaimId.get(cr.claimId).Id,
-        itemsToCreate
-      );
-    }
-
-    return settlementsToCreate;
-  }*/
 
   /**
    * Given a list of new settlement items, marks all settlements items for

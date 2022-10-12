@@ -14,7 +14,7 @@ public class EU261Claim {
     'UK' => 6 * 12,
     'IE' => 6 * 12,
     'LV' => 6,
-    'default' => 0
+    'default' => 6 * 12
   };
 
   // TODO: Make sure that this doesn't make any outside calls to anything.
@@ -76,7 +76,7 @@ public class EU261Claim {
 
   @TestVisible
   private Bookings.Type bookingType;
-  public Claims claimObj { public get; private set; } // must be a single claim
+  public Claims claimObj { public get; private set; } // must be a single claim // TODO: Update this to be a Claim
   @TestVisible
   private Bookings booking;
   private Map<Id, List<Trip>> trips;
@@ -410,7 +410,7 @@ public class EU261Claim {
 
     if (
       c.contactType != Claim.ContactType.PrivateCustomer ||
-      c.customers.size() > 4
+      c.customers.size() > 5
     ) {
       return true;
     }
@@ -808,8 +808,10 @@ public class EU261Claim {
    * @return a boolean which asserts if the claim is covered by EU261
    */
   private Boolean isWithinEU261Jurisdiction() {
-    // ~TODO(c): Determine if the customer has already received benefits related to a law of a non-EU country
-    Boolean hasReceivedBenefitsWhichVoidEU261 = false;
+    return true; // Until we have other operating carriers.
+    // As SAS is EU carrier, we're always under EU jurisdiction as operating carrier.
+
+    /* TODO: Add operating carrier check
 
     Airport__c originAirport = this.tripWithClaimFlight.originAirport;
     Airport__c destinationAirport = this.tripWithClaimFlight.destinationAirport;
@@ -817,6 +819,7 @@ public class EU261Claim {
     destinationAirport.Is_EU261_Applicable__c);
 
     return (isToOrFromEU261Territory && !hasReceivedBenefitsWhichVoidEU261);
+    */
   }
 
   /**
