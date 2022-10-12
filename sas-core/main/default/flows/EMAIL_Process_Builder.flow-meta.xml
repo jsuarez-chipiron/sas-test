@@ -68,6 +68,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Get_Group_Id</targetReference>
         </connector>
     </assignments>
@@ -195,6 +196,13 @@
                     <elementReference>sevenDaysago</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_User_Records.IsActive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Set_New_Owner_Id_User</targetReference>
             </connector>
@@ -218,6 +226,13 @@
                 <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
                     <elementReference>sevenDaysago</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_User_Record.IsActive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -269,6 +284,7 @@
         <locationX>710</locationX>
         <locationY>815</locationY>
         <defaultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Get_Group_Id</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Queue</defaultConnectorLabel>
@@ -289,7 +305,7 @@
         </rules>
         <rules>
             <name>User</name>
-            <conditionLogic>1 AND  (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12)</conditionLogic>
+            <conditionLogic>1 AND  (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Parent.OwnerId</leftValueReference>
                 <operator>StartsWith</operator>
@@ -420,6 +436,7 @@
             <label>Owner - Queue</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>newReceivedEmailCount</name>
         <dataType>Number</dataType>
