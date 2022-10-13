@@ -139,4 +139,11 @@
         <shortDescription>US  Station</shortDescription>
         <value>BOS;EWR;LAX;IAD;MIA;ORD;SFO</value>
     </labels>
+    <labels>
+        <fullName>Distribution_Lists</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>email lists to send Passenger data to Hotel Accomodation Tool</shortDescription>
+        <value>stationsupportcenter.osl@sas.no</value>
+    </labels>
 </CustomLabels>
