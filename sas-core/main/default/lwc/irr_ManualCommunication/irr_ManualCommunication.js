@@ -5,7 +5,8 @@
  * @description LWC App for IRR Manual Communication.
  */
 
-import {LightningElement, track} from 'lwc';
+import {LightningElement, track, api} from 'lwc';
+import { convertToCSV } from 'c/c_Json2CsvUtils';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -14,6 +15,7 @@ import sendManualCommunication from '@salesforce/apex/IRR_CON_ManualCommunicatio
 import getManualTemplatesBySendMode from '@salesforce/apex/IRR_CON_ManualCommunication.getManualTemplatesBySendMode';
 import getBookingPassengerInfos from '@salesforce/apex/IRR_CON_ManualCommunication.getBookingPassengerInfos';
 import getAdvancedFilterPassengerInfos from "@salesforce/apex/IRR_CON_ManualCommunication.getAdvancedFilterPassengerInfos";
+import distributionList from '@salesforce/label/c.Distribution_Lists';
 
 import * as tableUtil from 'c/c_TableUtil';
 import { reduceErrors } from 'c/c_LdsUtils';
@@ -42,28 +44,70 @@ export default class IRR_ManualCommunication extends LightningElement {
     @track criticalError = false;
 
     @track confirmDetail = {};
+
     @track showConfirmation = false;
 
     @track showSuccess = false;
+
     @track showScheduleSuccess = false;
 
     @track showRecipientModal = false;
+
     @track additionalRecipients = [];
+
+    @track additionalHotelRecipients = []
 
     @track leftPanelTab = "LEFT_FILTER";
 
     @track templatePreview = "";
 
+    @track isDisabled = false;
+
+    @api emailPicklistOptions = [];
+
+    @track isHotelModel= false;
+
+    @track passData;
+
+    @track fileName;
+
+    showEmailPicklist = false;
+
     retrieveParameters = {};
 
     templatesBySendMode = {};
 
+    sendEmailResult = {};
+
     selectedRows = [];
+
+    toAddresses = []; ;
 
     filterParameters = {};
 
+    flightHeaders = {
+        "thisSegment.flightId" :"Flight",
+        "bookingReference":"PNR",
+        "lastNameSlashFirstName":"Name",
+        "phoneNumber":"Phone",
+        "emailAddress":"Email",
+        "thisSegment.serviceClass":"Service Class",
+        "thisSegment.status":"Status",
+        "SSR":"SSR",
+        "ebLevel":"EB",
+        "otherFQTVCarrier":"FQTV"
+        
+    };
+
     connectedCallback() {
         const _ = this.init();
+        for(const emailList of distributionList.split(';')){
+            const option = {
+                label: emailList,
+                value: emailList
+            };
+            this.emailPicklistOptions = [ ...this.emailPicklistOptions, option ];
+        }
     }
 
     async init() {
@@ -131,6 +175,10 @@ export default class IRR_ManualCommunication extends LightningElement {
         }
     }
 
+    handleEmailChange(event) {
+        this.toAddresses = event.detail.value;
+    }
+
     handleTabSwitch(event) {
         this.leftPanelTab = event.target.value;
     }
@@ -188,6 +236,7 @@ export default class IRR_ManualCommunication extends LightningElement {
 
     handleHideSuccessEvent() {
         this.showSuccess = false;
+        this.emailPicklistOptions = '';
     }
 
     handleHideScheduleEvent() {
@@ -308,6 +357,7 @@ export default class IRR_ManualCommunication extends LightningElement {
         this.showRetrieve = true;
         this.showSuccess = false;
         this.showScheduleSuccess = false;
+        this.emailPicklistOptions = '';
     }
 
     async handleRetrieveEvent(event) {
@@ -344,6 +394,7 @@ export default class IRR_ManualCommunication extends LightningElement {
             }
             if (eventParameters) this.retrieveParameters = eventParameters;
             if (result) this.passengerResult = result.map(item => tableUtil.flatten(item));
+            if (result) this.passengerResultunflatten = result;
             this.processTable();
             //Focus container div to capture keyboard events
             this.template.querySelector('div[focusable=""]').focus();
@@ -354,4 +405,32 @@ export default class IRR_ManualCommunication extends LightningElement {
             this.handleError(e);
         }
     }
+
+    handleFileSend() {
+        const passengerInfos = this.selectedRows.map(row => tableUtil.flatten(row));
+        const params = Object.values(this.retrieveParameters).join(" - ");
+        const param =  params.split('-');
+        const [ flight,date,departureStation ] = param;
+        this.fileName = `${flight}_${departureStation}_${date}`;
+        if(this.selectedRows.length > 0) {
+            this.isHotelModel  = true
+            const csvData = convertToCSV(passengerInfos,this.flightHeaders);
+            if(csvData == null) return;
+            this.paxData = csvData;
+            this.passengerCount = this.selectedRows.length;
+        } else {
+            const toastEvent = new ShowToastEvent({
+                title: 'No Recipients Selected',
+                message: 'Please select at least one recipient in order to email the Attachment.',
+            });
+           this.dispatchEvent(toastEvent);
+           return;
+        }
+    
+
+    }
+    hideHotelModel(event){
+        this.isHotelModel = event.detail;
+    }
+
 }
