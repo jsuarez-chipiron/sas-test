@@ -148,7 +148,7 @@ public class AccountingEntry {
       }
       when DEBIT {
         debitOrCredit = 'D';
-        costCenter = Settlements.COST_CENTER_DEBITS;
+        costCenter = settlementItem.Cost_Center__c;
         if (settlementItem.Name.length() == 15) {
           reconciliationReference = settlementItem.Name.substring(5, 15);
         } else {

@@ -103,7 +103,10 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   public static final String COST_ACCOUNT_EU261_COMPENSATION = '6727';
   public static final String COST_ACCOUNT_EU261_REIMBURSEMENT = '6738';
 
-  public static final String COST_CENTER_DEBITS = '90801';
+  private static final Map<SettlementItems.RecordType, String> COST_CENTER_DEBITS = new Map<SettlementItems.RecordType, String>{
+    SettlementItems.RecordType.DefaultRecordType => '90801',
+    SettlementItems.RecordType.Emergency => '71470'
+  };
 
   public static final Decimal CONVERSION_RATE_EUR_TO_EB_POINTS = 100;
   public static final Decimal CONVERSION_RATE_EUR_TO_VOUCHER_EUR = 2;
@@ -454,7 +457,24 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           uow.registerDirty(item);
         }
 
-        item.Cost_Center__c = COST_CENTER_DEBITS;
+        Boolean isEmergencyClaim = settlement.IsEmergencyClaim__c;
+
+        if (isEmergencyClaim) {
+          item.Cost_Center__c = COST_CENTER_DEBITS.get(
+            SettlementItems.RecordType.Emergency
+          );
+          item.RecordTypeId = SettlementItems.getRecordTypeId(
+            SettlementItems.RecordType.Emergency
+          );
+        } else {
+          item.Cost_Center__c = COST_CENTER_DEBITS.get(
+            SettlementItems.RecordType.DefaultRecordType
+          );
+          item.RecordTypeId = SettlementItems.getRecordTypeId(
+            SettlementItems.RecordType.DefaultRecordType
+          );
+        }
+
         item.Currency__c = settlement.Currency__c;
         item.Status__c = SettlementItems.STATUS_DRAFT;
 

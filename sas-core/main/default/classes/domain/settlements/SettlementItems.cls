@@ -29,6 +29,28 @@ public without sharing class SettlementItems extends fflib_SObjectDomain {
   public static final String STATUS_REJECTED_BY_RACER = 'Rejected by Racer';
   public static final String STATUS_DONE = 'Done';
 
+  public enum RecordType {
+    Emergency,
+    DefaultRecordType
+  }
+
+  public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
+    RecordType.Emergency => 'Emergency',
+    RecordType.DefaultRecordType => 'Default Record Type'
+  };
+  private static Map<RecordType, Id> recordTypeToId = new Map<RecordType, String>();
+
+  public static Id getRecordTypeId(RecordType rt) {
+    Id rtId = recordTypeToId.get(rt);
+    if (rtId == null) {
+      rtId = Schema.SObjectType.Settlement_Item__c.getRecordTypeInfosByName()
+        .get(recordTypeToDeveloperName.get(rt))
+        .getRecordTypeId();
+      recordTypeToId.put(rt, rtId);
+    }
+    return rtId;
+  }
+
   public void markAsReceivedByRacer(
     String accountingStatus,
     String errorMessage

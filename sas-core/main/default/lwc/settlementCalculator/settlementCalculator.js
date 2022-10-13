@@ -19,6 +19,7 @@ export default class SettlementCalculator extends LightningElement {
   lastModifiedDate;
   settlementItemRecordTypeId;
   settlementRecordTypeInfos;
+  caseRecordType;
 
   rows = [
     {
@@ -118,14 +119,26 @@ export default class SettlementCalculator extends LightningElement {
     xdr: 0
   };
 
-  @wire(getObjectInfo, { objectApiName: SETTLEMENT_ITEM_OBJECT })
+  @wire(getObjectInfo, {
+    objectApiName: SETTLEMENT_ITEM_OBJECT,
+    param: "$caseRecordType"
+  })
   wiredObjectInfo({ data }) {
     if (data) {
-      this.settlementItemRecordTypeId = data.defaultRecordTypeId;
+      var settlementItemRecordType = "Default Record Type";
+      if (this.caseRecordType == "Emergency") {
+        settlementItemRecordType = "Emergency";
+      }
+      const rtis = data.recordTypeInfos;
+      this.settlementItemRecordTypeId = Object.keys(rtis).find(
+        (rti) => rtis[rti].name === settlementItemRecordType
+      );
     }
   }
 
-  @wire(getObjectInfo, { objectApiName: SETTLEMENT_OBJECT })
+  @wire(getObjectInfo, {
+    objectApiName: SETTLEMENT_OBJECT
+  })
   wiredSettlementObjectInfo({ data }) {
     if (data) {
       this.settlementRecordTypeInfos = data.recordTypeInfos;
@@ -154,16 +167,17 @@ export default class SettlementCalculator extends LightningElement {
     if (!error && data) {
       //caseRecordType fetch value for case record name as the case record name from settlement
       //could be access through claim__r.case__r.RecordType.Name
-      const caseRecordType =
-        data.fields.Claim__r.value.fields.Case__r.value.fields.RecordType.value
-          .fields.Name.value;
+      this.caseRecordType =
+        data.fields.Claim__r.value.fields.Case__r.value.fields.RecordType.value.fields.Name.value;
       const settlementStatus = data.fields.Settlement_Status__c.value;
 
       this.cannotBeUpdated =
         !this.SETTLEMENT_STATUS_TO_MODIFY_SETTLEMENT_ITEM.includes(
           settlementStatus
         ) ||
-        !this.CASE_RECORD_TYPE_TO_CREATE_SETTLEMENT.includes(caseRecordType);
+        !this.CASE_RECORD_TYPE_TO_CREATE_SETTLEMENT.includes(
+          this.caseRecordType
+        );
       this.type = {
         isEuroBonusPoints: data.recordTypeInfo.name === "EB points",
         isMonetary:

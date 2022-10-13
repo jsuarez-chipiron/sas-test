@@ -3487,6 +3487,14 @@
         <layout>Settlement_Item__c-Settlement Item Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Settlement_Item__c-Settlement Item Layout</layout>
+        <recordType>Settlement_Item__c.DefaultRecordType</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Settlement_Item__c-Settlement Item Layout</layout>
+        <recordType>Settlement_Item__c.Emergency</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Settlement__c-EuroBonus Points Settlement</layout>
         <recordType>Settlement__c.EB_points</recordType>
     </layoutAssignments>
@@ -3628,9 +3636,9 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Account</object>
@@ -3646,9 +3654,9 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Contact</object>
@@ -3849,6 +3857,16 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>PersonAccount.EBCustomer</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Settlement_Item__c.DefaultRecordType</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Settlement_Item__c.Emergency</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <userLicense>Salesforce</userLicense>
