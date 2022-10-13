@@ -138,6 +138,9 @@ public class IRR_EVT_ManualProcessor extends IRR_EVT_EventProcessor {
             for (IRR_MOD_PassengerInfo passengerInfo : manualRequest.passengerInfos) {
                 Boolean sendEmail = manualRequest.sendEmailMessages;
                 Boolean sendSMS = manualRequest.sendSMSMessages;
+                //US27907
+                passengerInfo.thisSegment.arrivalCity = this.airportInfoMap.get(passengerInfo.thisSegment.stationArrival);
+                passengerInfo.thisSegment.departureCity = this.airportInfoMap.get(passengerInfo.thisSegment.stationDeparture);
                 //Allow only Rebook event to pass through as other events are being handled in initiate event method
                     if (manualRequest.delayInfo == null &&  manualRequest.newInfo == null && manualRequest.cancelInfo == null){
                         if (passengerInfo.itinerary != null && passengerInfo.itinerary.size() > 0) {
