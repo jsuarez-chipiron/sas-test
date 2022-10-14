@@ -88,7 +88,7 @@ public class PaymentFileBuilder {
     Settlement_Bank_Setting__mdt bankSettings = Settlement_Bank_Setting__mdt.getAll()
       .get(fileCurrency.name());
 
-    String fileContents = '';
+    List<String> fileContents = new List<String>();
 
     // Each settlement in a file has a unique batch reference. The starting
     // number for the batch reference depends on the file's currency.
@@ -109,29 +109,34 @@ public class PaymentFileBuilder {
             recordName
           )
         ) {
-          String textToAdd = '';
+          List<String> textToAdd = new List<String>();
 
           switch on fieldName {
             when 'ref1Batch', 'documentCode', 'checkNumber' {
-              textToAdd = String.valueOf(batchReference);
+              textToAdd.add(String.valueOf(batchReference));
             }
             when 'runId' {
-              textToAdd = String.valueOf(runId);
+              textToAdd.add(String.valueOf(runId));
             }
             when else {
-              textToAdd += mergedRecord.get(recordName).get(fieldName) != null
+              String fieldData = mergedRecord.get(recordName).get(fieldName) !=
+                null
                 ? mergedRecord.get(recordName).get(fieldName)
                 : '';
+              textToAdd.add(fieldData);
             }
           }
 
           // Pad field to full field length.
-          fileContents += textToAdd.rightPad(
-            PaymentEntry.FIELD_LENGTHS.get(recordName).get(fieldName)
+          fileContents.add(
+            String.join(textToAdd, '')
+              .rightPad(
+                PaymentEntry.FIELD_LENGTHS.get(recordName).get(fieldName)
+              )
           );
         }
         // Each record is a single line so we'll add a linebreak at the end.
-        fileContents += '\n';
+        fileContents.add('\n');
       }
       // Each settlement has it's own batch reference.
       batchReference++;
@@ -151,7 +156,7 @@ public class PaymentFileBuilder {
       ContentLocation = 'S',
       PathOnClient = fileName + '.txt',
       Title = fileName,
-      VersionData = Blob.valueOf(fileContents)
+      VersionData = Blob.valueOf(String.join(fileContents, ''))
     );
     insert paymentFile;
 
