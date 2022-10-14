@@ -265,7 +265,8 @@ public with sharing class Settlements_IntegrationTest {
       .replace('{-S2NAME---}', settlementItemToInclude2Afterwards.Name)
       .replace('{-S3NAME---}', settlementItemToInclude3Afterwards.Name)
       .replace('{-S4NAME---}', settlementItemToInclude4Afterwards.Name)
-      .replace('{-S4NAME---}', settlementItemToInclude5Afterwards.Name);
+      .replace('{-S5NAME---}', settlementItemToInclude5Afterwards.Name);
+
     // TODO: Fix reconciliation reference date.
     /**
      * When the testing option 'Independent Auto-Number Sequence' is enabled, the
