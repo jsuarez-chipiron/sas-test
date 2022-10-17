@@ -67,9 +67,24 @@
             <isGoTo>true</isGoTo>
             <targetReference>AutomaticApproval</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>10000 or less</defaultConnectorLabel>
+        <defaultConnectorLabel>15 250 or less</defaultConnectorLabel>
         <rules>
-            <name>More_than_15250</name>
+            <name>More_than_30000</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>30000.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ManualApproval</targetReference>
+            </connector>
+            <label>More than 30000</label>
+        </rules>
+        <rules>
+            <name>Between_15250_and_30000</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
@@ -78,32 +93,17 @@
                     <numberValue>15250.0</numberValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>ManualApproval</targetReference>
-            </connector>
-            <label>More than 15250</label>
-        </rules>
-        <rules>
-            <name>Between_10000_and_15250</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
-                <operator>GreaterThanOrEqualTo</operator>
-                <rightValue>
-                    <numberValue>10000.0</numberValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <numberValue>15250.0</numberValue>
+                    <numberValue>30000.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Random_Check_Monetary</targetReference>
             </connector>
-            <label>Between 10000 and 15250</label>
+            <label>Between 15250 and 30000</label>
         </rules>
     </decisions>
     <decisions>
@@ -164,9 +164,9 @@
         <defaultConnector>
             <targetReference>ManualApproval</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>Manual Approval</defaultConnectorLabel>
         <rules>
-            <name>Manual_Approval_Check</name>
+            <name>Automatic_Approval</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>randomCheckForManualApproval</leftValueReference>
@@ -179,7 +179,7 @@
                 <isGoTo>true</isGoTo>
                 <targetReference>AutomaticApproval</targetReference>
             </connector>
-            <label>Manual Approval Check</label>
+            <label>Automatic Approval</label>
         </rules>
     </decisions>
     <decisions>
