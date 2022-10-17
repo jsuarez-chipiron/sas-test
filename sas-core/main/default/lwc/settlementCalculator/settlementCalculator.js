@@ -1,4 +1,4 @@
-import { LightningElement, wire, api } from "lwc";
+import { LightningElement, wire, api, track } from "lwc";
 import { getRecord, getRecordNotifyChange } from "lightning/uiRecordApi";
 import { getObjectInfo, getPicklistValues } from "lightning/uiObjectInfoApi";
 import SETTLEMENT_ITEM_OBJECT from "@salesforce/schema/Settlement_Item__c";
@@ -15,6 +15,7 @@ import getExchangeRates from "@salesforce/apex/SettlementsController.getExchange
 
 export default class SettlementCalculator extends LightningElement {
   @api recordId;
+  @track isModalOpen = false;
   lastModifiedDate;
   settlementItemRecordTypeId;
   settlementRecordTypeInfos;
@@ -32,6 +33,8 @@ export default class SettlementCalculator extends LightningElement {
   settlementCurrency;
   customerOptions;
 
+  HIGH_SETTLEMENT_AMOUNT = 35000;
+  HIGH_SETTLEMENT_POINTS = 150000;
   MAX_LIABILITY_IN_XDR = 1288;
   COST_ACCOUNTS_BAGGAGE = ["6741", "6742", "6743"];
   maxLiabilityInSettlementCurrency = 0;
@@ -103,7 +106,8 @@ export default class SettlementCalculator extends LightningElement {
             `<b>${Math.round(entry.amount * 100) / 100}</b> ${entry.currency}`
         )
         .join("  |  ")}`,
-      points: total
+      points: total,
+      currency: this.settlementCurrency
     };
   }
 
@@ -303,6 +307,35 @@ export default class SettlementCalculator extends LightningElement {
     }
   }
 
+  openModal() {
+    // to open modal set isModalOpen tarck value as true
+
+    this.isModalOpen = true;
+  }
+  closeModal() {
+    // to close modal set isModalOpen tarck value as false
+    this.isModalOpen = false;
+  }
+
+  findCustomersHighSettlementAmount() {
+    // Used to warn the agent if the amount is High
+    const total = this.rows.reduce((prev, curr) => prev + curr.amount, 0);
+    if (this.settlementCurrency == "Points") {
+      if (total > this.HIGH_SETTLEMENT_POINTS) {
+        this.openModal();
+      }
+    }
+    if (this.settlementCurrency == "SEK") {
+      if (total > this.HIGH_SETTLEMENT_AMOUNT) {
+        this.openModal();
+      }
+    } else {
+      if (total * this.exchangeRates.sek > this.HIGH_SETTLEMENT_AMOUNT) {
+        this.openModal();
+      }
+    }
+  }
+
   handleAmountChange(event) {
     const rowIdx = this.rows.findIndex(
       (row) => row.idx == event.target.dataset.idx
@@ -314,6 +347,7 @@ export default class SettlementCalculator extends LightningElement {
     };
     this.dirty = true;
     this.findCustomersAboveMaxLiability();
+    this.findCustomersHighSettlementAmount();
   }
 
   handleCustomerChange(event) {
