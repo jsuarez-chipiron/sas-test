@@ -472,6 +472,10 @@ public without sharing class Claim extends AbstractSObjectWrapper {
   }
 
   private static RecordType getRecordTypeEnumById(Id rtId) {
+    if (rtId == null) {
+      return null;
+    }
+
     RecordType rt = recordTypeIdToEnum.get(rtId);
     if (rt == null) {
       rt = recordTypeDeveloperNameToEnum.get(
