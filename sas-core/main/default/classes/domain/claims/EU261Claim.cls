@@ -102,7 +102,7 @@ public class EU261Claim {
     this.flightToIrregularities = flightToIrregularities;
     this.hasPotentiallyDuplicateClaims = hasPotentiallyDuplicateClaims;
 
-    if (booking.instanceRecords.size() > 0) {
+    if (booking != null && booking.instanceRecords.size() > 0) {
       this.bookingType = Bookings.nameToBookingType.get(
         booking.instanceRecords[0].Type__c
       );
@@ -246,7 +246,10 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'can handle only claims with case in status "New"'
       );
-    } else if (this.booking.instanceRecords.size() == 0) {
+    } else if (
+      this.booking == null ||
+      this.booking.instanceRecords.size() == 0
+    ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'the claim is not associated with a booking'

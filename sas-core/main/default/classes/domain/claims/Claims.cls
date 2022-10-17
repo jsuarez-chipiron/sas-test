@@ -230,6 +230,7 @@ public without sharing class Claims extends fflib_SObjectDomain {
       if (
         cl.bookingReference != null &&
         cl.recordType != Claim.RecordType.CompensationCard &&
+        cl.recordType != null &&
         cl.parentCaseId != null
       ) {
         System.enqueueJob(
@@ -250,7 +251,8 @@ public without sharing class Claims extends fflib_SObjectDomain {
       if (
         cl.bookingReference != null &&
         oldRecord.bookingReference != cl.bookingReference &&
-        cl.recordType != Claim.RecordType.CompensationCard
+        cl.recordType != Claim.RecordType.CompensationCard &&
+        cl.recordType != null
       ) {
         BookingService.removeBookingFromCase(
           cl.parentCaseId,

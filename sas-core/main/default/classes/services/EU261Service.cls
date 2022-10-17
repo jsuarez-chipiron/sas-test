@@ -213,15 +213,19 @@ public without sharing class EU261Service {
 
     for (Claim c : claims) {
       List<Booking__c> bookingsForClaim = new List<Booking__c>();
-      for (CaseToBooking__c ctb : caseIdToCaseToBookings.get(c.parentCaseId)) {
-        // TODO: Fix this can be null.
-        Booking__c booking = bookingsById.get(ctb.Booking__c);
-        if (booking != null) {
-          bookingsForClaim.add(booking);
+      List<CaseToBooking__c> ctbs = caseIdToCaseToBookings.get(c.parentCaseId);
+      Bookings booking;
+      if (ctbs != null) {
+        for (CaseToBooking__c ctb : ctbs) {
+          // TODO: Fix this can be null.
+          Booking__c b = bookingsById.get(ctb.Booking__c);
+          if (b != null) {
+            bookingsForClaim.add(b);
+          }
         }
-      }
 
-      Bookings booking = Bookings.newInstance(bookingsForClaim);
+        booking = Bookings.newInstance(bookingsForClaim);
+      }
 
       // Check if the claim matches any other claim by PNR
       Boolean hasPotentiallyDuplicateClaims = false;
@@ -235,7 +239,7 @@ public without sharing class EU261Service {
       }
 
       Map<Id, List<FlightIrregularities__c>> claimSpecificIrregularities = new Map<Id, List<FlightIrregularities__c>>{};
-      if (booking.instanceRecords.size() > 0) {
+      if (booking != null && booking.instanceRecords.size() > 0) {
         for (Segment__c s : booking.instanceRecords[0].Segments__r) {
           List<FlightIrregularities__c> flightIrreg = flightIdToIrregularities.get(
             s.Flight__c
