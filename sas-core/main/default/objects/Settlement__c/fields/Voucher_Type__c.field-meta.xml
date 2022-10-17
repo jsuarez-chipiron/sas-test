@@ -47,9 +47,9 @@
                 <label>6738 - Care voucher</label>
             </value>
             <value>
-                <fullName>6741 - Damage baggage voucher</fullName>
+                <fullName>6741 - Damaged baggage voucher</fullName>
                 <default>false</default>
-                <label>6741 - Damage baggage voucher</label>
+                <label>6741 - Damaged baggage voucher</label>
             </value>
             <value>
                 <fullName>6742 - Delayed baggage voucher</fullName>
