@@ -47,7 +47,7 @@
                 <fullName>Better Business Bureau (BBB)</fullName>
                 <default>false</default>
                 <label>Better Business Bureau (BBB)</label>
-            </value>            
+            </value>
             <value>
                 <fullName>Bezirksgericht für Handelssachen Wien (Germany)</fullName>
                 <default>false</default>
@@ -343,6 +343,11 @@
                 <default>false</default>
                 <label>To be added to Salesforce</label>
             </value>
+            <value>
+                <fullName>Västmanlands Tingsrätt (Sweden)</fullName>
+                <default>false</default>
+                <label>Västmanlands Tingsrätt (Sweden)</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Norway</controllingFieldValue>
@@ -435,6 +440,10 @@
             <valueName>Umeå Tingsrätt</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Sweden</controllingFieldValue>
+            <valueName>Västmanlands Tingsrätt (Sweden)</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Switzerland</controllingFieldValue>
             <valueName>Federal Office of Civil Aviation (FOCA, Switzerland)</valueName>
         </valueSettings>
@@ -462,10 +471,10 @@
             <controllingFieldValue>France</controllingFieldValue>
             <valueName>Tribunal d’Instance (France)</valueName>
         </valueSettings>
-            <valueSettings>
+        <valueSettings>
             <controllingFieldValue>United States</controllingFieldValue>
             <valueName>Better Business Bureau (BBB)</valueName>
-        </valueSettings>    
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>United States</controllingFieldValue>
             <valueName>Bucks County Magisterial Court</valueName>
