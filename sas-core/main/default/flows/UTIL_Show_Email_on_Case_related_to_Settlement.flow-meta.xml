@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <environments>Default</environments>
     <interviewLabel>UTIL Show Email on Case related to Settlement {!$Flow.CurrentDateTime}</interviewLabel>
     <label>UTIL Show Email on Case related to Settlement</label>
     <processMetadataValues>
@@ -86,6 +87,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CreatedById</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
