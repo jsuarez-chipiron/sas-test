@@ -244,7 +244,7 @@
     <assignments>
         <name>Set_Priority_To_High</name>
         <label>Set Priority To Medium</label>
-        <locationX>660</locationX>
+        <locationX>924</locationX>
         <locationY>1286</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.Priority</assignToReference>
@@ -442,7 +442,7 @@
                 <leftValueReference>Loop_Cases.LIA_Claim__r.Submitted_Claim_Expenses_in_SEK__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <numberValue>25000.0</numberValue>
+                    <numberValue>15000.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -508,7 +508,7 @@
                 <leftValueReference>Loop_Cases.LIA_Claim__r.Submitted_Claim_Expenses_in_SEK__c</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <numberValue>25000.0</numberValue>
+                    <numberValue>15000.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
