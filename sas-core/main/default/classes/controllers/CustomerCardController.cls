@@ -1,7 +1,7 @@
 public without sharing class CustomerCardController {
   @AuraEnabled
   public static void addBookingToCase(ID caseId, String bookingReference) {
-    if (!Bookings.isValidBookingReference(bookingReference)) {
+    if (!Booking.isValidBookingReference(bookingReference)) {
       throw new AuraHandledException(
         'Booking reference should be 5 or 6 characters.'
       );

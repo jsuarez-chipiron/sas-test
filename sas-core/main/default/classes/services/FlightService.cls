@@ -64,29 +64,29 @@ public without sharing class FlightService {
    *
    * @throws InvalidDelayException If the actual delay cannot be accounted for with irregularities in the db.
    */
-  public Map<Id, Integer> getTotalDelayInMinutesWithinSASControl(
-    Flights flights,
-    Map<Id, List<FlightIrregularities__c>> flightIdToIrregularities
+  public Map<Id, Integer> getTotalDelayInMinutesWithinSASControl( // TODO: Is this necessary?
+    List<Flight> flights,
+    Map<Id, List<FlightIrregularity>> flightIdToIrregularities
   ) {
     Map<Id, Integer> flightIdToDelay = new Map<Id, Integer>{};
 
-    for (Flight__c flight : flights.instanceRecords) {
-      if (flight.Arrival_Delayed_Minutes__c == null) {
-        flightIdToDelay.put(flight.Id, 0);
+    for (Flight f : flights) {
+      if (f.arrivalDelayedMinutes == null) {
+        flightIdToDelay.put(f.id, 0);
         continue;
       }
-      FlightIrregularities flightIrregularities = new FlightIrregularities(
-        flightIdToIrregularities.get(flight.Id)
+      List<FlightIrregularity> flightIrregularities = new List<FlightIrregularity>(
+        flightIdToIrregularities.get(f.id)
       );
-      List<Decimal> delayDivided = flightIrregularities.getTotalDelayInMinutesDivided();
+      List<Decimal> delayDivided = FlightIrregularity.getTotalDelayInMinutesDivided(
+        flightIrregularities
+      );
 
       Integer departureDelay = Integer.valueOf(delayDivided[0]);
       Integer arrivalDelay = Integer.valueOf(delayDivided[1]);
       Integer departureDelayWithinSASControl = Integer.valueOf(delayDivided[2]);
       Integer arrivalDelayWithinSASControl = Integer.valueOf(delayDivided[3]);
-      Integer netDelayOnArrival = Integer.valueOf(
-        flight.Arrival_Delayed_Minutes__c
-      );
+      Integer netDelayOnArrival = Integer.valueOf(f.arrivalDelayedMinutes);
       Integer amountOfDelayEliminated =
         departureDelay +
         arrivalDelay -
@@ -104,7 +104,7 @@ public without sharing class FlightService {
         arrivalDelayWithinSASControl -
         amountOfDelayEliminated;
 
-      flightIdToDelay.put(flight.Id, netDelayWithinSASControl);
+      flightIdToDelay.put(f.id, netDelayWithinSASControl);
     }
 
     return flightIdToDelay;

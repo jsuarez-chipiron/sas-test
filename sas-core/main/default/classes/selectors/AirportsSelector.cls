@@ -3,6 +3,8 @@ public inherited sharing class AirportsSelector extends fflib_SObjectSelector {
     return new List<Schema.SObjectField>{
       Airport__c.Id,
       Airport__c.Name,
+      Airport__c.CreatedDate,
+      Airport__c.LastModifiedDate,
       Airport__c.City__c,
       Airport__c.Country_Code__c,
       Airport__c.Country_Name__c,

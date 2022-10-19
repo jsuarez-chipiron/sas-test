@@ -1,4 +1,4 @@
-public without sharing class ClaimRebookedFlight extends AbstractSObjectWrapper  {
+public without sharing class ClaimRebookedFlight extends AbstractSObjectWrapper {
   public Claim_Rebooked_Flight__c underlyingSObject { get; private set; }
 
   public Id parentClaimId;
@@ -21,6 +21,7 @@ public without sharing class ClaimRebookedFlight extends AbstractSObjectWrapper 
 
   public ClaimRebookedFlight(Claim_Rebooked_Flight__c rebookedFlight) {
     super(rebookedFlight);
+    this.underlyingSObject = rebookedFlight;
 
     this.departureDate = rebookedFlight.Departure_Date__c;
     this.flightNumber = rebookedFlight.Flight_Number__c;

@@ -2,11 +2,15 @@ public inherited sharing class SegmentsSelector extends fflib_SObjectSelector {
   public List<Schema.SObjectField> getSObjectFieldList() {
     return new List<Schema.SObjectField>{
       Segment__c.Id,
+      Segment__c.Name,
+      Segment__c.CreatedDate,
+      Segment__c.LastModifiedDate,
       Segment__c.Baggage_Quantity__c,
       Segment__c.Booking__c,
       Segment__c.Booking_Class__c,
       Segment__c.Check_In_Status__c,
       Segment__c.Fare_Basis__c,
+      Segment__c.Fare_Price__c,
       Segment__c.Flight__c,
       Segment__c.Identifier__c,
       Segment__c.Is_Boarded__c,

@@ -1,0 +1,310 @@
+public without sharing class Flight extends AbstractSObjectWrapper {
+  public Flight__c underlyingSObject { get; private set; }
+
+  public String tedsIdentifier;
+  public String operationalControlCenter;
+  public String aircraftRegistration;
+
+  public String arrivalAirport;
+  public Decimal arrivalDelayedMinutes;
+  public String arrivalGate;
+  public Status arrivalStatus;
+  public String arrivalTerminal;
+
+  public String departureAirport;
+  public Decimal departureDelayedMinutes;
+  public String departureGate;
+  public Status departureStatus;
+  public String departureTerminal;
+
+  public DateTime actualArrivalTime;
+  public String actualArrivalTimeLocal;
+  public DateTime actualDepartureTime;
+  public String actualDepartureTimeLocal;
+
+  public DateTime estimatedArrivalTime;
+  public String estimatedArrivalTimeLocal;
+  public DateTime estimatedDepartureTime;
+  public String estimatedDepartureTimeLocal;
+
+  public DateTime scheduledArrivalTime;
+  public String scheduledArrivalTimeLocal;
+  public DateTime scheduledDepartureTime;
+  public String scheduledDepartureTimeLocal;
+
+  public Airport departureAirportObject;
+  public Airport arrivalAirportObject;
+
+  public String operatingCarrier {
+    get {
+      return tedsIdentifier.substring(0, 2);
+    }
+  }
+
+  public List<FlightIrregularity> irregularities;
+
+  public enum Status {
+    Ontime,
+    Delayed,
+    Cancelled,
+    Unknown
+  }
+
+  public class MissingDataException extends Exception {
+  }
+
+  public class FlightException extends Exception {
+  }
+
+  private static final Map<String, Status> STATUS_PICKLIST_VALUE_TO_ENUM = new Map<String, Status>{
+    'ontime' => Status.Ontime,
+    'delayed' => Status.Delayed,
+    'cancelled' => Status.Cancelled,
+    'unknown' => Status.Unknown
+  };
+
+  private static final Map<Status, String> STATUS_ENUM_TO_PICKLIST_VALUE = new Map<Status, String>{
+    Status.Ontime => 'ontime',
+    Status.Delayed => 'delayed',
+    Status.Cancelled => 'cancelled',
+    Status.Unknown => 'unknown'
+  };
+
+  private static final String SAS_AIRLINE_IATA_DESIGNATOR = 'SK';
+
+  private static final Set<String> STAR_ALLIANCE_AIRLINE_IATA_DESIGNATORS = new Set<String>{
+    'A3',
+    'AC',
+    'AI',
+    'AV',
+    'BR',
+    'CA',
+    'CM',
+    'ET',
+    'LH',
+    'LO',
+    'LX',
+    'MS',
+    'NH',
+    'NZ',
+    'OS',
+    'OU',
+    'OZ',
+    'SA',
+    'SK',
+    'SN',
+    'SQ',
+    'TG',
+    'TK',
+    'TP',
+    'UA',
+    'ZH'
+  };
+
+  private Flight() {
+    this.underlyingSObject = new Flight__c();
+  }
+
+  public Flight(Flight__c f) {
+    super(f);
+    this.underlyingSObject = f;
+
+    this.tedsIdentifier = f.TEDS_Identifier__c;
+    this.operationalControlCenter = f.Operational_Control_Center__c;
+    this.aircraftRegistration = f.Aircraft_Registration__c;
+
+    this.arrivalAirport = f.Arrival_Airport__c;
+    this.arrivalDelayedMinutes = f.Arrival_Delayed_Minutes__c;
+    this.arrivalGate = f.Arrival_Gate__c;
+    this.arrivalStatus = STATUS_PICKLIST_VALUE_TO_ENUM.get(f.Arrival_Status__c);
+    this.arrivalTerminal = f.Arrival_Terminal__c;
+
+    this.departureAirport = f.Departure_Airport__c;
+    this.departureDelayedMinutes = f.Departure_Delayed_Minutes__c;
+    this.departureGate = f.Departure_Gate__c;
+    this.departureStatus = STATUS_PICKLIST_VALUE_TO_ENUM.get(
+      f.Departure_Status__c
+    );
+    this.departureTerminal = f.Departure_Terminal__c;
+
+    this.actualArrivalTime = f.Actual_Arrival_Time__c;
+    this.actualArrivalTimeLocal = f.Actual_Arrival_Time_Local__c;
+    this.actualDepartureTime = f.Actual_Departure_Time__c;
+    this.actualDepartureTimeLocal = f.Actual_Departure_Time_Local__c;
+
+    this.estimatedArrivalTime = f.Estimated_Arrival_Time__c;
+    this.estimatedArrivalTimeLocal = f.Estimated_Arrival_Time_Local__c;
+    this.estimatedDepartureTime = f.Estimated_Departure_Time__c;
+    this.estimatedDepartureTimeLocal = f.Estimated_Departure_Time_Local__c;
+
+    this.scheduledArrivalTime = f.Scheduled_Arrival_Time__c;
+    this.scheduledArrivalTimeLocal = f.Scheduled_Arrival_Time_Local__c;
+    this.scheduledDepartureTime = f.Scheduled_Departure_Time__c;
+    this.scheduledDepartureTimeLocal = f.Scheduled_Departure_Time_Local__c;
+  }
+
+  public Flight(Flight__c f, Airport departureAirport, Airport arrivalAirport) {
+    this(f);
+
+    this.arrivalAirportObject = arrivalAirport;
+    this.departureAirportObject = departureAirport;
+  }
+
+  public override void updateSObjectFields() {
+    this.underlyingSObject.TEDS_Identifier__c = this.tedsIdentifier;
+    this.underlyingSObject.Operational_Control_Center__c = this.operationalControlCenter;
+    this.underlyingSObject.Aircraft_Registration__c = this.aircraftRegistration;
+
+    this.underlyingSObject.Arrival_Airport__c = this.arrivalAirport;
+    this.underlyingSObject.Arrival_Delayed_Minutes__c = this.arrivalDelayedMinutes;
+    this.underlyingSObject.Arrival_Gate__c = this.arrivalGate;
+    this.underlyingSObject.Arrival_Status__c = STATUS_ENUM_TO_PICKLIST_VALUE.get(
+      this.arrivalStatus
+    );
+    this.underlyingSObject.Arrival_Terminal__c = this.arrivalTerminal;
+
+    this.underlyingSObject.Departure_Airport__c = this.departureAirport;
+    this.underlyingSObject.Departure_Delayed_Minutes__c = this.departureDelayedMinutes;
+    this.underlyingSObject.Departure_Gate__c = this.departureGate;
+    this.underlyingSObject.Departure_Status__c = STATUS_ENUM_TO_PICKLIST_VALUE.get(
+      this.departureStatus
+    );
+    this.underlyingSObject.Departure_Terminal__c = this.departureTerminal;
+
+    this.underlyingSObject.Actual_Arrival_Time__c = this.actualArrivalTime;
+    this.underlyingSObject.Actual_Arrival_Time_Local__c = this.actualArrivalTimeLocal;
+    this.underlyingSObject.Actual_Departure_Time__c = this.actualDepartureTime;
+    this.underlyingSObject.Actual_Departure_Time_Local__c = this.actualDepartureTimeLocal;
+
+    this.underlyingSObject.Estimated_Arrival_Time__c = this.estimatedArrivalTime;
+    this.underlyingSObject.Estimated_Arrival_Time_Local__c = this.estimatedArrivalTimeLocal;
+    this.underlyingSObject.Estimated_Departure_Time__c = this.estimatedDepartureTime;
+    this.underlyingSObject.Estimated_Departure_Time_Local__c = this.estimatedDepartureTimeLocal;
+
+    this.underlyingSObject.Scheduled_Arrival_Time__c = this.scheduledArrivalTime;
+    this.underlyingSObject.Scheduled_Arrival_Time_Local__c = this.scheduledArrivalTimeLocal;
+    this.underlyingSObject.Scheduled_Departure_Time__c = this.scheduledDepartureTime;
+    this.underlyingSObject.Scheduled_Departure_Time_Local__c = this.scheduledDepartureTimeLocal;
+  }
+
+  /**
+   * Returns true if this flight if the operating carrier of this flight belongs
+   * to Star Alliance.
+   */
+  public Boolean isOperatedByStarAlliance() {
+    return STAR_ALLIANCE_AIRLINE_IATA_DESIGNATORS.contains(
+      this.operatingCarrier
+    );
+  }
+
+  public Boolean isOperatedBySAS() {
+    return this.operatingCarrier == SAS_AIRLINE_IATA_DESIGNATOR;
+  }
+
+  /**
+   * Returns true if this flight is delayed or cancelled based on departure and
+   * arrival statuses.
+   */
+  public Boolean isDelayedOrCancelled() {
+    return this.arrivalStatus == Status.Delayed ||
+      (this.arrivalStatus == Status.Cancelled &&
+      this.departureStatus == Status.Cancelled);
+  }
+
+  /**
+   * Calculates the direct distance between this flight's departure and
+   * arrival airports.
+   *
+   * @throws MissingDataException if airport object fields have not been set for this flight.
+   */
+  public Integer getFlightDistancesInMeters() {
+    if (
+      this.arrivalAirportObject == null ||
+      this.departureAirportObject == null
+    ) {
+      throw new MissingDataException('Missing airports.');
+    }
+    return this.departureAirportObject.distanceInMetersTo(
+      this.arrivalAirportObject
+    );
+  }
+
+  /*
+   * Returns variations of the flight id written in plain text
+   * @param TEDSId flightId in TEDS format, e.g. SK0151-20220713-RIX-OSL
+   *
+   * @return A tuple with ids with the following formats: BT0151-20220713, BT0151-2022-07-13
+   */
+  public static List<String> TEDSIdToSimpleFlightIds(String TEDSId) {
+    String flightNumber = TEDSId.substringBefore('-'); // Should be normalized
+    String flightDateConcat = TEDSId.substringAfter('-').substringBefore('-');
+    String flightDateSeparated =
+      flightDateConcat.substring(0, 4) +
+      '-' +
+      flightDateConcat.substring(4, 6) +
+      '-' +
+      flightDateConcat.substring(6, 8);
+
+    String format1 = flightNumber + '-' + flightDateConcat;
+    String format2 = flightNumber + '-' + flightDateSeparated;
+
+    return new List<String>{ format1, format2 };
+  }
+
+  /**
+   * Constructs a flightNumber + date combination like the one used in TEDS
+   *
+   * @param flightNumber E.g. SK1234
+   * @param flightDate
+   * @return a string like: SK1234-20220101
+   */
+  public static String constructTEDSFlightNumberDate(
+    String flightNumber,
+    Date flightDate
+  ) {
+    return normalizeFlightNumber(flightNumber) +
+      '-' +
+      String.valueOf(flightDate).remove('-');
+  }
+
+  /**
+   * Method to normalize a valid IATA flight number to the format used by TEDS.
+   * TEDS format is valid IATA format with trailing numbers leftpadded with 0
+   * Returns a normalized flight number.
+   *
+   *  @param enteredFlightNumber The flight number as entered by manual input (forms etc.)
+   */
+  public static String normalizeFlightNumber(String enteredFlightNumber) {
+    String toNormalize = enteredFlightNumber.toUpperCase();
+    String toReturn = '';
+    Pattern validTEDSFormat = Pattern.compile('^([A-Z]\\w|\\w[A-Z])(\\d{4})$');
+    Pattern validFlightNumberFormat = Pattern.compile(
+      '^([A-Z]\\w|\\w[A-Z])(\\d{1,4})$'
+    );
+    Boolean validIATAFlightNumber = isValidIATAFlightNumber(toNormalize);
+    if (validIATAFlightNumber) {
+      String airlineCode = toNormalize.substring(0, 2);
+      String flightNumber = toNormalize.substring(2, toNormalize.length());
+      toReturn = airlineCode + flightNumber.leftPad(4, '0');
+    }
+    if (validTEDSFormat.matcher(toReturn).matches()) {
+      return toReturn;
+    } else {
+      throw new FlightException('Unable to normalize Flight Number');
+    }
+  }
+
+  /* Method to validate if an entered flight number is a valid IATA flight number
+   * Valid formats are:
+   * [LETTER][NUMBER] followed by 1-4 numbers
+   * [NUMBER][LETTER] followed by 1-4 numbers
+   * [LETTER][LETTER] followed by 1-4 numbers
+   */
+  public static Boolean isValidIATAFlightNumber(String toCheck) {
+    Pattern validFlightNumberFormat = Pattern.compile(
+      '^([A-Z]\\w|\\w[A-Z])(\\d{1,4})$'
+    );
+    Matcher matcher = validFlightNumberFormat.matcher(toCheck);
+    return matcher.matches();
+  }
+}

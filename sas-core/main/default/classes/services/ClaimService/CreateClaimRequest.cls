@@ -238,7 +238,7 @@ public without sharing class CreateClaimRequest {
       }
 
       try {
-        flightNumber = Flights.normalizeFlightNumber(flightData.flightNumber);
+        flightNumber = Flight.normalizeFlightNumber(flightData.flightNumber);
       } catch (Exception e) {
         throw new InvalidDataException(
           'Invalid rebooked flight number: ' + flightData.flightNumber
@@ -355,10 +355,8 @@ public without sharing class CreateClaimRequest {
     }
     travelers = travelersToCreate;
 
-    if (
-      !Bookings.isValidBookingReference(
-        jsonData.formData.claim.bookingReference
-      )
+    if (jsonData.formData.claim.bookingReference != null &&
+      !Booking.isValidBookingReference(jsonData.formData.claim.bookingReference)
     ) {
       throw new InvalidDataException(
         'Invalid booking reference: ' + jsonData.formData.claim.bookingReference
@@ -366,7 +364,7 @@ public without sharing class CreateClaimRequest {
     }
 
     try {
-      flightNumber = Flights.normalizeFlightNumber(
+      flightNumber = Flight.normalizeFlightNumber(
         jsonData.formData.claim.flightNumber
       );
     } catch (Exception e) {

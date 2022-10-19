@@ -11,32 +11,32 @@ public with sharing class Flights_Test {
 
     System.assertEquals(
       'SK0001',
-      Flights.normalizeFlightNumber(validFlightNumber1),
+      Flight.normalizeFlightNumber(validFlightNumber1),
       'Should have returned a properly formatted flight number'
     );
     System.assertEquals(
       'SK0001',
-      Flights.normalizeFlightNumber(validFlightNumber2),
+      Flight.normalizeFlightNumber(validFlightNumber2),
       'Should have returned a properly formatted flight number'
     );
     System.assertEquals(
       'SK0001',
-      Flights.normalizeFlightNumber(validFlightNumber3),
+      Flight.normalizeFlightNumber(validFlightNumber3),
       'Should have returned a properly formatted flight number'
     );
     System.assertEquals(
       'SK0001',
-      Flights.normalizeFlightNumber(validFlightNumber4),
+      Flight.normalizeFlightNumber(validFlightNumber4),
       'Should have returned a properly formatted flight number'
     );
     System.assertEquals(
       'A30001',
-      Flights.normalizeFlightNumber(validFlightNumber5),
+      Flight.normalizeFlightNumber(validFlightNumber5),
       'Should have returned a properly formatted flight number'
     );
     System.assertEquals(
       '9W0001',
-      Flights.normalizeFlightNumber(validFlightNumber6),
+      Flight.normalizeFlightNumber(validFlightNumber6),
       'Should have returned a properly formatted flight number'
     );
   }
@@ -46,7 +46,7 @@ public with sharing class Flights_Test {
     Boolean exceptionWasThrown = false;
 
     try {
-      Flights.normalizeFlightNumber(invalidFlightNumber);
+      Flight.normalizeFlightNumber(invalidFlightNumber);
     } catch (Exception e) {
       exceptionWasThrown = true;
     }

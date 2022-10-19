@@ -74,19 +74,19 @@ private class ProactivitiesController_Test {
     );
     LIA_Claim__c claimWithOneProactivityAirportMatcher = new LIA_Claim__c(
       Case__c = caseWithOneProactivityAirportMatcher.Id,
-      Flight_Number__c = Flights.normalizeFlightNumber('SK1'),
+      Flight_Number__c = Flight.normalizeFlightNumber('SK1'),
       Flight_Date__c = today
     );
     LIA_Claim__c claimWithOneProactivityCancellationCodeMatcher = new LIA_Claim__c(
       Case__c = caseWithOneProactivityCancellationCodeMatcher.Id,
-      Flight_Number__c = Flights.normalizeFlightNumber('SK2'),
+      Flight_Number__c = Flight.normalizeFlightNumber('SK2'),
       Flight_Date__c = today
     );
 
     String flightIdentifier1 =
-      Flights.constructTEDSFlightNumberDate('SK1', today) + '-ARN-UME';
+      Flight.constructTEDSFlightNumberDate('SK1', today) + '-ARN-UME';
     String flightIdentifier2 =
-      Flights.constructTEDSFlightNumberDate('SK2', today) + '-UME-ARN';
+      Flight.constructTEDSFlightNumberDate('SK2', today) + '-UME-ARN';
 
     Flight__c flight1 = new Flight__c(
       Arrival_Airport__c = 'ARN',

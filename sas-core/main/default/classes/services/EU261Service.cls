@@ -82,18 +82,24 @@ public without sharing class EU261Service {
 
     storeClaimDecision(claimsToAutomate, uow);
 
-    /**
-     * TODO: Enable when we can create settlements.
-        List<EU261Claim> claimsToPayOut = new List<EU261Claim>();
-        for (EU261Claim c : claimsToAutomate) {
-          if (c.decision.verdict == Claim.EU261HandlingStatus.EligibleForCompensation) {
-            claimsToPayOut.add(c);
-          }
-        }
-        createSettlementsForClaims(claimsToPayOut);
-        settleAndRejectClaims();
-        // TODO: Send approval emails
-     */
+    // TODO: Enable when we can create settlements.
+    List<EU261Claim> claimsToPayOut = new List<EU261Claim>();
+    for (EU261Claim c : claimsToAutomate) {
+      if (
+        c.decision.verdict == Claim.EU261HandlingStatus.EligibleForCompensation
+      ) {
+        claimsToPayOut.add(c);
+      }
+    }
+    Boolean enabledSettlements = false;
+    Boolean enabledRejections = false;
+    if (enabledSettlements) {
+      createSettlementsForClaims(claimsToPayOut);
+    }
+
+    if (enabledSettlements || enabledRejections) {
+      settleAndRejectClaims(claimsToPayOut, uow);
+    }
 
     /**
      * TODO: Enable when we can send out rejection emails.
@@ -144,14 +150,20 @@ public without sharing class EU261Service {
       .selectByCaseId(allCaseIdsInClaims);
     Map<Id, List<CaseToBooking__c>> caseIdToCaseToBookings = new Map<Id, List<CaseToBooking__c>>();
     Set<Id> allBookingIds = new Set<Id>();
-    for (CaseToBooking__c c : ctbs) {
-      if (caseIdToCaseToBookings.get(c.Case__c) == null) {
-        caseIdToCaseToBookings.put(c.Case__c, new List<CaseToBooking__c>{ c });
-      } else {
-        caseIdToCaseToBookings.get(c.Case__c).add(c);
-      }
 
-      allBookingIds.add(c.Booking__c);
+    if (ctbs != null) {
+      for (CaseToBooking__c c : ctbs) {
+        if (caseIdToCaseToBookings.get(c.Case__c) == null) {
+          caseIdToCaseToBookings.put(
+            c.Case__c,
+            new List<CaseToBooking__c>{ c }
+          );
+        } else {
+          caseIdToCaseToBookings.get(c.Case__c).add(c);
+        }
+
+        allBookingIds.add(c.Booking__c);
+      }
     }
 
     List<Booking__c> allBookingsFoundInClaims = BookingsSelector.newInstance()
@@ -210,27 +222,40 @@ public without sharing class EU261Service {
   ) {
     List<EU261Claim> toReturn = new List<EU261Claim>{};
 
-    FlightIrregularities irregularities = new FlightIrregularities(
-      flightIrregularities
-    );
-    irregularities.removeNA0Delay(); // Remove irrelevant irregularities
-    Map<Id, List<FlightIrregularities__c>> flightIdToIrregularities = irregularities.getFlightIdToIrregularities();
+    Map<Id, List<FlightIrregularity>> flightIdToIrregularities = new Map<Id, List<FlightIrregularity>>();
+
+    for (FlightIrregularities__c fi : flightIrregularities) {
+      FlightIrregularity newFi = new FlightIrregularity(fi);
+      if (flightIdToIrregularities.get(newFi.flightId) == null) {
+        flightIdToIrregularities.put(
+          newFi.flightId,
+          new List<FlightIrregularity>()
+        );
+      }
+
+      if (!newFi.isNA0Delay()) {
+        flightIdToIrregularities.get(newFi.flightId).add(newFi);
+      }
+    }
+
+    for (Id flightId : flightIdToIrregularities.keySet()) {
+      flightIdToIrregularities.put(
+        flightId,
+        FlightIrregularity.unique(flightIdToIrregularities.get(flightId))
+      );
+    }
 
     for (Claim c : claims) {
       List<Booking__c> bookingsForClaim = new List<Booking__c>();
-      List<CaseToBooking__c> ctbs = caseIdToCaseToBookings.get(c.parentCaseId);
-      Bookings booking;
-      if (ctbs != null) {
-        for (CaseToBooking__c ctb : ctbs) {
-          // TODO: Fix this can be null.
-          Booking__c b = bookingsById.get(ctb.Booking__c);
-          if (b != null) {
-            bookingsForClaim.add(b);
-          }
+      for (CaseToBooking__c ctb : caseIdToCaseToBookings.get(c.parentCaseId)) {
+        // TODO: Fix this can be null.
+        Booking__c booking = bookingsById.get(ctb.Booking__c);
+        if (booking != null) {
+          bookingsForClaim.add(booking);
         }
-
-        booking = Bookings.newInstance(bookingsForClaim);
       }
+
+      Bookings booking = Bookings.newInstance(bookingsForClaim);
 
       // Check if the claim matches any other claim by PNR
       Boolean hasPotentiallyDuplicateClaims = false;
@@ -243,25 +268,37 @@ public without sharing class EU261Service {
         }
       }
 
-      Map<Id, List<FlightIrregularities__c>> claimSpecificIrregularities = new Map<Id, List<FlightIrregularities__c>>{};
-      if (booking != null && booking.instanceRecords.size() > 0) {
+      Map<Id, List<FlightIrregularity>> claimSpecificIrregularities = new Map<Id, List<FlightIrregularity>>{};
+      if (booking.instanceRecords.size() > 0) {
         for (Segment__c s : booking.instanceRecords[0].Segments__r) {
-          List<FlightIrregularities__c> flightIrreg = flightIdToIrregularities.get(
+          List<FlightIrregularity> flightIrreg = flightIdToIrregularities.get(
             s.Flight__c
           );
           if (flightIrreg == null) {
-            flightIrreg = new List<FlightIrregularities__c>{};
+            flightIrreg = new List<FlightIrregularity>{};
           }
           claimSpecificIrregularities.put(s.Flight__c, flightIrreg);
         }
       }
 
+      Boolean foundMultipleMatchingBookings =
+        booking.instanceRecords.size() > 1;
+
+      Map<String, Airport> airportCodeToAirportObjects = new Map<String, Airport>();
+      for (String key : airportCodeToAirport.keySet()) {
+        airportCodeToAirportObjects.put(
+          key,
+          new Airport(airportCodeToAirport.get(key))
+        );
+      }
+
       EU261Claim fullClaim = new EU261Claim(
         c,
-        booking,
+        booking.objects[0],
         claimSpecificIrregularities,
         hasPotentiallyDuplicateClaims,
-        airportCodeToAirport
+        foundMultipleMatchingBookings,
+        airportCodeToAirportObjects
       );
 
       toReturn.add(fullClaim);
@@ -274,8 +311,9 @@ public without sharing class EU261Service {
     List<EU261Claim> claimsToAutomate,
     fflib_ISObjectUnitOfWork uow
   ) {
+    List<LIA_Claim__c> toUpsert = new List<LIA_Claim__c>();
     for (EU261Claim ac : claimsToAutomate) {
-      Claim c = ac.claimObj.objects[0];
+      Claim c = ac.claimObj;
 
       c.eu261HandlingStatus = ac.decision.verdict;
 
@@ -291,8 +329,10 @@ public without sharing class EU261Service {
         c.eu261HandlingNote = ac.decision.reasoning;
       }
 
-      ac.claimObj.upsertToDB(uow);
+      toUpsert.add(ac.claimObj.underlyingSObject);
     }
+
+    Claims.newInstance(toUpsert).upsertToDB(uow);
   }
 
   /**
@@ -322,17 +362,14 @@ public without sharing class EU261Service {
         c.decision.reimbursementAmount > 0
       ) {
         SettlementItem si = new SettlementItem();
-        si.customerName = c.claimObj.objects[0].contactFullName;
+        si.customerName = c.claimObj.contactFullName;
         si.costAccount = REIMBURSEMENT_COST_ACCOUNT;
         si.amount = c.decision.reimbursementAmount;
         si.comments = 'Automatic EU261 reimbursement';
         settlementsItemsForClaim.add(si);
       }
-      settlementsItemsByClaimId.put(
-        c.claimObj.objects[0].id,
-        settlementsItemsForClaim
-      );
-      payableClaimSObjects.add(c.claimObj.instanceRecords[0]);
+      settlementsItemsByClaimId.put(c.claimObj.id, settlementsItemsForClaim);
+      payableClaimSObjects.add(c.claimObj.underlyingSObject);
     }
 
     fflib_ISObjectUnitOfWork uow1 = SAS_Service_Application.UnitOfWork.newInstance();
@@ -359,14 +396,17 @@ public without sharing class EU261Service {
     return s;
   }
 
-  private void settleAndRejectClaims(List<EU261Claim> claimsToRejectAndSettle) {
+  private void settleAndRejectClaims(
+    List<EU261Claim> claimsToRejectAndSettle,
+    fflib_ISObjectUnitOfWork uow
+  ) {
     List<Case> parentCasesObjs = new List<Case>();
     for (EU261Claim c : claimsToRejectAndSettle) {
       // TODO: Doesn't work yet. parentCases.add(c.parentCase);
     }
     Cases parentCases = Cases.newInstance(parentCasesObjs);
 
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    // fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     // eligibleClaims.settle();
     // ineligbleClaims.reject();
 
@@ -374,7 +414,23 @@ public without sharing class EU261Service {
 
     Map<Id, Messaging.SingleEmailMessage> emailsByCaseId = new Map<Id, Messaging.SingleEmailMessage>();
 
+    Boolean enabledRejections = true;
+    Boolean enabledSettlements = true;
+
     for (EU261Claim c : claimsToRejectAndSettle) {
+      if (
+        !enabledRejections &&
+        c.decision.verdict ==
+        Claim.EU261HandlingStatus.IneligibleForCompensation
+      ) {
+        continue;
+      }
+      if (
+        !enabledSettlements &&
+        c.decision.verdict == Claim.EU261HandlingStatus.EligibleForCompensation
+      ) {
+        continue;
+      }
       // TODO: Create settlements for the claims which can be settled.
 
       String templateName = c.decision.verdict ==
@@ -384,16 +440,16 @@ public without sharing class EU261Service {
 
       Messaging.SingleEmailMessage emailToSend = EmailMessages.createSingleEmailMessageFromTemplate(
         templateName,
-        c.claimObj.objects[0].parentCaseId
+        c.claimObj.parentCaseId
       );
       emailToSend.setReplyTo(AUTOMATION_REPLY_TO_ADDRESS);
 
-      emailsByCaseId.put(c.claimObj.objects[0].parentCaseId, emailToSend);
+      emailsByCaseId.put(c.claimObj.parentCaseId, emailToSend);
     }
 
     parentCases.emailContactPeople(emailsByCaseId, uow).close(uow);
 
-    uow.commitWork();
+    // uow.commitWork();
   }
 
   /*private static void debugResult(

@@ -27,6 +27,7 @@ public without sharing class ClaimCustomer extends AbstractSObjectWrapper {
 
   public ClaimCustomer(Customer__c c) {
     super(c);
+    this.underlyingSObject = c;
     this.firstName = c.First_Name__c;
     this.lastName = c.Last_Name__c;
     this.parentClaimId = c.Claim__c;

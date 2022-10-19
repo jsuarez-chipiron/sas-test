@@ -99,41 +99,41 @@ private class ProactivitiesSelector_Test {
     );
     LIA_Claim__c claimWithOneProactivityAirportMatcher = new LIA_Claim__c(
       Case__c = caseWithOneProactivityAirportMatcher.Id,
-      Flight_Number__c = Flights.normalizeFlightNumber('SK1'),
+      Flight_Number__c = Flight.normalizeFlightNumber('SK1'),
       Flight_Date__c = today
     );
 
     LIA_Claim__c claimWithOneProactivityCancellationCodeMatcher = new LIA_Claim__c(
       Case__c = caseWithOneProactivityCancellationCodeMatcher.Id,
-      Flight_Number__c = Flights.normalizeFlightNumber('SK2'),
+      Flight_Number__c = Flight.normalizeFlightNumber('SK2'),
       Flight_Date__c = today
     );
 
     LIA_Claim__c claimWithThreeProactivitesCancellationCodeAndAirportMatcher = new LIA_Claim__c(
       Case__c = caseWithThreeProactivitiesCancellationCodeAndAirportMatcher.Id,
-      Flight_Number__c = Flights.normalizeFlightNumber('SK3'),
+      Flight_Number__c = Flight.normalizeFlightNumber('SK3'),
       Liability_PNR__c = 'ABC123',
       Flight_Date__c = today
     );
 
     LIA_Claim__c claimWithNoIrrelevantClaimFlight = new LIA_Claim__c(
       Case__c = caseWithNoRelevantClaimFlight.Id,
-      Flight_Number__c = Flights.normalizeFlightNumber('SK8'),
+      Flight_Number__c = Flight.normalizeFlightNumber('SK8'),
       Liability_PNR__c = 'ABC124',
       Flight_Date__c = today
     );
 
     String flightIdentifier1 =
-      Flights.constructTEDSFlightNumberDate('SK1', today) + '-UME-ARN';
+      Flight.constructTEDSFlightNumberDate('SK1', today) + '-UME-ARN';
 
     String flightIdentifier2 =
-      Flights.constructTEDSFlightNumberDate('SK2', today) + '-ARN-UME';
+      Flight.constructTEDSFlightNumberDate('SK2', today) + '-ARN-UME';
 
     String flightIdentifier3 =
-      Flights.constructTEDSFlightNumberDate('SK3', today) + '-UME-ARN';
+      Flight.constructTEDSFlightNumberDate('SK3', today) + '-UME-ARN';
 
     String flightIdentifier4 =
-      Flights.constructTEDSFlightNumberDate('SK4', today) + '-UME-ARN';
+      Flight.constructTEDSFlightNumberDate('SK4', today) + '-UME-ARN';
 
     Flight__c flight1 = new Flight__c(
       Arrival_Airport__c = 'ARN',

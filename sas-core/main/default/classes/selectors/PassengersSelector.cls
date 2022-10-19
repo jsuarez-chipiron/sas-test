@@ -3,6 +3,8 @@ public inherited sharing class PassengersSelector extends fflib_SObjectSelector 
     return new List<Schema.SObjectField>{
       Passenger__c.Id,
       Passenger__c.Name,
+      Passenger__c.CreatedDate,
+      Passenger__c.LastModifiedDate,
       Passenger__c.Account__c,
       Passenger__c.Booking__c,
       Passenger__c.Email__c,

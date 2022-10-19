@@ -4,6 +4,9 @@ public inherited sharing class FlightsSelector extends fflib_SObjectSelector {
     return new List<Schema.SObjectField>{
       Flight__c.Id,
       Flight__c.Name,
+      Flight__c.CreatedDate,
+      Flight__c.LastModifiedDate,
+      Flight__c.Aircraft_Registration__c,
       Flight__c.Actual_Arrival_Time__c,
       Flight__c.Actual_Arrival_Time_Local__c,
       Flight__c.Actual_Departure_Time__c,
@@ -23,6 +26,7 @@ public inherited sharing class FlightsSelector extends fflib_SObjectSelector {
       Flight__c.Estimated_Departure_Time__c,
       Flight__c.Estimated_Departure_Time_Local__c,
       Flight__c.Operating_Carrier__c,
+      Flight__c.Operational_Control_Center__c,
       Flight__c.Scheduled_Arrival_Time__c,
       Flight__c.Scheduled_Arrival_Time_Local__c,
       Flight__c.Scheduled_Departure_Time__c,
@@ -58,7 +62,7 @@ public inherited sharing class FlightsSelector extends fflib_SObjectSelector {
     Date departureDate
   ) {
     String flightLikeId =
-      Flights.constructTEDSFlightNumberDate(flightNumber, departureDate) +
+      Flight.constructTEDSFlightNumberDate(flightNumber, departureDate) +
       '-___-___';
 
     return (List<Flight__c>) Database.query(
