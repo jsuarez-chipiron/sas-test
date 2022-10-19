@@ -74,6 +74,14 @@
                 <behavior>Edit</behavior>
                 <field>Departure_Delayed_Minutes__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Aircraft_Registration__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Operational_Control_Center__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

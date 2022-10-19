@@ -229,6 +229,28 @@ public without sharing class Flights extends fflib_SObjectDomain {
   }
 
   public Flights upsertToDB() {
+    Set<String> flightIds = new Set<String>();
+
+    for (Flight__c f : instanceRecords) {
+      flightIds.add(f.TEDS_Identifier__c);
+    }
+
+    List<FlightIrregularities__c> irregularitiesToDelete = FlightIrregularitiesSelector.newInstance()
+      .selectByTEDSFlightId(flightIds);
+
+    try {
+      delete irregularitiesToDelete; // Delete and re-insert all irregularities
+    } catch (DMLException e) {
+      if (e.getDmlType(0) == StatusCode.ENTITY_IS_DELETED) {
+        // A parallel thread may have deleted the entities. Let's just ignore.
+      } else {
+        throw e;
+      }
+    }
+
+    // The upsert operation seems to fail due to a race condition between two threads
+    // trying to upsert the records simultaneously. One thread succeeds and the other
+    // fails with a duplicate value exception.
     try {
       upsert instanceRecords TEDS_Identifier__c;
     } catch (DMLException e) {
@@ -237,9 +259,11 @@ public without sharing class Flights extends fflib_SObjectDomain {
       }
     }
 
-    if (flightIrregularities.instanceRecords.size() > 0) {
-      upsert flightIrregularities.addFlightReferences(instanceRecords)
-        .instanceRecords;
+    if (flightIrregularities != null) {
+      if (flightIrregularities.instanceRecords.size() > 0) {
+        insert flightIrregularities.addFlightReferences(instanceRecords)
+          .instanceRecords;
+      }
     }
 
     return this;
@@ -264,7 +288,7 @@ public without sharing class Flights extends fflib_SObjectDomain {
   /*
    * Returns variations of the flight id written in plain text
    * Format: BT0151-20220713-RIX-OSL
-   * A List Returns a flight Id on format
+   *
    * @return A list with ids with the following formats: BT0151-20220713, BT0151-2022-07-13
    */
   public static List<String> TEDSIdToSimpleFlightIds(String TEDSId) {
@@ -281,6 +305,22 @@ public without sharing class Flights extends fflib_SObjectDomain {
     String format2 = flightNumber + '-' + flightDateSeparated;
 
     return new List<String>{ format1, format2 };
+  }
+
+  /**
+   * Constructs a flightNumber + date combination like the one used in TEDS
+   *
+   * @param flightNumber E.g. SK1234
+   * @param flightDate
+   * @return a string like: SK1234-20220101
+   */
+  public static String constructTEDSFlightNumberDate(
+    String flightNumber,
+    Date flightDate
+  ) {
+    return normalizeFlightNumber(flightNumber) +
+      '-' +
+      String.valueOf(flightDate).remove('-');
   }
 
   /**

@@ -71,6 +71,10 @@ public without sharing class FlightService {
     Map<Id, Integer> flightIdToDelay = new Map<Id, Integer>{};
 
     for (Flight__c flight : flights.instanceRecords) {
+      if (flight.Arrival_Delayed_Minutes__c == null) {
+        flightIdToDelay.put(flight.Id, 0);
+        continue;
+      }
       FlightIrregularities flightIrregularities = new FlightIrregularities(
         flightIdToIrregularities.get(flight.Id)
       );

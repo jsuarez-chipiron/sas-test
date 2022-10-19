@@ -1,4 +1,4 @@
-import { LightningElement, wire, api } from "lwc";
+import { LightningElement, wire, api, track } from "lwc";
 import { getRecord, getRecordNotifyChange } from "lightning/uiRecordApi";
 import { getObjectInfo, getPicklistValues } from "lightning/uiObjectInfoApi";
 import SETTLEMENT_ITEM_OBJECT from "@salesforce/schema/Settlement_Item__c";
@@ -6,6 +6,7 @@ import SETTLEMENT_OBJECT from "@salesforce/schema/Settlement__c";
 import SETTLEMENT_CURRENCY_FIELD from "@salesforce/schema/Settlement__c.Currency__c";
 import SETTLEMENT_STATUS_FIELD from "@salesforce/schema/Settlement__c.Settlement_Status__c";
 import COST_ACCOUNT_FIELD from "@salesforce/schema/Settlement_Item__c.Cost_Account__c";
+import CASE_RECORD_TYPE_FIELD from "@salesforce/schema/Settlement__c.Claim__r.Case__r.RecordType.Name";
 
 import addSettlementsItemsToSettlement from "@salesforce/apex/SettlementsController.addSettlementsItemsToSettlement";
 import getSettlement from "@salesforce/apex/SettlementsController.getSettlement";
@@ -14,6 +15,7 @@ import getExchangeRates from "@salesforce/apex/SettlementsController.getExchange
 
 export default class SettlementCalculator extends LightningElement {
   @api recordId;
+  @track isModalOpen = false;
   lastModifiedDate;
   settlementItemRecordTypeId;
   settlementRecordTypeInfos;
@@ -31,6 +33,8 @@ export default class SettlementCalculator extends LightningElement {
   settlementCurrency;
   customerOptions;
 
+  HIGH_SETTLEMENT_AMOUNT = 35000;
+  HIGH_SETTLEMENT_POINTS = 150000;
   MAX_LIABILITY_IN_XDR = 1288;
   COST_ACCOUNTS_BAGGAGE = ["6741", "6742", "6743"];
   maxLiabilityInSettlementCurrency = 0;
@@ -46,6 +50,13 @@ export default class SettlementCalculator extends LightningElement {
     isMonetary: false,
     isVoucher: false
   };
+
+  CASE_RECORD_TYPE_TO_CREATE_SETTLEMENT = [
+    "Customer Claim",
+    "Claim",
+    "Emergency"
+  ];
+  SETTLEMENT_STATUS_TO_MODIFY_SETTLEMENT_ITEM = ["In progress", "Denied"];
 
   get amountLabel() {
     return `Amount (${this.settlementCurrency})`;
@@ -95,7 +106,8 @@ export default class SettlementCalculator extends LightningElement {
             `<b>${Math.round(entry.amount * 100) / 100}</b> ${entry.currency}`
         )
         .join("  |  ")}`,
-      points: total
+      points: total,
+      currency: this.settlementCurrency
     };
   }
 
@@ -132,13 +144,26 @@ export default class SettlementCalculator extends LightningElement {
 
   @wire(getRecord, {
     recordId: "$recordId",
-    fields: [SETTLEMENT_CURRENCY_FIELD, SETTLEMENT_STATUS_FIELD]
+    fields: [
+      SETTLEMENT_CURRENCY_FIELD,
+      SETTLEMENT_STATUS_FIELD,
+      CASE_RECORD_TYPE_FIELD
+    ]
   })
   wiredSettlement({ error, data }) {
     if (!error && data) {
+      //caseRecordType fetch value for case record name as the case record name from settlement
+      //could be access through claim__r.case__r.RecordType.Name
+      const caseRecordType =
+        data.fields.Claim__r.value.fields.Case__r.value.fields.RecordType.value
+          .fields.Name.value;
+      const settlementStatus = data.fields.Settlement_Status__c.value;
+
       this.cannotBeUpdated =
-        data.fields.Settlement_Status__c.value !== "In progress" &&
-        data.fields.Settlement_Status__c.value !== "Denied";
+        !this.SETTLEMENT_STATUS_TO_MODIFY_SETTLEMENT_ITEM.includes(
+          settlementStatus
+        ) ||
+        !this.CASE_RECORD_TYPE_TO_CREATE_SETTLEMENT.includes(caseRecordType);
       this.type = {
         isEuroBonusPoints: data.recordTypeInfo.name === "EB points",
         isMonetary:
@@ -282,6 +307,35 @@ export default class SettlementCalculator extends LightningElement {
     }
   }
 
+  openModal() {
+    // to open modal set isModalOpen tarck value as true
+
+    this.isModalOpen = true;
+  }
+  closeModal() {
+    // to close modal set isModalOpen tarck value as false
+    this.isModalOpen = false;
+  }
+
+  findCustomersHighSettlementAmount() {
+    // Used to warn the agent if the amount is High
+    const total = this.rows.reduce((prev, curr) => prev + curr.amount, 0);
+    if (this.settlementCurrency == "Points") {
+      if (total > this.HIGH_SETTLEMENT_POINTS) {
+        this.openModal();
+      }
+    }
+    if (this.settlementCurrency == "SEK") {
+      if (total > this.HIGH_SETTLEMENT_AMOUNT) {
+        this.openModal();
+      }
+    } else {
+      if (total * this.exchangeRates.sek > this.HIGH_SETTLEMENT_AMOUNT) {
+        this.openModal();
+      }
+    }
+  }
+
   handleAmountChange(event) {
     const rowIdx = this.rows.findIndex(
       (row) => row.idx == event.target.dataset.idx
@@ -293,6 +347,7 @@ export default class SettlementCalculator extends LightningElement {
     };
     this.dirty = true;
     this.findCustomersAboveMaxLiability();
+    this.findCustomersHighSettlementAmount();
   }
 
   handleCustomerChange(event) {

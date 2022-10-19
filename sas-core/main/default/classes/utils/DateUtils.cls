@@ -70,14 +70,23 @@ public without sharing class DateUtils {
     Datetime datetime1,
     Datetime datetime2
   ) {
-    Long millisecondDelta = Math.abs(datetime1.getTime() - datetime2.getTime());
-    Long hourDelta = millisecondDelta / (3600000);
+    Decimal hourDelta = getHoursBetween(datetime1, datetime2);
 
     if (hourDelta > 24.0) {
       return true;
     }
-
     return false;
+  }
+
+  public static Decimal getHoursBetween(
+    Datetime datetime1,
+    Datetime datetime2
+  ) {
+    Decimal millisecondDelta = Math.abs(
+      datetime1.getTime() - datetime2.getTime()
+    );
+    Decimal hourDelta = millisecondDelta / (3600000);
+    return hourDelta;
   }
 
   /**

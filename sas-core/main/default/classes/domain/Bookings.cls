@@ -61,7 +61,9 @@ public without sharing class Bookings extends fflib_SObjectDomain {
    *
    * @return A map of booking id to each trip in booking
    */
-  public Map<Id, List<Trip>> getTrips(Map<String, Airport__c> airportCodeToAirport) {
+  public Map<Id, List<Trip>> getTrips(
+    Map<String, Airport__c> airportCodeToAirport
+  ) {
     Map<Id, List<Trip>> bookingIdToTrips = new Map<Id, List<Trip>>{};
 
     // Sort the Segments
@@ -72,7 +74,10 @@ public without sharing class Bookings extends fflib_SObjectDomain {
         );
       }
 
-      bookingIdToTrips.put(b.Id, Trip.createFromBooking(b, airportCodeToAirport));
+      bookingIdToTrips.put(
+        b.Id,
+        Trip.createFromBooking(b, airportCodeToAirport)
+      );
     }
 
     return bookingIdToTrips;
@@ -400,16 +405,7 @@ public without sharing class Bookings extends fflib_SObjectDomain {
     }
 
     // Upsert flights
-    // The upsert operation seems to fail due to a race condition between two threads
-    // trying to upsert the records simultaneously. One thread succeeds and the other
-    // fails with a duplicate value exception.
-    try {
-      upsert uniqueFlightsToUpsert.values() TEDS_Identifier__c;
-    } catch (DMLException e) {
-      if (e.getDmlType(0) == StatusCode.DUPLICATE_VALUE) {
-        upsert uniqueFlightsToUpsert.values() TEDS_Identifier__c;
-      }
-    }
+    (new Flights(uniqueFlightsToUpsert.values())).upsertToDB();
 
     List<SObject> passengersToInsert = new List<SObject>();
     List<SObject> segmentsToInsert = new List<SObject>();

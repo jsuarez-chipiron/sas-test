@@ -84,16 +84,9 @@ private class ProactivitiesController_Test {
     );
 
     String flightIdentifier1 =
-      Flights.normalizeFlightNumber('SK1') +
-      '-' +
-      String.valueOf(today).remove('-') +
-      '-UME-ARN';
-
+      Flights.constructTEDSFlightNumberDate('SK1', today) + '-ARN-UME';
     String flightIdentifier2 =
-      Flights.normalizeFlightNumber('SK2') +
-      '-' +
-      String.valueOf(today).remove('-') +
-      '-ARN-UME';
+      Flights.constructTEDSFlightNumberDate('SK2', today) + '-UME-ARN';
 
     Flight__c flight1 = new Flight__c(
       Arrival_Airport__c = 'ARN',

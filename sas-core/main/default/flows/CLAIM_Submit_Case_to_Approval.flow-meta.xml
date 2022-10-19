@@ -224,7 +224,7 @@
                 <leftValueReference>Get_Claim_Information.Result__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Default judgment</stringValue>
+                    <stringValue>Default judgement</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -426,6 +426,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>5</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CreatedById</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

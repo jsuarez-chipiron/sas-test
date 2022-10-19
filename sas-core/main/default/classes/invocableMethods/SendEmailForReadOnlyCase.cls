@@ -7,11 +7,14 @@ public with sharing class SendEmailForReadOnlyCase {
       closedCasePermanentlyTemplate,
       caseIds[0]
     );
+    List<Case> associatedCase = CasesSelector.newInstance()
+      .selectById(new Set<Id>{ caseIds[0] });
+    msg.Subject = msg.getSubject()
+      .replace('{{{Case.CaseNumber}}}', associatedCase[0].CaseNumber);
+    msg.HtmlBody = msg.getHtmlBody()
+      .replace('{{{Case.CaseNumber}}}', associatedCase[0].CaseNumber);
     msg.SetReplyTo('no-reply@flysas.com');
-    Cases.newInstance(
-        CasesSelector.newInstance().selectById(new Set<Id>{ caseIds[0] })
-      )
-      .emailOwner(msg, uow);
+    Cases.newInstance(associatedCase).emailOwner(msg, uow);
 
     uow.commitWork();
   }

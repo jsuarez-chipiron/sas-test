@@ -8,7 +8,8 @@ public inherited sharing class FlightIrregularitiesSelector extends fflib_SObjec
       FlightIrregularities__c.Duration_minutes__c,
       FlightIrregularities__c.Type__c,
       FlightIrregularities__c.Description__c,
-      FlightIrregularities__c.Cancellation_Time__c
+      FlightIrregularities__c.Cancellation_Time__c,
+      FlightIrregularities__c.Eligible_For_EU261__c
     };
   }
 
@@ -50,16 +51,12 @@ public inherited sharing class FlightIrregularitiesSelector extends fflib_SObjec
     String fromAirport,
     String toAirport
   ) {
-    String parsedDate = String.valueOf(departureDate).remove('-');
     String flightId =
-      flightNumber +
-      '-' +
-      parsedDate +
+      Flights.constructTEDSFlightNumberDate(flightNumber, departureDate) +
       '-' +
       fromAirport +
       '-' +
-      toAirport +
-      '';
+      toAirport;
 
     return (List<FlightIrregularities__c>) Database.query(
       newQueryFactory()
