@@ -349,7 +349,7 @@ private class IRR_EVT_ManualProcessor_Test {
         manualRequest.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()}; 
         manualRequest.passengerInfos[0].thisSegment = new IRR_MOD_SegmentInfo();
         manualRequest.passengerInfos[0].thisSegment.stationArrival = 'ARN';
-        manualRequest.passengerInfos[0].thisSegment.stationArrival = 'CPH';
+        manualRequest.passengerInfos[0].thisSegment.stationDeparture = 'CPH';
         manualRequest.passengerInfos[0].hasPhoneNumber = true;
         manualRequest.passengerInfos[0].phoneNumber = 'TEST_PHONE';
         manualRequest.passengerInfos[0].hasEmailAddress = true;
@@ -418,7 +418,7 @@ private class IRR_EVT_ManualProcessor_Test {
         manualRequest.passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
         manualRequest.passengerInfos[0].thisSegment = new IRR_MOD_SegmentInfo();
         manualRequest.passengerInfos[0].thisSegment.stationArrival = 'ARN';
-        manualRequest.passengerInfos[0].thisSegment.stationArrival = 'CPH';
+        manualRequest.passengerInfos[0].thisSegment.stationDeparture = 'CPH';
         manualRequest.passengerInfos[0].hasPhoneNumber = true;
         manualRequest.passengerInfos[0].phoneNumber = 'TEST_PHONE';
         manualRequest.passengerInfos[0].hasEmailAddress = true;
