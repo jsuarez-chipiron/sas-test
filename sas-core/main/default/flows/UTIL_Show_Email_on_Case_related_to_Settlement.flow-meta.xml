@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <decisions>
+        <name>Check_For_Case_Status</name>
+        <label>Check For Case Status</label>
+        <locationX>182</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Get_Email_Draft</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Case_Status</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Approval</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Get_Email_Draft</targetReference>
+            </connector>
+            <label>Case Status is Waiting For Approval</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <interviewLabel>UTIL Show Email on Case related to Settlement {!$Flow.CurrentDateTime}</interviewLabel>
     <label>UTIL Show Email on Case related to Settlement</label>
@@ -24,13 +49,48 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>Copy_1_of_Get_Email_Draft</name>
+        <label>Get Email Draft</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Email_related_to_Settlement</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>5</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RelatedToId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CreatedById</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Approval_Submitter__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>EmailMessage</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Email_Draft</targetReference>
+            <targetReference>Check_For_Case_Status</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -47,7 +107,7 @@
     <recordLookups>
         <name>Get_Current_Record</name>
         <label>Get Current Record</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -68,8 +128,8 @@
     <recordLookups>
         <name>Get_Email_Draft</name>
         <label>Get Email Draft</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Email_related_to_Settlement</targetReference>
@@ -104,8 +164,8 @@
     <screens>
         <name>Email_related_to_Settlement</name>
         <label>Email related to Settlement</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>182</locationX>
+        <locationY>734</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
@@ -118,7 +178,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Current_Record</targetReference>
