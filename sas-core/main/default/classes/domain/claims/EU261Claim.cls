@@ -14,7 +14,7 @@ public class EU261Claim {
     'UK' => 6 * 12,
     'IE' => 6 * 12,
     'LV' => 6,
-    'default' => 0
+    'default' => 6 * 12
   };
 
   // TODO: Make sure that this doesn't make any outside calls to anything.
@@ -71,58 +71,59 @@ public class EU261Claim {
       this.reasoning = reasoning;
       this.compensationAmount = compensationAmount;
       this.reimbursementAmount = reimbursementAmount;
+
+      // TODO: Create this properly per customer.
     }
   }
 
   @TestVisible
-  private Bookings.Type bookingType;
-  public Claims claimObj { public get; private set; } // must be a single claim
+  private Booking.Type bookingType;
+  public Claim claimObj { public get; private set; }
   @TestVisible
-  private Bookings booking;
-  private Map<Id, List<Trip>> trips;
-  private Map<Id, List<FlightIrregularities__c>> flightToIrregularities;
+  private Booking claimedBooking;
+  private List<Trip> trips;
+  private Map<Id, List<FlightIrregularity>> flightToIrregularities;
   private Trip tripWithClaimFlight;
   private Boolean hasPotentiallyDuplicateClaims = false;
-  private Flight__c claimFlight;
+  private Boolean foundMultipleMatchingBookings = false;
+  private Flight claimFlight;
 
   public Decision decision { public get; private set; }
 
   public EU261Claim(
     Claim c,
-    Bookings booking,
-    Map<Id, List<FlightIrregularities__c>> flightToIrregularities,
+    Booking b,
+    Map<Id, List<FlightIrregularity>> flightToIrregularities, // TODO: This we should add in to the booking.flights.irregularities
     Boolean hasPotentiallyDuplicateClaims,
-    Map<String, Airport__c> airportCodeToAirport
+    Boolean foundMultipleMatchingBookings,
+    Map<String, Airport> airportCodeToAirport // TODO: Get rid of this.
   ) {
-    this.claimObj = Claims.newInstance(
-      (new List<LIA_Claim__c>{ c.underlyingSObject })
-    );
+    this.claimObj = c;
 
-    this.booking = booking;
+    this.claimedBooking = b;
     this.flightToIrregularities = flightToIrregularities;
     this.hasPotentiallyDuplicateClaims = hasPotentiallyDuplicateClaims;
+    this.foundMultipleMatchingBookings = foundMultipleMatchingBookings;
 
-    if (booking != null && booking.instanceRecords.size() > 0) {
-      this.bookingType = Bookings.nameToBookingType.get(
-        booking.instanceRecords[0].Type__c
-      );
+    if (b != null) {
+      this.bookingType = b.type;
 
       try {
-        this.trips = booking.getTrips(airportCodeToAirport);
+        this.trips = b.getTrips(airportCodeToAirport);
       } catch (Trip.BookingTypeNotSupportedException e) {
         // If not supported, we'll leave trips empty. We'll ignore these when
         // processing cases later on.
         return;
       }
 
-      String flightNumberDate = Flights.constructTEDSFlightNumberDate(
+      String flightNumberDate = Flight.constructTEDSFlightNumberDate(
         c.flightNumber,
         c.departureDate
       );
 
       if (this.trips != null) {
-        for (Trip t : this.trips.get(booking.instanceRecords[0].Id)) {
-          Flight__c claimFlight = t.getFlight(flightNumberDate);
+        for (Trip t : this.trips) {
+          Flight claimFlight = t.getFlight(flightNumberDate);
           if (claimFlight != null) {
             this.tripWithClaimFlight = t;
             this.claimFlight = claimFlight;
@@ -151,33 +152,40 @@ public class EU261Claim {
       throw new AutomationException('claimFlight not set');
     }
 
-    FlightIrregularities claimIrregularities = new FlightIrregularities(
-      flightToIrregularities.get(claimFlight.Id)
-    );
-    claimIrregularities.removeNA0Delay();
+    for (FlightIrregularity fi : flightToIrregularities.get(claimFlight.id)) {
+      if (!fi.isNA0Delay() && fi.isCancellation()) {
+        return true;
+      }
+    }
 
-    return claimIrregularities.containsCancellation();
+    return false;
   }
 
   private Boolean hasMoreThanOneCancellation() {
-    List<FlightIrregularities__c> allIrregularities = new List<FlightIrregularities__c>();
-    for (List<FlightIrregularities__c> fi : flightToIrregularities.values()) {
-      allIrregularities.addAll(fi);
-    }
-    FlightIrregularities irr = new FlightIrregularities(allIrregularities);
-    irr.removeAllButCancellations();
-    irr.removeDuplicates();
+    // TODO: This is broken. It is currently checking whether there is more than one cancellation on
+    // the claim flight. It should check whether there is more than one cancellation on the entire trip.
+    List<FlightIrregularity> cancellations = new List<FlightIrregularity>();
 
-    return irr.instanceRecords.size() > 1;
+    List<FlightIrregularity> uniqueIrregularities = FlightIrregularity.unique(
+      flightToIrregularities.get(claimFlight.id)
+    );
+
+    for (FlightIrregularity fi : uniqueIrregularities) {
+      if (fi.isCancellation()) {
+        cancellations.add(fi);
+      }
+    }
+
+    return cancellations.size() > 1;
   }
 
   private Boolean hasOnlyOneFlightRoute() {
     String firstFlightRoute =
-      booking.instanceRecords[0].Segments__r[0].Flight__r.Departure_Airport__c +
-      booking.instanceRecords[0].Segments__r[0].Flight__r.Arrival_Airport__c;
-    for (Segment__c s : booking.instanceRecords[0].Segments__r) {
+      this.claimedBooking.segments[0].flight.departureAirport +
+      this.claimedBooking.segments[0].flight.arrivalAirport;
+    for (Segment s : this.claimedBooking.segments) {
       String segmentFlightRoute =
-        s.Flight__r.Departure_Airport__c + s.Flight__r.Arrival_Airport__c;
+        s.flight.departureAirport + s.flight.arrivalAirport;
       if (segmentFlightRoute != firstFlightRoute) {
         return false;
       }
@@ -220,7 +228,7 @@ public class EU261Claim {
    * Returns a decision if we cannot handle this claim. Returns null if we can evaluate it.
    */
   private Decision canWeEvaluate() {
-    Claim c = this.claimObj.objects[0];
+    Claim c = this.claimObj;
     if (c.category != Claim.Category.FlightDisruptions) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -246,15 +254,12 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'can handle only claims with case in status "New"'
       );
-    } else if (
-      this.booking == null ||
-      this.booking.instanceRecords.size() == 0
-    ) {
+    } else if (this.claimedBooking == null) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'the claim is not associated with a booking'
       );
-    } else if (this.booking.instanceRecords.size() > 1) {
+    } else if (this.foundMultipleMatchingBookings) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'can handle only one booking per claim'
@@ -267,12 +272,13 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot handle potential duplicates'
       );
-    } else if (this.bookingType != Bookings.Type.OneWay) {
+    } else if (this.claimedBooking.type != Booking.Type.OneWay) {
+      // TODO: I guess we need to get rid of the booking variable?
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'can handle only one way trips'
       );
-    } else if (this.booking.instanceRecords[0].Segments__r.size() == 0) {
+    } else if (this.claimedBooking.flights.size() == 0) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'no flight associated with the claim'
@@ -283,9 +289,7 @@ public class EU261Claim {
         'cannot handle claims without any travellers'
       );
     } else if (
-      invalidFareBases.contains(
-        this.booking.instanceRecords[0].Segments__r[0].Fare_Basis__c
-      )
+      invalidFareBases.contains(this.claimedBooking.segments[0].fareBasis)
     ) {
       // TODO: Move this to be evaluation instead.
       return new Decision(
@@ -298,8 +302,8 @@ public class EU261Claim {
         'cannot find claimed flight from booking'
       );
     } else if (
-      !this.tripWithClaimFlight.originAirport.Is_EU261_Applicable__c ||
-      !this.tripWithClaimFlight.destinationAirport.Is_EU261_Applicable__c
+      !this.tripWithClaimFlight.originAirport.isEU261Applicable ||
+      !this.tripWithClaimFlight.destinationAirport.isEU261Applicable
     ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -339,16 +343,16 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'the claim flight is cancelled but the booking has no cancelled segments'
       );
-    } else if (hasMoreThanOneCancellation()) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'there are more than one cancellation connected to this claim'
-      );
     } else if (!hasOnlyOneFlightRoute()) {
       // Super-basic flight handling
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'can only handle claims with a single flight route'
+      );
+    } else if (hasMoreThanOneCancellation()) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'there are more than one cancellation connected to this claim'
       );
     } else if (
       c.type == Claim.Type.FlightCancellation &&
@@ -406,11 +410,11 @@ public class EU261Claim {
    * 6. TODO: Consider infants
    */
   private Boolean requiresPowerOfAttorney() {
-    Claim c = this.claimObj.objects[0];
+    Claim c = this.claimObj;
 
     if (
       c.contactType != Claim.ContactType.PrivateCustomer ||
-      c.customers.size() > 4
+      c.customers.size() > 5
     ) {
       return true;
     }
@@ -421,10 +425,10 @@ public class EU261Claim {
       }
 
       Boolean claimedCustomerFoundInBooking = false;
-      for (Passenger__c p : this.booking.instanceRecords[0].Passengers__r) {
+      for (Passenger p : this.claimedBooking.passengers) {
         if (
-          p.Last_Name__c.toLowerCase() == cust.lastName.toLowerCase() &&
-          p.First_Name__c.toLowerCase() == cust.firstName.toLowerCase()
+          p.lastName.toLowerCase() == cust.lastName.toLowerCase() &&
+          p.firstName.toLowerCase() == cust.firstName.toLowerCase()
         ) {
           claimedCustomerFoundInBooking = true;
         }
@@ -442,6 +446,7 @@ public class EU261Claim {
     try {
       getMinutesDelayedWithinSASControl();
     } catch (Exception e) {
+      System.debug(e.getMessage());
       return false;
     }
     return true;
@@ -462,14 +467,14 @@ public class EU261Claim {
    * to the benefit of the customer.
    */
   private Boolean isFiledOnTime() {
-    Claim c = this.claimObj.objects[0];
+    Claim c = this.claimObj;
     Datetime tripDate = this.tripWithClaimFlight.getFinalDestinationArrivalTime();
 
     Integer limitInDepartureCountry = countryToClaimTimeLimitInMonths.get(
-      this.tripWithClaimFlight.originAirport.Country_Code__c
+      this.tripWithClaimFlight.originAirport.countryCode
     );
     Integer limitInArrivalCountry = countryToClaimTimeLimitInMonths.get(
-      this.tripWithClaimFlight.destinationAirport.Country_Code__c
+      this.tripWithClaimFlight.destinationAirport.countryCode
     );
 
     Integer timeLimit;
@@ -536,18 +541,18 @@ public class EU261Claim {
     // Get the original flight plan
     Trip originalTrip = this.tripWithClaimFlight.getOriginalTripWithFlight();
     Datetime originalDeparture = originalTrip.getFirstFlight()
-      .Scheduled_Departure_Time__c;
+      .scheduledDepartureTime;
     Datetime originalArrival = originalTrip.getFlightToFinalDestination()
-      .Scheduled_Arrival_Time__c;
+      .scheduledArrivalTime;
 
     Decimal flightDistanceInKm =
-      Airports.distanceBetweenAirportsInMeters(
+      Airport.distanceBetweenAirportsInMeters(
         this.tripWithClaimFlight.originAirport,
         this.tripWithClaimFlight.destinationAirport
       ) / 1000;
     Integer flightDistanceInKmRounded = flightDistanceInKm.intValue();
     Boolean isIntraCommunity = originalTrip.isIntraCommunity();
-    List<FlightIrregularities__c> flightIrregularities = this.flightToIrregularities.get(
+    List<FlightIrregularity> flightIrregularities = this.flightToIrregularities.get(
       this.claimFlight.Id
     );
     Integer daysUntilFlightWhenInformedOfCancellation = this.getDaysBetweenCancellationAndDeparture();
@@ -575,10 +580,9 @@ public class EU261Claim {
         isIntraCommunity
       );
     } else {
-      Datetime newDeparture = newTrip.getFirstFlight()
-        .Scheduled_Departure_Time__c;
+      Datetime newDeparture = newTrip.getFirstFlight().scheduledDepartureTime;
       Datetime newArrival = newTrip.getFlightToFinalDestination()
-        .Scheduled_Arrival_Time__c;
+        .scheduledArrivalTime;
 
       // Compare the original rebooking against the suggested rebooking and calculate compensation
       departureDifference = Integer.valueOf(
@@ -629,19 +633,18 @@ public class EU261Claim {
   private Integer getNumberOfPassengersEligibleForCompensation() {
     // TODO: Check: Is fare = 0?
 
-    List<Passenger__c> passengers = this.booking.instanceRecords[0]
-      .Passengers__r; // FIXME: This should always be about travelers in claim, not passengers in booking
+    List<Passenger> passengers = this.claimedBooking.passengers; // FIXME: This should always be about travelers in claim, not passengers in booking
 
-    List<ClaimCustomer> customers = this.claimObj.objects[0].customers;
+    List<ClaimCustomer> customers = this.claimObj.customers;
 
-    List<Passenger__c> eligiblePassengers = new List<Passenger__c>();
+    List<Passenger> eligiblePassengers = new List<Passenger>();
 
-    for (Passenger__c passenger : passengers) {
+    for (Passenger passenger : passengers) {
       Boolean claimedPassenger = false;
       for (ClaimCustomer cc : customers) {
         if (
-          cc.firstName.toLowerCase() == passenger.First_Name__c.toLowerCase() &&
-          cc.lastName.toLowerCase() == passenger.Last_Name__c.toLowerCase()
+          cc.firstName.toLowerCase() == passenger.firstName.toLowerCase() &&
+          cc.lastName.toLowerCase() == passenger.lastName.toLowerCase()
         ) {
           claimedPassenger = true;
           break;
@@ -649,13 +652,11 @@ public class EU261Claim {
       }
 
       if (claimedPassenger) {
-        Boolean isInfant = passenger.Identifier__c.toLowerCase()
-          .contains('inf');
+        Boolean isInfant = passenger.identifier.toLowerCase().contains('inf');
         if (isInfant) {
           Boolean isDomesticTripInDenmark =
-            this.tripWithClaimFlight.destinationAirport.Country_Code__c ==
-            'DK' &&
-            this.tripWithClaimFlight.originAirport.Country_Code__c == 'DK';
+            this.tripWithClaimFlight.destinationAirport.countryCode == 'DK' &&
+            this.tripWithClaimFlight.originAirport.countryCode == 'DK';
           if (isDomesticTripInDenmark) {
             eligiblePassengers.add(passenger);
           }
@@ -669,37 +670,31 @@ public class EU261Claim {
   }
 
   private Boolean cancellationCodeIsWithinSASControl() {
-    FlightIrregularities claimIrregularities = new FlightIrregularities(
-      this.flightToIrregularities.get(this.claimFlight.Id)
+    List<FlightIrregularity> irregularitiesForClaimFlight = this.flightToIrregularities.get(
+      this.claimFlight.id
     );
-    claimIrregularities.removeAllButCancellations();
-    claimIrregularities.removeDuplicates();
 
-    if (!claimIrregularities.containsCancellation()) {
-      throw new AutomationException('Claim flight is not cancelled.');
-    }
-
-    Integer noIrregularities = claimIrregularities.instanceRecords.size();
-    if (noIrregularities == 1) {
-      FlightIrregularities__c relevantIrregularity = claimIrregularities.instanceRecords[0];
-      return claimIrregularities.isWithinSASControl()
-        .get(relevantIrregularity.Id);
-    } else if (noIrregularities == 0) {
+    if (
+      irregularitiesForClaimFlight == null ||
+      irregularitiesForClaimFlight.size() == 0
+    ) {
       throw new AutomationException(
         'Claim flight has no valid irregularities.'
       );
-    } else {
+    } else if (irregularitiesForClaimFlight.size() > 1) {
       throw new AutomationException(
         'Cancelled flight has more than one irregularity.'
       );
     }
+
+    return irregularitiesForClaimFlight[0].isWithinSASControl();
   }
 
   private Boolean canDetermineIfSASIsResponsibleForCancellation() {
     try {
       this.cancellationCodeIsWithinSASControl();
       return true;
-    } catch (FlightIrregularities.IrregularityException e) {
+    } catch (FlightIrregularity.IrregularityException e) {
       return false;
     } catch (AutomationException e2) {
       return false;
@@ -711,20 +706,18 @@ public class EU261Claim {
    * @return an Integer of the amount of minutes delayed for the ac.tripWithClaimFlight with the delay minutes outside SAS control deducted.
    */
   private Integer getMinutesDelayedWithinSASControl() {
-    Flight__c flight = this.tripWithClaimFlight.getFlightToFinalDestination();
-    FlightIrregularities irregularities = new FlightIrregularities(
-      this.flightToIrregularities.get(flight.Id)
+    Flight f = this.tripWithClaimFlight.getFlightToFinalDestination();
+    List<FlightIrregularity> irregularities = this.flightToIrregularities.get(
+      f.Id
     );
 
     Integer delayCausedByIrregularitiesWithinSASControl = FlightService.newInstance()
       .getTotalDelayInMinutesWithinSASControl(
-        new Flights(new List<Flight__c>{ flight }),
+        new List<Flight>{ f },
         this.flightToIrregularities
       )
-      .get(flight.Id);
-    Integer netDelayedMinutes = Integer.valueOf(
-      flight.Arrival_Delayed_Minutes__c
-    );
+      .get(f.id);
+    Integer netDelayedMinutes = Integer.valueOf(f.arrivalDelayedMinutes);
 
     if (
       delaysOutsideSASControlReducesCompensation(
@@ -746,48 +739,53 @@ public class EU261Claim {
   }
 
   private Integer getDaysBetweenCancellationAndDeparture() {
-    FlightIrregularities claimIrregularities = new FlightIrregularities(
-      this.flightToIrregularities.get(this.claimFlight.Id)
-    );
-    claimIrregularities.removeAllButCancellations();
-    claimIrregularities.removeDuplicates();
+    List<FlightIrregularity> claimIrregularities = new List<FlightIrregularity>();
 
-    if (!claimIrregularities.containsCancellation()) {
+    for (
+      FlightIrregularity fi : this.flightToIrregularities.get(
+        this.claimFlight.id
+      )
+    ) {
+      if (fi.isCancellation()) {
+        claimIrregularities.add(fi);
+      }
+    }
+
+    if (claimIrregularities.size() == 0) {
       throw new AutomationException('Claim flight is not cancelled.');
     }
 
-    if (claimIrregularities.instanceRecords.size() == 1) {
-      FlightIrregularities__c cancellation = claimIrregularities.instanceRecords[0];
-      Datetime departureTime = this.claimFlight.Scheduled_Departure_Time__c;
-      Datetime cancellationTime = cancellation.Cancellation_Time__c;
-      if (cancellationTime == null) {
-        throw new AutomationException(
-          'Cancellation does not have a cancellation time.'
-        );
-      }
-      Decimal hoursBetween = DateUtils.getHoursBetween(
-        departureTime,
-        cancellationTime
-      );
-      Integer daysBetween = (hoursBetween / 24).intValue();
-      return daysBetween;
-    } else {
+    if (claimIrregularities.size() > 1) {
       throw new AutomationException(
         'Cancelled flight does not have exactly one irregularity.'
       );
     }
+    FlightIrregularity cancellation = claimIrregularities[0];
+
+    Datetime departureTime = this.claimFlight.scheduledDepartureTime;
+    Datetime cancellationTime = cancellation.cancellationTime;
+    if (cancellationTime == null) {
+      throw new AutomationException(
+        'Cancellation does not have a cancellation time.'
+      );
+    }
+    Decimal hoursBetween = DateUtils.getHoursBetween(
+      departureTime,
+      cancellationTime
+    );
+    Integer daysBetween = (hoursBetween / 24).intValue();
+    return daysBetween;
   }
 
   private Boolean hasRotationIrregularities() {
-    Flight__c flight = this.tripWithClaimFlight.getFlightToFinalDestination();
-    List<FlightIrregularities__c> flightIrregularities = this.flightToIrregularities.get(
-      flight.Id
-    );
-    FlightIrregularities irregularities = new FlightIrregularities(
-      flightIrregularities
-    );
+    Flight f = this.tripWithClaimFlight.getFlightToFinalDestination();
 
-    return irregularities.containsRotationIrregularities();
+    for (FlightIrregularity fi : this.flightToIrregularities.get(f.id)) {
+      if (fi.isRotation()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   // TODO: Get rid of this.
@@ -808,8 +806,10 @@ public class EU261Claim {
    * @return a boolean which asserts if the claim is covered by EU261
    */
   private Boolean isWithinEU261Jurisdiction() {
-    // ~TODO(c): Determine if the customer has already received benefits related to a law of a non-EU country
-    Boolean hasReceivedBenefitsWhichVoidEU261 = false;
+    return true; // Until we have other operating carriers.
+    // As SAS is EU carrier, we're always under EU jurisdiction as operating carrier.
+
+    /* TODO: Add operating carrier check
 
     Airport__c originAirport = this.tripWithClaimFlight.originAirport;
     Airport__c destinationAirport = this.tripWithClaimFlight.destinationAirport;
@@ -817,6 +817,7 @@ public class EU261Claim {
     destinationAirport.Is_EU261_Applicable__c);
 
     return (isToOrFromEU261Territory && !hasReceivedBenefitsWhichVoidEU261);
+    */
   }
 
   /**
@@ -831,7 +832,7 @@ public class EU261Claim {
     final Integer LONG_DISTANCE = 3500;
 
     Decimal flightDistanceInM =
-      Airports.distanceBetweenAirportsInMeters(
+      Airport.distanceBetweenAirportsInMeters(
         this.tripWithClaimFlight.originAirport,
         this.tripWithClaimFlight.destinationAirport
       ) / 1000;

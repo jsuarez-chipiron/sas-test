@@ -71,32 +71,26 @@ public without sharing class Claims extends fflib_SObjectDomain {
         parentCaseIds.add(cl.parentCaseId);
       }
     }
-
-    Map<Id, Boolean> bookingIdsToProrationStatus = new Map<Id, Boolean>();
-    List<Booking__c> bookingsForInstanceClaims = new List<Booking__c>();
+    List<Booking> bookingsForInstanceClaims = new List<Booking>();
 
     if (parentCaseIds.size() > 0) {
-      bookingsForInstanceClaims = BookingsSelector.newInstance()
-        .selectByCaseId(parentCaseIds);
-
-      // Claim can potentially be prorated if the booking it is about
-      // has an operating carrier which is not a part of Star Alliance.
-      bookingIdsToProrationStatus = Bookings.newInstance(
-          bookingsForInstanceClaims
-        )
-        .haveNonStarAllianceOperatingCarriers();
+      bookingsForInstanceClaims = Booking.createFromList(
+        BookingsSelector.newInstance().selectByCaseId(parentCaseIds)
+      );
     }
 
     Map<Id, Boolean> claimIdsToProrationStatus = new Map<Id, Boolean>();
 
     for (Claim cl : objects) {
+      // Claim can potentially be prorated if the booking is is about has an
+      // operating carrier which is not a part of Star Alliance.
       claimIdsToProrationStatus.put(cl.underlyingSObject.Id, false);
       if (cl.category == Claim.Category.Baggage) {
-        for (Booking__c booking : bookingsForInstanceClaims) {
-          if (booking.Booking_Reference__c == cl.bookingReference) {
+        for (Booking b : bookingsForInstanceClaims) {
+          if (b.bookingReference == cl.bookingReference) {
             claimIdsToProrationStatus.put(
               cl.id,
-              bookingIdsToProrationStatus.get(booking.Id)
+              b.hasNonStarAllianceOperatingCarriers()
             );
             break;
           }

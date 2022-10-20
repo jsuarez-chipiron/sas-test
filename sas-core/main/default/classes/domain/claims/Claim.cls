@@ -10,6 +10,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
   public ContactType contactType;
   public String contactFirstName;
   public String contactLastName;
+  public String contactFullName { get; private set; } // Formula field
   public String contactAddressLine1;
   public String contactAddressLine2;
   public String contactCity;
@@ -151,6 +152,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     this.unaccompaniedMinor = c.Concerns_an_unaccompanied_minor__c;
     this.contactEmail = c.Contact_Email__c;
     this.contactFirstName = c.Contact_First_Name__c;
+    this.contactFullName = c.Contact_Full_Name__c;
     this.contactLastName = c.Contact_Last_Name__c;
     this.contactCountry = c.Country__c;
     this.preferredCurrency = Currencies.CODE_PICKLIST_VALUE_TO_ENUM.get(

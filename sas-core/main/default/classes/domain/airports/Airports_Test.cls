@@ -24,10 +24,10 @@ private class Airports_Test {
     List<Airport__c> airportsFromDB = AirportsSelector.newInstance()
       .selectByTEDSId(airportIdsFromTEDS);
 
-    Airport__c ARN;
+      Airport ARN;
     for (Airport__c a : airportsFromDB) {
       if (a.TEDS_Identifier__c == 'ARN') {
-        ARN = a;
+        ARN = new Airport(a);
         break;
       }
     }
@@ -37,28 +37,28 @@ private class Airports_Test {
         when 'HEL' {
           System.assertEquals(
             398569,
-            Airports.distanceBetweenAirportsInMeters(ARN, a),
+            Airport.distanceBetweenAirportsInMeters(ARN, new Airport(a)),
             'Should calculate the distance between ARN and HEL correctly.'
           );
         }
         when 'ITM' {
           System.assertEquals(
             8062362,
-            Airports.distanceBetweenAirportsInMeters(ARN, a),
+            Airport.distanceBetweenAirportsInMeters(ARN, new Airport(a)),
             'Should calculate the distance between ARN and ITM correctly.'
           );
         }
         when 'RUN' {
           System.assertEquals(
             9584413,
-            Airports.distanceBetweenAirportsInMeters(ARN, a),
+            Airport.distanceBetweenAirportsInMeters(ARN, new Airport(a)),
             'Should calculate the distance between RUN and ARN correctly.'
           );
         }
         when 'SYD' {
           System.assertEquals(
             15597941,
-            Airports.distanceBetweenAirportsInMeters(ARN, a),
+            Airport.distanceBetweenAirportsInMeters(ARN, new Airport(a)),
             'Should calculate the distance between SYD and ARN correctly.'
           );
         }

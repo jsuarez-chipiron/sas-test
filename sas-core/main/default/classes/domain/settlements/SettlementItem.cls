@@ -68,7 +68,7 @@ public without sharing class SettlementItem extends AbstractSObjectWrapper {
     );
   }
 
-  private SettlementItem() {
+  public SettlementItem() {
     this.underlyingSObject = new Settlement_Item__c();
   }
 

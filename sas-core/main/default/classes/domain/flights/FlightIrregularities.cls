@@ -7,36 +7,10 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
   public List<FlightIrregularities__c> instanceRecords;
   public Map<String, List<FlightIrregularities__c>> TEDSIdToIrregularities = new Map<String, List<FlightIrregularities__c>>{};
 
-  // This should likely be stored in CancellationCode.globalValueSet. However, db calls makes that very annoying.
-  // TODO: Populate, get help from liability: https://docs.google.com/spreadsheets/d/1lo-pu7Ew-f-5z18Ke51962j_VZkI9FfA8kYiKTFUw5o/edit#gid=801456937
-  public static final Map<String, Boolean> codeToSASIsResponsible = new Map<String, Boolean>{
-    'WEAT' => false,
-    'TECH' => true,
-    'INDU' => true,
-    'FA' => true
-  };
-
-  public static final Set<String> POTENTIALROTATIONCODES = new Set<String>{
-    'EQUI',
-    'CREW',
-    'RA (93)',
-    'RA',
-    '93',
-    'RC (95)',
-    'RC',
-    '95',
-    'RS (94)',
-    'RS',
-    '94'
-  };
-
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
       return new FlightIrregularities(records);
     }
-  }
-
-  public class IrregularityException extends Exception {
   }
 
   public static FlightIrregularities newInstance(
@@ -127,7 +101,7 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
         for (FlightIrregularities__c irregularity : irregularities) {
           Id flightId = flight.Id;
           if (flightId == null) {
-            throw new flightsAreMissingIdsException(
+            throw new FlightsAreMissingIdsException(
               'The flights which the irregularities reference do not have Ids. Please insert the flights into the database before calling this function.'
             );
           }
@@ -137,31 +111,6 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
     }
 
     return this;
-  }
-
-  public Boolean containsRotationIrregularities() {
-    for (FlightIrregularities__c f : instanceRecords) {
-      if (POTENTIALROTATIONCODES.contains(f.Code__c)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  public Map<Id, Boolean> isWithinSASControl() {
-    Map<Id, Boolean> irregularityToIsWithinControl = new Map<Id, Boolean>{};
-
-    for (FlightIrregularities__c f : instanceRecords) {
-      Boolean SASisResponsible = codeToSASIsResponsible.get(f.Code__c);
-      if (SASisResponsible == null) {
-        throw new IrregularityException(
-          'Cannot determine wether SAS is within control or not.'
-        );
-      }
-      irregularityToIsWithinControl.put(f.Id, SASisResponsible);
-    }
-
-    return irregularityToIsWithinControl;
   }
 
   public Map<Id, List<FlightIrregularities__c>> getFlightIdToIrregularities() {
@@ -180,179 +129,6 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
       }
     }
     return flightIdToIrregularities;
-  }
-
-  /*
-   * @return a List of 4 decimal values of:
-   * delay on departure [0],
-   * delay on arrival [1],
-   * delay on departure within SAS' control [2],
-   * delay on arrival within SAS' control [3].
-   */
-  public List<Decimal> getTotalDelayInMinutesDivided() {
-    Decimal departureDelay = 0;
-    Decimal arrivalDelay = 0;
-    Decimal departureDelayWithinSASControl = 0;
-    Decimal arrivalDelayWithinSASControl = 0;
-    Boolean cancellationExists = false;
-
-    for (FlightIrregularities__c f : instanceRecords) {
-      String cancellationOrDelay = f.Type__c.substringBefore(' ');
-      String arrivalOrDeparture = f.Type__c.substringAfter(' ');
-      if (cancellationOrDelay == 'Cancellation') {
-        cancellationExists = true;
-      } else {
-        Boolean SASisResponsible = codeToSASIsResponsible.get(f.Code__c);
-        if (SASisResponsible == null) {
-          throw new IrregularityException(
-            'Cannot determine wether SAS is within control or not.'
-          );
-        }
-
-        if (arrivalOrDeparture == '(departure)') {
-          if (SASisResponsible) {
-            departureDelayWithinSASControl += f.Duration_minutes__c;
-          }
-          departureDelay += f.Duration_minutes__c;
-        } else if (arrivalOrDeparture == '(arrival)') {
-          if (SASisResponsible) {
-            arrivalDelayWithinSASControl += f.Duration_minutes__c;
-          }
-          arrivalDelay += f.Duration_minutes__c;
-        } else {
-          throw new IrregularityException('Invalid irregularity type');
-        }
-      }
-    }
-
-    if (cancellationExists && (departureDelay + arrivalDelay) != 0) {
-      throw new IrregularityException(
-        'There are both cancellation and delay irregularities'
-      );
-    }
-
-    return new List<Decimal>{
-      departureDelay,
-      arrivalDelay,
-      departureDelayWithinSASControl,
-      arrivalDelayWithinSASControl
-    };
-  }
-
-  /**
-   * @return a String with an explanation which of the irregularities SAS is not responsible for.
-   */
-  public String getOutsideSASControlExplanation() {
-    Decimal totalDelayOutsideSASControl = 0;
-    String explanation = 'SAS is not responsible for delay(s) with reason code(s): ';
-
-    for (FlightIrregularities__c f : instanceRecords) {
-      Boolean SASisResponsible = codeToSASIsResponsible.get(f.Code__c);
-      if (SASisResponsible == null) {
-        throw new IrregularityException(
-          'Cannot get explanation of why SAS is within control or not.'
-        );
-      }
-      if (!SASisResponsible) {
-        totalDelayOutsideSASControl += f.Duration_minutes__c;
-        explanation += f.Code__c + ' (' + f.Duration_minutes__c + ' minutes), ';
-      }
-    }
-
-    explanation += '(Total: ' + totalDelayOutsideSASControl + ' minutes)';
-
-    return explanation;
-  }
-
-  public void removeNA0Delay() {
-    List<FlightIrregularities__c> irregularitiesToSave = new List<FlightIrregularities__c>{};
-    for (FlightIrregularities__c fi : instanceRecords) {
-      if (
-        !((fi.Code__c == 'N/A' && fi.Duration_minutes__c == 0) ||
-        (fi.Code__c == null &&
-        fi.Duration_minutes__c == null))
-      ) {
-        irregularitiesToSave.add(fi);
-      }
-    }
-
-    this.instanceRecords = irregularitiesToSave;
-  }
-
-  public void removeAllButCancellations() {
-    List<FlightIrregularities__c> irregularitiesToSave = new List<FlightIrregularities__c>{};
-    for (FlightIrregularities__c fi : instanceRecords) {
-      String cancellationOrDelay = fi.Type__c.substringBefore(' ');
-      if (cancellationOrDelay == 'Cancellation') {
-        irregularitiesToSave.add(fi);
-      }
-    }
-
-    this.instanceRecords = irregularitiesToSave;
-  }
-
-  // We might be able to get rid of this in the future.
-  public void removeDuplicates() {
-    List<FlightIrregularities__c> irregularitiesToSave = new List<FlightIrregularities__c>{};
-    List<IrregularityWrapper> addedIrregularities = new List<IrregularityWrapper>{};
-    for (FlightIrregularities__c fi : instanceRecords) {
-      IrregularityWrapper iw = new IrregularityWrapper(fi);
-      if (!addedIrregularities.contains(iw)) {
-        addedIrregularities.add(iw);
-        irregularitiesToSave.add(fi);
-      }
-    }
-
-    this.instanceRecords = irregularitiesToSave;
-  }
-
-  /*
-    A duplicate is defined as the other object having the same:
-    Code__c,
-    Flight__c,
-    Reason__c,
-    Duration_minutes__c,
-    Type__c,
-    Description__c,
-    Cancellation_Time__c
-  */
-  private class IrregularityWrapper {
-    public FlightIrregularities__c irregulatity;
-
-    public IrregularityWrapper(FlightIrregularities__c irregulatity) {
-      this.irregulatity = irregulatity;
-    }
-
-    public Boolean equals(Object compareTo) {
-      IrregularityWrapper otherIrregulatity = (IrregularityWrapper) compareTo;
-
-      if (
-        irregulatity.Code__c == otherIrregulatity.irregulatity.Code__c &&
-        irregulatity.Flight__c == otherIrregulatity.irregulatity.Flight__c &&
-        irregulatity.Reason__c == otherIrregulatity.irregulatity.Reason__c &&
-        irregulatity.Duration_minutes__c ==
-        otherIrregulatity.irregulatity.Duration_minutes__c &&
-        irregulatity.Type__c == otherIrregulatity.irregulatity.Type__c &&
-        irregulatity.Description__c ==
-        otherIrregulatity.irregulatity.Description__c &&
-        irregulatity.Cancellation_Time__c ==
-        otherIrregulatity.irregulatity.Cancellation_Time__c
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  }
-
-  public Boolean containsCancellation() {
-    for (FlightIrregularities__c f : instanceRecords) {
-      String cancellationOrDelay = f.Type__c.substringBefore(' ');
-      if (cancellationOrDelay == 'Cancellation') {
-        return true;
-      }
-    }
-    return false;
   }
 
   /**
@@ -377,9 +153,9 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
         if (reasonText?.length() > 2000) {
           reasonText = reasonText.substring(0, 2000);
         }
-        if (codeToSASIsResponsible.get(code) == null) {
+        if (FlightIrregularity.codeToSASIsResponsible.get(code) == null) {
           eligibleForEU261 = 'Tentative';
-        } else if (codeToSASIsResponsible.get(code)) {
+        } else if (FlightIrregularity.codeToSASIsResponsible.get(code)) {
           eligibleForEU261 = 'Yes';
         } else {
           eligibleForEU261 = 'No';
@@ -443,9 +219,9 @@ public without sharing class FlightIrregularities extends fflib_SObjectDomain {
           } catch (Exception e) {
           }
         }
-        if (codeToSASIsResponsible.get(code) == null) {
+        if (FlightIrregularity.codeToSASIsResponsible.get(code) == null) {
           eligibleForEU261 = 'Tentative';
-        } else if (codeToSASIsResponsible.get(code)) {
+        } else if (FlightIrregularity.codeToSASIsResponsible.get(code)) {
           eligibleForEU261 = 'Yes';
         } else {
           eligibleForEU261 = 'No';

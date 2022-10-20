@@ -114,11 +114,11 @@ private class ClaimsSelector_Test {
     );
 
     String flightIdentifier1 =
-      Flights.constructTEDSFlightNumberDate('SK1', today) + '-UME-ARN';
+      Flight.constructTEDSFlightNumberDate('SK1', today) + '-UME-ARN';
     String flightIdentifier2 =
-      Flights.constructTEDSFlightNumberDate('SK2', today) + '-ARN-UME';
+      Flight.constructTEDSFlightNumberDate('SK2', today) + '-ARN-UME';
     String flightIdentifier3 =
-      Flights.constructTEDSFlightNumberDate('SK3', today) + '-UME-ARN';
+      Flight.constructTEDSFlightNumberDate('SK3', today) + '-UME-ARN';
 
     Flight__c flight1 = new Flight__c(
       Arrival_Airport__c = 'ARN',

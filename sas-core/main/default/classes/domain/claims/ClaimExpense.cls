@@ -29,6 +29,7 @@ public without sharing class ClaimExpense extends AbstractSObjectWrapper {
 
   public ClaimExpense(Claim_Expense__c expense) {
     super(expense);
+    this.underlyingSObject = expense;
 
     this.amount = expense.Amount__c;
     this.parentClaimId = expense.Claim__c;

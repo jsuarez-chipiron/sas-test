@@ -2,6 +2,9 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
   public List<Schema.SObjectField> getSObjectFieldList() {
     return new List<Schema.SObjectField>{
       Settlement__c.Id,
+      Settlement__c.Name,
+      Settlement__c.CreatedDate,
+      Settlement__c.LastModifiedDate,
       Settlement__c.Address_line_1__c,
       Settlement__c.Address_line_2__c,
       Settlement__c.Amount__c,
@@ -15,7 +18,6 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
       Settlement__c.Currency__c,
       Settlement__c.EuroBonus_Number__c,
       Settlement__c.EuroBonus_Points__c,
-      Settlement__c.Name,
       Settlement__c.Payee_First_Name__c,
       Settlement__c.Payee_Last_Name__c,
       Settlement__c.Payee_Name__c,
