@@ -1246,7 +1246,7 @@ private class EU261Service_Test {
     Test.stopTest();
 
     for (EU261Claim c : claimsWithEvaluationDetails) {
-      if (c.bookingType == Booking.Type.OneWay) {
+      if (c.claimedBooking.type == Booking.Type.OneWay) {
         System.assertEquals(
           Claim.EU261HandlingStatus.EligibleForCompensation,
           c.decision.verdict,
@@ -1508,26 +1508,16 @@ private class EU261Service_Test {
       .automateEU261Claims(claimIds, uow);
     Test.stopTest();
 
-    for (EU261Claim c : claimsWithEvaluationDetails) {
-      if (c.claimedBooking.bookingReference == oneWayBookingReference) {
-        System.assertEquals(
-          Claim.EU261HandlingStatus.EligibleForCompensation,
-          c.decision.verdict,
-          'Claim with a single booking should be possible to evaluate.'
-        );
-      } else {
-        System.assertEquals(
-          Claim.EU261HandlingStatus.UnableToHandle,
-          c.decision.verdict,
-          'Claim with more than one booking cannot be evaluated.'
-        );
-        System.assertEquals(
-          'can handle only one booking per claim',
-          c.decision.reasoning,
-          'Rejection reason should be "can handle only one booking per claim"'
-        );
-      }
-    }
+    System.assertEquals(
+      Claim.EU261HandlingStatus.UnableToHandle,
+      claimsWithEvaluationDetails[0].decision.verdict,
+      'Claim with more than one booking cannot be evaluated.'
+    );
+    System.assertEquals(
+      'can handle only one booking per claim',
+      claimsWithEvaluationDetails[0].decision.reasoning,
+      'Rejection reason should be "can handle only one booking per claim"'
+    );
   }
 
   @IsTest
@@ -1855,7 +1845,7 @@ private class EU261Service_Test {
     System.assertEquals(
       Claim.EU261HandlingStatus.UnableToHandle,
       claimsWithEvaluationDetails[0].decision.verdict,
-      'It should not be possible to evaluate claims with flights not operated by SAS.'
+      'It should not be possible to evaluate claims with possible duplicates.'
     );
     System.assertEquals(
       'cannot handle potential duplicates',

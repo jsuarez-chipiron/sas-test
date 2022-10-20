@@ -292,13 +292,24 @@ public without sharing class EU261Service {
         );
       }
 
+      for (Booking b : booking.objects) {
+        for (Segment s : b.segments) {
+          s.flight.irregularities = claimSpecificIrregularities.get(
+            s.flight.id
+          );
+          s.flight.departureAirportObject = airportCodeToAirportObjects.get(
+            s.flight.departureAirport
+          );
+          s.flight.arrivalAirportObject = airportCodeToAirportObjects.get(
+            s.flight.arrivalAirport
+          );
+        }
+      }
+
       EU261Claim fullClaim = new EU261Claim(
         c,
-        booking.objects[0],
-        claimSpecificIrregularities,
-        hasPotentiallyDuplicateClaims,
-        foundMultipleMatchingBookings,
-        airportCodeToAirportObjects
+        booking.objects,
+        hasPotentiallyDuplicateClaims
       );
 
       toReturn.add(fullClaim);

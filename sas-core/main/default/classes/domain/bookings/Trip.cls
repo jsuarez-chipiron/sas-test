@@ -40,20 +40,25 @@ public without sharing class Trip {
    *
    * @return A map of booking id to each trip in booking
    */
-  public static List<Trip> createFromBooking(
-    Booking b,
-    Map<String, Airport> airportCodeToAirport // TODO: Get rid of this.
-  ) {
+  public static List<Trip> createFromBooking(Booking b) {
     Map<Id, List<Trip>> bookingIdToTrips = new Map<Id, List<Trip>>{};
 
     // Sort the Segments
     if (b.segments == null) {
       throw new InsufficientDataException(
-        'You must fetch the Segments__r for the booking.'
+        'You must fetch the segments for the booking.'
       );
     }
 
-    return divideBookingSegmentsIntoTrips(b, airportCodeToAirport);
+    for (Segment s : b.segments) {
+      if (s.flight == null) {
+        throw new InsufficientDataException(
+          'You must fetch flights for the segments in the booking.'
+        );
+      }
+    }
+
+    return divideBookingSegmentsIntoTrips(b);
   }
 
   public class InsufficientDataException extends Exception {
@@ -462,10 +467,7 @@ public without sharing class Trip {
    *
    * @return a List<Trip> of the trips sorted in reverse order.
    */
-  private static List<Trip> divideBookingSegmentsIntoTrips(
-    Booking booking,
-    Map<String, Airport> airportCodeToAirport
-  ) {
+  private static List<Trip> divideBookingSegmentsIntoTrips(Booking booking) {
     List<Segment> sortedSegments = booking.segments;
     sortedSegments.sort(); // TODO: Make cleaner
     List<Leg> sortedLegs = Leg.createFromSegments(sortedSegments);
@@ -492,7 +494,11 @@ public without sharing class Trip {
     }
 
     for (Trip t : tripsToReturn) {
-      t.setAirports(airportCodeToAirport);
+      Flight firstFlight = t.sortedLegs[0].flight;
+      Flight finalFlight = t.getFlightToFinalDestination();
+
+      t.originAirport = firstFlight.departureAirportObject;
+      t.destinationAirport = finalFlight.arrivalAirportObject;
     }
 
     return tripsToReturn;
@@ -578,37 +584,5 @@ public without sharing class Trip {
     // }
 
     // return tripsToReturn;
-  }
-
-  // Do not use in batch
-  private void setAirports() {
-    Flight firstFlight = sortedLegs[0].flight;
-    Flight finalFlight = getFlightToFinalDestination();
-
-    String originAirportCode = firstFlight.departureAirport;
-    String destinationAirportCode = finalFlight.arrivalAirport;
-
-    List<Airport__c> aps = AirportsSelector.newInstance()
-      .selectByIATACode(
-        new Set<String>{ originAirportCode, destinationAirportCode }
-      );
-
-    for (Airport__c a : aps) {
-      if (a.TEDS_Identifier__c == originAirportCode) {
-        this.originAirport = new Airport(a);
-      } else if (a.TEDS_Identifier__c == destinationAirportCode) {
-        this.destinationAirport = new Airport(a);
-      }
-    }
-  }
-
-  private void setAirports(Map<String, Airport> airportCodeToAirport) {
-    Flight firstFlight = sortedLegs[0].flight;
-    Flight finalFlight = getFlightToFinalDestination();
-
-    this.originAirport = airportCodeToAirport.get(firstFlight.arrivalAirport);
-    this.destinationAirport = airportCodeToAirport.get(
-      finalFlight.departureAirport
-    );
   }
 }

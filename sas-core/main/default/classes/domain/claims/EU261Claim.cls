@@ -76,13 +76,10 @@ public class EU261Claim {
     }
   }
 
-  @TestVisible
-  private Booking.Type bookingType;
   public Claim claimObj { public get; private set; }
   @TestVisible
   private Booking claimedBooking;
   private List<Trip> trips;
-  private Map<Id, List<FlightIrregularity>> flightToIrregularities;
   private Trip tripWithClaimFlight;
   private Boolean hasPotentiallyDuplicateClaims = false;
   private Boolean foundMultipleMatchingBookings = false;
@@ -92,24 +89,26 @@ public class EU261Claim {
 
   public EU261Claim(
     Claim c,
-    Booking b,
-    Map<Id, List<FlightIrregularity>> flightToIrregularities, // TODO: This we should add in to the booking.flights.irregularities
-    Boolean hasPotentiallyDuplicateClaims,
-    Boolean foundMultipleMatchingBookings,
-    Map<String, Airport> airportCodeToAirport // TODO: Get rid of this.
+    List<Booking> b,
+    Boolean hasPotentiallyDuplicateClaims
   ) {
     this.claimObj = c;
 
-    this.claimedBooking = b;
-    this.flightToIrregularities = flightToIrregularities;
     this.hasPotentiallyDuplicateClaims = hasPotentiallyDuplicateClaims;
-    this.foundMultipleMatchingBookings = foundMultipleMatchingBookings;
 
-    if (b != null) {
-      this.bookingType = b.type;
+    if (b != null && b.size() != 0) {
+      this.claimedBooking = b[0];
+
+      for (Flight f : this.claimedBooking.flights) {
+        for (FlightIrregularity fi : f.irregularities) {
+          System.debug(fi);
+        }
+      }
+
+      this.foundMultipleMatchingBookings = b.size() > 1;
 
       try {
-        this.trips = b.getTrips(airportCodeToAirport);
+        this.trips = claimedBooking.getTrips();
       } catch (Trip.BookingTypeNotSupportedException e) {
         // If not supported, we'll leave trips empty. We'll ignore these when
         // processing cases later on.
@@ -152,8 +151,8 @@ public class EU261Claim {
       throw new AutomationException('claimFlight not set');
     }
 
-    for (FlightIrregularity fi : flightToIrregularities.get(claimFlight.id)) {
-      if (!fi.isNA0Delay() && fi.isCancellation()) {
+    for (FlightIrregularity fi : claimFlight.irregularities) {
+      if (fi.isCancellation()) {
         return true;
       }
     }
@@ -162,21 +161,15 @@ public class EU261Claim {
   }
 
   private Boolean hasMoreThanOneCancellation() {
-    // TODO: This is broken. It is currently checking whether there is more than one cancellation on
-    // the claim flight. It should check whether there is more than one cancellation on the entire trip.
-    List<FlightIrregularity> cancellations = new List<FlightIrregularity>();
-
-    List<FlightIrregularity> uniqueIrregularities = FlightIrregularity.unique(
-      flightToIrregularities.get(claimFlight.id)
-    );
-
-    for (FlightIrregularity fi : uniqueIrregularities) {
-      if (fi.isCancellation()) {
-        cancellations.add(fi);
+    Integer count = 0;
+    for (Flight f : this.claimedBooking.flights) {
+      for (FlightIrregularity fi : f.irregularities) {
+        if (fi.isCancellation()) {
+          count += 1;
+        }
       }
     }
-
-    return cancellations.size() > 1;
+    return count > 1;
   }
 
   private Boolean hasOnlyOneFlightRoute() {
@@ -552,9 +545,6 @@ public class EU261Claim {
       ) / 1000;
     Integer flightDistanceInKmRounded = flightDistanceInKm.intValue();
     Boolean isIntraCommunity = originalTrip.isIntraCommunity();
-    List<FlightIrregularity> flightIrregularities = this.flightToIrregularities.get(
-      this.claimFlight.Id
-    );
     Integer daysUntilFlightWhenInformedOfCancellation = this.getDaysBetweenCancellationAndDeparture();
 
     // Get the new (suggested) flight plan
@@ -670,24 +660,20 @@ public class EU261Claim {
   }
 
   private Boolean cancellationCodeIsWithinSASControl() {
-    List<FlightIrregularity> irregularitiesForClaimFlight = this.flightToIrregularities.get(
-      this.claimFlight.id
-    );
-
     if (
-      irregularitiesForClaimFlight == null ||
-      irregularitiesForClaimFlight.size() == 0
+      claimFlight.irregularities == null ||
+      claimFlight.irregularities.size() == 0
     ) {
       throw new AutomationException(
         'Claim flight has no valid irregularities.'
       );
-    } else if (irregularitiesForClaimFlight.size() > 1) {
+    } else if (claimFlight.irregularities.size() > 1) {
       throw new AutomationException(
         'Cancelled flight has more than one irregularity.'
       );
     }
 
-    return irregularitiesForClaimFlight[0].isWithinSASControl();
+    return claimFlight.irregularities[0].isWithinSASControl();
   }
 
   private Boolean canDetermineIfSASIsResponsibleForCancellation() {
@@ -707,14 +693,11 @@ public class EU261Claim {
    */
   private Integer getMinutesDelayedWithinSASControl() {
     Flight f = this.tripWithClaimFlight.getFlightToFinalDestination();
-    List<FlightIrregularity> irregularities = this.flightToIrregularities.get(
-      f.Id
-    );
 
     Integer delayCausedByIrregularitiesWithinSASControl = FlightService.newInstance()
       .getTotalDelayInMinutesWithinSASControl(
         new List<Flight>{ f },
-        this.flightToIrregularities
+        new Map<Id, List<FlightIrregularity>>{ f.id => f.irregularities }
       )
       .get(f.id);
     Integer netDelayedMinutes = Integer.valueOf(f.arrivalDelayedMinutes);
@@ -741,11 +724,7 @@ public class EU261Claim {
   private Integer getDaysBetweenCancellationAndDeparture() {
     List<FlightIrregularity> claimIrregularities = new List<FlightIrregularity>();
 
-    for (
-      FlightIrregularity fi : this.flightToIrregularities.get(
-        this.claimFlight.id
-      )
-    ) {
+    for (FlightIrregularity fi : this.claimFlight.irregularities) {
       if (fi.isCancellation()) {
         claimIrregularities.add(fi);
       }
@@ -780,7 +759,7 @@ public class EU261Claim {
   private Boolean hasRotationIrregularities() {
     Flight f = this.tripWithClaimFlight.getFlightToFinalDestination();
 
-    for (FlightIrregularity fi : this.flightToIrregularities.get(f.id)) {
+    for (FlightIrregularity fi : this.claimFlight.irregularities) {
       if (fi.isRotation()) {
         return true;
       }

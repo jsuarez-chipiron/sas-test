@@ -9,8 +9,24 @@ public without sharing class Booking extends AbstractSObjectWrapper {
   public Type type;
 
   public List<Segment> segments;
-  public List<Flight> flights;
   public List<Passenger> passengers;
+
+  public List<Flight> flights {
+    get {
+      if (this.segments == null) {
+        return null;
+      }
+      List<Flight> toReturn = new List<Flight>();
+
+      for (Segment s : this.segments) {
+        if (s.flight != null) {
+          toReturn.add(s.flight);
+        }
+      }
+
+      return toReturn;
+    }
+  }
 
   public class MissingDataException extends Exception {
   }
@@ -44,17 +60,10 @@ public without sharing class Booking extends AbstractSObjectWrapper {
       for (Segment__c segmentSObject : b.Segments__r) {
         Segment s = new Segment(segmentSObject);
         segmentsForBooking.add(s);
-
-        if (s.flight != null) {
-          flightsForBooking.add(s.flight);
-        }
       }
 
       segmentsForBooking.sort();
       this.segments = segmentsForBooking;
-      if (flightsForBooking.size() != 0) {
-        this.flights = flightsForBooking;
-      }
     }
 
     if (b.Passengers__r != null) {
@@ -191,8 +200,8 @@ public without sharing class Booking extends AbstractSObjectWrapper {
    *
    * @return A map of booking id to each trip in booking
    */
-  public List<Trip> getTrips(Map<String, Airport> airportCodeToAirport) {
-    return Trip.createFromBooking(this, airportCodeToAirport);
+  public List<Trip> getTrips() {
+    return Trip.createFromBooking(this);
   }
 
   /**
