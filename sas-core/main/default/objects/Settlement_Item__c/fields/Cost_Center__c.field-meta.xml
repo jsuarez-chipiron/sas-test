@@ -16,6 +16,11 @@
                 <default>true</default>
                 <label>90801</label>
             </value>
+            <value>
+                <fullName>71470</fullName>
+                <default>false</default>
+                <label>71470</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

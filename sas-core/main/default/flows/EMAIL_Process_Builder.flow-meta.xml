@@ -345,7 +345,7 @@
         </rules>
         <rules>
             <name>User</name>
-            <conditionLogic>1 AND  (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 )</conditionLogic>
+            <conditionLogic>1 AND  (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Parent.OwnerId</leftValueReference>
                 <operator>StartsWith</operator>
@@ -428,6 +428,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Refunds</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.Department__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency</stringValue>
                 </rightValue>
             </conditions>
             <connector>
