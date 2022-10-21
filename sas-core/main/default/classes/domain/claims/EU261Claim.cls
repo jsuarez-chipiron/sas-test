@@ -36,10 +36,8 @@ public class EU261Claim {
   }
 
   public class Decision {
-    public Integer compensationAmount { get; private set; } // Compensation is always per customer
     public Integer reimbursementAmount { get; private set; } // Reimbursement is one per claim because expenses are not tied to a customer
-
-    public Map<ClaimCustomer, Integer> compensationPerCustomer; // TODO: We need something like this.
+    public Map<ClaimCustomer, Integer> compensationPerCustomer;
 
     public Claim.EU261HandlingStatus verdict { get; private set; }
 
@@ -53,23 +51,25 @@ public class EU261Claim {
       }
       this.verdict = verdict;
       this.reasoning = reasoning;
-      this.compensationAmount = 0;
       this.reimbursementAmount = 0;
     }
 
     Decision(
       String reasoning,
-      Integer compensationAmount,
+      Map<ClaimCustomer, Integer> compensationByCustomer,
       Integer reimbursementAmount
     ) {
-      if (compensationAmount == 0 && reimbursementAmount == 0) {
+      if (
+        reimbursementAmount == 0 &&
+        (compensationByCustomer == null || compensationByCustomer.isEmpty())
+      ) {
         throw new CreateException(
           'Cannot create an eligible decision with compensation and reimbursement amount both set to 0.'
         );
       }
       this.verdict = Claim.EU261HandlingStatus.EligibleForCompensation;
       this.reasoning = reasoning;
-      this.compensationAmount = compensationAmount;
+      this.compensationPerCustomer = compensationByCustomer;
       this.reimbursementAmount = reimbursementAmount;
 
       // TODO: Create this properly per customer.
@@ -599,64 +599,67 @@ public class EU261Claim {
       );
     }
 
-    Integer numberOfEligiblePassengers = this.getNumberOfPassengersEligibleForCompensation();
+    List<ClaimCustomer> eligiblePassengers = this.getPassengersEligibleForCompensation();
 
-    Integer totalCompensation = compensation * numberOfEligiblePassengers;
-
-    if (totalCompensation > 0) {
-      // TODO: Will this ever happen?
-      return new Decision('', totalCompensation, 0); // TODO: Reimbursement!
-    } else {
-      String reason = 'unknown';
-      if (numberOfEligiblePassengers == 0) {
-        reason = 'there are no passengers which are eligible for compensation';
-      } else if (compensation == 0) {
-        reason = 'the offered rebooking is not outside the timeframe allowed by EU261';
-      }
+    if (eligiblePassengers.size() == 0) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        reason
+        'there are no passengers which are eligible for compensation'
       );
     }
+
+    if (compensation == 0) {
+      return new Decision(
+        Claim.EU261HandlingStatus.IneligibleForCompensation,
+        'the offered rebooking is not outside the timeframe allowed by EU261'
+      );
+    }
+
+    Map<ClaimCustomer, Integer> compensationByCustomer = new Map<ClaimCustomer, Integer>();
+
+    for (ClaimCustomer p : eligiblePassengers) {
+      compensationByCustomer.put(p, compensation);
+    }
+
+    return new Decision('', compensationByCustomer, 0); // TODO: reimbursement
   }
 
-  private Integer getNumberOfPassengersEligibleForCompensation() {
+  private List<ClaimCustomer> getPassengersEligibleForCompensation() {
     // TODO: Check: Is fare = 0?
 
-    List<Passenger> passengers = this.claimedBooking.passengers; // FIXME: This should always be about travelers in claim, not passengers in booking
+    List<Passenger> passengers = this.claimedBooking.passengers;
 
     List<ClaimCustomer> customers = this.claimObj.customers;
 
-    List<Passenger> eligiblePassengers = new List<Passenger>();
+    List<ClaimCustomer> eligibleCustomers = new List<ClaimCustomer>();
 
     for (Passenger passenger : passengers) {
-      Boolean claimedPassenger = false;
       for (ClaimCustomer cc : customers) {
         if (
           cc.firstName.toLowerCase() == passenger.firstName.toLowerCase() &&
           cc.lastName.toLowerCase() == passenger.lastName.toLowerCase()
         ) {
-          claimedPassenger = true;
-          break;
-        }
-      }
+          Boolean isInfant = passenger.identifier.toLowerCase().contains('inf');
 
-      if (claimedPassenger) {
-        Boolean isInfant = passenger.identifier.toLowerCase().contains('inf');
-        if (isInfant) {
-          Boolean isDomesticTripInDenmark =
-            this.tripWithClaimFlight.destinationAirport.countryCode == 'DK' &&
-            this.tripWithClaimFlight.originAirport.countryCode == 'DK';
-          if (isDomesticTripInDenmark) {
-            eligiblePassengers.add(passenger);
+          if (!isInfant) {
+            eligibleCustomers.add(cc);
+          } else {
+            // Infants are usually not entitled to compensation
+            Boolean isDomesticTripInDenmark =
+              this.tripWithClaimFlight.destinationAirport.countryCode == 'DK' &&
+              this.tripWithClaimFlight.originAirport.countryCode == 'DK';
+            if (isDomesticTripInDenmark) {
+              // Unless the trip is a domestic flight in denmark.
+              eligibleCustomers.add(cc);
+            }
           }
-        } else {
-          eligiblePassengers.add(passenger);
+
+          break;
         }
       }
     }
 
-    return eligiblePassengers.size();
+    return eligibleCustomers;
   }
 
   private Boolean cancellationCodeIsWithinSASControl() {
@@ -816,43 +819,48 @@ public class EU261Claim {
         this.tripWithClaimFlight.destinationAirport
       ) / 1000;
     Integer flightDistanceInKm = flightDistanceInM.intValue();
-    Integer numberOfEligiblePassengers = this.getNumberOfPassengersEligibleForCompensation();
+    List<ClaimCustomer> passengersEligibleForCompensation = this.getPassengersEligibleForCompensation();
     Integer delayedMinutes = this.getMinutesDelayedWithinSASControl();
 
-    Integer compensationAmount = 0;
+    if (passengersEligibleForCompensation.size() == 0) {
+      return new Decision(
+        Claim.EU261HandlingStatus.IneligibleForCompensation,
+        'no passenger in this claim has a revenue ticket.'
+      );
+    }
 
     if (delayedMinutes < MINIMUM_DELAY_FOR_COMPENSATION) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
         'delayed less than 180 minutes.'
       );
-    } else {
-      if (flightDistanceInKm <= MEDIUM_DISTANCE) {
-        compensationAmount = numberOfEligiblePassengers * 250;
-      } else if (
-        flightDistanceInKm > MEDIUM_DISTANCE &&
-        (flightDistanceInKm <= LONG_DISTANCE ||
-        this.tripWithClaimFlight.isIntraCommunity())
-      ) {
-        compensationAmount = numberOfEligiblePassengers * 400;
-      } else if (delayedMinutes < MINIMUM_DELAY_FOR_INCREASED_COMPENSATION) {
-        compensationAmount = numberOfEligiblePassengers * 300;
-      } else if (delayedMinutes >= MINIMUM_DELAY_FOR_INCREASED_COMPENSATION) {
-        compensationAmount = numberOfEligiblePassengers * 600;
-      } else {
-        // TODO: Can we get rid of this?
-        throw new AutomationException('Invalid compensation calculation.');
-      }
-
-      if (numberOfEligiblePassengers == 0) {
-        return new Decision(
-          Claim.EU261HandlingStatus.IneligibleForCompensation,
-          'no passenger in this claim has a revenue ticket.'
-        );
-      } else {
-        return new Decision('', compensationAmount, 0); // TODO: Several customers, reimbursement!
-      }
     }
+
+    Integer compensationAmount = 0;
+
+    if (flightDistanceInKm <= MEDIUM_DISTANCE) {
+      compensationAmount = 250;
+    } else if (
+      flightDistanceInKm > MEDIUM_DISTANCE &&
+      (flightDistanceInKm <= LONG_DISTANCE ||
+      this.tripWithClaimFlight.isIntraCommunity())
+    ) {
+      compensationAmount = 400;
+    } else if (delayedMinutes < MINIMUM_DELAY_FOR_INCREASED_COMPENSATION) {
+      compensationAmount = 300;
+    } else if (delayedMinutes >= MINIMUM_DELAY_FOR_INCREASED_COMPENSATION) {
+      compensationAmount = 600;
+    } else {
+      // TODO: Can we get rid of this?
+      throw new AutomationException('Invalid compensation calculation.');
+    }
+    Map<ClaimCustomer, Integer> compensationByCustomer = new Map<ClaimCustomer, Integer>();
+
+    for (ClaimCustomer p : passengersEligibleForCompensation) {
+      compensationByCustomer.put(p, compensationAmount);
+    }
+
+    return new Decision('', compensationByCustomer, 0); // TODO: reimbursement
   }
 
   private Integer calculateCompensationCancellation(

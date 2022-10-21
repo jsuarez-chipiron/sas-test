@@ -35,8 +35,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
   public Currencies.Code preferredCurrency;
   public String euroBonusNumber;
 
-  public Boolean personWithReducedMobility;
-  public Boolean unaccompaniedMinor;
+  public Boolean personWithReducedMobility = false;
+  public Boolean unaccompaniedMinor = false;
 
   public DelayLength delayToDestination;
   public Date departureDate;

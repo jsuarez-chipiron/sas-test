@@ -66,7 +66,16 @@ private class EU261Service_Test {
 
   @TestSetup
   static void setup() {
+    Cases.bypassTrigger = true;
+    TestDataFactories.insertEmailTemplates(
+      new Set<String>{
+        EU261Service.AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME,
+        EU261Service.AUTOMATION_REJECTED_EMAIL_TEMPLATE_NAME
+      }
+    );
+
     Test.setMock(HttpCalloutMock.class, new APIMMock());
+
     Flight__c flight1 = new Flight__c(
       Arrival_Airport__c = 'ARN',
       Departure_Airport__c = 'HEL',
@@ -1105,6 +1114,254 @@ private class EU261Service_Test {
       minimalClaimDelay,
       rotationDelay
     };
+
+    TestDataFactories.CasesClaims individualClaim = createDefaultTestClaim(
+      individualPassengerBookingReference,
+      null
+    );
+    TestDataFactories.CasesClaims coupleClaim = createDefaultTestClaim(
+      coupleBookingReference,
+      null
+    );
+    TestDataFactories.CasesClaims duplicatePNRClaim = createDefaultTestClaim(
+      duplicateBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0001'
+      }
+    );
+    TestDataFactories.CasesClaims nonEUClaim = createDefaultTestClaim(
+      nonEUBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0004'
+      }
+    );
+    TestDataFactories.CasesClaims expenseClaim = createDefaultTestClaim(
+      claimExpensesBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0001'
+      }
+    );
+    TestDataFactories.CasesClaims claimWithTooShortDelay = createDefaultTestClaim(
+      tooShortDelayBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0006'
+      }
+    );
+    TestDataFactories.CasesClaims claimWithTooLongDelay = createDefaultTestClaim(
+      tooLongDelayBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0007'
+      }
+    );
+    TestDataFactories.CasesClaims claimWithMissingFlightFromBooking = createDefaultTestClaim(
+      missingClaimedFlightBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0006'
+      }
+    );
+    TestDataFactories.CasesClaims claimWithTwoIrregularities = createDefaultTestClaim(
+      twoIrregularitiesBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0005'
+      }
+    );
+    TestDataFactories.CasesClaims claimWithRotationIrregularity = createDefaultTestClaim(
+      rotationBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0010'
+      }
+    );
+    TestDataFactories.CasesClaims claimNotOperatedBySAS = createDefaultTestClaim(
+      notOperatedBySASBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'LH0001',
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-18')
+      }
+    );
+    TestDataFactories.CasesClaims existingDuplicateClaim = createDefaultTestClaim(
+      twoClaimsSameBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0001'
+      }
+    );
+    TestDataFactories.CasesClaims newDuplicateClaim = createDefaultTestClaim(
+      twoClaimsSameBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0001'
+      }
+    );
+    TestDataFactories.CasesClaims minimalClaim = createDefaultTestClaim(
+      minimalClaimBookingReference,
+      null
+    );
+    TestDataFactories.CasesClaims claimCancellationWithinSASControl = createDefaultTestClaim(
+      cancellationBookingWithinSASControlReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0008',
+        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
+      }
+    );
+    TestDataFactories.CasesClaims claimCancellationOutsideSASControl = createDefaultTestClaim(
+      cancellationBookingOutsideSASControlReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0011',
+        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
+      }
+    );
+    TestDataFactories.CasesClaims claimUnsupportCancellation = createDefaultTestClaim(
+      cancellationBookingUnsupportedReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0012',
+        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
+      }
+    );
+    TestDataFactories.CasesClaims claimTwoCancellations = createDefaultTestClaim(
+      cancellationBookingTwoCancellationsReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0013',
+        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
+      }
+    );
+    TestDataFactories.CasesClaims claimWithValidRebooking = createDefaultTestClaim(
+      cancellationWithRebookingBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0013',
+        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
+        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
+      }
+    );
+    TestDataFactories.CasesClaims groupClaim = createDefaultTestClaim(
+      groupBookingReference,
+      null
+    );
+    TestDataFactories.CasesClaims differentLastNamesClaim = createDefaultTestClaim(
+      differentLastNamesReference,
+      null
+    );
+    TestDataFactories.CasesClaims missingTravelersFromBookingClaim = createDefaultTestClaim(
+      missingTravelersBookingReference,
+      null
+    );
+    TestDataFactories.CasesClaims claimFirmClaim = createDefaultTestClaim(
+      claimFirmBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Type_of_Customer__c => 'Claim firm'
+      }
+    );
+    TestDataFactories.CasesClaims oneWayClaim = createDefaultTestClaim(
+      oneWayBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0001'
+      }
+    );
+    TestDataFactories.CasesClaims dayReturnClaim = createDefaultTestClaim(
+      dayReturnBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0001'
+      }
+    );
+    TestDataFactories.CasesClaims multiCityClaim = createDefaultTestClaim(
+      multiCityBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0001'
+      }
+    );
+    TestDataFactories.CasesClaims roundTripClaim = createDefaultTestClaim(
+      roundTripBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0001'
+      }
+    );
+    TestDataFactories.CasesClaims unknownClaim = createDefaultTestClaim(
+      unknownBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0001'
+      }
+    );
+
+    createCaseToBookings(
+      new List<TestDataFactories.CasesClaims>{
+        individualClaim,
+        coupleClaim,
+        duplicatePNRClaim,
+        nonEUClaim,
+        expenseClaim,
+        claimWithTooShortDelay,
+        claimWithTooLongDelay,
+        claimWithMissingFlightFromBooking,
+        claimWithTwoIrregularities,
+        claimWithRotationIrregularity,
+        claimNotOperatedBySAS,
+        existingDuplicateClaim,
+        newDuplicateClaim,
+        minimalClaim,
+        claimCancellationWithinSASControl,
+        claimCancellationOutsideSASControl,
+        claimUnsupportCancellation,
+        claimTwoCancellations,
+        claimWithValidRebooking,
+        groupClaim,
+        differentLastNamesClaim,
+        missingTravelersFromBookingClaim,
+        claimFirmClaim,
+        oneWayClaim,
+        dayReturnClaim,
+        multiCityClaim,
+        roundTripClaim,
+        unknownClaim
+      }
+    );
+
+    insert new List<SObject>{
+      new Customer__c(
+        First_Name__c = 'Birgit',
+        Last_Name__c = 'Svensson',
+        Claim__c = coupleClaim.claims[0].Id
+      ),
+      new Customer__c(
+        First_Name__c = 'Sven',
+        Last_Name__c = 'Svensson',
+        Claim__c = groupClaim.claims[0].Id
+      ),
+      new Customer__c(
+        First_Name__c = 'Sven',
+        Last_Name__c = 'Svensson',
+        Claim__c = groupClaim.claims[0].Id
+      ),
+      new Customer__c(
+        First_Name__c = 'Sven',
+        Last_Name__c = 'Svensson',
+        Claim__c = groupClaim.claims[0].Id
+      ),
+      new Customer__c(
+        First_Name__c = 'Sven',
+        Last_Name__c = 'Svensson',
+        Claim__c = groupClaim.claims[0].Id
+      ),
+      new Customer__c(
+        First_Name__c = 'Sven',
+        Last_Name__c = 'Svensson',
+        Claim__c = groupClaim.claims[0].Id
+      ),
+      new Customer__c(
+        First_Name__c = 'Sven',
+        Last_Name__c = 'Birgitsdottir',
+        Claim__c = differentLastNamesClaim.claims[0].Id
+      ),
+      new Customer__c(
+        First_Name__c = 'Birgit',
+        Last_Name__c = 'Svensson',
+        Claim__c = missingTravelersFromBookingClaim.claims[0].Id
+      ),
+      new Claim_Expense__c(
+        Amount__c = 10,
+        Currency__c = 'SEK',
+        Type__c = 'Food',
+        Claim__c = expenseClaim.claims[0].Id
+      )
+    };
+
+    Cases.bypassTrigger = false;
   }
 
   private static void createCaseToBookings(
@@ -1142,16 +1399,23 @@ private class EU261Service_Test {
     Map<Schema.SObjectField, Object> extraClaimFields
   ) {
     Map<Schema.SObjectField, Object> claimFields = new Map<Schema.SObjectField, Object>{
+      LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
       LIA_Claim__c.Customer_Claim_Category__c => 'Flight disruptions',
       LIA_Claim__c.Customer_Claim_Type__c => 'Flight delay',
+      LIA_Claim__c.Flight_Number__c => 'SK0009',
+      LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
       LIA_Claim__c.Type_of_Customer__c => 'Private customer',
+      LIA_Claim__c.Bank_Country__c => 'Sweden',
       LIA_Claim__c.Country__c => 'Sweden',
+      LIA_Claim__c.Currency__c => 'SEK',
       LIA_Claim__c.Liability_PNR__c => bookingReference,
       LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
         Claim.RecordType.CustomerClaim
       )
     };
-    claimFields.putAll(extraClaimFields);
+    if (extraClaimFields != null) {
+      claimFields.putAll(extraClaimFields);
+    }
 
     TestDataFactories.CasesClaims toReturn = TestDataFactories.createCasesWithClaims(
       1,
@@ -1185,64 +1449,26 @@ private class EU261Service_Test {
 
   @IsTest
   static void onlyOneWayTicketsCanBeEvaluated() {
-    TestDataFactories.CasesClaims oneWayClaim = createDefaultTestClaim(
-      oneWayBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0001',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-    TestDataFactories.CasesClaims dayReturnClaim = createDefaultTestClaim(
-      dayReturnBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0001',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-    TestDataFactories.CasesClaims multiCityClaim = createDefaultTestClaim(
-      multiCityBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0001',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-    TestDataFactories.CasesClaims roundTripClaim = createDefaultTestClaim(
-      roundTripBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0001',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-    TestDataFactories.CasesClaims unknownClaim = createDefaultTestClaim(
-      unknownBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0001',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      oneWayClaim,
-      dayReturnClaim,
-      multiCityClaim,
-      roundTripClaim,
-      unknownClaim
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE
+            Liability_PNR__c = :oneWayBookingReference
+            OR Liability_PNR__c = :dayReturnBookingReference
+            OR Liability_PNR__c = :multiCityBookingReference
+            OR Liability_PNR__c = :roundTripBookingReference
+            OR Liability_PNR__c = :unknownBookingReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     for (EU261Claim c : claimsWithEvaluationDetails) {
@@ -1269,94 +1495,25 @@ private class EU261Service_Test {
 
   @IsTest
   static void onlyClaimsWhichDoNotRequirePOACanBeEvaluated() {
-    TestDataFactories.CasesClaims groupClaim = createDefaultTestClaim(
-      groupBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK9',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-    TestDataFactories.CasesClaims differentLastNamesClaim = createDefaultTestClaim(
-      differentLastNamesReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK9',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-    TestDataFactories.CasesClaims missingTravelersFromBookingClaim = createDefaultTestClaim(
-      missingTravelersBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK9',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-    TestDataFactories.CasesClaims claimFirmClaim = createDefaultTestClaim(
-      claimFirmBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Type_of_Customer__c => 'Claim firm',
-        LIA_Claim__c.Flight_Number__c => 'SK9',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    insert new Customer__c(
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson',
-      Claim__c = groupClaim.claims[0].Id
-    );
-    insert new Customer__c(
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson',
-      Claim__c = groupClaim.claims[0].Id
-    );
-    insert new Customer__c(
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson',
-      Claim__c = groupClaim.claims[0].Id
-    );
-    insert new Customer__c(
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson',
-      Claim__c = groupClaim.claims[0].Id
-    );
-    insert new Customer__c(
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson',
-      Claim__c = groupClaim.claims[0].Id
-    );
-
-    insert new Customer__c(
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Birgitsdottir',
-      Claim__c = differentLastNamesClaim.claims[0].Id
-    );
-
-    insert new Customer__c(
-      First_Name__c = 'Birgit',
-      Last_Name__c = 'Svensson',
-      Claim__c = missingTravelersFromBookingClaim.claims[0].Id
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      groupClaim,
-      differentLastNamesClaim,
-      missingTravelersFromBookingClaim,
-      claimFirmClaim
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE
+            Liability_PNR__c = :groupBookingReference
+            OR Liability_PNR__c = :differentLastNamesReference
+            OR Liability_PNR__c = :missingTravelersBookingReference
+            OR Liability_PNR__c = :claimFirmBookingReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     System.assert(
@@ -1364,7 +1521,7 @@ private class EU261Service_Test {
       'Should have evaluated four claims.'
     );
     for (EU261Claim c : claimsWithEvaluationDetails) {
-      if (c.claimObj.id == groupClaim.claims[0].Id) {
+      if (c.claimObj.bookingReference == groupBookingReference) {
         System.assertEquals(
           Claim.EU261HandlingStatus.UnableToHandle,
           c.decision.verdict,
@@ -1375,7 +1532,7 @@ private class EU261Service_Test {
           c.decision.reasoning,
           'Rejection reason should be "can handle only claims which do not require power of attorney"'
         );
-      } else if (c.claimObj.id == differentLastNamesClaim.claims[0].Id) {
+      } else if (c.claimObj.bookingReference == differentLastNamesReference) {
         System.assertEquals(
           Claim.EU261HandlingStatus.UnableToHandle,
           c.decision.verdict,
@@ -1387,7 +1544,7 @@ private class EU261Service_Test {
           'Rejection reason should be "can handle only claims which do not require power of attorney"'
         );
       } else if (
-        c.claimObj.id == missingTravelersFromBookingClaim.claims[0].Id
+        c.claimObj.bookingReference == missingTravelersBookingReference
       ) {
         System.assertEquals(
           Claim.EU261HandlingStatus.UnableToHandle,
@@ -1416,47 +1573,38 @@ private class EU261Service_Test {
 
   @IsTest
   static void claimsWithAnyNumberOfPassengersCanBeEvaluated() {
-    TestDataFactories.CasesClaims individualClaim = createDefaultTestClaim(
-      individualPassengerBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0009',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-    TestDataFactories.CasesClaims coupleClaim = createDefaultTestClaim(
-      coupleBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0009',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    insert new Customer__c(
-      First_Name__c = 'Birgit',
-      Last_Name__c = 'Svensson',
-      Claim__c = coupleClaim.claims[0].Id
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      individualClaim,
-      coupleClaim
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE
+            Liability_PNR__c = :individualPassengerBookingReference
+            OR Liability_PNR__c = :coupleBookingReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
-      .automateEU261Claims(claimIds, uow);
+    EU261Service es = EU261Service.newInstance();
+    es.enabledSettlements = true;
+    es.enabledRejections = true;
+    List<EU261Claim> claimsWithEvaluationDetails = es.automateEU261Claims(
+      claimIds,
+      uow
+    );
+    uow.commitWork();
     Test.stopTest();
 
+    List<Settlement__c> settlementsForClaim = [
+      SELECT Id, Amount__c, Claim__c
+      FROM Settlement__c
+      WHERE Claim__c IN :claimIds
+    ];
+
     for (EU261Claim c : claimsWithEvaluationDetails) {
-      if (c.claimObj.id == individualClaim.claims[0].Id) {
+      if (c.claimObj.customers.size() == 1) {
         System.assertEquals(
           Claim.EU261HandlingStatus.EligibleForCompensation,
           c.decision.verdict,
@@ -1464,8 +1612,21 @@ private class EU261Service_Test {
         );
         System.assertEquals(
           250,
-          c.decision.compensationAmount,
+          c.decision.compensationPerCustomer.get(c.claimObj.customers[0]),
           'Compensation should be 250€'
+        );
+        Settlement__c settlementForClaim;
+
+        for (Settlement__c s : settlementsForClaim) {
+          if (s.Claim__c == c.claimObj.id) {
+            settlementForClaim = s;
+          }
+        }
+
+        System.assertEquals(
+          250,
+          settlementForClaim.Amount__c,
+          'Settlement total should be higher for two passengers.'
         );
       } else {
         System.assertEquals(
@@ -1474,9 +1635,27 @@ private class EU261Service_Test {
           'It should be possible to evaluate a claim with two passengers.'
         );
         System.assertEquals(
+          250,
+          c.decision.compensationPerCustomer.get(c.claimObj.customers[0]),
+          'Compensation should be 250€ for first customer'
+        );
+        System.assertEquals(
+          250,
+          c.decision.compensationPerCustomer.get(c.claimObj.customers[1]),
+          'Compensation should be 250€ for second customer'
+        );
+
+        Settlement__c settlementForClaim;
+        for (Settlement__c s : settlementsForClaim) {
+          if (s.Claim__c == c.claimObj.id) {
+            settlementForClaim = s;
+          }
+        }
+
+        System.assertEquals(
           500,
-          c.decision.compensationAmount,
-          'Compensation should be 800€'
+          settlementForClaim.Amount__c,
+          'Settlement total should be higher for two passengers.'
         );
       }
     }
@@ -1484,28 +1663,21 @@ private class EU261Service_Test {
 
   @IsTest
   static void onlyClaimsWithOneBookingCanBeEvaluated() {
-    TestDataFactories.CasesClaims claims = createDefaultTestClaim(
-      duplicateBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0001',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claims
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :duplicateBookingReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     System.assertEquals(
@@ -1522,28 +1694,21 @@ private class EU261Service_Test {
 
   @IsTest
   static void onlyClaimsWithAirportsinEUCanBeEvaluated() {
-    TestDataFactories.CasesClaims nonEUClaim = createDefaultTestClaim(
-      nonEUBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0004',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      nonEUClaim
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :nonEUBookingReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     for (EU261Claim c : claimsWithEvaluationDetails) {
@@ -1564,35 +1729,21 @@ private class EU261Service_Test {
 
   @IsTest
   static void onlyClaimsWithoutExpensesCanBeEvaluated() {
-    TestDataFactories.CasesClaims claims = createDefaultTestClaim(
-      claimExpensesBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0001',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claims
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
-
-    insert new Claim_Expense__c(
-      Amount__c = 10,
-      Currency__c = 'SEK',
-      Type__c = 'Food',
-      Claim__c = claims.claims[0].Id
-    );
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :claimExpensesBookingReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     System.assertEquals(
@@ -1609,37 +1760,23 @@ private class EU261Service_Test {
 
   @IsTest
   static void onlyClaimsWithin2to5HoursDelayCanBeEvaluated() {
-    TestDataFactories.CasesClaims claimWithTooShortDelay = createDefaultTestClaim(
-      tooShortDelayBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0006',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-    TestDataFactories.CasesClaims claimWithTooLongDelay = createDefaultTestClaim(
-      tooLongDelayBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0007',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claimWithTooShortDelay,
-      claimWithTooLongDelay
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE
+            Liability_PNR__c = :tooShortDelayBookingReference
+            OR Liability_PNR__c = :tooLongDelayBookingReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     for (EU261Claim c : claimsWithEvaluationDetails) {
@@ -1658,28 +1795,21 @@ private class EU261Service_Test {
 
   @IsTest
   static void onlyClaimsWithClaimedFlightInBookingCanBeEvaluated() {
-    TestDataFactories.CasesClaims claimWithMissingFlightFromBooking = createDefaultTestClaim(
-      missingClaimedFlightBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0006',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claimWithMissingFlightFromBooking
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :missingClaimedFlightBookingReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     System.assertEquals(
@@ -1696,28 +1826,21 @@ private class EU261Service_Test {
 
   @IsTest
   static void claimsWithMoreThanOneIrregularityCanBeEvaluated() {
-    TestDataFactories.CasesClaims c = createDefaultTestClaim(
-      twoIrregularitiesBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0005',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      c
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :twoIrregularitiesBookingReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     System.debug(claimsWithEvaluationDetails[0].decision.reasoning);
@@ -1731,28 +1854,21 @@ private class EU261Service_Test {
 
   @IsTest
   static void claimsWithRotationIrregularitiesCannotBeEvaluated() {
-    TestDataFactories.CasesClaims c = createDefaultTestClaim(
-      rotationBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0010',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      c
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :rotationBookingReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     System.assertEquals(
@@ -1769,31 +1885,21 @@ private class EU261Service_Test {
 
   @IsTest
   static void onlyClaimsWithFlightsOperatedBySASCanBeEvaluated() {
-    TestDataFactories.CasesClaims c = createDefaultTestClaim(
-      notOperatedBySASBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'LH0001',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-18')
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      c
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :notOperatedBySASBookingReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
-    // fflib_ApexMocks mocks = new fflib_ApexMocks();
-    // BookingService mockList = (BookingService) mocks.mock(BookingService.class);
-    // Test.setMock(BookingService.class, mockList);
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     System.assertEquals(
@@ -1810,36 +1916,21 @@ private class EU261Service_Test {
 
   @IsTest
   static void onlyClaimsWithoutDuplicatesCanBeEvaluated() {
-    TestDataFactories.CasesClaims existingClaim = createDefaultTestClaim(
-      twoClaimsSameBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0001',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-    TestDataFactories.CasesClaims claimBeingProcessed = createDefaultTestClaim(
-      twoClaimsSameBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0001',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      claimBeingProcessed
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :twoClaimsSameBookingReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     System.assertEquals(
@@ -1856,28 +1947,21 @@ private class EU261Service_Test {
 
   @IsTest
   static void minimalClaimShouldBeEvaluatedCorrectly() {
-    TestDataFactories.CasesClaims c = createDefaultTestClaim(
-      minimalClaimBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0009',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17')
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      c
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :minimalClaimBookingReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     System.assertEquals(
@@ -1887,7 +1971,10 @@ private class EU261Service_Test {
     );
     System.assertEquals(
       250,
-      claimsWithEvaluationDetails[0].decision.compensationAmount,
+      claimsWithEvaluationDetails[0]
+        .decision.compensationPerCustomer.get(
+          claimsWithEvaluationDetails[0].claimObj.customers[0]
+        ),
       'Compensation should be 250 euros.'
     );
     System.assertEquals(
@@ -1899,29 +1986,21 @@ private class EU261Service_Test {
 
   @IsTest
   static void minimalCancellationClaimWithoutRebookingCannotBeEvaluated() {
-    TestDataFactories.CasesClaims c = createDefaultTestClaim(
-      cancellationBookingWithinSASControlReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0008',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
-        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      c
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :cancellationBookingWithinSASControlReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     System.assertEquals(
@@ -1938,29 +2017,22 @@ private class EU261Service_Test {
 
   @IsTest
   static void minimalCancellationClaimsWithCancellationsOutsideSASControlShouldBeDenied() {
-    TestDataFactories.CasesClaims c = createDefaultTestClaim(
-      cancellationBookingOutsideSASControlReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0011',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
-        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      c
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE
+            Liability_PNR__c = :cancellationBookingOutsideSASControlReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     System.assertEquals(
@@ -1972,29 +2044,21 @@ private class EU261Service_Test {
 
   @IsTest
   static void claimsWithUnsupportedCancellationCodesShouldNotBeAutomated() {
-    TestDataFactories.CasesClaims c = createDefaultTestClaim(
-      cancellationBookingUnsupportedReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0012',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
-        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      c
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :cancellationBookingUnsupportedReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     System.assertEquals(
@@ -2011,29 +2075,21 @@ private class EU261Service_Test {
 
   @IsTest
   static void claimsWithTwoCancellationsShouldNotBeAutomated() {
-    TestDataFactories.CasesClaims c = createDefaultTestClaim(
-      cancellationBookingTwoCancellationsReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0013',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
-        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      c
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :cancellationBookingTwoCancellationsReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
       .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
     Test.stopTest();
 
     // TODO: Fixme
@@ -2052,29 +2108,26 @@ private class EU261Service_Test {
   @IsTest
   static void minimalCancellationClaimShouldBeAutomatedCorrectly() {
     // A rebooked flight which arrives 3h later than the original flight.
-    TestDataFactories.CasesClaims c = createDefaultTestClaim(
-      cancellationWithRebookingBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
-        LIA_Claim__c.Flight_Number__c => 'SK0013',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
-        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
-      }
-    );
-
-    List<TestDataFactories.CasesClaims> casesClaims = new List<TestDataFactories.CasesClaims>{
-      c
-    };
-
-    createCaseToBookings(casesClaims); // TODO: This should be done by claim insertion already.
-
-    Set<Id> claimIds = getClaimIds(casesClaims);
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :cancellationWithRebookingBookingReference
+        ]
+      ))
+      .keySet();
 
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
-      .automateEU261Claims(claimIds, uow);
+    EU261Service es = EU261Service.newInstance();
+    es.enabledSettlements = true;
+    es.enabledRejections = true;
+    List<EU261Claim> claimsWithEvaluationDetails = es.automateEU261Claims(
+      claimIds,
+      uow
+    );
+    uow.commitWork();
     Test.stopTest();
 
     System.assertEquals(
@@ -2084,8 +2137,116 @@ private class EU261Service_Test {
     );
     System.assertEquals(
       250,
-      claimsWithEvaluationDetails[0].decision.compensationAmount,
-      'We shuold pay out €250 for the minimal cancellation claim'
+      claimsWithEvaluationDetails[0]
+        .decision.compensationPerCustomer.get(
+          claimsWithEvaluationDetails[0].claimObj.customers[0]
+        ),
+      'We should pay out €250 for the minimal cancellation claim'
+    );
+
+    Settlement__c settlementForClaim = [
+      SELECT Id, Amount__c
+      FROM Settlement__c
+      WHERE Claim__c = :claimsWithEvaluationDetails[0].claimObj.id
+    ][0];
+
+    System.assertEquals(
+      250,
+      settlementForClaim.Amount__c,
+      'Settlement with the correct amount should have been created.'
+    );
+
+    Case caseForClaim = [
+      SELECT Id, Status
+      FROM Case
+      WHERE
+        Initially_Provided_PNR__c = :cancellationWithRebookingBookingReference
+    ][0];
+
+    System.assertEquals(
+      'Closed',
+      caseForClaim.Status,
+      'Parent case should be closed after handling.'
     );
   }
 }
+/*
+  @IsTest
+  static void simpleEvaluation() {
+    Flight f = new Flight(); // FlightFactory.create('SK0013', departureDate);
+    f.flightNumber = 'SK0013';
+    f.tedsIdentifier = ;
+
+    Booking b = new Booking();
+
+    ClaimCustomer cc = new ClaimCustomer();
+    cc.firstname = 'Test';
+    cc.lastName = 'Testsson';
+
+    Claim c = new Claim();
+    c.customers = new List<ClaimCustomer>{ cc };
+    c.flightNumber = 'SK0013';
+    c.departureDate = Date.parse('2022-08-17');
+    c.category = Claim.Category.FlightDisrution;
+    c.type = Claim.Type.FlightCancellation;
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      c,
+      new List<Booking>{ b },
+      false
+    );
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      result.verdict,
+      Claim.EU261HandlingStatus.EligibleForCompensation,
+      'Simple one way claim should be eligible for compensation.'
+    );
+  }
+}
+
+List<FlightIrregularity> fis = new List<FlightIrregularity>{
+  IrregularityFactory.createCancellation(),
+  IrregularityFactory.createCancellation()
+}
+Flight f = FlightFactory.createWithIrregularities(flightNumber, flightDate, departure, arrival, fis);
+
+Booking b = BookingFactory.createValidForClaim(Claim c) {
+  // Flight
+  // Irregularity
+  // 
+}
+
+b.passengers = new Passenger(b);
+b.segments = SegmentFactory.createFromBookingFlightPassenger(Booking b, Flight f, Passenger p);
+
+FlightFactory.createWithIrregularities(String flightNumber, Date flightDate, Airport departure, Airport arrival, List<FlightIrregularity> irregularities) {
+  Flight f = new Flight();
+  f.id = C_Util.generateUUID();
+}
+
+SegmentFactory.createFromBookingFlightPassenger(Booking b, Flight f, Passenger p) {
+  Segment s = new Segment();
+  s.flight = f;
+  s.flightId = f.id;
+  s.id = C_Util.generateUUID();
+
+  s.baggageQuantity = 0;
+  s.bookingClass = 'A';
+  s.checkInStatus = '';
+  s.fareBasis = 'ABCDE'
+  s.farePrice = 200;
+  s.identifier = 'ST1';
+  s.isBoarded = true;
+  s.seat = '1A';
+  s.segmentStatus = 'Accepted';
+  s.segmentStatusCode = 'HK';
+  s.serviceClass = 'A';
+  s.specialServiceRequests = '';
+  s.ticketNumber = '1234567890';
+  s.ticketType = '';
+  s.tripType = 'Outbound';
+  
+  return s;
+}
+*/
