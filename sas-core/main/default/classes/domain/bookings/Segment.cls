@@ -10,7 +10,7 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
   public String fareBasis;
   public Decimal farePrice;
   public String identifier;
-  public Boolean isBoarded;
+  public Boolean isBoarded = false;
   public String seat;
   public String segmentStatus;
   public String segmentStatusCode;

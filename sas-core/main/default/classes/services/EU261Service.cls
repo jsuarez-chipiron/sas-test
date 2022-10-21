@@ -12,14 +12,47 @@ public without sharing class EU261Service {
   private static final SettlementItem.CostAccount COMPENSATION_COST_ACCOUNT = SettlementItem.CostAccount.CA6727;
   private static final SettlementItem.CostAccount REIMBURSEMENT_COST_ACCOUNT = SettlementItem.CostAccount.CA6738;
 
+  @TestVisible
   private static final String AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME = 'eu261_automation_approved';
+  @TestVisible
   private static final String AUTOMATION_REJECTED_EMAIL_TEMPLATE_NAME = 'eu261_automation_rejected';
   private static final String AUTOMATION_REPLY_TO_ADDRESS = 'test@example.com';
+
+  @TestVisible
+  private Boolean enabledSettlements;
+
+  @TestVisible
+  private Boolean enabledRejections;
 
   public static EU261Service newInstance() {
     return (EU261Service) SAS_Service_Application.Service.newInstance(
       EU261Service.class
     );
+  }
+
+  public EU261Service() {
+    List<EU261_Automation_Configuration__mdt> automationConfig = [
+      SELECT
+        Automatic_Rejection__c,
+        Automatic_Settlement__c,
+        Claim_Expense_Max_Amount__c
+      FROM EU261_Automation_Configuration__mdt
+      WHERE Label = 'Default'
+    ];
+
+    if (automationConfig == null || automationConfig.size() == 0) {
+      this.enabledRejections = false;
+      this.enabledSettlements = false;
+    } else {
+      this.enabledRejections = automationConfig[0].Automatic_Rejection__c ==
+        null
+        ? false
+        : automationConfig[0].Automatic_Rejection__c;
+      this.enabledSettlements = automationConfig[0].Automatic_Settlement__c ==
+        null
+        ? false
+        : automationConfig[0].Automatic_Settlement__c;
+    }
   }
 
   public void processEU261Claims(Set<Id> claimIds) {
@@ -91,8 +124,7 @@ public without sharing class EU261Service {
         claimsToPayOut.add(c);
       }
     }
-    Boolean enabledSettlements = false;
-    Boolean enabledRejections = false;
+
     if (enabledSettlements) {
       createSettlementsForClaims(claimsToPayOut);
     }
@@ -412,22 +444,15 @@ public without sharing class EU261Service {
     List<EU261Claim> claimsToRejectAndSettle,
     fflib_ISObjectUnitOfWork uow
   ) {
-    List<Case> parentCasesObjs = new List<Case>();
+    Set<Id> parentCaseIds = new Set<Id>();
     for (EU261Claim c : claimsToRejectAndSettle) {
-      // TODO: Doesn't work yet. parentCases.add(c.parentCase);
+      parentCaseIds.add(c.claimObj.parentCaseId);
     }
-    Cases parentCases = Cases.newInstance(parentCasesObjs);
-
-    // fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    // eligibleClaims.settle();
-    // ineligbleClaims.reject();
-
-    //TODO: Claims.newInstance(new List<LIA_Claim__c>{ claim }).settle(uow);
+    Cases parentCases = Cases.newInstance(
+      CasesSelector.newInstance().selectById(parentCaseIds)
+    );
 
     Map<Id, Messaging.SingleEmailMessage> emailsByCaseId = new Map<Id, Messaging.SingleEmailMessage>();
-
-    Boolean enabledRejections = true;
-    Boolean enabledSettlements = true;
 
     for (EU261Claim c : claimsToRejectAndSettle) {
       if (
@@ -443,7 +468,6 @@ public without sharing class EU261Service {
       ) {
         continue;
       }
-      // TODO: Create settlements for the claims which can be settled.
 
       String templateName = c.decision.verdict ==
         Claim.EU261HandlingStatus.EligibleForCompensation
@@ -460,8 +484,6 @@ public without sharing class EU261Service {
     }
 
     parentCases.emailContactPeople(emailsByCaseId, uow).close(uow);
-
-    // uow.commitWork();
   }
 
   /*private static void debugResult(

@@ -3,8 +3,8 @@ public without sharing class Booking extends AbstractSObjectWrapper {
 
   public String bookingReference;
   public String createdAtTravelOfficeId;
-  public Boolean isCancelled;
-  public Boolean isStaffBooking;
+  public Boolean isCancelled = false;
+  public Boolean isStaffBooking = false;
   public String tedsIdentifier;
   public Type type;
 

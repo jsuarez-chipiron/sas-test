@@ -571,7 +571,22 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           settlementToCreate.Bank_Account_Number__c = claim.Bank_Account_Number__c;
           settlementToCreate.Bank_Country__c = claim.Bank_Country__c;
           settlementToCreate.Bank_Name__c = claim.Bank_Name__c;
-          settlementToCreate.Currency__c = claim.Currency__c;
+          if (claim.Currency__c != null) {
+            settlementToCreate.Currency__c = claim.Currency__c;
+          } else {
+            if (claim.Bank_Country__c == null) {
+              throw new CreateException(
+                'Cannot determine currency for the settlement.'
+              );
+            }
+
+            Settlement_Country_Setting__mdt settingsForClaimBankCountry = [
+              SELECT Default_Currency__c
+              FROM Settlement_Country_Setting__mdt
+              WHERE Country_Name__c = :claim.Bank_Country__c
+            ];
+            settlementToCreate.Currency__c = settingsForClaimBankCountry.Default_Currency__c;
+          }
           settlementToCreate.Payee_Name__c = claim.Bank_Account_Holder_Name__c;
           settlementToCreate.Payee_reference__c = claim.Customer_s_Reference__c;
           settlementToCreate.RecordTypeId = Settlements.getRecordTypeId(

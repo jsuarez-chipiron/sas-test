@@ -17,6 +17,10 @@ public without sharing class Cases extends fflib_SObjectDomain {
 
   public List<Case> instanceRecords;
 
+  // Can be used to bypass all trigger handling when testing. E.g. when inserting test setup data.
+  @TestVisible
+  private static Boolean bypassTrigger = false;
+
   public static final String STATUS_NEW = 'New';
   public static final String STATUS_IN_PROGRESS = 'In Progress';
   public static final String STATUS_WAITING_FOR_APPROVAL = 'Waiting for Approval';
@@ -58,10 +62,16 @@ public without sharing class Cases extends fflib_SObjectDomain {
   };
 
   public override void onAfterDelete() {
+    if (bypassTrigger) {
+      return;
+    }
     removeRelatedSurveyInvitations();
   }
 
   public override void onAfterInsert() {
+    if (bypassTrigger) {
+      return;
+    }
     createCaseToBookings();
     updateBookingsForNewAssociatedAccounts();
     updateSocialPost();
@@ -70,6 +80,9 @@ public without sharing class Cases extends fflib_SObjectDomain {
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
+    if (bypassTrigger) {
+      return;
+    }
     updateBookingsForNewAssociatedAccounts(
       instanceRecords,
       (Map<Id, Case>) existingRecords
@@ -80,6 +93,9 @@ public without sharing class Cases extends fflib_SObjectDomain {
   }
 
   public override void onBeforeInsert() {
+    if (bypassTrigger) {
+      return;
+    }
     assignOwnerFromSoMe();
     enrichCaseDataBasedOnOrigin();
     enrichCaseTagData();
@@ -88,6 +104,9 @@ public without sharing class Cases extends fflib_SObjectDomain {
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
+    if (bypassTrigger) {
+      return;
+    }
     completeMilestones();
     enrichCaseTagData();
   }
