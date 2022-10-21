@@ -102,9 +102,9 @@ public without sharing class Settlements extends ApplicationDomain {
   public static final String COST_ACCOUNT_EU261_COMPENSATION = '6727';
   public static final String COST_ACCOUNT_EU261_REIMBURSEMENT = '6738';
 
-  private static final Map<SettlementItems.RecordType, String> COST_CENTER_DEBITS = new Map<SettlementItems.RecordType, String>{
-    SettlementItems.RecordType.DefaultRecordType => '90801',
-    SettlementItems.RecordType.Emergency => '71470'
+  private static final Map<SettlementItem.RecordType, String> COST_CENTER_DEBITS = new Map<SettlementItem.RecordType, String>{
+    SettlementItem.RecordType.DefaultRecordType => '90801',
+    SettlementItem.RecordType.Emergency => '71470'
   };
 
   public static final Decimal CONVERSION_RATE_EUR_TO_EB_POINTS = 100;
@@ -475,17 +475,17 @@ public without sharing class Settlements extends ApplicationDomain {
 
         if (isEmergencyClaim) {
           item.Cost_Center__c = COST_CENTER_DEBITS.get(
-            SettlementItems.RecordType.Emergency
+            SettlementItem.RecordType.Emergency
           );
-          item.RecordTypeId = SettlementItems.getRecordTypeId(
-            SettlementItems.RecordType.Emergency
+          item.RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+            SettlementItem.RecordType.Emergency
           );
         } else {
           item.Cost_Center__c = COST_CENTER_DEBITS.get(
-            SettlementItems.RecordType.DefaultRecordType
+            SettlementItem.RecordType.DefaultRecordType
           );
-          item.RecordTypeId = SettlementItems.getRecordTypeId(
-            SettlementItems.RecordType.DefaultRecordType
+          item.RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+            SettlementItem.RecordType.DefaultRecordType
           );
         }
 

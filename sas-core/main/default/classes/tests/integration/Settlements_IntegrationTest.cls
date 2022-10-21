@@ -122,8 +122,8 @@ public with sharing class Settlements_IntegrationTest {
       Currency__c = 'SEK',
       Settlement__c = settlement2.Id,
       Status__c = 'Waiting for transfer',
-      RecordTypeId = SettlementItems.getRecordTypeId(
-        SettlementItems.RecordType.Emergency
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.Emergency
       )
     );
     insert new List<SObject>{
