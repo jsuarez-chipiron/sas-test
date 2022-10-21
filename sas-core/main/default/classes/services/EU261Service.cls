@@ -333,7 +333,7 @@ public without sharing class EU261Service {
       ) {
         c.eu261HandlingNote =
           'Compensation: ' +
-          ac.decision.compensationAmount +
+          ac.decision.compensationPerCustomer.values() +
           ' | Reimbursement: ' +
           ac.decision.reimbursementAmount;
       } else {
@@ -384,6 +384,7 @@ public without sharing class EU261Service {
     }
 
     fflib_ISObjectUnitOfWork uow1 = SAS_Service_Application.UnitOfWork.newInstance();
+
     Settlements s = Settlements.createFromClaim(
       payableClaimSObjects,
       null,

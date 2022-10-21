@@ -1464,7 +1464,7 @@ private class EU261Service_Test {
         );
         System.assertEquals(
           250,
-          c.decision.compensationAmount,
+          c.decision.compensationPerCustomer.get(c.claimObj.customers[0]),
           'Compensation should be 250€'
         );
       } else {
@@ -1474,9 +1474,14 @@ private class EU261Service_Test {
           'It should be possible to evaluate a claim with two passengers.'
         );
         System.assertEquals(
-          500,
-          c.decision.compensationAmount,
-          'Compensation should be 800€'
+          250,
+          c.decision.compensationPerCustomer.get(c.claimObj.customers[0]),
+          'Compensation should be 250€ for first customer'
+        );
+        System.assertEquals(
+          250,
+          c.decision.compensationPerCustomer.get(c.claimObj.customers[1]),
+          'Compensation should be 250€ for second customer'
         );
       }
     }
@@ -1887,7 +1892,10 @@ private class EU261Service_Test {
     );
     System.assertEquals(
       250,
-      claimsWithEvaluationDetails[0].decision.compensationAmount,
+      claimsWithEvaluationDetails[0]
+        .decision.compensationPerCustomer.get(
+          claimsWithEvaluationDetails[0].claimObj.customers[0]
+        ),
       'Compensation should be 250 euros.'
     );
     System.assertEquals(
@@ -2084,8 +2092,91 @@ private class EU261Service_Test {
     );
     System.assertEquals(
       250,
-      claimsWithEvaluationDetails[0].decision.compensationAmount,
+      claimsWithEvaluationDetails[0]
+        .decision.compensationPerCustomer.get(
+          claimsWithEvaluationDetails[0].claimObj.customers[0]
+        ),
       'We shuold pay out €250 for the minimal cancellation claim'
     );
   }
 }
+/*
+  @IsTest
+  static void simpleEvaluation() {
+    Flight f = new Flight(); // FlightFactory.create('SK0013', departureDate);
+    f.flightNumber = 'SK0013';
+    f.tedsIdentifier = ;
+
+    Booking b = new Booking();
+
+    ClaimCustomer cc = new ClaimCustomer();
+    cc.firstname = 'Test';
+    cc.lastName = 'Testsson';
+
+    Claim c = new Claim();
+    c.customers = new List<ClaimCustomer>{ cc };
+    c.flightNumber = 'SK0013';
+    c.departureDate = Date.parse('2022-08-17');
+    c.category = Claim.Category.FlightDisrution;
+    c.type = Claim.Type.FlightCancellation;
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      c,
+      new List<Booking>{ b },
+      false
+    );
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      result.verdict,
+      Claim.EU261HandlingStatus.EligibleForCompensation,
+      'Simple one way claim should be eligible for compensation.'
+    );
+  }
+}
+
+List<FlightIrregularity> fis = new List<FlightIrregularity>{
+  IrregularityFactory.createCancellation(),
+  IrregularityFactory.createCancellation()
+}
+Flight f = FlightFactory.createWithIrregularities(flightNumber, flightDate, departure, arrival, fis);
+
+Booking b = BookingFactory.createValidForClaim(Claim c) {
+  // Flight
+  // Irregularity
+  // 
+}
+
+b.passengers = new Passenger(b);
+b.segments = SegmentFactory.createFromBookingFlightPassenger(Booking b, Flight f, Passenger p);
+
+FlightFactory.createWithIrregularities(String flightNumber, Date flightDate, Airport departure, Airport arrival, List<FlightIrregularity> irregularities) {
+  Flight f = new Flight();
+  f.id = C_Util.generateUUID();
+}
+
+SegmentFactory.createFromBookingFlightPassenger(Booking b, Flight f, Passenger p) {
+  Segment s = new Segment();
+  s.flight = f;
+  s.flightId = f.id;
+  s.id = C_Util.generateUUID();
+
+  s.baggageQuantity = 0;
+  s.bookingClass = 'A';
+  s.checkInStatus = '';
+  s.fareBasis = 'ABCDE'
+  s.farePrice = 200;
+  s.identifier = 'ST1';
+  s.isBoarded = true;
+  s.seat = '1A';
+  s.segmentStatus = 'Accepted';
+  s.segmentStatusCode = 'HK';
+  s.serviceClass = 'A';
+  s.specialServiceRequests = '';
+  s.ticketNumber = '1234567890';
+  s.ticketType = '';
+  s.tripType = 'Outbound';
+  
+  return s;
+}
+*/
