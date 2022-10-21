@@ -74,10 +74,7 @@ public without sharing class FlightDelayCertificateService {
     );
 
     if (insertedBookings.size() > 0) {
-      Bookings bookings = Bookings.newInstance(insertedBookings);
-      bookings.reloadFullBookingData();
-      currentBooking = new Booking(bookings.instanceRecords[0]); // Recreate the object to ensure data has been reloaded.
-
+      currentBooking = new Booking(insertedBookings[0]); // Recreate the object to ensure data has been reloaded.
       Boolean bookingHasDelays = currentBooking.hasDelayedOrCancelledFlights();
       Boolean passengerInBooking = currentBooking.containsPassenger(
         currentRequest.Contact_Last_Name__c
@@ -159,7 +156,10 @@ public without sharing class FlightDelayCertificateService {
         insertedRequests[0].Booking_Reference__c
       );
       List<Booking__c> insertedBookings = bookings != null
-        ? bookings.instanceRecords
+        ? BookingsSelector.newInstance()
+            .selectByIdFull(
+              new Map<Id, Booking__c>(bookings.instanceRecords).keySet()
+            )
         : new List<Booking__c>();
 
       //Chained Queueables are not allowing in tests
