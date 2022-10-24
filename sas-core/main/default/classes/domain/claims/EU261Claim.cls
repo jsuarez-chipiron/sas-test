@@ -24,6 +24,12 @@ public class EU261Claim {
     if (this.decision == null) {
       // If decision is null from above, we should be able to evaluate this claim.
       this.decision = this.determineEligibilityAndCalculateCompensation();
+
+      if (this.getCaveats().length() != 0) {
+        this.decision.verdict = Claim.EU261HandlingStatus.PossiblyEligibleForCompensation;
+        this.decision.reasoning = 'caveats: ' + this.getCaveats();
+      }
+
       // this.calculateReimbursement(); // Todo, implement
     }
 
@@ -41,7 +47,7 @@ public class EU261Claim {
 
     public Claim.EU261HandlingStatus verdict { get; private set; }
 
-    public String reasoning { get; private set; }
+    public String reasoning;
 
     Decision(Claim.EU261HandlingStatus verdict, String reasoning) {
       if (verdict == Claim.EU261HandlingStatus.EligibleForCompensation) {
@@ -260,11 +266,6 @@ public class EU261Claim {
       // TODO: Think about how to handle repeat PNRs.
       // TODO: Think about the potential fraud cases.
       // TODO: Ensure that we have only a specific number of trips.
-    } else if (this.hasPotentiallyDuplicateClaims) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'cannot handle potential duplicates'
-      );
     } else if (this.claimedBooking.type != Booking.Type.OneWay) {
       // TODO: I guess we need to get rid of the booking variable?
       return new Decision(
@@ -302,11 +303,6 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'can only handle claims with origin and destination airports in EU'
       );
-    } else if (c.submittedClaimExpenses > 0) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'cannot handle claim expenses'
-      );
     } else if (this.hasRotationIrregularities()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -316,11 +312,6 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot handle claims where SAS is not the only operating carrier'
-      );
-    } else if (this.requiresPowerOfAttorney()) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'can handle only claims which do not require power of attorney'
       );
     } else if (
       c.type == Claim.Type.FlightCancellation && !this.hasCancellation()
@@ -965,5 +956,24 @@ public class EU261Claim {
       }
     }
     return false;
+  }
+
+  /*private Decision createDecision() {
+   }*/
+
+  private String getCaveats() {
+    List<String> caveats = new List<String>();
+
+    if (this.hasPotentiallyDuplicateClaims) {
+      caveats.add('has potential duplicates');
+    }
+    if (this.claimObj.submittedClaimExpenses > 0) {
+      caveats.add('has claim expenses');
+    }
+    if (this.requiresPowerOfAttorney()) {
+      caveats.add('requires a power of attorney');
+    }
+
+    return String.join(caveats, ', ');
   }
 }

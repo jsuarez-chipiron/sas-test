@@ -13,15 +13,11 @@
       "operation": "Insert"
     },
     {
-      "query": "SELECT Department__c, Origin, Team__c, LIA_Claim__c, Refund_Request__c, RecordTypeId FROM Case",
+      "query": "SELECT Department__c, Origin, Team__c, Refund_Request__c, RecordTypeId FROM Case",
       "operation": "Insert"
     },
     {
       "query": "SELECT Case__c, Case__c FROM CaseToBooking__c",
-      "operation": "Insert"
-    },
-    {
-      "query": "SELECT Claim__c, First_Name__c, Last_Name__c FROM Customer__c",
       "operation": "Insert"
     },
     {
@@ -37,10 +33,6 @@
       "operation": "Insert"
     },
     {
-      "query": "SELECT Address_line_1__c, Bank_Account_Holder_Name__c, Bank_Account_Number__c, Bank_Country__c, Bank_Name__c, BIC_Swift__c, Case__c, City__c, Contact_Email__c, Contact_First_Name__c, Contact_Last_Name__c Country__c, Currency__c, Customer_Claim_Category__c, Customer_Claim_Type__c, Flight_Date__c, Flight_Number__c, Postal_Code__c, Preferred_Compensation_Method__c, Preferred_Reimbursement_Method__c, Type_of_Customer__c, RecordTypeId FROM LIA_Claim__c",
-      "operation": "Insert"
-    },
-    {
       "query": "SELECT Account__c, Booking__c, EuroBonus_Number__c, First_Name__c, Identifier__c, Last_Name__c, Name FROM Passenger__c",
       "operation": "Insert"
     },
@@ -50,14 +42,6 @@
     },
     {
       "query": "SELECT Baggage_Quantity__c, Booking__c, Booking_Class__c, Check_In_Status__c, Flight__c, Identifier__c, Is_Boarded__c, Trip_Type__c FROM Segment__c",
-      "operation": "Insert"
-    },
-    {
-      "query": "SELECT Address_Line_1__c, Amount__c, Bank_Account_Number__c, Bank_Country__c, Bank_Name__c, BIC_Swift__c, City__c, Claim__c, Country__c, Currency__c, Payee_Name__c, Payee_First_Name__c, Payee_Last_Name__c, Postal_Code__c, Settlement_Status__c, Voucher_Email__c, Voucher_Type__c, RecordTypeId FROM Settlement__c",
-      "operation": "Insert"
-    },
-    {
-      "query": "SELECT Amount__c, Comments__c, Cost_Account__c, Cost_Center__c, Currency__c, Customer_Name__c, Settlement__c, Status__c FROM Settlement_Item__c",
       "operation": "Insert"
     },
     {

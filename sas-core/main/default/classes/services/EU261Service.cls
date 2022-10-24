@@ -368,6 +368,18 @@ public without sharing class EU261Service {
           ac.decision.compensationPerCustomer.values() +
           ' | Reimbursement: ' +
           ac.decision.reimbursementAmount;
+      } else if (
+        ac.decision.verdict ==
+        Claim.EU261HandlingStatus.PossiblyEligibleForCompensation
+      ) {
+        c.eu261HandlingNote =
+          'Compensation: ' +
+          ac.decision.compensationPerCustomer.values() +
+          ' | Reimbursement: ' +
+          ac.decision.reimbursementAmount +
+          ' (' +
+          ac.decision.reasoning +
+          ')';
       } else {
         c.eu261HandlingNote = ac.decision.reasoning;
       }
