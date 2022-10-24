@@ -198,11 +198,13 @@ public without sharing class CAREClaims extends fflib_SObjectDomain {
       Customers__c = parsedCustomers,
       Categories__c = parsedCategories,
       Decisions__c = parsedDecisions,
-      Departure_Date__c = Date.newInstance(
-        responseCase.flightDate.year(),
-        responseCase.flightDate.month(),
-        responseCase.flightDate.day()
-      ),
+      Departure_Date__c = responseCase.flightDate != null
+        ? Date.newInstance(
+            responseCase.flightDate.year(),
+            responseCase.flightDate.month(),
+            responseCase.flightDate.day()
+          )
+        : null,
       Flight_Number__c = responseCase.flightNumber,
       Name = responseCase.caseId,
       Notes__c = parsedNotes,
