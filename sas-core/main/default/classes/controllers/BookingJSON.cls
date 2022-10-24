@@ -303,8 +303,10 @@ global class BookingJSON implements Comparable {
       );
     }
 
-    for (IRR_CommunicationLog__c l : relatedCommunicationLogsArg) {
-      tempLogs.add(new BookingJSON.CommunicationLog(l));
+    if (relatedCommunicationLogsArg != null) {
+      for (IRR_CommunicationLog__c l : relatedCommunicationLogsArg) {
+        tempLogs.add(new BookingJSON.CommunicationLog(l));
+      }
     }
 
     tempFlights.sort();
