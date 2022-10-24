@@ -46,7 +46,6 @@ public class RacerResponseHandlers {
    *
    * @param contentVersionIds
    */
-  @future
   public static Void handle(List<Id> contentVersionIds) {
     List<ContentVersion> cvs = contentVersionsSel.selectById(
       new Set<Id>(contentVersionIds),
@@ -71,12 +70,11 @@ public class RacerResponseHandlers {
    * received and processed the payment file correctly.
    */
   private static Void processPaymulStatusReport(ContentVersion cv) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-
     String fileContents = cv.VersionData.toString();
     List<String> lines = fileContents.split('\n');
 
     for (String line : lines) {
+      fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
       List<String> dataFields = line.split('[|]');
       /**
        * dataFields contents by index:
@@ -99,8 +97,8 @@ public class RacerResponseHandlers {
 
       Settlements.newInstance(correspondingSettlements)
         .markAsReceivedByRacer(documentStatus, errorDetail, uow);
+      uow.commitWork();
     }
-    uow.commitWork();
     moveToFolder(cv, PAYMUL_FOLDER_NAME);
   }
 
@@ -109,12 +107,11 @@ public class RacerResponseHandlers {
    * has been received and processed successfully by them.
    */
   private static Void processL1StatusReport(ContentVersion cv) {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-
     String fileContents = cv.VersionData.toString();
     List<String> lines = fileContents.split('\n');
 
     for (String line : lines) {
+      fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
       List<String> dataFields = line.split('[|]');
       /**
        * dataFields contents by index:
@@ -137,8 +134,8 @@ public class RacerResponseHandlers {
 
       Settlements.newInstance(correspondingSettlements)
         .markAsReceivedByBank(documentStatus, errorDetail, uow);
+      uow.commitWork();
     }
-    uow.commitWork();
     moveToFolder(cv, L1_FOLDER_NAME);
   }
 
@@ -200,11 +197,9 @@ public class RacerResponseHandlers {
       settlementNamesToErrorMessages.put(settlementName, errorDetail);
     }
 
-
     List<Settlement__c> failedSettlements = settlementsSel.selectByName(
       failedSettlementNames
     );
-
 
     Map<Id, String> settlementIdsToErrorMessages = new Map<Id, String>();
 
@@ -280,6 +275,17 @@ public class RacerResponseHandlers {
     }
     if (!folder.isEmpty()) {
       file.moveToFolder(folder[0].Id);
+    }
+  }
+  public class HandleRacerResponseQueueable implements Queueable {
+    private List<Id> contentVersionIds;
+
+    public HandleRacerResponseQueueable(List<Id> contentVersionIds) {
+      this.contentVersionIds = contentVersionIds;
+    }
+
+    public void execute(QueueableContext ctx) {
+      handle(this.contentVersionIds);
     }
   }
 }
