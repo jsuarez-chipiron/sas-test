@@ -1523,49 +1523,49 @@ private class EU261Service_Test {
     for (EU261Claim c : claimsWithEvaluationDetails) {
       if (c.claimObj.bookingReference == groupBookingReference) {
         System.assertEquals(
-          Claim.EU261HandlingStatus.UnableToHandle,
+          Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
           c.decision.verdict,
-          'It should not be possible to evaluate a claim with more than four travelers.'
+          'It should not be possible to automatically evaluate a claim with more than four travelers.'
         );
         System.assertEquals(
-          'can handle only claims which do not require power of attorney',
+          'caveats: requires a power of attorney',
           c.decision.reasoning,
-          'Rejection reason should be "can handle only claims which do not require power of attorney"'
+          'Reasoning should include caveat on power of attorney'
         );
       } else if (c.claimObj.bookingReference == differentLastNamesReference) {
         System.assertEquals(
-          Claim.EU261HandlingStatus.UnableToHandle,
+          Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
           c.decision.verdict,
-          'It should not be possible to evaluate a claim with different last names.'
+          'It should not be possible to automatically evaluate a claim with different last names.'
         );
         System.assertEquals(
-          'can handle only claims which do not require power of attorney',
+          'caveats: requires a power of attorney',
           c.decision.reasoning,
-          'Rejection reason should be "can handle only claims which do not require power of attorney"'
+          'Reasoning should include caveat on power of attorney'
         );
       } else if (
         c.claimObj.bookingReference == missingTravelersBookingReference
       ) {
         System.assertEquals(
-          Claim.EU261HandlingStatus.UnableToHandle,
+          Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
           c.decision.verdict,
-          'It should not be possible to evaluate a claim when claimed travelers are not included in the booking.'
+          'It should not be possible to automatically evaluate a claim when claimed travelers are not included in the booking.'
         );
         System.assertEquals(
-          'can handle only claims which do not require power of attorney',
+          'caveats: requires a power of attorney',
           c.decision.reasoning,
-          'Rejection reason should be "can handle only claims which do not require power of attorney"'
+          'Reasoning should include caveat on power of attorney'
         );
       } else {
         System.assertEquals(
-          Claim.EU261HandlingStatus.UnableToHandle,
+          Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
           c.decision.verdict,
           'It should not be possible to evaluate a claim submitted by a claim firm.'
         );
         System.assertEquals(
-          'can handle only claims which do not require power of attorney',
+          'caveats: requires a power of attorney',
           c.decision.reasoning,
-          'Rejection reason should be "can handle only claims which do not require power of attorney"'
+          'Reasoning should include caveat on power of attorney'
         );
       }
     }
@@ -1747,14 +1747,14 @@ private class EU261Service_Test {
     Test.stopTest();
 
     System.assertEquals(
-      Claim.EU261HandlingStatus.UnableToHandle,
+      Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
       claimsWithEvaluationDetails[0].decision.verdict,
-      'It should not be possible to evaluate claims with expenses.'
+      'It should not be possible to automatically evaluate claims with expenses.'
     );
     System.assertEquals(
-      'cannot handle claim expenses',
+      'caveats: has claim expenses',
       claimsWithEvaluationDetails[0].decision.reasoning,
-      'Rejection reason should be "cannot handle claim expenses"'
+      'Rejection reason should include caveat about expenses'
     );
   }
 
@@ -1934,14 +1934,14 @@ private class EU261Service_Test {
     Test.stopTest();
 
     System.assertEquals(
-      Claim.EU261HandlingStatus.UnableToHandle,
+      Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
       claimsWithEvaluationDetails[0].decision.verdict,
-      'It should not be possible to evaluate claims with possible duplicates.'
+      'It should not be possible to automatically evaluate claims with possible duplicates.'
     );
     System.assertEquals(
-      'cannot handle potential duplicates',
+      'caveats: has potential duplicates',
       claimsWithEvaluationDetails[0].decision.reasoning,
-      'Rejection reason should be "cannot handle potential duplicates"'
+      'Rejection reason should include caveat about duplicates'
     );
   }
 

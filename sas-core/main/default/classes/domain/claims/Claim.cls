@@ -292,6 +292,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     Unhandled,
     EligibleForCompensation,
     IneligibleForCompensation,
+    PossiblyEligibleForCompensation,
     UnableToHandle
   }
 
@@ -299,6 +300,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     EU261HandlingStatus.Unhandled => 'Unhandled',
     EU261HandlingStatus.EligibleForCompensation => 'Eligible for compensation',
     EU261HandlingStatus.IneligibleForCompensation => 'Ineligible for compensation',
+    EU261HandlingStatus.PossiblyEligibleForCompensation => 'Possibly eligible for compensation',
     EU261HandlingStatus.UnableToHandle => 'Unable to handle'
   };
 
@@ -306,6 +308,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     'Unhandled' => EU261HandlingStatus.Unhandled,
     'Eligible for compensation' => EU261HandlingStatus.EligibleForCompensation,
     'Ineligible for compensation' => EU261HandlingStatus.IneligibleForCompensation,
+    'Possibly eligible for compensation' => EU261HandlingStatus.PossiblyEligibleForCompensation,
     'Unable to handle' => EU261HandlingStatus.UnableToHandle
   };
 

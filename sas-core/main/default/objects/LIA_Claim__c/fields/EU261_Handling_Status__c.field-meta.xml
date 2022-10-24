@@ -10,12 +10,7 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Unhandled</fullName>
-                <default>true</default>
-                <label>Unhandled</label>
-            </value>
+            <sorted>true</sorted>
             <value>
                 <fullName>Eligible for compensation</fullName>
                 <default>false</default>
@@ -27,9 +22,19 @@
                 <label>Ineligible for compensation</label>
             </value>
             <value>
+                <fullName>Possibly eligible for compensation</fullName>
+                <default>false</default>
+                <label>Possibly eligible for compensation</label>
+            </value>
+            <value>
                 <fullName>Unable to handle</fullName>
                 <default>false</default>
                 <label>Unable to handle</label>
+            </value>
+            <value>
+                <fullName>Unhandled</fullName>
+                <default>true</default>
+                <label>Unhandled</label>
             </value>
         </valueSetDefinition>
     </valueSet>
