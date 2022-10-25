@@ -285,9 +285,7 @@ public without sharing class EU261Service {
       );
 
       if (ctbsForClaim != null) {
-        for (
-          CaseToBooking__c ctb : ctbsForClaim
-        ) {
+        for (CaseToBooking__c ctb : ctbsForClaim) {
           Booking__c booking = bookingsById.get(ctb.Booking__c);
           if (booking != null) {
             bookingsForClaim.add(booking);
@@ -362,7 +360,7 @@ public without sharing class EU261Service {
     List<EU261Claim> claimsToAutomate,
     fflib_ISObjectUnitOfWork uow
   ) {
-    List<LIA_Claim__c> toUpsert = new List<LIA_Claim__c>();
+    List<Claim> toUpsert = new List<Claim>();
     for (EU261Claim ac : claimsToAutomate) {
       Claim c = ac.claimObj;
 
@@ -392,7 +390,7 @@ public without sharing class EU261Service {
         c.eu261HandlingNote = ac.decision.reasoning;
       }
 
-      toUpsert.add(ac.claimObj.underlyingSObject);
+      toUpsert.add(c);
     }
 
     Claims.newInstance(toUpsert).upsertToDB(uow);
