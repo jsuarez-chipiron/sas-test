@@ -26,6 +26,10 @@
                 <behavior>Edit</behavior>
                 <field>PIR__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Duplicate_Matcher__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

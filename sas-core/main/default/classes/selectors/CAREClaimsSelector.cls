@@ -83,10 +83,34 @@ public inherited sharing class CAREClaimsSelector extends fflib_SObjectSelector 
       }
     }
 
-    System.debug(whereQuery);
-
     return (List<CARE_Claim__c>) Database.query(
       newQueryFactory().setCondition(whereQuery).toSOQL()
+    );
+  }
+
+  /**
+   * Select potential duplicates for EU261 claims. Potential duplicate is
+   * defined as having the same booking reference and claimed flight number.
+   * 
+   * @param pnrFlightNumberTuples A list of (bookingReference, flightNumber) pairs with which to query.
+   */
+  public List<CARE_Claim__c> selectPotentialDuplicates(
+    List<List<String>> pnrFlightNumberTuples
+  ) {
+    Set<String> duplicateMatchers = new Set<String>();
+
+    for (List<String> pnrAndFlightNumber : pnrFlightNumberTuples) {
+      duplicateMatchers.add(
+        pnrAndFlightNumber[0] +
+        '-' +
+        pnrAndFlightNumber[1]
+      );
+    }
+
+    return (List<CARE_Claim__c>) Database.query(
+      newQueryFactory()
+        .setCondition('Duplicate_Matcher__c IN :duplicateMatchers')
+        .toSOQL()
     );
   }
 }
