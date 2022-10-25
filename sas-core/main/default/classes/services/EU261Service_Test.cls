@@ -36,6 +36,7 @@ private class EU261Service_Test {
   private static String differentLastNamesReference = 'DIFFLA';
   private static String missingTravelersBookingReference = 'MISSTR';
   private static String claimFirmBookingReference = 'CLAIMF';
+  private static String careDuplicateBookingReference = 'CAREDU';
 
   public static Set<String> allTestPnrs = new Set<String>{
     'ONTIME',
@@ -408,6 +409,11 @@ private class EU261Service_Test {
       TEDS_Identifier__c = 'uniqueBooking31',
       Type__c = 'OneWay'
     );
+    Booking__c careDuplicateBookingReferenceBooking = new Booking__c(
+      Booking_Reference__c = careDuplicateBookingReference,
+      TEDS_Identifier__c = 'uniqueBooking32',
+      Type__c = 'OneWay'
+    );
 
     insert new List<SObject>{
       airportHEL,
@@ -459,7 +465,8 @@ private class EU261Service_Test {
       groupBooking,
       differentLastNamesBooking,
       missingTravelersBooking,
-      claimFirmBooking
+      claimFirmBooking,
+      careDuplicateBookingReferenceBooking
     };
     Segment__c oneWaySegment = new Segment__c(
       Booking__c = oneWayBooking.Id,
@@ -661,6 +668,12 @@ private class EU261Service_Test {
     );
     Segment__c minimalClaimSegment = new Segment__c(
       Booking__c = minimalClaimBooking.Id,
+      Flight__c = flightForMinimalClaim.Id,
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
+    );
+    Segment__c careDuplicateClaimSegment = new Segment__c(
+      Booking__c = careDuplicateBookingReferenceBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
       Seat__c = '1A',
       Trip_Type__c = 'Outbound'
@@ -932,6 +945,12 @@ private class EU261Service_Test {
       First_Name__c = 'Sven',
       Last_Name__c = 'Svensson'
     );
+    Passenger__c careDuplicatePassenger = new Passenger__c(
+      Booking__c = careDuplicateBookingReferenceBooking.Id,
+      Identifier__c = 'P1',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
 
     FlightIrregularities__c flight1Delay = new FlightIrregularities__c(
       Flight__c = flight1.Id,
@@ -1063,6 +1082,7 @@ private class EU261Service_Test {
       differentLastNamesSegment2,
       missingTravelersSegment,
       claimFirmSegment,
+      careDuplicateClaimSegment,
       oneWayPassenger,
       dayReturnPassenger,
       roundTripPassenger,
@@ -1099,6 +1119,7 @@ private class EU261Service_Test {
       differentLastNamesPassenger2,
       missingTravelersPassenger,
       claimFirmPassenger,
+      careDuplicatePassenger,
       flight1Delay,
       flight3Delay,
       nonEUFlightDelay,
@@ -1278,6 +1299,10 @@ private class EU261Service_Test {
         LIA_Claim__c.Flight_Number__c => 'SK0001'
       }
     );
+    TestDataFactories.CasesClaims careDuplicateClaim = createDefaultTestClaim(
+      careDuplicateBookingReference,
+      null
+    );
 
     createCaseToBookings(
       new List<TestDataFactories.CasesClaims>{
@@ -1308,7 +1333,8 @@ private class EU261Service_Test {
         dayReturnClaim,
         multiCityClaim,
         roundTripClaim,
-        unknownClaim
+        unknownClaim,
+        careDuplicateClaim
       }
     );
 
@@ -1949,6 +1975,41 @@ private class EU261Service_Test {
       Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
       claimsWithEvaluationDetails[0].decision.verdict,
       'It should not be possible to automatically evaluate claims with possible duplicates.'
+    );
+    System.assertEquals(
+      'caveats: has potential duplicates',
+      claimsWithEvaluationDetails[0].decision.reasoning,
+      'Rejection reason should include caveat about duplicates'
+    );
+  }
+
+  @IsTest
+  static void onlyClaimsWithoutCAREDuplicatesCanBeEvaluated() {
+    insert new CARE_Claim__c(
+      Booking_Reference__c = careDuplicateBookingReference,
+      Flight_Number__c = 'SK0009' // This is the default flight number for claims in these tests
+    );
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :careDuplicateBookingReference
+        ]
+      ))
+      .keySet();
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
+      .automateEU261Claims(claimIds, uow);
+    uow.commitWork();
+    Test.stopTest();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
+      claimsWithEvaluationDetails[0].decision.verdict,
+      'It should not be possible to automatically evaluate claims with possible CARE duplicates.'
     );
     System.assertEquals(
       'caveats: has potential duplicates',

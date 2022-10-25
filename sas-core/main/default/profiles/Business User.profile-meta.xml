@@ -1745,6 +1745,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>CARE_Claim__c.Duplicate_Matcher__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>CARE_Claim__c.Flight_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>

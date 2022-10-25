@@ -156,9 +156,13 @@ public without sharing class EU261Service {
     // 1. Get claims
     ClaimsSelector claimsSel = ClaimsSelector.newInstance();
     List<Claim> claims = new List<Claim>();
+    List<List<String>> pnrFlightNumberTuples = new List<List<String>>();
 
     for (LIA_Claim__c c : claimsSel.selectByIdWithCustomers(claimIds)) {
       claims.add(new Claim(c));
+      pnrFlightNumberTuples.add(
+        new List<String>{ c.Liability_PNR__c, c.Flight_Number__c }
+      );
     }
 
     // 2. Extract information needed for selection
@@ -176,6 +180,9 @@ public without sharing class EU261Service {
     for (LIA_Claim__c c : claimsSel.selectByBookingReference(allPnrsInClaims)) {
       otherClaimsWithMatchingPnrs.add(new Claim(c));
     }
+
+    List<CARE_Claim__c> possiblyDuplicateCAREClaims = CAREClaimsSelector.newInstance()
+      .selectPotentialDuplicates(pnrFlightNumberTuples);
 
     // 4. Map cases to bookings and get bookings
     List<CaseToBooking__c> ctbs = CaseToBookingsSelector.newInstance()
@@ -239,7 +246,8 @@ public without sharing class EU261Service {
       caseIdToCaseToBookings,
       bookingsById,
       flightIrregularities,
-      airportCodeToAirport
+      airportCodeToAirport,
+      possiblyDuplicateCAREClaims
     );
   }
 
@@ -250,7 +258,8 @@ public without sharing class EU261Service {
     Map<Id, List<CaseToBooking__c>> caseIdToCaseToBookings,
     Map<Id, Booking__c> bookingsById,
     List<FlightIrregularities__c> flightIrregularities,
-    Map<String, Airport__c> airportCodeToAirport
+    Map<String, Airport__c> airportCodeToAirport,
+    List<CARE_Claim__c> possiblyDuplicateCAREClaims
   ) {
     List<EU261Claim> toReturn = new List<EU261Claim>{};
 
@@ -301,6 +310,14 @@ public without sharing class EU261Service {
         if (
           c.bookingReference == otherClaim.bookingReference &&
           c.id != otherClaim.id
+        ) {
+          hasPotentiallyDuplicateClaims = true;
+        }
+      }
+      for (CARE_Claim__c cc : possiblyDuplicateCAREClaims) {
+        if (
+          c.bookingReference == cc.Booking_Reference__c &&
+          c.flightNumber == cc.Flight_Number__c
         ) {
           hasPotentiallyDuplicateClaims = true;
         }
