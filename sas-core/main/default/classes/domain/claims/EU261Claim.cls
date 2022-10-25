@@ -25,12 +25,16 @@ public class EU261Claim {
       // If decision is null from above, we should be able to evaluate this claim.
       this.decision = this.determineEligibilityAndCalculateCompensation();
 
-      if (this.getCaveats().length() != 0) {
-        this.decision.verdict = Claim.EU261HandlingStatus.PossiblyEligibleForCompensation;
-        this.decision.reasoning = 'caveats: ' + this.getCaveats();
-      }
-
       // this.calculateReimbursement(); // Todo, implement
+    }
+
+    if (
+      this.decision.verdict ==
+      Claim.EU261HandlingStatus.EligibleForCompensation &&
+      this.getCaveats().length() != 0
+    ) {
+      this.decision.verdict = Claim.EU261HandlingStatus.PossiblyEligibleForCompensation;
+      this.decision.reasoning = 'caveats: ' + this.getCaveats();
     }
 
     return this.decision;
