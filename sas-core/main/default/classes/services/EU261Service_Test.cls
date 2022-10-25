@@ -1491,6 +1491,18 @@ private class EU261Service_Test {
         );
       }
     }
+
+    LIA_Claim__c settledClaimAfterEvaluation = [
+      SELECT EU261_Handling_Status__c
+      FROM LIA_Claim__c
+      WHERE Liability_PNR__c = :oneWayBookingReference
+    ];
+
+    System.assertEquals(
+      'Eligible for compensation',
+      settledClaimAfterEvaluation.EU261_Handling_Status__c,
+      'Claims should have been updated in DB.'
+    );
   }
 
   @IsTest

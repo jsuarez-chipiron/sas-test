@@ -19,6 +19,17 @@ public without sharing class Claims extends fflib_SObjectDomain {
     }
   }
 
+  public static Claims newInstance(List<Claim> claimList) {
+    List<LIA_Claim__c> sObjectList = new List<LIA_Claim__c>();
+
+    for (Claim c : claimList) {
+      c.updateSObjectFields();
+      sObjectList.add(c.underlyingSObject);
+    }
+
+    return newInstance(sObjectList);
+  }
+
   public static Claims newInstance(List<LIA_Claim__c> sObjectList) {
     return (Claims) SAS_Service_Application.Domain.newInstance(sObjectList);
   }
