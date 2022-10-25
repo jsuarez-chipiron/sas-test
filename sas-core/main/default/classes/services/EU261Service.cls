@@ -279,11 +279,19 @@ public without sharing class EU261Service {
 
     for (Claim c : claims) {
       List<Booking__c> bookingsForClaim = new List<Booking__c>();
-      for (CaseToBooking__c ctb : caseIdToCaseToBookings.get(c.parentCaseId)) {
-        // TODO: Fix this can be null.
-        Booking__c booking = bookingsById.get(ctb.Booking__c);
-        if (booking != null) {
-          bookingsForClaim.add(booking);
+
+      List<CaseToBooking__c> ctbsForClaim = caseIdToCaseToBookings.get(
+        c.parentCaseId
+      );
+
+      if (ctbsForClaim != null) {
+        for (
+          CaseToBooking__c ctb : ctbsForClaim
+        ) {
+          Booking__c booking = bookingsById.get(ctb.Booking__c);
+          if (booking != null) {
+            bookingsForClaim.add(booking);
+          }
         }
       }
 
