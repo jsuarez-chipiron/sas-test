@@ -1,7 +1,6 @@
-public without sharing class CAREClaims extends fflib_SObjectDomain {
+public without sharing class CAREClaims extends ApplicationDomain {
   public CAREClaims(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<CARE_Claim__c>) Records;
   }
 

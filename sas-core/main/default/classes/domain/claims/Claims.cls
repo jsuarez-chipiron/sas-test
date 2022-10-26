@@ -1,7 +1,6 @@
-public without sharing class Claims extends fflib_SObjectDomain {
+public without sharing class Claims extends ApplicationDomain {
   public Claims(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
 
     this.instanceRecords = (List<LIA_Claim__c>) Records;
 

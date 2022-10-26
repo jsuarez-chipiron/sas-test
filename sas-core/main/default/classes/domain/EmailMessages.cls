@@ -1,7 +1,6 @@
-public without sharing class EmailMessages extends fflib_SObjectDomain {
+public without sharing class EmailMessages extends ApplicationDomain {
   public EmailMessages(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
   }
 
   public static final String STATUS_NEW = '0';

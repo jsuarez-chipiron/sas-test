@@ -1,7 +1,6 @@
-public without sharing class FlightIrregularities extends fflib_SObjectDomain {
+public without sharing class FlightIrregularities extends ApplicationDomain {
   public FlightIrregularities(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<FlightIrregularities__c>) Records;
   }
   public List<FlightIrregularities__c> instanceRecords;

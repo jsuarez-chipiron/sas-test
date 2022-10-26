@@ -1,7 +1,6 @@
-public without sharing class Airports extends fflib_SObjectDomain {
+public without sharing class Airports extends ApplicationDomain {
   public Airports(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Airport__c>) Records;
 
     List<Airport> airportObjects = new List<Airport>();
@@ -116,7 +115,10 @@ public without sharing class Airports extends fflib_SObjectDomain {
       throw new AirportsNotDefinedException('Unable to find airports');
     }
 
-    return Airport.distanceBetweenAirportsInMeters(new Airport(airports[0]), new Airport(airports[1]));
+    return Airport.distanceBetweenAirportsInMeters(
+      new Airport(airports[0]),
+      new Airport(airports[1])
+    );
   }
 
   // For manual update

@@ -1,7 +1,6 @@
-public without sharing class Bookings extends fflib_SObjectDomain {
+public without sharing class Bookings extends ApplicationDomain {
   public Bookings(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Booking__c>) Records;
 
     List<Booking> bookingObjects = new List<Booking>();

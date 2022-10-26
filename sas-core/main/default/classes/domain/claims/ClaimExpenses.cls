@@ -1,7 +1,6 @@
-public without sharing class ClaimExpenses extends fflib_SObjectDomain {
+public without sharing class ClaimExpenses extends ApplicationDomain {
   public ClaimExpenses(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Claim_Expense__c>) Records;
   }
 

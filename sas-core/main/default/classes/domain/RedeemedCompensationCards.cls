@@ -1,7 +1,6 @@
-public without sharing class RedeemedCompensationCards extends fflib_SObjectDomain {
+public without sharing class RedeemedCompensationCards extends ApplicationDomain {
   public RedeemedCompensationCards(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Redeemed_Compensation_Card__c>) Records;
   }
 

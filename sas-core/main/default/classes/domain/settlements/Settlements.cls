@@ -1,10 +1,9 @@
-public without sharing class Settlements extends fflib_SObjectDomain {
+public without sharing class Settlements extends ApplicationDomain {
   private static SettlementItemsSelector settlementItemsSel = SettlementItemsSelector.newInstance();
   private static ExchangeRatesSelector exchangeRatesSel = ExchangeRatesSelector.newInstance();
 
   public Settlements(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Settlement__c>) Records;
   }
 

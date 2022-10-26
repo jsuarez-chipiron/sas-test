@@ -1,7 +1,6 @@
-public without sharing class ContentVersions extends fflib_SObjectDomain {
+public without sharing class ContentVersions extends ApplicationDomain {
   public ContentVersions(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<ContentVersion>) Records;
   }
 

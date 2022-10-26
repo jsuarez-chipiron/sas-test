@@ -1,7 +1,6 @@
-public without sharing class Cases extends fflib_SObjectDomain {
+public without sharing class Cases extends ApplicationDomain {
   public Cases(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Case>) Records;
   }
 
