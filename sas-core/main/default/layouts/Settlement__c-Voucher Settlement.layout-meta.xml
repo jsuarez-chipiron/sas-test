@@ -171,6 +171,8 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>
         <fields>Status__c</fields>
@@ -186,13 +188,19 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Customer_Name__c</fields>
         <fields>Amount__c</fields>
+        <fields>Currency__c</fields>
         <fields>Cost_Account__c</fields>
+        <fields>Comments__c</fields>
         <relatedList>Settlement_Item__c.Settlement__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Customer_Name__c</fields>
         <fields>OBJECT_ID</fields>
@@ -213,7 +221,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000005BULq</masterLabel>
+        <masterLabel>00h5E000002BHJr</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
