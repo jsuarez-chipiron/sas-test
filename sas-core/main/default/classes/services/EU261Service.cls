@@ -505,49 +505,4 @@ public without sharing class EU261Service {
 
     parentCases.emailContactPeople(emailsByCaseId, uow).close(uow);
   }
-
-  /*private static void debugResult(
-    List<ClaimWithCompensationDetails> automatedClaims
-  ) {
-    Integer claimNo = 1;
-    for (ClaimWithCompensationDetails c : automatedClaims) {
-      System.debug(
-        '----------------- Claim no.' +
-        claimNo +
-        ' START -----------------'
-      );
-      System.debug('Booking type: ' + c.bookingType);
-      System.debug(
-        'Status: ' + c.claim.instanceRecords[0].EU261_Handling_Status__c
-      );
-      System.debug(
-        'Note: ' + c.claim.instanceRecords[0].EU261_Handling_Note__c
-      );
-
-      System.debug(
-        'More: ' +
-        'outsideSASControlExplanation: ' +
-        c.outsideSASControlExplanation +
-        '. maximumTimeToClaimCompensation: ' +
-        c.maximumTimeToClaimCompensation +
-        '. hasPotentiallyDuplicateClaims: ' +
-        c.hasPotentiallyDuplicateClaims +
-        '. hasRelatedFiles: ' +
-        c.hasRelatedFiles +
-        '. rejectionReason: ' +
-        c.rejectionReason +
-        '. canBeEvaluated: ' +
-        c.canBeEvaluated +
-        '. unhandledReason: ' +
-        c.unhandledReason
-      );
-      System.debug(
-        '----------------- Claim no.' +
-        claimNo +
-        ' END -------------------'
-      );
-
-      claimNo += 1;
-    }
-  }*/
 }
