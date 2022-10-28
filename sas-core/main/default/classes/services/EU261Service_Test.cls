@@ -37,6 +37,8 @@ private class EU261Service_Test {
   private static String missingTravelersBookingReference = 'MISSTR';
   private static String claimFirmBookingReference = 'CLAIMF';
   private static String careDuplicateBookingReference = 'CAREDU';
+  private static String twoFlightsCancelledInTimeBookingReference = 'TWOYES';
+  private static String twoFlightsCancelledNotOnTimeBookingReference = 'TWONOT';
 
   public static Set<String> allTestPnrs = new Set<String>{
     'ONTIME',
@@ -222,6 +224,30 @@ private class EU261Service_Test {
       TEDS_Identifier__c = 'SK0015-20220817',
       Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 8, 1, 0),
       Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 11, 1, 0)
+    );
+    Flight__c flightAfterFlightWithTECHCancellationNotMissed = new Flight__c(
+      Arrival_Airport__c = 'ARN',
+      Departure_Airport__c = 'CPH',
+      Operating_Carrier__c = 'SK',
+      TEDS_Identifier__c = 'SK0016-20220817',
+      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 12, 1, 0),
+      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 14, 1, 0)
+    );
+    Flight__c flightAfterFlightWithTECHCancellationMissed = new Flight__c(
+      Arrival_Airport__c = 'ARN',
+      Departure_Airport__c = 'CPH',
+      Operating_Carrier__c = 'SK',
+      TEDS_Identifier__c = 'SK0017-20220817',
+      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 8, 1, 0),
+      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 10, 1, 0)
+    );
+    Flight__c flightAfterFlightWithTECHCancellationMissedReplacement = new Flight__c(
+      Arrival_Airport__c = 'ARN',
+      Departure_Airport__c = 'CPH',
+      Operating_Carrier__c = 'SK',
+      TEDS_Identifier__c = 'SK0018-20220817',
+      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 13, 1, 0),
+      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 15, 1, 0)
     );
     Airport__c airportHEL = new Airport__c(
       City__c = 'Helsinki',
@@ -409,9 +435,19 @@ private class EU261Service_Test {
       TEDS_Identifier__c = 'uniqueBooking31',
       Type__c = 'OneWay'
     );
-    Booking__c careDuplicateBookingReferenceBooking = new Booking__c(
+    Booking__c careDuplicateBooking = new Booking__c(
       Booking_Reference__c = careDuplicateBookingReference,
       TEDS_Identifier__c = 'uniqueBooking32',
+      Type__c = 'OneWay'
+    );
+    Booking__c twoFlightsCancelledInTimeBooking = new Booking__c(
+      Booking_Reference__c = twoFlightsCancelledInTimeBookingReference,
+      TEDS_Identifier__c = 'uniqueBooking33',
+      Type__c = 'OneWay'
+    );
+    Booking__c twoFlightsCancelledNotInTimeBooking = new Booking__c(
+      Booking_Reference__c = twoFlightsCancelledNotOnTimeBookingReference,
+      TEDS_Identifier__c = 'uniqueBooking34',
       Type__c = 'OneWay'
     );
 
@@ -436,6 +472,9 @@ private class EU261Service_Test {
       flightWithCancellationOutsideSASControlReplacement,
       flightForMinimalClaim,
       flightWithRotation,
+      flightAfterFlightWithTECHCancellationNotMissed,
+      flightAfterFlightWithTECHCancellationMissed,
+      flightAfterFlightWithTECHCancellationMissedReplacement,
       oneWayBooking,
       dayReturnBooking,
       multiCityBooking,
@@ -466,7 +505,9 @@ private class EU261Service_Test {
       differentLastNamesBooking,
       missingTravelersBooking,
       claimFirmBooking,
-      careDuplicateBookingReferenceBooking
+      careDuplicateBooking,
+      twoFlightsCancelledInTimeBooking,
+      twoFlightsCancelledNotInTimeBooking
     };
     Segment__c oneWaySegment = new Segment__c(
       Booking__c = oneWayBooking.Id,
@@ -673,7 +714,7 @@ private class EU261Service_Test {
       Trip_Type__c = 'Outbound'
     );
     Segment__c careDuplicateClaimSegment = new Segment__c(
-      Booking__c = careDuplicateBookingReferenceBooking.Id,
+      Booking__c = careDuplicateBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
       Seat__c = '1A',
       Trip_Type__c = 'Outbound'
@@ -693,47 +734,98 @@ private class EU261Service_Test {
     Segment__c groupBookingSegment1 = new Segment__c(
       Booking__c = groupBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c groupBookingSegment2 = new Segment__c(
       Booking__c = groupBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '2A'
+      Seat__c = '2A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c groupBookingSegment3 = new Segment__c(
       Booking__c = groupBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '3A'
+      Seat__c = '3A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c groupBookingSegment4 = new Segment__c(
       Booking__c = groupBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '4A'
+      Seat__c = '4A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c groupBookingSegment5 = new Segment__c(
       Booking__c = groupBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '5A'
+      Seat__c = '5A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c differentLastNamesSegment1 = new Segment__c(
       Booking__c = differentLastNamesBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c differentLastNamesSegment2 = new Segment__c(
       Booking__c = differentLastNamesBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '2A'
+      Seat__c = '2A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c missingTravelersSegment = new Segment__c(
       Booking__c = missingTravelersBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Segment__c claimFirmSegment = new Segment__c(
       Booking__c = claimFirmBooking.Id,
       Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '1A'
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
+    );
+    Segment__c twoFlightsCancelledInTimeSegment1 = new Segment__c(
+      Booking__c = twoFlightsCancelledInTimeBooking.Id,
+      Flight__c = flightWithTECHCancellation.Id,
+      Seat__c = '1A',
+      Trip_Type__c = 'Cancelled'
+    );
+    Segment__c twoFlightsCancelledInTimeSegment2 = new Segment__c(
+      Booking__c = twoFlightsCancelledInTimeBooking.Id,
+      Flight__c = flightWithTECHCancellationReplacement.Id,
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
+    );
+    Segment__c twoFlightsCancelledInTimeSegment3 = new Segment__c(
+      Booking__c = twoFlightsCancelledInTimeBooking.Id,
+      Flight__c = flightAfterFlightWithTECHCancellationNotMissed.Id,
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
+    );
+    Segment__c twoFlightsCancelledNotInTimeSegment1 = new Segment__c(
+      Booking__c = twoFlightsCancelledNotInTimeBooking.Id,
+      Flight__c = flightWithTECHCancellation.Id,
+      Seat__c = '1A',
+      Trip_Type__c = 'Cancelled'
+    );
+    Segment__c twoFlightsCancelledNotInTimeSegment2 = new Segment__c(
+      Booking__c = twoFlightsCancelledNotInTimeBooking.Id,
+      Flight__c = flightWithTECHCancellationReplacement.Id,
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
+    );
+    Segment__c twoFlightsCancelledNotInTimeSegment3 = new Segment__c(
+      Booking__c = twoFlightsCancelledNotInTimeBooking.Id,
+      Flight__c = flightAfterFlightWithTECHCancellationMissed.Id,
+      Seat__c = '1A',
+      Trip_Type__c = 'Cancelled'
+    );
+    Segment__c twoFlightsCancelledNotInTimeSegment4 = new Segment__c(
+      Booking__c = twoFlightsCancelledNotInTimeBooking.Id,
+      Flight__c = flightAfterFlightWithTECHCancellationMissedReplacement.Id,
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
     );
     Passenger__c dayReturnPassenger = new Passenger__c(
       Booking__c = dayReturnBooking.Id,
@@ -946,7 +1038,19 @@ private class EU261Service_Test {
       Last_Name__c = 'Svensson'
     );
     Passenger__c careDuplicatePassenger = new Passenger__c(
-      Booking__c = careDuplicateBookingReferenceBooking.Id,
+      Booking__c = careDuplicateBooking.Id,
+      Identifier__c = 'P1',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
+    Passenger__c twoFlightsCancelledNotInTimePassenger = new Passenger__c(
+      Booking__c = twoFlightsCancelledNotInTimeBooking.Id,
+      Identifier__c = 'P1',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
+    Passenger__c twoFlightsCancelledInTimePassenger = new Passenger__c(
+      Booking__c = twoFlightsCancelledInTimeBooking.Id,
       Identifier__c = 'P1',
       First_Name__c = 'Sven',
       Last_Name__c = 'Svensson'
@@ -1133,7 +1237,16 @@ private class EU261Service_Test {
       flightCancellationTECH,
       nonSASDelay,
       minimalClaimDelay,
-      rotationDelay
+      rotationDelay,
+      twoFlightsCancelledNotInTimePassenger,
+      twoFlightsCancelledInTimePassenger,
+      twoFlightsCancelledInTimeSegment1,
+      twoFlightsCancelledInTimeSegment2,
+      twoFlightsCancelledInTimeSegment3,
+      twoFlightsCancelledNotInTimeSegment1,
+      twoFlightsCancelledNotInTimeSegment2,
+      twoFlightsCancelledNotInTimeSegment3,
+      twoFlightsCancelledNotInTimeSegment4
     };
 
     TestDataFactories.CasesClaims individualClaim = createDefaultTestClaim(
@@ -1303,6 +1416,20 @@ private class EU261Service_Test {
       careDuplicateBookingReference,
       null
     );
+    TestDataFactories.CasesClaims twoFlightsCancelledNotInTimeClaim = createDefaultTestClaim(
+      twoFlightsCancelledNotOnTimeBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0013',
+        LIA_Claim__c.Customer_Claim_Type__c => 'Flight Cancellation'
+      }
+    );
+    TestDataFactories.CasesClaims twoFlightsCancelledInTimeClaim = createDefaultTestClaim(
+      twoFlightsCancelledInTimeBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0013',
+        LIA_Claim__c.Customer_Claim_Type__c => 'Flight Cancellation'
+      }
+    );
 
     createCaseToBookings(
       new List<TestDataFactories.CasesClaims>{
@@ -1334,7 +1461,9 @@ private class EU261Service_Test {
         multiCityClaim,
         roundTripClaim,
         unknownClaim,
-        careDuplicateClaim
+        careDuplicateClaim,
+        twoFlightsCancelledNotInTimeClaim,
+        twoFlightsCancelledInTimeClaim
       }
     );
 
@@ -2240,6 +2369,68 @@ private class EU261Service_Test {
       'Closed',
       caseForClaim.Status,
       'Parent case should be closed after handling.'
+    );
+  }
+
+  @IsTest
+  static void claimsWithTwoFlightsAndOneCancellationNotOnTimeShouldBeApproved() {
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :twoFlightsCancelledNotOnTimeBookingReference
+        ]
+      ))
+      .keySet();
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    EU261Claim twoFlightsClaim = EU261Service.newInstance()
+      .automateEU261Claims(claimIds, uow)[0];
+    uow.commitWork();
+    Test.stopTest();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.EligibleForCompensation,
+      twoFlightsClaim.decision.verdict,
+      'If a cancelled flight leads to a missed connection and a delay of +3 hours the customer should be eligble for compensation (two flights).'
+    );
+    System.assertEquals(
+      250,
+      twoFlightsClaim.decision.compensationPerCustomer.values()[0],
+      'The customer should be awarded 250 eur (two flights)'
+    );
+  }
+
+  @IsTest
+  static void claimsWithTwoFlightsANDOneCancellationButOnTimeShouldBeDenied() {
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :twoFlightsCancelledInTimeBookingReference
+        ]
+      ))
+      .keySet();
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    EU261Claim twoFlightsClaim = EU261Service.newInstance()
+      .automateEU261Claims(claimIds, uow)[0];
+    uow.commitWork();
+    Test.stopTest();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.IneligibleForCompensation,
+      twoFlightsClaim.decision.verdict,
+      'If a cancelled flight does not affect the final arrival time the customer should not be compensated (two flights).'
+    );
+    System.assertEquals(
+      'the offered rebooking is not outside the timeframe allowed by EU261',
+      twoFlightsClaim.decision.reasoning,
+      'If a cancelled flight does not affect the final arrival time the customer should not be compensated (two flights).'
     );
   }
 }

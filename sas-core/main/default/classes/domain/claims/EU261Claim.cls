@@ -294,6 +294,11 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot handle claims with a restricted fare basis.'
       );
+    } else if (this.trips == null) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'was not able to divide the booking into trips'
+      );
     } else if (!this.hasTripWithClaimFlight()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -330,12 +335,6 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'the claim flight is cancelled but the booking has no cancelled segments'
-      );
-    } else if (!hasOnlyOneFlightRoute()) {
-      // Super-basic flight handling
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'can only handle claims with a single flight route'
       );
     } else if (hasMoreThanOneCancellation()) {
       return new Decision(

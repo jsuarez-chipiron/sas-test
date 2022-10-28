@@ -56,6 +56,14 @@ public without sharing class Trip {
           'You must fetch flights for the segments in the booking.'
         );
       }
+      if (
+        s.flight.departureAirportObject == null ||
+        s.flight.arrivalAirportObject == null
+      ) {
+        throw new InsufficientDataException(
+          'You must fetch airports for the segments in the booking.'
+        );
+      }
     }
 
     return divideBookingSegmentsIntoTrips(b);
@@ -417,17 +425,18 @@ public without sharing class Trip {
    *
    * This is done to simplify cancellation compensation handling.
    */
-  public static List<Leg> createFromSegments(List<Segment> sortedSegments) {
-    String departureAirport = sortedSegments[0].flight.departureAirport;
-    String arrivalAirport = sortedSegments[0].flight.arrivalAirport;
-    Datetime departureTime = sortedSegments[0].flight.scheduledDepartureTime;
-    Datetime arrivalTime = sortedSegments[0].flight.scheduledArrivalTime;
-    Type segmentType = Trip.nameToType.get(sortedSegments[0].tripType);
+  public static List<Leg> createFromSegments(List<Segment> segments) {
+    segments.sort();
+    String departureAirport = segments[0].flight.departureAirport;
+    String arrivalAirport = segments[0].flight.arrivalAirport;
+    Datetime departureTime = segments[0].flight.scheduledDepartureTime;
+    Datetime arrivalTime = segments[0].flight.scheduledArrivalTime;
+    Type segmentType = Trip.nameToType.get(segments[0].tripType);
 
     List<Leg> toReturn = new List<Leg>{};
     List<Segment> segmentsInCurrentLeg = new List<Segment>{};
     Boolean isNewLeg = true;
-    for (Segment s : sortedSegments) {
+    for (Segment s : segments) {
       if (
         s.flight.departureAirport == departureAirport &&
         s.flight.arrivalAirport == arrivalAirport &&
@@ -468,30 +477,50 @@ public without sharing class Trip {
    * @return a List<Trip> of the trips sorted in reverse order.
    */
   private static List<Trip> divideBookingSegmentsIntoTrips(Booking booking) {
-    List<Segment> sortedSegments = booking.segments;
-    sortedSegments.sort(); // TODO: Make cleaner
-    List<Leg> sortedLegs = Leg.createFromSegments(sortedSegments);
+    List<Leg> sortedLegs = Leg.createFromSegments(booking.segments);
 
-    // Leg latestLeg;
-    // List<Leg> legsInCurrentTrip = new List<Leg>{};
-    // Boolean hasInBoundTrip = false;
     List<Trip> tripsToReturn = new List<Trip>{};
-    switch on booking.type {
-      when OneWay {
-        List<Leg> tripLegs = new List<Leg>{};
-        for (Leg l : sortedLegs) {
-          tripLegs.add(l);
-        }
-        tripsToReturn.add(new Trip(tripLegs));
-      }
-      when else {
+    Leg latestLeg;
+    List<Leg> legsInCurrentTrip = new List<Leg>();
+    for (Leg leg : sortedLegs) {
+      /*
+       * Check if the segment is the last segment in the booking, cancelled or unknown => add it to the trip.
+       *
+       * This is logical in most cases. The most common case this does not work for is if the flight to the
+       * final destination was cancelled (and there is a return flight home) and the replacement flight
+       * departs before the original one.
+       */
+      if (latestLeg == null && leg.segmentType == Type.Outbound) {
+        latestLeg = leg;
+        legsInCurrentTrip.add(leg);
+        continue;
+      } else if (
+        leg.segmentType == Type.Cancelled ||
+        leg.segmentType == Type.Unknown
+      ) {
+        legsInCurrentTrip.add(leg);
+        continue;
+      } else if (latestLeg == null) {
         throw new BookingTypeNotSupportedException(
-          'Booking type "' +
-          booking.type +
-          '" is not yet supported.'
-        );
+          'Error in initialization of trip.'
+        ); // e.g. If the trip starts with Inbound
       }
+
+      Boolean moreThan24HoursAtAirport = DateUtils.isMoreThan24HoursBetween(
+        latestLeg.flight.scheduledDepartureTime,
+        leg.flight.scheduledArrivalTime
+      );
+
+      if (moreThan24HoursAtAirport) {
+        tripsToReturn.add(new Trip(legsInCurrentTrip));
+        legsInCurrentTrip = new List<Leg>();
+      }
+
+      latestLeg = leg;
+      legsInCurrentTrip.add(leg);
     }
+
+    tripsToReturn.add(new Trip(legsInCurrentTrip));
 
     for (Trip t : tripsToReturn) {
       Flight firstFlight = t.sortedLegs[0].flight;
@@ -501,88 +530,15 @@ public without sharing class Trip {
       t.destinationAirport = finalFlight.arrivalAirportObject;
     }
 
+    if (
+      tripsToReturn.size() == 1 &&
+      tripsToReturn[0].originAirport == tripsToReturn[0].destinationAirport
+    ) {
+      throw new BookingTypeNotSupportedException(
+        'Booking type not yet supported (Dayreturn)'
+      );
+    }
+
     return tripsToReturn;
-
-    /*
-     * Go through the segments backwards.
-     * Looping through forwards makes it very difficult to distinguish between whether a cancelled flight is outbound or inbound.
-     */
-    // for (Integer i = sortedSegments.size() - 1; i >= 0; i--) {
-    //   Segment__c s = sortedSegments[i];
-    //   Type segmentsTripType = nameToType.get(s.Trip_Type__c);
-    //   if (segmentsTripType == null) {
-    //     segmentsTripType = Type.Unknown;
-    //   }
-    //   /*
-    //    * Check if the segment is the last segment in the booking, cancelled or unknown => add it to the trip.
-    //    *
-    //    * This is logical in most cases. The most common case this does not work for is if the flight to the
-    //    * final destination was cancelled (and there is a return flight home) and the replacement flight
-    //    * departs before the original one.
-    //    *
-    //    * TODO: Handle Cancellations and Unknowns better.
-    //    */
-    //   if (
-    //     latestLeg == null ||
-    //     segmentsTripType == Type.Cancelled ||
-    //     segmentsTripType == Type.Unknown
-    //   ) {
-    //     latestLeg = s;
-    //     segmentsInCurrentTrip.add(s);
-    //     continue;
-    //   }
-
-    //   if (s.Flight__r == null) {
-    //     throw new InsufficientDataException(
-    //       'You must fetch the Flight__r for the Segments__r for the booking.'
-    //     );
-    //   }
-
-    //   // We can only have one outbound and one inbound trip (Except for MultiCity bookings)
-    //   Boolean switchedToOutbound = (s.Trip_Type__c != latestLeg.Trip_Type__c &&
-    //   segmentsTripType == Trip.Type.Outbound &&
-    //   !hasInBoundTrip);
-
-    //   Boolean moreThan24HoursAtAirport = DateUtils.isMoreThan24HoursBetween(
-    //     latestLeg.Flight__r.Scheduled_Departure_Time__c,
-    //     s.Flight__r.Scheduled_Arrival_Time__c
-    //   );
-
-    //   /**
-    //    * Switched to inbound does not work for MultiCity bookings.
-    //    * However, it is a MultiCity booking, it is relatively unlikely you will stay less than
-    //    * 24 hours at a destination airport. This is most likely to happen to DayReturn bookings.
-    //    */
-    //   Boolean segmentReachedAFinalDestination =
-    //     moreThan24HoursAtAirport ||
-    //     (switchedToOutbound &&
-    //     Bookings.nameToBookingType.get(booking.Type__c) !=
-    //     Bookings.Type.MultiCity);
-
-    //   if (segmentReachedAFinalDestination) {
-    //     tripsToReturn.add(
-    //       new Trip(
-    //         new Segments(segmentsInCurrentTrip).getSortedInstanceRecords()
-    //       )
-    //     );
-    //     segmentsInCurrentTrip = new List<Segment__c>{};
-    //     hasInBoundTrip = true;
-    //   } else {
-    //     // If not, continue looping through the segments
-    //     latestLeg = s;
-    //   }
-    //   segmentsInCurrentTrip.add(s);
-    // }
-
-    // tripsToReturn.add(
-    //   new Trip((new Segments(segmentsInCurrentTrip)).getSortedInstanceRecords())
-    // );
-
-    // // No, refactor, DB-call -> see eu261-service 773
-    // for (Trip t : tripsToReturn) {
-    //   t.setAirports(airportCodeToAirport);
-    // }
-
-    // return tripsToReturn;
   }
 }
