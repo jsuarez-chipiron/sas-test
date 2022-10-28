@@ -44,7 +44,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Case_Status</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Case.Status</leftValueReference>
                 <operator>EqualTo</operator>
@@ -52,10 +52,17 @@
                     <stringValue>Waiting for Approval</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Control</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Get_Approval_Submitter_Id</targetReference>
             </connector>
-            <label>Case Status is Waiting For Approval</label>
+            <label>Case Status is Waiting For Approval/Control</label>
         </rules>
     </decisions>
     <environments>Default</environments>
