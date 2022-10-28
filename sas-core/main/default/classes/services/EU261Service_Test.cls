@@ -1603,7 +1603,7 @@ private class EU261Service_Test {
   }
 
   @IsTest
-  static void onlyOneWayTicketsCanBeEvaluated() {
+  static void onlyOneWayAndRoundTripTicketsCanBeEvaluated() {
     Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
         [
           SELECT Id
@@ -1633,6 +1633,12 @@ private class EU261Service_Test {
           c.decision.verdict,
           'One way claim should be possible to evaluate.'
         );
+      } else if (c.claimedBooking.type == Booking.Type.RoundTrip) {
+        System.assertEquals(
+          Claim.EU261HandlingStatus.EligibleForCompensation,
+          c.decision.verdict,
+          'Round trip claim should be possible to evaluate.'
+        );
       } else {
         System.assertEquals(
           Claim.EU261HandlingStatus.UnableToHandle,
@@ -1640,9 +1646,9 @@ private class EU261Service_Test {
           'Other booking types should not be available for evaluation.'
         );
         System.assertEquals(
-          'can handle only one way trips',
+          'can handle only one way or round trips',
           c.decision.reasoning,
-          'Rejection reason should be "can handle only one way trips"'
+          'Rejection reason should be "can handle only one way or round trips"'
         );
       }
     }
