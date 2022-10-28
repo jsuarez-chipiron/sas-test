@@ -182,6 +182,17 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     return false;
   }
 
+  public void setAirports(Map<String, Airport> airportCodeToAirportObjects) {
+    for (Segment s : segments) {
+      s.flight.departureAirportObject = airportCodeToAirportObjects.get(
+        s.flight.departureAirport
+      );
+      s.flight.arrivalAirportObject = airportCodeToAirportObjects.get(
+        s.flight.arrivalAirport
+      );
+    }
+  }
+
   /**
    * Divides the flights in the booking into different trips. If there is an issue, the booking's trip(s) get set to null.
    * If the booking is a OneWay there should only be one trip.

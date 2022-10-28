@@ -116,7 +116,10 @@ public without sharing class Airports extends fflib_SObjectDomain {
       throw new AirportsNotDefinedException('Unable to find airports');
     }
 
-    return Airport.distanceBetweenAirportsInMeters(new Airport(airports[0]), new Airport(airports[1]));
+    return Airport.distanceBetweenAirportsInMeters(
+      new Airport(airports[0]),
+      new Airport(airports[1])
+    );
   }
 
   // For manual update
@@ -130,5 +133,21 @@ public without sharing class Airports extends fflib_SObjectDomain {
   }
 
   public class AirportsNotDefinedException extends Exception {
+  }
+
+  public Map<String, Airport__c> getAirportCodeToAirport() {
+    Map<String, Airport__c> codeToAirport = new Map<String, Airport__c>{};
+    for (Airport__c a : instanceRecords) {
+      codeToAirport.put(a.TEDS_Identifier__c, a);
+    }
+    return codeToAirport;
+  }
+
+  public Map<String, Airport> getAirportCodeToAirportObject() {
+    Map<String, Airport> codeToAirport = new Map<String, Airport>{};
+    for (Airport__c a : instanceRecords) {
+      codeToAirport.put(a.TEDS_Identifier__c, new Airport(a));
+    }
+    return codeToAirport;
   }
 }
