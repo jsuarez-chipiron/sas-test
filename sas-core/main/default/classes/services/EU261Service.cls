@@ -224,10 +224,8 @@ public without sharing class EU261Service {
 
     List<Airport__c> allAirports = AirportsSelector.newInstance()
       .selectByIATACode(allAirportCodes);
-    Map<String, Airport__c> airportCodeToAirport = new Map<String, Airport__c>{};
-    for (Airport__c a : allAirports) {
-      airportCodeToAirport.put(a.TEDS_Identifier__c, a);
-    }
+    Map<String, Airport> airportCodeToAirportObjects = new Airports(allAirports)
+      .getAirportCodeToAirportObject();
 
     // 5. Get time limits for how long a pax can wait before filing a claim. Todo: Reimplement, do after airports are fetched in constructClaimWithCompensationDetails
     Map<String, Decimal> countryToClaimSubmissionTimeLimit = new Map<String, Decimal>{};
@@ -246,7 +244,7 @@ public without sharing class EU261Service {
       caseIdToCaseToBookings,
       bookingsById,
       flightIrregularities,
-      airportCodeToAirport,
+      airportCodeToAirportObjects,
       possiblyDuplicateCAREClaims
     );
   }
@@ -258,7 +256,7 @@ public without sharing class EU261Service {
     Map<Id, List<CaseToBooking__c>> caseIdToCaseToBookings,
     Map<Id, Booking__c> bookingsById,
     List<FlightIrregularities__c> flightIrregularities,
-    Map<String, Airport__c> airportCodeToAirport,
+    Map<String, Airport> airportCodeToAirportObjects,
     List<CARE_Claim__c> possiblyDuplicateCAREClaims
   ) {
     List<EU261Claim> toReturn = new List<EU261Claim>{};
@@ -339,25 +337,12 @@ public without sharing class EU261Service {
       Boolean foundMultipleMatchingBookings =
         booking.instanceRecords.size() > 1;
 
-      Map<String, Airport> airportCodeToAirportObjects = new Map<String, Airport>();
-      for (String key : airportCodeToAirport.keySet()) {
-        airportCodeToAirportObjects.put(
-          key,
-          new Airport(airportCodeToAirport.get(key))
-        );
-      }
-
       for (Booking b : booking.objects) {
         for (Segment s : b.segments) {
           s.flight.irregularities = claimSpecificIrregularities.get(
             s.flight.id
           );
-          s.flight.departureAirportObject = airportCodeToAirportObjects.get(
-            s.flight.departureAirport
-          );
-          s.flight.arrivalAirportObject = airportCodeToAirportObjects.get(
-            s.flight.arrivalAirport
-          );
+          b.setAirports(airportCodeToAirportObjects);
         }
       }
 
@@ -520,49 +505,4 @@ public without sharing class EU261Service {
 
     parentCases.emailContactPeople(emailsByCaseId, uow).close(uow);
   }
-
-  /*private static void debugResult(
-    List<ClaimWithCompensationDetails> automatedClaims
-  ) {
-    Integer claimNo = 1;
-    for (ClaimWithCompensationDetails c : automatedClaims) {
-      System.debug(
-        '----------------- Claim no.' +
-        claimNo +
-        ' START -----------------'
-      );
-      System.debug('Booking type: ' + c.bookingType);
-      System.debug(
-        'Status: ' + c.claim.instanceRecords[0].EU261_Handling_Status__c
-      );
-      System.debug(
-        'Note: ' + c.claim.instanceRecords[0].EU261_Handling_Note__c
-      );
-
-      System.debug(
-        'More: ' +
-        'outsideSASControlExplanation: ' +
-        c.outsideSASControlExplanation +
-        '. maximumTimeToClaimCompensation: ' +
-        c.maximumTimeToClaimCompensation +
-        '. hasPotentiallyDuplicateClaims: ' +
-        c.hasPotentiallyDuplicateClaims +
-        '. hasRelatedFiles: ' +
-        c.hasRelatedFiles +
-        '. rejectionReason: ' +
-        c.rejectionReason +
-        '. canBeEvaluated: ' +
-        c.canBeEvaluated +
-        '. unhandledReason: ' +
-        c.unhandledReason
-      );
-      System.debug(
-        '----------------- Claim no.' +
-        claimNo +
-        ' END -------------------'
-      );
-
-      claimNo += 1;
-    }
-  }*/
 }

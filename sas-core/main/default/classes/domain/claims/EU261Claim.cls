@@ -270,11 +270,14 @@ public class EU261Claim {
       // TODO: Think about how to handle repeat PNRs.
       // TODO: Think about the potential fraud cases.
       // TODO: Ensure that we have only a specific number of trips.
-    } else if (this.claimedBooking.type != Booking.Type.OneWay) {
+    } else if (
+      this.claimedBooking.type != Booking.Type.OneWay &&
+      this.claimedBooking.type != Booking.Type.RoundTrip
+    ) {
       // TODO: I guess we need to get rid of the booking variable?
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'can handle only one way trips'
+        'can handle only one way or round trips'
       );
     } else if (this.claimedBooking.flights.size() == 0) {
       return new Decision(
@@ -293,6 +296,11 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot handle claims with a restricted fare basis.'
+      );
+    } else if (this.trips == null) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'was not able to divide the booking into trips'
       );
     } else if (!this.hasTripWithClaimFlight()) {
       return new Decision(
@@ -330,12 +338,6 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'the claim flight is cancelled but the booking has no cancelled segments'
-      );
-    } else if (!hasOnlyOneFlightRoute()) {
-      // Super-basic flight handling
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'can only handle claims with a single flight route'
       );
     } else if (hasMoreThanOneCancellation()) {
       return new Decision(
