@@ -1,7 +1,6 @@
-public without sharing class Claims extends fflib_SObjectDomain {
+public without sharing class Claims extends ApplicationDomain {
   public Claims(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
 
     this.instanceRecords = (List<LIA_Claim__c>) Records;
 
@@ -122,16 +121,9 @@ public without sharing class Claims extends fflib_SObjectDomain {
    * progress.
    */
   public Claims settle(fflib_ISObjectUnitOfWork uow) {
-    List<Settlement__c> settlementsForClaims = SettlementsSelector.newInstance()
-      .selectByClaimId((new Map<Id, LIA_Claim__c>(instanceRecords)).keySet());
-
-    Set<Id> caseIds = new Set<Id>();
-    for (Claim cl : objects) {
-      caseIds.add(cl.parentCaseId);
-    }
-    List<Case> casesForClaims = CasesSelector.newInstance().selectById(caseIds);
-
-    Settlements.newInstance(settlementsForClaims)
+    Settlements.newInstance(
+        SettlementsSelector.newInstance().selectByClaimId(this.ids)
+      )
       .validate()
       .approve(uow)
       .lock();

@@ -493,6 +493,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Percentage_Sent_to_Control__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Exchange_Rate__c.From_Currency__c</field>
         <readable>true</readable>

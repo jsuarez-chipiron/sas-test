@@ -1,10 +1,9 @@
-public without sharing class Settlements extends fflib_SObjectDomain {
+public without sharing class Settlements extends ApplicationDomain {
   private static SettlementItemsSelector settlementItemsSel = SettlementItemsSelector.newInstance();
   private static ExchangeRatesSelector exchangeRatesSel = ExchangeRatesSelector.newInstance();
 
   public Settlements(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Settlement__c>) Records;
   }
 
@@ -331,6 +330,21 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     );
     Approval.unlock(instanceRecords);
     Approval.unlock(settlementItemsForInstanceRecords);
+
+    return this;
+  }
+
+  public Settlements submitToApproval(fflib_ISObjectUnitOfWork uow) {
+    for (Settlement__c settlement : instanceRecords) {
+      if (settlement.Id == null) {
+        uow.registerNew(settlement);
+      } else {
+        uow.registerDirty(settlement);
+      }
+
+      settlement.Submitter__c = UserInfo.getUserId();
+      settlement.Settlement_Status__c = Settlements.STATUS_WAITING_FOR_APPROVAL;
+    }
 
     return this;
   }

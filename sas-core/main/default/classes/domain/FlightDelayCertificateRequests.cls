@@ -1,7 +1,6 @@
-public without sharing class FlightDelayCertificateRequests extends fflib_SObjectDomain {
+public without sharing class FlightDelayCertificateRequests extends ApplicationDomain {
   public FlightDelayCertificateRequests(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Flight_Delay_Certificate_Request__c>) Records;
   }
 

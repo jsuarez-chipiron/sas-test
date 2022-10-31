@@ -77,6 +77,14 @@ private class EU261Service_Test {
       }
     );
 
+    Exchange_Rate__c eurSekRate = new Exchange_Rate__c(
+      From_Currency__c = 'EUR',
+      To_Currency__c = 'SEK',
+      Rate__c = 10,
+      Date__c = Date.valueOf('2022-10-31'),
+      Name = 'EUR-SEK'
+    );
+
     Test.setMock(HttpCalloutMock.class, new APIMMock());
 
     Flight__c flight1 = new Flight__c(
@@ -452,6 +460,7 @@ private class EU261Service_Test {
     );
 
     insert new List<SObject>{
+      eurSekRate,
       airportHEL,
       airportARN,
       airportCPH,
@@ -1554,19 +1563,26 @@ private class EU261Service_Test {
     Map<Schema.SObjectField, Object> extraClaimFields
   ) {
     Map<Schema.SObjectField, Object> claimFields = new Map<Schema.SObjectField, Object>{
+      LIA_Claim__c.Address_line_1__c => 'Frösundaviks allé 1',
+      LIA_Claim__c.Bank_Account_Holder_Name__c => 'Test testsson',
+      LIA_Claim__c.Bank_Account_Number__c => 'SE7280000810340009783242',
+      LIA_Claim__c.Bank_Country__c => 'Sweden',
+      LIA_Claim__c.BIC_Swift__c => 'CITIUS33',
+      LIA_Claim__c.City__c => 'Solna',
       LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
+      LIA_Claim__c.Country__c => 'Sweden',
+      LIA_Claim__c.Currency__c => 'SEK',
       LIA_Claim__c.Customer_Claim_Category__c => 'Flight disruptions',
       LIA_Claim__c.Customer_Claim_Type__c => 'Flight delay',
       LIA_Claim__c.Flight_Number__c => 'SK0009',
       LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
-      LIA_Claim__c.Type_of_Customer__c => 'Private customer',
-      LIA_Claim__c.Bank_Country__c => 'Sweden',
-      LIA_Claim__c.Country__c => 'Sweden',
-      LIA_Claim__c.Currency__c => 'SEK',
       LIA_Claim__c.Liability_PNR__c => bookingReference,
+      LIA_Claim__c.Postal_Code__c => '11200',
+      LIA_Claim__c.Preferred_Compensation_Method__c => 'Monetary',
       LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
         Claim.RecordType.CustomerClaim
-      )
+      ),
+      LIA_Claim__c.Type_of_Customer__c => 'Private customer'
     };
     if (extraClaimFields != null) {
       claimFields.putAll(extraClaimFields);
@@ -1763,6 +1779,7 @@ private class EU261Service_Test {
     EU261Service es = EU261Service.newInstance();
     es.enabledSettlements = true;
     es.enabledRejections = true;
+    es.percentageRequiringManualApproval = 0;
     List<EU261Claim> claimsWithEvaluationDetails = es.automateEU261Claims(
       claimIds,
       uow
@@ -1771,7 +1788,7 @@ private class EU261Service_Test {
     Test.stopTest();
 
     List<Settlement__c> settlementsForClaim = [
-      SELECT Id, Amount__c, Claim__c
+      SELECT Id, Amount__c, Claim__c, Currency__c
       FROM Settlement__c
       WHERE Claim__c IN :claimIds
     ];
@@ -1786,7 +1803,7 @@ private class EU261Service_Test {
         System.assertEquals(
           250,
           c.decision.compensationPerCustomer.get(c.claimObj.customers[0]),
-          'Compensation should be 250€'
+          'Compensation amount should be 250 €'
         );
         Settlement__c settlementForClaim;
 
@@ -1797,9 +1814,9 @@ private class EU261Service_Test {
         }
 
         System.assertEquals(
-          250,
+          2500.00,
           settlementForClaim.Amount__c,
-          'Settlement total should be higher for two passengers.'
+          'Settlement total should be smaller for one passenger.'
         );
       } else {
         System.assertEquals(
@@ -1826,7 +1843,13 @@ private class EU261Service_Test {
         }
 
         System.assertEquals(
-          500,
+          'SEK',
+          settlementForClaim.Currency__c,
+          'Currency should be set based on preferred currency.'
+        );
+
+        System.assertEquals(
+          5000.00,
           settlementForClaim.Amount__c,
           'Settlement total should be higher for two passengers.'
         );
@@ -2331,6 +2354,7 @@ private class EU261Service_Test {
     EU261Service es = EU261Service.newInstance();
     es.enabledSettlements = true;
     es.enabledRejections = true;
+    es.percentageRequiringManualApproval = 0;
     List<EU261Claim> claimsWithEvaluationDetails = es.automateEU261Claims(
       claimIds,
       uow
@@ -2359,9 +2383,9 @@ private class EU261Service_Test {
     ][0];
 
     System.assertEquals(
-      250,
+      2500.0,
       settlementForClaim.Amount__c,
-      'Settlement with the correct amount should have been created.'
+      'Settlement amount should be multiplied by the exchange rate.'
     );
 
     Case caseForClaim = [

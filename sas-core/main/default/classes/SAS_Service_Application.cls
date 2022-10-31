@@ -70,6 +70,7 @@ public class SAS_Service_Application {
   public static final fflib_Application.ServiceFactory Service = new fflib_Application.ServiceFactory(
     new Map<Type, Type>{
       BookingService.class => BookingService.class,
+      ClaimService.class => ClaimService.class,
       ClaimsIntegrationService.class => ClaimsIntegrationService.class,
       CLMIntegrationService.class => CLMIntegrationService.class,
       EU261Service.class => EU261Service.class,

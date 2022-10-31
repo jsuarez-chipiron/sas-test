@@ -1,7 +1,6 @@
-public without sharing class EmailMessages extends fflib_SObjectDomain {
+public without sharing class EmailMessages extends ApplicationDomain {
   public EmailMessages(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
   }
 
   public static final String STATUS_NEW = '0';
@@ -31,6 +30,9 @@ public without sharing class EmailMessages extends fflib_SObjectDomain {
   private static final String TRUNCATION_MESSAGE =
     '<p style="background-color: #ff0000"><b>----- Email truncated due to character limit exceeded. ' +
     'For full history, see the email feed on the case. -----</b></p>';
+
+  public class EmailTemplateNameException extends Exception {
+  }
 
   /**
    * Used to call the trigger in the before insert context
@@ -70,9 +72,48 @@ public without sharing class EmailMessages extends fflib_SObjectDomain {
     return newAttachment;
   }
 
+  /**
+   * Create an EmailMessage record from a template with the given name.
+   *
+   * The created email can be inserted and stored to be sent later.
+   *
+   * @param templateName Name of the email template. There must exist only one template with this name.
+   * @param parentCaseId The case to which this email is linked to.
+   * @throws EmailTemplateNameException if no templates are found with the name, or if more than one template is found.
+   */
+  public static EmailMessage createEmailMessageFromTemplate(
+    String templateName,
+    Id parentCaseId
+  ) {
+    List<EmailTemplate> templates = EmailTemplatesSelector.newInstance()
+      .selectByName(new Set<String>{ templateName });
+
+    if (templates.size() != 1) {
+      throw new EmailTemplateNameException();
+    }
+
+    return new EmailMessage(
+      HtmlBody = templates[0].HtmlValue,
+      ParentId = parentCaseId,
+      Subject = templates[0].Subject + ' ' + Cases.getThreadId(parentCaseId),
+      TextBody = templates[0].Body,
+      Status = STATUS_DRAFT
+    );
+  }
+
+  /**
+   * Create a Messaging.SingleEmailMessage from a template with the given name.
+   *
+   * The created email will be queued for sending immediately after it is
+   * inserted.
+   *
+   * @param templateName Name of the email template. There must exist only one template with this name.
+   * @param parentCaseId The case to which this email is linked to.
+   * @throws EmailTemplateNameException if no templates are found with the name, or if more than one template is found.
+   */
   public static Messaging.SingleEmailMessage createSingleEmailMessageFromTemplate(
     String templateName,
-    Id caseId
+    Id parentCaseId
   ) {
     List<EmailTemplate> templates = EmailTemplatesSelector.newInstance()
       .selectByName(new Set<String>{ templateName });
@@ -85,13 +126,34 @@ public without sharing class EmailMessages extends fflib_SObjectDomain {
     emailToSend.setSubject(
       templates[0].Subject +
       ' ' +
-      Cases.getThreadId(caseId)
+      Cases.getThreadId(parentCaseId)
     );
     emailToSend.setHtmlBody(templates[0].HtmlValue);
     emailToSend.setPlainTextBody(templates[0].Body);
     return emailToSend;
   }
 
-  public class EmailTemplateNameException extends Exception {
+  public static Messaging.SingleEmailMessage createSingleEmailMessageFromEmailMessage(
+    EmailMessage sourceEmail
+  ) {
+    Messaging.SingleEmailMessage singleEmailMessage = new Messaging.SingleEmailMessage();
+    singleEmailMessage.setSenderDisplayName(sourceEmail.FromAddress);
+
+    singleEmailMessage.setToAddresses(sourceEmail.ToAddress.split(';'));
+    singleEmailMessage.setReplyTo(sourceEmail.FromAddress);
+
+    if (sourceEmail.CcAddress != null) {
+      singleEmailMessage.setCcAddresses(sourceEmail.CcAddress.split(';'));
+    }
+    if (sourceEmail.BccAddress != null) {
+      singleEmailMessage.setBccAddresses(sourceEmail.BccAddress.split(';'));
+    }
+
+    singleEmailMessage.setSubject(sourceEmail.Subject);
+    singleEmailMessage.setHtmlBody(sourceEmail.HtmlBody);
+    singleEmailMessage.setPlainTextBody(sourceEmail.TextBody);
+    singleEmailMessage.setSaveAsActivity(true);
+
+    return singleEmailMessage;
   }
 }

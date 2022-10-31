@@ -1,7 +1,6 @@
-public without sharing class Passengers extends fflib_SObjectDomain {
+public without sharing class Passengers extends ApplicationDomain {
   public Passengers(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {

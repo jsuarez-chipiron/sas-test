@@ -1,7 +1,6 @@
-public without sharing class Cases extends fflib_SObjectDomain {
+public without sharing class Cases extends ApplicationDomain {
   public Cases(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Case>) Records;
   }
 
@@ -185,6 +184,17 @@ public without sharing class Cases extends fflib_SObjectDomain {
       c.OwnerId = queues[0].Id;
     }
     uow.registerDirty(instanceRecords);
+    return this;
+  }
+
+  public Cases updateStatus(
+    fflib_ISObjectUnitOfWork uow,
+    String statusToUpdateTo
+  ) {
+    for (Case c : instanceRecords) {
+      c.Status = statusToUpdateTo;
+      uow.registerDirty(c);
+    }
     return this;
   }
 

@@ -1,7 +1,6 @@
-public without sharing class SettlementItems extends fflib_SObjectDomain {
+public without sharing class SettlementItems extends ApplicationDomain {
   public SettlementItems(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Settlement_Item__c>) Records;
   }
 

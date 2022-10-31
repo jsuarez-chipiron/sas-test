@@ -1,4 +1,4 @@
-public without sharing class Customers extends fflib_SObjectDomain {
+public without sharing class Customers extends ApplicationDomain {
   public Customers(List<SObject> records) {
     super(records);
     this.instanceRecords = (List<Customer__c>) Records;

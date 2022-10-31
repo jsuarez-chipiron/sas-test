@@ -1,7 +1,6 @@
-public without sharing class Refund_Requests extends fflib_SObjectDomain {
+public without sharing class Refund_Requests extends ApplicationDomain {
   public Refund_Requests(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
