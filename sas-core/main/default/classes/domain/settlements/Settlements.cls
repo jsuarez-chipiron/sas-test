@@ -334,6 +334,21 @@ public without sharing class Settlements extends ApplicationDomain {
     return this;
   }
 
+  public Settlements submitToApproval(fflib_ISObjectUnitOfWork uow) {
+    for (Settlement__c settlement : instanceRecords) {
+      if (settlement.Id == null) {
+        uow.registerNew(settlement);
+      } else {
+        uow.registerDirty(settlement);
+      }
+
+      settlement.Submitter__c = UserInfo.getUserId();
+      settlement.Settlement_Status__c = Settlements.STATUS_WAITING_FOR_APPROVAL;
+    }
+
+    return this;
+  }
+
   /**
    * Approves the given settlements for transfer. Excepts that the settlements
    * have already been validated.

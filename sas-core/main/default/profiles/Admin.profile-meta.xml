@@ -494,7 +494,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EU261_Automation_Configuration__mdt.Percentage_sent_to_control__c</field>
+        <field>EU261_Automation_Configuration__mdt.Percentage_Sent_to_Control__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

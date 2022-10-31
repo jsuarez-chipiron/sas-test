@@ -187,6 +187,17 @@ public without sharing class Cases extends ApplicationDomain {
     return this;
   }
 
+  public Cases updateStatus(
+    fflib_ISObjectUnitOfWork uow,
+    String statusToUpdateTo
+  ) {
+    for (Case c : instanceRecords) {
+      c.Status = statusToUpdateTo;
+      uow.registerDirty(c);
+    }
+    return this;
+  }
+
   private void completeMilestones() {
     // how to handle maps?
     List<String> statusesThatCompleteMilestones = new List<String>{
