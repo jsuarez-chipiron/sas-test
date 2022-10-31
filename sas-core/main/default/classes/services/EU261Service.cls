@@ -16,7 +16,7 @@ public without sharing class EU261Service {
   private static final String AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME = 'eu261_automation_approved';
   @TestVisible
   private static final String AUTOMATION_REJECTED_EMAIL_TEMPLATE_NAME = 'eu261_automation_rejected';
-  private static final String AUTOMATION_REPLY_TO_ADDRESS = 'test@example.com';
+  private static final String AUTOMATION_REPLY_TO_ADDRESS = 'customercare@sas.se';
 
   private static final String COMPENSATION_WITHOUT_REIMBURSEMENT_TEXT_TEMPLATE = 'We will therefore reimburse you with a total amount of {0} {1}.';
   private static final String COMPENSATION_WITH_REIMBURSEMENT_TEXT_TEMPLATE = 'We will therefore reimburse you with a total amount of {0} {1}. Where {2} {1} is the flat rate compensation and {3} {1} Is the reimbursement for the expenses you experienced during the delay.';
