@@ -267,6 +267,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Claim_Expense__c.Under_Expense_Limit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Claim_Firm__c.Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
