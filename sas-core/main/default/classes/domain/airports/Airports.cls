@@ -1,11 +1,18 @@
-public without sharing class Airports extends fflib_SObjectDomain {
+public without sharing class Airports extends ApplicationDomain {
   public Airports(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Airport__c>) Records;
+
+    List<Airport> airportObjects = new List<Airport>();
+    for (Airport__c a : this.instanceRecords) {
+      airportObjects.add(new Airport(a));
+    }
+
+    this.objects = airportObjects;
   }
 
   public List<Airport__c> instanceRecords;
+  public List<Airport> objects;
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
@@ -15,6 +22,27 @@ public without sharing class Airports extends fflib_SObjectDomain {
 
   public static Airports newInstance(List<Airport__c> sObjectList) {
     return (Airports) SAS_Service_Application.Domain.newInstance(sObjectList);
+  }
+
+  public Airports upsertToDB() {
+    for (Airport obj : this.objects) {
+      obj.updateSObjectFields();
+    }
+    try {
+      upsert instanceRecords TEDS_Identifier__c;
+    } catch (DMLException e) {
+      if (e.getDmlType(0) == StatusCode.DUPLICATE_VALUE) {
+        upsert instanceRecords TEDS_Identifier__c;
+      }
+    }
+
+    List<Airport> airports = new List<Airport>();
+    for (Airport__c a : this.instanceRecords) {
+      airports.add(new Airport(a));
+    }
+    this.objects = airports;
+
+    return this;
   }
 
   /**
@@ -65,11 +93,14 @@ public without sharing class Airports extends fflib_SObjectDomain {
     return newAirports;
   }
 
+  // TODO: What to do with this? Part of a service? Or in here?
   /**
    * Calculates the haversine distance in meters between two airports.
    *
    * @param airport1 a String with the IATA code of the airport e.g. ARN.
    * @param airport2 a String with the IATA code of the airport e.g. ARN.
+   *
+   * TODO: No selector calls in domains unless 100% mandatory.
    *
    * @return An Integer value of the distance in meters between the two airports.
    */
@@ -84,61 +115,10 @@ public without sharing class Airports extends fflib_SObjectDomain {
       throw new AirportsNotDefinedException('Unable to find airports');
     }
 
-    return distanceBetweenAirportsInMeters(airports[0], airports[1]);
-  }
-
-  /**
-   * Calculates the haversine distance in meters between two airports.
-   *
-   * @param airport1 an Airport__c.
-   * @param airport2 an Airport__c.
-   *
-   * @return An Integer value of the distance in meters between the two airports.
-   */
-  public static Integer distanceBetweenAirportsInMeters(
-    Airport__c airport1,
-    Airport__c airport2
-  ) {
-    if (airport1 == null || airport2 == null) {
-      throw new AirportsNotDefinedException(
-        'At least one of the airports equal to null.'
-      );
-    }
-
-    Double long1 = Double.valueOf(airport1.Longitude__c);
-    Double lat1 = Double.valueOf(airport1.Latitude__c);
-    Double long2 = Double.valueOf(airport2.Longitude__c);
-    Double lat2 = Double.valueOf(airport2.Latitude__c);
-
-    Location loc1 = Location.newInstance(
-      airport1.Latitude__c,
-      airport1.Longitude__c
+    return Airport.distanceBetweenAirportsInMeters(
+      new Airport(airports[0]),
+      new Airport(airports[1])
     );
-    Location loc2 = Location.newInstance(
-      airport2.Latitude__c,
-      airport2.Longitude__c
-    );
-    Double dist = Location.getDistance(loc1, loc2, 'km'); // Can only be km or mi
-
-    if (dist == null) {
-      throw new AirportException('Airport longitude and/or latitude not set');
-    }
-
-    return Integer.valueOf(
-      Decimal.valueOf(dist * 1000).round(System.RoundingMode.HALF_UP)
-    );
-  }
-
-  public Airports upsertToDB() {
-    try {
-      upsert instanceRecords TEDS_Identifier__c;
-    } catch (DMLException e) {
-      if (e.getDmlType(0) == StatusCode.DUPLICATE_VALUE) {
-        upsert instanceRecords TEDS_Identifier__c;
-      }
-    }
-
-    return this;
   }
 
   // For manual update
@@ -154,6 +134,19 @@ public without sharing class Airports extends fflib_SObjectDomain {
   public class AirportsNotDefinedException extends Exception {
   }
 
-  public class AirportException extends Exception {
+  public Map<String, Airport__c> getAirportCodeToAirport() {
+    Map<String, Airport__c> codeToAirport = new Map<String, Airport__c>{};
+    for (Airport__c a : instanceRecords) {
+      codeToAirport.put(a.TEDS_Identifier__c, a);
+    }
+    return codeToAirport;
+  }
+
+  public Map<String, Airport> getAirportCodeToAirportObject() {
+    Map<String, Airport> codeToAirport = new Map<String, Airport>{};
+    for (Airport__c a : instanceRecords) {
+      codeToAirport.put(a.TEDS_Identifier__c, new Airport(a));
+    }
+    return codeToAirport;
   }
 }

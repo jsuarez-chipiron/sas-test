@@ -1,11 +1,18 @@
-public without sharing class Bookings extends fflib_SObjectDomain {
+public without sharing class Bookings extends ApplicationDomain {
   public Bookings(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Booking__c>) Records;
+
+    List<Booking> bookingObjects = new List<Booking>();
+    for (Booking__c b : this.instanceRecords) {
+      bookingObjects.add(new Booking(b));
+    }
+
+    this.objects = bookingObjects;
   }
 
   public List<Booking__c> instanceRecords;
+  public List<Booking> objects;
 
   // fullRecords exist only when an instance has been created from TEDS
   // response data.
@@ -17,152 +24,8 @@ public without sharing class Bookings extends fflib_SObjectDomain {
     }
   }
 
-  public enum Type {
-    DayReturn,
-    RoundTrip,
-    MultiCity,
-    OneWay,
-    Unknown
-  }
-
-  public static Map<String, Type> nameToBookingType = new Map<String, Type>{
-    'DayReturn' => Type.DayReturn,
-    'RoundTrip' => Type.RoundTrip,
-    'MultiCity' => Type.MultiCity,
-    'OneWay' => Type.OneWay,
-    'Unknown' => Type.Unknown
-  };
-
   public static Bookings newInstance(List<Booking__c> sObjectList) {
     return (Bookings) SAS_Service_Application.Domain.newInstance(sObjectList);
-  }
-
-  public class InsufficientDataException extends Exception {
-  }
-
-  public class InvalidTripException extends Exception {
-  }
-
-  /**
-   * Divides the flights in the booking into different trips. If there is an issue, the booking's trip(s) get set to null.
-   * If the booking is a OneWay there should only be one trip.
-   * If the booking is a Roundtrip or Dayreturn there should be two trips.
-   * If the booking is a MultiCity there can be 1(?) or more trips.
-   *
-   * The compensation should, logically, be calculated with respect to each "final destination" in the booking (see EU261 Article 2 h: https://eur-lex.europa.eu/legal-content/EN/TXT/?qid=1476179175834&uri=CELEX:32004R0261)
-   * When a pax stays in a city for more than 24 hours it counts as a "final destination" according to internal SAS policy (TODO: find a good source).
-   * After 24 hours the booking is considered a "package" under EU law (Council Directive 90/314/EEC Article 2 §1: https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=celex%3A31990L0314)
-   *
-   * TODO: Find a solid source for the 24 hour policy.
-   * TODO: Think about implementation: When there is a cancelled flight and a customers trip becomes e.g.
-   * ARN -> CPH (Delay 200 minutes + Wait >24hrs because of cancellation) -> LAX (Delay 260 minutes).
-   * The customer could, according to this implementation, claim compensation for both ARN -> CPH and CPH -> LAX.
-   * This seems fair. However, I think there is a good case for us not needing to provide them with more compensation.
-   *
-   * @return A map of booking id to each trip in booking
-   */
-  public Map<Id, List<Trip>> getTrips(
-    Map<String, Airport__c> airportCodeToAirport
-  ) {
-    Map<Id, List<Trip>> bookingIdToTrips = new Map<Id, List<Trip>>{};
-
-    // Sort the Segments
-    for (Booking__c b : instanceRecords) {
-      if (b.Segments__r == null) {
-        throw new InsufficientDataException(
-          'You must fetch the Segments__r for the booking.'
-        );
-      }
-
-      bookingIdToTrips.put(
-        b.Id,
-        Trip.createFromBooking(b, airportCodeToAirport)
-      );
-    }
-
-    return bookingIdToTrips;
-  }
-  public class MissingDataException extends Exception {
-  }
-
-  /**
-   * Returns true if the given string is a valid booking reference.
-   *
-   * Valid booking reference is 5-6 alphanumeric characters. There are also
-   * stricter limitations, but just in case they aren't fully universal, this
-   * is a relatively lenient check.
-   */
-  public static Boolean isValidBookingReference(String bookingReference) {
-    if (String.isBlank(bookingReference)) {
-      return false;
-    }
-
-    return Pattern.compile('[a-zA-Z0-9]{5,6}')
-      .matcher(bookingReference)
-      .matches();
-  }
-
-  /**
-   * Whether the bookings have a non Star Alliance operating carrier for at
-   * least one leg in the booking.
-   *
-   * @return A map from booking id to whether that booking has non Star
-   * Alliance operating carriers as a part of the journey.
-   */
-  public Map<Id, Boolean> haveNonStarAllianceOperatingCarriers() {
-    Set<Id> bookingIds = (new Map<Id, Booking__c>(instanceRecords)).keySet();
-
-    Map<Id, Boolean> flightIdToOperatedByStarAlliance = Flights.newInstance(
-        FlightsSelector.newInstance().selectByBookingIds(bookingIds)
-      )
-      .operatedByStarAlliance();
-
-    Map<Id, Boolean> toReturn = new Map<Id, Boolean>();
-    for (Booking__c booking : instanceRecords) {
-      Boolean hasNonStarAllianceOperators = false;
-      for (Segment__c segment : booking.Segments__r) {
-        Boolean flightOperatedByStarAlliance = flightIdToOperatedByStarAlliance.get(
-          segment.Flight__c
-        );
-        if (!flightOperatedByStarAlliance) {
-          hasNonStarAllianceOperators = true;
-          break;
-        }
-      }
-      toReturn.put(booking.Id, hasNonStarAllianceOperators);
-    }
-
-    return toReturn;
-  }
-
-  public Set<String> getFlightIds() {
-    Set<String> toReturn = new Set<String>();
-
-    if (fullRecords != null) {
-      // Prefer getting flight data from fullRecords as they're always there if
-      // we have that data.
-      for (FullBookingData d : fullRecords) {
-        for (Flight__c f : d.flights) {
-          toReturn.add(f.TEDS_Identifier__c);
-        }
-      }
-    } else {
-      if (instanceRecords[0].Id != null) {
-        // If the instance bookings exist in DB, they might also have related
-        // flights in the DB.
-        for (
-          Flight__c f : FlightsSelector.newInstance()
-            .selectByBookingIds(
-              (new Map<Id, Booking__c>(instanceRecords)).keySet()
-            )
-        ) {
-          toReturn.add(f.TEDS_Identifier__c);
-        }
-      }
-      // else we have no FullBookingData and no DB links => can't find connected flights.
-    }
-
-    return toReturn;
   }
 
   public static Bookings createFromTEDSData(
@@ -432,85 +295,14 @@ public without sharing class Bookings extends fflib_SObjectDomain {
 
     return this;
   }
-  /**
-   * Whether the bookings have at least one flight affected by irregularities
-   *
-   * @return A map from booking id to whether that booking was affected by irregularities
-   */
-  public Map<Id, Boolean> haveDelayedOrCancelledFlights() {
-    if (fullRecords == null) {
-      throw new MissingDataException('FullBookingData should not be null');
-    }
-    Map<Id, Boolean> toReturn = new Map<Id, Boolean>();
-    for (FullBookingData fbd : fullRecords) {
-      Booking__c booking = fbd.booking;
-      Boolean isAffectedByIrregularity = false;
-      Map<Id, Boolean> flightIdToIrrStatus = Flights.newInstance(fbd.flights)
-        .isDelayedOrCancelled();
-      for (Flight__c flight : fbd.flights) {
-        Boolean flightIsDelayedOrCancelled = flightIdToIrrStatus.get(flight.Id);
-        if (flightIsDelayedOrCancelled) {
-          isAffectedByIrregularity = true;
-          break;
-        }
-      }
-      toReturn.put(booking.Id, isAffectedByIrregularity);
-    }
-
-    return toReturn;
-  }
-
-  /**
-   * Checks whether a certain flight exists in a booking
-   * @param flightId A flight in the format of Flight Number-Flight Date (ex. SK0001-20201010)
-   * @return Map of Booking Id and if the flight is part of the booking
-   */
-  public Map<Id, Boolean> containsFlight(String flightId) {
-    if (fullRecords == null) {
-      throw new MissingDataException('FullBookingData should not be null');
-    }
-    Map<Id, Boolean> toReturn = new Map<Id, Boolean>();
-    for (FullBookingData fbd : fullRecords) {
-      Boolean hasFlight = false;
-      for (Flight__c flight : fbd.flights) {
-        if (flight.TEDS_Identifier__c.substring(0, 15) == flightId) {
-          hasFlight = true;
-          break;
-        }
-      }
-      toReturn.put(fbd.booking.Id, hasFlight);
-    }
-
-    return toReturn;
-  }
-  /**
-   * Checks whether a certain passenger exists in a booking
-   * @param passengerLastName Last name of the passenger to check
-   * @return Map of Booking Id and if the passenger is part of the booking
-   */
-  public Map<Id, Boolean> containsPassenger(String passengerLastName) {
-    if (fullRecords == null) {
-      throw new MissingDataException('FullBookingData should not be null');
-    }
-    Map<Id, Boolean> toReturn = new Map<Id, Boolean>();
-    for (FullBookingData fbd : fullRecords) {
-      Boolean hasPassenger = false;
-      for (Passenger__c passenger : fbd.passengers) {
-        if (passenger.Last_Name__c == passengerLastName) {
-          hasPassenger = true;
-          break;
-        }
-      }
-      toReturn.put(fbd.booking.Id, hasPassenger);
-    }
-    return toReturn;
-  }
 
   /**
    * Loads Passenger, Flight, Segment data for instance of domain that was not
    * created as part of retrieving data from TEDS.
    * Stores the data in the same FullBookingData format as if domain instance was
    * created from call to TEDS
+   *
+   * TODO: Move me to the service class, or somewhere.
    */
   public Bookings reloadFullBookingData() {
     Set<Id> bookingIds = new Map<Id, Booking__c>(instanceRecords).keySet();

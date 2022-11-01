@@ -1,7 +1,6 @@
-public without sharing class LiveChatTranscripts extends fflib_SObjectDomain {
+public without sharing class LiveChatTranscripts extends ApplicationDomain {
   public LiveChatTranscripts(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<LiveChatTranscript>) Records;
   }
 

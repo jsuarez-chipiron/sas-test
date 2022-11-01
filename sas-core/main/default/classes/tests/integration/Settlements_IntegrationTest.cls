@@ -67,6 +67,7 @@ public with sharing class Settlements_IntegrationTest {
 
     Settlement_Item__c settlementItemToInclude1 = new Settlement_Item__c(
       Amount__c = 50,
+      Cost_Center__c = '90801',
       Cost_Account__c = '6727',
       Currency__c = 'SEK',
       Settlement__c = settlement1.Id,
@@ -74,6 +75,7 @@ public with sharing class Settlements_IntegrationTest {
     );
     Settlement_Item__c settlementItemToInclude2 = new Settlement_Item__c(
       Amount__c = 60,
+      Cost_Center__c = '90801',
       Cost_Account__c = '6727',
       Currency__c = 'SEK',
       Settlement__c = settlement1.Id,
@@ -81,6 +83,7 @@ public with sharing class Settlements_IntegrationTest {
     );
     Settlement_Item__c settlementItemToInclude3 = new Settlement_Item__c(
       Amount__c = 70,
+      Cost_Center__c = '90801',
       Cost_Account__c = '6727',
       Currency__c = 'SEK',
       Settlement__c = settlement2.Id,
@@ -89,6 +92,7 @@ public with sharing class Settlements_IntegrationTest {
     Settlement_Item__c settlementItemToInclude4 = new Settlement_Item__c(
       Amount__c = 120,
       Net_Amount_After_Deductible__c = 50,
+      Cost_Center__c = '90801',
       Is_Insured__c = true,
       Cost_Account__c = '6741',
       Currency__c = 'SEK',
@@ -97,6 +101,7 @@ public with sharing class Settlements_IntegrationTest {
     );
     Settlement_Item__c settlementItemNotToInclude1 = new Settlement_Item__c(
       Amount__c = 50,
+      Cost_Center__c = '90801',
       Cost_Account__c = '6727',
       Currency__c = 'SEK',
       Settlement__c = settlement1.Id,
@@ -104,16 +109,29 @@ public with sharing class Settlements_IntegrationTest {
     );
     Settlement_Item__c settlementItemNotToInclude2 = new Settlement_Item__c(
       Amount__c = 50,
+      Cost_Center__c = '90801',
       Cost_Account__c = '6727',
       Currency__c = 'NOK',
       Settlement__c = settlement2.Id,
       Status__c = 'Waiting for transfer'
+    );
+    Settlement_Item__c settlementItemToInclude5 = new Settlement_Item__c(
+      Amount__c = 70,
+      Cost_Center__c = '71470',
+      Cost_Account__c = '6740',
+      Currency__c = 'SEK',
+      Settlement__c = settlement2.Id,
+      Status__c = 'Waiting for transfer',
+      RecordTypeId = SettlementItems.getRecordTypeId(
+        SettlementItems.RecordType.Emergency
+      )
     );
     insert new List<SObject>{
       settlementItemToInclude1,
       settlementItemToInclude2,
       settlementItemToInclude3,
       settlementItemToInclude4,
+      settlementItemToInclude5,
       settlementItemNotToInclude1,
       settlementItemNotToInclude2
     };
@@ -146,6 +164,11 @@ public with sharing class Settlements_IntegrationTest {
       FROM Settlement_Item__c
       WHERE Id = :settlementItemToInclude4.Id
     ];
+    Settlement_Item__c settlementItemToInclude5Afterwards = [
+      SELECT Id, Status__c, Accounting_File_Name__c, Name
+      FROM Settlement_Item__c
+      WHERE Id = :settlementItemToInclude5.Id
+    ];
     Settlement_Item__c settlementItemNotToInclude1Afterwards = [
       SELECT Id, Status__c, Accounting_File_Name__c, Name
       FROM Settlement_Item__c
@@ -164,6 +187,11 @@ public with sharing class Settlements_IntegrationTest {
       Datetime.now().format('yyyyMMdd') +
       '.sfsek';
 
+    System.assertEquals(
+      expectedFileTitle,
+      settlementItemToInclude5Afterwards.Accounting_File_Name__c,
+      'Accounting file name should be stored in settlement items.'
+    );
     System.assertEquals(
       expectedFileTitle,
       settlementItemToInclude1Afterwards.Accounting_File_Name__c,
@@ -236,7 +264,9 @@ public with sharing class Settlements_IntegrationTest {
       .replace('{-S1NAME---}', settlementItemToInclude1Afterwards.Name)
       .replace('{-S2NAME---}', settlementItemToInclude2Afterwards.Name)
       .replace('{-S3NAME---}', settlementItemToInclude3Afterwards.Name)
-      .replace('{-S4NAME---}', settlementItemToInclude4Afterwards.Name);
+      .replace('{-S4NAME---}', settlementItemToInclude4Afterwards.Name)
+      .replace('{-S5NAME---}', settlementItemToInclude5Afterwards.Name);
+
     // TODO: Fix reconciliation reference date.
     /**
      * When the testing option 'Independent Auto-Number Sequence' is enabled, the

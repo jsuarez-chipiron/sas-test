@@ -1,7 +1,6 @@
-public without sharing class Flights extends fflib_SObjectDomain {
+public without sharing class Flights extends ApplicationDomain {
   public Flights(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Flight__c>) Records;
   }
 
@@ -16,68 +15,6 @@ public without sharing class Flights extends fflib_SObjectDomain {
 
   public static Flights newInstance(List<Flight__c> sObjectList) {
     return (Flights) SAS_Service_Application.Domain.newInstance(sObjectList);
-  }
-
-  public static final String SAS_AIRLINE_IATA_DESIGNATOR = 'SK';
-
-  public static final Set<String> STAR_ALLIANCE_AIRLINE_IATA_DESIGNATORS = new Set<String>{
-    'A3',
-    'AC',
-    'AI',
-    'AV',
-    'BR',
-    'CA',
-    'CM',
-    'ET',
-    'LH',
-    'LO',
-    'LX',
-    'MS',
-    'NH',
-    'NZ',
-    'OS',
-    'OU',
-    'OZ',
-    'SA',
-    'SK',
-    'SN',
-    'SQ',
-    'TG',
-    'TK',
-    'TP',
-    'UA',
-    'ZH'
-  };
-
-  /**
-   * Whether the flights are operated by carriers which are not a part of Star
-   * Alliance.
-   *
-   * @return A map from flight id to whether that flight is operated by carrier
-   * which belongs to Star Alliance.
-   */
-  public Map<Id, Boolean> operatedByStarAlliance() {
-    Map<Id, Boolean> toReturn = new Map<Id, Boolean>();
-    for (Flight__c flight : instanceRecords) {
-      toReturn.put(
-        flight.Id,
-        STAR_ALLIANCE_AIRLINE_IATA_DESIGNATORS.contains(
-          flight.Operating_Carrier__c
-        )
-      );
-    }
-    return toReturn;
-  }
-
-  public Map<Id, Boolean> operatedBySAS() {
-    Map<Id, Boolean> toReturn = new Map<Id, Boolean>();
-    for (Flight__c flight : instanceRecords) {
-      toReturn.put(
-        flight.Id,
-        flight.Operating_Carrier__c == SAS_AIRLINE_IATA_DESIGNATOR
-      );
-    }
-    return toReturn;
   }
 
   /**
@@ -267,118 +204,5 @@ public without sharing class Flights extends fflib_SObjectDomain {
     }
 
     return this;
-  }
-
-  /* Determine whether the flights are delayed/cancelled or not
-   *
-   * @return A map from flight id to whether that flight is delayed/cancelled or not
-   */
-  public Map<Id, Boolean> isDelayedOrCancelled() {
-    Map<Id, Boolean> toReturn = new Map<Id, Boolean>();
-    for (Flight__c flight : instanceRecords) {
-      Boolean isIrregularity =
-        flight.Arrival_Status__c == 'delayed' ||
-        (flight.Arrival_Status__c == 'cancelled' &&
-        flight.Departure_Status__c == 'cancelled');
-      toReturn.put(flight.Id, isIrregularity);
-    }
-    return toReturn;
-  }
-
-  /*
-   * Returns variations of the flight id written in plain text
-   * Format: BT0151-20220713-RIX-OSL
-   *
-   * @return A list with ids with the following formats: BT0151-20220713, BT0151-2022-07-13
-   */
-  public static List<String> TEDSIdToSimpleFlightIds(String TEDSId) {
-    String flightNumber = TEDSId.substringBefore('-'); // Should be normalized
-    String flightDateConcat = TEDSId.substringAfter('-').substringBefore('-');
-    String flightDateSeparated =
-      flightDateConcat.substring(0, 4) +
-      '-' +
-      flightDateConcat.substring(4, 6) +
-      '-' +
-      flightDateConcat.substring(6, 8);
-
-    String format1 = flightNumber + '-' + flightDateConcat;
-    String format2 = flightNumber + '-' + flightDateSeparated;
-
-    return new List<String>{ format1, format2 };
-  }
-
-  /**
-   * Constructs a flightNumber + date combination like the one used in TEDS
-   *
-   * @param flightNumber E.g. SK1234
-   * @param flightDate
-   * @return a string like: SK1234-20220101
-   */
-  public static String constructTEDSFlightNumberDate(
-    String flightNumber,
-    Date flightDate
-  ) {
-    return normalizeFlightNumber(flightNumber) +
-      '-' +
-      String.valueOf(flightDate).remove('-');
-  }
-
-  /**
-   * Method to normalize a valid IATA flight number
-   * to the format used by TEDS.
-   * TEDS format is valid IATA format with trailing numbers leftpadded with 0
-   * Returns a normalized flight number.
-   *
-   *  @param enteredFlightNumber The flight number as entered by manual input (forms etc.)
-   */
-  public static String normalizeFlightNumber(String enteredFlightNumber) {
-    String toNormalize = enteredFlightNumber.toUpperCase();
-    String toReturn = '';
-    Pattern validTEDSFormat = Pattern.compile('^([A-Z]\\w|\\w[A-Z])(\\d{4})$');
-    Pattern validFlightNumberFormat = Pattern.compile(
-      '^([A-Z]\\w|\\w[A-Z])(\\d{1,4})$'
-    );
-    Boolean validIATAFlightNumber = isValidIATAFlightNumber(toNormalize);
-    if (validIATAFlightNumber) {
-      String airlineCode = toNormalize.substring(0, 2);
-      String flightNumber = toNormalize.substring(2, toNormalize.length());
-      toReturn = airlineCode + flightNumber.leftPad(4, '0');
-    }
-    if (validTEDSFormat.matcher(toReturn).matches()) {
-      return toReturn;
-    } else {
-      throw new FlightException('Unable to normalize Flight Number');
-    }
-  }
-
-  /* Method to validate if an entered flight number is a valid IATA flight number
-   * Valid formats are:
-   * [LETTER][NUMBER] followed by 1-4 numbers
-   * [NUMBER][LETTER] followed by 1-4 numbers
-   * [LETTER][LETTER] followed by 1-4 numbers
-   */
-  public static Boolean isValidIATAFlightNumber(String toCheck) {
-    Pattern validFlightNumberFormat = Pattern.compile(
-      '^([A-Z]\\w|\\w[A-Z])(\\d{1,4})$'
-    );
-    Matcher matcher = validFlightNumberFormat.matcher(toCheck);
-    return matcher.matches();
-  }
-
-  public Map<Id, Integer> getFlightDistancesInMeters() {
-    Map<Id, Integer> toReturn = new Map<Id, Integer>();
-    for (Flight__c f : instanceRecords) {
-      toReturn.put(
-        f.Id,
-        Airports.distanceBetweenAirportsInMeters(
-          f.Departure_Airport__c,
-          f.Arrival_Airport__c
-        )
-      );
-    }
-    return toReturn;
-  }
-
-  public class FlightException extends Exception {
   }
 }

@@ -35,10 +35,9 @@ public with sharing class Bookings_Test {
     )[0];
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
-    Boolean result = Bookings.newInstance(new List<Booking__c>{ bookingToTest })
-      .reloadFullBookingData()
-      .haveDelayedOrCancelledFlights()
-      .get(bookingToTest.Id);
+    Bookings b = Bookings.newInstance(new List<Booking__c>{ bookingToTest })
+      .reloadFullBookingData();
+    Boolean result = b.objects[0].hasDelayedOrCancelledFlights();
     Test.stopTest();
     System.assert(
       result,
@@ -80,10 +79,9 @@ public with sharing class Bookings_Test {
     )[0];
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
-    Boolean result = Bookings.newInstance(new List<Booking__c>{ bookingToTest })
-      .reloadFullBookingData()
-      .haveDelayedOrCancelledFlights()
-      .get(bookingToTest.Id);
+    Bookings b = Bookings.newInstance(new List<Booking__c>{ bookingToTest })
+      .reloadFullBookingData();
+      Boolean result = b.objects[0].hasDelayedOrCancelledFlights();
     Test.stopTest();
     System.assert(
       result,
@@ -124,10 +122,9 @@ public with sharing class Bookings_Test {
     )[0];
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
-    Boolean result = Bookings.newInstance(new List<Booking__c>{ bookingToTest })
-      .reloadFullBookingData()
-      .haveDelayedOrCancelledFlights()
-      .get(bookingToTest.Id);
+    Bookings b = Bookings.newInstance(new List<Booking__c>{ bookingToTest })
+      .reloadFullBookingData();
+      Boolean result = b.objects[0].hasDelayedOrCancelledFlights();
     Test.stopTest();
     System.assert(
       !result,
@@ -147,7 +144,7 @@ public with sharing class Bookings_Test {
 
     for (String pnr : pnrs) {
       System.assert(
-        !Bookings.isValidBookingReference(pnr),
+        !Booking.isValidBookingReference(pnr),
         'PNR: ' +
         pnr +
         ' should be invalid.'
@@ -167,7 +164,7 @@ public with sharing class Bookings_Test {
 
     for (String pnr : pnrs) {
       System.assert(
-        Bookings.isValidBookingReference(pnr),
+        Booking.isValidBookingReference(pnr),
         'PNR: ' +
         pnr +
         ' should be valid.'
@@ -197,21 +194,21 @@ public with sharing class Bookings_Test {
       )
       .reloadFullBookingData();
     Test.stopTest();
-    Booking__c currentBooking = b.fullRecords[0].booking;
+    Booking currentBooking = b.objects[0];
     System.assert(
-      b.containsFlight('SK0402-20210420').get(currentBooking.Id),
+      currentBooking.containsFlight('SK0402-20210420'),
       'Flight should have been found in the booking'
     );
     System.assert(
-      b.containsPassenger('TESTSSON').get(currentBooking.Id),
+      currentBooking.containsPassenger('TESTSSON'),
       'Passenger should have been found in the booking'
     );
     System.assert(
-      !b.containsFlight('SK9999-20190620').get(currentBooking.Id),
+      !currentBooking.containsFlight('SK9999-20190620'),
       'Flight should not have been found in the booking'
     );
     System.assert(
-      !b.containsPassenger('OtherTestsson').get(currentBooking.Id),
+      !currentBooking.containsPassenger('OtherTestsson'),
       'Passenger should not have been found in the booking'
     );
   }

@@ -345,7 +345,7 @@
         </rules>
         <rules>
             <name>User</name>
-            <conditionLogic>1 AND  (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 )</conditionLogic>
+            <conditionLogic>1 AND  (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13 OR 14)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Parent.OwnerId</leftValueReference>
                 <operator>StartsWith</operator>
@@ -430,6 +430,20 @@
                     <stringValue>Refunds</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.Department__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Liability</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Get_User_Records</targetReference>
             </connector>
@@ -490,6 +504,12 @@
         <scale>0</scale>
     </formulas>
     <formulas>
+        <description>Based on the case, it shows the corresponding queue name</description>
+        <name>queueName</name>
+        <dataType>String</dataType>
+        <expression>IF({!$Record.Parent.RecordType.Name} = &apos;Emergency&apos;, &apos;Emergency&apos;, TEXT({!$Record.Parent.Department__c}))</expression>
+    </formulas>
+    <formulas>
         <name>sevenDaysago</name>
         <dataType>DateTime</dataType>
         <expression>NOW() - 7</expression>
@@ -539,7 +559,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Parent.Department__c</elementReference>
+                <elementReference>queueName</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

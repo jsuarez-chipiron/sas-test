@@ -79,7 +79,7 @@ service application depends on some data from the IRR application.
 
 ### Controllers
 
-Controllers provide entry points to application logic for outside parts, e.g. LWC components. Controllers themselves should have minimal logic, and
+Controllers provide entry points to application logic for outside parts, primarily LWC components. Controllers themselves should have minimal logic, and
 only make requests to the service layer to perform actions in the application, selectors to retrieve data to be displayed and perform (de)serialising to make
 data better formatted for their callers.
 
@@ -90,12 +90,23 @@ us concentrate all database querying logic to a single place. Selectors should h
 
 ### Services
 
-Services create the primary interface of the application. They provide methods for modifying data, connections to external services, and .
-All data modification should happen through services.
+Services create the primary interface of the application. They provide methods for modifying data, connections to external services, and other interactivity.
+These should be written in a way that makes them easily callable from anything from invocable methods to the REST API and triggers.
+
+Transaction management, including e.g. unit of work commits, should happen primarily at this level.
 
 ### Domain classes
 
-Domain objects manage triggers and handle object specific business rules.
+Most domain concepts have been split into two different classes. E.g. for flights we have the classes `Flight` and `Flights`.
+
+Instances of the class with a _singular_ name represent individual database rows. They offer direct access to read and modify individual
+fields of the given row and provide most business rules. E.g. instance methods for a flight include `isOperatedByStarAlliance` and `getFlightDistancesInMeters`.
+These classes also include e.g. mappings between picklist values and enums whenever those are deemed useful.
+
+Instances of the class with a _plural_ name represent a collection of rows on which operations can be done. E.g. for `Settlements` we have instance methods such as `markAsDone`.
+These classes are also trigger handlers for the given SF object.
+
+Updating domain objects should happen primarily through these classes, but they should never make any SOQL queries or external callouts.
 
 ### Dependency injection
 

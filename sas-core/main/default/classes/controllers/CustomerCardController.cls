@@ -1,7 +1,7 @@
 public without sharing class CustomerCardController {
   @AuraEnabled
   public static void addBookingToCase(ID caseId, String bookingReference) {
-    if (!Bookings.isValidBookingReference(bookingReference)) {
+    if (!Booking.isValidBookingReference(bookingReference)) {
       throw new AuraHandledException(
         'Booking reference should be 5 or 6 characters.'
       );
@@ -49,10 +49,8 @@ public without sharing class CustomerCardController {
       List<Case> relatedCases = CasesSelector.newInstance()
         .selectByBookingReference(new Set<String>{ b.Booking_Reference__c });
       List<IRR_CommunicationLog__c> logs = logsByBookingReference.get(key);
-      if (logs.size() > 0) {
-        // TODO: Refactor, the change I made was not good.
-        toReturn.add(new BookingJSON(b, relatedCases, logs));
-      }
+
+      toReturn.add(new BookingJSON(b, relatedCases, logs));
     }
     toReturn.sort();
 

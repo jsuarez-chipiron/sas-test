@@ -2,6 +2,9 @@ public inherited sharing class SettlementItemsSelector extends fflib_SObjectSele
   public List<Schema.SObjectField> getSObjectFieldList() {
     return new List<Schema.SObjectField>{
       Settlement_Item__c.Id,
+      Settlement_Item__c.Name,
+      Settlement_Item__c.CreatedDate,
+      Settlement_Item__c.LastModifiedDate,
       Settlement_Item__c.Accounting_File_Name__c,
       Settlement_Item__c.Amount__c,
       Settlement_Item__c.Comments__c,
@@ -10,7 +13,6 @@ public inherited sharing class SettlementItemsSelector extends fflib_SObjectSele
       Settlement_Item__c.Currency__c,
       Settlement_Item__c.Customer_Name__c,
       Settlement_Item__c.Is_Insured__c,
-      Settlement_Item__c.Name,
       Settlement_Item__c.Net_Amount_After_Deductible__c,
       Settlement_Item__c.Settlement__c,
       Settlement_Item__c.Status__c

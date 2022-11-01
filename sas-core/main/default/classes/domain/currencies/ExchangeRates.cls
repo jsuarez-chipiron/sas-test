@@ -1,4 +1,4 @@
-public without sharing class ExchangeRates extends fflib_SObjectDomain {
+public without sharing class ExchangeRates extends ApplicationDomain {
   public ExchangeRates(List<SObject> records) {
     super(records);
     Configuration.disableTriggerCRUDSecurity();

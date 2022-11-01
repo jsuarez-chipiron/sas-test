@@ -1,7 +1,6 @@
-public without sharing class Cases extends fflib_SObjectDomain {
+public without sharing class Cases extends ApplicationDomain {
   public Cases(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Case>) Records;
   }
 
@@ -16,6 +15,10 @@ public without sharing class Cases extends fflib_SObjectDomain {
   }
 
   public List<Case> instanceRecords;
+
+  // Can be used to bypass all trigger handling when testing. E.g. when inserting test setup data.
+  @TestVisible
+  private static Boolean bypassTrigger = false;
 
   public static final String STATUS_NEW = 'New';
   public static final String STATUS_IN_PROGRESS = 'In Progress';
@@ -58,10 +61,16 @@ public without sharing class Cases extends fflib_SObjectDomain {
   };
 
   public override void onAfterDelete() {
+    if (bypassTrigger) {
+      return;
+    }
     removeRelatedSurveyInvitations();
   }
 
   public override void onAfterInsert() {
+    if (bypassTrigger) {
+      return;
+    }
     createCaseToBookings();
     updateBookingsForNewAssociatedAccounts();
     updateSocialPost();
@@ -70,6 +79,9 @@ public without sharing class Cases extends fflib_SObjectDomain {
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
+    if (bypassTrigger) {
+      return;
+    }
     updateBookingsForNewAssociatedAccounts(
       instanceRecords,
       (Map<Id, Case>) existingRecords
@@ -80,6 +92,9 @@ public without sharing class Cases extends fflib_SObjectDomain {
   }
 
   public override void onBeforeInsert() {
+    if (bypassTrigger) {
+      return;
+    }
     assignOwnerFromSoMe();
     enrichCaseDataBasedOnOrigin();
     enrichCaseTagData();
@@ -88,6 +103,9 @@ public without sharing class Cases extends fflib_SObjectDomain {
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
+    if (bypassTrigger) {
+      return;
+    }
     completeMilestones();
     enrichCaseTagData();
   }
@@ -97,6 +115,40 @@ public without sharing class Cases extends fflib_SObjectDomain {
       c.Status = STATUS_CLOSED;
     }
     uow.registerDirty(instanceRecords);
+    return this;
+  }
+
+  public Cases emailContactPeople(
+    Map<Id, Messaging.SingleEmailMessage> emailToSendByCaseId,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    List<OrgWideEmailAddress> owa = OrgWideEmailAddressesSelector.newInstance()
+      .selectPrimary();
+
+    for (
+      Messaging.SingleEmailMessage emailToSend : emailToSendByCaseId.values()
+    ) {
+      if (emailToSend.getReplyTo() == null) {
+        throw new EmailException(
+          'All emails should have a set reply-to address'
+        );
+      }
+    }
+
+    for (Case c : instanceRecords) {
+      Messaging.SingleEmailMessage emailToSend = emailToSendByCaseId.get(c.Id);
+      if (emailToSend != null) {
+        if (owa.size() > 0) {
+          emailToSend.setOrgWideEmailAddressId(owa[0].Id);
+        }
+
+        emailToSend.setToAddresses(new List<String>{ c.SuppliedEmail });
+        emailToSend.setSaveAsActivity(true);
+        emailToSend.setWhatId(c.Id);
+        uow.registerEmail(emailToSend);
+      }
+    }
+
     return this;
   }
 
@@ -132,6 +184,17 @@ public without sharing class Cases extends fflib_SObjectDomain {
       c.OwnerId = queues[0].Id;
     }
     uow.registerDirty(instanceRecords);
+    return this;
+  }
+
+  public Cases updateStatus(
+    fflib_ISObjectUnitOfWork uow,
+    String statusToUpdateTo
+  ) {
+    for (Case c : instanceRecords) {
+      c.Status = statusToUpdateTo;
+      uow.registerDirty(c);
+    }
     return this;
   }
 

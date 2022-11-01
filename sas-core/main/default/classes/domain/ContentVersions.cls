@@ -1,7 +1,6 @@
-public without sharing class ContentVersions extends fflib_SObjectDomain {
+public without sharing class ContentVersions extends ApplicationDomain {
   public ContentVersions(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<ContentVersion>) Records;
   }
 
@@ -89,8 +88,11 @@ public without sharing class ContentVersions extends fflib_SObjectDomain {
         racerFileIds.add(cv.Id);
       }
     }
-
-    RacerResponseHandlers.handle(racerFileIds);
+    if (racerFileIds.size() > 0) {
+      System.enqueueJob(
+        new RacerResponseHandlers.HandleRacerResponseQueueable(racerFileIds)
+      );
+    }
   }
 
   private void handleCurrencyFiles() {
@@ -101,7 +103,8 @@ public without sharing class ContentVersions extends fflib_SObjectDomain {
         currencyFileIds.add(cv.Id);
       }
     }
-
-    ExchangeRates.handleCurrencyFiles(currencyFileIds);
+    if (currencyFileIds.size() > 0) {
+      ExchangeRates.handleCurrencyFiles(currencyFileIds);
+    }
   }
 }

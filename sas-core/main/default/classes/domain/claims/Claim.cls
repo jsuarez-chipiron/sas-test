@@ -10,6 +10,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
   public ContactType contactType;
   public String contactFirstName;
   public String contactLastName;
+  public String contactFullName { get; private set; } // Formula field
   public String contactAddressLine1;
   public String contactAddressLine2;
   public String contactCity;
@@ -34,8 +35,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
   public Currencies.Code preferredCurrency;
   public String euroBonusNumber;
 
-  public Boolean personWithReducedMobility;
-  public Boolean unaccompaniedMinor;
+  public Boolean personWithReducedMobility = false;
+  public Boolean unaccompaniedMinor = false;
 
   public DelayLength delayToDestination;
   public Date departureDate;
@@ -151,6 +152,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     this.unaccompaniedMinor = c.Concerns_an_unaccompanied_minor__c;
     this.contactEmail = c.Contact_Email__c;
     this.contactFirstName = c.Contact_First_Name__c;
+    this.contactFullName = c.Contact_Full_Name__c;
     this.contactLastName = c.Contact_Last_Name__c;
     this.contactCountry = c.Country__c;
     this.preferredCurrency = Currencies.CODE_PICKLIST_VALUE_TO_ENUM.get(
@@ -290,6 +292,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     Unhandled,
     EligibleForCompensation,
     IneligibleForCompensation,
+    PossiblyEligibleForCompensation,
     UnableToHandle
   }
 
@@ -297,6 +300,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     EU261HandlingStatus.Unhandled => 'Unhandled',
     EU261HandlingStatus.EligibleForCompensation => 'Eligible for compensation',
     EU261HandlingStatus.IneligibleForCompensation => 'Ineligible for compensation',
+    EU261HandlingStatus.PossiblyEligibleForCompensation => 'Possibly eligible for compensation',
     EU261HandlingStatus.UnableToHandle => 'Unable to handle'
   };
 
@@ -304,6 +308,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     'Unhandled' => EU261HandlingStatus.Unhandled,
     'Eligible for compensation' => EU261HandlingStatus.EligibleForCompensation,
     'Ineligible for compensation' => EU261HandlingStatus.IneligibleForCompensation,
+    'Possibly eligible for compensation' => EU261HandlingStatus.PossiblyEligibleForCompensation,
     'Unable to handle' => EU261HandlingStatus.UnableToHandle
   };
 

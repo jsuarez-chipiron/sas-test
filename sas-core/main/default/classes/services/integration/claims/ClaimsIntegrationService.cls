@@ -63,7 +63,7 @@ public without sharing class ClaimsIntegrationService {
     FetchCAREClaimsQuery query
   ) {
     if (
-      !String.isBlank(query.pnr) && !Bookings.isValidBookingReference(query.pnr)
+      !String.isBlank(query.pnr) && !Booking.isValidBookingReference(query.pnr)
     ) {
       throw new APIMIntegrationService.IllegalArgumentsException(
         'Booking reference must be 5 or 6 characters'

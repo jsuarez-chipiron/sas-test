@@ -2,14 +2,18 @@ public inherited sharing class FlightIrregularitiesSelector extends fflib_SObjec
   public List<Schema.SObjectField> getSObjectFieldList() {
     return new List<Schema.SObjectField>{
       FlightIrregularities__c.Id,
-      FlightIrregularities__c.Code__c,
-      FlightIrregularities__c.Flight__c,
-      FlightIrregularities__c.Reason__c,
-      FlightIrregularities__c.Duration_minutes__c,
-      FlightIrregularities__c.Type__c,
-      FlightIrregularities__c.Description__c,
+      FlightIrregularities__c.Name,
+      FlightIrregularities__c.CreatedDate,
+      FlightIrregularities__c.LastModifiedDate,
       FlightIrregularities__c.Cancellation_Time__c,
-      FlightIrregularities__c.Eligible_For_EU261__c
+      FlightIrregularities__c.Code__c,
+      FlightIrregularities__c.Description__c,
+      FlightIrregularities__c.Duration_minutes__c,
+      FlightIrregularities__c.Eligible_For_EU261__c,
+      FlightIrregularities__c.Flight__c,
+      FlightIrregularities__c.Name__c,
+      FlightIrregularities__c.Reason__c,
+      FlightIrregularities__c.Type__c
     };
   }
 
@@ -52,7 +56,7 @@ public inherited sharing class FlightIrregularitiesSelector extends fflib_SObjec
     String toAirport
   ) {
     String flightId =
-      Flights.constructTEDSFlightNumberDate(flightNumber, departureDate) +
+      Flight.constructTEDSFlightNumberDate(flightNumber, departureDate) +
       '-' +
       fromAirport +
       '-' +

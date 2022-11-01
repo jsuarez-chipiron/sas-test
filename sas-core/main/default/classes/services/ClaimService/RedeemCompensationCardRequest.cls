@@ -132,7 +132,7 @@ public without sharing class RedeemCompensationCardRequest {
       jsonData.formData.compensationDetails
     );
 
-    if (!Bookings.isValidBookingReference(jsonData.formData.bookingReference)) {
+    if (!Booking.isValidBookingReference(jsonData.formData.bookingReference)) {
       throw new InvalidDataException(
         'Invalid booking reference: ' + jsonData.formData.bookingReference
       );

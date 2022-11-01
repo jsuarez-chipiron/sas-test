@@ -22,7 +22,7 @@ public without sharing class FlightDelayCertificateService {
       Flight_Date__c = String.isBlank(form.formdata.departureDate)
         ? null
         : Date.valueOf(form.formdata.departureDate),
-      Flight_Number__c = Flights.normalizeFlightNumber(
+      Flight_Number__c = Flight.normalizeFlightNumber(
         form.formdata.flightNumber
       ),
       OwnerId = delayCertificateQueue,
@@ -36,7 +36,7 @@ public without sharing class FlightDelayCertificateService {
       Booking_Reference__c = form.formData.bookingReference,
       Contact_First_Name__c = form.formData.firstName,
       Contact_Last_Name__c = form.formData.lastName,
-      Flight_Number__c = Flights.normalizeFlightNumber(
+      Flight_Number__c = Flight.normalizeFlightNumber(
         form.formdata.flightNumber
       ),
       Flight_Date__c = String.isBlank(form.formdata.departureDate)
@@ -65,7 +65,7 @@ public without sharing class FlightDelayCertificateService {
     );
     Flight_Delay_Certificate_Request__c currentRequest = newRequests.instanceRecords[0];
 
-    Booking__c currentBooking = null;
+    Booking currentBooking;
 
     Boolean isValidBooking = false;
 
@@ -74,22 +74,17 @@ public without sharing class FlightDelayCertificateService {
     );
 
     if (insertedBookings.size() > 0) {
-      Bookings bookings = Bookings.newInstance(insertedBookings);
-      bookings.reloadFullBookingData();
-      currentBooking = bookings.fullRecords[0].booking;
+      currentBooking = new Booking(insertedBookings[0]); // Recreate the object to ensure data has been reloaded.
+      Boolean bookingHasDelays = currentBooking.hasDelayedOrCancelledFlights();
+      Boolean passengerInBooking = currentBooking.containsPassenger(
+        currentRequest.Contact_Last_Name__c
+      );
+      Boolean enteredFlightInBooking = currentBooking.containsFlight(
+        currentRequest.Flight_Number__c +
+        '-' +
+        String.valueOf(currentRequest.Flight_Date__c).replace('-', '')
+      );
 
-      Boolean bookingHasDelays = bookings.haveDelayedOrCancelledFlights()
-        .get(currentBooking.Id);
-      Boolean passengerInBooking = bookings.containsPassenger(
-          currentRequest.Contact_Last_Name__c
-        )
-        .get(currentBooking.Id);
-      Boolean enteredFlightInBooking = bookings.containsFlight(
-          currentRequest.Flight_Number__c +
-          '-' +
-          String.valueOf(currentRequest.Flight_Date__c).replace('-', '')
-        )
-        .get(currentBooking.Id);
       isValidBooking =
         bookingHasDelays &&
         passengerInBooking &&
@@ -161,7 +156,10 @@ public without sharing class FlightDelayCertificateService {
         insertedRequests[0].Booking_Reference__c
       );
       List<Booking__c> insertedBookings = bookings != null
-        ? bookings.instanceRecords
+        ? BookingsSelector.newInstance()
+            .selectByIdFull(
+              new Map<Id, Booking__c>(bookings.instanceRecords).keySet()
+            )
         : new List<Booking__c>();
 
       //Chained Queueables are not allowing in tests

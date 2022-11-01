@@ -13,7 +13,7 @@ public without sharing class SettlementItem extends AbstractSObjectWrapper {
   public Date dateOfExchangeCalculation;
   public Decimal deductibleInsuranceAmount;
   public String errorMessage;
-  public Boolean isInsured;
+  public Boolean isInsured = false;
   public Decimal netAmountAfterDeductible;
   public Status status;
 
@@ -68,7 +68,7 @@ public without sharing class SettlementItem extends AbstractSObjectWrapper {
     );
   }
 
-  private SettlementItem() {
+  public SettlementItem() {
     this.underlyingSObject = new Settlement_Item__c();
   }
 

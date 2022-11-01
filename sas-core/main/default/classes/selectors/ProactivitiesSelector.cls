@@ -87,7 +87,7 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
     String flightId1 = null;
     String flightId2 = null;
     if (claim.Flight_Number__c != null) {
-      claimFlightNumber = Flights.normalizeFlightNumber(claim.Flight_Number__c);
+      claimFlightNumber = Flight.normalizeFlightNumber(claim.Flight_Number__c);
       flightId1 = claimFlightNumber != null &&
         claim.Flight_Date__c != null
         ? claimFlightNumber +
@@ -147,7 +147,7 @@ public inherited sharing class ProactivitiesSelector extends fflib_SObjectSelect
     Set<Id> flightIds = new Set<Id>{};
     Set<String> stringFlightIds = new Set<String>{};
     for (Flight__c f : flightsConnectedToTheClaim) {
-      List<String> simpleFlightIds = Flights.TEDSIdToSimpleFlightIds(
+      List<String> simpleFlightIds = Flight.TEDSIdToSimpleFlightIds(
         f.TEDS_Identifier__c
       );
       stringFlightIds.addAll(simpleFlightIds);

@@ -148,10 +148,16 @@ public class AccountingEntry {
       }
       when DEBIT {
         debitOrCredit = 'D';
-        costCenter = Settlements.COST_CENTER_DEBITS;
+        costCenter = settlementItem.Cost_Center__c;
         if (settlementItem.Name.length() == 15) {
           reconciliationReference = settlementItem.Name.substring(5, 15);
         } else {
+          if (settlementItem.Name.length() > 10) {
+            throw new IllegalArgumentException(
+              'Settlement item name is too long: ' + settlementItem.Name
+            );
+          }
+
           reconciliationReference = settlementItem.Name;
         }
         if (settlementItem.Is_Insured__c) {

@@ -459,6 +459,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>CARE_Claim__c.Duplicate_Matcher__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>CARE_Claim__c.Flight_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -470,6 +475,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>CARE_Claim__c.PIR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Automatic_Rejection__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Automatic_Settlement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Claim_Expense_Max_Amount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Percentage_Sent_to_Control__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3068,6 +3093,14 @@
         <layout>Settlement_Item__c-Settlement Item Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Settlement_Item__c-Settlement Item Layout</layout>
+        <recordType>Settlement_Item__c.DefaultRecordType</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Settlement_Item__c-Settlement Item Layout</layout>
+        <recordType>Settlement_Item__c.Emergency</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Settlement__c-EuroBonus Points Settlement</layout>
         <recordType>Settlement__c.EB_points</recordType>
     </layoutAssignments>
@@ -3371,6 +3404,16 @@
         <default>true</default>
         <personAccountDefault>true</personAccountDefault>
         <recordType>PersonAccount.EBCustomer</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+        <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Settlement_Item__c.DefaultRecordType</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Settlement_Item__c.Emergency</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>

@@ -58,6 +58,16 @@ public without sharing class ClaimService {
   public static final String COMPENSATION_CARD_FAILURE_EMAIL_TEMPLATE_NAME = 'compensation_card_failure';
   public static final String COMPENSATION_CARD_REPLY_TO_ADDRESS = 'customercare@sas.se';
   public static final String COMPENSATION_CARD_OMNI_QUEUE_NAME = 'Claims_Compensation_Card'; //TODO: Switch to compensation card
+  public static final String APPROVAL_QUEUE_NAME = 'Approvers';
+
+  public static ClaimService newInstance() {
+    return (ClaimService) SAS_Service_Application.Service.newInstance(
+      ClaimService.class
+    );
+  }
+
+  public class MissingArgumentsException extends Exception {
+  }
 
   public static String createClaim(CreateClaimRequest request) {
     Claims c = Claims.createFromClaims(
@@ -761,6 +771,94 @@ public without sharing class ClaimService {
     public void execute(QueueableContext ctx) {
       fetchCAREClaimsFromEDW(bookingReference, pir, caseId);
     }
+  }
+
+  /**
+   * Submits the given list of claims to approval.
+   *
+   * @param closingEmails List of emails which should be sent
+   */
+  public void submitClaimsToApproval(
+    fflib_ISObjectUnitOfWork uow,
+    Set<Id> claimIds,
+    List<EmailMessage> closingEmails
+  ) {
+    if (claimIds == null || claimIds.size() == 0) {
+      throw new MissingArgumentsException('Missing or empty claimIds.');
+    }
+    Claims cls = Claims.newInstance(
+      ClaimsSelector.newInstance().selectById(claimIds)
+    );
+
+    Set<Id> caseIds = new Set<Id>();
+
+    for (Claim cl : cls.objects) {
+      caseIds.add(cl.parentCaseId);
+    }
+
+    if (closingEmails != null && closingEmails.size() > 0) {
+      uow.registerNew(closingEmails);
+    }
+
+    Settlements.newInstance(
+        SettlementsSelector.newInstance().selectByClaimId(cls.ids)
+      )
+      .validate()
+      .submitToApproval(uow)
+      .lock();
+
+    Id currentUserId = UserInfo.getUserId();
+    Cases casesObj = Cases.newInstance(
+        CasesSelector.newInstance().selectById(caseIds)
+      )
+      .updateStatus(uow, 'Waiting for Approval')
+      .routeToQueue(APPROVAL_QUEUE_NAME, uow);
+
+    for (Case c : casesObj.instanceRecords) {
+      c.Approval_Submitter__c = currentUserId;
+    }
+  }
+
+  /**
+   * Settles the given list of claims, skipping approval and control.
+   */
+  public void settleClaims(
+    fflib_ISObjectUnitOfWork uow,
+    Set<Id> claimIds,
+    Map<Id, Messaging.SingleEmailMessage> closingEmailsByClaimId
+  ) {
+    if (claimIds == null || claimIds.size() == 0) {
+      throw new MissingArgumentsException('Missing or empty claimIds.');
+    }
+
+    Map<Id, Messaging.SingleEmailMessage> emailsByCaseId = new Map<Id, Messaging.SingleEmailMessage>();
+    Set<Id> parentCaseIds = new Set<Id>();
+
+    List<LIA_Claim__c> claimSObjs = ClaimsSelector.newInstance()
+      .selectById(claimIds);
+
+    for (LIA_Claim__c cl : claimSObjs) {
+      if (
+        closingEmailsByClaimId != null &&
+        closingEmailsByClaimId.keySet().size() > 0
+      ) {
+        emailsByCaseId.put(cl.Case__c, closingEmailsByClaimId.get(cl.Id));
+      }
+      parentCaseIds.add(cl.Case__c);
+    }
+
+    Cases.newInstance(CasesSelector.newInstance().selectById(parentCaseIds))
+      .emailContactPeople(emailsByCaseId, uow)
+      .close(uow);
+
+    Claims.newInstance(claimSObjs).settle(uow);
+  }
+
+  public void rejectClaims(
+    fflib_ISObjectUnitOfWork uow,
+    Set<Id> claimIds,
+    Map<Id, Messaging.SingleEmailMessage> closingEmailsByClaimId
+  ) {
   }
 
   @future(callout=true)

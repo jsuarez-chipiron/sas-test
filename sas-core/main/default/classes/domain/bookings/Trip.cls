@@ -1,6 +1,6 @@
 public without sharing class Trip {
-  public Airport__c originAirport;
-  public Airport__c destinationAirport;
+  public Airport originAirport;
+  public Airport destinationAirport;
   public List<Leg> sortedLegs;
   public Boolean SASIsOnlyOperatingCarrier;
   public FlightHistory flightHistory;
@@ -40,20 +40,33 @@ public without sharing class Trip {
    *
    * @return A map of booking id to each trip in booking
    */
-  public static List<Trip> createFromBooking(
-    Booking__c b,
-    Map<String, Airport__c> airportCodeToAirport
-  ) {
+  public static List<Trip> createFromBooking(Booking b) {
     Map<Id, List<Trip>> bookingIdToTrips = new Map<Id, List<Trip>>{};
 
     // Sort the Segments
-    if (b.Segments__r == null) {
+    if (b.segments == null) {
       throw new InsufficientDataException(
-        'You must fetch the Segments__r for the booking.'
+        'You must fetch the segments for the booking.'
       );
     }
 
-    return divideBookingSegmentsIntoTrips(b, airportCodeToAirport);
+    for (Segment s : b.segments) {
+      if (s.flight == null) {
+        throw new InsufficientDataException(
+          'You must fetch flights for the segments in the booking.'
+        );
+      }
+      if (
+        s.flight.departureAirportObject == null ||
+        s.flight.arrivalAirportObject == null
+      ) {
+        throw new InsufficientDataException(
+          'You must fetch airports for the segments in the booking.'
+        );
+      }
+    }
+
+    return divideBookingSegmentsIntoTrips(b);
   }
 
   public class InsufficientDataException extends Exception {
@@ -78,16 +91,15 @@ public without sharing class Trip {
     this.sortedLegs = legsInOrder;
     this.SASIsOnlyOperatingCarrier = true;
 
-    List<Flight__c> fs = new List<Flight__c>();
+    List<Flight> fs = new List<Flight>();
     for (Leg l : legsInOrder) {
       fs.add(l.flight);
     }
 
-    for (
-      Boolean operatedBySAS : Flights.newInstance(fs).operatedBySAS().values()
-    ) {
-      if (!operatedBySAS) {
+    for (Flight f : fs) {
+      if (!f.isOperatedBySAS()) {
         SASIsOnlyOperatingCarrier = false;
+        break;
       }
     }
 
@@ -95,10 +107,10 @@ public without sharing class Trip {
   }
 
   // GENERAL LOGIC
-  public Flight__c getFlight(String flightNumberDate) {
+  public Flight getFlight(String flightNumberDate) {
     for (Leg l : this.sortedLegs) {
-      String segmentFlightId = Flights.TEDSIdToSimpleFlightIds(
-        l.flight.TEDS_Identifier__c
+      String segmentFlightId = Flight.TEDSIdToSimpleFlightIds(
+        l.flight.tedsIdentifier
       )[0];
       if (segmentFlightId == flightNumberDate) {
         return l.flight;
@@ -107,17 +119,17 @@ public without sharing class Trip {
     return null;
   }
 
-  public Flight__c getFlightToFinalDestination() {
+  public Flight getFlightToFinalDestination() {
     return sortedLegs[sortedLegs.size() - 1].flight;
   }
 
-  public Flight__c getFirstFlight() {
+  public Flight getFirstFlight() {
     return sortedLegs[0].flight;
   }
 
   public Boolean isIntraCommunity() {
-    return originAirport.Is_EU261_Applicable__c &&
-      destinationAirport.Is_EU261_Applicable__c;
+    return originAirport.isEU261Applicable &&
+      destinationAirport.isEU261Applicable;
   }
 
   public String getJSON() {
@@ -138,20 +150,20 @@ public without sharing class Trip {
 
   // DELAY LOGIC
   public Datetime getFinalDestinationArrivalTime() {
-    Flight__c lastFlight = getFlightToFinalDestination();
-    return lastFlight.Scheduled_Arrival_Time__c;
+    Flight lastFlight = getFlightToFinalDestination();
+    return lastFlight.scheduledArrivalTime;
   }
 
   public Boolean isDelayedToDestination() {
-    return getFlightToFinalDestination().Arrival_Delayed_Minutes__c > 0;
+    return getFlightToFinalDestination().arrivalDelayedMinutes > 0;
   }
 
   // CANCELLATION LOGIC
   public Boolean hasCancelledSegments() {
     Integer noCancelledFlights = 0;
     for (Leg l : sortedLegs) {
-      for (Segment__c s : l.segments) {
-        if (Trip.nameToType.get(s.Trip_Type__c) == Type.Cancelled) {
+      for (Segment s : l.segments) {
+        if (Trip.nameToType.get(s.tripType) == Type.Cancelled) {
           return true;
         }
       }
@@ -160,15 +172,14 @@ public without sharing class Trip {
   }
 
   public Integer getNoCancelledFlights(
-    Map<Id, List<FlightIrregularities__c>> flightToIrregularities
+    Map<Id, List<FlightIrregularity>> flightToIrregularities
   ) {
     Integer noCancelledFlights = 0;
     for (Leg l : sortedLegs) {
-      FlightIrregularities fi = new FlightIrregularities(
-        flightToIrregularities.get(l.flight.Id)
-      );
-      if (fi.containsCancellation()) {
-        noCancelledFlights += 1;
+      for (FlightIrregularity fi : flightToIrregularities.get(l.flight.id)) {
+        if (fi.isCancellation()) {
+          noCancelledFlights += 1;
+        }
       }
     }
     return noCancelledFlights;
@@ -198,10 +209,10 @@ public without sharing class Trip {
   public Trip getOriginalTripWithFlight() {
     Trip originalTrip = flightHistory.getOriginalTrip();
     if (
-      originalTrip.getFirstFlight().Departure_Airport__c !=
-      this.getFirstFlight().Departure_Airport__c ||
-      originalTrip.getFirstFlight().Arrival_Airport__c !=
-      this.getFirstFlight().Arrival_Airport__c
+      originalTrip.getFirstFlight().departureAirport !=
+      this.getFirstFlight().departureAirport ||
+      originalTrip.getFirstFlight().arrivalAirport !=
+      this.getFirstFlight().arrivalAirport
     ) {
       throw new TripException(
         'The original trip does not have the same origin and destination as the final trip'
@@ -222,10 +233,10 @@ public without sharing class Trip {
     }
 
     if (
-      suggestedRebookedTrip.getFirstFlight().Departure_Airport__c !=
-      this.getFirstFlight().Departure_Airport__c ||
-      suggestedRebookedTrip.getFirstFlight().Arrival_Airport__c !=
-      this.getFirstFlight().Arrival_Airport__c
+      suggestedRebookedTrip.getFirstFlight().departureAirport !=
+      this.getFirstFlight().departureAirport ||
+      suggestedRebookedTrip.getFirstFlight().arrivalAirport !=
+      this.getFirstFlight().arrivalAirport
     ) {
       throw new TripException(
         'The suggested rebooked trip does not have the same origin and destination as the final trip'
@@ -236,45 +247,45 @@ public without sharing class Trip {
     return suggestedRebookedTrip;
   }
 
-  public class Airport {
+  public class Airport2 {
     String IATACode;
     List<Leg> availableRoutesFromAirport = new List<Leg>{};
 
-    public Airport(String IATACode) {
+    public Airport2(String IATACode) {
       this.IATACode = IATACode;
     }
   }
 
   public class FlightHistory {
-    Map<String, Airport> codeToAirport = new Map<String, Airport>{};
-    Airport originAirport;
-    Airport destinationAirport;
+    Map<String, Airport2> codeToAirport = new Map<String, Airport2>{};
+    Airport2 originAirport;
+    Airport2 destinationAirport;
 
     public FlightHistory(List<Leg> tripLegs) {
       List<String> addedAirports = new List<String>{};
       for (Leg l : tripLegs) {
-        if (!addedAirports.contains(l.flight.Departure_Airport__c)) {
-          Airport newAirport = new Airport(l.flight.Departure_Airport__c);
-          codeToAirport.put(l.flight.Departure_Airport__c, newAirport);
-          addedAirports.add(l.flight.Departure_Airport__c);
+        if (!addedAirports.contains(l.flight.departureAirport)) {
+          Airport2 newAirport = new Airport2(l.flight.departureAirport);
+          codeToAirport.put(l.flight.departureAirport, newAirport);
+          addedAirports.add(l.flight.departureAirport);
         }
-        if (!addedAirports.contains(l.flight.Arrival_Airport__c)) {
-          Airport newAirport = new Airport(l.flight.Arrival_Airport__c);
-          codeToAirport.put(l.flight.Arrival_Airport__c, newAirport);
-          addedAirports.add(l.flight.Arrival_Airport__c);
+        if (!addedAirports.contains(l.flight.arrivalAirport)) {
+          Airport2 newAirport = new Airport2(l.flight.arrivalAirport);
+          codeToAirport.put(l.flight.arrivalAirport, newAirport);
+          addedAirports.add(l.flight.arrivalAirport);
         }
 
-        Airport departureAirport = codeToAirport.get(
-          l.flight.Departure_Airport__c
+        Airport2 departureAirport = codeToAirport.get(
+          l.flight.departureAirport
         );
         departureAirport.availableRoutesFromAirport.add(l);
       }
 
       this.originAirport = codeToAirport.get(
-        tripLegs[0].flight.Departure_Airport__c
+        tripLegs[0].flight.departureAirport
       );
       this.destinationAirport = codeToAirport.get(
-        tripLegs[tripLegs.size() - 1].flight.Arrival_Airport__c
+        tripLegs[tripLegs.size() - 1].flight.arrivalAirport
       );
     }
 
@@ -284,8 +295,8 @@ public without sharing class Trip {
      * prioritizing cancelled segments over active ones
      */
     public Trip getOriginalTrip() {
-      Airport currentAirport = originAirport;
-      Airport nextAirport;
+      Airport2 currentAirport = originAirport;
+      Airport2 nextAirport;
       List<Leg> tripLegsInOrder = new List<Leg>{};
       List<Leg> routes = currentAirport.availableRoutesFromAirport;
       Integer noIterations = 0;
@@ -313,9 +324,7 @@ public without sharing class Trip {
           }
         }
         tripLegsInOrder.add(currentLeg);
-        nextAirport = this.codeToAirport.get(
-          currentLeg.flight.Arrival_Airport__c
-        );
+        nextAirport = this.codeToAirport.get(currentLeg.flight.arrivalAirport);
         routes = nextAirport.availableRoutesFromAirport;
         currentAirport = nextAirport;
         noIterations += 1;
@@ -336,8 +345,8 @@ public without sharing class Trip {
      * prioritizing active segments over cancelled ones
      */
     public Trip getSuggestedRebooking() {
-      Airport currentAirport = originAirport;
-      Airport nextAirport;
+      Airport2 currentAirport = originAirport;
+      Airport2 nextAirport;
       List<Leg> tripLegsInOrder = new List<Leg>{};
       List<Leg> routes = currentAirport.availableRoutesFromAirport;
       while (routes.size() != 0) {
@@ -378,9 +387,7 @@ public without sharing class Trip {
           }
         }
         tripLegsInOrder.add(currentLeg);
-        nextAirport = this.codeToAirport.get(
-          currentLeg.flight.Arrival_Airport__c
-        );
+        nextAirport = this.codeToAirport.get(currentLeg.flight.arrivalAirport);
         currentAirport = nextAirport;
         routes = nextAirport.availableRoutesFromAirport;
       }
@@ -397,14 +404,14 @@ public without sharing class Trip {
    * Class used to combine different passengers' segments into one.
    */
   public class Leg {
-    transient List<Segment__c> segments;
-    Flight__c flight;
+    transient List<Segment> segments;
+    Flight flight;
     Type segmentType;
 
-    public Leg(List<Segment__c> segments) {
+    public Leg(List<Segment> segments) {
       this.segments = segments;
-      this.flight = segments[0].Flight__r;
-      this.segmentType = Trip.nameToType.get(segments[0].Trip_Type__c);
+      this.flight = segments[0].flight;
+      this.segmentType = Trip.nameToType.get(segments[0].tripType);
     }
   }
 
@@ -418,27 +425,26 @@ public without sharing class Trip {
    *
    * This is done to simplify cancellation compensation handling.
    */
-  public static List<Leg> createFromSegments(List<Segment__c> sortedSegments) {
-    String departureAirport = sortedSegments[0].Flight__r.Departure_Airport__c;
-    String arrivalAirport = sortedSegments[0].Flight__r.Arrival_Airport__c;
-    Datetime departureTime = sortedSegments[0]
-      .Flight__r.Scheduled_Departure_Time__c;
-    Datetime arrivalTime = sortedSegments[0]
-      .Flight__r.Scheduled_Arrival_Time__c;
-    Type segmentType = Trip.nameToType.get(sortedSegments[0].Trip_Type__c);
+  public static List<Leg> createFromSegments(List<Segment> segments) {
+    segments.sort();
+    String departureAirport = segments[0].flight.departureAirport;
+    String arrivalAirport = segments[0].flight.arrivalAirport;
+    Datetime departureTime = segments[0].flight.scheduledDepartureTime;
+    Datetime arrivalTime = segments[0].flight.scheduledArrivalTime;
+    Type segmentType = Trip.nameToType.get(segments[0].tripType);
 
     List<Leg> toReturn = new List<Leg>{};
-    List<Segment__c> segmentsInCurrentLeg = new List<Segment__c>{};
+    List<Segment> segmentsInCurrentLeg = new List<Segment>{};
     Boolean isNewLeg = true;
-    for (Segment__c s : sortedSegments) {
+    for (Segment s : segments) {
       if (
-        s.Flight__r.Departure_Airport__c == departureAirport &&
-        s.Flight__r.Arrival_Airport__c == arrivalAirport &&
-        s.Flight__r.Scheduled_Departure_Time__c == departureTime &&
-        s.Flight__r.Scheduled_Arrival_Time__c == arrivalTime
+        s.flight.departureAirport == departureAirport &&
+        s.flight.arrivalAirport == arrivalAirport &&
+        s.flight.scheduledDepartureTime == departureTime &&
+        s.flight.scheduledArrivalTime == arrivalTime
       ) {
-        if (Trip.nameToType.get(s.Trip_Type__c) != segmentType) {
-          throw new TripException(
+        if (Trip.nameToType.get(s.tripType) != segmentType) {
+          throw new BookingTypeNotSupportedException(
             'Two segments which should be the same are of different types.'
           );
         } else {
@@ -447,12 +453,12 @@ public without sharing class Trip {
       } else {
         toReturn.add(new Leg(segmentsInCurrentLeg));
 
-        segmentsInCurrentLeg = new List<Segment__c>{ s }; // Clear current leg
-        departureAirport = s.Flight__r.Departure_Airport__c;
-        arrivalAirport = s.Flight__r.Arrival_Airport__c;
-        departureTime = s.Flight__r.Scheduled_Departure_Time__c;
-        arrivalTime = s.Flight__r.Scheduled_Arrival_Time__c;
-        segmentType = Trip.nameToType.get(s.Trip_Type__c);
+        segmentsInCurrentLeg = new List<Segment>{ s }; // Clear current leg
+        departureAirport = s.flight.departureAirport;
+        arrivalAirport = s.flight.arrivalAirport;
+        departureTime = s.flight.scheduledDepartureTime;
+        arrivalTime = s.flight.scheduledArrivalTime;
+        segmentType = Trip.nameToType.get(s.tripType);
       }
     }
     if (segmentsInCurrentLeg.size() > 0) {
@@ -470,155 +476,69 @@ public without sharing class Trip {
    *
    * @return a List<Trip> of the trips sorted in reverse order.
    */
-  private static List<Trip> divideBookingSegmentsIntoTrips(
-    Booking__c booking,
-    Map<String, Airport__c> airportCodeToAirport
-  ) {
-    List<Segment__c> sortedSegments = Segments.newInstance(booking.Segments__r)
-      .getSortedInstanceRecords();
-    List<Leg> sortedLegs = Leg.createFromSegments(sortedSegments);
+  private static List<Trip> divideBookingSegmentsIntoTrips(Booking booking) {
+    List<Leg> sortedLegs = Leg.createFromSegments(booking.segments);
 
-    // Leg latestLeg;
-    // List<Leg> legsInCurrentTrip = new List<Leg>{};
-    // Boolean hasInBoundTrip = false;
     List<Trip> tripsToReturn = new List<Trip>{};
-    switch on booking.Type__c {
-      when 'OneWay' {
-        List<Leg> tripLegs = new List<Leg>{};
-        for (Leg l : sortedLegs) {
-          tripLegs.add(l);
-        }
-        tripsToReturn.add(new Trip(tripLegs));
-      }
-      when else {
+    Leg latestLeg;
+    List<Leg> legsInCurrentTrip = new List<Leg>();
+    for (Leg leg : sortedLegs) {
+      /*
+       * Check if the segment is the last segment in the booking, cancelled or unknown => add it to the trip.
+       *
+       * This is logical in most cases. The most common case this does not work for is if the flight to the
+       * final destination was cancelled (and there is a return flight home) and the replacement flight
+       * departs before the original one.
+       */
+      if (latestLeg == null && leg.segmentType == Type.Outbound) {
+        latestLeg = leg;
+        legsInCurrentTrip.add(leg);
+        continue;
+      } else if (
+        leg.segmentType == Type.Cancelled ||
+        leg.segmentType == Type.Unknown
+      ) {
+        legsInCurrentTrip.add(leg);
+        continue;
+      } else if (latestLeg == null) {
         throw new BookingTypeNotSupportedException(
-          'Booking type "' +
-          Bookings.nameToBookingType.get(booking.Type__c) +
-          '" is not yet supported.'
-        );
+          'Error in initialization of trip.'
+        ); // e.g. If the trip starts with Inbound
       }
+
+      Boolean moreThan24HoursAtAirport = DateUtils.isMoreThan24HoursBetween(
+        latestLeg.flight.scheduledDepartureTime,
+        leg.flight.scheduledArrivalTime
+      );
+
+      if (moreThan24HoursAtAirport) {
+        tripsToReturn.add(new Trip(legsInCurrentTrip));
+        legsInCurrentTrip = new List<Leg>();
+      }
+
+      latestLeg = leg;
+      legsInCurrentTrip.add(leg);
     }
 
+    tripsToReturn.add(new Trip(legsInCurrentTrip));
+
     for (Trip t : tripsToReturn) {
-      t.setAirports(airportCodeToAirport);
+      Flight firstFlight = t.sortedLegs[0].flight;
+      Flight finalFlight = t.getFlightToFinalDestination();
+
+      t.originAirport = firstFlight.departureAirportObject;
+      t.destinationAirport = finalFlight.arrivalAirportObject;
+    }
+
+    if (
+      tripsToReturn.size() == 1 &&
+      tripsToReturn[0].originAirport == tripsToReturn[0].destinationAirport
+    ) {
+      throw new BookingTypeNotSupportedException(
+        'Booking type not yet supported (Dayreturn)'
+      );
     }
 
     return tripsToReturn;
-
-    /*
-     * Go through the segments backwards.
-     * Looping through forwards makes it very difficult to distinguish between whether a cancelled flight is outbound or inbound.
-     */
-    // for (Integer i = sortedSegments.size() - 1; i >= 0; i--) {
-    //   Segment__c s = sortedSegments[i];
-    //   Type segmentsTripType = nameToType.get(s.Trip_Type__c);
-    //   if (segmentsTripType == null) {
-    //     segmentsTripType = Type.Unknown;
-    //   }
-    //   /*
-    //    * Check if the segment is the last segment in the booking, cancelled or unknown => add it to the trip.
-    //    *
-    //    * This is logical in most cases. The most common case this does not work for is if the flight to the
-    //    * final destination was cancelled (and there is a return flight home) and the replacement flight
-    //    * departs before the original one.
-    //    *
-    //    * TODO: Handle Cancellations and Unknowns better.
-    //    */
-    //   if (
-    //     latestLeg == null ||
-    //     segmentsTripType == Type.Cancelled ||
-    //     segmentsTripType == Type.Unknown
-    //   ) {
-    //     latestLeg = s;
-    //     segmentsInCurrentTrip.add(s);
-    //     continue;
-    //   }
-
-    //   if (s.Flight__r == null) {
-    //     throw new InsufficientDataException(
-    //       'You must fetch the Flight__r for the Segments__r for the booking.'
-    //     );
-    //   }
-
-    //   // We can only have one outbound and one inbound trip (Except for MultiCity bookings)
-    //   Boolean switchedToOutbound = (s.Trip_Type__c != latestLeg.Trip_Type__c &&
-    //   segmentsTripType == Trip.Type.Outbound &&
-    //   !hasInBoundTrip);
-
-    //   Boolean moreThan24HoursAtAirport = DateUtils.isMoreThan24HoursBetween(
-    //     latestLeg.Flight__r.Scheduled_Departure_Time__c,
-    //     s.Flight__r.Scheduled_Arrival_Time__c
-    //   );
-
-    //   /**
-    //    * Switched to inbound does not work for MultiCity bookings.
-    //    * However, it is a MultiCity booking, it is relatively unlikely you will stay less than
-    //    * 24 hours at a destination airport. This is most likely to happen to DayReturn bookings.
-    //    */
-    //   Boolean segmentReachedAFinalDestination =
-    //     moreThan24HoursAtAirport ||
-    //     (switchedToOutbound &&
-    //     Bookings.nameToBookingType.get(booking.Type__c) !=
-    //     Bookings.Type.MultiCity);
-
-    //   if (segmentReachedAFinalDestination) {
-    //     tripsToReturn.add(
-    //       new Trip(
-    //         new Segments(segmentsInCurrentTrip).getSortedInstanceRecords()
-    //       )
-    //     );
-    //     segmentsInCurrentTrip = new List<Segment__c>{};
-    //     hasInBoundTrip = true;
-    //   } else {
-    //     // If not, continue looping through the segments
-    //     latestLeg = s;
-    //   }
-    //   segmentsInCurrentTrip.add(s);
-    // }
-
-    // tripsToReturn.add(
-    //   new Trip((new Segments(segmentsInCurrentTrip)).getSortedInstanceRecords())
-    // );
-
-    // // No, refactor, DB-call -> see eu261-service 773
-    // for (Trip t : tripsToReturn) {
-    //   t.setAirports(airportCodeToAirport);
-    // }
-
-    // return tripsToReturn;
-  }
-
-  // Do not use in batch
-  private void setAirports() {
-    Flight__c firstFlight = sortedLegs[0].flight;
-    Flight__c finalFlight = getFlightToFinalDestination();
-
-    String originAirportCode = firstFlight.Departure_Airport__c;
-    String destinationAirportCode = finalFlight.Arrival_Airport__c;
-
-    List<Airport__c> aps = AirportsSelector.newInstance()
-      .selectByIATACode(
-        new Set<String>{ originAirportCode, destinationAirportCode }
-      );
-
-    for (Airport__c a : aps) {
-      if (a.TEDS_Identifier__c == originAirportCode) {
-        this.originAirport = a;
-      } else if (a.TEDS_Identifier__c == destinationAirportCode) {
-        this.destinationAirport = a;
-      }
-    }
-  }
-
-  private void setAirports(Map<String, Airport__c> airportCodeToAirport) {
-    Flight__c firstFlight = sortedLegs[0].flight;
-    Flight__c finalFlight = getFlightToFinalDestination();
-
-    this.originAirport = airportCodeToAirport.get(
-      firstFlight.Departure_Airport__c
-    );
-    this.destinationAirport = airportCodeToAirport.get(
-      finalFlight.Arrival_Airport__c
-    );
   }
 }

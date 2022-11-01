@@ -1,10 +1,9 @@
-public without sharing class Settlements extends fflib_SObjectDomain {
+public without sharing class Settlements extends ApplicationDomain {
   private static SettlementItemsSelector settlementItemsSel = SettlementItemsSelector.newInstance();
   private static ExchangeRatesSelector exchangeRatesSel = ExchangeRatesSelector.newInstance();
 
   public Settlements(List<SObject> records) {
     super(records);
-    Configuration.disableTriggerCRUDSecurity();
     this.instanceRecords = (List<Settlement__c>) Records;
   }
 
@@ -103,7 +102,10 @@ public without sharing class Settlements extends fflib_SObjectDomain {
   public static final String COST_ACCOUNT_EU261_COMPENSATION = '6727';
   public static final String COST_ACCOUNT_EU261_REIMBURSEMENT = '6738';
 
-  public static final String COST_CENTER_DEBITS = '90801';
+  private static final Map<SettlementItems.RecordType, String> COST_CENTER_DEBITS = new Map<SettlementItems.RecordType, String>{
+    SettlementItems.RecordType.DefaultRecordType => '90801',
+    SettlementItems.RecordType.Emergency => '71470'
+  };
 
   public static final Decimal CONVERSION_RATE_EUR_TO_EB_POINTS = 100;
   public static final Decimal CONVERSION_RATE_EUR_TO_VOUCHER_EUR = 2;
@@ -332,6 +334,21 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     return this;
   }
 
+  public Settlements submitToApproval(fflib_ISObjectUnitOfWork uow) {
+    for (Settlement__c settlement : instanceRecords) {
+      if (settlement.Id == null) {
+        uow.registerNew(settlement);
+      } else {
+        uow.registerDirty(settlement);
+      }
+
+      settlement.Submitter__c = UserInfo.getUserId();
+      settlement.Settlement_Status__c = Settlements.STATUS_WAITING_FOR_APPROVAL;
+    }
+
+    return this;
+  }
+
   /**
    * Approves the given settlements for transfer. Excepts that the settlements
    * have already been validated.
@@ -360,6 +377,31 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     }
 
     return this;
+  }
+
+  /**
+   * @param itemsToUpsert Map from Settlement Id to list of SettlementItems for each settlement.
+   */
+  public Settlements updateSettlementItems(
+    Map<Id, List<SettlementItem>> itemsToUpsert,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    Map<Id, List<Settlement_Item__c>> sObjectsToUpsert = new Map<Id, List<Settlement_Item__c>>();
+
+    //
+
+    for (Id settlementId : itemsToUpsert.keySet()) {
+      List<Settlement_Item__c> items = new List<Settlement_Item__c>();
+
+      for (SettlementItem si : itemsToUpsert.get(settlementId)) {
+        si.updateSObjectFields();
+        items.add(si.underlyingSObject);
+      }
+
+      sObjectsToUpsert.put(settlementId, items);
+    }
+
+    return updateSettlementItems(sObjectsToUpsert, uow);
   }
 
   /**
@@ -429,7 +471,24 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           uow.registerDirty(item);
         }
 
-        item.Cost_Center__c = COST_CENTER_DEBITS;
+        Boolean isEmergencyClaim = settlement.IsEmergencyClaim__c;
+
+        if (isEmergencyClaim) {
+          item.Cost_Center__c = COST_CENTER_DEBITS.get(
+            SettlementItems.RecordType.Emergency
+          );
+          item.RecordTypeId = SettlementItems.getRecordTypeId(
+            SettlementItems.RecordType.Emergency
+          );
+        } else {
+          item.Cost_Center__c = COST_CENTER_DEBITS.get(
+            SettlementItems.RecordType.DefaultRecordType
+          );
+          item.RecordTypeId = SettlementItems.getRecordTypeId(
+            SettlementItems.RecordType.DefaultRecordType
+          );
+        }
+
         item.Currency__c = settlement.Currency__c;
         item.Status__c = SettlementItems.STATUS_DRAFT;
 
@@ -526,7 +585,22 @@ public without sharing class Settlements extends fflib_SObjectDomain {
           settlementToCreate.Bank_Account_Number__c = claim.Bank_Account_Number__c;
           settlementToCreate.Bank_Country__c = claim.Bank_Country__c;
           settlementToCreate.Bank_Name__c = claim.Bank_Name__c;
-          settlementToCreate.Currency__c = claim.Currency__c;
+          if (claim.Currency__c != null) {
+            settlementToCreate.Currency__c = claim.Currency__c;
+          } else {
+            if (claim.Bank_Country__c == null) {
+              throw new CreateException(
+                'Cannot determine currency for the settlement.'
+              );
+            }
+
+            Settlement_Country_Setting__mdt settingsForClaimBankCountry = [
+              SELECT Default_Currency__c
+              FROM Settlement_Country_Setting__mdt
+              WHERE Country_Name__c = :claim.Bank_Country__c
+            ];
+            settlementToCreate.Currency__c = settingsForClaimBankCountry.Default_Currency__c;
+          }
           settlementToCreate.Payee_Name__c = claim.Bank_Account_Holder_Name__c;
           settlementToCreate.Payee_reference__c = claim.Customer_s_Reference__c;
           settlementToCreate.RecordTypeId = Settlements.getRecordTypeId(
@@ -717,55 +791,6 @@ public without sharing class Settlements extends fflib_SObjectDomain {
     return settlementsToCreate
       .updateSettlementItems(itemsToCreateBySettlement, uow);
   }
-
-  /*
-  public static Settlements createFromSettlementItems(
-    List<LIA_Claim__c> claims,
-    List<SettlementItem> settlementItems,
-    fflib_ISObjectUnitOfWork uow
-  ) {
-    Map<Id, Settlement__c> settlementsByClaimId = new Map<Id, Settlement__c>();
-    Settlements settlementsToCreate = createFromClaim(cardClaims, null, uow);
-    for (Settlement__c s : settlementsToCreate.instanceRecords) {
-      settlementsByClaimId.put(s.Claim__c, s);
-    }
-
-    Map<Id, List<Settlement_Item__c>> itemsToCreateBySettlement = new Map<Id, List<Settlement_Item__c>>();
-
-    for (CompensationRequest cr : compensationRequests) {
-      List<Settlement_Item__c> itemsToCreate = new List<Settlement_Item__c>();
-
-      if (cr.compensationAmount != 0) {
-        // TODO: Currency conversion.
-        Settlement_Item__c itemToCreate = new Settlement_Item__c(
-          Amount__c = cr.compensationAmount,
-          Comments__c = 'Automatic compensation due to EU261', // TODO: Explanation here?
-          Cost_Account__c = '6727',
-          Customer_Name__c = cr.customer.fullName,
-          Settlement__c = cr.claimId
-        );
-        itemsToCreate.add(compensationItemToCreate);
-      }
-
-      if (cr.reimbursementAmount != 0) {
-        // TODO: Currency conversion.
-        Settlement_Item__c itemToCreate = new Settlement_Item__c(
-          Amount__c = cr.reimbursementAmount,
-          Comments__c = 'Automatic reimbursement due to EU261', // TODO: Explanation here?
-          Cost_Account__c = '6738',
-          Customer_Name__c = cr.customer.fullName,
-          Settlement__c = cr.claimId
-        );
-      }
-
-      itemsToCreateBySettlement.put(
-        settlementsByClaimId.get(cr.claimId).Id,
-        itemsToCreate
-      );
-    }
-
-    return settlementsToCreate;
-  }*/
 
   /**
    * Given a list of new settlement items, marks all settlements items for

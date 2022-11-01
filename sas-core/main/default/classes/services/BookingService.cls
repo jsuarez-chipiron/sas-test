@@ -97,7 +97,13 @@ public without sharing class BookingService {
       new List<IRR_MOD_TedsBooking>{ bookingData }
     );
 
-    Set<String> flightIdsForBookings = newBookings.getFlightIds();
+    Set<String> flightIdsForBookings = new Set<String>();
+
+    for (Bookings.FullBookingData fbd : newBookings.fullRecords) {
+      for (Flight__c flight : fbd.flights) {
+        flightIdsForBookings.add(flight.TEDS_Identifier__c);
+      }
+    }
 
     if (flightIdsForBookings.size() > 0) {
       Flights newFlights = FlightService.newInstance()
@@ -176,7 +182,14 @@ public without sharing class BookingService {
 
     if (newBookings != null) {
       List<Flights> newFlights = new List<Flights>();
-      Set<String> flightIds = newBookings.getFlightIds();
+
+      Set<String> flightIds = new Set<String>();
+
+      for (Bookings.FullBookingData fbd : newBookings.fullRecords) {
+        for (Flight__c flight : fbd.flights) {
+          flightIds.add(flight.TEDS_Identifier__c);
+        }
+      }
 
       if (flightIds.size() > 0) {
         if (flightIds.size() <= 10) {
