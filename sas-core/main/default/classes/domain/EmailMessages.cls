@@ -120,7 +120,7 @@ public without sharing class EmailMessages extends ApplicationDomain {
     Messaging.SingleEmailMessage emailToSend = new Messaging.SingleEmailMessage();
 
     if (templates.size() != 1) {
-      throw new EmailTemplateNameException();
+      throw new EmailTemplateNameException(templateName);
     }
 
     emailToSend.setSubject(

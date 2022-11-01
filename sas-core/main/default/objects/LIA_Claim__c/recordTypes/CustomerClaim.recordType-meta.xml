@@ -2234,6 +2234,29 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>EU261_Handling_Status__c</picklist>
+        <values>
+            <fullName>Eligible for compensation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ineligible for compensation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Possibly eligible for compensation</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Unable to handle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unhandled</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Judicial_Body__c</picklist>
         <values>
             <fullName>ADR</fullName>
