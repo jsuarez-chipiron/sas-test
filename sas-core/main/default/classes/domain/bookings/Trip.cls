@@ -444,7 +444,7 @@ public without sharing class Trip {
         s.flight.scheduledArrivalTime == arrivalTime
       ) {
         if (Trip.nameToType.get(s.tripType) != segmentType) {
-          throw new TripException(
+          throw new BookingTypeNotSupportedException(
             'Two segments which should be the same are of different types.'
           );
         } else {
