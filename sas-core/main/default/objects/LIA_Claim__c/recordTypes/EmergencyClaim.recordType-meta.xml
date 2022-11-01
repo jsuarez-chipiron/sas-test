@@ -2225,6 +2225,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Possibly eligible for compensation</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Unable to handle</fullName>
             <default>false</default>
         </values>
