@@ -615,6 +615,7 @@ public without sharing class Settlements extends ApplicationDomain {
             Settlements.RecordType.Voucher
           );
           settlementToCreate.Voucher_Email__c = claim.Contact_Email__c;
+          settlementToCreate.Currency__c = 'EUR'; // Usually issued in euros so we default to that.
         }
       }
       uow.registerNew(settlementToCreate);
