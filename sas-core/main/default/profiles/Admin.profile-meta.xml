@@ -2929,6 +2929,9 @@
         <layout>CaseToBooking__c-CaseToBooking Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Executed_CARE_Query__c-Executed CARE Query Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Flight__c-Flight Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -3160,6 +3163,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Exchange_Rate__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Executed_CARE_Query__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
