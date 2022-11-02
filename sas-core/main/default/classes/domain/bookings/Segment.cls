@@ -102,4 +102,45 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
       return 0;
     }
   }
+
+  public Boolean isActive(Datetime theTime) {
+    events.sort();
+    Boolean confirmed = false;
+    for (SegmentEvent se : events) {
+      if (se.updateDate > theTime) {
+        break;
+      }
+      SegmentEvent.StatusCode newStatus = SegmentEvent.STATUS_PICKLIST_VALUE_TO_ENUM.get(
+        se.newStatus
+      );
+      if (newStatus == SegmentEvent.StatusCode.C_HK) {
+        // Holds confirmed
+        confirmed = true;
+      }
+      if (newStatus == SegmentEvent.StatusCode.C_UN) {
+        // Unable - no flight
+        return false;
+      }
+    }
+    return confirmed;
+  }
+
+  public Boolean isActive() {
+    events.sort();
+    Boolean confirmed = false;
+    for (SegmentEvent se : events) {
+      SegmentEvent.StatusCode newStatus = SegmentEvent.STATUS_PICKLIST_VALUE_TO_ENUM.get(
+        se.newStatus
+      );
+      if (newStatus == SegmentEvent.StatusCode.C_HK) {
+        // Holds confirmed
+        confirmed = true;
+      }
+      if (newStatus == SegmentEvent.StatusCode.C_UN) {
+        // Unable - no flight
+        return false;
+      }
+    }
+    return confirmed;
+  }
 }

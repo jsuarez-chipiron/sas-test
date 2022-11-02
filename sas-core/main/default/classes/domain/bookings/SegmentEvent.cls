@@ -47,7 +47,7 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
     OperationType.C_XD => 'Cancelled ?'
   };
 
-  private static final Map<String, StatusCode> STATUS_PICKLIST_VALUE_TO_ENUM = new Map<String, StatusCode>{
+  public static final Map<String, StatusCode> STATUS_PICKLIST_VALUE_TO_ENUM = new Map<String, StatusCode>{
     'AF' => StatusCode.C_AF,
     'AK' => StatusCode.C_AK,
     'AL' => StatusCode.C_AL,
