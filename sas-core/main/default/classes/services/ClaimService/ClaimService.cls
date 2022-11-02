@@ -721,12 +721,51 @@ public without sharing class ClaimService {
     String pir,
     String caseId
   ) {
-    /**
-     * TODO:
-     * 1. Check if we have fetched already.
-     * - [ ] Create an object for storing these fetches
-     * - [ ] Enable this part only after the decommission
-     * 2. If not, fetch.*/
+    String queryType;
+    String queryText;
+
+    // Skip querying CARE if the query has been done already.
+    if (bookingReference != null && pir == null && caseId == null) {
+      List<Executed_CARE_Query__c> foundQuery = [
+        SELECT Id
+        FROM Executed_CARE_Query__c
+        WHERE Query_Text__c = :bookingReference AND Query_Type__c = 'PNR'
+      ];
+
+      if (foundQuery.size() > 0) {
+        return;
+      }
+
+      queryType = 'PNR';
+      queryText = bookingReference;
+    } else if (bookingReference == null && pir != null && caseId == null) {
+      List<Executed_CARE_Query__c> foundQuery = [
+        SELECT Id
+        FROM Executed_CARE_Query__c
+        WHERE Query_Text__c = :pir AND Query_Type__c = 'PIR'
+      ];
+
+      if (foundQuery.size() > 0) {
+        return;
+      }
+
+      queryType = 'PIR';
+      queryText = pir;
+    } else if (bookingReference == null && pir == null && caseId != null) {
+      List<Executed_CARE_Query__c> foundQuery = [
+        SELECT Id
+        FROM Executed_CARE_Query__c
+        WHERE Query_Text__c = :caseId AND Query_Type__c = 'CaseId'
+      ];
+
+      if (foundQuery.size() > 0) {
+        return;
+      }
+
+      queryType = 'CaseId';
+      queryText = caseId;
+    }
+
     ClaimsIntegrationService.FetchCAREClaimsQuery query = new ClaimsIntegrationService.FetchCAREClaimsQuery();
     query.pnr = bookingReference;
     query.caseId = caseId;
@@ -736,6 +775,16 @@ public without sharing class ClaimService {
       FetchCAREClaimsResponse response = ClaimsIntegrationService.fetchClaimsByQuery(
         query
       );
+
+      if (queryType != null) {
+        // Query type will be null if there were several fields queried. Let's not store those queries.
+        Executed_CARE_Query__c ecq = new Executed_CARE_Query__c(
+          Query_Text__c = queryText,
+          Query_Type__c = queryType
+        );
+
+        insert ecq;
+      }
 
       if (response == null) {
         return;
