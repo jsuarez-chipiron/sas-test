@@ -533,14 +533,20 @@ public without sharing class EU261Service {
           }
           when else {
             // Default to monetary
-            Exchange_Rate__c rate = exchangeRatesByToCurrency.get(
-              settlementForClaim.Currency__c
-            );
-            if (rate == null) {
-              throw new AutomationException('Cannot find exchange rate.');
+            Decimal rate = 1.0; // EUR-EUR
+            if (settlementForClaim.Currency__c != 'EUR') {
+              Exchange_Rate__c exchangeRateObj = exchangeRatesByToCurrency.get(
+                settlementForClaim.Currency__c
+              );
+              if (exchangeRateObj == null) {
+                throw new AutomationException('Cannot find exchange rate.');
+              } else {
+                rate = exchangeRateObj.Rate__c;
+              }
             }
+
             Decimal amount =
-              c.decision.compensationPerCustomer.get(customer) * rate.Rate__c;
+              c.decision.compensationPerCustomer.get(customer) * rate;
             si.amount = amount.setScale(0);
           }
         }
