@@ -12,17 +12,15 @@
     the block can be removed from this document.
 -->
     <types>
-        <members>FetchFlightEventsTrigger</members>
+        <members>FetchCAREDataEventsTrigger</members>
         <name>ApexTrigger</name>
     </types>
     <types>
-        <members>AutomatedServiceClassSelectortest</members>
-        <members>IRR_SEL_AutomatedServiceClassSelector</members>
-        <members>IRR_SEL_IAutomatedServiceClassSelector</members>
+        <members>FetchCAREDataEvents</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>ServiceClass__mdt</members>
+        <members>Fetch_CARE_Data__e</members>
         <name>CustomObject</name>
     </types>
 </Package>
