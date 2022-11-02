@@ -38,13 +38,11 @@ public without sharing class Claims extends ApplicationDomain {
   public List<LIA_Claim__c> instanceRecords;
 
   public override void onAfterInsert() {
-    checkIfExistsInCARE();
     fetchCAREClaims();
     updateParentCaseBookings();
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
-    checkIfExistsInCARE((Map<Id, LIA_Claim__c>) existingRecords);
     fetchCAREClaims((Map<Id, LIA_Claim__c>) existingRecords);
     updateParentCaseBookings((Map<Id, LIA_Claim__c>) existingRecords);
     // TODO: We should also update EB accounts correctly. Requires fixing of the entire EB accounts fetching flow.
@@ -55,7 +53,6 @@ public without sharing class Claims extends ApplicationDomain {
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
-    clearClaimInCareField();
     normalizeFields();
   }
 
@@ -179,45 +176,6 @@ public without sharing class Claims extends ApplicationDomain {
     }
 
     return this;
-  }
-
-  private void checkIfExistsInCARE(Map<Id, LIA_Claim__c> existingRecords) {
-    for (LIA_Claim__c claim : instanceRecords) {
-      if (claim.Liability_PNR__c != null) {
-        Boolean shouldCheckEDW =
-          existingRecords.get(claim.Id).Liability_PNR__c !=
-          claim.Liability_PNR__c;
-        if (shouldCheckEDW) {
-          EventBus.publish(
-            new Fetch_CARE_Data__e(
-              Claim_Id__c = claim.Id,
-              Booking_Reference__c = claim.Liability_PNR__c
-            )
-          );
-        }
-      }
-    }
-  }
-
-  private void checkIfExistsInCARE() {
-    for (LIA_Claim__c claim : instanceRecords) {
-      if (claim.Liability_PNR__c != null) {
-        EventBus.publish(
-          new Fetch_CARE_Data__e(
-            Claim_Id__c = claim.Id,
-            Booking_Reference__c = claim.Liability_PNR__c
-          )
-        );
-      }
-    }
-  }
-
-  private void clearClaimInCareField() {
-    for (LIA_Claim__c claim : instanceRecords) {
-      if (claim.Liability_PNR__c == null) {
-        claim.Claims_Exist_In_CARE_For_PNR__c = false;
-      }
-    }
   }
 
   private void updateParentCaseBookings() {
