@@ -6,5 +6,7 @@
     <fields>Currency__c</fields>
     <fields>Amount__c</fields>
     <fields>Claim__c</fields>
+    <fields>Claim_Expense_Amount_In_SEK__c</fields>
+    <fields>Under_Expense_Limit__c</fields>
     <label>Claim Expense Compact Layout</label>
 </CompactLayout>
