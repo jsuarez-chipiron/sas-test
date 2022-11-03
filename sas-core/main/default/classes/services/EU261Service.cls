@@ -11,7 +11,6 @@ public without sharing class EU261Service {
   @TestVisible
   private static final String AUTOMATION_REJECTED_EMAIL_TEMPLATE_NAME = 'eu261_automation_rejected';
   private static final String AUTOMATION_REPLY_TO_ADDRESS = 'customercare@sas.se';
-  private static final String AUTOMATION_EMAIL_FROM_NAME = 'SAS Customer Claims';
 
   private static final String COMPENSATION_WITHOUT_REIMBURSEMENT_TEXT_TEMPLATE = 'We will therefore reimburse you with a total amount of {0} {1}.';
   private static final String COMPENSATION_WITH_REIMBURSEMENT_TEXT_TEMPLATE = 'We will therefore reimburse you with a total amount of {0} {1}. Where {2} {1} is the flat rate compensation and {3} {1} Is the reimbursement for the expenses you experienced during the delay.';
@@ -614,7 +613,6 @@ public without sharing class EU261Service {
         'Your case ' +
         parentCase.CaseNumber +
         ' has been processed';
-      draftEmailForClaim.FromName = AUTOMATION_EMAIL_FROM_NAME;
 
       toReturn.add(draftEmailForClaim);
     }
@@ -639,7 +637,6 @@ public without sharing class EU261Service {
         parentCasesById.get(c.claimObj.parentCaseId).CaseNumber +
         ' has been processed'
       );
-      emailToSend.setSenderDisplayName(AUTOMATION_EMAIL_FROM_NAME);
 
       emailsByClaimId.put(c.claimObj.id, emailToSend);
     }
@@ -680,7 +677,6 @@ public without sharing class EU261Service {
         parentCasesById.get(c.claimObj.parentCaseId).CaseNumber +
         ' has been processed'
       );
-      emailToSend.setSenderDisplayName(AUTOMATION_EMAIL_FROM_NAME);
 
       emailsByClaimId.put(c.claimObj.id, emailToSend);
     }
