@@ -532,6 +532,7 @@ public without sharing class EU261Service {
         si.customerName = customer.fullName;
         si.costAccount = COMPENSATION_COST_ACCOUNT;
         si.comments = 'Automatic EU261 compensation';
+        si.recordType = SettlementItem.RecordType.DefaultRecordType;
         settlementsItemsForClaim.add(si);
 
         switch on c.claimObj.preferredCompensationMethod {

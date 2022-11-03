@@ -71,7 +71,10 @@ public with sharing class Settlements_IntegrationTest {
       Cost_Account__c = '6727',
       Currency__c = 'SEK',
       Settlement__c = settlement1.Id,
-      Status__c = 'Waiting for transfer'
+      Status__c = 'Waiting for transfer',
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.DefaultRecordType
+      )
     );
     Settlement_Item__c settlementItemToInclude2 = new Settlement_Item__c(
       Amount__c = 60,
@@ -79,7 +82,10 @@ public with sharing class Settlements_IntegrationTest {
       Cost_Account__c = '6727',
       Currency__c = 'SEK',
       Settlement__c = settlement1.Id,
-      Status__c = 'Waiting for transfer'
+      Status__c = 'Waiting for transfer',
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.DefaultRecordType
+      )
     );
     Settlement_Item__c settlementItemToInclude3 = new Settlement_Item__c(
       Amount__c = 70,
@@ -87,7 +93,10 @@ public with sharing class Settlements_IntegrationTest {
       Cost_Account__c = '6727',
       Currency__c = 'SEK',
       Settlement__c = settlement2.Id,
-      Status__c = 'Waiting for transfer'
+      Status__c = 'Waiting for transfer',
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.DefaultRecordType
+      )
     );
     Settlement_Item__c settlementItemToInclude4 = new Settlement_Item__c(
       Amount__c = 120,
@@ -97,7 +106,10 @@ public with sharing class Settlements_IntegrationTest {
       Cost_Account__c = '6741',
       Currency__c = 'SEK',
       Settlement__c = settlement3.Id,
-      Status__c = 'Waiting for transfer'
+      Status__c = 'Waiting for transfer',
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.DefaultRecordType
+      )
     );
     Settlement_Item__c settlementItemNotToInclude1 = new Settlement_Item__c(
       Amount__c = 50,
@@ -105,7 +117,10 @@ public with sharing class Settlements_IntegrationTest {
       Cost_Account__c = '6727',
       Currency__c = 'SEK',
       Settlement__c = settlement1.Id,
-      Status__c = 'Pending L1 confirmation'
+      Status__c = 'Pending L1 confirmation',
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.DefaultRecordType
+      )
     );
     Settlement_Item__c settlementItemNotToInclude2 = new Settlement_Item__c(
       Amount__c = 50,
@@ -113,7 +128,10 @@ public with sharing class Settlements_IntegrationTest {
       Cost_Account__c = '6727',
       Currency__c = 'NOK',
       Settlement__c = settlement2.Id,
-      Status__c = 'Waiting for transfer'
+      Status__c = 'Waiting for transfer',
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.DefaultRecordType
+      )
     );
     Settlement_Item__c settlementItemToInclude5 = new Settlement_Item__c(
       Amount__c = 70,
@@ -122,8 +140,8 @@ public with sharing class Settlements_IntegrationTest {
       Currency__c = 'SEK',
       Settlement__c = settlement2.Id,
       Status__c = 'Waiting for transfer',
-      RecordTypeId = SettlementItems.getRecordTypeId(
-        SettlementItems.RecordType.Emergency
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.Emergency
       )
     );
     insert new List<SObject>{
