@@ -25,6 +25,7 @@ public without sharing class EU261Service {
   private Boolean enabledRejections;
 
   private Map<Id, Case> parentCasesById = new Map<Id, Case>();
+  private Map<Id, Settlement__c> existingSettlementsByClaimId = new Map<Id, Settlement__c>();
 
   public static EU261Service newInstance() {
     return (EU261Service) SAS_Service_Application.Service.newInstance(
@@ -195,6 +196,24 @@ public without sharing class EU261Service {
       }
     }
 
+    List<Settlement__c> allSettlementsForClaims = SettlementsSelector.newInstance()
+      .selectByClaimId(claimIds);
+    if (
+      enabledSettlements &&
+      allSettlementsForClaims != null &&
+      allSettlementsForClaims.size() > 0
+    ) {
+      //
+      List<String> claimsHavingSettlements = new List<String>();
+      for (Settlement__c s : allSettlementsForClaims) {
+        claimsHavingSettlements.add(s.Claim__c);
+      }
+      throw new AutomationException(
+        'Found settlements for claims: ' +
+        String.join(claimsHavingSettlements, ', ')
+      );
+    }
+
     List<Booking__c> allBookingsFoundInClaims = BookingsSelector.newInstance()
       .selectByIdFull(allBookingIds);
 
@@ -323,9 +342,6 @@ public without sharing class EU261Service {
           claimSpecificIrregularities.put(s.Flight__c, flightIrreg);
         }
       }
-
-      Boolean foundMultipleMatchingBookings =
-        booking.instanceRecords.size() > 1;
 
       for (Booking b : booking.objects) {
         for (Segment s : b.segments) {
