@@ -52,7 +52,7 @@ public without sharing class BankAccountUtils {
 
     if (bankCountry == 'United States') {
       // Should have the format: "{Bankaccount}ABA{BankRoutingNumber}" (according to ClaimService.cls)
-      if (isValidUSAccountNumber(accountNumber, BicNumber)) {
+      if (isValidUSAccountNumber(accountNumber, bicNumber)) {
         return true;
       } else {
         return false;
@@ -132,25 +132,32 @@ public without sharing class BankAccountUtils {
     return true; // Default case
   }
 
-  private static Boolean isValidUSAccountNumber(String accNr, String BicNr) {
-    if (!accNr.contains('ABA')) {
+  private static Boolean isValidUSAccountNumber(
+    String fullAccountNumber,
+    String bicNr
+  ) {
+    if (!fullAccountNumber.contains('ABA')) {
       return false;
     }
 
-    List<String> separate = accNr.split('ABA');
+    List<String> separate = fullAccountNumber.split('ABA');
     if (separate.size() != 2) {
       return false;
     }
 
     String routingNumber = separate[1];
-    String acNr = separate[0];
+    String accountNumber = separate[0];
     if (
       routingNumber.length() == 9 &
       routingNumber.isNumeric() &
-      routingNumber != acNr
+      routingNumber != accountNumber
     ) {
-      if (acNr.length() > 5 & acNr.length() < 18 & acNr.isAlphanumeric()) {
-        if (BicNr != acNr) {
+      if (
+        accountNumber.length() > 5 &
+        accountNumber.length() < 18 &
+        accountNumber.isAlphanumeric()
+      ) {
+        if (bicNr != accountNumber) {
           return true;
         }
       }
