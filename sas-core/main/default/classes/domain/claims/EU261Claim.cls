@@ -174,7 +174,9 @@ public class EU261Claim {
     Integer count = 0;
     for (Flight f : this.claimedBooking.flights) {
       for (FlightIrregularity fi : f.irregularities) {
-        if (fi.isCancellation()) {
+        if (fi.isCancellation() && !fi.isArrivalCancellation()) {
+          // We can ignore arrival cancellation in here because there's always
+          // one if the departure is cancelled.
           count += 1;
         }
       }
