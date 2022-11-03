@@ -445,9 +445,11 @@ public class EU261Claim {
   }
 
   private Boolean isStaffBooking() {
-    // TODO: Implement this. We are not currently storing the data but when we
-    // are, this is just something like return ac.booking.IsIdTicket__c;
-    return false;
+    if (this.claimedBooking.isStaffBooking == null) {
+      return false;
+    } else {
+      return this.claimedBooking.isStaffBooking;
+    }
   }
 
   /**
