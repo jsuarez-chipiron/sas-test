@@ -174,7 +174,9 @@ public class EU261Claim {
     Integer count = 0;
     for (Flight f : this.claimedBooking.flights) {
       for (FlightIrregularity fi : f.irregularities) {
-        if (fi.isCancellation()) {
+        if (fi.isCancellation() && !fi.isArrivalCancellation()) {
+          // We can ignore arrival cancellation in here because there's always
+          // one if the departure is cancelled.
           count += 1;
         }
       }
@@ -443,9 +445,11 @@ public class EU261Claim {
   }
 
   private Boolean isStaffBooking() {
-    // TODO: Implement this. We are not currently storing the data but when we
-    // are, this is just something like return ac.booking.IsIdTicket__c;
-    return false;
+    if (this.claimedBooking.isStaffBooking == null) {
+      return false;
+    } else {
+      return this.claimedBooking.isStaffBooking;
+    }
   }
 
   /**
