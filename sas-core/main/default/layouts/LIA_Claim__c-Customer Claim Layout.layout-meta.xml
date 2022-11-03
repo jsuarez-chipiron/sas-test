@@ -330,11 +330,6 @@
             <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>PrintableView</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>8</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>LIA_Claim__c.Create_Customer</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>9</sortOrder>
@@ -343,6 +338,11 @@
             <actionName>LIA_Claim__c.Create_Settlement</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>10</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>PrintableView</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>8</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
@@ -379,6 +379,8 @@
         <fields>Currency__c</fields>
         <fields>Amount__c</fields>
         <relatedList>Claim_Expense__c.Claim__c</relatedList>
+        <sortField>Claim_Expense_Amount_In_SEK__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
