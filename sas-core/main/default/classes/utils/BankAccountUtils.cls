@@ -40,7 +40,11 @@ public without sharing class BankAccountUtils {
    * @param bankCountry A String containing the bank country name
    * @return true or false depending on if the number is valid. If the bank country does not use IBAN true is returned
    */
-  public static Boolean validateIBAN(String accountNumber, String bankCountry) {
+  public static Boolean validateIBAN(
+    String accountNumber,
+    String bankCountry,
+    String BicNumber
+  ) {
     if (accountNumber.length() == 0) {
       // If the bank account field is blank
       return false;
@@ -48,7 +52,7 @@ public without sharing class BankAccountUtils {
 
     if (bankCountry == 'United States') {
       // Should have the format: "{Bankaccount}ABA{BankRoutingNumber}" (according to ClaimService.cls)
-      if (isValidUSAccountNumber(accountNumber)) {
+      if (isValidUSAccountNumber(accountNumber, BicNumber)) {
         return true;
       } else {
         return false;
@@ -128,7 +132,7 @@ public without sharing class BankAccountUtils {
     return true; // Default case
   }
 
-  private static Boolean isValidUSAccountNumber(String accNr) {
+  private static Boolean isValidUSAccountNumber(String accNr, String BicNr) {
     if (!accNr.contains('ABA')) {
       return false;
     }
@@ -139,10 +143,18 @@ public without sharing class BankAccountUtils {
     }
 
     String routingNumber = separate[1];
-    if (routingNumber.length() == 9 & routingNumber.isNumeric()) {
-      return true;
+    String acNr = separate[0];
+    if (
+      routingNumber.length() == 9 &
+      routingNumber.isNumeric() &
+      routingNumber != acNr
+    ) {
+      if (acNr.length() > 5 & acNr.length() < 18 & acNr.isAlphanumeric()) {
+        if (BicNr != acNr) {
+          return true;
+        }
+      }
     }
-
     return false;
   }
 
@@ -169,5 +181,15 @@ public without sharing class BankAccountUtils {
     }
 
     return false;
+  }
+  public static Boolean validateAddress(String addr1, String addr2) {
+    String address = addr1 + ' ' + addr2;
+    List<String> invalidChar = new List<String>{ '´', '`', '?', '!', '+' };
+    for (String str : InvalidChar) {
+      if (address.containsAny(str)) {
+        return false;
+      }
+    }
+    return true;
   }
 }

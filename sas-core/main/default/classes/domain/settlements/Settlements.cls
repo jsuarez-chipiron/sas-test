@@ -999,7 +999,8 @@ public without sharing class Settlements extends ApplicationDomain {
           try {
             bankAccountNumberIsValid = BankAccountUtils.validateIBAN(
               s.Bank_Account_Number__c,
-              s.Bank_Country__c
+              s.Bank_Country__c,
+              s.BIC_Swift__c
             );
           } catch (Exception e) {
             errorMessages.add(
@@ -1013,6 +1014,16 @@ public without sharing class Settlements extends ApplicationDomain {
           if (!BankAccountUtils.validateBIC(s.BIC_Swift__c)) {
             errorMessages.add(
               'BIC number should be formatted as: XXXXXXYY or XXXXXXYYYYY (X\'s are letters, Y\'s are letters or numbers).'
+            );
+          }
+          if (
+            !BankAccountUtils.validateAddress(
+              s.Address_line_1__c,
+              s.Address_line_2__c
+            )
+          ) {
+            errorMessages.add(
+              'Address should not contain special character like (´,´,!,€,+,?)).'
             );
           }
         }
