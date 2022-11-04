@@ -250,12 +250,8 @@ public class AccountingEntry {
       } else {
         accountingEntries.add(new AccountingEntry(s, EntryType.DEBIT, false));
       }
-    }
-
-    for (Settlement_Item__c s : settlementItems) {
       accountingEntries.add(new AccountingEntry(s, EntryType.CREDIT, false));
     }
-
     return accountingEntries;
   }
 }
