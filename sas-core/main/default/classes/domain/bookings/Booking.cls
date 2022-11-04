@@ -217,6 +217,13 @@ public without sharing class Booking extends AbstractSObjectWrapper {
   }
 
   /**
+   * Like getTrips() but you can get the trips at a specific time. E.g. before a cancellation.
+   */
+  public List<Trip> getTripsAtTime(Datetime theTime) {
+    return Trip.createFromBookingAtTime(this, theTime);
+  }
+
+  /**
    * Returns true if the given string is a valid booking reference.
    *
    * Valid booking reference is 5-6 alphanumeric characters. There are also

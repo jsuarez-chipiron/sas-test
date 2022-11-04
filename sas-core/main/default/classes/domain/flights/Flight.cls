@@ -212,6 +212,28 @@ public without sharing class Flight extends AbstractSObjectWrapper {
       this.departureStatus == Status.Cancelled);
   }
 
+  public FlightIrregularity getCancellation() {
+    if (this.irregularities == null) {
+      throw new MissingDataException('Irregularities have not been set');
+    }
+    List<FlightIrregularity> cancellations = new List<FlightIrregularity>{};
+    for (FlightIrregularity fi : this.irregularities) {
+      if (fi.isCancellation()) {
+        cancellations.add(fi);
+      }
+    }
+
+    if (cancellations.size() == 0) {
+      return null;
+    } else if (cancellations.size() == 1) {
+      return cancellations[0];
+    } else {
+      throw new MissingDataException(
+        'There are more than one cancelaltion irregularities associated with this claim'
+      );
+    }
+  }
+
   /**
    * Calculates the direct distance between this flight's departure and
    * arrival airports.
