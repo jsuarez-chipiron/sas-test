@@ -223,9 +223,11 @@ public without sharing class EU261Service {
 
     Set<String> allTEDSFlightIds = new Set<String>{};
     Set<String> allAirportCodes = new Set<String>{};
+    Set<Id> segmentIds = new Set<Id>{};
     for (Booking__c b : allBookingsFoundInClaims) {
       for (Segment__c s : b.Segments__r) {
         allTEDSFlightIds.add(s.Flight__r.TEDS_Identifier__c);
+        segmentIds.add(s.Id);
         allAirportCodes.add(s.Flight__r.Departure_Airport__c);
         allAirportCodes.add(s.Flight__r.Arrival_Airport__c);
       }
@@ -246,6 +248,10 @@ public without sharing class EU261Service {
     List<FlightIrregularities__c> flightIrregularities = FlightIrregularitiesSelector.newInstance()
       .selectByTEDSFlightId(allTEDSFlightIds);
 
+    // 7. Get all segment events (massive):
+    List<Segment_Event__c> segmentEvents = SegmentEventsSelector.newInstance()
+      .selectBySegmentId(segmentIds);
+
     return constructClaimWithCompensationDetails(
       claims,
       countryToClaimSubmissionTimeLimit,
@@ -253,6 +259,7 @@ public without sharing class EU261Service {
       caseIdToCaseToBookings,
       bookingsById,
       flightIrregularities,
+      segmentEvents,
       airportCodeToAirportObjects,
       possiblyDuplicateCAREClaims
     );
@@ -265,6 +272,7 @@ public without sharing class EU261Service {
     Map<Id, List<CaseToBooking__c>> caseIdToCaseToBookings,
     Map<Id, Booking__c> bookingsById,
     List<FlightIrregularities__c> flightIrregularities,
+    List<Segment_Event__c> segmentEvents,
     Map<String, Airport> airportCodeToAirportObjects,
     List<CARE_Claim__c> possiblyDuplicateCAREClaims
   ) {
@@ -291,6 +299,16 @@ public without sharing class EU261Service {
         flightId,
         FlightIrregularity.unique(flightIdToIrregularities.get(flightId))
       );
+    }
+
+    Map<Id, List<SegmentEvent>> segmentIdToSegmentEvents = new Map<Id, List<SegmentEvent>>();
+    for (Segment_Event__c se : segmentEvents) {
+      SegmentEvent newSe = new SegmentEvent(se);
+      if (segmentIdToSegmentEvents.get(newSe.segmentId) == null) {
+        segmentIdToSegmentEvents.put(newSe.segmentId, new List<SegmentEvent>());
+      }
+
+      segmentIdToSegmentEvents.get(newSe.segmentId).add(newSe);
     }
 
     for (Claim c : claims) {
@@ -348,6 +366,7 @@ public without sharing class EU261Service {
           s.flight.irregularities = claimSpecificIrregularities.get(
             s.flight.id
           );
+          s.events = segmentIdToSegmentEvents.get(s.Id);
           b.setAirports(airportCodeToAirportObjects);
         }
       }
