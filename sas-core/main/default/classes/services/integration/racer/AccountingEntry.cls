@@ -229,6 +229,7 @@ public class AccountingEntry {
      * part which we can claim from insurance.
      */
     List<AccountingEntry> accountingEntries = new List<AccountingEntry>();
+    List<AccountingEntry> creditEntries = new List<AccountingEntry>();
 
     for (Settlement_Item__c s : settlementItems) {
       if (s.Is_Insured__c) {
@@ -250,8 +251,11 @@ public class AccountingEntry {
       } else {
         accountingEntries.add(new AccountingEntry(s, EntryType.DEBIT, false));
       }
-      accountingEntries.add(new AccountingEntry(s, EntryType.CREDIT, false));
+      // Storing Credit entries separately to preserve the file structure
+      creditEntries.add(new AccountingEntry(s, EntryType.CREDIT, false));
     }
+    // The Credit entries should be placed after the Debit entries
+    accountingEntries.addAll(creditEntries);
     return accountingEntries;
   }
 }
