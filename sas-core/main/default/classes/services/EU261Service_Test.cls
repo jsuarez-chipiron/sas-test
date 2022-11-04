@@ -2599,32 +2599,51 @@ private class EU261Service_Test {
       'If a cancelled flight does not affect the final arrival time the customer should not be compensated (two flights).'
     );
   }
-}
-/*
+
   @IsTest
   static void simpleEvaluation() {
-    Flight f = new Flight(); // FlightFactory.create('SK0013', departureDate);
-    f.flightNumber = 'SK0013';
-    f.tedsIdentifier = ;
+    Datetime departure = DateTime.newInstance(2020, 10, 10, 1, 1, 1);
+    Datetime replacementDeparture = departure.addHours(4);
+    Flight f1 = FlightFactory.create('SK0013', departure, 'ARN', 'HEL');
+    Flight f2 = FlightFactory.create(
+      'SK0014',
+      replacementDeparture,
+      'ARN',
+      'HEL'
+    );
+    List<Flight> flights = new List<Flight>{ f1, f2 };
 
-    Booking b = new Booking();
+    List<FlightIrregularity> fis = new List<FlightIrregularity>{
+      IrregularityFactory.createCancellation(f1)
+    };
 
-    ClaimCustomer cc = new ClaimCustomer();
+    fis[0].cancellationTime = departure.addDays(-1);
+    f1.irregularities = fis;
+
+    ClaimCustomer cc = new ClaimCustomer(new Customer__c());
     cc.firstname = 'Test';
     cc.lastName = 'Testsson';
 
     Claim c = new Claim();
     c.customers = new List<ClaimCustomer>{ cc };
     c.flightNumber = 'SK0013';
-    c.departureDate = Date.parse('2022-08-17');
-    c.category = Claim.Category.FlightDisrution;
+    c.departureDate = departure.date();
+    c.category = Claim.Category.FlightDisruptions;
     c.type = Claim.Type.FlightCancellation;
+
+    Booking b = BookingFactory.createValidForClaim(c);
+
+    Passenger extraPassenger = PassengerFactory.create(b);
+    b.passengers.add(extraPassenger); // Total 2 passengers
+
+    b.segments = SegmentFactory.createFromBookingFlights(b, flights);
 
     EU261Claim claimToEvaluate = new EU261Claim(
       c,
       new List<Booking>{ b },
       false
     );
+
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
     System.assertEquals(
@@ -2634,49 +2653,3 @@ private class EU261Service_Test {
     );
   }
 }
-
-List<FlightIrregularity> fis = new List<FlightIrregularity>{
-  IrregularityFactory.createCancellation(),
-  IrregularityFactory.createCancellation()
-}
-Flight f = FlightFactory.createWithIrregularities(flightNumber, flightDate, departure, arrival, fis);
-
-Booking b = BookingFactory.createValidForClaim(Claim c) {
-  // Flight
-  // Irregularity
-  // 
-}
-
-b.passengers = new Passenger(b);
-b.segments = SegmentFactory.createFromBookingFlightPassenger(Booking b, Flight f, Passenger p);
-
-FlightFactory.createWithIrregularities(String flightNumber, Date flightDate, Airport departure, Airport arrival, List<FlightIrregularity> irregularities) {
-  Flight f = new Flight();
-  f.id = C_Util.generateUUID();
-}
-
-SegmentFactory.createFromBookingFlightPassenger(Booking b, Flight f, Passenger p) {
-  Segment s = new Segment();
-  s.flight = f;
-  s.flightId = f.id;
-  s.id = C_Util.generateUUID();
-
-  s.baggageQuantity = 0;
-  s.bookingClass = 'A';
-  s.checkInStatus = '';
-  s.fareBasis = 'ABCDE'
-  s.farePrice = 200;
-  s.identifier = 'ST1';
-  s.isBoarded = true;
-  s.seat = '1A';
-  s.segmentStatus = 'Accepted';
-  s.segmentStatusCode = 'HK';
-  s.serviceClass = 'A';
-  s.specialServiceRequests = '';
-  s.ticketNumber = '1234567890';
-  s.ticketType = '';
-  s.tripType = 'Outbound';
-  
-  return s;
-}
-*/
