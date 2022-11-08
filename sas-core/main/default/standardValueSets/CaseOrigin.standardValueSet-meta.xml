@@ -27,6 +27,21 @@
         <label>Email - Businesstravel STO</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Callout CPH</fullName>
+        <default>false</default>
+        <label>Email - Callout CPH</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Callout OSL</fullName>
+        <default>false</default>
+        <label>Email - Callout OSL</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Callout STO</fullName>
+        <default>false</default>
+        <label>Email - Callout STO</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Corporate Support Backoffice</fullName>
         <default>false</default>
         <label>Email - Corporate Support Backoffice</label>
@@ -472,6 +487,26 @@
         <label>Email - SASSI Internal</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - SAT</fullName>
+        <default>false</default>
+        <label>Email - SAT</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - SATTCPH</fullName>
+        <default>false</default>
+        <label>Email - SATTCPH</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - SATTOSL</fullName>
+        <default>false</default>
+        <label>Email - SATTOSL</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - SATTSTO</fullName>
+        <default>false</default>
+        <label>Email - SATTSTO</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email - Scanned Compensation Cards</fullName>
         <default>false</default>
         <label>Email - Scanned Compensation Cards</label>
@@ -540,41 +575,6 @@
         <fullName>Email - Vendor Management</fullName>
         <default>false</default>
         <label>Email - Vendor Management</label>
-    </standardValue>  
-    <standardValue>
-        <fullName>Email - Callout STO</fullName>
-        <default>false</default>
-        <label>Email - Callout STO</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Callout CPH</fullName>
-        <default>false</default>
-        <label>Email - Callout CPH</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - Callout OSL</fullName>
-        <default>false</default>
-        <label>Email - Callout OSL</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - SATTSTO</fullName>
-        <default>false</default>
-        <label>Email - SATTSTO</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - SATTCPH</fullName>
-        <default>false</default>
-        <label>Email - SATTCPH</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - SATTOSL</fullName>
-        <default>false</default>
-        <label>Email - SATTOSL</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Email - SAT</fullName>
-        <default>false</default>
-        <label>Email - SAT</label>
     </standardValue>
     <standardValue>
         <fullName>Facebook</fullName>
@@ -900,6 +900,11 @@
         <fullName>Manual - Legal Case Diary Migration</fullName>
         <default>false</default>
         <label>Manual - Legal Case Diary Migration</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Manual - NO Refunds Migration</fullName>
+        <default>false</default>
+        <label>Manual - NO Refunds Migration</label>
     </standardValue>
     <standardValue>
         <fullName>Phone</fullName>

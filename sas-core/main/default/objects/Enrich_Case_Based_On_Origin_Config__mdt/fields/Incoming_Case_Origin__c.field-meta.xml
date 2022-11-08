@@ -836,6 +836,11 @@
                 <label>Form - Visa Rejection SE</label>
             </value>
             <value>
+                <fullName>Manual - NO Refunds Migration</fullName>
+                <default>false</default>
+                <label>Manual - NO Refunds Migration</label>
+            </value>
+            <value>
                 <fullName>Twitter</fullName>
                 <default>false</default>
                 <label>Twitter</label>
