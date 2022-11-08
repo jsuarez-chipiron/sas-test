@@ -25,20 +25,7 @@ public without sharing class Trip {
    *
    * @return A map of booking id to each trip in booking
    */
-  public static List<Trip> createFromBooking(Booking b) {
-    checkData(b);
-    return createFromSegments(b.segments);
-  }
-
-  public static List<Trip> createFromBookingAtTime(
-    Booking b,
-    Datetime theTime
-  ) {
-    checkData(b);
-    return createFromSegmentsAtTime(b.segments, theTime);
-  }
-
-  private static void checkData(Booking b) {
+  public static List<Trip> createFromBooking(Booking b, Datetime theTime) {
     if (b.segments == null) {
       throw new InsufficientDataException(
         'You must fetch the segments for the booking.'
@@ -60,21 +47,23 @@ public without sharing class Trip {
         );
       }
     }
+    return createFromSegments(b.segments, theTime);
   }
 
   public static List<Trip> createFromSegments(List<Segment> segments) {
-    List<Segment> activeSegments = SegmentService.getActiveSegments(segments);
-    return divideActiveSegmentsIntoTrips(activeSegments);
+    return createFromSegments(segments, System.now());
   }
 
-  public static List<Trip> createFromSegmentsAtTime(
+  public static List<Trip> createFromSegments(
     List<Segment> segments,
     Datetime theTime
   ) {
-    List<Segment> activeSegments = SegmentService.getActiveSegments(
-      segments,
-      theTime
-    );
+    List<Segment> activeSegments = new List<Segment>();
+    for (Segment s : segments) {
+      if (s.isActive(theTime)) {
+        activeSegments.add(s);
+      }
+    }
     return divideActiveSegmentsIntoTrips(activeSegments);
   }
 
@@ -116,7 +105,7 @@ public without sharing class Trip {
   // GENERAL LOGIC
   public Boolean containsFlight(Flight flight) {
     for (Leg l : this.sortedLegs) {
-      if (l.flight.tedsIdentifier == flight.tedsIdentifier) {
+      if (l.flight == flight) {
         return true;
       }
     }
@@ -156,10 +145,7 @@ public without sharing class Trip {
     }
 
     for (Integer i = 0; i < this.sortedLegs.size(); i++) {
-      if (
-        this.sortedLegs[i].flight.tedsIdentifier !=
-        otherT.sortedLegs[i].flight.tedsIdentifier
-      ) {
+      if (this.sortedLegs[i].flight != otherT.sortedLegs[i].flight) {
         return false;
       }
     }

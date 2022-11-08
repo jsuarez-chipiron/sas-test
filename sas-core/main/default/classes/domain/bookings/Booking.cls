@@ -213,14 +213,14 @@ public without sharing class Booking extends AbstractSObjectWrapper {
    * @return A map of booking id to each trip in booking
    */
   public List<Trip> getTrips() {
-    return Trip.createFromBooking(this);
+    return Trip.createFromBooking(this, System.now());
   }
 
   /**
    * Like getTrips() but you can get the trips at a specific time. E.g. before a cancellation.
    */
   public List<Trip> getTripsAtTime(Datetime theTime) {
-    return Trip.createFromBookingAtTime(this, theTime);
+    return Trip.createFromBooking(this, theTime);
   }
 
   /**

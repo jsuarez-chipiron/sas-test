@@ -163,69 +163,11 @@ public class EU261Claim {
         c.departureDate
       );
 
-      FlightIrregularity cancellation;
-      this.hasCancellation = false;
       for (Flight f : this.claimedBooking.flights) {
         String flightId = Flight.TEDSIdToSimpleFlightIds(f.tedsIdentifier)[0];
         if (flightId == flightNumberDate) {
           this.claimFlight = f;
-          cancellation = claimFlight.getCancellation();
-          if (cancellation != null) {
-            this.hasCancellation = true;
-          }
           break;
-        }
-      }
-
-      List<Trip> tripsBeforeIrregularity;
-      List<Trip> tripsAfterIrregularity;
-      try {
-        if (this.hasCancellation) {
-          if (cancellation.cancellationTime == null) {
-            throw new CreateException(
-              'Cancellation does not have a cancellation time.'
-            );
-          }
-          tripsBeforeIrregularity = claimedBooking.getTripsAtTime(
-            cancellation.cancellationTime.addSeconds(-1)
-          ); // Relatively arbitrary, could be improved
-          tripsAfterIrregularity = claimedBooking.getTripsAtTime(
-            cancellation.cancellationTime
-          );
-
-          if (tripsBeforeIrregularity.size() != tripsAfterIrregularity.size()) {
-            throw new CreateException(
-              'Interpretation of booking changed after cancellation'
-            );
-          }
-        } else {
-          tripsAfterIrregularity = claimedBooking.getTrips();
-        }
-        this.couldInitializeTrips = true;
-      } catch (Trip.BookingTypeNotSupportedException e) {
-        // If not supported, we'll leave trips empty. We'll ignore these when
-        // processing cases later on.
-        this.couldInitializeTrips = false;
-        return;
-      } catch (CreateException e) {
-        this.couldInitializeTrips = false;
-        return;
-      }
-
-      if (this.hasCancellation) {
-        for (Integer i = 0; i < tripsBeforeIrregularity.size(); i++) {
-          Trip tripBeforeIrregularity = tripsBeforeIrregularity[i];
-          if (tripBeforeIrregularity.containsFlight(this.claimFlight)) {
-            this.tripWithClaimFlight = tripBeforeIrregularity;
-            this.tripWithClaimFlightReplacement = tripsAfterIrregularity[i];
-          }
-        }
-      } else {
-        // Delay or otherwise
-        for (Trip t : tripsAfterIrregularity) {
-          if (t.containsFlight(this.claimFlight)) {
-            this.tripWithClaimFlight = t;
-          }
         }
       }
     }
@@ -283,6 +225,69 @@ public class EU261Claim {
       }
     }
     return true;
+  }
+
+  private void calculateAndSetTrips() {
+    FlightIrregularity cancellation = claimFlight.getCancellation();
+    if (cancellation != null) {
+      this.hasCancellation = true;
+    } else {
+      this.hasCancellation = false;
+    }
+
+    List<Trip> tripsBeforeIrregularity;
+    List<Trip> tripsAfterIrregularity;
+    try {
+      if (this.hasCancellation) {
+        if (cancellation.cancellationTime == null) {
+          throw new CreateException(
+            'Cancellation does not have a cancellation time.'
+          );
+        }
+        tripsBeforeIrregularity = claimedBooking.getTripsAtTime(
+          cancellation.cancellationTime.addSeconds(-1)
+        ); // Relatively arbitrary, could be improved
+        tripsAfterIrregularity = claimedBooking.getTripsAtTime(
+          cancellation.cancellationTime
+        );
+
+        if (tripsBeforeIrregularity.size() != tripsAfterIrregularity.size()) {
+          throw new CreateException(
+            'Interpretation of booking changed after cancellation'
+          );
+        }
+      } else {
+        // If the claim flight is not cancelled, calculate the trips based
+        // on the final state of the booking.
+        tripsAfterIrregularity = claimedBooking.getTrips();
+      }
+      this.couldInitializeTrips = true;
+    } catch (Trip.BookingTypeNotSupportedException e) {
+      // If not supported, we'll leave trips empty. We'll ignore these when
+      // processing cases later on.
+      this.couldInitializeTrips = false;
+      return;
+    } catch (CreateException e) {
+      this.couldInitializeTrips = false;
+      return;
+    }
+
+    if (this.hasCancellation) {
+      for (Integer i = 0; i < tripsBeforeIrregularity.size(); i++) {
+        Trip tripBeforeIrregularity = tripsBeforeIrregularity[i];
+        if (tripBeforeIrregularity.containsFlight(this.claimFlight)) {
+          this.tripWithClaimFlight = tripBeforeIrregularity;
+          this.tripWithClaimFlightReplacement = tripsAfterIrregularity[i];
+        }
+      }
+    } else {
+      // Delay or otherwise
+      for (Trip t : tripsAfterIrregularity) {
+        if (t.containsFlight(this.claimFlight)) {
+          this.tripWithClaimFlight = t;
+        }
+      }
+    }
   }
 
   /**
@@ -396,7 +401,12 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot handle claims with a restricted fare basis.'
       );
-    } else if (!this.couldInitializeTrips) {
+    }
+
+    // To continue the evaluation we have to construct the trip(s)
+    this.calculateAndSetTrips();
+
+    if (!this.couldInitializeTrips) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'was not able to divide the booking into trips'
@@ -819,7 +829,7 @@ public class EU261Claim {
     List<FlightIrregularity> claimIrregularities = new List<FlightIrregularity>();
 
     for (FlightIrregularity fi : this.claimFlight.irregularities) {
-      if (fi.isCancellation()) {
+      if (fi.isCancellation() && !fi.isArrivalCancellation()) {
         claimIrregularities.add(fi);
       }
     }

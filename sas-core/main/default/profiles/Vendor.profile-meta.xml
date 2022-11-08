@@ -1365,10 +1365,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SegmentService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>SendAccountingFileQueueable</apexClass>
         <enabled>false</enabled>
     </classAccesses>

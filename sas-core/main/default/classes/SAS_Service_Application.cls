@@ -79,7 +79,6 @@ public class SAS_Service_Application {
       EU261Service.class => EU261Service.class,
       FlightService.class => FlightService.class,
       AirportService.class => AirportService.class,
-      SegmentService.class => SegmentService.class,
       SettlementService.class => SettlementService.class,
       TEDSIntegrationService.class => TEDSIntegrationService.class,
       VoucherIntegrationService.class => VoucherIntegrationService.class

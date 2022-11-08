@@ -218,7 +218,7 @@ public without sharing class Flight extends AbstractSObjectWrapper {
     }
     List<FlightIrregularity> cancellations = new List<FlightIrregularity>{};
     for (FlightIrregularity fi : this.irregularities) {
-      if (fi.isCancellation()) {
+      if (fi.isCancellation() && !fi.isArrivalCancellation()) {
         cancellations.add(fi);
       }
     }
