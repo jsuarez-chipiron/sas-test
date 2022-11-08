@@ -555,6 +555,11 @@
                 <label>SGH Bag SE</label>
             </value>
             <value>
+                <fullName>Sitel CS Norway Refunds</fullName>
+                <default>false</default>
+                <label>Sitel CS Norway Refunds</label>
+            </value>
+            <value>
                 <fullName>Sitel General</fullName>
                 <default>false</default>
                 <label>Sitel General</label>
@@ -876,6 +881,10 @@
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>
             <valueName>OC Waivers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Refunds</controllingFieldValue>
+            <valueName>Sitel CS Norway Refunds</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Refunds</controllingFieldValue>

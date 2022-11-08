@@ -4468,6 +4468,10 @@
             <fullName>Form - Visa Rejection SE</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Manual - NO Refunds Migration</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PNR_Payment_Status__c</picklist>
@@ -4854,6 +4858,10 @@
         </values>
         <values>
             <fullName>Settlement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sitel CS Norway Refunds</fullName>
             <default>false</default>
         </values>
         <values>
