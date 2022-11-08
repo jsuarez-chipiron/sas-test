@@ -181,7 +181,7 @@ public without sharing class CreateClaimRequest {
 
   public class Expense {
     public ClaimExpense.Type type { get; private set; }
-    public Currencies.Code expenseCurrency { get; private set; }
+    public Money.CurrencyCode expenseCurrency { get; private set; }
     public Decimal amount { get; private set; }
     public Set<Id> contentVersionIds { get; private set; }
 
@@ -201,7 +201,7 @@ public without sharing class CreateClaimRequest {
       }
 
       amount = expenseData.amount == null ? 0 : expenseData.amount;
-      expenseCurrency = Currencies.CODE_PICKLIST_VALUE_TO_ENUM.get(
+      expenseCurrency = Money.CURRENCY_PICKLIST_VALUE_TO_ENUM.get(
         expenseData.expenseCurrency.toUpperCase()
       );
 
@@ -219,7 +219,7 @@ public without sharing class CreateClaimRequest {
         ': ' +
         this.amount +
         ' ' +
-        Currencies.CODE_ENUM_TO_PICKLIST_VALUE.get(this.expenseCurrency);
+        this.expenseCurrency.name();
     }
   }
 
@@ -266,7 +266,7 @@ public without sharing class CreateClaimRequest {
     public String bankName;
     public String bankBic;
 
-    public Currencies.Code preferredCurrency;
+    public Money.CurrencyCode preferredCurrency;
     public Claim.CompensationType preferredCompensationMethod;
     public Claim.CompensationType preferredReimbursementMethod;
 
@@ -278,7 +278,7 @@ public without sharing class CreateClaimRequest {
       this.bankBic = jsonData.bankBic;
       this.preferredCurrency = String.isBlank(jsonData.preferredCurrency)
         ? null
-        : Currencies.CODE_PICKLIST_VALUE_TO_ENUM.get(
+        : Money.CURRENCY_PICKLIST_VALUE_TO_ENUM.get(
             jsonData.preferredCurrency.toUpperCase()
           );
       this.preferredCompensationMethod = JSON_TO_COMPENSATION_TYPE.get(
@@ -355,7 +355,8 @@ public without sharing class CreateClaimRequest {
     }
     travelers = travelersToCreate;
 
-    if (jsonData.formData.claim.bookingReference != null &&
+    if (
+      jsonData.formData.claim.bookingReference != null &&
       !Booking.isValidBookingReference(jsonData.formData.claim.bookingReference)
     ) {
       throw new InvalidDataException(

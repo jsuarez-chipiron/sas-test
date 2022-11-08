@@ -79,8 +79,6 @@ public without sharing class ClaimsIntegrationService {
     path += String.isBlank(query.pir) ? '/-' : '/' + query.pir;
     path += String.isBlank(query.caseId) ? '/-' : '/' + query.caseId;
 
-    System.debug(path);
-
     HttpResponse response = makeRequest(HttpUtils.HTTP_METHOD.GET, path, null);
 
     if (response.getStatusCode() == 404) {

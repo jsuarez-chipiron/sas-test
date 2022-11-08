@@ -4,7 +4,7 @@ public without sharing class ClaimExpense extends AbstractSObjectWrapper {
   public Decimal amount;
   public Id parentClaimId;
   public Decimal amountInSEK;
-  public Currencies.Code currencyOfAmount;
+  public Money.CurrencyCode currencyOfAmount;
   public Type type;
   public Date dateOfExchangeCalculation;
 
@@ -12,7 +12,7 @@ public without sharing class ClaimExpense extends AbstractSObjectWrapper {
     this.underlyingSObject.Amount__c = this.amount;
     this.underlyingSObject.Claim__c = this.parentClaimId;
     this.underlyingSObject.Claim_Expense_Amount_In_SEK__c = this.amountInSEK;
-    this.underlyingSObject.Currency__c = Currencies.CODE_ENUM_TO_PICKLIST_VALUE.get(
+    this.underlyingSObject.Currency__c = Money.CURRENCY_ENUM_TO_PICKLIST_VALUE.get(
       this.currencyOfAmount
     );
     this.underlyingSObject.Type__c = TYPE_ENUM_TO_PICKLIST_VALUE.get(this.type);
@@ -34,7 +34,7 @@ public without sharing class ClaimExpense extends AbstractSObjectWrapper {
     this.amount = expense.Amount__c;
     this.parentClaimId = expense.Claim__c;
     this.amountInSEK = expense.Claim_Expense_Amount_In_SEK__c;
-    this.currencyOfAmount = Currencies.CODE_PICKLIST_VALUE_TO_ENUM.get(
+    this.currencyOfAmount = Money.CURRENCY_PICKLIST_VALUE_TO_ENUM.get(
       expense.Currency__c
     );
     this.type = TYPE_PICKLIST_VALUE_TO_ENUM.get(expense.Type__c);

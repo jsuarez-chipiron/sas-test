@@ -17,15 +17,19 @@ public class EU261Claim {
     'default' => 6 * 12
   };
 
-  // TODO: Make sure that this doesn't make any outside calls to anything.
+  /**
+   * Evaluates the claim according to the EU261 rules and returns the decision
+   * made on whether the claim should be paid out.
+   *
+   * The result is also stored in this.decision.
+   */
   public Decision evaluate() {
     this.decision = this.canWeEvaluate();
 
     if (this.decision == null) {
       // If decision is null from above, we should be able to evaluate this claim.
       this.decision = this.determineEligibilityAndCalculateCompensation();
-
-      // this.calculateReimbursement(); // Todo, implement
+      this.decision.reimbursementAmountInSEK = calculateReimbursement();
     }
 
     if (
@@ -45,13 +49,46 @@ public class EU261Claim {
   public class CreateException extends Exception {
   }
 
+  /**
+   * Represents the outcome of evaluating a customer claim according to EU261
+   * rules.
+   *
+   * Consists of the overall verdict of whether the customer is eligible for
+   * compensation or not, or that we can't handle the claim.
+   *
+   * When the claim should be paid out, the decision also contains information
+   * about the amounts of compensation and reimbursement that should be paid
+   * out.
+   */
   public class Decision {
-    public Integer reimbursementAmount { get; private set; } // Reimbursement is one per claim because expenses are not tied to a customer
-    public Map<ClaimCustomer, Integer> compensationPerCustomer;
+    /**
+     * The total reimbursement that can be paid out based on this decision in
+     * SEK.
+     *
+     * There's only one total for reimbursement because the costs are not tied
+     * to a specific customer like they are with compensation.
+     */
+    public Money reimbursementAmountInSEK { get; private set; }
 
+    /**
+     * The compensation which should be paid out based on this decision.
+     * Keys are the claimed customers and values the amount to be paid out to
+     * that customer in euros.
+     */
+    public Map<ClaimCustomer, Money> compensationPerCustomerInEUR {
+      get;
+      private set;
+    }
+
+    /**
+     * The overall verdict of whether a customer is eligible for compensation.
+     */
     public Claim.EU261HandlingStatus verdict { get; private set; }
 
-    public String reasoning;
+    /**
+     * Clarifications on how the decision was reached, if available.
+     */
+    public String reasoning { get; private set; }
 
     Decision(Claim.EU261HandlingStatus verdict, String reasoning) {
       if (verdict == Claim.EU261HandlingStatus.EligibleForCompensation) {
@@ -61,16 +98,16 @@ public class EU261Claim {
       }
       this.verdict = verdict;
       this.reasoning = reasoning;
-      this.reimbursementAmount = 0;
+      this.reimbursementAmountInSEK = new Money(0, Money.CurrencyCode.SEK);
     }
 
     Decision(
       String reasoning,
-      Map<ClaimCustomer, Integer> compensationByCustomer,
-      Integer reimbursementAmount
+      Map<ClaimCustomer, Money> compensationByCustomer,
+      Money reimbursementAmountInSEK
     ) {
       if (
-        reimbursementAmount == 0 &&
+        reimbursementAmountInSEK.amount == 0 &&
         (compensationByCustomer == null || compensationByCustomer.isEmpty())
       ) {
         throw new CreateException(
@@ -79,10 +116,8 @@ public class EU261Claim {
       }
       this.verdict = Claim.EU261HandlingStatus.EligibleForCompensation;
       this.reasoning = reasoning;
-      this.compensationPerCustomer = compensationByCustomer;
-      this.reimbursementAmount = reimbursementAmount;
-
-      // TODO: Create this properly per customer.
+      this.compensationPerCustomerInEUR = compensationByCustomer;
+      this.reimbursementAmountInSEK = reimbursementAmountInSEK;
     }
   }
 
@@ -95,16 +130,23 @@ public class EU261Claim {
   private Boolean foundMultipleMatchingBookings = false;
   private Flight claimFlight;
 
+  private EU261Service.Config config;
+
+  /**
+   * The decision made on this claim. Populated by this.evaluate().
+   */
   public Decision decision { public get; private set; }
 
   public EU261Claim(
     Claim c,
     List<Booking> b,
-    Boolean hasPotentiallyDuplicateClaims
+    Boolean hasPotentiallyDuplicateClaims,
+    EU261Service.Config config
   ) {
     this.claimObj = c;
+    this.config = config;
 
-    this.hasPotentiallyDuplicateClaims = hasPotentiallyDuplicateClaims;
+    this.hasPotentiallyDuplicateClaims = hasPotentiallyDuplicateClaims; // TODO: This should be moved out of here. Decision should be based only on this single claim, comparison to others can be done elsewhere.
 
     if (b != null && b.size() != 0) {
       this.claimedBooking = b[0];
@@ -552,7 +594,7 @@ public class EU261Claim {
     Trip newTrip = this.tripWithClaimFlight.getSuggestedRebookingWithoutFlight();
     Integer arrivalDifference;
     Integer departureDifference;
-    Integer compensation;
+    Money compensation;
     if (newTrip == null) {
       // Current state of this automation as we cannot determine that we have not suggested a rebooking
       Boolean allDataIsAvailable = false; // Temp (dev), EDW
@@ -609,20 +651,24 @@ public class EU261Claim {
       );
     }
 
-    if (compensation == 0) {
+    if (compensation == new Money(0, Money.CurrencyCode.EUR)) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
         'the offered rebooking is not outside the timeframe allowed by EU261'
       );
     }
 
-    Map<ClaimCustomer, Integer> compensationByCustomer = new Map<ClaimCustomer, Integer>();
+    Map<ClaimCustomer, Money> compensationByCustomer = new Map<ClaimCustomer, Money>();
 
     for (ClaimCustomer p : eligiblePassengers) {
       compensationByCustomer.put(p, compensation);
     }
 
-    return new Decision('', compensationByCustomer, 0); // TODO: reimbursement
+    return new Decision(
+      '',
+      compensationByCustomer,
+      new Money(0, Money.CurrencyCode.EUR)
+    ); // TODO: reimbursement
   }
 
   private List<ClaimCustomer> getPassengersEligibleForCompensation() {
@@ -661,6 +707,10 @@ public class EU261Claim {
     }
 
     return eligibleCustomers;
+  }
+
+  private Money calculateReimbursement() {
+    return this.claimObj.submittedClaimExpenses.setScale(0);
   }
 
   private Boolean cancellationCodeIsWithinSASControl() {
@@ -837,34 +887,38 @@ public class EU261Claim {
       );
     }
 
-    Integer compensationAmount = 0;
+    Money compensationAmount = new Money(0, Money.CurrencyCode.EUR);
 
     if (flightDistanceInKm <= MEDIUM_DISTANCE) {
-      compensationAmount = 250;
+      compensationAmount = new Money(250, Money.CurrencyCode.EUR);
     } else if (
       flightDistanceInKm > MEDIUM_DISTANCE &&
       (flightDistanceInKm <= LONG_DISTANCE ||
       this.tripWithClaimFlight.isIntraCommunity())
     ) {
-      compensationAmount = 400;
+      compensationAmount = new Money(400, Money.CurrencyCode.EUR);
     } else if (delayedMinutes < MINIMUM_DELAY_FOR_INCREASED_COMPENSATION) {
-      compensationAmount = 300;
+      compensationAmount = new Money(300, Money.CurrencyCode.EUR);
     } else if (delayedMinutes >= MINIMUM_DELAY_FOR_INCREASED_COMPENSATION) {
-      compensationAmount = 600;
+      compensationAmount = new Money(600, Money.CurrencyCode.EUR);
     } else {
       // TODO: Can we get rid of this?
       throw new AutomationException('Invalid compensation calculation.');
     }
-    Map<ClaimCustomer, Integer> compensationByCustomer = new Map<ClaimCustomer, Integer>();
+    Map<ClaimCustomer, Money> compensationByCustomer = new Map<ClaimCustomer, Money>();
 
     for (ClaimCustomer p : passengersEligibleForCompensation) {
       compensationByCustomer.put(p, compensationAmount);
     }
 
-    return new Decision('', compensationByCustomer, 0); // TODO: reimbursement
+    return new Decision(
+      '',
+      compensationByCustomer,
+      new Money(0, Money.CurrencyCode.EUR)
+    ); // TODO: reimbursement
   }
 
-  private Integer calculateCompensationCancellation(
+  private Money calculateCompensationCancellation(
     Integer minutesLateOnArrival,
     Integer minutesEarlyOnDeparture,
     Integer flightDistanceInKm,
@@ -892,36 +946,36 @@ public class EU261Claim {
       );
 
     if (!isEligableForCompensation) {
-      return 0;
+      return new Money(0, Money.CurrencyCode.EUR);
     }
 
-    Integer compensation;
+    Money compensation;
     if (flightDistanceInKm <= MEDIUM_DISTANCE) {
-      compensation = 250;
+      compensation = new Money(250, Money.CurrencyCode.EUR);
       if (
         minutesLateOnArrival <=
         MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_SHORT_DISTANCE
       ) {
-        compensation /= 2;
+        compensation = compensation.divideBy(2);
       }
     } else if (
       flightDistanceInKm > MEDIUM_DISTANCE &&
       (flightDistanceInKm <= LONG_DISTANCE || isIntraCommunity)
     ) {
-      compensation = 400;
+      compensation = new Money(400, Money.CurrencyCode.EUR);
       if (
         minutesLateOnArrival <=
         MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_MEDIUM_DISTANCE
       ) {
-        compensation /= 2;
+        compensation = compensation.divideBy(2);
       }
     } else {
-      compensation = 600;
+      compensation = new Money(600, Money.CurrencyCode.EUR);
       if (
         minutesLateOnArrival <=
         MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_LONG_DISTANCE
       ) {
-        compensation /= 2;
+        compensation = compensation.divideBy(2);
       }
     }
 
@@ -968,18 +1022,52 @@ public class EU261Claim {
     return false;
   }
 
-  /*private Decision createDecision() {
-   }*/
-
-  private String getCaveats() {
+  public String getCaveats() {
+    // TODO: Pass duplicate claims as a param
     List<String> caveats = new List<String>();
 
     if (this.hasPotentiallyDuplicateClaims) {
       caveats.add('has potential duplicates');
     }
-    if (this.claimObj.submittedClaimExpenses > 0) {
-      caveats.add('has claim expenses');
+
+    Boolean anySingleExpenseOverLimit = false;
+
+    if (this.claimObj.expenses != null) {
+      for (ClaimExpense ce : this.claimObj.expenses) {
+        Money expenseLimit = new Money(0, Money.CurrencyCode.SEK);
+
+        switch on ce.type {
+          when Accommodation {
+            expenseLimit = this.config.expenseLimitAccommodation;
+          }
+          when Food {
+            expenseLimit = this.config.expenseLimitFood;
+          }
+          when PhoneCalls {
+            expenseLimit = this.config.expenseLimitPhoneCalls;
+          }
+          when Transportation {
+            expenseLimit = this.config.expenseLimitTransportation;
+          }
+        }
+
+        if (
+          (new Money(ce.amountInSEK, Money.CurrencyCode.SEK))
+            .greaterThan(expenseLimit)
+        ) {
+          anySingleExpenseOverLimit = true;
+          break;
+        }
+      }
     }
+
+    if (
+      anySingleExpenseOverLimit ||
+      this.claimObj.submittedClaimExpenses.greaterThan(config.expenseLimitTotal)
+    ) {
+      caveats.add('has high claim expenses');
+    }
+
     if (this.requiresPowerOfAttorney()) {
       caveats.add('requires a power of attorney');
     }

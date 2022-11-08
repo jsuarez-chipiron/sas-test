@@ -530,13 +530,18 @@ public without sharing class Settlements extends ApplicationDomain {
   public static Settlements createFromClaim(
     List<LIA_Claim__c> claims,
     RecordType recordTypeToCreate,
+    Boolean createReimbursementSettlement,
     fflib_ISObjectUnitOfWork uow
   ) {
     List<Settlement__c> settlementsToCreate = new List<Settlement__c>();
 
     for (LIA_Claim__c claim : claims) {
       if (recordTypeToCreate == null) {
-        switch on claim.Preferred_Compensation_Method__c {
+        String method = createReimbursementSettlement
+          ? claim.Preferred_Reimbursement_Method__c
+          : claim.Preferred_Compensation_Method__c;
+
+        switch on method {
           when 'EuroBonus Points' {
             recordTypeToCreate = RecordType.EBPoints;
           }
@@ -644,7 +649,12 @@ public without sharing class Settlements extends ApplicationDomain {
   ) {
     Map<Id, Settlement__c> settlementsByClaimId = new Map<Id, Settlement__c>();
 
-    Settlements settlementsToCreate = createFromClaim(cardClaims, null, uow);
+    Settlements settlementsToCreate = createFromClaim(
+      cardClaims,
+      null,
+      false,
+      uow
+    );
 
     for (Settlement__c s : settlementsToCreate.instanceRecords) {
       settlementsByClaimId.put(s.Claim__c, s);

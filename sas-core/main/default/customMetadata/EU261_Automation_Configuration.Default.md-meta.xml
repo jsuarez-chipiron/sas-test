@@ -15,6 +15,22 @@
         <value xsi:type="xsd:double">0.0</value>
     </values>
     <values>
+        <field>Expense_Limit_Accommodation__c</field>
+        <value xsi:type="xsd:double">0.0</value>
+    </values>
+    <values>
+        <field>Expense_Limit_Food__c</field>
+        <value xsi:type="xsd:double">0.0</value>
+    </values>
+    <values>
+        <field>Expense_Limit_Phone_Calls__c</field>
+        <value xsi:type="xsd:double">0.0</value>
+    </values>
+    <values>
+        <field>Expense_Limit_Transportation__c</field>
+        <value xsi:type="xsd:double">0.0</value>
+    </values>
+    <values>
         <field>Percentage_Sent_to_Control__c</field>
         <value xsi:type="xsd:double">20.0</value>
     </values>

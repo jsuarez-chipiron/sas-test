@@ -78,7 +78,7 @@ public without sharing class RedeemCompensationCardRequest {
     public String bankName;
     public String bankBic;
 
-    public Currencies.Code preferredCurrency;
+    public Money.CurrencyCode preferredCurrency;
     public Claim.CompensationType preferredCompensationMethod;
     public Claim.CompensationType preferredReimbursementMethod;
 
@@ -92,7 +92,7 @@ public without sharing class RedeemCompensationCardRequest {
       this.bankBic = jsonData.bankBic;
       this.preferredCurrency = String.isBlank(jsonData.preferredCurrency)
         ? null
-        : Currencies.CODE_PICKLIST_VALUE_TO_ENUM.get(
+        : Money.CURRENCY_PICKLIST_VALUE_TO_ENUM.get(
             jsonData.preferredCurrency.toUpperCase()
           );
       this.preferredCompensationMethod = JSON_TO_COMPENSATION_TYPE.get(

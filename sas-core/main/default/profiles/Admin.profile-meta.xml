@@ -41,7 +41,23 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>Currencies</apexClass>
+        <apexClass>Money</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>U</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ExchangeRate</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SettlementItem</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ClaimExpensesSelector</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -490,6 +506,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EU261_Automation_Configuration__mdt.Claim_Expense_Max_Amount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Expense_Limit_Accommodation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Expense_Limit_Food__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Expense_Limit_Phone_Calls__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Expense_Limit_Transportation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
