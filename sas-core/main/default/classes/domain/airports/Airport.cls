@@ -15,6 +15,7 @@ public without sharing class Airport extends AbstractSObjectWrapper {
   public class AirportsNotDefinedException extends Exception {
   }
 
+  @TestVisible
   private Airport() {
     this.underlyingSObject = new Airport__c();
   }

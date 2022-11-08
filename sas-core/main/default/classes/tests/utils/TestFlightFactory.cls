@@ -1,12 +1,13 @@
-public with sharing class FlightFactory {
+@IsTest
+public with sharing class TestFlightFactory {
   public static Flight create(
     String flightNumber,
     DateTime flightDateTime,
     String departure,
     String arrival
   ) {
-    Airport departureAirport = AirportFactory.getAirport(departure);
-    Airport arrivalAirport = AirportFactory.getAirport(arrival);
+    Airport departureAirport = TestAirportFixture.get(departure);
+    Airport arrivalAirport = TestAirportFixture.get(arrival);
 
     String tedsIdentifier =
       flightNumber +
@@ -15,12 +16,13 @@ public with sharing class FlightFactory {
       flightDateTime.month() +
       flightDateTime.day() +
       '-' +
-      departureAirport.tedsIdentifier +
+      departure +
       '-' +
-      arrivalAirport.tedsIdentifier;
+      arrival;
 
-    Flight f = new Flight(new Flight__c(TEDS_Identifier__c = tedsIdentifier));
-    f.id = Id.valueOf('001xa000003DIlo'); // TODO: fix
+    Flight f = new Flight();
+    f.id = fflib_IDGenerator.generate(Flight__c.getSObjectType());
+    f.tedsIdentifier = tedsIdentifier;
 
     f.departureAirportObject = departureAirport;
     f.arrivalAirportObject = arrivalAirport;
@@ -28,13 +30,13 @@ public with sharing class FlightFactory {
     f.operationalControlCenter = null; // TODO: implement
     f.aircraftRegistration = null; // TODO: implement
 
-    f.arrivalAirport = arrivalAirport.tedsIdentifier;
+    f.arrivalAirport = arrival;
     f.arrivalDelayedMinutes = 0;
     f.arrivalGate = 'A1';
     f.arrivalStatus = Flight.Status.Ontime;
     f.arrivalTerminal = '1';
 
-    f.departureAirport = departureAirport.tedsIdentifier;
+    f.departureAirport = departure;
     f.departureDelayedMinutes = 0;
     f.departureGate = 'A1';
     f.departureStatus = Flight.Status.Ontime;
@@ -54,6 +56,8 @@ public with sharing class FlightFactory {
     f.scheduledArrivalTimeLocal = String.valueOf(flightDateTime.addHours(2));
     f.scheduledDepartureTime = flightDateTime;
     f.scheduledDepartureTimeLocal = String.valueOf(flightDateTime);
+
+    f.irregularities = new List<FlightIrregularity>();
 
     return f;
   }

@@ -101,6 +101,7 @@ public without sharing class Flight extends AbstractSObjectWrapper {
     'ZH'
   };
 
+  @TestVisible
   private Flight() {
     this.underlyingSObject = new Flight__c();
   }

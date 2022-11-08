@@ -2603,18 +2603,13 @@ private class EU261Service_Test {
   @IsTest
   static void simpleEvaluation() {
     Datetime departure = DateTime.newInstance(2020, 10, 10, 1, 1, 1);
-    Datetime replacementDeparture = departure.addHours(4);
-    Flight f1 = FlightFactory.create('SK0013', departure, 'ARN', 'HEL');
-    Flight f2 = FlightFactory.create(
-      'SK0014',
-      replacementDeparture,
-      'ARN',
-      'HEL'
-    );
+    Datetime newDeparture = departure.addHours(4);
+    Flight f1 = TestFlightFactory.create('SK0013', departure, 'ARN', 'HEL');
+    Flight f2 = TestFlightFactory.create('SK0014', newDeparture, 'ARN', 'HEL');
     List<Flight> flights = new List<Flight>{ f1, f2 };
 
     List<FlightIrregularity> fis = new List<FlightIrregularity>{
-      IrregularityFactory.createCancellation(f1)
+      TestIrregularityFactory.createCancellation(f1)
     };
 
     fis[0].cancellationTime = departure.addDays(-1);
@@ -2624,19 +2619,21 @@ private class EU261Service_Test {
     cc.firstname = 'Test';
     cc.lastName = 'Testsson';
 
-    Claim c = new Claim();
+    Claim c = TestClaimFactory.create();
     c.customers = new List<ClaimCustomer>{ cc };
     c.flightNumber = 'SK0013';
     c.departureDate = departure.date();
     c.category = Claim.Category.FlightDisruptions;
     c.type = Claim.Type.FlightCancellation;
+    c.recordType = Claim.RecordType.CustomerClaim;
 
-    Booking b = BookingFactory.createValidForClaim(c);
+    Booking b = TestBookingFactory.createValidForClaim(c);
+    b.type = Booking.Type.RoundTrip;
 
-    Passenger extraPassenger = PassengerFactory.create(b);
+    Passenger extraPassenger = TestPassengerFactory.create(b);
     b.passengers.add(extraPassenger); // Total 2 passengers
 
-    b.segments = SegmentFactory.createFromBookingFlights(b, flights);
+    b.segments = TestSegmentFactory.createFromBookingFlights(b, flights);
 
     EU261Claim claimToEvaluate = new EU261Claim(
       c,
@@ -2649,6 +2646,11 @@ private class EU261Service_Test {
     System.assertEquals(
       result.verdict,
       Claim.EU261HandlingStatus.EligibleForCompensation,
+      'Simple one way claim should be eligible for compensation.'
+    );
+    System.assertEquals(
+      result.compensationPerCustomer.values()[0],
+      250,
       'Simple one way claim should be eligible for compensation.'
     );
   }

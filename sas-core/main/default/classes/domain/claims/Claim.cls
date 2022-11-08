@@ -1,4 +1,5 @@
 public without sharing class Claim extends AbstractSObjectWrapper {
+  public Datetime createdDate;
   public RecordType recordType;
   public LIA_Claim__c underlyingSObject { get; private set; }
 
@@ -133,6 +134,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
 
   public Claim(LIA_Claim__c c) {
     super(c);
+    this.createdDate = c.CreatedDate;
+
     this.underlyingSObject = c;
     this.containsDetailObjectData = false;
 

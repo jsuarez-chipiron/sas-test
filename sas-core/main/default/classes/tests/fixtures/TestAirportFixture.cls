@@ -1,5 +1,6 @@
-public with sharing class AirportFactory {
-  public class FactoryException extends Exception {
+@IsTest
+public with sharing class TestAirportFixture {
+  public class MissingAirportException extends Exception {
   }
 
   private static Map<String, Airport__c> codeToAirport = new Map<String, Airport__c>{
@@ -41,10 +42,10 @@ public with sharing class AirportFactory {
     )
   };
 
-  public static Airport getAirport(String IATACode) {
+  public static Airport get(String IATACode) {
     Airport__c a = codeToAirport.get(IATACode);
     if (a == null) {
-      throw new FactoryException('Airport not yet added.');
+      throw new MissingAirportException('Airport not yet added.');
     }
     return new Airport(a);
   }

@@ -1,4 +1,5 @@
-public with sharing class SegmentFactory {
+@IsTest
+public with sharing class TestSegmentFactory {
   public static Segment createFromBookingFlightPassenger(
     Booking b,
     Flight f,
@@ -7,7 +8,7 @@ public with sharing class SegmentFactory {
     Segment s = new Segment(new Segment__c());
     s.flight = f;
     s.flightId = f.id;
-    s.id = Id.valueOf('001xa000003DIlo'); // TODO: fix;
+    s.id = fflib_IDGenerator.generate(Segment__c.getSObjectType());
 
     s.baggageQuantity = 0;
     s.bookingClass = 'A';
@@ -23,7 +24,15 @@ public with sharing class SegmentFactory {
     s.specialServiceRequests = '';
     s.ticketNumber = '1234567890';
     s.ticketType = '';
+
     s.tripType = 'Outbound';
+    if (f.irregularities != null) {
+      for (FlightIrregularity fi : f.irregularities) {
+        if (fi.isCancellation()) {
+          s.tripType = 'Cancelled';
+        }
+      }
+    }
 
     return s;
   }

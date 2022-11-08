@@ -1,16 +1,6 @@
-public with sharing class BookingFactory {
-  public class FactoryException extends Exception {
-  }
-
-  private static List<Claim.Type> supportedClaimTypes = new List<Claim.Type>{
-    Claim.Type.FlightCancellation
-  };
-
+@IsTest
+public with sharing class TestBookingFactory {
   public static Booking createValidForClaim(Claim c) {
-    if (!supportedClaimTypes.contains(c.type)) {
-      throw new FactoryException('Claim type not supported');
-    }
-
     Booking b = create();
 
     b.bookingReference = c.bookingReference;
@@ -23,7 +13,7 @@ public with sharing class BookingFactory {
 
     if (c.customers != null) {
       for (ClaimCustomer cc : c.customers) {
-        b.passengers.add(PassengerFactory.create(b, cc));
+        b.passengers.add(TestPassengerFactory.create(b, cc));
       }
     }
 
@@ -31,9 +21,9 @@ public with sharing class BookingFactory {
   }
 
   public static Booking create() {
-    Booking b = new Booking(new Booking__c());
+    Booking b = new Booking();
 
-    b.id = Id.valueOf('001xa000003DIlo'); // TODO: fix;
+    b.id = fflib_IDGenerator.generate(Booking__c.getSObjectType());
     b.bookingReference = '000000';
     b.createdAtTravelOfficeId = 'STOSK08RV';
     b.isCancelled = false;

@@ -33,14 +33,4 @@ public without sharing class StringUtils {
 
     return s.replaceAll('[\\s\u00A0\u200B-\u200D\uFEFF]+', '');
   }
-
-  /**
-   * Adds zeroes to the beginning of "toPad" until it is "length" caracters.
-   */
-  public static String padWithZeros(String toPad, Integer length) {
-    while (toPad.length() < length) {
-      toPad = '0' + toPad;
-    }
-    return toPad;
-  }
 }

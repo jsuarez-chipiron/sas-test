@@ -1,10 +1,13 @@
-public with sharing class IrregularityFactory {
+@IsTest
+public with sharing class TestIrregularityFactory {
   public static FlightIrregularity createCancellation(Flight f) {
     FlightIrregularity fi = new FlightIrregularity(
       new FlightIrregularities__c()
     );
 
-    fi.id = Id.valueOf('001xa000003DIlo'); // TODO: fix;
+    fi.id = fflib_IDGenerator.generate(
+      FlightIrregularities__c.getSObjectType()
+    ); 
     fi.cancellationTime = DateTime.newInstance(2020, 1, 1, 1, 1, 1);
     fi.code = 'TECH';
     fi.description = null;
@@ -22,7 +25,9 @@ public with sharing class IrregularityFactory {
       new FlightIrregularities__c()
     );
 
-    fi.id = Id.valueOf('001xa000003DIlo'); // TODO: fix;
+    fi.id = fflib_IDGenerator.generate(
+      FlightIrregularities__c.getSObjectType()
+    ); 
     fi.cancellationTime = DateTime.newInstance(2020, 1, 1, 1, 1, 1);
     fi.code = 'FA';
     fi.description = null;
