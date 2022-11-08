@@ -64,6 +64,15 @@ export default class CaseSimilarCases extends NavigationMixin(
           fieldName: "classNameEmail"
         }
       }
+    },
+    {
+      label: "Department",
+      fieldName: "department",
+      cellAttributes: {
+        class: {
+          fieldName: "classNameDepartment"
+        }
+      }
     }
   ];
 
@@ -131,7 +140,14 @@ export default class CaseSimilarCases extends NavigationMixin(
           ? "slds-text-color_success"
           : "";
 
-      const fields = ["EbNumber", "email", "flight", "pir", "bookingReference"];
+      const fields = [
+        "EbNumber",
+        "email",
+        "flight",
+        "pir",
+        "bookingReference",
+        "department"
+      ];
 
       const getNumMatches = (caseData) =>
         fields.reduce(
@@ -181,7 +197,8 @@ export default class CaseSimilarCases extends NavigationMixin(
             flight: flightId,
             owner: caseWithClaim.Owner.Name,
             pir: caseWithClaim.Claims__r[0].PIR__c,
-            status: caseWithClaim.Status
+            status: caseWithClaim.Status,
+            department: caseWithClaim.Department__c
           };
         }
       });
@@ -199,6 +216,7 @@ export default class CaseSimilarCases extends NavigationMixin(
           classNameFlight: getClassName(parsedCase, "flight"),
           classNamePir: getClassName(parsedCase, "pir"),
           classNamePnr: getClassName(parsedCase, "bookingReference"),
+          classNameDepartment: getClassName(parsedCase, "department"),
           numberOfMatches: getNumMatches(parsedCase),
           matchingFields: getMatchingFields(parsedCase)
         }));
