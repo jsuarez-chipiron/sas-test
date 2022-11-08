@@ -5,7 +5,7 @@
         <name>Assign_StatusLiabilityCases</name>
         <label>Assign StatusLiability</label>
         <locationX>314</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>statusToAssign</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Assign_StatusNonLiabilityCases</name>
         <label>Assign StatusNonLiability</label>
         <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>statusToAssign</assignToReference>
             <operator>Assign</operator>
@@ -93,7 +93,7 @@
         <name>Is_claim_result_necessary_for_updating_case_status</name>
         <label>Is claim result necessary for updating case status?</label>
         <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Assign_StatusLiabilityCases</targetReference>
         </defaultConnector>
@@ -129,10 +129,57 @@
         </rules>
     </decisions>
     <decisions>
+        <description>It validates the latest case record type and department of the case before making a status update</description>
+        <name>Is_the_case_record_type_and_department_valid</name>
+        <label>Is the case record type and department valid?</label>
+        <locationX>858</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Department_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Invalid case record type and department</defaultConnectorLabel>
+        <rules>
+            <name>Yes_it_is_Customer_Claim_or_Claim</name>
+            <conditionLogic>(1 AND 2) OR (3 AND 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Claim</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.Department__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Claim</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Claim</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.Department__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Liability</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_the_status_valid_for_update</targetReference>
+            </connector>
+            <label>Yes, it is Customer Claim or Claim</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_the_department_Liability</name>
         <label>Is the department Liability?</label>
         <locationX>380</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>UpdateStatusNonLiabilityCases</targetReference>
         </defaultConnector>
@@ -157,11 +204,11 @@
         <name>Is_the_status_valid_for_update</name>
         <label>Is the status valid for update?</label>
         <locationX>611</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Error</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>No, Invalid status</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
             <conditionLogic>or</conditionLogic>
@@ -227,6 +274,7 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>CASE Update Status {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CASE Update Status</label>
     <processMetadataValues>
@@ -252,7 +300,7 @@
         <name>Get_Liability_Claim</name>
         <label>Get Liability Claim</label>
         <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_claim_result_necessary_for_updating_case_status</targetReference>
@@ -272,11 +320,11 @@
     <recordLookups>
         <name>GetCurrentCaseInformation</name>
         <label>GetCurrentCaseInformation</label>
-        <locationX>611</locationX>
+        <locationX>858</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_the_status_valid_for_update</targetReference>
+            <targetReference>Is_the_case_record_type_and_department_valid</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -294,7 +342,7 @@
         <name>UpdateStatus</name>
         <label>UpdateStatus</label>
         <locationX>380</locationX>
-        <locationY>1310</locationY>
+        <locationY>1430</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -312,16 +360,32 @@
         <object>Case</object>
     </recordUpdates>
     <screens>
-        <name>Error</name>
-        <label>Error</label>
-        <locationX>842</locationX>
+        <name>Department_Error</name>
+        <label>Department Error</label>
+        <locationX>1106</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
+            <name>Department_Error_Message</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Please  press &quot;Finish&quot; to refresh the current case to see latest case information before updating the case&apos;s status&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error</name>
+        <label>Error</label>
+        <locationX>842</locationX>
+        <locationY>518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
             <name>InvalidateStatusMessage</name>
-            <fieldText>&lt;p&gt;The current stats,{!GetCurrentCaseInformation.Status}, is not valid to make updated&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;The current status,{!GetCurrentCaseInformation.Status}, is not valid to make an update&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -331,7 +395,7 @@
         <name>UpdateStatusLiabilityCases</name>
         <label>Update Status Liability Cases</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -360,7 +424,7 @@
         <name>UpdateStatusNonLiabilityCases</name>
         <label>Update Status Non Liability Cases</label>
         <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -389,7 +453,7 @@
         <name>Validation_Error</name>
         <label>Validation Error</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -402,7 +466,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>485</locationX>
+        <locationX>732</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetCurrentCaseInformation</targetReference>
