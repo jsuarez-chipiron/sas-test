@@ -80,7 +80,7 @@ public without sharing class ContentVersions extends ApplicationDomain {
         insert toInsert;
       } catch (DmlException e) {
         C_Log.log(
-          C_Log.Severity.Info,
+          C_Log.Severity.Error,
           e.getMessage(),
           null,
           'ContentVersions',
