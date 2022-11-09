@@ -47,8 +47,7 @@ global class FCS_EmailPublisherAction implements QuickAction.QuickActionDefaults
         cse != null &&
         (cse.IsRedirected__c ||
         cse.IsEscalated__c ||
-        cse.Origin == 'Manual' ||
-        cse.Origin == 'Manual - Legal Case Diary Migration' ||
+        cse.Origin?.startsWith('Manual') ||
         cse.Origin == 'Internal - New Refund Request Form' ||
         cse.Origin?.contains('Form - ')) &&
         (cse.Department__c != null &&
