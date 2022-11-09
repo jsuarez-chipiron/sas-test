@@ -104,6 +104,10 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     this.durationMinutes == null)));
   }
 
+  public Boolean isArrivalCancellation() {
+    return this.type == 'Cancellation (arrival)';
+  }
+
   public Boolean isWithinSASControl() {
     Boolean SASIsResponsible = codeToSASIsResponsible.get(this.code);
     if (SASIsResponsible == null) {

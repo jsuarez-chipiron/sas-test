@@ -681,7 +681,10 @@ public class RacerResponseHandlersTest {
       Cost_Center__c = '90801',
       Customer_Name__c = 'Test Testsson',
       Settlement__c = settlement.Id,
-      Status__c = SettlementItems.STATUS_SENT_TO_RACER
+      Status__c = SettlementItems.STATUS_SENT_TO_RACER,
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.DefaultRecordType
+      )
     );
 
     Settlement_Item__c item2 = new Settlement_Item__c(
@@ -692,7 +695,10 @@ public class RacerResponseHandlersTest {
       Cost_Center__c = '90801',
       Customer_Name__c = 'Test Testsson',
       Settlement__c = settlement.Id,
-      Status__c = SettlementItems.STATUS_SENT_TO_RACER
+      Status__c = SettlementItems.STATUS_SENT_TO_RACER,
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.DefaultRecordType
+      )
     );
 
     Settlement_Item__c item3 = new Settlement_Item__c(
@@ -703,7 +709,10 @@ public class RacerResponseHandlersTest {
       Cost_Center__c = '90801',
       Customer_Name__c = 'Test Testsson',
       Settlement__c = settlement.Id,
-      Status__c = SettlementItems.STATUS_SENT_TO_RACER
+      Status__c = SettlementItems.STATUS_SENT_TO_RACER,
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.DefaultRecordType
+      )
     );
 
     insert new List<SObject>{ item1, item2, item3 };
@@ -826,7 +835,10 @@ public class RacerResponseHandlersTest {
       Cost_Center__c = '90801',
       Customer_Name__c = 'Test Testsson',
       Settlement__c = relevantSettlement1.Id,
-      Status__c = SettlementItems.STATUS_PENDING_L1_CONFIRMATION
+      Status__c = SettlementItems.STATUS_PENDING_L1_CONFIRMATION,
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.DefaultRecordType
+      )
     );
 
     Settlement_Item__c item2 = new Settlement_Item__c(
@@ -836,7 +848,10 @@ public class RacerResponseHandlersTest {
       Cost_Center__c = '90801',
       Customer_Name__c = 'Test Testsson',
       Settlement__c = relevantSettlement2.Id,
-      Status__c = SettlementItems.STATUS_PENDING_L1_CONFIRMATION
+      Status__c = SettlementItems.STATUS_PENDING_L1_CONFIRMATION,
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.DefaultRecordType
+      )
     );
 
     Settlement_Item__c item3 = new Settlement_Item__c(
@@ -846,7 +861,10 @@ public class RacerResponseHandlersTest {
       Cost_Center__c = '90801',
       Customer_Name__c = 'Test Testsson',
       Settlement__c = relevantSettlement2.Id,
-      Status__c = SettlementItems.STATUS_PENDING_L1_CONFIRMATION
+      Status__c = SettlementItems.STATUS_PENDING_L1_CONFIRMATION,
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.DefaultRecordType
+      )
     );
 
     Settlement_Item__c item4 = new Settlement_Item__c(
@@ -856,7 +874,10 @@ public class RacerResponseHandlersTest {
       Cost_Center__c = '90801',
       Customer_Name__c = 'Test Testsson',
       Settlement__c = irrelevantSettlement.Id,
-      Status__c = SettlementItems.STATUS_PENDING_L1_CONFIRMATION
+      Status__c = SettlementItems.STATUS_PENDING_L1_CONFIRMATION,
+      RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+        SettlementItem.RecordType.DefaultRecordType
+      )
     );
 
     insert new List<SObject>{ item1, item2, item3, item4 };

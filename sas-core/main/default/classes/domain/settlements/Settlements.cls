@@ -102,9 +102,9 @@ public without sharing class Settlements extends ApplicationDomain {
   public static final String COST_ACCOUNT_EU261_COMPENSATION = '6727';
   public static final String COST_ACCOUNT_EU261_REIMBURSEMENT = '6738';
 
-  private static final Map<SettlementItems.RecordType, String> COST_CENTER_DEBITS = new Map<SettlementItems.RecordType, String>{
-    SettlementItems.RecordType.DefaultRecordType => '90801',
-    SettlementItems.RecordType.Emergency => '71470'
+  private static final Map<SettlementItem.RecordType, String> COST_CENTER_DEBITS = new Map<SettlementItem.RecordType, String>{
+    SettlementItem.RecordType.DefaultRecordType => '90801',
+    SettlementItem.RecordType.Emergency => '71470'
   };
 
   public static final Decimal CONVERSION_RATE_EUR_TO_EB_POINTS = 100;
@@ -475,17 +475,17 @@ public without sharing class Settlements extends ApplicationDomain {
 
         if (isEmergencyClaim) {
           item.Cost_Center__c = COST_CENTER_DEBITS.get(
-            SettlementItems.RecordType.Emergency
+            SettlementItem.RecordType.Emergency
           );
-          item.RecordTypeId = SettlementItems.getRecordTypeId(
-            SettlementItems.RecordType.Emergency
+          item.RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+            SettlementItem.RecordType.Emergency
           );
         } else {
           item.Cost_Center__c = COST_CENTER_DEBITS.get(
-            SettlementItems.RecordType.DefaultRecordType
+            SettlementItem.RecordType.DefaultRecordType
           );
-          item.RecordTypeId = SettlementItems.getRecordTypeId(
-            SettlementItems.RecordType.DefaultRecordType
+          item.RecordTypeId = SettlementItem.getRecordTypeIdByEnum(
+            SettlementItem.RecordType.DefaultRecordType
           );
         }
 
@@ -615,6 +615,7 @@ public without sharing class Settlements extends ApplicationDomain {
             Settlements.RecordType.Voucher
           );
           settlementToCreate.Voucher_Email__c = claim.Contact_Email__c;
+          settlementToCreate.Currency__c = 'EUR'; // Usually issued in euros so we default to that.
         }
       }
       uow.registerNew(settlementToCreate);
@@ -998,7 +999,8 @@ public without sharing class Settlements extends ApplicationDomain {
           try {
             bankAccountNumberIsValid = BankAccountUtils.validateIBAN(
               s.Bank_Account_Number__c,
-              s.Bank_Country__c
+              s.Bank_Country__c,
+              s.BIC_Swift__c
             );
           } catch (Exception e) {
             errorMessages.add(
@@ -1012,6 +1014,16 @@ public without sharing class Settlements extends ApplicationDomain {
           if (!BankAccountUtils.validateBIC(s.BIC_Swift__c)) {
             errorMessages.add(
               'BIC number should be formatted as: XXXXXXYY or XXXXXXYYYYY (X\'s are letters, Y\'s are letters or numbers).'
+            );
+          }
+          if (
+            !BankAccountUtils.validateAddress(
+              s.Address_line_1__c,
+              s.Address_line_2__c
+            )
+          ) {
+            errorMessages.add(
+              'Address should not contain special character like (´,´,!,€,+,?)).'
             );
           }
         }

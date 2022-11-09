@@ -76,7 +76,17 @@ public without sharing class ContentVersions extends ApplicationDomain {
     }
 
     if (!toInsert.isEmpty()) {
-      insert toInsert;
+      try {
+        insert toInsert;
+      } catch (DmlException e) {
+        C_Log.log(
+          C_Log.Severity.Error,
+          e.getMessage(),
+          null,
+          'ContentVersions',
+          null
+        );
+      }
     }
   }
 

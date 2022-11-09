@@ -17,7 +17,11 @@ private class BankAccountUtils_Test {
     for (List<String> bankDetails : invalidIBANList) {
       try {
         results.add(
-          BankAccountUtils.validateIBAN(bankDetails[0], bankDetails[1])
+          BankAccountUtils.validateIBAN(
+            bankDetails[0],
+            bankDetails[1],
+            'AXISINBB002'
+          )
         );
       } catch (Exception e) {
         results.add(false);
@@ -112,7 +116,11 @@ private class BankAccountUtils_Test {
     for (List<String> bankDetails : validIBANList) {
       try {
         results.add(
-          BankAccountUtils.validateIBAN(bankDetails[0], bankDetails[1])
+          BankAccountUtils.validateIBAN(
+            bankDetails[0],
+            bankDetails[1],
+            'AXISINBB002'
+          )
         );
       } catch (Exception e) {
         results.add(false);
@@ -131,6 +139,9 @@ private class BankAccountUtils_Test {
   static void shouldInvalidateABAAndReturnFalse() {
     // Given
     List<String> invalidABAList = new List<String>{
+      '123ABA123456789',
+      '12345678ABA0111030931',
+      'ABA123456789',
       '123ABA0111030330',
       '123ABA0670148320',
       '123ABA2112744600',
@@ -145,12 +156,18 @@ private class BankAccountUtils_Test {
       '123ABA0116000430',
       '123ABA011103093ABA2',
       '01110309',
-      '123ABA123ABA0111030930'
+      '123ABA123ABA0111030930',
+      '123456789ABA123456789',
+      'N/A12347ABA123456789',
+      'NAABA123456789',
+      'AXISINBB002ABA123456789'
     };
     // When
     List<Boolean> results = new List<Boolean>();
     for (String num : invalidABAList) {
-      results.add(BankAccountUtils.validateIBAN(num, 'United States'));
+      results.add(
+        BankAccountUtils.validateIBAN(num, 'United States', 'AXISINBB002')
+      );
     }
 
     // Then
@@ -165,25 +182,27 @@ private class BankAccountUtils_Test {
   static void shouldValidateABAAndReturnTrue() {
     // Given
     List<String> validABAList = new List<String>{
-      '123ABA011103093',
-      '123ABA067014822',
-      '123ABA211274450',
-      '123ABA211370545',
-      '123ABA054001725',
-      '123ABA211370545',
-      '123ABA011400071',
-      '123ABA031201360',
-      '123ABA026013673',
-      '123ABA021302567',
-      '123ABA053902197',
-      '123ABA036001808',
-      '123ABA011600033'
+      '123456ABA011103093',
+      '123456ABA067014822',
+      '123456ABA211274450',
+      '123456ABA211370545',
+      '123456ABA054001725',
+      '123456ABA211370545',
+      '123456ABA011400071',
+      '123456ABA031201360',
+      '123456ABA026013673',
+      '123456ABA021302567',
+      '123456ABA053902197',
+      '123456ABA036001808',
+      '123456ABA011600033'
     };
 
     // When
     List<Boolean> results = new List<Boolean>();
     for (String num : validABAList) {
-      results.add(BankAccountUtils.validateIBAN(num, 'United States'));
+      results.add(
+        BankAccountUtils.validateIBAN(num, 'United States', 'AXISINBB002')
+      );
     }
 
     // Then
@@ -212,7 +231,7 @@ private class BankAccountUtils_Test {
     // When
     List<Boolean> results = new List<Boolean>();
     for (String num : randomNumbers) {
-      results.add(BankAccountUtils.validateIBAN(num, 'Libya')); // Libya because of the last entry
+      results.add(BankAccountUtils.validateIBAN(num, 'Libya', 'AXISINBB002')); // Libya because of the last entry
     }
 
     // Then
@@ -294,6 +313,54 @@ private class BankAccountUtils_Test {
       System.assert(
         res,
         'The function invalidated (returned false) a valid BIC number'
+      );
+    }
+  }
+
+  @IsTest
+  static void shouldInValidateAddressAndReturnFalse() {
+    // Given
+    List<List<String>> inValidAddList = new List<List<String>>{
+      new List<String>{ '123 N´d kings trollhattan', 'Albania' },
+      new List<String>{ '123 N.? trollhattan', 'Sweden ' },
+      new List<String>{ '123 N. trollhattan', 'Sweden ??' },
+      new List<String>{ '34c´gh', '' }
+    };
+
+    // When
+    List<Boolean> results = new List<Boolean>();
+    for (List<String> addr : inValidAddList) {
+      results.add(BankAccountUtils.validateAddress(addr[0], addr[1]));
+    }
+
+    // Then
+    for (Boolean res : results) {
+      System.assert(
+        !res,
+        'The function invalidated (returned true) Invalid Address'
+      );
+    }
+  }
+
+  @IsTest
+  static void shouldValidateAddressAndReturnTrue() {
+    // Given
+    List<List<String>> validAddList = new List<List<String>>{
+      new List<String>{ '123 N kings trollhattan', 'Albania' },
+      new List<String>{ '123 N. trollhattan', 'Albania121' }
+    };
+
+    // When
+    List<Boolean> results = new List<Boolean>();
+    for (List<String> addr : validAddList) {
+      results.add(BankAccountUtils.validateAddress(addr[0], addr[1]));
+    }
+
+    // Then
+    for (Boolean res : results) {
+      System.assert(
+        res,
+        'The function invalidated (returned false) a valid Address'
       );
     }
   }

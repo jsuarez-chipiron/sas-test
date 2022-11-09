@@ -5326,6 +5326,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Manual - NO Refunds Migration</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>
@@ -5783,6 +5787,10 @@
         </values>
         <values>
             <fullName>Settlement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sitel CS Norway Refunds</fullName>
             <default>false</default>
         </values>
         <values>

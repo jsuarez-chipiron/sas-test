@@ -156,12 +156,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>claimsDuplicateCaseInEDW</componentName>
-                <identifier>claimsDuplicateCaseInEDW</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>sidebartabs</value>

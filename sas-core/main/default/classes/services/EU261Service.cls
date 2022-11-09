@@ -1,12 +1,6 @@
 /**
- * @param claim a LIA_Claim__c to be automated
- * @param booking a BookingJSON associated with the claim
  *
- * Service class which handles case/claim automation
- * Contains all information needed (not currently) to automate a claim.
- *
- * WARNING: The automation is currently built with the assumption that there is exactly one flight per claim.
- * This can relatively easily be changed, but keep it in mind before allowing more than one flight in a claim.
+ * An instance of this class is a single (batch) run of EU261 automation.
  */
 public without sharing class EU261Service {
   private static final SettlementItem.CostAccount COMPENSATION_COST_ACCOUNT = SettlementItem.CostAccount.CA6727;
@@ -29,6 +23,9 @@ public without sharing class EU261Service {
 
   @TestVisible
   private Boolean enabledRejections;
+
+  private Map<Id, Case> parentCasesById = new Map<Id, Case>();
+  private Map<Id, Settlement__c> existingSettlementsByClaimId = new Map<Id, Settlement__c>();
 
   public static EU261Service newInstance() {
     return (EU261Service) SAS_Service_Application.Service.newInstance(
@@ -142,9 +139,7 @@ public without sharing class EU261Service {
    *
    * @return a list of ClaimWithCompensationDetails containing all information necessary to automate the claim.
    */
-  private static List<EU261Claim> gatherAllNecessaryInformation(
-    Set<Id> claimIds
-  ) {
+  private List<EU261Claim> gatherAllNecessaryInformation(Set<Id> claimIds) {
     // 1. Get claims
     ClaimsSelector claimsSel = ClaimsSelector.newInstance();
     List<Claim> claims = new List<Claim>();
@@ -182,6 +177,10 @@ public without sharing class EU261Service {
     Map<Id, List<CaseToBooking__c>> caseIdToCaseToBookings = new Map<Id, List<CaseToBooking__c>>();
     Set<Id> allBookingIds = new Set<Id>();
 
+    for (Case c : CasesSelector.newInstance().selectById(allCaseIdsInClaims)) {
+      parentCasesById.put(c.Id, c);
+    }
+
     if (ctbs != null) {
       for (CaseToBooking__c c : ctbs) {
         if (caseIdToCaseToBookings.get(c.Case__c) == null) {
@@ -195,6 +194,24 @@ public without sharing class EU261Service {
 
         allBookingIds.add(c.Booking__c);
       }
+    }
+
+    List<Settlement__c> allSettlementsForClaims = SettlementsSelector.newInstance()
+      .selectByClaimId(claimIds);
+    if (
+      enabledSettlements &&
+      allSettlementsForClaims != null &&
+      allSettlementsForClaims.size() > 0
+    ) {
+      //
+      List<String> claimsHavingSettlements = new List<String>();
+      for (Settlement__c s : allSettlementsForClaims) {
+        claimsHavingSettlements.add(s.Claim__c);
+      }
+      throw new AutomationException(
+        'Found settlements for claims: ' +
+        String.join(claimsHavingSettlements, ', ')
+      );
     }
 
     List<Booking__c> allBookingsFoundInClaims = BookingsSelector.newInstance()
@@ -241,7 +258,7 @@ public without sharing class EU261Service {
     );
   }
 
-  private static List<EU261Claim> constructClaimWithCompensationDetails(
+  private List<EU261Claim> constructClaimWithCompensationDetails(
     List<Claim> claims,
     Map<String, Decimal> countryToClaimSubmissionTimeLimit,
     List<Claim> otherClaimsWithMatchingPnrs,
@@ -326,9 +343,6 @@ public without sharing class EU261Service {
         }
       }
 
-      Boolean foundMultipleMatchingBookings =
-        booking.instanceRecords.size() > 1;
-
       for (Booking b : booking.objects) {
         for (Segment s : b.segments) {
           s.flight.irregularities = claimSpecificIrregularities.get(
@@ -350,7 +364,7 @@ public without sharing class EU261Service {
     return toReturn;
   }
 
-  private static void storeClaimDecision(
+  private void storeClaimDecision(
     fflib_ISObjectUnitOfWork uow,
     List<EU261Claim> claimsToAutomate
   ) {
@@ -474,7 +488,7 @@ public without sharing class EU261Service {
    *
    * @return A map from claim id to settlement for that claim.
    */
-  private static Map<Id, Settlement__c> createSettlementsForClaims(
+  private Map<Id, Settlement__c> createSettlementsForClaims(
     List<EU261Claim> claimsToPayOut
   ) {
     Map<Id, List<SettlementItem>> settlementsItemsBySettlementId = new Map<Id, List<SettlementItem>>();
@@ -518,6 +532,7 @@ public without sharing class EU261Service {
         si.customerName = customer.fullName;
         si.costAccount = COMPENSATION_COST_ACCOUNT;
         si.comments = 'Automatic EU261 compensation';
+        si.recordType = SettlementItem.RecordType.DefaultRecordType;
         settlementsItemsForClaim.add(si);
 
         switch on c.claimObj.preferredCompensationMethod {
@@ -533,14 +548,20 @@ public without sharing class EU261Service {
           }
           when else {
             // Default to monetary
-            Exchange_Rate__c rate = exchangeRatesByToCurrency.get(
-              settlementForClaim.Currency__c
-            );
-            if (rate == null) {
-              throw new AutomationException('Cannot find exchange rate.');
+            Decimal rate = 1.0; // EUR-EUR
+            if (settlementForClaim.Currency__c != 'EUR') {
+              Exchange_Rate__c exchangeRateObj = exchangeRatesByToCurrency.get(
+                settlementForClaim.Currency__c
+              );
+              if (exchangeRateObj == null) {
+                throw new AutomationException('Cannot find exchange rate.');
+              } else {
+                rate = exchangeRateObj.Rate__c;
+              }
             }
+
             Decimal amount =
-              c.decision.compensationPerCustomer.get(customer) * rate.Rate__c;
+              c.decision.compensationPerCustomer.get(customer) * rate;
             si.amount = amount.setScale(0);
           }
         }
@@ -580,20 +601,8 @@ public without sharing class EU261Service {
     Map<Id, Settlement__c> settlementsByClaimId
   ) {
     List<EmailMessage> toReturn = new List<EmailMessage>();
-    Set<Id> parentCaseIds = new Set<Id>();
-    for (EU261Claim c : claimsToApproval) {
-      parentCaseIds.add(c.claimObj.parentCaseId);
-    }
-    List<Case> parentCases = CasesSelector.newInstance()
-      .selectById(parentCaseIds);
+
     for (EU261Claim cl : claimsToApproval) {
-      Case parentCase;
-      for (Case c : parentCases) {
-        if (c.Id == cl.claimObj.parentCaseId) {
-          parentCase = c;
-          break;
-        }
-      }
       EmailMessage draftEmailForClaim = EmailMessages.createEmailMessageFromTemplate(
         AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME,
         cl.claimObj.parentCaseId
@@ -615,7 +624,12 @@ public without sharing class EU261Service {
         );
       }
 
+      Case parentCase = parentCasesById.get(cl.claimObj.parentCaseId);
       draftEmailForClaim.ToAddress = parentCase.SuppliedEmail;
+      draftEmailForClaim.Subject =
+        'Your case ' +
+        parentCase.CaseNumber +
+        ' has been processed';
 
       toReturn.add(draftEmailForClaim);
     }
@@ -635,6 +649,11 @@ public without sharing class EU261Service {
       );
 
       emailToSend.setReplyTo(AUTOMATION_REPLY_TO_ADDRESS);
+      emailToSend.setSubject(
+        'Your case ' +
+        parentCasesById.get(c.claimObj.parentCaseId).CaseNumber +
+        ' has been processed'
+      );
 
       emailsByClaimId.put(c.claimObj.id, emailToSend);
     }
@@ -670,6 +689,11 @@ public without sharing class EU261Service {
       }
 
       emailToSend.setReplyTo(AUTOMATION_REPLY_TO_ADDRESS);
+      emailToSend.setSubject(
+        'Your case ' +
+        parentCasesById.get(c.claimObj.parentCaseId).CaseNumber +
+        ' has been processed'
+      );
 
       emailsByClaimId.put(c.claimObj.id, emailToSend);
     }

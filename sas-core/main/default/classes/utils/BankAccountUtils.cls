@@ -38,9 +38,14 @@ public without sharing class BankAccountUtils {
    * If the bank country DOES require IBAN or ABA the function validates it and returns true if it is valid and false if it is invalid.
    * @param accountNumber A String containing the bank account number
    * @param bankCountry A String containing the bank country name
+   * @param bicNumber The Bank Identification Code
    * @return true or false depending on if the number is valid. If the bank country does not use IBAN true is returned
    */
-  public static Boolean validateIBAN(String accountNumber, String bankCountry) {
+  public static Boolean validateIBAN(
+    String accountNumber,
+    String bankCountry,
+    String bicNumber
+  ) {
     if (accountNumber.length() == 0) {
       // If the bank account field is blank
       return false;
@@ -48,7 +53,7 @@ public without sharing class BankAccountUtils {
 
     if (bankCountry == 'United States') {
       // Should have the format: "{Bankaccount}ABA{BankRoutingNumber}" (according to ClaimService.cls)
-      if (isValidUSAccountNumber(accountNumber)) {
+      if (isValidUSAccountNumber(accountNumber, bicNumber)) {
         return true;
       } else {
         return false;
@@ -128,21 +133,36 @@ public without sharing class BankAccountUtils {
     return true; // Default case
   }
 
-  private static Boolean isValidUSAccountNumber(String accNr) {
-    if (!accNr.contains('ABA')) {
+  private static Boolean isValidUSAccountNumber(
+    String fullAccountNumber,
+    String bicNr
+  ) {
+    if (!fullAccountNumber.contains('ABA')) {
       return false;
     }
 
-    List<String> separate = accNr.split('ABA');
+    List<String> separate = fullAccountNumber.split('ABA');
     if (separate.size() != 2) {
       return false;
     }
 
     String routingNumber = separate[1];
-    if (routingNumber.length() == 9 & routingNumber.isNumeric()) {
-      return true;
+    String accountNumber = separate[0];
+    if (
+      routingNumber.length() == 9 &
+      routingNumber.isNumeric() &
+      routingNumber != accountNumber
+    ) {
+      if (
+        accountNumber.length() > 5 &
+        accountNumber.length() < 18 &
+        accountNumber.isAlphanumeric()
+      ) {
+        if (bicNr != accountNumber) {
+          return true;
+        }
+      }
     }
-
     return false;
   }
 
@@ -169,5 +189,15 @@ public without sharing class BankAccountUtils {
     }
 
     return false;
+  }
+  public static Boolean validateAddress(String addr1, String addr2) {
+    String address = addr1 + ' ' + addr2;
+    List<String> invalidChar = new List<String>{ '´', '`', '?', '!', '+' };
+    for (String str : InvalidChar) {
+      if (address.containsAny(str)) {
+        return false;
+      }
+    }
+    return true;
   }
 }
