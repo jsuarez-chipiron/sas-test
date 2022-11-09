@@ -38,12 +38,13 @@ public without sharing class BankAccountUtils {
    * If the bank country DOES require IBAN or ABA the function validates it and returns true if it is valid and false if it is invalid.
    * @param accountNumber A String containing the bank account number
    * @param bankCountry A String containing the bank country name
+   * @param bicNumber The Bank Identification Code
    * @return true or false depending on if the number is valid. If the bank country does not use IBAN true is returned
    */
   public static Boolean validateIBAN(
     String accountNumber,
     String bankCountry,
-    String BicNumber
+    String bicNumber
   ) {
     if (accountNumber.length() == 0) {
       // If the bank account field is blank
